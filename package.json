@@ -63,7 +63,7 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "npm run dev | npm run watch",
     "serve": "./node_modules/.bin/http-server -p 8888 -s",
     "watch": "DEVEL=true webpack -w",
