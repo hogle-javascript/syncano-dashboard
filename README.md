@@ -19,7 +19,7 @@ Install dependencies:
     
     npm install 
 
-Make sure that you have gulp - installation instructions [here](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#getting-started).
+Start local dev version (available at https://localhost:8080/)
 
-    gulp server
+    npm start
 
