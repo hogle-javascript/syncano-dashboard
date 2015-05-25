@@ -1,5 +1,9 @@
 var React = require('react');
 
+var ThemeManager = require('material-ui/lib/styles/theme-manager')();
+
+var LinearProgress = require('material-ui/lib/linear-progress');
+
 var Dropdown = require('../common/Dropdown/Dropdown.react');
 var Icon = require('../common/Icon/Icon.react');
 var ProgressBar = require('../common/ProgressBar/ProgressBar.react');
@@ -18,12 +22,27 @@ var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
 //var FlatButton = require('material-ui').FlatButton;
 
-
 require('./Examples.css');
 
 module.exports = React.createClass({
 
   displayName: 'Examples',
+
+  childContextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {
+      muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
+  componentWillMount: function() {
+    ThemeManager.setPalette({
+      accent1Color: Colors.deepOrange500
+    });
+  },
 
   getDefaultProps: function () {
   },
@@ -184,6 +203,12 @@ module.exports = React.createClass({
           <h2>FieldReadonly</h2>
           <FieldReadonly field={someField}/>
         </div>
+
+        <div className="exampleBox">
+          <h2>material-ui</h2>
+          <LinearProgress mode="indeterminate" />
+        </div>
+
 
       </div>
     );
