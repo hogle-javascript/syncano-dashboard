@@ -1,10 +1,10 @@
-jest.dontMock("../actions.js");
+// jest.dontMock("../actions.js");
 
-describe("actions.js", function() {
-  it("testing component", function() {
+// describe("actions.js", function() {
+//   it("testing component", function() {
 
-    var React = require('react/addons');
-    var TestUtils = React.addons.TestUtils;
-    var actions.js = require('../actions.js');
-  });
-});
+//     var React = require('react/addons');
+//     var TestUtils = React.addons.TestUtils;
+//     var actions.js = require('../actions.js');
+//   });
+// });

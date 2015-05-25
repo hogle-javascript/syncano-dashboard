@@ -10,7 +10,7 @@ STAGING=true webpack -p
 JSBUNDLE_NAME=`ls public/js | grep -v vendor`
 sed -i "s/src=\"js\/bundle.js\"/src=\"js\/$JSBUNDLE_NAME\"/g" public/index.html
 
-S3_BUCKET='syncano-gui-staging'
+S3_BUCKET='syncano-dashboard-staging'
 BUILD_BUNDLE="public"
 aws s3 cp ${BUILD_BUNDLE} s3://$S3_BUCKET/ --recursive
 
@@ -20,5 +20,5 @@ node invalidate_cloudfront.js
 
 # notify slack
 TARGET="Staging"
-MESSAGE="Deployed $TARGET of gui, branch: $(git rev-parse --abbrev-ref HEAD)"
+MESSAGE="Deployed $TARGET of dashboard, branch: $(git rev-parse --abbrev-ref HEAD)"
 ./notify_slack.sh $MESSAGE

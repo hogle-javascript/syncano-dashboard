@@ -1,7 +1,7 @@
 var React = require('react');
 var classNames = require('classnames');
 
-require('./tabs.css');
+require('./Tabs.css');
 
 
 var Tab = React.createClass({

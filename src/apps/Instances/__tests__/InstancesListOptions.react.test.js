@@ -1,10 +1,10 @@
-jest.dontMock("../InstancesListOptions.react");
+// jest.dontMock("../InstancesListOptions.react");
 
-describe("InstancesListOptions.react", function() {
-  it("testing component", function() {
+// describe("InstancesListOptions.react", function() {
+//   it("testing component", function() {
 
-    var React = require('react/addons');
-    var TestUtils = React.addons.TestUtils;
-    var InstancesListOptions = require('../InstancesListOptions.react');
-  });
-});
+//     var React = require('react/addons');
+//     var TestUtils = React.addons.TestUtils;
+//     var InstancesListOptions = require('../InstancesListOptions.react');
+//   });
+// });
