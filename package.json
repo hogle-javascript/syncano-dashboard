@@ -18,29 +18,32 @@
     "moment": "^2.9.0",
     "node-uuid": "^1.4.3",
     "object-assign": "^2.0.0",
-    "react": "latest",
+    "react": "0.13.2",
+    "material-ui": "latest",
+    "react-outsideclickhandler": "latest",
     "react-onclickoutside": "^0.2.4",
     "superagent": "^0.21.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
+    "aws-sdk": "*",
     "css-loader": "^0.9.0",
     "file-loader": "^0.8.1",
-    "jest-cli": "^0.4.0",
+    "jest-cli": "^0.4.5",
     "jsx-loader": "^0.12.2",
+    "q": "*",
     "raw-loader": "^0.5.1",
-    "react-tools": "latest",
+    "react-tools": "^0.13.3",
     "style-loader": "^0.8.2",
     "url-loader": "^0.5.5",
     "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6",
-    "aws-sdk": "*",
-    "q": "*"
+    "webpack-dev-server": "^1.6.6"
   },
   "jest": {
     "rootDir": ".",
     "testPathDirs": [
-      "src/js/"
+      "src/common",
+      "src/apps"
     ],
     "testPathIgnorePatterns": [
       "/__tests__/[^/]*/.+"
@@ -60,6 +63,7 @@
     ]
   },
   "scripts": {
+    "test": "jest",
     "start": "npm run dev | npm run watch",
     "serve": "./node_modules/.bin/http-server -p 8888 -s",
     "watch": "DEVEL=true webpack -w",
