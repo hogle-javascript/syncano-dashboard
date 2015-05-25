@@ -16,6 +16,7 @@ var FabList = require('../common/Fab/FabList.react');
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
 var FieldSelect= require('../common/Field/FieldSelect.react');
+var AvatarInitials = require('../common/AvatarInitials/AvatarInitials.react');
 
 var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
@@ -207,6 +208,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>AvatarInitials</h2>
+          <AvatarInitials name="Marek Piotr Pełka" />
         </div>
 
 

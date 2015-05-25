@@ -1,5 +1,13 @@
-var React      = require('react');
+var getHash = function(str) {
+  var hash;
+  for (var i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash);
+};
 
+var React      = require('react');
 var ColorStore = require('../Color/store');
 
 require('./AvatarInitials.css');
@@ -9,18 +17,30 @@ module.exports = React.createClass({
   displayName: 'AvatarInitials',
 
   propTypes: {
-    text: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    backgroundColor: React.PropTypes.string,
+    singleInitial: React.PropTypes.bool
   },
 
   render: function() {
+    var initials;
     var colors = ColorStore.getAllColors();
-    var colorIndex = Math.floor((this.props.text.charCodeAt(0) - 65) % colors.length);
+    var nameFragments = this.props.name.split(' ');
+    if (this.props.singleInitial || nameFragments.length === 1) {
+      initials = this.props.name.charAt(0).toUpperCase();
+    } else {
+      initials = nameFragments.filter(function(nameFragment, index, arr){
+        return index === 0 || index === arr.length - 1
+      }).map(function(nameFragment){
+        return nameFragment.charAt(0).toUpperCase();
+      }).join('');
+    }
     var style = {
-      backgroundColor: colors[colorIndex]
+      backgroundColor: this.props.backgroundColor || colors[getHash(this.props.name) % colors.length]
     };
     return (
       <div className="avatar-initials" style={style}>
-        <div className="avatar-initials-text">{this.props.text.charAt(0).toUpperCase()}</div>
+        <div className="avatar-initials-text">{initials}</div>
       </div>
     );
   }
