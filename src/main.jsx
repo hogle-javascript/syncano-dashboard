@@ -93,7 +93,7 @@ var Instances = require('./apps/Instances/Instances.react');
 var AuthUtils = require('./apps/Auth/utils');
 var AuthStore = require('./apps/Auth/store');
 
-var SyncanoLib = require('./lib/syncano4-js/lib/syncano4.js');
+var SyncanoLib = require('./lib/syncano4.js');
 Syncano = new SyncanoLib();
 
 var appContainer = document.getElementById('app');
