@@ -1,0 +1,25 @@
+machine:
+  node:
+    version:
+      0.10.24
+  python:
+    version:
+      2.7.6
+
+dependencies:
+  pre:
+    - pip install awscli
+
+general:
+  artifacts:
+    - "coverage/"
+
+deployment:
+  staging:
+    branch: devel
+    commands:
+      - bash deploy.sh
+  production:
+    branch: master
+    commands:
+      - bash deploy_production.sh

@@ -1,0 +1,126 @@
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 25px 25px 25px;
+}
+
+.accordion-heading {
+  font-size: 16px;
+  line-height: 1em;
+  color: #929292;
+}
+
+.accordion-body {
+  background-color: white;
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.15), 0px 2px 5px rgba(0,0,0,0.2);
+  font-size: 14px;
+  color: #606060;
+  position: relative;
+}
+
+.accordion-list-item {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+
+.accordion-list-item-primary {
+  flex-direction: column;
+}
+
+.accordion-list-item-secondary {
+  border-left: 2px solid transparent;
+}
+
+.accordion-list-item-primary > .accordion-list-item-content {
+  cursor: pointer;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #E5E5E5;
+  border-left: 2px solid transparent;
+  transition: all 150ms;
+  position: relative;
+}
+
+.accordion-list-item-primary.accordion-list-item-active > .accordion-list-item-content {
+  border-bottom: 1px solid transparent;
+}
+
+.accordion-list-item-primary.accordion-list-item-expanded > .accordion-list-item-content {
+  border-bottom: 1px solid transparent;
+  box-shadow: 0px 2px 1px 0px rgba(0,0,0,0.15);
+}
+
+.accordion-list-item-primary .accordion-list-item-text {
+  font-size: 16px;
+}
+
+.accordion-list-item-secondary .accordion-list-item-text {
+  font-size: 14px;
+}
+
+.accordion-list-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion-list-item-icon i {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.accordion-list-item-icon-toggle {
+  transition: all 150ms;
+}
+
+.accordion-list-item-expanded .accordion-list-item-icon-toggle {
+  transform: rotate(90deg);
+}
+
+.accordion-list-item-icon-options {
+  margin-right: 5px;
+}
+
+.accordion-list-item-icon-options i {
+  fill: #adadad;
+}
+
+.accordion-list-item-primary .accordion-list-item-payload {
+  padding: 5px 0;
+  display: none;
+}
+
+.accordion-list-item-primary.accordion-list-item-expanded .accordion-list-item-payload {
+  display: block;
+}
+
+.accordion-list-item-secondary .accordion-list-item-symbol {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.accordion-list-item-active {
+  border-left: 2px solid #0091EA;
+  background-color: #F2F2F2;
+}
+
+.accordion-list-item-secondary > .accordion-list-item-content {
+  cursor: pointer;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  border-left: 2px solid transparent;
+  transition: all 150ms;
+}

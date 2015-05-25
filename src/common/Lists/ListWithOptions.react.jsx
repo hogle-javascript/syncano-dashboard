@@ -1,0 +1,58 @@
+var React               = require('react');
+
+//var ViewActions         = require('../actions/ViewActions');
+
+var Constants           = require('../../constants/Constants');
+var List                = require('./List.react');
+var Dropdown            = require('../Dropdown/Dropdown.react').Dropdown;
+var DropdownWithButtons = require('../Dropdown/DropdownWithButtons.react');
+
+var ContentHeader       = require('../ContentHeader.react');
+
+module.exports = React.createClass({
+
+  displayName: 'ListWithOptions',
+
+  handleDropdownMenuItemClick: function(action) {
+
+    //if (Constants.VIEW_MODES.indexOf(action) != -1) {
+    //    ViewActions.updateViewMode(this.props.list.uuid, Constants.VIEW_ACTIONS_MAP[action]);
+    //}
+    //if (Constants.SORT_MODES.indexOf(action) != -1) {
+    //    ViewActions.updateSortMode(this.props.list.uuid, action);
+    //}
+  },
+
+  toggleDropdownMenu: function() {
+    ViewActions.showDropdown(this.props.list.uuid);
+  },
+
+  render: function() {
+    var dropdownVisible = this.props.dropdown === this.props.list.uuid;
+    var dropdown;
+    var heading;
+
+    //debugger;
+    //if (this.props.list.contentType !== "instances") {
+    //  dropdown = <Dropdown icon="more-horiz" actions={this.props.list.actions} visible={dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu} handleClick={this.handleDropdownMenuItemClick} />;
+    //} else {
+    //  dropdown = <DropdownWithButtons icon="more-horiz" actions={this.props.list.actions} visible={dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu} handleClick={this.handleDropdownMenuItemClick} />;
+    //}
+
+    //if (this.props.list.heading === "CodeBoxes" || this.props.list.heading === "Classes") {
+    //  heading = <ContentHeader {...this.props}/>
+    //} else {
+    //  heading = <div className="list-header">{this.props.list.heading}<div className="list-heading-dropdown">{dropdown}</div></div>
+    //}
+
+    //{heading}
+    console.log("List data", this.props.list.data)
+    return (
+      <div className="list-group">
+
+        <List {...this.props} data={this.props.list.data} />
+      </div>
+    );
+  }
+
+});

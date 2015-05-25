@@ -1,0 +1,57 @@
+.button-social-auth-list {
+  border: 1px solid #0091EA;
+  border-radius: 3px;
+}
+
+.button-social-auth-list:hover .button-social-auth {
+  display: flex;
+}
+
+.button-social-auth-list:hover .button-social-auth:first-child {
+  border-bottom: 1px solid #0091EA;
+}
+
+.button-social-auth {
+  color: #0091EA;
+  border-bottom: 1px solid #0091EA;
+  display: none;
+  height: 50px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  padding: 0 2em;
+}
+
+.button-social-auth:hover {
+  color: white;
+  background-color: #0091EA;
+}
+
+.button-social-auth:hover path {
+  fill: white;
+}
+
+.button-social-auth path {
+  fill: #0091EA;
+}
+
+.button-social-auth:first-child {
+  border-bottom: 1px solid #0091EA;
+}
+
+.button-social-auth i {
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+}
+
+.button-social-auth:first-child {
+/*  display: flex;
+  border-bottom: none;*/
+}
+
+.button-social-auth:last-child {
+  border: none;
+}
