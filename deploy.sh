@@ -14,9 +14,9 @@ S3_BUCKET='syncano-dashboard-staging'
 BUILD_BUNDLE="public"
 aws s3 cp ${BUILD_BUNDLE} s3://$S3_BUCKET/ --recursive
 
-export AWS_REGION='eu-west-1'
-export DISTRIBUTION_ID='E10VUXJJFKD7D3'
-node invalidate_cloudfront.js
+# export AWS_REGION='eu-west-1'
+# export DISTRIBUTION_ID='E10VUXJJFKD7D3'
+# node invalidate_cloudfront.js
 
 # notify slack
 TARGET="Staging"
