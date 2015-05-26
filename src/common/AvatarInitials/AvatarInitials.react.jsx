@@ -1,12 +1,3 @@
-var getHash = function(str) {
-  var hash;
-  for (var i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash);
-};
-
 var React      = require('react');
 var ColorStore = require('../Color/store');
 
@@ -20,6 +11,15 @@ module.exports = React.createClass({
     name: React.PropTypes.string.isRequired,
     backgroundColor: React.PropTypes.string,
     singleInitial: React.PropTypes.bool
+  },
+
+  getHash: function(str) {
+    var hash;
+    for (var i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
   },
 
   render: function() {
@@ -36,7 +36,7 @@ module.exports = React.createClass({
       }).join('');
     }
     var style = {
-      backgroundColor: this.props.backgroundColor || colors[getHash(this.props.name) % colors.length]
+      backgroundColor: this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length]
     };
     return (
       <div className="avatar-initials" style={style}>

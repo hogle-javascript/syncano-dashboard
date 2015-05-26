@@ -212,7 +212,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>AvatarInitials</h2>
-          <AvatarInitials name="Marek Piotr Pełka" />
+          <AvatarInitials name="George R. R. Martin" />
         </div>
 
 
