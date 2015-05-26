@@ -3,11 +3,6 @@ machine:
     version:
       0.10.32
 
-dependencies:
-  pre:
-    - npm install webpack -g
-    - npm install gulp -g
-
 general:
   artifacts:
     - "coverage/"
@@ -16,10 +11,14 @@ deployment:
   staging:
     branch: devel
     commands:
+      - npm install webpack -g
+      - npm install gulp -g
       - NODE_ENV=staging gulp publish
       - gulp clean
   production:
     branch: master
     commands:
+      - npm install webpack -g
+      - npm install gulp -g
       - NODE_ENV=production gulp publish
       - gulp clean
