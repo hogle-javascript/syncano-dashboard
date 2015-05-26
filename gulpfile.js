@@ -101,7 +101,7 @@ gulp.task('publish', ['build'], function() {
     }
   });
 
-  return gulp.src('./dist/**/*')
+  return gulp.src(['./dist/**/*', '!./dist/rev-manifest.json'])
     .pipe(publisher.publish())
     .pipe(publisher.sync())
     .pipe(awspublish.reporter());
