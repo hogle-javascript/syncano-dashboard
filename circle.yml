@@ -11,14 +11,14 @@ deployment:
   staging:
     branch: devel
     commands:
-      - npm install webpack -g
       - npm install gulp -g
+      - npm install
       - NODE_ENV=staging gulp publish
       - gulp clean
   production:
     branch: master
     commands:
-      - npm install webpack -g
       - npm install gulp -g
+      - npm install
       - NODE_ENV=production gulp publish
       - gulp clean
