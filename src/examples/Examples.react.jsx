@@ -15,7 +15,11 @@ var FabList = require('../common/Fab/FabList.react');
 
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
-var FieldSelect= require('../common/Field/FieldSelect.react');
+var FieldSelect = require('../common/Field/FieldSelect.react');
+
+var SwitchField = require('../common/SwitchField/SwitchField.react');
+var SwitchFieldList = require('../common/SwitchField/SwitchFieldList.react');
+var SwitchInput = require('../common/SwitchField/SwitchInput.react');
 
 var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
@@ -127,6 +131,20 @@ module.exports = React.createClass({
       color: '#FFC52D',
     }
 
+    var switchFields = [{
+        name: 'limit',
+        enabled: true,
+        heading: 'Limit',
+        textEnabled: 'Hard limit is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Hard limit is currently disabled. Your account will stop working when the limit is reached.',
+      }, {
+        name: 'alert',
+        enabled: false,
+        heading: 'Alert',
+        textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
+      }]
+
     return (
 
       <div className="examplesContainer">
@@ -207,6 +225,34 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>SwitchFieldList</h2>
+          <SwitchFieldList 
+            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
+            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
+            fields={switchFields} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>SwitchField</h2>
+          <SwitchField 
+            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
+            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
+            field={switchFields[0]} 
+            name="react skills" 
+            heading="React skills" 
+            enabled={true} 
+            textEnabled="Dummy text enabled" 
+            textDisabled="dummy text disabled" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>SwitchInput</h2>
+          <SwitchInput 
+            handleClick={dummyClick.bind(this, "handleClick")} 
+            enabled={true} />
         </div>
 
 

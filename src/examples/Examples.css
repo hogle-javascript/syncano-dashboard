@@ -16,8 +16,8 @@
     width: 90%;
     background: white;
     /*width: 700px;*/
-    height: 200px;
-    min-height: 100px;
+    height: auto;
+    min-height: 200px;
 }
 
 .exampleBox h2 {

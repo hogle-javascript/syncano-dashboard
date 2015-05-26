@@ -3,27 +3,41 @@ var classNames  = require('classnames');
 
 var SwitchInput = require('./SwitchInput.react');
 
+require('./SwitchField.css');
 
 module.exports = React.createClass({
 
   displayName: 'SwitchField',
 
+  propTypes: {
+    handleFieldLinkClick: React.PropTypes.func.isRequired,
+    handleSwitchClick: React.PropTypes.func.isRequired,
+    enabled: React.PropTypes.bool.isRequired,
+    textEnabled: React.PropTypes.string.isRequired,
+    textDisabled: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    heading: React.PropTypes.string.isRequired,
+  },
+
   handleFieldLinkClick: function() {
-    this.props.handleFieldLinkClick(this.props.field.name)
+    this.props.handleFieldLinkClick()
   },
 
   render: function() {
-    var enabled = this.props.field.enabled;
-    var textEnabled = <div>{this.props.field.textEnabled} <span className="action-link" onClick={this.handleFieldLinkClick}>{'Change ' + this.props.field.name}</span>.</div>;
-    var text = enabled ? textEnabled : this.props.field.textDisabled;
+    var textEnabled = <div>{this.props.textEnabled} <span className="action-link" onClick={this.handleFieldLinkClick}>{'Change ' + this.props.name}</span>.</div>;
+    var text = this.props.enabled ? textEnabled : this.props.textDisabled;
     return (
       <div className="switch-field">
         <div className="switch-field-text">
-          <div className="switch-field-heading">{this.props.field.heading}</div>
+          <div className="switch-field-heading">{this.props.heading}</div>
           <div className="switch-field-description">{text}</div>
         </div>
         <div className="switch-field-input">
-          <SwitchInput {...this.props} enabled={enabled} handleClick={this.props.handleSwitchClick} />
+          <SwitchInput 
+            handleClick={this.props.handleSwitchClick}
+            enabled={this.props.enabled} 
+            name={this.props.name}
+             />
         </div>
       </div>
     );
