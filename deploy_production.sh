@@ -11,16 +11,16 @@ PRODUCTION=true webpack
 JSBUNDLE_NAME=`ls public/js`
 sed -i "s/bundle.js/$JSBUNDLE_NAME/g" public/index.html
 
-S3_BUCKET='admin-syncano-io'
+S3_BUCKET='syncano-dashboard-production'
 BUILD_BUNDLE="public"
 
 aws s3 cp ${BUILD_BUNDLE} s3://$S3_BUCKET/ --recursive
 
-export AWS_REGION='us-east-1'
-export DISTRIBUTION_ID='E3GVWH8UCCSHQ7'
-node invalidate_cloudfront.js
+# export AWS_REGION='us-east-1'
+# export DISTRIBUTION_ID='E3GVWH8UCCSHQ7'
+# node invalidate_cloudfront.js
 
 # notify slack
 TARGET="PRODUCTION"
-MESSAGE="Deployed $TARGET of gui, branch: $(git rev-parse --abbrev-ref HEAD)"
+MESSAGE="Deployed $TARGET of dashboard, branch: $(git rev-parse --abbrev-ref HEAD)"
 ./notify_slack.sh $MESSAGE

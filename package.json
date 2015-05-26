@@ -1,11 +1,11 @@
 {
-  "name": "syncano-gui",
+  "name": "syncano-dashboard",
   "version": "0.0.1",
-  "description": "Syncano GUI",
+  "description": "Syncano Dashboard",
   "main": "js/app.jsx",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Syncano/syncano-gui.git"
+    "url": "https://github.com/Syncano/syncano-dashboard.git"
   },
   "dependencies": {
     "brace": "^0.5.0",
@@ -65,7 +65,7 @@
     ]
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "npm run dev | npm run watch",
     "serve": "./node_modules/.bin/http-server -p 8888 -s",
     "watch": "DEVEL=true webpack -w",
