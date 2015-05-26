@@ -5,7 +5,7 @@ var Hello = require('hellojs');
 var AuthStore = require('../apps/Auth/store');
 
 var AuthActions = require('../apps/Auth/actions');
-var ButtonSocialAuthList = require('../common/SocialButton/SocialButtonList.react');
+var ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react');
 
 require('./signup.css');
 

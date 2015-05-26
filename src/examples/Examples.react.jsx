@@ -16,6 +16,8 @@ var FabList = require('../common/Fab/FabList.react');
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
 var FieldSelect= require('../common/Field/FieldSelect.react');
+var ButtonSocialAuth = require('../common/SocialButton/ButtonSocialAuth.react');
+var ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react');
 
 var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
@@ -127,6 +129,17 @@ module.exports = React.createClass({
       color: '#FFC52D',
     }
 
+    var socialAuthButtons = [{
+      icon: 'github',
+      text: 'Log in with Github',
+    }, {
+      icon: 'google',
+      text: 'Log in with Google',
+    }, {
+      icon: 'facebook',
+      text: 'Log in with Facebook',
+    }];
+
     return (
 
       <div className="examplesContainer">
@@ -209,6 +222,15 @@ module.exports = React.createClass({
           <LinearProgress mode="indeterminate" />
         </div>
 
+        <div className="exampleBox">
+          <h2>ButtonSocialAuth</h2>
+          <ButtonSocialAuth icon="facebook" text="Log in with Facebook" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>ButtonSocialAuth</h2>
+          <ButtonSocialAuthList buttons={socialAuthButtons} />
+        </div>
 
       </div>
     );
