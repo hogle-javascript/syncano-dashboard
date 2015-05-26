@@ -33,7 +33,7 @@ gulp.task('copy-images', function() {
 });
 
 gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
-    var config = Object.create(webpackConfig);
+    var config     = Object.create(webpackConfig);
     config.devtool = 'sourcemap';
     config.debug   = true;
 
