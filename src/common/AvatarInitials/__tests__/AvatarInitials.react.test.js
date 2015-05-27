@@ -6,5 +6,6 @@ describe("AvatarInitials.react", function() {
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
     var AvatarInitials = require('../AvatarInitials.react');
+
   });
 });

@@ -7,29 +7,25 @@ describe("ButtonSocialAuth", function () {
     var TestUtils = React.addons.TestUtils;
     var ButtonSocialAuth = require('../ButtonSocialAuth.react');
 
-    // Test data
-    socialAuthButtons = {
-      type: 'github',
+    var button = {
+      icon: 'github',
       text: 'Log in with Github',
     };
-    mockFn = jest.genMockFn();
 
-    // Render component
-    buttonSocialAuth = TestUtils.renderIntoDocument(
+    var mockFn = jest.genMockFn();
+
+    var buttonSocialAuth = TestUtils.renderIntoDocument(
       <ButtonSocialAuth
         handleClick={mockFn}
-        type={socialAuthButtons.type}
-        text={socialAuthButtons.text}/>)
-
-    // Check if "li" element was rendered with correct class
-    renderedLi = TestUtils.findRenderedDOMComponentWithClass(buttonSocialAuth, "button-social-auth");
-    // Check if "onClick" event calls handleClick method
-    TestUtils.Simulate.click(renderedLi);
+        icon={button.icon}
+        text={button.text}/>
+    );
+    var node = TestUtils.findRenderedDOMComponentWithClass(buttonSocialAuth, "button-social-auth");
+    TestUtils.Simulate.click(node);
     expect(mockFn.mock.calls.length).toBe(1);
-    // Check if "div" element was rendered with correct class and content
-    renderedDiv = TestUtils.findRenderedDOMComponentWithClass(buttonSocialAuth, "button-text");
-    expect(renderedDiv.getDOMNode().textContent).toEqual(socialAuthButtons.text);
-    // Check if "li" element have children "Icon"
-    expect(renderedLi.props.children[0].type.displayName).toBe("Icon");
+
+    var textNode = TestUtils.findRenderedDOMComponentWithClass(buttonSocialAuth, "button-text");
+    expect(textNode.getDOMNode().textContent).toEqual(button.text);
+
   });
 });
