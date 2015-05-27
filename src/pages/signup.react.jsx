@@ -1,7 +1,7 @@
 var React = require('react');
 var Hello = require('hellojs');
 
-var ButtonSocialAuthList = require('../common/SocialButton/SocialButtonList.react');
+var ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react');
 //var ServerActions = require('../actions/ServerActions');
 //
 require('./signup.css');
