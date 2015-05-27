@@ -1,23 +1,24 @@
-var React = require('react');
+var React             = require('react'),
 
-var ThemeManager = require('material-ui/lib/styles/theme-manager')();
+    ThemeManager      = require('material-ui/lib/styles/theme-manager')(),
+    LinearProgress    = require('material-ui/lib/linear-progress'),
+    Snackbar          = require('material-ui/lib/snackbar'),
+    FlatButton        = require('material-ui/lib/flat-button'),
 
-var LinearProgress = require('material-ui/lib/linear-progress');
+    Dropdown          = require('../common/Dropdown/Dropdown.react'),
+    Icon              = require('../common/Icon/Icon.react'),
+    ProgressBar       = require('../common/ProgressBar/ProgressBar.react'),
+    Label             = require('../common/Label/Label.react'),
+    ListItemEmpty     = require('../common/Lists/ListItemEmpty.react'),
+    Editor            = require('../common/Editor/Editor.react'),
+    Fab               = require('../common/Fab/Fab.react'),
+    FabList           = require('../common/Fab/FabList.react'),
 
-var Dropdown = require('../common/Dropdown/Dropdown.react');
-var Icon = require('../common/Icon/Icon.react');
-var ProgressBar = require('../common/ProgressBar/ProgressBar.react');
-var Label = require('../common/Label/Label.react');
-var ListItemEmpty = require('../common/Lists/ListItemEmpty.react');
-var Editor = require('../common/Editor/Editor.react');
-var Fab = require('../common/Fab/Fab.react');
-var FabList = require('../common/Fab/FabList.react');
+    FieldPassword     = require('../common/Field/FieldPassword.react'),
+    FieldReadonly     = require('../common/Field/FieldReadonly.react'),
+    FieldSelect       = require('../common/Field/FieldSelect.react'),
 
-var FieldPassword = require('../common/Field/FieldPassword.react');
-var FieldReadonly = require('../common/Field/FieldReadonly.react');
-var FieldSelect= require('../common/Field/FieldSelect.react');
-
-var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
+    InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
 
 //var FlatButton = require('material-ui').FlatButton;
@@ -127,6 +128,14 @@ module.exports = React.createClass({
       color: '#FFC52D',
     }
 
+    var handleSnackbarClick = function() {
+      this.refs.snackbar.show()
+    }.bind(this);
+
+    var handleSnackbarAction = function() {
+      window.alert("Bum!");
+    }
+
     return (
 
       <div className="examplesContainer">
@@ -207,6 +216,20 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>material-ui - Snackbar</h2>
+
+          <FlatButton
+            onClick={handleSnackbarClick}
+            label="Bum!" />
+
+          <Snackbar
+            ref="snackbar"
+            message="Bum! Bum! Bum!"
+            action="undo"
+            onActionTouchTap={handleSnackbarAction} />
         </div>
 
 
