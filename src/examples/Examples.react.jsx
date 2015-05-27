@@ -217,6 +217,7 @@ module.exports = React.createClass({
           <AvatarInitials name="George R. R. Martin" />
         </div>
 
+        <div className="exampleBox">
           <h2>ColorPicker</h2>
           <ColorPicker />
         </div>
