@@ -12,6 +12,8 @@ var ListItemEmpty = require('../common/Lists/ListItemEmpty.react');
 var Editor = require('../common/Editor/Editor.react');
 var Fab = require('../common/Fab/Fab.react');
 var FabList = require('../common/Fab/FabList.react');
+var ColorPicker = require('../common/Color/ColorPicker.react');
+var ColorPickerItem = require('../common/Color/ColorPickerItem.react');
 
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
@@ -209,6 +211,25 @@ module.exports = React.createClass({
           <LinearProgress mode="indeterminate" />
         </div>
 
+        <div className="exampleBox">
+          <h2>ColorPicker</h2>
+          <ColorPicker />
+        </div>
+
+        <div className="exampleBox">
+          <h2>ColorPicker (selected)</h2>
+          <ColorPicker selectedColor={'#EF5350'} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>ColorPickerItem (selected)</h2>
+          <ColorPickerItem color={'#EF5350'} selected={true} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>ColorPickerItem</h2>
+          <ColorPickerItem color={'#EF5350'} selected={false} />
+        </div>
 
       </div>
     );
