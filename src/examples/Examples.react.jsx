@@ -16,6 +16,7 @@ var React                = require('react'),
     FabList              = require('../common/Fab/FabList.react'),
     ColorPicker          = require('../common/Color/ColorPicker.react'),
     ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
+    UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
