@@ -18,6 +18,7 @@ var ColorPickerItem = require('../common/Color/ColorPickerItem.react');
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
 var FieldSelect= require('../common/Field/FieldSelect.react');
+var AvatarInitials = require('../common/AvatarInitials/AvatarInitials.react');
 var ButtonSocialAuth = require('../common/SocialButton/ButtonSocialAuth.react');
 var ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react');
 
@@ -222,6 +223,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>AvatarInitials</h2>
+          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">
