@@ -1,14 +1,7 @@
 machine:
   node:
     version:
-      0.10.24
-  python:
-    version:
-      2.7.6
-
-dependencies:
-  pre:
-    - pip install awscli
+      0.10.32
 
 general:
   artifacts:
@@ -18,8 +11,14 @@ deployment:
   staging:
     branch: devel
     commands:
-      - bash deploy.sh
+      - npm install gulp -g
+      - npm install
+      - NODE_ENV=staging gulp publish
+      - gulp clean
   production:
     branch: master
     commands:
-      - bash deploy_production.sh
+      - npm install gulp -g
+      - npm install
+      - NODE_ENV=production gulp publish
+      - gulp clean
