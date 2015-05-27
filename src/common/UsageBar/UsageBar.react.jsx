@@ -8,7 +8,7 @@ module.exports = React.createClass({
   displayName: 'UsageBar',
 
   propsTypes: {
-    billingProfile: React.propsTypes.object,
+    billingProfile: React.PropTypes.object
   },
 
   render: function() {

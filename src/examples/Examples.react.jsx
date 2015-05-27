@@ -14,6 +14,8 @@ var Fab = require('../common/Fab/Fab.react');
 var FabList = require('../common/Fab/FabList.react');
 var ColorPicker = require('../common/Color/ColorPicker.react');
 var ColorPickerItem = require('../common/Color/ColorPickerItem.react');
+var UsageBar = require('../common/UsageBar/UsageBar.react');
+
 
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
@@ -127,7 +129,15 @@ module.exports = React.createClass({
       largeText: false,
       fieldGroup: 'menu',
       color: '#FFC52D',
-    }
+    };
+
+    var billingProfile = {
+      soft_limit: 3000,
+      hard_limit: 5000,
+      balance: {
+        total: 4000
+      }
+    };
 
     return (
 
@@ -208,7 +218,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>material-ui</h2>
-          <LinearProgress mode="indeterminate" />
+          <LinearProgress mode="indeterminate"/>
         </div>
 
         <div className="exampleBox">
@@ -229,6 +239,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>ColorPickerItem</h2>
           <ColorPickerItem color={'#EF5350'} selected={false} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>UsageBar</h2>
+          <UsageBar billingProfile={billingProfile} />
         </div>
 
       </div>
