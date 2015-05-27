@@ -3,6 +3,7 @@ var React                = require('react'),
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
     LinearProgress       = require('material-ui/lib/linear-progress'),
     Dialog               = require('material-ui/lib/dialog'),
+    Snackbar             = require('material-ui/lib/snackbar'),
     FlatButton           = require('material-ui/lib/flat-button'),
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
@@ -15,7 +16,6 @@ var React                = require('react'),
     FabList              = require('../common/Fab/FabList.react'),
     ColorPicker          = require('../common/Color/ColorPicker.react'),
     ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
-
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
@@ -134,6 +134,14 @@ module.exports = React.createClass({
       color: '#FFC52D',
     }
 
+    var handleSnackbarClick = function() {
+      this.refs.snackbar.show()
+    }.bind(this);
+
+    var handleSnackbarAction = function() {
+      window.alert("Bum!");
+    }
+
     var dialogStandardActions = [
       { text: 'Cancel' },
       { text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit' }
@@ -235,6 +243,20 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>material-ui LinearProgress</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>material-ui - Snackbar</h2>
+
+          <FlatButton
+            onClick={handleSnackbarClick}
+            label="Bum!" />
+
+          <Snackbar
+            ref="snackbar"
+            message="Bum! Bum! Bum!"
+            action="undo"
+            onActionTouchTap={handleSnackbarAction} />
         </div>
 
         <div className="exampleBox">
