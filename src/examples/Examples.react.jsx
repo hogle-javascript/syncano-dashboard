@@ -1,29 +1,30 @@
-var React = require('react');
+var React                = require('react'),
 
-var ThemeManager = require('material-ui/lib/styles/theme-manager')();
+    ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
+    LinearProgress       = require('material-ui/lib/linear-progress'),
+    Dialog               = require('material-ui/lib/dialog'),
+    FlatButton           = require('material-ui/lib/flat-button'),
 
-var LinearProgress = require('material-ui/lib/linear-progress');
+    Dropdown             = require('../common/Dropdown/Dropdown.react'),
+    Icon                 = require('../common/Icon/Icon.react'),
+    ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
+    Label                = require('../common/Label/Label.react'),
+    ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
+    Editor               = require('../common/Editor/Editor.react'),
+    Fab                  = require('../common/Fab/Fab.react'),
+    FabList              = require('../common/Fab/FabList.react'),
+    ColorPicker          = require('../common/Color/ColorPicker.react'),
+    ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
 
-var Dropdown = require('../common/Dropdown/Dropdown.react');
-var Icon = require('../common/Icon/Icon.react');
-var ProgressBar = require('../common/ProgressBar/ProgressBar.react');
-var Label = require('../common/Label/Label.react');
-var ListItemEmpty = require('../common/Lists/ListItemEmpty.react');
-var Editor = require('../common/Editor/Editor.react');
-var Fab = require('../common/Fab/Fab.react');
-var FabList = require('../common/Fab/FabList.react');
-var ColorPicker = require('../common/Color/ColorPicker.react');
-var ColorPickerItem = require('../common/Color/ColorPickerItem.react');
 
-var FieldPassword = require('../common/Field/FieldPassword.react');
-var FieldReadonly = require('../common/Field/FieldReadonly.react');
-var FieldSelect= require('../common/Field/FieldSelect.react');
-var AvatarInitials = require('../common/AvatarInitials/AvatarInitials.react');
-var ButtonSocialAuth = require('../common/SocialButton/ButtonSocialAuth.react');
-var ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react');
+    FieldPassword        = require('../common/Field/FieldPassword.react'),
+    FieldReadonly        = require('../common/Field/FieldReadonly.react'),
+    FieldSelect          = require('../common/Field/FieldSelect.react'),
+    AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
+    ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
+    ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
 
-var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
-
+    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
 
 //var FlatButton = require('material-ui').FlatButton;
 
@@ -50,6 +51,7 @@ module.exports = React.createClass({
   },
 
   getDefaultProps: function () {
+
   },
 
   componentWillMount: function () {
@@ -131,6 +133,16 @@ module.exports = React.createClass({
       fieldGroup: 'menu',
       color: '#FFC52D',
     }
+
+    var dialogStandardActions = [
+      { text: 'Cancel' },
+      { text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit' }
+    ];
+
+    var modalState = true;
+    var handleStandardDialogTouchTap = function() {
+      this.refs.standardDialog.show();
+    }.bind(this);
 
     var socialAuthButtons = [{
       icon: 'github',
@@ -221,8 +233,21 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>material-ui</h2>
+          <h2>material-ui LinearProgress</h2>
           <LinearProgress mode="indeterminate" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>material-ui Dialog</h2>
+          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}  />
+          <Dialog
+            ref="standardDialog"
+            title="Dialog With Standard Actions"
+            actions={dialogStandardActions}
+            actionFocus="submit"
+            modal={modalState}>
+            Based on JSON
+          </Dialog>
         </div>
 
         <div className="exampleBox">
@@ -236,8 +261,6 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ButtonSocialAuth</h2>
-          <ButtonSocialAuthList buttons={socialAuthButtons} />
           <h2>ColorPicker</h2>
           <ColorPicker />
         </div>
