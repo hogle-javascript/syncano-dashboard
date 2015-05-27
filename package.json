@@ -64,6 +64,8 @@
     ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/classnames",
+      "<rootDir>/src/utils/utils",
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign"
     ]
