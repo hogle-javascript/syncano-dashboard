@@ -1,5 +1,5 @@
-React
-=====
+React patterns
+==============
 
 *Mostly reasonable patterns for writing React apps [SOURCE](https://github.com/planningcenter/react-patterns)*
 
