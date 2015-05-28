@@ -2,19 +2,20 @@ var React = require('react');
 var Director = require('director');
 var classNames = require('classnames');
 
-//var Hello         = require('hellojs');
-//
-//var App           = require('./App');
+// var Hello         = require('hellojs');
 
 
-//
-//var ServerActions = require('./actions/ServerActions');
-//var ViewActions   = require('./actions/ViewActions');
-//
-//var AccountStore  = require('./stores/AccountStore');
-//
-//require('../css/main');
-//
+// var App           = require('./App');
+
+
+
+// var ServerActions = require('./actions/ServerActions');
+// var ViewActions   = require('./actions/ViewActions');
+
+// var AccountStore  = require('./stores/AccountStore');
+
+// require('../css/main');
+
 
 //
 //var localAccount = JSON.parse(localStorage.getItem('account'));
