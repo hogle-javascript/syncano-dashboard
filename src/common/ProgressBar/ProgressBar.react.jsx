@@ -25,7 +25,6 @@ module.exports = React.createClass({
     });
 
     return (
-
       <div className={cssClasses}></div>
     );
   }

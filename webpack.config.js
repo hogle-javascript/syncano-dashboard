@@ -1,33 +1,42 @@
-var webpack = require("webpack");
+var ENV     = process.env.NODE_ENV || 'development',
+    path    = require('path'),
+    webpack = require('webpack');
 
-var PRODUCTION = JSON.parse(process.env.PRODUCTION || 'false');
-var STAGING = JSON.parse(process.env.STAGING || 'false');
-var DEVEL = JSON.parse(process.env.DEVEL || 'false');
-
-var envPlugin = new webpack.DefinePlugin({
-  __DEVEL__: DEVEL,
-  __STAGING__: STAGING,
-  __PRODUCTION__: PRODUCTION
-});
-
-var vendorPlugin = new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js");
 
 module.exports = {
+  // cache: true,
   entry: {
-      app: './src/main.jsx',
-      vendor: ["brace", 'react', 'moment'],
+      app: path.join(__dirname, 'src', 'app.jsx'),
+      vendor: ['brace', 'react', 'moment'],
   },
   output: {
-    path: './public/js/',
-    filename: PRODUCTION || STAGING ? '[hash].bundle.js' : 'bundle.js',
+    path: path.join(__dirname, 'dist', 'js'),
+    filename: '[name].js',
+    chunkFilename: '[name].[chunkhash].js',
+    publicPath: 'js/',
   },
-  plugins: [envPlugin, vendorPlugin],
+  plugins: [
+    new webpack.DefinePlugin({ENV: ENV}),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+  ],
   module: {
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
       {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
+      // // required to write "require('./style.css')"
+      // { test: /\.css$/,    loader: "style-loader!css-loader" },
+
+      // // required for bootstrap icons
+      // { test: /\.woff$/,   loader: "url-loader?prefix=font/&limit=5000&mimetype=application/font-woff" },
+      // { test: /\.ttf$/,    loader: "file-loader?prefix=font/" },
+      // { test: /\.eot$/,    loader: "file-loader?prefix=font/" },
+      // { test: /\.svg$/,    loader: "file-loader?prefix=font/" },
+
+      // // required for react jsx
+      // { test: /\.js$/,    loader: "jsx-loader" },
+      // { test: /\.jsx$/,   loader: "jsx-loader?insertPragma=React.DOM" },
     ]
   },
   resolve: {
