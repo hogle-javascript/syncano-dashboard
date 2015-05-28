@@ -1,15 +1,13 @@
 var React = require('react');
 
-require('./signup.css');
-
 module.exports = React.createClass({
 
-  displayName: 'LoginHandler',
+  displayName: 'InstancesHandler',
 
   render: function () {
     return (
-      <div className="login-page">
-        Login
+      <div>
+        Instances
       </div>
     );
   }

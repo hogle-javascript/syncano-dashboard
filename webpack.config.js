@@ -6,7 +6,7 @@ var ENV     = process.env.NODE_ENV || 'development',
 module.exports = {
   // cache: true,
   entry: {
-      app: path.join(__dirname, 'src', 'main.jsx'),
+      app: path.join(__dirname, 'src', 'app.jsx'),
       vendor: ['brace', 'react', 'moment'],
   },
   output: {

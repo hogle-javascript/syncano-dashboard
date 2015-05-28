@@ -1,7 +1,8 @@
 var React = require('react');
+
 module.exports = React.createClass({
 
-  displayName: 'NotFound',
+  displayName: 'NotFoundHandler',
 
   render: function () {
     return (

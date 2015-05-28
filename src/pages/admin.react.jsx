@@ -10,12 +10,9 @@ module.exports = React.createClass({
 
   componentWillMount: function () {
 
-    //debugger;
-    console.log('Checking Syncano connection');
     var token = AuthStore.getToken();
     if (token) {
       if (!Syncano.getInfo().account.account_key) {
-        console.log('Connecting to Syncnao!');
         Syncano.connect(token);
       }
     }
