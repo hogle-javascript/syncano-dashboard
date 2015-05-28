@@ -16,6 +16,7 @@ var React                = require('react'),
     FabList              = require('../common/Fab/FabList.react'),
     ColorPicker          = require('../common/Color/ColorPicker.react'),
     ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
+    UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
@@ -26,7 +27,6 @@ var React                = require('react'),
 
     InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
 
-//var FlatButton = require('material-ui').FlatButton;
 
 require('./Examples.css');
 
@@ -51,7 +51,6 @@ module.exports = React.createClass({
   },
 
   getDefaultProps: function () {
-
   },
 
   componentWillMount: function () {
@@ -132,7 +131,7 @@ module.exports = React.createClass({
       largeText: false,
       fieldGroup: 'menu',
       color: '#FFC52D',
-    }
+    };
 
     var handleSnackbarClick = function() {
       this.refs.snackbar.show()
@@ -140,7 +139,7 @@ module.exports = React.createClass({
 
     var handleSnackbarAction = function() {
       window.alert("Bum!");
-    }
+    };
 
     var dialogStandardActions = [
       { text: 'Cancel' },
@@ -162,6 +161,14 @@ module.exports = React.createClass({
       icon: 'facebook',
       text: 'Log in with Facebook',
     }];
+
+    var billingProfile = {
+      soft_limit: 3000,
+      hard_limit: 5000,
+      balance: {
+        total: 4000
+      }
+    };
 
     return (
 
@@ -300,6 +307,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>ColorPickerItem</h2>
           <ColorPickerItem color={'#EF5350'} selected={false} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>UsageBar</h2>
+          <UsageBar billingProfile={billingProfile} />
         </div>
 
       </div>
