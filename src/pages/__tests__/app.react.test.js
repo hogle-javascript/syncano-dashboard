@@ -1,10 +1,10 @@
-jest.dontMock("../login.react");
+jest.dontMock("../app.react");
 
-describe("login.react", function() {
+describe("app.react", function() {
   it("testing component", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var login = require('../login.react');
+    var app = require('../app.react');
   });
 });
