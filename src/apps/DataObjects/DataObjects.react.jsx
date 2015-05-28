@@ -1,13 +1,13 @@
 var React = require('react');
 
+
 module.exports = React.createClass({
 
-  displayName: 'Instances',
+  displayName: 'DataObjects',
 
   render: function () {
-
     return (
-      <div>Instances</div>
+      <div>Data objects</div>
     );
   }
 

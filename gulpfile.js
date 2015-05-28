@@ -19,7 +19,7 @@ var paths = {
 }
 
 gulp.task('clean', function(cb) {
-  del([paths.dist], cb);
+  del(['./dist/**/*', paths.dist], cb);
 });
 
 gulp.task('copy-index', function() {

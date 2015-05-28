@@ -2,12 +2,11 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-  displayName: 'Instances',
+  displayName: 'AccountPasswordReset',
 
   render: function () {
-
     return (
-      <div>Instances</div>
+      <div>Password reset</div>
     );
   }
 

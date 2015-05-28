@@ -1,10 +1,10 @@
-jest.dontMock("../admin.react");
+jest.dontMock("../dashboard.react");
 
-describe("admin.react", function() {
+describe("dashboard.react", function() {
   it("testing component", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var admin = require('../admin.react');
+    var dashboard = require('../dashboard.react');
   });
 });

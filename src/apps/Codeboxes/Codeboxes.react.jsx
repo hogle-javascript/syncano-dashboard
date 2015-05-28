@@ -1,13 +1,13 @@
 var React = require('react');
 
+
 module.exports = React.createClass({
 
-  displayName: 'Instances',
+  displayName: 'Codeoxes',
 
   render: function () {
-
     return (
-      <div>Instances</div>
+      <div>Codeoxes</div>
     );
   }
 
