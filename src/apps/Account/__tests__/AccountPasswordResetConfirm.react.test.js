@@ -1,6 +1,7 @@
 jest.dontMock('../AccountPasswordResetConfirm.react');
 jest.dontMock('../../../utils/ReactRouterContext');
-jest.dontMock('../../../utils/objectAssign');
+jest.dontMock('object-assign');
+
 
 describe('AccountPasswordResetConfirm.react', function () {
   it('testing component', function () {

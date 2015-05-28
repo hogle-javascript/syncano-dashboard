@@ -1,5 +1,5 @@
 var React        = require('react'),
-    objectAssign = require('./objectAssign');
+    objectAssign = require('object-assign');
 
 // More info
 // https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
@@ -8,7 +8,7 @@ var React        = require('react'),
 var ReactRouterContext = function ReactRouterContext(Component, props, stubs) {
   function RouterStub() {}
 
-  Object.assign(RouterStub, {
+  objectAssign(RouterStub, {
     makePath: function makePath() {},
     makeHref: function makeHref() {},
     transitionTo: function transitionTo() {},
