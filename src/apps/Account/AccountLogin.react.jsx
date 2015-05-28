@@ -1,6 +1,6 @@
 var React = require('react');
 
-require('./signup.css');
+require('./AccountSignup.css');
 
 module.exports = React.createClass({
 
