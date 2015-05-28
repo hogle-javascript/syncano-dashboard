@@ -4,7 +4,7 @@ require('./signup.css');
 
 module.exports = React.createClass({
 
-  displayName: 'LoginHandler',
+  displayName: 'AccountLogin',
 
   render: function () {
     return (

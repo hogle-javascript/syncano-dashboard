@@ -3,29 +3,38 @@ var React                       = require('react'),
     Route                       = Router.Route,
     NotFoundRoute               = Router.NotFoundRoute,
 
-    AppHandler                  = require('./pages/app.react'),
-    PanelHandler                = require('./pages/panel.react'),
-    NotFoundHandler             = require('./pages/notfound.react'),
-    LoginHandler                = require('./pages/login.react'),
-    SignupHandler               = require('./pages/signup.react'),
-    ActivateHandler             = require('./pages/activate.react'),
-    PasswordResetHandler        = require('./pages/password_reset.react'),
-    PasswordResetConfirmHandler = require('./pages/password_reset_confirm.react'),
+    // Pages
+    App                         = require('./pages/app.react'),
+    Dashboard                   = require('./pages/dashboard.react'),
+    NotFound                    = require('./pages/notfound.react'),
 
-    InstancesHandler            = require('./pages/instances.react');
+    // Account
+    AccountLogin                = require('./apps/Account/AccountLogin.react'),
+    AccountSignup               = require('./apps/Account/AccountSignup.react'),
+    AccountActivate             = require('./apps/Account/AccountActivate.react'),
+    AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
+    AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
+
+    // Instances
+    Instances                   = require('./apps/Instances/Instances.react'),
+
+    // Examples
+    Examples                    = require('./examples/Examples.react');
 
 
 module.exports = (
-  <Route name="app" handler={AppHandler} path="/">
-    <Route name="login" handler={LoginHandler}/>
-    <Route name="signup" handler={SignupHandler} />
-    <Route name="activate" handler={ActivateHandler} path="/activate/:uid-:token" />
-    <Route name="password-reset" handler={PasswordResetHandler} path="/password/reset" />
-    <Route name="password-reset-confirm" handler={PasswordResetConfirmHandler} path="/password/reset/:uid-:token" />
+  <Route name="app" handler={App} path="/">
+    <Route name="login" handler={AccountLogin}/>
+    <Route name="signup" handler={AccountSignup} />
+    <Route name="activate" handler={AccountActivate} path="/activate/:uid-:token" />
+    <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
+    <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid-:token" />
 
-    <Route name="panel" handler={PanelHandler} path="/">
-      <Route name="instance-list" handler={InstancesHandler} path="/instances" />
+    <Route name="dashboard" handler={Dashboard} path="/">
+      <Route name="instance-list" handler={Instances} path="/instances" />
     </Route>
-    <NotFoundRoute handler={NotFoundHandler} />
+
+    <Route name="examples" handler={Examples}/>
+    <NotFoundRoute handler={NotFound} />
   </Route>
 )

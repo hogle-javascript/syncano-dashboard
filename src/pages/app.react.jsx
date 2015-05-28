@@ -5,12 +5,12 @@ var React        = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'AppHandler',
+  displayName: 'App',
 
   render: function () {
     return (
       <div className="app">
-        <div>AppHandler</div>
+        <div>App</div>
         <RouteHandler/>
       </div>
     );

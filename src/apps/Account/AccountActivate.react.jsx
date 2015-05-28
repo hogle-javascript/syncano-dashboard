@@ -3,7 +3,7 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-  displayName: 'ActivateHandler',
+  displayName: 'AccountActivate',
 
   render: function() {
     // var params = this.context.router.getCurrentParams();

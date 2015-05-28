@@ -2,7 +2,7 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-  displayName: 'PasswordResetHandler',
+  displayName: 'AccountPasswordReset',
 
   render: function () {
     return (

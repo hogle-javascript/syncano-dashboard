@@ -3,7 +3,7 @@ var React = require('react');
 
 module.exports = React.createClass({
 
-  displayName: 'PasswordResetConfirm',
+  displayName: 'AccountPasswordResetConfirm',
 
   render: function() {
     // var params = this.context.router.getCurrentParams();

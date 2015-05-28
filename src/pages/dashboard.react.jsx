@@ -5,12 +5,12 @@ var React        = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'PanelHandler',
+  displayName: 'Dashboard',
 
   render: function () {
     return (
-      <div className="panel">
-        <div>PanelHandler</div>
+      <div className="dashboard">
+        <div>Dashboard</div>
         <RouteHandler/>
       </div>
     );
