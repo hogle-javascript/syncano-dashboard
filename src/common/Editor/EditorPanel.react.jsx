@@ -1,68 +1,76 @@
 var React = require('react');
 var classNames = require('classnames');
 
-//var InstanceStore = require('../stores/InstanceStore');
-//var ViewActions = require('../actions/ViewActions');
+var TextField = require('material-ui/lib/text-field');
+var Paper = require('material-ui/lib/paper');
+var FontIcon = require('material-ui/lib/font-icon');
+var LinearProgress = require('material-ui/lib/linear-progress');
 
-var ButtonGroup = require('../Button/ButtonGroup.react');
 var Icon = require('../Icon/Icon.react');
-var ProgressBar = require('../ProgressBar/ProgressBar.react');
+
+require('./Editor.css');
+
 
 module.exports = React.createClass({
 
   displayName: 'EditorPanel',
 
+  propTypes: {
+    trace: React.PropTypes.string,
+    buttons: React.PropTypes.array,
+    payload: React.PropTypes.string,
+    loading: React.PropTypes.bool,
+  },
+
   getInitialState: function () {
     return {
-      //panelCollapsed: InstanceStore.isEditorPanelCollapsed(),
-      //codeboxTrace: InstanceStore._getCodeBoxTrace(),
-      //editorLoading: InstanceStore.isEditorWaitingForResponse(),
+      trace: this.props.trace,
+      payload: this.props.payload,
+      panelCollapsed: true,
+      loading: this.props.loading || false,
     }
   },
 
-  onChange: function () {
+  handleToggleClick: function () {
     this.setState({
-      //panelCollapsed: InstanceStore.isEditorPanelCollapsed(),
-      //codeboxTrace: InstanceStore._getCodeBoxTrace(),
-      //editorLoading: InstanceStore.isEditorWaitingForResponse(),
+      panelCollapsed: !this.state.panelCollapsed,
     });
   },
 
-  componentDidMount: function () {
-    InstanceStore.addChangeListener(this.onChange);
-  },
-
-  componentWillUnmount: function () {
-    InstanceStore.removeChangeListener(this.onChange)
-  },
-
-  handleToggleClick: function () {
-    ViewActions.toggleEditorPanel();
+  getProgressBar: function () {
+    if (this.state.loading) {
+      return (<LinearProgress mode="indeterminate" />);
+    }
   },
 
   render: function () {
     var cssClasses = classNames('editor-panel', {
       'editor-panel-collapsed': this.state.panelCollapsed,
-      'editor-panel-loading': this.state.editorLoading,
     });
+    var payloadStyle = {
+        'height': '100%',
+        'display': 'flex',
+        'flex-direction': 'column',
+        'padding': '0px 10px 0px 10px',
+        'background-color': '#F1F1F1'
+    };
+
+    var progressBar = this.getProgressBar();
+
     var unfoldIcon = this.state.panelCollapsed ? "unfold-more" : "unfold-less";
     return (
-      <div className={cssClasses}>
-        <div className="editor-toolbar">
-          <input className="field-input" type="text" placeholder="Payload" ref="payload"/>
-
-          <div className="editor-toolbar-buttons">
-            <ButtonGroup buttons={this.props.buttons} handleClick={this.props.handleButtonsClick}/>
-
+      <Paper zDepth={1} style={{'background-color': '#F1F1F1'}}>
+        <Paper zDepth={1} style={payloadStyle}>
+          <TextField style={{width: '100%'}} hintText='Type in your payload here e.g. {"my_argument": "test123}' floatingLabelText="Payload" />
             <div className="editor-toolbar-unfold-button" onClick={this.handleToggleClick}>
               <Icon icon={unfoldIcon}/>
             </div>
-          </div>
-        </div>
-        <ProgressBar />
-
-        <div className="editor-console">{this.state.codeboxTrace.data.result}</div>
-      </div>
+        </Paper>
+        {progressBar}
+        <Paper rounded={false} zDepth={1} style={{'height': '100px', backgroundColor: '#4C4A43', 'color': 'white', 'padding': '10px'}}>
+          {this.state.trace}
+        </Paper>
+      </Paper>
     );
   }
 

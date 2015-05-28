@@ -70,7 +70,8 @@
       "<rootDir>/node_modules/classnames",
       "<rootDir>/src/utils/utils",
       "<rootDir>/node_modules/superagent",
-      "<rootDir>/node_modules/object-assign"
+      "<rootDir>/node_modules/object-assign",
+      "<rootDir>material-ui"
     ]
   },
   "scripts": {

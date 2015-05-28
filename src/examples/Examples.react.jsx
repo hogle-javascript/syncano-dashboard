@@ -27,7 +27,6 @@ var React                = require('react'),
 
     InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
 
-
 require('./Examples.css');
 
 module.exports = React.createClass({
@@ -38,13 +37,13 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  getChildContext: function () {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
     ThemeManager.setPalette({
       accent1Color: Colors.deepOrange500
     });
@@ -133,21 +132,21 @@ module.exports = React.createClass({
       color: '#FFC52D',
     };
 
-    var handleSnackbarClick = function() {
+    var handleSnackbarClick = function () {
       this.refs.snackbar.show()
     }.bind(this);
 
-    var handleSnackbarAction = function() {
+    var handleSnackbarAction = function () {
       window.alert("Bum!");
     };
 
     var dialogStandardActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit' }
+      {text: 'Cancel'},
+      {text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit'}
     ];
 
     var modalState = true;
-    var handleStandardDialogTouchTap = function() {
+    var handleStandardDialogTouchTap = function () {
       this.refs.standardDialog.show();
     }.bind(this);
 
@@ -169,6 +168,8 @@ module.exports = React.createClass({
         total: 4000
       }
     };
+
+    var payload = '{test: "testvalue"}';
 
     return (
 
@@ -224,7 +225,18 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Editor</h2>
-          <Editor source={source} runtime={runtime}/>
+          <Editor
+            mode="python"
+            theme="github"
+            onChange={dummyClick}
+            name="UNIQUE_ID_OF_DIV"
+            value={source}
+            />
+        </div>
+
+        <div className="exampleBox">
+          <h2>EditorPanel</h2>
+          <EditorPanel trace={source} payload={payload}/>
         </div>
 
         <div className="exampleBox">
@@ -249,7 +261,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>material-ui LinearProgress</h2>
-          <LinearProgress mode="indeterminate" />
+          <LinearProgress mode="indeterminate"/>
         </div>
 
         <div className="exampleBox">
@@ -257,18 +269,18 @@ module.exports = React.createClass({
 
           <FlatButton
             onClick={handleSnackbarClick}
-            label="Bum!" />
+            label="Bum!"/>
 
           <Snackbar
             ref="snackbar"
             message="Bum! Bum! Bum!"
             action="undo"
-            onActionTouchTap={handleSnackbarAction} />
+            onActionTouchTap={handleSnackbarAction}/>
         </div>
 
         <div className="exampleBox">
           <h2>material-ui Dialog</h2>
-          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}  />
+          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}/>
           <Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
@@ -281,12 +293,12 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>AvatarInitials</h2>
-          <AvatarInitials name="George R. R. Martin" />
+          <AvatarInitials name="George R. R. Martin"/>
         </div>
 
         <div className="exampleBox">
           <h2>ButtonSocialAuth</h2>
-          <ButtonSocialAuth icon="facebook" text="Log in with Facebook" />
+          <ButtonSocialAuth icon="facebook" text="Log in with Facebook"/>
         </div>
 
         <div className="exampleBox">
@@ -296,22 +308,22 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>ColorPicker (selected)</h2>
-          <ColorPicker selectedColor={'#EF5350'} />
+          <ColorPicker selectedColor={'#EF5350'}/>
         </div>
 
         <div className="exampleBox">
           <h2>ColorPickerItem (selected)</h2>
-          <ColorPickerItem color={'#EF5350'} selected={true} />
+          <ColorPickerItem color={'#EF5350'} selected={true}/>
         </div>
 
         <div className="exampleBox">
           <h2>ColorPickerItem</h2>
-          <ColorPickerItem color={'#EF5350'} selected={false} />
+          <ColorPickerItem color={'#EF5350'} selected={false}/>
         </div>
 
         <div className="exampleBox">
           <h2>UsageBar</h2>
-          <UsageBar billingProfile={billingProfile} />
+          <UsageBar billingProfile={billingProfile}/>
         </div>
 
       </div>
