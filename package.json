@@ -18,6 +18,7 @@
     "material-ui": "latest",
     "moment": "^2.9.0",
     "node-uuid": "^1.4.3",
+    "normalize.css": "^3.0.3",
     "object-assign": "^2.0.0",
     "react": "0.13.2",
     "react-onclickoutside": "^0.2.4",

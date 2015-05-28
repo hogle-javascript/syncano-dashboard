@@ -5,6 +5,7 @@ var React      = require('react'),
 
     container  = document.getElementById('app');
 
+require('normalize.css');
 require('./app.css');
 
 Router.run(routes, function (Handler) {
