@@ -1,4 +1,5 @@
 var React = require('react');
+var mui = require("material-ui");
 
 var ThemeManager = require('material-ui/lib/styles/theme-manager')();
 
@@ -15,7 +16,11 @@ var FabList = require('../common/Fab/FabList.react');
 
 var FieldPassword = require('../common/Field/FieldPassword.react');
 var FieldReadonly = require('../common/Field/FieldReadonly.react');
-var FieldSelect= require('../common/Field/FieldSelect.react');
+var Field = require('material-ui/lib/text-field');
+var FieldSelectMUI = require('material-ui/lib/drop-down-menu');
+var FieldDatetime = require('../common/Field/FieldDatetime.react');
+var FieldSelectOption = require('../common/Field/FieldSelectOption.react');
+var FieldSelect = require('../common/Field/FieldSelect.react');
 
 var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
 
@@ -27,6 +32,12 @@ require('./Examples.css');
 module.exports = React.createClass({
 
   displayName: 'Examples',
+
+  getInitialState: function () {
+    return {
+      errorText: null,  
+    };
+  },
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -51,6 +62,18 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
+  },
+
+  dummyDisplayError: function(e) {
+    if (e.target.value.length > 5) {
+      this.setState({
+        errorText: "(DummyError) This field is 5 chars only",
+      })
+    } else {
+      this.setState({
+        errorText: null,
+      })
+    }
   },
 
   render: function () {
@@ -127,6 +150,51 @@ module.exports = React.createClass({
       color: '#FFC52D',
     }
 
+    var fieldSelect = {
+      displayName: "Codebox",
+      name: "codebox",
+      options: [{
+        displayName: "CodeBox1",
+        name: 1,
+      }, {
+        displayName: "CodeBox2",
+        name: 2,
+      }, {
+        displayName: "CodeBox3", 
+        name: 3,
+      }],
+      type: "select",
+    }
+
+    var fieldSelectMUI = [{ 
+      payload: '1', 
+      text: 'Never', 
+    }, { 
+      payload: '2', 
+      text: 'Every Night', 
+    }, { 
+      payload: '3', 
+      text: 'Weeknights', 
+    }, { 
+      payload: '4', 
+      text: 'Weekends', 
+    }, { 
+      payload: '5', 
+      text: 'Weekly', 
+    }];
+
+    var fieldDatetime = {
+      displayName: "Date",
+      name: "date",
+      type: "datetime",
+      value: "",
+    };
+
+    var fieldSelectOption = {
+      displayName: "Option display name",
+      name: 5,
+    }
+
     return (
 
       <div className="examplesContainer">
@@ -195,8 +263,30 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldPassword</h2>
-          <FieldPassword field={passwordField}/>
+          <h2>Field (material UI)</h2>
+          <Field
+            hintText="(Hint text) Your name - 5 chars only"
+            errorText={this.state.errorText}
+            onChange={this.dummyDisplayError}
+            floatingLabelText="Your name"
+            style={{width: "100%", borderBottomColor: "0091EA"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldDatetime</h2>
+          <FieldDatetime 
+            dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
+            labelText="Date"
+            iconColor="red"
+            fieldStyle={{width: "100%"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldPassword (Material UI)</h2>
+          <mui.TextField
+            name="password"
+            type="password"
+            floatingLabelText="Password" />
         </div>
 
         <div className="exampleBox">
@@ -205,9 +295,44 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
+          <h2>FieldReadonly (material UI)</h2>
+          <Field
+            defaultValue="Your name - 5 chars only"
+            disabled={true}
+            style={{width: "100%"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelect</h2>
+          <FieldSelect field={fieldSelect}
+             />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelect (Drop Down from material UI)</h2>
+          <FieldSelectMUI 
+            menuItems={fieldSelectMUI} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelectOption</h2>
+          <FieldSelectOption 
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+            <FieldSelectOption 
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+            <FieldSelectOption 
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+        </div>
+
+        <div className="exampleBox">
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
         </div>
+
+        
 
 
       </div>

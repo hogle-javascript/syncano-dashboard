@@ -59,7 +59,8 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/superagent",
-      "<rootDir>/node_modules/object-assign"
+      "<rootDir>/node_modules/object-assign",
+      "<rootDir>/node_modules/classnames"
     ]
   },
   "scripts": {

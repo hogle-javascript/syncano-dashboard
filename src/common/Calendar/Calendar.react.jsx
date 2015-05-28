@@ -52,8 +52,7 @@ module.exports = React.createClass({
             this.setState({
               displayedHours: value,
             });
-          }
-          ;
+          };
         }
         break;
 
@@ -73,10 +72,8 @@ module.exports = React.createClass({
             this.setState({displayedSeconds: 59});
           } else {
             this.setState({displayedSeconds: value});
-          }
-          ;
-        }
-        ;
+          };
+        };
         break;
 
       case "timezone":
@@ -93,58 +90,57 @@ module.exports = React.createClass({
             this.setState({
               displayedTimezone: value,
             });
-          }
-          ;
-        }
-        ;
+          };
+        };
         break;
-    }
-    ;
+    };
   },
 
-  //getDaysOfMonth: function () {
-  //  var date = new Date();
-  //  var dayOfWeek = new Date([this.state.displayedYear, this.state.displayedMonth, 1].join("-").toString()).getDay();
-  //  var prevMonth = [];
-  //  var days = [];
-  //
-  //  this.setState({
-  //      previousMonthDaysCount: new Date(this.state.displayedYear, this.state.displayedMonth - 1, 0).getDate(),
-  //  }, function () {
-  //    for (var i = 0; i < this.state.previousMonthDaysCount; i++) {
-  //      prevMonth.push(i + 1);
-  //    }
-  //    ;
-  //    for (var i = (prevMonth.length - dayOfWeek); i < prevMonth.length; i++) {
-  //      days.push(<div onClick={this.handleClickDay.bind(this, "previous")}
-  //                     className="calendar-day-other">{prevMonth[i]}</div>);
-  //    }
-  //    ;
-  //  });
-  //  this.setState({
-  //    currentMonthDaysCount: new Date(this.state.displayedYear, this.state.displayedMonth, 0).getDate(),
-  //  }, function () {
-  //    for (var i = 1; i <= this.state.currentMonthDaysCount; i++) {
-  //      days.push(<div onClick={this.handleClickDay.bind(this, "current")} className="calendar-day">{i}</div>);
-  //    }
-  //    ;
-  //    for (var i = 1; i <= 42 - (dayOfWeek + this.state.currentMonthDaysCount); i++) {
-  //      days.push(<div onClick={this.handleClickDay.bind(this, "next")} className="calendar-day-other">{i}</div>)
-  //    }
-  //    ;
-  //    this.setState({
-  //      displayedDays: days.map(function (day, i) {
-  //        return {day}
-  //      }),
-  //    });
-  //  });
-  //},
+  getDaysOfMonth: function () {
+   var date = new Date();
+   var dayOfWeek = new Date([this.state.displayedYear, this.state.displayedMonth, 1].join("-").toString()).getDay();
+   var prevMonth = [];
+   var days = [];
+  
+   this.setState({
+       previousMonthDaysCount: new Date(this.state.displayedYear, this.state.displayedMonth - 1, 0).getDate(),
+   }, function () {
+     for (var i = 0; i < this.state.previousMonthDaysCount; i++) {
+       prevMonth.push(i + 1);
+     };
+     for (var i = (prevMonth.length - dayOfWeek); i < prevMonth.length; i++) {
+       days.push(<div 
+                   onClick={this.handleClickDay.bind(this, "previous")}
+                   className="calendar-day-other">{prevMonth[i]}
+                 </div>);
+     };
+   });
+   this.setState({
+     currentMonthDaysCount: new Date(this.state.displayedYear, this.state.displayedMonth, 0).getDate(),
+   }, function () {
+     for (var i = 1; i <= this.state.currentMonthDaysCount; i++) {
+       days.push(<div 
+                   onClick={this.handleClickDay.bind(this, "current")} 
+                   className="calendar-day">{i}
+                 </div>);
+     };
+     for (var i = 1; i <= 42 - (dayOfWeek + this.state.currentMonthDaysCount); i++) {
+       days.push(<div onClick={this.handleClickDay.bind(this, "next")} className="calendar-day-other">{i}</div>)
+     };
+     this.setState({
+       displayedDays: days.map(function (day, i) {
+         return {day}
+       }),
+     });
+   });
+  },
 
   handleClickDay: function (dayOfMonth, event) {
     var hourGMT = parseInt(this.refs.hours.getDOMNode().value) - parseInt(this.refs.timezone.getDOMNode().value);
     var dayGMT = parseInt(event.target.innerHTML);
     var monthGMT = parseInt(this.state.displayedMonth);
     var yearGMT = parseInt(this.state.displayedYear);
+    var result;
     if (hourGMT > 23) {
       hourGMT = "00";
       if (dayGMT == this.state.currentMonthDaysCount) {
@@ -155,12 +151,10 @@ module.exports = React.createClass({
           yearGMT++;
         } else {
           monthGMT++;
-        }
-        ;
+        };
       } else {
         dayGMT++;
-      }
-      ;
+      };
     } else if (hourGMT < 0) {
       hourGMT = "23";
       if (dayGMT == 1) {
@@ -171,14 +165,11 @@ module.exports = React.createClass({
           yearGMT--;
         } else {
           monthGMT--;
-        }
-        ;
+        };
       } else {
         dayGMT--;
-      }
-      ;
-    }
-    ;
+      };
+    };
 
     switch (dayOfMonth) {
       case "previous":
@@ -188,17 +179,18 @@ module.exports = React.createClass({
         } else {
           monthGMT--;
         }
-        this.props.inputField.getDOMNode().innerHTML = yearGMT + "-" +
+        result = yearGMT + "-" +
           monthGMT + "-" + dayGMT + "T" +
           hourGMT + ":" + this.state.displayedMinutes + ":" +
           this.state.displayedSeconds + ".000000Z";
         break;
 
       case "current":
-        this.props.inputField.getDOMNode().innerHTML = yearGMT + "-" +
+        result = yearGMT + "-" +
           monthGMT + "-" + dayGMT + "T" +
           hourGMT + ":" + this.state.displayedMinutes + ":" +
           this.state.displayedSeconds + ".000000Z";
+          console.log(this.props.inputField);
         break;
 
       case "next":
@@ -208,13 +200,13 @@ module.exports = React.createClass({
         } else {
           monthGMT++;
         }
-        this.props.inputField.getDOMNode().innerHTML = yearGMT + "-" +
+        result = yearGMT + "-" +
           monthGMT + "-" + dayGMT + "T" +
           hourGMT + ":" + this.state.displayedMinutes + ":" +
           this.state.displayedSeconds + ".000000Z";
         break;
-    }
-    ;
+    };
+    this.props.inputField.setValue(result);
   },
 
   handlePreviousMonthClick: function () {
@@ -231,8 +223,7 @@ module.exports = React.createClass({
       }, function () {
         this.getDaysOfMonth();
       });
-    }
-    ;
+    };
   },
 
   handleNextMonthClick: function () {
@@ -249,8 +240,7 @@ module.exports = React.createClass({
       }, function () {
         this.getDaysOfMonth();
       });
-    }
-    ;
+    };
   },
 
   increaseHMS: function (fieldName) {
@@ -262,8 +252,7 @@ module.exports = React.createClass({
       } else {
         this.refs.hours.getDOMNode().value = parseInt(this.refs.hours.getDOMNode().value) + 1;
       }
-    }
-    ;
+    };
     if (fieldName === "minutes") {
       if (this.refs.minutes.getDOMNode().value == 59) {
         this.refs.minutes.getDOMNode().value = "00"
@@ -272,8 +261,7 @@ module.exports = React.createClass({
       } else {
         this.refs.minutes.getDOMNode().value = parseInt(this.refs.minutes.getDOMNode().value) + 1;
       }
-    }
-    ;
+    };
     if (fieldName === "seconds") {
       if (this.refs.seconds.getDOMNode().value == 59) {
         this.refs.seconds.getDOMNode().value = "00"
@@ -282,16 +270,14 @@ module.exports = React.createClass({
       } else {
         this.refs.seconds.getDOMNode().value = parseInt(this.refs.seconds.getDOMNode().value) + 1;
       }
-    }
-    ;
+    };
     if (fieldName === "timezone") {
       if (this.refs.timezone.getDOMNode().value == 12) {
         this.refs.timezone.getDOMNode().value = "-11"
       } else {
         this.refs.timezone.getDOMNode().value = parseInt(this.refs.timezone.getDOMNode().value) + 1;
       }
-    }
-    ;
+    };
   },
 
   decreaseHMS: function (fieldName) {
@@ -303,8 +289,7 @@ module.exports = React.createClass({
       } else {
         this.refs.hours.getDOMNode().value = parseInt(this.refs.hours.getDOMNode().value) - 1;
       }
-    }
-    ;
+    };
     if (fieldName === "minutes") {
       if (this.refs.minutes.getDOMNode().value == 0) {
         this.refs.minutes.getDOMNode().value = "59"
@@ -313,8 +298,7 @@ module.exports = React.createClass({
       } else {
         this.refs.minutes.getDOMNode().value = parseInt(this.refs.minutes.getDOMNode().value) - 1;
       }
-    }
-    ;
+    };
     if (fieldName === "seconds") {
       if (this.refs.seconds.getDOMNode().value == 0) {
         this.refs.seconds.getDOMNode().value = "59"
@@ -323,18 +307,15 @@ module.exports = React.createClass({
       } else {
         this.refs.seconds.getDOMNode().value = parseInt(this.refs.seconds.getDOMNode().value) - 1;
       }
-    }
-    ;
+    };
     if (fieldName === "timezone") {
       if (this.refs.timezone.getDOMNode().value == -11) {
         this.refs.timezone.getDOMNode().value = "12"
       } else {
         this.refs.timezone.getDOMNode().value = parseInt(this.refs.timezone.getDOMNode().value) - 1;
       }
-    }
-    ;
+    };
   },
-  //
   render: function () {
     var iconStyle = {fill: "#FAFAFA", width: "16px", height: "16px"};
     var hoursIconStyle = {fill: "#FAFAFA", width: "16px", height: "16px"};
