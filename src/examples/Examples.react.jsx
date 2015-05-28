@@ -1,6 +1,7 @@
 var React                = require('react'),
     mui                  = require('material-ui'),
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
+    Colors               = require('material-ui/lib/styles/colors')
     LinearProgress       = require('material-ui/lib/linear-progress'),
     Dialog               = require('material-ui/lib/dialog'),
     Snackbar             = require('material-ui/lib/snackbar'),
@@ -55,14 +56,21 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     ThemeManager.setPalette({
-      accent1Color: Colors.deepOrange500
+      primary1Color: Colors.blueA700,
+      primary2Color: Colors.lightBlueA700,
+      primary3Color: Colors.cyanA700,
+      accent1Color: Colors.pink500,
+      // accent1Color: Colors.pinkA200,
+      // accent2Color: Colors.pinkA400,
+      // accent3Color: Colors.pinkA100,
+      // textColor: Colors.darkBlack,
+      // canvasColor: Colors.white,
+      // borderColor: Colors.grey300,
+      // disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
     });
   },
 
   getDefaultProps: function () {
-  },
-
-  componentWillMount: function () {
   },
 
   componentDidMount: function () {
