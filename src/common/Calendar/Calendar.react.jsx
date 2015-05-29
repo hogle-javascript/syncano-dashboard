@@ -190,7 +190,6 @@ module.exports = React.createClass({
           monthGMT + "-" + dayGMT + "T" +
           hourGMT + ":" + this.state.displayedMinutes + ":" +
           this.state.displayedSeconds + ".000000Z";
-          console.log(this.props.inputField);
         break;
 
       case "next":
