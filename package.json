@@ -24,6 +24,7 @@
     "react-onclickoutside": "^0.2.4",
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
+    "react-tap-event-plugin": "^0.1.7",
     "superagent": "^0.21.0"
   },
   "devDependencies": {

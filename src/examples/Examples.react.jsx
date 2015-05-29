@@ -25,7 +25,8 @@ var React                = require('react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
 
-    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
+    InstancesListItem    = require('../apps/Instances/InstancesListItem.react'),
+    MaterialIcon         = require('../common/Icon/MaterialIcon.react');
 
 
 require('./Examples.css');
@@ -312,6 +313,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>UsageBar</h2>
           <UsageBar billingProfile={billingProfile} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>MaterialIcon - from google font</h2>
+          <MaterialIcon name="favorite" />
         </div>
 
       </div>

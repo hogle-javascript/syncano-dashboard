@@ -1,6 +1,8 @@
 var React        = require('react'),
     Router       = require('react-router'),
-    RouteHandler = Router.RouteHandler;
+    RouteHandler = Router.RouteHandler,
+
+    Header       = require('../apps/Header/Header.react');
 
 
 module.exports = React.createClass({
@@ -9,9 +11,9 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div className="dashboard">
-        <div>Dashboard</div>
-        <RouteHandler/>
+      <div>
+        <Header />
+        <RouteHandler />
       </div>
     );
   }
