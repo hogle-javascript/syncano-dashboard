@@ -6,6 +6,10 @@ module.exports = React.createClass({
 
   displayName: 'FieldSelectOption',
 
+  propTypes: {
+    option: React.PropTypes.object,
+  },
+
   handleClick: function() {
     this.props.handleClick(this.props.option.name);
   },
