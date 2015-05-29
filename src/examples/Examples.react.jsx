@@ -30,7 +30,8 @@ var React                = require('react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
 
-    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
+    InstancesListItem    = require('../apps/Instances/InstancesListItem.react'),
+    MaterialIcon         = require('../common/Icon/MaterialIcon.react');
 
 require('./Examples.css');
 
@@ -40,7 +41,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      errorText: null,  
+      errorText: null,
     };
   },
 
@@ -209,27 +210,27 @@ module.exports = React.createClass({
         displayName: "CodeBox2",
         name: 2,
       }, {
-        displayName: "CodeBox3", 
+        displayName: "CodeBox3",
         name: 3,
       }],
       type: "select",
     }
 
-    var fieldSelectMUI = [{ 
-      payload: '1', 
-      text: 'Never', 
-    }, { 
-      payload: '2', 
-      text: 'Every Night', 
-    }, { 
-      payload: '3', 
-      text: 'Weeknights', 
-    }, { 
-      payload: '4', 
-      text: 'Weekends', 
-    }, { 
-      payload: '5', 
-      text: 'Weekly', 
+    var fieldSelectMUI = [{
+      payload: '1',
+      text: 'Never',
+    }, {
+      payload: '2',
+      text: 'Every Night',
+    }, {
+      payload: '3',
+      text: 'Weeknights',
+    }, {
+      payload: '4',
+      text: 'Weekends',
+    }, {
+      payload: '5',
+      text: 'Weekly',
     }];
 
     var fieldDatetime = {
@@ -323,7 +324,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldDatetime</h2>
-          <FieldDatetime 
+          <FieldDatetime
             dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
             labelText="Date"
             iconColor="red"
@@ -359,19 +360,19 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldSelect (Drop Down from material UI)</h2>
-          <FieldSelectMUI 
+          <FieldSelectMUI
             menuItems={fieldSelectMUI} />
         </div>
 
         <div className="exampleBox">
           <h2>FieldSelectOption</h2>
-          <FieldSelectOption 
+          <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
-            <FieldSelectOption 
+            <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
-            <FieldSelectOption 
+            <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
         </div>
@@ -442,6 +443,12 @@ module.exports = React.createClass({
           <h2>UsageBar</h2>
           <UsageBar billingProfile={billingProfile} />
         </div>
+
+        <div className="exampleBox">
+          <h2>MaterialIcon - from google font</h2>
+          <MaterialIcon name="favorite" />
+        </div>
+
       </div>
     );
   }
