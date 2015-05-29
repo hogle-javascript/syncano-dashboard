@@ -1,4 +1,5 @@
 var React                = require('react'),
+    mui                  = require('material-ui'),
 
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
     LinearProgress       = require('material-ui/lib/linear-progress'),
@@ -21,40 +22,18 @@ var React                = require('react'),
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
     FieldSelect          = require('../common/Field/FieldSelect.react'),
+    SwitchField          = require('../common/SwitchField/SwitchField.react'),
+    SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
+    SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
 
     InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
 
-<<<<<<< HEAD
-var ThemeManager = require('material-ui/lib/styles/theme-manager')();
-
-var LinearProgress = require('material-ui/lib/linear-progress');
-
-var Dropdown = require('../common/Dropdown/Dropdown.react');
-var Icon = require('../common/Icon/Icon.react');
-var ProgressBar = require('../common/ProgressBar/ProgressBar.react');
-var Label = require('../common/Label/Label.react');
-var ListItemEmpty = require('../common/Lists/ListItemEmpty.react');
-var Editor = require('../common/Editor/Editor.react');
-var Fab = require('../common/Fab/Fab.react');
-var FabList = require('../common/Fab/FabList.react');
-
-var FieldPassword = require('../common/Field/FieldPassword.react');
-var FieldReadonly = require('../common/Field/FieldReadonly.react');
-var FieldSelect = require('../common/Field/FieldSelect.react');
-
-var SwitchField = require('../common/SwitchField/SwitchField.react');
-var SwitchFieldList = require('../common/SwitchField/SwitchFieldList.react');
-var SwitchInput = require('../common/SwitchField/SwitchInput.react');
-
-var InstancesListItem = require('../apps/Instances/InstancesListItem.react');
-
 
 //var FlatButton = require('material-ui').FlatButton;
-=======
->>>>>>> f41f6b2246635e3a5e85b9669c17d5d205d5dc9d
+
 
 require('./Examples.css');
 
@@ -307,10 +286,9 @@ module.exports = React.createClass({
           <SwitchField 
             handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
             handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
-            field={switchFields[0]} 
             name="react skills" 
             heading="React skills" 
-            enabled={true} 
+            toggled={true} 
             textEnabled="Dummy text enabled" 
             textDisabled="dummy text disabled" />
         </div>
@@ -321,6 +299,15 @@ module.exports = React.createClass({
             handleClick={dummyClick.bind(this, "handleClick")} 
             enabled={true} />
         </div>
+
+        <div className="exampleBox">
+          <h2>Toggle (Material UI)</h2>
+          <mui.Toggle
+            name="ToggleButton"
+            value="ValueToggle"
+            label="tempomat"
+            onToggle={dummyClick.bind(this, "Mui Toggle")} /> 
+          </div>
 
         <div className="exampleBox">
           <h2>material-ui - Snackbar</h2>

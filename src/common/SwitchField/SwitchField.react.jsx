@@ -1,7 +1,8 @@
-var React       = require('react');
-var classNames  = require('classnames');
+var React        = require('react');
+var classNames   = require('classnames');
 
-var SwitchInput = require('./SwitchInput.react');
+//var SwitchInput = require('./SwitchInput.react');
+var Toggle      = require('material-ui/lib/toggle');
 
 require('./SwitchField.css');
 
@@ -12,30 +13,53 @@ module.exports = React.createClass({
   propTypes: {
     handleFieldLinkClick: React.PropTypes.func.isRequired,
     handleSwitchClick: React.PropTypes.func.isRequired,
-    enabled: React.PropTypes.bool.isRequired,
+    toggled: React.PropTypes.bool.isRequired,
     textEnabled: React.PropTypes.string.isRequired,
     textDisabled: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     heading: React.PropTypes.string.isRequired,
   },
 
+  getInitialState: function () {
+    return {
+      toggled: this.props.toggled,      
+    };
+  },
+
   handleFieldLinkClick: function() {
     this.props.handleFieldLinkClick()
   },
 
+  handleSwitchClick: function() {
+    this.props.handleSwitchClick();
+    this.setState({
+      toggled: !this.state.toggled,
+    })
+  },
+
+  getText: function() {
+    var textEnabled = <div>{this.props.textEnabled} 
+                        <span 
+                          ref="changeLink"
+                          className="action-link" 
+                          onClick={this.handleFieldLinkClick}>{' Change ' + this.props.name + "."}
+                        </span>
+                      </div>;
+    var text = this.state.toggled ? textEnabled : this.props.textDisabled;
+    return text;
+  },
+
   render: function() {
-    var textEnabled = <div>{this.props.textEnabled} <span className="action-link" onClick={this.handleFieldLinkClick}>{'Change ' + this.props.name}</span>.</div>;
-    var text = this.props.enabled ? textEnabled : this.props.textDisabled;
     return (
       <div className="switch-field">
         <div className="switch-field-text">
           <div className="switch-field-heading">{this.props.heading}</div>
-          <div className="switch-field-description">{text}</div>
+          <div className="switch-field-description">{this.getText()}</div>
         </div>
         <div className="switch-field-input">
-          <SwitchInput 
-            handleClick={this.props.handleSwitchClick}
-            enabled={this.props.enabled} 
+          <Toggle 
+            onToggle={this.handleSwitchClick}
+            defaultToggled={this.props.toggled} 
             name={this.props.name}
              />
         </div>
