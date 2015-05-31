@@ -31,20 +31,27 @@ module.exports = React.createClass({
     AuthStore.unlisten(this.onChange);
   },
 
+  componentWillUpdate: function (nextProps, nextState) {
+    // I don't know if it's good place for this but it works
+    if (nextState.isLoading === false && nextState.token !== null) {
+      var router = this.context.router;
+          next   = router.getCurrentQuery().next || '/instances';
+
+      router.replaceWith(next);
+    }
+
+  },
+
   onChange: function (state) {
     this.setState(state);
   },
 
   handleSubmit: function (event) {
     event.preventDefault();
-    var router = this.context.router;
-        next   = router.getCurrentQuery().next || '/instances';
 
     AuthActions.passwordSignIn({
       email: this.state.email,
       password: this.state.password,
-      next: router.replaceWith,
-      nextPath: next
     });
   },
 

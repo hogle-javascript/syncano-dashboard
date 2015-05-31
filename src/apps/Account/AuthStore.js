@@ -3,7 +3,7 @@ var alt         = require('../../alt'),
 
 
 function AuthStore() {
-  this.token         = null;
+  this.token         = sessionStorage.token || null;
   this.user          = null;
   this.error         = null;
   this.email         = null;
@@ -31,34 +31,41 @@ AuthStore.prototype.handlePasswordSignIn = function (payload) {
 };
 
 AuthStore.prototype.handlePasswordSignInSucceeded = function (payload) {
-  this.token         = payload.payload.account_key;
-  this.user          = payload;
-  this.error         = null;
-  this.email         = null;
-  this.emailError    = null;
-  this.password      = null;
-  this.passwordError = null;
-  this.isLoading     = false;
-  console.log('handlePasswordSignInSucceeded', payload);
+  this.token           = payload.account_key;
+  this.user            = payload;
+  this.error           = null;
+  this.email           = null;
+  this.emailError      = null;
+  this.password        = null;
+  this.passwordError   = null;
+  this.isLoading       = false;
+
+  sessionStorage.token = payload.account_key;
 };
 
 AuthStore.prototype.handlePasswordSignInFailed = function (payload) {
-  this.isLoading = false;
-  console.log('handlePasswordSignInFailed', payload);
+  this.token           = null;
+  this.user            = null;
+  this.error           = null;
+  this.email           = null;
+  this.emailError      = null;
+  this.password        = null;
+  this.passwordError   = null;
+  this.isLoading       = false;
+
+  sessionStorage.token = null;
 };
 
 AuthStore.prototype.handleLogout = function () {
-  this.token         = null;
-  this.user          = null;
-  this.error         = null;
-  this.email         = null;
-  this.emailError    = null;
-  this.password      = null;
-  this.passwordError = null;
-};
+  this.token           = null;
+  this.user            = null;
+  this.error           = null;
+  this.email           = null;
+  this.emailError      = null;
+  this.password        = null;
+  this.passwordError   = null;
 
-AuthStore.prototype.isAuthenticated = function () {
-  return !!this.token;
+  sessionStorage.token = null;
 };
 
 module.exports = alt.createStore(AuthStore);
