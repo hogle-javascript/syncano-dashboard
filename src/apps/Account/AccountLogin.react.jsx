@@ -1,7 +1,11 @@
 var React        = require('react'),
+    Router       = require('react-router'),
+    Link         = Router.Link,
     mui          = require('material-ui'),
     TextField    = mui.TextField,
-    RaisedButton = mui.RaisedButton;
+    RaisedButton = mui.RaisedButton,
+    AuthActions  = require('./AuthActions'),
+    AuthStore    = require('./AuthStore');
 
 
 require('./AccountSignup.css');
@@ -11,25 +15,37 @@ module.exports = React.createClass({
 
   displayName: 'AccountLogin',
   mixins: [React.addons.LinkedStateMixin],
-
-  componentDidMount: function() {
-    this.refs.email.getDOMNode().focus();
+  contextTypes: {
+    router: React.PropTypes.func
   },
 
   getInitialState: function() {
-    return {
-      error: null,
-      email: null,
-      emailError: null,
-      password: null,
-      passwordError: null,
-    };
+    return AuthStore.getState();
+  },
+
+  componentDidMount: function () {
+    AuthStore.listen(this.onChange);
+  },
+
+  componentWillUnmount: function () {
+    AuthStore.unlisten(this.onChange);
+  },
+
+  onChange: function (state) {
+    this.setState(state);
   },
 
   handleSubmit: function (event) {
     event.preventDefault();
     var router = this.context.router;
-        next   = router.getCurrentQuery().next;
+        next   = router.getCurrentQuery().next || '/instances';
+
+    AuthActions.passwordSignIn({
+      email: this.state.email,
+      password: this.state.password,
+      next: router.replaceWith,
+      nextPath: next
+    });
   },
 
   render: function() {
@@ -65,15 +81,19 @@ module.exports = React.createClass({
               autoComplete="password"
               hintText="Password" />
             <RaisedButton
+              disabled={this.state.isLoading}
               type="submit"
               label="Sign in"
-              style={{width: '100%'}}
+              style={{
+                width: '100%',
+                marginTop: '1em'
+              }}
               primary={true} />
           </form>
           <div className="login-options-group">
           </div>
           <div className="login-disclaimer">
-            <p>Don't have an account? <a href="#signup">Sign up here</a>.</p>
+            <p>Don't have an account? <Link to="signup">Sign up here</Link>.</p>
           </div>
         </div>
       </div>
