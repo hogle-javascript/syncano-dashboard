@@ -22,12 +22,12 @@ gulp.task('clean', function(cb) {
   del(['./dist/**/*', paths.dist], cb);
 });
 
-gulp.task('copy-index', function() {
+gulp.task('copy-index', ['clean'], function() {
     return gulp.src(paths.index)
     .pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('copy-images', function() {
+gulp.task('copy-images', ['clean'], function() {
     return gulp.src(paths.images)
     .pipe(gulp.dest('dist/img'));
 });
@@ -77,7 +77,7 @@ gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
 });
 
 
-gulp.task('revision', ['webpack:build'], function(){
+gulp.task('revision', ['clean', 'webpack:build'], function(){
   return gulp.src('./dist/**/*.js')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
@@ -85,7 +85,7 @@ gulp.task('revision', ['webpack:build'], function(){
     .pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('revreplace', ['webpack:build', 'revision'], function(){
+gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
   var manifest = gulp.src('./' + paths.dist + '/rev-manifest.json');
 
   return gulp.src(paths.index)
@@ -93,7 +93,7 @@ gulp.task('revreplace', ['webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['build'], function() {
+gulp.task('publish', ['clean', 'build'], function() {
 
   var publisher = awspublish.create({
     params: {
