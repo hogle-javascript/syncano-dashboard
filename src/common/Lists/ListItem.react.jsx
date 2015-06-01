@@ -25,8 +25,8 @@ module.exports = React.createClass({
     var color = '#e2e2e2';
     var icon = '';
     if (this.props.item.metadata) {
-      color = item.metadata.color;
-      icon = item.metadata.icon;
+      color = this.props.item.metadata.color;
+      icon = this.props.item.metadata.icon;
     }
 
     return {

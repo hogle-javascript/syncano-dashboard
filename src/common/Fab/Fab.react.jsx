@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
   propTypes: {
     button: React.PropTypes.object,
-    handleFABClick: React.PropTypes.func.isRequired,
+    handleClick: React.PropTypes.func.isRequired,
   },
 
   getDefaultProps: function() {
@@ -27,7 +27,7 @@ module.exports = React.createClass({
   },
 
   handleClick: function() {
-    this.props.handleFABClick(this.props.button.name);
+    this.props.handleClick(this.props.button.name);
   },
 
   render: function() {
@@ -39,8 +39,8 @@ module.exports = React.createClass({
       backgroundColor: this.props.button.color
     };
     return (
-      <div className={cssClasses} style={style} onClick={this.handleClick}>
-        <Icon icon={this.props.button.icon} />
+      <div className={cssClasses} style={style}>
+        <Icon icon={this.props.button.icon} handleClick={this.handleClick} />
       </div>
     );
   }

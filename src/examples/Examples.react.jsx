@@ -305,12 +305,12 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Fab</h2>
-          <Fab />
+          <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
           <h2>FabList</h2>
-          <FabList buttons={fabButtons} handleFABClick={dummyClick}/>
+          <FabList buttons={fabButtons} handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
