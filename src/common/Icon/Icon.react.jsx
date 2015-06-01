@@ -10,6 +10,7 @@ module.exports = React.createClass({
     icon: React.PropTypes.oneOf(IconStore.getAllIcons()),
     glowing: React.PropTypes.bool,
     style: React.PropTypes.object,
+    handleClick: React.PropTypes.func,
   },
 
   getInitialState: function () {
@@ -31,6 +32,10 @@ module.exports = React.createClass({
     }
   },
 
+  handleClick: function() {
+    this.props.handleClick();
+  },
+
   render: function () {
 
     if (this.props.glowing) {
@@ -39,10 +44,10 @@ module.exports = React.createClass({
 
     if (this.props.icon) {
       var svg = require('./svg/' + this.props.icon);
-      return <i dangerouslySetInnerHTML={{__html: svg}} style={this.state.style} className={klass}></i>;
+      return <i onClick={this.handleClick} dangerouslySetInnerHTML={{__html: svg}} style={this.state.style} className={klass}></i>;
 
     } else {
-      return <i style={this.state.style} className={klass}></i>;
+      return <i onClick={this.handleClick} style={this.state.style} className={klass}></i>;
     }
   }
 });

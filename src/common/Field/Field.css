@@ -92,7 +92,7 @@
   padding: 0.5em 0;
   z-index: 99999;
   max-height: 240px;
-  overflow: scroll;
+  overflow: auto;
   display: none;
 }
 
