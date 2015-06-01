@@ -1,14 +1,11 @@
 var React = require('react'),
-  Paper = require('material-ui/lib/paper');
+
+    Paper = require('material-ui/lib/paper');
 
 
 module.exports = React.createClass({
 
   displayName: 'Item',
-
-  //propTypes: {
-  //  item: React.PropTypes.object.isRequired,
-  //},
 
   render: function () {
 
@@ -17,7 +14,6 @@ module.exports = React.createClass({
       display: 'flex',
       marginBottom: '0px',
       justifyContent: 'center',
-
     };
 
     return (
@@ -25,7 +21,5 @@ module.exports = React.createClass({
         {this.props.children}
       </Paper>
     )
-
-
   }
 });

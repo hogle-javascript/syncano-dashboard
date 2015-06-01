@@ -1,7 +1,6 @@
-var React = require('react');
+var React         = require('react'),
 
-//HeaderColumn = require('./ColumnListHeaderColumn.react'),
-  MaterialIcon = require('../Icon/MaterialIcon.react');
+    MaterialIcon  = require('../Icon/MaterialIcon.react');
 
 require('./List.css');
 
@@ -19,20 +18,19 @@ module.exports = React.createClass({
 
     var headerStyle = {
       root: {
-        'display': 'flex',
-        'justify-content': 'flex-end',
-        'margin-bottom': '5px',
-        'font-size': '16px',
-        'line-height': '35px',
-        'color': '#929292',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginBottom: '5px',
+        fontSize: '16px',
+        lineHeight: '35px',
+        color: '#929292',
       }
     };
 
     var columns = this.props.columns.map(function (column) {
-        return <div style={column.style} className={"col s" + column.space}>{column.name}</div>
-      }
+        return <div key={this.props.columns.indexOf(column)} style={column.style} className={"col s" + column.space}>{column.name}</div>
+      }.bind(this)
     );
-
 
     if (this.props.checkedItemsNumber > 0) {
       return (
@@ -43,7 +41,6 @@ module.exports = React.createClass({
           </div>
         </div>
       )
-
     }
 
     return (

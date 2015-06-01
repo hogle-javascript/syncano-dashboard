@@ -1,8 +1,7 @@
-var React = require('react'),
-  Moment = require('moment'),
-  classNames = require('classnames'),
-
-  Paper = require('material-ui/lib/paper');
+var React       = require('react'),
+    Moment      = require('moment'),
+    classNames  = require('classnames'),
+    Paper       = require('material-ui/lib/paper');
 
 
 module.exports = React.createClass({
