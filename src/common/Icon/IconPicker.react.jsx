@@ -43,13 +43,7 @@ module.exports = React.createClass({
     }
   },
 
-  getSelectedIcon: function() {
-    console.log(this.state.selectedIcon);
-    return this.state.selectedIcon;
-  },
-
   render: function() {
-    
     return (
       <div className="icon-picker">
         {this.getIcons()}

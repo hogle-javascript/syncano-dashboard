@@ -2,7 +2,7 @@ jest.dontMock("../Icon.react");
 
 describe("Icon", function () {
   beforeEach(function() {
-  	React     = require("react/addons");
+    React     = require("react/addons");
     TestUtils = React.addons.TestUtils;
     Icon      = require("../Icon.react");
 
@@ -29,7 +29,7 @@ describe("Icon", function () {
 
   it("tests Icon component initial 'style' state and if style", function() {
 
-  	// Render component with default props only and test its initial state
+    // Render component with default props only and test its initial state
     var component = TestUtils.renderIntoDocument(<Icon />);
     expect(component.state.style.width).toBe("20px");
     expect(component.state.style.height).toBe("20px");
@@ -46,16 +46,22 @@ describe("Icon", function () {
     expect(component.state.style.fill).toBe("#0091EA");
 
     // Check if passed 'style' props was applied to node
-    var component = TestUtils.renderIntoDocument(<Icon style={{fill: "#0091EA"}}/>);
+    var component = TestUtils.renderIntoDocument(<Icon style={{fill: "#0091EA", width: "30px", heigth: "30px"}}/>);
     var node = React.findDOMNode(component);
-    expect(node.style.width).toBe("20px");
-    expect(node.style.height).toBe("20px");
+    expect(node.style.width).toBe("30px");
+    expect(node.style.height).toBe("30px");
     expect(node.style.fill).toBe("#0091EA");
   });
 
   it("tests handleClick method", function() {
+    // Simulate onClick event and check if handleClick() method was not called - undefined props
+    var component = TestUtils.renderIntoDocument(<Icon />);
+    var node = React.findDOMNode(component);
+    TestUtils.Simulate.click(node);
+    expect(dummyClick).not.toBeCalled();
+    expect(dummyClick.mock.calls.length).toBe(0);
 
-  	// Simulate onClick event and check if handleClick() method was called
+    // Simulate onClick event and check if handleClick() method was called
     var component = TestUtils.renderIntoDocument(<Icon handleClick={dummyClick} />);
     var node = React.findDOMNode(component);
     TestUtils.Simulate.click(node);
