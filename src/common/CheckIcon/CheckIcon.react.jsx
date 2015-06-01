@@ -8,6 +8,7 @@ module.exports = React.createClass({
   displayName: 'CheckIcon',
 
   propTypes: {
+    id: React.PropTypes.string,
     icon: React.PropTypes.string,
     handleClick: React.PropTypes.func,
   },
@@ -17,15 +18,14 @@ module.exports = React.createClass({
       'hovered': false,
       'checked': false,
       'background': this.props.background,
-      'checkingState': this.props.checkingState || false,
     }
   },
 
-  handleClick: function () {
-    this.props.handleClick();
-  },
-
   onCheck: function () {
+    if (this.props.handleClick) {
+      this.props.handleClick(this.props.id, !this.state.checked);
+    }
+
     this.setState({
       checked: !this.state.checked,
     });
@@ -44,16 +44,19 @@ module.exports = React.createClass({
 
   getIconState: function () {
 
-    var GREY = 'rgba(0,0,0,0.3)';
+    var GREY = 'rgba(0,0,0,0.2)';
 
+    // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
       return {icon: 'check', color: GREY};
     }
 
-    if (this.state.checkingState || this.state.hovered ) {
+    // If icon is hovered background is grey and icon is 'check_box_outline_blank'
+    if (this.state.hovered ) {
       return {icon: 'check_box_outline_blank', color: GREY};
     }
 
+    // Otherwise we have original colorful icon
     return {icon: this.props.icon, color: this.props.background};
   },
 
