@@ -1,9 +1,10 @@
-var React        = require('react'),
-    Router       = require('react-router'),
-    RouteHandler = Router.RouteHandler,
+var React         = require('react'),
+    Router        = require('react-router'),
+    RouteHandler  = Router.RouteHandler,
 
-    Header       = require('../apps/Header/Header.react'),
-    AuthStore    = require('../apps/Account/AuthStore');
+    Header        = require('../apps/Header/Header.react'),
+    AuthStore     = require('../apps/Account/AuthStore'),
+    AuthConstants = require('../apps/Account/AuthConstants');
 
 
 module.exports = React.createClass({
@@ -13,7 +14,7 @@ module.exports = React.createClass({
   statics: {
     willTransitionTo: function (transition) {
       if (AuthStore.getState().token === null) {
-        transition.redirect('/login', {}, {'next' : transition.path});
+        transition.redirect(AuthConstants.LOGIN_URL, {}, {'next' : transition.path});
       }
     },
   },

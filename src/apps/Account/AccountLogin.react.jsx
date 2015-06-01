@@ -1,11 +1,12 @@
-var React        = require('react'),
-    Router       = require('react-router'),
-    Link         = Router.Link,
-    mui          = require('material-ui'),
-    TextField    = mui.TextField,
-    RaisedButton = mui.RaisedButton,
-    AuthActions  = require('./AuthActions'),
-    AuthStore    = require('./AuthStore');
+var React         = require('react'),
+    Router        = require('react-router'),
+    Link          = Router.Link,
+    mui           = require('material-ui'),
+    TextField     = mui.TextField,
+    RaisedButton  = mui.RaisedButton,
+    AuthActions   = require('./AuthActions'),
+    AuthStore     = require('./AuthStore'),
+    AuthConstants = require('./AuthConstants');
 
 
 require('./AccountSignup.css');
@@ -23,7 +24,7 @@ module.exports = React.createClass({
   statics: {
     willTransitionTo: function (transition) {
       if (AuthStore.getState().token !== null) {
-        transition.redirect('/instances', {}, {});
+        transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     },
   },
@@ -44,7 +45,7 @@ module.exports = React.createClass({
     // I don't know if it's good place for this but it works
     if (nextState.canSubmit && nextState.token !== null) {
       var router = this.context.router,
-          next   = router.getCurrentQuery().next || '/instances';
+          next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
@@ -125,6 +126,7 @@ module.exports = React.createClass({
           <div className="login-options-group">
           </div>
           <div className="login-disclaimer">
+            <p><Link to="password-reset">Forgot password?</Link></p>
             <p>Don't have an account? <Link to="signup">Sign up here</Link>.</p>
           </div>
         </div>
