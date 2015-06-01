@@ -25,7 +25,8 @@ var React                = require('react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
 
-    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
+    ListItem    = require('../common/Lists/ListItem.react');
+    List    = require('../common/Lists/List.react');
 
 
 require('./Examples.css');
@@ -196,8 +197,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (card)</h2>
-          <InstancesListItem
+          <h2>ListItem (card)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"cards"}
@@ -207,8 +208,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (stream)</h2>
-          <InstancesListItem
+          <h2>ListItem (stream)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"stream"}
