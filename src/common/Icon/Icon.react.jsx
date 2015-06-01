@@ -1,13 +1,16 @@
 var React = require('react');
+var classNames = require('classnames');
 
 var IconStore = require('./store');
+
+require('./Icon.css');
 
 module.exports = React.createClass({
 
   displayName: 'Icon',
 
   propTypes: {
-    icon: React.PropTypes.oneOf(IconStore.getAllIcons()),
+    icon: React.PropTypes.oneOf(IconStore.getAllIcons()).isRequired,
     glowing: React.PropTypes.bool,
     style: React.PropTypes.object,
     handleClick: React.PropTypes.func,
@@ -18,12 +21,11 @@ module.exports = React.createClass({
       width: '20px',
       height: '20px',
     };
-    var propsStyle = this.props.style || {};
-    var mergedStyles = propsStyle;
+    var mergedStyles = this.props.style || {};
 
-    for (var attrname in defaultStyle) {
-      if (!mergedStyles.hasOwnProperty(attrname)) {
-        mergedStyles[attrname] = defaultStyle[attrname];
+    for (var attrName in defaultStyle) {
+      if (!mergedStyles.hasOwnProperty(attrName)) {
+        mergedStyles[attrName] = defaultStyle[attrName];
       }
     }
 
@@ -32,22 +34,37 @@ module.exports = React.createClass({
     }
   },
 
+  getDefaultProps: function () {
+    return {
+      glowing: false,        
+    };
+  },
+
   handleClick: function() {
-    this.props.handleClick();
+    if(this.props.handleClick) {
+      this.props.handleClick();
+    }
   },
 
   render: function () {
-
-    if (this.props.glowing) {
-      var klass = "glowing";
-    }
+    var glowingClass = classNames({
+      "glowing": this.props.glowing
+    })
 
     if (this.props.icon) {
       var svg = require('./svg/' + this.props.icon);
-      return <i onClick={this.handleClick} dangerouslySetInnerHTML={{__html: svg}} style={this.state.style} className={klass}></i>;
+      return <i 
+               onClick={this.handleClick} 
+               dangerouslySetInnerHTML={{__html: svg}} 
+               style={this.state.style} 
+               className={glowingClass}></i>;
 
     } else {
-      return <i onClick={this.handleClick} style={this.state.style} className={klass}></i>;
+      return <i 
+               onClick={this.handleClick} 
+               style={this.state.style} 
+               className={glowingClass}></i>;
     }
   }
+
 });

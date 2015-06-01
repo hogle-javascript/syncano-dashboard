@@ -2,7 +2,8 @@ var React = require('react');
 var classNames = require('classnames');
 
 var Icon = require('./Icon.react');
-//var ViewActions = require('../actions/ViewActions');
+
+require('./Icon.css');
 
 module.exports = React.createClass({
 
@@ -11,11 +12,19 @@ module.exports = React.createClass({
   propTypes: {
     icon: React.PropTypes.string.isRequired,
     selcted: React.PropTypes.bool,
+    handleClick: React.PropTypes.func,
   },
 
-  handleClick: function (e) {
-    e.stopPropagation();
-    //ViewActions.selectModalIcon(this.props.icon);
+  getInitialState: function () {
+    return {
+      selected: this.props.selected,        
+    };
+  },
+
+  handleClick: function () {
+    if(this.props.handleClick) {
+      this.props.handleClick();
+    }
   },
 
   render: function () {
@@ -23,8 +32,10 @@ module.exports = React.createClass({
       'icon-picker-list-item-selected': this.props.selected,
     });
     return (
-      <div className={cssClasses} onClick={this.handleClick}>
-        <Icon icon={this.props.icon}/>
+      <div 
+        className={cssClasses} 
+        onClick={this.handleClick} >
+        <Icon icon={this.props.icon} />
       </div>
     );
   }

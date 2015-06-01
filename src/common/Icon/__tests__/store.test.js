@@ -1,43 +1,33 @@
-jest.dontMock('../store');
+jest.dontMock("../store");
 
-describe('store', function () {
-  it('have icons', function () {
+describe("Icon store", function () {
+  beforeEach(function() {
+    IconStore = require("../store");
+    
+    // Test data
+    existingIcon = "account-child";
+    nonExistingIcon = "dummy_icon";
+  });
 
-    var IconStore = require('../store');
+  it("tests Icon store methods", function() {
+    var allIcons = IconStore.getAllIcons();
+    var pickerIcons = IconStore.getIconPickerIcons();
+    expect(allIcons.length).toBeGreaterThan(0);
+    expect(pickerIcons.length).toBeGreaterThan(0);
+    expect(IconStore.contains(existingIcon)).toBeTruthy();
+    expect(IconStore.contains(nonExistingIcon)).toBeFalsy();
+  });
 
-    var existingIcon = "account-child";
-    var nonexistingIcon = "dummy_icon";
-
+  it("tests if allIcons store contain icons", function () {
     var array = IconStore.getAllIcons();
     expect(array).toContain(existingIcon);
-    expect(array).not.toContain(nonexistingIcon);
-  })
-});
+    expect(array).not.toContain(nonExistingIcon);
+  });
 
-describe('store', function () {
-  it('have picker icons', function () {
-
-    var IconStore = require('../store');
-
-    var existingPickerIcon = "accessibility";
-    var nonexistingPickerIcon = "dummy_icon";
-
+  it("tests if pickerIcons store contain icons", function() {
     var array = IconStore.getIconPickerIcons();
-    expect(array).toContain(existingPickerIcon);
-    expect(array).not.toContain(nonexistingPickerIcon);
-  })
-});
+    expect(array).toContain(existingIcon);
+    expect(array).not.toContain(nonExistingIcon);
+  });
 
-describe('store', function () {
-  it('can check if have icon', function () {
-
-    var IconStore = require('../store');
-
-    var existingIcon = "account-child";
-    var nonexistingIcon = "dummy_icon";
-
-    expect(IconStore.contains(existingIcon)).toBe(true);
-    expect(IconStore.contains(nonexistingIcon)).not.toBe(true);
-
-  })
 });
