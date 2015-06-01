@@ -3,14 +3,14 @@ var alt         = require('../../alt'),
 
 
 function AuthStore() {
-  this.token         = sessionStorage.token || null;
+  this.token         = sessionStorage.getItem('token');
   this.user          = null;
   this.error         = null;
   this.email         = null;
   this.emailError    = null;
   this.password      = null;
   this.passwordError = null;
-  this.isLoading     = false;
+  this.canSubmit     = true;
 
   this.bindListeners({
       handlePasswordSignIn: AuthActions.PASSWORD_SIGN_IN,
@@ -26,46 +26,52 @@ AuthStore.prototype.handlePasswordSignIn = function (payload) {
   this.passwordError = null;
   this.email         = payload.email;
   this.password      = payload.password;
-  this.isLoading     = true;
-  console.log('handlePasswordSignIn', payload);
+  this.canSubmit     = false;
 };
 
 AuthStore.prototype.handlePasswordSignInSucceeded = function (payload) {
-  this.token           = payload.account_key;
-  this.user            = payload;
-  this.error           = null;
-  this.email           = null;
-  this.emailError      = null;
-  this.password        = null;
-  this.passwordError   = null;
-  this.isLoading       = false;
+  this.token         = payload.account_key;
+  this.user          = payload;
+  this.error         = null;
+  this.email         = null;
+  this.emailError    = null;
+  this.password      = null;
+  this.passwordError = null;
+  this.canSubmit     = true;
 
-  sessionStorage.token = payload.account_key;
+  sessionStorage.setItem('token', payload.account_key);
 };
 
 AuthStore.prototype.handlePasswordSignInFailed = function (payload) {
-  this.token           = null;
-  this.user            = null;
-  this.error           = null;
-  this.email           = null;
-  this.emailError      = null;
-  this.password        = null;
-  this.passwordError   = null;
-  this.isLoading       = false;
+  this.token         = null;
+  this.user          = null;
+  this.error         = null;
+  this.emailError    = null;
+  this.passwordError = null;
+  this.canSubmit     = true;
 
-  sessionStorage.token = null;
+  sessionStorage.removeItem('token');
+
+
+  if (typeof payload === 'string') {
+    this.error = payload;
+  } else {
+    for (var field in payload) {
+      this[field + 'Error'] = payload[field].join();
+    }
+  }
 };
 
 AuthStore.prototype.handleLogout = function () {
-  this.token           = null;
-  this.user            = null;
-  this.error           = null;
-  this.email           = null;
-  this.emailError      = null;
-  this.password        = null;
-  this.passwordError   = null;
+  this.token         = null;
+  this.user          = null;
+  this.error         = null;
+  this.email         = null;
+  this.emailError    = null;
+  this.password      = null;
+  this.passwordError = null;
 
-  sessionStorage.token = null;
+  sessionStorage.removeItem('token');
 };
 
 module.exports = alt.createStore(AuthStore);

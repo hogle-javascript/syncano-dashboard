@@ -9,12 +9,12 @@ function AuthActions() {
 AuthActions.prototype.passwordSignIn = function (payload) {
   this.dispatch(payload);
 
-  new Syncano()
-    .connect(payload.email, payload.password)
-    .then(
-      this.actions.passwordSignInSucceeded,
-      this.actions.passwordSignInFailed
-    );
+  new Syncano().connect(
+    payload.email,
+    payload.password,
+    this.actions.passwordSignInSucceeded,
+    this.actions.passwordSignInFailed
+  );
 };
 
 AuthActions.prototype.passwordSignInSucceeded = function (payload) {

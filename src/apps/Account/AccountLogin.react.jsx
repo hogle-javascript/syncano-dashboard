@@ -15,8 +15,17 @@ module.exports = React.createClass({
 
   displayName: 'AccountLogin',
   mixins: [React.addons.LinkedStateMixin],
+
   contextTypes: {
     router: React.PropTypes.func
+  },
+
+  statics: {
+    willTransitionTo: function (transition) {
+      if (AuthStore.getState().token !== null) {
+        transition.redirect('/instances', {}, {});
+      }
+    },
   },
 
   getInitialState: function() {
@@ -33,8 +42,8 @@ module.exports = React.createClass({
 
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works
-    if (nextState.isLoading === false && nextState.token !== null) {
-      var router = this.context.router;
+    if (nextState.canSubmit && nextState.token !== null) {
+      var router = this.context.router,
           next   = router.getCurrentQuery().next || '/instances';
 
       router.replaceWith(next);
@@ -49,10 +58,26 @@ module.exports = React.createClass({
   handleSubmit: function (event) {
     event.preventDefault();
 
+    if (!this.state.canSubmit) {
+      return;
+    }
+
     AuthActions.passwordSignIn({
       email: this.state.email,
       password: this.state.password,
     });
+  },
+
+  renderError: function () {
+    if (!this.state.error) {
+      return;
+    }
+
+    return (
+      <div>
+        <p>{this.state.error}</p>
+      </div>
+    );
   },
 
   render: function() {
@@ -65,6 +90,7 @@ module.exports = React.createClass({
           <div className="login-header">
             <h1>Sign in and start creating your apps right away.</h1>
           </div>
+          {this.renderError()}
           <form
             onSubmit={this.handleSubmit}
             className="login-input-group"
@@ -88,7 +114,6 @@ module.exports = React.createClass({
               autoComplete="password"
               hintText="Password" />
             <RaisedButton
-              disabled={this.state.isLoading}
               type="submit"
               label="Sign in"
               style={{
