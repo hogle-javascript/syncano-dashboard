@@ -49,7 +49,7 @@ AuthStore.prototype.handlePasswordSignInFailed = function (payload) {
     this.errors.feedback = payload;
   } else {
     for (var field in payload) {
-      this.errors[field] = payload[field].join();
+      this.errors[field] = payload[field];
     }
   }
 };
