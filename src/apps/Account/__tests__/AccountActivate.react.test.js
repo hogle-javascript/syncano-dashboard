@@ -1,5 +1,4 @@
 jest.dontMock('../AccountActivate.react');
-jest.dontMock('../../../utils/ReactRouterContext');
 jest.dontMock('object-assign');
 
 

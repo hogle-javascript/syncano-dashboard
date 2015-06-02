@@ -1,4 +1,4 @@
-var alt     = require('../../alt'),
+var alt     = require('../../alt');
     Syncano = require('../../lib/syncano4');
 
 
@@ -15,6 +15,7 @@ AuthActions.prototype.passwordSignIn = function (payload) {
     this.actions.passwordSignInSucceeded,
     this.actions.passwordSignInFailed
   );
+
 };
 
 AuthActions.prototype.passwordSignInSucceeded = function (payload) {

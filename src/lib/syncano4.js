@@ -5,14 +5,15 @@
  * Copyright 2015 Syncano Inc.
  */
 
-var isNode = false,
-	isWebpack = false;
+var isNode    = false,
+		isWebpack = false;
+
 if (typeof module !== 'undefined' && module.exports) {
 	isNode = true;
 }
 
 if (typeof __webpack_require__ === 'function') {
-	isNode = false;
+	isNode    = false;
 	isWebpack = true;
 }
 

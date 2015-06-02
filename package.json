@@ -71,6 +71,8 @@
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/classnames",
       "<rootDir>/src/utils/utils",
+      "<rootDir>/src/utils/ReactRouterContext",
+      "<rootDir>/src/utils/StorageMock",
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
       "<rootDir>/node_modules/classnames"
