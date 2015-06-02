@@ -1,5 +1,4 @@
 jest.dontMock("../SwitchField.react");
-//jest.dontMock("material-ui/lib/styles/theme-manager");
 
 describe("SwitchField.react", function() {
   beforeEach(function() {
@@ -8,7 +7,7 @@ describe("SwitchField.react", function() {
     SwitchField = require("../SwitchField.react");
    
     // Test data
-    dummyClick = jest.genMockFn().mockReturnValue("Dummy Click!");
+    dummyClick = jest.genMockFn();
     dummyClick.mockClear();
   })
 
@@ -19,8 +18,8 @@ describe("SwitchField.react", function() {
 
   it("tests component class names", function() {
     var component = TestUtils.renderIntoDocument(<SwitchField 
-    	                                           heading="dummy heading" 
-    	                                           togled={true} />)
+                                                   heading="dummy heading" 
+                                                   togled={true} />)
     var node = React.findDOMNode(component);
     var nodeText = React.findDOMNode(node.children[0]);
     
@@ -40,7 +39,6 @@ describe("SwitchField.react", function() {
                                                    toggled={false} 
                                                    textEnabled="Dummy text enabled" 
                                                    textDisabled="dummy text disabled" />);
-    
     expect(component.getText()).toBe(component.props.textDisabled);
     component.setState({toggled: true});
     var linkNode = TestUtils.findRenderedDOMComponentWithTag(component, "span");
@@ -62,7 +60,14 @@ describe("SwitchField.react", function() {
   });
 
   it("tests handleSwitchClick() method", function() {
-    // Here should be tests like simulate click on Toggle component from material UI
-    // which run handleSwitchClick method but when material-ui modul is unmocked it causing errors
+    var component = TestUtils.renderIntoDocument(<SwitchField 
+                                                   handleSwitchClick={dummyClick}
+                                                   toggled={true} />);
+    expect(component.state.toggled).toBeTruthy();
+    // Simulate click on Material UI component
+    component.refs.MUIToggle.props.onToggle();
+    expect(dummyClick).toBeCalled();
+    expect(dummyClick.mock.calls.length).toBe(1);
+    expect(component.state.toggled).toBeFalsy();
   })
 });

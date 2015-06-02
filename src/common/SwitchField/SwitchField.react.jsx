@@ -58,6 +58,7 @@ module.exports = React.createClass({
         </div>
         <div className="switch-field-input">
           <Toggle 
+            ref="MUIToggle"
             onToggle={this.handleSwitchClick}
             defaultToggled={this.props.toggled} 
             name={this.props.name}

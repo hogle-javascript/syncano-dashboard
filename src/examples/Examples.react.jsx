@@ -266,7 +266,6 @@ module.exports = React.createClass({
       displayName: "Option display name",
       name: 5,
     }
->>>>>>> devel
 
     return (
 
