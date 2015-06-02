@@ -26,10 +26,11 @@ var ValidationMixin = {
 
     // f***ing js
     if (key !== undefined) {
-      keyConstraints      = {};
+      var keyConstraints = {},
+          keyAttributes  = {};
+
       keyConstraints[key] = constraints[key];
       constraints         = keyConstraints;
-      keyAttributes       = {};
       keyAttributes[key]  = attributes[key];
       attributes          = keyAttributes;
     }
