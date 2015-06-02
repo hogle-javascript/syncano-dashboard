@@ -10,7 +10,7 @@ module.exports = React.createClass({
     description: React.PropTypes.string.isRequired,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
-    handleOnClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func,
   },
 
   getDefaultProps: function() {
@@ -27,18 +27,22 @@ module.exports = React.createClass({
     }
   },
 
-  onOver: function () {
+  handleMouseOver: function () {
     this.setState({'color': this.props.hoverColor})
   },
 
-  onOut: function () {
+  handleMouseLeave: function () {
     this.setState({'color': this.props.color})
   },
 
   render: function () {
 
     return (
-      <div style={{color: this.state.color}} onMouseOver={this.onOver} onMouseOut={this.onOut} onClick={this.props.handleOnClick}>
+      <div
+        style={{color: this.state.color}}
+        onMouseOver={this.onOver}
+        onMouseOut={this.onOut}
+        onClick={this.props.handleClick}>
         <div style={{fontSize: '16px'}}>{this.props.name}</div>
         <div style={{fontSize: '13px', opacity: '0.7'}}>{this.props.description}</div>
       </div>

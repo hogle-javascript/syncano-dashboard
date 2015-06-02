@@ -15,13 +15,13 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      'hovered': false,
-      'checked': false,
-      'background': this.props.background,
+      hovered: false,
+      checked: false,
+      background: this.props.background,
     }
   },
 
-  onCheck: function () {
+  handleClick: function () {
     if (this.props.handleClick) {
       this.props.handleClick(this.props.id, !this.state.checked);
     }
@@ -31,14 +31,14 @@ module.exports = React.createClass({
     });
   },
 
-  onOver: function () {
+  handleMouseOver: function () {
     this.setState({
       hovered: true,
     });
   },
-  onOut: function () {
+  handleMouseLeave: function () {
     this.setState({
-      'hovered': false,
+      hovered: false,
     });
   },
 
@@ -78,7 +78,11 @@ module.exports = React.createClass({
     };
 
     return (
-      <div style={style} onMouseOver={this.onOver} onMouseLeave={this.onOut} onClick={this.onCheck}>
+      <div
+        style={style}
+        onMouseOver={this.handleMouseOver}
+        onMouseLeave={this.handleMouseLeave}
+        onClick={this.handleClick}>
         <MaterialIcon name={iconState.icon} style={iconStyle}/>
       </div>
     )

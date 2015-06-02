@@ -14,6 +14,14 @@ module.exports = React.createClass({
     columns: React.PropTypes.array,
   },
 
+  renderColumn: function (column) {
+    return (<div
+      key={this.props.columns.indexOf(column)}
+      style={column.style}
+      className={"col s" + column.space}>{column.name}
+    </div>)
+  },
+
   render: function () {
 
     var headerStyle = {
@@ -27,10 +35,7 @@ module.exports = React.createClass({
       }
     };
 
-    var columns = this.props.columns.map(function (column) {
-        return <div key={this.props.columns.indexOf(column)} style={column.style} className={"col s" + column.space}>{column.name}</div>
-      }.bind(this)
-    );
+    var columns = this.props.columns.map(this.renderColumn);
 
     if (this.props.checkedItemsNumber > 0) {
       return (
