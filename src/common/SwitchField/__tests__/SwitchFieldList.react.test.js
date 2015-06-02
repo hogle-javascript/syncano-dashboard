@@ -8,7 +8,7 @@ describe("SwitchFieldList.react", function() {
     SwitchFieldList = require('../SwitchFieldList.react');
 
     // Test data
-    mockFn = jest.genMockFn().mockImplementation(function() {console.log("Click");});
+    mockFn = jest.genMockFn();
     switchFields = [{
         name: 'limit',
         enabled: true,
@@ -32,7 +32,7 @@ describe("SwitchFieldList.react", function() {
     var node = React.findDOMNode(component);
     // Check component class name
     expect(node.className).toBe("switch-field-list");
-    // Check component childrens
+    // Check component childrens props
     expect(node.children.length).toBe(switchFields.length);
     expect(component.refs[switchFields[0].name]).toBeDefined();
     expect(component.refs[switchFields[0].name].props.name).toBe(switchFields[0].name);
