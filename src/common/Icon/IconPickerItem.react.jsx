@@ -17,7 +17,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      selected: this.props.selected,        
+      selected: this.props.selected || false,        
     };
   },
 

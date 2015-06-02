@@ -27,7 +27,7 @@ describe("Icon", function () {
 
   });
 
-  it("tests Icon component initial 'style' state and if style", function() {
+  it("tests Icon component initial 'style' state and if style is applied", function() {
 
     // Render component with default props only and test its initial state
     var component = TestUtils.renderIntoDocument(<Icon />);
@@ -35,9 +35,9 @@ describe("Icon", function () {
     expect(component.state.style.height).toBe("20px");
 
     // Render component with defined 'style' props and test if its overwritten
-    var component = TestUtils.renderIntoDocument(<Icon style={{width: "30px", heigth: "30px"}} />);
+    var component = TestUtils.renderIntoDocument(<Icon style={{width: "30px", height: "30px"}} />);
     expect(component.state.style.width).toBe("30px");
-    expect(component.state.style.width).toBe("30px");
+    expect(component.state.style.height).toBe("30px");
 
     // Render component with defined 'style' props and test if its merged
     var component = TestUtils.renderIntoDocument(<Icon style={{fill: "#0091EA"}}/>);
@@ -46,7 +46,7 @@ describe("Icon", function () {
     expect(component.state.style.fill).toBe("#0091EA");
 
     // Check if passed 'style' props was applied to node
-    var component = TestUtils.renderIntoDocument(<Icon style={{fill: "#0091EA", width: "30px", heigth: "30px"}}/>);
+    var component = TestUtils.renderIntoDocument(<Icon style={{fill: "#0091EA", width: "30px", height: "30px"}}/>);
     var node = React.findDOMNode(component);
     expect(node.style.width).toBe("30px");
     expect(node.style.height).toBe("30px");
