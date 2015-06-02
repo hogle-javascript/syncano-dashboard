@@ -25,7 +25,8 @@
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
-    "superagent": "^0.21.0"
+    "superagent": "^0.21.0",
+    "validate.js": "^0.7.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
