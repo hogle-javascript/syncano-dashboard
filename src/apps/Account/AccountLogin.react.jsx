@@ -1,12 +1,13 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    Link          = Router.Link,
-    mui           = require('material-ui'),
-    TextField     = mui.TextField,
-    RaisedButton  = mui.RaisedButton,
-    AuthActions   = require('./AuthActions'),
-    AuthStore     = require('./AuthStore'),
-    AuthConstants = require('./AuthConstants');
+var React           = require('react'),
+    Router          = require('react-router'),
+    Link            = Router.Link,
+    mui             = require('material-ui'),
+    TextField       = mui.TextField,
+    RaisedButton    = mui.RaisedButton,
+    AuthActions     = require('./AuthActions'),
+    AuthStore       = require('./AuthStore'),
+    AuthConstants   = require('./AuthConstants'),
+    ValidationMixin = require('../../mixins/ValidationMixin');
 
 
 require('./AccountSignup.css');
@@ -15,7 +16,19 @@ require('./AccountSignup.css');
 module.exports = React.createClass({
 
   displayName: 'AccountLogin',
-  mixins: [React.addons.LinkedStateMixin],
+
+  mixins: [
+    React.addons.LinkedStateMixin,
+    ValidationMixin
+  ],
+
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: true
+    },
+    password: {presence: true},
+  },
 
   contextTypes: {
     router: React.PropTypes.func
@@ -63,20 +76,24 @@ module.exports = React.createClass({
       return;
     }
 
-    AuthActions.passwordSignIn({
-      email: this.state.email,
-      password: this.state.password,
-    });
+    this.validate(function(isValid){
+      if (isValid === true) {
+        AuthActions.passwordSignIn({
+          email: this.state.email,
+          password: this.state.password,
+        });
+      }
+    }.bind(this));
   },
 
   renderError: function () {
-    if (!this.state.error) {
+    if (!this.state.errors || this.state.errors.feedback === undefined) {
       return;
     }
 
     return (
       <div>
-        <p>{this.state.error}</p>
+        <p>{this.state.errors.feedback}</p>
       </div>
     );
   },
@@ -100,7 +117,7 @@ module.exports = React.createClass({
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.state.emailError}
+              errorText={this.getValidationMessages('email').join()}
               name="email"
               className="text-field"
               autoComplete="email"
@@ -108,7 +125,7 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.state.passwordError}
+              errorText={this.getValidationMessages('password').join()}
               type="password"
               name="password"
               className="text-field"
