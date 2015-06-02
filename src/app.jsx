@@ -2,9 +2,13 @@ var React      = require('react'),
     classNames = require('classnames'),
     Router     = require('react-router'),
     routes     = require('./routes'),
-
+    tapPlugin  = require('react-tap-event-plugin'),
     container  = document.getElementById('app');
 
+
+tapPlugin();
+
+require('normalize.css');
 require('./app.css');
 
 Router.run(routes, function (Handler) {

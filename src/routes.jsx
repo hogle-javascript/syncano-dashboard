@@ -27,7 +27,9 @@ var React                       = require('react'),
     Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
 
     // Examples
-    Examples                    = require('./examples/Examples.react');
+    Examples                    = require('./examples/Examples.react'),
+    ListExamples                = require('./examples/ListExamples.react');
+
 
 
 module.exports = (
@@ -52,6 +54,7 @@ module.exports = (
     </Route>
 
     <Route name="examples" handler={Examples}/>
+    <Route name="listsexamples" handler={ListExamples}/>
     <NotFoundRoute handler={NotFound} />
   </Route>
 )

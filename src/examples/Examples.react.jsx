@@ -31,8 +31,9 @@ var React                = require('react'),
     Icon                 = require('../common/Icon/Icon.react'),
     IconPicker           = require('../common/Icon/IconPicker.react'),
     IconPickerItem       = require('../common/Icon/IconPickerItem.react'),
-
-    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
+    ListItem             = require('../common/Lists/ListItem.react'),
+    List                 = require('../common/Lists/List.react'),
+    MaterialIcon         = require('../common/Icon/MaterialIcon.react');
 
 require('./Examples.css');
 
@@ -42,7 +43,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      errorText: null,  
+      errorText: null,
     };
   },
 
@@ -211,27 +212,27 @@ module.exports = React.createClass({
         displayName: "CodeBox2",
         name: 2,
       }, {
-        displayName: "CodeBox3", 
+        displayName: "CodeBox3",
         name: 3,
       }],
       type: "select",
     }
 
-    var fieldSelectMUI = [{ 
-      payload: '1', 
-      text: 'Never', 
-    }, { 
-      payload: '2', 
-      text: 'Every Night', 
-    }, { 
-      payload: '3', 
-      text: 'Weeknights', 
-    }, { 
-      payload: '4', 
-      text: 'Weekends', 
-    }, { 
-      payload: '5', 
-      text: 'Weekly', 
+    var fieldSelectMUI = [{
+      payload: '1',
+      text: 'Never',
+    }, {
+      payload: '2',
+      text: 'Every Night',
+    }, {
+      payload: '3',
+      text: 'Weeknights',
+    }, {
+      payload: '4',
+      text: 'Weekends',
+    }, {
+      payload: '5',
+      text: 'Weekly',
     }];
 
     var fieldDatetime = {
@@ -270,8 +271,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (card)</h2>
-          <InstancesListItem
+          <h2>ListItem (card)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"cards"}
@@ -281,8 +282,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (stream)</h2>
-          <InstancesListItem
+          <h2>ListItem (stream)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"stream"}
@@ -307,7 +308,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Fab</h2>
-          <Fab />
+          <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
@@ -329,7 +330,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldDatetime</h2>
-          <FieldDatetime 
+          <FieldDatetime
             dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
             labelText="Date"
             iconColor="red"
@@ -365,19 +366,19 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldSelect (Drop Down from material UI)</h2>
-          <FieldSelectMUI 
+          <FieldSelectMUI
             menuItems={fieldSelectMUI} />
         </div>
 
         <div className="exampleBox">
           <h2>FieldSelectOption</h2>
-          <FieldSelectOption 
+          <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
-            <FieldSelectOption 
+            <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
-            <FieldSelectOption 
+            <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
         </div>
@@ -483,6 +484,11 @@ module.exports = React.createClass({
             icon={"theaters"} 
             selected={false} 
             handleClick={dummyClick.bind(this, "Not selected IconPickerItem")} />
+        </div>
+        
+        <div className="exampleBox">
+          <h2>MaterialIcon - from google font</h2>
+          <MaterialIcon name="favorite" />
         </div>
       </div>
     );
