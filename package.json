@@ -8,9 +8,9 @@
     "url": "https://github.com/Syncano/syncano-dashboard.git"
   },
   "dependencies": {
+    "alt": "^0.16.7",
     "brace": "^0.5.0",
     "classnames": "^1.2.0",
-    "director": "^1.2.7",
     "flux": "^2.0.0",
     "gravatar": "^1.1.0",
     "hellojs": "^1.5.0",
@@ -71,6 +71,8 @@
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/classnames",
       "<rootDir>/src/utils/utils",
+      "<rootDir>/src/utils/ReactRouterContext",
+      "<rootDir>/src/utils/StorageMock",
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
       "<rootDir>/node_modules/classnames"
