@@ -9,7 +9,7 @@ var AuthStore  = require('../Auth/store');
 //var ViewActions   = require('../actions/ViewActions');
 //var ServerActions = require('../actions/ServerActions');
 //var Constants     = require('../constants/Constants');
-//var Syncano       = require('../utils/Syncano');
+//var Syncano       = require('../../lib/syncano4.js');
 
 var CHANGE_EVENT = 'change';
 

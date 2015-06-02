@@ -1,5 +1,4 @@
 jest.dontMock('../AccountPasswordResetConfirm.react');
-jest.dontMock('../../../utils/ReactRouterContext');
 jest.dontMock('object-assign');
 
 

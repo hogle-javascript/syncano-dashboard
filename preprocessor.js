@@ -9,7 +9,7 @@ module.exports = {
       return '';
     }
     return ReactTools.transform(src, {
-      harmony: true,
+    	harmony: true
     });
   }
 };

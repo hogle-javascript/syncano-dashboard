@@ -9,14 +9,14 @@ module.exports = React.createClass({
 
   propTypes: {
     buttons: React.PropTypes.array.isRequired,
-    handleFABClick: React.PropTypes.func.isRequired,
+    handleClick: React.PropTypes.func.isRequired,
   },
 
   render: function() {
     var buttons = this.props.buttons.map(function(button) {
       return (
         <div className="fab-with-label" key={button.name}>
-          <FAB button={button} handleFABClick={this.props.handleFABClick}/>
+          <FAB button={button} handleClick={this.props.handleClick}/>
           <Label text={button.label} />
         </div>
       );
