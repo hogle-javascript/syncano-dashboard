@@ -8,6 +8,8 @@ module.exports = {
     if (path.match(/\.svg$/)) {
       return '';
     }
-    return ReactTools.transform(src);
+    return ReactTools.transform(src, {
+    	harmony: true
+    });
   }
 };

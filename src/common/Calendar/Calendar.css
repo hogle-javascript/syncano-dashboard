@@ -11,7 +11,7 @@
   visibility: visible;
   transform: translate(20px, 0);
   transition: all 500ms;
-  position: fixed;
+  position: absolute;
   z-index: 99999;
 }
 

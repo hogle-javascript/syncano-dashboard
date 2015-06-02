@@ -1,6 +1,7 @@
 var React                = require('react'),
-
+    mui                  = require('material-ui'),
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
+    Colors               = require('material-ui/lib/styles/colors')
     LinearProgress       = require('material-ui/lib/linear-progress'),
     Dialog               = require('material-ui/lib/dialog'),
     Snackbar             = require('material-ui/lib/snackbar'),
@@ -20,18 +21,30 @@ var React                = require('react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
+    Field                = require('material-ui/lib/text-field'),
+    FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
+    FieldDatetime        = require('../common/Field/FieldDatetime.react'),
+    FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
     FieldSelect          = require('../common/Field/FieldSelect.react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
+    ListItem             = require('../common/Lists/ListItem.react'),
+    List                 = require('../common/Lists/List.react'),
+    MaterialIcon         = require('../common/Icon/MaterialIcon.react');
 
-    InstancesListItem    = require('../apps/Instances/InstancesListItem.react');
 
 require('./Examples.css');
 
 module.exports = React.createClass({
 
   displayName: 'Examples',
+
+  getInitialState: function () {
+    return {
+      errorText: null,
+    };
+  },
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -45,17 +58,36 @@ module.exports = React.createClass({
 
   componentWillMount: function () {
     ThemeManager.setPalette({
-      accent1Color: Colors.deepOrange500
+      primary1Color: Colors.blueA700,
+      primary2Color: Colors.lightBlueA700,
+      primary3Color: Colors.cyanA700,
+      accent1Color: Colors.pink500,
+      // accent1Color: Colors.pinkA200,
+      // accent2Color: Colors.pinkA400,
+      // accent3Color: Colors.pinkA100,
+      // textColor: Colors.darkBlack,
+      // canvasColor: Colors.white,
+      // borderColor: Colors.grey300,
+      // disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
     });
   },
 
   getDefaultProps: function () {
   },
 
-  componentWillMount: function () {
+  componentDidMount: function () {
   },
 
-  componentDidMount: function () {
+  dummyDisplayError: function(e) {
+    if (e.target.value.length > 5) {
+      this.setState({
+        errorText: "(DummyError) This field is 5 chars only",
+      })
+    } else {
+      this.setState({
+        errorText: null,
+      })
+    }
   },
 
   render: function () {
@@ -171,6 +203,51 @@ module.exports = React.createClass({
 
     var payload = '{test: "testvalue"}';
 
+    var fieldSelect = {
+      displayName: "Codebox",
+      name: "codebox",
+      options: [{
+        displayName: "CodeBox1",
+        name: 1,
+      }, {
+        displayName: "CodeBox2",
+        name: 2,
+      }, {
+        displayName: "CodeBox3",
+        name: 3,
+      }],
+      type: "select",
+    }
+
+    var fieldSelectMUI = [{
+      payload: '1',
+      text: 'Never',
+    }, {
+      payload: '2',
+      text: 'Every Night',
+    }, {
+      payload: '3',
+      text: 'Weeknights',
+    }, {
+      payload: '4',
+      text: 'Weekends',
+    }, {
+      payload: '5',
+      text: 'Weekly',
+    }];
+
+    var fieldDatetime = {
+      displayName: "Date",
+      name: "date",
+      type: "datetime",
+      value: "",
+    };
+
+    var fieldSelectOption = {
+      displayName: "Option display name",
+      name: 5,
+    }
+
     return (
 
       <div className="examplesContainer">
@@ -197,8 +274,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (card)</h2>
-          <InstancesListItem
+          <h2>ListItem (card)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"cards"}
@@ -208,8 +285,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>InstancesListItem (stream)</h2>
-          <InstancesListItem
+          <h2>ListItem (stream)</h2>
+          <ListItem
             handleClick={dummyClick}
             item={item}
             style={"stream"}
@@ -241,17 +318,39 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Fab</h2>
-          <Fab />
+          <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
           <h2>FabList</h2>
-          <FabList buttons={fabButtons} handleFABClick={dummyClick}/>
+          <FabList buttons={fabButtons} handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
-          <h2>FieldPassword</h2>
-          <FieldPassword field={passwordField}/>
+          <h2>Field (material UI)</h2>
+          <Field
+            hintText="(Hint text) Your name - 5 chars only"
+            errorText={this.state.errorText}
+            onChange={this.dummyDisplayError}
+            floatingLabelText="Your name"
+            style={{width: "100%", borderBottomColor: "0091EA"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldDatetime</h2>
+          <FieldDatetime
+            dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
+            labelText="Date"
+            iconColor="red"
+            fieldStyle={{width: "100%"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldPassword (Material UI)</h2>
+          <mui.TextField
+            name="password"
+            type="password"
+            floatingLabelText="Password" />
         </div>
 
         <div className="exampleBox">
@@ -261,7 +360,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>material-ui LinearProgress</h2>
-          <LinearProgress mode="indeterminate"/>
+          <LinearProgress mode="indeterminate" />
         </div>
 
         <div className="exampleBox">
@@ -324,6 +423,11 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>UsageBar</h2>
           <UsageBar billingProfile={billingProfile}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>MaterialIcon - from google font</h2>
+          <MaterialIcon name="favorite" />
         </div>
 
       </div>
