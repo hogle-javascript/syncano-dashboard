@@ -1,88 +1,101 @@
-var React = require('react');
-var Ace = require('brace');
+// Port from react-ace
 
+var ace = require('brace');
+var React = require('react');
+
+require('brace/mode/python');
 require('brace/mode/javascript');
 require('brace/mode/ruby');
-require('brace/mode/python');
-require('brace/theme/clouds');
-
-var EditorPanel = require('./EditorPanel.react');
-
-require('./Editor.css');
+require('brace/mode/golang');
+require('brace/theme/github');
 
 
 module.exports = React.createClass({
-
-  displayName: 'Editor',
-
   propTypes: {
-    source: React.PropTypes.string,
-    runtime: React.PropTypes.oneOf(['python', 'javascript', 'ruby',  'golang']),
-    buttons: React.PropTypes.array,
+    mode  : React.PropTypes.oneOf(['python', 'javascript', 'ruby',  'golang']),
+    theme : React.PropTypes.string,
+    name : React.PropTypes.string,
+    height : React.PropTypes.string,
+    width : React.PropTypes.string,
+    fontSize : React.PropTypes.number,
+    showGutter : React.PropTypes.bool,
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.string,
+    onLoad: React.PropTypes.func,
+    maxLines : React.PropTypes.number,
+    readOnly : React.PropTypes.bool,
+    highlightActiveLine : React.PropTypes.bool,
+    showPrintMargin : React.PropTypes.bool
   },
-
-  getInitialState: function () {
+  getDefaultProps: function() {
     return {
-      value: this.props.source
+      name   : 'brace-editor',
+      mode   : '',
+      theme  : '',
+      height : '500px',
+      width  : '500px',
+      value  : '',
+      fontSize   : 12,
+      showGutter : true,
+      onChange   : null,
+      onLoad     : null,
+      maxLines   : null,
+      readOnly   : false,
+      highlightActiveLine : true,
+      showPrintMargin     : true
+    };
+  },
+  onChange: function() {
+    var value = this.editor.getValue();
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
+  },
+  componentDidMount: function() {
+    var self = this;
+    this.editor = ace.edit(this.props.name);
+    this.editor.$blockScrolling = Infinity;
+    this.editor.getSession().setMode('ace/mode/'+this.props.mode);
+    this.editor.setTheme('ace/theme/'+this.props.theme);
+    this.editor.setFontSize(this.props.fontSize);
+    this.editor.on('change', this.onChange);
+    this.editor.setValue(this.props.value);
+    this.editor.renderer.setShowGutter(this.props.showGutter);
+    this.editor.setOption('maxLines', this.props.maxLines);
+    this.editor.setOption('readOnly', this.props.readOnly);
+    this.editor.setOption('highlightActiveLine', this.props.highlightActiveLine);
+    this.editor.setShowPrintMargin(this.props.setShowPrintMargin);
+
+    this.editor.clearSelection();
+
+    if (this.props.onLoad) {
+      this.props.onLoad(this.editor);
     }
   },
 
-  componentDidMount: function () {
-    this.editor = Ace.edit('editor');
-    this.editor.setTheme('ace/theme/clouds');
-    this.editor.getSession().setTabSize(1);
-    this.editor.selection.clearSelection();
-
-    // Setting mode based on runtime
-    this.editor.getSession().setMode('ace/mode/' + this.props.runtime);
-
-    // onEditorChange will be called after any change in source code
-    this.editor.on('change', this.onEditorChange);
-
+  componentWillReceiveProps: function(nextProps) {
+    this.editor = ace.edit(nextProps.name);
+    this.editor.getSession().setMode('ace/mode/'+nextProps.mode);
+    this.editor.setTheme('ace/theme/'+nextProps.theme);
+    this.editor.setFontSize(nextProps.fontSize);
+    this.editor.setOption('maxLines', nextProps.maxLines);
+    this.editor.setOption('readOnly', nextProps.readOnly);
+    this.editor.setOption('highlightActiveLine', nextProps.highlightActiveLine);
+    this.editor.setShowPrintMargin(nextProps.setShowPrintMargin);
+    if (this.editor.getValue() !== nextProps.value) {
+      this.editor.setValue(nextProps.value);
+    }
+    this.editor.renderer.setShowGutter(nextProps.showGutter);
+    if (nextProps.onLoad) {
+      nextProps.onLoad(this.editor);
+    }
   },
 
-  componentWillUpdate: function (nextProps, nextState) {
-    this.editor.setValue(nextProps.source);
-    this.editor.selection.clearSelection();
-  },
-
-  componentWillReceiveProps: function (nextProps) {
-    //if (nextProps.codebox.data.runtime_name === 'nodejs') {
-    //  this.editor.getSession().setMode('ace/mode/javascript');
-    //} else if (nextProps.codebox.data.runtime_name === 'python') {
-    //  this.editor.getSession().setMode('ace/mode/python');
-    //} else if (nextProps.codebox.data.runtime_name === 'ruby') {
-    //  this.editor.getSession().setMode('ace/mode/ruby');
-    //} else if (nextProps.codebox.data.runtime_name === 'golang') {
-    //  this.editor.getSession().setMode('ace/mode/ruby');
-    //}
-  },
-
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return nextProps.source !== this.props.source;
-  },
-
-  componentDidUpdate: function (prevProps, prevState) {
-    this.editor.resize();
-  },
-
-  getEditorValue: function () {
-    this.props.getEditorValue(this.editor.getValue());
-  },
-
-  onEditorChange: function () {
-    this.setState({source: this.editor.getValue()});
-  },
-
-  render: function () {
-    return (
-      <div className="editor-group">
-        <div id="editor" className="editor" ref="editor">{this.props.source}</div>
-
-      </div>
-    );
-
-    //<EditorPanel buttons={this.props.buttons} ref="editorPanel" handleButtonsClick={this.props.handleButtonsClick}/>
+  render: function() {
+    var divStyle = {
+      width: this.props.width,
+      height: this.props.height
+    };
+    return (<div id={this.props.name} onChange={this.onChange} style={divStyle}></div>);
   }
-
 });

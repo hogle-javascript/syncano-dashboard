@@ -14,6 +14,7 @@ var React                = require('react'),
     Label                = require('../common/Label/Label.react'),
     ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
     Editor               = require('../common/Editor/Editor.react'),
+    EditorPanel          = require('../common/Editor/EditorPanel.react'),
     Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
     ColorPicker          = require('../common/Color/ColorPicker.react'),
@@ -55,13 +56,13 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  getChildContext: function () {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
     ThemeManager.setPalette({
       primary1Color: Colors.blueA700,
       primary2Color: Colors.lightBlueA700,
@@ -169,21 +170,21 @@ module.exports = React.createClass({
       color: '#FFC52D',
     };
 
-    var handleSnackbarClick = function() {
+    var handleSnackbarClick = function () {
       this.refs.snackbar.show()
     }.bind(this);
 
-    var handleSnackbarAction = function() {
+    var handleSnackbarAction = function () {
       window.alert("Bum!");
     };
 
     var dialogStandardActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit' }
+      {text: 'Cancel'},
+      {text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit'}
     ];
 
     var modalState = true;
-    var handleStandardDialogTouchTap = function() {
+    var handleStandardDialogTouchTap = function () {
       this.refs.standardDialog.show();
     }.bind(this);
 
@@ -205,6 +206,8 @@ module.exports = React.createClass({
         total: 4000
       }
     };
+
+    var payload = '{test: "testvalue"}';
 
     var fieldSelect = {
       displayName: "Codebox",
@@ -341,7 +344,18 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>Editor</h4>
-          <Editor source={source} runtime={runtime}/>
+          <Editor
+            mode="python"
+            theme="github"
+            onChange={dummyClick}
+            name="UNIQUE_ID_OF_DIV"
+            value={source}
+            />
+        </div>
+
+        <div className="exampleBox">
+          <h2>EditorPanel</h2>
+          <EditorPanel trace={source} payload={payload}/>
         </div>
 
         <div className="exampleBox">
@@ -387,7 +401,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>FieldReadonly (material UI)</h4>
+          <h2>FieldReadonly (material UI)</h2>
           <Field
             defaultValue="Your name - 5 chars only"
             disabled={true}
@@ -395,19 +409,19 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>FieldSelect</h4>
+          <h2>FieldSelect</h2>
           <FieldSelect field={fieldSelect}
              />
         </div>
 
         <div className="exampleBox">
-          <h4>FieldSelect (Drop Down from material UI)</h4>
+          <h2>FieldSelect (Drop Down from material UI)</h2>
           <FieldSelectMUI
             menuItems={fieldSelectMUI} />
         </div>
 
         <div className="exampleBox">
-          <h4>FieldSelectOption</h4>
+          <h2>FieldSelectOption</h2>
           <FieldSelectOption
             option={fieldSelectOption}
             handleClick={this.dummyClick} />
@@ -420,7 +434,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>material-ui</h4>
+          <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
         </div>
 
@@ -429,13 +443,13 @@ module.exports = React.createClass({
 
           <FlatButton
             onClick={handleSnackbarClick}
-            label="Bum!" />
+            label="Bum!"/>
 
           <Snackbar
             ref="snackbar"
             message="Bum! Bum! Bum!"
             action="undo"
-            onActionTouchTap={handleSnackbarAction} />
+            onActionTouchTap={handleSnackbarAction}/>
         </div>
 
         <div className="exampleBox">
@@ -478,12 +492,12 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>ColorPickerItem</h4>
-          <ColorPickerItem color={'#EF5350'} selected={false} />
+          <ColorPickerItem color={'#EF5350'} selected={false}/>
         </div>
 
         <div className="exampleBox">
           <h4>UsageBar</h4>
-          <UsageBar billingProfile={billingProfile} />
+          <UsageBar billingProfile={billingProfile}/>
         </div>
 
         <div className="exampleBox">

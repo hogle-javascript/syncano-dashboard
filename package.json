@@ -76,7 +76,8 @@
       "<rootDir>/src/utils/StorageMock",
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
-      "<rootDir>/node_modules/classnames"
+      "<rootDir>/node_modules/classnames",
+      "<rootDir>material-ui"
     ]
   },
   "scripts": {
