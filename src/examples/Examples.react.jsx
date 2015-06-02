@@ -9,6 +9,7 @@ var React                = require('react'),
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     Icon                 = require('../common/Icon/Icon.react'),
+    CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
     ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
     Label                = require('../common/Label/Label.react'),
     ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
@@ -32,7 +33,11 @@ var React                = require('react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
-    MaterialIcon         = require('../common/Icon/MaterialIcon.react');
+    MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
+
+    ColumnListItem       = require('../common/ColumnList/Item.react'),
+    ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
+    ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
 
 
 require('./Examples.css');
@@ -247,35 +252,50 @@ module.exports = React.createClass({
     var fieldSelectOption = {
       displayName: "Option display name",
       name: 5,
-    }
+    };
+
+    var columns = [
+      {
+        name: 'CodeBox',
+        columnType: 'icon'
+      }, {
+        name: 'ID',
+        columnType: 'integer'
+      },
+    ];
 
     return (
 
       <div className="examplesContainer">
-        <h1>Examples</h1>
+        <h4>Examples</h4>
 
         <div className="exampleBox">
-          <h2>Dropdown</h2>
+          <h4>Dropdown</h4>
           <Dropdown icon="menu" actions={actions} handleItemClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
-          <h2>Icon</h2>
+          <h4>Icon</h4>
           <Icon icon="notifications" style={{width: '40px'}}/>
         </div>
 
         <div className="exampleBox">
-          <h2>ProgressBar</h2>
+          <h4>CheckIcon</h4>
+          <CheckIcon icon="notifications" background="blue" width='40px' />
+        </div>
+
+        <div className="exampleBox">
+          <h4>ProgressBar</h4>
           <ProgressBar visible={true}/>
         </div>
 
         <div className="exampleBox">
-          <h2>Label</h2>
+          <h4>Label</h4>
           <Label text={text}/>
         </div>
 
         <div className="exampleBox">
-          <h2>ListItem (card)</h2>
+          <h4>ListItem (card)</h4>
           <ListItem
             handleClick={dummyClick}
             item={item}
@@ -286,7 +306,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ListItem (stream)</h2>
+          <h4>ListItem (stream)</h4>
           <ListItem
             handleClick={dummyClick}
             item={item}
@@ -297,12 +317,33 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ListItemEmpty</h2>
+          <h4>ListColumnItem </h4>
+          <ColumnListItem>
+            <ColumnListItemColumn grid="1">
+              <CheckIcon icon="notifications" background="blue" width='40px' />
+            </ColumnListItemColumn>
+            <ColumnListItemColumn grid="5">
+              <ColumnNameDesc name="My Codebox" description="Description of my codebox" />
+            </ColumnListItemColumn>
+            <ColumnListItemColumn grid="2">
+              <span><strong>2345</strong></span>
+            </ColumnListItemColumn>
+            <ColumnListItemColumn grid="2">
+              <span><strong>2345</strong></span>
+            </ColumnListItemColumn>
+            <ColumnListItemColumn grid="2">
+              <span><strong>2345</strong></span>
+            </ColumnListItemColumn>
+          </ColumnListItem>
+        </div>
+
+        <div className="exampleBox">
+          <h4>ListItemEmpty</h4>
           <ListItemEmpty icon={"inbox"} text={text}/>
         </div>
 
         <div className="exampleBox">
-          <h2>Editor</h2>
+          <h4>Editor</h4>
           <Editor
             mode="python"
             theme="github"
@@ -318,17 +359,17 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>Fab</h2>
+          <h4>Fab</h4>
           <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
-          <h2>FabList</h2>
+          <h4>FabList</h4>
           <FabList buttons={fabButtons} handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
-          <h2>Field (material UI)</h2>
+          <h4>Field (material UI)</h4>
           <Field
             hintText="(Hint text) Your name - 5 chars only"
             errorText={this.state.errorText}
@@ -338,7 +379,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldDatetime</h2>
+          <h4>FieldDatetime</h4>
           <FieldDatetime
             dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
             labelText="Date"
@@ -347,7 +388,7 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldPassword (Material UI)</h2>
+          <h4>FieldPassword (Material UI)</h4>
           <mui.TextField
             name="password"
             type="password"
@@ -355,17 +396,50 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldReadonly</h2>
+          <h4>FieldReadonly</h4>
           <FieldReadonly field={someField}/>
         </div>
 
         <div className="exampleBox">
-          <h2>material-ui LinearProgress</h2>
+          <h2>FieldReadonly (material UI)</h2>
+          <Field
+            defaultValue="Your name - 5 chars only"
+            disabled={true}
+            style={{width: "100%"}} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelect</h2>
+          <FieldSelect field={fieldSelect}
+             />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelect (Drop Down from material UI)</h2>
+          <FieldSelectMUI
+            menuItems={fieldSelectMUI} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>FieldSelectOption</h2>
+          <FieldSelectOption
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+            <FieldSelectOption
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+            <FieldSelectOption
+            option={fieldSelectOption}
+            handleClick={this.dummyClick} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
         </div>
 
         <div className="exampleBox">
-          <h2>material-ui - Snackbar</h2>
+          <h4>material-ui - Snackbar</h4>
 
           <FlatButton
             onClick={handleSnackbarClick}
@@ -379,8 +453,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>material-ui Dialog</h2>
-          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}/>
+          <h4>material-ui Dialog</h4>
+          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}  />
           <Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
@@ -392,42 +466,42 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>AvatarInitials</h2>
-          <AvatarInitials name="George R. R. Martin"/>
+          <h4>AvatarInitials</h4>
+          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">
-          <h2>ButtonSocialAuth</h2>
-          <ButtonSocialAuth icon="facebook" text="Log in with Facebook"/>
+          <h4>ButtonSocialAuth</h4>
+          <ButtonSocialAuth icon="facebook" text="Log in with Facebook" />
         </div>
 
         <div className="exampleBox">
-          <h2>ColorPicker</h2>
+          <h4>ColorPicker</h4>
           <ColorPicker />
         </div>
 
         <div className="exampleBox">
-          <h2>ColorPicker (selected)</h2>
-          <ColorPicker selectedColor={'#EF5350'}/>
+          <h4>ColorPicker (selected)</h4>
+          <ColorPicker selectedColor={'#EF5350'} />
         </div>
 
         <div className="exampleBox">
-          <h2>ColorPickerItem (selected)</h2>
-          <ColorPickerItem color={'#EF5350'} selected={true}/>
+          <h4>ColorPickerItem (selected)</h4>
+          <ColorPickerItem color={'#EF5350'} selected={true} />
         </div>
 
         <div className="exampleBox">
-          <h2>ColorPickerItem</h2>
+          <h4>ColorPickerItem</h4>
           <ColorPickerItem color={'#EF5350'} selected={false}/>
         </div>
 
         <div className="exampleBox">
-          <h2>UsageBar</h2>
+          <h4>UsageBar</h4>
           <UsageBar billingProfile={billingProfile}/>
         </div>
 
         <div className="exampleBox">
-          <h2>MaterialIcon - from google font</h2>
+          <h4>MaterialIcon - from google font</h4>
           <MaterialIcon name="favorite" />
         </div>
 

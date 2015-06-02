@@ -33,7 +33,7 @@ module.exports = React.createClass({
     };
   },
 
-  handleOnClick: function (e) {
+  handleClick: function (e) {
     this.setState({
       hidden: !this.state.hidden,
     })
@@ -67,7 +67,7 @@ module.exports = React.createClass({
           ref="icon"
           style={this.getIconStyle()} 
           icon="arrow_down" 
-          handleClick={this.handleOnClick} />
+          handleClick={this.handleClick} />
       </div>
     );
   }
