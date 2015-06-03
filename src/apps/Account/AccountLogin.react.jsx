@@ -27,7 +27,9 @@ module.exports = React.createClass({
       presence: true,
       email: true
     },
-    password: {presence: true},
+    password: {
+      presence: true
+    },
   },
 
   contextTypes: {

@@ -1,4 +1,46 @@
-.header-group {
+.header {
+  background-color: #1E88E5;
+  color: #fff;
+  padding: 16px 32px 0 32px;
+}
+
+.header .col {
+  padding: 0 !important;
+}
+
+.header .header-top {
+  margin-bottom: 36px;
+}
+
+.header .header-icons .material-icons {
+  width: 18px;
+  height: 18px;
+  display: block;
+  float: right;
+  margin-left: 32px;
+  margin-bottom: 18px;
+}
+
+.header .header-links a {
+  margin-left: 32px;
+  font-size: 0.8rem;
+}
+
+.header .header-breadcrumbs ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header .header-breadcrumbs li {
+    display: inline;
+}
+
+.header .header-breadcrumbs a {
+  color: #fff;
+}
+
+/*.header-group {
   background-color: #0091EA;
   color: white;
   font-family: 'Roboto';
@@ -182,4 +224,4 @@
 
 .glowing {
   animation: glowing 1500ms infinite;
-}
+}*/
