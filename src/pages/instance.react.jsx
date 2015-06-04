@@ -5,28 +5,17 @@ var React         = require('react'),
     // Stores and Action
     AuthStore       = require('../apps/Account/AuthStore'),
     AuthActions     = require('../apps/Account/AuthActions'),
-    AuthConstants   = require('../apps/Account/AuthConstants'),
-
-    // Components
-    Header          = require('../apps/Header/Header.react');
+    AuthConstants   = require('../apps/Account/AuthConstants');
 
 
 module.exports = React.createClass({
 
-  displayName: 'Dashboard',
+  displayName: 'Instance',
 
   mixins: [Router.State, Router.Navigation],
 
   contextTypes: {
     router: React.PropTypes.func
-  },
-
-  statics: {
-    willTransitionTo: function (transition) {
-      if (!AuthStore.data.token) {
-        transition.redirect(AuthConstants.LOGIN_URL, {}, {'next' : transition.path});
-      }
-    },
   },
 
  componentWillMount: function () {
@@ -38,7 +27,6 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
-        <Header />
         <RouteHandler />
       </div>
     );
