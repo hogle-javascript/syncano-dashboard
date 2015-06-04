@@ -1,11 +1,13 @@
 var React           = require('react'),
+    Reflux          = require('reflux'),
     Router          = require('react-router'),
     Link            = Router.Link,
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    AuthActions     = require('./AuthActions'),
-    AuthStore       = require('./AuthStore'),
+    //AuthActions     = require('./AuthActions'),
+    AuthActions       = require('./AuthStore').AuthActions,
+    AuthStore       = require('./AuthStore').AuthStore,
     AuthConstants   = require('./AuthConstants'),
     ValidationMixin = require('../../mixins/ValidationMixin');
 
@@ -35,17 +37,17 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  statics: {
-    willTransitionTo: function (transition) {
-      if (AuthStore.getState().token !== null) {
-        transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
-      }
-    },
-  },
+  //statics: {
+  //  willTransitionTo: function (transition) {
+  //    if (AuthStore.getState().token !== null) {
+  //      transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
+  //    }
+  //  },
+  //},
 
-  getInitialState: function() {
-    return AuthStore.getState();
-  },
+  //getInitialState: function() {
+  //  return AuthStore.getState();
+  //},
 
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works

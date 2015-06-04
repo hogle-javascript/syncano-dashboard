@@ -1,57 +1,34 @@
-var alt     = require('../../alt');
-    Syncano = require('../../lib/syncano4');
+var Reflux    = require('reflux'),
+
+    MainStore = require('../Main/MainStore');
 
 
-// TODO: make this code more DRY
-function AuthActions() {
+var AuthActions = Reflux.createActions([
+  "logout",
+]);
 
-};
+AuthActions.passwordSignIn = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+AuthActions.passwordSignIn.listen(function (payload) {
 
-// TODO: Change this Source http://alt.js.org/docs/async/
-AuthActions.prototype.passwordSignUp = function (payload) {
-  this.dispatch(payload);
+  MainStore.connection.connect(payload.email, payload.password)
+    .then(this.completed)
+    .catch(this.failure);
+});
 
-  new Syncano().Accounts.create({
-      email: payload.email,
-      password: payload.password
-    }).then(
-      this.actions.passwordSignUpSucceeded,
-      this.actions.passwordSignUpFailed
-    );
+AuthActions.setInstance = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+AuthActions.setInstance.listen(function (name) {
 
-};
+  MainStore.connection.setInstance(name)
+    .then(this.completed)
+    .catch(this.failure);
+});
 
-AuthActions.prototype.passwordSignUpSucceeded = function (payload) {
-  this.dispatch(payload);
-};
+AuthActions.apiKeySignIn = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+AuthActions.apiKeySignIn.listen(function (apiKey) {
 
-AuthActions.prototype.passwordSignUpFailed = function (error) {
-  this.dispatch(error);
-};
+  MainStore.connection.connect(apiKey)
+    .then(this.completed)
+    .catch(this.failure);
+});
 
-// TODO: Change this Source http://alt.js.org/docs/async/
-AuthActions.prototype.passwordSignIn = function (payload) {
-  this.dispatch(payload);
-
-  new Syncano().connect(
-    payload.email,
-    payload.password,
-    this.actions.passwordSignInSucceeded,
-    this.actions.passwordSignInFailed
-  );
-
-};
-
-AuthActions.prototype.passwordSignInSucceeded = function (payload) {
-  this.dispatch(payload);
-};
-
-AuthActions.prototype.passwordSignInFailed = function (error) {
-  this.dispatch(error);
-};
-
-AuthActions.prototype.logout = function () {
-  this.dispatch();
-};
-
-module.exports = alt.createActions(AuthActions);
+module.exports = AuthActions;

@@ -1,14 +1,20 @@
 var React           = require('react'),
+    Reflux          = require('reflux'),
     Router          = require('react-router'),
     Link            = Router.Link,
+
+    // Utils
+    ValidationMixin = require('../../mixins/ValidationMixin');
+
+    // Stores and Actions
+    AuthStore       = require('./AuthStore'),
+    AuthActions     = require('./AuthActions'),
+    AuthConstants   = require('./AuthConstants'),
+
+    // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    AuthActions     = require('./AuthActions'),
-    AuthStore       = require('./AuthStore'),
-    AuthConstants   = require('./AuthConstants'),
-    ValidationMixin = require('../../mixins/ValidationMixin');
-
 
 require('./AccountSignup.css');
 
@@ -18,6 +24,7 @@ module.exports = React.createClass({
   displayName: 'AccountLogin',
 
   mixins: [
+    Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
     ValidationMixin
   ],
@@ -36,37 +43,20 @@ module.exports = React.createClass({
 
   statics: {
     willTransitionTo: function (transition) {
-      if (AuthStore.getState().token !== null) {
+      if (AuthStore.data.token) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     },
   },
 
-  getInitialState: function() {
-    return AuthStore.getState();
-  },
-
-  componentDidMount: function () {
-    AuthStore.listen(this.onChange);
-  },
-
-  componentWillUnmount: function () {
-    AuthStore.unlisten(this.onChange);
-  },
-
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works
-    if (nextState.canSubmit && nextState.token !== null) {
+    if (nextState.canSubmit && nextState.token) {
       var router = this.context.router,
           next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
-
-  },
-
-  onChange: function (state) {
-    this.setState(state);
   },
 
   handleSubmit: function (event) {

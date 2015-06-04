@@ -25,6 +25,7 @@
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
+    "reflux": "latest",
     "superagent": "^0.21.0",
     "validate.js": "^0.7.1"
   },

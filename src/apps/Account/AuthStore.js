@@ -1,111 +1,96 @@
-var alt         = require('../../alt'),
+var Reflux  = require('reflux'),
+
+    MainStore = require('../Main/MainStore'),
     AuthActions = require('./AuthActions');
 
 
-// TODO: make this code more DRY
-function AuthStore() {
-  this.token     = sessionStorage.getItem('token') || null;
-  this.user      = null;
-  this.errors    = {};
-  this.email     = null;
-  this.password  = null;
-  this.canSubmit = true;
+var AuthStore = Reflux.createStore({
 
-  this.bindListeners({
-      handlePasswordSignIn: AuthActions.PASSWORD_SIGN_IN,
-      handlePasswordSignInSucceeded: AuthActions.PASSWORD_SIGN_IN_SUCCEEDED,
-      handlePasswordSignInFailed: AuthActions.PASSWORD_SIGN_IN_FAILED,
-      handlePasswordSignUp: AuthActions.PASSWORD_SIGN_UP,
-      handlePasswordSignUpSucceeded: AuthActions.PASSWORD_SIGN_UP_SUCCEEDED,
-      handlePasswordSignUpFailed: AuthActions.PASSWORD_SIGN_UP_FAILED,
-      handleLogout: AuthActions.LOGOUT,
-  });
-};
-
-AuthStore.prototype.handlePasswordSignIn = function (payload) {
-  this.errors    = {};
-  this.email     = payload.email;
-  this.password  = payload.password;
-  this.canSubmit = false;
-};
-
-AuthStore.prototype.handlePasswordSignInSucceeded = function (payload) {
-  this.token     = payload.account_key;
-  this.user      = payload;
-  this.errors    = {};
-  this.email     = null;
-  this.password  = null;
-  this.canSubmit = true;
-
-  sessionStorage.setItem('token', payload.account_key);
-};
-
-AuthStore.prototype.handlePasswordSignInFailed = function (payload) {
-  this.token     = null;
-  this.user      = null;
-  this.errors    = {};
-  this.canSubmit = true;
-
-  sessionStorage.removeItem('token');
-
-
-  if (typeof payload === 'string') {
-    this.errors.feedback = payload;
-  } else {
-    for (var field in payload) {
-      this.errors[field] = payload[field];
+  getInitialState: function () {
+    return {
+      canSubmit: true,
+      token: null,
+      errors: {},
     }
-  }
-};
+  },
 
-AuthStore.prototype.handlePasswordSignUp = function (payload) {
-  this.errors    = {};
-  this.email     = payload.email;
-  this.password  = payload.password;
-  this.canSubmit = false;
-};
+  init: function () {
 
-AuthStore.prototype.handlePasswordSignUpSucceeded = function (payload) {
-  this.token     = payload.account_key || null;
-  this.user      = payload;
-  this.errors    = {};
-  this.email     = null;
-  this.password  = null;
-  this.canSubmit = true;
+    this.listenTo(AuthActions.logout, this.onLogout);
 
-  if (this.token !== null) {
-    sessionStorage.setItem('token', this.token);
-  }
-};
+    this.listenTo(AuthActions.passwordSignIn.completed, this.onPasswordSignInSuccess);
+    this.listenTo(AuthActions.passwordSignIn.failure, this.onPasswordSignInFailure);
 
-AuthStore.prototype.handlePasswordSignUpFailed = function (payload) {
-  this.token     = null;
-  this.user      = null;
-  this.errors    = {};
-  this.canSubmit = true;
-
-  sessionStorage.removeItem('token');
+    this.listenTo(AuthActions.setInstance.completed, this.onSetInstanceCompleted);
+    this.listenTo(AuthActions.setInstance.failure, this.onSetInstanceFailure);
 
 
-  if (typeof payload === 'string') {
-    this.errors.feedback = payload;
-  } else {
-    for (var field in payload) {
-      this.errors[field] = payload[field];
+    this.data = {
+      token: null,
+      user: null,
+      errors: {},
+      email: null,
+      password: null,
+      canSubmit: true,
+    };
+
+    this.data.token = sessionStorage.getItem('token') || null;
+
+    if (this.data.token) {
+      if (!MainStore.connection.account) {
+        AuthActions.apiKeySignIn(this.data.token);
+      }
     }
+  },
+
+  onPasswordSignInSuccess: function (payload) {
+
+    sessionStorage.setItem('token', payload.account_key);
+    this.data = {
+      firstName:    payload.first_name,
+      lastName:     payload.last_name,
+      is_active:    payload.is_active,
+      user:         payload.email,
+      token:        payload.account_key,
+      errors:       {},
+    };
+
+    this.trigger(this.data);
+  },
+
+  onPasswordSignInFailure: function (payload) {
+
+    sessionStorage.removeItem('token');
+    this.data = this.getInitialState();
+
+    if (typeof payload === 'string') {
+      this.data.errors.feedback = payload;
+    } else {
+      for (var field in payload) {
+        this.data.errors[field] = payload[field];
+      }
+    }
+
+    this.trigger(this.data);
+  },
+
+  onLogout: function () {
+    sessionStorage.removeItem('token');
+
+    this.data = this.getInitialState();
+    this.trigger(this.data);
+  },
+
+
+  // Attaching to instance
+  onSetInstanceCompleted: function (payload) {
+    this.data.currentInstance = payload;
+    this.trigger(this.data)
+  },
+
+  onSetInstanceFailure: function () {
+    MainStore.router.transitionTo('/404');
   }
-};
+});
 
-AuthStore.prototype.handleLogout = function () {
-  this.token         = null;
-  this.user          = null;
-  this.errors        = {};
-  this.email         = null;
-  this.emailError    = null;
-  this.password      = null;
-  this.passwordError = null;
-
-  sessionStorage.removeItem('token');
-};
-
-module.exports = alt.createStore(AuthStore);
+module.exports = AuthStore;
