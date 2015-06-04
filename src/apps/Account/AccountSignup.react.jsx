@@ -2,23 +2,30 @@ var React           = require('react'),
     Reflux          = require('reflux'),
     Router          = require('react-router'),
     Link            = Router.Link,
+
+    // Utils
+    ValidationMixin = require('../../mixins/ValidationMixin'),
+
+    // Stores and Actions
+    AuthStore       = require('./AuthStore'),
+    AuthActions     = require('./AuthActions'),
+    AuthConstants   = require('./AuthConstants'),
+
+    // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton,
-    //AuthActions     = require('./AuthActions'),
-    AuthActions       = require('./AuthStore').AuthActions,
-    AuthStore       = require('./AuthStore').AuthStore,
-    AuthConstants   = require('./AuthConstants'),
-    ValidationMixin = require('../../mixins/ValidationMixin');
+    RaisedButton    = mui.RaisedButton;
 
 
 require('./AccountSignup.css');
+
 
 module.exports = React.createClass({
 
   displayName: 'AccountSignup',
 
   mixins: [
+    Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
     ValidationMixin
   ],
@@ -37,39 +44,22 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  //statics: {
-  //  willTransitionTo: function (transition) {
-  //    if (AuthStore.getState().token !== null) {
-  //      transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
-  //    }
-  //  },
-  //},
-
-  //getInitialState: function() {
-  //  return AuthStore.getState();
-  //},
+  statics: {
+    willTransitionTo: function (transition) {
+      if (AuthStore.data.token) {
+        transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
+      }
+    },
+  },
 
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works
-    if (nextState.canSubmit && nextState.token !== null) {
+    if (nextState.canSubmit && nextState.token) {
       var router = this.context.router,
           next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
-
-  },
-
-  componentDidMount: function () {
-    AuthStore.listen(this.onChange);
-  },
-
-  componentWillUnmount: function () {
-    AuthStore.unlisten(this.onChange);
-  },
-
-  onChange: function (state) {
-    this.setState(state);
   },
 
   handleSubmit: function (event) {

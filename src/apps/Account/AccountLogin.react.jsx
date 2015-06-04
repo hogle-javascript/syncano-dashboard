@@ -4,7 +4,7 @@ var React           = require('react'),
     Link            = Router.Link,
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin');
+    ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
     AuthStore       = require('./AuthStore'),
@@ -14,7 +14,7 @@ var React           = require('react'),
     // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton,
+    RaisedButton    = mui.RaisedButton;
 
 require('./AccountSignup.css');
 
@@ -34,7 +34,9 @@ module.exports = React.createClass({
       presence: true,
       email: true
     },
-    password: {presence: true},
+    password: {
+      presence: true
+    },
   },
 
   contextTypes: {

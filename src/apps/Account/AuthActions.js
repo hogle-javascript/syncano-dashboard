@@ -3,32 +3,38 @@ var Reflux    = require('reflux'),
     MainStore = require('../Main/MainStore');
 
 
-var AuthActions = Reflux.createActions([
-  "logout",
-]);
+var AuthActions = Reflux.createActions({
+  'logout': {},
+  'passwordSignIn': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+  'setInstance': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+  'apiKeySignIn': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+});
 
-AuthActions.passwordSignIn = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 AuthActions.passwordSignIn.listen(function (payload) {
-
-  MainStore.connection.connect(payload.email, payload.password)
-    .then(this.completed)
-    .catch(this.failure);
+  AuthActions.passwordSignIn.promise(
+    MainStore.connection.connect(payload.email, payload.password)
+  );
 });
 
-AuthActions.setInstance = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 AuthActions.setInstance.listen(function (name) {
-
-  MainStore.connection.setInstance(name)
-    .then(this.completed)
-    .catch(this.failure);
+  AuthActions.passwordSignIn.promise(
+    MainStore.connection.setInstance(name)
+  );
 });
 
-AuthActions.apiKeySignIn = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 AuthActions.apiKeySignIn.listen(function (apiKey) {
-
-  MainStore.connection.connect(apiKey)
-    .then(this.completed)
-    .catch(this.failure);
+  AuthActions.passwordSignIn.promise(
+    MainStore.connection.connect(apiKey)
+  );
 });
 
 module.exports = AuthActions;

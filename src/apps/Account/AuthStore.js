@@ -1,10 +1,11 @@
-var Reflux  = require('reflux'),
+var Reflux      = require('reflux'),
 
-    MainStore = require('../Main/MainStore'),
+    MainStore   = require('../Main/MainStore'),
     AuthActions = require('./AuthActions');
 
 
 var AuthStore = Reflux.createStore({
+  listenables: AuthActions,
 
   getInitialState: function () {
     return {
@@ -15,16 +16,6 @@ var AuthStore = Reflux.createStore({
   },
 
   init: function () {
-
-    this.listenTo(AuthActions.logout, this.onLogout);
-
-    this.listenTo(AuthActions.passwordSignIn.completed, this.onPasswordSignInSuccess);
-    this.listenTo(AuthActions.passwordSignIn.failure, this.onPasswordSignInFailure);
-
-    this.listenTo(AuthActions.setInstance.completed, this.onSetInstanceCompleted);
-    this.listenTo(AuthActions.setInstance.failure, this.onSetInstanceFailure);
-
-
     this.data = {
       token: null,
       user: null,
@@ -43,22 +34,22 @@ var AuthStore = Reflux.createStore({
     }
   },
 
-  onPasswordSignInSuccess: function (payload) {
+  onPasswordSignInCompleted: function (payload) {
 
     sessionStorage.setItem('token', payload.account_key);
     this.data = {
-      firstName:    payload.first_name,
-      lastName:     payload.last_name,
-      is_active:    payload.is_active,
-      user:         payload.email,
-      token:        payload.account_key,
-      errors:       {},
+      firstName: payload.first_name,
+      lastName: payload.last_name,
+      is_active: payload.is_active,
+      user: payload.email,
+      token: payload.account_key,
+      errors: {},
     };
 
     this.trigger(this.data);
   },
 
-  onPasswordSignInFailure: function (payload) {
+  onPasswordSignInFailed: function (payload) {
 
     sessionStorage.removeItem('token');
     this.data = this.getInitialState();
@@ -81,14 +72,13 @@ var AuthStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-
   // Attaching to instance
   onSetInstanceCompleted: function (payload) {
     this.data.currentInstance = payload;
     this.trigger(this.data)
   },
 
-  onSetInstanceFailure: function () {
+  onSetInstanceFailed: function () {
     MainStore.router.transitionTo('/404');
   }
 });
