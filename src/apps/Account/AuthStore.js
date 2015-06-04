@@ -39,7 +39,7 @@ var AuthStore = Reflux.createStore({
   },
 
   onPasswordSignUpFailed: function (payload) {
-    this.onPasswordSignInFailed(payload);
+    this.onPasswordSignInCompleted(payload);
   },
 
   onPasswordSignInCompleted: function (payload) {

@@ -7,19 +7,19 @@ var AuthActions = Reflux.createActions({
   'logout': {},
   'passwordSignIn': {
       asyncResult: true,
-      children: ['completed', 'failure']
+      children: ['completed', 'failed']
   },
   'passwordSignUp': {
       asyncResult: true,
-      children: ['completed', 'failure']
+      children: ['completed', 'failed']
   },
   'setInstance': {
       asyncResult: true,
-      children: ['completed', 'failure']
+      children: ['completed', 'failed']
   },
   'apiKeySignIn': {
       asyncResult: true,
-      children: ['completed', 'failure']
+      children: ['completed', 'failed']
   },
 });
 
