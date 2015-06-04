@@ -8,7 +8,6 @@
     "url": "https://github.com/Syncano/syncano-dashboard.git"
   },
   "dependencies": {
-    "alt": "^0.16.7",
     "brace": "^0.5.0",
     "classnames": "^1.2.0",
     "flux": "^2.0.0",
@@ -25,7 +24,9 @@
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
-    "superagent": "^0.21.0"
+    "reflux": "latest",
+    "superagent": "^0.21.0",
+    "validate.js": "^0.7.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^1.0.0",
@@ -48,7 +49,9 @@
     "style-loader": "^0.8.2",
     "url-loader": "^0.5.5",
     "webpack": "^1.4.13",
-    "webpack-dev-server": "^1.6.6"
+    "webpack-dev-server": "^1.6.6",
+    "node-sass": "~3.1.2",
+    "sass-loader": "~1.0.2"
   },
   "jest": {
     "rootDir": ".",
@@ -75,7 +78,8 @@
       "<rootDir>/src/utils/StorageMock",
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
-      "<rootDir>/node_modules/classnames"
+      "<rootDir>/node_modules/classnames",
+      "<rootDir>material-ui"
     ]
   },
   "scripts": {

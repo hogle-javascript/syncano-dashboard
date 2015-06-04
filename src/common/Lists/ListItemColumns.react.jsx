@@ -14,11 +14,11 @@ var TraceResult        = require('../Trace/TraceResult.react');
 //var ViewActions        = require('../actions/ViewActions');
 //var ServerActions      = require('../actions/ServerActions');
 
-require('./Card.css');
+//require('./Card.css');
 
 module.exports = React.createClass({
 
-  displayName: 'ListItemColumns',
+  displayName: 'ListColumnsItem',
 
   getInitialState: function() {
     return {

@@ -1,33 +1,58 @@
-var alt     = require('../../alt');
-    Syncano = require('../../lib/syncano4');
+var Reflux    = require('reflux'),
+
+    MainStore = require('../Main/MainStore');
 
 
-function AuthActions() {
+// TODO: https://github.com/spoike/refluxjs/issues/296
+var AuthActions = Reflux.createActions({
+  'logout': {},
+  'passwordSignIn': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+  'passwordSignUp': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+  'setInstance': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+  'apiKeySignIn': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
+});
 
-};
+AuthActions.passwordSignIn.listen(function (payload) {
+  MainStore
+    .connection
+    .connect(payload.email, payload.password)
+    .then(this.completed)
+    .catch(this.failure)
+});
 
-AuthActions.prototype.passwordSignIn = function (payload) {
-  this.dispatch(payload);
+AuthActions.passwordSignUp.listen(function (payload) {
+  MainStore
+    .Accounts
+    .create(payload.email, payload.password)
+    .then(this.completed)
+    .catch(this.failure)
+});
 
-  new Syncano().connect(
-    payload.email,
-    payload.password,
-    this.actions.passwordSignInSucceeded,
-    this.actions.passwordSignInFailed
-  );
+AuthActions.setInstance.listen(function (name) {
+  MainStore
+    .setInstance(payload.email, payload.password)
+    .then(this.completed)
+    .catch(this.failure)
+});
 
-};
+AuthActions.apiKeySignIn.listen(function (apiKey) {
+  MainStore
+    .connection
+    .connect(apiKey)
+    .then(this.completed)
+    .catch(this.failure)
+});
 
-AuthActions.prototype.passwordSignInSucceeded = function (payload) {
-  this.dispatch(payload);
-};
-
-AuthActions.prototype.passwordSignInFailed = function (error) {
-  this.dispatch(error);
-};
-
-AuthActions.prototype.logout = function () {
-  this.dispatch();
-};
-
-module.exports = alt.createActions(AuthActions);
+module.exports = AuthActions;
