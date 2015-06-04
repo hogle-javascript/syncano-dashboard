@@ -29,12 +29,6 @@ module.exports = React.createClass({
     },
   },
 
- componentWillMount: function () {
-   if (this.getParams().instanceName) {
-      AuthActions.setInstance(this.getParams().instanceName);
-   }
- },
-
   render: function () {
     return (
       <div>
