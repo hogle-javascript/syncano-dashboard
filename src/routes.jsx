@@ -2,6 +2,7 @@ var React                       = require('react'),
     Router                      = require('react-router'),
     Route                       = Router.Route,
     NotFoundRoute               = Router.NotFoundRoute,
+    DefaultRoute                = Router.DefaultRoute,
 
     // Pages
     App                         = require('./pages/app.react'),
@@ -19,16 +20,16 @@ var React                       = require('react'),
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
 
-      // Instance Apps
-      Admins                      = require('./apps/Admins/Admins.react'),
-      ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
-      Classes                     = require('./apps/Classes/Classes.react'),
-      Codeboxes                   = require('./apps/Codeboxes/Codeboxes.react'),
-      DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
-      Schedules                   = require('./apps/Schedules/Schedules.react'),
-      Tasks                       = require('./apps/Tasks/Tasks.react'),
-      Users                       = require('./apps/Users/Users.react'),
-      Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
+    // Instance Apps
+    Admins                      = require('./apps/Admins/Admins.react'),
+    ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
+    Classes                     = require('./apps/Classes/Classes.react'),
+    Codeboxes                   = require('./apps/Codeboxes/Codeboxes.react'),
+    DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
+    Schedules                   = require('./apps/Schedules/Schedules.react'),
+    Tasks                       = require('./apps/Tasks/Tasks.react'),
+    Users                       = require('./apps/Users/Users.react'),
+    Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
@@ -45,17 +46,17 @@ module.exports = (
     <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid-:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/">
-      <Route name="instances" handler={Instances} path="/instances" />
-      <Route name="instance" handler={Instance} path="/">
-        <Route name="admins" handler={Admins} path="/instances/:instanceName/admins" />
-        <Route name="api-keys" handler={ApiKeys} path="/instances/:instanceName/api_keys" />
-        <Route name="classes" handler={Classes} path="/instances/:instanceName/classes" />
-        <Route name="codeboxes" handler={Codeboxes} path="/instances/:instanceName/codeboxes" />
-        <Route name="data-objects" handler={DataObjects} path="/instances/:instanceName/objects" />
-        <Route name="schedules" handler={Schedules} path="/instances/:instanceName/schedules" />
-        <Route name="tasks" handler={Tasks} path="/instances/:instanceName/tasks" />
-        <Route name="users" handler={Users} path="/instances/:instanceName/users" />
-        <Route name="webhooks" handler={Webhooks} path="/instances/:instanceName/webhooks" />
+      <Route name="instances" handler={Instance} path="/instances">
+        <Route name="admins" handler={Admins} path=":instanceName/admins" />
+        <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
+        <Route name="classes" handler={Classes} path=":instanceName/classes" />
+        <Route name="codeboxes" handler={Codeboxes} path=":instanceName/codeboxes" />
+        <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
+        <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
+        <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
+        <Route name="users" handler={Users} path=":instanceName/users" />
+        <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
+        <DefaultRoute handler={Instances} />
       </Route>
     </Route>
 

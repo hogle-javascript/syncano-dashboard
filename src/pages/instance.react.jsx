@@ -19,17 +19,14 @@ module.exports = React.createClass({
   },
 
  componentWillMount: function () {
-   if (this.getParams().instanceName) {
-      AuthActions.setInstance(this.getParams().instanceName);
+   var params = this.getParams();
+   if (params.instanceName) {
+      AuthActions.setInstance(params.instanceName);
    }
  },
 
   render: function () {
-    return (
-      <div>
-        <RouteHandler />
-      </div>
-    );
+    return <RouteHandler />
   }
 
 });
