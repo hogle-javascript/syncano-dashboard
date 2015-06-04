@@ -1,17 +1,16 @@
-var React               = require('react'),
-
-    Reflux              = require('reflux'),
+var React  = require('react'),
+    Reflux = require('reflux'),
 
     // Stores and Actions
-    CodeBoxesActions    = require('./CodeBoxesActions'),
-    CodeBoxesStore      = require('./CodeBoxesStore'),
-    AuthStore           = require('../Account/AuthStore'),
+    CodeBoxesActions = require('./CodeBoxesActions'),
+    CodeBoxesStore   = require('./CodeBoxesStore'),
+    AuthStore        = require('../Account/AuthStore'),
 
     // Components
-    Item                = require('../../common/ColumnList/Item.react'),
-    Column              = require('../../common/ColumnList/ItemColumn.react'),
-    Header              = require('../../common/ColumnList/Header.react'),
-    ColNameDesc         = require('../../common/ColumnList/ColNameDesc.react');
+    Item             = require('../../common/ColumnList/Item.react'),
+    Column           = require('../../common/ColumnList/ItemColumn.react'),
+    Header           = require('../../common/ColumnList/Header.react'),
+    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react');
 
 
 module.exports = React.createClass({
