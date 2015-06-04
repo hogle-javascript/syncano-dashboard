@@ -38,7 +38,7 @@ var AuthStore = Reflux.createStore({
     this.onPasswordSignInCompleted(payload);
   },
 
-  onPasswordSignUpFailed: function (payload) {
+  onPasswordSignUpFailure: function (payload) {
     this.onPasswordSignInCompleted(payload);
   },
 
@@ -57,7 +57,7 @@ var AuthStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onPasswordSignInFailed: function (payload) {
+  onPasswordSignInFailure: function (payload) {
 
     sessionStorage.removeItem('token');
     this.data = this.getInitialState();
