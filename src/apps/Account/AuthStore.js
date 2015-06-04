@@ -34,12 +34,24 @@ var AuthStore = Reflux.createStore({
     }
   },
 
+  onPasswordSignUp: function () {
+    this.onPasswordSignIn();
+  },
+
   onPasswordSignUpCompleted: function (payload) {
     this.onPasswordSignInCompleted(payload);
   },
 
   onPasswordSignUpFailure: function (payload) {
     this.onPasswordSignInCompleted(payload);
+  },
+
+  onPasswordSignIn: function () {
+    this.data = {
+      canSubmit: false
+    };
+
+    this.trigger(this.data);
   },
 
   onPasswordSignInCompleted: function (payload) {
@@ -86,7 +98,7 @@ var AuthStore = Reflux.createStore({
     this.trigger(this.data)
   },
 
-  onSetInstanceFailed: function () {
+  onSetInstanceFailure: function () {
     MainStore.router.transitionTo('/404');
   }
 });
