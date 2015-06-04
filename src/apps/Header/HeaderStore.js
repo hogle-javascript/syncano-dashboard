@@ -1,54 +1,45 @@
-var alt           = require('../../alt'),
+var Reflux        = require('reflux'),
     HeaderActions = require('./HeaderActions');
 
 
-function HeaderStore() {
-  this.breadcrumbs   = [];
-  this.menu          = [];
-  this.notifications = [];
+var HeaderStore = Reflux.createStore({
+  listenables: HeaderActions,
 
-  this.bindListeners({
-      handleSetBreadcrumbs: HeaderActions.SET_BREADCRUMBS,
-      handlePushBreadcrumb: HeaderActions.PUSH_BREADCRUMB,
-      handlePopBreadcrumb: HeaderActions.POP_BREADCRUMB,
-      handleClearBreadcrumbs: HeaderActions.CLEAR_BREADCRUMBS,
-      handleSetMenuItems: HeaderActions.SET_MENU_ITEMS,
-      handlePushMenuItem: HeaderActions.PUSH_MENU_ITEM,
-      handlePopMenuItem: HeaderActions.POP_MENU_ITEM,
-      handleClearMenuItems: HeaderActions.CLEAR_MENU_ITEMS,
-  });
-};
+  getInitialState: function () {
+    return {
+      breadcrumbs : [],
+      menuItems   : [],
+    }
+  },
 
-HeaderStore.prototype.handleSetBreadcrumbs = function (payload) {
-  this.breadcrumbs = payload;
-};
+  init: function () {
+    this.data = this.getInitialState();
+  },
 
-HeaderStore.prototype.handlePushBreadcrumb = function (payload) {
-  this.breadcrumbs.push(payload);
-};
+  onSetBreadcrumbs: function (payload) {
+    this.data.breadcrumbs = payload;
+    this.trigger(this.data);
+  },
 
-HeaderStore.prototype.handlePopBreadcrumb = function () {
-  this.breadcrumbs.pop();
-};
+  onClearBreadcrumbs: function () {
+    this.data.breadcrumbs = [];
+    this.trigger(this.data);
+  },
 
-HeaderStore.prototype.handleClearBreadcrumbs = function () {
-  this.breadcrumbs = [];
-};
+  onSetMenuItems: function (payload) {
+    this.data.menuItems = payload;
+    this.trigger(this.data);
+  },
 
-HeaderStore.prototype.handleSetMenuItems = function (payload) {
-  this.menu = payload;
-};
+  onClearMenuItems: function () {
+    this.data.menuItems = [];
+    this.trigger(this.data);
+  },
 
-HeaderStore.prototype.handlePushMenuItem = function (payload) {
-  this.menu.push(payload);
-};
+  onClear: function () {
+    this.data = this.getInitialState();
+  },
 
-HeaderStore.prototype.handlePopMenuItem = function () {
-  this.menu.pop();
-};
+});
 
-HeaderStore.prototype.handleClearMenuItems = function () {
-  this.menu = [];
-};
-
-module.exports = alt.createStore(HeaderStore);
+module.exports = HeaderStore;

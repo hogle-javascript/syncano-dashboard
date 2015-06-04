@@ -1,0 +1,18 @@
+.tableIcons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: 35px;
+}
+
+.tableIcons i {
+    margin-left: 10px;
+}
+
+.tableIcons div {
+    float: right;
+}
+
+.tableIcons i:hover {
+    color: black;
+}

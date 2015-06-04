@@ -1,4 +1,4 @@
-.color-picker {
+.icon-picker {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -12,6 +12,7 @@
   user-select: none;
   border-radius: 3px;
   fill: #444;
+  max-width: 30px;
 }
 
 .icon-picker-list-item.icon-picker-list-item-selected {

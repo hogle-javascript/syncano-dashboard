@@ -25,6 +25,7 @@ module.exports = {
       {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
+      {test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
       // // required to write "require('./style.css')"
       // { test: /\.css$/,    loader: "style-loader!css-loader" },
 
