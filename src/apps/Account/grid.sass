@@ -1,0 +1,67 @@
+*, *:after, *:before
+  box-sizing: border-box
+
+$device-sm: 30em
+$device-md: 50em
+$device-lg: 1140px
+$column-gutter: 0rem
+$columns-count: 35
+
+html,
+body
+  font-size: 14px
+
+.container
+  margin: 0 auto
+  padding: 0 10px
+  max-width: $device-lg
+
+.container:after,
+.row:after
+  content: ""
+  display: table
+  clear: both
+
+.row
+  display: flex
+  flex-flow: row wrap
+  margin-right: -($column-gutter/2)
+  margin-left: -($column-gutter/2)
+  &.align-middle
+    align-items: center
+  &.align-bottom
+    align-items: flex-end
+  &.align-left
+    justify-content: flex-start
+  &.align-center
+    justify-content: center
+  &.align-right
+    justify-content: flex-end
+
+[class*="col"]
+  width: 100%
+  padding: 0 $column-gutter/2
+
+@mixin col-size($col)
+  flex-basis: (100% * $col / $columns-count)
+  max-width: (100% * $col / $columns-count)
+
+
+@for $col from 1 through $columns-count
+  .col-xs-#{$col}
+    @include col-size($col)
+
+@media (min-width: #{$device-sm})
+  @for $col from 1 through $columns-count
+    .col-sm-#{$col}
+      @include col-size($col)
+
+@media (min-width: #{$device-md})
+  @for $col from 1 through $columns-count
+    .col-md-#{$col}
+      @include col-size($col)
+
+@media (min-width: #{$device-lg})
+  @for $col from 1 through $columns-count
+    .col-lg-#{$col}
+      @include col-size($col)

@@ -1,13 +1,20 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    Link          = Router.Link,
-    mui           = require('material-ui'),
-    TextField     = mui.TextField,
-    RaisedButton  = mui.RaisedButton,
-    AuthActions   = require('./AuthActions'),
-    AuthStore     = require('./AuthStore'),
-    AuthConstants = require('./AuthConstants');
+var React           = require('react'),
+    Reflux          = require('reflux'),
+    Router          = require('react-router'),
+    Link            = Router.Link,
 
+    // Utils
+    ValidationMixin = require('../../mixins/ValidationMixin'),
+
+    // Stores and Actions
+    AuthStore       = require('./AuthStore'),
+    AuthActions     = require('./AuthActions'),
+    AuthConstants   = require('./AuthConstants'),
+
+    // Components
+    mui             = require('material-ui'),
+    TextField       = mui.TextField,
+    RaisedButton    = mui.RaisedButton;
 
 require('./AccountSignup.css');
 
@@ -15,7 +22,22 @@ require('./AccountSignup.css');
 module.exports = React.createClass({
 
   displayName: 'AccountLogin',
-  mixins: [React.addons.LinkedStateMixin],
+
+  mixins: [
+    Reflux.connect(AuthStore),
+    React.addons.LinkedStateMixin,
+    ValidationMixin
+  ],
+
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: true
+    },
+    password: {
+      presence: true
+    },
+  },
 
   contextTypes: {
     router: React.PropTypes.func
@@ -23,37 +45,20 @@ module.exports = React.createClass({
 
   statics: {
     willTransitionTo: function (transition) {
-      if (AuthStore.getState().token !== null) {
+      if (AuthStore.data.token) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     },
   },
 
-  getInitialState: function() {
-    return AuthStore.getState();
-  },
-
-  componentDidMount: function () {
-    AuthStore.listen(this.onChange);
-  },
-
-  componentWillUnmount: function () {
-    AuthStore.unlisten(this.onChange);
-  },
-
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works
-    if (nextState.canSubmit && nextState.token !== null) {
+    if (nextState.canSubmit && nextState.token) {
       var router = this.context.router,
           next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
-
-  },
-
-  onChange: function (state) {
-    this.setState(state);
   },
 
   handleSubmit: function (event) {
@@ -63,20 +68,24 @@ module.exports = React.createClass({
       return;
     }
 
-    AuthActions.passwordSignIn({
-      email: this.state.email,
-      password: this.state.password,
-    });
+    this.validate(function(isValid){
+      if (isValid === true) {
+        AuthActions.passwordSignIn({
+          email: this.state.email,
+          password: this.state.password,
+        });
+      }
+    }.bind(this));
   },
 
   renderError: function () {
-    if (!this.state.error) {
+    if (!this.state.errors || this.state.errors.feedback === undefined) {
       return;
     }
 
     return (
       <div>
-        <p>{this.state.error}</p>
+        <p>{this.state.errors.feedback}</p>
       </div>
     );
   },
@@ -100,7 +109,7 @@ module.exports = React.createClass({
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.state.emailError}
+              errorText={this.getValidationMessages('email').join()}
               name="email"
               className="text-field"
               autoComplete="email"
@@ -108,7 +117,7 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.state.passwordError}
+              errorText={this.getValidationMessages('password').join()}
               type="password"
               name="password"
               className="text-field"

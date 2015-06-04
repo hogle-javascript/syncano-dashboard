@@ -5,9 +5,9 @@ describe("AccountSignup.react", function () {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var AccountSignup = require('../AccountSignup.react');
+    // var AccountSignup = require('../AccountSignup.react');
 
-    var AccountSignupView = TestUtils.renderIntoDocument(<AccountSignup />);
+    // var AccountSignupView = TestUtils.renderIntoDocument(<AccountSignup />);
 
   });
 });
