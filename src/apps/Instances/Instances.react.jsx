@@ -1,21 +1,15 @@
-var React         = require('react'),
-    HeaderActions = require('../Header/HeaderActions'),
-    HeaderStore   = require('../Header/HeaderStore');
+var React       = require('react'),
+    HeaderMixin = require('../Header/HeaderMixin');
+
 
 module.exports = React.createClass({
 
   displayName: 'Instances',
-
-  componentDidMount: function () {
-    HeaderActions.setBreadcrumbs([{
-      route: 'instances',
-      label: 'Instances'
-    }]);
-  },
-
-  componentWillUnmount: function () {
-    HeaderActions.clearBreadcrumbs();
-  },
+  mixins: [HeaderMixin],
+  headerBreadcrumbs: [{
+    route: 'instances',
+    label: 'Instances'
+  }],
 
   render: function () {
 

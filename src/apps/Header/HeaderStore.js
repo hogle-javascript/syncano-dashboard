@@ -36,6 +36,11 @@ var HeaderStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onSet: function (payload) {
+    this.data = payload;
+    this.trigger(this.data);
+  },
+
   onClear: function () {
     this.data = this.getInitialState();
   },

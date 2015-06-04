@@ -2,11 +2,12 @@ var Reflux    = require('reflux');
 
 
 var HeaderActions = Reflux.createActions([
+  'set',
   'setBreadcrumbs',
-  'clearBreadcrumbs',
   'setMenuItems',
-  'clearMenuItems',
   'clear',
+  'clearBreadcrumbs',
+  'clearMenuItems',
 ]);
 
 module.exports = HeaderActions;
