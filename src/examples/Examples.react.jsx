@@ -35,6 +35,9 @@ var React                = require('react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
+    Icon                 = require('../common/Icon/Icon.react'),
+    IconPicker           = require('../common/Icon/IconPicker.react'),
+    IconPickerItem       = require('../common/Icon/IconPickerItem.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
@@ -45,7 +48,6 @@ var React                = require('react'),
 
 
 //var FlatButton = require('material-ui').FlatButton;
-
 
 require('./Examples.css');
 
@@ -291,8 +293,11 @@ module.exports = React.createClass({
         <h4>Examples</h4>
 
         <div className="exampleBox">
-          <h4>Dropdown</h4>
-          <Dropdown icon="menu" actions={actions} handleItemClick={dummyClick}/>
+          <h2>Dropdown</h2>
+          <Dropdown
+            icon="menu"
+            actions={actions}
+            handleItemClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
@@ -338,6 +343,17 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
+          <h2>ListItemEmpty</h2>
+          <ListItemEmpty
+            icon={"inbox"}
+            text={text}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Editor</h2>
+          <Editor
+            source={source}
+            runtime={runtime}/>
           <h4>ListColumnItem </h4>
           <ColumnListItem>
             <ColumnListItemColumn grid="1">
@@ -384,8 +400,10 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>FabList</h4>
-          <FabList buttons={fabButtons} handleClick={dummyClick}/>
+          <h2>FabList</h2>
+          <FabList
+            buttons={fabButtons}
+            handleFABClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
@@ -508,8 +526,10 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>material-ui Dialog</h4>
-          <FlatButton label="Bum!" onClick={handleStandardDialogTouchTap}  />
+          <h2>material-ui Dialog</h2>
+          <FlatButton
+            label="Bum!"
+            onClick={handleStandardDialogTouchTap}  />
           <Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
@@ -526,8 +546,10 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>ButtonSocialAuth</h4>
-          <ButtonSocialAuth icon="facebook" text="Log in with Facebook" />
+          <h2>ButtonSocialAuth</h2>
+          <ButtonSocialAuth
+            icon="facebook"
+            text="Log in with Facebook" />
         </div>
 
         <div className="exampleBox">
@@ -541,13 +563,17 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>ColorPickerItem (selected)</h4>
-          <ColorPickerItem color={'#EF5350'} selected={true} />
+          <h2>ColorPickerItem (selected)</h2>
+          <ColorPickerItem
+            color={'#EF5350'}
+            selected={true} />
         </div>
 
         <div className="exampleBox">
-          <h4>ColorPickerItem</h4>
-          <ColorPickerItem color={'#EF5350'} selected={false}/>
+          <h2>ColorPickerItem</h2>
+          <ColorPickerItem
+            color={'#EF5350'}
+            selected={false} />
         </div>
 
         <div className="exampleBox">
@@ -556,10 +582,37 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>MaterialIcon - from google font</h4>
-          <MaterialIcon name="favorite" />
+          <h2>Icon</h2>
+          <Icon
+            icon="warning"
+            handleClick={dummyClick.bind(this, "Icon")}
+            style={{fill: "#0091EA"}}
+            glowing={true} />
         </div>
 
+        <div className="exampleBox">
+          <h2>IconPicker</h2>
+          <IconPicker
+            selectedIcon="airplanemode-on"
+            handleClickListItem={dummyClick.bind(this, "IconPicker icon")} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>IconPickerItem</h2>
+          <IconPickerItem
+            icon={"theaters"}
+            selected={true}
+            handleClick={dummyClick.bind(this, "Selected IconPickerItem")} />
+          <IconPickerItem
+            icon={"theaters"}
+            selected={false}
+            handleClick={dummyClick.bind(this, "Not selected IconPickerItem")} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>MaterialIcon - from google font</h2>
+          <MaterialIcon name="favorite" />
+        </div>
       </div>
     );
   }
