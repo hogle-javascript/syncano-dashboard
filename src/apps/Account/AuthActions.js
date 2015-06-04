@@ -42,7 +42,8 @@ AuthActions.passwordSignUp.listen(function (payload) {
 
 AuthActions.setInstance.listen(function (name) {
   MainStore
-    .setInstance(payload.email, payload.password)
+    .connection
+    .setInstance(name)
     .then(this.completed)
     .catch(this.failure)
 });
