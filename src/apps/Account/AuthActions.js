@@ -9,6 +9,10 @@ var AuthActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
+  'passwordSignUp': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
   'setInstance': {
       asyncResult: true,
       children: ['completed', 'failure']
@@ -22,6 +26,12 @@ var AuthActions = Reflux.createActions({
 AuthActions.passwordSignIn.listen(function (payload) {
   AuthActions.passwordSignIn.promise(
     MainStore.connection.connect(payload.email, payload.password)
+  );
+});
+
+AuthActions.passwordSignUp.listen(function (payload) {
+  AuthActions.passwordSignUp.promise(
+    MainStore.connection.Accounts.create(payload)
   );
 });
 

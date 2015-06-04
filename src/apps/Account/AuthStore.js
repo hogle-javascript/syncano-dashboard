@@ -34,6 +34,14 @@ var AuthStore = Reflux.createStore({
     }
   },
 
+  onPasswordSignUpCompleted: function (payload) {
+    this.onPasswordSignInCompleted(payload);
+  },
+
+  onPasswordSignUpFailed: function (payload) {
+    this.onPasswordSignInFailed(payload);
+  },
+
   onPasswordSignInCompleted: function (payload) {
 
     sessionStorage.setItem('token', payload.account_key);
