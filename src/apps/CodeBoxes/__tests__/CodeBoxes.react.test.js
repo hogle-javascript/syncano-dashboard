@@ -1,4 +1,5 @@
 jest.dontMock("../CodeBoxes.react");
+jest.dontMock("request");
 
 describe("CodeBoxes.react", function () {
   it("testing component", function () {
@@ -8,7 +9,7 @@ describe("CodeBoxes.react", function () {
         StorageMock   = require('../../../utils/StorageMock');
 
         Codeboxes     = require('../CodeBoxes.react');
-        CodeboxesView = TestUtils.renderIntoDocument(<Codeboxes />);
+        //CodeboxesView = TestUtils.renderIntoDocument(<Codeboxes />);
 
   });
 });
