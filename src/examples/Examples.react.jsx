@@ -1,5 +1,6 @@
 var React                = require('react'),
     mui                  = require('material-ui'),
+
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
     Colors               = require('material-ui/lib/styles/colors')
     LinearProgress       = require('material-ui/lib/linear-progress'),
@@ -28,6 +29,9 @@ var React                = require('react'),
     FieldDatetime        = require('../common/Field/FieldDatetime.react'),
     FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
     FieldSelect          = require('../common/Field/FieldSelect.react'),
+    SwitchField          = require('../common/SwitchField/SwitchField.react'),
+    SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
+    SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
@@ -38,6 +42,9 @@ var React                = require('react'),
     ColumnListItem       = require('../common/ColumnList/Item.react'),
     ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
     ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
+
+
+//var FlatButton = require('material-ui').FlatButton;
 
 
 require('./Examples.css');
@@ -207,6 +214,20 @@ module.exports = React.createClass({
       }
     };
 
+    var switchFields = [{
+        name: 'limit',
+        enabled: true,
+        heading: 'Limit',
+        textEnabled: 'Hard limit is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Hard limit is currently disabled. Your account will stop working when the limit is reached.',
+      }, {
+        name: 'alert',
+        enabled: false,
+        heading: 'Alert',
+        textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
+      }]
+
     var payload = '{test: "testvalue"}';
 
     var fieldSelect = {
@@ -349,8 +370,7 @@ module.exports = React.createClass({
             theme="github"
             onChange={dummyClick}
             name="UNIQUE_ID_OF_DIV"
-            value={source}
-            />
+            value={source}/>
         </div>
 
         <div className="exampleBox">
@@ -410,8 +430,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldSelect</h2>
-          <FieldSelect field={fieldSelect}
-             />
+          <FieldSelect field={fieldSelect}/>
         </div>
 
         <div className="exampleBox">
@@ -437,6 +456,42 @@ module.exports = React.createClass({
           <h2>material-ui</h2>
           <LinearProgress mode="indeterminate" />
         </div>
+
+        <div className="exampleBox">
+          <h2>SwitchFieldList</h2>
+          <SwitchFieldList
+            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
+            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
+            fields={switchFields} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>SwitchField</h2>
+          <SwitchField
+            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
+            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
+            name="react skills"
+            heading="React skills"
+            toggled={true}
+            textEnabled="Dummy text enabled"
+            textDisabled="dummy text disabled" />
+        </div>
+
+        <div className="exampleBox">
+          <h2>SwitchInput</h2>
+          <SwitchInput
+            handleClick={dummyClick.bind(this, "handleClick")}
+            enabled={true} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>Toggle (Material UI)</h2>
+          <mui.Toggle
+            name="ToggleButton"
+            value="ValueToggle"
+            label="tempomat"
+            onToggle={dummyClick.bind(this, "Mui Toggle")} />
+          </div>
 
         <div className="exampleBox">
           <h4>material-ui - Snackbar</h4>
