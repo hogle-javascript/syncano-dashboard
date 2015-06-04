@@ -1,6 +1,6 @@
-jest.dontMock("../Codeboxes.react");
+jest.dontMock("../CodeBoxes.react");
 
-describe("Codeboxes.react", function () {
+describe("CodeBoxes.react", function () {
   it("testing component", function () {
 
     var React         = require('react/addons'),
