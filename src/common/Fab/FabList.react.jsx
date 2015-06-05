@@ -47,7 +47,7 @@ module.exports = React.createClass({
     }.bind(this));
 
     return (
-      <div style={this.mergeStyles(this.props.style, styles).list}>
+      <div style={styles.list}>
         {buttons}
       </div>
     );
