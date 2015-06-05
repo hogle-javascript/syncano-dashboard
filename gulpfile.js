@@ -15,8 +15,8 @@ var paths = {
     dist: './dist',
     assets: './src/assets',
     index: './src/assets/index.html',
-    images: './src/assets/img/**/*',
-}
+    images: './src/assets/img/**/*'
+};
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*', paths.dist], cb);
@@ -38,8 +38,8 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
     config.debug   = true;
 
     if (ENV == 'production') {
-      config.progress = false
-      config.debug    = false
+      config.progress = false;
+      config.debug    = false;
       config.plugins  = config.plugins.concat(
           new webpack.DefinePlugin({
               'process.env': {

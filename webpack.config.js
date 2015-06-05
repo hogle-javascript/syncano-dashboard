@@ -6,8 +6,8 @@ var ENV     = process.env.NODE_ENV || 'development',
 module.exports = {
   // cache: true,
   entry: {
-      app: path.join(__dirname, 'src', 'app.jsx'),
-      vendor: ['brace', 'react', 'moment'],
+      app: ['webpack/hot/dev-server', path.join(__dirname, 'src', 'app.jsx')],
+      vendor: ['brace', 'react', 'moment']
   },
   output: {
     path: path.join(__dirname, 'dist', 'js'),
@@ -17,7 +17,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({ENV: ENV}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [
@@ -41,6 +42,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css', '.svg', '.styl']
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js', '.json', '.jsx', '.css', '.svg', '.styl']
   }
 };
