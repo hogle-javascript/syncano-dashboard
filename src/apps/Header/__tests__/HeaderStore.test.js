@@ -1,10 +1,10 @@
-jest.dontMock("../actions");
+jest.dontMock("../HeaderStore");
 
-describe("actions", function() {
+describe("HeaderStore", function() {
   it("testing component", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var actions = require('../actions');
+    var HeaderStore = require('../HeaderStore');
   });
 });
