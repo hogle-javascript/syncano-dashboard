@@ -1,13 +1,10 @@
 var React = require('react'),
 
     mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable;
+    StylePropable = mui.Mixins.StylePropable,
 
-
-var FAB   = require('./Fab.react');
-
-
-var Label = require('../Label/Label.react');
+    FAB   = require('./Fab.react'),
+    Label = require('../Label/Label.react');
 
 module.exports = React.createClass({
 
@@ -34,6 +31,7 @@ module.exports = React.createClass({
     };
     return styles;
   },
+
   render: function() {
     var styles = this.getStyles();
 
