@@ -35,11 +35,13 @@ var CodeBoxesStore = Reflux.createStore({
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
-    this.listenTo(AuthStore, this.getData);
+    this.listenTo(AuthStore, this.refreshData);
   },
 
-  getData: function (status) {
-    if (status.currentInstance) {
+  refreshData: function () {
+    console.log('Refresh CodeBoxes data', status);
+
+    if (AuthStore.data.currentInstance) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
     }

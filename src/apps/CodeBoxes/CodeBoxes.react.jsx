@@ -1,5 +1,9 @@
 var React  = require('react'),
     Reflux = require('reflux'),
+    Router              = require('react-router'),
+
+    // Utils
+    HeaderMixin      = require('../Header/HeaderMixin');
 
     // Stores and Actions
     CodeBoxesActions = require('./CodeBoxesActions'),
@@ -24,9 +28,30 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(CodeBoxesStore),
+    //Reflux.connect(AuthStore, 'currentInstance'),
+    HeaderMixin,
+    Router.State,
+    Router.Navigation,
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
+
+  componentWillMount: function() {
+    CodeBoxesStore.refreshData();
+  },
+
+  headerBreadcrumbs: function () {
+   return [
+     {
+      route: 'instance',
+      label: this.getParams().instanceName,
+      params: {instanceName: this.getParams().instanceName}
+    },{
+      route: 'codeboxes',
+      label: 'Codeboxes',
+      params: {instanceName: this.getParams().instanceName}
+    }]
+  },
 
   handleItemIconClick: function (id, state) {
     var checkedItemNumber;
@@ -55,6 +80,7 @@ module.exports = React.createClass({
   },
 
   handleItemClick: function(itemId) {
+    this.transitionTo('codeboxesedit', {instanceName: AuthStore.getCurrentInstanceName(), codeboxId: itemId});
     //debugger;
   },
 
