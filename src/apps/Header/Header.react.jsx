@@ -1,114 +1,118 @@
-var React = require('react');
-var classNames = require('classnames');
+var React         = require('react'),
+    Reflux        = require('reflux'),
+    classNames    = require('classnames'),
+    Router        = require('react-router'),
+    Link          = Router.Link,
+    mui           = require('material-ui'),
+    Tabs          = mui.Tabs,
+    Tab           = mui.Tab,
+    MaterialIcon  = require('../../common/Icon/MaterialIcon.react'),
+    HeaderActions = require('./HeaderActions'),
+    HeaderStore   = require('./HeaderStore');
 
-var HeaderStore = require('./store');
-var AuthStore = require('../Auth/store');
-
-//var ViewActions   = require('../actions/ViewActions');
-
-var Icon = require('../../common/Icon/Icon.react');
-var Tabs = require('../../common/Tabs/Tabs.react');
-var ProgressBar = require('../../common/ProgressBar/ProgressBar.react');
-
-var HeaderOptions = require('./HeaderOptions.react');
 
 require('./Header.css');
+
 
 module.exports = React.createClass({
 
   displayName: 'Header',
+  mixins: [Reflux.connect(HeaderStore)],
 
-  propTypes: {
-    actions: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string,
-    //handleTabClick: React.PropTypes.func.isRequired,
-    //handleAccountMenuItemClick: React.PropTypes.func.isRequired,
+  contextTypes: {
+      router: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function () {
-    return {
-      menu: HeaderStore.getMenu(),
-      //account: AuthStore.getAccount(),
+  handleTabActive: function (tab) {
+    this.context.router.transitionTo(tab.props.route);
+  },
+
+  renderBreadcrumbs: function () {
+    if (this.state.breadcrumbs.length === 0) {
+      return;
     }
+
+    return (
+      <ul>
+        {this.state.breadcrumbs.map(this.renderBreadcrumbItem)}
+      </ul>
+    );
   },
 
-  getDefaultProps: function () {
-    return {
-      appLoading: false,
-      actions: [{
-        displayName: 'Account settings',
-        name: 'account'
-      }, {
-        displayName: 'Log out',
-        name: 'logout'
-      }],
+  renderBreadcrumbItem: function (breadcrumb, index, breadcrumbs) {
+    var chevron = null;
+
+    if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
+      chevron = <MaterialIcon name="chevron_right" />
     }
+
+    breadcrumb.params = breadcrumb.params || {};
+    breadcrumb.query  = breadcrumb.query  || {};
+
+    return (
+      <li key={'breadcrumb-' + index}>
+        <Link
+          to={breadcrumb.route}
+          params={breadcrumb.params}
+          query={breadcrumb.query}>
+          {breadcrumb.label}
+        </Link>
+        {chevron}
+      </li>
+    )
   },
 
-  componentDidMount: function () {
-    HeaderStore.addChangeListener(this.onChange);
-    AuthStore.addChangeListener(this.onChange);
+  renderMenu: function (className) {
+    if (this.state.menuItems.length === 0) {
+      return
+    }
+
+    return (
+      <div className={className}>
+        <Tabs tabItemContainerStyle={{backgroundColor: 'transparent'}}>
+          {this.state.menuItems.map(this.renderMenuItem)}
+        </Tabs>
+      </div>
+    );
   },
 
-  componentWillUnmount: function () {
-    HeaderStore.removeChangeListener(this.onChange);
-    AuthStore.removeChangeListener(this.onChange);
-  },
-
-  onChange: function () {
-    this.setState({
-      menu: HeaderStore.getMenu(),
-      //account: AuthStore.getAccount(),
-    });
+  renderMenuItem: function(tab) {
+    return (
+      <Tab
+        label={tab.label}
+        route={tab.route}
+        onActive={this.handleTabActive} />
+    )
   },
 
   render: function () {
+    var colClass    = 's' + this.state.menuItems.length,
+        offsetClass = 'offset-s' + (10 - this.state.menuItems.length),
+        menuClass   =  classNames('col', 'header-menu', colClass),
+        iconsClass  =  classNames('col', 'header-icons', 's2', offsetClass);
 
-    var cssClasses = classNames({
-      'header-group': true,
-      'header-group-loading': this.props.appLoading,
-    });
-
-
-    //return (<div>aaa</div> )
-    if (typeof this.props.tabs !== "undefined") {
-      var viewTab = HeaderStore.getAppView().tab;
-      return (
-        <div className={cssClasses}>
-          <div className="header-details">
-            <div className="header-nav-icon" onClick={this.props.handleIconClick}>
-              <Icon icon={this.props.icon}/>
-            </div>
-            <div className="header-text">
-              <div className="header-title">{this.props.title}</div>
-            </div>
-            <HeaderOptions {...this.props} menu={this.state.menu} account={this.state.account} />
+    return (
+      <div className="row header">
+        <div className="row header-top">
+          <div className="col header-breadcrumbs">
+            {this.renderBreadcrumbs()}
           </div>
-          <Tabs {...this.props} activeTab={viewTab} />
-          <ProgressBar />
-        </div>
-      );
-    } else {
-      return (
-        <div className={cssClasses}>
-          <div className="header-details">
-            <div className="header-nav-icon">
-              <Icon icon={this.props.icon}/>
-            </div>
-            <div className="header-text">
-              <div className="header-title">{this.props.title}</div>
-            </div>
-            <HeaderOptions menu={this.state.menu} actions={this.props.actions} />
+          <div className="col header-links right-align">
+            <a herf="#">Docs</a>
+            <a herf="#">API Keys</a>
+            <a herf="#">Support</a>
           </div>
-          <ProgressBar />
         </div>
-      );
-    }
+        <div className="row header-bottom">
+          {this.renderMenu(menuClass)}
+          <div className={iconsClass}>
+            <MaterialIcon name="more_vert" />
+            <MaterialIcon name="notifications_none" />
+            <MaterialIcon name="search" />
+          </div>
+        </div>
+      </div>
+    )
   }
 
 });
-
-
-
-//<HeaderOptions {...this.props} menu={this.state.menu} account={this.state.account} handleAccountMenuItemClick={this.handleAccountMenuItemClick}/>

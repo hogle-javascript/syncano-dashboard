@@ -1,11 +1,10 @@
-var React               = require('react'),
-
-    Reflux              = require('reflux'),
+var React  = require('react'),
+    Reflux = require('reflux'),
 
     // Stores and Actions
-    CodeBoxesActions    = require('./CodeBoxesActions'),
-    CodeBoxesStore      = require('./CodeBoxesStore'),
-    AuthStore           = require('../Account/AuthStore'),
+    CodeBoxesActions = require('./CodeBoxesActions'),
+    CodeBoxesStore   = require('./CodeBoxesStore'),
+    AuthStore        = require('../Account/AuthStore'),
 
     // Components
     Item                = require('../../common/ColumnList/Item.react'),

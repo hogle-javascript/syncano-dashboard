@@ -5,15 +5,14 @@
  * Copyright 2015 Syncano Inc.
  */
 
-var isNode    = false,
-		isWebpack = false;
-
+var isNode = false,
+	isWebpack = false;
 if (typeof module !== 'undefined' && module.exports) {
 	isNode = true;
 }
 
 if (typeof __webpack_require__ === 'function') {
-	isNode    = false;
+	isNode = false;
 	isWebpack = true;
 }
 
@@ -83,7 +82,7 @@ var Syncano = (function() {
 
 	/*
 		Parses obj and search for obj.links.
-		If found, copies them to private linksObject with given prefix and removes from obj.
+		If found, copies them to private linksObject with given prefix and removes from obj. 
 		All existing links will be overwritten
 		Returns:
 			linksObject
