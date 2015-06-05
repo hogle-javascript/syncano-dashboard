@@ -2,6 +2,9 @@ var React               = require('react'),
     Reflux              = require('reflux'),
     Router              = require('react-router'),
 
+    // Utils
+    HeaderMixin      = require('../Header/HeaderMixin');
+
     // Stores and Actions
     CodeBoxesActions    = require('./CodeBoxesActions'),
     CodeBoxesStore      = require('./CodeBoxesStore'),
@@ -29,10 +32,28 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(CodeBoxesStore),
     //React.addons.LinkedStateMixin,
+    HeaderMixin,
     Router.State,
     Router.Navigation,
     //ValidationMixin,
   ],
+
+  headerBreadcrumbs: function () {
+   return [
+     {
+      route: 'instance',
+      label: this.getParams().instanceName,
+      params: {instanceName: this.getParams().instanceName}
+    },{
+      route: 'codeboxes',
+      label: 'Codeboxes',
+      params: {instanceName: this.getParams().instanceName}
+    },{
+      route: 'codeboxesedit',
+      label: this.getParams().codeboxId,
+      params: {codeboxId: this.getParams().codeboxId, instanceName: this.getParams().instanceName}
+    }]
+  },
 
   dummyClick: function (event) {
       console.log('change!');

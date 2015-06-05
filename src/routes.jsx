@@ -1,6 +1,7 @@
 var React                       = require('react'),
     Router                      = require('react-router'),
     Route                       = Router.Route,
+    Redirect                    = Router.Redirect,
     NotFoundRoute               = Router.NotFoundRoute,
     DefaultRoute                = Router.DefaultRoute,
 
@@ -47,6 +48,7 @@ module.exports = (
 
     <Route name="dashboard" handler={Dashboard} path="/">
       <Route name="instances" handler={Instance} path="/instances">
+        <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
