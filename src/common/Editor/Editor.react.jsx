@@ -33,7 +33,7 @@ module.exports = React.createClass({
       mode   : '',
       theme  : '',
       height : '500px',
-      width  : '500px',
+      width  : '100%',
       value  : '',
       fontSize   : 12,
       showGutter : true,

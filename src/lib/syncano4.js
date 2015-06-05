@@ -214,14 +214,23 @@ var Syncano = (function() {
 				enumerable: false,
 				configurable: false
 			});
-			if (typeof data.objects[i].name !== 'undefined') {
-				Object.defineProperty(List, data.objects[i].name, {
+			if (typeof data.objects[i].id !== 'undefined') {
+				Object.defineProperty(List, data.objects[i].id, {
 					value: data.objects[i],
 					writable: true,
 					enumerable: true,
 					configurable: false
 				});
 			}
+			//if (typeof data.objects[i].name !== 'undefined') {
+			//	Object.defineProperty(List, data.objects[i].name, {
+			//		value: data.objects[i],
+			//		writable: true,
+			//		enumerable: true,
+			//		configurable: false
+			//	});
+			//}
+
 		}
 		Object.defineProperty(List, '_items', {
 			value: data.objects,
@@ -1429,6 +1438,7 @@ var Syncano = (function() {
 		 * @param {object} params
 		 * @param {string} params.runtime_name - python / nodejs / ruby
 		 * @param {string} params.name - name of the codebox
+		 * @param {string} params.description - name of the codebox
 		 * @param {string} params.source - source code (will be automatically URL-encoded)
 		 * @param {function} [callbackOK] - optional method to call on success
 		 * @param {function} [callbackError] - optional method to call when request fails

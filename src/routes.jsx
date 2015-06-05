@@ -20,6 +20,7 @@ var React                       = require('react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     Codeboxes                   = require('./apps/Codeboxes/Codeboxes.react'),
+    CodeboxesEdit               = require('./apps/Codeboxes/CodeboxesEdit.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
@@ -46,6 +47,7 @@ module.exports = (
       <Route name="api-keys" handler={ApiKeys} path="/instances/:instanceName/api_keys" />
       <Route name="classes" handler={Classes} path="/instances/:instanceName/classes" />
       <Route name="codeboxes" handler={Codeboxes} path="/instances/:instanceName/codeboxes" />
+      <Route name="codeboxesedit" handler={CodeboxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
       <Route name="data-objects" handler={DataObjects} path="/instances/:instanceName/objects" />
       <Route name="schedules" handler={Schedules} path="/instances/:instanceName/schedules" />
       <Route name="tasks" handler={Tasks} path="/instances/:instanceName/tasks" />

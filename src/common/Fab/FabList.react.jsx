@@ -1,18 +1,42 @@
-var React = require('react');
+var React = require('react'),
+
+    mui           = require('material-ui'),
+    StylePropable = mui.Mixins.StylePropable;
+
 
 var FAB   = require('./Fab.react');
+
+
 var Label = require('../Label/Label.react');
 
 module.exports = React.createClass({
 
   displayName: 'FABList',
 
+  mixins: [StylePropable],
+
   propTypes: {
     buttons: React.PropTypes.array.isRequired,
     handleClick: React.PropTypes.func.isRequired,
   },
 
+  getStyles: function() {
+    var styles = {
+      list: {
+        position: 'fixed',
+        right: 50,
+        bottom: 50,
+        zIndex: 9,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end'
+      },
+    };
+    return styles;
+  },
   render: function() {
+    var styles = this.getStyles();
+
     var buttons = this.props.buttons.map(function(button) {
       return (
         <div className="fab-with-label" key={button.name}>
@@ -21,8 +45,9 @@ module.exports = React.createClass({
         </div>
       );
     }.bind(this));
+
     return (
-      <div className="fab-list">
+      <div style={this.mergeStyles(this.props.style, styles).list}>
         {buttons}
       </div>
     );

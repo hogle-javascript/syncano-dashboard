@@ -48,7 +48,6 @@ module.exports = React.createClass({
       'editor-panel-collapsed': this.state.panelCollapsed,
     });
     var payloadStyle = {
-        'height': '100%',
         'display': 'flex',
         'flex-direction': 'column',
         'padding': '0px 10px 0px 10px',
@@ -59,7 +58,7 @@ module.exports = React.createClass({
 
     var unfoldIcon = this.state.panelCollapsed ? "unfold-more" : "unfold-less";
     return (
-      <Paper zDepth={1} style={{'background-color': '#F1F1F1'}}>
+      <Paper zDepth={1} style={{height: '100%', 'background-color': '#F1F1F1'}}>
         <Paper zDepth={1} style={payloadStyle}>
           <TextField style={{width: '100%'}} hintText='Type in your payload here e.g. {"my_argument": "test123}' floatingLabelText="Payload" />
             <div className="editor-toolbar-unfold-button" onClick={this.handleToggleClick}>
@@ -67,7 +66,7 @@ module.exports = React.createClass({
             </div>
         </Paper>
         {progressBar}
-        <Paper rounded={false} zDepth={1} style={{'height': '100px', backgroundColor: '#4C4A43', 'color': 'white', 'padding': '10px'}}>
+        <Paper rounded={false} zDepth={1} style={{'height': '100%', backgroundColor: '#4C4A43', 'color': 'white', 'padding': '10px'}}>
           {this.state.trace}
         </Paper>
       </Paper>
