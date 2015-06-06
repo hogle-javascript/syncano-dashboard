@@ -41,10 +41,7 @@ module.exports = React.createClass({
 
     this.validate(function(isValid){
       if (isValid === true) {
-        AuthActions.passwordSignUp({
-          email: this.state.email,
-          password: this.state.password,
-        });
+        AuthActions.passwordReset(this.state.email);
       }
     }.bind(this));
   },
@@ -61,6 +58,18 @@ module.exports = React.createClass({
     );
   },
 
+  renderFeedback: function () {
+    if (!this.state.feedback || this.state.feedback === undefined) {
+      return
+    }
+
+    return (
+      <div>
+        <p>{this.state.feedback}</p>
+      </div>
+    );
+  },
+
   render: function() {
     return (
       <div className="login">
@@ -72,6 +81,7 @@ module.exports = React.createClass({
             <h1>Reset password</h1>
           </div>
           {this.renderError()}
+          {this.renderFeedback()}
           <form
             onSubmit={this.handleSubmit}
             className="login-input-group"

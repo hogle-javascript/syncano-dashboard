@@ -48,7 +48,7 @@ var AuthStore = Reflux.createStore({
 
   onPasswordSignInCompleted: function (payload) {
     this.data = {
-      canSubmit: false
+      canSubmit: true
     };
 
     SessionActions.login(payload);
@@ -67,6 +67,23 @@ var AuthStore = Reflux.createStore({
     }
 
     this.trigger(this.data);
+  },
+
+  onPasswordReset: function () {
+    this.onPasswordSignIn();
+  },
+
+  onPasswordResetCompleted: function () {
+    this.data = {
+      canSubmit: true,
+      email: null,
+      feedback: 'Check your inbox.'
+    };
+    this.trigger(this.data);
+  },
+
+  onPasswordResetFailure: function (payload) {
+    this.onPasswordSignInFailure(payload);
   },
 
   checkSession: function (session) {
