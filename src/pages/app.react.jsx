@@ -1,10 +1,10 @@
-var React        = require('react'),
-    Router       = require('react-router'),
-    RouteHandler = Router.RouteHandler,
+var React         = require('react'),
+    Router        = require('react-router'),
+    RouteHandler  = Router.RouteHandler,
 
-    AuthActions  = require('../apps/Main/MainActions'),
+    SessionActions = require('../apps/Session/SessionActions'),
 
-    ThemeManager = require('material-ui/lib/styles/theme-manager')();
+    ThemeManager   = require('material-ui/lib/styles/theme-manager')();
 
 
 module.exports = React.createClass({
@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function () {
-    MainActions.registerRouter(this.context.router);
+    SessionActions.registerRouter(this.context.router);
   },
 
   render: function () {
