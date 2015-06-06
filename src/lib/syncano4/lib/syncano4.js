@@ -82,7 +82,7 @@ var Syncano = (function() {
 
 	/*
 		Parses obj and search for obj.links.
-		If found, copies them to private linksObject with given prefix and removes from obj. 
+		If found, copies them to private linksObject with given prefix and removes from obj.
 		All existing links will be overwritten
 		Returns:
 			linksObject

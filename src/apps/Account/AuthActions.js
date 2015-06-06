@@ -18,15 +18,18 @@ AuthActions.passwordSignIn.listen(function (payload) {
   Connection
     .connect(payload.email, payload.password)
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
 AuthActions.passwordSignUp.listen(function (payload) {
   Connection
     .Accounts
-    .create(payload.email, payload.password)
+    .create({
+      email: payload.email,
+      password: payload.password
+    })
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
 module.exports = AuthActions;

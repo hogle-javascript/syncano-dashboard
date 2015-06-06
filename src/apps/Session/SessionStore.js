@@ -19,6 +19,10 @@ var SessionStore = Reflux.createStore({
   },
 
   onLogin: function(payload) {
+    if (payload === undefined || payload.account_key === undefined) {
+      return
+    }
+
     sessionStorage.setItem('token', payload.account_key);
     this.token = payload.account_key;
     this.user  = payload;
@@ -49,6 +53,10 @@ var SessionStore = Reflux.createStore({
   },
 
   isAuthenticated: function () {
+    if (this.token === 'undefined') {
+      return false;
+    }
+
     return this.token ? true : false;
   },
 
