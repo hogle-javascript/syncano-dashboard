@@ -28,7 +28,6 @@ module.exports.toggleMenuMixin = {
 module.exports.dropdownClickMixin = {
 
   handleClick: function (e) {
-    console.log('handleDropdownClick', e);
     this.props.handleClick(this.props.action.name);
     e.stopPropagation();
     //ViewActions.closeDropdown();
