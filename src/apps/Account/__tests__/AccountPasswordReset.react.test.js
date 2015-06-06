@@ -7,7 +7,7 @@ describe("AccountPasswordReset.react", function () {
     var TestUtils = React.addons.TestUtils;
     var AccountPasswordReset = require('../AccountPasswordReset.react');
 
-    var AccountPasswordResetView = TestUtils.renderIntoDocument(<AccountPasswordReset />);
+    // var AccountPasswordResetView = TestUtils.renderIntoDocument(<AccountPasswordReset />);
 
   });
 });
