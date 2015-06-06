@@ -1,13 +1,14 @@
-var Reflux          = require('reflux'),
+var Reflux     = require('reflux'),
 
-    MainStore       = require('../Main/MainStore');
+    Connection = require('../Session/Connection').get();
 
 var CodeBoxesActions = Reflux.createActions();
 
 CodeBoxesActions.getCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.getCodeBoxes.listen( function(payload) {
-
-  MainStore.connection.CodeBoxes.list()
+  Connection
+    .CodeBoxes
+    .list()
     .then(this.completed)
     .catch(this.failure);
 });
