@@ -319,7 +319,8 @@ var Syncano = (function() {
 			create: this.createAccount.bind(this),
 			get: this.getAccount.bind(this),
 			update: this.updateAccount.bind(this),
-			resetKey: this.resetAccountKey.bind(this)
+			resetKey: this.resetAccountKey.bind(this),
+			passwordReset: this.accountPasswordReset.bind(this)
 		};
 
 		/**
@@ -1003,6 +1004,20 @@ var Syncano = (function() {
 		 */
 		resetAccountKey: function(callbackOK, callbackError) {
 			return this.request('POST', 'v1/account/reset_key', {}, callbackOK, callbackError);
+		},
+
+		/**
+		 * Reset password
+		 *
+		 * @method Syncano#accountPasswordReset
+		 * @alias Syncano.Accounts.accountPasswordReset
+		 * @param {string} email - yout email address
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {Object} promise
+		 */
+		accountPasswordReset: function(email, callbackOK, callbackError) {
+			return this.request('POST', 'v1/account/password/reset/', {email: email}, callbackOK, callbackError);
 		},
 
 		/***********************
