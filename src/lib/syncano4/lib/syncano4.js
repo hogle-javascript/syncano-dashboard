@@ -321,7 +321,8 @@ var Syncano = (function() {
 			update: this.updateAccount.bind(this),
 			resetKey: this.resetAccountKey.bind(this),
 			passwordReset: this.accountPasswordReset.bind(this),
-			passwordResetConfirm: this.accountPasswordResetConfirm.bind(this)
+			passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
+			activate: this.activateAccount.bind(this),
 		};
 
 		/**
@@ -1036,6 +1037,22 @@ var Syncano = (function() {
 		 */
 		accountPasswordResetConfirm: function(params, callbackOK, callbackError) {
 			return this.request('POST', 'v1/account/password/reset/confirm/', params, callbackOK, callbackError);
+		},
+
+		/**
+		 * Activate account
+		 *
+		 * @method Syncano#activateAccount
+		 * @alias Syncano.Accounts.activateAccount
+		 * @param {Object} params - activate account object
+		 * @param {string} params.uid - User id query param
+		 * @param {string} params.token - Token query param
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {Object} promise
+		 */
+		activateAccount: function(params, callbackOK, callbackError) {
+			return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
 		},
 
 		/***********************

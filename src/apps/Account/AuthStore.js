@@ -26,6 +26,27 @@ var AuthStore = Reflux.createStore({
     this.listenTo(SessionStore, this.checkSession);
   },
 
+  onActivate: function () {
+    this.data = {
+      status: 'Account activation in progress...'
+    };
+    this.trigger(this.data);
+  },
+
+  onActivateCompleted: function () {
+    this.data = {
+      status: 'Account activated successfully.'
+    };
+    this.trigger(this.data);
+  },
+
+  onActivateFailure: function () {
+    this.data = {
+      status: 'Invalid or expired activation link.'
+    };
+    this.trigger(this.data);
+  },
+
   onPasswordSignUp: function () {
     this.onPasswordSignIn();
   },

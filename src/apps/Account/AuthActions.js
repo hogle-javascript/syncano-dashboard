@@ -4,6 +4,10 @@ var Reflux     = require('reflux'),
 
 // TODO: https://github.com/spoike/refluxjs/issues/296
 var AuthActions = Reflux.createActions({
+  'activate': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
   'passwordSignIn': {
       asyncResult: true,
       children: ['completed', 'failure']
@@ -20,6 +24,14 @@ var AuthActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
+});
+
+AuthActions.activate.listen(function (payload) {
+  Connection
+    .Accounts
+    .activate(payload)
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 AuthActions.passwordSignIn.listen(function (payload) {
