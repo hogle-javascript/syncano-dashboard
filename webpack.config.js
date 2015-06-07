@@ -28,7 +28,8 @@ module.exports = {
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
       {
         test: /\.sass$/,
-        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8" +
+        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8&" +
+          "includePaths[]=" + compass + "&" +
           "includePaths[]=" +
           (path.resolve(__dirname, "./src/assets/sass")) + "&" +
           "includePaths[]=" +
