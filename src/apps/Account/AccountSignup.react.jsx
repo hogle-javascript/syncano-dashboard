@@ -15,7 +15,8 @@ var React           = require('react'),
     // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton;
+    RaisedButton    = mui.RaisedButton,
+    Paper           = mui.Paper;
 
 
 require('./Account.sass');
@@ -94,39 +95,60 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>
-        {this.renderError()}
-        <form
-          onSubmit={this.handleSubmit}
-          className="login-input-group"
-          acceptCharset="UTF-8"
-          method="post">
-          <TextField
-            ref="email"
-            valueLink={this.linkState('email')}
-            errorText={this.getValidationMessages('email').join()}
-            name="email"
-            className="text-field"
-            autoComplete="email"
-            hintText="Your email" />
-          <TextField
-            ref="password"
-            valueLink={this.linkState('password')}
-            errorText={this.getValidationMessages('password').join()}
-            type="password"
-            name="password"
-            className="text-field"
-            autoComplete="password"
-            hintText="Password" />
-          <RaisedButton
-            type="submit"
-            label="Sign up for free"
-            style={{
-              width: '100%',
-              marginTop: '1em'
-            }}
-            primary={true} />
-        </form>
+      <div className="account-container">
+        <div className="account-logo">
+          <img src="/img/syncano-logo.svg" />
+        </div>
+        <Paper className="account-container__content">
+          <div className="account-container__content__header vm-5-b">
+            <p className="vm-2-b">Try it now and start creating your apps</p>
+            <small>
+              Your 30 day trial includes unlimited use of the Syncano platform without
+               inputting any credit card information.
+            </small>
+          </div>
+          {this.renderError()}
+          <form
+            onSubmit={this.handleSubmit}
+            className="account-container__content__form"
+            acceptCharset="UTF-8"
+            method="post">
+            <TextField
+              ref="email"
+              valueLink={this.linkState('email')}
+              errorText={this.getValidationMessages('email').join()}
+              name="email"
+              className="text-field"
+              autoComplete="email"
+              hintText="Your email" />
+            <TextField
+              ref="password"
+              valueLink={this.linkState('password')}
+              errorText={this.getValidationMessages('password').join()}
+              type="password"
+              name="password"
+              className="text-field"
+              autoComplete="password"
+              hintText="Password" />
+            <RaisedButton
+              type="submit"
+              label="Sign up for free"
+              style={{
+                width: '100%',
+                height: '48px'
+              }}
+              className="raised-button"
+              primary={true} />
+          </form>
+          <div className="account-container__content__footer">
+            <ul className="list--flex">
+              <li>
+                <p>Already have an account? <Link to="login"> Login</Link></p>
+              </li>
+            </ul>
+          </div>
+        </Paper>
+        <p className="vm-0-b text-center">By signing up you agree to our <Link to="login"> Terms of Use and Privacy Policy</Link>.</p>
       </div>
     );
   }

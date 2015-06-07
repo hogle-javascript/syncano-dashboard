@@ -96,7 +96,7 @@ module.exports = React.createClass({
 	  return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.png" />
+          <img src="/img/syncano-logo.svg" />
         </div>
         <Paper className="account-container__content">
           <div className="account-container__content__header">
@@ -138,14 +138,10 @@ module.exports = React.createClass({
           <div className="account-container__content__footer">
             <ul className="list--flex">
               <li>
-                <p>
-                  <Link to="password-reset">Forgot password?</Link>
-                </p>
+                <p><Link to="password-reset">Forgot password?</Link></p>
               </li>
               <li>
-                <p>
-                  Don't have an account?<Link to="signup"> Sign up here</Link>.
-                </p>
+                <p>Don't have an account?<Link to="signup"> Sign up here</Link>.</p>
               </li>
             </ul>
           </div>
