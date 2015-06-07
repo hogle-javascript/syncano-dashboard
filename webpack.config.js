@@ -1,7 +1,7 @@
 var ENV     = process.env.NODE_ENV || 'development',
     path    = require('path'),
-    webpack = require('webpack');
-
+    webpack = require('webpack'),
+    compass = require('node-libcompass').includePaths;
 
 module.exports = {
   // cache: true,
@@ -26,7 +26,15 @@ module.exports = {
       {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
-      {test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
+      {
+        test: /\.sass$/,
+        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8" +
+          "includePaths[]=" +
+          (path.resolve(__dirname, "./src/assets/sass")) + "&" +
+          "includePaths[]=" +
+          (path.resolve(__dirname, "./node_modules"))
+      }
+      //{test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
       // // required to write "require('./style.css')"
       // { test: /\.css$/,    loader: "style-loader!css-loader" },
 
@@ -43,6 +51,6 @@ module.exports = {
   },
   resolve: {
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.json', '.jsx', '.css', '.svg', '.styl']
+    extensions: ['', '.js', '.json', '.jsx', '.css', '.scss', '.sass', '.svg', '.styl']
   }
 };

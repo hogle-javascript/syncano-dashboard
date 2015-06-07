@@ -1,0 +1,34 @@
+@import 'config'
+@import 'spacings'
+@import 'grid'
+@import 'compass.scss'
+
+.account-container
+  @extend .col-lg-15
+  max-width: rhythm(500/8)
+  margin: 0 auto
+  padding-left: rhythm(10/8)
+  padding-right: rhythm(10/8)
+  +padding-leader(8)
+  +padding-trailer(8)
+
+  &__content
+    padding: rhythm(4)
+
+    &__header p
+      +adjust-font-size-to(20px)
+      color: rgba(0, 0, 0, 0.87)
+      text-align: center
+
+    &__form
+      +margin-trailer(4)
+
+    &__footer
+      color: rgba(0, 0, 0, 0.24)
+
+      p
+        margin-bottom: 0
+
+.account-logo
+  text-align: center
+  +margin-trailer(4)

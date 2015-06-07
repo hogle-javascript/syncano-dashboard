@@ -9,8 +9,7 @@ var React      = require('react'),
 tapPlugin();
 
 require('normalize.css');
-require('./assets/sass/grid.sass');
-require('./app.css');
+require('./app.sass');
 
 Router.run(routes, function (Handler) {
   React.render(<Handler/>, container);

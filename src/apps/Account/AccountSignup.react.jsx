@@ -17,7 +17,7 @@ var React           = require('react'),
     RaisedButton    = mui.RaisedButton;
 
 
-require('./AccountSignup.css');
+require('./Account.sass');
 
 
 module.exports = React.createClass({
