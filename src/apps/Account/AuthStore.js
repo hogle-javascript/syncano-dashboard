@@ -61,6 +61,10 @@ var AuthStore = Reflux.createStore({
     if (typeof payload === 'string') {
       this.data.errors.feedback = payload;
     } else {
+      if (payload.non_field_errors !== undefined) {
+        this.data.errors.feedback = payload.non_field_errors.join();
+      }
+
       for (var field in payload) {
         this.data.errors[field] = payload[field];
       }
@@ -83,6 +87,24 @@ var AuthStore = Reflux.createStore({
   },
 
   onPasswordResetFailure: function (payload) {
+    this.onPasswordSignInFailure(payload);
+  },
+
+  onPasswordResetConfirm: function () {
+    this.onPasswordSignIn();
+  },
+
+  onPasswordResetConfirmCompleted: function () {
+    this.data = {
+      canSubmit: true,
+      password: null,
+      confirmPassword: null,
+      feedback: 'Password changed successfully'
+    };
+    this.trigger(this.data);
+  },
+
+  onPasswordResetConfirmFailure: function (payload) {
     this.onPasswordSignInFailure(payload);
   },
 
