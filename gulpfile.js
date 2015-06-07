@@ -2,6 +2,7 @@ var gulp             = require('gulp'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
+    stripDebug       = require('gulp-strip-debug'),
     del              = require('del'),
     path             = require('path'),
     webpack          = require('webpack'),
@@ -72,13 +73,14 @@ gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
         }
     }).listen(8080, 'localhost', function(err) {
         if(err) throw new gutil.PluginError('webpack-dev-server', err);
-        gutil.log('[webpack-dev-server]', 'https://localhost:8080/webpack-dev-server/index.html');
+        gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
     });
 });
 
 
 gulp.task('revision', ['clean', 'webpack:build'], function(){
   return gulp.src('./dist/**/*.js')
+    .pipe(stripDebug())
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())

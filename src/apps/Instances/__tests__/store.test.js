@@ -5,6 +5,6 @@ describe("store", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var store = require('../store');
+    // var store = require('../store');
   });
 });

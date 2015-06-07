@@ -5,6 +5,6 @@ describe("HeaderOptions.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var HeaderOptions = require('../HeaderOptions.react');
+    // var HeaderOptions = require('../HeaderOptions.react');
   });
 });

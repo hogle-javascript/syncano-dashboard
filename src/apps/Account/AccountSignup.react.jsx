@@ -7,6 +7,7 @@ var React           = require('react'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
+    SessionStore    = require('../Session/SessionStore'),
     AuthStore       = require('./AuthStore'),
     AuthActions     = require('./AuthActions'),
     AuthConstants   = require('./AuthConstants'),
@@ -46,7 +47,7 @@ module.exports = React.createClass({
 
   statics: {
     willTransitionTo: function (transition) {
-      if (AuthStore.data.token) {
+      if (SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     },
@@ -54,7 +55,7 @@ module.exports = React.createClass({
 
   componentWillUpdate: function (nextProps, nextState) {
     // I don't know if it's good place for this but it works
-    if (nextState.canSubmit && nextState.token) {
+    if (SessionStore.isAuthenticated()) {
       var router = this.context.router,
           next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
