@@ -16,6 +16,10 @@ var AuthActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
+  'passwordResetConfirm': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
 });
 
 AuthActions.passwordSignIn.listen(function (payload) {
@@ -40,6 +44,14 @@ AuthActions.passwordReset.listen(function (email) {
   Connection
     .Accounts
     .passwordReset(email)
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+AuthActions.passwordResetConfirm.listen(function (payload) {
+  Connection
+    .Accounts
+    .passwordResetConfirm(payload)
     .then(this.completed)
     .catch(this.failure);
 });

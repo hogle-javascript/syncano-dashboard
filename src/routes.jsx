@@ -41,9 +41,9 @@ module.exports = (
   <Route name="app" handler={App} path="/">
     <Route name="login" handler={AccountLogin}/>
     <Route name="signup" handler={AccountSignup} />
-    <Route name="activate" handler={AccountActivate} path="/activate/:uid-:token" />
+    <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
     <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
-    <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid-:token" />
+    <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/">
       <Route name="instances" handler={Instance} path="/instances">
