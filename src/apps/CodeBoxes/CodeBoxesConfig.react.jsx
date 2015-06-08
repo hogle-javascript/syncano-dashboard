@@ -62,8 +62,8 @@ module.exports = React.createClass({
       label: this.state.currentCodeBoxId,
       params: routeParams
     },{
-       route: 'codeboxestraces',
-       label: 'Traces',
+       route: 'codeboxesconfig',
+       label: 'Config',
        params: routeParams
      }]
   },
