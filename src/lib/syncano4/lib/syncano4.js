@@ -82,7 +82,7 @@ var Syncano = (function() {
 
 	/*
 		Parses obj and search for obj.links.
-		If found, copies them to private linksObject with given prefix and removes from obj. 
+		If found, copies them to private linksObject with given prefix and removes from obj.
 		All existing links will be overwritten
 		Returns:
 			linksObject
@@ -328,7 +328,10 @@ var Syncano = (function() {
 			create: this.createAccount.bind(this),
 			get: this.getAccount.bind(this),
 			update: this.updateAccount.bind(this),
-			resetKey: this.resetAccountKey.bind(this)
+			resetKey: this.resetAccountKey.bind(this),
+			passwordReset: this.accountPasswordReset.bind(this),
+			passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
+			activate: this.activateAccount.bind(this),
 		};
 
 		/**
@@ -1012,6 +1015,53 @@ var Syncano = (function() {
 		 */
 		resetAccountKey: function(callbackOK, callbackError) {
 			return this.request('POST', 'v1/account/reset_key', {}, callbackOK, callbackError);
+		},
+
+		/**
+		 * Reset password
+		 *
+		 * @method Syncano#accountPasswordReset
+		 * @alias Syncano.Accounts.accountPasswordReset
+		 * @param {string} email - yout email address
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {Object} promise
+		 */
+		accountPasswordReset: function(email, callbackOK, callbackError) {
+			return this.request('POST', 'v1/account/password/reset/', {email: email}, callbackOK, callbackError);
+		},
+
+		/**
+		 * Confirm reset password
+		 *
+		 * @method Syncano#accountPasswordResetConfirm
+		 * @alias Syncano.Accounts.accountPasswordResetConfirm
+		 * @param {Object} params - reset password object
+		 * @param {string} params.uid - User id query param
+		 * @param {string} params.token - Token query param
+		 * @param {string} params.new_password - new user passsword
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {Object} promise
+		 */
+		accountPasswordResetConfirm: function(params, callbackOK, callbackError) {
+			return this.request('POST', 'v1/account/password/reset/confirm/', params, callbackOK, callbackError);
+		},
+
+		/**
+		 * Activate account
+		 *
+		 * @method Syncano#activateAccount
+		 * @alias Syncano.Accounts.activateAccount
+		 * @param {Object} params - activate account object
+		 * @param {string} params.uid - User id query param
+		 * @param {string} params.token - Token query param
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {Object} promise
+		 */
+		activateAccount: function(params, callbackOK, callbackError) {
+			return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
 		},
 
 		/***********************

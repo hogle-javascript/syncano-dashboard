@@ -7,6 +7,7 @@ var React           = require('react'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
+    SessionStore    = require('../Session/SessionStore'),
     AuthStore       = require('./AuthStore'),
     AuthActions     = require('./AuthActions'),
     AuthConstants   = require('./AuthConstants'),
@@ -14,10 +15,10 @@ var React           = require('react'),
     // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton;
+    RaisedButton    = mui.RaisedButton,
+    Paper           = mui.Paper;
 
-require('./AccountSignup.css');
-
+require('./Account.sass');
 
 module.exports = React.createClass({
 
@@ -36,7 +37,7 @@ module.exports = React.createClass({
     },
     password: {
       presence: true
-    },
+    }
   },
 
   contextTypes: {
@@ -45,15 +46,15 @@ module.exports = React.createClass({
 
   statics: {
     willTransitionTo: function (transition) {
-      if (AuthStore.data.token) {
+      if (SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
-    },
+    }
   },
 
-  componentWillUpdate: function (nextProps, nextState) {
+  componentWillUpdate: function () {
     // I don't know if it's good place for this but it works
-    if (nextState.canSubmit && nextState.token) {
+    if (SessionStore.isAuthenticated()) {
       var router = this.context.router,
           next   = router.getCurrentQuery().next || AuthConstants.LOGIN_REDIRECT_PATH;
 
@@ -91,19 +92,19 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className="login">
-        <div className="login-logo">
-          <img src="/img/syncano-logo.png" />
+	  return (
+      <div className="account-container">
+        <div className="account-logo">
+          <img src="/img/syncano-logo.svg" />
         </div>
-        <div className="login-content">
-          <div className="login-header">
-            <h1>Sign in and start creating your apps right away.</h1>
+        <Paper className="account-container__content">
+          <div className="account-container__content__header">
+            <p>Log in and start creating your apps</p>
           </div>
           {this.renderError()}
           <form
             onSubmit={this.handleSubmit}
-            className="login-input-group"
+            className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
             <TextField
@@ -128,19 +129,23 @@ module.exports = React.createClass({
               label="Sign in"
               style={{
                 width: '100%',
-                marginTop: '1em'
+                height: '48px'
               }}
+              className="raised-button"
               primary={true} />
           </form>
-          <div className="login-options-group">
+          <div className="account-container__content__footer">
+            <ul className="list--flex">
+              <li>
+                <p><Link to="password-reset">Forgot password?</Link></p>
+              </li>
+              <li>
+                <p>Don't have an account?<Link to="signup"> Sign up here</Link>.</p>
+              </li>
+            </ul>
           </div>
-          <div className="login-disclaimer">
-            <p><Link to="password-reset">Forgot password?</Link></p>
-            <p>Don't have an account? <Link to="signup">Sign up here</Link>.</p>
-          </div>
-        </div>
+        </Paper>
       </div>
     )
   }
-
 });

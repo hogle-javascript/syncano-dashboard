@@ -2,6 +2,7 @@ var gulp             = require('gulp'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
+    stripDebug       = require('gulp-strip-debug'),
     del              = require('del'),
     path             = require('path'),
     webpack          = require('webpack'),
@@ -15,8 +16,8 @@ var paths = {
     dist: './dist',
     assets: './src/assets',
     index: './src/assets/index.html',
-    images: './src/assets/img/**/*',
-}
+    images: './src/assets/img/**/*'
+};
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*', paths.dist], cb);
@@ -38,8 +39,8 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
     config.debug   = true;
 
     if (ENV == 'production') {
-      config.progress = false
-      config.debug    = false
+      config.progress = false;
+      config.debug    = false;
       config.plugins  = config.plugins.concat(
           new webpack.DefinePlugin({
               'process.env': {
@@ -72,13 +73,14 @@ gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
         }
     }).listen(8080, 'localhost', function(err) {
         if(err) throw new gutil.PluginError('webpack-dev-server', err);
-        gutil.log('[webpack-dev-server]', 'https://localhost:8080/webpack-dev-server/index.html');
+        gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
     });
 });
 
 
 gulp.task('revision', ['clean', 'webpack:build'], function(){
   return gulp.src('./dist/**/*.js')
+    .pipe(stripDebug())
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
@@ -93,11 +95,22 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'build'], function() {
+gulp.task('publish', [], function() {
+
+  var params = {
+    bucket: 'new-dashboard.syncano.rocks',
+    region: 'eu-west-1'
+  };
+
+  if (ENV === 'production') {
+    params.bucket = 'syncano-dashboard-production';
+    params.region = 'eu-west-1';
+  }
 
   var publisher = awspublish.create({
+    region: params.region,
     params: {
-      Bucket: 'syncano-dashboard-' + ENV
+      Bucket: params.bucket
     }
   });
 

@@ -1,11 +1,13 @@
-var Reflux    = require('reflux'),
-
-    MainStore = require('../Main/MainStore');
+var Reflux     = require('reflux'),
+    Connection = require('../Session/Connection').get();
 
 
 // TODO: https://github.com/spoike/refluxjs/issues/296
 var AuthActions = Reflux.createActions({
-  'logout': {},
+  'activate': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
   'passwordSignIn': {
       asyncResult: true,
       children: ['completed', 'failure']
@@ -14,46 +16,56 @@ var AuthActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'setInstance': {
+  'passwordReset': {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'apiKeySignIn': {
+  'passwordResetConfirm': {
       asyncResult: true,
       children: ['completed', 'failure']
   },
+});
+
+AuthActions.activate.listen(function (payload) {
+  Connection
+    .Accounts
+    .activate(payload)
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 AuthActions.passwordSignIn.listen(function (payload) {
-  MainStore
-    .connection
+  Connection
     .connect(payload.email, payload.password)
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
 AuthActions.passwordSignUp.listen(function (payload) {
-  MainStore
+  Connection
     .Accounts
-    .create(payload.email, payload.password)
+    .create({
+      email: payload.email,
+      password: payload.password
+    })
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
-AuthActions.setInstance.listen(function (name) {
-  MainStore
-    .connection
-    .setInstance(name)
+AuthActions.passwordReset.listen(function (email) {
+  Connection
+    .Accounts
+    .passwordReset(email)
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
-AuthActions.apiKeySignIn.listen(function (apiKey) {
-  MainStore
-    .connection
-    .connect(apiKey)
+AuthActions.passwordResetConfirm.listen(function (payload) {
+  Connection
+    .Accounts
+    .passwordResetConfirm(payload)
     .then(this.completed)
-    .catch(this.failure)
+    .catch(this.failure);
 });
 
 module.exports = AuthActions;

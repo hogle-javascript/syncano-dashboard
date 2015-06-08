@@ -1,7 +1,6 @@
 var Reflux            = require('reflux'),
 
-    MainStore         = require('../Main/MainStore'),
-    AuthStore         = require('../Account/AuthStore');
+    AuthStore         = require('../Account/AuthStore'),
     CodeBoxesActions  = require('./CodeBoxesActions');
 
 

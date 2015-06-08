@@ -1,13 +1,13 @@
 var ENV     = process.env.NODE_ENV || 'development',
     path    = require('path'),
-    webpack = require('webpack');
-
+    webpack = require('webpack'),
+    compass = require('node-libcompass').includePaths;
 
 module.exports = {
   // cache: true,
   entry: {
-      app: path.join(__dirname, 'src', 'app.jsx'),
-      vendor: ['brace', 'react', 'moment'],
+      app: ['webpack/hot/dev-server', path.join(__dirname, 'src', 'app.jsx')],
+      vendor: ['brace', 'react', 'moment']
   },
   output: {
     path: path.join(__dirname, 'dist', 'js'),
@@ -17,7 +17,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({ENV: ENV}),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [
@@ -25,7 +26,16 @@ module.exports = {
       {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
-      {test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
+      {
+        test: /\.sass$/,
+        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8&" +
+          "includePaths[]=" + compass + "&" +
+          "includePaths[]=" +
+          (path.resolve(__dirname, "./src/assets/sass")) + "&" +
+          "includePaths[]=" +
+          (path.resolve(__dirname, "./node_modules"))
+      }
+      //{test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
       // // required to write "require('./style.css')"
       // { test: /\.css$/,    loader: "style-loader!css-loader" },
 
@@ -41,6 +51,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.css', '.svg', '.styl']
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js', '.json', '.jsx', '.css', '.scss', '.sass', '.svg', '.styl']
   }
 };

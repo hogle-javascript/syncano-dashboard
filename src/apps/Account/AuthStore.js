@@ -1,7 +1,8 @@
-var Reflux      = require('reflux'),
+var Reflux         = require('reflux'),
 
-    MainStore   = require('../Main/MainStore'),
-    AuthActions = require('./AuthActions');
+    SessionActions = require('../Session/SessionActions'),
+    SessionStore   = require('../Session/SessionStore'),
+    AuthActions    = require('./AuthActions');
 
 
 var AuthStore = Reflux.createStore({
@@ -10,28 +11,40 @@ var AuthStore = Reflux.createStore({
   getInitialState: function () {
     return {
       canSubmit: true,
-      token: null,
       errors: {},
     }
   },
 
   init: function () {
     this.data = {
-      token: null,
-      user: null,
       errors: {},
       email: null,
       password: null,
       canSubmit: true,
     };
 
-    this.data.token = sessionStorage.getItem('token') || null;
+    this.listenTo(SessionStore, this.checkSession);
+  },
 
-    if (this.data.token) {
-      if (!MainStore.connection.account) {
-        AuthActions.apiKeySignIn(this.data.token);
-      }
-    }
+  onActivate: function () {
+    this.data = {
+      status: 'Account activation in progress...'
+    };
+    this.trigger(this.data);
+  },
+
+  onActivateCompleted: function () {
+    this.data = {
+      status: 'Account activated successfully.'
+    };
+    this.trigger(this.data);
+  },
+
+  onActivateFailure: function () {
+    this.data = {
+      status: 'Invalid or expired activation link.'
+    };
+    this.trigger(this.data);
   },
 
   // We need name (for example) to build URL's
@@ -48,7 +61,7 @@ var AuthStore = Reflux.createStore({
   },
 
   onPasswordSignUpFailure: function (payload) {
-    this.onPasswordSignInCompleted(payload);
+    this.onPasswordSignInFailure(payload);
   },
 
   onPasswordSignIn: function () {
@@ -60,28 +73,24 @@ var AuthStore = Reflux.createStore({
   },
 
   onPasswordSignInCompleted: function (payload) {
-
-    sessionStorage.setItem('token', payload.account_key);
     this.data = {
-      firstName: payload.first_name,
-      lastName: payload.last_name,
-      is_active: payload.is_active,
-      user: payload.email,
-      token: payload.account_key,
-      errors: {},
+      canSubmit: true
     };
 
+    SessionActions.login(payload);
     this.trigger(this.data);
   },
 
   onPasswordSignInFailure: function (payload) {
-
-    sessionStorage.removeItem('token');
     this.data = this.getInitialState();
 
     if (typeof payload === 'string') {
       this.data.errors.feedback = payload;
     } else {
+      if (payload.non_field_errors !== undefined) {
+        this.data.errors.feedback = payload.non_field_errors.join();
+      }
+
       for (var field in payload) {
         this.data.errors[field] = payload[field];
       }
@@ -90,22 +99,47 @@ var AuthStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onLogout: function () {
-    sessionStorage.removeItem('token');
+  onPasswordReset: function () {
+    this.onPasswordSignIn();
+  },
 
-    this.data = this.getInitialState();
+  onPasswordResetCompleted: function () {
+    this.data = {
+      canSubmit: true,
+      email: null,
+      feedback: 'Check your inbox.'
+    };
     this.trigger(this.data);
   },
 
-  // Attaching to instance
-  onSetInstanceCompleted: function (payload) {
-    this.data.currentInstance = payload;
-    this.trigger(this.data)
+  onPasswordResetFailure: function (payload) {
+    this.onPasswordSignInFailure(payload);
   },
 
-  onSetInstanceFailure: function () {
-    MainStore.router.transitionTo('/404');
-  }
+  onPasswordResetConfirm: function () {
+    this.onPasswordSignIn();
+  },
+
+  onPasswordResetConfirmCompleted: function () {
+    this.data = {
+      canSubmit: true,
+      password: null,
+      confirmPassword: null,
+      feedback: 'Password changed successfully'
+    };
+    this.trigger(this.data);
+  },
+
+  onPasswordResetConfirmFailure: function (payload) {
+    this.onPasswordSignInFailure(payload);
+  },
+
+  checkSession: function (session) {
+    if (session.isAuthenticated()) {
+      this.trigger(this.data);
+    }
+  },
+
 });
 
 module.exports = AuthStore;
