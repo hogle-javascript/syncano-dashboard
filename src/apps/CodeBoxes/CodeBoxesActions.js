@@ -36,7 +36,6 @@ CodeBoxesActions.updateCodeBox.listen( function(params) {
 
 CodeBoxesActions.runCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.runCodeBox.listen( function(params) {
-  console.log('running cb')
   MainStore.connection.CodeBoxes.run(params.id, {payload: params.payload})
     .then(this.completed)
     .catch(this.failure);
@@ -44,17 +43,13 @@ CodeBoxesActions.runCodeBox.listen( function(params) {
 
 CodeBoxesActions.loadCodeboxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.loadCodeboxTrace.listen( function(codeboxId, traceId) {
-  console.log('getting trace')
-  MainStore.connection.CodeBoxes.trace({
-    traceId:traceId,
-    codeboxId: codeboxId,
-  })
+  MainStore.connection.CodeBoxes.trace(traceId, codeboxId, {})
     .then(this.completed)
     .catch(this.failure);
 });
 
 CodeBoxesActions.getCodeBoxRuntimes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-CodeBoxesActions.getCodeBoxRuntimes.listen( function(payload) {
+CodeBoxesActions.getCodeBoxRuntimes.listen( function() {
   MainStore.connection.CodeBoxes.listRuntimes()
     .then(this.completed)
     .catch(this.failure);

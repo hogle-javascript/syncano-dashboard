@@ -1556,28 +1556,20 @@ var Syncano = (function() {
 		 *
 		 * @method Syncano#runCodeBox
 		 * @alias Syncano.CodeBoxes.run
+		 * @param {number|object} id - identifier of the CodeBox to run
 		 * @param {object} params
-		 * @param {string} params.runtime_name - python / nodejs / ruby
-		 * @param {string} params.name - name of the codebox
-		 * @param {string} params.source - source code (will be automatically URL-encoded)
 		 * @param {function} [callbackOK] - optional method to call on success
 		 * @param {function} [callbackError] - optional method to call when request fails
 		 * @returns {object} promise
 		 */
-		runCodeBox: function(params, callbackOK, callbackError) {
+		runCodeBox: function(codeboxId, params, callbackOK, callbackError) {
 			if (typeof params !== 'object') {
 				throw new Error('Missing parameters object');
 			}
 			if (typeof linksObject.instance_codeboxes === 'undefined') {
 				throw new Error('Not connected to any instance');
 			}
-			if (typeof params.runtime_name === 'undefined') {
-				params.runtime_name = 'nodejs';
-			}
-			if (typeof params.source !== 'undefined') {
-				params.source = encodeURIComponent(params.source);
-			}
-			return this.request('POST', linksObject.instance_codeboxes, params, callbackOK, callbackError);
+			return this.request('POST', linksObject.instance_codeboxes + codeboxId + '/run', params, callbackOK, callbackError);
 		},
 
 		/**
@@ -1617,7 +1609,7 @@ var Syncano = (function() {
 			if (typeof traceId === 'object') {
 				traceId = traceId.id;
 			}
-			return this.request('GET', linksObject.instance_codeboxes + codeboxId + '/traces/' + traceId + '/', params, callbackOK, callbackError);
+			return this.request('GET', linksObject.instance_codeboxes + traceId + '/traces/' + codeboxId + '/', params, callbackOK, callbackError);
 		},
 
 

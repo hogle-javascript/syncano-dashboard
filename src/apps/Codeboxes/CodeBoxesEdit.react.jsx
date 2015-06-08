@@ -3,7 +3,8 @@ var React               = require('react'),
     Router              = require('react-router'),
 
     // Utils
-    HeaderMixin      = require('../Header/HeaderMixin');
+    HeaderMixin            = require('../Header/HeaderMixin'),
+    ButtonActionMixin      = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
     CodeBoxesActions    = require('./CodeBoxesActions'),
@@ -17,7 +18,7 @@ var React               = require('react'),
     ColNameDesc         = require('../../common/ColumnList/ColNameDesc.react'),
 
     FabList             = require('../../common/Fab/FabList.react'),
-    Dialog              = require('material-ui/lib/dialog');
+    Dialog              = require('material-ui/lib/dialog'),
 
     Editor              = require('../../common/Editor/Editor.react'),
     EditorPanel         = require('../../common/Editor/EditorPanel.react'),
@@ -31,54 +32,90 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(CodeBoxesStore),
-    //React.addons.LinkedStateMixin,
+    React.addons.LinkedStateMixin,
     HeaderMixin,
+    ButtonActionMixin,
     Router.State,
     Router.Navigation,
     //ValidationMixin,
   ],
 
+  componentWillMount: function() {
+    CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
+    this.setState({'currentCodeBoxId': this.getParams().codeboxId})
+  },
+
+
   headerBreadcrumbs: function () {
-   return [
-     {
+   var instanceName = this.getParams().instanceName;
+   var codeBoxId = this.state.currentCodeBoxId;
+   return [{
       route: 'instance',
-      label: this.getParams().instanceName,
-      params: {instanceName: this.getParams().instanceName}
+      label: instanceName,
+      params: {instanceName: instanceName}
     },{
       route: 'codeboxes',
       label: 'Codeboxes',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     },{
       route: 'codeboxesedit',
-      label: this.getParams().codeboxId,
-      params: {codeboxId: this.getParams().codeboxId, instanceName: this.getParams().instanceName}
+      label: codeBoxId,
+      params: {codeboxId: codeBoxId, instanceName: instanceName}
     }]
   },
-
-  dummyClick: function (event) {
-      console.log('change!');
+  
+  componentWillUpdate: function (nextProps, nextState) {
   },
 
-    genFabButtons: function() {
+  // Collecting params for actions
+  getSaveActionParams: function() {
+    debugger;
+    return {
+      id: this.state.currentCodeBoxId,
+      source: this.refs.editor.editor.getValue()
+    }
+  },
 
-    var buttons = [
-      {
+  getRunActionParams: function() {
+    return {
+      id: this.state.currentCodeBoxId,
+      payload: this.state.payload,
+    }
+  },
+
+  getRunAction: function (params) {
+    CodeBoxesActions.runCodeBox(params);
+    this.setState({traceLoading: true});
+  },
+
+  // All the buttons in a view (used by ButtonActionMixin)
+  genButtons: function() {
+    return {
+      runButton: {
         name: "runButton",
         label: "Click here to run CodeBox",
         icon: 'play-arrow',
         color: '#FFC52D',
+        action: this.getRunAction,
+        params: this.getRunActionParams,
       },
-      {
+     saveButton: {
         name: "saveButton",
         label: "Click here to save CodeBox",
         icon: 'system-update-tv',
         color: '#FF2D6F',
+        action: CodeBoxesActions.updateCodeBox,
+        params: this.getSaveActionParams,
       }
-    ];
-    return <FabList style={{list: {top:200, bottom:0}}} buttons={buttons} handleClick={this.dummyClick}/>;
+    };
+  },
+
+  handleSourceUpdate: function(update){
+    //console.log(update, this.refs.editorPanel.state.payload);
   },
 
   render: function () {
+    var buttons = this.genButtons();
 
     var containerStyle = {
       margin: '65px auto',
@@ -87,21 +124,34 @@ module.exports = React.createClass({
     };
 
     var source;
+    var codeBox;
+    var editorMode = 'python';
     if (this.state.CodeBoxList) {
-      source = this.state.CodeBoxList[this.getParams().codeboxId].source;
+      codeBox = this.state.CodeBoxList[this.state.currentCodeBoxId];
+      source = codeBox.source;
+      editorMode = CodeBoxesStore.getEditorMode(codeBox);
     }
 
     return (
       <div className="container" style={containerStyle}>
-        {this.genFabButtons()}
+        <FabList
+          style={{list: {top: 200,}}}
+          buttons={[buttons.runButton, buttons.saveButton]}
+          handleClick={this.handleButtonClick}/>
         <Editor
-            mode="python"
-            theme="github"
-            onChange={this.dummyClick}
-            name="UNIQUE_ID_OF_DIV"
-            value={source} />
+          ref="editor"
+          mode={editorMode}
+          theme="github"
+          onChange={this.handleSourceUpdate}
+          //name="UNIQUE_ID_OF_DIV"
+          value={source} />
         <div style={{marginTop: 30, height: 300}}>
-        <EditorPanel trace={source} payload={'payload'}/>
+          <EditorPanel
+            ref="editorPanel"
+            trace={this.state.lastTraceResult}
+            payload={this.linkState('payload')}
+            loading={this.linkState('traceLoading')}>
+          </EditorPanel>
         </div>
       </div>
     );
