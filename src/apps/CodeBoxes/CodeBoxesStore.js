@@ -26,7 +26,7 @@ var CodeBoxesStore = Reflux.createStore({
   init: function () {
 
     this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.onSetCurrentCodeBoxId);
-    this.listenTo(CodeBoxesActions.loadCodeboxTrace.completed, this.onLoadCodeboxTrace);
+    this.listenTo(CodeBoxesActions.loadCodeBoxTrace.completed, this.onLoadCodeboxTrace);
     this.listenTo(CodeBoxesActions.runCodeBox.completed, this.onRunCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.addCodeBox.completed, this.onAddCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.getCodeBoxRuntimes.completed, this.onGetCodeBoxRuntimes);
@@ -51,7 +51,7 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   refreshData: function () {
-    console.info('Refreshing CodeBoxes data');
+    console.debug('CodeBoxesStore::refreshData');
 
     if (SessionStore.instance) {
       CodeBoxesActions.getCodeBoxRuntimes();
@@ -64,6 +64,7 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   onGetCodeBoxRuntimes: function(runtimes) {
+    console.debug('CodeBoxesStore::onGetCodeBoxRuntimes');
     this.data.runtimes = Object.keys(runtimes).map(function(runtime){
       return {payload: runtime, text: runtime}
     });
@@ -71,24 +72,28 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   onGetCodeboxesCompleted: function (list) {
+    console.debug('CodeBoxesStore::onGetCodeboxesCompleted');
     this.data.CodeBoxList = list;
     this.trigger(this.data);
   },
 
   onAddCodeBoxCompleted: function (resp) {
+    console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     MainStore.router.transitionTo('codeboxesedit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
     CodeBoxesActions.getCodeBoxes();
   },
 
   onRunCodeBoxCompleted: function (trace) {
+    console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     this.data.lastTrace = trace;
-    CodeBoxesActions.loadCodeboxTrace(this.data.currentCodeBoxId, trace.id);
+    CodeBoxesActions.loadCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },
 
   onLoadCodeboxTrace: function (trace) {
+    console.debug('CodeBoxesStore::onLoadCodeboxTrace');
     if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function(){CodeBoxesActions.loadCodeboxTrace(CodeBoxId, trace.id)}, 300);
+      setTimeout(function(){CodeBoxesActions.loadCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
       this.data.traceLoading = false;

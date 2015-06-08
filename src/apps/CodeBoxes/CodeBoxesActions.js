@@ -9,6 +9,7 @@ CodeBoxesActions.setCurrentCodeBoxId = Reflux.createAction();
 
 CodeBoxesActions.getCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.getCodeBoxes.listen( function(payload) {
+  console.info('CodeBoxesActions::getCodeBoxes');
   Connection
     .CodeBoxes
     .list()
@@ -18,6 +19,7 @@ CodeBoxesActions.getCodeBoxes.listen( function(payload) {
 
 CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.addCodeBox.listen( function(payload) {
+  console.info('CodeBoxesActions::addCodeBox');
   Connection
     .CodeBoxes.create({
       runtime_name: payload.runtime,
@@ -31,23 +33,25 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
 
 CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.updateCodeBox.listen( function(params) {
+  console.info('CodeBoxesActions::updateCodeBox');
   Connection
     .CodeBoxes.update(params.id, params)
     .then(this.completed)
     .catch(this.failure);
 });
 
-
 CodeBoxesActions.runCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.runCodeBox.listen( function(params) {
+  console.info('CodeBoxesActions::runCodeBox');
   Connection
     .CodeBoxes.run(params.id, {payload: params.payload})
     .then(this.completed)
     .catch(this.failure);
 });
 
-CodeBoxesActions.loadCodeboxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-CodeBoxesActions.loadCodeboxTrace.listen( function(codeboxId, traceId) {
+CodeBoxesActions.loadCodeBoxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.loadCodeBoxTrace.listen( function(codeboxId, traceId) {
+  console.info('CodeBoxesActions::loadCodeBoxTrace');
   Connection
     .CodeBoxes.trace(traceId, codeboxId, {})
     .then(this.completed)
@@ -56,6 +60,7 @@ CodeBoxesActions.loadCodeboxTrace.listen( function(codeboxId, traceId) {
 
 CodeBoxesActions.getCodeBoxRuntimes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.getCodeBoxRuntimes.listen( function() {
+  console.info('CodeBoxesActions::getCodeBoxRuntimes');
   Connection
     .CodeBoxes.listRuntimes()
     .then(this.completed)

@@ -69,7 +69,6 @@ module.exports = React.createClass({
 
   // Collecting params for actions
   getSaveActionParams: function() {
-    debugger;
     return {
       id: this.state.currentCodeBoxId,
       source: this.refs.editor.editor.getValue()

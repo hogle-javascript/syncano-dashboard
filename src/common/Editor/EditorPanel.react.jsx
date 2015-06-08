@@ -27,7 +27,7 @@ module.exports = React.createClass({
       requestChange: React.PropTypes.func.isRequired
     }),
     loading: React.PropTypes.shape({
-      value: React.PropTypes.string,
+      value: React.PropTypes.bool,
       requestChange: React.PropTypes.func.isRequired
     })
   },
