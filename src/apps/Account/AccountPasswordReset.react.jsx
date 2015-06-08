@@ -13,7 +13,10 @@ var React           = require('react'),
     // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton;
+    RaisedButton    = mui.RaisedButton,
+    Paper           = mui.Paper;
+
+require('./Account.sass');
 
 module.exports = React.createClass({
 
@@ -72,19 +75,19 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="login">
-        <div className="login-logo">
-          <img src="/img/syncano-logo.png" />
+      <div className="account-container">
+        <div className="account-logo">
+          <img src="/img/syncano-logo.svg" />
         </div>
-        <div className="login-content">
-          <div className="login-header">
-            <h1>Reset password</h1>
+        <Paper className="account-container__content">
+          <div className="account-container__content__header">
+            <p className="text--gray text--left">Reset password</p>
           </div>
           {this.renderError()}
           {this.renderFeedback()}
           <form
             onSubmit={this.handleSubmit}
-            className="login-input-group"
+            className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
             <TextField
@@ -94,23 +97,28 @@ module.exports = React.createClass({
               name="email"
               className="text-field"
               autoComplete="email"
-              hintText="Reset password" />
+              hintText="Your email" />
             <RaisedButton
               type="submit"
               label="Reset password"
               style={{
                 width: '100%',
-                marginTop: '1em'
+                height: '48px'
               }}
+              className="raised-button"
               primary={true} />
           </form>
-          <div className="login-options-group">
+          <div className="account-container__content__footer">
+            <ul className="list--flex">
+              <li>
+                <p><Link to="signup">Create your account</Link></p>
+              </li>
+              <li>
+                <p>Already have an account? <Link to="login">Login</Link>.</p>
+              </li>
+            </ul>
           </div>
-          <div className="login-disclaimer">
-            <p><Link to="signup">Create your account</Link></p>
-            <p>Already have an account? <Link to="login">Login</Link>.</p>
-          </div>
-        </div>
+        </Paper>
       </div>
     )
   }

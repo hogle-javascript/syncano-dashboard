@@ -20,7 +20,6 @@ var React           = require('react'),
 
 require('./Account.sass');
 
-
 module.exports = React.createClass({
 
   displayName: 'AccountLogin',
@@ -100,7 +99,7 @@ module.exports = React.createClass({
         </div>
         <Paper className="account-container__content">
           <div className="account-container__content__header">
-            <p>Sign in and start creating your apps right away.</p>
+            <p>Log in and start creating your apps</p>
           </div>
           {this.renderError()}
           <form
