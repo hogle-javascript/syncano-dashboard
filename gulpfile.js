@@ -95,7 +95,7 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', [], function() {
+gulp.task('publish', ['clean', 'build'], function() {
 
   var params = {
     bucket: 'new-dashboard.syncano.rocks',
