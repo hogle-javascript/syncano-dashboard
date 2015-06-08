@@ -13,7 +13,9 @@ var React           = require('react'),
     // Components
     mui             = require('material-ui'),
     TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton;
+    RaisedButton    = mui.RaisedButton,
+
+    Notification    = require('../../common/Notification/Notification.react');
 
 
 module.exports = React.createClass({
@@ -62,9 +64,12 @@ module.exports = React.createClass({
     }
 
     return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
+      <Notification
+        type={{
+          status: 'info',
+          text: this.state.errors.feedback
+          }}
+        />
     );
   },
 
@@ -74,9 +79,12 @@ module.exports = React.createClass({
     }
 
     return (
-      <div>
-        <p>{this.state.feedback}</p>
-      </div>
+      <Notification
+        type={{
+            status: 'info',
+            text: this.state.feedback
+            }}
+        />
     );
   },
 
@@ -134,5 +142,4 @@ module.exports = React.createClass({
       </div>
     )
   }
-
 });

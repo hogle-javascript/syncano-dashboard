@@ -16,7 +16,9 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper;
+    Paper           = mui.Paper,
+
+    Notification    = require('../../common/Notification/Notification.react');
 
 
 require('./Account.sass');
@@ -39,7 +41,7 @@ module.exports = React.createClass({
     },
     password: {
       presence: true
-    },
+    }
   },
 
   contextTypes: {
@@ -51,7 +53,7 @@ module.exports = React.createClass({
       if (SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
-    },
+    }
   },
 
   componentWillUpdate: function (nextProps, nextState) {
@@ -75,7 +77,7 @@ module.exports = React.createClass({
       if (isValid === true) {
         AuthActions.passwordSignUp({
           email: this.state.email,
-          password: this.state.password,
+          password: this.state.password
         });
       }
     }.bind(this));
@@ -87,9 +89,12 @@ module.exports = React.createClass({
     }
 
     return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
+      <Notification
+        type={{
+              status: 'info',
+              text: this.state.errors.feedback
+              }}
+        />
     )
   },
 
@@ -107,6 +112,12 @@ module.exports = React.createClass({
                inputting any credit card information.
             </small>
           </div>
+          <Notification
+            type={{
+              status: 'info',
+              text: 'jakiś awesome text notyfikacji'
+              }}
+            />
           {this.renderError()}
           <form
             onSubmit={this.handleSubmit}

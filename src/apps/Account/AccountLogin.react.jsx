@@ -16,7 +16,10 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper;
+    Paper           = mui.Paper,
+
+    Notification    = require('../../common/Notification/Notification.react');
+
 
 require('./Account.sass');
 
@@ -85,9 +88,12 @@ module.exports = React.createClass({
     }
 
     return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
+      <Notification
+        type={{
+              status: 'info',
+              text: this.state.errors.feedback
+              }}
+        />
     );
   },
 
