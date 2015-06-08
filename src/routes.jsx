@@ -28,6 +28,7 @@ var React                       = require('react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
     CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
     CodeBoxesTraces             = require('./apps/CodeBoxes/CodeBoxesTraces.react'),
+    CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
@@ -57,6 +58,7 @@ module.exports = (
         <Route name="codeboxesadd" handler={CodeBoxes} path="/instances/:instanceName/codeboxes/:action" />
         <Route name="codeboxesedit" handler={CodeBoxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
         <Route name="codeboxestraces" handler={CodeBoxesTraces} path="/instances/:instanceName/codeboxes/:codeboxId/traces" />
+        <Route name="codeboxesconfig" handler={CodeBoxesConfig} path="/instances/:instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />

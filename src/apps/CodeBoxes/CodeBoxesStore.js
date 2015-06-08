@@ -1,6 +1,6 @@
 var Reflux            = require('reflux'),
 
-    SessionStore         = require('../Session/SessionStore'),
+    SessionStore      = require('../Session/SessionStore'),
     AuthStore         = require('../Account/AuthStore'),
     CodeBoxesActions  = require('./CodeBoxesActions');
 
@@ -26,7 +26,8 @@ var CodeBoxesStore = Reflux.createStore({
   init: function () {
 
     this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.onSetCurrentCodeBoxId);
-    this.listenTo(CodeBoxesActions.loadCodeBoxTrace.completed, this.onLoadCodeboxTrace);
+    this.listenTo(CodeBoxesActions.getCodeBoxTrace.completed, this.onGetCodeboxTrace);
+    this.listenTo(CodeBoxesActions.getCodeBoxTraces.completed, this.onGetCodeboxTraces);
     this.listenTo(CodeBoxesActions.runCodeBox.completed, this.onRunCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.addCodeBox.completed, this.onAddCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.getCodeBoxRuntimes.completed, this.onGetCodeBoxRuntimes);
@@ -56,6 +57,9 @@ var CodeBoxesStore = Reflux.createStore({
     if (SessionStore.instance) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
+      if (this.data.currentCodeBoxId) {
+        CodeBoxesActions.getCodeBoxTraces(this.data.currentCodeBoxId);
+      }
     }
   },
 
@@ -86,21 +90,26 @@ var CodeBoxesStore = Reflux.createStore({
   onRunCodeBoxCompleted: function (trace) {
     console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     this.data.lastTrace = trace;
-    CodeBoxesActions.loadCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
+    CodeBoxesActions.getCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },
 
-  onLoadCodeboxTrace: function (trace) {
-    console.debug('CodeBoxesStore::onLoadCodeboxTrace');
+  onGetCodeboxTrace: function (trace) {
+    console.debug('CodeBoxesStore::onGetCodeBoxTrace');
     if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function(){CodeBoxesActions.loadCodeBoxTrace(CodeBoxId, trace.id)}, 300);
+      setTimeout(function(){CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
       this.data.traceLoading = false;
     }
     this.trigger(this.data);
-  }
+  },
 
+  onGetCodeboxTraces: function (traces) {
+    console.debug('CodeBoxesStore::onGetCodeBoxTraces');
+    this.data.traces = traces;
+    this.trigger(this.data);
+  }
 
 });
 
