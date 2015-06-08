@@ -99,7 +99,7 @@ gulp.task('publish', ['clean', 'build'], function() {
 
   var publisher = awspublish.create({
     params: {
-      Bucket: 'syncano-dashboard-' + ENV
+      Bucket: (ENV === 'staging') ? 'new-dashboard.syncano.rocks': 'syncano-dashboard-production',
     }
   });
 
