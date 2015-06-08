@@ -28,7 +28,6 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(CodeBoxesStore),
-    //Reflux.connect(AuthStore, 'currentInstance'),
     HeaderMixin,
     Router.State,
     Router.Navigation,
@@ -38,6 +37,13 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     CodeBoxesStore.refreshData();
+  },
+
+  componentDidMount: function() {
+    if (this.getParams().action == 'add'){
+      // Show Add modal
+      this.refs.addCodeBoxDialog.show();
+    }
   },
 
   headerBreadcrumbs: function () {
@@ -80,10 +86,9 @@ module.exports = React.createClass({
   },
 
   handleItemClick: function(itemId) {
+    // Redirect to edit screen
     this.transitionTo('codeboxesedit', {instanceName: AuthStore.getCurrentInstanceName(), codeboxId: itemId});
-    //debugger;
   },
-
 
   generateItem: function (item) {
     return (<Item key={item.id}>

@@ -22,14 +22,13 @@ module.exports = React.createClass({
       list: {
         position: 'fixed',
         right: 50,
-        bottom: 50,
         zIndex: 9,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-end'
       },
     };
-    return styles;
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function() {
@@ -38,7 +37,7 @@ module.exports = React.createClass({
     var buttons = this.props.buttons.map(function(button) {
       return (
         <div className="fab-with-label" key={button.name}>
-          <FAB button={button} handleClick={this.props.handleClick}/>
+          <FAB button={button} label={button.label} handleClick={this.props.handleClick}/>
           <Label text={button.label} />
         </div>
       );

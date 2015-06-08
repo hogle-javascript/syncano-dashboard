@@ -9,6 +9,7 @@ var CodeBoxesStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
+      currentCodeBoxId: null,
       CodeBoxList: null,
       checkedItemNumber: 0,
       AddDialogVisible: true,
@@ -16,26 +17,37 @@ var CodeBoxesStore = Reflux.createStore({
       runtimes: null,
       canSubmit: true,
       name: '',
+      payload: '{"112":111}',
       description: '',
       selectedRuntimeIndex: 0,
     }
   },
 
   init: function () {
+
+    this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.onSetCurrentCodeBoxId);
+    this.listenTo(CodeBoxesActions.loadCodeboxTrace.completed, this.onLoadCodeboxTrace);
+    this.listenTo(CodeBoxesActions.runCodeBox.completed, this.onRunCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.addCodeBox.completed, this.onAddCodeBoxCompleted);
     this.listenTo(CodeBoxesActions.getCodeBoxRuntimes.completed, this.onGetCodeBoxRuntimes);
     this.listenTo(CodeBoxesActions.getCodeBoxes.completed, this.onGetCodeboxesCompleted);
 
-    this.data = {
-      checkedItemNumber: 0,
-      canSubmit: true,
-      name: '',
-      description: '',
+    this.data = {};
+
+    this.langMap = {
+      python: 'python',
+      nodejs: 'javascript',
+      ruby: 'ruby',
+      golang: 'golang'
     };
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
     this.listenTo(AuthStore, this.refreshData);
+  },
+
+  getEditorMode: function (codeBox) {
+    return this.langMap[codeBox.runtime_name]
   },
 
   refreshData: function () {
@@ -45,6 +57,10 @@ var CodeBoxesStore = Reflux.createStore({
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
     }
+  },
+
+  onSetCurrentCodeBoxId: function(CodeBoxId) {
+    this.data.currentCodeBoxId = CodeBoxId;
   },
 
   onGetCodeBoxRuntimes: function(runtimes) {
@@ -62,7 +78,24 @@ var CodeBoxesStore = Reflux.createStore({
   onAddCodeBoxCompleted: function (resp) {
     MainStore.router.transitionTo('codeboxesedit', {instanceName: AuthStore.getCurrentInstanceName(), codeboxId: resp.id});
     CodeBoxesActions.getCodeBoxes();
+  },
+
+  onRunCodeBoxCompleted: function (trace) {
+    this.data.lastTrace = trace;
+    CodeBoxesActions.loadCodeboxTrace(this.data.currentCodeBoxId, trace.id);
+  },
+
+  onLoadCodeboxTrace: function (trace) {
+    if (trace.status == 'pending') {
+      var CodeBoxId = this.data.currentCodeBoxId;
+      setTimeout(function(){CodeBoxesActions.loadCodeboxTrace(CodeBoxId, trace.id)}, 300);
+    } else {
+      this.data.lastTraceResult = trace.result;
+      this.data.traceLoading = false;
+    }
+    this.trigger(this.data);
   }
+
 
 });
 

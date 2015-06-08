@@ -82,6 +82,7 @@ module.exports = React.createClass({
     this.editor.setOption('readOnly', nextProps.readOnly);
     this.editor.setOption('highlightActiveLine', nextProps.highlightActiveLine);
     this.editor.setShowPrintMargin(nextProps.setShowPrintMargin);
+
     if (this.editor.getValue() !== nextProps.value) {
       this.editor.setValue(nextProps.value);
     }
@@ -89,6 +90,8 @@ module.exports = React.createClass({
     if (nextProps.onLoad) {
       nextProps.onLoad(this.editor);
     }
+
+    this.editor.clearSelection();
   },
 
   render: function() {

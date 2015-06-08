@@ -53,6 +53,7 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="codeboxes" handler={Codeboxes} path=":instanceName/codeboxes" />
+        <Route name="codeboxesadd" handler={Codeboxes} path="/instances/:instanceName/codeboxes/:action" />
         <Route name="codeboxesedit" handler={CodeboxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
