@@ -1,11 +1,12 @@
 var Reflux            = require('reflux'),
 
-    SessionStore         = require('../Session/SessionStore'),
+    SessionStore      = require('../Session/SessionStore'),
     AuthStore         = require('../Account/AuthStore'),
     CodeBoxesActions  = require('./CodeBoxesActions');
 
 
 var CodeBoxesStore = Reflux.createStore({
+  listenables: CodeBoxesActions,
 
   getInitialState: function () {
     return {
@@ -24,13 +25,6 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   init: function () {
-
-    this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.onSetCurrentCodeBoxId);
-    this.listenTo(CodeBoxesActions.loadCodeBoxTrace.completed, this.onLoadCodeboxTrace);
-    this.listenTo(CodeBoxesActions.runCodeBox.completed, this.onRunCodeBoxCompleted);
-    this.listenTo(CodeBoxesActions.addCodeBox.completed, this.onAddCodeBoxCompleted);
-    this.listenTo(CodeBoxesActions.getCodeBoxRuntimes.completed, this.onGetCodeBoxRuntimes);
-    this.listenTo(CodeBoxesActions.getCodeBoxes.completed, this.onGetCodeboxesCompleted);
 
     this.data = {};
 
@@ -63,7 +57,7 @@ var CodeBoxesStore = Reflux.createStore({
     this.data.currentCodeBoxId = CodeBoxId;
   },
 
-  onGetCodeBoxRuntimes: function(runtimes) {
+  onGetCodeBoxRuntimesCompleted: function(runtimes) {
     console.debug('CodeBoxesStore::onGetCodeBoxRuntimes');
     this.data.runtimes = Object.keys(runtimes).map(function(runtime){
       return {payload: runtime, text: runtime}
@@ -71,15 +65,15 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onGetCodeboxesCompleted: function (list) {
-    console.debug('CodeBoxesStore::onGetCodeboxesCompleted');
+  onGetCodeBoxesCompleted: function (list) {
+    console.debug('CodeBoxesStore::onGetCodeBoxesCompleted');
     this.data.CodeBoxList = list;
     this.trigger(this.data);
   },
 
   onAddCodeBoxCompleted: function (resp) {
     console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
-    MainStore.router.transitionTo('codeboxesedit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
+    SessionStore.router.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
     CodeBoxesActions.getCodeBoxes();
   },
 
@@ -91,7 +85,7 @@ var CodeBoxesStore = Reflux.createStore({
 
   onLoadCodeboxTrace: function (trace) {
     console.debug('CodeBoxesStore::onLoadCodeboxTrace');
-    if (trace.status == 'pending') {
+    if (trace.status === 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
       setTimeout(function(){CodeBoxesActions.loadCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
