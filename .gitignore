@@ -19,3 +19,5 @@ node_modules
 
 dist/
 .idea/
+*.sublime-project
+*.sublime-workspace
