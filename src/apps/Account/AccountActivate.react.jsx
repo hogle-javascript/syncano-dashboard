@@ -3,8 +3,10 @@ var React       = require('react'),
     Reflux      = require('reflux'),
 
     AuthStore   = require('./AuthStore'),
-    AuthActions = require('./AuthActions');
+    AuthActions = require('./AuthActions'),
 
+    mui             = require('material-ui'),
+    Paper           = mui.Paper;
 
 module.exports = React.createClass({
 
@@ -12,7 +14,7 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(AuthStore),
-    Router.State,
+    Router.State
   ],
 
   contextTypes: {
@@ -29,19 +31,16 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="login-page" ref="loginPage">
-        <div className="login">
-          <div className="login-logo">
-            <img src="/img/syncano-logo.png" />
-          </div>
-          <div className="login-content">
-            <div className="login-header">
-              <h1>{this.state.status}</h1>
-            </div>
-          </div>
+      <div className="account-container" ref="loginPage">
+        <div className="account-logo">
+          <img src="/img/syncano-logo.svg" />
         </div>
+        <Paper className="account-container__content">
+          <div className="account-container__content__header">
+            <p className="vm-0-b">{this.state.status}</p>
+          </div>
+        </Paper>
       </div>
     )
   }
-
 });
