@@ -25,8 +25,9 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    Codeboxes                   = require('./apps/Codeboxes/Codeboxes.react'),
-    CodeboxesEdit               = require('./apps/Codeboxes/CodeboxesEdit.react'),
+    CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
+    CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
+    CodeBoxesTraces             = require('./apps/CodeBoxes/CodeBoxesTraces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
@@ -52,9 +53,10 @@ module.exports = (
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
-        <Route name="codeboxes" handler={Codeboxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxesadd" handler={Codeboxes} path="/instances/:instanceName/codeboxes/:action" />
-        <Route name="codeboxesedit" handler={CodeboxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
+        <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
+        <Route name="codeboxesadd" handler={CodeBoxes} path="/instances/:instanceName/codeboxes/:action" />
+        <Route name="codeboxesedit" handler={CodeBoxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
+        <Route name="codeboxestraces" handler={CodeBoxesTraces} path="/instances/:instanceName/codeboxes/:codeboxId/traces" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
