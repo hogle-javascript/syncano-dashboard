@@ -67,28 +67,6 @@ module.exports = React.createClass({
   },
 
   headerMenuItems: function () {
-    console.log("XXX",[
-     {
-      label: 'Editor',
-      route: 'codeboxesedit',
-      params: {
-        codeboxId: this.state.currentCodeBoxId,
-        instanceName: this.state.instanceName}
-    },{
-      label: 'Config',
-      route: 'codeboxeseconfig',
-      params: {
-        codeboxId: this.state.currentCodeBoxId,
-        instanceName: this.state.instanceName
-      }
-    },{
-      label: 'Traces',
-      route: 'codeboxestraces',
-      params: {
-        codeboxId: this.state.currentCodeBoxId,
-        instanceName: this.state.instanceName
-      }
-    }])
    return [
      {
       label: 'Editor',
