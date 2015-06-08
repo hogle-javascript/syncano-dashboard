@@ -148,7 +148,7 @@ module.exports = React.createClass({
             </ul>
           </div>
         </Paper>
-        <p className="vm-0-b text-center">By signing up you agree to our <Link to="login"> Terms of Use and Privacy Policy</Link>.</p>
+        <p className="vm-0-b text--center">By signing up you agree to our <Link to="login"> Terms of Use and Privacy Policy</Link>.</p>
       </div>
     );
   }

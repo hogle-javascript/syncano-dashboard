@@ -20,7 +20,6 @@ var React           = require('react'),
 
 require('./Account.sass');
 
-
 module.exports = React.createClass({
 
   displayName: 'AccountLogin',
