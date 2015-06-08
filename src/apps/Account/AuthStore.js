@@ -47,11 +47,6 @@ var AuthStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  // We need name (for example) to build URL's
-  getCurrentInstanceName: function () {
-    return this.data.currentInstance.name;
-  },
-
   onPasswordSignUp: function () {
     this.onPasswordSignIn();
   },
