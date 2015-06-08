@@ -9,7 +9,6 @@ module.exports = React.createClass({
   displayName: 'ItemColumn',
 
   propTypes: {
-    item: React.PropTypes.object.isRequired,
   },
 
   render: function () {

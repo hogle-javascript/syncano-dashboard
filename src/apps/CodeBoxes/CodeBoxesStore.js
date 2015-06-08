@@ -1,5 +1,6 @@
 var Reflux            = require('reflux'),
 
+    SessionStore         = require('../Session/SessionStore'),
     AuthStore         = require('../Account/AuthStore'),
     CodeBoxesActions  = require('./CodeBoxesActions');
 
@@ -42,7 +43,7 @@ var CodeBoxesStore = Reflux.createStore({
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
-    this.listenTo(AuthStore, this.refreshData);
+    this.listenTo(SessionStore, this.refreshData);
   },
 
   getEditorMode: function (codeBox) {
@@ -50,9 +51,9 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   refreshData: function () {
-    console.log('Refresh CodeBoxes data', status);
+    console.info('Refreshing CodeBoxes data');
 
-    if (AuthStore.data.currentInstance) {
+    if (SessionStore.instance) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
     }
@@ -75,7 +76,7 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   onAddCodeBoxCompleted: function (resp) {
-    MainStore.router.transitionTo('codeboxesedit', {instanceName: AuthStore.getCurrentInstanceName(), codeboxId: resp.id});
+    MainStore.router.transitionTo('codeboxesedit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
     CodeBoxesActions.getCodeBoxes();
   },
 

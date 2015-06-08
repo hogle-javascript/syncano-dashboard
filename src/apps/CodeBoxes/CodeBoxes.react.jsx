@@ -6,20 +6,21 @@ var React  = require('react'),
     HeaderMixin      = require('../Header/HeaderMixin');
 
     // Stores and Actions
+    SessionStore     = require('../Session/SessionStore'),
     CodeBoxesActions = require('./CodeBoxesActions'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
-    AuthStore        = require('../Account/AuthStore'),
+
 
     // Components
-    Item                = require('../../common/ColumnList/Item.react'),
-    Column              = require('../../common/ColumnList/ItemColumn.react'),
-    Header              = require('../../common/ColumnList/Header.react'),
-    ColNameDesc         = require('../../common/ColumnList/ColNameDesc.react'),
+    Item             = require('../../common/ColumnList/Item.react'),
+    Column           = require('../../common/ColumnList/ItemColumn.react'),
+    Header           = require('../../common/ColumnList/Header.react'),
+    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react'),
 
-    FabList             = require('../../common/Fab/FabList.react'),
-    Dialog              = require('material-ui/lib/dialog');
+    FabList          = require('../../common/Fab/FabList.react'),
+    Dialog           = require('material-ui/lib/dialog');
 
-    AddDialog           = require('./CodeBoxesAddDialog.react');
+    AddDialog        = require('./CodeBoxesAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -87,7 +88,7 @@ module.exports = React.createClass({
 
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codeboxesedit', {instanceName: AuthStore.getCurrentInstanceName(), codeboxId: itemId});
+    this.transitionTo('codeboxesedit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
   },
 
   generateItem: function (item) {
@@ -149,7 +150,7 @@ module.exports = React.createClass({
   render: function () {
 
     var listGroupCss = {
-      'margin-bottom': 50,
+      marginBottom: 50,
     };
 
     var columns = [

@@ -22,18 +22,20 @@ module.exports = React.createClass({
   propTypes: {
     trace: React.PropTypes.string,
     buttons: React.PropTypes.array,
-    payload: React.PropTypes.string,
-    loading: React.PropTypes.bool,
-    valueLink: React.PropTypes.shape({
-      value: React.PropTypes.string.isRequired,
+    payload: React.PropTypes.shape({
+      value: React.PropTypes.string,
+      requestChange: React.PropTypes.func.isRequired
+    }),
+    loading: React.PropTypes.shape({
+      value: React.PropTypes.string,
       requestChange: React.PropTypes.func.isRequired
     })
   },
 
   getInitialState: function () {
     return {
-      trace: this.props.trace,
       panelCollapsed: true,
+      trace: this.props.trace,
       loading: this.props.loading,
     }
   },

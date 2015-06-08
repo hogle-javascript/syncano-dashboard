@@ -2,6 +2,7 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
+
 var CodeBoxesActions = Reflux.createActions();
 
 CodeBoxesActions.setCurrentCodeBoxId = Reflux.createAction();
@@ -17,19 +18,21 @@ CodeBoxesActions.getCodeBoxes.listen( function(payload) {
 
 CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.addCodeBox.listen( function(payload) {
-  MainStore.connection.CodeBoxes.create({
-    runtime_name : payload.runtime,
-    name         : payload.label,
-    description  : payload.description,
-    source       : '#Start coding!',
-  })
+  Connection
+    .CodeBoxes.create({
+      runtime_name: payload.runtime,
+      name: payload.label,
+      description: payload.description,
+      source: '#Start coding!',
+    })
     .then(this.completed)
     .catch(this.failure);
 });
 
 CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.updateCodeBox.listen( function(params) {
-  MainStore.connection.CodeBoxes.update(params.id, params)
+  Connection
+    .CodeBoxes.update(params.id, params)
     .then(this.completed)
     .catch(this.failure);
 });
@@ -37,21 +40,24 @@ CodeBoxesActions.updateCodeBox.listen( function(params) {
 
 CodeBoxesActions.runCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.runCodeBox.listen( function(params) {
-  MainStore.connection.CodeBoxes.run(params.id, {payload: params.payload})
+  Connection
+    .CodeBoxes.run(params.id, {payload: params.payload})
     .then(this.completed)
     .catch(this.failure);
 });
 
 CodeBoxesActions.loadCodeboxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.loadCodeboxTrace.listen( function(codeboxId, traceId) {
-  MainStore.connection.CodeBoxes.trace(traceId, codeboxId, {})
+  Connection
+    .CodeBoxes.trace(traceId, codeboxId, {})
     .then(this.completed)
     .catch(this.failure);
 });
 
 CodeBoxesActions.getCodeBoxRuntimes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.getCodeBoxRuntimes.listen( function() {
-  MainStore.connection.CodeBoxes.listRuntimes()
+  Connection
+    .CodeBoxes.listRuntimes()
     .then(this.completed)
     .catch(this.failure);
 });
