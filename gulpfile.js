@@ -95,11 +95,22 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'build'], function() {
+gulp.task('publish', [], function() {
+
+  var params = {
+    bucket: 'new-dashboard.syncano.rocks',
+    region: 'eu-west-1'
+  };
+
+  if (ENV === 'production') {
+    params.bucket = 'syncano-dashboard-production';
+    params.region = 'eu-west-1';
+  }
 
   var publisher = awspublish.create({
+    region: params.region,
     params: {
-      Bucket: (ENV === 'staging') ? 'new-dashboard.syncano.rocks': 'syncano-dashboard-production',
+      Bucket: params.bucket
     }
   });
 
