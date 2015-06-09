@@ -35,7 +35,7 @@ module.exports = React.createClass({
     email: {
       presence: true,
       email: true
-    },
+    }
   },
 
   handleSubmit: function (event) {
@@ -131,5 +131,4 @@ module.exports = React.createClass({
       </div>
     )
   }
-
 });
