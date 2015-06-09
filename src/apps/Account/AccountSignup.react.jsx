@@ -112,12 +112,6 @@ module.exports = React.createClass({
                inputting any credit card information.
             </small>
           </div>
-          <Notification
-            type={{
-              status: 'info',
-              text: 'jakiś awesome text notyfikacji'
-              }}
-            />
           {this.renderError()}
           <form
             onSubmit={this.handleSubmit}
