@@ -21,6 +21,7 @@ var CodeBoxesStore = Reflux.createStore({
       payload: '{"112":111}',
       description: '',
       selectedRuntimeIndex: 0,
+      traces: null,
     }
   },
 

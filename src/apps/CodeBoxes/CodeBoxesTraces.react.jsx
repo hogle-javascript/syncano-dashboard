@@ -3,20 +3,20 @@ var React  = require('react'),
     Router = require('react-router'),
 
     // Utils
-    HeaderMixin      = require('../Header/HeaderMixin'),
+    HeaderMixin = require('../Header/HeaderMixin'),
 
     // Stores and Actions
     CodeBoxesActions = require('./CodeBoxesActions'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui              = require('material-ui'),
-    Paper            = mui.Paper,
-    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
-    Item             = require('../../common/ColumnList/Item.react'),
-    Column           = require('../../common/ColumnList/ItemColumn.react'),
-    Header           = require('../../common/ColumnList/Header.react'),
-    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react');
+    mui         = require('material-ui'),
+    Paper       = mui.Paper,
+    RoundIcon   = require('../../common/Icon/RoundIcon.react'),
+    Item        = require('../../common/ColumnList/Item.react'),
+    Column      = require('../../common/ColumnList/ItemColumn.react'),
+    Header      = require('../../common/ColumnList/Header.react'),
+    ColNameDesc = require('../../common/ColumnList/ColNameDesc.react');
 
 
 module.exports = React.createClass({
