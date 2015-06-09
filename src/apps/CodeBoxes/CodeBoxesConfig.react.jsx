@@ -58,11 +58,11 @@ module.exports = React.createClass({
        label: 'Codeboxes',
        params: routeParams
      }, {
-      route: 'codeboxesedit',
+      route: 'codeboxes-edit',
       label: this.state.currentCodeBoxId,
       params: routeParams
     },{
-       route: 'codeboxesconfig',
+       route: 'codeboxes-config',
        label: 'Config',
        params: routeParams
      }]
@@ -78,16 +78,16 @@ module.exports = React.createClass({
    return [
      {
       label: 'Editor',
-      route: 'codeboxesedit',
+      route: 'codeboxes-edit',
       params: routeParams
     },{
       label: 'Config',
-      route: 'codeboxesconfig',
+      route: 'codeboxes-config',
       params: routeParams,
       active: true,
     },{
       label: 'Traces',
-      route: 'codeboxestraces',
+      route: 'codeboxes-traces',
       params: routeParams
     }]
   },

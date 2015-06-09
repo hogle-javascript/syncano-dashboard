@@ -34,10 +34,12 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     var codeboxId = this.getParams().codeboxId;
+    var instanceName = this.getParams().instanceName;
+
     CodeBoxesActions.setCurrentCodeBoxId(codeboxId);
     this.setState({
       currentCodeBoxId: codeboxId,
-      instanceName: this.getParams().instanceName,
+      instanceName: instanceName,
     });
     CodeBoxesStore.refreshData();
   },
@@ -58,11 +60,11 @@ module.exports = React.createClass({
        label: 'Codeboxes',
        params: routeParams
      }, {
-      route: 'codeboxesedit',
+      route: 'codeboxes-edit',
       label: this.state.currentCodeBoxId,
       params: routeParams
     },{
-       route: 'codeboxestraces',
+       route: 'codeboxes-traces',
        label: 'Traces',
        params: routeParams,
      }]
@@ -78,15 +80,15 @@ module.exports = React.createClass({
    return [
      {
       label: 'Editor',
-      route: 'codeboxesedit',
+      route: 'codeboxes-edit',
       params: routeParams
     },{
       label: 'Config',
-      route: 'codeboxesconfig',
+      route: 'codeboxes-config',
       params: routeParams
     },{
       label: 'Traces',
-      route: 'codeboxestraces',
+      route: 'codeboxes-traces',
       params: routeParams,
       active: true,
     }]
@@ -99,7 +101,6 @@ module.exports = React.createClass({
     } else {
       this.setState({visibleTraceId: traceId});
     }
-
   },
 
   generateItem: function (item) {

@@ -71,7 +71,6 @@ module.exports = React.createClass({
     var activeTabIndex;
     this.state.menuItems.forEach(function(item, index){
       if (item.active) {
-        console.log(item.active);
         activeTabIndex = index;
       }
     });
