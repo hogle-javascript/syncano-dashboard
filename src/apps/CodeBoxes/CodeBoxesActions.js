@@ -49,11 +49,20 @@ CodeBoxesActions.runCodeBox.listen( function(params) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.loadCodeBoxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-CodeBoxesActions.loadCodeBoxTrace.listen( function(codeboxId, traceId) {
-  console.info('CodeBoxesActions::loadCodeBoxTrace');
+CodeBoxesActions.getCodeBoxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.getCodeBoxTrace.listen( function(codeboxId, traceId) {
+  console.info('CodeBoxesActions::getCodeBoxTrace');
   Connection
     .CodeBoxes.trace(traceId, codeboxId, {})
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+CodeBoxesActions.getCodeBoxTraces = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.getCodeBoxTraces.listen( function(codeboxId) {
+  console.info('CodeBoxesActions::getCodeBoxTraces', codeboxId);
+  Connection
+    .CodeBoxes.traces(codeboxId, {})
     .then(this.completed)
     .catch(this.failure);
 });

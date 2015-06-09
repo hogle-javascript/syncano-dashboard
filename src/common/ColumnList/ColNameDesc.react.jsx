@@ -8,7 +8,7 @@ module.exports = React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     name: React.PropTypes.string.isRequired,
-    description: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
     handleClick: React.PropTypes.func,

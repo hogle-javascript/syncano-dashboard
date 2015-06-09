@@ -24,7 +24,7 @@ module.exports = React.createClass({
   },
 
   handleTabActive: function (tab) {
-    this.context.router.transitionTo(tab.props.route);
+    this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
   renderBreadcrumbs: function () {
@@ -67,9 +67,17 @@ module.exports = React.createClass({
       return
     }
 
+    // We have to find active tab
+    var activeTabIndex;
+    this.state.menuItems.forEach(function(item, index){
+      if (item.active) {
+        activeTabIndex = index;
+      }
+    });
+
     return (
       <div className={className}>
-        <Tabs tabItemContainerStyle={{backgroundColor: 'transparent'}}>
+        <Tabs tabItemContainerStyle={{backgroundColor: 'transparent'}} initialSelectedIndex={activeTabIndex}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
@@ -79,8 +87,10 @@ module.exports = React.createClass({
   renderMenuItem: function(tab) {
     return (
       <Tab
+        key={tab.route}
         label={tab.label}
         route={tab.route}
+        params={tab.params}
         onActive={this.handleTabActive} />
     )
   },
