@@ -89,7 +89,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <Notification>{this.state.errors.feedback}</Notification>
+      <Notification type="error">{this.state.errors.feedback}</Notification>
     );
   },
 
