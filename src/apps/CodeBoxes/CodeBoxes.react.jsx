@@ -3,7 +3,7 @@ var React  = require('react'),
     Router = require('react-router'),
 
     // Utils
-    HeaderMixin      = require('../Header/HeaderMixin');
+    HeaderMixin       = require('../Header/HeaderMixin'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
@@ -11,8 +11,10 @@ var React  = require('react'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui              = require('material-ui');
+    mui              = require('material-ui'),
     Dialog           = mui.Dialog,
+    Container        = require('../../common/Container/Container.react'),
+    ListContainer    = require('../../common/Lists/ListContainer.react'),
     Item             = require('../../common/ColumnList/Item.react'),
     Column           = require('../../common/ColumnList/ItemColumn.react'),
     Header           = require('../../common/ColumnList/Header.react'),
@@ -48,8 +50,11 @@ module.exports = React.createClass({
   },
 
   headerBreadcrumbs: function () {
-   return [
-     {
+   return [{
+      route: 'instances',
+      label: 'Instances',
+      params: {instanceName: this.getParams().instanceName}
+    },{
       route: 'instance',
       label: this.getParams().instanceName,
       params: {instanceName: this.getParams().instanceName}
@@ -143,21 +148,19 @@ module.exports = React.createClass({
 
   getItems: function () {
     if (this.state.CodeBoxList){
-      var items = Object.keys(this.state.CodeBoxList).map(function(key){
+      items = Object.keys(this.state.CodeBoxList).map(function(key){
         return this.generateItem(this.state.CodeBoxList[key])
       }.bind(this));
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
+    }
+    if (items.length > 0) {
       return items;
     }
     return [<Item key="empty">Empty Item</Item>];
   },
 
   render: function () {
-
-    var listGroupCss = {
-      marginBottom: 50,
-    };
 
     var columns = [
       {'name': 'CodeBoxes', space: 1, style: {fontSize: '20px'}},
@@ -169,17 +172,11 @@ module.exports = React.createClass({
 
     var items = this.getItems();
 
-    var containerStyle = {
-      margin: '65px auto',
-      width: '80%',
-      maxWidth: '1140px'
-    };
-
     return (
-      <div className="container" style={containerStyle}>
+      <Container>
         {this.genFabButtons()}
         <AddDialog ref="addCodeBoxDialog"/>
-        <div style={listGroupCss}>
+        <ListContainer>
           <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
             <MaterialIcon name="group_add" handleClick={this.dummyClick}/>
             <MaterialIcon name="home" handleClick={this.dummyClick}/>
@@ -187,8 +184,8 @@ module.exports = React.createClass({
           <List viewMode="stream">
             {items}
           </List>
-        </div>
-      </div>
+        </ListContainer>
+      </Container>
     );
   }
 

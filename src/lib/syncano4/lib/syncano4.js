@@ -220,16 +220,14 @@ var Syncano = (function() {
 					enumerable: true,
 					configurable: false
 				});
+			} else if (typeof data.objects[i].name !== 'undefined') {
+				Object.defineProperty(List, data.objects[i].name, {
+					value: data.objects[i],
+					writable: true,
+					enumerable: true,
+					configurable: false
+				});
 			}
-			//if (typeof data.objects[i].name !== 'undefined') {
-			//	Object.defineProperty(List, data.objects[i].name, {
-			//		value: data.objects[i],
-			//		writable: true,
-			//		enumerable: true,
-			//		configurable: false
-			//	});
-			//}
-
 		}
 		Object.defineProperty(List, '_items', {
 			value: data.objects,
