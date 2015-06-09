@@ -13,7 +13,9 @@ var React  = require('react'),
     // Components
     mui              = require('material-ui'),
     Dialog           = mui.Dialog,
+    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
     Container        = require('../../common/Container/Container.react'),
+    List             = require('../../common/Lists/List.react'),
     ListContainer    = require('../../common/Lists/ListContainer.react'),
     Item             = require('../../common/ColumnList/Item.react'),
     Column           = require('../../common/ColumnList/ItemColumn.react'),
@@ -147,6 +149,7 @@ module.exports = React.createClass({
   },
 
   getItems: function () {
+    var items = [];
     if (this.state.CodeBoxList){
       items = Object.keys(this.state.CodeBoxList).map(function(key){
         return this.generateItem(this.state.CodeBoxList[key])
