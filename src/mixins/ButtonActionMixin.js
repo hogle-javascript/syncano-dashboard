@@ -1,7 +1,7 @@
 var ButtonActionMixin = {
   handleButtonClick: function (buttonName) {
-    var buttonConf = this.genButtons()[buttonName];
-    var params = typeof buttonConf.params == 'function' ? buttonConf.params(): buttonConf.params;
+    var buttonConf = this.genButtons()[buttonName],
+        params = typeof buttonConf.params === 'function' ? buttonConf.params(): buttonConf.params;
     buttonConf.action(params);
   },
 };

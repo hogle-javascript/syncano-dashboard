@@ -58,7 +58,7 @@ module.exports = React.createClass({
       label: 'Codeboxes',
       params: {instanceName: this.state.instanceName}
     },{
-      route: 'codeboxesedit',
+      route: 'codeboxes-edit',
       label: this.state.currentCodeBoxId,
       params: {
         codeboxId: this.state.currentCodeBoxId,

@@ -1,6 +1,6 @@
 var React  = require('react'),
     Reflux = require('reflux'),
-    Router              = require('react-router'),
+    Router = require('react-router'),
 
     // Utils
     HeaderMixin      = require('../Header/HeaderMixin');
@@ -88,7 +88,7 @@ module.exports = React.createClass({
 
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codeboxesedit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
+    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
   },
 
   generateItem: function (item) {
@@ -99,14 +99,16 @@ module.exports = React.createClass({
           icon        = "notifications"
           background  = {this.getColor(item.runtime_name)}
           width       = '40px'
-          handleClick = {this.handleItemIconClick}/>
+          handleClick = {this.handleItemIconClick}
+         />
       </Column>
       <Column grid="5">
         <ColNameDesc
           id          = {item.id.toString()}
           name        = {item.name}
           description = {item.description}
-          handleClick = {this.handleItemClick}/>
+          handleClick = {this.handleItemClick}
+         />
       </Column>
       <Column grid="2">
         <span><strong>{item.runtime_name}</strong></span>
