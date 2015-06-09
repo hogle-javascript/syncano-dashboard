@@ -7,23 +7,35 @@ var SessionStore = Reflux.createStore({
   listenables: SessionActions,
 
   init: function () {
-    this.token      = sessionStorage.getItem('token') || null;
-    this.user       = null;
-    this.instance   = null;
     this.connection = Connection.get();
+    this.instance   = null;
     this.route      = null;
 
     if (this.isAuthenticated() && !this.connection.account) {
-      SessionActions.tokenLogin(this.token);
+      SessionActions.tokenLogin(this.getToken());
     }
   },
 
+  getMyEmail: function() {
+    return sessionStorage.getItem('user');
+  },
+
+  getToken: function() {
+    return sessionStorage.getItem('token');
+  },
+
+  onTokenLoginCompleted: function(payload) {
+    console.info('SessionStore::onTokenLoginComplete');
+  },
+
   onLogin: function(payload) {
+    console.info('SessionStore::onLogin');
     if (payload === undefined || payload.account_key === undefined) {
       return
     }
 
     sessionStorage.setItem('token', payload.account_key);
+    sessionStorage.setItem('user', payload.email);
     this.token = payload.account_key;
     this.user  = payload;
     this.trigger(this);
@@ -54,11 +66,10 @@ var SessionStore = Reflux.createStore({
   },
 
   isAuthenticated: function () {
-    if (this.token === 'undefined') {
+    if (sessionStorage.getItem('token') === null) {
       return false;
     }
-
-    return this.token ? true : false;
+    return true;
   },
 
 });
