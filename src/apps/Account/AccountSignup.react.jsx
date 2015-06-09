@@ -89,13 +89,8 @@ module.exports = React.createClass({
     }
 
     return (
-      <Notification
-        type={{
-              status: 'info',
-              text: this.state.errors.feedback
-              }}
-        />
-    )
+      <Notification>{this.state.errors.feedback}</Notification>
+    );
   },
 
   render: function () {

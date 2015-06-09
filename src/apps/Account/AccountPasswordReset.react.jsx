@@ -58,12 +58,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <Notification
-        type={{
-          status: 'info',
-          text: this.state.errors.feedback
-          }}
-        />
+      <Notification>{this.state.errors.feedback}</Notification>
     );
   },
 
@@ -73,12 +68,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <Notification
-        type={{
-            status: 'info',
-            text: this.state.feedback
-            }}
-        />
+      <Notification>{this.state.feedback}</Notification>
     );
   },
 
@@ -129,6 +119,6 @@ module.exports = React.createClass({
           </div>
         </Paper>
       </div>
-    )
+    );
   }
 });
