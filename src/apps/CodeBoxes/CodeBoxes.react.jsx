@@ -1,16 +1,26 @@
 var React  = require('react'),
     Reflux = require('reflux'),
+    Router = require('react-router'),
+
+    // Utils
+    HeaderMixin      = require('../Header/HeaderMixin');
 
     // Stores and Actions
+    SessionStore     = require('../Session/SessionStore'),
     CodeBoxesActions = require('./CodeBoxesActions'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
-    AuthStore        = require('../Account/AuthStore'),
 
     // Components
+    mui              = require('material-ui');
+    Dialog           = mui.Dialog,
     Item             = require('../../common/ColumnList/Item.react'),
     Column           = require('../../common/ColumnList/ItemColumn.react'),
     Header           = require('../../common/ColumnList/Header.react'),
-    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react');
+    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react'),
+    FabList          = require('../../common/Fab/FabList.react'),
+
+
+    AddDialog        = require('./CodeBoxesAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -19,9 +29,36 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(CodeBoxesStore),
+    HeaderMixin,
+    Router.State,
+    Router.Navigation,
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
+
+  componentWillMount: function() {
+    CodeBoxesStore.refreshData();
+  },
+
+  componentDidMount: function() {
+    if (this.getParams().action == 'add'){
+      // Show Add modal
+      this.refs.addCodeBoxDialog.show();
+    }
+  },
+
+  headerBreadcrumbs: function () {
+   return [
+     {
+      route: 'instance',
+      label: this.getParams().instanceName,
+      params: {instanceName: this.getParams().instanceName}
+    },{
+      route: 'codeboxes',
+      label: 'Codeboxes',
+      params: {instanceName: this.getParams().instanceName}
+    }]
+  },
 
   handleItemIconClick: function (id, state) {
     var checkedItemNumber;
@@ -39,55 +76,114 @@ module.exports = React.createClass({
     console.log('checked', checkedItemNumber)
   },
 
-  generateItem: function () {
-    return (<Item key="1">
+  getColor: function(runtime) {
+    var colors = {
+      nodejs: '#80BD01',
+      python: '#4984B1',
+      golang: '#E0EBF5',
+      ruby:   '#B21000'
+    }
+    return colors[runtime];
+  },
+
+  handleItemClick: function(itemId) {
+    // Redirect to edit screen
+    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
+  },
+
+  generateItem: function (item) {
+    return (<Item key={item.id}>
       <Column grid="1">
         <CheckIcon
-          id="some_id1"
-          icon="notifications"
-          background="blue" width='40px'
-          handleClick={this.handleItemIconClick}/>
+          id          = "some_id1"
+          icon        = "notifications"
+          background  = {this.getColor(item.runtime_name)}
+          width       = '40px'
+          handleClick = {this.handleItemIconClick}
+         />
       </Column>
       <Column grid="5">
-        <ColNameDesc name="My Codebox" description="Description of my codebox"/>
+        <ColNameDesc
+          id          = {item.id.toString()}
+          name        = {item.name}
+          description = {item.description}
+          handleClick = {this.handleItemClick}
+         />
       </Column>
-      <Column grid="3">
-        <span><strong>2345</strong></span>
+      <Column grid="2">
+        <span><strong>{item.runtime_name}</strong></span>
       </Column>
-      <Column grid="3">
-        <span><strong>January 2011</strong></span>
+      <Column grid="2">
+        <span><strong>{item.id}</strong></span>
+      </Column>
+      <Column grid="2">
+        <span><strong>{item.created_at}</strong></span>
       </Column>
     </Item>)
 
   },
 
+  buttonClick: function (action) {
+      console.info('CodeBoxes::buttonClick');
+      this.refs.addCodeBoxDialog.show();
+  },
+
+  genFabButtons: function() {
+
+    var buttons = [
+      {
+        name: "plusButton",
+        label: "Click here to create CodeBox",
+        icon: 'plus',
+        color: 'red',
+      }
+    ];
+    return <FabList buttons={buttons} handleClick={this.buttonClick}/>;
+  },
+
+  getItems: function () {
+    if (this.state.CodeBoxList){
+      var items = Object.keys(this.state.CodeBoxList).map(function(key){
+        return this.generateItem(this.state.CodeBoxList[key])
+      }.bind(this));
+      // TODO: Fix this dirty hack, that should be done in store by sorting!
+      items.reverse();
+      return items;
+    }
+    return [<Item key="empty">Empty Item</Item>];
+  },
+
   render: function () {
 
-    var dummyClick = function (action) {
-      console.log('Click!', action);
-    };
-
     var listGroupCss = {
-      'margin-bottom': 50,
+      marginBottom: 50,
     };
 
     var columns = [
       {'name': 'CodeBoxes', space: 1, style: {fontSize: '20px'}},
       {'name': '', space: 5},
-      {'name': 'ID', space: 3},
-      {'name': 'Created', space: 3},
+      {'name': 'Runtime', space: 2},
+      {'name': 'ID', space: 2},
+      {'name': 'Created', space: 2},
     ];
 
-    var items = [this.generateItem()];
+    var items = this.getItems();
+
+    var containerStyle = {
+      margin: '65px auto',
+      width: '80%',
+      maxWidth: '1140px'
+    };
 
     return (
-      <div className="container" style={{marginTop: 50}}>
+      <div className="container" style={containerStyle}>
+        {this.genFabButtons()}
+        <AddDialog ref="addCodeBoxDialog"/>
         <div style={listGroupCss}>
           <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
-            <MaterialIcon name="group_add" handleClick={dummyClick}/>
-            <MaterialIcon name="home" handleClick={dummyClick}/>
+            <MaterialIcon name="group_add" handleClick={this.dummyClick}/>
+            <MaterialIcon name="home" handleClick={this.dummyClick}/>
           </Header>
-
           <List viewMode="stream">
             {items}
           </List>

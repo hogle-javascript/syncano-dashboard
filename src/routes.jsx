@@ -1,6 +1,7 @@
 var React                       = require('react'),
     Router                      = require('react-router'),
     Route                       = Router.Route,
+    Redirect                    = Router.Redirect,
     NotFoundRoute               = Router.NotFoundRoute,
     DefaultRoute                = Router.DefaultRoute,
 
@@ -24,7 +25,8 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    Codeboxes                   = require('./apps/Codeboxes/Codeboxes.react'),
+    CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
+    CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
@@ -34,7 +36,6 @@ var React                       = require('react'),
     // Examples
     Examples                    = require('./examples/Examples.react'),
     ListExamples                = require('./examples/ListExamples.react');
-
 
 
 module.exports = (
@@ -47,10 +48,13 @@ module.exports = (
 
     <Route name="dashboard" handler={Dashboard} path="/">
       <Route name="instances" handler={Instance} path="/instances">
+        <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
-        <Route name="codeboxes" handler={Codeboxes} path=":instanceName/codeboxes" />
+        <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
+        <Route name="codeboxes-add" handler={CodeBoxes} path="/instances/:instanceName/codeboxes/:action" />
+        <Route name="codeboxes-edit" handler={CodeBoxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />

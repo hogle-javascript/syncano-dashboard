@@ -26,6 +26,21 @@ module.exports = React.createClass({
     }
   },
 
+  getStyles: function() {
+    var styles = {
+      button: {
+        backgroundColor: this.props.button.color,
+        width: 55,
+        height: 55,
+      },
+      icon: {
+        width: 30,
+        height: 30,
+      }
+    };
+    return styles;
+  },
+
   handleClick: function() {
     this.props.handleClick(this.props.button.name);
   },
@@ -35,12 +50,12 @@ module.exports = React.createClass({
       'fab': true,
       'fab-primary': this.props.button.primary,
     });
-    var style = {
-      backgroundColor: this.props.button.color
-    };
+
+    var styles = this.getStyles();
+
     return (
-      <div className={cssClasses} style={style}>
-        <Icon icon={this.props.button.icon} handleClick={this.handleClick} />
+      <div className={cssClasses} style={styles.button}>
+        <Icon style={styles.icon} icon={this.props.button.icon} handleClick={this.handleClick} />
       </div>
     );
   }

@@ -44,6 +44,7 @@ var SessionStore = Reflux.createStore({
   },
 
   onSetInstanceCompleted: function (payload) {
+    console.info('SessionStore::onSetInstanceCompleted');
     this.instance = payload;
     this.trigger(this)
   },

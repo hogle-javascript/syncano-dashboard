@@ -1,7 +1,7 @@
-var React = require('react');
-var classNames = require('classnames');
+var React      = require('react'),
+    classNames = require('classnames'),
 
-var IconStore = require('./store');
+    IconStore  = require('./store');
 
 require('./Icon.css');
 
@@ -36,7 +36,7 @@ module.exports = React.createClass({
 
   getDefaultProps: function () {
     return {
-      glowing: false,        
+      glowing: false,
     };
   },
 
