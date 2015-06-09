@@ -11,7 +11,7 @@ var React  = require('react'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui              = require('material-ui');
+    mui              = require('material-ui'),
     Dialog           = mui.Dialog,
     Item             = require('../../common/ColumnList/Item.react'),
     Column           = require('../../common/ColumnList/ItemColumn.react'),

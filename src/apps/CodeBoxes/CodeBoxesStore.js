@@ -50,10 +50,14 @@ var CodeBoxesStore = Reflux.createStore({
     if (SessionStore.instance) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
+      if (this.data.currentCodeBoxId) {
+        CodeBoxesActions.getCodeBoxTraces(this.data.currentCodeBoxId);
+      }
     }
   },
 
   onSetCurrentCodeBoxId: function(CodeBoxId) {
+    console.debug('CodeBoxesStore::onSetCurrentCodeBoxIdCompleted');
     this.data.currentCodeBoxId = CodeBoxId;
   },
 
@@ -80,23 +84,27 @@ var CodeBoxesStore = Reflux.createStore({
   onRunCodeBoxCompleted: function (trace) {
     console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     this.data.lastTrace = trace;
-    CodeBoxesActions.loadCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
+    CodeBoxesActions.getCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },
 
-  onLoadCodeboxTrace: function (trace) {
-    console.debug('CodeBoxesStore::onLoadCodeboxTrace');
-    if (trace.status === 'pending') {
+  onGetCodeBoxTraceCompleted: function (trace) {
+    console.debug('CodeBoxesStore::onGetCodeBoxTrace');
+    if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function(){CodeBoxesActions.loadCodeBoxTrace(CodeBoxId, trace.id)}, 300);
+      setTimeout(function(){CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
       this.data.traceLoading = false;
     }
     this.trigger(this.data);
+  },
+
+  onGetCodeBoxTracesCompleted: function (traces) {
+    console.debug('CodeBoxesStore::onGetCodeBoxTraces');
+    this.data.traces = traces;
+    this.trigger(this.data);
   }
 
-
 });
-
 
 module.exports = CodeBoxesStore;

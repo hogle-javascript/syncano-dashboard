@@ -42,25 +42,52 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
-    this.setState({'currentCodeBoxId': this.getParams().codeboxId})
+    this.setState({
+      currentCodeBoxId: this.getParams().codeboxId,
+      instanceName: this.getParams().instanceName,
+    })
   },
 
-
   headerBreadcrumbs: function () {
-   var instanceName = this.getParams().instanceName;
-   var codeBoxId = this.state.currentCodeBoxId;
    return [{
       route: 'instance',
-      label: instanceName,
-      params: {instanceName: instanceName}
+      label: this.state.instanceName,
+      params: {instanceName: this.state.instanceName}
     },{
       route: 'codeboxes',
       label: 'Codeboxes',
-      params: {instanceName: instanceName}
+      params: {instanceName: this.state.instanceName}
     },{
       route: 'codeboxes-edit',
-      label: codeBoxId,
-      params: {codeboxId: codeBoxId, instanceName: instanceName}
+      label: this.state.currentCodeBoxId,
+      params: {
+        codeboxId: this.state.currentCodeBoxId,
+        instanceName: this.state.instanceName}
+    }]
+  },
+
+  headerMenuItems: function () {
+   return [
+     {
+      label: 'Editor',
+      route: 'codeboxes-edit',
+      params: {
+        codeboxId: this.state.currentCodeBoxId,
+        instanceName: this.state.instanceName}
+    },{
+      label: 'Config',
+      route: 'codeboxes-config',
+      params: {
+        codeboxId: this.state.currentCodeBoxId,
+        instanceName: this.state.instanceName
+      }
+    },{
+      label: 'Traces',
+      route: 'codeboxes-traces',
+      params: {
+        codeboxId: this.state.currentCodeBoxId,
+        instanceName: this.state.instanceName
+      }
     }]
   },
   
