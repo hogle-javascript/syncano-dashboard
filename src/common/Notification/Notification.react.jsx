@@ -9,22 +9,31 @@ module.exports = React.createClass({
 
   displayName: 'Notification',
 
+  propTypes: {
+    status: React.PropTypes.string.isRequired,
+    children: React.PropTypes.any.isRequired
+  },
+
+  getDefaultProps: function() {
+    return {
+      status: 'info'
+    };
+  },
+
   render: function() {
   	var cssClasses  = classNames({
-      'notification-card'    : true,
-      'notification-info'    : this.props.type.status === "info",
-      'notification-error'   : this.props.type.status === "error",
-      'notification-warning' : this.props.type.status === "warning"
+      'notification'          : true,
+      'notification--info'    : this.props.status === 'info',
+      'notification--error'   : this.props.status === 'error',
+      'notification--warning' : this.props.status === 'warning'
     });
     return (
       <div className={cssClasses}>
-        <div className="notification-content">
-          <div className="notification-icon">
-            <MaterialIcon name={this.props.type.status} />
+        <div className="notification__content">
+          <div className="notification__content__icon">
+            <MaterialIcon name={this.props.status} />
           </div>
-          <div>
-            <span>{this.props.type.text}</span>
-          </div>
+          <div>{this.props.children}</div>
         </div>
       </div>
     )
