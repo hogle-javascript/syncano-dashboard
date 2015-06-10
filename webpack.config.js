@@ -10,7 +10,7 @@ var ENV        = process.env.NODE_ENV || 'development',
 for (i = 0; i < pluginVars.length; i++) {
     var name    = pluginVars[i],
         envName = ENV.toUpperCase() + '_' + name;
-    plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || null);
+    plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || '');
 }
 
 module.exports = {
