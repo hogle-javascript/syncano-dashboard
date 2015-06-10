@@ -55,10 +55,10 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxes-traces" handler={CodeBoxesTraces} path="/instances/:instanceName/codeboxes/:codeboxId/traces" />
-        <Route name="codeboxes-add" handler={CodeBoxes} path="/instances/:instanceName/codeboxes/:action" />
-        <Route name="codeboxes-edit" handler={CodeBoxesEdit} path="/instances/:instanceName/codeboxes/:codeboxId/edit" />
-        <Route name="codeboxes-config" handler={CodeBoxesConfig} path="/instances/:instanceName/codeboxes/:codeboxId/config" />
+        <Route name="codeboxes-traces" handler={CodeBoxesTraces} path=":instanceName/codeboxes/:codeboxId/traces" />
+        <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
+        <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
+        <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
