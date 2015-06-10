@@ -119,7 +119,7 @@ var Syncano = (function() {
 		}
 		request.open(mtype, params.url, true);
 		if (mtype !== 'GET') {
-			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+			request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 		}
 
 		if (params.headers !== undefined){
@@ -141,7 +141,7 @@ var Syncano = (function() {
 		};
 
 		if (mtype !== 'GET') {
-			request.send(prepareAjaxParams(params.data));
+			request.send(JSON.stringify(params.data));
 		} else {
 			request.send();
 		}
