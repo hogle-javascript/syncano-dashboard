@@ -20,7 +20,6 @@ var React           = require('react'),
 
     Notification    = require('../../common/Notification/Notification.react');
 
-
 require('./Account.sass');
 
 module.exports = React.createClass({
