@@ -14,7 +14,6 @@ var React  = require('react'),
 
     // Components
     mui           = require('material-ui'),
-    Dialog        = mui.Dialog,
 
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
@@ -23,9 +22,7 @@ var React  = require('react'),
     ColumnName      = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react'),
-
-    FabList          = require('../../common/Fab/FabList.react');
+    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -53,18 +50,7 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
-    var checkedItemNumber;
-    if (state) {
-      checkedItemNumber = ++this.state.checkedItemNumber;
-    } else {
-      checkedItemNumber = --this.state.checkedItemNumber;
-    }
-
-    this.setState({
-      checkingState: checkedItemNumber > 0,
-      checkedItemNumber: checkedItemNumber,
-    });
-    console.log('checked', checkedItemNumber)
+    this.props.handleItemIconClick(id, state);
   },
 
   handleItemClick: function(instanceName) {

@@ -46,8 +46,9 @@ module.exports = React.createClass({
     }
   },
 
-  handleClick: function () {
-    this.props.handleClick(this.props.id);
+  handleClick: function (id, state) {
+    console.info('ColumnCheckIcon:handleClick');
+    this.props.handleClick(id, state);
   },
 
   render: function () {
@@ -62,8 +63,7 @@ module.exports = React.createClass({
     return (
       <div
         className={cssClasses}
-        style={style}
-        onClick={this.handleClick}>
+        style={style}>
         <CheckIcon
             id          = {this.props.id}
             icon        = {this.props.icon || DEFAULT_ICON}

@@ -15,7 +15,7 @@ module.exports = React.createClass({
         justifyContent : 'flex-end',
         marginBottom   : 5,
         fontSize       : 16,
-        lineHeight     : 35,
+        lineHeight     : '35px',
         color          : '#929292',
       }
     };
