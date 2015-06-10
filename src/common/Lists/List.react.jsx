@@ -1,6 +1,5 @@
-var React       = require('react');
-var Moment      = require('moment');
-var classNames  = require('classnames');
+var React       = require('react'),
+    classNames  = require('classnames');
 
 
 module.exports = React.createClass({

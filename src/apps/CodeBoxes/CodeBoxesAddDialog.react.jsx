@@ -7,7 +7,6 @@ var React               = require('react'),
     // Stores and Actions
     CodeBoxesActions    = require('./CodeBoxesActions'),
     CodeBoxesStore      = require('./CodeBoxesStore'),
-    AuthStore           = require('../Account/AuthStore'),
 
     // Components
     mui                 = require('material-ui'),
