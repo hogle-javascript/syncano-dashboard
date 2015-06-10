@@ -31,7 +31,6 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
-    ButtonActionMixin,
     HeaderMixin,
     Router.State,
     Router.Navigation,
@@ -69,7 +68,11 @@ module.exports = React.createClass({
             background  = {item.metadata.color}
             width       = '40px'
             handleClick = {this.handleItemIconClick} />
-        <ColumnName handleClick={this.handleItemClick}>{item.name}</ColumnName>
+        <ColumnName
+          id={item.name}
+          handleClick={this.handleItemClick}>
+          {item.name}
+        </ColumnName>
         <ColumnDesc>{item.description}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
