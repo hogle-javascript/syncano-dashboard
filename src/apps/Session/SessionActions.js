@@ -17,6 +17,7 @@ var SessionActions = Reflux.createActions({
 });
 
 SessionActions.tokenLogin.listen(function (token) {
+  console.info('SessionActions::tokenLogin');
   Connection
     .connect(token)
     .then(this.completed)
@@ -24,6 +25,7 @@ SessionActions.tokenLogin.listen(function (token) {
 });
 
 SessionActions.setInstance.listen(function (name) {
+  console.info('SessionActions::setInstance');
   Connection
     .setInstance(name)
     .then(this.completed)
