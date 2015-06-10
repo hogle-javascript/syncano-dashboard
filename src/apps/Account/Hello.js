@@ -9,7 +9,7 @@ credentials.github   = (typeof GITHUB_ID === 'undefined') ? null : GITHUB_ID;
 
 options.redirect_uri = location.protocol + '//' + location.host;
 options.scope        = 'email';
-options.oauth_proxy  = (typeof OAUTH_PROXY_URL === 'undefined') ? null : OAUTH_PROXY_URL
+options.oauth_proxy  = (typeof OAUTH_PROXY_URL === 'undefined') ? null : OAUTH_PROXY_URL;
 
 hello.init(credentials, options);
 

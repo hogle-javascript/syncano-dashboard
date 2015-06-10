@@ -8,7 +8,7 @@ describe("CodeBoxes.react", function () {
         TestUtils     = React.addons.TestUtils,
         StorageMock   = require('../../../utils/StorageMock');
 
-        Codeboxes     = require('../CodeBoxes.react');
+        // Codeboxes     = require('../CodeBoxes.react');
         //CodeboxesView = TestUtils.renderIntoDocument(<Codeboxes />);
 
   });

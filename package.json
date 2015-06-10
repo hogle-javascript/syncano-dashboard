@@ -81,7 +81,8 @@
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
       "<rootDir>/node_modules/classnames",
-      "<rootDir>material-ui"
+      "<rootDir>material-ui",
+      "<rootDir>/node_modules/hellojs"
     ]
   },
   "scripts": {
