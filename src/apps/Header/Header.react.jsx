@@ -3,13 +3,13 @@ var React         = require('react'),
     classNames    = require('classnames'),
     Router        = require('react-router'),
     Link          = Router.Link,
-    mui           = require('material-ui'),
-    Tabs          = mui.Tabs,
-    Tab           = mui.Tab,
-    MaterialIcon  = require('../../common/Icon/MaterialIcon.react'),
-    HeaderActions = require('./HeaderActions'),
-    SessionActions= require('../Session/SessionActions'),
-    HeaderStore   = require('./HeaderStore');
+    mui            = require('material-ui'),
+    Tabs           = mui.Tabs,
+    Tab            = mui.Tab,
+    MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
+    HeaderActions  = require('./HeaderActions'),
+    SessionActions = require('../Session/SessionActions'),
+    HeaderStore    = require('./HeaderStore');
 
 
 require('./Header.css');
