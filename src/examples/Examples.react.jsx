@@ -33,8 +33,8 @@ var React                = require('react'),
     SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
     SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
-    ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
-    ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
+    SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
     Icon                 = require('../common/Icon/Icon.react'),
     IconPicker           = require('../common/Icon/IconPicker.react'),
     IconPickerItem       = require('../common/Icon/IconPickerItem.react'),
@@ -549,7 +549,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>ButtonSocialAuth</h2>
-          <ButtonSocialAuth
+          <SocialAuthButton
             icon="facebook"
             text="Log in with Facebook" />
         </div>

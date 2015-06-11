@@ -92,19 +92,12 @@ module.exports = React.createClass({
   },
 
   renderSocialButton: function (network) {
-
-    var buttonStyles = {
-      width: '100%'
-    };
-
-    var iconStyles = {
-      display: 'flex'
-    };
-
     return (
-      <FlatButton style={buttonStyles} linkButton={true} onClick={this.handleSocialSignup(network)} label={"Sign up with " + network}>
-        <FontIcon style={iconStyles} className={"synicon-" + network} />
-      </FlatButton>
+      <SocialAuthButton
+          icon={"synicon-" + network}
+          label={"Sign up with " + network}
+          handleClick={this.handleSocialSignup(network)}
+        />
     )
   },
 
@@ -117,7 +110,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="social-actions-list">{buttons}</ul>
+    return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
   renderError: function () {

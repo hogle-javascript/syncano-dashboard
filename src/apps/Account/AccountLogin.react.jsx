@@ -20,6 +20,8 @@ var React           = require('react'),
     FlatButton      = mui.FlatButton,
     FontIcon        = mui.FontIcon,
 
+    SocialAuthButton = require('../../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
     Notification    = require('../../common/Notification/Notification.react');
 
 require('./Account.sass');
@@ -73,19 +75,12 @@ module.exports = React.createClass({
   },
 
   renderSocialButton: function (network) {
-
-    var buttonStyles = {
-      width: '100%'
-    };
-
-    var iconStyles = {
-      display: 'flex'
-    };
-
     return (
-      <FlatButton style={buttonStyles} linkButton={true} onClick={this.handleSocialSignup(network)} label={"Log in with " + network}>
-        <FontIcon style={iconStyles} className={"synicon-" + network} />
-      </FlatButton>
+      <SocialAuthButton
+        icon={"synicon-" + network}
+        label={"Log in with " + network}
+        handleClick={this.handleSocialSignup(network)}
+        />
     )
   },
 
@@ -98,7 +93,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="social-actions-list">{buttons}</ul>
+    return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
   handleSubmit: function (event) {
@@ -112,7 +107,7 @@ module.exports = React.createClass({
       if (isValid === true) {
         AuthActions.passwordSignIn({
           email: this.state.email,
-          password: this.state.password,
+          password: this.state.password
         });
       }
     }.bind(this));
