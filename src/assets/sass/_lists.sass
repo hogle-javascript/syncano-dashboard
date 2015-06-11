@@ -1,17 +1,15 @@
 .list--flex
-  padding: 0
-  margin: 0
   +display-flex
   +justify-content(space-between)
+  +flex-direction(column)
+  padding: 0
+  margin: 0
 
   > li
     display: inline-block
-    +display-flex
 
-    > span,
-    > a
-      +display-flex
-
+.list--horizontal
+  +flex-direction(row)
 
 .list--bordered
   border: 1px solid #1e88e5
@@ -28,3 +26,31 @@
 
     > a
       text-decoration: none
+
+.social-actions-list
+  @extend .list--flex
+  @extend .list--bordered
+  +margin-trailer(3)
+
+  > li
+    +display-flex
+
+    > a > div:first-child
+      +display-flex
+      +flex-direction(row-reverse)
+      +align-items(center)
+      text-transform: none !important
+      color: $blue !important
+      font-weight: 400 !important
+
+      > span
+        +display-flex
+
+        &:not([class*="synicon-"])
+          +flex(1)
+          padding: 0 !important
+
+      [class*="synicon-"]
+        font-size: 18px !important
+        line-height: 1 !important
+        padding: 14px 16px !important

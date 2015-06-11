@@ -17,6 +17,8 @@ var React           = require('react'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
     Paper           = mui.Paper,
+    FlatButton      = mui.FlatButton,
+    FontIcon        = mui.FontIcon,
 
     Notification    = require('../../common/Notification/Notification.react');
 
@@ -90,15 +92,19 @@ module.exports = React.createClass({
   },
 
   renderSocialButton: function (network) {
+
+    var buttonStyles = {
+      width: '100%'
+    };
+
+    var iconStyles = {
+      display: 'flex'
+    };
+
     return (
-      <RaisedButton
-        onClick={this.handleSocialSignup(network)}
-        label={network}
-        style={{
-          width: '100%',
-          height: '48px'
-        }}
-        className="raised-button" />
+      <FlatButton style={buttonStyles} linkButton={true} onClick={this.handleSocialSignup(network)} label={"Sign up with " + network}>
+        <FontIcon style={iconStyles} className={"synicon-" + network} />
+      </FlatButton>
     )
   },
 
@@ -111,7 +117,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="list--flex">{buttons}</ul>
+    return <ul className="social-actions-list">{buttons}</ul>
   },
 
   renderError: function () {
@@ -131,7 +137,7 @@ module.exports = React.createClass({
           <img src="/img/syncano-logo.svg" />
         </div>
         <Paper className="account-container__content">
-          <div className="account-container__content__header vm-5-b">
+          <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Try it now and start creating your apps</p>
             <small>
               Your 30 day trial includes unlimited use of the Syncano platform without
@@ -173,7 +179,7 @@ module.exports = React.createClass({
           </form>
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">
-            <ul className="list--flex">
+            <ul className="list--flex list--horizontal">
               <li>
                 <p>Already have an account? <Link to="login"> Login</Link></p>
               </li>

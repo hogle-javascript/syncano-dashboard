@@ -8,8 +8,8 @@
 // $typl8-font-family               non-font-face stack
 
 //$typl8-serif-boolean: true !default;
-$typl8-custom-font: true !default;
-//$typl8-font-family: if($typl8-serif-boolean, serif, sans-serif) !default;
+$typl8-custom-font: true;
+$typl8-font-family: 'Roboto', sans-serif;
 //$typl8-font-weight: normal !default;
 //$typl8-line-height: 1.65 !default;
 $typl8-font-size: 87.5;

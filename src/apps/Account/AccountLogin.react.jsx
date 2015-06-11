@@ -17,6 +17,8 @@ var React           = require('react'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
     Paper           = mui.Paper,
+    FlatButton      = mui.FlatButton,
+    FontIcon        = mui.FontIcon,
 
     Notification    = require('../../common/Notification/Notification.react');
 
@@ -71,15 +73,19 @@ module.exports = React.createClass({
   },
 
   renderSocialButton: function (network) {
+
+    var buttonStyles = {
+      width: '100%'
+    };
+
+    var iconStyles = {
+      display: 'flex'
+    };
+
     return (
-      <RaisedButton
-        onClick={this.handleSocialSignup(network)}
-        label={network}
-        style={{
-          width: '100%',
-          height: '48px'
-        }}
-        className="raised-button" />
+      <FlatButton style={buttonStyles} linkButton={true} onClick={this.handleSocialSignup(network)} label={"Log in with " + network}>
+        <FontIcon style={iconStyles} className={"synicon-" + network} />
+      </FlatButton>
     )
   },
 
@@ -92,7 +98,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="list--flex">{buttons}</ul>
+    return <ul className="social-actions-list">{buttons}</ul>
   },
 
   handleSubmit: function (event) {
@@ -157,7 +163,7 @@ module.exports = React.createClass({
               hintText="Password" />
             <RaisedButton
               type="submit"
-              label="Sign in"
+              label="Log in"
               style={{
                 width: '100%',
                 height: '48px'
@@ -167,7 +173,7 @@ module.exports = React.createClass({
           </form>
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">
-            <ul className="list--flex">
+            <ul className="list--flex list--horizontal">
               <li>
                 <p><Link to="password-reset">Forgot password?</Link></p>
               </li>
