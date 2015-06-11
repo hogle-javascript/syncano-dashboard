@@ -119,8 +119,15 @@ var Syncano = (function() {
 		}
 		request.open(mtype, params.url, true);
 		if (mtype !== 'GET') {
-			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+			request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 		}
+
+		if (params.headers !== undefined){
+			for (var headerName in params.headers) {
+				request.setRequestHeader(headerName, params.headers[headerName]);
+			}
+		}
+
 		request.onload = function() {
 			if (request.status >= 200 && request.status < 400) {
 				var data = '';
@@ -134,7 +141,7 @@ var Syncano = (function() {
 		};
 
 		if (mtype !== 'GET') {
-			request.send(prepareAjaxParams(params.data));
+			request.send(JSON.stringify(params.data));
 		} else {
 			request.send();
 		}
@@ -176,6 +183,14 @@ var Syncano = (function() {
 				'user-agent': 'syncano-nodejs-4.0'
 			};
 		}
+
+		if (params.headers !== undefined) {
+			opt.headers = opt.headers || {};
+			for (var headerName in params.headers) {
+				opt.headers[headerName] = params.headers[headerName];
+			}
+		}
+
 		Request(opt, function(error, response, body) {
 			if (response.statusCode >= 200 && response.statusCode < 400) {
 				var data = '';
@@ -625,6 +640,20 @@ var Syncano = (function() {
 				throw new Error('Incorrect arguments');
 			}
 			return promise;
+		},
+
+		socialConnect: function (network, token, callbackOK, callbackError) {
+			if (network === 'google') {
+				network = 'google-oauth2';
+			}
+			return this.request(
+				'POST',
+				'v1/account/auth/' + network + '/',
+				{},
+				callbackOK,
+				callbackError,
+				{'Authorization': 'token ' + token}
+			);
 		},
 
 		/**
@@ -2388,9 +2417,10 @@ var Syncano = (function() {
 		 * @param {object} params -  - parameters to API call
 		 * @param {function} [callbackOK] - optional method to call on success
 		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @param {object} headers -  - request headers
 		 * @returns {object} promise
 		 */
-		request: function(requestType, method, params, _callbackOK, _callbackError) {
+		request: function(requestType, method, params, _callbackOK, _callbackError, headers) {
 			var deferred = Deferred();
 			var callbackOK = function(result) {
 				typeof _callbackOK === 'function' && _callbackOK(result);
@@ -2412,7 +2442,8 @@ var Syncano = (function() {
 				var ajaxParams = {
 					type: requestType,
 					url: url,
-					data: params
+					data: params,
+					headers: headers
 				};
 				ajaxParams.success = function(data) {
 					if (typeof data === 'object' && typeof data.objects !== 'undefined' && typeof data.prev !== 'undefined' && typeof data.next !== 'undefined') {

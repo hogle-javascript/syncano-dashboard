@@ -135,6 +135,14 @@ var AuthStore = Reflux.createStore({
     }
   },
 
+  onSocialLoginCompleted: function (payload) {
+    this.onPasswordSignInCompleted(payload);
+  },
+
+  onSocialLoginFailure: function (error) {
+    console.error('AuthStore::onSocialLoginFailure', error);
+  },
+
 });
 
 module.exports = AuthStore;

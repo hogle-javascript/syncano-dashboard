@@ -3,12 +3,13 @@ var React         = require('react'),
     classNames    = require('classnames'),
     Router        = require('react-router'),
     Link          = Router.Link,
-    mui           = require('material-ui'),
-    Tabs          = mui.Tabs,
-    Tab           = mui.Tab,
-    MaterialIcon  = require('../../common/Icon/MaterialIcon.react'),
-    HeaderActions = require('./HeaderActions'),
-    HeaderStore   = require('./HeaderStore');
+    mui            = require('material-ui'),
+    Tabs           = mui.Tabs,
+    Tab            = mui.Tab,
+    MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
+    HeaderActions  = require('./HeaderActions'),
+    SessionActions = require('../Session/SessionActions'),
+    HeaderStore    = require('./HeaderStore');
 
 
 require('./Header.css');
@@ -25,6 +26,10 @@ module.exports = React.createClass({
 
   handleTabActive: function (tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleLogout: function() {
+    SessionActions.logout();
   },
 
   renderBreadcrumbs: function () {
@@ -116,6 +121,10 @@ module.exports = React.createClass({
         <div className="row header-bottom">
           {this.renderMenu(menuClass)}
           <div className={iconsClass}>
+            <MaterialIcon 
+              name="power" 
+              handleClick={this.handleLogout}
+            />
             <MaterialIcon name="more_vert" />
             <MaterialIcon name="notifications_none" />
             <MaterialIcon name="search" />

@@ -83,6 +83,37 @@ module.exports = React.createClass({
     }.bind(this));
   },
 
+  handleSocialSignup: function (network) {
+    return function () {
+      AuthActions.socialLogin(network)
+    };
+  },
+
+  renderSocialButton: function (network) {
+    return (
+      <RaisedButton
+        onClick={this.handleSocialSignup(network)}
+        label={network}
+        style={{
+          width: '100%',
+          height: '48px'
+        }}
+        className="raised-button" />
+    )
+  },
+
+  renderSocialButtons: function () {
+    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function (network){
+      return (
+        <li key={network}>
+          {this.renderSocialButton(network)}
+        </li>
+      )
+    }.bind(this));
+
+    return <ul className="list--flex">{buttons}</ul>
+  },
+
   renderError: function () {
     if (!this.state.errors || this.state.errors.feedback === undefined) {
       return
@@ -140,6 +171,7 @@ module.exports = React.createClass({
               className="raised-button"
               primary={true} />
           </form>
+          {this.renderSocialButtons()}
           <div className="account-container__content__footer">
             <ul className="list--flex">
               <li>

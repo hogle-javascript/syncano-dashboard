@@ -48,6 +48,7 @@ var SessionStore = Reflux.createStore({
     this.connection = Connection.reset();
 
     sessionStorage.removeItem('token');
+    this.router.transitionTo('login');
     this.trigger(this);
   },
 
