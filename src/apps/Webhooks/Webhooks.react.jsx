@@ -13,19 +13,34 @@ module.exports = React.createClass({
   ],
 
   headerBreadcrumbs: function () {
-   return [{
+    var instanceName = this.getParams().instanceName;
+    return [{
       route: 'instances',
       label: 'Instances',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     },{
       route: 'instance',
-      label: this.getParams().instanceName,
-      params: {instanceName: this.getParams().instanceName}
+      label: instanceName,
+      params: {instanceName: instanceName}
     },{
       route: 'webhooks',
       label: 'Webhooks',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     }]
+  },
+
+  headerMenuItems: function() {
+    var instanceName = this.getParams().instanceName;
+    return [
+      {label: 'Data Browser', route: 'data-objects', params: {instanceName: instanceName}},
+      {label: 'Classes', route: 'classes', params: {instanceName: instanceName}},
+      {label: 'API Keys', route: 'api-keys', params: {instanceName: instanceName}},
+      {label: 'Admins', route: 'admins', params: {instanceName: instanceName}},
+      {label: 'Users', route: 'users', params: {instanceName: instanceName}},
+      {label: 'CodeBoxes', route: 'codeboxes', params: {instanceName: instanceName}},
+      {label: 'Webhooks', route: 'webhooks', params: {instanceName: instanceName}},
+      {label: 'Tasks', route: 'tasks', params: {instanceName: instanceName}},
+    ];
   },
 
   render: function () {
