@@ -9,6 +9,8 @@ var gulp             = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config.js'),
     awspublish       = require('gulp-awspublish'),
+    iconfont         = require('gulp-iconfont'),
+    iconfontCss      = require('gulp-iconfont-css'),
     ENV              = process.env.NODE_ENV || 'development';
 
 
@@ -33,7 +35,25 @@ gulp.task('copy-images', ['clean'], function() {
     .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
+var fontName = 'SynIcons';
+
+gulp.task('iconfont', ['clean'], function(){
+  gulp.src([paths.assets + '/icons/*.svg'])
+    .pipe(iconfontCss({
+      fontName: fontName,
+      path: paths.assets + '/templates/synicons.css',
+      targetPath: '../../css/synicons.css',
+      fontPath: '/fonts/icons/'
+    }))
+    .pipe(iconfont({
+      fontName: fontName,
+      normalize: true,
+      fontHeight: 1001
+    }))
+    .pipe(gulp.dest(paths.dist + '/fonts/icons/'));
+});
+
+gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
     var config     = Object.create(webpackConfig);
     config.devtool = 'sourcemap';
     config.debug   = true;
@@ -57,7 +77,7 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
     webpack(config).run(callback);
 });
 
-gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
+gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
     var config = Object.create(webpackConfig);
     config.devtool = 'eval';
     config.debug = true;
@@ -78,9 +98,9 @@ gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
 });
 
 
-gulp.task('revision', ['clean', 'webpack:build'], function(){
-  return gulp.src('./dist/**/*.js')
-    .pipe(stripDebug())
+gulp.task('revision', ['clean', 'iconfont', 'webpack:build'], function(){
+  return gulp.src(['./dist/**/*.js', './dist/**/*.css'])
+    //.pipe(stripDebug())
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
