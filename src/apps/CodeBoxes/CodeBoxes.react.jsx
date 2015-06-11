@@ -11,20 +11,19 @@ var React  = require('react'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui              = require('material-ui'),
-    Dialog           = mui.Dialog,
-    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
-    Container        = require('../../common/Container/Container.react'),
-    List             = require('../../common/Lists/List.react'),
-    ListContainer    = require('../../common/Lists/ListContainer.react'),
-    Item             = require('../../common/ColumnList/Item.react'),
-    Column           = require('../../common/ColumnList/ItemColumn.react'),
-    Header           = require('../../common/ColumnList/Header.react'),
-    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react'),
-    FabList          = require('../../common/Fab/FabList.react'),
+    mui                  = require('material-ui'),
+    FloatingActionButton = mui.FloatingActionButton,
+    Dialog               = mui.Dialog,
+    Container            = require('../../common/Container/Container.react'),
+    List                 = require('../../common/Lists/List.react'),
+    ListContainer        = require('../../common/Lists/ListContainer.react'),
+    Item                 = require('../../common/ColumnList/Item.react'),
+    Column               = require('../../common/ColumnList/ItemColumn.react'),
+    Header               = require('../../common/ColumnList/Header.react'),
+    ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
+    FabList              = require('../../common/Fab/FabList.react'),
 
-
-    AddDialog        = require('./CodeBoxesAddDialog.react');
+    AddDialog            = require('./CodeBoxesAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -102,7 +101,7 @@ module.exports = React.createClass({
     return (<Item key={item.id}>
       <Column grid="1">
         <CheckIcon
-          id          = "some_id1"
+          id          = {item.name}
           icon        = "notifications"
           background  = {this.getColor(item.runtime_name)}
           width       = '40px'
@@ -130,22 +129,10 @@ module.exports = React.createClass({
 
   },
 
-  buttonClick: function (action) {
-      console.info('CodeBoxes::buttonClick');
+  // Buttons
+  handlePlusButton: function (action) {
+      console.info('CodeBoxes::handlePlusButton');
       this.refs.addCodeBoxDialog.show();
-  },
-
-  genFabButtons: function() {
-
-    var buttons = [
-      {
-        name: "plusButton",
-        label: "Click here to create CodeBox",
-        icon: 'plus',
-        color: 'red',
-      }
-    ];
-    return <FabList buttons={buttons} handleClick={this.buttonClick}/>;
   },
 
   getItems: function () {
@@ -177,12 +164,36 @@ module.exports = React.createClass({
 
     return (
       <Container>
-        {this.genFabButtons()}
-        <AddDialog ref="addCodeBoxDialog"/>
+        <FabList
+          style={{top: 200, display: this.state.checkedItemNumber ? 'block': 'none'}}>
+          <FloatingActionButton
+            label         = "Click here to delete CodeBox" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.handleDeleteButton}
+            iconClassName = "md md-delete" />
+          <FloatingActionButton
+            label         = "Click here to edit Codebox" // TODO: extend component
+            color         = "" // TODO: extend component
+            secondary     = {true}
+            mini          = {true}
+            onClick       = {this.handleChangePaletteButton}
+            iconClassName = "md md-edit" />
+        </FabList>
+
+        <FabList
+          style={{bottom: 100}}>
+          <FloatingActionButton
+            label         = "Click here to add CodeBox" // TODO: extend component
+            color         = "" // TODO: extend component
+            onClick       = {this.handlePlusButton}
+            iconClassName = "md md-add" />
+        </FabList>
+
+        <AddDialog ref="addCodeBoxDialog" />
+
         <ListContainer>
           <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
-            <MaterialIcon name="group_add" handleClick={this.dummyClick}/>
-            <MaterialIcon name="home" handleClick={this.dummyClick}/>
           </Header>
           <List viewMode="stream">
             {items}

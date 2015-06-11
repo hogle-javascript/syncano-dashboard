@@ -18,11 +18,17 @@ var paths = {
     dist: './dist',
     assets: './src/assets',
     index: './src/assets/index.html',
-    images: './src/assets/img/**/*'
+    images: './src/assets/img/**/*',
+    fonts: './src/assets/fonts/**/*'
 };
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*', paths.dist], cb);
+});
+
+gulp.task('copy-fonts', ['clean'], function() {
+    return gulp.src(paths.fonts)
+    .pipe(gulp.dest('dist/fonts'))
 });
 
 gulp.task('copy-index', ['clean'], function() {
@@ -140,7 +146,7 @@ gulp.task('publish', ['clean', 'build'], function() {
     .pipe(awspublish.reporter());
 });
 
-gulp.task('copy', ['copy-index', 'copy-images']);
+gulp.task('copy', ['copy-index', 'copy-images', 'copy-fonts']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);

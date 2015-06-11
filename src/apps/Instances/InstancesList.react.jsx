@@ -13,15 +13,16 @@ var React  = require('react'),
     InstancesStore   = require('./InstancesStore'),
 
     // Components
-    mui              = require('material-ui'),
-    Dialog           = mui.Dialog,
-    ListContainer    = require('../../common/Lists/ListContainer.react'),
-    Item             = require('../../common/ColumnList/Item.react'),
-    Column           = require('../../common/ColumnList/ItemColumn.react'),
-    Header           = require('../../common/ColumnList/Header.react'),
-    ColNameDesc      = require('../../common/ColumnList/ColNameDesc.react'),
-    ColName          = require('../../common/ColumnList/ColName.react'),
-    FabList          = require('../../common/Fab/FabList.react');
+    mui           = require('material-ui'),
+
+    // List
+    ListContainer   = require('../../common/Lists/ListContainer.react'),
+    Item            = require('../../common/ColumnList/Item.react'),
+    Header          = require('../../common/ColumnList/Header.react'),
+    ColumnName      = require('../../common/ColumnList/Column/Name.react'),
+    ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -30,7 +31,6 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
-    ButtonActionMixin,
     HeaderMixin,
     Router.State,
     Router.Navigation,
@@ -49,18 +49,7 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
-    var checkedItemNumber;
-    if (state) {
-      checkedItemNumber = ++this.state.checkedItemNumber;
-    } else {
-      checkedItemNumber = --this.state.checkedItemNumber;
-    }
-
-    this.setState({
-      checkingState: checkedItemNumber > 0,
-      checkedItemNumber: checkedItemNumber,
-    });
-    console.log('checked', checkedItemNumber)
+    this.props.handleItemIconClick(id, state);
   },
 
   handleItemClick: function(instanceName) {
@@ -69,39 +58,23 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  getColumns: function() {
-    return [
-      {'name': this.props.name, space: 1, style: {fontSize: '20px'}},
-      {'name': 'Name', space: 5},
-      {'name': 'Description', space: 4},
-      {'name': 'Created', space: 2},
-    ];
-  },
-
   generateItem: function (item) {
 
     return (
       <Item key={item.name}>
-        <Column grid="1">
-          <CheckIcon
+        <ColumnCheckIcon
             id          = {item.name}
-            icon        = {item.metadata.icon || 'adjust'}
-            background  = {item.metadata.color || 'green'}
+            icon        = {item.metadata.icon}
+            background  = {item.metadata.color}
             width       = '40px'
-            handleClick = {this.handleItemIconClick}
-            />
-        </Column>
-        <Column grid="5">
-          <ColName id={item.name} handleClick={this.handleItemClick}>
-            {item.name}
-          </ColName>
-        </Column>
-        <Column grid="4">
-          <span>{item.description}</span>
-        </Column>
-        <Column grid="2">
-          <span>{item.created_at}</span>
-        </Column>
+            handleClick = {this.handleItemIconClick} />
+        <ColumnName
+          id={item.name}
+          handleClick={this.handleItemClick}>
+          {item.name}
+        </ColumnName>
+        <ColumnDesc>{item.description}</ColumnDesc>
+        <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
   },
@@ -123,17 +96,17 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-        <ListContainer>
-          <Header
-            checkedItemsNumber = {this.state.checkedItemNumber}
-            columns            = {this.getColumns()}>
-            <MaterialIcon name="group_add" handleClick={this.dummyClick} />
-            <MaterialIcon name="home" handleClick={this.dummyClick} />
-          </Header>
-          <List viewMode={this.props.viewMode}>
-            {this.getList()}
-          </List>
-        </ListContainer>
+      <ListContainer>
+        <Header>
+          <ColumnCheckIcon.Header>Instances</ColumnCheckIcon.Header>
+          <ColumnName.Header></ColumnName.Header>
+          <ColumnDesc.Header>Description</ColumnDesc.Header>
+          <ColumnDate.Header>Created</ColumnDate.Header>
+        </Header>
+        <List viewMode={this.props.viewMode}>
+          {this.getList()}
+        </List>
+      </ListContainer>
     );
   }
 
