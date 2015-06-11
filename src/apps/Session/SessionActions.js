@@ -4,7 +4,7 @@ var Reflux     = require('reflux'),
 
 var SessionActions = Reflux.createActions({
   'login': {},
-  'tokenLogin': {
+  'fetchUser': {
     asyncResult: true,
     children: ['completed', 'failure'],
   },
@@ -16,8 +16,8 @@ var SessionActions = Reflux.createActions({
   }
 });
 
-SessionActions.tokenLogin.listen(function (token) {
-  console.info('SessionActions::tokenLogin');
+SessionActions.fetchUser.listen(function (token) {
+  console.info('SessionActions::fetchUser');
   Connection
     .connect(token)
     .then(this.completed)

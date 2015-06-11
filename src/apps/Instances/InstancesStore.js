@@ -47,7 +47,7 @@ var InstancesStore = Reflux.createStore({
     data.instances.otherInstances = [];
 
     Object.keys(instances).map(function(item) {
-      if (instances[item].owner.email === SessionStore.getMyEmail()) {
+      if (instances[item].owner.email === SessionStore.user.email) {
 
         data.instances.myInstances.push(instances[item]);
       } else {

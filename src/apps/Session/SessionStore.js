@@ -7,25 +7,15 @@ var SessionStore = Reflux.createStore({
   listenables: SessionActions,
 
   init: function () {
+    this.token      = sessionStorage.getItem('token') || null;
+    this.user       = null;
     this.connection = Connection.get();
     this.instance   = null;
     this.route      = null;
 
-    if (this.isAuthenticated() && !this.connection.account) {
-      SessionActions.tokenLogin(this.getToken());
+    if (this.isAuthenticated() && !this.user) {
+      SessionActions.fetchUser(this.token);
     }
-  },
-
-  getMyEmail: function() {
-    return sessionStorage.getItem('user');
-  },
-
-  getToken: function() {
-    return sessionStorage.getItem('token');
-  },
-
-  onTokenLoginCompleted: function(payload) {
-    console.info('SessionStore::onTokenLoginComplete');
   },
 
   onLogin: function(payload) {
@@ -35,7 +25,7 @@ var SessionStore = Reflux.createStore({
     }
 
     sessionStorage.setItem('token', payload.account_key);
-    sessionStorage.setItem('user', payload.email);
+
     this.token = payload.account_key;
     this.user  = payload;
     this.trigger(this);
@@ -67,10 +57,20 @@ var SessionStore = Reflux.createStore({
   },
 
   isAuthenticated: function () {
-    if (sessionStorage.getItem('token') === null) {
-      return false;
+    if (this.token === 'undefined') {
+       return false;
     }
-    return true;
+    return this.token ? true : false;
+  },
+
+  onFetchUserCompleted: function (payload) {
+    console.info('SessionStore::onFetchUserCompleted');
+    this.onLogin(payload);
+  },
+
+  onFetchUserFailure: function () {
+    console.info('SessionStore::onFetchUserFailure');
+    this.onLogout();
   },
 
 });
