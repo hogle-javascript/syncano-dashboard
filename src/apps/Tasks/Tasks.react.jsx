@@ -64,7 +64,6 @@ module.exports = React.createClass({
         label: 'Tasks', 
         route: 'tasks', 
         params: params,
-        active: true,
       }];
   },
 

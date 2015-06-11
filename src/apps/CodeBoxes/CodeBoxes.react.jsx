@@ -94,7 +94,6 @@ module.exports = React.createClass({
         label: 'CodeBoxes', 
         route: 'codeboxes', 
         params: params,
-        active: true,
       }, {
         label: 'Webhooks', 
         route: 'webhooks', 

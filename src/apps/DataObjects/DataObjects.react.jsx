@@ -36,7 +36,6 @@ module.exports = React.createClass({
         label: 'Data Browser', 
         route: 'data-objects', 
         params: params, 
-        active: true
       }, {
         label: 'Classes', 
         route: 'classes', 

@@ -48,7 +48,6 @@ module.exports = React.createClass({
         label: 'Admins', 
         route: 'admins', 
         params: params,
-        active: true,
       }, {
         label: 'Users', 
         route: 'users', 

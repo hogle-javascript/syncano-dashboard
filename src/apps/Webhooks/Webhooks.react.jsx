@@ -60,7 +60,6 @@ module.exports = React.createClass({
         label: 'Webhooks', 
         route: 'webhooks', 
         params: params,
-        active: true,
       }, {
         label: 'Tasks', 
         route: 'tasks', 

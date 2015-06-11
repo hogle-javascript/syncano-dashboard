@@ -44,7 +44,6 @@ module.exports = React.createClass({
         label: 'API Keys', 
         route: 'api-keys', 
         params: params,
-        active: true,
       }, {
         label: 'Admins', 
         route: 'admins', 

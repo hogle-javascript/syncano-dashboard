@@ -52,7 +52,6 @@ module.exports = React.createClass({
         label: 'Users', 
         route: 'users', 
         params: params,
-        active: true,
       }, {
         label: 'CodeBoxes', 
         route: 'codeboxes', 

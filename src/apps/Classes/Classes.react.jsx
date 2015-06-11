@@ -40,7 +40,6 @@ headerBreadcrumbs: function () {
         label: 'Classes', 
         route: 'classes', 
         params: params,
-        active: true,
       }, {
         label: 'API Keys', 
         route: 'api-keys', 
