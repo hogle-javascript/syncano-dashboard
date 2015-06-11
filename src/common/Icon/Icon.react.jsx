@@ -1,7 +1,7 @@
 var React      = require('react'),
     classNames = require('classnames'),
 
-    IconStore  = require('./store');
+    IconStore  = require('./IconStore');
 
 require('./Icon.css');
 

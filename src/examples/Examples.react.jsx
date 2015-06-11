@@ -34,8 +34,6 @@ var React                = require('react'),
     ButtonSocialAuth     = require('../common/SocialButton/ButtonSocialAuth.react'),
     ButtonSocialAuthList = require('../common/SocialButton/ButtonSocialAuthList.react'),
     Icon                 = require('../common/Icon/Icon.react'),
-    IconPicker           = require('../common/Icon/IconPicker.react'),
-    IconPickerItem       = require('../common/Icon/IconPickerItem.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
@@ -564,25 +562,6 @@ module.exports = React.createClass({
             handleClick={dummyClick.bind(this, "Icon")}
             style={{fill: "#0091EA"}}
             glowing={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>IconPicker</h2>
-          <IconPicker
-            selectedIcon="airplanemode-on"
-            handleClickListItem={dummyClick.bind(this, "IconPicker icon")} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>IconPickerItem</h2>
-          <IconPickerItem
-            icon={"theaters"}
-            selected={true}
-            handleClick={dummyClick.bind(this, "Selected IconPickerItem")} />
-          <IconPickerItem
-            icon={"theaters"}
-            selected={false}
-            handleClick={dummyClick.bind(this, "Not selected IconPickerItem")} />
         </div>
 
         <div className="exampleBox">
