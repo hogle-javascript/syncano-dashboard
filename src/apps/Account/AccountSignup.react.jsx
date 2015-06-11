@@ -164,11 +164,8 @@ module.exports = React.createClass({
             <RaisedButton
               type="submit"
               label="Sign up for free"
-              style={{
-                width: '100%',
-                height: '48px'
-              }}
-              className="raised-button"
+              labelStyle={{fontSize: '16px'}}
+              style={{width: '100%'}}
               primary={true} />
           </form>
           {this.renderSocialButtons()}

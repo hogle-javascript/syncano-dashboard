@@ -119,11 +119,8 @@ module.exports = React.createClass({
             <RaisedButton
               type="submit"
               label="Change password"
-              style={{
-                width: '100%',
-                height: '48px'
-              }}
-              className="raised-button"
+              labelStyle={{fontSize: '16px'}}
+              style={{width: '100%'}}
               primary={true} />
           </form>
           <div className="account-container__content__footer">

@@ -1,10 +1,12 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    RouteHandler  = Router.RouteHandler,
+var React           = require('react'),
+    Router          = require('react-router'),
+    RouteHandler    = Router.RouteHandler,
 
-    SessionActions = require('../apps/Session/SessionActions'),
+    SessionActions  = require('../apps/Session/SessionActions'),
 
-    ThemeManager   = require('material-ui/lib/styles/theme-manager')();
+    mui             = require('material-ui'),
+    ThemeManager    = new mui.Styles.ThemeManager(),
+    SyncanoTheme    = require('./../common/SyncanoTheme');
 
 
 module.exports = React.createClass({
@@ -27,6 +29,7 @@ module.exports = React.createClass({
 
   componentWillMount: function () {
     SessionActions.registerRouter(this.context.router);
+    ThemeManager.setTheme(SyncanoTheme);
   },
 
   render: function () {
