@@ -171,14 +171,14 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.handleDeleteButton}
-            iconClassName = "md md-delete" />
+            iconClassName = "synicon-delete" />
           <FloatingActionButton
             label         = "Click here to edit Codebox" // TODO: extend component
             color         = "" // TODO: extend component
             secondary     = {true}
             mini          = {true}
             onClick       = {this.handleChangePaletteButton}
-            iconClassName = "md md-edit" />
+            iconClassName = "synicon-pencil" />
         </FabList>
 
         <FabList
@@ -187,7 +187,7 @@ module.exports = React.createClass({
             label         = "Click here to add CodeBox" // TODO: extend component
             color         = "" // TODO: extend component
             onClick       = {this.handlePlusButton}
-            iconClassName = "md md-add" />
+            iconClassName = "synicon-add" />
         </FabList>
 
         <AddDialog ref="addCodeBoxDialog" />
