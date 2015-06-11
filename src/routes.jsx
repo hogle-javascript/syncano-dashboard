@@ -76,6 +76,7 @@ module.exports = (
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
       <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
+      <DefaultRoute handler={Instances} />
     </Route>
 
     <Route name="examples" handler={Examples}/>

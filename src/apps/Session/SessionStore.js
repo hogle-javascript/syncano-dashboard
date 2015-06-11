@@ -80,6 +80,10 @@ var SessionStore = Reflux.createStore({
     this.onLogout();
   },
 
+  isReady: function () {
+    return this.isAuthenticated() && this.user !== null;
+  }
+
 });
 
 module.exports = SessionStore;

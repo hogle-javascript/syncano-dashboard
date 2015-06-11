@@ -1,6 +1,5 @@
 var Reflux         = require('reflux'),
 
-    SessionStore   = require('../Session/SessionStore'),
     ProfileActions = require('./ProfileActions');
 
 
@@ -27,18 +26,8 @@ var ProfileStore = Reflux.createStore({
     this.invitations    = {};
     this.authentication = {};
     this.billing        = {};
-
-    this.listenTo(SessionStore, this.checkSession);
-  },
-
-  checkSession: function (state) {
-    console.log('ProfileStore::checkSession', state);
-    // if (!state.isAuthenticated() || !state.user) {
-    //   return
-    // }
-
-    // console.log(state);
   }
+
 });
 
 module.exports = ProfileStore;

@@ -7,7 +7,7 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
+    SessionMixin     = require('../Session/SessionMixin'),
     SessionActions   = require('../Session/SessionActions'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
@@ -33,16 +33,19 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
+    SessionMixin
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
 
-  componentWillMount: function() {
-    console.info('Instances::componentWillMount');
+  sessionIsReady: function () {
+    console.info('Instances::sessionIsReady');
     InstancesStore.refreshData();
   },
 
   componentDidMount: function() {
+    console.info('Instances::componentDidMount');
+
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addInstancesDialog.show();

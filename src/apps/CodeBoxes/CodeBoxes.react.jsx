@@ -7,6 +7,7 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
+    SessionMixin     = require('../Session/SessionMixin'),
     CodeBoxesActions = require('./CodeBoxesActions'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
@@ -35,12 +36,18 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
+    SessionMixin
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
 
-  componentDidMount: function() {
+  sessionIsReady: function () {
+    console.info('CodeBoxes::sessionIsReady');
     CodeBoxesStore.refreshData();
+  },
+
+  componentDidMount: function() {
+    console.info('CodeBoxes::componentDidMount');
 
     if (this.getParams().action == 'add'){
       // Show Add modal
@@ -69,36 +76,36 @@ module.exports = React.createClass({
     var params = {instanceName: this.getParams().instanceName};
     return [
       {
-        label: 'Data Browser', 
-        route: 'data-objects', 
-        params: params, 
-      }, {
-        label: 'Classes', 
-        route: 'classes', 
-        params: params},
-      {
-        label: 'API Keys', 
-        route: 'api-keys', 
-        params: params
-      }, {
-        label: 'Admins', 
-        route: 'admins', 
-        params: params
-      }, {
-        label: 'Users', 
-        route: 'users', 
-        params: params
-      }, {
-        label: 'CodeBoxes', 
-        route: 'codeboxes', 
+        label: 'Data Browser',
+        route: 'data-objects',
         params: params,
       }, {
-        label: 'Webhooks', 
-        route: 'webhooks', 
+        label: 'Classes',
+        route: 'classes',
+        params: params},
+      {
+        label: 'API Keys',
+        route: 'api-keys',
         params: params
       }, {
-        label: 'Tasks', 
-        route: 'tasks', 
+        label: 'Admins',
+        route: 'admins',
+        params: params
+      }, {
+        label: 'Users',
+        route: 'users',
+        params: params
+      }, {
+        label: 'CodeBoxes',
+        route: 'codeboxes',
+        params: params,
+      }, {
+        label: 'Webhooks',
+        route: 'webhooks',
+        params: params
+      }, {
+        label: 'Tasks',
+        route: 'tasks',
         params: params
       }];
   },
