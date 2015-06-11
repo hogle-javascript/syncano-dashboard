@@ -18,8 +18,6 @@ var React                = require('react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
     Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
-    ColorPicker          = require('../common/Color/ColorPicker.react'),
-    ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
@@ -552,30 +550,6 @@ module.exports = React.createClass({
           <ButtonSocialAuth
             icon="facebook"
             text="Log in with Facebook" />
-        </div>
-
-        <div className="exampleBox">
-          <h4>ColorPicker</h4>
-          <ColorPicker />
-        </div>
-
-        <div className="exampleBox">
-          <h4>ColorPicker (selected)</h4>
-          <ColorPicker selectedColor={'#EF5350'} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>ColorPickerItem (selected)</h2>
-          <ColorPickerItem
-            color={'#EF5350'}
-            selected={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>ColorPickerItem</h2>
-          <ColorPickerItem
-            color={'#EF5350'}
-            selected={false} />
         </div>
 
         <div className="exampleBox">
