@@ -1,7 +1,10 @@
 var React           = require('react'),
+    Reflux          = require('reflux'),
 
     HeaderMixin     = require('../Header/HeaderMixin'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
+
+    ProfileStore    = require('./ProfileStore'),
 
     mui             = require('material-ui'),
     TextField       = mui.TextField,
@@ -13,6 +16,7 @@ module.exports = React.createClass({
   displayName: 'ProfileSettings',
 
   mixins: [
+    Reflux.connect(ProfileStore),
     HeaderMixin,
     React.addons.LinkedStateMixin,
     ValidationMixin
@@ -52,15 +56,8 @@ module.exports = React.createClass({
     }
   ],
 
-  getInitialState: function () {
-    return {
-      firstName: null,
-      lastName: null,
-      email: null,
-    }
-  },
-
   render: function () {
+    console.log(this.state);
     return (
       <div className="container">
         <form
@@ -86,6 +83,7 @@ module.exports = React.createClass({
           <TextField
             ref="email"
             name="email"
+            value={this.state.email}
             className="text-field"
             autoComplete="email"
             hintText="Your email"

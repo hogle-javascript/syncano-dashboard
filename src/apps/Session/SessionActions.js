@@ -18,8 +18,11 @@ var SessionActions = Reflux.createActions({
 
 SessionActions.fetchUser.listen(function (token) {
   console.info('SessionActions::fetchUser');
+
   Connection
-    .connect(token)
+    .setApiKey(token)
+    .Accounts
+    .get()
     .then(this.completed)
     .catch(this.failure)
 });

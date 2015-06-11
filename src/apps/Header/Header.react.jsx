@@ -18,7 +18,10 @@ require('./Header.css');
 module.exports = React.createClass({
 
   displayName: 'Header',
-  mixins: [Reflux.connect(HeaderStore)],
+  mixins: [
+    Reflux.connect(HeaderStore),
+    Router.State
+  ],
 
   contextTypes: {
       router: React.PropTypes.func.isRequired
@@ -75,11 +78,11 @@ module.exports = React.createClass({
     // We have to find active tab
     var activeTabIndex = null;
     this.state.menuItems.some(function(item, index){
-      if (item.active) {
+      if (this.isActive(item.route, item.params, item.query)) {
         activeTabIndex = index;
         return true;
       }
-    });
+    }.bind(this));
 
     return (
       <div className={className}>

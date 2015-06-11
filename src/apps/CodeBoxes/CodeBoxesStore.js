@@ -92,7 +92,10 @@ var CodeBoxesStore = Reflux.createStore({
     console.debug('CodeBoxesStore::onGetCodeBoxTrace');
     if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function(){CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)}, 300);
+      var timeout = setTimeout(function(){
+        CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)
+        clearTimeout(timeout);
+      }, 300);
     } else {
       this.data.lastTraceResult = trace.result;
       this.data.traceLoading = false;

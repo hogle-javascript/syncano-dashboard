@@ -39,11 +39,9 @@ module.exports = React.createClass({
     //ValidationMixin,
   ],
 
-  componentWillMount: function() {
-    CodeBoxesStore.refreshData();
-  },
-
   componentDidMount: function() {
+    CodeBoxesStore.refreshData();
+
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addCodeBoxDialog.show();

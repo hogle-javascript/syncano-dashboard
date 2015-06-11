@@ -65,7 +65,14 @@ var SessionStore = Reflux.createStore({
 
   onFetchUserCompleted: function (payload) {
     console.info('SessionStore::onFetchUserCompleted');
-    this.onLogin(payload);
+
+    if (payload === undefined) {
+      return
+    }
+
+    this.user             = payload;
+    this.user.account_key = this.token;
+    this.trigger(this);
   },
 
   onFetchUserFailure: function () {
