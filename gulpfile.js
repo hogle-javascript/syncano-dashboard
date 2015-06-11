@@ -41,7 +41,7 @@ gulp.task('copy-images', ['clean'], function() {
     .pipe(gulp.dest('dist/img'));
 });
 
-var fontName = 'SynIcons';
+var fontName = 'Syncano Icons';
 
 gulp.task('iconfont', ['clean'], function(){
   gulp.src([paths.assets + '/icons/*.svg'])
