@@ -39,7 +39,7 @@ module.exports = React.createClass({
       {label: 'Users', route: 'users', params: {instanceName: instanceName}},
       {label: 'CodeBoxes', route: 'codeboxes', params: {instanceName: instanceName}},
       {label: 'Webhooks', route: 'webhooks', params: {instanceName: instanceName}},
-      {label: 'Tasks', route: 'tasks', params: {instanceName: instanceName}},
+      {label: 'Tasks', route: 'tasks', params: {instanceName: instanceName}, active: true},
     ];
   },
 

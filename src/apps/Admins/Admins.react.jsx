@@ -35,7 +35,7 @@ module.exports = React.createClass({
       {label: 'Data Browser', route: 'data-objects', params: {instanceName: instanceName}},
       {label: 'Classes', route: 'classes', params: {instanceName: instanceName}},
       {label: 'API Keys', route: 'api-keys', params: {instanceName: instanceName}},
-      {label: 'Admins', route: 'admins', params: {instanceName: instanceName}},
+      {label: 'Admins', route: 'admins', params: {instanceName: instanceName}, active: true},
       {label: 'Users', route: 'users', params: {instanceName: instanceName}},
       {label: 'CodeBoxes', route: 'codeboxes', params: {instanceName: instanceName}},
       {label: 'Webhooks', route: 'webhooks', params: {instanceName: instanceName}},

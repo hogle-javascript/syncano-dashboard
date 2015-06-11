@@ -33,7 +33,7 @@ headerBreadcrumbs: function () {
     var instanceName = this.getParams().instanceName;
     return [
       {label: 'Data Browser', route: 'data-objects', params: {instanceName: instanceName}},
-      {label: 'Classes', route: 'classes', params: {instanceName: instanceName}},
+      {label: 'Classes', route: 'classes', params: {instanceName: instanceName}, active: true},
       {label: 'API Keys', route: 'api-keys', params: {instanceName: instanceName}},
       {label: 'Admins', route: 'admins', params: {instanceName: instanceName}},
       {label: 'Users', route: 'users', params: {instanceName: instanceName}},

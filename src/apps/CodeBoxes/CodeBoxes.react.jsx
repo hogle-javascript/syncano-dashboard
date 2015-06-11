@@ -75,7 +75,7 @@ module.exports = React.createClass({
       {label: 'API Keys', route: 'api-keys', params: {instanceName: instanceName}},
       {label: 'Admins', route: 'admins', params: {instanceName: instanceName}},
       {label: 'Users', route: 'users', params: {instanceName: instanceName}},
-      {label: 'CodeBoxes', route: 'codeboxes', params: {instanceName: instanceName}},
+      {label: 'CodeBoxes', route: 'codeboxes', params: {instanceName: instanceName}, active: true},
       {label: 'Webhooks', route: 'webhooks', params: {instanceName: instanceName}},
       {label: 'Tasks', route: 'tasks', params: {instanceName: instanceName}},
     ];
