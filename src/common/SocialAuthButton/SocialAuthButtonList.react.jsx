@@ -1,7 +1,6 @@
 var React            = require('react'),
     SocialAuthButton = require('./SocialAuthButton.react.jsx');
 
-require('./SocialAuthButtonList.sass');
 
 module.exports = React.createClass({
 

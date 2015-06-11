@@ -4,8 +4,6 @@ var React           = require('react'),
     FlatButton      = mui.FlatButton,
     FontIcon        = mui.FontIcon;
 
-require('./SocialAuthButton.sass');
-
 
 module.exports = React.createClass({
 
@@ -19,17 +17,23 @@ module.exports = React.createClass({
     handleClick: React.PropTypes.func.isRequired
   },
 
-  getButtonStyles: function() {
+  getButtonStyles: function () {
     var style = {
       width: '100%',
-      borderRadius: '0'
+      borderRadius: '0',
+      textTransform: 'none',
+      color: '#1e88e5',
+      fontWeight: 400
     };
     return this.mergeStyles(style, this.props.style);
   },
 
-  getIconStyles: function() {
+  getIconStyles: function () {
     var style = {
-      display: 'flex'
+      display: 'flex',
+      fontSize: '18px',
+      lineHeight: '1',
+      padding: '14px 16px'
     };
     return this.mergeStyles(style, this.props.style);
   },
@@ -40,7 +44,13 @@ module.exports = React.createClass({
     var iconStyles = this.getIconStyles();
 
     return (
-      <FlatButton className='social-auth-button' hoverColor="#1e88e5" style={buttonStyles} linkButton={true} onClick={this.props.handleClick} label={this.props.label}>
+      <FlatButton
+        className="social-auth-button"
+        hoverColor="#1e88e5"
+        style={buttonStyles}
+        linkButton={true}
+        onClick={this.props.handleClick}
+        label={this.props.label}>
         <FontIcon style={iconStyles} className={this.props.icon} />
       </FlatButton>
     )
