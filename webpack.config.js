@@ -1,7 +1,17 @@
-var ENV     = process.env.NODE_ENV || 'development',
-    path    = require('path'),
-    webpack = require('webpack'),
-    compass = require('node-libcompass').includePaths;
+var ENV        = process.env.NODE_ENV || 'development',
+    path       = require('path'),
+    webpack    = require('webpack'),
+    compass    = require('node-libcompass').includePaths,
+    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL'],
+    plugin     = {ENV: JSON.stringify(ENV)};
+
+
+// We want to check env variables like this: DEVELOPMENT_FACEBOOK_ID or FACEBOOK_ID or null
+for (i = 0; i < pluginVars.length; i++) {
+    var name    = pluginVars[i],
+        envName = ENV.toUpperCase() + '_' + name;
+    plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || '');
+}
 
 module.exports = {
   // cache: true,
@@ -16,7 +26,7 @@ module.exports = {
     publicPath: 'js/',
   },
   plugins: [
-    new webpack.DefinePlugin({ENV: ENV}),
+    new webpack.DefinePlugin(plugin),
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
     new webpack.HotModuleReplacementPlugin()
   ],

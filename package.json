@@ -53,7 +53,9 @@
     "url-loader": "^0.5.5",
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6",
-    "node-libcompass": "git://github.com/patrykkopycinski/node-libcompass"
+    "node-libcompass": "git://github.com/patrykkopycinski/node-libcompass",
+    "gulp-iconfont": "~2.0.0",
+    "gulp-iconfont-css": "0.0.9"
   },
   "jest": {
     "rootDir": ".",
@@ -81,7 +83,8 @@
       "<rootDir>/node_modules/superagent",
       "<rootDir>/node_modules/object-assign",
       "<rootDir>/node_modules/classnames",
-      "<rootDir>material-ui"
+      "<rootDir>material-ui",
+      "<rootDir>/node_modules/hellojs"
     ]
   },
   "scripts": {

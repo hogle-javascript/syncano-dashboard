@@ -13,7 +13,7 @@ var HeaderMixin = {
       menuItems = menuItems.call(this);
     }
 
-    var hasBreadcrumbs = breadcrumbs && breadcrumbs.length > 0.
+    var hasBreadcrumbs = breadcrumbs && breadcrumbs.length > 0,
         hasMenuItems   = menuItems && menuItems.length > 0;
 
     // We want to have just one render here

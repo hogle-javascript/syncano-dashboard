@@ -3,12 +3,13 @@ var React         = require('react'),
     classNames    = require('classnames'),
     Router        = require('react-router'),
     Link          = Router.Link,
-    mui           = require('material-ui'),
-    Tabs          = mui.Tabs,
-    Tab           = mui.Tab,
-    MaterialIcon  = require('../../common/Icon/MaterialIcon.react'),
-    HeaderActions = require('./HeaderActions'),
-    HeaderStore   = require('./HeaderStore');
+    mui            = require('material-ui'),
+    Tabs           = mui.Tabs,
+    Tab            = mui.Tab,
+    MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
+    HeaderActions  = require('./HeaderActions'),
+    SessionActions = require('../Session/SessionActions'),
+    HeaderStore    = require('./HeaderStore');
 
 
 require('./Header.css');
@@ -17,7 +18,10 @@ require('./Header.css');
 module.exports = React.createClass({
 
   displayName: 'Header',
-  mixins: [Reflux.connect(HeaderStore)],
+  mixins: [
+    Reflux.connect(HeaderStore),
+    Router.State
+  ],
 
   contextTypes: {
       router: React.PropTypes.func.isRequired
@@ -25,6 +29,10 @@ module.exports = React.createClass({
 
   handleTabActive: function (tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleLogout: function() {
+    SessionActions.logout();
   },
 
   renderBreadcrumbs: function () {
@@ -68,12 +76,13 @@ module.exports = React.createClass({
     }
 
     // We have to find active tab
-    var activeTabIndex;
-    this.state.menuItems.forEach(function(item, index){
-      if (item.active) {
+    var activeTabIndex = null;
+    this.state.menuItems.some(function(item, index){
+      if (this.isActive(item.route, item.params, item.query)) {
         activeTabIndex = index;
+        return true;
       }
-    });
+    }.bind(this));
 
     return (
       <div className={className}>
@@ -116,6 +125,10 @@ module.exports = React.createClass({
         <div className="row header-bottom">
           {this.renderMenu(menuClass)}
           <div className={iconsClass}>
+            <MaterialIcon 
+              name="power" 
+              handleClick={this.handleLogout}
+            />
             <MaterialIcon name="more_vert" />
             <MaterialIcon name="notifications_none" />
             <MaterialIcon name="search" />

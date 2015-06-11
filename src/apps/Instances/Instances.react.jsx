@@ -52,11 +52,10 @@ module.exports = React.createClass({
 
   // Breadcrumbs and tabs (HeaderMixin)
   headerBreadcrumbs: function () {
-   return [{
+    return [{
       route: 'instances',
       label: 'Instances',
-    },
-    ]
+    }];
   },
 
   // Buttons
@@ -118,7 +117,7 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.handleDeleteButton}
-            iconClassName = "md md-delete" />
+            iconClassName = "synicon-delete" />
           <FloatingActionButton
             label         = "Click here to customize Instances" // TODO: extend component
             color         = "" // TODO: extend component
@@ -126,7 +125,7 @@ module.exports = React.createClass({
             mini          = {true}
             disabled      = {this.state.checkedInstances > 1}
             onClick       = {this.handleChangePaletteButton}
-            iconClassName = "md md-palette" />
+            iconClassName = "synicon-palette" />
         </FabList>
 
         <FabList
@@ -135,7 +134,7 @@ module.exports = React.createClass({
             label         = "Click here to add Instances" // TODO: extend component
             color         = "" // TODO: extend component
             onClick       = {this.handlePlusButton}
-            iconClassName = "md md-add" />
+            iconClassName = "synicon-plus" />
         </FabList>
 
         <AddDialog ref="addInstanceDialog"/>

@@ -20,7 +20,6 @@ var React           = require('react'),
 
     Notification    = require('../../common/Notification/Notification.react');
 
-
 require('./Account.sass');
 
 module.exports = React.createClass({
@@ -63,6 +62,37 @@ module.exports = React.createClass({
 
       router.replaceWith(next);
     }
+  },
+
+  handleSocialSignup: function (network) {
+    return function () {
+      AuthActions.socialLogin(network)
+    };
+  },
+
+  renderSocialButton: function (network) {
+    return (
+      <RaisedButton
+        onClick={this.handleSocialSignup(network)}
+        label={network}
+        style={{
+          width: '100%',
+          height: '48px'
+        }}
+        className="raised-button" />
+    )
+  },
+
+  renderSocialButtons: function () {
+    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function (network){
+      return (
+        <li key={network}>
+          {this.renderSocialButton(network)}
+        </li>
+      )
+    }.bind(this));
+
+    return <ul className="list--flex">{buttons}</ul>
   },
 
   handleSubmit: function (event) {
@@ -135,6 +165,7 @@ module.exports = React.createClass({
               className="raised-button"
               primary={true} />
           </form>
+          {this.renderSocialButtons()}
           <div className="account-container__content__footer">
             <ul className="list--flex">
               <li>
