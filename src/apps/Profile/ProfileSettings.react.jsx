@@ -4,7 +4,7 @@ var React       = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'ProfileAuthentication',
+  displayName: 'ProfileSettings',
 
   mixins: [HeaderMixin],
 
@@ -18,8 +18,8 @@ module.exports = React.createClass({
       label: 'Account',
     },
     {
-      route: 'profile-authentication',
-      label: 'Authentication',
+      route: 'profile-settings',
+      label: 'Profile',
     }
   ],
 
@@ -44,7 +44,9 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>Authentication</div>
+      <div className="container">
+      Profile
+      </div>
     );
   }
 

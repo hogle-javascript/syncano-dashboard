@@ -18,6 +18,11 @@ var React                       = require('react'),
     AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
     AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
 
+    ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
+    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
+    ProfileBilling              = require('./apps/Profile/ProfileBilling.react'),
+    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
+
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
 
@@ -34,10 +39,6 @@ var React                       = require('react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
     Users                       = require('./apps/Users/Users.react'),
     Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
-    Profile                     = require('./apps/Profile/Profile.react'),
-    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBilling              = require('./apps/Profile/ProfileBilling.react'),
-    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
@@ -70,13 +71,11 @@ module.exports = (
         <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
       </Route>
-      <Route name="profile" handler={Profile} path="/account" >
-        <Route name="profile-settings" handler={Profile} path="/account/profile" />
-        <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
-        <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
-        <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
-        <DefaultRoute handler={Profile} />
-      </Route>
+
+      <Route name="profile-settings" handler={ProfileSettings} path="/account" />
+      <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
+      <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
+      <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
     </Route>
 
     <Route name="examples" handler={Examples}/>
