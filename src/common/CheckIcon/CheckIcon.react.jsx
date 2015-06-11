@@ -10,15 +10,20 @@ module.exports = React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     icon: React.PropTypes.string,
+    checked: React.PropTypes.bool,
     handleClick: React.PropTypes.func,
   },
 
   getInitialState: function () {
     return {
       hovered: false,
-      checked: false,
+      checked: this.props.checked,
       background: this.props.background,
     }
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.setState({checked: newProps.checked})
   },
 
   handleClick: function () {
