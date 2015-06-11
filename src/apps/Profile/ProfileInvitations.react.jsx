@@ -1,6 +1,6 @@
 var React       = require('react'),
     State       = require('react-router').State,
-    
+
     HeaderMixin = require('../Header/HeaderMixin');
 
 module.exports = React.createClass({
@@ -12,18 +12,20 @@ module.exports = React.createClass({
     State,
   ],
 
-  headerBreadcrumbs: function () {
-   return [{
-      route: 'instances',
+  headerBreadcrumbs: [
+    {
+      route: 'dashboard',
       label: 'Home',
-    }, {
-      route: 'account',
+    },
+    {
+      route: 'profile-settings',
       label: 'Account',
-    }, {
-      route: 'invitations',
+    },
+    {
+      route: 'profile-invitations',
       label: 'Invitations',
-    }]
-  },
+    }
+  ],
 
   render: function () {
     return (

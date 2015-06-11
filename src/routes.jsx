@@ -70,11 +70,11 @@ module.exports = (
         <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
       </Route>
-      <Route name="account" handler={Profile} path="/account" >
-        <Route name="profile" handler={Profile} path="profile" />
-        <Route name="authentication" handler={ProfileAuthentication} path="authentication" />
-        <Route name="billing" handler={ProfileBilling} path="billing" />
-        <Route name="invitations" handler={ProfileInvitations} path="invitations" />
+      <Route name="profile" handler={Profile} path="/account" >
+        <Route name="profile-settings" handler={Profile} path="/account/profile" />
+        <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
+        <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
+        <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
         <DefaultRoute handler={Profile} />
       </Route>
     </Route>

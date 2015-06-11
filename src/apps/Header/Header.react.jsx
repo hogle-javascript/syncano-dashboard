@@ -126,8 +126,7 @@ module.exports = React.createClass({
           <div className={iconsClass}>
             <MaterialIcon
               name="power"
-              handleClick={this.handleLogout}
-            />
+              handleClick={this.handleLogout}/>
             <MaterialIcon name="more_vert" />
             <MaterialIcon name="notifications_none" />
             <MaterialIcon name="search" />
