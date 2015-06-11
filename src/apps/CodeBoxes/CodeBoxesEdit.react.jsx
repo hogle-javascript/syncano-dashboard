@@ -50,6 +50,9 @@ module.exports = React.createClass({
 
   headerBreadcrumbs: function () {
    return [{
+      route: 'instances',
+      label: 'Instances',
+    }, {
       route: 'instance',
       label: this.state.instanceName,
       params: {instanceName: this.state.instanceName}
@@ -73,7 +76,8 @@ module.exports = React.createClass({
       route: 'codeboxes-edit',
       params: {
         codeboxId: this.state.currentCodeBoxId,
-        instanceName: this.state.instanceName}
+        instanceName: this.state.instanceName}, 
+      active: true,
     },{
       label: 'Config',
       route: 'codeboxes-config',
@@ -157,7 +161,6 @@ module.exports = React.createClass({
       source = codeBox.source;
       editorMode = CodeBoxesStore.getEditorMode(codeBox);
     }
-
     return (
       <div className="container" style={containerStyle}>
         <FabList

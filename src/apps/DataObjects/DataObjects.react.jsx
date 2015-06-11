@@ -13,25 +13,59 @@ module.exports = React.createClass({
   ],
 
   headerBreadcrumbs: function () {
-   return [{
+    var instanceName = this.getParams().instanceName;
+    return [{
       route: 'instances',
       label: 'Instances',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     },{
       route: 'instance',
-      label: this.getParams().instanceName,
-      params: {instanceName: this.getParams().instanceName}
+      label: instanceName,
+      params: {instanceName: instanceName}
     },{
       route: 'data-objects',
       label: 'Data Objects',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     }]
   },
 
-  headerMenuItems: [
-    {label: 'Data Objects', route: 'instances'},
-    {label: 'Classes', route: 'instances'},
-  ],
+  headerMenuItems: function() {
+    var params = {instanceName: this.getParams().instanceName};
+    return [
+      {
+        label: 'Data Browser', 
+        route: 'data-objects', 
+        params: params, 
+      }, {
+        label: 'Classes', 
+        route: 'classes', 
+        params: params
+      }, {
+        label: 'API Keys', 
+        route: 'api-keys', 
+        params: params
+      }, {
+        label: 'Admins', 
+        route: 'admins', 
+        params: params
+      }, {
+        label: 'Users', 
+        route: 'users', 
+        params: params
+      }, {
+        label: 'CodeBoxes', 
+        route: 'codeboxes', 
+        params: params
+      }, {
+        label: 'Webhooks', 
+        route: 'webhooks', 
+        params: params
+      }, {
+        label: 'Tasks', 
+        route: 'tasks', 
+        params: params
+      }];
+  },
 
   render: function () {
     return (

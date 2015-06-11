@@ -48,24 +48,27 @@ module.exports = React.createClass({
      instanceName: this.state.instanceName
    };
 
-   return [
-     {
-       route: 'instance',
-       label: this.state.instanceName,
-       params: routeParams
-     }, {
-       route: 'codeboxes',
-       label: 'Codeboxes',
-       params: routeParams
-     }, {
-      route: 'codeboxes-edit',
-      label: this.state.currentCodeBoxId,
-      params: routeParams
-    },{
-       route: 'codeboxes-config',
-       label: 'Config',
-       params: routeParams
-     }]
+  return [
+      {
+        route: 'instances',
+        label: 'Instances',
+      }, {
+        route: 'instance',
+        label: this.state.instanceName,
+        params: routeParams
+      }, {
+        route: 'codeboxes',
+        label: 'Codeboxes',
+        params: routeParams
+      }, {
+        route: 'codeboxes-edit',
+        label: this.state.currentCodeBoxId,
+        params: routeParams
+      },{
+        route: 'codeboxes-traces',
+        label: 'Config',
+        params: routeParams,
+      }]
   },
 
   headerMenuItems: function () {
