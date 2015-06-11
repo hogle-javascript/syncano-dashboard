@@ -13,10 +13,11 @@ var React  = require('react'),
     InstancesStore   = require('./InstancesStore'),
 
     // Components
-    mui       = require('material-ui'),
-    Dialog    = mui.Dialog,
-    Container = require('../../common/Container/Container.react'),
-    FabList   = require('../../common/Fab/FabList.react'),
+    mui                  = require('material-ui'),
+    FloatingActionButton = mui.FloatingActionButton,
+    Dialog               = mui.Dialog,
+    Container            = require('../../common/Container/Container.react'),
+    FabList              = require('../../common/Fab/FabList.react'),
 
     // Local components
     InstancesList = require('./InstancesList.react'),
@@ -29,7 +30,6 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(InstancesStore),
-    ButtonActionMixin,
     HeaderMixin,
     Router.State,
     Router.Navigation,
@@ -58,20 +58,16 @@ module.exports = React.createClass({
     ]
   },
 
-  // Buttons ButtonActionMixin
-  buttons: function () {
-    return {
-      plusButton: {
-        name: "plusButton",
-        label: "Click here to create CodeBox",
-        icon: 'plus',
-        color: 'red',
-        action: this.handlePlusButton
-      }
-    }
+  // Buttons
+  handlePlusButton: function() {
+    this.refs.addInstanceDialog.show();
   },
 
-  handlePlusButton: function() {
+  handleDeleteButton: function() {
+    this.refs.addInstanceDialog.show();
+  },
+
+  handleChangePaletteButton: function() {
     this.refs.addInstanceDialog.show();
   },
 
@@ -102,14 +98,45 @@ module.exports = React.createClass({
 
     return (
       <Container>
+
         <FabList
-          style={{list: {top: 200}}}
-          buttons={[this.buttons().plusButton]}
-          handleClick={this.handleButtonClick}
-        />
+          style={{top: 200, display: this.state.checkedItemNumber ? 'block': 'none'}}>
+          <FloatingActionButton
+            label         = "Click here to delete Instances" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.handleDeleteButton}
+            iconClassName = "md md-delete" />
+          <FloatingActionButton
+            label         = "Click here to customize Instances" // TODO: extend component
+            color         = "" // TODO: extend component
+            secondary     = {true}
+            mini          = {true}
+            onClick       = {this.handleChangePaletteButton}
+            iconClassName = "md md-palette" />
+        </FabList>
+
+        <FabList
+          style={{bottom: 100}}>
+          <FloatingActionButton
+            label         = "Click here to add Instances" // TODO: extend component
+            color         = "" // TODO: extend component
+            onClick       = {this.handlePlusButton}
+            iconClassName = "md md-add" />
+        </FabList>
+
         <AddDialog ref="addInstanceDialog"/>
-        <InstancesList name="My instances" listType="myInstances" viewMode="stream"/>
-        <InstancesList name="Other instances" listType="otherInstances" viewMode="stream"/>
+
+        <InstancesList
+          name                = "My instances"
+          listType            = "myInstances"
+          viewMode            = "stream"
+          handleItemIconClick = {this.handleItemIconClick} />
+        <InstancesList
+          name                = "Other instances"
+          listType            = "otherInstances"
+          viewMode            = "stream"
+          handleItemIconClick = {this.handleItemIconClick}/>
       </Container>
     );
   }
