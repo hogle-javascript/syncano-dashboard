@@ -13,24 +13,25 @@ module.exports = React.createClass({
   ],
 
   headerBreadcrumbs: function () {
-   return [{
+    var instanceName = this.getParams().instanceName;
+    return [{
       route: 'instances',
       label: 'Instances',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     },{
       route: 'instance',
-      label: this.getParams().instanceName,
-      params: {instanceName: this.getParams().instanceName}
+      label: instanceName,
+      params: {instanceName: instanceName}
     },{
       route: 'schedules',
       label: 'Schedules',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     }]
   },
 
   render: function () {
     return (
-      <div>Classes</div>
+      <div>Schedules</div>
     );
   }
 

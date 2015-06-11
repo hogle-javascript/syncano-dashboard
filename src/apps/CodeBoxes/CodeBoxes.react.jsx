@@ -49,19 +49,58 @@ module.exports = React.createClass({
   },
 
   headerBreadcrumbs: function () {
-   return [{
+    var instanceName = this.getParams().instanceName;
+    return [{
       route: 'instances',
       label: 'Instances',
-      params: {instanceName: this.getParams().instanceName}
+      params: {instanceName: instanceName}
     },{
       route: 'instance',
-      label: this.getParams().instanceName,
-      params: {instanceName: this.getParams().instanceName}
+      label: instanceName,
+      params: {instanceName: instanceName}
     },{
       route: 'codeboxes',
-      label: 'Codeboxes',
-      params: {instanceName: this.getParams().instanceName}
+      label: 'CodeBoxes',
+      params: {instanceName: instanceName}
     }]
+  },
+
+  headerMenuItems: function() {
+    var params = {instanceName: this.getParams().instanceName};
+    return [
+      {
+        label: 'Data Browser', 
+        route: 'data-objects', 
+        params: params, 
+      }, {
+        label: 'Classes', 
+        route: 'classes', 
+        params: params},
+      {
+        label: 'API Keys', 
+        route: 'api-keys', 
+        params: params
+      }, {
+        label: 'Admins', 
+        route: 'admins', 
+        params: params
+      }, {
+        label: 'Users', 
+        route: 'users', 
+        params: params
+      }, {
+        label: 'CodeBoxes', 
+        route: 'codeboxes', 
+        params: params,
+      }, {
+        label: 'Webhooks', 
+        route: 'webhooks', 
+        params: params
+      }, {
+        label: 'Tasks', 
+        route: 'tasks', 
+        params: params
+      }];
   },
 
   handleItemIconClick: function (id, state) {
@@ -169,14 +208,14 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.handleDeleteButton}
-            iconClassName = "md md-delete" />
+            iconClassName = "synicon-delete" />
           <FloatingActionButton
             label         = "Click here to edit Codebox" // TODO: extend component
             color         = "" // TODO: extend component
             secondary     = {true}
             mini          = {true}
             onClick       = {this.handleChangePaletteButton}
-            iconClassName = "md md-edit" />
+            iconClassName = "synicon-pencil" />
         </FabList>
 
         <FabList
@@ -185,7 +224,7 @@ module.exports = React.createClass({
             label         = "Click here to add CodeBox" // TODO: extend component
             color         = "" // TODO: extend component
             onClick       = {this.handlePlusButton}
-            iconClassName = "md md-add" />
+            iconClassName = "synicon-plus" />
         </FabList>
 
         <AddDialog ref="addCodeBoxDialog" />
