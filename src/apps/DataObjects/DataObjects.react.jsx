@@ -3,7 +3,6 @@ var React       = require('react'),
     
     HeaderMixin = require('../Header/HeaderMixin');
 
-
 module.exports = React.createClass({
 
   displayName: 'DataObjects',

@@ -1,8 +1,7 @@
 var React       = require('react'),
     State       = require('react-router').State,
-    
-    HeaderMixin = require('../Header/HeaderMixin');
 
+    HeaderMixin = require('../Header/HeaderMixin');
 
 module.exports = React.createClass({
 
