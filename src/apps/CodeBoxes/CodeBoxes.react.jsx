@@ -187,7 +187,7 @@ module.exports = React.createClass({
             label         = "Click here to add CodeBox" // TODO: extend component
             color         = "" // TODO: extend component
             onClick       = {this.handlePlusButton}
-            iconClassName = "synicon-add" />
+            iconClassName = "synicon-plus" />
         </FabList>
 
         <AddDialog ref="addCodeBoxDialog" />
