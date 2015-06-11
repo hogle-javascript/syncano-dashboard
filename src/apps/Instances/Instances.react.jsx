@@ -51,11 +51,10 @@ module.exports = React.createClass({
 
   // Breadcrumbs and tabs (HeaderMixin)
   headerBreadcrumbs: function () {
-   return [{
+    return [{
       route: 'instances',
       label: 'Instances',
-    },
-    ]
+    }];
   },
 
   // Buttons ButtonActionMixin

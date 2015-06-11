@@ -34,6 +34,10 @@ var React                       = require('react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
     Users                       = require('./apps/Users/Users.react'),
     Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
+    Profile                     = require('./apps/Profile/Profile.react'),
+    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
+    ProfileBilling              = require('./apps/Profile/ProfileBilling.react'),
+    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
@@ -41,14 +45,14 @@ var React                       = require('react'),
 
 
 module.exports = (
-  <Route name="app" handler={App} path="/">
-    <Route name="login" handler={AccountLogin}/>
+  <Route name="app" handler={App} path="/" >
+    <Route name="login" handler={AccountLogin} />
     <Route name="signup" handler={AccountSignup} />
     <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
     <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
     <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
 
-    <Route name="dashboard" handler={Dashboard} path="/">
+    <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
         <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
@@ -65,6 +69,13 @@ module.exports = (
         <Route name="users" handler={Users} path=":instanceName/users" />
         <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
+      </Route>
+      <Route name="account" handler={Profile} path="/account" >
+        <Route name="profile" handler={Profile} path="profile" />
+        <Route name="authentication" handler={ProfileAuthentication} path="authentication" />
+        <Route name="billing" handler={ProfileBilling} path="billing" />
+        <Route name="invitations" handler={ProfileInvitations} path="invitations" />
+        <DefaultRoute handler={Profile} />
       </Route>
     </Route>
 
