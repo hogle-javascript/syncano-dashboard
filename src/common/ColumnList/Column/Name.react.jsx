@@ -4,14 +4,13 @@ var React       = require('react'),
     Paper       = require('material-ui/lib/paper'),
     Colors      = require('material-ui/lib/styles/colors');
 
-var cssClasses = classNames('col-xs-8');
+var cssClasses = classNames('col-xs-12');
 
 var Header = React.createClass({
   render: function () {
     var styles = {
       fontSize    : 20,
       fontWeight  : 500,
-      marginLeft  : 8
     };
 
     return (
@@ -79,8 +78,7 @@ module.exports = React.createClass({
         className   = {cssClasses}
         style       = {style}
         onMouseOver = {this.handleMouseOver}
-        onMouseOut  = {this.handleMouseLeave}
-        onClick     = {this.handleClick}>
+        onMouseOut  = {this.handleMouseLeave}>
         {this.props.children}
       </div>
     );

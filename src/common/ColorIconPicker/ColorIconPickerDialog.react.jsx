@@ -37,7 +37,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    console.info('ColorIconPickerDialog::componentWillReceiveProps', nextProps);
+    console.info('ColorIconPickerDialog::componentWillReceiveProps');
     this.setState({
       color: nextProps.initialColor,
       icon: nextProps.initialIcon,
@@ -68,14 +68,12 @@ module.exports = React.createClass({
 
   handleChange: function(ColorIcon) {
     console.info('ColorIconPickerDialog::handleChange', ColorIcon);
-
     if (ColorIcon.color) {
       this.setState({color:  ColorIcon.color});
     }
     if (ColorIcon.icon) {
       this.setState({icon:  ColorIcon.icon});
     }
-
   },
 
   render: function () {

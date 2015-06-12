@@ -4,7 +4,7 @@ var React       = require('react'),
     Paper       = require('material-ui/lib/paper');
 
 // Same classes for column and it's header
-var cssClasses = classNames('col-xs-3');
+var cssClasses = classNames('col-xs-4');
 
 var Header = React.createClass({
   render: function () {
