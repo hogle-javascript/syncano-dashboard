@@ -43,7 +43,7 @@ gulp.task('copy-images', ['clean'], function() {
 
 var fontName = 'Syncano Icons';
 
-gulp.task('iconfont', ['clean'], function(){
+gulp.task('iconfont', ['clean'], function (cb) {
   gulp.src([paths.assets + '/icons/*.svg'])
     .pipe(iconfontCss({
       fontName: fontName,
@@ -56,7 +56,10 @@ gulp.task('iconfont', ['clean'], function(){
       normalize: true,
       fontHeight: 1001
     }))
-    .pipe(gulp.dest(paths.dist + '/fonts/icons/'));
+    .pipe(gulp.dest(paths.dist + '/fonts/icons/'))
+    .on('finish', function() {
+      cb();
+    });
 });
 
 gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
