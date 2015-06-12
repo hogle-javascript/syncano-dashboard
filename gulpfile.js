@@ -9,6 +9,7 @@ var gulp             = require('gulp'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config.js'),
     awspublish       = require('gulp-awspublish'),
+    cloudfront       = require('gulp-cloudfront'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     ENV              = process.env.NODE_ENV || 'development';
@@ -126,27 +127,24 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
 
 gulp.task('publish', ['clean', 'iconfont', 'build'], function() {
 
-  var params = {
-    bucket: 'new-dashboard.syncano.rocks',
-    region: 'eu-west-1'
+  var aws = {
+    'bucket'         : 'syncano-gui-staging',
+    'region'         : 'eu-west-1',
+    'distributionId' : 'E10VUXJJFKD7D3'
   };
 
   if (ENV === 'production') {
-    params.bucket = 'syncano-dashboard-production';
-    params.region = 'eu-west-1';
+    aws.bucket         = 'admin-syncano-io';
+    aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
-  var publisher = awspublish.create({
-    region: params.region,
-    params: {
-      Bucket: params.bucket
-    }
-  });
+  var publisher = awspublish.create(aws);
 
   return gulp.src(['./dist/**/*', '!./dist/rev-manifest.json'])
     .pipe(publisher.publish())
     .pipe(publisher.sync())
-    .pipe(awspublish.reporter());
+    .pipe(awspublish.reporter())
+    .pipe(cloudfront(aws));
 });
 
 gulp.task('copy', ['copy-index', 'copy-images', 'copy-fonts']);
