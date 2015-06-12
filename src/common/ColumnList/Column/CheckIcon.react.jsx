@@ -43,7 +43,12 @@ module.exports = React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor,
+      checked: this.props.checked,
     }
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.setState({checked: newProps.checked})
   },
 
   handleClick: function (id, state) {
@@ -69,6 +74,7 @@ module.exports = React.createClass({
             icon        = {this.props.icon || DEFAULT_ICON}
             background  = {this.props.background || DEFAULT_BACKGROUND}
             width       = {40}
+            checked     = {this.state.checked}
             handleClick = {this.handleClick} />
       </div>
     );

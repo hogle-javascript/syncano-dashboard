@@ -27,17 +27,14 @@ module.exports = React.createClass({
 
   getStyles: function() {
     var style = {
-      icon: {
-        backgroundColor: this.props.background,
-        color: 'white',
-        margin: '0 auto',
+        width: '50px',
+        height: '50px',
         borderRadius: '100%',
-        padding: '12px',
-      },
-      back: {
-        'width': '50px',
-        'height': '50px',
-      },
+        backgroundColor: this.props.background,
+        margin: '12px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     };
 
     return this.mergeStyles(style, this.props.style);
@@ -49,9 +46,9 @@ module.exports = React.createClass({
 
     return (
       <div
-        style={styles.back}
+        style={styles}
         onClick={this.handleClick}>
-        <MaterialIcon name={this.props.icon} style={styles.icon}/>
+        {this.props.children}
       </div>
     )
 

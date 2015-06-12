@@ -1,8 +1,8 @@
-jest.dontMock("../store");
+jest.dontMock("../IconStore");
 
 describe("Icon store", function () {
   beforeEach(function() {
-    IconStore = require("../store");
+    IconStore = require("../IconStore");
     
     // Test data
     existingIcon = "account-child";

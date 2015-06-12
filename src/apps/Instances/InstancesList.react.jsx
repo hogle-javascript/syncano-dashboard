@@ -49,7 +49,7 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
-    this.props.handleItemIconClick(id, state);
+    InstancesActions.checkItem(id, state);
   },
 
   handleItemClick: function(instanceName) {
@@ -59,13 +59,13 @@ module.exports = React.createClass({
   },
 
   generateItem: function (item) {
-
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
             id          = {item.name}
             icon        = {item.metadata.icon}
             background  = {item.metadata.color}
+            checked     = {item.checked}
             width       = '40px'
             handleClick = {this.handleItemIconClick} />
         <ColumnName

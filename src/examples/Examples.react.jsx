@@ -18,8 +18,6 @@ var React                = require('react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
     Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
-    ColorPicker          = require('../common/Color/ColorPicker.react'),
-    ColorPickerItem      = require('../common/Color/ColorPickerItem.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
@@ -36,8 +34,6 @@ var React                = require('react'),
     SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
     SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
     Icon                 = require('../common/Icon/Icon.react'),
-    IconPicker           = require('../common/Icon/IconPicker.react'),
-    IconPickerItem       = require('../common/Icon/IconPickerItem.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
@@ -555,30 +551,6 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>ColorPicker</h4>
-          <ColorPicker />
-        </div>
-
-        <div className="exampleBox">
-          <h4>ColorPicker (selected)</h4>
-          <ColorPicker selectedColor={'#EF5350'} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>ColorPickerItem (selected)</h2>
-          <ColorPickerItem
-            color={'#EF5350'}
-            selected={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>ColorPickerItem</h2>
-          <ColorPickerItem
-            color={'#EF5350'}
-            selected={false} />
-        </div>
-
-        <div className="exampleBox">
           <h4>UsageBar</h4>
           <UsageBar billingProfile={billingProfile}/>
         </div>
@@ -590,25 +562,6 @@ module.exports = React.createClass({
             handleClick={dummyClick.bind(this, "Icon")}
             style={{fill: "#0091EA"}}
             glowing={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>IconPicker</h2>
-          <IconPicker
-            selectedIcon="airplanemode-on"
-            handleClickListItem={dummyClick.bind(this, "IconPicker icon")} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>IconPickerItem</h2>
-          <IconPickerItem
-            icon={"theaters"}
-            selected={true}
-            handleClick={dummyClick.bind(this, "Selected IconPickerItem")} />
-          <IconPickerItem
-            icon={"theaters"}
-            selected={false}
-            handleClick={dummyClick.bind(this, "Not selected IconPickerItem")} />
         </div>
 
         <div className="exampleBox">

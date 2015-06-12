@@ -1,5 +1,7 @@
-var React      = require('react');
-var ColorStore = require('../Color/store');
+var React = require('react'),
+
+    // Stores
+    ColorStore = require('../Color/ColorStore');
 
 require('./AvatarInitials.css');
 
