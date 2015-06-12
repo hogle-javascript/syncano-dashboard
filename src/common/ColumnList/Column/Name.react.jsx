@@ -1,8 +1,10 @@
 var React       = require('react'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
+
     Paper       = require('material-ui/lib/paper'),
     Colors      = require('material-ui/lib/styles/colors');
+
 
 var cssClasses = classNames('col-xs-12');
 
@@ -10,7 +12,7 @@ var Header = React.createClass({
   render: function () {
     var styles = {
       fontSize    : 20,
-      fontWeight  : 500,
+      fontWeight  : 500
     };
 
     return (
@@ -38,8 +40,8 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      color: Colors.blue600,
-      hoverColor: '#0091EA'
+      color: 'rgba(0,0,0,.54)',
+      hoverColor: Colors.blue600
     };
   },
 

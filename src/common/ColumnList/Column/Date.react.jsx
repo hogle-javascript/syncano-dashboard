@@ -34,7 +34,7 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       color: 'rgba(0,0,0,.54)',
-      hoverColor: Colors.lightBlueA700
+      hoverColor: Colors.blue600
     };
   },
 

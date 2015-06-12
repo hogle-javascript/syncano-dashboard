@@ -48,7 +48,7 @@ module.exports = React.createClass({
   getDefaultProps: function () {
     return {
       color      : 'black',
-      hoverColor : '#0091EA'
+      hoverColor : Colors.blue600
     }
   },
 
@@ -80,7 +80,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.setState({checked: newProps.checked})
+    this.setState({checked: newProps.checked});
   },
 
   handleIconClick: function (id, state) {
@@ -94,13 +94,13 @@ module.exports = React.createClass({
   },
 
   handleMouseOver: function () {
-    console.info('ColumnCheckIcon::handleMouseOver')
-    this.setState({'color': this.props.hoverColor})
+    console.info('ColumnCheckIcon::handleMouseOver');
+    this.setState({'color': this.props.hoverColor});
   },
 
   handleMouseLeave: function () {
     console.info('ColumnCheckIcon::handleMouseLeave');
-    this.setState({'color': this.props.color})
+    this.setState({'color': this.props.color});
   },
 
 

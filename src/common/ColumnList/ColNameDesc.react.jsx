@@ -1,4 +1,6 @@
-var React = require('react');
+var React   = require('react'),
+
+    Colors  = require('material-ui/lib/styles/colors');
 
 
 module.exports = React.createClass({
@@ -11,20 +13,20 @@ module.exports = React.createClass({
     description: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
   getDefaultProps: function() {
     return {
       color: '#999',
-      hoverColor: '#0091EA',
+      hoverColor: Colors.blue600
     };
   },
 
   getInitialState: function () {
     return {
       color: this.props.color,
-      hoverColor: this.props.hoverColor,
+      hoverColor: this.props.hoverColor
     }
   },
 

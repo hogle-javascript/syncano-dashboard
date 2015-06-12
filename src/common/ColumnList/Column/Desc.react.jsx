@@ -1,7 +1,10 @@
 var React       = require('react'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
-    Paper       = require('material-ui/lib/paper');
+
+    Paper       = require('material-ui/lib/paper'),
+    Colors      = require('material-ui/lib/styles/colors');
+
 
 // Same classes for column and it's header
 var cssClasses = classNames('col-flex-1');
@@ -35,7 +38,7 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       color: 'rgba(0,0,0,.54)',
-      hoverColor: '#0091EA'
+      hoverColor: Colors.blue600
     };
   },
 
@@ -67,7 +70,6 @@ module.exports = React.createClass({
         style={style}>
         {this.props.children}
       </div>
-
     );
 
   }
