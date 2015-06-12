@@ -15,7 +15,7 @@ module.exports = React.createClass({
     var style = {
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'center'
     };
 
     var cssClasses = classNames('col', 's' + this.props.grid);

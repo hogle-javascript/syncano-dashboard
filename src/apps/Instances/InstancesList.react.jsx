@@ -62,12 +62,11 @@ module.exports = React.createClass({
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
-            id          = {item.name}
-            icon        = {item.metadata.icon}
-            background  = {item.metadata.color}
-            checked     = {item.checked}
-            width       = '40px'
-            handleClick = {this.handleItemIconClick} />
+          id          = {item.name}
+          icon        = {item.metadata.icon}
+          background  = {item.metadata.color}
+          checked     = {item.checked}
+          handleClick = {this.handleItemIconClick} />
         <ColumnName
           id={item.name}
           handleClick={this.handleItemClick}>
@@ -98,8 +97,7 @@ module.exports = React.createClass({
     return (
       <ListContainer>
         <Header>
-          <ColumnCheckIcon.Header>Instances</ColumnCheckIcon.Header>
-          <ColumnName.Header></ColumnName.Header>
+          <ColumnName.Header>Instances</ColumnName.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

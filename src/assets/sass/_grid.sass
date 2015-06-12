@@ -2,7 +2,7 @@
 $device-sm: 30em
 $device-md: 50em
 $device-lg: 1140px
-$column-gutter: 0rem
+$column-gutter: 1.14285714285714
 $columns-count: 35
 
 .container
@@ -19,8 +19,8 @@ $columns-count: 35
 .row
   display: flex
   flex-flow: row wrap
-  margin-right: -($column-gutter/2)
-  margin-left: -($column-gutter/2)
+  margin-right: -($column-gutter/2)rem
+  margin-left: -($column-gutter/2)rem
   &.align-middle
     align-items: center
   &.align-bottom
@@ -34,7 +34,10 @@ $columns-count: 35
 
 [class*="col"]
   width: 100%
-  padding: 0 $column-gutter/2
+  padding: 0 ($column-gutter/2*1rem)
+
+.col-flex-1
+  flex: 1
 
 @mixin col-size($col)
   flex-basis: (100% * $col / $columns-count)

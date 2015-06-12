@@ -1,15 +1,23 @@
 var React       = require('react'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
-    Paper       = require('material-ui/lib/paper');
+    Paper       = require('material-ui/lib/paper'),
+    Colors      = require('material-ui/lib/styles/colors');
 
+var cssClasses = classNames('col-xs-8');
 
 var Header = React.createClass({
   render: function () {
+    var styles = {
+      fontSize    : 20,
+      fontWeight  : 500,
+      marginLeft  : 8
+    };
+
     return (
-        <div className={"col s4"}>
-          {this.props.children}
-        </div>
+      <div style={styles} className={cssClasses}>
+        {this.props.children}
+      </div>
     )
   }
 });
@@ -22,24 +30,24 @@ module.exports = React.createClass({
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
   statics :{
-    Header: Header,
+    Header: Header
   },
 
   getDefaultProps: function() {
     return {
-      color: '#999',
-      hoverColor: '#0091EA',
+      color: Colors.blue600,
+      hoverColor: '#0091EA'
     };
   },
 
   getInitialState: function () {
     return {
       color: this.props.color,
-      hoverColor: this.props.hoverColor,
+      hoverColor: this.props.hoverColor
     }
   },
 
@@ -57,14 +65,14 @@ module.exports = React.createClass({
 
   render: function () {
     var style = {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      fontSize: 16,
-      color: this.state.color,
+      display         : 'flex',
+      flexDirection   : 'row',
+      fontSize        : 12,
+      paddingTop      : 16,
+      paddingBottom   : 16,
+      alignSelf       : 'center',
+      color           : this.state.color
     };
-
-    var cssClasses = classNames('col', 's4');
 
     return (
       <div

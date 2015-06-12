@@ -12,11 +12,11 @@ module.exports = React.createClass({
     var headerStyle = {
       root: {
         display        : 'flex',
-        justifyContent : 'flex-end',
-        marginBottom   : 5,
-        fontSize       : 16,
-        lineHeight     : '35px',
-        color          : '#929292',
+        alignItems     : 'center',
+        fontSize       : 14,
+        lineHeight     : '24px',
+        color          : 'rgba(0,0,0,.54)',
+        marginBottom   : 16
       }
     };
 

@@ -4,7 +4,7 @@ var React       = require('react'),
     Paper       = require('material-ui/lib/paper');
 
 // Same classes for column and it's header
-var cssClasses = classNames('col', 's4');
+var cssClasses = classNames('col-flex-1');
 
 var Header = React.createClass({
   render: function () {
@@ -24,25 +24,25 @@ module.exports = React.createClass({
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
   statics :{
-    Header: Header,
+    Header: Header
   },
 
 
   getDefaultProps: function() {
     return {
-      color: '#999',
-      hoverColor: '#0091EA',
+      color: 'rgba(0,0,0,.54)',
+      hoverColor: '#0091EA'
     };
   },
 
   getInitialState: function () {
     return {
       color: this.props.color,
-      hoverColor: this.props.hoverColor,
+      hoverColor: this.props.hoverColor
     }
   },
 
@@ -52,11 +52,13 @@ module.exports = React.createClass({
 
   render: function () {
     var style = {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      fontSize: 16,
-      color: this.props.color,
+      display        : 'flex',
+      flexDirection  : 'column',
+      fontSize       : '12px',
+      lineHeight     : '16px',
+      paddingTop     : 16,
+      paddingBottom  : 16,
+      color          : this.props.color
     };
 
     return (

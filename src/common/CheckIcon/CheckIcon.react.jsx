@@ -13,14 +13,14 @@ module.exports = React.createClass({
     id: React.PropTypes.string,
     icon: React.PropTypes.string,
     checked: React.PropTypes.bool,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
   getInitialState: function () {
     return {
       hovered: false,
       checked: this.props.checked,
-      background: this.props.background,
+      background: this.props.background
     }
   },
 
@@ -34,18 +34,18 @@ module.exports = React.createClass({
     }
 
     this.setState({
-      checked: !this.state.checked,
+      checked: !this.state.checked
     });
   },
 
   handleMouseOver: function () {
     this.setState({
-      hovered: true,
+      hovered: true
     });
   },
   handleMouseLeave: function () {
     this.setState({
-      hovered: false,
+      hovered: false
     });
   },
 
@@ -73,16 +73,15 @@ module.exports = React.createClass({
         color: 'white',
         display: 'flex',
         fontSize: '18px',
-        lineHeight: '1',
-        padding: '14px 16px'
+        lineHeight: '1'
       },
       background: {
-        margin: 12,
-        height: 50,
-        width: 50,
+        margin: '0 0 0 8px',
+        height: 40,
+        minWidth: 40,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
       }
     }
   },

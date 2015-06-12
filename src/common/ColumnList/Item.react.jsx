@@ -1,8 +1,8 @@
-var React = require('react'),
+var React           = require('react'),
 
-    mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable,
-    Paper = mui.Paper;
+    mui             = require('material-ui'),
+    StylePropable   = mui.Mixins.StylePropable,
+    Paper           = mui.Paper;
 
 
 module.exports = React.createClass({
@@ -13,10 +13,9 @@ module.exports = React.createClass({
 
   getStyles: function() {
     var style = {
-      height: '100px',
       display: 'flex',
       marginBottom: '0px',
-      justifyContent: 'center',
+      justifyContent: 'center'
     };
     return this.mergeStyles(style, this.props.style);
   },
