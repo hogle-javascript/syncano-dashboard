@@ -34,10 +34,34 @@ module.exports = React.createClass({
     },
     description: {
     },
+  },
 
+  getInitialState: function() {
+    return {
+      description: ""
+    }
+  },
+
+  clearData: function() {
+    this.setState({
+      name: '',
+      description: '',
+      errors: {},
+    })
+  },
+
+  componentWillReceiveProps: function(nextProps, nextState) {
+    if (nextProps.initialValues){
+      this.setState({
+          name: nextProps.initialValues.name,
+          description: nextProps.initialValues.description
+      })
+    }
   },
 
   show: function() {
+    console.log('InstancesAddDialog::show');
+    this.clearData();
     this.refs.createInstanceDialog.show();
   },
 
@@ -53,14 +77,18 @@ module.exports = React.createClass({
       return
     }
 
-    this.validate(function(isValid){
+    this.validate(function (isValid) {
       console.info('InstancesAddDialog::handleSubmit isValid:', isValid);
       if (isValid === true) {
-        this.dismiss();
-        InstancesActions.createInstance({
-          name       : this.state.name,
-          description : this.state.description || "",
-        });
+
+        if (this.props.mode === 'add') {
+          InstancesActions.createInstance({
+            name        : this.state.name,
+            description : this.state.description,
+          });
+        } else if (this.props.mode === 'edit') {
+          InstancesActions.updateInstance(this.state.name, {description: this.state.description});
+        }
       }
     }.bind(this));
   },
@@ -83,46 +111,47 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var modalState = true;
+    var title = this.props.mode === 'edit' ? 'Edit': 'Add';
+    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Instance';
 
     var dialogStandardActions = [
       {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: 'Create Instance', onClick: this.handleSubmit, ref: 'submit'}
+      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
     ];
 
     return (
       <Dialog
         ref="createInstanceDialog"
-        title="Add Instance"
+        title={title}
+        openImmediately={this.props.openImmediately}
         actions={dialogStandardActions}
-        modal={modalState}>
+        modal={true}>
         <div>
         <form
           onSubmit={this.handleSubmit}
           acceptCharset="UTF-8"
           method="post">
+
         <TextField
-            ref="name"
-            valueLink={this.linkState('name')}
-            errorText={this.getValidationMessages('name').join()}
-            name="name"
-            style={{width:'100%'}}
-            autoComplete="name"
-            hintText="Short name for your Instance"
-            floatingLabelText="Name of Instance"
-            />
-        <TextField
-            ref="description"
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join()}
-            name="description"
-            style={{width:'100%'}}
-            className="text-field"
-            autoComplete="description"
-            multiLine={true}
-            hintText="Multiline description of Instance (optional)"
-            floatingLabelText="Description of Instance"
-          />
+            ref               = "name"
+            name              = "name"
+            style             = {{width:'100%'}}
+            disabled          = {this.props.mode === 'edit' ? true: false}
+            valueLink         = {this.linkState('name')}
+            errorText         = {this.getValidationMessages('name').join()}
+            hintText          = "Short name for your Instance"
+            floatingLabelText = "Name of Instance" />
+
+          <TextField
+            ref               = "description"
+            name              = "description"
+            multiLine         = {true}
+            style             = {{width:'100%'}}
+            valueLink         = {this.linkState('description')}
+            errorText         = {this.getValidationMessages('description').join()}
+            hintText          = "Multiline description of Instance (optional)"
+            floatingLabelText = "Description of Instance" />
+
         </form>
         </div>
       </Dialog>
