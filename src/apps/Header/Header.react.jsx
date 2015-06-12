@@ -75,31 +75,27 @@ module.exports = React.createClass({
       return
     }
 
-    // We have to find active tab
-    var activeTabIndex = null;
-    this.state.menuItems.some(function(item, index){
-      if (this.isActive(item.route, item.params, item.query)) {
-        activeTabIndex = index;
-        return true;
-      }
-    }.bind(this));
-
     return (
       <div className={className}>
-        <Tabs tabItemContainerStyle={{backgroundColor: 'transparent'}} initialSelectedIndex={activeTabIndex}>
+        <Tabs tabItemContainerStyle={{backgroundColor: 'transparent'}}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
     );
   },
 
-  renderMenuItem: function(tab) {
+  renderMenuItem: function(tab, index) {
+    tab.params   = tab.params || {};
+    tab.query    = tab.query  || {};
+    var selected = this.isActive(tab.route, tab.params, tab.query);
+
     return (
       <Tab
-        key={tab.route}
+        key={'menuItem-' + tab.route + '-' + index}
         label={tab.label}
         route={tab.route}
         params={tab.params}
+        selected={selected}
         onActive={this.handleTabActive} />
     )
   },
@@ -125,8 +121,8 @@ module.exports = React.createClass({
         <div className="row header-bottom">
           {this.renderMenu(menuClass)}
           <div className={iconsClass}>
-            <MaterialIcon 
-              name="power" 
+            <MaterialIcon
+              name="power"
               handleClick={this.handleLogout}
             />
             <MaterialIcon name="more_vert" />
