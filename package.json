@@ -91,6 +91,8 @@
   "scripts": {
     "test": "jest -w 3",
     "start": "gulp webpack-dev-server",
-    "build": "gulp build"
+    "build": "gulp build",
+    "publish": "gulp publish",
+    "clean": "gulp clean"
   }
 }
