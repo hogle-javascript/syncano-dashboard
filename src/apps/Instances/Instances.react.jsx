@@ -93,8 +93,8 @@ module.exports = React.createClass({
 
   render: function () {
     var singleItem = InstancesStore.getCheckedItem(),
-        singleItemColor,
-        singleItemIcon;
+        singleItemColor = null,
+        singleItemIcon = null;
 
     if (singleItem) {
       singleItemColor = singleItem.metadata.color;
@@ -111,7 +111,7 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {InstancesActions.uncheckAll}
-            iconClassName = "md md-done" />
+            iconClassName = "synicon-checkbox-multiple-marked-outline" />
           <FloatingActionButton
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
