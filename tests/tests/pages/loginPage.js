@@ -1,10 +1,11 @@
 var LOCATORS = {
-  staging_url : "https://dashboard.syncano.rocks/#login",
-  email_input : "input[type=email]",
+  staging_url : "https://dashboard.syncano.rocks/#/login",
+  email_input : "input[name=email]",
   email : "adam.wardecki+chan@syncano.com",
-  pass_input : "input[type=password]",
+  pass_input : "input[name=password]",
   pass : "chan2015",
-  login_button : "div.login-button"
+  login_button : "button[type=submit]",
+  main_div: "div[id=app]"
 }
 
 
@@ -17,7 +18,7 @@ module.exports = function (client) {
         },
         typeEmail: function () {
             return client
-                .waitForElementVisible(LOCATORS['email_input'], 1000)
+                .waitForElementVisible(LOCATORS['email_input'], 5000)
                 .setValue(LOCATORS['email_input'], LOCATORS['email'])
         },
         typePassword: function () {
@@ -30,12 +31,12 @@ module.exports = function (client) {
             return client
                 .waitForElementVisible(LOCATORS["login_button"], 1000)
                 .click(LOCATORS['login_button'])
-                .url("https://dashboard.syncano.rocks/#instances")
                 .pause(5000);
         },
         verifyLoginSuccessful: function () {
             return client
-                .assert.containsText("div.header-title", "Instances");
+                .waitForElementVisible(LOCATORS['main_div'], 5000)
+                .assert.containsText(LOCATORS['main_div'], "Instances");
         }
     };
 }
