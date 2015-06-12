@@ -119,21 +119,14 @@ module.exports = React.createClass({
             <RaisedButton
               type="submit"
               label="Change password"
-              style={{
-                width: '100%',
-                height: '48px'
-              }}
-              className="raised-button"
+              labelStyle={{fontSize: '16px'}}
+              style={{width: '100%'}}
               primary={true} />
           </form>
           <div className="account-container__content__footer">
-            <ul className="list--flex">
-              <li>
-                <p><Link to="signup">Create your account</Link></p>
-              </li>
-              <li>
-                <p>Already have an account? <Link to="login">Login</Link>.</p>
-              </li>
+            <ul className="list--flex list--horizontal">
+              <li><p><Link to="signup">Create your account</Link></p></li>
+              <li><p>Already have an account? <Link to="login">Login</Link>.</p></li>
             </ul>
           </div>
         </Paper>

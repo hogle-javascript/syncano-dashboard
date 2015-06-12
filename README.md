@@ -50,3 +50,9 @@ or if you are using `fish` shell:
     $ set -g -x GOOGLE_ID xx
     $ set -g -x GITHUB_ID xx
     $ set -g -x OAUTH_PROXY_URL xx
+
+
+
+# Icons
+
+We are using set of [Material Design Icons](http://materialdesignicons.com/)

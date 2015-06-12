@@ -13,11 +13,12 @@ var React  = require('react'),
     InstancesStore   = require('./InstancesStore'),
 
     // Components
-    mui                  = require('material-ui'),
-    FloatingActionButton = mui.FloatingActionButton,
-    Dialog               = mui.Dialog,
-    Container            = require('../../common/Container/Container.react'),
-    FabList              = require('../../common/Fab/FabList.react'),
+    mui                   = require('material-ui'),
+    FloatingActionButton  = mui.FloatingActionButton,
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
     InstancesList = require('./InstancesList.react'),
@@ -70,24 +71,21 @@ module.exports = React.createClass({
   },
 
   handleChangePaletteButton: function() {
-    this.refs.addInstanceDialog.show();
+    this.refs.pickColorIconDialog.show();
   },
 
-  // Lists
-  handleItemIconClick: function (id, state) {
-    var checkedItemNumber;
-    if (state) {
-      checkedItemNumber = ++this.state.checkedItemNumber;
-    } else {
-      checkedItemNumber = --this.state.checkedItemNumber;
-    }
+  handleChangePalette: function (color, icon) {
+    console.info('Instances::handleChangePalette', color, icon);
 
-    this.setState({
-      checkingState: checkedItemNumber > 0,
-      checkedItemNumber: checkedItemNumber,
-    });
-
-    console.log('checked', checkedItemNumber)
+    InstancesActions.updateInstance(
+      InstancesStore.getCheckedItem().name, {
+        metadata: JSON.stringify({
+          color: color,
+          icon: icon
+        })
+      }
+    );
+    InstancesActions.uncheckAll()
   },
 
   handleItemClick: function(instanceName) {
@@ -97,12 +95,26 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    var singleItem = InstancesStore.getCheckedItem(),
+        singleItemColor = null,
+        singleItemIcon = null;
+
+    if (singleItem) {
+      singleItemColor = singleItem.metadata.color;
+      singleItemIcon = singleItem.metadata.icon;
+    }
 
     return (
       <Container>
 
         <FabList
-          style={{top: 200, display: this.state.checkedItemNumber ? 'block': 'none'}}>
+          style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
+          <FloatingActionButton
+            label         = "Click here to unselect Instances" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {InstancesActions.uncheckAll}
+            iconClassName = "synicon-checkbox-multiple-marked-outline" />
           <FloatingActionButton
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
@@ -114,6 +126,7 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             secondary     = {true}
             mini          = {true}
+            disabled      = {this.state.checkedInstances > 1}
             onClick       = {this.handleChangePaletteButton}
             iconClassName = "synicon-palette" />
         </FabList>
@@ -129,16 +142,20 @@ module.exports = React.createClass({
 
         <AddDialog ref="addInstanceDialog"/>
 
+        <ColorIconPickerDialog
+          ref="pickColorIconDialog"
+          initialColor={singleItemColor}
+          initialIcon={singleItemIcon}
+          handleClick={this.handleChangePalette}/>
+
         <InstancesList
           name                = "My instances"
           listType            = "myInstances"
-          viewMode            = "stream"
-          handleItemIconClick = {this.handleItemIconClick} />
+          viewMode            = "stream" />
         <InstancesList
           name                = "Other instances"
           listType            = "otherInstances"
-          viewMode            = "stream"
-          handleItemIconClick = {this.handleItemIconClick}/>
+          viewMode            = "stream" />
       </Container>
     );
   }

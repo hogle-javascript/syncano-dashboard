@@ -3,6 +3,7 @@ var gulp             = require('gulp'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
     stripDebug       = require('gulp-strip-debug'),
+    cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
     path             = require('path'),
     webpack          = require('webpack'),
@@ -43,7 +44,7 @@ gulp.task('copy-images', ['clean'], function() {
 
 var fontName = 'Syncano Icons';
 
-gulp.task('iconfont', ['clean'], function(){
+gulp.task('iconfont', ['clean'], function (cb) {
   gulp.src([paths.assets + '/icons/*.svg'])
     .pipe(iconfontCss({
       fontName: fontName,
@@ -56,7 +57,10 @@ gulp.task('iconfont', ['clean'], function(){
       normalize: true,
       fontHeight: 1001
     }))
-    .pipe(gulp.dest(paths.dist + '/fonts/icons/'));
+    .pipe(gulp.dest(paths.dist + '/fonts/icons/'))
+    .on('finish', function() {
+      cb();
+    });
 });
 
 gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
@@ -105,48 +109,58 @@ gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
 
 
 gulp.task('revision', ['clean', 'iconfont', 'webpack:build'], function(){
-  return gulp.src(['./dist/**/*.js', './dist/**/*.css'])
-    //.pipe(stripDebug())
+  return gulp.src('./dist/**/*')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
     .pipe(gulp.dest(paths.dist))
 });
 
-gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
+gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function (cb) {
+  var manifest = require('./' + paths.dist + '/rev-manifest.json'),
+      delPaths = Object.keys(manifest).map(function (path) {
+        return paths.dist + '/' + path;
+      });
+
+  del(delPaths, cb);
+});
+
+
+gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevisioned'], function(){
   var manifest = gulp.src('./' + paths.dist + '/rev-manifest.json');
 
-  return gulp.src(paths.index)
+  return gulp.src('./dist/**/*')
     .pipe(revReplace({manifest: manifest}))
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'build'], function() {
+gulp.task('publish', ['clean', 'iconfont', 'build'], function() {
 
-  var params = {
-    bucket: 'new-dashboard.syncano.rocks',
-    region: 'eu-west-1'
+  var aws = {
+    region: 'eu-west-1',
+    distributionId: 'E10VUXJJFKD7D3',
+    params: {Bucket: 'syncano-gui-staging'},
+    patternIndex: /^\/index-[a-f0-9]{10}\.html(\.gz)*$/gi
   };
 
   if (ENV === 'production') {
-    params.bucket = 'syncano-dashboard-production';
-    params.region = 'eu-west-1';
+    aws.params.Bucket  = 'admin-syncano-io';
+    aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
-  var publisher = awspublish.create({
-    region: params.region,
-    params: {
-      Bucket: params.bucket
-    }
-  });
+  var publisher = awspublish.create(aws);
 
-  return gulp.src(['./dist/**/*', '!./dist/rev-manifest.json'])
+  return gulp.src([
+      './dist/**/*',
+      '!./dist/rev-manifest.json'
+    ])
+    .pipe(awspublish.gzip())
     .pipe(publisher.publish())
-    .pipe(publisher.sync())
-    .pipe(awspublish.reporter());
+    .pipe(awspublish.reporter())
+    .pipe(cloudfront(aws));
 });
 
 gulp.task('copy', ['copy-index', 'copy-images', 'copy-fonts']);
 gulp.task('serve', ['webpack-dev-server']);
-gulp.task('build', ['webpack:build', 'revreplace']);
+gulp.task('build', ['webpack:build', 'iconfont', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);

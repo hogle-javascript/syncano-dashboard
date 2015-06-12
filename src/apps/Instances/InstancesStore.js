@@ -14,6 +14,7 @@ var InstancesStore = Reflux.createStore({
         myInstances: [],
         otherInstances: [],
       },
+      checkedInstances: 0,
     }
   },
 
@@ -23,7 +24,7 @@ var InstancesStore = Reflux.createStore({
         myInstances: [],
         otherInstances: [],
       },
-      checkedItemNumber: 0,
+      checkedInstances: 0,
       canSubmit: true,
       errors: {},
     };
@@ -43,7 +44,6 @@ var InstancesStore = Reflux.createStore({
 
     Object.keys(instances).map(function(item) {
       if (instances[item].owner.email === SessionStore.user.email) {
-
         data.instances.myInstances.push(instances[item]);
       } else {
         data.instances.otherInstances.push(instances[item]);
@@ -55,6 +55,49 @@ var InstancesStore = Reflux.createStore({
   onCreateInstanceCompleted: function(payload) {
     console.debug('InstancesStore::onCreateInstanceCompleted');
     this.refreshData();
+  },
+
+  onUpdateInstanceCompleted: function(paylod) {
+    console.debug('InstancesStore::onUpdateInstanceCompleted');
+    this.refreshData();
+  },
+
+  onCheckItem: function(checkId, state) {
+    console.debug('InstancesStore::onCheckItem');
+    this.data.checkedInstances = 0;
+    this.data.instances.myInstances.forEach(function(item) {
+      if (checkId == item.name) {
+        item.checked = state;
+      }
+      // Counting 'checked' items in meantime
+      if (item.checked) {
+        this.data.checkedInstances += 1;
+      }
+    }.bind(this));
+    this.trigger(this.data);
+  },
+
+  onUncheckAll: function() {
+    console.debug('InstancesStore::onCheckItem');
+    this.data.checkedInstances = 0;
+    this.data.instances.myInstances.forEach(function(item) {
+        item.checked = false;
+    });
+    this.trigger(this.data);
+  },
+
+  getCheckedItem: function() {
+    console.debug('InstancesStore::getCheckedItem');
+
+    // Looking for the first 'checked' item
+    var checkedItem;
+    this.data.instances.myInstances.some(function (item) {
+      if (item.checked) {
+        checkedItem = item;
+        return true;
+      }
+    });
+    return checkedItem;
   }
 
 });

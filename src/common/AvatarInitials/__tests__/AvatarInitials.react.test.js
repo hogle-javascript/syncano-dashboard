@@ -1,5 +1,5 @@
 jest.dontMock("../AvatarInitials.react");
-jest.dontMock("../../Color/store");
+jest.dontMock("../../Color/ColorStore");
 
 describe("AvatarInitials.react", function() {
 
