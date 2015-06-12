@@ -13,10 +13,24 @@ for (i = 0; i < pluginVars.length; i++) {
     plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || '');
 }
 
+var plugins = [
+  new webpack.DefinePlugin(plugin),
+  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+];
+
+var appEntry = [
+  path.join(__dirname, 'src', 'app.jsx')
+];
+
+if (ENV === 'development') {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+  appEntry.push('webpack/hot/dev-server')
+}
+
 module.exports = {
   // cache: true,
   entry: {
-      app: ['webpack/hot/dev-server', path.join(__dirname, 'src', 'app.jsx')],
+      app: appEntry,
       vendor: ['brace', 'react', 'moment']
   },
   output: {
@@ -25,11 +39,7 @@ module.exports = {
     chunkFilename: '[name].[chunkhash].js',
     publicPath: 'js/',
   },
-  plugins: [
-    new webpack.DefinePlugin(plugin),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
-    new webpack.HotModuleReplacementPlugin()
-  ],
+  plugins: plugins,
   module: {
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
