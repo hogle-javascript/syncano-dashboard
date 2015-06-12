@@ -1,17 +1,15 @@
 .list--flex
-  padding: 0
-  margin: 0
   +display-flex
   +justify-content(space-between)
+  +flex-direction(column)
+  padding: 0
+  margin: 0
 
   > li
     display: inline-block
-    +display-flex
 
-    > span,
-    > a
-      +display-flex
-
+.list--horizontal
+  +flex-direction(row)
 
 .list--bordered
   border: 1px solid #1e88e5
@@ -28,3 +26,4 @@
 
     > a
       text-decoration: none
+

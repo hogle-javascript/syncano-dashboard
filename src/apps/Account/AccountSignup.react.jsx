@@ -1,24 +1,26 @@
-var React           = require('react'),
-    Reflux          = require('reflux'),
-    Router          = require('react-router'),
-    Link            = Router.Link,
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
+    Link                  = Router.Link,
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
+    ValidationMixin       = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
-    SessionStore    = require('../Session/SessionStore'),
-    AuthStore       = require('./AuthStore'),
-    AuthActions     = require('./AuthActions'),
-    AuthConstants   = require('./AuthConstants'),
+    SessionStore          = require('../Session/SessionStore'),
+    AuthStore             = require('./AuthStore'),
+    AuthActions           = require('./AuthActions'),
+    AuthConstants         = require('./AuthConstants'),
 
     // Components
-    mui             = require('material-ui'),
-    TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
+    mui                   = require('material-ui'),
+    TextField             = mui.TextField,
+    RaisedButton          = mui.RaisedButton,
+    Paper                 = mui.Paper,
 
-    Notification    = require('../../common/Notification/Notification.react');
+    SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
+    Notification          = require('../../common/Notification/Notification.react');
 
 
 require('./Account.sass');
@@ -91,14 +93,11 @@ module.exports = React.createClass({
 
   renderSocialButton: function (network) {
     return (
-      <RaisedButton
-        onClick={this.handleSocialSignup(network)}
-        label={network}
-        style={{
-          width: '100%',
-          height: '48px'
-        }}
-        className="raised-button" />
+      <SocialAuthButton
+          icon={"synicon-" + network}
+          label={"Sign up with " + network}
+          handleClick={this.handleSocialSignup(network)}
+        />
     )
   },
 
@@ -111,7 +110,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="list--flex">{buttons}</ul>
+    return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
   renderError: function () {
@@ -131,7 +130,7 @@ module.exports = React.createClass({
           <img src="/img/syncano-logo.svg" />
         </div>
         <Paper className="account-container__content">
-          <div className="account-container__content__header vm-5-b">
+          <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Try it now and start creating your apps</p>
             <small>
               Your 30 day trial includes unlimited use of the Syncano platform without
@@ -173,7 +172,7 @@ module.exports = React.createClass({
           </form>
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">
-            <ul className="list--flex">
+            <ul className="list--flex list--horizontal">
               <li>
                 <p>Already have an account? <Link to="login"> Login</Link></p>
               </li>

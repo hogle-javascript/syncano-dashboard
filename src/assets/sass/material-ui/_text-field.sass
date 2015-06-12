@@ -1,7 +1,6 @@
 .text-field
   width: 100% !important
-  font-size: rhythm($base-font-size/$base-line-height) !important
-  +margin-trailer(3)
+  +margin-trailer(2)
 
-  //> hr
-  //  bottom: -1px   !important
+  & + .text-field
+    +margin-trailer(4)
