@@ -305,7 +305,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>CheckIcon</h4>
-          <CheckIcon icon="notifications" background="blue" width='40px' />
+          <CheckIcon icon="beta" background="blue" />
         </div>
 
         <div className="exampleBox">
