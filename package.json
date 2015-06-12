@@ -96,6 +96,6 @@
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
-    "nightwatch": "nightwatch -e chrome --test tests/*"
+    "nightwatch": "cd tests && nightwatch"
   }
 }
