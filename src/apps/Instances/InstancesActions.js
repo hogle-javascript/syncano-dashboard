@@ -38,6 +38,18 @@ InstancesActions.updateInstance.listen( function(name, payload) {
     .catch(this.failure);
 });
 
+InstancesActions.removeInstances = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+InstancesActions.removeInstances.listen( function(names) {
+  names.map(function(name) {
+    console.info('InstancesActions::removeInstances');
+    Connection
+      .Instances
+      .remove(name)
+      .then(this.completed)
+      .catch(this.failure);
+  }.bind(this));
+});
+
 InstancesActions.checkItem = Reflux.createAction();
 InstancesActions.uncheckAll = Reflux.createAction();
 
