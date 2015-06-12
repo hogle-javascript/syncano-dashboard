@@ -14,7 +14,6 @@ module.exports = function (client) {
             return client
                 .url(LOCATORS['staging_url'])
                 .waitForElementVisible("body", 1000)
-                .assert.title("Syncano GUI");
         },
         typeEmail: function () {
             return client
