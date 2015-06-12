@@ -36,6 +36,7 @@
     "file-loader": "^0.8.1",
     "gulp": "^3.9.0",
     "gulp-awspublish": "^2.0.2",
+    "gulp-cloudfront": "0.0.14",
     "gulp-iconfont": "~2.0.0",
     "gulp-iconfont-css": "0.0.9",
     "gulp-rev": "^4.0.0",
@@ -90,6 +91,8 @@
   "scripts": {
     "test": "jest -w 3",
     "start": "gulp webpack-dev-server",
-    "build": "gulp build"
+    "build": "gulp build",
+    "publish": "gulp publish",
+    "clean": "gulp clean"
   }
 }
