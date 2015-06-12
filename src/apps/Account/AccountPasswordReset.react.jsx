@@ -105,13 +105,9 @@ module.exports = React.createClass({
               primary={true} />
           </form>
           <div className="account-container__content__footer">
-            <ul className="list--flex">
-              <li>
-                <p><Link to="signup">Create your account</Link></p>
-              </li>
-              <li>
-                <p>Already have an account? <Link to="login">Login</Link>.</p>
-              </li>
+            <ul className="list--flex list--horizontal">
+              <li><p><Link to="signup">Create your account</Link></p></li>
+              <li><p>Already have an account? <Link to="login">Login</Link>.</p></li>
             </ul>
           </div>
         </Paper>

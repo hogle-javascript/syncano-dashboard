@@ -164,12 +164,8 @@ module.exports = React.createClass({
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">
-              <li>
-                <p><Link to="password-reset">Forgot password?</Link></p>
-              </li>
-              <li>
-                <p>Don't have an account?<Link to="signup"> Sign up here</Link>.</p>
-              </li>
+              <li><p><Link to="password-reset">Forgot password?</Link></p></li>
+              <li><p>Don't have an account?<Link to="signup"> Sign up here</Link>.</p></li>
             </ul>
           </div>
         </Paper>
