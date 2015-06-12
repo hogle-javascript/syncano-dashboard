@@ -1,6 +1,8 @@
 var React = require('react'),
 
-    MaterialIcon = require('../Icon/MaterialIcon.react');
+    mui        = require('material-ui'),
+    FontIcon   = mui.FontIcon,
+    Paper      = mui.Paper;
 
 
 module.exports = React.createClass({
@@ -48,44 +50,64 @@ module.exports = React.createClass({
 
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
-      return {icon: 'check', color: GREY};
+      return {icon: 'checkbox-marked-outline', color: GREY};
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
     if (this.state.hovered ) {
-      return {icon: 'check_box_outline_blank', color: GREY};
+      return {icon: 'checkbox-blank-outline', color: GREY};
     }
 
     // Otherwise we have original colorful icon
     return {icon: this.props.icon, color: this.props.background};
   },
 
+  getStyles: function() {
+    return {
+      icon: {
+        color: 'white',
+        display: 'flex',
+        fontSize: '18px',
+        lineHeight: '1',
+        padding: '14px 16px'
+      },
+      background: {
+        margin: 12,
+        height: 50,
+        width: 50,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
+    }
+  },
+
   render: function () {
 
-    var style = {
-      'width': '50px',
-      'height': '50px',
-    };
+    // Styles for icon and it's background
+    var styles = this.getStyles(),
+        backgroundStyle = this.getStyles().background,
+        iconStyle       = this.getStyles().icon;
 
+    // State
     var iconState = this.getIconState();
 
-    var iconStyle = {
-      backgroundColor: iconState.color,
-      color: 'white',
-      margin: '0 auto',
-      borderRadius: '100%',
-      padding: '12px',
-    };
+    // Background color based on current state
+    backgroundStyle.backgroundColor = iconState.color;
+
+    // Which icon to show?
+    var iconClass = iconState.icon;
 
     return (
-      <div
-        style={style}
-        onMouseOver={this.handleMouseOver}
-        onMouseLeave={this.handleMouseLeave}
-        onClick={this.handleClick}>
-        <MaterialIcon name={iconState.icon} style={iconStyle}/>
-      </div>
+      <Paper
+        zDepth       = {0}
+        circle       = {true}
+        style        = {backgroundStyle}
+        onMouseOver  = {this.handleMouseOver}
+        onMouseLeave = {this.handleMouseLeave}
+        onClick      = {this.handleClick}>
+          <FontIcon className={"synicon-" + iconClass} style={iconStyle} />
+      </Paper>
     )
-
   }
 });
