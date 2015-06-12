@@ -7,7 +7,7 @@ var SyncanoTheme = {
   contentFontFamily: 'Roboto, sans-serif',
   getPalette: function() {
     return {
-      primary1Color: Colors.cyan500,
+      primary1Color: Colors.blue600,
       primary2Color: Colors.cyan700,
       primary3Color: Colors.cyan100,
       accent1Color: Colors.pinkA200,
