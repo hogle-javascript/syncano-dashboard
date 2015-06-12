@@ -1,24 +1,26 @@
-var React           = require('react'),
-    Reflux          = require('reflux'),
-    Router          = require('react-router'),
-    Link            = Router.Link,
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
+    Link                  = Router.Link,
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
+    ValidationMixin       = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
-    SessionStore    = require('../Session/SessionStore'),
-    AuthStore       = require('./AuthStore'),
-    AuthActions     = require('./AuthActions'),
-    AuthConstants   = require('./AuthConstants'),
+    SessionStore          = require('../Session/SessionStore'),
+    AuthStore             = require('./AuthStore'),
+    AuthActions           = require('./AuthActions'),
+    AuthConstants         = require('./AuthConstants'),
 
     // Components
-    mui             = require('material-ui'),
-    TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
+    mui                   = require('material-ui'),
+    TextField             = mui.TextField,
+    RaisedButton          = mui.RaisedButton,
+    Paper                 = mui.Paper,
 
-    Notification    = require('../../common/Notification/Notification.react');
+    SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
+    Notification          = require('../../common/Notification/Notification.react');
 
 require('./Account.sass');
 
@@ -72,14 +74,11 @@ module.exports = React.createClass({
 
   renderSocialButton: function (network) {
     return (
-      <RaisedButton
-        onClick={this.handleSocialSignup(network)}
-        label={network}
-        style={{
-          width: '100%',
-          height: '48px'
-        }}
-        className="raised-button" />
+      <SocialAuthButton
+        icon={"synicon-" + network}
+        label={"Log in with " + network}
+        handleClick={this.handleSocialSignup(network)}
+        />
     )
   },
 
@@ -92,7 +91,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <ul className="list--flex">{buttons}</ul>
+    return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
   handleSubmit: function (event) {
@@ -106,7 +105,7 @@ module.exports = React.createClass({
       if (isValid === true) {
         AuthActions.passwordSignIn({
           email: this.state.email,
-          password: this.state.password,
+          password: this.state.password
         });
       }
     }.bind(this));
@@ -157,14 +156,14 @@ module.exports = React.createClass({
               hintText="Password" />
             <RaisedButton
               type="submit"
-              label="Sign in"
+              label="Log in"
               labelStyle={{fontSize: '16px'}}
               style={{width: '100%'}}
               primary={true} />
           </form>
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">
-            <ul className="list--flex">
+            <ul className="list--flex list--horizontal">
               <li>
                 <p><Link to="password-reset">Forgot password?</Link></p>
               </li>
