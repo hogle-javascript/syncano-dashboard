@@ -80,7 +80,7 @@ module.exports = React.createClass({
     }
     return (
       <Paper zDepth={zDepth} key={icon} circle={true} style={style} >
-          <FontIcon id={icon} className={"md md-" + icon} style={{color: iconColor}} onClick={this.handleSetIcon} />
+          <FontIcon id={icon} className={"synicon-" + icon} style={{color: iconColor}} onClick={this.handleSetIcon} />
       </Paper>
     )
   },
@@ -93,7 +93,7 @@ module.exports = React.createClass({
     var zDepth = 0;
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon = <FontIcon className={"md md-"+this.state.selectedIcon} style={{color: 'white'}} />;
+      icon = <FontIcon className={"synicon-"+this.state.selectedIcon} style={{color: 'white'}} />;
     }
     return (
       <Paper id={color} zDepth={zDepth} key={color} circle={true} style={style} onClick={this.handleSetColor}>
