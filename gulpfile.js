@@ -121,7 +121,7 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'build'], function() {
+gulp.task('publish', ['clean', 'iconfont', 'build'], function() {
 
   var params = {
     bucket: 'new-dashboard.syncano.rocks',
@@ -148,5 +148,5 @@ gulp.task('publish', ['clean', 'build'], function() {
 
 gulp.task('copy', ['copy-index', 'copy-images', 'copy-fonts']);
 gulp.task('serve', ['webpack-dev-server']);
-gulp.task('build', ['webpack:build', 'revreplace']);
+gulp.task('build', ['webpack:build', 'iconfont', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
