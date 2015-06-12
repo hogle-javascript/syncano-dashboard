@@ -70,18 +70,19 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       icon: {
-        color: 'white',
-        display: 'flex',
-        fontSize: '18px',
-        lineHeight: '1'
+        color       : '#fff',
+        display     : 'flex',
+        fontSize    : 18,
+        lineHeight  : 1
       },
       background: {
-        margin: '0 0 0 8px',
-        height: 40,
-        minWidth: 40,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin          : '0 16px 0 8px',
+        height          : 40,
+        minWidth        : 40,
+        display         : 'flex',
+        justifyContent  : 'center',
+        alignItems      : 'center',
+        cursor          : 'pointer'
       }
     }
   },

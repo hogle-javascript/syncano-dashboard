@@ -64,8 +64,7 @@ module.exports = React.createClass({
     return (
       <div
         className={cssClasses}
-        style={style}
-        onClick={this.handleClick}>
+        style={style}>
         {this.props.children}
       </div>
 

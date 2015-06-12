@@ -70,6 +70,7 @@ module.exports = React.createClass({
       paddingTop      : 16,
       paddingBottom   : 16,
       alignSelf       : 'center',
+      cursor          : 'pointer',
       color           : this.state.color
     };
 

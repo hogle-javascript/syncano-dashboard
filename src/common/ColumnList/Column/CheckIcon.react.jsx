@@ -18,6 +18,7 @@ var Header = React.createClass({
     var styles = {
       fontSize    : 20,
       fontWeight  : 500,
+      paddingLeft : 16
     };
 
     return (
@@ -47,7 +48,7 @@ module.exports = React.createClass({
   getDefaultProps: function () {
     return {
       color      : 'black',
-      hoverColor : '#0091EA',
+      hoverColor : '#0091EA'
     }
   },
 
@@ -62,15 +63,17 @@ module.exports = React.createClass({
       container: {
         display         : 'flex',
         flexDirection   : 'row',
+        alignItems      : 'center',
         fontSize        : 12,
-        padding         : '16px 8px',
+        padding         : '16px 8px'
       },
       name: {
-        marginLeft     : 16,
         fontSize       : 16,
+        lineHeight     : '20px',
         display        : 'flex',
         flexDirection  : 'column',
         justifyContent : 'center',
+        cursor         : 'pointer',
         color          : this.state.color
       }
     };
