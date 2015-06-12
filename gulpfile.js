@@ -19,18 +19,13 @@ var paths = {
     dist: './dist',
     assets: './src/assets',
     index: './src/assets/index.html',
-    images: './src/assets/img/**/*',
-    fonts: './src/assets/fonts/**/*'
+    images: './src/assets/img/**/*'
 };
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*', paths.dist], cb);
 });
 
-gulp.task('copy-fonts', ['clean'], function() {
-    return gulp.src(paths.fonts)
-    .pipe(gulp.dest('dist/fonts'))
-});
 
 gulp.task('copy-index', ['clean'], function() {
     return gulp.src(paths.index)
@@ -125,29 +120,35 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function(){
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'iconfont', 'build'], function() {
+gulp.task('publish', ['clean', 'iconfont', 'copy', 'build'], function() {
 
   var aws = {
-    'bucket'         : 'syncano-gui-staging',
-    'region'         : 'eu-west-1',
-    'distributionId' : 'E10VUXJJFKD7D3'
+    region: 'eu-west-1',
+    distributionId: 'E10VUXJJFKD7D3',
+    patternIndex: /^\/index\.html(\.gz)*$/gi,
+    params: {Bucket: 'syncano-gui-staging'}
   };
 
   if (ENV === 'production') {
-    aws.bucket         = 'admin-syncano-io';
+    aws.params.Bucket  = 'admin-syncano-io';
     aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
   var publisher = awspublish.create(aws);
 
-  return gulp.src(['./dist/**/*', '!./dist/rev-manifest.json'])
+  return gulp.src([
+      './dist/**/*',
+      '!./dist/rev-manifest.json',
+      '!./dist/js/app.*',
+      '!./dist/js/vendor.*',
+    ])
     .pipe(publisher.publish())
     .pipe(publisher.sync())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
 });
 
-gulp.task('copy', ['copy-index', 'copy-images', 'copy-fonts']);
+gulp.task('copy', ['copy-index', 'copy-images']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'iconfont', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
