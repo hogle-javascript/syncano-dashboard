@@ -59,12 +59,53 @@ var InstancesStore = Reflux.createStore({
 
   onCreateInstanceCompleted: function(payload) {
     console.debug('InstancesStore::onCreateInstanceCompleted');
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
     this.refreshData();
   },
 
+  onCreateInstanceFailure: function(payload) {
+    console.debug('InstancesStore::onCreateInstanceCompleted');
+
+    // TODO: create a mixin for that
+    if (typeof payload === 'string') {
+      this.data.errors.feedback = payload;
+    } else {
+      if (payload.non_field_errors !== undefined) {
+        this.data.errors.feedback = payload.non_field_errors.join();
+      }
+
+      for (var field in payload) {
+        this.data.errors[field] = payload[field];
+      }
+    }
+    this.trigger(this.data);
+  },
+
+
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
     this.refreshData();
+  },
+
+  onUpdateInstanceFailure: function(payload) {
+    console.debug('InstancesStore::onUpdateInstanceFailure');
+
+    // TODO: create a mixin for that
+    if (typeof payload === 'string') {
+      this.data.errors.feedback = payload;
+    } else {
+      if (payload.non_field_errors !== undefined) {
+        this.data.errors.feedback = payload.non_field_errors.join();
+      }
+
+      for (var field in payload) {
+        this.data.errors[field] = payload[field];
+      }
+    }
+    this.trigger(this.data);
   },
 
   onCheckItem: function(checkId, state) {

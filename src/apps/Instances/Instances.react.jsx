@@ -50,6 +50,13 @@ module.exports = React.createClass({
     }
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.hideDialogs) {
+      this.refs.addInstanceDialog.dismiss();
+      this.refs.editInstanceDialog.dismiss();
+    }
+  },
+
   // Breadcrumbs and tabs (HeaderMixin)
   headerBreadcrumbs: function () {
     return [{
@@ -61,6 +68,7 @@ module.exports = React.createClass({
   // Buttons
   handlePlusButton: function() {
     this.refs.addInstanceDialog.show();
+    //this.setState({addDialog: true});
   },
 
   handleDeleteButton: function() {
@@ -69,6 +77,16 @@ module.exports = React.createClass({
 
   handleChangePaletteButton: function() {
     this.refs.pickColorIconDialog.show();
+  },
+
+  handleEditButton: function() {
+    var checkedItem = InstancesStore.getCheckedItem();
+    this.setState({
+      initialEditValues: {
+        name: checkedItem.name,
+        description: checkedItem.description}
+    })
+    this.refs.editInstanceDialog.show();
   },
 
   handleChangePalette: function (color, icon) {
@@ -103,21 +121,37 @@ module.exports = React.createClass({
 
     return (
       <Container>
+        <AddDialog mode="add" ref="addInstanceDialog"/>
+        <AddDialog mode="edit" initialValues={this.state.initialEditValues} ref="editInstanceDialog"/>
+        <ColorIconPickerDialog
+          ref="pickColorIconDialog"
+          initialColor={singleItemColor}
+          initialIcon={singleItemIcon}
+          handleClick={this.handleChangePalette}/>
 
         <FabList
           style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
+
           <FloatingActionButton
             label         = "Click here to unselect Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {InstancesActions.uncheckAll}
             iconClassName = "synicon-checkbox-multiple-marked-outline" />
+
           <FloatingActionButton
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.handleDeleteButton}
             iconClassName = "synicon-delete" />
+          <FloatingActionButton
+            label         = "Click here to edit Instance" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.handleEditButton}
+            iconClassName = "synicon-pencil" />
+
           <FloatingActionButton
             label         = "Click here to customize Instances" // TODO: extend component
             color         = "" // TODO: extend component
@@ -126,6 +160,7 @@ module.exports = React.createClass({
             disabled      = {this.state.checkedInstances > 1}
             onClick       = {this.handleChangePaletteButton}
             iconClassName = "synicon-palette" />
+
         </FabList>
 
         <FabList
@@ -137,22 +172,16 @@ module.exports = React.createClass({
             iconClassName = "synicon-plus" />
         </FabList>
 
-        <AddDialog ref="addInstanceDialog"/>
-
-        <ColorIconPickerDialog
-          ref="pickColorIconDialog"
-          initialColor={singleItemColor}
-          initialIcon={singleItemIcon}
-          handleClick={this.handleChangePalette}/>
-
         <InstancesList
           name                = "My instances"
           listType            = "myInstances"
           viewMode            = "stream" />
+
         <InstancesList
           name                = "Other instances"
           listType            = "otherInstances"
           viewMode            = "stream" />
+
       </Container>
     );
   }
