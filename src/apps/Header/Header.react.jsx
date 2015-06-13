@@ -172,8 +172,7 @@ module.exports = React.createClass({
         width           : 26,
         display         : 'flex',
         justifyContent  : 'center',
-        alignItems      : 'center',
-        cursor          : 'pointer'
+        alignItems      : 'center'
       }
     }
   },
