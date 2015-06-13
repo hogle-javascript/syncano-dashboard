@@ -127,7 +127,7 @@ module.exports = React.createClass({
 
     var deleteActions = [
       { text: 'Cancel', onClick: this.handleCancel },
-      { text: "Yes I'm sure, please delete my instances ", onClick: this.handleDelete }
+      { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
     ];
 
     return (
