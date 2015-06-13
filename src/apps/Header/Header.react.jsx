@@ -206,14 +206,14 @@ module.exports = React.createClass({
               {this.renderMenu()}
             </ToolbarGroup>
             <ToolbarGroup key={2} style={styles.bottomToolbarGroup}>
+              <MaterialIcon name="search" style={styles.bottomToolbarGroupIcon} />
+              <MaterialIcon name="notifications_none" style={styles.bottomToolbarGroupIcon} />
+              <MaterialIcon name="more_vert" style={styles.bottomToolbarGroupIcon} />
               <MaterialIcon
                 name="power"
                 handleClick={this.handleLogout}
                 style={styles.bottomToolbarGroupIcon}
                 />
-              <MaterialIcon name="more_vert" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon name="notifications_none" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon name="search" style={styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>
