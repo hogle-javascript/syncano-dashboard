@@ -27,14 +27,14 @@ module.exports = React.createClass({
 
   getStyles: function() {
     var style = {
-        width: '50px',
-        height: '50px',
-        borderRadius: '100%',
+        width: 40,
+        height: 40,
+        borderRadius: '50%',
         backgroundColor: this.props.background,
         margin: '12px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     };
 
     return this.mergeStyles(style, this.props.style);

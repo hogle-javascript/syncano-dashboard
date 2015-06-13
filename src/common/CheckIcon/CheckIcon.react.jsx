@@ -90,7 +90,7 @@ module.exports = React.createClass({
   render: function () {
 
     // Styles for icon and it's background
-    var styles = this.getStyles(),
+    var styles          = this.getStyles(),
         backgroundStyle = this.getStyles().background,
         iconStyle       = this.getStyles().icon;
 
