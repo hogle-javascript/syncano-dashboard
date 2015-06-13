@@ -4,8 +4,11 @@ var React          = require('react'),
     Router         = require('react-router'),
     Link           = Router.Link,
 
+    // Stores and Actions
+    SessionStore   = require('../Session/SessionStore'),
+
     mui            = require('material-ui'),
-    Colors          = require('material-ui/lib/styles/colors'),
+    Colors         = require('material-ui/lib/styles/colors'),
     Tabs           = mui.Tabs,
     Tab            = mui.Tab,
     Toolbar        = mui.Toolbar,
@@ -28,6 +31,7 @@ module.exports = React.createClass({
   displayName: 'Header',
   mixins: [
     Reflux.connect(HeaderStore),
+    Router.Navigation,
     Router.State
   ],
 
@@ -172,9 +176,31 @@ module.exports = React.createClass({
         width           : 26,
         display         : 'flex',
         justifyContent  : 'center',
-        alignItems      : 'center'
+        alignItems      : 'center',
       }
     }
+  },
+
+  getInstanceComponent: function() {
+    var styles = this.getStyles();
+    var instance = SessionStore.instance;
+
+    if (instance) {
+      // Setting background instance icon background
+      styles.instanceIconBackground.background = instance.metadata.color;
+      return (
+        <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
+          <Paper circle={true} background={instance.metadata.color} style={styles.instanceIconBackground}>
+            <FontIcon className={"synicon-" + instance.metadata.icon} style={styles.instanceIcon}/>
+          </Paper>
+          <div>{SessionStore.instance.name}</div>
+        </ToolbarGroup>)
+    }
+    return null;
+  },
+
+  handleLogoClick: function (){
+    this.transitionTo('app');
   },
 
   render: function () {
@@ -184,24 +210,20 @@ module.exports = React.createClass({
       <div>
         <Toolbar style={styles.topToolbar}>
           <ToolbarGroup key={0} style={styles.logotypeContainer}>
-            <div style={styles.logotype}>Syncano</div>
+            <div style={styles.logotype} onClick={this.handleLogoClick}>Syncano</div>
           </ToolbarGroup>
           <ToolbarGroup key={1} float="right" style={{height: '100%'}}>
             <ul className="toolbar-list">
-              <li><a href="#">Docs</a></li>
-              <li><a href="#">API Keys</a></li>
-              <li><a href="#">Support</a></li>
+              <li><a href="http://docs.syncano.com/v4.0" target="_blank">Docs</a></li>
+              <li><a href="mailto:support@syncano.com">Support</a></li>
             </ul>
           </ToolbarGroup>
         </Toolbar>
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
-            <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
-              <RoundIcon background="green" style={styles.instanceIconBackground}>
-                <FontIcon className={"synicon-folder"} style={styles.instanceIcon} />
-              </RoundIcon>
-              <div>Dreamer</div>
-            </ToolbarGroup>
+
+            {this.getInstanceComponent()}
+
             <ToolbarGroup key={1} className="col-flex-1" style={styles.bottomToolbarGroup}>
               {this.renderMenu()}
             </ToolbarGroup>

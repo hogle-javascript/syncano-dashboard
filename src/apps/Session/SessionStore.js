@@ -24,6 +24,10 @@ var SessionStore = Reflux.createStore({
     return sessionStorage.getItem('token');
   },
 
+  clearInstance: function() {
+    this.instance = null;
+  },
+
   onTokenLoginCompleted: function(payload) {
     console.info('SessionStore::onTokenLoginComplete');
   },
