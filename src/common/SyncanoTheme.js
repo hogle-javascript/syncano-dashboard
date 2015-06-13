@@ -26,6 +26,9 @@ var SyncanoTheme = {
       },
       raisedButton: {
         primaryColor: Colors.pinkA200
+      },
+      floatingActionButton: {
+        color: Colors.pinkA200
       }
     };
   }
