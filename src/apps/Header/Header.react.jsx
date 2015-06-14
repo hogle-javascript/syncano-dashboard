@@ -165,13 +165,13 @@ module.exports = React.createClass({
         lineHeight  : 1
       },
       instanceIconBackground: {
-        margin          : '0 16px 0 0',
-        height          : 26,
-        minWidth        : 26,
-        width           : 26,
-        display         : 'flex',
-        justifyContent  : 'center',
-        alignItems      : 'center'
+        margin         : '0 16px 0 0',
+        height         : 26,
+        minWidth       : 26,
+        width          : 26,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
@@ -180,30 +180,6 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     return (
-<<<<<<< HEAD
-      <div className="row header">
-        <div className="row header-top">
-          <div className="col header-breadcrumbs">
-            {this.renderBreadcrumbs()}
-          </div>
-          <div className="col header-links right-align">
-            <a herf="#">Docs</a>
-            <a herf="#">API Keys</a>
-            <a herf="#">Support</a>
-          </div>
-        </div>
-        <div className="row header-bottom">
-          {this.renderMenu(menuClass)}
-          <div className={iconsClass}>
-            <MaterialIcon
-              name="power"
-              handleClick={this.handleLogout}/>
-            <MaterialIcon name="more_vert" />
-            <MaterialIcon name="notifications_none" />
-            <MaterialIcon name="search" />
-          </div>
-        </div>
-=======
       <div>
         <Toolbar style={styles.topToolbar}>
           <ToolbarGroup key={0} style={styles.logotypeContainer}>
@@ -240,7 +216,6 @@ module.exports = React.createClass({
             </ToolbarGroup>
           </Toolbar>
         </Paper>
->>>>>>> 2094351bdb5f1485bff949932d15ab554aa9786a
       </div>
     )
   }

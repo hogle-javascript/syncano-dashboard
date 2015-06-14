@@ -7,7 +7,6 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionMixin     = require('../Session/SessionMixin'),
     SessionActions   = require('../Session/SessionActions'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
@@ -33,19 +32,12 @@ module.exports = React.createClass({
     Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
-    SessionMixin
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
+    Router.Navigation
   ],
-
-  onSessionIsReady: function () {
-    console.info('Instances::onSessionIsReady');
-    InstancesStore.refreshData();
-  },
 
   componentDidMount: function() {
     console.info('Instances::componentDidMount');
+    InstancesStore.refreshData();
 
     if (this.getParams().action == 'add'){
       // Show Add modal

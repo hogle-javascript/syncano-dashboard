@@ -37,12 +37,10 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
     SessionMixin
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
   ],
 
-  sessionIsReady: function () {
-    console.info('CodeBoxes::sessionIsReady');
+  onSessionIsReady: function () {
+    console.info('CodeBoxes::onSessionIsReady');
     CodeBoxesStore.refreshData();
   },
 
