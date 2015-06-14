@@ -5,6 +5,7 @@ var React  = require('react'),
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin      = require('../../mixins/DialogsMixin'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
@@ -34,9 +35,46 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
+    DialogsMixin,
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
+
+
+  // Dialogs config
+  initDialogs: function () {
+    var singleItem = InstancesStore.getCheckedItem(),
+        singleItemColor = null,
+        singleItemIcon = null;
+
+    if (singleItem) {
+      singleItemColor = singleItem.metadata.color;
+      singleItemIcon = singleItem.metadata.icon;
+    }
+    return [{
+      dialog: AddDialog,
+      params: {
+        ref  : "addInstanceDialog",
+        mode : "add",
+      },
+    }, {
+      dialog: AddDialog,
+      params: {
+        ref           : "editInstanceDialog",
+        mode          : "edit",
+        initialValues : this.state.initialEditValues
+      },
+    },{
+      dialog: ColorIconPickerDialog,
+      params: {
+        ref          : "pickColorIconDialog",
+        mode         : "add",
+        initialColor : singleItemColor,
+        initialIcon  : singleItemIcon,
+        handleClick  : this.handleChangePalette
+      }
+    }]
+  },
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
@@ -54,18 +92,7 @@ module.exports = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
-    if (nextState.hideDialogs) {
-      this.refs.addInstanceDialog.dismiss();
-      this.refs.editInstanceDialog.dismiss();
-    }
-  },
-
-  // Breadcrumbs and tabs (HeaderMixin)
-  headerBreadcrumbs: function () {
-    return [{
-      route: 'instances',
-      label: 'Instances',
-    }];
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   headerMenuItems: function () {
@@ -77,30 +104,6 @@ module.exports = React.createClass({
         label: 'Solutions',
         route: 'dashboard',
       }];
-  },
-
-  // Buttons
-  handlePlusButton: function() {
-    this.refs.addInstanceDialog.show();
-    //this.setState({addDialog: true});
-  },
-
-  handleDeleteButton: function() {
-    this.refs.addInstanceDialog.show();
-  },
-
-  handleChangePaletteButton: function() {
-    this.refs.pickColorIconDialog.show();
-  },
-
-  handleEditButton: function() {
-    var checkedItem = InstancesStore.getCheckedItem();
-    this.setState({
-      initialEditValues: {
-        name: checkedItem.name,
-        description: checkedItem.description}
-    });
-    this.refs.editInstanceDialog.show();
   },
 
   handleChangePalette: function (color, icon) {
@@ -133,26 +136,12 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var singleItem = InstancesStore.getCheckedItem(),
-        singleItemColor = null,
-        singleItemIcon = null;
-
-    if (singleItem) {
-      singleItemColor = singleItem.metadata.color;
-      singleItemIcon = singleItem.metadata.icon;
-    }
 
     var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
       <Container>
-        <AddDialog mode="add" ref="addInstanceDialog"/>
-        <AddDialog mode="edit" initialValues={this.state.initialEditValues} ref="editInstanceDialog"/>
-        <ColorIconPickerDialog
-          ref="pickColorIconDialog"
-          initialColor={singleItemColor}
-          initialIcon={singleItemIcon}
-          handleClick={this.handleChangePalette}/>
+        {this.getDialogs()}
 
         <FabList
           style={{top: 200, display: checkedInstances ? 'block': 'none'}}>
@@ -168,14 +157,15 @@ module.exports = React.createClass({
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
-            onClick       = {this.handleDeleteButton}
+            onClick       = {this.showDialog('deleteInstanceDialog')}
             iconClassName = "synicon-delete" />
+
           <FloatingActionButton
             label         = "Click here to edit Instance" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             disabled      = {checkedInstances > 1}
-            onClick       = {this.handleEditButton}
+            onClick       = {this.showDialog('editInstanceDialog')}
             iconClassName = "synicon-pencil" />
 
           <FloatingActionButton
@@ -184,7 +174,7 @@ module.exports = React.createClass({
             secondary     = {true}
             mini          = {true}
             disabled      = {checkedInstances > 1}
-            onClick       = {this.handleChangePaletteButton}
+            onClick       = {this.showDialog('pickColorIconDialog')}
             iconClassName = "synicon-palette" />
 
         </FabList>
@@ -194,23 +184,23 @@ module.exports = React.createClass({
           <FloatingActionButton
             label         = "Click here to add Instances" // TODO: extend component
             color         = "" // TODO: extend component
-            onClick       = {this.handlePlusButton}
+            onClick       = {this.showDialog('addInstanceDialog')}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <InstancesList
-          name                = "My instances"
-          items               = {this.state.instances}
-          filter              = {this.filterMyInstances}
-          listType            = "myInstances"
-          viewMode            = "stream" />
+          name     = "My instances"
+          items    = {this.state.instances}
+          filter   = {this.filterMyInstances}
+          listType = "myInstances"
+          viewMode = "stream" />
 
         <InstancesList
-          name                = "Other instances"
-          items               = {this.state.instances}
-          filter              = {this.filterOtherInstances}
-          listType            = "otherInstances"
-          viewMode            = "stream" />
+          name     = "Other instances"
+          items    = {this.state.instances}
+          filter   = {this.filterOtherInstances}
+          listType = "otherInstances"
+          viewMode = "stream" />
 
       </Container>
     );

@@ -49,19 +49,25 @@ module.exports = React.createClass({
       errors: {},
     })
   },
-
-  componentWillReceiveProps: function(nextProps, nextState) {
-    if (nextProps.initialValues){
-      this.setState({
-          name: nextProps.initialValues.name,
-          description: nextProps.initialValues.description
-      })
-    }
+  componentWillUpdate: function() {
+    console.log('InstancesAddDialog::componentWillUpdate');
   },
 
   show: function() {
     console.log('InstancesAddDialog::show');
     this.clearData();
+
+    // When it is "edit" mode, we want to set values
+    if (this.props.mode === "edit"){
+      var checkedItem = InstancesStore.getCheckedItem();
+      if (checkedItem) {
+        this.setState({
+            name: checkedItem.name,
+            description: checkedItem.description
+        });
+      }
+    }
+
     this.refs.createInstanceDialog.show();
   },
 
