@@ -9,19 +9,23 @@ var InstancesStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      errors: {},
+      // Lists
       instances: [],
-      checkedInstances: 0,
+
+      // Dialogs
+      errors: {},
     }
   },
 
   init: function () {
 
     this.data = {
+      // List
       instances: [],
-      checkedInstances: 0,
-      canSubmit: true,
+
+      // Dialogs
       errors: {},
+      canSubmit: true,
     };
 
     // We want to know when we are ready to download data for this store,
@@ -34,15 +38,21 @@ var InstancesStore = Reflux.createStore({
     InstancesActions.getInstances();
   },
 
+  getNumberOfChecked: function() {
+    var checkedFilter = function(item) {
+      return item.checked === true;
+    };
+    return this.data.instances.filter(checkedFilter).length;
+  },
+
   onGetInstancesCompleted: function(instances) {
     console.debug('InstancesStore::onGetInstanesCompleted');
 
     var data = this.data;
+    data.instances = [];
     Object.keys(instances).map(function(item) {
         data.instances.push(instances[item]);
     });
-
-    //this.data.instances = instances;
     this.trigger(this.data);
   },
 
@@ -98,14 +108,10 @@ var InstancesStore = Reflux.createStore({
 
   onCheckItem: function(checkId, state) {
     console.debug('InstancesStore::onCheckItem');
-    this.data.checkedInstances = 0;
+
     this.data.instances.forEach(function(item) {
       if (checkId == item.name) {
         item.checked = state;
-      }
-      // Counting 'checked' items in meantime
-      if (item.checked) {
-        this.data.checkedInstances += 1;
       }
     }.bind(this));
     this.trigger(this.data);
@@ -113,7 +119,7 @@ var InstancesStore = Reflux.createStore({
 
   onUncheckAll: function() {
     console.debug('InstancesStore::onCheckItem');
-    this.data.checkedInstances = 0;
+
     this.data.instances.forEach(function(item) {
         item.checked = false;
     });
@@ -124,7 +130,7 @@ var InstancesStore = Reflux.createStore({
     console.debug('InstancesStore::getCheckedItem');
 
     // Looking for the first 'checked' item
-    var checkedItem;
+    var checkedItem = null;
     this.data.instances.some(function (item) {
       if (item.checked) {
         checkedItem = item;

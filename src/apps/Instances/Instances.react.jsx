@@ -99,7 +99,7 @@ module.exports = React.createClass({
       initialEditValues: {
         name: checkedItem.name,
         description: checkedItem.description}
-    })
+    });
     this.refs.editInstanceDialog.show();
   },
 
@@ -142,6 +142,8 @@ module.exports = React.createClass({
       singleItemIcon = singleItem.metadata.icon;
     }
 
+    var checkedInstances = InstancesStore.getNumberOfChecked();
+
     return (
       <Container>
         <AddDialog mode="add" ref="addInstanceDialog"/>
@@ -153,7 +155,7 @@ module.exports = React.createClass({
           handleClick={this.handleChangePalette}/>
 
         <FabList
-          style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
+          style={{top: 200, display: checkedInstances ? 'block': 'none'}}>
 
           <FloatingActionButton
             label         = "Click here to unselect Instances" // TODO: extend component
@@ -172,6 +174,7 @@ module.exports = React.createClass({
             label         = "Click here to edit Instance" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
+            disabled      = {checkedInstances > 1}
             onClick       = {this.handleEditButton}
             iconClassName = "synicon-pencil" />
 
@@ -180,7 +183,7 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             secondary     = {true}
             mini          = {true}
-            disabled      = {this.state.checkedInstances > 1}
+            disabled      = {checkedInstances > 1}
             onClick       = {this.handleChangePaletteButton}
             iconClassName = "synicon-palette" />
 
