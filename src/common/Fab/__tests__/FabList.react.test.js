@@ -5,6 +5,6 @@ describe("FabList.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var FabList = require('../FabList.react');
+    // var FabList = require('../FabList.react');
   });
 });

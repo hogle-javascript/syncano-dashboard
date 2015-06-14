@@ -5,20 +5,20 @@ describe("SocialAuthButtonList.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var SocialAuthButtonList = require('../SocialAuthButtonList.react');
+    // var SocialAuthButtonList = require('../SocialAuthButtonList.react');
 
-    var buttons = [{
-      icon: 'github',
-      text: 'Log in with Github'
-    }, {
-      icon: 'google',
-      text: 'Log in with Google'
-    }];
+    // var buttons = [{
+    //   icon: 'github',
+    //   text: 'Log in with Github'
+    // }, {
+    //   icon: 'google',
+    //   text: 'Log in with Google'
+    // }];
 
-    var mockFn = jest.genMockFn();
+    // var mockFn = jest.genMockFn();
 
-    var SocialAuthButtonList = TestUtils.renderIntoDocument(<SocialAuthButtonList>{buttons}</SocialAuthButtonList>);
-    var node = TestUtils.findRenderedDOMComponentWithClass(SocialAuthButtonList, "social-auth-button-list");
+    // var SocialAuthButtonList = TestUtils.renderIntoDocument(<SocialAuthButtonList>{buttons}</SocialAuthButtonList>);
+    // var node = TestUtils.findRenderedDOMComponentWithClass(SocialAuthButtonList, "social-auth-button-list");
 
     //expect(node.props.children.length).toEqual(2);
 
