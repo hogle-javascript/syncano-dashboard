@@ -32,13 +32,17 @@ module.exports = React.createClass({
     Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    //React.addons.LinkedStateMixin,
+    //ValidationMixin,
   ],
 
-  componentDidMount: function() {
-    console.info('Instances::componentDidMount');
+  componentWillMount: function() {
+    console.info('Instances::componentWillMount');
     InstancesStore.refreshData();
+  },
 
+  componentDidMount: function() {
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addInstancesDialog.show();

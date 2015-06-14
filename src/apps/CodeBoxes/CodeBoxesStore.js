@@ -35,6 +35,10 @@ var CodeBoxesStore = Reflux.createStore({
       ruby: 'ruby',
       golang: 'golang'
     };
+
+    // We want to know when we are ready to download data for this store,
+    // it depends on instance we working on
+    this.listenTo(SessionStore, this.refreshData);
   },
 
   getEditorMode: function (codeBox) {
@@ -88,10 +92,7 @@ var CodeBoxesStore = Reflux.createStore({
     console.debug('CodeBoxesStore::onGetCodeBoxTrace');
     if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      var timeout = setTimeout(function(){
-        CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)
-        clearTimeout(timeout);
-      }, 300);
+      setTimeout(function(){CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
       this.data.traceLoading = false;

@@ -19,6 +19,7 @@ var InstancesStore = Reflux.createStore({
   },
 
   init: function () {
+
     this.data = {
       instances: {
         myInstances: [],
@@ -28,6 +29,10 @@ var InstancesStore = Reflux.createStore({
       canSubmit: true,
       errors: {},
     };
+
+    // We want to know when we are ready to download data for this store,
+    // it depends on instance we working on
+    this.listenTo(SessionStore, this.refreshData);
   },
 
   refreshData: function () {

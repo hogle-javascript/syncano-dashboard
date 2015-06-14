@@ -7,7 +7,6 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
-    SessionMixin     = require('../Session/SessionMixin'),
     CodeBoxesActions = require('./CodeBoxesActions'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
@@ -36,17 +35,15 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    SessionMixin
+    //React.addons.LinkedStateMixin,
+    //ValidationMixin,
   ],
 
-  onSessionIsReady: function () {
-    console.info('CodeBoxes::onSessionIsReady');
+  componentWillMount: function() {
     CodeBoxesStore.refreshData();
   },
 
   componentDidMount: function() {
-    console.info('CodeBoxes::componentDidMount');
-
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addCodeBoxDialog.show();
