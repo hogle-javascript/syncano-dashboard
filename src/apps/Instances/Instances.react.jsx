@@ -43,14 +43,9 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function () {
-    var singleItem = InstancesStore.getCheckedItem(),
-        singleItemColor = null,
-        singleItemIcon = null;
 
-    if (singleItem) {
-      singleItemColor = singleItem.metadata.color;
-      singleItemIcon = singleItem.metadata.icon;
-    }
+    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
+
     return [{
       dialog: AddDialog,
       params: {
@@ -62,15 +57,14 @@ module.exports = React.createClass({
       params: {
         ref           : "editInstanceDialog",
         mode          : "edit",
-        initialValues : this.state.initialEditValues
       },
     },{
       dialog: ColorIconPickerDialog,
       params: {
         ref          : "pickColorIconDialog",
         mode         : "add",
-        initialColor : singleItemColor,
-        initialIcon  : singleItemIcon,
+        initialColor : checkedItemIconColor.color,
+        initialIcon  : checkedItemIconColor.icon,
         handleClick  : this.handleChangePalette
       }
     }]

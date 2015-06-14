@@ -138,7 +138,23 @@ var InstancesStore = Reflux.createStore({
       }
     });
     return checkedItem;
-  }
+  },
+
+  getCheckedItemIconColor: function() {
+    var singleItem = this.getCheckedItem();
+
+    if (!singleItem) {
+      return {
+        color : null,
+        icon  : null,
+      }
+    }
+
+    return {
+      color : singleItem.metadata.color,
+      icon  : singleItem.metadata.icon
+    };
+  },
 
 });
 
