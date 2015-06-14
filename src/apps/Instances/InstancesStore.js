@@ -10,10 +10,7 @@ var InstancesStore = Reflux.createStore({
   getInitialState: function () {
     return {
       errors: {},
-      instances: {
-        myInstances: [],
-        otherInstances: [],
-      },
+      instances: [],
       checkedInstances: 0,
     }
   },
@@ -21,10 +18,7 @@ var InstancesStore = Reflux.createStore({
   init: function () {
 
     this.data = {
-      instances: {
-        myInstances: [],
-        otherInstances: [],
-      },
+      instances: [],
       checkedInstances: 0,
       canSubmit: true,
       errors: {},
@@ -44,16 +38,11 @@ var InstancesStore = Reflux.createStore({
     console.debug('InstancesStore::onGetInstanesCompleted');
 
     var data = this.data;
-    data.instances.myInstances = [];
-    data.instances.otherInstances = [];
-
     Object.keys(instances).map(function(item) {
-      if (instances[item].owner.email === SessionStore.getMyEmail()) {
-        data.instances.myInstances.push(instances[item]);
-      } else {
-        data.instances.otherInstances.push(instances[item]);
-      }
+        data.instances.push(instances[item]);
     });
+
+    //this.data.instances = instances;
     this.trigger(this.data);
   },
 
@@ -81,7 +70,6 @@ var InstancesStore = Reflux.createStore({
     }
     this.trigger(this.data);
   },
-
 
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
@@ -111,7 +99,7 @@ var InstancesStore = Reflux.createStore({
   onCheckItem: function(checkId, state) {
     console.debug('InstancesStore::onCheckItem');
     this.data.checkedInstances = 0;
-    this.data.instances.myInstances.forEach(function(item) {
+    this.data.instances.forEach(function(item) {
       if (checkId == item.name) {
         item.checked = state;
       }
@@ -126,7 +114,7 @@ var InstancesStore = Reflux.createStore({
   onUncheckAll: function() {
     console.debug('InstancesStore::onCheckItem');
     this.data.checkedInstances = 0;
-    this.data.instances.myInstances.forEach(function(item) {
+    this.data.instances.forEach(function(item) {
         item.checked = false;
     });
     this.trigger(this.data);
@@ -137,7 +125,7 @@ var InstancesStore = Reflux.createStore({
 
     // Looking for the first 'checked' item
     var checkedItem;
-    this.data.instances.myInstances.some(function (item) {
+    this.data.instances.some(function (item) {
       if (item.checked) {
         checkedItem = item;
         return true;

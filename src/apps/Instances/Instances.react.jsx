@@ -123,6 +123,15 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
+  // List filters
+  filterMyInstances: function(item) {
+    return item.owner.email === SessionStore.getMyEmail();
+  },
+
+  filterOtherInstances: function(item) {
+    return item.owner.email !== SessionStore.getMyEmail();
+  },
+
   render: function () {
     var singleItem = InstancesStore.getCheckedItem(),
         singleItemColor = null,
@@ -188,11 +197,15 @@ module.exports = React.createClass({
 
         <InstancesList
           name                = "My instances"
+          items               = {this.state.instances}
+          filter              = {this.filterMyInstances}
           listType            = "myInstances"
           viewMode            = "stream" />
 
         <InstancesList
           name                = "Other instances"
+          items               = {this.state.instances}
+          filter              = {this.filterOtherInstances}
           listType            = "otherInstances"
           viewMode            = "stream" />
 

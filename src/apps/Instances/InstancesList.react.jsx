@@ -40,11 +40,16 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      listType: this.props.listType
+      listType: this.props.listType,
+      items: this.props.items,
     }
   },
 
   componentWillMount: function() {
+  },
+
+  componentWillReceiveProps: function(nextProps, nextState) {
+    this.setState({items : nextProps.items})
   },
 
   // List
@@ -62,10 +67,10 @@ module.exports = React.createClass({
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
-          id          = {item.name}
-          icon        = {item.metadata.icon}
-          background  = {item.metadata.color}
-          checked     = {item.checked}
+          id              = {item.name}
+          icon            = {item.metadata.icon}
+          background      = {item.metadata.color}
+          checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
           {item.name}
@@ -77,7 +82,7 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    var instances = this.state.instances[this.state.listType] || [];
+    var instances = this.state.items.filter(this.props.filter);
 
     var items = instances.map(function (item) {
       return this.generateItem(item)
@@ -105,5 +110,4 @@ module.exports = React.createClass({
       </ListContainer>
     );
   }
-
 });
