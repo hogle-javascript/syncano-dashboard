@@ -54,6 +54,7 @@ module.exports = React.createClass({
     if (nextState.hideDialogs) {
       this.refs.addInstanceDialog.dismiss();
       this.refs.editInstanceDialog.dismiss();
+      this.refs.deleteInstanceDialog.dismiss();
     }
   },
 
@@ -72,7 +73,7 @@ module.exports = React.createClass({
   },
 
   handleDeleteButton: function() {
-    this.refs.addInstanceDialog.show();
+    this.refs.deleteInstanceDialog.show();
   },
 
   handleChangePaletteButton: function() {
@@ -103,6 +104,11 @@ module.exports = React.createClass({
     InstancesActions.uncheckAll()
   },
 
+  handleDelete: function() {
+    console.info('Instances::handleDelete');
+    InstancesActions.removeInstances(InstancesStore.getCheckedItems());
+  },
+
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
     SessionActions.setInstance(instanceName);
@@ -119,15 +125,30 @@ module.exports = React.createClass({
       singleItemIcon = singleItem.metadata.icon;
     }
 
+    var deleteActions = [
+      { text: 'Cancel', onClick: this.handleCancel },
+      { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
+    ];
+
     return (
       <Container>
         <AddDialog mode="add" ref="addInstanceDialog"/>
+
         <AddDialog mode="edit" initialValues={this.state.initialEditValues} ref="editInstanceDialog"/>
+
         <ColorIconPickerDialog
           ref="pickColorIconDialog"
           initialColor={singleItemColor}
           initialIcon={singleItemIcon}
           handleClick={this.handleChangePalette}/>
+
+        <Dialog
+          ref="deleteInstanceDialog"
+          title="Delete instances"
+          actions={deleteActions}
+          modal={true}>
+          Do you realy want to delete <strong>{InstancesStore.getCheckedItems().length}</strong> instances?
+        </Dialog>
 
         <FabList
           style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
