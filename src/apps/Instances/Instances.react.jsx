@@ -39,8 +39,8 @@ module.exports = React.createClass({
     //ValidationMixin,
   ],
 
-  sessionIsReady: function () {
-    console.info('Instances::sessionIsReady');
+  onSessionIsReady: function () {
+    console.info('Instances::onSessionIsReady');
     InstancesStore.refreshData();
   },
 
@@ -50,6 +50,14 @@ module.exports = React.createClass({
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addInstancesDialog.show();
+    }
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    if (nextState.hideDialogs) {
+      this.refs.addInstanceDialog.dismiss();
+      this.refs.editInstanceDialog.dismiss();
+      this.refs.deleteInstanceDialog.dismiss();
     }
   },
 
@@ -64,14 +72,25 @@ module.exports = React.createClass({
   // Buttons
   handlePlusButton: function() {
     this.refs.addInstanceDialog.show();
+    //this.setState({addDialog: true});
   },
 
   handleDeleteButton: function() {
-    this.refs.addInstanceDialog.show();
+    this.refs.deleteInstanceDialog.show();
   },
 
   handleChangePaletteButton: function() {
     this.refs.pickColorIconDialog.show();
+  },
+
+  handleEditButton: function() {
+    var checkedItem = InstancesStore.getCheckedItem();
+    this.setState({
+      initialEditValues: {
+        name: checkedItem.name,
+        description: checkedItem.description}
+    })
+    this.refs.editInstanceDialog.show();
   },
 
   handleChangePalette: function (color, icon) {
@@ -86,6 +105,11 @@ module.exports = React.createClass({
       }
     );
     InstancesActions.uncheckAll()
+  },
+
+  handleDelete: function() {
+    console.info('Instances::handleDelete');
+    InstancesActions.removeInstances(InstancesStore.getCheckedItems());
   },
 
   handleItemClick: function(instanceName) {
@@ -104,23 +128,54 @@ module.exports = React.createClass({
       singleItemIcon = singleItem.metadata.icon;
     }
 
+    var deleteActions = [
+      { text: 'Cancel', onClick: this.handleCancel },
+      { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
+    ];
+
     return (
       <Container>
+        <AddDialog mode="add" ref="addInstanceDialog"/>
+
+        <AddDialog mode="edit" initialValues={this.state.initialEditValues} ref="editInstanceDialog"/>
+
+        <ColorIconPickerDialog
+          ref="pickColorIconDialog"
+          initialColor={singleItemColor}
+          initialIcon={singleItemIcon}
+          handleClick={this.handleChangePalette}/>
+
+        <Dialog
+          ref="deleteInstanceDialog"
+          title="Delete instances"
+          actions={deleteActions}
+          modal={true}>
+          Do you realy want to delete <strong>{InstancesStore.getCheckedItems().length}</strong> instances?
+        </Dialog>
 
         <FabList
           style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
+
           <FloatingActionButton
             label         = "Click here to unselect Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {InstancesActions.uncheckAll}
             iconClassName = "synicon-checkbox-multiple-marked-outline" />
+
           <FloatingActionButton
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.handleDeleteButton}
             iconClassName = "synicon-delete" />
+          <FloatingActionButton
+            label         = "Click here to edit Instance" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.handleEditButton}
+            iconClassName = "synicon-pencil" />
+
           <FloatingActionButton
             label         = "Click here to customize Instances" // TODO: extend component
             color         = "" // TODO: extend component
@@ -129,6 +184,7 @@ module.exports = React.createClass({
             disabled      = {this.state.checkedInstances > 1}
             onClick       = {this.handleChangePaletteButton}
             iconClassName = "synicon-palette" />
+
         </FabList>
 
         <FabList
@@ -140,22 +196,16 @@ module.exports = React.createClass({
             iconClassName = "synicon-plus" />
         </FabList>
 
-        <AddDialog ref="addInstanceDialog"/>
-
-        <ColorIconPickerDialog
-          ref="pickColorIconDialog"
-          initialColor={singleItemColor}
-          initialIcon={singleItemIcon}
-          handleClick={this.handleChangePalette}/>
-
         <InstancesList
           name                = "My instances"
           listType            = "myInstances"
           viewMode            = "stream" />
+
         <InstancesList
           name                = "Other instances"
           listType            = "otherInstances"
           viewMode            = "stream" />
+
       </Container>
     );
   }

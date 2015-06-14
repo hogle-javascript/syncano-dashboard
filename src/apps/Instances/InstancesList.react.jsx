@@ -7,7 +7,6 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
     SessionActions   = require('../Session/SessionActions'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
@@ -62,17 +61,14 @@ module.exports = React.createClass({
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
-            id          = {item.name}
-            icon        = {item.metadata.icon}
-            background  = {item.metadata.color}
-            checked     = {item.checked}
-            width       = '40px'
-            handleClick = {this.handleItemIconClick} />
-        <ColumnName
-          id={item.name}
-          handleClick={this.handleItemClick}>
+          id          = {item.name}
+          icon        = {item.metadata.icon}
+          background  = {item.metadata.color}
+          checked     = {item.checked}
+          handleIconClick = {this.handleItemIconClick}
+          handleNameClick = {this.handleItemClick}>
           {item.name}
-        </ColumnName>
+        </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
@@ -99,7 +95,6 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>Instances</ColumnCheckIcon.Header>
-          <ColumnName.Header></ColumnName.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

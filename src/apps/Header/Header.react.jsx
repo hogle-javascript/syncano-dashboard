@@ -1,18 +1,26 @@
-var React         = require('react'),
-    Reflux        = require('reflux'),
-    classNames    = require('classnames'),
-    Router        = require('react-router'),
-    Link          = Router.Link,
+var React          = require('react'),
+    Reflux         = require('reflux'),
+    classNames     = require('classnames'),
+    Router         = require('react-router'),
+    Link           = Router.Link,
+
     mui            = require('material-ui'),
+    Colors          = require('material-ui/lib/styles/colors'),
     Tabs           = mui.Tabs,
     Tab            = mui.Tab,
+    Toolbar        = mui.Toolbar,
+    ToolbarGroup   = mui.ToolbarGroup,
+    FontIcon       = mui.FontIcon,
+    Paper          = mui.Paper,
+
     MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
+    RoundIcon      = require('../../common/Icon/RoundIcon.react'),
     HeaderActions  = require('./HeaderActions'),
     SessionActions = require('../Session/SessionActions'),
     HeaderStore    = require('./HeaderStore');
 
 
-require('./Header.css');
+require('./Header.sass');
 
 
 module.exports = React.createClass({
@@ -41,7 +49,7 @@ module.exports = React.createClass({
     }
 
     return (
-      <ul>
+      <ul className="toolbar-list">
         {this.state.breadcrumbs.map(this.renderBreadcrumbItem)}
       </ul>
     );
@@ -51,7 +59,7 @@ module.exports = React.createClass({
     var chevron = null;
 
     if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <MaterialIcon name="chevron_right" />
+      chevron = <MaterialIcon name="chevron_right" style={{marginLeft: 8}} />
     }
 
     breadcrumb.params = breadcrumb.params || {};
@@ -70,25 +78,25 @@ module.exports = React.createClass({
     )
   },
 
-  renderMenu: function (className) {
+  renderMenu: function () {
     if (this.state.menuItems.length === 0) {
       return
     }
 
-    // We have to find active tab
-    var activeTabIndex = null;
-    this.state.menuItems.some(function(item, index){
-      if (this.isActive(item.route, item.params, item.query)) {
-        activeTabIndex = index;
-        return true;
+    var menuStyles = {
+      menuContainer: {
+        display: 'inline-flex',
+        alignSelf: 'flex-end'
+      },
+      menu: {
+        backgroundColor: 'transparent',
+        height: 60
       }
-    }.bind(this));
+    };
 
     return (
-      <div className={className}>
-        <Tabs
-          tabItemContainerStyle={{backgroundColor: 'transparent'}}
-          initialSelectedIndex={activeTabIndex}>
+      <div style={menuStyles.menuContainer}>
+        <Tabs tabItemContainerStyle={menuStyles.menu}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
@@ -96,23 +104,83 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
+    tab.params         = tab.params || {};
+    tab.query          = tab.query  || {};
+    var selected       = this.isActive(tab.route, tab.params, tab.query),
+        menuItemStyles = {
+          color: Colors.indigo500,
+          fontWeight: 400,
+          fontSize: 17
+        };
+
     return (
       <Tab
         key={'menuItem-' + tab.route + '-' + index}
         label={tab.label}
         route={tab.route}
         params={tab.params}
+        selected={selected}
+        style={menuItemStyles}
         onActive={this.handleTabActive} />
     )
   },
 
+  getStyles: function() {
+    return {
+      topToolbar: {
+        background: Colors.blue500,
+        height: 68,
+        padding: '0 32px'
+      },
+      logotypeContainer: {
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center'
+      },
+      logotype: {
+        color: '#fff',
+        fontSize: 25
+      },
+      bottomToolbar: {
+        display: 'flex',
+        fontSize: 17,
+        fontWeight: 500,
+        height: 60,
+        background: '#fff',
+        padding: '0 32px'
+      },
+      bottomToolbarGroup: {
+        display: 'flex',
+        float: 'none',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      bottomToolbarGroupIcon: {
+        padding: '0 4px'
+      },
+      instanceIcon: {
+        color       : '#fff',
+        display     : 'flex',
+        fontSize    : 12,
+        lineHeight  : 1
+      },
+      instanceIconBackground: {
+        margin          : '0 16px 0 0',
+        height          : 26,
+        minWidth        : 26,
+        width           : 26,
+        display         : 'flex',
+        justifyContent  : 'center',
+        alignItems      : 'center'
+      }
+    }
+  },
+
   render: function () {
-    var colClass    = 's' + this.state.menuItems.length,
-        offsetClass = 'offset-s' + (10 - this.state.menuItems.length),
-        menuClass   =  classNames('col', 'header-menu', colClass),
-        iconsClass  =  classNames('col', 'header-icons', 's2', offsetClass);
+    var styles = this.getStyles();
 
     return (
+<<<<<<< HEAD
       <div className="row header">
         <div className="row header-top">
           <div className="col header-breadcrumbs">
@@ -135,6 +203,44 @@ module.exports = React.createClass({
             <MaterialIcon name="search" />
           </div>
         </div>
+=======
+      <div>
+        <Toolbar style={styles.topToolbar}>
+          <ToolbarGroup key={0} style={styles.logotypeContainer}>
+            <div style={styles.logotype}>Syncano</div>
+          </ToolbarGroup>
+          <ToolbarGroup key={1} float="right" style={{height: '100%'}}>
+            <ul className="toolbar-list">
+              <li><a href="#">Docs</a></li>
+              <li><a href="#">API Keys</a></li>
+              <li><a href="#">Support</a></li>
+            </ul>
+          </ToolbarGroup>
+        </Toolbar>
+        <Paper>
+          <Toolbar style={styles.bottomToolbar}>
+            <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
+              <RoundIcon background="green" style={styles.instanceIconBackground}>
+                <FontIcon className={"synicon-folder"} style={styles.instanceIcon} />
+              </RoundIcon>
+              <div>Dreamer</div>
+            </ToolbarGroup>
+            <ToolbarGroup key={1} className="col-flex-1" style={styles.bottomToolbarGroup}>
+              {this.renderMenu()}
+            </ToolbarGroup>
+            <ToolbarGroup key={2} style={styles.bottomToolbarGroup}>
+              <MaterialIcon name="search" style={styles.bottomToolbarGroupIcon} />
+              <MaterialIcon name="notifications_none" style={styles.bottomToolbarGroupIcon} />
+              <MaterialIcon name="more_vert" style={styles.bottomToolbarGroupIcon} />
+              <MaterialIcon
+                name="power"
+                handleClick={this.handleLogout}
+                style={styles.bottomToolbarGroupIcon}
+                />
+            </ToolbarGroup>
+          </Toolbar>
+        </Paper>
+>>>>>>> 2094351bdb5f1485bff949932d15ab554aa9786a
       </div>
     )
   }

@@ -4,7 +4,7 @@ var React = require('react'),
     IconStore  = require('../Icon/IconStore'),
 
     mui        = require('material-ui'),
-    FontIcon   = mui.FontIcon;
+    FontIcon   = mui.FontIcon,
     Paper      = mui.Paper;
 
 
@@ -47,7 +47,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    console.info('ColorIconPicker::componentWillReceiveProps', nextProps);
+    console.info('ColorIconPicker::componentWillReceiveProps');
     this.setState({
       selectedColor: nextProps.selectedColor,
       selectedIcon: nextProps.selectedIcon,

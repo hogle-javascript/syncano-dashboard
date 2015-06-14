@@ -8,11 +8,11 @@ describe("InstancesList.react", function() {
   it("testing component", function() {
 
     var React = require('react/addons'),
-        TestUtils = React.addons.TestUtils,
-        StorageMock   = require('../../../utils/StorageMock'),
-        ConsoleMock   = require('../../../utils/ConsoleMock'),
+        TestUtils = React.addons.TestUtils;
+        // StorageMock   = require('../../../utils/StorageMock'),
+        // ConsoleMock   = require('../../../utils/ConsoleMock'),
 
-        InstancesList = require('../InstancesList.react');
+        // InstancesList = require('../InstancesList.react');
 
     //InstancesList = TestUtils.renderIntoDocument(<InstancesList />);
 

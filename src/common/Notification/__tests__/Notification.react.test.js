@@ -5,6 +5,6 @@ describe("Notification.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var Notification = require('../Notification.react');
+    // var Notification = require('../Notification.react');
   });
 });
