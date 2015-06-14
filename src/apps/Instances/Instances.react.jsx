@@ -35,9 +35,7 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    DialogsMixin,
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
+    DialogsMixin
   ],
 
 
@@ -56,7 +54,7 @@ module.exports = React.createClass({
       dialog: AddDialog,
       params: {
         ref           : "editInstanceDialog",
-        mode          : "edit",
+        mode          : "edit"
       },
     },{
       dialog: ColorIconPickerDialog,
@@ -80,7 +78,7 @@ module.exports = React.createClass({
     console.info('Instances::componentDidMount');
     if (this.getParams().action == 'add'){
       // Show Add modal
-      this.refs.addInstancesDialog.show();
+      this.showDialog('addInstanceDialog');
     }
   },
 
@@ -106,8 +104,8 @@ module.exports = React.createClass({
     InstancesActions.updateInstance(
       InstancesStore.getCheckedItem().name, {
         metadata: JSON.stringify({
-          color: color,
-          icon: icon
+          color : color,
+          icon  : icon
         })
       }
     );
