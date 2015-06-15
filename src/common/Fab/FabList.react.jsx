@@ -1,9 +1,7 @@
-var React = require('react'),
+var React         = require('react'),
 
     mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable,
-
-    Label = require('../Label/Label.react');
+    StylePropable = mui.Mixins.StylePropable;
 
 
 module.exports = React.createClass({
@@ -13,17 +11,17 @@ module.exports = React.createClass({
   mixins: [StylePropable],
 
   propTypes: {
-    handleClick: React.PropTypes.func.isRequired,
+    handleClick: React.PropTypes.func.isRequired
   },
 
   getStyles: function() {
     var styles = {
       position: 'fixed',
-      right: '50px',
-      zIndex: 9,
+      right: '2vw',
+      zIndex: 10,
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'flex-end',
+      alignItems: 'flex-end'
     };
     return this.mergeStyles(styles, this.props.style);
   },
@@ -36,5 +34,3 @@ module.exports = React.createClass({
     );
   }
 });
-
-//<FAB button={button} label={button.label} handleClick={this.props.handleClick}/>
