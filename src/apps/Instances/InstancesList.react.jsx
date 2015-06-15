@@ -12,12 +12,13 @@ var React  = require('react'),
     InstancesStore   = require('./InstancesStore'),
 
     // Components
-    mui           = require('material-ui'),
+    mui              = require('material-ui'),
 
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
     Item            = require('../../common/ColumnList/Item.react'),
     Header          = require('../../common/ColumnList/Header.react'),
+    LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
     ColumnName      = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
@@ -33,8 +34,6 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
   ],
 
   getInitialState: function() {
@@ -81,6 +80,10 @@ module.exports = React.createClass({
   },
 
   getList: function () {
+    if (this.state.isLoading) {
+      return <LoadingItem />;
+    }
+
     var instances = this.state.items.filter(this.props.filter);
 
     var items = instances.map(function (item) {
