@@ -7,9 +7,9 @@ var SessionStore = Reflux.createStore({
   listenables: SessionActions,
 
   init: function () {
+    this.connection = Connection.get();
     this.token      = sessionStorage.getItem('token') || null;
     this.user       = null;
-    this.connection = Connection.get();
     this.instance   = null;
     this.route      = null;
 
@@ -24,6 +24,10 @@ var SessionStore = Reflux.createStore({
 
   getToken: function() {
     return sessionStorage.getItem('token');
+  },
+
+  clearInstance: function() {
+    this.instance = null;
   },
 
   onTokenLoginCompleted: function(payload) {

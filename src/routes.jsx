@@ -54,6 +54,7 @@ module.exports = (
     <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/" >
+      <Redirect name="instances-redirect" from="dashboard" to="instances" path="/" />
       <Route name="instances" handler={Instance} path="/instances">
         <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
