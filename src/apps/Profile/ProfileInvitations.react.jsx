@@ -1,29 +1,46 @@
 var React       = require('react'),
-    State       = require('react-router').State,
-    
     HeaderMixin = require('../Header/HeaderMixin');
+
 
 module.exports = React.createClass({
 
   displayName: 'ProfileInvitations',
 
-  mixins: [
-    HeaderMixin,
-    State,
+  mixins: [HeaderMixin],
+
+  headerBreadcrumbs: [
+    {
+      route: 'dashboard',
+      label: 'Home',
+    },
+    {
+      route: 'profile-settings',
+      label: 'Account',
+    },
+    {
+      route: 'profile-invitations',
+      label: 'Invitations',
+    }
   ],
 
-  headerBreadcrumbs: function () {
-   return [{
-      route: 'instances',
-      label: 'Home',
-    }, {
-      route: 'account',
-      label: 'Account',
-    }, {
-      route: 'invitations',
+  headerMenuItems: [
+    {
+      route: 'profile-settings',
+      label: 'Profile',
+    },
+    {
+      route: 'profile-authentication',
+      label: 'Authentication',
+    },
+    {
+      route: 'profile-billing',
+      label: 'Billing',
+    },
+    {
+      route: 'profile-invitations',
       label: 'Invitations',
-    }]
-  },
+    }
+  ],
 
   render: function () {
     return (

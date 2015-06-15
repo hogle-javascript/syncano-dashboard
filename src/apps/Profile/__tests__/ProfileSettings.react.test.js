@@ -1,6 +1,6 @@
-jest.dontMock("../Profile.react");
+jest.dontMock("../ProfileSettings.react");
 
-describe("Profile.react", function () {
+describe("ProfileSettings.react", function () {
   it("testing component", function () {
 
     var React        = require('react/addons'),

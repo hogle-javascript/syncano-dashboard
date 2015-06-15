@@ -327,6 +327,11 @@ var Syncano = (function() {
 			tempInstance = param.instance;
 		}
 
+		this.setApiKey = function (api_key) {
+			setApiKey(api_key);
+			return this;
+		};
+
 		/**
 		 * Object with methods to handle Accounts
 		 *

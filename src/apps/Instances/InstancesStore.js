@@ -48,7 +48,7 @@ var InstancesStore = Reflux.createStore({
     data.instances.otherInstances = [];
 
     Object.keys(instances).map(function(item) {
-      if (instances[item].owner.email === SessionStore.getMyEmail()) {
+      if (instances[item].owner.email === SessionStore.user.email) {
         data.instances.myInstances.push(instances[item]);
       } else {
         data.instances.otherInstances.push(instances[item]);
@@ -132,6 +132,12 @@ var InstancesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRemoveInstancesCompleted: function(payload) {
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
+  },
+
   getCheckedItem: function() {
     console.debug('InstancesStore::getCheckedItem');
 
@@ -144,6 +150,18 @@ var InstancesStore = Reflux.createStore({
       }
     });
     return checkedItem;
+  },
+
+  // TODO: Combine it somehow with getCheckedItems? general filter function? mixin for filtering lists?
+  getCheckedItems: function() {
+    // Looking for the first 'checked' item
+    var checkedItems = [];
+    this.data.instances.myInstances.map(function (item) {
+      if (item.checked) {
+        checkedItems.push(item);
+      }
+    });
+    return checkedItems;
   }
 
 });

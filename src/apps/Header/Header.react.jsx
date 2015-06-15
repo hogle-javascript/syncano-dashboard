@@ -110,15 +110,14 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    tab.params   = tab.params || {};
-    tab.query    = tab.query  || {};
-    var selected = this.isActive(tab.route, tab.params, tab.query);
-
-    var menuItemStyles = {
-      color: Colors.indigo500,
-      fontWeight: 400,
-      fontSize: 17
-    };
+    tab.params         = tab.params || {};
+    tab.query          = tab.query  || {};
+    var selected       = this.isActive(tab.route, tab.params, tab.query),
+        menuItemStyles = {
+          color: Colors.indigo500,
+          fontWeight: 400,
+          fontSize: 17
+        };
 
     return (
       <Tab
