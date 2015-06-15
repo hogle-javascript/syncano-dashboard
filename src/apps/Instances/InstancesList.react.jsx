@@ -80,7 +80,9 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) return <LoadingItem />;
+    if (this.state.isLoading) {
+      return <LoadingItem />;
+    }
 
     var instances = this.state.items.filter(this.props.filter);
 
