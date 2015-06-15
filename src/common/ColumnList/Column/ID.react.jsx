@@ -7,7 +7,7 @@ var React       = require('react'),
 
 
 // Same classes for column and it's header
-var cssClasses = classNames('col-xs-4');
+var cssClasses = classNames('col-xs-2');
 
 var Header = React.createClass({
   render: function () {
@@ -21,7 +21,7 @@ var Header = React.createClass({
 
 module.exports = React.createClass({
 
-  displayName: 'ColumnDate',
+  displayName: 'ColumnID',
 
   propTypes: {
     id          : React.PropTypes.string,
@@ -51,9 +51,9 @@ module.exports = React.createClass({
     return {
       display        : 'flex',
       flexDirection  : 'column',
-      justifyContent : 'center',
       fontSize       : '12px',
       lineHeight     : '16px',
+      justifyContent : 'center',
       paddingTop     : 16,
       paddingBottom  : 16,
       color          : this.props.color
@@ -70,8 +70,7 @@ module.exports = React.createClass({
       <div
         className = {cssClasses}
         style     = {this.getStyles()}>
-        <span>{Moment(this.props.children).format('DD/MM/YYYY')}</span>
-        <span>{Moment(this.props.children).format('LTS')}</span>
+        <span>{this.props.children}</span>
       </div>
     );
 
