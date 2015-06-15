@@ -63,7 +63,9 @@ module.exports = React.createClass({
     var chevron = null;
 
     if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <MaterialIcon name="chevron_right" style={{marginLeft: 8}} />
+      chevron = <MaterialIcon
+                  name  = "chevron_right"
+                  style = {{marginLeft: 8}} />
     }
 
     breadcrumb.params = breadcrumb.params || {};
@@ -72,9 +74,9 @@ module.exports = React.createClass({
     return (
       <li key={'breadcrumb-' + index}>
         <Link
-          to={breadcrumb.route}
-          params={breadcrumb.params}
-          query={breadcrumb.query}>
+          to     = {breadcrumb.route}
+          params = {breadcrumb.params}
+          query  = {breadcrumb.query}>
           {breadcrumb.label}
         </Link>
         {chevron}
@@ -108,95 +110,100 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    tab.params   = tab.params || {};
-    tab.query    = tab.query  || {};
-    var selected = this.isActive(tab.route, tab.params, tab.query);
-
-    var menuItemStyles = {
-      color: Colors.indigo500,
-      fontWeight: 400,
-      fontSize: 17
-    };
+    tab.params         = tab.params || {};
+    tab.query          = tab.query  || {};
+    var selected       = this.isActive(tab.route, tab.params, tab.query),
+        menuItemStyles = {
+          color: Colors.indigo500,
+          fontWeight: 400,
+          fontSize: 17
+        };
 
     return (
       <Tab
-        key={'menuItem-' + tab.route + '-' + index}
-        label={tab.label}
-        route={tab.route}
-        params={tab.params}
-        selected={selected}
-        style={menuItemStyles}
-        onActive={this.handleTabActive} />
+        key      = {'menuItem-' + tab.route + '-' + index}
+        label    = {tab.label}
+        route    = {tab.route}
+        params   = {tab.params}
+        selected = {selected}
+        style    = {menuItemStyles}
+        onActive = {this.handleTabActive} />
     )
   },
 
   getStyles: function() {
     return {
       topToolbar: {
-        background: Colors.blue500,
-        height: 68,
-        padding: '0 32px'
+        background : Colors.blue500,
+        height     : 68,
+        padding    : '0 32px'
       },
       logotypeContainer: {
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center'
+        height     : '100%',
+        display    : 'flex',
+        alignItems : 'center'
       },
       logotype: {
-        color: '#fff',
-        fontSize: 25
+        color      : '#fff',
+        fontSize   : 25
       },
       bottomToolbar: {
-        display: 'flex',
-        fontSize: 17,
-        fontWeight: 500,
-        height: 60,
-        background: '#fff',
-        padding: '0 32px'
+        display    : 'flex',
+        fontSize   : 17,
+        fontWeight : 500,
+        height     : 60,
+        background : '#fff',
+        padding    : '0 32px'
       },
       bottomToolbarGroup: {
-        display: 'flex',
-        float: 'none',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display        : 'flex',
+        float          : 'none',
+        alignItems     : 'center',
+        justifyContent : 'center'
       },
       bottomToolbarGroupIcon: {
-        padding: '0 4px'
+        padding        : '0 4px'
       },
       instanceIcon: {
-        color       : '#fff',
-        display     : 'flex',
-        fontSize    : 12,
-        lineHeight  : 1
+        color      : '#fff',
+        display    : 'flex',
+        fontSize   : 12,
+        lineHeight : 1
       },
       instanceIconBackground: {
-        margin          : '0 16px 0 0',
-        height          : 26,
-        minWidth        : 26,
-        width           : 26,
-        display         : 'flex',
-        justifyContent  : 'center',
-        alignItems      : 'center',
+        margin         : '0 16px 0 0',
+        height         : 26,
+        minWidth       : 26,
+        width          : 26,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
 
-  getInstanceComponent: function() {
-    var styles = this.getStyles();
-    var instance = SessionStore.instance;
+  renderInstance: function() {
+    var styles = this.getStyles(),
+        instance = SessionStore.instance;
 
-    if (instance) {
-      // Setting background instance icon background
-      styles.instanceIconBackground.background = instance.metadata.color;
-      return (
-        <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
-          <Paper circle={true} background={instance.metadata.color} style={styles.instanceIconBackground}>
-            <FontIcon className={"synicon-" + instance.metadata.icon} style={styles.instanceIcon}/>
-          </Paper>
-          <div>{SessionStore.instance.name}</div>
-        </ToolbarGroup>)
+    if (!instance) {
+      return;
     }
-    return null;
+
+    // Setting background instance icon background
+    styles.instanceIconBackground.background = instance.metadata.color;
+    return (
+      <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
+        <Paper
+          circle     = {true}
+          background = {instance.metadata.color}
+          style      = {styles.instanceIconBackground}>
+          <FontIcon
+            className = {"synicon-" + instance.metadata.icon}
+            style     = {styles.instanceIcon}/>
+        </Paper>
+        <div>{SessionStore.instance.name}</div>
+      </ToolbarGroup>)
   },
 
   handleLogoClick: function (){
@@ -209,32 +216,49 @@ module.exports = React.createClass({
     return (
       <div>
         <Toolbar style={styles.topToolbar}>
-          <ToolbarGroup key={0} style={styles.logotypeContainer}>
-            <div style={styles.logotype} onClick={this.handleLogoClick}>Syncano</div>
+          <ToolbarGroup style = {styles.logotypeContainer}>
+            <div
+              style   = {styles.logotype}
+              onClick = {this.handleLogoClick}>Syncano</div>
           </ToolbarGroup>
-          <ToolbarGroup key={1} float="right" style={{height: '100%'}}>
+          <ToolbarGroup
+            float = "right"
+            style = {{height: '100%'}}>
             <ul className="toolbar-list">
-              <li><a href="http://docs.syncano.com/v4.0" target="_blank">Docs</a></li>
-              <li><a href="mailto:support@syncano.com">Support</a></li>
+              <li>
+                <a href="http://docs.syncano.com/v4.0" target="_blank">Docs</a>
+              </li>
+              <li>
+                <a href="mailto:support@syncano.com">Support</a>
+              </li>
             </ul>
           </ToolbarGroup>
         </Toolbar>
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
 
-            {this.getInstanceComponent()}
+            {this.renderInstance()}
 
-            <ToolbarGroup key={1} className="col-flex-1" style={styles.bottomToolbarGroup}>
+            <ToolbarGroup
+              className = "col-flex-1"
+              style     = {styles.bottomToolbarGroup}>
               {this.renderMenu()}
             </ToolbarGroup>
-            <ToolbarGroup key={2} style={styles.bottomToolbarGroup}>
-              <MaterialIcon name="search" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon name="notifications_none" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon name="more_vert" style={styles.bottomToolbarGroupIcon} />
+            <ToolbarGroup
+              style={styles.bottomToolbarGroup}>
               <MaterialIcon
-                name="power"
-                handleClick={this.handleLogout}
-                style={styles.bottomToolbarGroupIcon}
+                name  = "search"
+                style = {styles.bottomToolbarGroupIcon} />
+              <MaterialIcon
+                name  = "notifications_none"
+                style = {styles.bottomToolbarGroupIcon} />
+              <MaterialIcon
+                name  = "more_vert"
+                style = {styles.bottomToolbarGroupIcon} />
+              <MaterialIcon
+                name        = "power"
+                style       = {styles.bottomToolbarGroupIcon}
+                handleClick = {this.handleLogout}
                 />
             </ToolbarGroup>
           </Toolbar>

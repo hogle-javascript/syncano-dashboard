@@ -8,8 +8,8 @@ var React  = require('react'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
 
     // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
     SessionActions   = require('../Session/SessionActions'),
+    SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
 
@@ -112,6 +112,11 @@ module.exports = React.createClass({
     InstancesActions.uncheckAll()
   },
 
+  handleDelete: function() {
+    console.info('Instances::handleDelete');
+    InstancesActions.removeInstances(InstancesStore.getCheckedItems());
+  },
+
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
     SessionActions.setInstance(instanceName);
@@ -130,6 +135,11 @@ module.exports = React.createClass({
   render: function () {
 
     var checkedInstances = InstancesStore.getNumberOfChecked();
+
+    var deleteActions = [
+      { text: 'Cancel', onClick: this.handleCancel },
+      { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
+    ];
 
     return (
       <Container>

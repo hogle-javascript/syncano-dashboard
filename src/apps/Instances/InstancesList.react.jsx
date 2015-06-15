@@ -7,7 +7,6 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
     SessionActions   = require('../Session/SessionActions'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),

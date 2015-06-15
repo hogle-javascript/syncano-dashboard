@@ -80,7 +80,7 @@ var InstancesStore = Reflux.createStore({
     }
     this.trigger(this.data);
   },
-
+  
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
     this.data.hideDialogs = true;
@@ -126,6 +126,12 @@ var InstancesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRemoveInstancesCompleted: function(payload) {
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
+  },
+
   getCheckedItem: function() {
     console.debug('InstancesStore::getCheckedItem');
 
@@ -155,6 +161,18 @@ var InstancesStore = Reflux.createStore({
       icon  : singleItem.metadata.icon
     };
   },
+
+  // TODO: Combine it somehow with getCheckedItems? general filter function? mixin for filtering lists?
+  getCheckedItems: function() {
+    // Looking for the first 'checked' item
+    var checkedItems = [];
+    this.data.instances.map(function (item) {
+      if (item.checked) {
+        checkedItems.push(item);
+      }
+    });
+    return checkedItems;
+  }
 
 });
 
