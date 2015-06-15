@@ -63,7 +63,9 @@ module.exports = React.createClass({
     var chevron = null;
 
     if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <MaterialIcon name="chevron_right" style={{marginLeft: 8}} />
+      chevron = <MaterialIcon
+                  name  = "chevron_right"
+                  style = {{marginLeft: 8}} />
     }
 
     breadcrumb.params = breadcrumb.params || {};
@@ -72,9 +74,9 @@ module.exports = React.createClass({
     return (
       <li key={'breadcrumb-' + index}>
         <Link
-          to={breadcrumb.route}
-          params={breadcrumb.params}
-          query={breadcrumb.query}>
+          to     = {breadcrumb.route}
+          params = {breadcrumb.params}
+          query  = {breadcrumb.query}>
           {breadcrumb.label}
         </Link>
         {chevron}
@@ -120,13 +122,13 @@ module.exports = React.createClass({
 
     return (
       <Tab
-        key={'menuItem-' + tab.route + '-' + index}
-        label={tab.label}
-        route={tab.route}
-        params={tab.params}
-        selected={selected}
-        style={menuItemStyles}
-        onActive={this.handleTabActive} />
+        key      = {'menuItem-' + tab.route + '-' + index}
+        label    = {tab.label}
+        route    = {tab.route}
+        params   = {tab.params}
+        selected = {selected}
+        style    = {menuItemStyles}
+        onActive = {this.handleTabActive} />
     )
   },
 
