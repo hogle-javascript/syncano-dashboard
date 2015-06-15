@@ -11,6 +11,7 @@ var InstancesStore = Reflux.createStore({
     return {
       // Lists
       instances: [],
+      isLoading: false,
 
       // Dialogs
       errors: {},
@@ -22,6 +23,7 @@ var InstancesStore = Reflux.createStore({
     this.data = {
       // List
       instances: [],
+      isLoading: false,
 
       // Dialogs
       errors: {},
@@ -53,6 +55,13 @@ var InstancesStore = Reflux.createStore({
     Object.keys(instances).map(function(item) {
         data.instances.push(instances[item]);
     });
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onGetInstancesLoading: function() {
+    console.debug('InstancesStore::onGetInstancesLoading');
+    this.data.isLoading = true;
     this.trigger(this.data);
   },
 

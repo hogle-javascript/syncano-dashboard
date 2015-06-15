@@ -11,10 +11,8 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var cssClasses = classNames('list', 'items-list', 'view-' + this.props.viewMode);
-
     return (
-      <div className={cssClasses}>
+      <div>
         {this.props.children}
       </div>
     );
