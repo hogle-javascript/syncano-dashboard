@@ -10,7 +10,7 @@ var HeaderStore = Reflux.createStore({
   getInitialState: function () {
     return {
       breadcrumbs : [],
-      menuItems   : [],
+      menuItems   : []
     }
   },
 
@@ -22,6 +22,20 @@ var HeaderStore = Reflux.createStore({
 
   refreshData: function() {
     this.trigger(this);
+  },
+
+  getSelectedIndex: function() {
+    if (!this.data.menuItems) {
+      return 0
+    }
+    var selectedItemIndex = null;
+    this.data.menuItems.some(function (item, index) {
+      if (item.active) {
+        selectedItemIndex = index;
+        return true;
+      }
+    });
+    return selectedItemIndex;
   },
 
   onSetBreadcrumbs: function (payload) {

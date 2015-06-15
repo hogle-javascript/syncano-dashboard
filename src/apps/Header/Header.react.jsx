@@ -102,7 +102,7 @@ module.exports = React.createClass({
 
     return (
       <div style={menuStyles.menuContainer}>
-        <Tabs tabItemContainerStyle={menuStyles.menu}>
+        <Tabs tabItemContainerStyle={menuStyles.menu} initialSelectedIndex={HeaderStore.getSelectedIndex()}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
@@ -112,8 +112,8 @@ module.exports = React.createClass({
   renderMenuItem: function(tab, index) {
     tab.params         = tab.params || {};
     tab.query          = tab.query  || {};
-    var selected       = this.isActive(tab.route, tab.params, tab.query),
-        menuItemStyles = {
+
+    var menuItemStyles = {
           color: Colors.indigo500,
           fontWeight: 400,
           fontSize: 17
@@ -125,7 +125,6 @@ module.exports = React.createClass({
         label    = {tab.label}
         route    = {tab.route}
         params   = {tab.params}
-        selected = {selected}
         style    = {menuItemStyles}
         onActive = {this.handleTabActive} />
     )
