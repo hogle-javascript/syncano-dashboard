@@ -12,7 +12,6 @@ var React  = require('react'),
 
     // Components
     mui                  = require('material-ui'),
-    FloatingActionButton = mui.FloatingActionButton,
     Dialog               = mui.Dialog,
     Container            = require('../../common/Container/Container.react'),
     List                 = require('../../common/Lists/List.react'),
@@ -21,6 +20,7 @@ var React  = require('react'),
     Column               = require('../../common/ColumnList/ItemColumn.react'),
     Header               = require('../../common/ColumnList/Header.react'),
     ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
+    FloatingActionButton = require('../../common/Fab/Fab.react'),
     FabList              = require('../../common/Fab/FabList.react'),
 
     AddDialog            = require('./CodeBoxesAddDialog.react');
