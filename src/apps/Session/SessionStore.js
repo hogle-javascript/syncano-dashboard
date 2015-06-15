@@ -18,6 +18,18 @@ var SessionStore = Reflux.createStore({
     }
   },
 
+  getMyEmail: function() {
+    return sessionStorage.getItem('user');
+  },
+
+  getToken: function() {
+    return sessionStorage.getItem('token');
+  },
+
+  onTokenLoginCompleted: function(payload) {
+    console.info('SessionStore::onTokenLoginComplete');
+  },
+
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
     if (payload === undefined || payload.account_key === undefined) {

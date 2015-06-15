@@ -1,6 +1,6 @@
 var Reflux        = require('reflux'),
-    HeaderActions = require('./HeaderActions');
-
+    HeaderActions = require('./HeaderActions'),
+    SessionStore  = require('../Session/SessionStore');
 
 var HeaderStore = Reflux.createStore({
   listenables: HeaderActions,
@@ -9,11 +9,20 @@ var HeaderStore = Reflux.createStore({
     return {
       breadcrumbs : [],
       menuItems   : [],
+      user        : {},
     }
   },
 
   init: function () {
     this.data = this.getInitialState();
+    this.listenTo(SessionStore, this.refreshUserData);
+  },
+
+  refreshUserData: function (Session) {
+    if (Session.isReady()) {
+      this.data.user = Session.user;
+      this.trigger(this.data);
+    };
   },
 
   onSetBreadcrumbs: function (payload) {

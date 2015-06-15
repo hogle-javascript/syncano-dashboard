@@ -29,7 +29,7 @@ module.exports = React.createClass({
   render: function () {
     //console.log("Action", this.props.action);
     return (
-      <div className="dropdown-menu-item clickable" onClick={this.handleItemClick}>{this.props.action.displayName}</div>
+      <div className="dropdown-menu-item clickable" onClick={this.handleItemClick}>{this.props.action.content}</div>
     );
   }
 });

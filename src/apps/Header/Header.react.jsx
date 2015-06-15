@@ -17,7 +17,10 @@ var React          = require('react'),
     RoundIcon      = require('../../common/Icon/RoundIcon.react'),
     HeaderActions  = require('./HeaderActions'),
     SessionActions = require('../Session/SessionActions'),
-    HeaderStore    = require('./HeaderStore');
+    SessionStore   = require('../Session/SessionStore'),
+    HeaderStore    = require('./HeaderStore'),
+    Dropdown       = require('../../common/Dropdown/Dropdown.react'),
+    Icon           = require('../../common/Icon/Icon.react');
 
 
 require('./Header.sass');
@@ -159,25 +162,48 @@ module.exports = React.createClass({
         padding: '0 4px'
       },
       instanceIcon: {
-        color       : '#fff',
-        display     : 'flex',
-        fontSize    : 12,
-        lineHeight  : 1
+        color: '#fff',
+        display: 'flex',
+        fontSize: 12,
+        lineHeight: 1
       },
       instanceIconBackground: {
-        margin         : '0 16px 0 0',
-        height         : 26,
-        minWidth       : 26,
-        width          : 26,
-        display        : 'flex',
-        justifyContent : 'center',
-        alignItems     : 'center'
+        margin: '0 16px 0 0',
+        height: 26,
+        minWidth: 26,
+        width: 26,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }
     }
   },
 
+  handleAccountClick: function(route) {
+    console.log(route);
+    this.context.router.transitionTo(route);
+  },
+
   render: function () {
     var styles = this.getStyles();
+
+    var dropdownItems = [{
+      content: "Account",
+      name: "account",
+      handleItemClick: this.handleAccountClick.bind(this, "profile-settings"),
+    }, {
+      content: "Logout",
+      name: "logout",
+      handleItemClick: this.handleLogout,
+    }];
+
+    var dropdownHeader = {
+      icon: <Icon 
+              icon="account-circle" 
+              style={{width: "60px", height: "60px", fill: "#0091EA"}} />,
+      userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail: this.state.user.email
+    };
 
     return (
       <div>
@@ -207,12 +233,10 @@ module.exports = React.createClass({
             <ToolbarGroup key={2} style={styles.bottomToolbarGroup}>
               <MaterialIcon name="search" style={styles.bottomToolbarGroupIcon} />
               <MaterialIcon name="notifications_none" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon name="more_vert" style={styles.bottomToolbarGroupIcon} />
-              <MaterialIcon
-                name="power"
-                handleClick={this.handleLogout}
-                style={styles.bottomToolbarGroupIcon}
-                />
+              <Dropdown
+                  items={dropdownItems}
+                  headerContent={dropdownHeader}
+                  style={styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>

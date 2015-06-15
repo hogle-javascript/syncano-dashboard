@@ -13,7 +13,7 @@ var SessionActions = Reflux.createActions({
   'setInstance': {
       asyncResult: true,
       children: ['completed', 'failure'],
-  }
+  },
 });
 
 SessionActions.fetchUser.listen(function (token) {
