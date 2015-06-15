@@ -236,7 +236,7 @@ module.exports = React.createClass({
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
 
-            {this.getInstanceComponent()}
+            {this.renderInstance()}
 
             <ToolbarGroup
               className = "col-flex-1"
