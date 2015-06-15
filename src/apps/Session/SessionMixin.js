@@ -10,14 +10,22 @@ var SessionMixin = {
   },
 
   componentDidMount: function() {
-    if (this.onSessionIsReady === undefined || typeof this.onSessionIsReady !== 'function') {
+    if (this.onSessionIsReady === undefined) {
+      return
+    }
+
+    if (typeof this.onSessionIsReady !== 'function') {
       throw Error('Invalid `onSessionIsReady` type');
     }
+
     this._unsubscribeSessionStore = SessionStore.listen(this._onSessionStatusChange);
     this._onSessionStatusChange(SessionStore);
   },
 
   componentWillUnmount: function() {
+    if (this._unsubscribeSessionStore === undefined) {
+      return
+    }
     this._unsubscribeSessionStore();
   }
 };

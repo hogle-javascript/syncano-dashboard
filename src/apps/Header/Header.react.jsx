@@ -104,15 +104,14 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    tab.params   = tab.params || {};
-    tab.query    = tab.query  || {};
-    var selected = this.isActive(tab.route, tab.params, tab.query);
-
-    var menuItemStyles = {
-      color: Colors.indigo500,
-      fontWeight: 400,
-      fontSize: 17
-    };
+    tab.params         = tab.params || {};
+    tab.query          = tab.query  || {};
+    var selected       = this.isActive(tab.route, tab.params, tab.query),
+        menuItemStyles = {
+          color: Colors.indigo500,
+          fontWeight: 400,
+          fontSize: 17
+        };
 
     return (
       <Tab
@@ -166,13 +165,13 @@ module.exports = React.createClass({
         lineHeight  : 1
       },
       instanceIconBackground: {
-        margin          : '0 16px 0 0',
-        height          : 26,
-        minWidth        : 26,
-        width           : 26,
-        display         : 'flex',
-        justifyContent  : 'center',
-        alignItems      : 'center'
+        margin         : '0 16px 0 0',
+        height         : 26,
+        minWidth       : 26,
+        width          : 26,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
