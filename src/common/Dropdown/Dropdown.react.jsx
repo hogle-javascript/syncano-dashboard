@@ -72,10 +72,13 @@ module.exports = React.createClass({
     });
 
     var headerContent;
+    var headerIcon = <Icon
+                       icon={this.props.headerContent.icon || "account-circle"}
+                       style={{width: "60px", height: "60px", fill: "#0091EA"}} />
     if (this.props.headerContent) {
-      headerContent = 
+      headerContent =
       <div className="account-group">
-        <div className="account-image">{this.props.headerContent.icon}</div>
+        <div className="account-image">{headerIcon}</div>
         <div className="account-text">
           <div className="account-name">{this.props.headerContent.userFullName}</div>
           <div className="account-email">{this.props.headerContent.userEmail}</div>

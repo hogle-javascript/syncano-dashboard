@@ -242,9 +242,7 @@ module.exports = React.createClass({
     }];
 
     var dropdownHeader = {
-      icon: <Icon 
-              icon="account-circle" 
-              style={{width: "60px", height: "60px", fill: "#0091EA"}} />,
+      icon: "account-circle",
       userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
       userEmail: this.state.user.email
     };
