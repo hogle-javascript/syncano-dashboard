@@ -5,6 +5,7 @@ var React  = require('react'),
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin      = require('../../mixins/DialogsMixin'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
@@ -34,9 +35,38 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
+    DialogsMixin
   ],
+
+
+  // Dialogs config
+  initDialogs: function () {
+
+    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
+
+    return [{
+      dialog: AddDialog,
+      params: {
+        ref  : "addInstanceDialog",
+        mode : "add",
+      },
+    }, {
+      dialog: AddDialog,
+      params: {
+        ref           : "editInstanceDialog",
+        mode          : "edit"
+      },
+    },{
+      dialog: ColorIconPickerDialog,
+      params: {
+        ref          : "pickColorIconDialog",
+        mode         : "add",
+        initialColor : checkedItemIconColor.color,
+        initialIcon  : checkedItemIconColor.icon,
+        handleClick  : this.handleChangePalette
+      }
+    }]
+  },
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
@@ -48,25 +78,13 @@ module.exports = React.createClass({
     console.info('Instances::componentDidMount');
     if (this.getParams().action == 'add'){
       // Show Add modal
-      this.refs.addInstancesDialog.show();
+      this.showDialog('addInstanceDialog');
     }
   },
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
-    if (nextState.hideDialogs) {
-      this.refs.addInstanceDialog.dismiss();
-      this.refs.editInstanceDialog.dismiss();
-      this.refs.deleteInstanceDialog.dismiss();
-    }
-  },
-
-  // Breadcrumbs and tabs (HeaderMixin)
-  headerBreadcrumbs: function () {
-    return [{
-      route: 'instances',
-      label: 'Instances',
-    }];
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   headerMenuItems: function () {
@@ -80,38 +98,14 @@ module.exports = React.createClass({
       }];
   },
 
-  // Buttons
-  handlePlusButton: function() {
-    this.refs.addInstanceDialog.show();
-    //this.setState({addDialog: true});
-  },
-
-  handleDeleteButton: function() {
-    this.refs.deleteInstanceDialog.show();
-  },
-
-  handleChangePaletteButton: function() {
-    this.refs.pickColorIconDialog.show();
-  },
-
-  handleEditButton: function() {
-    var checkedItem = InstancesStore.getCheckedItem();
-    this.setState({
-      initialEditValues: {
-        name: checkedItem.name,
-        description: checkedItem.description}
-    })
-    this.refs.editInstanceDialog.show();
-  },
-
   handleChangePalette: function (color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
 
     InstancesActions.updateInstance(
       InstancesStore.getCheckedItem().name, {
         metadata: JSON.stringify({
-          color: color,
-          icon: icon
+          color : color,
+          icon  : icon
         })
       }
     );
@@ -129,15 +123,18 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  render: function () {
-    var singleItem = InstancesStore.getCheckedItem(),
-        singleItemColor = null,
-        singleItemIcon = null;
+  // List filters
+  filterMyInstances: function(item) {
+    return item.owner.email === SessionStore.user.email;
+  },
 
-    if (singleItem) {
-      singleItemColor = singleItem.metadata.color;
-      singleItemIcon = singleItem.metadata.icon;
-    }
+  filterOtherInstances: function(item) {
+    return item.owner.email !== SessionStore.user.email;
+  },
+
+  render: function () {
+
+    var checkedInstances = InstancesStore.getNumberOfChecked();
 
     var deleteActions = [
       { text: 'Cancel', onClick: this.handleCancel },
@@ -146,26 +143,10 @@ module.exports = React.createClass({
 
     return (
       <Container>
-        <AddDialog mode="add" ref="addInstanceDialog"/>
-
-        <AddDialog mode="edit" initialValues={this.state.initialEditValues} ref="editInstanceDialog"/>
-
-        <ColorIconPickerDialog
-          ref="pickColorIconDialog"
-          initialColor={singleItemColor}
-          initialIcon={singleItemIcon}
-          handleClick={this.handleChangePalette}/>
-
-        <Dialog
-          ref="deleteInstanceDialog"
-          title="Delete instances"
-          actions={deleteActions}
-          modal={true}>
-          Do you realy want to delete <strong>{InstancesStore.getCheckedItems().length}</strong> instances?
-        </Dialog>
+        {this.getDialogs()}
 
         <FabList
-          style={{top: 200, display: this.state.checkedInstances ? 'block': 'none'}}>
+          style={{top: 200, display: checkedInstances ? 'block': 'none'}}>
 
           <FloatingActionButton
             label         = "Click here to unselect Instances" // TODO: extend component
@@ -178,13 +159,15 @@ module.exports = React.createClass({
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
-            onClick       = {this.handleDeleteButton}
+            onClick       = {this.showDialog('deleteInstanceDialog')}
             iconClassName = "synicon-delete" />
+
           <FloatingActionButton
             label         = "Click here to edit Instance" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
-            onClick       = {this.handleEditButton}
+            disabled      = {checkedInstances > 1}
+            onClick       = {this.showDialog('editInstanceDialog')}
             iconClassName = "synicon-pencil" />
 
           <FloatingActionButton
@@ -192,8 +175,8 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             secondary     = {true}
             mini          = {true}
-            disabled      = {this.state.checkedInstances > 1}
-            onClick       = {this.handleChangePaletteButton}
+            disabled      = {checkedInstances > 1}
+            onClick       = {this.showDialog('pickColorIconDialog')}
             iconClassName = "synicon-palette" />
 
         </FabList>
@@ -203,19 +186,23 @@ module.exports = React.createClass({
           <FloatingActionButton
             label         = "Click here to add Instances" // TODO: extend component
             color         = "" // TODO: extend component
-            onClick       = {this.handlePlusButton}
+            onClick       = {this.showDialog('addInstanceDialog')}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <InstancesList
-          name                = "My instances"
-          listType            = "myInstances"
-          viewMode            = "stream" />
+          name     = "My instances"
+          items    = {this.state.instances}
+          filter   = {this.filterMyInstances}
+          listType = "myInstances"
+          viewMode = "stream" />
 
         <InstancesList
-          name                = "Other instances"
-          listType            = "otherInstances"
-          viewMode            = "stream" />
+          name     = "Other instances"
+          items    = {this.state.instances}
+          filter   = {this.filterOtherInstances}
+          listType = "otherInstances"
+          viewMode = "stream" />
 
       </Container>
     );
