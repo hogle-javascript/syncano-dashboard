@@ -7,15 +7,23 @@ var SessionStore = Reflux.createStore({
   listenables: SessionActions,
 
   init: function () {
+    this.connection = Connection.get();
     this.token      = sessionStorage.getItem('token') || null;
     this.user       = null;
-    this.connection = Connection.get();
     this.instance   = null;
     this.route      = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
     }
+  },
+
+  clearInstance: function() {
+    this.instance = null;
+  },
+
+  onTokenLoginCompleted: function(payload) {
+    console.info('SessionStore::onTokenLoginComplete');
   },
 
   onLogin: function(payload) {

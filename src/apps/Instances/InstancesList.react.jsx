@@ -94,7 +94,7 @@ module.exports = React.createClass({
     return (
       <ListContainer>
         <Header>
-          <ColumnCheckIcon.Header>Instances</ColumnCheckIcon.Header>
+          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

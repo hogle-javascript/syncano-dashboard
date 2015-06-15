@@ -8,6 +8,7 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
+    SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
 
@@ -39,10 +40,12 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
+    SessionStore.clearInstance();
     InstancesStore.refreshData();
   },
 
   componentDidMount: function() {
+    console.info('Instances::componentDidMount');
     if (this.getParams().action == 'add'){
       // Show Add modal
       this.refs.addInstancesDialog.show();
@@ -50,6 +53,7 @@ module.exports = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
+    console.info('Instances::componentWillUpdate');
     if (nextState.hideDialogs) {
       this.refs.addInstanceDialog.dismiss();
       this.refs.editInstanceDialog.dismiss();
@@ -63,6 +67,17 @@ module.exports = React.createClass({
       route: 'instances',
       label: 'Instances',
     }];
+  },
+
+  headerMenuItems: function () {
+    return [
+      {
+        label: 'Instances',
+        route: 'instances',
+      }, {
+        label: 'Solutions',
+        route: 'dashboard',
+      }];
   },
 
   // Buttons
