@@ -116,7 +116,9 @@ module.exports = React.createClass({
         menuItemStyles = {
           color: Colors.indigo500,
           fontWeight: 400,
-          fontSize: 17
+          fontSize: 17,
+          paddingLeft: 10,
+          paddingRight: 10
         };
 
     return (
@@ -145,7 +147,8 @@ module.exports = React.createClass({
       },
       logotype: {
         color      : '#fff',
-        fontSize   : 25
+        fontSize   : 25,
+        cursor     : 'pointer'
       },
       bottomToolbar: {
         display    : 'flex',
@@ -160,6 +163,13 @@ module.exports = React.createClass({
         float          : 'none',
         alignItems     : 'center',
         justifyContent : 'center'
+      },
+      instanceToolbarGroup: {
+        display        : 'flex',
+        float          : 'none',
+        alignItems     : 'center',
+        justifyContent : 'center',
+        maxWidth       : 320
       },
       bottomToolbarGroupIcon: {
         padding        : '0 4px'
@@ -193,7 +203,7 @@ module.exports = React.createClass({
     // Setting background instance icon background
     styles.instanceIconBackground.background = instance.metadata.color;
     return (
-      <ToolbarGroup key={0} style={styles.bottomToolbarGroup}>
+      <ToolbarGroup key={0} style={styles.instanceToolbarGroup}>
         <Paper
           circle     = {true}
           background = {instance.metadata.color}
