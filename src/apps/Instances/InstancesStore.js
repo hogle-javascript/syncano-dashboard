@@ -46,6 +46,10 @@ var InstancesStore = Reflux.createStore({
     };
     return this.data.instances.filter(checkedFilter).length;
   },
+  onGetInstances: function(instances) {
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
 
   onGetInstancesCompleted: function(instances) {
     console.debug('InstancesStore::onGetInstanesCompleted');
@@ -56,12 +60,6 @@ var InstancesStore = Reflux.createStore({
         data.instances.push(instances[item]);
     });
     this.data.isLoading = false;
-    this.trigger(this.data);
-  },
-
-  onGetInstancesLoading: function() {
-    console.debug('InstancesStore::onGetInstancesLoading');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 

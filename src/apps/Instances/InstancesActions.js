@@ -5,9 +5,8 @@ var Reflux     = require('reflux'),
 
 var InstancesActions = Reflux.createActions();
 
-InstancesActions.getInstances = Reflux.createAction({asyncResult: true, children: ['loading', 'completed', 'failure']});
+InstancesActions.getInstances = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 InstancesActions.getInstances.listen( function(payload) {
-  this.loading();
   console.info('InstancesActions::getInstances');
   Connection
     .Instances
