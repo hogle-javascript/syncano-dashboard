@@ -31,7 +31,11 @@ module.exports = React.createClass({
       name: React.PropTypes.string,            // name for DropdownMenuItems kys
       handleItemClick: React.PropTypes.func,   // function to call after DropdownMenuItem click
     })).isRequired,
-    header: React.PropTypes.object,
+    headerContent: React.PropTypes.shape({
+      icon: React.PropTypes.string,
+      userFullName: React.PropTypes.string,
+      userEmail: React.PropTypes.string
+    }),
     iconStyle: React.PropTypes.object,
   },
 
@@ -71,10 +75,12 @@ module.exports = React.createClass({
       'dropdown-menu-visible': this.state.isOpen,
     });
 
-    var headerContent;
-    var headerIcon = <Icon
+    var headerContent,
+        headerIcon = <Icon
                        icon={this.props.headerContent.icon || "account-circle"}
                        style={{width: "60px", height: "60px", fill: "#0091EA"}} />
+
+
     if (this.props.headerContent) {
       headerContent =
       <div className="account-group">

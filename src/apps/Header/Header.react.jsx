@@ -244,7 +244,7 @@ module.exports = React.createClass({
     var dropdownHeader = {
       icon: "account-circle",
       userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
-      userEmail: this.state.user.email
+      userEmail: this.state.user.email,
     };
 
     return (
