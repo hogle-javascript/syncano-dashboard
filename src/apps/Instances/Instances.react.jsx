@@ -125,11 +125,11 @@ module.exports = React.createClass({
 
   // List filters
   filterMyInstances: function(item) {
-    return item.owner.email === SessionStore.getMyEmail();
+    return item.owner.email === SessionStore.user.email;
   },
 
   filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.getMyEmail();
+    return item.owner.email !== SessionStore.user.email;
   },
 
   render: function () {
