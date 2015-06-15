@@ -8,6 +8,7 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
+    SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
 
