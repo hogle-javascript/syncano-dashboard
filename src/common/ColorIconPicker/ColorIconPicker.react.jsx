@@ -75,29 +75,46 @@ module.exports = React.createClass({
 
     if (icon === this.state.selectedIcon) {
       zDepth = 3;
-      style.background= this.state.selectedColor;
+      style.background= ColorStore.getColorByName(this.state.selectedColor);
       iconColor = 'white';
     }
     return (
-      <Paper zDepth={zDepth} key={icon} circle={true} style={style} >
-          <FontIcon id={icon} className={"synicon-" + icon} style={{color: iconColor}} onClick={this.handleSetIcon} />
+      <Paper
+        zDepth = {zDepth}
+        key    = {icon}
+        circle = {true}
+        style  = {style} >
+          <FontIcon
+            id        = {icon}
+            className = {"synicon-" + icon}
+            style     = {{color: iconColor}}
+            onClick   = {this.handleSetIcon} />
       </Paper>
     )
   },
 
-  genColorItem: function(color) {
+  genColorItem: function(colorName) {
     var style = this.getStyles().item;
-    style.background = color;
+
+    style.background = ColorStore.getColorByName(colorName);
 
     var icon;
     var zDepth = 0;
-    if (color === this.state.selectedColor) {
+    if (colorName === ColorStore.getColorByName(this.state.selectedColor)) {
       zDepth = 3;
-      icon = <FontIcon className={"synicon-"+this.state.selectedIcon} style={{color: 'white'}} />;
+      icon = <FontIcon
+                className = {"synicon-"+this.state.selectedIcon}
+                style     = {{color: 'white'}} />;
     }
     return (
-      <Paper id={color} zDepth={zDepth} key={color} circle={true} style={style} onClick={this.handleSetColor}>
-          {icon}
+      <Paper
+        id      = {colorName}
+        key     = {colorName}
+        zDepth  = {zDepth}
+        circle  = {true}
+        style   = {style}
+        onClick = {this.handleSetColor}>
+        {icon}
       </Paper>
     );
   },
@@ -106,8 +123,8 @@ module.exports = React.createClass({
 
     var items;
     if (this.props.pickerType === "color") {
-      items = ColorStore.getColorPickerPalette().map(function (color) {
-        return this.genColorItem(color)}.bind(this));
+      items = ColorStore.getColorPickerPalette().map(function (colorObj) {
+        return this.genColorItem(colorObj)}.bind(this));
     } else {
       items = IconStore.getIconPickerIcons().map(function (icon) {
         return this.genIconItem(icon)}.bind(this));

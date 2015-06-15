@@ -109,12 +109,16 @@ module.exports = React.createClass({
     );
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   renderMenuItem: function(tab, index) {
     tab.params         = tab.params || {};
     tab.query          = tab.query  || {};
     var selected       = this.isActive(tab.route, tab.params, tab.query),
         menuItemStyles = {
-          color: Colors.indigo500,
+          color: this.context.muiTheme.palette.primary1Color,
           fontWeight: 400,
           fontSize: 17,
           paddingLeft: 10,

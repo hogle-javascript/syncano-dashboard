@@ -1,6 +1,11 @@
 var Reflux         = require('reflux'),
     Connection     = require('./Connection'),
-    SessionActions = require('./SessionActions');
+    SessionActions = require('./SessionActions'),
+
+    ThemeManager   = require('material-ui/lib/styles/theme-manager')(),
+    Colors         = require('material-ui/lib/styles/colors'),
+    ColorStore     = require('../../common/Color/ColorStore'),
+    SyncanoTheme   = require('../../common/SyncanoTheme');
 
 
 var SessionStore = Reflux.createStore({
@@ -12,6 +17,7 @@ var SessionStore = Reflux.createStore({
     this.user       = null;
     this.instance   = null;
     this.route      = null;
+    this.theme      = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -20,6 +26,9 @@ var SessionStore = Reflux.createStore({
 
   clearInstance: function() {
     this.instance = null;
+    if (this.theme) {
+      this.theme.setTheme(SyncanoTheme);
+    }
   },
 
   onTokenLoginCompleted: function(payload) {
@@ -54,8 +63,27 @@ var SessionStore = Reflux.createStore({
     this.router = router;
   },
 
+  onRegisterTheme: function (theme) {
+    this.theme = theme;
+  },
+
   onSetInstanceCompleted: function (payload) {
     console.info('SessionStore::onSetInstanceCompleted');
+    var colorName = payload.metadata.color;
+
+    var secondColorName = 'pink';
+    if (ColorStore.getColorByName(colorName)) {
+        this.theme.setPalette({
+          primary1Color : Colors[colorName+'700'],
+          primary2Color : Colors[colorName+'300'],
+          primary3Color : Colors[colorName+'200'],
+
+          accent1Color  : Colors[secondColorName+'700'],
+          accent2Color  : Colors[secondColorName+'300'],
+          accent3Color  : Colors[secondColorName+'200'],
+      });
+    }
+
     this.instance = payload;
     this.trigger(this)
   },

@@ -7,6 +7,7 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
+    ColorStore       = require('../../common/Color/ColorStore'),
     SessionActions   = require('../Session/SessionActions'),
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
@@ -67,7 +68,7 @@ module.exports = React.createClass({
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}
-          background      = {item.metadata.color}
+          background      = {ColorStore.getColorByName(item.metadata.color)}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
