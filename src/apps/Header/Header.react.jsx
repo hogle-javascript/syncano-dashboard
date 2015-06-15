@@ -177,20 +177,20 @@ module.exports = React.createClass({
       bottomToolbarGroupIcon: {
         padding        : '0 4px'
       },
-      instanceIcon: {
-        color: '#fff',
-        display: 'flex',
-        fontSize: 12,
-        lineHeight: 1
+      instanceIcon : {
+        color      : '#fff',
+        display    : 'flex',
+        fontSize   : 12,
+        lineHeight : 1
       },
       instanceIconBackground: {
-        margin: '0 16px 0 0',
-        height: 26,
-        minWidth: 26,
-        width: 26,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin              : '0 16px 0 0',
+        height              : 26,
+        minWidth            : 26,
+        width               : 26,
+        display             : 'flex',
+        justifyContent      : 'center',
+        alignItems          : 'center'
       }
     }
   },
