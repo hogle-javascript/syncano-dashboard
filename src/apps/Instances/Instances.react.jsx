@@ -1,6 +1,7 @@
 var React  = require('react'),
     Reflux = require('reflux'),
     Router = require('react-router'),
+    Radium = require('radium'),
 
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
@@ -15,9 +16,9 @@ var React  = require('react'),
 
     // Components
     mui                   = require('material-ui'),
-    FloatingActionButton  = mui.FloatingActionButton,
     Dialog                = mui.Dialog,
     Container             = require('../../common/Container/Container.react'),
+    FloatingActionButton  = require('../../common/Fab/Fab.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
@@ -26,7 +27,7 @@ var React  = require('react'),
     AddDialog     = require('./InstancesAddDialog.react');
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'Instances',
 
@@ -48,14 +49,14 @@ module.exports = React.createClass({
       dialog: AddDialog,
       params: {
         ref  : "addInstanceDialog",
-        mode : "add",
+        mode : "add"
       },
     }, {
       dialog: AddDialog,
       params: {
         ref           : "editInstanceDialog",
         mode          : "edit"
-      },
+      }
     },{
       dialog: ColorIconPickerDialog,
       params: {
@@ -132,23 +133,38 @@ module.exports = React.createClass({
     return item.owner.email !== SessionStore.user.email;
   },
 
+  getStyles: function() {
+    return {
+      fabListTop: {
+        top: 200
+      },
+      fabListTopButton: {
+        margin: '5px 0'
+      },
+      fabListBottom: {
+        bottom: 100
+      }
+    }
+  },
+
   render: function () {
 
-    var checkedInstances = InstancesStore.getNumberOfChecked();
-
-    var deleteActions = [
-      { text: 'Cancel', onClick: this.handleCancel },
-      { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
-    ];
+    var checkedInstances = InstancesStore.getNumberOfChecked(),
+        styles = this.getStyles(),
+        deleteActions = [
+          { text: 'Cancel', onClick: this.handleCancel },
+          { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
+        ];
 
     return (
       <Container>
         {this.getDialogs()}
 
         <FabList
-          style={{top: 200, display: checkedInstances ? 'block': 'none'}}>
+          style={[styles.fabListTop, {display: checkedInstances ? 'flex': 'none'}]}>
 
           <FloatingActionButton
+            style         = {styles.fabListTopButton}
             label         = "Click here to unselect Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
@@ -156,6 +172,7 @@ module.exports = React.createClass({
             iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
           <FloatingActionButton
+            style         = {styles.fabListTopButton}
             label         = "Click here to delete Instances" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
@@ -163,6 +180,7 @@ module.exports = React.createClass({
             iconClassName = "synicon-delete" />
 
           <FloatingActionButton
+            style         = {styles.fabListTopButton}
             label         = "Click here to edit Instance" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
@@ -171,6 +189,7 @@ module.exports = React.createClass({
             iconClassName = "synicon-pencil" />
 
           <FloatingActionButton
+            style         = {styles.fabListTopButton}
             label         = "Click here to customize Instances" // TODO: extend component
             color         = "" // TODO: extend component
             secondary     = {true}
@@ -182,7 +201,7 @@ module.exports = React.createClass({
         </FabList>
 
         <FabList
-          style={{bottom: 100}}>
+          style={styles.fabListBottom}>
           <FloatingActionButton
             label         = "Click here to add Instances" // TODO: extend component
             color         = "" // TODO: extend component
@@ -208,4 +227,4 @@ module.exports = React.createClass({
     );
   }
 
-});
+}));
