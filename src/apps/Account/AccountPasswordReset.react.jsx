@@ -96,7 +96,8 @@ module.exports = React.createClass({
               name="email"
               className="text-field"
               autoComplete="email"
-              hintText="Your email" />
+              hintText="Your email"
+              fullWidth={true} />
             <RaisedButton
               type="submit"
               label="Reset password"

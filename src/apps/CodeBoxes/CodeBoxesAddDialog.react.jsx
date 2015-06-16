@@ -126,27 +126,27 @@ module.exports = React.createClass({
           acceptCharset="UTF-8"
           method="post">
         <TextField
-            ref="label"
-            valueLink={this.linkState('label')}
-            errorText={this.getValidationMessages('label').join()}
-            name="label"
-            style={{width:500}}
-            autoComplete="label"
-            hintText="Short name for your CodeBox"
-            floatingLabelText="Label of CodeBox"
-            />
+          ref="label"
+          valueLink={this.linkState('label')}
+          errorText={this.getValidationMessages('label').join()}
+          name="label"
+          style={{width:500}}
+          autoComplete="label"
+          hintText="Short name for your CodeBox"
+          floatingLabelText="Label of CodeBox"
+          fullWidth={true} />
         <TextField
-            ref="description"
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join()}
-            name="description"
-            style={{width:500}}
-            className="text-field"
-            autoComplete="description"
-            multiLine={true}
-            hintText="Multiline description of CodeBox (optional)"
-            floatingLabelText="Description of CodeBox"
-          />
+          ref="description"
+          valueLink={this.linkState('description')}
+          errorText={this.getValidationMessages('description').join()}
+          name="description"
+          style={{width:500}}
+          className="text-field"
+          autoComplete="description"
+          multiLine={true}
+          hintText="Multiline description of CodeBox (optional)"
+          floatingLabelText="Description of CodeBox"
+          fullWidth={true} />
         <div>
           <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
         </div>
