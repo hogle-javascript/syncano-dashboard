@@ -6,6 +6,7 @@ var React  = require('react'),
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
@@ -35,7 +36,8 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    DialogsMixin
+    DialogsMixin,
+    InstanceTabsMixin,
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -91,45 +93,6 @@ module.exports = React.createClass({
   handleReset: function() {
     console.info('ApiKeys::handleReset');
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
-  },
-
-  headerMenuItems: function() {
-    var params = {instanceName: this.getParams().instanceName};
-    return [
-      {
-        label: 'Data Browser', 
-        route: 'data-objects', 
-        params: params, 
-      }, {
-        label: 'Classes', 
-        route: 'classes', 
-        params: params
-      }, {
-        label: 'API Keys', 
-        route: 'api-keys', 
-        params: params,
-        active: true
-      }, {
-        label: 'Admins', 
-        route: 'admins', 
-        params: params
-      }, {
-        label: 'Users', 
-        route: 'users', 
-        params: params
-      }, {
-        label: 'CodeBoxes', 
-        route: 'codeboxes', 
-        params: params
-      }, {
-        label: 'Webhooks', 
-        route: 'webhooks', 
-        params: params
-      }, {
-        label: 'Tasks', 
-        route: 'tasks', 
-        params: params
-      }];
   },
 
   render: function () {
