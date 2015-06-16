@@ -32,8 +32,6 @@ var React                 = require('react'),
     // Local components
     ApiKeysList           = require('./ApiKeysList.react'),
     AddDialog             = require('./ApiKeysAddDialog.react');
-
-
 ```
 
 ## Actions
