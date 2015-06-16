@@ -3,6 +3,7 @@ var React  = require('react'),
 
     // Utils
     ValidationMixin = require('../../mixins/ValidationMixin'),
+    DialogFormMixin = require('../../mixins/DialogFormMixin'),
 
     // Stores and Actions
     InstancesActions = require('./InstancesActions'),
@@ -22,6 +23,7 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(InstancesStore),
     React.addons.LinkedStateMixin,
+    DialogFormMixin,
     ValidationMixin,
   ],
 
@@ -29,11 +31,11 @@ module.exports = React.createClass({
     name: {
       presence: true,
       length: {
-        minimum: 5,
+        minimum: 5
       }
     },
     description: {
-    },
+    }
   },
 
   getInitialState: function() {
@@ -44,76 +46,34 @@ module.exports = React.createClass({
 
   clearData: function() {
     this.setState({
-      name: '',
-      description: '',
-      errors: {},
+      name        : '',
+      description : '',
+      errors      : {}
     })
   },
-  componentWillUpdate: function() {
-    console.log('InstancesAddDialog::componentWillUpdate');
-  },
 
-  show: function() {
-    console.log('InstancesAddDialog::show');
-    this.clearData();
-
-    // When it is "edit" mode, we want to set values
-    if (this.props.mode === "edit"){
-      var checkedItem = InstancesStore.getCheckedItem();
-      if (checkedItem) {
-        this.setState({
-            name: checkedItem.name,
-            description: checkedItem.description
-        });
-      }
+  editShow: function() {
+    var checkedItem = InstancesStore.getCheckedItem();
+    if (checkedItem) {
+      this.setState({
+            name        : checkedItem.name,
+            description : checkedItem.description
+      });
     }
-
-    this.refs.createInstanceDialog.show();
   },
 
-  dismiss: function() {
-    this.refs.createInstanceDialog.dismiss();
+  handleEditSubmit: function () {
+    InstancesActions.updateInstance(
+      this.state.name,
+      {description: this.state.description}
+    );
   },
 
-  handleSubmit: function (event) {
-    console.info('InstancesAddDialog::handleSubmit');
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function (isValid) {
-      console.info('InstancesAddDialog::handleSubmit isValid:', isValid);
-      if (isValid === true) {
-
-        if (this.props.mode === 'add') {
-          InstancesActions.createInstance({
-            name        : this.state.name,
-            description : this.state.description,
-          });
-        } else if (this.props.mode === 'edit') {
-          InstancesActions.updateInstance(this.state.name, {description: this.state.description});
-        }
-      }
-    }.bind(this));
-  },
-
-  handleCancel: function(event) {
-    this.setState({
-      errors: {}});
-    this.dismiss();
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-    return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
-    )
+  handleAddSubmit: function () {
+    InstancesActions.createInstance({
+      name        : this.state.name,
+      description : this.state.description,
+    });
   },
 
   render: function () {
@@ -127,16 +87,16 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref="createInstanceDialog"
-        title={title}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        modal={true}>
+        ref             = "dialogRef"
+        title           = {title}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogStandardActions}
+        modal           = {true}>
         <div>
         <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          onSubmit      = {this.handleSubmit}
+          acceptCharset = "UTF-8"
+          method        = "post">
 
         <TextField
             ref               = "name"

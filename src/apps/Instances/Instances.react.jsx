@@ -54,8 +54,8 @@ module.exports = Radium(React.createClass({
     }, {
       dialog: AddDialog,
       params: {
-        ref           : "editInstanceDialog",
-        mode          : "edit"
+        ref  : "editInstanceDialog",
+        mode : "edit"
       }
     },{
       dialog: ColorIconPickerDialog,
