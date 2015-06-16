@@ -376,21 +376,12 @@ var Syncano = (function() {
     /**
      * Object with methods to handle Instances
      *
-     * @alias Syncano#Instances
+     * @alias Syncano#Admins
      * @type {object}
-     * @property {function} create - shortcut to {@link Syncano#createInstance} method
-     * @property {function} list - shortcut to {@link Syncano#listInstances} method
-     * @property {function} get - shortcut to {@link Syncano#getInstance} method
-     * @property {function} remove - shortcut to {@link Syncano#removeInstance} method
-     * @property {function} update - shortcut to {@link Syncano#updateInstance} method
-     * @property {function} listAdmins - shortcut to {@link Syncano#listInstanceAdmins} method
+     * @property {function} list - shortcut to {@link Syncano#listAdmins} method
      */
     this.Admins = {
-      create: this.createAdmin.bind(this),
       list: this.listAdmins.bind(this),
-      get: this.getAdmin.bind(this),
-      remove: this.removeAdmin.bind(this),
-      update: this.updateAdmin.bind(this),
     };
 
     /**
