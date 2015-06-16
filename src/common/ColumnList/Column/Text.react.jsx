@@ -21,7 +21,7 @@ var Header = React.createClass({
 
 module.exports = React.createClass({
 
-  displayName: 'ColumnDate',
+  displayName: 'ColumnText',
 
   propTypes: {
     id          : React.PropTypes.string,
@@ -70,8 +70,7 @@ module.exports = React.createClass({
       <div
         className = {cssClasses}
         style     = {this.getStyles()}>
-        <span>{Moment(this.props.children).format('DD/MM/YYYY')}</span>
-        <span>{Moment(this.props.children).format('LTS')}</span>
+        {this.props.children}
       </div>
     );
 

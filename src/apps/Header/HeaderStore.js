@@ -32,6 +32,20 @@ var HeaderStore = Reflux.createStore({
     this.trigger(this);
   },
 
+  getSelectedIndex: function() {
+    if (!this.data.menuItems) {
+      return 0
+    }
+    var selectedItemIndex = null;
+    this.data.menuItems.some(function (item, index) {
+      if (item.active) {
+        selectedItemIndex = index;
+        return true;
+      }
+    });
+    return selectedItemIndex;
+  },
+
   onSetBreadcrumbs: function (payload) {
     this.data.breadcrumbs = payload;
     this.trigger(this.data);

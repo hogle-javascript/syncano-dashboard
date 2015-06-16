@@ -8,73 +8,69 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
-    InstancesActions = require('./InstancesActions'),
-    InstancesStore   = require('./InstancesStore'),
+    ApiKeysActions = require('./ApiKeysActions'),
+    ApiKeysStore   = require('./ApiKeysStore'),
 
     // Components
     mui              = require('material-ui'),
+    Colors           = require('material-ui/lib/styles/colors'),
+    FontIcon         = mui.FontIcon,
 
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
     Item            = require('../../common/ColumnList/Item.react'),
-    EmptyListItem   = require('../../common/ColumnList/EmptyListItem.react'),
     Header          = require('../../common/ColumnList/Header.react'),
     LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName      = require('../../common/ColumnList/Column/Name.react'),
-    ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
+    ColumnID        = require('../../common/ColumnList/Column/ID.react'),
+    ColumnText      = require('../../common/ColumnList/Column/Text.react'),
+    ColumnKey       = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
 
-  displayName: 'InstancesList',
+  displayName: 'ApiKeysList',
 
   mixins: [
-    Reflux.connect(InstancesStore),
+    Reflux.connect(ApiKeysStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
   ],
-
-  getInitialState: function() {
-    return {
-      listType: this.props.listType,
-      items: this.props.items
-    }
-  },
-
-  componentWillMount: function() {
-  },
-
-  componentWillReceiveProps: function(nextProps, nextState) {
-    this.setState({items : nextProps.items})
-  },
 
   // List
   handleItemIconClick: function (id, state) {
-    InstancesActions.checkItem(id, state);
-  },
-
-  handleItemClick: function(instanceName) {
-    // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+    ApiKeysActions.checkItem(id, state);
   },
 
   generateItem: function (item) {
+
+    var ignore_acl = null,
+        allow_user_create = null;
+    if (item.ignore_acl) {
+      ignore_acl = <div>Ignore ACL</div>;
+    }
+    if (item.allow_user_create) {
+      allow_user_create = <div>Allow user creation</div>;
+    }
+
     return (
-      <Item key={item.name}>
+      <Item key={item.id}>
         <ColumnCheckIcon
-          id              = {item.name}
-          icon            = {item.metadata.icon}
-          background      = {item.metadata.color}
+          id              = {item.id.toString()}
+          icon            = 'key'
+          background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}>
-          {item.name}
+          handleIconClick = {this.handleItemIconClick} >
+          {item.description}
         </ColumnCheckIcon>
-        <ColumnDesc>{item.description}</ColumnDesc>
+        <ColumnID>{item.id}</ColumnID>
+        <ColumnKey color="black">{item.api_key}</ColumnKey>
+        <ColumnText>
+          {ignore_acl}
+          {allow_user_create}
+        </ColumnText>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -85,7 +81,7 @@ module.exports = React.createClass({
       return <LoadingItem />;
     }
 
-    var instances = this.state.items.filter(this.props.filter);
+    var instances = this.state.items;
 
     var items = instances.map(function (item) {
       return this.generateItem(item)
@@ -96,12 +92,7 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return (
-      <EmptyListItem
-        handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </EmptyListItem>
-    );
+    return [<Item key="empty">Empty Item</Item>];
   },
 
   render: function () {
@@ -109,13 +100,16 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Description</ColumnDesc.Header>
+          <ColumnID.Header>ID</ColumnID.Header>
+          <ColumnKey.Header>Key</ColumnKey.Header>
+          <ColumnText.Header>Permissions</ColumnText.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List>
           {this.getList()}
         </List>
       </ListContainer>
     );
   }
 });
+

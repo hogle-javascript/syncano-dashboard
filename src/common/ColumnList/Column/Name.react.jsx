@@ -6,7 +6,7 @@ var React       = require('react'),
     Colors      = require('material-ui/lib/styles/colors');
 
 
-var cssClasses = classNames('col-xs-12');
+var cssClasses = classNames('col-xs-8');
 
 var Header = React.createClass({
   render: function () {
