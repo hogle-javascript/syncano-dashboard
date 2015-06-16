@@ -1,17 +1,24 @@
 var Reflux            = require('reflux'),
 
+    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+
     SessionStore      = require('../Session/SessionStore'),
     AuthStore         = require('../Account/AuthStore'),
     CodeBoxesActions  = require('./CodeBoxesActions');
 
 
 var CodeBoxesStore = Reflux.createStore({
+  mixins: [CheckListStoreMixin],
   listenables: CodeBoxesActions,
 
   getInitialState: function () {
     return {
       currentCodeBoxId: null,
       CodeBoxList: null,
+
+      items: [],
+      isLoading: true,
+
       checkedItemNumber: 0,
       AddDialogVisible: true,
       availableRuntimes: null,
@@ -27,7 +34,9 @@ var CodeBoxesStore = Reflux.createStore({
 
   init: function () {
 
-    this.data = {};
+    this.data = {
+      items: []
+    };
 
     this.langMap = {
       python: 'python',
@@ -45,6 +54,32 @@ var CodeBoxesStore = Reflux.createStore({
     return this.langMap[codeBox.runtime_name]
   },
 
+  getRuntimeColorIcon: function(runtime) {
+    var colors = {
+      nodejs: {color: '#80BD01', icon: 'language-python'},
+      python: {color: '#4984B1', icon: 'language-javascript'},
+      golang: {color: '#E0EBF5', icon: 'code-array'},
+      ruby:   {color: '#B21000', icon: 'code-array'},
+    }
+    return colors[runtime];
+  },
+
+  getCurrentCodeBox: function() {
+
+    if (!this.data.currentCodeBoxId){
+      return null;
+    }
+
+    var currentItem = null;
+    this.data.items.some(function(item){
+      if (item.id.toString() === this.data.currentCodeBoxId.toString()) {
+        currentItem = item;
+        return true;
+      }
+    }.bind(this));
+    return currentItem;
+  },
+
   refreshData: function () {
     console.debug('CodeBoxesStore::refreshData');
 
@@ -58,8 +93,16 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   onSetCurrentCodeBoxId: function(CodeBoxId) {
-    console.debug('CodeBoxesStore::onSetCurrentCodeBoxIdCompleted');
+    console.debug('CodeBoxesStore::onSetCurrentCodeBoxIdCompleted', CodeBoxId);
     this.data.currentCodeBoxId = CodeBoxId;
+  },
+
+  onGetCodeBoxRuntimes: function(runtimes) {
+    console.debug('CodeBoxesStore::onGetCodeBoxRuntimes');
+    if (!this.data.isLoading) {
+      this.data.isLoading = true;
+      this.trigger(this.data);
+    }
   },
 
   onGetCodeBoxRuntimesCompleted: function(runtimes) {
@@ -70,9 +113,28 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onGetCodeBoxesCompleted: function (list) {
+  onRemoveCodeBoxesCompleted: function(payload) {
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
+  },
+
+  onGetCodeBoxes: function() {
+    if (!this.data.isLoading) {
+      this.data.isLoading = true;
+      this.trigger(this.data);
+    }
+  },
+
+  onGetCodeBoxesCompleted: function (items) {
     console.debug('CodeBoxesStore::onGetCodeBoxesCompleted');
-    this.data.CodeBoxList = list;
+
+    var data = this.data;
+    data.items = [];
+    Object.keys(items).map(function(item) {
+        data.items.push(items[item]);
+    });
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 

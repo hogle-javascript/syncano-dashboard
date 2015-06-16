@@ -7,6 +7,10 @@ var CodeBoxesActions = Reflux.createActions();
 
 CodeBoxesActions.setCurrentCodeBoxId = Reflux.createAction();
 
+// TODO: Mixin?
+CodeBoxesActions.checkItem = Reflux.createAction();
+CodeBoxesActions.uncheckAll = Reflux.createAction();
+
 CodeBoxesActions.getCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 CodeBoxesActions.getCodeBoxes.listen( function(payload) {
   console.info('CodeBoxesActions::getCodeBoxes');
@@ -47,6 +51,17 @@ CodeBoxesActions.runCodeBox.listen( function(params) {
     .CodeBoxes.run(params.id, {payload: params.payload})
     .then(this.completed)
     .catch(this.failure);
+});
+
+CodeBoxesActions.removeCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.removeCodeBoxes.listen( function(idArray) {
+  console.info('CodeBoxesActions::removeCodeBoxes');
+  idArray.map(function(id) {
+    Connection
+      .CodeBoxes.remove(id)
+      .then(this.completed)
+      .catch(this.failure);
+  }.bind(this));
 });
 
 CodeBoxesActions.getCodeBoxTrace = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});

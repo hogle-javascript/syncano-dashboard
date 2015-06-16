@@ -17,6 +17,8 @@ var React               = require('react'),
     Header              = require('../../common/ColumnList/Header.react'),
     ColNameDesc         = require('../../common/ColumnList/ColNameDesc.react'),
 
+    LoadingItem         = require('../../common/ColumnList/LoadingItem.react'),
+
     FabList             = require('../../common/Fab/FabList.react'),
     Dialog              = require('material-ui/lib/dialog'),
 
@@ -154,19 +156,28 @@ module.exports = React.createClass({
     };
 
     var source;
-    var codeBox;
+    var codeBox = CodeBoxesStore.getCurrentCodeBox();
     var editorMode = 'python';
-    if (this.state.CodeBoxList) {
-      codeBox = this.state.CodeBoxList[this.state.currentCodeBoxId];
+
+
+    if (codeBox) {
       source = codeBox.source;
       editorMode = CodeBoxesStore.getEditorMode(codeBox);
     }
+
+    if (!codeBox) {
+      return <LoadingItem />;
+    }
+
     return (
       <div className="container" style={containerStyle}>
         <FabList
           style={{list: {top: 200,}}}
           buttons={[buttons.runButton, buttons.saveButton]}
           handleClick={this.handleButtonClick}/>
+
+        <div>Codebox: {codeBox.name}</div>
+
         <Editor
           ref="editor"
           mode={editorMode}

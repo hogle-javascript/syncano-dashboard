@@ -54,8 +54,8 @@ module.exports = Radium(React.createClass({
     }, {
       dialog: AddDialog,
       params: {
-        ref           : "editInstanceDialog",
-        mode          : "edit"
+        ref  : "editInstanceDialog",
+        mode : "edit"
       }
     },{
       dialog: ColorIconPickerDialog,
@@ -153,7 +153,7 @@ module.exports = Radium(React.createClass({
         styles = this.getStyles(),
         deleteActions = [
           { text: 'Cancel', onClick: this.handleCancel },
-          { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
+          { text: "Yes, I'm sure. Please delete my instances", onClick: this.handleDelete }
         ];
 
     return (
