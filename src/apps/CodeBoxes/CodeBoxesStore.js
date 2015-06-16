@@ -28,7 +28,7 @@ var CodeBoxesStore = Reflux.createStore({
       payload: '{"112":111}',
       description: '',
       selectedRuntimeIndex: 0,
-      traces: null,
+      traces: [],
     }
   },
 
@@ -163,6 +163,12 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRunCodeBox: function (trace) {
+    console.debug('CodeBoxesStore::onRunCodeBox');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
   onRunCodeBoxCompleted: function (trace) {
     console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     this.data.lastTrace = trace;
@@ -176,14 +182,21 @@ var CodeBoxesStore = Reflux.createStore({
       setTimeout(function(){CodeBoxesActions.getCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
-      this.data.traceLoading = false;
+      this.data.isLoading = false;
     }
     this.trigger(this.data);
   },
 
-  onGetCodeBoxTracesCompleted: function (traces) {
-    console.debug('CodeBoxesStore::onGetCodeBoxTraces');
-    this.data.traces = traces;
+  onGetCodeBoxTracesCompleted: function (tracesObj) {
+    console.debug('CodeBoxesStore::onGetCodeBoxTraces', tracesObj);
+
+    var data = this.data;
+    data.traces = [];
+    Object.keys(tracesObj).map(function(item) {
+        data.traces.push(tracesObj[item]);
+    });
+
+    this.data.isLoading = false;
     this.trigger(this.data);
   }
 

@@ -1,29 +1,29 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
 
     // Utils
-    HeaderMixin         = require('../Header/HeaderMixin'),
-    ButtonActionMixin   = require('../../mixins/ButtonActionMixin'),
+    HeaderMixin       = require('../Header/HeaderMixin'),
+    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
     SessionStore      = require('../Session/SessionStore'),
-    SessionActions   = require('../Session/SessionActions'),
-    CodeBoxesActions = require('./CodeBoxesActions'),
-    CodeBoxesStore   = require('./CodeBoxesStore'),
+    SessionActions    = require('../Session/SessionActions'),
+    CodeBoxesActions  = require('./CodeBoxesActions'),
+    CodeBoxesStore    = require('./CodeBoxesStore'),
 
     // Components
-    mui              = require('material-ui'),
+    mui               = require('material-ui'),
 
     // List
-    ListContainer   = require('../../common/Lists/ListContainer.react'),
-    Item            = require('../../common/ColumnList/Item.react'),
-    Header          = require('../../common/ColumnList/Header.react'),
-    LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName      = require('../../common/ColumnList/Column/Name.react'),
-    ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer     = require('../../common/Lists/ListContainer.react'),
+    Item              = require('../../common/ColumnList/Item.react'),
+    Header            = require('../../common/ColumnList/Header.react'),
+    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
+    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -65,7 +65,7 @@ module.exports = React.createClass({
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
-          {item.name}
+          {item.label}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>

@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
   editShow: function() {
     this.setState({
-      name        : '',
+      label       : '',
       description : '',
       errors      : {}
     });
@@ -53,7 +53,7 @@ module.exports = React.createClass({
     var checkedItem = CodeBoxesStore.getCheckedItem();
     if (checkedItem) {
       this.setState({
-          label                : checkedItem.name,
+          label                : checkedItem.label,
           description          : checkedItem.description,
           selectedRuntimeIndex : CodeBoxesStore.getRuntimeIndex(checkedItem.runtime_name)
       });
