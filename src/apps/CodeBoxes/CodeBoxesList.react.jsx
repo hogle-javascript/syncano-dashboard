@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
 
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
@@ -8,17 +8,16 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
-    InstancesActions  = require('./InstancesActions'),
-    InstancesStore    = require('./InstancesStore'),
+    CodeBoxesActions  = require('./CodeBoxesActions'),
+    CodeBoxesStore    = require('./CodeBoxesStore'),
 
     // Components
     mui               = require('material-ui'),
-    List              = mui.List,
 
     // List
+    List              = require('../../common/Lists/List.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnName        = require('../../common/ColumnList/Column/Name.react'),
@@ -29,24 +28,15 @@ var React  = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'InstancesList',
+  displayName: 'CodeBoxesList',
 
   mixins: [
-    Reflux.connect(InstancesStore),
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+
+    Reflux.connect(CodeBoxesStore),
+    HeaderMixin
   ],
-
-  getInitialState: function() {
-    return {
-      listType: this.props.listType,
-      items: this.props.items
-    }
-  },
-
-  componentWillMount: function() {
-  },
 
   componentWillReceiveProps: function(nextProps, nextState) {
     this.setState({items : nextProps.items})
@@ -54,26 +44,27 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
-    InstancesActions.checkItem(id, state);
+    CodeBoxesActions.checkItem(id, state);
   },
 
-  handleItemClick: function(instanceName) {
-    // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+  handleItemClick: function(itemId) {
+    // Redirect to edit screen
+    this.transitionTo('codeboxes-edit', {instanceName: this.getParams().instanceName, codeboxId: itemId});
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
+
+    var runtime = CodeBoxesStore.getRuntimeColorIcon(item.runtime_name);
     return (
-      <Item key={item.name}>
+      <Item key={item.id}>
         <ColumnCheckIcon
-          id              = {item.name}
-          icon            = {item.metadata.icon}
-          background      = {item.metadata.color}
+          id              = {item.id}
+          icon            = {runtime.icon}
+          background      = {runtime.color}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
-          {item.name}
+          {item.label}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
@@ -86,10 +77,8 @@ module.exports = React.createClass({
       return <LoadingItem />;
     }
 
-    var instances = this.state.items.filter(this.props.filter);
-
-    var items = instances.map(function (item) {
-      return this.generateItem(item)
+    var items = this.state.items.map(function (item) {
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
@@ -97,12 +86,7 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return (
-      <EmptyListItem
-        handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </EmptyListItem>
-    );
+    return [<Item key="empty">Empty Item</Item>];
   },
 
   render: function () {
@@ -113,7 +97,7 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List>
           {this.getList()}
         </List>
       </ListContainer>

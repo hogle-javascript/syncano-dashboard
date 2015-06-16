@@ -1,17 +1,18 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
 
     // Stores and Actions
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    ApiKeysActions = require('./ApiKeysActions'),
-    ApiKeysStore   = require('./ApiKeysStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    ApiKeysActions        = require('./ApiKeysActions'),
+    ApiKeysStore          = require('./ApiKeysStore'),
 
     // Components
     mui                   = require('material-ui'),
@@ -22,8 +23,8 @@ var React  = require('react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    ApiKeysList = require('./ApiKeysList.react'),
-    AddDialog     = require('./ApiKeysAddDialog.react');
+    ApiKeysList           = require('./ApiKeysList.react'),
+    AddDialog             = require('./ApiKeysAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -31,11 +32,13 @@ module.exports = React.createClass({
   displayName: 'ApiKeys',
 
   mixins: [
-    Reflux.connect(ApiKeysStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
-    DialogsMixin
+
+    Reflux.connect(ApiKeysStore),
+    HeaderMixin,
+    DialogsMixin,
+    InstanceTabsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -91,45 +94,6 @@ module.exports = React.createClass({
   handleReset: function() {
     console.info('ApiKeys::handleReset');
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
-  },
-
-  headerMenuItems: function() {
-    var params = {instanceName: this.getParams().instanceName};
-    return [
-      {
-        label: 'Data Browser', 
-        route: 'data-objects', 
-        params: params, 
-      }, {
-        label: 'Classes', 
-        route: 'classes', 
-        params: params
-      }, {
-        label: 'API Keys', 
-        route: 'api-keys', 
-        params: params,
-        active: true
-      }, {
-        label: 'Admins', 
-        route: 'admins', 
-        params: params
-      }, {
-        label: 'Users', 
-        route: 'users', 
-        params: params
-      }, {
-        label: 'CodeBoxes', 
-        route: 'codeboxes', 
-        params: params
-      }, {
-        label: 'Webhooks', 
-        route: 'webhooks', 
-        params: params
-      }, {
-        label: 'Tasks', 
-        route: 'tasks', 
-        params: params
-      }];
   },
 
   render: function () {

@@ -106,7 +106,8 @@ module.exports = React.createClass({
               name="password"
               className="text-field"
               autoComplete="password"
-              hintText="New password" />
+              hintText="New password"
+              fullWidth={true} />
             <TextField
               ref="confirmPassword"
               valueLink={this.linkState('confirmPassword')}
@@ -115,7 +116,8 @@ module.exports = React.createClass({
               name="confirmPassword"
               className="text-field"
               autoComplete="confirmPassword"
-              hintText="Confirm password" />
+              hintText="Confirm password"
+              fullWidth={true} />
             <RaisedButton
               type="submit"
               label="Change password"

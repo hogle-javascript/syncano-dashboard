@@ -3,7 +3,7 @@ var React                = require('react'),
     gravatar             = require('gravatar'),
 
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
-    Colors               = require('material-ui/lib/styles/colors')
+    Colors               = require('material-ui/lib/styles/colors'),
     LinearProgress       = require('material-ui/lib/linear-progress'),
     Dialog               = require('material-ui/lib/dialog'),
     Snackbar             = require('material-ui/lib/snackbar'),
@@ -24,7 +24,7 @@ var React                = require('react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
-    Field                = require('material-ui/lib/text-field'),
+    TextField            = mui.TextField,
     FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
     FieldDatetime        = require('../common/Field/FieldDatetime.react'),
     FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
@@ -57,7 +57,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      errorText: null,
+      errorText: null
     };
   },
 
@@ -76,7 +76,7 @@ module.exports = React.createClass({
       primary1Color: Colors.blueA700,
       primary2Color: Colors.lightBlueA700,
       primary3Color: Colors.cyanA700,
-      accent1Color: Colors.pink500,
+      accent1Color: Colors.pink500
       // accent1Color: Colors.pinkA200,
       // accent2Color: Colors.pinkA400,
       // accent3Color: Colors.pinkA100,
@@ -96,11 +96,11 @@ module.exports = React.createClass({
   dummyDisplayError: function(e) {
     if (e.target.value.length > 5) {
       this.setState({
-        errorText: "(DummyError) This field is 5 chars only",
+        errorText: "(DummyError) This field is 5 chars only"
       })
     } else {
       this.setState({
-        errorText: null,
+        errorText: null
       })
     }
   },
@@ -128,19 +128,23 @@ module.exports = React.createClass({
 
     var actions = [{
       displayName: 'Sort by name',
-      name: 'sortByName',
+      name: 'sortByName'
     }, {
       displayName: 'Sort by date',
-      name: 'sortByDate',
+      name: 'sortByDate'
     }, {
       displayName: 'Switch to list view',
       name: 'switchToListView',
-      iconType: 'view-stream',
+      iconType: 'view-stream'
     }, {
       displayName: 'Switch to card view',
       name: 'switchToCardView',
-      iconType: 'view-module',
+      iconType: 'view-module'
     }];
+
+    var dummyClick = function (action) {
+      console.log('Click!', action);
+    };
 
     console.log(Icon.propTypes);
 
@@ -153,7 +157,7 @@ module.exports = React.createClass({
     };
 
     var style = {
-      'color': 'red',
+      'color': 'red'
     };
 
     var source = "import os\n" +
@@ -168,13 +172,13 @@ module.exports = React.createClass({
         name: "menuButton",
         label: "Menu button dummy label",
         icon: 'menu',
-        color: '#FFC52D',
+        color: '#FFC52D'
       },
       {
         name: "plusButton",
         label: "Plus button dummy label",
         icon: 'plus',
-        color: 'red',
+        color: 'red'
       }
     ];
 
@@ -183,8 +187,8 @@ module.exports = React.createClass({
       name: "password",
       largeText: false,
       fieldGroup: 'menu',
-      color: '#FFC52D',
-    }
+      color: '#FFC52D'
+    };
 
     var someField = {
       displayName: "Some Field",
@@ -192,7 +196,7 @@ module.exports = React.createClass({
       name: "somefield",
       largeText: false,
       fieldGroup: 'menu',
-      color: '#FFC52D',
+      color: '#FFC52D'
     };
 
     var handleSnackbarClick = function () {
@@ -215,13 +219,13 @@ module.exports = React.createClass({
 
     var socialAuthButtons = [{
       icon: 'github',
-      text: 'Log in with Github',
+      text: 'Log in with Github'
     }, {
       icon: 'google',
-      text: 'Log in with Google',
+      text: 'Log in with Google'
     }, {
       icon: 'facebook',
-      text: 'Log in with Facebook',
+      text: 'Log in with Facebook'
     }];
 
     var billingProfile = {
@@ -244,7 +248,7 @@ module.exports = React.createClass({
         heading: 'Alert',
         textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
         textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
-      }]
+      }];
 
     var payload = '{test: "testvalue"}';
 
@@ -253,44 +257,44 @@ module.exports = React.createClass({
       name: "codebox",
       options: [{
         displayName: "CodeBox1",
-        name: 1,
+        name: 1
       }, {
         displayName: "CodeBox2",
-        name: 2,
+        name: 2
       }, {
         displayName: "CodeBox3",
-        name: 3,
+        name: 3
       }],
-      type: "select",
-    }
+      type: "select"
+    };
 
     var fieldSelectMUI = [{
       payload: '1',
-      text: 'Never',
+      text: 'Never'
     }, {
       payload: '2',
-      text: 'Every Night',
+      text: 'Every Night'
     }, {
       payload: '3',
-      text: 'Weeknights',
+      text: 'Weeknights'
     }, {
       payload: '4',
-      text: 'Weekends',
+      text: 'Weekends'
     }, {
       payload: '5',
-      text: 'Weekly',
+      text: 'Weekly'
     }];
 
     var fieldDatetime = {
       displayName: "Date",
       name: "date",
       type: "datetime",
-      value: "",
+      value: ""
     };
 
     var fieldSelectOption = {
       displayName: "Option display name",
-      name: 5,
+      name: 5
     };
 
     var columns = [
@@ -300,7 +304,7 @@ module.exports = React.createClass({
       }, {
         name: 'ID',
         columnType: 'integer'
-      },
+      }
     ];
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
@@ -462,12 +466,13 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>Field (material UI)</h4>
-          <Field
+          <TextField
             hintText="(Hint text) Your name - 5 chars only"
             errorText={this.state.errorText}
             onChange={this.dummyDisplayError}
             floatingLabelText="Your name"
-            style={{width: "100%", borderBottomColor: "0091EA"}} />
+            fullWidth={true}
+            style={{borderBottomColor: "0091EA"}} />
         </div>
 
         <div className="exampleBox">
@@ -481,7 +486,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>FieldPassword (Material UI)</h4>
-          <mui.TextField
+          <TextField
             name="password"
             type="password"
             floatingLabelText="Password" />
@@ -494,10 +499,10 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldReadonly (material UI)</h2>
-          <Field
+          <TextField
             defaultValue="Your name - 5 chars only"
             disabled={true}
-            style={{width: "100%"}} />
+            fullWidth={true} />
         </div>
 
         <div className="exampleBox">
