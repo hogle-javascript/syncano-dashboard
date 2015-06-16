@@ -1,19 +1,18 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
+var React               = require('react'),
+    Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-    DialogFormMixin = require('../../mixins/DialogFormMixin'),
+    ValidationMixin     = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
-    CodeBoxesActions = require('./CodeBoxesActions'),
-    CodeBoxesStore   = require('./CodeBoxesStore'),
+    CodeBoxesActions    = require('./CodeBoxesActions'),
+    CodeBoxesStore      = require('./CodeBoxesStore'),
 
     // Components
-    mui          = require('material-ui'),
-    TextField    = mui.TextField,
-    DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog;
+    mui                 = require('material-ui'),
+    TextField           = mui.TextField,
+    DropDownMenu        = mui.DropDownMenu,
+    Dialog              = mui.Dialog;
 
 
 module.exports = React.createClass({

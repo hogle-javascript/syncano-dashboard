@@ -144,7 +144,8 @@ module.exports = React.createClass({
               name="email"
               className="text-field"
               autoComplete="email"
-              hintText="Your email" />
+              hintText="Your email"
+              fullWidth={true} />
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
@@ -153,7 +154,8 @@ module.exports = React.createClass({
               name="password"
               className="text-field"
               autoComplete="password"
-              hintText="Password" />
+              hintText="Password"
+              fullWidth={true} />
             <RaisedButton
               type="submit"
               label="Log in"
