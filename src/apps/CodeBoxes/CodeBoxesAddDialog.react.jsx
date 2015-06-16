@@ -97,14 +97,14 @@ module.exports = React.createClass({
     var runtimesMenu = null;
     if (this.state.runtimes) {
       runtimesMenu = <DropDownMenu
-        ref="runtime"
-        name="runtime"
-        autoWidth={true}
-        floatingLabelText="Description of CodeBox"
-        style={{width:500}}
-        selectedIndex={this.state.selectedRuntimeIndex}
-        onChange={this.handleRuntimeChange}
-        menuItems={this.state.runtimes} />;
+        ref               = "runtime"
+        name              = "runtime"
+        autoWidth         = {true}
+        floatingLabelText = "Description of CodeBox"
+        style             = {{width:500}}
+        selectedIndex     = {this.state.selectedRuntimeIndex}
+        onChange          = {this.handleRuntimeChange}
+        menuItems         = {this.state.runtimes} />;
     }
 
     var floatingLabel = {
@@ -133,8 +133,7 @@ module.exports = React.createClass({
             style={{width:500}}
             autoComplete="label"
             hintText="Short name for your CodeBox"
-            floatingLabelText="Label of CodeBox"
-            />
+            floatingLabelText="Label of CodeBox" />
         <TextField
             ref="description"
             valueLink={this.linkState('description')}
@@ -145,8 +144,7 @@ module.exports = React.createClass({
             autoComplete="description"
             multiLine={true}
             hintText="Multiline description of CodeBox (optional)"
-            floatingLabelText="Description of CodeBox"
-          />
+            floatingLabelText="Description of CodeBox" />
         <div>
           <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
         </div>
