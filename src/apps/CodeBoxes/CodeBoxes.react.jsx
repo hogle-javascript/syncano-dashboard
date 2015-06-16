@@ -4,8 +4,8 @@ var React  = require('react'),
 
     // Utils
     DialogsMixin      = require('../../mixins/DialogsMixin'),
-    HeaderMixin       = require('../Header/HeaderMixin'),
     InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+    HeaderMixin       = require('../Header/HeaderMixin'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
@@ -16,17 +16,11 @@ var React  = require('react'),
     mui                  = require('material-ui'),
     Dialog               = mui.Dialog,
     Container            = require('../../common/Container/Container.react'),
-    List                 = require('../../common/Lists/List.react'),
-    ListContainer        = require('../../common/Lists/ListContainer.react'),
-    Item                 = require('../../common/ColumnList/Item.react'),
-    Column               = require('../../common/ColumnList/ItemColumn.react'),
-    Header               = require('../../common/ColumnList/Header.react'),
-    ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
     FloatingActionButton = require('../../common/Fab/Fab.react'),
     FabList              = require('../../common/Fab/FabList.react'),
 
+    // Local components
     CodeBoxesList        = require('./CodeBoxesList.react'),
-
     AddDialog            = require('./CodeBoxesAddDialog.react');
 
 
@@ -35,12 +29,13 @@ module.exports = React.createClass({
   displayName: 'CodeBoxes',
 
   mixins: [
+    Router.State,
+    Router.Navigation,
+
     Reflux.connect(CodeBoxesStore),
     DialogsMixin,
     HeaderMixin,
     InstanceTabsMixin,
-    Router.State,
-    Router.Navigation,
   ],
 
   componentWillMount: function() {

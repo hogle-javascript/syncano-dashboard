@@ -18,13 +18,14 @@ var React  = require('react'),
 
 module.exports = React.createClass({
 
-  displayName : 'CodeBoxesAddDialog',
+  displayName: 'CodeBoxesAddDialog',
 
   mixins: [
-    Reflux.connect(CodeBoxesStore),
     React.addons.LinkedStateMixin,
+
+    Reflux.connect(CodeBoxesStore),
     DialogFormMixin,
-    ValidationMixin,
+    ValidationMixin
   ],
 
   validatorConstraints: {
