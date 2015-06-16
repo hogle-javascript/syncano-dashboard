@@ -1,8 +1,12 @@
 var React               = require('react'),
     classNames          = require('classnames'),
-    mui                 = require('material-ui'),
     gravatar            = require('gravatar'),
 
+    mui                 = require('material-ui'),
+    List                = mui.List,
+    ListItem            = mui.ListItem, 
+    ListDivider         = mui.ListDivider,
+    Avatar              = mui.Avatar,
     MaterialIcon        = require('../../common/Icon/MaterialIcon.react'),
 
     OutsideClickHandler = require('react-outsideclickhandler');
@@ -19,7 +23,7 @@ module.exports = React.createClass({
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
       content: React.PropTypes.string.isRequired,         // Content to view as item can be any object too
       name: React.PropTypes.string.isRequired,            // name for DropdownMenuItems kys
-      handleItemClick: React.PropTypes.func.isRequired,   // function to call after DropdownMenuItem click
+      handleItemClick: React.PropTypes.func.isRequired   // function to call after DropdownMenuItem click
     })).isRequired,
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string.isRequired,
@@ -35,15 +39,15 @@ module.exports = React.createClass({
       iconStyle: {
         width: "18px",
         height: "18px", 
-        fill: "#FFF",
+        fill: "#FFF"
       }        
-    };
+    }
   },
 
   getInitialState: function () {
     return {
       icon: this.props.icon || 'more_vert',
-      isOpen: false,
+      isOpen: false
     }
   },
 
@@ -59,43 +63,43 @@ module.exports = React.createClass({
 
     var cssClasses = classNames({
       'dropdown-menu': true,
-      'dropdown-menu-visible': this.state.isOpen,
+      'dropdown-menu-visible': this.state.isOpen
     });
 
     var headerContent;
 
     if (this.props.headerContent) {
       var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true);
-      var avatar = <mui.Avatar src={gravatarUrl} />;
+      var avatar = <Avatar src={gravatarUrl} />;
       var headerContent =
-        <mui.List>
-          <mui.ListItem 
+        <List>
+          <ListItem 
             leftAvatar={avatar}
             secondaryText={this.props.headerContent.userEmail} 
             disableTouchTap={!this.props.headerContent.clickable}
-            onClick={this.props.headerContent.handleItemClick} >
+            onClick={this.props.headerContent.handleItemClick}>
             {this.props.headerContent.userFullName}
-          </mui.ListItem>
-          <mui.ListDivider />
-        </mui.List>
+          </ListItem>
+          <ListDivider />
+        </List>
     };
 
     var items = this.props.items.map(function (item, i) {
       return (
-        <mui.List>
-          <mui.ListItem 
+        <List>
+          <ListItem 
             key={item.name + i} 
-            onClick={item.handleItemClick} >
+            onClick={item.handleItemClick}>
             {item.content}
-          </mui.ListItem>
-        </mui.List>)
+          </ListItem>
+        </List>)
     }.bind(this));
 
     return (
-      <OutsideClickHandler onOutsideClick={this.close} >
+      <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
           <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
-            <MaterialIcon name={this.state.icon} style={this.props.iconStyle}/>
+            <MaterialIcon name={this.state.icon} style={this.props.iconStyle} />
           </div>
           <div className={cssClasses}>
               {headerContent}
