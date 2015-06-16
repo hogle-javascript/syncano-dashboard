@@ -7,7 +7,6 @@ var React             = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionStore      = require('../Session/SessionStore'),
     SessionActions    = require('../Session/SessionActions'),
     CodeBoxesActions  = require('./CodeBoxesActions'),
     CodeBoxesStore    = require('./CodeBoxesStore'),
@@ -48,14 +47,12 @@ module.exports = React.createClass({
     CodeBoxesActions.checkItem(id, state);
   },
 
-
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
+    this.transitionTo('codeboxes-edit', {instanceName: this.getParams().instanceName, codeboxId: itemId});
   },
 
-
-  generateItem: function (item) {
+  renderItem: function (item) {
 
     var runtime = CodeBoxesStore.getRuntimeColorIcon(item.runtime_name);
     return (
@@ -81,7 +78,7 @@ module.exports = React.createClass({
     }
 
     var items = this.state.items.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
@@ -100,7 +97,7 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List>
           {this.getList()}
         </List>
       </ListContainer>
