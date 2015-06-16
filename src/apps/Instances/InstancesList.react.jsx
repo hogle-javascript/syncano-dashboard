@@ -17,6 +17,7 @@ var React  = require('react'),
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
     Item            = require('../../common/ColumnList/Item.react'),
+    EmptyListItem   = require('../../common/ColumnList/EmptyListItem.react'),
     Header          = require('../../common/ColumnList/Header.react'),
     LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
     ColumnName      = require('../../common/ColumnList/Column/Name.react'),
@@ -33,13 +34,13 @@ module.exports = React.createClass({
     Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
   getInitialState: function() {
     return {
       listType: this.props.listType,
-      items: this.props.items,
+      items: this.props.items
     }
   },
 
@@ -95,7 +96,12 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem
+        handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
   render: function () {
