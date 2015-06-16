@@ -1,18 +1,18 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
 
     // Stores and Actions
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    ApiKeysActions = require('./ApiKeysActions'),
-    ApiKeysStore   = require('./ApiKeysStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    ApiKeysActions        = require('./ApiKeysActions'),
+    ApiKeysStore          = require('./ApiKeysStore'),
 
     // Components
     mui                   = require('material-ui'),
@@ -23,8 +23,8 @@ var React  = require('react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    ApiKeysList = require('./ApiKeysList.react'),
-    AddDialog     = require('./ApiKeysAddDialog.react');
+    ApiKeysList           = require('./ApiKeysList.react'),
+    AddDialog             = require('./ApiKeysAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -32,12 +32,13 @@ module.exports = React.createClass({
   displayName: 'ApiKeys',
 
   mixins: [
-    Reflux.connect(ApiKeysStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
+
+    Reflux.connect(ApiKeysStore),
+    HeaderMixin,
     DialogsMixin,
-    InstanceTabsMixin,
+    InstanceTabsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
