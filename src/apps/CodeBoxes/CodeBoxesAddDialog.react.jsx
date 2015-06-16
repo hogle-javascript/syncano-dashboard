@@ -1,27 +1,29 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+var React  = require('react'),
+    Reflux = require('reflux'),
 
     // Utils
-    ValidationMixin     = require('../../mixins/ValidationMixin'),
+    ValidationMixin = require('../../mixins/ValidationMixin'),
+    DialogFormMixin = require('../../mixins/DialogFormMixin'),
 
     // Stores and Actions
-    CodeBoxesActions    = require('./CodeBoxesActions'),
-    CodeBoxesStore      = require('./CodeBoxesStore'),
+    CodeBoxesActions = require('./CodeBoxesActions'),
+    CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui                 = require('material-ui'),
-    TextField           = mui.TextField,
-    DropDownMenu        = mui.DropDownMenu,
-    Dialog              = mui.Dialog;
+    mui          = require('material-ui'),
+    TextField    = mui.TextField,
+    DropDownMenu = mui.DropDownMenu,
+    Dialog       = mui.Dialog;
 
 
 module.exports = React.createClass({
 
-  displayName: 'CodeBoxesAddDialog',
+  displayName : 'CodeBoxesAddDialog',
 
   mixins: [
     Reflux.connect(CodeBoxesStore),
     React.addons.LinkedStateMixin,
+    DialogFormMixin,
     ValidationMixin,
   ],
 
@@ -35,64 +37,53 @@ module.exports = React.createClass({
 
   },
 
-  show: function() {
-    this.refs.addCodeBoxDialog.show();
-  },
-
-  dismiss: function() {
-    this.refs.addCodeBoxDialog.dismiss();
-  },
-
-
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        this.dismiss();
-        CodeBoxesActions.addCodeBox({
-          label       : this.state.label,
-          description : this.state.description,
-          runtime     : this.state.runtimes[this.state.selectedRuntimeIndex].text,
-        });
-      }
-    }.bind(this));
-  },
-
-  handleCancel: function(event) {
+  clearData: function() {
     this.setState({
-      errors: {}});
-    this.dismiss();
+      errors : {}
+    })
   },
 
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
+  editShow: function() {
+    this.setState({
+      name        : '',
+      description : '',
+      errors      : {}
+    });
+
+    var checkedItem = CodeBoxesStore.getCheckedItem();
+    if (checkedItem) {
+      this.setState({
+          label                : checkedItem.name,
+          description          : checkedItem.description,
+          selectedRuntimeIndex : CodeBoxesStore.getRuntimeIndex(checkedItem.runtime_name)
+      });
     }
-    return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
-    )
+  },
+
+
+  handleEditSubmit: function () {
+    CodeBoxesActions.updateCodeBox(CodeBoxesStore.getCheckedItem().id, {
+      name         : this.state.label,
+      description  : this.state.description,
+      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text,
+    });
+  },
+
+  handleAddSubmit: function () {
+    CodeBoxesActions.addCodeBox({
+      name         : this.state.label,
+      description  : this.state.description,
+      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text,
+    });
   },
 
   handleRuntimeChange: function (event, selectedIndex, menuItem){
     this.setState({selectedRuntimeIndex: selectedIndex});
   },
 
-
   render: function () {
 
     var modalState = true;
-
-    var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: 'Add CodeBox', onClick: this.handleSubmit, ref: 'submit'}
-    ];
 
     var runtimesMenu = null;
     if (this.state.runtimes) {
@@ -113,38 +104,51 @@ module.exports = React.createClass({
       fontFamily: 'Roboto, sans-serif'
     };
 
+    var title = this.props.mode === 'edit' ? 'Edit': 'Add';
+    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Codebox';
+
+    var dialogStandardActions = [
+      {
+        text    : 'Cancel',
+        onClick : this.handleCancel,
+        ref     : 'cancel'
+      },
+      {
+        text    : submitLabel,
+        onClick : this.handleSubmit,
+        ref     : 'submit'
+      }
+    ];
+
     return (
       <Dialog
-        ref="addCodeBoxDialog"
-        title="Add CodeBox"
-        actions={dialogStandardActions}
-        //actionFocus="submit"
-        modal={modalState}>
+        ref     = "dialogRef"
+        title   = {title + " CodeBox"}
+        actions = {dialogStandardActions}
+        modal   = {modalState}>
         <div>
         <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          onSubmit      = {this.handleSubmit}
+          acceptCharset = "UTF-8"
+          method        = "post">
         <TextField
-            ref="label"
-            valueLink={this.linkState('label')}
-            errorText={this.getValidationMessages('label').join()}
-            name="label"
-            style={{width:500}}
-            autoComplete="label"
-            hintText="Short name for your CodeBox"
-            floatingLabelText="Label of CodeBox" />
+            ref               = "label"
+            valueLink         = {this.linkState('label')}
+            errorText         = {this.getValidationMessages('label').join()}
+            name              = "label"
+            style             = {{width:500}}
+            hintText          = "Short name for your CodeBox"
+            floatingLabelText = "Label of CodeBox" />
         <TextField
-            ref="description"
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join()}
-            name="description"
-            style={{width:500}}
-            className="text-field"
-            autoComplete="description"
-            multiLine={true}
-            hintText="Multiline description of CodeBox (optional)"
-            floatingLabelText="Description of CodeBox" />
+            ref               = "description"
+            name              = "description"
+            valueLink         = {this.linkState('description')}
+            errorText         = {this.getValidationMessages('description').join()}
+            style             ={{width:500}}
+            className         = "text-field"
+            multiLine         = {true}
+            hintText          = "Multiline description of CodeBox (optional)"
+            floatingLabelText = "Description of CodeBox" />
         <div>
           <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
         </div>

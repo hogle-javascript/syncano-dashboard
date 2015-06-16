@@ -64,6 +64,18 @@ var CodeBoxesStore = Reflux.createStore({
     return colors[runtime];
   },
 
+  getRuntimeIndex: function(runtimeName) {
+    var runtimeIndex = null;
+    this.data.runtimes.some(function(runtime, index) {
+      console.log(runtimeName, runtime.payload)
+      if (runtimeName === runtime.payload) {
+        runtimeIndex = index;
+        return true;
+      }
+    });
+    return runtimeIndex;
+  },
+
   getCurrentCodeBox: function() {
 
     if (!this.data.currentCodeBoxId){
@@ -142,6 +154,13 @@ var CodeBoxesStore = Reflux.createStore({
     console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
     SessionStore.router.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
     CodeBoxesActions.getCodeBoxes();
+  },
+
+  onUpdateCodeBoxCompleted: function(resp) {
+    console.debug('CodeBoxesStore::onUpdateCodeBoxCompleted');
+    CodeBoxesActions.getCodeBoxes();
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
   },
 
   onRunCodeBoxCompleted: function (trace) {

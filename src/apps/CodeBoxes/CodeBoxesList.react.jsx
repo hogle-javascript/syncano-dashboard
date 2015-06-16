@@ -3,8 +3,8 @@ var React  = require('react'),
     Router = require('react-router'),
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+    HeaderMixin         = require('../Header/HeaderMixin'),
+    ButtonActionMixin   = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
     SessionStore      = require('../Session/SessionStore'),

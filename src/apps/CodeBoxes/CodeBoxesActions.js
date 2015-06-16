@@ -26,9 +26,9 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
   console.info('CodeBoxesActions::addCodeBox');
   Connection
     .CodeBoxes.create({
-      runtime_name: payload.runtime,
-      name: payload.label,
-      description: payload.description,
+      runtime_name : payload.runtime_name,
+      name         : payload.name,
+      description  : payload.description,
       source: '#Start coding!',
     })
     .then(this.completed)
@@ -36,10 +36,10 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
 });
 
 CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-CodeBoxesActions.updateCodeBox.listen( function(params) {
+CodeBoxesActions.updateCodeBox.listen( function(codeboxId, params) {
   console.info('CodeBoxesActions::updateCodeBox');
   Connection
-    .CodeBoxes.update(params.id, params)
+    .CodeBoxes.update(codeboxId, params)
     .then(this.completed)
     .catch(this.failure);
 });
