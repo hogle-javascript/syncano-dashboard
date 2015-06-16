@@ -1,13 +1,9 @@
 var React               = require('react'),
     classNames          = require('classnames'),
+    mui                 = require('material-ui'),
+    gravatar            = require('gravatar'),
 
-    Constants           = require('../../constants/Constants'),
-
-    Icon                = require('../Icon/Icon.react'),
     MaterialIcon        = require('../../common/Icon/MaterialIcon.react'),
-    Mixins              = require('../../mixins/mixins'),
-
-    DropdownMenuItem    = require('./DropdownMenuItem.react'),
 
     OutsideClickHandler = require('react-outsideclickhandler');
 
@@ -16,24 +12,20 @@ require('./Dropdown.css');
 
 module.exports = React.createClass({
 
-  displayName: 'Dropdown',
-
-  mixins: [
-    //require('react-onclickoutside'),
-    //Mixins.toggleMenuMixin
-  ],
+  displayName: 'MaterialDropdown',
 
   propTypes: {
     icon: React.PropTypes.string,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
-      content: React.PropTypes.string,         // Content to view as item
-      name: React.PropTypes.string,            // name for DropdownMenuItems kys
-      handleItemClick: React.PropTypes.func,   // function to call after DropdownMenuItem click
+      content: React.PropTypes.string.isRequired,         // Content to view as item can be any object too
+      name: React.PropTypes.string.isRequired,            // name for DropdownMenuItems kys
+      handleItemClick: React.PropTypes.func.isRequired,   // function to call after DropdownMenuItem click
     })).isRequired,
     headerContent: React.PropTypes.shape({
-      icon: React.PropTypes.string,
-      userFullName: React.PropTypes.string,
-      userEmail: React.PropTypes.string
+      userFullName: React.PropTypes.string.isRequired,
+      userEmail: React.PropTypes.string.isRequired,
+      handleItemClick: React.PropTypes.func,              // if "clickable" props is defined as false or 
+      clickable: React.PropTypes.bool                     // is not defined function will not be triggered
     }),
     iconStyle: React.PropTypes.object,
   },
@@ -73,21 +65,30 @@ module.exports = React.createClass({
     var headerContent;
 
     if (this.props.headerContent) {
-      var headerIcon = <Icon
-                         icon={this.props.headerContent.icon || "account-circle"}
-                         style={{width: "60px", height: "60px", fill: "#0091EA"}} />
-      headerContent =
-      <div className="account-group">
-        <div className="account-image">{headerIcon}</div>
-        <div className="account-text">
-          <div className="account-name">{this.props.headerContent.userFullName}</div>
-          <div className="account-email">{this.props.headerContent.userEmail}</div>
-        </div>
-      </div>
-    }
+      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true);
+      var avatar = <mui.Avatar src={gravatarUrl} />;
+      var headerContent =
+        <mui.List>
+          <mui.ListItem 
+            leftAvatar={avatar}
+            secondaryText={this.props.headerContent.userEmail} 
+            disableTouchTap={!this.props.headerContent.clickable}
+            onClick={this.props.headerContent.handleItemClick} >
+            {this.props.headerContent.userFullName}
+          </mui.ListItem>
+          <mui.ListDivider />
+        </mui.List>
+    };
 
     var items = this.props.items.map(function (item, i) {
-      return <DropdownMenuItem key={item.name + i} action={item} handleItemClick={item.handleItemClick}/>
+      return (
+        <mui.List>
+          <mui.ListItem 
+            key={item.name + i} 
+            onClick={item.handleItemClick} >
+            {item.content}
+          </mui.ListItem>
+        </mui.List>)
     }.bind(this));
 
     return (
@@ -97,10 +98,8 @@ module.exports = React.createClass({
             <MaterialIcon name={this.state.icon} style={this.props.iconStyle}/>
           </div>
           <div className={cssClasses}>
-            <div className="dropdown-menu-section">
               {headerContent}
               {items}
-            </div>
           </div>
         </div>
       </OutsideClickHandler>

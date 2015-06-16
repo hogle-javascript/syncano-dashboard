@@ -1,29 +1,29 @@
-var React          = require('react'),
-    Reflux         = require('reflux'),
-    classNames     = require('classnames'),
-    Router         = require('react-router'),
-    Link           = Router.Link,
+var React            = require('react'),
+    Reflux           = require('reflux'),
+    classNames       = require('classnames'),
+    Router           = require('react-router'),
+    Link             = Router.Link,
 
     // Stores and Actions
-    SessionStore   = require('../Session/SessionStore'),
+    SessionStore     = require('../Session/SessionStore'),
 
-    mui            = require('material-ui'),
-    Colors         = require('material-ui/lib/styles/colors'),
-    Tabs           = mui.Tabs,
-    Tab            = mui.Tab,
-    Toolbar        = mui.Toolbar,
-    ToolbarGroup   = mui.ToolbarGroup,
-    FontIcon       = mui.FontIcon,
-    Paper          = mui.Paper,
+    mui              = require('material-ui'),
+    Colors           = require('material-ui/lib/styles/colors'),
+    Tabs             = mui.Tabs,
+    Tab              = mui.Tab,
+    Toolbar          = mui.Toolbar,
+    ToolbarGroup     = mui.ToolbarGroup,
+    FontIcon         = mui.FontIcon,
+    Paper            = mui.Paper,
 
-    MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon      = require('../../common/Icon/RoundIcon.react'),
-    HeaderActions  = require('./HeaderActions'),
-    SessionActions = require('../Session/SessionActions'),
-    SessionStore   = require('../Session/SessionStore'),
-    HeaderStore    = require('./HeaderStore'),
-    Dropdown       = require('../../common/Dropdown/Dropdown.react'),
-    Icon           = require('../../common/Icon/Icon.react');
+    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
+    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
+    HeaderActions    = require('./HeaderActions'),
+    SessionActions   = require('../Session/SessionActions'),
+    SessionStore     = require('../Session/SessionStore'),
+    HeaderStore      = require('./HeaderStore'),
+    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
+    Icon             = require('../../common/Icon/Icon.react');
 
 
 require('./Header.sass');
@@ -195,9 +195,9 @@ module.exports = React.createClass({
     }
   },
 
-  handleAccountClick: function(route) {
-    console.log(route);
-    this.context.router.transitionTo(route);
+  handleAccountClick: function(e) {
+    this.transitionTo("profile-settings");
+    e.stopPropagation();
   },
 
   renderInstance: function() {
@@ -232,19 +232,16 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     var dropdownItems = [{
-      content: "Account",
-      name: "account",
-      handleItemClick: this.handleAccountClick.bind(this, "profile-settings"),
-    }, {
-      content: "Logout",
-      name: "logout",
-      handleItemClick: this.handleLogout,
+      content         : "Logout",
+      name            : "logout",
+      handleItemClick : this.handleLogout,
     }];
 
     var dropdownHeader = {
-      icon: "account-circle",
-      userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
-      userEmail: this.state.user.email,
+      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail       : this.state.user.email,
+      clickable       : true,
+      handleItemClick : this.handleAccountClick
     };
 
     return (
@@ -285,7 +282,7 @@ module.exports = React.createClass({
               <MaterialIcon
                 name  = "notifications_none"
                 style = {styles.bottomToolbarGroupIcon} />
-              <Dropdown
+              <MaterialDropdown
                   items={dropdownItems}
                   headerContent={dropdownHeader}
                   style={styles.bottomToolbarGroupIcon} />
