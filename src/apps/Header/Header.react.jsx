@@ -6,6 +6,9 @@ var React            = require('react'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
+    HeaderActions    = require('./HeaderActions'),
+    SessionActions   = require('../Session/SessionActions'),
+    HeaderStore      = require('./HeaderStore'),
 
     mui              = require('material-ui'),
     Colors           = require('material-ui/lib/styles/colors'),
@@ -16,14 +19,7 @@ var React            = require('react'),
     FontIcon         = mui.FontIcon,
     Paper            = mui.Paper,
 
-    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
-    HeaderActions    = require('./HeaderActions'),
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    HeaderStore      = require('./HeaderStore'),
-    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
-    Icon             = require('../../common/Icon/Icon.react');
+    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react');
 
 
 require('./Header.sass');
@@ -66,9 +62,9 @@ module.exports = React.createClass({
     var chevron = null;
 
     if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <MaterialIcon
-                  name  = "chevron_right"
-                  style = {{marginLeft: 8}} />
+      chevron = <FontIcon
+                  className = "synicon-chevron-right"
+                  style     = {{marginLeft: 8}} />
     }
 
     breadcrumb.params = breadcrumb.params || {};
@@ -183,13 +179,13 @@ module.exports = React.createClass({
         lineHeight : 1
       },
       instanceIconBackground: {
-        margin              : '0 16px 0 0',
-        height              : 26,
-        minWidth            : 26,
-        width               : 26,
-        display             : 'flex',
-        justifyContent      : 'center',
-        alignItems          : 'center'
+        margin         : '0 16px 0 0',
+        height         : 26,
+        minWidth       : 26,
+        width          : 26,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
@@ -275,12 +271,12 @@ module.exports = React.createClass({
               {this.renderMenu()}
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
-              <MaterialIcon
-                name  = "search"
-                style = {styles.bottomToolbarGroupIcon} />
-              <MaterialIcon
-                name  = "notifications_none"
-                style = {styles.bottomToolbarGroupIcon} />
+              <FontIcon 
+                className = "synicon-magnify"
+                style     = {styles.bottomToolbarGroupIcon} />
+              <FontIcon
+                className = "synicon-bell-outline"
+                style     = {styles.bottomToolbarGroupIcon} />
               <MaterialDropdown
                   items={dropdownItems}
                   headerContent={dropdownHeader}

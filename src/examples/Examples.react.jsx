@@ -121,9 +121,9 @@ module.exports = React.createClass({
     }];
 
     var dropdownHeader = {
-      icon: "account-circle",
+      icon: "synicon-account-circle",
       userFullName: "Name LastName",
-      userEmail: "email@domain.com",
+      userEmail: "hubert.wesolowski@syncano.com",
     };
 
     var actions = [{
