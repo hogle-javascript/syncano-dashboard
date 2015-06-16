@@ -74,14 +74,14 @@ module.exports = React.createClass({
       'dropdown-menu': true,
       'dropdown-menu-visible': this.state.isOpen,
     });
+    console.log(this.props.headerContent);
 
-    var headerContent,
-        headerIcon = <Icon
-                       icon={this.props.headerContent.icon || "account-circle"}
-                       style={{width: "60px", height: "60px", fill: "#0091EA"}} />
-
+    var headerContent;
 
     if (this.props.headerContent) {
+      var headerIcon = <Icon
+                         icon={this.props.headerContent.icon || "account-circle"}
+                         style={{width: "60px", height: "60px", fill: "#0091EA"}} />
       headerContent =
       <div className="account-group">
         <div className="account-image">{headerIcon}</div>

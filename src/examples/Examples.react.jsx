@@ -104,6 +104,22 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    var dropdownItems = [{
+      content: "Account",
+      name: "account",
+      handleItemClick: dummyClick,
+    }, {
+      content: "Logout",
+      name: "logout",
+      handleItemClick: dummyClick,
+    }];
+
+    var dropdownHeader = {
+      icon: "account-circle",
+      userFullName: "Name LastName",
+      userEmail: "email.domain.com",
+    };
+
     var actions = [{
       displayName: 'Sort by name',
       name: 'sortByName',
@@ -293,9 +309,8 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>Dropdown</h2>
           <Dropdown
-            icon="menu"
-            actions={actions}
-            handleItemClick={dummyClick}/>
+              items={dropdownItems}
+              headerContent={dropdownHeader} />
         </div>
 
         <div className="exampleBox">
@@ -326,7 +341,7 @@ module.exports = React.createClass({
             style={"cards"}
             dropdownVisible={false}
             avatarStyle={"icon"}
-            actions={actions}/>
+            actions={dropdownItems} />
         </div>
 
         <div className="exampleBox">
@@ -337,7 +352,7 @@ module.exports = React.createClass({
             style={"stream"}
             dropdownVisible={false}
             avatarStyle={"icon"}
-            actions={actions}/>
+            actions={dropdownItems}/>
         </div>
 
         <div className="exampleBox">
