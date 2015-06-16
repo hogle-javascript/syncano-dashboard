@@ -30,12 +30,11 @@ module.exports = React.createClass({
 
   validatorConstraints: {
     label: {
-      presence: true,
+      presence: true
     },
     description: {
-      presence: true,
-    },
-
+      presence: true
+    }
   },
 
   clearData: function() {
@@ -64,17 +63,17 @@ module.exports = React.createClass({
 
   handleEditSubmit: function () {
     CodeBoxesActions.updateCodeBox(CodeBoxesStore.getCheckedItem().id, {
-      name         : this.state.label,
+      label         : this.state.label,
       description  : this.state.description,
-      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text,
+      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text
     });
   },
 
   handleAddSubmit: function () {
     CodeBoxesActions.addCodeBox({
-      name         : this.state.label,
+      label         : this.state.label,
       description  : this.state.description,
-      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text,
+      runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text
     });
   },
 
@@ -145,7 +144,7 @@ module.exports = React.createClass({
             name              = "description"
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join()}
-            style             ={{width:500}}
+            style             = {{width:500}}
             className         = "text-field"
             multiLine         = {true}
             hintText          = "Multiline description of CodeBox (optional)"

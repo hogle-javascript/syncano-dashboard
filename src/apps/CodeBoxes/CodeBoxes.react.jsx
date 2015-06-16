@@ -35,7 +35,7 @@ module.exports = React.createClass({
     Reflux.connect(CodeBoxesStore),
     DialogsMixin,
     HeaderMixin,
-    InstanceTabsMixin,
+    InstanceTabsMixin
   ],
 
   componentWillMount: function() {
@@ -61,7 +61,7 @@ module.exports = React.createClass({
       dialog: AddDialog,
       params: {
         ref  : "addCodeBoxDialog",
-        mode : "add",
+        mode : "add"
       },
     },{
       dialog: AddDialog,
@@ -139,8 +139,10 @@ module.exports = React.createClass({
         </FabList>
 
         <CodeBoxesList
-          name  = "CodeBoxes"
-          items = {this.state.items} />
+          name                 = "CodeBoxes"
+          items                = {this.state.items}
+          emptyItemHandleClick = {this.showDialog('addCodeBoxDialog')}
+          emptyItemContent     = "Create a CodeBox" />
       </Container>
     );
   }

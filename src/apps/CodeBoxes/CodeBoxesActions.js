@@ -27,7 +27,7 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
   Connection
     .CodeBoxes.create({
       runtime_name : payload.runtime_name,
-      name         : payload.name,
+      label        : payload.label,
       description  : payload.description,
       source: '#Start coding!',
     })
