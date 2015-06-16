@@ -420,12 +420,14 @@ var Syncano = (function() {
 		 * @property {function} list - shortcut to {@link Syncano#listApiKeys} method
 		 * @property {function} get - shortcut to {@link Syncano#getApiKey} method
 		 * @property {function} remove - shortcut to {@link Syncano#removeApiKey} method
+		 * @property {function} reset - shortcut to {@link Syncano#resetApiKey} method
 		 */
 		this.ApiKeys = {
 			create: this.createApiKey.bind(this),
 			list: this.listApiKeys.bind(this),
 			get: this.getApiKey.bind(this),
-			remove: this.removeApiKey.bind(this)
+			remove: this.removeApiKey.bind(this),
+			reset: this.resetApiKey.bind(this)
 		};
 
 		/**
@@ -1318,6 +1320,21 @@ var Syncano = (function() {
 		 */
 		removeApiKey: function(id, callbackOK, callbackError) {
 			return this.genericRemove(id, 'instance_api_keys', callbackOK, callbackError);
+		},
+
+		/**
+		 * Reset API key identified by specified id
+		 *
+		 * @method Syncano#resetApiKey
+		 * @alias Syncano.ApiKeys.remove
+		 * @param {Number|object} id - identifier of the api key to remove
+		 * @param {Number} id.id - when passed parameter is an object, we use its id property
+		 * @param {function} [callbackOK] - optional method to call on success
+		 * @param {function} [callbackError] - optional method to call when request fails
+		 * @returns {object} promise
+		 */
+		resetApiKey: function(id, params, callbackOK, callbackError) {
+			return this.request('POST', linksObject.instance_api_keys + id + '/reset_key/', params, callbackOK, callbackError);
 		},
 
 		/*********************
