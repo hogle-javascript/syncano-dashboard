@@ -63,7 +63,7 @@ module.exports = React.createClass({
 
   handleEditSubmit: function () {
     CodeBoxesActions.updateCodeBox(CodeBoxesStore.getCheckedItem().id, {
-      label         : this.state.label,
+      label        : this.state.label,
       description  : this.state.description,
       runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text
     });
@@ -71,7 +71,7 @@ module.exports = React.createClass({
 
   handleAddSubmit: function () {
     CodeBoxesActions.addCodeBox({
-      label         : this.state.label,
+      label        : this.state.label,
       description  : this.state.description,
       runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text
     });
