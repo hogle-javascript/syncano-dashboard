@@ -33,14 +33,16 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var style = this.getStyles();
+    var style      = this.getStyles(),
+        icon       = <FontIcon className="synicon-plus" style={style.leftAvatar} />,
+        leftAvatar = <Avatar icon={icon} />;
 
     return (
       <ListItem
         className="empty-list-item"
         onClick={this.props.handleClick}
         style={style.listItem}
-        leftAvatar={<Avatar icon={<FontIcon className="synicon-plus" style={style.leftAvatar} />} />}>
+        leftAvatar={leftAvatar}>
         {this.props.children}
       </ListItem>
     )
