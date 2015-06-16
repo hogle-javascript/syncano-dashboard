@@ -3,6 +3,7 @@ var React               = require('react'),
 
     // Utils
     ValidationMixin     = require('../../mixins/ValidationMixin'),
+    DialogFormMixin     = require('../../mixins/DialogFormMixin'),
 
     // Stores and Actions
     CodeBoxesActions    = require('./CodeBoxesActions'),

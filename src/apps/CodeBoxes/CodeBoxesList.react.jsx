@@ -16,6 +16,7 @@ var React             = require('react'),
     mui               = require('material-ui'),
 
     // List
+    List              = require('../../common/Lists/List.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     Header            = require('../../common/ColumnList/Header.react'),
@@ -31,10 +32,11 @@ module.exports = React.createClass({
   displayName: 'CodeBoxesList',
 
   mixins: [
-    Reflux.connect(CodeBoxesStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
+
+    Reflux.connect(CodeBoxesStore),
+    HeaderMixin
   ],
 
   componentWillReceiveProps: function(nextProps, nextState) {
