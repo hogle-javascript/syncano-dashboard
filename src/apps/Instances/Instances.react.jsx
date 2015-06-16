@@ -218,18 +218,22 @@ module.exports = Radium(React.createClass({
         </FabList>
 
         <InstancesList
-          name     = "My instances"
-          items    = {this.state.instances}
-          filter   = {this.filterMyInstances}
-          listType = "myInstances"
-          viewMode = "stream" />
+          name                 = "My instances"
+          items                = {this.state.instances}
+          filter               = {this.filterMyInstances}
+          listType             = "myInstances"
+          viewMode             = "stream"
+          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
+          emptyItemContent     = "Create an instance" />
 
         <InstancesList
-          name     = "Other instances"
-          items    = {this.state.instances}
-          filter   = {this.filterOtherInstances}
-          listType = "otherInstances"
-          viewMode = "stream" />
+          name                 = "Other instances"
+          items                = {this.state.instances}
+          filter               = {this.filterOtherInstances}
+          listType             = "otherInstances"
+          viewMode             = "stream"
+          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
+          emptyItemContent     = "Create an instance" />
 
       </Container>
     );
