@@ -18,6 +18,7 @@ var React  = require('react'),
 
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
+    List            = require('../../common/Lists/List.react'),
     Item            = require('../../common/ColumnList/Item.react'),
     Header          = require('../../common/ColumnList/Header.react'),
     LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
@@ -44,7 +45,7 @@ module.exports = React.createClass({
     ApiKeysActions.checkItem(id, state);
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
 
     var ignore_acl = null,
         allow_user_create = null;
@@ -84,7 +85,7 @@ module.exports = React.createClass({
     var instances = this.state.items;
 
     var items = instances.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
