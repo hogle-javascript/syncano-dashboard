@@ -24,11 +24,11 @@ var CodeBoxesStore = Reflux.createStore({
       availableRuntimes: null,
       runtimes: null,
       canSubmit: true,
-      name: '',
+      label: '',
       payload: '{"112":111}',
       description: '',
       selectedRuntimeIndex: 0,
-      traces: [],
+      traces: []
     }
   },
 
@@ -59,15 +59,15 @@ var CodeBoxesStore = Reflux.createStore({
       nodejs: {color: '#80BD01', icon: 'language-python'},
       python: {color: '#4984B1', icon: 'language-javascript'},
       golang: {color: '#E0EBF5', icon: 'code-array'},
-      ruby:   {color: '#B21000', icon: 'code-array'},
-    }
+      ruby:   {color: '#B21000', icon: 'code-array'}
+    };
     return colors[runtime];
   },
 
   getRuntimeIndex: function(runtimeName) {
     var runtimeIndex = null;
     this.data.runtimes.some(function(runtime, index) {
-      console.log(runtimeName, runtime.payload)
+      console.log(runtimeName, runtime.payload);
       if (runtimeName === runtime.payload) {
         runtimeIndex = index;
         return true;

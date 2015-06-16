@@ -18,6 +18,7 @@ var React             = require('react'),
     List              = require('../../common/Lists/List.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     Item              = require('../../common/ColumnList/Item.react'),
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnName        = require('../../common/ColumnList/Column/Name.react'),
@@ -86,7 +87,12 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem
+        handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
   render: function () {
