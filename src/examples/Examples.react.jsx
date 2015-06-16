@@ -439,7 +439,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>FieldReadonly (material UI)</h2>
-          <Textield
+          <TextField
             defaultValue="Your name - 5 chars only"
             disabled={true}
             fullWidth={true} />
