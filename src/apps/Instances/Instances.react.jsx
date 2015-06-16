@@ -66,7 +66,19 @@ module.exports = Radium(React.createClass({
         initialIcon  : checkedItemIconColor.icon,
         handleClick  : this.handleChangePalette
       }
-    }]
+    },{
+      dialog: Dialog,
+      params: {
+        ref:    "deleteInstanceDialog",
+        title:  "Delete Instance",
+        actions: [
+          {text: 'Cancel', onClick: this.handleCancel},
+          {text: "Yes, I'm sure", onClick: this.handleDelete}
+        ],
+        modal: true,
+        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?',
+      }
+     }]
   },
 
   componentWillMount: function() {
@@ -150,11 +162,7 @@ module.exports = Radium(React.createClass({
   render: function () {
 
     var checkedInstances = InstancesStore.getNumberOfChecked(),
-        styles = this.getStyles(),
-        deleteActions = [
-          { text: 'Cancel', onClick: this.handleCancel },
-          { text: "Yes, I'm sure. Please delete my instances", onClick: this.handleDelete }
-        ];
+        styles = this.getStyles();
 
     return (
       <Container>

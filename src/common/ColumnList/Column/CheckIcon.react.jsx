@@ -11,7 +11,7 @@ var React      = require('react'),
 var DEFAULT_BACKGROUND = 'green',
     DEFAULT_ICON       = 'folder';
 
-var cssClasses = classNames('col-xs-12');
+var cssClasses = classNames('col-xs-10');
 
 var Header = React.createClass({
   render: function () {
@@ -102,7 +102,6 @@ module.exports = React.createClass({
     console.info('ColumnCheckIcon::handleMouseLeave');
     this.setState({'color': this.props.color});
   },
-
 
   render: function () {
 

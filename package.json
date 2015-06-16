@@ -23,6 +23,7 @@
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
     "react-tap-event-plugin": "^0.1.7",
+    "react-zeroclipboard": "^1.1.0",
     "reflux": "latest",
     "request": "^2.53.0",
     "superagent": "^1.2.0",
