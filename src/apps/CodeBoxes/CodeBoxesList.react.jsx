@@ -7,7 +7,6 @@ var React             = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionStore      = require('../Session/SessionStore'),
     SessionActions    = require('../Session/SessionActions'),
     CodeBoxesActions  = require('./CodeBoxesActions'),
     CodeBoxesStore    = require('./CodeBoxesStore'),
@@ -48,12 +47,10 @@ module.exports = React.createClass({
     CodeBoxesActions.checkItem(id, state);
   },
 
-
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
+    this.transitionTo('codeboxes-edit', {instanceName: this.getParams().instanceName, codeboxId: itemId});
   },
-
 
   renderItem: function (item) {
 
@@ -100,7 +97,7 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List>
           {this.getList()}
         </List>
       </ListContainer>

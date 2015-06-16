@@ -100,13 +100,13 @@ module.exports = React.createClass({
     }
 
     var floatingLabel = {
-      color: 'grey',
-      fontSize: '16px',
-      fontFamily: 'Roboto, sans-serif'
+      color      : 'grey',
+      fontSize   : '16px',
+      fontFamily : 'Roboto, sans-serif'
     };
 
-    var title = this.props.mode === 'edit' ? 'Edit': 'Add';
-    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Codebox';
+    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Codebox';
 
     var dialogStandardActions = [
       {

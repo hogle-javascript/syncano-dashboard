@@ -43,17 +43,33 @@ module.exports = React.createClass({
     Reflux.connect(CodeBoxesStore),
     HeaderMixin,
     ButtonActionMixin,
-    InstanceTabsMixin,
+    InstanceTabsMixin
   ],
 
   componentWillMount: function() {
     CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
     this.setState({
-      currentCodeBoxId: this.getParams().codeboxId,
-      instanceName: this.getParams().instanceName,
+      currentCodeBoxId : this.getParams().codeboxId,
+      instanceName     : this.getParams().instanceName
     })
   },
 
+  getStyles() {
+    return {
+      container: {
+        margin   : '65px auto',
+        width    : '80%',
+        maxWidth : '1140px'
+      },
+      fabList: {
+        top: 200
+      },
+      tracePanel: {
+        marginTop : 30,
+        height    : 300
+      }
+    }
+  },
 
   handleRun: function() {
     CodeBoxesActions.runCodeBox({
@@ -63,21 +79,14 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    //var buttons = this.genButtons();
 
-    var containerStyle = {
-      margin: '65px auto',
-      width: '80%',
-      maxWidth: '1140px'
-    };
-
-    var source;
-    var codeBox = CodeBoxesStore.getCurrentCodeBox();
-    var editorMode = 'python';
-
+    var styles     = this.getStyles(),
+        source     = null,
+        codeBox    = CodeBoxesStore.getCurrentCodeBox(),
+        editorMode = 'python';
 
     if (codeBox) {
-      source = codeBox.source;
+      source     = codeBox.source;
       editorMode = CodeBoxesStore.getEditorMode(codeBox);
     }
 
@@ -86,9 +95,8 @@ module.exports = React.createClass({
     }
 
     return (
-      <Container>
-        <FabList
-          style={{top: 200}}>
+      <Container style={styles.container}>
+        <FabList style={styles.fabList}>
 
           <FloatingActionButton
             label         = "Click here to execute CodeBox" // TODO: extend component
@@ -108,17 +116,16 @@ module.exports = React.createClass({
           onChange = {this.handleSourceUpdate}
           //name="UNIQUE_ID_OF_DIV"
           value    = {source} />
-        <div
-          style = {{
-            marginTop : 30,
-            height    : 300}}>
+
+        <div style={styles.tracePanel}>
           <EditorPanel
-            ref     ="editorPanel"
+            ref     = "tracePanel"
             trace   = {this.state.lastTraceResult}
             payload = {this.linkState('payload')}
             loading = {this.linkState('isLoading')}>
           </EditorPanel>
         </div>
+
       </Container>
     );
   }
