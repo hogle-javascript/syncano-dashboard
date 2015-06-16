@@ -32,10 +32,11 @@ module.exports = Radium(React.createClass({
   displayName: 'Instances',
 
   mixins: [
-    Reflux.connect(InstancesStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
+
+    Reflux.connect(InstancesStore),
+    HeaderMixin,
     DialogsMixin
   ],
 
@@ -103,11 +104,12 @@ module.exports = Radium(React.createClass({
   headerMenuItems: function () {
     return [
       {
-        label: 'Instances',
-        route: 'instances',
+        label  : 'Instances',
+        route  : 'instances',
+        active : true
       }, {
-        label: 'Solutions',
-        route: 'dashboard',
+        label : 'Solutions',
+        route : 'dashboard'
       }];
   },
 

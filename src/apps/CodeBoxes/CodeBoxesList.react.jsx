@@ -55,7 +55,7 @@ module.exports = React.createClass({
   },
 
 
-  generateItem: function (item) {
+  renderItem: function (item) {
 
     var runtime = CodeBoxesStore.getRuntimeColorIcon(item.runtime_name);
     return (
@@ -81,7 +81,7 @@ module.exports = React.createClass({
     }
 
     var items = this.state.items.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
