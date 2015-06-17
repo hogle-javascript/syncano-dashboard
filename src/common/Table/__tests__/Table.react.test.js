@@ -5,6 +5,6 @@ describe("Table.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var Table = require('../Table.react');
+    // var Table = require('../Table.react');
   });
 });

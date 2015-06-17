@@ -5,6 +5,6 @@ describe("DropdownWithButtons.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var DropdownWithButtons = require('../DropdownWithButtons.react');
+    // var DropdownWithButtons = require('../DropdownWithButtons.react');
   });
 });
