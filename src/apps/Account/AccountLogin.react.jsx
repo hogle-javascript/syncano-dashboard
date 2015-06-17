@@ -20,10 +20,11 @@ var React                 = require('react'),
     Paper                 = mui.Paper,
 
     SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Notification          = require('../../common/Notification/Notification.react');
+    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
+
 
 require('./Account.sass');
+
 
 module.exports = React.createClass({
 
