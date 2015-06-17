@@ -42,7 +42,6 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   refreshData: function (data) {
     console.debug('AdminsInvitationsStore::refreshData');
-    console.debug('SessionStore.instance', SessionStore.instance)
     if (SessionStore.instance) {
       AdminsInvitationsActions.getInvitations();
     }
