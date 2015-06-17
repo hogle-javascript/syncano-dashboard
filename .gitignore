@@ -21,3 +21,6 @@ dist/
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# Reports by nightwatchjs 
+src/tests/reports/
