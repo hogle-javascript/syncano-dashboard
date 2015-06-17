@@ -1,5 +1,7 @@
 var Reflux         = require('reflux'),
 
+    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+
     SessionActions = require('../Session/SessionActions'),
     SessionStore   = require('../Session/SessionStore'),
     AuthActions    = require('./AuthActions');
@@ -7,21 +9,16 @@ var Reflux         = require('reflux'),
 
 var AuthStore = Reflux.createStore({
   listenables: AuthActions,
+  mixins: [StoreFormMixin],
 
   getInitialState: function () {
-    return {
-      canSubmit: true,
-      errors: {},
-    }
+    return this.data;
   },
 
   init: function () {
-    this.data = {
-      errors: {},
-      email: null,
-      password: null,
-      canSubmit: true,
-    };
+    this.data.email     = null;
+    this.data.password  = null;
+    this.data.canSubmit = true;
 
     this.listenTo(SessionStore, this.checkSession);
   },
