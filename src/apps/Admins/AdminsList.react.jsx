@@ -60,6 +60,12 @@ module.exports = React.createClass({
 
   renderItem: function (item) {
 
+    // TODO: is there any better way to hide/disable components?
+    var nameColumn =  <ColumnDesc>{item.first_name + ' ' + item.last_name}</ColumnDesc>;
+    if (this.props.mode == "invitations") {
+      nameColumn = null;
+    }
+
     return (
       <Item key={item.id}>
         <ColumnCheckIcon
@@ -70,7 +76,7 @@ module.exports = React.createClass({
           handleIconClick = {this.handleItemIconClick} >
           {item.email}
         </ColumnCheckIcon>
-        <ColumnDesc>{item.first_name + ' ' + item.last_name}</ColumnDesc>
+        {nameColumn}
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
@@ -95,11 +101,19 @@ module.exports = React.createClass({
   },
 
   render: function () {
+
+    // TODO: is there any better way to hide/disable components?
+    var nameColumnHeader = <ColumnDesc.Header>Name</ColumnDesc.Header>;
+    console.log(this.props.mode)
+    if (this.props.mode == "invitations") {
+      nameColumnHeader = null;
+    }
+
     return (
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Name</ColumnDesc.Header>
+          {nameColumnHeader}
           <ColumnDesc.Header>Role</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
