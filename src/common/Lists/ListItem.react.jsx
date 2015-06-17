@@ -76,7 +76,7 @@ module.exports = React.createClass({
     var dropdownComponent = null;
     if (this.props.actions) {
       dropdownComponent = <Dropdown
-        actions={this.props.actions}
+        items={this.props.actions}
         visible={this.props.dropdownVisible}
         handleItemClick={this.handleItemMenuClick}/>;
     }

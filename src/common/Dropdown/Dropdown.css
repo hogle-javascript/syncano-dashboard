@@ -2,10 +2,11 @@
   position: relative;
   padding: 0 10px 0 5px;
   display: flex;
+  flex-direction: row-reverse;
 }
 
-.dropdown i {
-  float: right;
+.dropdown-menu-header {
+  border-bottom: 1px solid #999;
 }
 
 .dropdown-menu {
@@ -27,6 +28,7 @@
   padding: 5px 0;
   max-height: 230px;
   overflow: auto;
+  min-width: 250px;
 }
 
 .dropdown-menu b {
@@ -106,4 +108,31 @@
 
 .dropdown-button:hover path {
   fill: #777;
+}
+
+.account-group {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #E9E9E9;
+}
+
+.account-group .account-name {
+  color: #707070;
+  font-weight: 500;
+}
+
+.account-group .account-email {
+  font-size: 13px;
+}
+
+.account-group .account-image {
+  margin-right: 15px;
+  min-width: 50px;
+  height: 50px;
+}
+
+.account-group .account-image img {
+  display: block;
+  border-radius: 100%;
 }
