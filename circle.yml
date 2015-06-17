@@ -6,6 +6,7 @@ machine:
 general:
   artifacts:
     - "coverage/"
+    - "tests/reports/"
 test:
   override:
     - npm test
