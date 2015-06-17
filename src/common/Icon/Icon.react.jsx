@@ -53,16 +53,16 @@ module.exports = React.createClass({
 
     if (this.props.icon) {
       var svg = require('./svg/' + this.props.icon);
-      return <i 
-               onClick={this.handleClick} 
-               dangerouslySetInnerHTML={{__html: svg}} 
-               style={this.state.style} 
+      return <i
+               onClick={this.handleClick}
+               dangerouslySetInnerHTML={{__html: svg}}
+               style={this.state.style}
                className={glowingClass}></i>;
 
     } else {
-      return <i 
-               onClick={this.handleClick} 
-               style={this.state.style} 
+      return <i
+               onClick={this.handleClick}
+               style={this.state.style}
                className={glowingClass}></i>;
     }
   }

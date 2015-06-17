@@ -1,5 +1,6 @@
 var React                = require('react'),
     mui                  = require('material-ui'),
+    gravatar             = require('gravatar'),
 
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
     Colors               = require('material-ui/lib/styles/colors'),
@@ -9,6 +10,7 @@ var React                = require('react'),
     FlatButton           = require('material-ui/lib/flat-button'),
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
+    MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
     Icon                 = require('../common/Icon/Icon.react'),
     CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
     ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
@@ -104,6 +106,26 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    var dummyClick = function (action) {
+      console.log('Click!', action);
+    };
+
+    var dropdownItems = [{
+      content: "Account",
+      name: "account",
+      handleItemClick: dummyClick
+    }, {
+      content: "Logout",
+      name: "logout",
+      handleItemClick: dummyClick
+    }];
+
+    var dropdownHeader = {
+      icon: "synicon-account-circle",
+      userFullName: "Name LastName",
+      userEmail: "hubert.wesolowski@syncano.com",
+    };
+
     var actions = [{
       displayName: 'Sort by name',
       name: 'sortByName'
@@ -285,6 +307,8 @@ module.exports = React.createClass({
       }
     ];
 
+    var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
+
     return (
 
       <div className="examplesContainer">
@@ -293,9 +317,45 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>Dropdown</h2>
           <Dropdown
-            icon="menu"
-            actions={actions}
-            handleItemClick={dummyClick}/>
+              items={dropdownItems}
+              headerContent={dropdownHeader} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>Material dropdown</h2>
+          <MaterialDropdown
+              items={dropdownItems}
+              headerContent={dropdownHeader} />
+        </div>
+
+        <div className="exampleBox">
+          <h4>Material List items</h4>
+          <mui.List>
+            <mui.ListItem
+              leftAvatar={<mui.Avatar src={avatarUrl} />}
+              secondaryText="email@domain.com"
+              secondaryTextLines={1} 
+              onClick={dummyClick} >
+              Name LastName
+            </mui.ListItem>
+            <mui.ListItem leftIcon={<MaterialIcon name="favorite" />}>Item with left icon</mui.ListItem>
+            <mui.ListItem rightIcon={<MaterialIcon name="favorite" />}>item with right icon</mui.ListItem>
+            <mui.ListDivider />
+            <mui.ListItem leftAvatar={<mui.Avatar src={avatarUrl} />}>item with gravatar</mui.ListItem>
+            <mui.ListItem>item empty</mui.ListItem>
+            <mui.ListItem 
+              leftAvatar={<mui.Avatar src={avatarUrl} />}
+              secondaryText={
+                <p>
+                  <span style={{color: Colors.darkBlack}}>Brunch this weekend?</span><br/>
+                  I&apos;ll be in your neighborhood doing errands this weekend.
+                  Do you want to grab brunch?
+                </p>
+              }
+              secondaryTextLines={2} >item with gravatar and text
+            </mui.ListItem>
+            <mui.ListDivider inset={true} />
+          </mui.List>
         </div>
 
         <div className="exampleBox">
@@ -326,7 +386,7 @@ module.exports = React.createClass({
             style={"cards"}
             dropdownVisible={false}
             avatarStyle={"icon"}
-            actions={actions}/>
+            actions={dropdownItems} />
         </div>
 
         <div className="exampleBox">
@@ -337,7 +397,7 @@ module.exports = React.createClass({
             style={"stream"}
             dropdownVisible={false}
             avatarStyle={"icon"}
-            actions={actions}/>
+            actions={dropdownItems}/>
         </div>
 
         <div className="exampleBox">

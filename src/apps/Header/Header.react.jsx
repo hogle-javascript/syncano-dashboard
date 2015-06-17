@@ -1,26 +1,25 @@
-var React          = require('react'),
-    Reflux         = require('reflux'),
-    classNames     = require('classnames'),
-    Router         = require('react-router'),
-    Link           = Router.Link,
+var React            = require('react'),
+    Reflux           = require('reflux'),
+    classNames       = require('classnames'),
+    Router           = require('react-router'),
+    Link             = Router.Link,
 
     // Stores and Actions
-    SessionStore   = require('../Session/SessionStore'),
+    SessionStore     = require('../Session/SessionStore'),
+    HeaderActions    = require('./HeaderActions'),
+    SessionActions   = require('../Session/SessionActions'),
+    HeaderStore      = require('./HeaderStore'),
 
-    mui            = require('material-ui'),
-    Colors         = require('material-ui/lib/styles/colors'),
-    Tabs           = mui.Tabs,
-    Tab            = mui.Tab,
-    Toolbar        = mui.Toolbar,
-    ToolbarGroup   = mui.ToolbarGroup,
-    FontIcon       = mui.FontIcon,
-    Paper          = mui.Paper,
+    mui              = require('material-ui'),
+    Colors           = require('material-ui/lib/styles/colors'),
+    Tabs             = mui.Tabs,
+    Tab              = mui.Tab,
+    Toolbar          = mui.Toolbar,
+    ToolbarGroup     = mui.ToolbarGroup,
+    FontIcon         = mui.FontIcon,
+    Paper            = mui.Paper,
 
-    MaterialIcon   = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon      = require('../../common/Icon/RoundIcon.react'),
-    HeaderActions  = require('./HeaderActions'),
-    SessionActions = require('../Session/SessionActions'),
-    HeaderStore    = require('./HeaderStore');
+    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react');
 
 
 require('./Header.sass');
@@ -63,16 +62,16 @@ module.exports = React.createClass({
     var chevron = null;
 
     if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <MaterialIcon
-                  name  = "chevron_right"
-                  style = {{marginLeft: 8}} />
+      chevron = <FontIcon
+                  className = "synicon-chevron-right"
+                  style     = {{marginLeft: 8}} />
     }
 
     breadcrumb.params = breadcrumb.params || {};
     breadcrumb.query  = breadcrumb.query  || {};
 
     return (
-      <li key={'breadcrumb-' + index}>
+      <li key={'breadcrumb-' + breadcrumb.route +  '-' + index}>
         <Link
           to     = {breadcrumb.route}
           params = {breadcrumb.params}
@@ -82,6 +81,18 @@ module.exports = React.createClass({
         {chevron}
       </li>
     )
+  },
+
+  getActiveMenuItemIndex: function () {
+    var index = 0;
+    this.state.menuItems.some(function (item, i) {
+      if (this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    }.bind(this));
+
+    return index;
   },
 
   renderMenu: function () {
@@ -102,7 +113,9 @@ module.exports = React.createClass({
 
     return (
       <div style={menuStyles.menuContainer}>
-        <Tabs tabItemContainerStyle={menuStyles.menu} initialSelectedIndex={HeaderStore.getSelectedIndex()}>
+        <Tabs
+          tabItemContainerStyle = {menuStyles.menu}
+          initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
@@ -110,9 +123,6 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    tab.params         = tab.params || {};
-    tab.query          = tab.query  || {};
-
     var menuItemStyles = {
           color: Colors.indigo500,
           fontWeight: 400,
@@ -173,7 +183,7 @@ module.exports = React.createClass({
       bottomToolbarGroupIcon: {
         padding        : '0 4px'
       },
-      instanceIcon: {
+      instanceIcon : {
         color      : '#fff',
         display    : 'flex',
         fontSize   : 12,
@@ -189,6 +199,11 @@ module.exports = React.createClass({
         alignItems     : 'center'
       }
     }
+  },
+
+  handleAccountClick: function(e) {
+    this.transitionTo("profile-settings");
+    e.stopPropagation();
   },
 
   renderInstance: function() {
@@ -222,6 +237,19 @@ module.exports = React.createClass({
   render: function () {
     var styles = this.getStyles();
 
+    var dropdownItems = [{
+      content         : "Logout",
+      name            : "logout",
+      handleItemClick : this.handleLogout,
+    }];
+
+    var dropdownHeader = {
+      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail       : this.state.user.email,
+      clickable       : true,
+      handleItemClick : this.handleAccountClick
+    };
+
     return (
       <div>
         <Toolbar style={styles.topToolbar}>
@@ -253,22 +281,17 @@ module.exports = React.createClass({
               style     = {styles.bottomToolbarGroup}>
               {this.renderMenu()}
             </ToolbarGroup>
-            <ToolbarGroup
-              style={styles.bottomToolbarGroup}>
-              <MaterialIcon
-                name  = "search"
-                style = {styles.bottomToolbarGroupIcon} />
-              <MaterialIcon
-                name  = "notifications_none"
-                style = {styles.bottomToolbarGroupIcon} />
-              <MaterialIcon
-                name  = "more_vert"
-                style = {styles.bottomToolbarGroupIcon} />
-              <MaterialIcon
-                name        = "power"
-                style       = {styles.bottomToolbarGroupIcon}
-                handleClick = {this.handleLogout}
-                />
+            <ToolbarGroup style={styles.bottomToolbarGroup}>
+              <FontIcon 
+                className = "synicon-magnify"
+                style     = {styles.bottomToolbarGroupIcon} />
+              <FontIcon
+                className = "synicon-bell-outline"
+                style     = {styles.bottomToolbarGroupIcon} />
+              <MaterialDropdown
+                  items={dropdownItems}
+                  headerContent={dropdownHeader}
+                  style={styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>
