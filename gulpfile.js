@@ -6,6 +6,8 @@ var gulp             = require('gulp'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
     path             = require('path'),
+    download         = require('gulp-download'),
+    unzip            = require('gulp-unzip'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config.js'),
@@ -17,6 +19,7 @@ var gulp             = require('gulp'),
 
 var paths = {
     dist: './dist',
+    bin: './bin',
     assets: './src/assets',
     index: './src/assets/index.html',
     images: './src/assets/img/**/*'
@@ -163,6 +166,23 @@ gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(
     .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
+});
+
+gulp.task('nightwatch-setup', function (cb) {
+  var urls = [
+    'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',
+    'http://chromedriver.storage.googleapis.com/2.16/chromedriver_linux64.zip'
+  ];
+  download(urls)
+    .pipe(gulp.dest(paths.bin))
+    .on('finish', function() {
+      gulp.src(paths.bin + '/**/*.zip')
+        .pipe(unzip())
+        .pipe(gulp.dest(paths.bin))
+        .on('finish', function() {
+          del(paths.bin + '/**/*.zip', cb);
+        });
+    });
 });
 
 gulp.task('copy', ['copy-index', 'copy-images']);
