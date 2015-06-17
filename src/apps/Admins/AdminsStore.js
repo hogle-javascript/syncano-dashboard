@@ -56,10 +56,8 @@ var AdminsStore = Reflux.createStore({
   onGetAdminsCompleted: function(items) {
     console.debug('AdminsStore::onGetInstanesCompleted');
 
-    var data = this.data;
-    data.items = [];
-    Object.keys(items).map(function(item) {
-        data.items.push(items[item]);
+    this.data.items = Object.keys(items).map(function(item) {
+        return items[item];
     });
     this.data.isLoading = false;
     this.trigger(this.data);
