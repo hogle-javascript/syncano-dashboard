@@ -5,6 +5,6 @@ describe("ListWithOptions.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var ListWithOptions = require('../ListWithOptions.react');
+    // var ListWithOptions = require('../ListWithOptions.react');
   });
 });
