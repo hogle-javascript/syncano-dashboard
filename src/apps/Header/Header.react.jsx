@@ -72,7 +72,7 @@ module.exports = React.createClass({
     breadcrumb.query  = breadcrumb.query  || {};
 
     return (
-      <li key={'breadcrumb-' + index}>
+      <li key={'breadcrumb-' + breadcrumb.route +  '-' + index}>
         <Link
           to     = {breadcrumb.route}
           params = {breadcrumb.params}
@@ -82,6 +82,18 @@ module.exports = React.createClass({
         {chevron}
       </li>
     )
+  },
+
+  getActiveMenuItemIndex: function () {
+    var index = 0;
+    this.state.menuItems.some(function (item, i) {
+      if (this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    }.bind(this));
+
+    return index;
   },
 
   renderMenu: function () {
@@ -102,7 +114,9 @@ module.exports = React.createClass({
 
     return (
       <div style={menuStyles.menuContainer}>
-        <Tabs tabItemContainerStyle={menuStyles.menu} initialSelectedIndex={HeaderStore.getSelectedIndex()}>
+        <Tabs
+          tabItemContainerStyle = {menuStyles.menu}
+          initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
@@ -110,9 +124,6 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    tab.params         = tab.params || {};
-    tab.query          = tab.query  || {};
-
     var menuItemStyles = {
           color: Colors.indigo500,
           fontWeight: 400,
