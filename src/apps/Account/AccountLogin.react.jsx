@@ -5,6 +5,7 @@ var React                 = require('react'),
 
     // Utils
     ValidationMixin       = require('../../mixins/ValidationMixin'),
+    FormMixin             = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     SessionStore          = require('../Session/SessionStore'),
@@ -31,7 +32,9 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin
+
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -77,8 +80,7 @@ module.exports = React.createClass({
       <SocialAuthButton
         icon={"synicon-" + network}
         label={"Log in with " + network}
-        handleClick={this.handleSocialSignup(network)}
-        />
+        handleClick={this.handleSocialSignup(network)}/>
     )
   },
 
@@ -94,31 +96,11 @@ module.exports = React.createClass({
     return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return;
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        AuthActions.passwordSignIn({
-          email: this.state.email,
-          password: this.state.password
-        });
-      }
-    }.bind(this));
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
+  handleSuccessfullValidation: function () {
+    AuthActions.passwordSignIn({
+      email: this.state.email,
+      password: this.state.password
+    });
   },
 
   render: function() {
@@ -131,9 +113,9 @@ module.exports = React.createClass({
           <div className="account-container__content__header">
             <p>Log in and start creating your apps</p>
           </div>
-          {this.renderError()}
+          {this.renderNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">

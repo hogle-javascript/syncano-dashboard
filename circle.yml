@@ -12,5 +12,5 @@ deployment:
     branch: devel
     commands:
       - npm install
-      - NODE_ENV=staging npm run-scrip publish
+      - NODE_ENV=staging npm run-script publish
       - npm run-scrip clean
