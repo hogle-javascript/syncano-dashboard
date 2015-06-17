@@ -6,11 +6,13 @@ machine:
 general:
   artifacts:
     - "coverage/"
-    - "tests/reports/"
+    - "reports/"
+
 test:
   override:
     - npm test
     - npm run-script nightwatch
+
 deployment:
   staging:
     branch: devel
@@ -18,10 +20,9 @@ deployment:
       - npm install
       - NODE_ENV=staging npm run-script publish
       - npm run-script clean
+
 dependencies:
    post:
-      - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
-      - java -jar selenium-server-standalone-2.46.0.jar:
-            background: true
+      - npm run-script nightwatch-setup
       - npm start:
             background: true

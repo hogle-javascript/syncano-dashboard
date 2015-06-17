@@ -1,5 +1,4 @@
 public/
-bin/
 
 # Build
 build/
@@ -26,4 +25,5 @@ dist/
 *.sublime-workspace
 
 # Reports by nightwatchjs
-/tests/reports
+reports/
+bin/

@@ -8,6 +8,7 @@ var gulp             = require('gulp'),
     path             = require('path'),
     download         = require('gulp-download'),
     unzip            = require('gulp-unzip'),
+    chmod            = require('gulp-chmod'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config.js'),
@@ -168,22 +169,45 @@ gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(
     .pipe(cloudfront(aws));
 });
 
-gulp.task('nightwatch-setup', function (cb) {
-  var urls = [
-    'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',
-    'http://chromedriver.storage.googleapis.com/2.16/chromedriver_linux64.zip'
-  ];
-  download(urls)
-    .pipe(gulp.dest(paths.bin))
-    .on('finish', function() {
-      gulp.src(paths.bin + '/**/*.zip')
-        .pipe(unzip())
-        .pipe(gulp.dest(paths.bin))
-        .on('finish', function() {
-          del(paths.bin + '/**/*.zip', cb);
-        });
-    });
+
+var chromedriverTypes = [
+  'linux64',
+  'linux32',
+  'mac32',
+  'win32'
+];
+
+
+chromedriverTypes.map(function (type) {
+  gulp.task('nightwatch-setup:' + type, function (cb) {
+    var zipFiles = paths.bin + '/**/*.zip',
+        urls     = [
+          'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',
+          'http://chromedriver.storage.googleapis.com/2.16/chromedriver_' + type + '.zip'
+        ];
+
+    download(urls)
+      .pipe(gulp.dest(paths.bin))
+      .on('finish', function() {
+        gulp.src(zipFiles)
+          .pipe(unzip())
+          .pipe(gulp.dest(paths.bin))
+          .on('finish', function() {
+            gulp.src(paths.bin + '/chromedriver')
+              .pipe(chmod({
+                owner: {read: true, write: true, execute: true},
+                group: {execute: true},
+                others: {execute: true}
+              }))
+              .pipe(gulp.dest(paths.bin))
+              .on('finish', function() {
+                del(zipFiles, cb);
+              });
+          });
+      });
+  });
 });
+
 
 gulp.task('copy', ['copy-index', 'copy-images']);
 gulp.task('serve', ['webpack-dev-server']);
