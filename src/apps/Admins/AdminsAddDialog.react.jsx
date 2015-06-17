@@ -55,37 +55,43 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title = "Invite Administrator";
-    var submitLabel = "Send Invitation";
-
-    var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
-    ];
-
-    // TODO: move it to the store
-    var menuItems = [
-      {
-        payload: 'read',
-        text: 'read'
-      },
-      {
-        payload: 'write',
-        text: 'write'
-      },
-      {
-        payload: 'full',
-        text: 'full'
-      },
-    ];
+    var title                 = "Invite Administrator",
+        submitLabel           = "Send Invitation",
+        dialogStandardActions = [
+          {
+            ref     : 'cancel',
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            ref     : 'submit',
+            text    : {submitLabel},
+            onClick : this.handleSubmit
+          }
+        ],
+        // TODO: move it to the store
+        menuItems = [
+          {
+            payload: 'read',
+            text: 'read'
+          },
+          {
+            payload: 'write',
+            text: 'write'
+          },
+          {
+            payload: 'full',
+            text: 'full'
+          }
+        ];
 
     return (
       <Dialog
-        ref="dialogRef"
-        title={title + " API Key"}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        modal={true}>
+        ref             ="dialogRef"
+        title           ={title + " Administrator"}
+        openImmediately ={this.props.openImmediately}
+        actions         ={dialogStandardActions}
+        modal           ={true}>
         <div>
         <form
           onSubmit={this.handleSubmit}
