@@ -13,7 +13,8 @@ module.exports = React.createClass({
 
   propTypes: {
     visible : React.PropTypes.bool.isRequired,
-    type    : React.PropTypes.oneOf(['circular', 'linear']).isRequired
+    type    : React.PropTypes.oneOf(['circular', 'linear']).isRequired,
+    mode    : React.PropTypes.oneOf(['indeterminate', 'determinate']).isRequired
   },
 
   getDefaultProps: function () {
@@ -25,11 +26,17 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      visible: this.props.visible || false,
+      visible : this.props.visible || false,
     }
   },
 
-  renderLoadingItem: function(type) {
+  checkVisibility: function() {
+    if (this.state.visible === true) {
+      return this.getLoadingItem(this.props.type)
+    }
+  },
+
+  getLoadingItem: function(type) {
     if (type === 'linear') {
       return <LinearProgress mode='indeterminate' />
     } else {
@@ -39,8 +46,8 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>
-        {this.renderLoadingItem(this.props.type)}
+      <div className="loading">
+        {this.checkVisibility()}
       </div>
     );
   }

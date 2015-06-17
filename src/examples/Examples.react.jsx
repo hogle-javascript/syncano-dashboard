@@ -646,8 +646,10 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Loading</h2>
-          <Loading type = "linear" />
-          <Loading />
+          <Loading 
+            type    = "linear"
+            visible = {true} />
+          <Loading visible={true}/>
         </div>
 
       </div>
