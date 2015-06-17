@@ -127,9 +127,9 @@ module.exports = React.createClass({
     return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Try it now and start creating your apps</p>
             <small>
@@ -158,7 +158,7 @@ module.exports = React.createClass({
               errorText={this.getValidationMessages('password').join()}
               type="password"
               name="password"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="password"
               hintText="Password"
               fullWidth={true} />
@@ -166,7 +166,7 @@ module.exports = React.createClass({
               type="submit"
               label="Sign up for free"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
           {this.renderSocialButtons()}
@@ -176,7 +176,7 @@ module.exports = React.createClass({
             </ul>
           </div>
         </Paper>
-        <p className="vm-0-b text--center">By signing up you agree to our <Link to="login"> Terms of Use and Privacy Policy</Link>.</p>
+        <p className="vm-0-b text--center">By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>
       </div>
     );
   }

@@ -85,11 +85,11 @@ module.exports = React.createClass({
     return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
-            <p className="text--gray text--left">Change password</p>
+            <p className="">Choose a new password</p>
           </div>
           {this.renderError()}
           {this.renderFeedback()}
@@ -114,7 +114,7 @@ module.exports = React.createClass({
               errorText={this.getValidationMessages('confirmPassword').join()}
               type="password"
               name="confirmPassword"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="confirmPassword"
               hintText="Confirm password"
               fullWidth={true} />
@@ -122,15 +122,9 @@ module.exports = React.createClass({
               type="submit"
               label="Change password"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
-          <div className="account-container__content__footer">
-            <ul className="list--flex list--horizontal">
-              <li><p><Link to="signup">Create your account</Link></p></li>
-              <li><p>Already have an account? <Link to="login">Login</Link>.</p></li>
-            </ul>
-          </div>
         </Paper>
       </div>
     );

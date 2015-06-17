@@ -125,9 +125,9 @@ module.exports = React.createClass({
 	  return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
             <p>Log in and start creating your apps</p>
           </div>
@@ -152,7 +152,7 @@ module.exports = React.createClass({
               errorText={this.getValidationMessages('password').join()}
               type="password"
               name="password"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="password"
               hintText="Password"
               fullWidth={true} />
@@ -160,7 +160,7 @@ module.exports = React.createClass({
               type="submit"
               label="Log in"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
           {this.renderSocialButtons()}
