@@ -4,8 +4,8 @@ var React                 = require('react'),
     Link                  = Router.Link,
 
     // Utils
-    ValidationMixin       = require('../../mixins/ValidationMixin'),
     FormMixin             = require('../../mixins/FormMixin'),
+    ValidationMixin       = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
     SessionStore          = require('../Session/SessionStore'),
@@ -79,9 +79,9 @@ module.exports = React.createClass({
   renderSocialButton: function (network) {
     return (
       <SocialAuthButton
-        icon={"synicon-" + network}
-        label={"Log in with " + network}
-        handleClick={this.handleSocialSignup(network)}/>
+        icon        = {'synicon-' + network}
+        label       = {'Log in with ' + network}
+        handleClick = {this.handleSocialSignup(network)}/>
     )
   },
 

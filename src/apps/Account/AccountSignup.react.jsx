@@ -4,6 +4,7 @@ var React                 = require('react'),
     Link                  = Router.Link,
 
     // Utils
+    FormMixin             = require('../../mixins/FormMixin'),
     ValidationMixin       = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
@@ -19,8 +20,7 @@ var React                 = require('react'),
     Paper                 = mui.Paper,
 
     SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Notification          = require('../../common/Notification/Notification.react');
+    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
 
 
 require('./Account.sass');
@@ -33,7 +33,9 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin
+
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -68,21 +70,11 @@ module.exports = React.createClass({
     }
   },
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        AuthActions.passwordSignUp({
-          email: this.state.email,
-          password: this.state.password
-        });
-      }
-    }.bind(this));
+  handleSuccessfullValidation: function () {
+    AuthActions.passwordSignUp({
+      email: this.state.email,
+      password: this.state.password
+    });
   },
 
   handleSocialSignup: function (network) {
@@ -94,10 +86,9 @@ module.exports = React.createClass({
   renderSocialButton: function (network) {
     return (
       <SocialAuthButton
-          icon={"synicon-" + network}
-          label={"Sign up with " + network}
-          handleClick={this.handleSocialSignup(network)}
-        />
+          icon        = {'synicon-' + network}
+          label       = {'Sign up with ' + network}
+          handleClick = {this.handleSocialSignup(network)}/>
     )
   },
 
@@ -113,23 +104,15 @@ module.exports = React.createClass({
     return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
   render: function () {
     return (
       <div className="account-container">
         <div className="account-logo">
           <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content" rounded={false}>
+        <Paper
+          className = "account-container__content"
+          rounded   = {false}>
           <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Try it now and start creating your apps</p>
             <small>
@@ -137,9 +120,9 @@ module.exports = React.createClass({
                inputting any credit card information.
             </small>
           </div>
-          {this.renderError()}
+          {this.renderNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
