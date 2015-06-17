@@ -10,7 +10,7 @@ general:
 
 test:
   override:
-    - npm test
+    # - npm test
     - npm run-script nightwatch
 
 deployment:
