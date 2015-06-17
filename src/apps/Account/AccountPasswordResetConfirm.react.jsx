@@ -4,6 +4,7 @@ var React           = require('react'),
     Link            = Router.Link,
 
     // Utils
+    FormMixin       = require('../../mixins/FormMixin'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
@@ -14,9 +15,7 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
-
-    Notification    = require('../../common/Notification/Notification.react');
+    Paper           = mui.Paper;
 
 
 require('./Account.sass');
@@ -28,8 +27,10 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
+    Router.State,
+
     ValidationMixin,
-    Router.State
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -42,43 +43,13 @@ module.exports = React.createClass({
     }
   },
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        var params = this.getParams();
-        AuthActions.passwordResetConfirm({
-          new_password: this.state.password,
-          uid: params.uid,
-          token: params.token
-        });
-      }
-    }.bind(this));
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
-  renderFeedback: function () {
-    if (!this.state.feedback || this.state.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification>{this.state.feedback}</Notification>
-    );
+  handleSuccessfullValidation: function () {
+    var params = this.getParams();
+    AuthActions.passwordResetConfirm({
+      new_password: this.state.password,
+      uid: params.uid,
+      token: params.token
+    });
   },
 
   render: function() {
@@ -91,10 +62,9 @@ module.exports = React.createClass({
           <div className="account-container__content__header">
             <p className="">Choose a new password</p>
           </div>
-          {this.renderError()}
-          {this.renderFeedback()}
+          {this.renderNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
