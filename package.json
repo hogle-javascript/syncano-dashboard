@@ -95,6 +95,7 @@
     "start": "gulp webpack-dev-server",
     "build": "gulp build",
     "publish": "gulp publish",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "nightwatch": "nightwatch -e chrome --test tests/*"
   }
 }
