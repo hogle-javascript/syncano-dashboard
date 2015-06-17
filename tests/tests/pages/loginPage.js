@@ -1,5 +1,5 @@
 var LOCATORS = {
-  staging_url : "https://dashboard.syncano.rocks/#/login",
+  url : "https://localhost:8080/",
   email_input : "input[name=email]",
   email : "adam.wardecki+chan@syncano.com",
   pass_input : "input[name=password]",
@@ -13,7 +13,7 @@ module.exports = function (client) {
     return {
         goToLoginPage: function () {
             return client
-                .url(LOCATORS['staging_url'])
+                .url(LOCATORS['url'])
                 .waitForElementVisible("body", 1000)
         },
         typeEmail: function () {
@@ -35,7 +35,7 @@ module.exports = function (client) {
         },
         verifyLoginSuccessful: function () {
             return client
-                .waitForElementVisible(LOCATORS['main_div'], 5000)
+                .waitForElementVisible(LOCATORS['main_div'], 20000)
                 .assert.containsText(LOCATORS['main_div'], "Instances");
         }
     };

@@ -20,7 +20,7 @@
 
   "test_settings" : {
     "default" : {
-      "launch_url" : "https://dashboard.syncano.rocks/",
+      "launch_url" : "https://localhost:8080/",
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
       "silent": true,
