@@ -6,11 +6,22 @@ machine:
 general:
   artifacts:
     - "coverage/"
-
+    - "tests/reports/"
+test:
+  override:
+    - npm test
+    - npm run-script nightwatch
 deployment:
   staging:
     branch: devel
     commands:
       - npm install
       - NODE_ENV=staging npm run-script publish
-      - npm run-scrip clean
+      - npm run-script clean
+dependencies:
+   post:
+      - wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+      - java -jar selenium-server-standalone-2.46.0.jar:
+            background: true
+      - npm start:
+            background: true
