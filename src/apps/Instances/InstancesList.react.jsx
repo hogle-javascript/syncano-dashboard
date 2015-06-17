@@ -63,7 +63,7 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
@@ -89,7 +89,7 @@ module.exports = React.createClass({
     var instances = this.state.items.filter(this.props.filter);
 
     var items = instances.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
@@ -98,8 +98,7 @@ module.exports = React.createClass({
       return items;
     }
     return (
-      <EmptyListItem
-        handleClick={this.props.emptyItemHandleClick}>
+      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </EmptyListItem>
     );

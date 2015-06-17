@@ -19,6 +19,7 @@ var React                 = require('react'),
     FloatingActionButton  = mui.FloatingActionButton,
     Dialog                = mui.Dialog,
     Container             = require('../../common/Container/Container.react'),
+    Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
@@ -57,7 +58,7 @@ module.exports = React.createClass({
       dialog: AddDialog,
       params: {
         ref  : "addApiKeyDialog",
-        mode : "add",
+        mode : "add"
       },
     },{
       dialog: Dialog,
@@ -65,20 +66,32 @@ module.exports = React.createClass({
         title:  "Reset API Key",
         ref  : "resetApiKeyDialog",
         actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure.", onClick: this.handleReset}
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : "Yes, I'm sure.",
+            onClick : this.handleReset
+          }
         ],
         modal: true,
-        children: 'Do you really want to reset this API key?',
+        children: 'Do you really want to reset this API key?'
       },
     }, {
       dialog: Dialog,
       params: {
-        ref:    "deleteApiKeyDialog",
-        title:  "Delete API key",
+        ref: "deleteApiKeyDialog",
+        title: "Delete API key",
         actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure.", onClick: this.handleDelete}
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : "Yes, I'm sure.",
+            onClick : this.handleDelete
+          }
         ],
         modal: true,
         children: 'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
