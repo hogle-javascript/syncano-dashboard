@@ -24,5 +24,6 @@ dist/
 *.sublime-project
 *.sublime-workspace
 
-# Reports by nightwatchjs 
-/tests/reports
+# Reports by nightwatchjs
+reports/
+bin/
