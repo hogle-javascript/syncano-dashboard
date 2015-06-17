@@ -18,6 +18,7 @@ var React  = require('react'),
 
     // List
     ListContainer   = require('../../common/Lists/ListContainer.react'),
+    List            = require('../../common/Lists/List.react'),
     Item            = require('../../common/ColumnList/Item.react'),
     Header          = require('../../common/ColumnList/Header.react'),
     LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),

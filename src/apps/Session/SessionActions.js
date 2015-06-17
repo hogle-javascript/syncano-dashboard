@@ -6,14 +6,14 @@ var SessionActions = Reflux.createActions({
   'login': {},
   'fetchUser': {
     asyncResult: true,
-    children: ['completed', 'failure'],
+    children: ['completed', 'failure']
   },
   'logout': {},
   'registerRouter': {},
   'setInstance': {
       asyncResult: true,
-      children: ['completed', 'failure'],
-  },
+      children: ['completed', 'failure']
+  }
 });
 
 SessionActions.fetchUser.listen(function (token) {

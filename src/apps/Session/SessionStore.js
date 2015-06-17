@@ -18,14 +18,6 @@ var SessionStore = Reflux.createStore({
     }
   },
 
-  getMyEmail: function() {
-    return sessionStorage.getItem('user');
-  },
-
-  getToken: function() {
-    return sessionStorage.getItem('token');
-  },
-
   clearInstance: function() {
     this.instance = null;
   },
