@@ -1,26 +1,26 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
-    Link                  = Router.Link,
+var React                = require('react'),
+    Reflux               = require('reflux'),
+    Router               = require('react-router'),
+    Link                 = Router.Link,
 
     // Utils
-    FormMixin             = require('../../mixins/FormMixin'),
-    ValidationMixin       = require('../../mixins/ValidationMixin'),
+    FormMixin            = require('../../mixins/FormMixin'),
+    ValidationMixin      = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
-    SessionStore          = require('../Session/SessionStore'),
-    AuthStore             = require('./AuthStore'),
-    AuthActions           = require('./AuthActions'),
-    AuthConstants         = require('./AuthConstants'),
+    SessionStore         = require('../Session/SessionStore'),
+    AuthStore            = require('./AuthStore'),
+    AuthActions          = require('./AuthActions'),
+    AuthConstants        = require('./AuthConstants'),
 
     // Components
-    mui                   = require('material-ui'),
-    TextField             = mui.TextField,
-    RaisedButton          = mui.RaisedButton,
-    Paper                 = mui.Paper,
+    mui                  = require('material-ui'),
+    TextField            = mui.TextField,
+    RaisedButton         = mui.RaisedButton,
+    Paper                = mui.Paper,
 
-    SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
+    SocialAuthButton     = require('../../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
 
 
 require('./Account.sass');

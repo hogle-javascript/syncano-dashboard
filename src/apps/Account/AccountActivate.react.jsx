@@ -5,8 +5,9 @@ var React       = require('react'),
     AuthStore   = require('./AuthStore'),
     AuthActions = require('./AuthActions'),
 
-    mui             = require('material-ui'),
-    Paper           = mui.Paper;
+    mui         = require('material-ui'),
+    Paper       = mui.Paper;
+
 
 module.exports = React.createClass({
 
