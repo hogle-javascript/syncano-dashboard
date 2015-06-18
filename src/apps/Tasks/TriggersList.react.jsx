@@ -8,8 +8,9 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
-    TriggersActions     = require('./TriggersActions'),
-    TriggersStore       = require('./TriggersStore'),
+    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
+    TriggersActions   = require('./TriggersActions'),
+    TriggersStore     = require('./TriggersStore'),
 
     // Components
     mui               = require('material-ui'),
@@ -61,18 +62,23 @@ module.exports = React.createClass({
 
   renderItem: function (item) {
 
+    // TODO: move to store
+    var codeBox      = CodeBoxesStore.getCodeBoxById(item.codebox),
+        codeBoxLabel = codeBox ? codeBox.label: '';
+
     return (
       <Item key={item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
-          icon            = 'account'
+          icon            = 'arrow-up-bold'
           background      = {Colors.blue500}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick} >
-          {item.email}
+          {item.label}
         </ColumnCheckIcon>
-        <ColumnDesc>{item.first_name + ' ' + item.last_name}</ColumnDesc>
-        <ColumnDesc>{item.role}</ColumnDesc>
+        <ColumnID>{item.id}</ColumnID>
+        <ColumnDesc>{codeBoxLabel}</ColumnDesc>
+        <ColumnDesc>{item.signal}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -104,8 +110,9 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Name</ColumnDesc.Header>
-          <ColumnDesc.Header>Role</ColumnDesc.Header>
+          <ColumnID.Header>ID</ColumnID.Header>
+          <ColumnDesc.Header>CodeBox</ColumnDesc.Header>
+          <ColumnDesc.Header>Signal</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>

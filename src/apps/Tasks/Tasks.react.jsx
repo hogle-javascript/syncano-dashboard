@@ -102,7 +102,7 @@ module.exports = React.createClass({
               onClick : this.handleCancel},
             {
               text    : "Yes, I'm sure",
-              onClick : this.handleRemoveSchedules}
+              onClick : this.handleRemoveTrigger}
           ],
           modal: true,
           children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
@@ -136,59 +136,15 @@ module.exports = React.createClass({
           modal: true,
           children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?'
         }
-      },
-
-      //{
-      //  dialog: Dialog,
-      //  params: {
-      //    ref:    "deleteTriggerDialog",
-      //    title:  "Delete API key",
-      //    actions: [
-      //      {text: 'Cancel', onClick: this.handleCancel},
-      //      {text: "Yes, I'm sure.", onClick: this.handleDeleteTrigger}
-      //    ],
-      //    modal: true,
-      //    children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' Schedules?',
-      //  }
-      //},
-      //{
-      //  dialog: Dialog,
-      //  params: {
-      //    title:  "Resend Invitation",
-      //    ref  : "resendInvitationDialog",
-      //    actions: [
-      //      {text: 'Cancel', onClick: this.handleCancel},
-      //      {text: "Yes, I'm sure.", onClick: this.handleResendInvitation}
-      //    ],
-      //    modal: true,
-      //    children: 'Do you really want to resend this Invitation?'
-      //  }
-      //},
-      //{
-      //  dialog: Dialog,
-      //  params: {
-      //    title:  "Delete Invitation",
-      //    ref  : "removeInvitationDialog",
-      //    actions: [
-      //      {text: 'Cancel', onClick: this.handleCancel},
-      //      {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
-      //    ],
-      //    modal: true,
-      //     children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' Invitations?',
-      //  }
-      //}
+      }
     ]
   },
 
-  handleDeleteTrigger: function() {
+  handleRemoveTrigger: function() {
     console.info('Schedules::handleDelete');
-    SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
+    TriggrsActions.removeTriggers(TriggersStore.getCheckedItems());
   },
 
-  handleResendInvitation: function() {
-    console.info('Schedules::handleResendInvitation');
-    TriggersActions.resendInvitation(SchedulesStore.getCheckedItem().id);
-  },
   handleRemoveSchedules: function() {
     console.info('Schedules::handleRemoveSchedules');
     SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());

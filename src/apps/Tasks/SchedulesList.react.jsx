@@ -38,13 +38,13 @@ module.exports = React.createClass({
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
   getInitialState() {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading,
+      isLoading : this.props.isLoading
     }
   },
 
@@ -61,19 +61,21 @@ module.exports = React.createClass({
   },
 
   renderItem: function (item) {
-    var codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
-    var codeBoxLabel = codeBox ? codeBox.label: '';
+    // TODO: move to store
+    var codeBox      = CodeBoxesStore.getCodeBoxById(item.codebox),
+        codeBoxLabel = codeBox ? codeBox.label: '';
 
     return (
       <Item key={item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
-          icon            = 'account'
+          icon            = 'camera-timer'
           background      = {Colors.blue500}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick} >
           {item.label}
         </ColumnCheckIcon>
+        <ColumnID>{item.id}</ColumnID>
         <ColumnDesc>{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.crontab}</ColumnDesc>
         <ColumnDate>{item.scheduled_next}</ColumnDate>
@@ -108,6 +110,7 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
+          <ColumnID.Header>ID</ColumnID.Header>
           <ColumnDesc.Header>CodeBox</ColumnDesc.Header>
           <ColumnDesc.Header>Crontab</ColumnDesc.Header>
           <ColumnDate.Header>Next run</ColumnDate.Header>

@@ -7,6 +7,10 @@ var TriggersActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
 
+  'createTrigger': {
+      asyncResult: true,
+      children: ['completed', 'failure']
+  },
   'getTriggers': {
       asyncResult: true,
       children: ['completed', 'failure']
@@ -19,8 +23,15 @@ var TriggersActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
+});
 
-
+TriggersActions.createTrigger.listen( function(payload) {
+  console.info('TriggersActions::createTrigger');
+  Connection
+    .Triggers
+    .create(payload)
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 TriggersActions.getTriggers.listen( function(payload) {
@@ -32,11 +43,11 @@ TriggersActions.getTriggers.listen( function(payload) {
     .catch(this.failure);
 });
 
-TriggersActions.updateTrigger.listen( function(name, payload) {
+TriggersActions.updateTrigger.listen( function(id, payload) {
   console.info('TriggersActions::updateTrigger');
   Connection
     .Triggers
-    .update(name, payload)
+    .update(id, payload)
     .then(this.completed)
     .catch(this.failure);
 });

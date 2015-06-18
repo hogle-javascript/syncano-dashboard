@@ -12,6 +12,21 @@ var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [CheckListStoreMixin],
 
+  signalMenuItems: [
+    {
+      payload : 'post_create',
+      text    : 'create'
+    },
+    {
+      payload : 'post_update',
+      text    : 'update'
+    },
+    {
+      payload : 'post_delete',
+      text    : 'delete'
+    }
+  ],
+
   getInitialState: function () {
     return {
       // Lists
@@ -45,6 +60,21 @@ var TriggersStore = Reflux.createStore({
     if (SessionStore.instance) {
       TriggersActions.getTriggers();
     }
+  },
+
+  getSignalsDropdown: function() {
+    return this.signalMenuItems;
+  },
+
+  getSignalIndex: function(signalName) {
+    var signalIndex = null;
+    this.signalMenuItems.some(function(item, index) {
+      if (item.payload === signalName) {
+        signalIndex = index;
+        return true;
+      }
+    });
+    return signalIndex;
   },
   
   onGetTriggers: function(items) {
