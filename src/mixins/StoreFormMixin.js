@@ -63,7 +63,11 @@ var StoreFormMixin = {
       }
     }
 
-    this.trigger({errors: this.data.errors});
+    this.trigger({
+      errors: this.data.errors,
+      feedback: this.data.feedback,
+      canSubmit: this.data.canSubmit
+    });
   }
 };
 
