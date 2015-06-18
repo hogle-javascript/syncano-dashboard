@@ -35,7 +35,9 @@ module.exports = React.createClass({
   validatorConstraints: {
     email: {
       presence: true,
-      email: true
+      email: {
+        message: '^Invalid email address'
+      }
     }
   },
 
