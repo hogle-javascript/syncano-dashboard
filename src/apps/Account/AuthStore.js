@@ -12,29 +12,35 @@ var AuthStore = Reflux.createStore({
   mixins: [StoreFormMixin],
 
   getInitialState: function () {
-    return this.data;
+    return {
+      email           : null,
+      password        : null,
+      confirmPassword : null
+    };
   },
 
   init: function () {
-    this.data.email    = null;
-    this.data.password = null;
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },
 
   onActivate: function () {
-    this.data.status = 'Account activation in progress...';
-    this.trigger(this.data);
+    this.trigger({
+      status: 'Account activation in progress...'
+    });
   },
 
   onActivateCompleted: function () {
-    this.data.status = 'Account activated successfully.';
-    this.trigger(this.data);
+    this.trigger({
+      status: 'Account activated successfully.'
+    });
   },
 
   onActivateFailure: function () {
-    this.data.status = 'Invalid or expired activation link.'
-    this.trigger(this.data);
+    this.trigger({
+      status: 'Invalid or expired activation link.'
+    });
   },
 
   onPasswordSignUpCompleted: function (payload) {
@@ -43,20 +49,20 @@ var AuthStore = Reflux.createStore({
 
   onPasswordSignInCompleted: function (payload) {
     SessionActions.login(payload);
-    this.trigger(this.data);
   },
 
   onPasswordResetCompleted: function () {
-    this.data.feedback = 'Check your inbox.';
-    this.data.email    = null;
-    this.trigger(this.data);
+    this.trigger({
+      email    : null,
+      feedback : 'Check your inbox.'
+    });
   },
 
   onPasswordResetConfirmCompleted: function () {
-    this.data.feedback        = 'Password changed successfully';
-    this.data.password        = null;
-    this.data.confirmPassword = null;
-    this.trigger(this.data);
+    this.data = this.getInitialState();
+    this.trigger({
+      feedback: 'Password changed successfully'
+    });
   },
 
   checkSession: function (Session) {
@@ -67,10 +73,6 @@ var AuthStore = Reflux.createStore({
 
   onSocialLoginCompleted: function (payload) {
     this.onPasswordSignInCompleted(payload);
-  },
-
-  onSocialLoginFailure: function (error) {
-    console.error('AuthStore::onSocialLoginFailure', error);
   },
 
 });
