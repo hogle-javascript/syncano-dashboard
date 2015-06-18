@@ -109,7 +109,7 @@ module.exports = React.createClass({
           <TextField
               ref               = "name"
               name              = "name"
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
               disabled          = {this.props.mode === 'edit' ? true : false}
               valueLink         = {this.linkState('name')}
               errorText         = {this.getValidationMessages('name').join()}
@@ -120,7 +120,7 @@ module.exports = React.createClass({
               ref               = "description"
               name              = "description"
               multiLine         = {true}
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join()}
               hintText          = "Multiline description of Instance (optional)"
