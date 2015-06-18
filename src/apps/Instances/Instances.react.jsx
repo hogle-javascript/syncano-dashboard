@@ -232,13 +232,11 @@ module.exports = Radium(React.createClass({
           emptyItemContent     = "Create an instance" />
 
         <InstancesList
-          name                 = "Other instances"
+          name                 = "Shared with me"
           items                = {this.state.instances}
           filter               = {this.filterOtherInstances}
-          listType             = "otherInstances"
-          viewMode             = "stream"
-          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
-          emptyItemContent     = "Create an instance" />
+          listType             = "sharedInstances"
+          viewMode             = "stream" />
 
       </Container>
     );
