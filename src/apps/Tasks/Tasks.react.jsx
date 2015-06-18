@@ -102,7 +102,7 @@ module.exports = React.createClass({
               onClick : this.handleCancel},
             {
               text    : "Yes, I'm sure",
-              onClick : this.handleRemoveTrigger}
+              onClick : this.handleRemoveTriggers}
           ],
           modal: true,
           children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
@@ -140,9 +140,9 @@ module.exports = React.createClass({
     ]
   },
 
-  handleRemoveTrigger: function() {
+  handleRemoveTriggers: function() {
     console.info('Schedules::handleDelete');
-    TriggrsActions.removeTriggers(TriggersStore.getCheckedItems());
+    TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
   },
 
   handleRemoveSchedules: function() {
@@ -208,7 +208,7 @@ module.exports = React.createClass({
             label         = "Click here to delete Schedules" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
-            onClick       = {this.showDialog('deleteTriggerDialog')}
+            onClick       = {this.showDialog('removeTriggerDialog')}
             iconClassName = "synicon-delete" />
 
           <FloatingActionButton

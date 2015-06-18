@@ -19,7 +19,7 @@ var TriggersActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'removeTrigger': {
+  'removeTriggers': {
       asyncResult: true,
       children: ['completed', 'failure']
   },
@@ -52,12 +52,12 @@ TriggersActions.updateTrigger.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-TriggersActions.removeTrigger.listen( function(names) {
-  names.map(function(name) {
+TriggersActions.removeTriggers.listen( function(ids) {
+  ids.map(function(id) {
     console.info('TriggersActions::removeTriggers');
     Connection
       .Triggers
-      .remove(name)
+      .remove(id)
       .then(this.completed)
       .catch(this.failure);
   }.bind(this));
