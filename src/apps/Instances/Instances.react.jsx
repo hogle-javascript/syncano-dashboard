@@ -51,7 +51,7 @@ module.exports = Radium(React.createClass({
       params: {
         ref  : "addInstanceDialog",
         mode : "add"
-      },
+      }
     }, {
       dialog: AddDialog,
       params: {
@@ -71,13 +71,13 @@ module.exports = Radium(React.createClass({
       dialog: Dialog,
       params: {
         ref:    "deleteInstanceDialog",
-        title:  "Delete Instance",
+        title:  "Delete an Instance",
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure", onClick: this.handleDelete}
+          {text: "Confirm", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?',
+        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?'
       }
      }]
   },
