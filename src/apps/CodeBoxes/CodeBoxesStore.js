@@ -76,6 +76,15 @@ var CodeBoxesStore = Reflux.createStore({
     return runtimeIndex;
   },
 
+  getCodeBoxesDropdown: function() {
+    return this.data.items.map(function(item){
+      return {
+        payload : item.id,
+        text    : item.label
+      }
+    });
+  },
+
   getCurrentCodeBox: function() {
 
     if (!this.data.currentCodeBoxId){
@@ -90,6 +99,28 @@ var CodeBoxesStore = Reflux.createStore({
       }
     }.bind(this));
     return currentItem;
+  },
+
+  getCodeBoxById: function(id) {
+    var codeBox = null;
+    this.data.items.some(function(item){
+      if (item.id.toString() === id.toString()) {
+        codeBox = item;
+        return true;
+      }
+    }.bind(this));
+    return codeBox;
+  },
+
+  getCodeBoxIndex: function(id) {
+    var codeBoxIndex = null;
+    this.data.items.some(function(item, index) {
+      if (item.id.toString() === id.toString()) {
+        codeBoxIndex = index;
+        return true;
+      }
+    });
+    return codeBoxIndex;
   },
 
   refreshData: function () {

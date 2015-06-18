@@ -612,6 +612,7 @@ var Syncano = (function() {
       create: this.createSchedule.bind(this),
       list: this.listSchedules.bind(this),
       get: this.getSchedule.bind(this),
+      update: this.updateSchedule.bind(this),
       remove: this.removeSchedule.bind(this),
       traces: this.listScheduleTraces.bind(this),
       trace: this.getScheduleTrace.bind(this)
@@ -2184,6 +2185,35 @@ var Syncano = (function() {
       }
       return this.request('POST', linksObject.instance_schedules, params, callbackOK, callbackError);
     },
+
+    /**
+     * Updates schedule
+     *
+     * @method Syncano#updateSchedule
+     * @alias Syncano.Schedules.update
+     * @param {Number|object} id
+     * @param {object} params
+     * @param {string} params.label - name of the schedule
+     * @param {Number} params.codebox - codebox to run
+     * @param {string} params.interval_sec - how often (in seconds) the schedule should run
+     * @param {string} params.crontab - ???
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateSchedule: function(id, params, callbackOK, callbackError) {
+      if (typeof params !== 'object') {
+        throw new Error('Missing parameters object');
+      }
+      if (typeof params.codebox === 'object') {
+        params.codebox = params.codebox.id;
+      }
+      if (typeof linksObject.instance_schedules === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_schedules + id, params, callbackOK, callbackError);
+    },
+
 
     /**
      * Returns all defined schedules as a list
