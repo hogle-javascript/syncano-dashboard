@@ -565,8 +565,7 @@ var Syncano = (function() {
     this.AccountInvitations = {
       list: this.listAccountInvitations.bind(this),
       get: this.getAccountInvitation.bind(this),
-      remove: this.removeAccountInvitation.bind(this),
-      /*accept: this.acceptAccountInvitation.bind(this)*/
+      remove: this.removeAccountInvitation.bind(this)
     };
 
     /**
