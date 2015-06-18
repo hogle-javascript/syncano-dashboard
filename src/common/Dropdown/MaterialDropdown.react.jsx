@@ -1,14 +1,16 @@
-var React               = require('react'),
-    classNames          = require('classnames'),
-    gravatar            = require('gravatar'),
-    OutsideClickHandler = require('react-outsideclickhandler'),
+var React                = require('react'),
+    classNames           = require('classnames'),
+    gravatar             = require('gravatar'),
+    OutsideClickHandler  = require('react-outsideclickhandler'),
 
-    mui                 = require('material-ui'),
-    List                = mui.List,
-    ListItem            = mui.ListItem, 
-    ListDivider         = mui.ListDivider,
-    Avatar              = mui.Avatar,
-    FontIcon            = mui.FontIcon;
+    mui                  = require('material-ui'),
+    List                 = mui.List,
+    ListItem             = mui.ListItem, 
+    ListDivider          = mui.ListDivider,
+    Avatar               = mui.Avatar,
+    FontIcon             = mui.FontIcon,
+    MaterialDropdownItem = require('./MaterialDropdownItem.react'),
+    DropdownNotifiItem   = require('./DropdownNotifiItem.react');
 
     
 
@@ -20,19 +22,31 @@ module.exports = React.createClass({
   displayName: 'MaterialDropdown',
 
   propTypes: {
-    icon: React.PropTypes.string,
+    type : React.PropTypes.string, 
+    icon : React.PropTypes.string,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
-      content         : React.PropTypes.string.isRequired,     // Content to view as item can be any object too
-      name            : React.PropTypes.string.isRequired,     // name for DropdownMenuItems kys
-      handleItemClick : React.PropTypes.func.isRequired        // function to call after DropdownMenuItem click
+      leftIcon           : React.PropTypes.shape({
+        name  : React.PropTypes.string.isRequired,
+        style : React.PropTypes.object.isRequired
+      }),
+      subheader          : React.PropTypes.string,
+      subheaderStyle     : React.PropTypes.object,
+      content            : React.PropTypes.shape({
+        text  : React.PropTypes.string.isRequired,
+        style : React.PropTypes.object.isRequired 
+      }), 
+      secondaryText      : React.PropTypes.string,
+      secondaryTextLines : React.PropTypes.number,                // Content to view as item can be any object too
+      name               : React.PropTypes.string.isRequired,     // name for DropdownMenuItems kys
+      handleItemClick    : React.PropTypes.func.isRequired        // function to call after DropdownMenuItem click
     })).isRequired,
     headerContent: React.PropTypes.shape({
-      userFullName    : React.PropTypes.string.isRequired,
-      userEmail       : React.PropTypes.string.isRequired,
-      handleItemClick : React.PropTypes.func,                  // if "clickable" props is defined as false or 
-      clickable       : React.PropTypes.bool                   // is not defined function will not be triggered
+      userFullName       : React.PropTypes.string.isRequired,
+      userEmail          : React.PropTypes.string.isRequired,
+      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or 
+      clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
     }),
-    iconStyle: React.PropTypes.object,
+    iconStyle: React.PropTypes.object
   },
 
   getDefaultProps: function () {
@@ -41,7 +55,9 @@ module.exports = React.createClass({
         width  : "18px",
         height : "18px", 
         fill   : "#FFF"
-      }        
+      },
+      type      : "normal",
+      clickable : true
     }
   },
 
@@ -53,11 +69,21 @@ module.exports = React.createClass({
   },
 
   toggleOpenClose: function (e) {
-    this.setState({isOpen: !this.state.isOpen});
+    this.setState({isOpen: (!this.state.isOpen && this.props.clickable)});
   },
 
   close: function () {
     this.setState({'isOpen': false});
+  },
+
+  getItems: function () {
+    if (this.props.type === "notification") {
+      return <DropdownNotifiItem items={this.props.items} />
+    } else {
+      return <MaterialDropdownItem
+                items         = {this.props.items}
+                headerContent = {this.props.headerContent} />
+    }
   },
 
   render: function () {
@@ -65,35 +91,6 @@ module.exports = React.createClass({
       'dropdown-menu'         : true,
       'dropdown-menu-visible' : this.state.isOpen
     });
-
-    var headerContent;
-
-    if (this.props.headerContent) {
-      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true);
-      var avatar = <Avatar src={gravatarUrl} />;
-      var headerContent =
-        <List>
-          <ListItem 
-            leftAvatar      = {avatar}
-            secondaryText   = {this.props.headerContent.userEmail} 
-            disableTouchTap = {!this.props.headerContent.clickable}
-            onClick         = {this.props.headerContent.handleItemClick}>
-            {this.props.headerContent.userFullName}
-          </ListItem>
-          <ListDivider />
-        </List>
-    };
-
-    var items = this.props.items.map(function (item, i) {
-      return (
-        <List>
-          <ListItem 
-            key     = {item.name + i} 
-            onClick = {item.handleItemClick}>
-            {item.content}
-          </ListItem>
-        </List>)
-    }.bind(this));
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>
@@ -104,8 +101,9 @@ module.exports = React.createClass({
               style     = {this.props.iconStyle} />
           </div>
           <div className={cssClasses}>
-              {headerContent}
-              {items}
+            <div className="dropdown-menu-section">
+              {this.getItems()}
+            </div>
           </div>
         </div>
       </OutsideClickHandler>

@@ -1,25 +1,26 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
-    classNames       = require('classnames'),
-    Router           = require('react-router'),
-    Link             = Router.Link,
+var React                  = require('react'),
+    Reflux                 = require('reflux'),
+    classNames             = require('classnames'),
+    Router                 = require('react-router'),
+    Link                   = Router.Link,
 
     // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
-    HeaderActions    = require('./HeaderActions'),
-    SessionActions   = require('../Session/SessionActions'),
-    HeaderStore      = require('./HeaderStore'),
+    SessionStore           = require('../Session/SessionStore'),
+    HeaderActions          = require('./HeaderActions'),
+    SessionActions         = require('../Session/SessionActions'),
+    HeaderStore            = require('./HeaderStore'),
+    AdminsInvitationsStore = require('../Admins/AdminsInvitationsStore'),
 
-    mui              = require('material-ui'),
-    Colors           = require('material-ui/lib/styles/colors'),
-    Tabs             = mui.Tabs,
-    Tab              = mui.Tab,
-    Toolbar          = mui.Toolbar,
-    ToolbarGroup     = mui.ToolbarGroup,
-    FontIcon         = mui.FontIcon,
-    Paper            = mui.Paper,
+    mui                    = require('material-ui'),
+    Colors                 = require('material-ui/lib/styles/colors'),
+    Tabs                   = mui.Tabs,
+    Tab                    = mui.Tab,
+    Toolbar                = mui.Toolbar,
+    ToolbarGroup           = mui.ToolbarGroup,
+    FontIcon               = mui.FontIcon,
+    Paper                  = mui.Paper,
 
-    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react');
+    MaterialDropdown       = require('../../common/Dropdown/MaterialDropdown.react');
 
 
 require('./Header.sass');
@@ -40,10 +41,6 @@ module.exports = React.createClass({
 
   handleTabActive: function (tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
-  },
-
-  handleLogout: function() {
-    SessionActions.logout();
   },
 
   renderBreadcrumbs: function () {
@@ -201,11 +198,6 @@ module.exports = React.createClass({
     }
   },
 
-  handleAccountClick: function(e) {
-    this.transitionTo("profile-settings");
-    e.stopPropagation();
-  },
-
   renderInstance: function() {
     var styles = this.getStyles(),
         instance = SessionStore.instance;
@@ -234,21 +226,134 @@ module.exports = React.createClass({
     this.transitionTo('app');
   },
 
-  render: function () {
-    var styles = this.getStyles();
+  handleAccountClick: function (e) {
+    this.transitionTo("profile-settings");
+    e.stopPropagation();
+  },
 
-    var dropdownItems = [{
-      content         : "Logout",
+  handleLogout: function () {
+    SessionActions.logout();
+  },
+
+  handleBillingClick: function (e) {
+    this.transitionTo("profile-billing");
+    e.stopPropagation();
+  },
+
+  handleAcceptInvitation: function (e) {
+    console.log("Invitation ACCEPTED");
+    e.stopPropagation();
+  },
+
+  handleDeclineInvitation: function (e) {
+    console.log("Invitation DECLINED");
+    console.error("INVITATIONS!!!", this.state.invitations.items);
+    e.stopPropagation();
+  },
+
+  handleResendEmail: function (e) {
+    console.log("EMAIL SENT");
+    e.stopPropagation();
+  },
+
+  getDropdownItems: function () {
+    return [{
+      leftIcon: {
+        name  : "synicon-credit-card",
+        style : {}
+      }, 
+      content: {
+        text  : "Billing",
+        style : {}
+      },
+      name            : "billing",
+      handleItemClick : this.handleBillingClick
+    }, {
+      leftIcon: {
+        name  : "synicon-power",
+        style : {
+          color: "#f50057"
+        }
+      }, 
+      content: {
+        text  : "Logout",
+        style : {
+          color: "#f50057"
+        }
+      },
       name            : "logout",
-      handleItemClick : this.handleLogout,
-    }];
+      handleItemClick : this.handleLogout
+    }]
+  },
 
-    var dropdownHeader = {
+  getDropdownHeaderItems: function () {
+    return {
       userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
       userEmail       : this.state.user.email,
       clickable       : true,
       handleItemClick : this.handleAccountClick
+    }
+  },
+
+  getNotificationItems: function () {
+    var invitations = this.state.invitations.items.filter(function (invitation) {
+      return invitation.state === "new"
     };
+    var notifications = [];
+
+    return [{
+      subheader      : "Notifications",
+      subheaderStyle : {
+        borderBottom: "1px solid #EAEAEA"
+      },
+      type     : "invitation",
+      leftIcon : {
+        name  : "synicon-share-variant",
+        style : {
+          color: "#8bc34a"
+        }
+      }, 
+      content: {
+        text  : "Wojtek Kosciesza invited you to his instance 'Instance Name'",
+        style : {}
+      },
+      buttonsText   : ["Accept", "Decline"],
+      name          : "billing",
+      handleAccept  : this.handleAcceptInvitation,
+      handleDecline : this.handleDeclineInvitation
+    }, {
+      type     : "normal-link",
+      leftIcon : {
+        name  : "synicon-alert",
+        style : {
+          color: "#ff9800"
+        }
+      }, 
+      content: {
+        text          : "You email address is not yet verified.",
+        secondaryText : "Resend activation email",
+        style         : {}
+      },
+      name            : "activation",
+      handleLinkClick : this.handleResendEmail
+    }, {
+      type     : "normal-link",
+      leftIcon : {
+        name  : "synicon-credit-card",
+        style : {}
+      }, 
+      content: {
+        text          : "Payment failed",
+        secondaryText : "Update payment method",
+        style         : {}
+      },
+      name            : "payment",
+      handleLinkClick : this.handleBillingClick
+    }]
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
       <div>
@@ -285,13 +390,15 @@ module.exports = React.createClass({
               <FontIcon 
                 className = "synicon-magnify"
                 style     = {styles.bottomToolbarGroupIcon} />
-              <FontIcon
-                className = "synicon-bell-outline"
-                style     = {styles.bottomToolbarGroupIcon} />
               <MaterialDropdown
-                  items={dropdownItems}
-                  headerContent={dropdownHeader}
-                  style={styles.bottomToolbarGroupIcon} />
+                type          = "notification"
+                icon          = "bell-outline"
+                items         = {this.getNotificationItems()}
+                iconStyle     = {styles.bottomToolbarGroupIcon} />
+              <MaterialDropdown
+                items         = {this.getDropdownItems()}
+                headerContent = {this.getDropdownHeaderItems()}
+                iconStyle     = {styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>

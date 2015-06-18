@@ -5,6 +5,19 @@
   flex-direction: row-reverse;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.right-button {
+  margin-left: 40px;
+  color: #ABABAB;
+}
+
+.left-button {
+  color: #0091EA;
+}
+
 .dropdown-menu-header {
   border-bottom: 1px solid #999;
 }
@@ -28,7 +41,7 @@
   padding: 5px 0;
   max-height: 230px;
   overflow: auto;
-  min-width: 250px;
+  max-width: 400px;
 }
 
 .dropdown-menu b {
