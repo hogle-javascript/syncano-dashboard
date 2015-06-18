@@ -74,6 +74,7 @@ module.exports = React.createClass({
         flexDirection  : 'column',
         justifyContent : 'center',
         cursor         : 'pointer',
+        wordBreak      : 'break-all',
         color          : this.state.color
       }
     };
