@@ -4,22 +4,28 @@ var React            = require('react'),
     Router           = require('react-router'),
     Link             = Router.Link,
 
-    // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
     HeaderActions    = require('./HeaderActions'),
-    SessionActions   = require('../Session/SessionActions'),
     HeaderStore      = require('./HeaderStore'),
+    SessionActions   = require('../Session/SessionActions'),
+    SessionStore     = require('../Session/SessionStore'),
+    InstancesActions = require('../Instances/InstancesActions'),
+    InstancesStore   = require('../Instances/InstancesStore'),
 
     mui              = require('material-ui'),
-    Colors           = require('material-ui/lib/styles/colors'),
+    Colors           = mui.Styles.Colors,
     Tabs             = mui.Tabs,
     Tab              = mui.Tab,
     Toolbar          = mui.Toolbar,
     ToolbarGroup     = mui.ToolbarGroup,
     FontIcon         = mui.FontIcon,
     Paper            = mui.Paper,
+    DropDownMenu     = mui.DropDownMenu,
 
-    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react');
+    StylePropable    = mui.Mixins.StylePropable,
+
+    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
+    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
+    RoundIcon        = require('../../common/Icon/RoundIcon.react');
 
 
 require('./Header.sass');
@@ -28,11 +34,14 @@ require('./Header.sass');
 module.exports = React.createClass({
 
   displayName: 'Header',
+
   mixins: [
     Reflux.connect(HeaderStore),
+    Reflux.connect(InstancesStore),
     Router.Navigation,
-    Router.State
-  ],
+    Router.State,
+    StylePropable
+],
 
   contextTypes: {
       router: React.PropTypes.func.isRequired
@@ -102,12 +111,12 @@ module.exports = React.createClass({
 
     var menuStyles = {
       menuContainer: {
-        display: 'inline-flex',
-        alignSelf: 'flex-end'
+        display   : 'inline-flex',
+        alignSelf : 'flex-end'
       },
       menu: {
-        backgroundColor: 'transparent',
-        height: 60
+        backgroundColor : 'transparent',
+        height          : 60
       }
     };
 
@@ -123,13 +132,7 @@ module.exports = React.createClass({
   },
 
   renderMenuItem: function(tab, index) {
-    var menuItemStyles = {
-          color: Colors.indigo500,
-          fontWeight: 400,
-          fontSize: 17,
-          paddingLeft: 10,
-          paddingRight: 10
-        };
+    var styles = this.getStyles();
 
     return (
       <Tab
@@ -137,7 +140,7 @@ module.exports = React.createClass({
         label    = {tab.label}
         route    = {tab.route}
         params   = {tab.params}
-        style    = {menuItemStyles}
+        style    = {styles.menuItemStyles}
         onActive = {this.handleTabActive} />
     )
   },
@@ -173,30 +176,51 @@ module.exports = React.createClass({
         alignItems     : 'center',
         justifyContent : 'center'
       },
+      menuItemStyles: {
+        color        : Colors.indigo500,
+        fontWeight   : 400,
+        fontSize     : 17,
+        paddingLeft  : 10,
+        paddingRight : 10
+      },
       instanceToolbarGroup: {
         display        : 'flex',
         float          : 'none',
         alignItems     : 'center',
         justifyContent : 'center',
-        maxWidth       : 320
+        maxWidth       : 320,
+        marginLeft     : '-32px'
       },
       bottomToolbarGroupIcon: {
         padding        : '0 4px'
       },
-      instanceIcon : {
-        color      : '#fff',
-        display    : 'flex',
-        fontSize   : 12,
-        lineHeight : 1
-      },
-      instanceIconBackground: {
-        margin         : '0 16px 0 0',
-        height         : 26,
-        minWidth       : 26,
-        width          : 26,
+      dropdownLabelContainer: {
         display        : 'flex',
-        justifyContent : 'center',
         alignItems     : 'center'
+      },
+      dropdownLabel: {
+        flex           : 1,
+        whiteSpace     : 'nowrap',
+        textOverflow   : 'ellipsis',
+        overflow       : 'hidden',
+        paddingRight   : 40
+      },
+      dropdownInstanceIcon: {
+        width          : 24,
+        height         : 24,
+        fontSize       : 12,
+        lineHeight     : '20px',
+        display        : 'inline-flex',
+        alignItems     : 'center',
+        justifyContent : 'center',
+        borderRadius   : '50%',
+        color          : '#fff',
+        margin         : '8px 16px 8px 0'
+      },
+      dropdownMenuItem: {
+        height: 40,
+        lineHeight: '40px',
+        paddingLeft: 32
       }
     }
   },
@@ -206,27 +230,68 @@ module.exports = React.createClass({
     e.stopPropagation();
   },
 
-  renderInstance: function() {
-    var styles = this.getStyles(),
-        instance = SessionStore.instance;
+  handleDropdownItemClick: function(e, selectedIndex, menuItem) {
+    var instanceName = menuItem.text._store.props.children[1]._store.props.children;
 
-    if (!instance) {
+    // Redirect to main instance screen
+    SessionActions.setInstance(instanceName);
+    this.transitionTo('instance', {instanceName: instanceName});
+  },
+
+  handleInstanceActive: function() {
+    var currentInstance     = SessionStore.instance,
+        instancesList       = InstancesStore.data.instances,
+        instanceActiveIndex = null;
+
+    instancesList.some(function(e, index){
+       if(e.name === currentInstance.name) {
+         instanceActiveIndex = index;
+         return true;
+       }
+    });
+
+    return instanceActiveIndex;
+  },
+
+  renderInstance: function() {
+    var styles        = this.getStyles(),
+        instance      = SessionStore.instance,
+        instancesList = InstancesStore.data.instances;
+
+    if (!instance || !instancesList.length > 0) {
       return;
+    } else if (instancesList.length > 0) {
+      instancesList = instancesList.reverse();
     }
 
-    // Setting background instance icon background
-    styles.instanceIconBackground.background = instance.metadata.color;
+    menuItems = InstancesStore.data.instances.map(function(item, index) {
+      var iconBackground = {
+            backgroundColor: item.metadata.color || 'green'
+          },
+          iconClassName  = item.metadata.icon ? 'synicon-' + item.metadata.icon : 'synicon-folder',
+          text           = <div style={styles.dropdownLabelContainer}>
+                             <FontIcon
+                               className = {iconClassName}
+                               style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
+                             <div style={styles.dropdownLabel}>{item.name}</div>
+                           </div>;
+
+      return {
+        payload: index + '',
+        text: text
+      }
+    });
+
     return (
-      <ToolbarGroup key={0} style={styles.instanceToolbarGroup}>
-        <Paper
-          circle     = {true}
-          background = {instance.metadata.color}
-          style      = {styles.instanceIconBackground}>
-          <FontIcon
-            className = {"synicon-" + instance.metadata.icon}
-            style     = {styles.instanceIcon}/>
-        </Paper>
-        <div>{SessionStore.instance.name}</div>
+      <ToolbarGroup
+        key={0}
+        style={styles.instanceToolbarGroup}>
+        <DropDownMenu
+          className="instances-dropdown"
+          menuItemStyle={styles.dropdownMenuItem}
+          menuItems={menuItems}
+          onChange={this.handleDropdownItemClick}
+          selectedIndex={this.handleInstanceActive()} />
       </ToolbarGroup>)
   },
 
@@ -240,7 +305,7 @@ module.exports = React.createClass({
     var dropdownItems = [{
       content         : "Logout",
       name            : "logout",
-      handleItemClick : this.handleLogout,
+      handleItemClick : this.handleLogout
     }];
 
     var dropdownHeader = {

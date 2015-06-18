@@ -27,6 +27,9 @@ var React  = require('react'),
     AddDialog     = require('./InstancesAddDialog.react');
 
 
+require('./Instances.sass');
+
+
 module.exports = Radium(React.createClass({
 
   displayName: 'Instances',
