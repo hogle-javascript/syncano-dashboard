@@ -27,15 +27,19 @@ var React  = require('react'),
     AddDialog     = require('./InstancesAddDialog.react');
 
 
+require('./Instances.sass');
+
+
 module.exports = Radium(React.createClass({
 
   displayName: 'Instances',
 
   mixins: [
-    Reflux.connect(InstancesStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
+
+    Reflux.connect(InstancesStore),
+    HeaderMixin,
     DialogsMixin
   ],
 
@@ -50,12 +54,12 @@ module.exports = Radium(React.createClass({
       params: {
         ref  : "addInstanceDialog",
         mode : "add"
-      },
+      }
     }, {
       dialog: AddDialog,
       params: {
-        ref           : "editInstanceDialog",
-        mode          : "edit"
+        ref  : "editInstanceDialog",
+        mode : "edit"
       }
     },{
       dialog: ColorIconPickerDialog,
@@ -66,7 +70,19 @@ module.exports = Radium(React.createClass({
         initialIcon  : checkedItemIconColor.icon,
         handleClick  : this.handleChangePalette
       }
-    }]
+    },{
+      dialog: Dialog,
+      params: {
+        ref:    "deleteInstanceDialog",
+        title:  "Delete an Instance",
+        actions: [
+          {text: 'Cancel', onClick: this.handleCancel},
+          {text: "Confirm", onClick: this.handleDelete}
+        ],
+        modal: true,
+        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?'
+      }
+     }]
   },
 
   componentWillMount: function() {
@@ -91,11 +107,12 @@ module.exports = Radium(React.createClass({
   headerMenuItems: function () {
     return [
       {
-        label: 'Instances',
-        route: 'instances',
+        label  : 'Instances',
+        route  : 'instances',
+        active : true
       }, {
-        label: 'Solutions',
-        route: 'dashboard',
+        label : 'Solutions',
+        route : 'dashboard'
       }];
   },
 
@@ -150,11 +167,7 @@ module.exports = Radium(React.createClass({
   render: function () {
 
     var checkedInstances = InstancesStore.getNumberOfChecked(),
-        styles = this.getStyles(),
-        deleteActions = [
-          { text: 'Cancel', onClick: this.handleCancel },
-          { text: "Yes, I'm sure. Please delete my instances.", onClick: this.handleDelete }
-        ];
+        styles = this.getStyles();
 
     return (
       <Container>
@@ -210,18 +223,20 @@ module.exports = Radium(React.createClass({
         </FabList>
 
         <InstancesList
-          name     = "My instances"
-          items    = {this.state.instances}
-          filter   = {this.filterMyInstances}
-          listType = "myInstances"
-          viewMode = "stream" />
+          name                 = "My instances"
+          items                = {this.state.instances}
+          filter               = {this.filterMyInstances}
+          listType             = "myInstances"
+          viewMode             = "stream"
+          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
+          emptyItemContent     = "Create an instance" />
 
         <InstancesList
-          name     = "Other instances"
-          items    = {this.state.instances}
-          filter   = {this.filterOtherInstances}
-          listType = "otherInstances"
-          viewMode = "stream" />
+          name                 = "Shared with me"
+          items                = {this.state.instances}
+          filter               = {this.filterOtherInstances}
+          listType             = "sharedInstances"
+          viewMode             = "stream" />
 
       </Container>
     );

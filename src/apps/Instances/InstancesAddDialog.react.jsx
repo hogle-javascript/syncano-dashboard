@@ -3,6 +3,7 @@ var React  = require('react'),
 
     // Utils
     ValidationMixin = require('../../mixins/ValidationMixin'),
+    DialogFormMixin = require('../../mixins/DialogFormMixin'),
 
     // Stores and Actions
     InstancesActions = require('./InstancesActions'),
@@ -12,7 +13,8 @@ var React  = require('react'),
     mui          = require('material-ui'),
     TextField    = mui.TextField,
     DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog;
+    Dialog       = mui.Dialog,
+    FlatButton   = mui.FlatButton;
 
 
 module.exports = React.createClass({
@@ -22,18 +24,19 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(InstancesStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin,
+    DialogFormMixin,
+    ValidationMixin
   ],
 
   validatorConstraints: {
     name: {
       presence: true,
       length: {
-        minimum: 5,
+        minimum: 5
       }
     },
     description: {
-    },
+    }
   },
 
   getInitialState: function() {
@@ -44,121 +47,86 @@ module.exports = React.createClass({
 
   clearData: function() {
     this.setState({
-      name: '',
-      description: '',
-      errors: {},
+      name        : '',
+      description : '',
+      errors      : {}
     })
   },
-  componentWillUpdate: function() {
-    console.log('InstancesAddDialog::componentWillUpdate');
-  },
 
-  show: function() {
-    console.log('InstancesAddDialog::show');
-    this.clearData();
-
-    // When it is "edit" mode, we want to set values
-    if (this.props.mode === "edit"){
-      var checkedItem = InstancesStore.getCheckedItem();
-      if (checkedItem) {
-        this.setState({
-            name: checkedItem.name,
-            description: checkedItem.description
-        });
-      }
+  editShow: function() {
+    var checkedItem = InstancesStore.getCheckedItem();
+    if (checkedItem) {
+      this.setState({
+            name        : checkedItem.name,
+            description : checkedItem.description
+      });
     }
-
-    this.refs.createInstanceDialog.show();
   },
 
-  dismiss: function() {
-    this.refs.createInstanceDialog.dismiss();
+  handleEditSubmit: function () {
+    InstancesActions.updateInstance(
+      this.state.name,
+      {description: this.state.description}
+    );
   },
 
-  handleSubmit: function (event) {
-    console.info('InstancesAddDialog::handleSubmit');
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function (isValid) {
-      console.info('InstancesAddDialog::handleSubmit isValid:', isValid);
-      if (isValid === true) {
-
-        if (this.props.mode === 'add') {
-          InstancesActions.createInstance({
-            name        : this.state.name,
-            description : this.state.description,
-          });
-        } else if (this.props.mode === 'edit') {
-          InstancesActions.updateInstance(this.state.name, {description: this.state.description});
-        }
-      }
-    }.bind(this));
-  },
-
-  handleCancel: function(event) {
-    this.setState({
-      errors: {}});
-    this.dismiss();
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-    return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
-    )
+  handleAddSubmit: function () {
+    InstancesActions.createInstance({
+      name        : this.state.name,
+      description : this.state.description
+    });
   },
 
   render: function () {
-    var title = this.props.mode === 'edit' ? 'Edit': 'Add';
-    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Instance';
+    var title = this.props.mode === 'edit' ? 'Update an Instance': 'Create an Instance';
 
-    var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
+    var dialogCustomActions = [
+      <FlatButton
+        label      = "Cancel"
+        onTouchTap = {this.handleCancel}
+        ref        = "cancel" />,
+
+      <FlatButton
+        label      = "Confirm"
+        primary    = {true}
+        onTouchTap = {this.handleSubmit}
+        ref        = "submit" />
     ];
 
     return (
       <Dialog
-        ref="createInstanceDialog"
-        title={title}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        modal={true}>
+        ref             = "dialogRef"
+        title           = {title}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogCustomActions}
+        modal           = {true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
-
-        <TextField
-            ref               = "name"
-            name              = "name"
-            style             = {{width:'100%'}}
-            disabled          = {this.props.mode === 'edit' ? true: false}
-            valueLink         = {this.linkState('name')}
-            errorText         = {this.getValidationMessages('name').join()}
-            hintText          = "Short name for your Instance"
-            floatingLabelText = "Name of Instance" />
+          <form
+            onSubmit      = {this.handleSubmit}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
           <TextField
-            ref               = "description"
-            name              = "description"
-            multiLine         = {true}
-            style             = {{width:'100%'}}
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join()}
-            hintText          = "Multiline description of Instance (optional)"
-            floatingLabelText = "Description of Instance" />
+              ref               = "name"
+              name              = "name"
+              fullWidth         = {true}
+              disabled          = {this.props.mode === 'edit' ? true : false}
+              valueLink         = {this.linkState('name')}
+              errorText         = {this.getValidationMessages('name').join(' ')}
+              hintText          = "Short name for your Instance"
+              floatingLabelText = "Name" />
 
-        </form>
+            <TextField
+              ref               = "description"
+              name              = "description"
+              multiLine         = {true}
+              fullWidth         = {true}
+              valueLink         = {this.linkState('description')}
+              errorText         = {this.getValidationMessages('description').join(' ')}
+              hintText          = "Multiline description of Instance (optional)"
+              floatingLabelText = "Description" />
+
+          </form>
         </div>
       </Dialog>
     );

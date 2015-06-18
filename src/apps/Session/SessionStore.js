@@ -22,6 +22,10 @@ var SessionStore = Reflux.createStore({
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
     }
+
+    if (this.token !== null) {
+      this.connection.setApiKey(this.token);
+    }
   },
 
   clearInstance: function() {
@@ -45,6 +49,8 @@ var SessionStore = Reflux.createStore({
 
     this.token = payload.account_key;
     this.user  = payload;
+
+    this.connection.setApiKey(this.token);
     this.trigger(this);
   },
 

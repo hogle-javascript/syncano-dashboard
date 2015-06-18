@@ -5,6 +5,6 @@ describe("ContentHeader.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var ContentHeader = require('../ContentHeader.react');
+    // var ContentHeader = require('../ContentHeader.react');
   });
 });

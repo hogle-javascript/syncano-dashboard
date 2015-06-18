@@ -51,6 +51,7 @@ module.exports = React.createClass({
     return {
       display        : 'flex',
       flexDirection  : 'column',
+      justifyContent : 'center',
       fontSize       : '12px',
       lineHeight     : '16px',
       paddingTop     : 16,

@@ -5,6 +5,6 @@ describe("ListItem.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var ListItem = require('../ListItem.react');
+    // var ListItem = require('../ListItem.react');
   });
 });

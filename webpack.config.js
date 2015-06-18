@@ -2,7 +2,7 @@ var ENV        = process.env.NODE_ENV || 'development',
     path       = require('path'),
     webpack    = require('webpack'),
     compass    = require('node-libcompass').includePaths,
-    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL'],
+    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN'],
     plugin     = {ENV: JSON.stringify(ENV)};
 
 
@@ -31,7 +31,7 @@ module.exports = {
   // cache: true,
   entry: {
       app: appEntry,
-      vendor: ['brace', 'react', 'moment']
+      vendor: ['brace', 'react', 'moment', 'raven-js', 'material-ui']
   },
   output: {
     path: path.join(__dirname, 'dist', 'js'),

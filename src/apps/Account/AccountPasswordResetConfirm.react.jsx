@@ -4,6 +4,7 @@ var React           = require('react'),
     Link            = Router.Link,
 
     // Utils
+    FormMixin       = require('../../mixins/FormMixin'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
@@ -14,9 +15,7 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
-
-    Notification    = require('../../common/Notification/Notification.react');
+    Paper           = mui.Paper;
 
 
 require('./Account.sass');
@@ -28,8 +27,10 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
+    Router.State,
+
     ValidationMixin,
-    Router.State
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -42,93 +43,58 @@ module.exports = React.createClass({
     }
   },
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        var params = this.getParams();
-        AuthActions.passwordResetConfirm({
-          new_password: this.state.password,
-          uid: params.uid,
-          token: params.token
-        });
-      }
-    }.bind(this));
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
-  renderFeedback: function () {
-    if (!this.state.feedback || this.state.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification>{this.state.feedback}</Notification>
-    );
+  handleSuccessfullValidation: function () {
+    var params = this.getParams();
+    AuthActions.passwordResetConfirm({
+      new_password: this.state.password,
+      uid: params.uid,
+      token: params.token
+    });
   },
 
   render: function() {
     return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
-            <p className="text--gray text--left">Change password</p>
+            <p className="">Choose a new password</p>
           </div>
-          {this.renderError()}
-          {this.renderFeedback()}
+          {this.renderFormNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join()}
+              errorText={this.getValidationMessages('password').join(' ')}
               type="password"
               name="password"
               className="text-field"
               autoComplete="password"
-              hintText="New password" />
+              hintText="New password"
+              fullWidth={true} />
             <TextField
               ref="confirmPassword"
               valueLink={this.linkState('confirmPassword')}
-              errorText={this.getValidationMessages('confirmPassword').join()}
+              errorText={this.getValidationMessages('confirmPassword').join(' ')}
               type="password"
               name="confirmPassword"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="confirmPassword"
-              hintText="Confirm password" />
+              hintText="Confirm password"
+              fullWidth={true} />
             <RaisedButton
               type="submit"
               label="Change password"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
-          <div className="account-container__content__footer">
-            <ul className="list--flex list--horizontal">
-              <li><p><Link to="signup">Create your account</Link></p></li>
-              <li><p>Already have an account? <Link to="login">Login</Link>.</p></li>
-            </ul>
-          </div>
         </Paper>
       </div>
     );

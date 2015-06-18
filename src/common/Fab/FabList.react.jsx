@@ -18,7 +18,7 @@ module.exports = React.createClass({
     var styles = {
       position: 'fixed',
       right: '2vw',
-      zIndex: 10,
+      zIndex: 9,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end'

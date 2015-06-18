@@ -5,7 +5,7 @@ describe("Icon store", function () {
     IconStore = require("../IconStore");
     
     // Test data
-    existingIcon = "account-child";
+    existingIcon = "account-multiple";
     nonExistingIcon = "dummy_icon";
   });
 

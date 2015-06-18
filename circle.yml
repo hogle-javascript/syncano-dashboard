@@ -6,11 +6,25 @@ machine:
 general:
   artifacts:
     - "coverage/"
+    - "reports/"
+
+test:
+  override:
+    - npm test
+    - npm run-script nightwatch
 
 deployment:
   staging:
     branch: devel
     commands:
       - npm install
-      - NODE_ENV=staging npm run-scrip publish
-      - npm run-scrip clean
+      - NODE_ENV=staging npm run-script publish
+      - npm run-script clean
+
+dependencies:
+   post:
+      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      - sudo dpkg -i google-chrome*.deb
+      - npm run-script nightwatch-setup
+      - npm start:
+            background: true

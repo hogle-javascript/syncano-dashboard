@@ -1,3 +1,5 @@
+public/
+
 # Build
 build/
 
@@ -21,3 +23,7 @@ dist/
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# Reports by nightwatchjs
+reports/
+bin/

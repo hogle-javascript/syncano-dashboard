@@ -56,11 +56,13 @@ module.exports = React.createClass({
   render: function () {
     var style = {
       display        : 'flex',
-      flexDirection  : 'column',
+      flexDirection  : 'row',
+      alignItems     : 'center',
       fontSize       : '12px',
       lineHeight     : '16px',
       paddingTop     : 16,
       paddingBottom  : 16,
+      wordBreak      : 'break-all',
       color          : this.props.color
     };
 

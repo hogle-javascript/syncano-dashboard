@@ -12,17 +12,17 @@ module.exports = React.createClass({
   displayName: 'CheckIcon',
 
   propTypes: {
-    id: React.PropTypes.string,
-    icon: React.PropTypes.string,
-    checked: React.PropTypes.bool,
-    handleClick: React.PropTypes.func
+    id          : React.PropTypes.string,
+    icon        : React.PropTypes.string,
+    checked     : React.PropTypes.bool,
+    handleClick : React.PropTypes.func
   },
 
   getInitialState: function () {
     return {
-      hovered: false,
-      checked: this.props.checked,
-      background: this.props.background
+      hovered    : false,
+      checked    : this.props.checked,
+      background : this.props.background
     }
   },
 

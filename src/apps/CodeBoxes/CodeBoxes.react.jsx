@@ -3,6 +3,8 @@ var React  = require('react'),
     Router = require('react-router'),
 
     // Utils
+    DialogsMixin      = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
     HeaderMixin       = require('../Header/HeaderMixin'),
 
     // Stores and Actions
@@ -14,15 +16,11 @@ var React  = require('react'),
     mui                  = require('material-ui'),
     Dialog               = mui.Dialog,
     Container            = require('../../common/Container/Container.react'),
-    List                 = require('../../common/Lists/List.react'),
-    ListContainer        = require('../../common/Lists/ListContainer.react'),
-    Item                 = require('../../common/ColumnList/Item.react'),
-    Column               = require('../../common/ColumnList/ItemColumn.react'),
-    Header               = require('../../common/ColumnList/Header.react'),
-    ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
     FloatingActionButton = require('../../common/Fab/Fab.react'),
     FabList              = require('../../common/Fab/FabList.react'),
 
+    // Local components
+    CodeBoxesList        = require('./CodeBoxesList.react'),
     AddDialog            = require('./CodeBoxesAddDialog.react');
 
 
@@ -31,16 +29,22 @@ module.exports = React.createClass({
   displayName: 'CodeBoxes',
 
   mixins: [
-    Reflux.connect(CodeBoxesStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
+
+    Reflux.connect(CodeBoxesStore),
+    DialogsMixin,
+    HeaderMixin,
+    InstanceTabsMixin
   ],
 
   componentWillMount: function() {
     CodeBoxesStore.refreshData();
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('CodeBoxes::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   componentDidMount: function() {
@@ -50,85 +54,39 @@ module.exports = React.createClass({
     }
   },
 
-  headerBreadcrumbs: function () {
-    var instanceName = this.getParams().instanceName;
+  // Dialogs config
+  initDialogs: function () {
+
     return [{
-      route: 'instances',
-      label: 'Instances',
-      params: {instanceName: instanceName}
+      dialog: AddDialog,
+      params: {
+        ref  : "addCodeBoxDialog",
+        mode : "add"
+      },
     },{
-      route: 'instance',
-      label: instanceName,
-      params: {instanceName: instanceName}
+      dialog: AddDialog,
+      params: {
+        ref  : "editCodeBoxDialog",
+        mode : "edit"
+      },
     },{
-      route: 'codeboxes',
-      label: 'CodeBoxes',
-      params: {instanceName: instanceName}
+      dialog: Dialog,
+      params: {
+        ref:    "deleteCodeBoxDialog",
+        title:  "Delete CodeBox key",
+        actions: [
+          {text: 'Cancel', onClick: this.handleCancel},
+          {text: "Yes, I'm sure", onClick: this.handleDelete}
+        ],
+        modal: true,
+        children: 'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?',
+      }
     }]
   },
 
-  headerMenuItems: function() {
-    var params = {instanceName: this.getParams().instanceName};
-    return [
-      {
-        label: 'Data Browser',
-        route: 'data-objects',
-        params: params,
-      }, {
-        label: 'Classes',
-        route: 'classes',
-        params: params},
-      {
-        label: 'API Keys',
-        route: 'api-keys',
-        params: params
-      }, {
-        label: 'Admins',
-        route: 'admins',
-        params: params
-      }, {
-        label: 'Users',
-        route: 'users',
-        params: params
-      }, {
-        label: 'CodeBoxes',
-        route: 'codeboxes',
-        params: params,
-      }, {
-        label: 'Webhooks',
-        route: 'webhooks',
-        params: params
-      }, {
-        label: 'Tasks',
-        route: 'tasks',
-        params: params
-      }];
-  },
-
-  handleItemIconClick: function (id, state) {
-    var checkedItemNumber;
-    if (state) {
-      checkedItemNumber = ++this.state.checkedItemNumber;
-    } else {
-      checkedItemNumber = --this.state.checkedItemNumber;
-    }
-
-    this.setState({
-      checkingState: checkedItemNumber > 0,
-      checkedItemNumber: checkedItemNumber,
-    });
-
-    console.log('checked', checkedItemNumber)
-  },
-
-  getColor: function(runtime) {
-    var colors = {
-      nodejs: '#80BD01',
-      python: '#4984B1',
-      golang: '#E0EBF5',
-      ruby:   '#B21000'
-    }
-    return colors[runtime];
+  handleDelete: function() {
+    console.info('CodeBoxes::handleDelete');
+    CodeBoxesActions.removeCodeBoxes(CodeBoxesStore.getCheckedItems());
   },
 
   handleItemClick: function(itemId) {
@@ -136,88 +94,39 @@ module.exports = React.createClass({
     this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
   },
 
-  generateItem: function (item) {
-    return (<Item key={item.id}>
-      <Column grid="1">
-        <CheckIcon
-          id          = {item.name}
-          icon        = "notifications"
-          background  = {this.getColor(item.runtime_name)}
-          width       = '40px'
-          handleClick = {this.handleItemIconClick}
-         />
-      </Column>
-      <Column grid="5">
-        <ColNameDesc
-          id          = {item.id.toString()}
-          name        = {item.name}
-          description = {item.description}
-          handleClick = {this.handleItemClick}
-         />
-      </Column>
-      <Column grid="2">
-        <span><strong>{item.runtime_name}</strong></span>
-      </Column>
-      <Column grid="2">
-        <span><strong>{item.id}</strong></span>
-      </Column>
-      <Column grid="2">
-        <span><strong>{item.created_at}</strong></span>
-      </Column>
-    </Item>)
-
-  },
-
-  // Buttons
-  handlePlusButton: function (action) {
-      console.info('CodeBoxes::handlePlusButton');
-      this.refs.addCodeBoxDialog.show();
-  },
-
-  getItems: function () {
-    var items = [];
-    if (this.state.CodeBoxList){
-      items = Object.keys(this.state.CodeBoxList).map(function(key){
-        return this.generateItem(this.state.CodeBoxList[key])
-      }.bind(this));
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
-    }
-    if (items.length > 0) {
-      return items;
-    }
-    return [<Item key="empty">Empty Item</Item>];
-  },
-
   render: function () {
 
-    var columns = [
-      {'name': 'CodeBoxes', space: 1, style: {fontSize: '20px'}},
-      {'name': '', space: 5},
-      {'name': 'Runtime', space: 2},
-      {'name': 'ID', space: 2},
-      {'name': 'Created', space: 2},
-    ];
-
-    var items = this.getItems();
+    var checkedItems = CodeBoxesStore.getNumberOfChecked();
 
     return (
       <Container>
+        {this.getDialogs()}
+
         <FabList
-          style={{top: 200, display: this.state.checkedItemNumber ? 'block': 'none'}}>
+          style={{top: 200, display: checkedItems ? 'block': 'none'}}>
+
           <FloatingActionButton
-            label         = "Click here to delete CodeBox" // TODO: extend component
+            label         = "Click here to unselect Api Keys" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
-            onClick       = {this.handleDeleteButton}
+            onClick       = {CodeBoxesActions.uncheckAll}
+            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+
+          <FloatingActionButton
+            label         = "Click here to delete CodeBoxes" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.showDialog('deleteCodeBoxDialog')}
             iconClassName = "synicon-delete" />
+
           <FloatingActionButton
-            label         = "Click here to edit Codebox" // TODO: extend component
+            label         = "Click here to edit CodeBox" // TODO: extend component
             color         = "" // TODO: extend component
-            secondary     = {true}
             mini          = {true}
-            onClick       = {this.handleChangePaletteButton}
+            disabled      = {checkedItems > 1}
+            onClick       = {this.showDialog('editCodeBoxDialog')}
             iconClassName = "synicon-pencil" />
+
         </FabList>
 
         <FabList
@@ -225,19 +134,15 @@ module.exports = React.createClass({
           <FloatingActionButton
             label         = "Click here to add CodeBox" // TODO: extend component
             color         = "" // TODO: extend component
-            onClick       = {this.handlePlusButton}
+            onClick       = {this.showDialog('addCodeBoxDialog')}
             iconClassName = "synicon-plus" />
         </FabList>
 
-        <AddDialog ref="addCodeBoxDialog" />
-
-        <ListContainer>
-          <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
-          </Header>
-          <List viewMode="stream">
-            {items}
-          </List>
-        </ListContainer>
+        <CodeBoxesList
+          name                 = "CodeBoxes"
+          items                = {this.state.items}
+          emptyItemHandleClick = {this.showDialog('addCodeBoxDialog')}
+          emptyItemContent     = "Create a CodeBox" />
       </Container>
     );
   }

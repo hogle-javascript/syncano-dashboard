@@ -47,6 +47,20 @@ var ValidationMixin = {
 
   },
 
+  handleFormValidation: function (event) {
+    event.preventDefault();
+
+    this.validate(function(isValid, errors){
+      if (isValid === true) {
+        if (this.handleSuccessfullValidation !== undefined) {
+          this.handleSuccessfullValidation.call(this)
+        }
+      } else if (this.handleFailedValidation !== undefined) {
+        this.handleFailedValidation.call(this, errors);
+      }
+    }.bind(this));
+  },
+
   handleValidation: function(key, callback) {
     return function(event) {
       event.preventDefault();

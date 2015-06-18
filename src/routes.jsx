@@ -32,7 +32,7 @@ var React                       = require('react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
     CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
-    CodeBoxesTraces             = require('./apps/CodeBoxes/CodeBoxesTraces.react'),
+    Traces                      = require('./apps/Traces/Traces.react'),
     CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Schedules                   = require('./apps/Schedules/Schedules.react'),
@@ -61,7 +61,7 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxes-traces" handler={CodeBoxesTraces} path=":instanceName/codeboxes/:codeboxId/traces" />
+        <Route name="codeboxes-traces" handler={Traces} path=":instanceName/codeboxes/:codeboxId/traces" />
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
         <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />

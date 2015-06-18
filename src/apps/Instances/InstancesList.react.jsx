@@ -13,17 +13,19 @@ var React  = require('react'),
     InstancesStore   = require('./InstancesStore'),
 
     // Components
-    mui              = require('material-ui'),
+    mui               = require('material-ui'),
+    List              = mui.List,
 
     // List
-    ListContainer   = require('../../common/Lists/ListContainer.react'),
-    Item            = require('../../common/ColumnList/Item.react'),
-    Header          = require('../../common/ColumnList/Header.react'),
-    LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName      = require('../../common/ColumnList/Column/Name.react'),
-    ColumnDesc      = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer     = require('../../common/Lists/ListContainer.react'),
+    Item              = require('../../common/ColumnList/Item.react'),
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
+    Header            = require('../../common/ColumnList/Header.react'),
+    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
+    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -34,13 +36,13 @@ module.exports = React.createClass({
     Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
   getInitialState: function() {
     return {
       listType: this.props.listType,
-      items: this.props.items,
+      items: this.props.items
     }
   },
 
@@ -62,7 +64,7 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
@@ -88,15 +90,20 @@ module.exports = React.createClass({
     var instances = this.state.items.filter(this.props.filter);
 
     var items = instances.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
+    } else if (this.props.emptyItemContent) {
+      return (
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
+      );
     }
-    return [<Item key="empty">Empty Item</Item>];
   },
 
   render: function () {
