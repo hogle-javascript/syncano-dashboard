@@ -112,7 +112,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
               disabled          = {this.props.mode === 'edit' ? true : false}
               valueLink         = {this.linkState('name')}
-              errorText         = {this.getValidationMessages('name').join()}
+              errorText         = {this.getValidationMessages('name').join(' ')}
               hintText          = "Short name for your Instance"
               floatingLabelText = "Name" />
 
