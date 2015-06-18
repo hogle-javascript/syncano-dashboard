@@ -1,6 +1,7 @@
 var Colors            = require('material-ui/lib/styles/colors'),
-    Spacing           = require('material-ui/lib/styles/spacing'),
-    ColorManipulator  = require('material-ui/lib/utils/color-manipulator');
+    ColorManipulator  = require('material-ui/lib/utils/color-manipulator'),
+
+    Spacing           = require('./Spacing');
 
 var SyncanoTheme = {
   spacing: Spacing,
@@ -23,6 +24,10 @@ var SyncanoTheme = {
     return {
       button: {
         height: 48
+      },
+      flatButton: {
+        primaryTextColor: palette.primary1Color,
+        textColor: 'rgba(0, 0, 0, 0.54)'
       },
       raisedButton: {
         primaryColor: Colors.pinkA200
