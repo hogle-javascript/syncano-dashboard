@@ -105,7 +105,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    console.log(this.state);
 	  return (
       <div className="account-container">
         <div className="account-logo">
