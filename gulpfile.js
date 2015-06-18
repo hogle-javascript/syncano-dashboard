@@ -108,7 +108,7 @@ gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
 gulp.task('stripDebug', ['clean', 'webpack:build'], function () {
   gulp.src('./dist/js/app.js')
     .pipe(stripDebug())
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/js'));
 });
 
 gulp.task('revision', ['clean', 'iconfont', 'webpack:build', 'stripDebug'], function(){
