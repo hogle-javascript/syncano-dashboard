@@ -91,6 +91,23 @@ module.exports = React.createClass({
           mode : "edit"
         }
       },
+      {
+        dialog: Dialog,
+        params: {
+          ref:    "removeTriggerDialog",
+          title:  "Delete Trigger",
+          actions: [
+            {
+              text    : 'Cancel',
+              onClick : this.handleCancel},
+            {
+              text    : "Yes, I'm sure",
+              onClick : this.handleRemoveSchedules}
+          ],
+          modal: true,
+          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
+        }
+      },
 
       // Schedules
       {
@@ -117,9 +134,10 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure", onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?',
+          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?'
         }
       },
+
       //{
       //  dialog: Dialog,
       //  params: {
