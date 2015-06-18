@@ -63,6 +63,11 @@ var InstancesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onGetInstancesFailure: function () {
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
   onCreateInstanceCompleted: function(payload) {
     console.debug('InstancesStore::onCreateInstanceCompleted');
     this.data.hideDialogs = true;
@@ -87,7 +92,7 @@ var InstancesStore = Reflux.createStore({
     }
     this.trigger(this.data);
   },
-  
+
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
     this.data.hideDialogs = true;
