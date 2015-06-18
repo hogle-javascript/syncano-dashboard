@@ -134,7 +134,7 @@ module.exports = React.createClass({
         <TextField
             ref               = "label"
             valueLink         = {this.linkState('label')}
-            errorText         = {this.getValidationMessages('label').join()}
+            errorText         = {this.getValidationMessages('label').join(' ')}
             name              = "label"
             style             = {{width:500}}
             hintText          = "Short name for your CodeBox"
@@ -143,7 +143,7 @@ module.exports = React.createClass({
             ref               = "description"
             name              = "description"
             valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join()}
+            errorText         = {this.getValidationMessages('description').join(' ')}
             style             = {{width:500}}
             className         = "text-field"
             multiLine         = {true}
