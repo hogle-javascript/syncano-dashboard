@@ -122,7 +122,7 @@ module.exports = React.createClass({
               multiLine         = {true}
               fullWidth         = {true}
               valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join()}
+              errorText         = {this.getValidationMessages('description').join(' ')}
               hintText          = "Multiline description of Instance (optional)"
               floatingLabelText = "Description" />
 

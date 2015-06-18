@@ -131,7 +131,7 @@ module.exports = React.createClass({
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join()}
+              errorText={this.getValidationMessages('email').join(' ')}
               name="email"
               className="text-field"
               autoComplete="email"
@@ -140,7 +140,7 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join()}
+              errorText={this.getValidationMessages('password').join(' ')}
               type="password"
               name="password"
               className="text-field vm-4-b"

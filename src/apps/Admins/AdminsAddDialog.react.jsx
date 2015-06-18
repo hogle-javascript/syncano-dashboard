@@ -119,7 +119,7 @@ module.exports = React.createClass({
             style             = {{width:'100%'}}
             disabled          = {this.props.mode === 'edit' ? true: false}
             valueLink         = {this.linkState('email')}
-            errorText         = {this.getValidationMessages('email').join()}
+            errorText         = {this.getValidationMessages('email').join(' ')}
             hintText          = "Email of the administrator"
             floatingLabelText = "Email" />
 
