@@ -1,6 +1,7 @@
 var React       = require('react'),
-    Router      = require('react-router'),
     Reflux      = require('reflux'),
+    Router      = require('react-router'),
+    Link        = Router.Link,
 
     AuthStore   = require('./AuthStore'),
     AuthActions = require('./AuthActions'),

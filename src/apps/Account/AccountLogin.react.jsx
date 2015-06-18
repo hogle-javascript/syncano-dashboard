@@ -116,7 +116,7 @@ module.exports = React.createClass({
           <div className="account-container__content__header">
             <p>Log in and start creating your apps</p>
           </div>
-          {this.renderNotifications()}
+          {this.renderFormNotifications()}
           <form
             onSubmit={this.handleFormValidation}
             className="account-container__content__form"

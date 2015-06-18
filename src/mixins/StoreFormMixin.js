@@ -1,21 +1,13 @@
 
 // TODO: add some options like: exclude, ignore, prefix etc
 var StoreFormMixin = {
-  getInitialState: function () {
-    return this.data;
-  },
 
-  init: function () {
-    this.data           = this.data || {};
-    this.data.errors    = {};
-    this.data.feedback  = null;
-    this.data.canSubmit = true;
-  },
-
-  resetForm: function () {
-    this.data.errors    = {};
-    this.data.feedback  = null;
-    this.data.canSubmit = true;
+  getInitialFormState: function () {
+    return {
+      errors    : {},
+      feedback  : null,
+      canSubmit : true
+    }
   },
 
   listenToForms: function () {
@@ -40,34 +32,29 @@ var StoreFormMixin = {
   },
 
   handleForm: function () {
-    this.data.canSubmit = false;
-    this.trigger({canSubmit: this.data.canSubmit});
+    this.trigger({canSubmit: false});
   },
 
   handleFormCompleted: function (payload) {
-    this.resetForm();
+    this.trigger(this.getInitialFormState());
   },
 
   handleFormFailure: function (payload) {
-    this.resetForm();
+    var state = this.getInitialFormState();
 
     if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
+      state.errors.feedback = payload;
     } else {
       if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
+        state.errors.feedback = payload.non_field_errors.join();
       }
 
       for (var field in payload) {
-        this.data.errors[field] = payload[field];
+        state.errors[field] = payload[field];
       }
     }
 
-    this.trigger({
-      errors: this.data.errors,
-      feedback: this.data.feedback,
-      canSubmit: this.data.canSubmit
-    });
+    this.trigger(state);
   }
 };
 

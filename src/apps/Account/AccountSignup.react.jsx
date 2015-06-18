@@ -122,7 +122,7 @@ module.exports = React.createClass({
                inputting any credit card information.
             </small>
           </div>
-          {this.renderNotifications()}
+          {this.renderFormNotifications()}
           <form
             onSubmit={this.handleFormValidation}
             className="account-container__content__form"

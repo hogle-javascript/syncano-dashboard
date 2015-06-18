@@ -3,7 +3,20 @@ var React        = require('react'),
 
 
 var FormMixin = {
-  renderErrorFeedback: function () {
+
+  getInitialState: function () {
+    return this.getInitialFormState();
+  },
+
+  getInitialFormState: function () {
+    return {
+      errors    : {},
+      feedback  : null,
+      canSubmit : true
+    }
+  },
+
+  renderFormErrorFeedback: function () {
     if (!this.state.errors || this.state.errors.feedback === undefined) {
       return;
     }
@@ -13,18 +26,20 @@ var FormMixin = {
     );
   },
 
-  renderFeedback: function () {
+  renderFormFeedback: function () {
     if (!this.state.feedback || this.state.feedback === undefined) {
       return
     }
 
-    return (
-      <Notification>{this.state.feedback}</Notification>
-    );
+    return <Notification>{this.state.feedback}</Notification>;
   },
 
-  renderNotifications: function () {
-    return this.renderErrorFeedback() || this.renderFeedback()
+  renderFormNotifications: function () {
+    return this.renderFormErrorFeedback() || this.renderFormFeedback()
+  },
+
+  resetForm: function () {
+    this.setState(this.getInitialFormState());
   }
 
 };
