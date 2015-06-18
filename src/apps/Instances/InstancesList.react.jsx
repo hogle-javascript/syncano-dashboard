@@ -96,12 +96,13 @@ module.exports = React.createClass({
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
+    } else if (this.props.emptyItemContent) {
+      return (
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
+      );
     }
-    return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </EmptyListItem>
-    );
   },
 
   render: function () {
