@@ -105,8 +105,13 @@ gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
     });
 });
 
+gulp.task('stripDebug', ['clean', 'webpack:build'], function () {
+  gulp.src('./dist/js/app.js')
+    .pipe(stripDebug())
+    .pipe(gulp.dest('./dist/js'));
+});
 
-gulp.task('revision', ['clean', 'iconfont', 'webpack:build'], function(){
+gulp.task('revision', ['clean', 'iconfont', 'webpack:build', 'stripDebug'], function(){
   return gulp.src([
       './dist/**/*',
       '!./dist/index.html'
