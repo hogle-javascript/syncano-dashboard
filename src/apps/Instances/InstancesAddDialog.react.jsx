@@ -82,14 +82,15 @@ module.exports = React.createClass({
 
     var dialogCustomActions = [
       <FlatButton
-        label="Cancel"
-        onTouchTap={this.handleCancel}
-        ref="cancel" />,
+        label      = "Cancel"
+        onTouchTap = {this.handleCancel}
+        ref        = "cancel" />,
+
       <FlatButton
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.handleSubmit}
-        ref="submit" />
+        label      = "Confirm"
+        primary    = {true}
+        onTouchTap = {this.handleSubmit}
+        ref        = "submit" />
     ];
 
     return (
