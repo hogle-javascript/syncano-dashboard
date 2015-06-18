@@ -38,7 +38,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(AdminsStore),
+    Reflux.connect(AdminsStore, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
     HeaderMixin,
     DialogsMixin,
@@ -47,8 +47,8 @@ module.exports = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Admins::componentWillUpdate');
-    // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.invitations.hideDialogs);
+    // Merging "hideDialogs"
+    this.hideDialogs(nextState.admins.hideDialogs || nextState.invitations.hideDialogs);
   },
 
   componentWillMount: function() {
@@ -63,15 +63,17 @@ module.exports = React.createClass({
       {
         dialog: AddDialog,
         params: {
-          ref  : "addAdminDialog",
-          mode : "add"
+          ref   : "addAdminDialog",
+          mode  : "add",
+          store : AdminsStore
         }
       },
       {
         dialog: AddDialog,
         params: {
-          ref  : "editAdminDialog",
-          mode : "edit"
+          ref   : "editAdminDialog",
+          mode  : "edit",
+          store : AdminsStore
         }
       },
       {
@@ -123,17 +125,27 @@ module.exports = React.createClass({
 
   handleResendInvitation: function() {
     console.info('Admins::handleResendInvitation');
-    AdminsInvitationsActions.resendInvitation(AdminsStore.getCheckedItem().id);
+    AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
   },
   handleRemoveInvitation: function() {
     console.info('Admins::handleRemoveInvitation');
-    AdminsInvitationsActions.removeInvitation(AdminsStore.getCheckedItem().id);
+    AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());
   },
 
   uncheckAll: function() {
     console.info('Admins::uncheckAll');
     AdminsActions.uncheckAll();
     AdminsInvitationsActions.uncheckAll();
+  },
+
+  checkAdminItem: function(id, state){
+    AdminsInvitationsActions.uncheckAll();
+    AdminsActions.checkItem(id, state);
+  },
+
+  checkInvitationItem: function(id, state){
+    AdminsActions.uncheckAll();
+    AdminsInvitationsActions.checkItem(id, state);
   },
 
   render: function () {
@@ -156,7 +168,7 @@ module.exports = React.createClass({
             iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
           <FloatingActionButton
-            label         = "Click here to delete Admins" // TODO: extend component
+            label         = "Click here to delete Administrator" // TODO: extend component
             color         = "" // TODO: extend component
             mini          = {true}
             onClick       = {this.showDialog('deleteAdminDialog')}
@@ -167,7 +179,33 @@ module.exports = React.createClass({
             color         = "" // TODO: extend component
             mini          = {true}
             disabled      = {checkedAdmins > 1}
-            onClick       = {this.showDialog('resetAdminDialog')}
+            onClick       = {this.showDialog('editAdminDialog')}
+            iconClassName = "synicon-pencil" />
+
+        </FabList>
+
+        <FabList
+          style={{top: 200, display: checkedInvitations ? 'block': 'none'}}>
+
+          <FloatingActionButton
+            label         = "Click here to unselect all" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.uncheckAll}
+            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+
+          <FloatingActionButton
+            label         = "Click here to delete Invitation" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.showDialog('removeInvitationDialog')}
+            iconClassName = "synicon-delete" />
+
+          <FloatingActionButton
+            label         = "Click here to resend invitation" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.showDialog('resendInvitationDialog')}
             iconClassName = "synicon-backup-restore" />
 
         </FabList>
@@ -183,13 +221,14 @@ module.exports = React.createClass({
 
         <AdminsList
           name       = "Administrators"
-          checkItem  = {AdminsActions.checkItem}
+          checkItem  = {this.checkAdminItem}
           isLoading  = {AdminsActions.isLoading}
-          items      = {this.state.items}/>
+          items      = {this.state.admins.items}/>
 
         <AdminsList
           name      = "Invitations"
-          checkItem = {AdminsInvitationsActions.checkItem}
+          mode      = "invitations"
+          checkItem = {this.checkInvitationItem}
           isLoading = {AdminsInvitationsActions.isLoading}
           items     = {this.state.invitations.items} />
 

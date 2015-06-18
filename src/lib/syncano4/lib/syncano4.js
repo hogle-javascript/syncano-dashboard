@@ -379,9 +379,11 @@ var Syncano = (function() {
      * @alias Syncano#Admins
      * @type {object}
      * @property {function} list - shortcut to {@link Syncano#listAdmins} method
+     * @property {function} update - shortcut to {@link Syncano#updateAdmin} method
      */
     this.Admins = {
       list: this.listAdmins.bind(this),
+      update: this.updateAdmin.bind(this)
     };
 
     /**
@@ -540,12 +542,14 @@ var Syncano = (function() {
      * @property {function} list - shortcut to {@link Syncano#listInvitations} method
      * @property {function} get - shortcut to {@link Syncano#getInvitation} method
      * @property {function} remove - shortcut to {@link Syncano#removeInvitation} method
+     * @property {function} resend - shortcut to {@link Syncano#resendInvitation} method
      */
     this.Invitations = {
       create: this.createInvitation.bind(this),
       list: this.listInvitations.bind(this),
       get: this.getInvitation.bind(this),
-      remove: this.removeInvitation.bind(this)
+      remove: this.removeInvitation.bind(this),
+      resend: this.resendInvitation.bind(this)
     };
 
     /**
@@ -902,8 +906,24 @@ var Syncano = (function() {
     listAdmins: function(params, callbackOK, callbackError) {
       params = params || {};
       return this.genericList(params, 'instance_admins', callbackOK, callbackError);
-
     },
+
+    /**
+     * Updates admin identified by id
+     *
+     * @method Syncano#updateAdmins
+     * @alias Syncano.Admins.update
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    updateAdmin: function(id, params, callbackOK, callbackError) {
+      params = params || {};
+      return this.request('PUT', linksObject.instance_admins + id, params, callbackOK, callbackError);
+    },
+
 
     /*****************
        CLASS METHODS
@@ -1767,6 +1787,23 @@ var Syncano = (function() {
         params.role = 'read';
       }
       return this.request('POST', linksObject.instance_invitations, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Resend invitation for your instance
+     *
+     * @method Syncano#resendInvitation
+     * @alias Syncano.Invitations.resend
+     * @param {Number|object} id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    resendInvitation: function(id, callbackOK, callbackError) {
+      if (typeof linksObject.instance_invitations === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('POST', linksObject.instance_invitations + id + '/resend/', callbackOK, callbackError);
     },
 
     /**

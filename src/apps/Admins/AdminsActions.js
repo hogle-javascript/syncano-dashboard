@@ -18,9 +18,7 @@ var AdminsActions = Reflux.createActions({
   'removeAdmin': {
       asyncResult: true,
       children: ['completed', 'failure']
-  },
-
-
+  }
 });
 
 AdminsActions.getAdmins.listen( function(payload) {

@@ -20,13 +20,13 @@ var React                    = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'AdminsAddDialog',
+  displayName: 'AdminInvitationDialog',
 
   mixins: [
     Reflux.connect(AdminsStore),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin,
+    ValidationMixin
   ],
 
   validatorConstraints: {
@@ -36,27 +36,55 @@ module.exports = React.createClass({
     },
   },
 
+  getInitialState: function() {
+    return {
+      email         : '',
+      role          : ''
+    }
+  },
+
   clearData: function() {
     this.setState({
       email  : '',
-      errors : {},
+      role   : '',
+      errors : {}
     })
   },
 
-  handleAddSubmit: function (event) {
+  editShow: function() {
+    console.info('AdminInvitationDialog::editShow');
+    var checkedItem = this.props.store.getCheckedItem();
+    if (checkedItem) {
+      this.setState({
+            email : checkedItem.email,
+            role  : checkedItem.role
+      });
+    }
+  },
+
+  handleAddSubmit: function () {
     AdminsInvitationsActions.createInvitation({
       email : this.state.email,
-      role  : this.state.role,
+      role  : this.state.role
+    });
+  },
+
+  handleEditSubmit: function () {
+    var checkedItem = this.props.store.getCheckedItem();
+    AdminsActions.updateAdmin(checkedItem.id, {
+      role  : this.state.role
     });
   },
 
   handleRoleChange: function (event, selectedIndex, menuItem){
-    this.setState({role: selectedIndex});
+    console.info('AdminInvitationDialog::handleRoleChange', selectedIndex, menuItem );
+    this.setState({role : menuItem.payload});
   },
 
   render: function () {
-    var title                 = "Invite Administrator",
-        submitLabel           = "Send Invitation",
+    var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Invite Administrator';
+
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -68,30 +96,15 @@ module.exports = React.createClass({
             text    : {submitLabel},
             onClick : this.handleSubmit
           }
-        ],
-        // TODO: move it to the store
-        menuItems = [
-          {
-            payload: 'read',
-            text: 'read'
-          },
-          {
-            payload: 'write',
-            text: 'write'
-          },
-          {
-            payload: 'full',
-            text: 'full'
-          }
         ];
 
     return (
       <Dialog
-        ref             ="dialogRef"
-        title           ={title + " Administrator"}
-        openImmediately ={this.props.openImmediately}
-        actions         ={dialogStandardActions}
-        modal           ={true}>
+        ref             = "dialogRef"
+        title           = {title + " Administrator"}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogStandardActions}
+        modal           = {true}>
         <div>
         <form
           onSubmit={this.handleSubmit}
@@ -102,19 +115,21 @@ module.exports = React.createClass({
             ref               = "email"
             name              = "email"
             style             = {{width:'100%'}}
+            disabled          = {this.props.mode === 'edit' ? true: false}
             valueLink         = {this.linkState('email')}
             errorText         = {this.getValidationMessages('email').join()}
-            hintText          = "Email of the new administrator"
+            hintText          = "Email of the administrator"
             floatingLabelText = "Email" />
 
           <DropDownMenu
             ref               = "role"
             name              = "role"
             autoWidth         = {true}
-            floatingLabelText = "Role of the new administrator"
+            selectedIndex     = {AdminsStore.getRoleMenuIndex(this.state.role) || 0}
+            floatingLabelText = "Role of the administrator"
             style             = {{width:500}}
             onChange          = {this.handleRoleChange}
-            menuItems         = {menuItems} />;
+            menuItems         = {AdminsStore.roleMenuItems} />
 
         </form>
         </div>
