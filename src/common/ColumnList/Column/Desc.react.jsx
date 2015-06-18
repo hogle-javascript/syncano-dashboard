@@ -62,6 +62,7 @@ module.exports = React.createClass({
       lineHeight     : '16px',
       paddingTop     : 16,
       paddingBottom  : 16,
+      wordBreak      : 'break-all',
       color          : this.props.color
     };
 
