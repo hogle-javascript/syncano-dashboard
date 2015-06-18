@@ -5,6 +5,6 @@ describe("InstancesListItem.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var InstancesListItem = require('../InstancesListItem.react');
+    // var InstancesListItem = require('../InstancesListItem.react');
   });
 });

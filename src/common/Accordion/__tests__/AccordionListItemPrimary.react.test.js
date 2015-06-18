@@ -5,6 +5,6 @@ describe("AccordionListItemPrimary.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var AccordionListItemPrimary = require('../AccordionListItemPrimary.react');
+    // var AccordionListItemPrimary = require('../AccordionListItemPrimary.react');
   });
 });
