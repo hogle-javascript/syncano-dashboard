@@ -1,5 +1,9 @@
 var React  = require('react'),
     Router = require('react-router'),
+    Reflux  = require('reflux'),
+
+    HeaderActions    = require('./HeaderActions'),
+    HeaderStore      = require('./HeaderStore'),
 
     mui    = require('material-ui'),
     Tabs   = mui.Tabs,
@@ -12,21 +16,15 @@ module.exports = React.createClass({
   displayName: 'HeaderMenu',
 
   mixins: [
+    Reflux.connect(HeaderStore),
     Router.State
   ],
 
-  getDefaultProps: function () {
-    return {
-      menuItems: []
-    }
-  },
-
   getActiveMenuItemIndex: function () {
     var index = 0;
-    this.props.menuItems.some(function (item, i) {
+    this.state.menuItems.some(function (item, i) {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
-        return true;
       }
     }.bind(this));
 
@@ -74,7 +72,7 @@ module.exports = React.createClass({
   render: function () {
     var styles = this.getStyles();
 
-    if (!this.props.menuItems.length === 0) {
+    if (this.state.menuItems.length === 0) {
       return null
     }
 
@@ -83,7 +81,7 @@ module.exports = React.createClass({
         <Tabs
           tabItemContainerStyle = {styles.menu}
           initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
-          {this.props.menuItems.map(this.renderMenuItem)}
+          {this.state.menuItems.map(this.renderMenuItem)}
         </Tabs>
       </div>
     );
