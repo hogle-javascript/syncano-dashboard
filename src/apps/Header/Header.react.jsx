@@ -1,5 +1,6 @@
 var React            = require('react'),
     Reflux           = require('reflux'),
+    Radium           = require('radium'),
     classNames       = require('classnames'),
     Router           = require('react-router'),
     Link             = Router.Link,
@@ -27,6 +28,8 @@ var React            = require('react'),
     Paper            = mui.Paper,
     DropDownMenu     = mui.DropDownMenu,
 
+    StylePropable    = mui.Mixins.StylePropable,
+
     MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
     MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
     RoundIcon        = require('../../common/Icon/RoundIcon.react');
@@ -35,7 +38,7 @@ var React            = require('react'),
 require('./Header.sass');
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'Header',
 
@@ -45,15 +48,11 @@ module.exports = React.createClass({
     Router.Navigation,
     Router.State,
     StylePropable
-],
+  ],
 
   contextTypes: {
       router   : React.PropTypes.func.isRequired,
       muiTheme : React.PropTypes.object
-  },
-
-  handleTabActive: function (tab) {
-    this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
   handleLogout: function() {
@@ -97,63 +96,9 @@ module.exports = React.createClass({
     )
   },
 
-  getActiveMenuItemIndex: function () {
-    var index = 0;
-    this.state.menuItems.some(function (item, i) {
-      if (this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        return true;
-      }
-    }.bind(this));
-
-    return index;
-  },
-
-  renderMenu: function () {
-    if (this.state.menuItems.length === 0) {
-      return
-    }
-
-    var menuStyles = {
-      menuContainer: {
-        display   : 'inline-flex',
-        alignSelf : 'flex-end'
-      },
-      menu: {
-        backgroundColor : 'transparent',
-        height          : 60
-      }
-    };
-
-    return (
-      <div style={menuStyles.menuContainer}>
-        <Tabs
-          tabItemContainerStyle = {menuStyles.menu}
-          initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
-          {this.state.menuItems.map(this.renderMenuItem)}
-        </Tabs>
-      </div>
-    );
-  },
-
-  renderMenuItem: function(tab, index) {
-    var styles = this.getStyles();
-
-    return (
-      <Tab
-        key      = {'menuItem-' + tab.route + '-' + index}
-        label    = {tab.label}
-        route    = {tab.route}
-        params   = {tab.params}
-        style    = {styles.menuItemStyles}
-        onActive = {this.handleTabActive} />
-    )
-  },
-
   getStyles: function() {
     return {
       topToolbar: {
-        //this.context.muiTheme.palette.primary1Color,
         background : this.context.muiTheme.palette.primary1Color,
         height     : 68,
         padding    : '0 32px'
@@ -168,14 +113,20 @@ module.exports = React.createClass({
         fontSize   : 25,
         cursor     : 'pointer'
       },
-
-      bottomToolbar: {
-        display    : 'flex',
-        fontSize   : 17,
-        fontWeight : 500,
-        height     : 60,
-        background : this.context.muiTheme.palette.primary2Color,
-        padding    : '0 32px'
+      toolbarList: {
+        display: 'flex'
+      },
+      toolbarListItem: {
+        display    : 'inline-flex',
+        alignItems : 'center'
+      },
+      bottomToolbar : {
+        display     : 'flex',
+        fontSize    : 17,
+        fontWeight  : 500,
+        height      : 60,
+        background  : this.context.muiTheme.palette.primary2Color,
+        padding     : '0 32px'
       },
       bottomToolbarGroup: {
         display        : 'flex',
@@ -183,30 +134,25 @@ module.exports = React.createClass({
         alignItems     : 'center',
         justifyContent : 'center'
       },
-      menuItemStyles: {
-        color        : 'white',
-        fontWeight   : 400,
-        fontSize     : 17,
-        paddingLeft  : 10,
-        paddingRight : 10
-      },
       instanceToolbarGroup: {
         display        : 'flex',
         float          : 'none',
         alignItems     : 'center',
         justifyContent : 'center',
         maxWidth       : 320,
+        width          : '100%',
         marginLeft     : '-32px'
       },
       bottomToolbarGroupIcon: {
-        padding        : '0 4px',
+        padding        : '0 4px'
       },
       dropdownLabelContainer: {
-        display        : 'flex',
-        alignItems     : 'center',
+        display        : '-webkit-box; display: flex',
+        alignItems     : 'center'
       },
       dropdownLabel: {
-        flex           : 1,
+        WebkitBoxFlex  : '1',
+        flex           : '1',
         whiteSpace     : 'nowrap',
         textOverflow   : 'ellipsis',
         overflow       : 'hidden',
@@ -217,11 +163,12 @@ module.exports = React.createClass({
         height         : 24,
         fontSize       : 12,
         lineHeight     : '20px',
-        display        : 'inline-flex',
+        display        : '-webkit-inline-flex; display: inline-flex',
         alignItems     : 'center',
         justifyContent : 'center',
         borderRadius   : '50%',
         color          : '#fff',
+        backgroundColor: 'green',
         margin         : '8px 16px 8px 0'
       },
       dropdownMenuItem: {
@@ -271,7 +218,7 @@ module.exports = React.createClass({
       instancesList = instancesList.reverse();
     }
 
-    menuItems = InstancesStore.data.instances.map(function(item, index) {
+    var dropDownMenuItems = InstancesStore.data.instances.map(function(item, index) {
       var iconBackground = {
             backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark')
           },
@@ -280,6 +227,7 @@ module.exports = React.createClass({
                              <FontIcon
                                className = {iconClassName}
                                style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
+
                              <div style={styles.dropdownLabel}>{item.name}</div>
                            </div>;
 
@@ -294,11 +242,11 @@ module.exports = React.createClass({
         key={0}
         style={styles.instanceToolbarGroup}>
         <DropDownMenu
-          className="instances-dropdown"
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={menuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
+          className     = "instances-dropdown"
+          menuItemStyle = {styles.dropdownMenuItem}
+          menuItems     = {dropDownMenuItems}
+          onChange      = {this.handleDropdownItemClick}
+          selectedIndex = {this.handleInstanceActive()} />
       </ToolbarGroup>)
   },
 
@@ -333,11 +281,17 @@ module.exports = React.createClass({
           <ToolbarGroup
             float = "right"
             style = {{height: '100%'}}>
-            <ul className="toolbar-list">
-              <li>
-                <a href="http://docs.syncano.com/v4.0" target="_blank">Docs</a>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
+              <li style={styles.toolbarListItem}>
+                <a
+                  href="http://docs.syncano.com/v4.0"
+                  target="_blank">
+                  Docs
+                </a>
               </li>
-              <li>
+              <li style={styles.toolbarListItem}>
                 <a href="mailto:support@syncano.com">Support</a>
               </li>
             </ul>
@@ -351,7 +305,7 @@ module.exports = React.createClass({
             <ToolbarGroup
               className = "col-flex-1"
               style     = {styles.bottomToolbarGroup}>
-              {this.renderMenu()}
+              <HeaderMenu />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
               <FontIcon 
@@ -371,4 +325,4 @@ module.exports = React.createClass({
     )
   }
 
-});
+}));

@@ -1,4 +1,5 @@
-var React = require('react'),
+var React      = require('react'),
+    Radium     = require('radium'),
 
     ColorStore = require('../Color/ColorStore'),
 
@@ -7,7 +8,7 @@ var React = require('react'),
     Paper      = mui.Paper;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'CheckIcon',
 
@@ -117,4 +118,4 @@ module.exports = React.createClass({
       </Paper>
     )
   }
-});
+}));

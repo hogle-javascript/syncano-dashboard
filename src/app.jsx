@@ -12,6 +12,17 @@ require('./raven');
 require('normalize.css');
 require('./app.sass');
 
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, container);
+Router.run(routes, function (Root, state) {
+  var pathname = decodeURIComponent(state.pathname).replace('//', '/');
+
+  // Remove trailing slash
+  if (pathname.match('/$') !== null) {
+    pathname = pathname.slice(0, -1);
+  }
+
+  if (pathname !== state.pathname) {
+    location.hash = pathname;
+  }
+
+  React.render(<Root/>, container);
 });

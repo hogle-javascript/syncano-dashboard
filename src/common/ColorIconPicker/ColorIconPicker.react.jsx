@@ -1,4 +1,5 @@
-var React = require('react'),
+var React      = require('react'),
+    Radium     = require('radium'),
 
     ColorStore = require('../Color/ColorStore'),
     IconStore  = require('../Icon/IconStore'),
@@ -8,7 +9,7 @@ var React = require('react'),
     Paper      = mui.Paper;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColorIconPicker',
 
@@ -69,22 +70,22 @@ module.exports = React.createClass({
   },
 
   genIconItem: function(icon) {
-    var style     = this.getStyles().item,
-        zDepth    = 0,
-        iconColor = 'black';
+    var style = this.getStyles().item,
+        zDepth = 0,
+        iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
-      zDepth           = 3;
-      iconColor        = 'white';
-      style.background = ColorStore.getColorByName(this.state.selectedColor);
-
+      zDepth = 3;
+      style.background= this.state.selectedColor;
+      iconColor = '#fff';
     }
+
     return (
       <Paper
         zDepth = {zDepth}
         key    = {icon}
         circle = {true}
-        style  = {style} >
+        style  = {style}>
           <FontIcon
             id        = {icon}
             className = {"synicon-" + icon}
@@ -94,48 +95,48 @@ module.exports = React.createClass({
     )
   },
 
-  genColorItem: function(colorName) {
-    var style = this.getStyles().item;
-
-    style.background = ColorStore.getColorByName(colorName);
-
-    var icon   = null,
+  genColorItem: function(color) {
+    var icon,
+        style = this.getStyles().item,
         zDepth = 0;
 
-    if (colorName === this.state.selectedColor) {
+    style.background = color;
+
+    if (color === this.state.selectedColor) {
       zDepth = 3;
       icon = <FontIcon
-                className = {"synicon-"+this.state.selectedIcon}
-                style     = {{color: 'white'}} />;
+               className = {"synicon-" + this.state.selectedIcon}
+               style     = {{color: 'white'}} />;
     }
     return (
       <Paper
-        id      = {colorName}
-        key     = {colorName}
+        id      = {color}
         zDepth  = {zDepth}
+        key     = {color}
         circle  = {true}
         style   = {style}
         onClick = {this.handleSetColor}>
-        {icon}
+          {icon}
       </Paper>
     );
   },
 
   render: function () {
+    var items = null,
+        styles = this.getStyles();
 
-    var items;
     if (this.props.pickerType === "color") {
-      items = ColorStore.getColorPickerPalette().map(function (colorObj) {
-        return this.genColorItem(colorObj)}.bind(this));
+      items = ColorStore.getColorPickerPalette().map(function (color) {
+        return this.genColorItem(color)}.bind(this));
     } else {
       items = IconStore.getIconPickerIcons().map(function (icon) {
         return this.genIconItem(icon)}.bind(this));
     }
 
     return (
-      <div style={this.getStyles().container}>
+      <div style={styles.container}>
         {items}
       </div>
     );
   }
-});
+}));

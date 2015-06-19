@@ -1,10 +1,11 @@
-var React           = require('react'),
+var React            = require('react'),
+    Radium           = require('radium'),
 
     mui              = require('material-ui'),
     CircularProgress = mui.CircularProgress;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'LoadingItem',
 
@@ -23,4 +24,4 @@ module.exports = React.createClass({
         </div>
     )
   }
-});
+}));

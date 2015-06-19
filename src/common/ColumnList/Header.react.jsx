@@ -1,9 +1,8 @@
 var React         = require('react'),
+    Radium        = require('radium');
 
-    MaterialIcon  = require('../Icon/MaterialIcon.react');
 
-
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'Header',
 
@@ -27,4 +26,4 @@ module.exports = React.createClass({
     )
   }
 
-});
+}));

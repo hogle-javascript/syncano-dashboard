@@ -1,10 +1,12 @@
-var React      = require('react'),
-    Moment     = require('moment'),
-    classNames = require('classnames'),
+var React       = require('react'),
+    Radium      = require('radium'),
+    Moment      = require('moment'),
+    classNames  = require('classnames'),
 
-    // Components
-    Paper     = require('material-ui/lib/paper'),
-    Colors    = require('material-ui/lib/styles/colors');
+    mui         = require('material-ui'),
+    Paper       = mui.Paper,
+    Colors      = mui.Styles.Colors;
+
 
 // Move it later to some theme? Constants?
 var DEFAULT_BACKGROUND = 'green',
@@ -28,7 +30,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnCheckIcon',
 
@@ -67,22 +69,22 @@ module.exports = React.createClass({
         padding         : '16px 8px'
       },
       name: {
-        fontSize       : 16,
-        lineHeight     : '20px',
-        display        : 'flex',
-        flexDirection  : 'column',
-        justifyContent : 'center',
-        cursor         : 'pointer',
-        color          : this.state.color
+        fontSize        : 16,
+        lineHeight      : '20px',
+        display         : 'flex',
+        flexDirection   : 'column',
+        justifyContent  : 'center',
+        cursor          : 'pointer',
+        color           : this.state.color
       },
       icon : {
-        margin: 12,
-        height: 50,
-        width: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: this.props.background
+        margin          : 12,
+        height          : 50,
+        width           : 50,
+        display         : 'flex',
+        justifyContent  : 'center',
+        alignItems      : 'center',
+        background      : this.props.background
       }
     };
   },
@@ -128,4 +130,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}));
