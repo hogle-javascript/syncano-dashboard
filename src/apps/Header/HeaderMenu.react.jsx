@@ -1,5 +1,4 @@
 var React  = require('react'),
-    Radium = require('radium'),
     Router = require('react-router'),
 
     mui    = require('material-ui'),
