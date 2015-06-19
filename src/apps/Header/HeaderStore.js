@@ -3,6 +3,7 @@ var Reflux        = require('reflux'),
     SessionStore  = require('../Session/SessionStore'),
     HeaderActions = require('./HeaderActions');
 
+
 var HeaderStore = Reflux.createStore({
   listenables: HeaderActions,
 
@@ -10,20 +11,18 @@ var HeaderStore = Reflux.createStore({
     return {
       breadcrumbs : [],
       menuItems   : [],
-      user        : {},
+      user        : {}
     }
   },
 
   init: function () {
-    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshUserData);
   },
 
   refreshUserData: function (Session) {
     if (Session.isReady()) {
-      this.data.user = Session.user;
-      this.trigger(this.data);
-    };
+      this.trigger({user: Session.user});
+    }
 
     this.listenTo(SessionStore, this.refreshData);
   },
@@ -33,32 +32,27 @@ var HeaderStore = Reflux.createStore({
   },
 
   onSetBreadcrumbs: function (payload) {
-    this.data.breadcrumbs = payload;
-    this.trigger(this.data);
+    this.trigger({breadcrumbs: payload});
   },
 
   onClearBreadcrumbs: function () {
-    this.data.breadcrumbs = [];
-    this.trigger(this.data);
+    this.trigger({breadcrumbs: []});
   },
 
   onSetMenuItems: function (payload) {
-    this.data.menuItems = payload;
-    this.trigger(this.data);
+    this.trigger({menuItems: payload});
   },
 
   onClearMenuItems: function () {
-    this.data.menuItems = [];
-    this.trigger(this.data);
+    this.trigger({menuItems: []});
   },
 
   onSet: function (payload) {
-    this.data = payload;
-    this.trigger(this.data);
+    this.trigger(payload);
   },
 
   onClear: function () {
-    this.data = this.getInitialState();
+    this.trigger(this.getInitialState());
   },
 
 });
