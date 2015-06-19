@@ -26,8 +26,14 @@ var ColorStore = {
     return colors;
   },
 
-  getColorByName: function(name){
-    return Colors[name+'700'];
+  getColorByName: function(name,variation){
+    if (variation === 'dark'){
+      return Colors[name+'700'];
+    }
+    if (variation === 'light'){
+      return Colors[name+'100'];
+    }
+    return Colors[name+'500'];
   },
 
   getAllColors: function() {

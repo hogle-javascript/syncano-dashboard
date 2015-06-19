@@ -4,13 +4,19 @@ var React            = require('react'),
     Router           = require('react-router'),
     Link             = Router.Link,
 
+    // Utils & Mixins
+    StylePropable    = mui.Mixins.StylePropable,
+
+    // Stores & Actions
     HeaderActions    = require('./HeaderActions'),
     HeaderStore      = require('./HeaderStore'),
     SessionActions   = require('../Session/SessionActions'),
     SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('../Instances/InstancesActions'),
     InstancesStore   = require('../Instances/InstancesStore'),
+    ColorStore       = require('../../common/Color/ColorStore'),
 
+    // Components
     mui              = require('material-ui'),
     Colors           = mui.Styles.Colors,
     Tabs             = mui.Tabs,
@@ -20,8 +26,6 @@ var React            = require('react'),
     FontIcon         = mui.FontIcon,
     Paper            = mui.Paper,
     DropDownMenu     = mui.DropDownMenu,
-
-    StylePropable    = mui.Mixins.StylePropable,
 
     MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
     MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
@@ -44,7 +48,8 @@ module.exports = React.createClass({
 ],
 
   contextTypes: {
-      router: React.PropTypes.func.isRequired
+      router   : React.PropTypes.func.isRequired,
+      muiTheme : React.PropTypes.object
   },
 
   handleTabActive: function (tab) {
@@ -131,10 +136,6 @@ module.exports = React.createClass({
     );
   },
 
-  contextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
   renderMenuItem: function(tab, index) {
     var styles = this.getStyles();
 
@@ -152,7 +153,8 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       topToolbar: {
-        background : Colors.blue500,
+        //this.context.muiTheme.palette.primary1Color,
+        background : this.context.muiTheme.palette.primary1Color,
         height     : 68,
         padding    : '0 32px'
       },
@@ -166,12 +168,13 @@ module.exports = React.createClass({
         fontSize   : 25,
         cursor     : 'pointer'
       },
+
       bottomToolbar: {
         display    : 'flex',
         fontSize   : 17,
         fontWeight : 500,
         height     : 60,
-        background : '#fff',
+        background : this.context.muiTheme.palette.primary2Color,
         padding    : '0 32px'
       },
       bottomToolbarGroup: {
@@ -181,7 +184,7 @@ module.exports = React.createClass({
         justifyContent : 'center'
       },
       menuItemStyles: {
-        color        : Colors.indigo500,
+        color        : 'white',
         fontWeight   : 400,
         fontSize     : 17,
         paddingLeft  : 10,
@@ -196,11 +199,11 @@ module.exports = React.createClass({
         marginLeft     : '-32px'
       },
       bottomToolbarGroupIcon: {
-        padding        : '0 4px'
+        padding        : '0 4px',
       },
       dropdownLabelContainer: {
         display        : 'flex',
-        alignItems     : 'center'
+        alignItems     : 'center',
       },
       dropdownLabel: {
         flex           : 1,
@@ -222,9 +225,9 @@ module.exports = React.createClass({
         margin         : '8px 16px 8px 0'
       },
       dropdownMenuItem: {
-        height: 40,
-        lineHeight: '40px',
-        paddingLeft: 32
+        height      : 40,
+        lineHeight  : '40px',
+        paddingLeft : 32
       }
     }
   },
@@ -270,7 +273,7 @@ module.exports = React.createClass({
 
     menuItems = InstancesStore.data.instances.map(function(item, index) {
       var iconBackground = {
-            backgroundColor: item.metadata.color || 'green'
+            backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark')
           },
           iconClassName  = item.metadata.icon ? 'synicon-' + item.metadata.icon : 'synicon-folder',
           text           = <div style={styles.dropdownLabelContainer}>
@@ -358,9 +361,9 @@ module.exports = React.createClass({
                 className = "synicon-bell-outline"
                 style     = {styles.bottomToolbarGroupIcon} />
               <MaterialDropdown
-                  items={dropdownItems}
-                  headerContent={dropdownHeader}
-                  style={styles.bottomToolbarGroupIcon} />
+                  items         = {dropdownItems}
+                  headerContent = {dropdownHeader}
+                  style         = {styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>

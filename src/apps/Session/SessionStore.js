@@ -35,6 +35,18 @@ var SessionStore = Reflux.createStore({
     }
   },
 
+  makePalette: function(mainColor, accentColor) {
+    return {
+      primary1Color : Colors[mainColor+'700'],
+      primary2Color : Colors[mainColor+'500'],
+      primary3Color : Colors[mainColor+'100'],
+
+      accent1Color  : Colors[accentColor+'700'],
+      accent2Color  : Colors[accentColor+'300'],
+      accent3Color  : Colors[accentColor+'200']
+    }
+  },
+
   onTokenLoginCompleted: function(payload) {
     console.info('SessionStore::onTokenLoginComplete');
   },
@@ -70,26 +82,18 @@ var SessionStore = Reflux.createStore({
   },
 
   onRegisterTheme: function (theme) {
+    console.info('SessionStore::onRegisterTheme');
     this.theme = theme;
   },
 
   onSetInstanceCompleted: function (payload) {
     console.info('SessionStore::onSetInstanceCompleted');
-    var colorName = payload.metadata.color;
+    var colorName       = payload.metadata.color,
+        secondColorName = 'indigo';
 
-    var secondColorName = 'pink';
     if (ColorStore.getColorByName(colorName)) {
-        this.theme.setPalette({
-          primary1Color : Colors[colorName+'700'],
-          primary2Color : Colors[colorName+'300'],
-          primary3Color : Colors[colorName+'200'],
-
-          accent1Color  : Colors[secondColorName+'700'],
-          accent2Color  : Colors[secondColorName+'300'],
-          accent3Color  : Colors[secondColorName+'200'],
-      });
+        this.theme.setPalette(this.makePalette(colorName, secondColorName));
     }
-
     this.instance = payload;
     this.trigger(this)
   },

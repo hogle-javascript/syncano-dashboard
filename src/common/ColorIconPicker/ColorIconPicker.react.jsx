@@ -13,44 +13,44 @@ module.exports = React.createClass({
   displayName: 'ColorIconPicker',
 
   propTypes: {
-    selectedColor: React.PropTypes.string,
-    selectedIcon: React.PropTypes.string,
-    pickerType: React.PropTypes.oneOf(['color', 'icon']),
-    handleChange: React.PropTypes.func,
+    selectedColor : React.PropTypes.string,
+    selectedIcon  : React.PropTypes.string,
+    pickerType    : React.PropTypes.oneOf(['color', 'icon']),
+    handleChange  : React.PropTypes.func
   },
 
   getStyles: function() {
     return {
       container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        height: '100%',
-        cursor: 'pointer',
+        display        : 'flex',
+        flexWrap       : 'wrap',
+        justifyContent : 'center',
+        height         : '100%',
+        cursor         : 'pointer'
       },
       item : {
-        margin: 12,
-        height: 50,
-        width: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        margin         : 12,
+        height         : 50,
+        width          : 50,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
 
   getInitialState: function() {
     return {
-      selectedColor: this.props.selectedColor,
-      selectedIcon: this.props.selectedIcon,
+      selectedColor : this.props.selectedColor,
+      selectedIcon  : this.props.selectedIcon
     }
   },
 
   componentWillReceiveProps: function (nextProps) {
     console.info('ColorIconPicker::componentWillReceiveProps');
     this.setState({
-      selectedColor: nextProps.selectedColor,
-      selectedIcon: nextProps.selectedIcon,
+      selectedColor : nextProps.selectedColor,
+      selectedIcon  : nextProps.selectedIcon
     })
   },
 
@@ -69,14 +69,15 @@ module.exports = React.createClass({
   },
 
   genIconItem: function(icon) {
-    var style = this.getStyles().item,
-        zDepth = 0,
+    var style     = this.getStyles().item,
+        zDepth    = 0,
         iconColor = 'black';
 
     if (icon === this.state.selectedIcon) {
-      zDepth = 3;
-      style.background= ColorStore.getColorByName(this.state.selectedColor);
-      iconColor = 'white';
+      zDepth           = 3;
+      iconColor        = 'white';
+      style.background = ColorStore.getColorByName(this.state.selectedColor);
+
     }
     return (
       <Paper
@@ -98,9 +99,10 @@ module.exports = React.createClass({
 
     style.background = ColorStore.getColorByName(colorName);
 
-    var icon;
-    var zDepth = 0;
-    if (colorName === ColorStore.getColorByName(this.state.selectedColor)) {
+    var icon   = null,
+        zDepth = 0;
+
+    if (colorName === this.state.selectedColor) {
       zDepth = 3;
       icon = <FontIcon
                 className = {"synicon-"+this.state.selectedIcon}

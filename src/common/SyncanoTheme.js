@@ -8,12 +8,14 @@ var SyncanoTheme = {
   contentFontFamily: 'Roboto, sans-serif',
   getPalette: function() {
     return {
-      primary1Color : Colors.blue600,
-      primary2Color : Colors.cyan700,
-      primary3Color : Colors.cyan100,
+      primary1Color : Colors.blue700,
+      primary2Color : Colors.blue500,
+      primary3Color : Colors.blue100,
+
       accent1Color  : Colors.indigo500,
       accent2Color  : Colors.pinkA400,
       accent3Color  : Colors.pinkA100,
+
       textColor     : Colors.darkBlack,
       canvasColor   : Colors.white,
       borderColor   : Colors.grey300,
