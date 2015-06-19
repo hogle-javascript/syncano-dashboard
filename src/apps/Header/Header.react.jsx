@@ -24,6 +24,7 @@ var React            = require('react'),
 
     StylePropable    = mui.Mixins.StylePropable,
 
+    HeaderMenu       = require('./HeaderMenu.react'),
     MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
     MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
     RoundIcon        = require('../../common/Icon/RoundIcon.react');
@@ -46,10 +47,6 @@ module.exports = Radium(React.createClass({
 
   contextTypes: {
       router: React.PropTypes.func.isRequired
-  },
-
-  handleTabActive: function (tab) {
-    this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
   handleLogout: function() {
@@ -93,59 +90,6 @@ module.exports = Radium(React.createClass({
     )
   },
 
-  getActiveMenuItemIndex: function () {
-    var index = 0;
-    this.state.menuItems.some(function (item, i) {
-      if (this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        return true;
-      }
-    }.bind(this));
-
-    return index;
-  },
-
-  renderMenu: function () {
-    if (this.state.menuItems.length === 0) {
-      return
-    }
-
-    var menuStyles = {
-      menuContainer: {
-        display   : 'inline-flex',
-        alignSelf : 'flex-end'
-      },
-      menu: {
-        backgroundColor : 'transparent',
-        height          : 60
-      }
-    };
-
-    return (
-      <div style={menuStyles.menuContainer}>
-        <Tabs
-          tabItemContainerStyle = {menuStyles.menu}
-          initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
-          {this.state.menuItems.map(this.renderMenuItem)}
-        </Tabs>
-      </div>
-    );
-  },
-
-  renderMenuItem: function(tab, index) {
-    var styles = this.getStyles();
-
-    return (
-      <Tab
-        key      = {'menuItem-' + tab.route + '-' + index}
-        label    = {tab.label}
-        route    = {tab.route}
-        params   = {tab.params}
-        style    = {styles.menuItemStyles}
-        onActive = {this.handleTabActive} />
-    )
-  },
-
   getStyles: function() {
     return {
       topToolbar: {
@@ -183,13 +127,6 @@ module.exports = Radium(React.createClass({
         float          : 'none',
         alignItems     : 'center',
         justifyContent : 'center'
-      },
-      menuItemStyles: {
-        color        : Colors.indigo500,
-        fontWeight   : 400,
-        fontSize     : 17,
-        paddingLeft  : 10,
-        paddingRight : 10
       },
       instanceToolbarGroup: {
         display        : 'flex',
@@ -362,7 +299,7 @@ module.exports = Radium(React.createClass({
             <ToolbarGroup
               className = "col-flex-1"
               style     = {styles.bottomToolbarGroup}>
-              {this.renderMenu()}
+              <HeaderMenu menuItems={this.state.menuItems} />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
               <FontIcon 
