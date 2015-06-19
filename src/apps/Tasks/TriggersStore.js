@@ -5,7 +5,7 @@ var Reflux              = require('reflux'),
   
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
-    TriggersActions       = require('./TriggersActions');
+    TriggersActions     = require('./TriggersActions');
 
 
 var TriggersStore = Reflux.createStore({

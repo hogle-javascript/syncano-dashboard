@@ -1,6 +1,6 @@
 var Reflux = require('reflux'),
 
-    SessionStore     = require('../Session/SessionStore'),
+    SessionStore  = require('../Session/SessionStore'),
     ApiKeysActions = require('./ApiKeysActions');
 
 
