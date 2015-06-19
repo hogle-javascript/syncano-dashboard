@@ -1,7 +1,5 @@
 var React         = require('react'),
-    Radium        = require('radium'),
-
-    MaterialIcon  = require('../Icon/MaterialIcon.react');
+    Radium        = require('radium');
 
 
 module.exports = Radium(React.createClass({
