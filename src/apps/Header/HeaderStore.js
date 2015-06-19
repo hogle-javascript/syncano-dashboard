@@ -16,44 +16,52 @@ var HeaderStore = Reflux.createStore({
   },
 
   init: function () {
-    this.listenTo(SessionStore, this.refreshUserData);
-  },
-
-  refreshUserData: function (Session) {
-    if (Session.isReady()) {
-      this.trigger({user: Session.user});
-    }
-
+    this.hasUser = false;
     this.listenTo(SessionStore, this.refreshData);
   },
 
-  refreshData: function() {
-    this.trigger(this);
+  refreshData: function (Session) {
+    console.debug('HeaderStore::refreshData');
+
+    if (this.hasUser === false && Session.isReady()) {
+      this.hasUser = true;
+      this.trigger({user: Session.user});
+    }
+
   },
 
   onSetBreadcrumbs: function (payload) {
+    console.debug('HeaderStore::onSetBreadcrumbs');
     this.trigger({breadcrumbs: payload});
   },
 
   onClearBreadcrumbs: function () {
+    console.debug('HeaderStore::onClearBreadcrumbs');
     this.trigger({breadcrumbs: []});
   },
 
   onSetMenuItems: function (payload) {
+    console.debug('HeaderStore::onSetMenuItems');
     this.trigger({menuItems: payload});
   },
 
   onClearMenuItems: function () {
+    console.debug('HeaderStore::onClearMenuItems');
     this.trigger({menuItems: []});
   },
 
   onSet: function (payload) {
+    console.debug('HeaderStore::onSet');
     this.trigger(payload);
   },
 
-  onClear: function () {
-    this.trigger(this.getInitialState());
-  },
+  onClear: function (payload) {
+    console.debug('HeaderStore::onClear');
+    this.trigger({
+      breadcrumbs: [],
+      menuItems: []
+    });
+  }
 
 });
 
