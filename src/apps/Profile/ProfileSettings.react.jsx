@@ -2,6 +2,7 @@ var React                = require('react'),
     Reflux               = require('reflux'),
 
     HeaderMixin          = require('../Header/HeaderMixin'),
+    FormMixin            = require('../../mixins/FormMixin'),
     ValidationMixin      = require('../../mixins/ValidationMixin'),
 
     ProfileActions       = require('./ProfileActions'),
@@ -22,9 +23,11 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(ProfileSettingsStore),
-    HeaderMixin,
     React.addons.LinkedStateMixin,
-    ValidationMixin
+
+    HeaderMixin,
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -70,34 +73,8 @@ module.exports = React.createClass({
     }
   ],
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        ProfileActions.updateSettings(this.state);
-      }
-    }.bind(this));
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
-  renderFeedback: function () {
-    if (!this.state.feedback || this.state.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification>{this.state.feedback}</Notification>
-    );
+  handleSuccessfullValidation: function () {
+    ProfileActions.updateSettings(this.state);
   },
 
   getStyles: function() {
@@ -144,11 +121,10 @@ module.exports = React.createClass({
               Profile
             </div>
             <div style={styles.content}>
-              {this.renderError()}
-              {this.renderFeedback()}
+              {this.renderFormNotifications()}
               <form
                 style={styles.form}
-                onSubmit={this.handleSubmit}
+                onSubmit={this.handleFormValidation}
                 acceptCharset="UTF-8"
                 method="post">
                 <TextField

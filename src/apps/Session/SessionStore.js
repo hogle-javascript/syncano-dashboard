@@ -60,6 +60,12 @@ var SessionStore = Reflux.createStore({
     this.router = router;
   },
 
+  onRegisterUser: function (user) {
+    this.user             = user;
+    this.user.account_key = this.token;
+    this.trigger(this);
+  },
+
   onSetInstanceCompleted: function (payload) {
     console.info('SessionStore::onSetInstanceCompleted');
     this.instance = payload;

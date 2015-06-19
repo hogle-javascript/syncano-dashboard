@@ -1,73 +1,47 @@
 var Reflux         = require('reflux'),
 
-    SessionStore   = require('../Session/SessionStore')
+    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+
+    SessionStore   = require('../Session/SessionStore'),
+    SessionActions = require('../Session/SessionActions'),
     ProfileActions = require('./ProfileActions');
 
 
 var ProfileSettingsStore = Reflux.createStore({
   listenables: ProfileActions,
+  mixins: [StoreFormMixin],
 
   getInitialState: function () {
+    var user = SessionStore.user || {};
     return {
-      errors    : {},
-      firstName : null,
-      lastName  : null,
-      email     : null,
-      feedback  : null,
-      canSubmit : true
+      firstName : user.first_name,
+      lastName  : user.last_name,
+      email     : user.email
     }
   },
 
   init: function () {
-    this.errors    = {};
-    this.firstName = null;
-    this.lastName  = null;
-    this.email     = null;
-    this.feedback  = null;
-    this.canSubmit = true;
-
     this.listenTo(SessionStore, this.checkSession);
   },
 
   checkSession: function (Session) {
+    console.debug('ProfileSettingsStore:checkSession', Session.user);
     if (Session.isReady()) {
-      this.firstName = Session.user.first_name;
-      this.lastName  = Session.user.last_name;
-      this.email     = Session.user.email;
-      this.trigger(this);
+      this.trigger({
+        firstName: Session.user.first_name,
+        lastName: Session.user.last_name,
+        email: Session.user.email,
+      });
     }
-  },
-
-  onUpdateSettings: function () {
-    this.trigger({canSubmit: false});
   },
 
   onUpdateSettingsCompleted: function (payload) {
-    this.errors    = {};
-    this.canSubmit = true;
-    this.feedback  = 'Profile saved successfully.'
-    this.trigger(this);
+    SessionActions.registerUser(payload);
+
+    this.trigger({
+      feedback: 'Profile saved successfully.'
+    });
   },
-
-  onUpdateSettingsFailure: function (payload) {
-    this.errors    = {};
-    this.canSubmit = true;
-    this.feedback  = null;
-
-    if (typeof payload === 'string') {
-      this.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.errors[field] = payload[field];
-      }
-    }
-
-    this.trigger(this);
-  }
 
 });
 
