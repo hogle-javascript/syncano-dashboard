@@ -111,7 +111,7 @@ module.exports = Radium(React.createClass({
         route  : 'instances'
       }, {
         label : 'Solutions',
-        route : 'dashboard'
+        route : 'solutions'
       }];
   },
 

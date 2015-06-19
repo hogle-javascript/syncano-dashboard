@@ -43,7 +43,7 @@ module.exports = Radium(React.createClass({
     Router.Navigation,
     Router.State,
     StylePropable
-],
+  ],
 
   contextTypes: {
       router: React.PropTypes.func.isRequired
@@ -299,7 +299,7 @@ module.exports = Radium(React.createClass({
             <ToolbarGroup
               className = "col-flex-1"
               style     = {styles.bottomToolbarGroup}>
-              <HeaderMenu menuItems={this.state.menuItems} />
+              <HeaderMenu />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
               <FontIcon 
