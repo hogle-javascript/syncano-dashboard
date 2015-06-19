@@ -16,15 +16,13 @@ var HeaderStore = Reflux.createStore({
   },
 
   init: function () {
-    this.hasUser = false;
     this.listenTo(SessionStore, this.refreshData);
   },
 
   refreshData: function (Session) {
     console.debug('HeaderStore::refreshData');
 
-    if (this.hasUser === false && Session.isReady()) {
-      this.hasUser = true;
+    if (Session.isReady()) {
       this.trigger({user: Session.user});
     }
 

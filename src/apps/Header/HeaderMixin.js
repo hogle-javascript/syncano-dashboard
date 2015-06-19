@@ -7,7 +7,7 @@ var HeaderMixin = {
   },
 
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo: function () {
       HeaderActions.clear();
     }
   },
