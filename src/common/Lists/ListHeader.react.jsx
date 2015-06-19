@@ -1,11 +1,12 @@
-var React = require('react');
+var React  = require('react'),
+    Radium = require('radium');
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ListHeader',
 
   propTypes: {
-    topic: React.PropTypes.string,
+    topic: React.PropTypes.string
   },
 
   render: function () {
@@ -17,7 +18,7 @@ module.exports = React.createClass({
         'margin-bottom': '25px',
         'font-size': '16px',
         'line-height': '1em',
-        'color': '#929292',
+        'color': '#929292'
       },
       'dropdown': {
         'display': 'flex',
@@ -38,4 +39,4 @@ module.exports = React.createClass({
     )
   }
 
-});
+}));

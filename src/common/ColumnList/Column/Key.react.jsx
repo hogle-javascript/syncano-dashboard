@@ -1,13 +1,14 @@
 var React              = require('react'),
+    Radium             = require('radium'),
     Moment             = require('moment'),
     classNames         = require('classnames'),
     ReactZeroClipboard = require('react-zeroclipboard'),
 
-    mui         = require('material-ui'),
-    Colors      = require('material-ui/lib/styles/colors'),
-    Snackbar    = mui.Snackbar,
-    Paper       = mui.Paper,
-    FontIcon    = mui.FontIcon;
+    mui                = require('material-ui'),
+    Colors             = mui.Styles.Colors,
+    Snackbar           = mui.Snackbar,
+    Paper              = mui.Paper,
+    FontIcon           = mui.FontIcon;
 
 
 // Same classes for column and it's header
@@ -23,7 +24,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnID',
 
@@ -54,13 +55,13 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       key: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        fontSize: '14px',
-        lineHeight: '16px',
-        paddingTop: 16,
-        paddingBottom: 16,
+        display       : 'flex',
+        flexDirection : 'row',
+        alignItems    : 'center',
+        fontSize      : 14,
+        lineHeight    : '16px',
+        paddingTop    : 16,
+        paddingBottom : 16
       },
       icon: {
         color: this.state.color
@@ -77,7 +78,7 @@ module.exports = React.createClass({
   },
 
   handleClick: function (event) {
-    this.setState({'color': this.props.color})
+    this.setState({'color': this.props.color});
     this.refs.snackbar.show();
   },
 
@@ -107,6 +108,6 @@ module.exports = React.createClass({
       </div>
 
     );
-
   }
-});
+
+}));

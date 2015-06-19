@@ -1,4 +1,5 @@
-var React = require('react'),
+var React      = require('react'),
+    Radium     = require('radium'),
 
     ColorStore = require('../Color/ColorStore'),
     IconStore  = require('../Icon/IconStore'),
@@ -8,7 +9,7 @@ var React = require('react'),
     Paper      = mui.Paper;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColorIconPicker',
 
@@ -16,25 +17,25 @@ module.exports = React.createClass({
     selectedColor: React.PropTypes.string,
     selectedIcon: React.PropTypes.string,
     pickerType: React.PropTypes.oneOf(['color', 'icon']),
-    handleChange: React.PropTypes.func,
+    handleChange: React.PropTypes.func
   },
 
   getStyles: function() {
     return {
       container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        height: '100%',
-        cursor: 'pointer',
+        display        : 'flex',
+        flexWrap       : 'wrap',
+        justifyContent : 'center',
+        height         : '100%',
+        cursor         : 'pointer'
       },
       item : {
-        margin: 12,
-        height: 50,
-        width: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        margin         : 12,
+        height         : 50,
+        width          : 50,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       }
     }
   },
@@ -42,7 +43,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       selectedColor: this.props.selectedColor,
-      selectedIcon: this.props.selectedIcon,
+      selectedIcon: this.props.selectedIcon
     }
   },
 
@@ -50,7 +51,7 @@ module.exports = React.createClass({
     console.info('ColorIconPicker::componentWillReceiveProps');
     this.setState({
       selectedColor: nextProps.selectedColor,
-      selectedIcon: nextProps.selectedIcon,
+      selectedIcon: nextProps.selectedIcon
     })
   },
 
@@ -71,40 +72,59 @@ module.exports = React.createClass({
   genIconItem: function(icon) {
     var style = this.getStyles().item,
         zDepth = 0,
-        iconColor = 'black';
+        iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
       zDepth = 3;
       style.background= this.state.selectedColor;
-      iconColor = 'white';
+      iconColor = '#fff';
     }
+
     return (
-      <Paper zDepth={zDepth} key={icon} circle={true} style={style} >
-          <FontIcon id={icon} className={"synicon-" + icon} style={{color: iconColor}} onClick={this.handleSetIcon} />
+      <Paper
+        zDepth = {zDepth}
+        key    = {icon}
+        circle = {true}
+        style  = {style}>
+          <FontIcon
+            id        = {icon}
+            className = {"synicon-" + icon}
+            style     = {{color: iconColor}}
+            onClick   = {this.handleSetIcon} />
       </Paper>
     )
   },
 
   genColorItem: function(color) {
-    var style = this.getStyles().item;
+    var icon,
+        style = this.getStyles().item,
+        zDepth = 0;
+
     style.background = color;
 
-    var icon;
-    var zDepth = 0;
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon = <FontIcon className={"synicon-"+this.state.selectedIcon} style={{color: 'white'}} />;
+      icon = <FontIcon
+               className = {"synicon-" + this.state.selectedIcon}
+               style     = {{color: 'white'}} />;
     }
     return (
-      <Paper id={color} zDepth={zDepth} key={color} circle={true} style={style} onClick={this.handleSetColor}>
+      <Paper
+        id      = {color}
+        zDepth  = {zDepth}
+        key     = {color}
+        circle  = {true}
+        style   = {style}
+        onClick = {this.handleSetColor}>
           {icon}
       </Paper>
     );
   },
 
   render: function () {
+    var items = null,
+        styles = this.getStyles();
 
-    var items;
     if (this.props.pickerType === "color") {
       items = ColorStore.getColorPickerPalette().map(function (color) {
         return this.genColorItem(color)}.bind(this));
@@ -114,9 +134,9 @@ module.exports = React.createClass({
     }
 
     return (
-      <div style={this.getStyles().container}>
+      <div style={styles.container}>
         {items}
       </div>
     );
   }
-});
+}));

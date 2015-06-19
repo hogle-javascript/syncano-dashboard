@@ -1,10 +1,11 @@
 var React         = require('react'),
+    Radium        = require('radium'),
 
     mui           = require('material-ui'),
     StylePropable = mui.Mixins.StylePropable;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'FABList',
 
@@ -33,4 +34,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}));

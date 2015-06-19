@@ -1,12 +1,13 @@
-var React = require('react'),
+var React         = require('react'),
+    Radium        = require('radium'),
 
     mui           = require('material-ui'),
     StylePropable = mui.Mixins.StylePropable,
 
-    MaterialIcon = require('../Icon/MaterialIcon.react');
+    MaterialIcon  = require('../Icon/MaterialIcon.react');
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'RoundIcon',
 
@@ -16,7 +17,7 @@ module.exports = React.createClass({
     id: React.PropTypes.string,
     icon: React.PropTypes.string,
     background: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
   handleClick: function () {
@@ -41,7 +42,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-
     var styles = this.getStyles();
 
     return (
@@ -51,6 +51,6 @@ module.exports = React.createClass({
         {this.props.children}
       </div>
     )
-
   }
-});
+
+}));
