@@ -122,7 +122,7 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var items,
+    var items = null,
         styles = this.getStyles();
 
     if (this.props.pickerType === "color") {
