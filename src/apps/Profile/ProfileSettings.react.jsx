@@ -7,14 +7,11 @@ var React                = require('react'),
 
     ProfileActions       = require('./ProfileActions'),
     ProfileSettingsStore = require('./ProfileSettingsStore'),
-    SessionStore         = require('../Session/SessionStore'),
 
     mui                  = require('material-ui'),
     TextField            = mui.TextField,
     RaisedButton         = mui.RaisedButton,
-    Paper                = mui.Paper,
-
-    Notification         = require('../../common/Notification/Notification.react');
+    Paper                = mui.Paper;
 
 
 module.exports = React.createClass({
@@ -73,10 +70,6 @@ module.exports = React.createClass({
     }
   ],
 
-  handleSuccessfullValidation: function () {
-    ProfileActions.updateSettings(this.state);
-  },
-
   getStyles: function() {
     return {
       container: {
@@ -108,6 +101,10 @@ module.exports = React.createClass({
         paddingRight: 30
       }
     }
+  },
+
+  handleSuccessfullValidation: function () {
+    ProfileActions.updateSettings(this.state);
   },
 
   render: function () {
