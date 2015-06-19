@@ -3,6 +3,7 @@ var Reflux        = require('reflux'),
     SessionStore  = require('../Session/SessionStore'),
     HeaderActions = require('./HeaderActions');
 
+
 var HeaderStore = Reflux.createStore({
   listenables: HeaderActions,
 
@@ -10,56 +11,55 @@ var HeaderStore = Reflux.createStore({
     return {
       breadcrumbs : [],
       menuItems   : [],
-      user        : {},
+      user        : {}
     }
   },
 
   init: function () {
-    this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshUserData);
-  },
-
-  refreshUserData: function (Session) {
-    if (Session.isReady()) {
-      this.data.user = Session.user;
-      this.trigger(this.data);
-    };
-
     this.listenTo(SessionStore, this.refreshData);
   },
 
-  refreshData: function() {
-    this.trigger(this);
+  refreshData: function (Session) {
+    console.debug('HeaderStore::refreshData');
+
+    if (Session.isReady()) {
+      this.trigger({user: Session.user});
+    }
+
   },
 
   onSetBreadcrumbs: function (payload) {
-    this.data.breadcrumbs = payload;
-    this.trigger(this.data);
+    console.debug('HeaderStore::onSetBreadcrumbs');
+    this.trigger({breadcrumbs: payload});
   },
 
   onClearBreadcrumbs: function () {
-    this.data.breadcrumbs = [];
-    this.trigger(this.data);
+    console.debug('HeaderStore::onClearBreadcrumbs');
+    this.trigger({breadcrumbs: []});
   },
 
   onSetMenuItems: function (payload) {
-    this.data.menuItems = payload;
-    this.trigger(this.data);
+    console.debug('HeaderStore::onSetMenuItems');
+    this.trigger({menuItems: payload});
   },
 
   onClearMenuItems: function () {
-    this.data.menuItems = [];
-    this.trigger(this.data);
+    console.debug('HeaderStore::onClearMenuItems');
+    this.trigger({menuItems: []});
   },
 
   onSet: function (payload) {
-    this.data = payload;
-    this.trigger(this.data);
+    console.debug('HeaderStore::onSet');
+    this.trigger(payload);
   },
 
-  onClear: function () {
-    this.data = this.getInitialState();
-  },
+  onClear: function (payload) {
+    console.debug('HeaderStore::onClear');
+    this.trigger({
+      breadcrumbs: [],
+      menuItems: []
+    });
+  }
 
 });
 

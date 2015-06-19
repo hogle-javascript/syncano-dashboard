@@ -1,6 +1,17 @@
-var HeaderActions = require('./HeaderActions');
+var React         = require('react'),
+    HeaderActions = require('./HeaderActions');
 
 var HeaderMixin = {
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
+  statics: {
+    willTransitionTo: function () {
+      HeaderActions.clear();
+    }
+  },
+
   componentDidMount: function () {
     var breadcrumbs = this.headerBreadcrumbs || [],
         menuItems   = this.headerMenuItems   || [];
@@ -28,10 +39,6 @@ var HeaderMixin = {
       HeaderActions.setMenuItems(menuItems);
     }
 
-  },
-
-  componentWillUnmount: function () {
-    HeaderActions.clear();
   },
 
   setHeaderBreadcrumbs: function (breadcrumbs) {
