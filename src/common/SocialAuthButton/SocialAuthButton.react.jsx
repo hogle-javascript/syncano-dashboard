@@ -1,11 +1,13 @@
 var React           = require('react'),
+    Radium          = require('radium'),
+
     mui             = require('material-ui'),
     StylePropable   = mui.Mixins.StylePropable,
     FlatButton      = mui.FlatButton,
     FontIcon        = mui.FontIcon;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'SocialAuthButton',
 
@@ -55,4 +57,4 @@ module.exports = React.createClass({
       </FlatButton>
     )
   }
-});
+}));

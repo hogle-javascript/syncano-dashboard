@@ -1,30 +1,27 @@
 var React       = require('react'),
+    Radium      = require('radium'),
     Moment      = require('moment'),
-    classNames  = require('classnames'),
-    Paper       = require('material-ui/lib/paper');
+
+    mui         = require('material-ui'),
+    Paper       = mui.Paper;
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ItemColumn',
 
-  propTypes: {
-  },
-
   render: function () {
     var style = {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center'
+      display        : 'flex',
+      flexDirection  : 'column',
+      justifyContent : 'center'
     };
 
-    var cssClasses = classNames('col', 's' + this.props.grid);
-
     return (
-      <div className={cssClasses} style={style}>
+      <div style={style}>
         {this.props.children}
       </div>
     );
 
   }
-});
+}));

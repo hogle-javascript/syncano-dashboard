@@ -1,9 +1,11 @@
 var React       = require('react'),
+    Radium      = require('radium'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
 
-    Paper       = require('material-ui/lib/paper'),
-    Colors      = require('material-ui/lib/styles/colors');
+    mui         = require('material-ui'),
+    Paper       = mui.Paper,
+    Colors      = mui.Styles.Colors;
 
 
 var cssClasses = classNames('col-xs-8');
@@ -23,7 +25,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnName',
 
@@ -40,8 +42,8 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      color: 'rgba(0,0,0,.54)',
-      hoverColor: Colors.blue600
+      color      : 'rgba(0,0,0,.54)',
+      hoverColor : Colors.blue600
     };
   },
 
@@ -87,4 +89,4 @@ module.exports = React.createClass({
     );
 
   }
-});
+}));
