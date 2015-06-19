@@ -22,7 +22,7 @@ var TriggersActions = Reflux.createActions({
   'removeTriggers': {
       asyncResult: true,
       children: ['completed', 'failure']
-  },
+  }
 });
 
 TriggersActions.createTrigger.listen( function(payload) {

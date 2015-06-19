@@ -4,6 +4,7 @@ var React            = require('react'),
     classNames       = require('classnames'),
     Router           = require('react-router'),
     Link             = Router.Link,
+    mui              = require('material-ui'),
 
     // Utils & Mixins
     StylePropable    = mui.Mixins.StylePropable,
@@ -18,7 +19,6 @@ var React            = require('react'),
     ColorStore       = require('../../common/Color/ColorStore'),
 
     // Components
-    mui              = require('material-ui'),
     Colors           = mui.Styles.Colors,
     Tabs             = mui.Tabs,
     Tab              = mui.Tab,
@@ -28,11 +28,10 @@ var React            = require('react'),
     Paper            = mui.Paper,
     DropDownMenu     = mui.DropDownMenu,
 
-    StylePropable    = mui.Mixins.StylePropable,
-
     MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
     MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon        = require('../../common/Icon/RoundIcon.react');
+    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
+    HeaderMenu       = require('./HeaderMenu.react');
 
 
 require('./Header.sass');
