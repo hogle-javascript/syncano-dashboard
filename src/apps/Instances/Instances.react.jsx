@@ -7,6 +7,7 @@ var React  = require('react'),
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
+    Show              = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
@@ -140,15 +141,6 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  // List filters
-  filterMyInstances: function(item) {
-    return item.owner.email === SessionStore.user.email;
-  },
-
-  filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.user.email;
-  },
-
   getStyles: function() {
     return {
       fabListTop: {
@@ -223,19 +215,21 @@ module.exports = Radium(React.createClass({
 
         <InstancesList
           name                 = "My instances"
-          items                = {this.state.instances}
+          items                = {InstancesStore.getMyInstances()}
           filter               = {this.filterMyInstances}
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
           emptyItemContent     = "Create an instance" />
 
+        <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>
         <InstancesList
           name                 = "Shared with me"
-          items                = {this.state.instances}
+          items                = {InstancesStore.getOtherInstances()}
           filter               = {this.filterOtherInstances}
           listType             = "sharedInstances"
           viewMode             = "stream" />
+        </Show>
 
       </Container>
     );

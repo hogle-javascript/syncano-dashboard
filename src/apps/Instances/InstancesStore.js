@@ -1,16 +1,20 @@
 var Reflux = require('reflux'),
 
+    // Utils & Mixins
+    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+
     SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('./InstancesActions');
 
 
 var InstancesStore = Reflux.createStore({
-  listenables: InstancesActions,
+  listenables : InstancesActions,
+  mixins      : [CheckListStoreMixin],
 
   getInitialState: function () {
     return {
       // Lists
-      instances: [],
+      //items: [],
       isLoading: false,
 
       // Dialogs
@@ -22,7 +26,7 @@ var InstancesStore = Reflux.createStore({
 
     this.data = {
       // List
-      instances: [],
+      items: [],
       isLoading: false,
 
       // Dialogs
@@ -40,24 +44,35 @@ var InstancesStore = Reflux.createStore({
     InstancesActions.getInstances();
   },
 
-  getNumberOfChecked: function() {
-    var checkedFilter = function(item) {
-      return item.checked === true;
-    };
-    return this.data.instances.filter(checkedFilter).length;
+  // Filters
+  filterMyInstances: function(item) {
+    return item.owner.email === SessionStore.user.email;
   },
+
+  filterOtherInstances: function(item) {
+    return item.owner.email !== SessionStore.user.email;
+  },
+
+  getMyInstances: function(){
+    return this.data.items.filter(this.filterMyInstances);
+  },
+
+  getOtherInstances: function(){
+    return this.data.items.filter(this.filterOtherInstances);
+  },
+
   onGetInstances: function(instances) {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetInstancesCompleted: function(instances) {
+  onGetInstancesCompleted: function(items) {
     console.debug('InstancesStore::onGetInstanesCompleted');
 
     var data = this.data;
-    data.instances = [];
-    Object.keys(instances).map(function(item) {
-        data.instances.push(instances[item]);
+    data.items = [];
+    Object.keys(items).map(function(item) {
+        data.items.push(items[item]);
     });
     this.data.isLoading = false;
     this.trigger(this.data);
@@ -118,44 +133,10 @@ var InstancesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onCheckItem: function(checkId, state) {
-    console.debug('InstancesStore::onCheckItem');
-
-    this.data.instances.forEach(function(item) {
-      if (checkId == item.name) {
-        item.checked = state;
-      }
-    }.bind(this));
-    this.trigger(this.data);
-  },
-
-  onUncheckAll: function() {
-    console.debug('InstancesStore::onCheckItem');
-
-    this.data.instances.forEach(function(item) {
-        item.checked = false;
-    });
-    this.trigger(this.data);
-  },
-
   onRemoveInstancesCompleted: function(payload) {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  getCheckedItem: function() {
-    console.debug('InstancesStore::getCheckedItem');
-
-    // Looking for the first 'checked' item
-    var checkedItem = null;
-    this.data.instances.some(function (item) {
-      if (item.checked) {
-        checkedItem = item;
-        return true;
-      }
-    });
-    return checkedItem;
   },
 
   getCheckedItemIconColor: function() {
@@ -164,7 +145,7 @@ var InstancesStore = Reflux.createStore({
     if (!singleItem) {
       return {
         color : null,
-        icon  : null,
+        icon  : null
       }
     }
 
@@ -172,18 +153,6 @@ var InstancesStore = Reflux.createStore({
       color : singleItem.metadata.color,
       icon  : singleItem.metadata.icon
     };
-  },
-
-  // TODO: Combine it somehow with getCheckedItems? general filter function? mixin for filtering lists?
-  getCheckedItems: function() {
-    // Looking for the first 'checked' item
-    var checkedItems = [];
-    this.data.instances.map(function (item) {
-      if (item.checked) {
-        checkedItems.push(item);
-      }
-    });
-    return checkedItems;
   }
 
 });

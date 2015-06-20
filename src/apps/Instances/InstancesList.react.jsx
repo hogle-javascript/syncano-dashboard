@@ -32,7 +32,6 @@ module.exports = React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
-    Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -86,9 +85,7 @@ module.exports = React.createClass({
       return <LoadingItem />;
     }
 
-    var instances = this.state.items.filter(this.props.filter);
-
-    var items = instances.map(function (item) {
+    var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
 
