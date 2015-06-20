@@ -26,7 +26,7 @@ module.exports = React.createClass({
 
   render: function() {
     var initials;
-    var colors = ColorStore.getAllColors();
+    var colors = ColorStore.getOldColorPickerPalette();
     var nameFragments = this.props.name.split(' ');
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();

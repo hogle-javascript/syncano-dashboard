@@ -26,6 +26,7 @@ module.exports = Radium(React.createClass({
         display        : 'flex',
         flexWrap       : 'wrap',
         justifyContent : 'center',
+        alignItems     : 'center',
         height         : '100%',
         cursor         : 'pointer'
       },
@@ -33,7 +34,7 @@ module.exports = Radium(React.createClass({
         margin         : 12,
         height         : 50,
         width          : 50,
-        display        : 'flex',
+        display        : 'inline-flex',
         justifyContent : 'center',
         alignItems     : 'center'
       }
@@ -70,14 +71,14 @@ module.exports = Radium(React.createClass({
   },
 
   genIconItem: function(icon) {
-    var style = this.getStyles().item,
-        zDepth = 0,
+    var style     = this.getStyles().item,
+        zDepth    = 0,
         iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
-      zDepth = 3;
-      style.background= this.state.selectedColor;
-      iconColor = '#fff';
+      zDepth           = 3;
+      style.background = ColorStore.getColorByName(this.state.selectedColor);
+      iconColor        = '#fff';
     }
 
     return (
@@ -97,16 +98,16 @@ module.exports = Radium(React.createClass({
 
   genColorItem: function(color) {
     var icon,
-        style = this.getStyles().item,
+        style  = this.getStyles().item,
         zDepth = 0;
 
-    style.background = color;
+    style.background = ColorStore.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon = <FontIcon
-               className = {"synicon-" + this.state.selectedIcon}
-               style     = {{color: 'white'}} />;
+      icon   = <FontIcon
+                 className = {"synicon-" + this.state.selectedIcon}
+                 style     = {{color: 'white'}} />;
     }
     return (
       <Paper
@@ -122,7 +123,7 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var items = null,
+    var items  = null,
         styles = this.getStyles();
 
     if (this.props.pickerType === "color") {

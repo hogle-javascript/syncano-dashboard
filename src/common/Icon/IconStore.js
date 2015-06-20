@@ -144,9 +144,18 @@ var IconStore = {
     return iconPickerIcons;
   },
 
+  getRandomIconPickerIcon: function() {
+    var icons         = this.getIconPickerIcons(),
+        iconsCount    = icons.length - 1,
+        lastIconIndex = iconsCount - 1,
+        randomNumber = Math.floor((Math.random() * lastIconIndex));
+
+    return icons[randomNumber];
+  },
+
   contains: function(string) {
     return allIcons.indexOf(string) !== -1;
-  },
+  }
 
 };
 
