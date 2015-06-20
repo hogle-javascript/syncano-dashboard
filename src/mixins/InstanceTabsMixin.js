@@ -11,21 +11,6 @@ var InstanceTabsMixin = {
         params: params
       },
       {
-        label: 'Classes',
-        route: 'classes',
-        params: params
-      },
-      {
-        label: 'API Keys',
-        route: 'api-keys',
-        params: params
-      },
-      {
-        label: 'Admins',
-        route: 'admins',
-        params: params
-      },
-      {
         label: 'Users',
         route: 'users',
         params: params
