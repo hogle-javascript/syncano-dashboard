@@ -45,8 +45,7 @@ var ColorStore = {
   getRandomColorName: function() {
     var uniqueColors      = this.getColorPickerPalette(),
         uniqueColorsCount = uniqueColors.length,
-        lastColorIndex    = uniqueColorsCount - 1,
-        randomNumber      = Math.floor((Math.random() * lastColorIndex));
+        randomNumber      = Math.floor((Math.random() * uniqueColorsCount));
 
     return uniqueColors[randomNumber];
   },

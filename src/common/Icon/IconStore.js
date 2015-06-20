@@ -146,9 +146,8 @@ var IconStore = {
 
   getRandomIconPickerIcon: function() {
     var icons         = this.getIconPickerIcons(),
-        iconsCount    = icons.length - 1,
-        lastIconIndex = iconsCount - 1,
-        randomNumber = Math.floor((Math.random() * lastIconIndex));
+        iconsCount    = icons.length,
+        randomNumber = Math.floor((Math.random() * iconsCount));
 
     return icons[randomNumber];
   },
