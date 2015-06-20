@@ -216,7 +216,6 @@ module.exports = Radium(React.createClass({
         <InstancesList
           name                 = "My instances"
           items                = {InstancesStore.getMyInstances()}
-          filter               = {this.filterMyInstances}
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
@@ -226,7 +225,6 @@ module.exports = Radium(React.createClass({
         <InstancesList
           name                 = "Shared with me"
           items                = {InstancesStore.getOtherInstances()}
-          filter               = {this.filterOtherInstances}
           listType             = "sharedInstances"
           viewMode             = "stream" />
         </Show>
