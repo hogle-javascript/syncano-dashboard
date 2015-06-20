@@ -193,7 +193,7 @@ module.exports = Radium(React.createClass({
 
   handleInstanceActive: function() {
     var currentInstance     = SessionStore.instance,
-        instancesList       = InstancesStore.data.instances,
+        instancesList       = InstancesStore.data.items,
         instanceActiveIndex = null;
 
     instancesList.some(function(e, index){
@@ -209,7 +209,7 @@ module.exports = Radium(React.createClass({
   renderInstance: function() {
     var styles        = this.getStyles(),
         instance      = SessionStore.instance,
-        instancesList = InstancesStore.data.instances;
+        instancesList = InstancesStore.data.items;
 
     if (!instance || !instancesList.length > 0) {
       return;
@@ -217,7 +217,7 @@ module.exports = Radium(React.createClass({
       instancesList = instancesList.reverse();
     }
 
-    var dropDownMenuItems = InstancesStore.data.instances.map(function(item, index) {
+    var dropDownMenuItems = InstancesStore.data.items.map(function(item, index) {
       var iconBackground = {
             backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark')
           },
