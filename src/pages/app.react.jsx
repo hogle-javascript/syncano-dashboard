@@ -29,6 +29,7 @@ module.exports = React.createClass({
 
   componentWillMount: function () {
     SessionActions.registerRouter(this.context.router);
+    SessionActions.registerTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 
