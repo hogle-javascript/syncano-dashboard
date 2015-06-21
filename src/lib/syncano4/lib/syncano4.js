@@ -1881,8 +1881,7 @@ var Syncano = (function() {
      */
 
     listAccountInvitations: function(params, callbackOK, callbackError) {
-      params = params || {};
-      return this.request('GET', 'v1/account/invitations', params, callbackOK, callbackError);
+      return this.request('GET', 'v1/account/invitations', params || {}, callbackOK, callbackError);
     },
 
     /**
@@ -1890,7 +1889,7 @@ var Syncano = (function() {
      * @alias Syncano.AccountInvitations.get
      * @param {object} params
      * @param {Number} id - identifier of the invitation to get
-     * @param {Number|object} id.id - when passed parameter is an object, we use its id property 
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
@@ -1900,10 +1899,7 @@ var Syncano = (function() {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
       };
-      if (typeof params === 'undefined') {
-        params = {};
-      }
-      return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params, callbackOK, callbackError);
+      return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params || {}, callbackOK, callbackError);
     },
 
     /**
@@ -1911,13 +1907,13 @@ var Syncano = (function() {
      * @alias Syncano.AccountInvitations.remove
      * @param {object} params
      * @param {Number} id - identifier of the invitation to remove
-     * @param {Number|object} id.id - when passed parameter is an object, we use its id property 
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
 
-    removeAccountInvitation: function(invitationId, params, callbackOK, callbackError) {
+    removeAccountInvitation: function(invitationId, callbackOK, callbackError) {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
       };
