@@ -128,9 +128,7 @@ module.exports = React.createClass({
 
   handleAccept: function() {
     console.info('ProfileInvitations::handleAccept');
-    var checkedItems = ProfileInvitationsStore.getCheckedItems(),
-        keys         = checkedItems.map(function (item) { return item.key });
-    ProfileActions.acceptInvitations(keys);
+    ProfileActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
   handleDecline: function() {

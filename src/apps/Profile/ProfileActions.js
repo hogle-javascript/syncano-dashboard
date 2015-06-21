@@ -46,9 +46,9 @@ ProfileActions.getInvitations.listen(function () {
     .catch(this.failure);
 });
 
-ProfileActions.acceptInvitations.listen(function (keys) {
-  var promises = keys.map(function (key) {
-    return Connection.AccountInvitations.accept(key);
+ProfileActions.acceptInvitations.listen(function (items) {
+  var promises = items.map(function (item) {
+    return Connection.AccountInvitations.accept(item.key);
   });
 
   D.all(promises)
@@ -56,9 +56,9 @@ ProfileActions.acceptInvitations.listen(function (keys) {
     .catch(this.failure);
 });
 
-ProfileActions.declineInvitations.listen(function (ids) {
-  var promises = ids.map(function (id) {
-    return Connection.AccountInvitations.remove(id);
+ProfileActions.declineInvitations.listen(function (items) {
+  var promises = items.map(function (item) {
+    return Connection.AccountInvitations.remove(item.id);
   });
 
   D.all(promises)
