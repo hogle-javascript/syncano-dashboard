@@ -8,6 +8,8 @@ var React  = require('react'),
     // Stores and Actions
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
+    ColorStore       = require('../../common/Color/ColorStore'),
+    IconStore        = require('../../common/Icon/IconStore'),
 
     // Components
     mui          = require('material-ui'),
@@ -73,7 +75,11 @@ module.exports = React.createClass({
   handleAddSubmit: function () {
     InstancesActions.createInstance({
       name        : this.state.name,
-      description : this.state.description
+      description : this.state.description,
+      metadata: {
+        color     : ColorStore.getRandomColorName(),
+        icon      : IconStore.getRandomIconPickerIcon()
+      }
     });
   },
 

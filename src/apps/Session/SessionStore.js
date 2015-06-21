@@ -1,6 +1,11 @@
 var Reflux         = require('reflux'),
     Connection     = require('./Connection'),
-    SessionActions = require('./SessionActions');
+    SessionActions = require('./SessionActions'),
+
+    ThemeManager   = require('material-ui/lib/styles/theme-manager')(),
+    Colors         = require('material-ui/lib/styles/colors'),
+    ColorStore     = require('../../common/Color/ColorStore'),
+    SyncanoTheme   = require('../../common/SyncanoTheme');
 
 
 var SessionStore = Reflux.createStore({
@@ -12,6 +17,7 @@ var SessionStore = Reflux.createStore({
     this.user       = null;
     this.instance   = null;
     this.route      = null;
+    this.theme      = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -24,6 +30,21 @@ var SessionStore = Reflux.createStore({
 
   clearInstance: function() {
     this.instance = null;
+    if (this.theme) {
+      this.theme.setTheme(SyncanoTheme);
+    }
+  },
+
+  makePalette: function(mainColor, accentColor) {
+    return {
+      primary1Color : Colors[mainColor+'700'],
+      primary2Color : Colors[mainColor+'500'],
+      primary3Color : Colors[mainColor+'100'],
+
+      accent1Color  : Colors[accentColor+'700'],
+      accent2Color  : Colors[accentColor+'300'],
+      accent3Color  : Colors[accentColor+'200']
+    }
   },
 
   onTokenLoginCompleted: function(payload) {
@@ -61,13 +82,24 @@ var SessionStore = Reflux.createStore({
   },
 
   onRegisterUser: function (user) {
+    console.info('SessionStore::onRegisterUser');
     this.user             = user;
     this.user.account_key = this.token;
     this.trigger(this);
+
+  onRegisterTheme: function (theme) {
+    console.info('SessionStore::onRegisterTheme');
+    this.theme = theme;
   },
 
   onSetInstanceCompleted: function (payload) {
     console.info('SessionStore::onSetInstanceCompleted');
+    var colorName       = payload.metadata.color,
+        secondColorName = 'indigo';
+
+    if (ColorStore.getColorByName(colorName)) {
+        this.theme.setPalette(this.makePalette(colorName, secondColorName));
+    }
     this.instance = payload;
     this.trigger(this)
   },

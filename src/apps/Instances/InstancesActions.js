@@ -22,7 +22,8 @@ InstancesActions.createInstance.listen( function(payload) {
     .Instances
     .create({
       name        : payload.name,
-      description : payload.description
+      description : payload.description,
+      metadata    : payload.metadata
     })
     .then(this.completed)
     .catch(this.failure);

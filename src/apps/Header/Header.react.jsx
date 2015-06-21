@@ -4,15 +4,21 @@ var React            = require('react'),
     classNames       = require('classnames'),
     Router           = require('react-router'),
     Link             = Router.Link,
+    mui              = require('material-ui'),
 
+    // Utils & Mixins
+    StylePropable    = mui.Mixins.StylePropable,
+
+    // Stores & Actions
     HeaderActions    = require('./HeaderActions'),
     HeaderStore      = require('./HeaderStore'),
     SessionActions   = require('../Session/SessionActions'),
     SessionStore     = require('../Session/SessionStore'),
     InstancesActions = require('../Instances/InstancesActions'),
     InstancesStore   = require('../Instances/InstancesStore'),
+    ColorStore       = require('../../common/Color/ColorStore'),
 
-    mui              = require('material-ui'),
+    // Components
     Colors           = mui.Styles.Colors,
     Tabs             = mui.Tabs,
     Tab              = mui.Tab,
@@ -22,12 +28,10 @@ var React            = require('react'),
     Paper            = mui.Paper,
     DropDownMenu     = mui.DropDownMenu,
 
-    StylePropable    = mui.Mixins.StylePropable,
-
-    HeaderMenu       = require('./HeaderMenu.react'),
     MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
     MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon        = require('../../common/Icon/RoundIcon.react');
+    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
+    HeaderMenu       = require('./HeaderMenu.react');
 
 
 require('./Header.sass');
@@ -46,7 +50,8 @@ module.exports = Radium(React.createClass({
   ],
 
   contextTypes: {
-      router: React.PropTypes.func.isRequired
+      router   : React.PropTypes.func.isRequired,
+      muiTheme : React.PropTypes.object
   },
 
   handleLogout: function() {
@@ -93,7 +98,7 @@ module.exports = Radium(React.createClass({
   getStyles: function() {
     return {
       topToolbar: {
-        background : Colors.blue500,
+        background : this.context.muiTheme.palette.primary1Color,
         height     : 68,
         padding    : '0 32px'
       },
@@ -108,7 +113,7 @@ module.exports = Radium(React.createClass({
         cursor     : 'pointer'
       },
       toolbarList: {
-        display    : 'flex'
+        display: 'flex'
       },
       toolbarListItem: {
         display    : 'inline-flex',
@@ -119,7 +124,7 @@ module.exports = Radium(React.createClass({
         fontSize    : 17,
         fontWeight  : 500,
         height      : 60,
-        background  : '#fff',
+        background  : this.context.muiTheme.palette.primary2Color,
         padding     : '0 32px'
       },
       bottomToolbarGroup: {
@@ -166,9 +171,9 @@ module.exports = Radium(React.createClass({
         margin         : '8px 16px 8px 0'
       },
       dropdownMenuItem: {
-        height: 40,
-        lineHeight: '40px',
-        paddingLeft: 32
+        height      : 40,
+        lineHeight  : '40px',
+        paddingLeft : 32
       }
     }
   },
@@ -188,7 +193,7 @@ module.exports = Radium(React.createClass({
 
   handleInstanceActive: function() {
     var currentInstance     = SessionStore.instance,
-        instancesList       = InstancesStore.data.instances,
+        instancesList       = InstancesStore.data.items,
         instanceActiveIndex = null;
 
     instancesList.some(function(e, index){
@@ -204,7 +209,7 @@ module.exports = Radium(React.createClass({
   renderInstance: function() {
     var styles        = this.getStyles(),
         instance      = SessionStore.instance,
-        instancesList = InstancesStore.data.instances;
+        instancesList = InstancesStore.data.items;
 
     if (!instance || !instancesList.length > 0) {
       return;
@@ -212,9 +217,9 @@ module.exports = Radium(React.createClass({
       instancesList = instancesList.reverse();
     }
 
-    var dropDownMenuItems = InstancesStore.data.instances.map(function(item, index) {
+    var dropDownMenuItems = InstancesStore.data.items.map(function(item, index) {
       var iconBackground = {
-            backgroundColor: item.metadata.color || 'green'
+            backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark')
           },
           iconClassName  = item.metadata.icon ? 'synicon-' + item.metadata.icon : 'synicon-folder',
           text           = <div style={styles.dropdownLabelContainer}>
@@ -236,11 +241,11 @@ module.exports = Radium(React.createClass({
         key={0}
         style={styles.instanceToolbarGroup}>
         <DropDownMenu
-          className="instances-dropdown"
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={dropDownMenuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
+          className     = "instances-dropdown"
+          menuItemStyle = {styles.dropdownMenuItem}
+          menuItems     = {dropDownMenuItems}
+          onChange      = {this.handleDropdownItemClick}
+          selectedIndex = {this.handleInstanceActive()} />
       </ToolbarGroup>)
   },
 
@@ -309,9 +314,9 @@ module.exports = Radium(React.createClass({
                 className = "synicon-bell-outline"
                 style     = {styles.bottomToolbarGroupIcon} />
               <MaterialDropdown
-                  items={dropdownItems}
-                  headerContent={dropdownHeader}
-                  style={styles.bottomToolbarGroupIcon} />
+                  items         = {dropdownItems}
+                  headerContent = {dropdownHeader}
+                  style         = {styles.bottomToolbarGroupIcon} />
             </ToolbarGroup>
           </Toolbar>
         </Paper>

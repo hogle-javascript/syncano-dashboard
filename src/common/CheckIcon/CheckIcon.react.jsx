@@ -1,6 +1,8 @@
 var React      = require('react'),
     Radium     = require('radium'),
 
+    ColorStore = require('../Color/ColorStore'),
+
     mui        = require('material-ui'),
     FontIcon   = mui.FontIcon,
     Paper      = mui.Paper;

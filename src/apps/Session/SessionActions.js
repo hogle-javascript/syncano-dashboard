@@ -11,6 +11,7 @@ var SessionActions = Reflux.createActions({
   'logout': {},
   'registerRouter': {},
   'registerUser': {},
+  'registerTheme': {},
   'setInstance': {
       asyncResult: true,
       children: ['completed', 'failure']

@@ -20,6 +20,11 @@ module.exports = React.createClass({
     Router.State
   ],
 
+  contextTypes: {
+      router   : React.PropTypes.func.isRequired,
+      muiTheme : React.PropTypes.object
+  },
+
   getActiveMenuItemIndex: function () {
     var index = 0;
     this.state.menuItems.some(function (item, i) {
@@ -46,7 +51,7 @@ module.exports = React.createClass({
         height          : 60
       },
       menuItemStyles: {
-        color           : Colors.indigo500,
+        color           : this.context.muiTheme.palette.primary3Color,
         fontWeight      : 400,
         fontSize        : 17,
         paddingLeft     : 10,

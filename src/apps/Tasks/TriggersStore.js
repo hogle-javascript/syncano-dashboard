@@ -5,7 +5,7 @@ var Reflux              = require('reflux'),
   
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
-    TriggersActions       = require('./TriggersActions');
+    TriggersActions     = require('./TriggersActions');
 
 
 var TriggersStore = Reflux.createStore({
@@ -34,7 +34,7 @@ var TriggersStore = Reflux.createStore({
       isLoading: false,
 
       // Dialogs
-      errors: {},
+      errors: {}
     }
   },
 
@@ -47,7 +47,7 @@ var TriggersStore = Reflux.createStore({
 
       // Dialogs
       errors: {},
-      canSubmit: true,
+      canSubmit: true
     };
 
     // We want to know when we are ready to download data for this store,
