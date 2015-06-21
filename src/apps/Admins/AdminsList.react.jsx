@@ -104,7 +104,6 @@ module.exports = React.createClass({
 
     // TODO: is there any better way to hide/disable components?
     var nameColumnHeader = <ColumnDesc.Header>Name</ColumnDesc.Header>;
-    console.log(this.props.mode)
     if (this.props.mode == "invitations") {
       nameColumnHeader = null;
     }

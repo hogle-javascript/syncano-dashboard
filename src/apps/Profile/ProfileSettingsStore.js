@@ -25,7 +25,7 @@ var ProfileSettingsStore = Reflux.createStore({
   },
 
   checkSession: function (Session) {
-    console.debug('ProfileSettingsStore:checkSession', Session.user);
+    console.debug('ProfileSettingsStore:checkSession');
     if (Session.isReady()) {
       this.trigger({
         firstName : Session.user.first_name,
