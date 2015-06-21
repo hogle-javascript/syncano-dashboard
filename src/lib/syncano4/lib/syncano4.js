@@ -1918,9 +1918,6 @@ var Syncano = (function() {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
       };
-      if (typeof params === 'undefuned') {
-        params = {};
-      }
       return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
     },
 

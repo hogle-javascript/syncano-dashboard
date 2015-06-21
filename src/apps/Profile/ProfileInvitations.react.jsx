@@ -1,20 +1,25 @@
 var React                   = require('react'),
     Reflux                  = require('reflux'),
 
+    // Utils
     HeaderMixin             = require('../Header/HeaderMixin'),
 
+    // Stores and Actions
     ProfileActions          = require('./ProfileActions'),
     ProfileInvitationsStore = require('./ProfileInvitationsStore'),
 
+    // Components
+    Colors                  = require('material-ui/lib/styles/colors'),
+
     // List
-    ListContainer            = require('../../common/Lists/ListContainer.react'),
-    List                     = require('../../common/Lists/List.react'),
-    Item                     = require('../../common/ColumnList/Item.react'),
-    Header                   = require('../../common/ColumnList/Header.react'),
-    LoadingItem              = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnDesc               = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate               = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon          = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer           = require('../../common/Lists/ListContainer.react'),
+    List                    = require('../../common/Lists/List.react'),
+    Item                    = require('../../common/ColumnList/Item.react'),
+    Header                  = require('../../common/ColumnList/Header.react'),
+    LoadingItem             = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnDesc              = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate              = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon         = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 
@@ -61,6 +66,11 @@ module.exports = React.createClass({
     }
   ],
 
+  componentDidMount: function() {
+    console.info('ProfileInvitations::componentDidMount');
+    ProfileActions.getInvitations();
+  },
+
   renderItem: function (item) {
     return (
       <Item key={item.id}>
@@ -70,8 +80,9 @@ module.exports = React.createClass({
           background      = {Colors.blue500}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick} >
-          {item.email}
+          {item.instance}
         </ColumnCheckIcon>
+        <ColumnDesc>{item.inviter}</ColumnDesc>
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
@@ -101,6 +112,7 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
+          <ColumnDesc.Header>From</ColumnDesc.Header>
           <ColumnDesc.Header>Role</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

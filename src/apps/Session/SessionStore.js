@@ -86,6 +86,7 @@ var SessionStore = Reflux.createStore({
     this.user             = user;
     this.user.account_key = this.token;
     this.trigger(this);
+  },
 
   onRegisterTheme: function (theme) {
     console.info('SessionStore::onRegisterTheme');
