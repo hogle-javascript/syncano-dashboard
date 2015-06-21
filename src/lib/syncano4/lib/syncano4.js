@@ -553,6 +553,22 @@ var Syncano = (function() {
     };
 
     /**
+     * Object with methods to handle Account Invitations
+     *
+     * @alias Syncano#AccountInvitations
+     * @type {object}
+     * @property {function} list - shortcut to {@link Syncano#listAccountInvitations} method
+     * @property {function} get - shortcut to {@link Syncano#getAccountInvitation} method
+     * @property {function} remove - shortcut to {@link Syncano#removeAccountInvitation} method
+     * @property {function} accept - shortcut to {@link Syncano#acceptAccountInvitation} method
+     */
+    this.AccountInvitations = {
+      list: this.listAccountInvitations.bind(this),
+      get: this.getAccountInvitation.bind(this),
+      remove: this.removeAccountInvitation.bind(this)
+    };
+
+    /**
      * Object with methods to handle WebHooks
      *
      * @alias Syncano#WebHooks
@@ -1849,6 +1865,63 @@ var Syncano = (function() {
      */
     removeInvitation: function(id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_invitations', callbackOK, callbackError);
+    },
+
+    /*******************************
+       ACCOUNT INVITATIONS METHODS
+    *******************************/
+    /**
+     * Invitions from other persons to their instances
+     *
+     * @method Syncano#listAccountInvitations
+     * @alias Syncano.AccountInvitations.list
+     * @param  {object} params
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listAccountInvitations: function(params, callbackOK, callbackError) {
+      return this.request('GET', 'v1/account/invitations', params || {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#getInvitation
+     * @alias Syncano.AccountInvitations.get
+     * @param {object} params
+     * @param {Number} id - identifier of the invitation to get
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    getAccountInvitation: function(invitationId, params, callbackOK, callbackError) {
+      if (typeof invitationId === 'object') {
+        invitationId = invitationId.id;
+      };
+      return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params || {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#removeInvitation
+     * @alias Syncano.AccountInvitations.remove
+     * @param {object} params
+     * @param {Number} id - identifier of the invitation to remove
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeAccountInvitation: function(invitationId, callbackOK, callbackError) {
+      if (typeof invitationId === 'object') {
+        invitationId = invitationId.id;
+      };
+      if (typeof params === 'undefuned') {
+        params = {};
+      }
+      return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
     },
 
     /********************
