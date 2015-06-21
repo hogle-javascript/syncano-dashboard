@@ -1,13 +1,11 @@
-var Reflux         = require('reflux'),
-
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
-
-    ProfileActions = require('./ProfileActions');
+var Reflux              = require('reflux'),
+    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    ProfileActions      = require('./ProfileActions');
 
 
 var ProfileInvitationsStore = Reflux.createStore({
   listenables: ProfileActions,
-  mixins: [StoreFormMixin],
+  mixins: [CheckListStoreMixin],
 
   getInitialState: function () {
     return {

@@ -40,14 +40,11 @@ var CheckListStoreMixin = {
   },
 
   getCheckedItems: function() {
-    // Looking for the first 'checked' item
-    var checkedItems = [];
-    this.data.items.map(function (item) {
+    return this.data.items.map(function (item) {
       if (item.checked) {
-        checkedItems.push(item);
+        return item;
       }
     });
-    return checkedItems;
   },
 
 };

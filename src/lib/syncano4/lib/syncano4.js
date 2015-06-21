@@ -332,6 +332,8 @@ var Syncano = (function() {
       return this;
     };
 
+    this.Deferred = Deferred;
+
     /**
      * Object with methods to handle Accounts
      *
@@ -565,7 +567,8 @@ var Syncano = (function() {
     this.AccountInvitations = {
       list: this.listAccountInvitations.bind(this),
       get: this.getAccountInvitation.bind(this),
-      remove: this.removeAccountInvitation.bind(this)
+      remove: this.removeAccountInvitation.bind(this),
+      accept: this.acceptAccountInvitation.bind(this)
     };
 
     /**
@@ -1921,6 +1924,21 @@ var Syncano = (function() {
       return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
     },
 
+    /**
+     * @method Syncano#acceptInvitation
+     * @alias Syncano.AccountInvitations.accept
+     * @param {object} params
+     * @param {String} key - invitation key
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    acceptAccountInvitation: function(invitationKey, callbackOK, callbackError) {
+      var params = {invitation_key: invitationKey}
+      return this.request('POST', 'v1/account/invitations/accept/', params, callbackOK, callbackError);
+    },
+
     /********************
        WEBHOOKS METHODS
     *********************/
@@ -3060,6 +3078,7 @@ var Syncano = (function() {
       return sequencePromiseResolver(arguments);
     };
     return defer;
+
   })();
 
   return Syncano;

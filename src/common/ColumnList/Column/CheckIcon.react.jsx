@@ -93,7 +93,9 @@ module.exports = Radium(React.createClass({
 
   handleNameClick: function() {
     console.info('ColumnCheckIcon:handleClick');
-    this.props.handleNameClick(this.props.id);
+    if (typeof this.props.handleNameClick === 'function') {
+      this.props.handleNameClick(this.props.id);
+    }
   },
 
   handleMouseOver: function () {
