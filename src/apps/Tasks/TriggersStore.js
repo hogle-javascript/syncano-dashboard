@@ -2,7 +2,8 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
     TriggersActions     = require('./TriggersActions');
@@ -10,7 +11,10 @@ var Reflux              = require('reflux'),
 
 var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   signalMenuItems: [
     {
@@ -29,35 +33,20 @@ var TriggersStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      // Lists
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {}
+      items     : [],
+      isLoading : false
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   refreshData: function (data) {
     console.debug('TriggersStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       TriggersActions.getTriggers();
     }
   },
@@ -76,7 +65,7 @@ var TriggersStore = Reflux.createStore({
     });
     return signalIndex;
   },
-  
+
   onGetTriggers: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -99,24 +88,6 @@ var TriggersStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateTriggerFailure: function(payload) {
-    console.debug('TriggersStore::onCreateTriggerCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
   onUpdateTriggerCompleted: function(paylod) {
     console.debug('TriggersStore::onUpdateTriggerCompleted');
     this.data.hideDialogs = true;
@@ -124,29 +95,11 @@ var TriggersStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onUpdateTriggerFailure: function(payload) {
-    console.debug('TriggersStore::onUpdateTriggerFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
   onRemoveTriggersCompleted: function(payload) {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 
