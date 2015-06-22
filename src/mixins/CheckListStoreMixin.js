@@ -16,10 +16,8 @@ var CheckListStoreMixin = {
         if (checkId == item.id) {
           item.checked = state;
         }
-      } else {
-        if (checkId == item.name) {
+      } else if (checkId == item.name) {
           item.checked = state;
-        }
       }
     }.bind(this));
     this.trigger(this.data);
