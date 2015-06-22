@@ -54,6 +54,7 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
+    console.info('InstancesList::handleItemIconClick', id, state);
     InstancesActions.checkItem(id, state);
   },
 
