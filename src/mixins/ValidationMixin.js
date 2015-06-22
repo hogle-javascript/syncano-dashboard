@@ -50,6 +50,11 @@ var ValidationMixin = {
   handleFormValidation: function (event) {
     event.preventDefault();
 
+    // FormMixin compatibility
+    if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {
+      return;
+    }
+
     this.validate(function(isValid, errors){
       if (isValid === true) {
         if (this.handleSuccessfullValidation !== undefined) {

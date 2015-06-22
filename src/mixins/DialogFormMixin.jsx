@@ -45,7 +45,7 @@ var DialogFormMixin = {
     }.bind(this));
   },
 
-  // FormMixin compatibility
+  // ValidationMixin compatibility
   handleSuccessfullValidation: function () {
     if (this.props.mode === 'add') {
       this.handleAddSubmit();
