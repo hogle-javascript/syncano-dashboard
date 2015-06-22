@@ -307,7 +307,7 @@ module.exports = Radium(React.createClass({
               <HeaderMenu />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
-              <FontIcon 
+              <FontIcon
                 className = "synicon-magnify"
                 style     = {styles.bottomToolbarGroupIcon} />
               <FontIcon

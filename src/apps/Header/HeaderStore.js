@@ -11,7 +11,7 @@ var HeaderStore = Reflux.createStore({
     return {
       breadcrumbs : [],
       menuItems   : [],
-      user        : {}
+      user        : SessionStore.getUser({})
     }
   },
 
@@ -23,7 +23,7 @@ var HeaderStore = Reflux.createStore({
     console.debug('HeaderStore::refreshData');
 
     if (Session.isReady()) {
-      this.trigger({user: Session.user});
+      this.trigger({user: Session.getUser()});
     }
 
   },

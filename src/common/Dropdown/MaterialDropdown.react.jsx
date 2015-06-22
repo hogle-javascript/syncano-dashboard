@@ -10,7 +10,6 @@ var React               = require('react'),
     Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon;
 
-    
 
 require('./Dropdown.css');
 
@@ -32,7 +31,7 @@ module.exports = React.createClass({
       handleItemClick : React.PropTypes.func,                  // if "clickable" props is defined as false or 
       clickable       : React.PropTypes.bool                   // is not defined function will not be triggered
     }),
-    iconStyle: React.PropTypes.object,
+    iconStyle: React.PropTypes.object
   },
 
   getDefaultProps: function () {
@@ -47,9 +46,13 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      icon: this.props.icon || 'dots-vertical',
-      isOpen: false
+      icon   : this.props.icon || 'dots-vertical',
+      isOpen : false
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps);
   },
 
   toggleOpenClose: function (e) {
@@ -66,12 +69,13 @@ module.exports = React.createClass({
       'dropdown-menu-visible' : this.state.isOpen
     });
 
-    var headerContent;
+    var headerContent = null;
 
     if (this.props.headerContent) {
-      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true);
-      var avatar = <Avatar src={gravatarUrl} />;
-      var headerContent =
+      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true),
+          avatar = <Avatar src={gravatarUrl} />;
+
+      headerContent =
         <List>
           <ListItem 
             leftAvatar      = {avatar}
