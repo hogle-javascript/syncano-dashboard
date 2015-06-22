@@ -2,24 +2,22 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
   
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
-    UsersActions    = require('./UsersActions');
+    UsersActions        = require('./UsersActions');
 
 
 var UsersStore = Reflux.createStore({
   listenables : UsersActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [CheckListStoreMixin, StoreFormMixin],
 
   getInitialState: function () {
     return {
       // Lists
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      isLoading: false
     }
   },
 
@@ -28,11 +26,7 @@ var UsersStore = Reflux.createStore({
     this.data = {
       // List
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
+      isLoading: false
     };
 
     // We want to know when we are ready to download data for this store,
@@ -69,47 +63,11 @@ var UsersStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateUserFailure: function(payload) {
-    console.debug('UsersStore::onCreateUserCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
   onUpdateUserCompleted: function(paylod) {
     console.debug('UsersStore::onUpdateUserCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  onUpdateUserFailure: function(payload) {
-    console.debug('UsersStore::onUpdateUserFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
   },
 
   onRemoveUsersCompleted: function(payload) {
