@@ -307,6 +307,19 @@ module.exports = React.createClass({
       }
     ];
 
+    var accordionItems = [{
+      id: "allUsers",
+      uuid: "allUsers",
+      displayName: "All users",
+      isNavigationElement: true,
+    },{
+      id: "groups",
+      uuid: "groups",
+      displayName: "Groups",
+      isNavigationElement: true,
+      //payload: this.state.groups,
+    }];
+
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
     return (

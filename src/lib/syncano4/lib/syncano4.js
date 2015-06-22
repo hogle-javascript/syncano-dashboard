@@ -477,6 +477,7 @@ var Syncano = (function() {
      */
     this.Groups = {
       create: this.createGroup.bind(this),
+      update: this.updateGroup.bind(this),
       list: this.listGroups.bind(this),
       get: this.getGroup.bind(this),
       remove: this.removeGroup.bind(this),
@@ -1527,12 +1528,30 @@ var Syncano = (function() {
      */
     createGroup: function(name, callbackOK, callbackError) {
       var params = {
-        name: name
+        label: name
       };
       if (typeof linksObject.instance_groups === 'undefined') {
         throw new Error('Not connected to any instance');
       }
       return this.request('POST', linksObject.instance_groups, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates group
+     *
+     * @method Syncano#updateGroup
+     * @alias Syncano.Groups.update
+     * @param {Number|object} id
+     * @param {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateGroup: function(id, params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_groups === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_groups + id, params, callbackOK, callbackError);
     },
 
     /**
