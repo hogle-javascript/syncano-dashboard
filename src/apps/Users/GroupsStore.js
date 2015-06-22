@@ -2,6 +2,7 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
   
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
@@ -10,7 +11,7 @@ var Reflux              = require('reflux'),
 
 var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [CheckListStoreMixin, StoreFormMixin],
 
   getInitialState: function () {
     return {
@@ -69,24 +70,6 @@ var GroupsStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateGroupFailure: function(payload) {
-    console.debug('GroupsStore::onCreateGroupCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
   onUpdateGroupCompleted: function(paylod) {
     console.debug('GroupsStore::onUpdateGroupCompleted');
     this.data.hideDialogs = true;
@@ -94,29 +77,11 @@ var GroupsStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onUpdateGroupFailure: function(payload) {
-    console.debug('GroupsStore::onUpdateGroupFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
   onRemoveGroupsCompleted: function(payload) {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

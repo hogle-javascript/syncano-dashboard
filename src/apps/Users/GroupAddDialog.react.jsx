@@ -64,7 +64,7 @@ module.exports = React.createClass({
 
 
   render: function () {
-    console.log(this.state);
+
     var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
         submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create',
         dialogStandardActions = [
