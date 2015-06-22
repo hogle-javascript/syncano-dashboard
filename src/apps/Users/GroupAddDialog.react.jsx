@@ -6,8 +6,8 @@ var React           = require('react'),
     DialogFormMixin = require('../../mixins/DialogFormMixin'),
 
     // Stores and Actions
-    GroupsActions = require('./GroupsActions'),
-    GroupsStore   = require('./GroupsStore'),
+    GroupsActions   = require('./GroupsActions'),
+    GroupsStore     = require('./GroupsStore'),
 
     // Components
     mui             = require('material-ui'),

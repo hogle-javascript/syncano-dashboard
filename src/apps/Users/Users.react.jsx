@@ -26,10 +26,10 @@ var React                    = require('react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    UsersList            = require('./UsersList.react'),
-    GroupsList             = require('./GroupsList.react'),
-    UserAddDialog       = require('./UserAddDialog.react'),
-    GroupAddDialog        = require('./GroupAddDialog.react');
+    UsersList                = require('./UsersList.react'),
+    GroupsList               = require('./GroupsList.react'),
+    UserAddDialog            = require('./UserAddDialog.react'),
+    GroupAddDialog           = require('./GroupAddDialog.react');
 
 
 module.exports = React.createClass({
