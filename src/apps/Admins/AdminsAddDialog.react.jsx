@@ -14,6 +14,7 @@ var React                    = require('react'),
     mui                       = require('material-ui'),
     Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
+    SelectField               = mui.SelectField,
     DropDownMenu              = mui.DropDownMenu,
     Dialog                    = mui.Dialog;
 
@@ -36,6 +37,9 @@ module.exports = React.createClass({
         message: '^Invalid email address'
       }
     },
+    role: {
+      presence: true
+    }
   },
 
   getInitialState: function() {
@@ -78,11 +82,6 @@ module.exports = React.createClass({
     });
   },
 
-  handleRoleChange: function (event, selectedIndex, menuItem){
-    console.info('AdminInvitationDialog::handleRoleChange', selectedIndex, menuItem );
-    this.setState({role : menuItem.payload});
-  },
-
   render: function () {
     var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
         submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Invite Administrator';
@@ -116,21 +115,23 @@ module.exports = React.createClass({
           <TextField
             ref               = "email"
             name              = "email"
-            style             = {{width:'100%'}}
+            fullWidth         = {true}
             disabled          = {this.props.mode === 'edit' ? true: false}
             valueLink         = {this.linkState('email')}
             errorText         = {this.getValidationMessages('email').join(' ')}
             hintText          = "Email of the administrator"
             floatingLabelText = "Email" />
 
-          <DropDownMenu
+          <SelectField
             ref               = "role"
             name              = "role"
             autoWidth         = {true}
-            selectedIndex     = {AdminsStore.getRoleMenuIndex(this.state.role) || 0}
+            valueLink         = {this.linkState("role")}
+            valueMember       = "payload"
+            displayMember     = "text"
             floatingLabelText = "Role of the administrator"
-            style             = {{width:500}}
-            onChange          = {this.handleRoleChange}
+            style             = {{width: '50%'}}
+            errorText         = {this.getValidationMessages('role').join(' ')}
             menuItems         = {AdminsStore.roleMenuItems} />
 
         </form>

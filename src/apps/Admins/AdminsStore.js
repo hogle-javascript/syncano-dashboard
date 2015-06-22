@@ -61,17 +61,6 @@ var AdminsStore = Reflux.createStore({
       AdminsActions.getAdmins();
     }
   },
-
-  getRoleMenuIndex: function(role) {
-    var selectedIndex = null;
-    this.roleMenuItems.some(function(item, index) {
-     if (role === item.payload) {
-       selectedIndex = index;
-       return true;
-     }
-    }.bind(this));
-    return selectedIndex;
-  },
   
   onGetAdmins: function(items) {
     this.data.isLoading = true;
