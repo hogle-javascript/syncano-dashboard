@@ -12,7 +12,7 @@ var ProfileSettingsStore = Reflux.createStore({
   mixins: [StoreFormMixin],
 
   getInitialState: function () {
-    var user = SessionStore.user || {};
+    var user = SessionStore.getUser({});
     return {
       firstName : user.first_name,
       lastName  : user.last_name,
@@ -27,10 +27,11 @@ var ProfileSettingsStore = Reflux.createStore({
   checkSession: function (Session) {
     console.debug('ProfileSettingsStore:checkSession');
     if (Session.isReady()) {
+      var user = SessionStore.getUser({});
       this.trigger({
-        firstName : Session.user.first_name,
-        lastName  : Session.user.last_name,
-        email     : Session.user.email
+        firstName : user.first_name,
+        lastName  : user.last_name,
+        email     : user.email
       });
     }
   },

@@ -135,6 +135,10 @@ var SessionStore = Reflux.createStore({
 
   isReady: function () {
     return this.isAuthenticated() && this.user !== null;
+  },
+
+  getUser: function (empty) {
+    return this.user || empty || null;
   }
 
 });
