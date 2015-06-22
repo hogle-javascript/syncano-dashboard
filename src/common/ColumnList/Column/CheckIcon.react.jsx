@@ -13,15 +13,22 @@ var React      = require('react'),
 var DEFAULT_BACKGROUND = 'green',
     DEFAULT_ICON       = 'folder';
 
-var cssClasses = classNames('col-xs-10');
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      cols : 10
+    }
+  },
+
   render: function () {
-    var styles = {
-      fontSize    : 20,
-      fontWeight  : 500,
-      paddingLeft : 16
-    };
+    var cssClasses = 'col-xs-' + this.props.cols,
+        styles = {
+          fontSize    : 20,
+          fontWeight  : 500,
+          paddingLeft : 16
+        };
 
     return (
       <div style={styles} className={cssClasses}>
@@ -50,7 +57,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function () {
     return {
       color      : 'black',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      cols       : 10
     }
   },
 
@@ -109,8 +117,8 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-
-    var styles = this.getStyles();
+    var cssClasses = 'col-xs-' + this.props.cols,
+        styles = this.getStyles();
 
     return (
       <div className={cssClasses} style={styles.container}>
