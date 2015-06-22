@@ -15,7 +15,6 @@ var React                    = require('react'),
     Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
     SelectField               = mui.SelectField,
-    DropDownMenu              = mui.DropDownMenu,
     Dialog                    = mui.Dialog;
 
 
@@ -132,7 +131,7 @@ module.exports = React.createClass({
             floatingLabelText = "Role of the administrator"
             style             = {{width: '50%'}}
             errorText         = {this.getValidationMessages('role').join(' ')}
-            menuItems         = {AdminsStore.roleMenuItems} />
+            menuItems         = {AdminsStore.getRoles()} />
 
         </form>
         </div>

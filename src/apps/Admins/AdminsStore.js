@@ -61,6 +61,10 @@ var AdminsStore = Reflux.createStore({
       AdminsActions.getAdmins();
     }
   },
+
+  getRoles: function () {
+    return this.roleMenuItems;
+  },
   
   onGetAdmins: function(items) {
     this.data.isLoading = true;
