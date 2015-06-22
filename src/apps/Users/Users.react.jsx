@@ -227,13 +227,13 @@ module.exports = React.createClass({
             style         = {styles.fabListButton}
             color         = "" // TODO: extend component
             onClick       = {this.showDialog('addUserDialog')}
-            iconClassName = "synicon-account" />
+            iconClassName = "synicon-account-plus" />
           <FloatingActionButton
             label         = "Click here to create Group" // TODO: extend component
             style         = {styles.fabListButton}
             color         = "" // TODO: extend component
             onClick       = {this.showDialog('addGroupDialog')}
-            iconClassName = "synicon-account-multiple" />
+            iconClassName = "synicon-account-multiple-plus" />
 
         </FabList>
 
