@@ -81,6 +81,13 @@ var SessionStore = Reflux.createStore({
     this.router = router;
   },
 
+  onRegisterUser: function (user) {
+    console.info('SessionStore::onRegisterUser');
+    this.user             = user;
+    this.user.account_key = this.token;
+    this.trigger(this);
+  },
+
   onRegisterTheme: function (theme) {
     console.info('SessionStore::onRegisterTheme');
     this.theme = theme;
@@ -128,6 +135,10 @@ var SessionStore = Reflux.createStore({
 
   isReady: function () {
     return this.isAuthenticated() && this.user !== null;
+  },
+
+  getUser: function (empty) {
+    return this.user || empty || null;
   }
 
 });

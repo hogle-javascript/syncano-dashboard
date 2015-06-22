@@ -129,7 +129,7 @@ var Syncano = (function() {
     }
 
     request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
+      if (request.status >= 200 && request.status <= 299) {
         var data = '';
         try {
           data = JSON.parse(request.responseText);
@@ -331,6 +331,8 @@ var Syncano = (function() {
       setApiKey(api_key);
       return this;
     };
+
+    this.Deferred = Deferred;
 
     /**
      * Object with methods to handle Accounts
@@ -565,7 +567,8 @@ var Syncano = (function() {
     this.AccountInvitations = {
       list: this.listAccountInvitations.bind(this),
       get: this.getAccountInvitation.bind(this),
-      remove: this.removeAccountInvitation.bind(this)
+      remove: this.removeAccountInvitation.bind(this),
+      accept: this.acceptAccountInvitation.bind(this)
     };
 
     /**
@@ -1918,10 +1921,22 @@ var Syncano = (function() {
       if (typeof invitationId === 'object') {
         invitationId = invitationId.id;
       };
-      if (typeof params === 'undefuned') {
-        params = {};
-      }
       return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#acceptInvitation
+     * @alias Syncano.AccountInvitations.accept
+     * @param {object} params
+     * @param {String} key - invitation key
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    acceptAccountInvitation: function(invitationKey, callbackOK, callbackError) {
+      var params = {invitation_key: invitationKey}
+      return this.request('POST', 'v1/account/invitations/accept/', params, callbackOK, callbackError);
     },
 
     /********************
@@ -3063,6 +3078,7 @@ var Syncano = (function() {
       return sequencePromiseResolver(arguments);
     };
     return defer;
+
   })();
 
   return Syncano;

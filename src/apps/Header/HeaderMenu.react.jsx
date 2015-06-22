@@ -1,14 +1,14 @@
-var React  = require('react'),
-    Router = require('react-router'),
-    Reflux  = require('reflux'),
+var React         = require('react'),
+    Router        = require('react-router'),
+    Reflux        = require('reflux'),
 
-    HeaderActions    = require('./HeaderActions'),
-    HeaderStore      = require('./HeaderStore'),
+    HeaderActions = require('./HeaderActions'),
+    HeaderStore   = require('./HeaderStore'),
 
-    mui    = require('material-ui'),
-    Tabs   = mui.Tabs,
-    Tab    = mui.Tab,
-    Colors = mui.Styles.Colors;
+    mui           = require('material-ui'),
+    Tabs          = mui.Tabs,
+    Tab           = mui.Tab,
+    Colors        = mui.Styles.Colors;
 
 
 module.exports = React.createClass({

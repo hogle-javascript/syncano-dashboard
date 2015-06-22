@@ -46,11 +46,11 @@ var InstancesStore = Reflux.createStore({
 
   // Filters
   filterMyInstances: function(item) {
-    return item.owner.email === SessionStore.user.email;
+    return item.owner.email === SessionStore.getUser().email;
   },
 
   filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.user.email;
+    return item.owner.email !== SessionStore.getUser().email;
   },
 
   getMyInstances: function(){
