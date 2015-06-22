@@ -77,10 +77,6 @@ var InstancesStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateInstanceCompleted: function(payload) {
-    console.debug('InstancesStore::onCreateInstanceCompleted');
-  },
-
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
     this.data.hideDialogs = true;

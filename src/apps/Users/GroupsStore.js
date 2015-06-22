@@ -31,7 +31,7 @@ var GroupsStore = Reflux.createStore({
 
   refreshData: function (data) {
     console.debug('GroupsStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       GroupsActions.getGroups();
     }
   },
