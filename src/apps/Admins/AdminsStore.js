@@ -12,6 +12,21 @@ var AdminsStore = Reflux.createStore({
   listenables : AdminsActions,
   mixins      : [CheckListStoreMixin],
 
+  roleMenuItems: [
+    {
+      payload: 'read',
+      text: 'read'
+    },
+    {
+      payload: 'write',
+      text: 'write'
+    },
+    {
+      payload: 'full',
+      text: 'full'
+    }
+  ],
+
   getInitialState: function () {
     return {
       // Lists
@@ -42,10 +57,20 @@ var AdminsStore = Reflux.createStore({
 
   refreshData: function (data) {
     console.debug('AdminsStore::refreshData');
-    console.debug('SessionStore.instance', SessionStore.instance)
     if (SessionStore.instance) {
       AdminsActions.getAdmins();
     }
+  },
+
+  getRoleMenuIndex: function(role) {
+    var selectedIndex = null;
+    this.roleMenuItems.some(function(item, index) {
+     if (role === item.payload) {
+       selectedIndex = index;
+       return true;
+     }
+    }.bind(this));
+    return selectedIndex;
   },
   
   onGetAdmins: function(items) {

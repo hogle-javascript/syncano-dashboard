@@ -1,22 +1,24 @@
-var React = require('react');
-var classNames = require('classnames');
+var React          = require('react'),
+    Radium         = require('radium'),
+    classNames     = require('classnames'),
 
-var TextField = require('material-ui/lib/text-field');
-var Paper = require('material-ui/lib/paper');
-var FontIcon = require('material-ui/lib/font-icon');
-var LinearProgress = require('material-ui/lib/linear-progress');
+    mui            = require('material-ui'),
+    TextField      = mui.TextField,
+    Paper          = mui.Paper,
+    FontIcon       = mui.FontIcon,
+    LinearProgress = mui.LinearProgress,
 
-var Icon = require('../Icon/Icon.react');
+    Icon           = require('../Icon/Icon.react');
 
 require('./Editor.css');
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
   mixins: [
-    React.addons.LinkedStateMixin,
+    React.addons.LinkedStateMixin
   ],
 
   propTypes: {
@@ -36,7 +38,7 @@ module.exports = React.createClass({
     return {
       panelCollapsed: true,
       trace: this.props.trace,
-      loading: this.props.loading,
+      loading: this.props.loading
     }
   },
 
@@ -55,7 +57,7 @@ module.exports = React.createClass({
 
   handleToggleClick: function () {
     this.setState({
-      panelCollapsed: !this.state.panelCollapsed,
+      panelCollapsed: !this.state.panelCollapsed
     });
   },
 
@@ -71,36 +73,50 @@ module.exports = React.createClass({
 
   render: function () {
     var cssClasses = classNames('editor-panel', {
-      'editor-panel-collapsed': this.state.panelCollapsed,
-    });
-    var payloadStyle = {
-        'display': 'flex',
-        'flex-direction': 'column',
-        'padding': '0px 10px 0px 10px',
-        'background-color': '#F1F1F1',
-    };
+          'editor-panel-collapsed': this.state.panelCollapsed
+        }),
+        payloadStyle = {
+          display         : 'flex',
+          flexDirection   : 'column',
+          padding         : '0px 10px 0px 10px',
+          backgroundColor : '#F1F1F1'
+        },
+        progressBar = this.getProgressBar(),
+        unfoldIcon  = this.state.panelCollapsed ? "unfold-more" : "unfold-less",
+        trace;
 
-    var progressBar = this.getProgressBar();
-
-    var unfoldIcon = this.state.panelCollapsed ? "unfold-more" : "unfold-less";
-
-    var trace;
     if (this.state.panelCollapsed) {
-      trace = (<Paper ref="trace" rounded={false} zDepth={1} style={{'height': '100%', backgroundColor: '#4C4A43', 'color': 'white', height: '200px'}}>
+      trace = (
+        <Paper
+          ref     = "trace"
+          rounded = {false}
+          zDepth  = {1}
+          style   = {{
+            backgroundColor : '#4C4A43',
+            color           : 'white',
+            height          : '200px'
+          }}>
           {this.props.trace}
-        </Paper>);
+        </Paper>
+      );
     }
 
     return (
-      <Paper zDepth={1} style={{'background-color': '#F1F1F1'}}>
-        <Paper zDepth={1} style={payloadStyle}>
+      <Paper
+        zDepth = {1}
+        style  = {{'background-color': '#F1F1F1'}}>
+        <Paper
+          zDepth = {1}
+          style  = {payloadStyle}>
           <TextField
-            ref="payloadField"
-            valueLink={this.props.payload}
-            style={{width: '100%'}}
-            hintText='Type in your payload here e.g. {"my_argument": "test123}'
-            floatingLabelText="Payload" />
-            <div className="editor-toolbar-unfold-button" onClick={this.handleToggleClick}>
+            ref               = "payloadField"
+            valueLink         = {this.props.payload}
+            fullWidth         = {true}
+            hintText          = 'Type in your payload here e.g. {"my_argument": "test123}'
+            floatingLabelText = "Payload" />
+            <div
+              className="editor-toolbar-unfold-button"
+              onClick={this.handleToggleClick}>
               <Icon icon={unfoldIcon}/>
             </div>
         </Paper>
@@ -110,4 +126,4 @@ module.exports = React.createClass({
     );
   }
 
-});
+}));

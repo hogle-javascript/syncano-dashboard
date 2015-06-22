@@ -62,7 +62,7 @@ module.exports = React.createClass({
           <div className="account-container__content__header">
             <p className="">Choose a new password</p>
           </div>
-          {this.renderNotifications()}
+          {this.renderFormNotifications()}
           <form
             onSubmit={this.handleFormValidation}
             className="account-container__content__form"
@@ -71,7 +71,7 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join()}
+              errorText={this.getValidationMessages('password').join(' ')}
               type="password"
               name="password"
               className="text-field"
@@ -81,7 +81,7 @@ module.exports = React.createClass({
             <TextField
               ref="confirmPassword"
               valueLink={this.linkState('confirmPassword')}
-              errorText={this.getValidationMessages('confirmPassword').join()}
+              errorText={this.getValidationMessages('confirmPassword').join(' ')}
               type="password"
               name="confirmPassword"
               className="text-field vm-4-b"

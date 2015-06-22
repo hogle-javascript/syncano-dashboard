@@ -1,10 +1,12 @@
 var React      = require('react'),
+    Radium     = require('radium'),
     Moment     = require('moment'),
     classNames = require('classnames'),
 
-    // Components
-    Paper     = require('material-ui/lib/paper'),
-    Colors    = require('material-ui/lib/styles/colors'),
+    mui         = require('material-ui'),
+    Paper       = mui.Paper,
+    Colors      = mui.Styles.Colors,
+
     CheckIcon = require('../../../common/CheckIcon/CheckIcon.react');
 
 // Move it later to some theme? Constants?
@@ -29,7 +31,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnCheckIcon',
 
@@ -74,6 +76,7 @@ module.exports = React.createClass({
         flexDirection  : 'column',
         justifyContent : 'center',
         cursor         : 'pointer',
+        wordBreak      : 'break-all',
         color          : this.state.color
       }
     };
@@ -90,7 +93,9 @@ module.exports = React.createClass({
 
   handleNameClick: function() {
     console.info('ColumnCheckIcon:handleClick');
-    this.props.handleNameClick(this.props.id);
+    if (typeof this.props.handleNameClick === 'function') {
+      this.props.handleNameClick(this.props.id);
+    }
   },
 
   handleMouseOver: function () {
@@ -126,4 +131,4 @@ module.exports = React.createClass({
       </div>
     );
   }
-});
+}));

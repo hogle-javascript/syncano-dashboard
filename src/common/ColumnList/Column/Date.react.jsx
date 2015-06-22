@@ -1,9 +1,11 @@
 var React       = require('react'),
+    Radium      = require('radium'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
 
-    Paper       = require('material-ui/lib/paper'),
-    Colors      = require('material-ui/lib/styles/colors');
+    mui         = require('material-ui'),
+    Paper       = mui.Paper,
+    Colors      = mui.Styles.Colors;
 
 
 // Same classes for column and it's header
@@ -19,7 +21,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnDate',
 
@@ -76,4 +78,4 @@ module.exports = React.createClass({
     );
 
   }
-});
+}));

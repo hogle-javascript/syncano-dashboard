@@ -1,4 +1,5 @@
 var React             = require('react'),
+    Radium            = require('radium'),
     Reflux            = require('reflux'),
     Router            = require('react-router'),
 
@@ -15,6 +16,7 @@ var React             = require('react'),
     // Components
     mui               = require('material-ui'),
     Paper             = mui.Paper,
+
     Trace             = require('../../common/Trace/TraceResult.react'),
 
     // List
@@ -30,7 +32,7 @@ var React             = require('react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react');
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'TracesList',
 
@@ -48,23 +50,23 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        height: '100%',
-        cursor: 'pointer'
+        display        : 'flex',
+        flexWrap       : 'wrap',
+        justifyContent : 'center',
+        height         : '100%',
+        cursor         : 'pointer'
       },
       icon : {
-        margin: 12,
-        height: 50,
-        width: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin         : 12,
+        height         : 50,
+        width          : 50,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center'
       },
       trace: {
-        visibility: 'collapse',
-        height: 0
+        visibility     : 'collapse',
+        height         : 0
       }
     }
   },
@@ -85,16 +87,16 @@ module.exports = React.createClass({
 
     if (item.id == this.state.visibleTraceId) {
       styles.item = {
-        marginTop: 10,
-        marginLeft: '-30px',
-        marginRight: '-30px'
+        marginTop   : 10,
+        marginLeft  : '-30px',
+        marginRight : '-30px'
       };
       styles.trace = {
-        marginLeft: '-30px',
-        marginRight: '-30px',
-        visibility: 'visible',
-        marginBottom: 15,
-        height: null
+        marginLeft   : '-30px',
+        marginRight  : '-30px',
+        visibility   : 'visible',
+        marginBottom : 15,
+        height       : null
       }
     }
 
@@ -150,4 +152,4 @@ module.exports = React.createClass({
       </ListContainer>
     );
   }
-});
+}));

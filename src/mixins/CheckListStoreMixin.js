@@ -8,11 +8,16 @@ var CheckListStoreMixin = {
   },
 
   onCheckItem: function(checkId, state) {
+    console.debug('CheckListStoreMixin::onCheckItem');
 
-    console.log(checkId, state)
     this.data.items.forEach(function(item) {
-      if (checkId == item.id) {
-        item.checked = state;
+      // TODO: If item don't have id we are checking name, we should consider name->id in js lib
+      if (item.id) {
+        if (checkId == item.id) {
+          item.checked = state;
+        }
+      } else if (checkId == item.name) {
+          item.checked = state;
       }
     }.bind(this));
     this.trigger(this.data);
@@ -40,14 +45,9 @@ var CheckListStoreMixin = {
   },
 
   getCheckedItems: function() {
-    // Looking for the first 'checked' item
-    var checkedItems = [];
-    this.data.items.map(function (item) {
-      if (item.checked) {
-        checkedItems.push(item);
-      }
+    return this.data.items.filter(function (item) {
+      return item.checked;
     });
-    return checkedItems;
   },
 
 };

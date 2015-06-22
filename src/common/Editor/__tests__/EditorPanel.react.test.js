@@ -8,6 +8,6 @@ describe("EditorPanel.react", function() {
     var TestUtils = React.addons.TestUtils;
     var EditorPanel = require('../EditorPanel.react');
 
-    var component = TestUtils.renderIntoDocument(<EditorPanel />);
+    //var component = TestUtils.renderIntoDocument(<EditorPanel />);
   });
 });

@@ -7,6 +7,7 @@ var React  = require('react'),
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
+    Show              = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
@@ -25,6 +26,9 @@ var React  = require('react'),
     // Local components
     InstancesList = require('./InstancesList.react'),
     AddDialog     = require('./InstancesAddDialog.react');
+
+
+require('./Instances.sass');
 
 
 module.exports = Radium(React.createClass({
@@ -51,7 +55,7 @@ module.exports = Radium(React.createClass({
       params: {
         ref  : "addInstanceDialog",
         mode : "add"
-      },
+      }
     }, {
       dialog: AddDialog,
       params: {
@@ -71,13 +75,13 @@ module.exports = Radium(React.createClass({
       dialog: Dialog,
       params: {
         ref:    "deleteInstanceDialog",
-        title:  "Delete Instance",
+        title:  "Delete an Instance",
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure", onClick: this.handleDelete}
+          {text: "Confirm", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?',
+        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?'
       }
      }]
   },
@@ -105,11 +109,10 @@ module.exports = Radium(React.createClass({
     return [
       {
         label  : 'Instances',
-        route  : 'instances',
-        active : true
+        route  : 'instances'
       }, {
         label : 'Solutions',
-        route : 'dashboard'
+        route : 'solutions'
       }];
   },
 
@@ -136,15 +139,6 @@ module.exports = Radium(React.createClass({
     // Redirect to main instance screen
     SessionActions.setInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
-  },
-
-  // List filters
-  filterMyInstances: function(item) {
-    return item.owner.email === SessionStore.user.email;
-  },
-
-  filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.user.email;
   },
 
   getStyles: function() {
@@ -221,21 +215,19 @@ module.exports = Radium(React.createClass({
 
         <InstancesList
           name                 = "My instances"
-          items                = {this.state.instances}
-          filter               = {this.filterMyInstances}
+          items                = {InstancesStore.getMyInstances()}
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
           emptyItemContent     = "Create an instance" />
 
+        <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>
         <InstancesList
-          name                 = "Other instances"
-          items                = {this.state.instances}
-          filter               = {this.filterOtherInstances}
-          listType             = "otherInstances"
-          viewMode             = "stream"
-          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
-          emptyItemContent     = "Create an instance" />
+          name                 = "Shared with me"
+          items                = {InstancesStore.getOtherInstances()}
+          listType             = "sharedInstances"
+          viewMode             = "stream" />
+        </Show>
 
       </Container>
     );

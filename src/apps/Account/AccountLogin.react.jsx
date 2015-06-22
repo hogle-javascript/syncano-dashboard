@@ -41,7 +41,9 @@ module.exports = React.createClass({
   validatorConstraints: {
     email: {
       presence: true,
-      email: true
+      email: {
+        message: '^Invalid email address'
+      }
     },
     password: {
       presence: true
@@ -114,7 +116,7 @@ module.exports = React.createClass({
           <div className="account-container__content__header">
             <p>Log in and start creating your apps</p>
           </div>
-          {this.renderNotifications()}
+          {this.renderFormNotifications()}
           <form
             onSubmit={this.handleFormValidation}
             className="account-container__content__form"
@@ -123,7 +125,7 @@ module.exports = React.createClass({
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join()}
+              errorText={this.getValidationMessages('email').join(' ')}
               name="email"
               className="text-field"
               autoComplete="email"
@@ -132,7 +134,7 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join()}
+              errorText={this.getValidationMessages('password').join(' ')}
               type="password"
               name="password"
               className="text-field vm-4-b"

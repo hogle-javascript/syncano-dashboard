@@ -3,9 +3,34 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get();
 
 
-var InstancesActions = Reflux.createActions();
+var InstancesActions = Reflux.createActions({
+    checkItem  : {},
+    uncheckAll : {},
 
-InstancesActions.getInstances = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+    getInstances: {
+       asyncResult: true,
+       children: ['completed', 'failure']
+    },
+
+    createInstance: {
+       asyncResult: true,
+       children: ['completed', 'failure']
+    },
+
+    updateInstance: {
+       asyncResult: true,
+       children: ['completed', 'failure']
+    },
+
+     removeInstances: {
+       asyncResult: true,
+       children: ['completed', 'failure']
+    },
+
+});
+
+
+
 InstancesActions.getInstances.listen( function(payload) {
   console.info('InstancesActions::getInstances');
   Connection
@@ -15,20 +40,19 @@ InstancesActions.getInstances.listen( function(payload) {
     .catch(this.failure);
 });
 
-InstancesActions.createInstance = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 InstancesActions.createInstance.listen( function(payload) {
   console.info('InstancesActions::createInstance');
   Connection
     .Instances
     .create({
       name        : payload.name,
-      description : payload.description
+      description : payload.description,
+      metadata    : payload.metadata
     })
     .then(this.completed)
     .catch(this.failure);
 });
 
-InstancesActions.updateInstance = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 InstancesActions.updateInstance.listen( function(name, payload) {
   console.info('InstancesActions::updateInstance');
   Connection
@@ -38,7 +62,6 @@ InstancesActions.updateInstance.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-InstancesActions.removeInstances = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
 InstancesActions.removeInstances.listen( function(names) {
   names.map(function(name) {
     console.info('InstancesActions::removeInstances');
@@ -49,8 +72,5 @@ InstancesActions.removeInstances.listen( function(names) {
       .catch(this.failure);
   }.bind(this));
 });
-
-InstancesActions.checkItem = Reflux.createAction();
-InstancesActions.uncheckAll = Reflux.createAction();
 
 module.exports = InstancesActions;

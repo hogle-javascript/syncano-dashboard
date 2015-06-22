@@ -12,7 +12,6 @@ var React                = require('react'),
     MaterialDropdownItem = require('./MaterialDropdownItem.react'),
     DropdownNotifiItem   = require('./DropdownNotifiItem.react');
 
-    
 
 require('./Dropdown.css');
 
@@ -63,9 +62,13 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      icon: this.props.icon || 'dots-vertical',
-      isOpen: false
+      icon   : this.props.icon || 'dots-vertical',
+      isOpen : false
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps);
   },
 
   toggleOpenClose: function (e) {
@@ -91,6 +94,36 @@ module.exports = React.createClass({
       'dropdown-menu'         : true,
       'dropdown-menu-visible' : this.state.isOpen
     });
+
+    var headerContent = null;
+
+    if (this.props.headerContent) {
+      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true),
+          avatar = <Avatar src={gravatarUrl} />;
+
+      headerContent =
+        <List>
+          <ListItem 
+            leftAvatar      = {avatar}
+            secondaryText   = {this.props.headerContent.userEmail} 
+            disableTouchTap = {!this.props.headerContent.clickable}
+            onClick         = {this.props.headerContent.handleItemClick}>
+            {this.props.headerContent.userFullName}
+          </ListItem>
+          <ListDivider />
+        </List>
+    };
+
+    var items = this.props.items.map(function (item, i) {
+      return (
+        <List>
+          <ListItem 
+            key     = {item.name + i} 
+            onClick = {item.handleItemClick}>
+            {item.content}
+          </ListItem>
+        </List>)
+    }.bind(this));
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>

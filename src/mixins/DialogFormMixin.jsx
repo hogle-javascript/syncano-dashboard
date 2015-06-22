@@ -53,7 +53,7 @@ var DialogFormMixin = {
         }
       }
     }.bind(this));
-  },
+  }
 
 };
 

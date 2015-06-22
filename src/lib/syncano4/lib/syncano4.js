@@ -129,7 +129,7 @@ var Syncano = (function() {
     }
 
     request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
+      if (request.status >= 200 && request.status <= 299) {
         var data = '';
         try {
           data = JSON.parse(request.responseText);
@@ -332,6 +332,8 @@ var Syncano = (function() {
       return this;
     };
 
+    this.Deferred = Deferred;
+
     /**
      * Object with methods to handle Accounts
      *
@@ -379,9 +381,11 @@ var Syncano = (function() {
      * @alias Syncano#Admins
      * @type {object}
      * @property {function} list - shortcut to {@link Syncano#listAdmins} method
+     * @property {function} update - shortcut to {@link Syncano#updateAdmin} method
      */
     this.Admins = {
       list: this.listAdmins.bind(this),
+      update: this.updateAdmin.bind(this)
     };
 
     /**
@@ -540,12 +544,31 @@ var Syncano = (function() {
      * @property {function} list - shortcut to {@link Syncano#listInvitations} method
      * @property {function} get - shortcut to {@link Syncano#getInvitation} method
      * @property {function} remove - shortcut to {@link Syncano#removeInvitation} method
+     * @property {function} resend - shortcut to {@link Syncano#resendInvitation} method
      */
     this.Invitations = {
       create: this.createInvitation.bind(this),
       list: this.listInvitations.bind(this),
       get: this.getInvitation.bind(this),
-      remove: this.removeInvitation.bind(this)
+      remove: this.removeInvitation.bind(this),
+      resend: this.resendInvitation.bind(this)
+    };
+
+    /**
+     * Object with methods to handle Account Invitations
+     *
+     * @alias Syncano#AccountInvitations
+     * @type {object}
+     * @property {function} list - shortcut to {@link Syncano#listAccountInvitations} method
+     * @property {function} get - shortcut to {@link Syncano#getAccountInvitation} method
+     * @property {function} remove - shortcut to {@link Syncano#removeAccountInvitation} method
+     * @property {function} accept - shortcut to {@link Syncano#acceptAccountInvitation} method
+     */
+    this.AccountInvitations = {
+      list: this.listAccountInvitations.bind(this),
+      get: this.getAccountInvitation.bind(this),
+      remove: this.removeAccountInvitation.bind(this),
+      accept: this.acceptAccountInvitation.bind(this)
     };
 
     /**
@@ -608,6 +631,7 @@ var Syncano = (function() {
       create: this.createSchedule.bind(this),
       list: this.listSchedules.bind(this),
       get: this.getSchedule.bind(this),
+      update: this.updateSchedule.bind(this),
       remove: this.removeSchedule.bind(this),
       traces: this.listScheduleTraces.bind(this),
       trace: this.getScheduleTrace.bind(this)
@@ -902,8 +926,24 @@ var Syncano = (function() {
     listAdmins: function(params, callbackOK, callbackError) {
       params = params || {};
       return this.genericList(params, 'instance_admins', callbackOK, callbackError);
-
     },
+
+    /**
+     * Updates admin identified by id
+     *
+     * @method Syncano#updateAdmins
+     * @alias Syncano.Admins.update
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    updateAdmin: function(id, params, callbackOK, callbackError) {
+      params = params || {};
+      return this.request('PUT', linksObject.instance_admins + id, params, callbackOK, callbackError);
+    },
+
 
     /*****************
        CLASS METHODS
@@ -1770,6 +1810,23 @@ var Syncano = (function() {
     },
 
     /**
+     * Resend invitation for your instance
+     *
+     * @method Syncano#resendInvitation
+     * @alias Syncano.Invitations.resend
+     * @param {Number|object} id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    resendInvitation: function(id, callbackOK, callbackError) {
+      if (typeof linksObject.instance_invitations === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('POST', linksObject.instance_invitations + id + '/resend/', callbackOK, callbackError);
+    },
+
+    /**
      * Returns all created invitations as a list
      *
      * @method Syncano#listInvitations
@@ -1811,6 +1868,75 @@ var Syncano = (function() {
      */
     removeInvitation: function(id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_invitations', callbackOK, callbackError);
+    },
+
+    /*******************************
+       ACCOUNT INVITATIONS METHODS
+    *******************************/
+    /**
+     * Invitions from other persons to their instances
+     *
+     * @method Syncano#listAccountInvitations
+     * @alias Syncano.AccountInvitations.list
+     * @param  {object} params
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listAccountInvitations: function(params, callbackOK, callbackError) {
+      return this.request('GET', 'v1/account/invitations', params || {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#getInvitation
+     * @alias Syncano.AccountInvitations.get
+     * @param {object} params
+     * @param {Number} id - identifier of the invitation to get
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    getAccountInvitation: function(invitationId, params, callbackOK, callbackError) {
+      if (typeof invitationId === 'object') {
+        invitationId = invitationId.id;
+      };
+      return this.request('GET', 'v1/account/invitations/' + invitationId + '/', params || {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#removeInvitation
+     * @alias Syncano.AccountInvitations.remove
+     * @param {object} params
+     * @param {Number} id - identifier of the invitation to remove
+     * @param {Number|object} id.id - when passed parameter is an object, we use its id property
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeAccountInvitation: function(invitationId, callbackOK, callbackError) {
+      if (typeof invitationId === 'object') {
+        invitationId = invitationId.id;
+      };
+      return this.request('DELETE', 'v1/account/invitations/' + invitationId + '/', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * @method Syncano#acceptInvitation
+     * @alias Syncano.AccountInvitations.accept
+     * @param {object} params
+     * @param {String} key - invitation key
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    acceptAccountInvitation: function(invitationKey, callbackOK, callbackError) {
+      var params = {invitation_key: invitationKey}
+      return this.request('POST', 'v1/account/invitations/accept/', params, callbackOK, callbackError);
     },
 
     /********************
@@ -2147,6 +2273,35 @@ var Syncano = (function() {
       }
       return this.request('POST', linksObject.instance_schedules, params, callbackOK, callbackError);
     },
+
+    /**
+     * Updates schedule
+     *
+     * @method Syncano#updateSchedule
+     * @alias Syncano.Schedules.update
+     * @param {Number|object} id
+     * @param {object} params
+     * @param {string} params.label - name of the schedule
+     * @param {Number} params.codebox - codebox to run
+     * @param {string} params.interval_sec - how often (in seconds) the schedule should run
+     * @param {string} params.crontab - ???
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateSchedule: function(id, params, callbackOK, callbackError) {
+      if (typeof params !== 'object') {
+        throw new Error('Missing parameters object');
+      }
+      if (typeof params.codebox === 'object') {
+        params.codebox = params.codebox.id;
+      }
+      if (typeof linksObject.instance_schedules === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_schedules + id, params, callbackOK, callbackError);
+    },
+
 
     /**
      * Returns all defined schedules as a list
@@ -2923,6 +3078,7 @@ var Syncano = (function() {
       return sequencePromiseResolver(arguments);
     };
     return defer;
+
   })();
 
   return Syncano;

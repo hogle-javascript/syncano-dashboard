@@ -94,7 +94,7 @@ module.exports = React.createClass({
         <Tabs>
 
           <Tab label="Colors">
-            <div style={{height: 300, paddingTop: 20}}>
+            <div style={{height: 300, padding: '20px 20px 0'}}>
               <ColorIconPicker
                 ref           = "color"
                 pickerType    = "color"
