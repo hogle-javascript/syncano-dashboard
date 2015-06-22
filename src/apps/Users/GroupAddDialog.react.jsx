@@ -31,7 +31,7 @@ module.exports = React.createClass({
   validatorConstraints: {
     label: {
       presence: true
-    },
+    }
   },
 
   clearData: function() {

@@ -17,10 +17,7 @@ var GroupsStore = Reflux.createStore({
     return {
       // Lists
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {}
+      isLoading: false
     }
   },
 
@@ -29,11 +26,7 @@ var GroupsStore = Reflux.createStore({
     this.data = {
       // List
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true
+      isLoading: false
     };
 
     // We want to know when we are ready to download data for this store,
