@@ -21,9 +21,7 @@ var FormMixin = {
       return;
     }
 
-    return (
-      <Notification type='error'>{this.state.errors.feedback}</Notification>
-    );
+    return <Notification type='error'>{this.state.errors.feedback}</Notification>;
   },
 
   renderFormFeedback: function () {

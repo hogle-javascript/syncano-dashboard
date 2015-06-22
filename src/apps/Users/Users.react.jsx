@@ -41,7 +41,7 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(UsersStore),
-    Reflux.connect(GroupsStore, 'invitations'),
+    Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
     DialogsMixin,
     InstanceTabsMixin
@@ -50,7 +50,7 @@ module.exports = React.createClass({
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Users::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.invitations.hideDialogs);
+    this.hideDialogs(nextState.hideDialogs || nextState.groups.hideDialogs);
   },
 
   componentWillMount: function() {
@@ -157,6 +157,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    console.log(this.state);
 
     var styles = this.getStyles();
 
@@ -244,7 +245,7 @@ module.exports = React.createClass({
               name                 = "Groups"
               checkItem            = {GroupsActions.checkItem}
               isLoading            = {GroupsActions.isLoading}
-              items                = {this.state.invitations.items}
+              items                = {this.state.groups.items}
               emptyItemHandleClick = {this.showDialog('addGroupDialog')}
               emptyItemContent     = "Create a Group" />
 

@@ -4,6 +4,7 @@ var React            = require('react'),
     // Utils
     ValidationMixin  = require('../../mixins/ValidationMixin'),
     DialogFormMixin  = require('../../mixins/DialogFormMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     UsersActions     = require('./UsersActions'),
@@ -27,12 +28,16 @@ module.exports = React.createClass({
     Reflux.connect(UsersStore),
     DialogFormMixin,
     ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
     username: {
-      presence: true,
+      presence: true
     },
+    password: {
+      presence: true
+    }
   },
 
   clearData: function() {
@@ -96,30 +101,32 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "username"
-            name              = "username"
-            style             = {{width:'100%'}}
-            valueLink         = {this.linkState('username')}
-            errorText         = {this.getValidationMessages('username').join()}
-            hintText          = "Username"
-            floatingLabelText = "Username" />
+            <TextField
+              ref               = "username"
+              name              = "username"
+              style             = {{width:'100%'}}
+              valueLink         = {this.linkState('username')}
+              errorText         = {this.getValidationMessages('username').join(' ')}
+              hintText          = "Username"
+              floatingLabelText = "Username" />
 
-          <TextField
-            ref               = "password"
-            name              = "password"
-            style             = {{width:'100%'}}
-            valueLink         = {this.linkState('password')}
-            errorText         = {this.getValidationMessages('password').join()}
-            hintText          = "User password"
-            floatingLabelText = "Password" />
+            <TextField
+              ref               = "password"
+              name              = "password"
+              type              = "password"
+              style             = {{width:'100%'}}
+              valueLink         = {this.linkState('password')}
+              errorText         = {this.getValidationMessages('password').join(' ')}
+              hintText          = "User password"
+              floatingLabelText = "Password" />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

@@ -3,7 +3,7 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-  
+
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
     UsersActions        = require('./UsersActions');
@@ -11,23 +11,20 @@ var Reflux              = require('reflux'),
 
 var UsersStore = Reflux.createStore({
   listenables : UsersActions,
-  mixins      : [CheckListStoreMixin, StoreFormMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   getInitialState: function () {
     return {
-      // Lists
       items: [],
       isLoading: false
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false
-    };
+    this.data = this.getInitialState();
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
@@ -40,7 +37,7 @@ var UsersStore = Reflux.createStore({
       UsersActions.getUsers();
     }
   },
-  
+
   onGetUsers: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
