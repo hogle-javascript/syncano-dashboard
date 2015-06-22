@@ -37,6 +37,30 @@ var ProfileInvitationsStore = Reflux.createStore({
     console.debug('ProfileInvitationsStore::onGetInvitationsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
+  },
+
+  onAcceptInvitationsCompleted: function() {
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   ProfileActions.getInvitations();
+  },
+
+  onAcceptInvitationsFailure: function() {
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   ProfileActions.getInvitations();
+  },
+
+  onDeclineInvitationsCompleted: function() {
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   ProfileActions.getInvitations();
+  },
+
+  onDeclineInvitationsFailure: function() {
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   ProfileActions.getInvitations();
   }
 
 });

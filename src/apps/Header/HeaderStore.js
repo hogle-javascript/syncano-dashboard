@@ -11,7 +11,7 @@ var HeaderStore = Reflux.createStore({
     return {
       breadcrumbs : [],
       menuItems   : [],
-      user        : {}
+      user        : SessionStore.user || {}
     }
   },
 

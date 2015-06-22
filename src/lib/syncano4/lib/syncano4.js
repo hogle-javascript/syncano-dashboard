@@ -129,7 +129,7 @@ var Syncano = (function() {
     }
 
     request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
+      if (request.status >= 200 && request.status <= 299) {
         var data = '';
         try {
           data = JSON.parse(request.responseText);

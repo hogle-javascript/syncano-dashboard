@@ -52,8 +52,8 @@ ProfileActions.acceptInvitations.listen(function (items) {
   });
 
   D.all(promises)
-    .then(this.completed)
-    .catch(this.failure);
+    .success(this.completed)
+    .error(this.failure);
 });
 
 ProfileActions.declineInvitations.listen(function (items) {
@@ -62,8 +62,8 @@ ProfileActions.declineInvitations.listen(function (items) {
   });
 
   D.all(promises)
-    .then(this.completed)
-    .catch(this.failure);
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = ProfileActions;
