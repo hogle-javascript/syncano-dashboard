@@ -1,15 +1,19 @@
-var Reflux            = require('reflux'),
+var Reflux              = require('reflux'),
 
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
 
-    SessionStore      = require('../Session/SessionStore'),
-    AuthStore         = require('../Account/AuthStore'),
-    CodeBoxesActions  = require('./CodeBoxesActions');
+    SessionStore        = require('../Session/SessionStore'),
+    AuthStore           = require('../Account/AuthStore'),
+    CodeBoxesActions    = require('./CodeBoxesActions');
 
 
 var CodeBoxesStore = Reflux.createStore({
-  mixins: [CheckListStoreMixin],
   listenables: CodeBoxesActions,
+  mixins: [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   getInitialState: function () {
     return {
@@ -33,16 +37,13 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   init: function () {
-
-    this.data = {
-      items: []
-    };
+    this.data = this.getInitialState();
 
     this.langMap = {
-      python: 'python',
-      nodejs: 'javascript',
-      ruby: 'ruby',
-      golang: 'golang'
+      python : 'python',
+      nodejs : 'javascript',
+      ruby   : 'ruby',
+      golang : 'golang'
     };
 
     // We want to know when we are ready to download data for this store,
@@ -126,7 +127,7 @@ var CodeBoxesStore = Reflux.createStore({
   refreshData: function () {
     console.debug('CodeBoxesStore::refreshData');
 
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
       if (this.data.currentCodeBoxId) {

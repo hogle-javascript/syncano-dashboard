@@ -4,6 +4,7 @@ var React               = require('react'),
     // Utils
     ValidationMixin     = require('../../mixins/ValidationMixin'),
     DialogFormMixin     = require('../../mixins/DialogFormMixin'),
+    FormMixin           = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     CodeBoxesActions    = require('./CodeBoxesActions'),
@@ -25,7 +26,8 @@ module.exports = React.createClass({
 
     Reflux.connect(CodeBoxesStore),
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -59,7 +61,6 @@ module.exports = React.createClass({
       });
     }
   },
-
 
   handleEditSubmit: function () {
     CodeBoxesActions.updateCodeBox(CodeBoxesStore.getCheckedItem().id, {
@@ -127,31 +128,32 @@ module.exports = React.createClass({
         actions = {dialogStandardActions}
         modal   = {modalState}>
         <div>
-        <form
-          onSubmit      = {this.handleSubmit}
-          acceptCharset = "UTF-8"
-          method        = "post">
-        <TextField
-            ref               = "label"
-            valueLink         = {this.linkState('label')}
-            errorText         = {this.getValidationMessages('label').join(' ')}
-            name              = "label"
-            style             = {{width:500}}
-            hintText          = "Short name for your CodeBox"
-            floatingLabelText = "Label of CodeBox" />
-        <TextField
-            ref               = "description"
-            name              = "description"
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join(' ')}
-            style             = {{width:500}}
-            className         = "text-field"
-            multiLine         = {true}
-            hintText          = "Multiline description of CodeBox (optional)"
-            floatingLabelText = "Description of CodeBox" />
-        <div>
-          <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
-        </div>
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
+            <TextField
+                ref               = "label"
+                valueLink         = {this.linkState('label')}
+                errorText         = {this.getValidationMessages('label').join(' ')}
+                name              = "label"
+                style             = {{width:500}}
+                hintText          = "Short name for your CodeBox"
+                floatingLabelText = "Label of CodeBox" />
+            <TextField
+                ref               = "description"
+                name              = "description"
+                valueLink         = {this.linkState('description')}
+                errorText         = {this.getValidationMessages('description').join(' ')}
+                style             = {{width:500}}
+                className         = "text-field"
+                multiLine         = {true}
+                hintText          = "Multiline description of CodeBox (optional)"
+                floatingLabelText = "Description of CodeBox" />
+            <div>
+              <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
+            </div>
         </form>
         </div>
       </Dialog>
