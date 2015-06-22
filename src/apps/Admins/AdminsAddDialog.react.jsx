@@ -4,6 +4,7 @@ var React                    = require('react'),
     // Utils
     ValidationMixin          = require('../../mixins/ValidationMixin'),
     DialogFormMixin          = require('../../mixins/DialogFormMixin'),
+    FormMixin                = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
@@ -26,7 +27,8 @@ module.exports = React.createClass({
     Reflux.connect(AdminsStore),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -40,8 +42,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      email         : '',
-      role          : ''
+      email : '',
+      role  : ''
     }
   },
 
@@ -108,32 +110,33 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "email"
-            name              = "email"
-            style             = {{width:'100%'}}
-            disabled          = {this.props.mode === 'edit' ? true: false}
-            valueLink         = {this.linkState('email')}
-            errorText         = {this.getValidationMessages('email').join(' ')}
-            hintText          = "Email of the administrator"
-            floatingLabelText = "Email" />
+            <TextField
+              ref               = "email"
+              name              = "email"
+              style             = {{width:'100%'}}
+              disabled          = {this.props.mode === 'edit' ? true: false}
+              valueLink         = {this.linkState('email')}
+              errorText         = {this.getValidationMessages('email').join(' ')}
+              hintText          = "Email of the administrator"
+              floatingLabelText = "Email" />
 
-          <DropDownMenu
-            ref               = "role"
-            name              = "role"
-            autoWidth         = {true}
-            selectedIndex     = {AdminsStore.getRoleMenuIndex(this.state.role) || 0}
-            floatingLabelText = "Role of the administrator"
-            style             = {{width:500}}
-            onChange          = {this.handleRoleChange}
-            menuItems         = {AdminsStore.roleMenuItems} />
+            <DropDownMenu
+              ref               = "role"
+              name              = "role"
+              autoWidth         = {true}
+              selectedIndex     = {AdminsStore.getRoleMenuIndex(this.state.role) || 0}
+              floatingLabelText = "Role of the administrator"
+              style             = {{width:500}}
+              onChange          = {this.handleRoleChange}
+              menuItems         = {AdminsStore.roleMenuItems} />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );
