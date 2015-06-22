@@ -16,6 +16,7 @@ var ProfileInvitationsStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
+    this.listenToForms();
   },
 
   onGetInvitations: function() {
