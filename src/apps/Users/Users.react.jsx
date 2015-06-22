@@ -157,12 +157,9 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    console.log(this.state);
-
-    var styles = this.getStyles();
-
-    var checkedUsers      = UsersStore.getNumberOfChecked(),
-        checkedGroups       = GroupsStore.getNumberOfChecked();
+    var styles        = this.getStyles(),
+        checkedUsers  = UsersStore.getNumberOfChecked(),
+        checkedGroups = GroupsStore.getNumberOfChecked();
 
     return (
       <Container>
