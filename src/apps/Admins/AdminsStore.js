@@ -48,7 +48,7 @@ var AdminsStore = Reflux.createStore({
 
   refreshData: function (data) {
     console.debug('AdminsStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       AdminsActions.getAdmins();
     }
   },

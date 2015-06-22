@@ -139,6 +139,10 @@ var SessionStore = Reflux.createStore({
 
   getUser: function (empty) {
     return this.user || empty || null;
+  },
+
+  getInstance: function (empty) {
+    return this.instance || empty || null;
   }
 
 });
