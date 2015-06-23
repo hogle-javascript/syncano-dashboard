@@ -7,7 +7,7 @@ module.exports = React.createClass({
   displayName: 'List',
 
   propTypes: {
-    viewMode: React.PropTypes.string.isRequired,
+    viewMode: React.PropTypes.string.isRequired
   },
 
   render: function () {
