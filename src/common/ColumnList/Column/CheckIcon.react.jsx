@@ -1,30 +1,37 @@
-var React      = require('react'),
-    Radium     = require('radium'),
-    Moment     = require('moment'),
-    classNames = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors,
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors,
 
-    CheckIcon = require('../../../common/CheckIcon/CheckIcon.react');
+    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
 
-// Move it later to some theme? Constants?
-var DEFAULT_BACKGROUND = 'green',
-    DEFAULT_ICON       = 'folder';
-
-var cssClasses = classNames('col-xs-10');
 
 var Header = React.createClass({
-  render: function () {
-    var styles = {
+
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+    }
+  },
+
+  getStyles: function() {
+    return {
       fontSize    : 20,
       fontWeight  : 500,
       paddingLeft : 16
-    };
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
-      <div style={styles} className={cssClasses}>
+      <div
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     )
@@ -50,7 +57,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function () {
     return {
       color      : 'black',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
     }
   },
 
@@ -63,11 +71,11 @@ module.exports = Radium(React.createClass({
   getStyles: function() {
     return {
       container: {
-        display         : 'flex',
-        flexDirection   : 'row',
-        alignItems      : 'center',
-        fontSize        : 12,
-        padding         : '16px 8px'
+        display        : 'flex',
+        flexDirection  : 'row',
+        alignItems     : 'center',
+        fontSize       : 12,
+        padding        : '16px 8px'
       },
       name: {
         fontSize       : 16,
@@ -109,18 +117,19 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-
     var styles = this.getStyles();
 
     return (
-      <div className={cssClasses} style={styles.container}>
+      <div
+        className = {this.props.className}
+        style     = {styles.container}>
         <CheckIcon
             id          = {this.props.id}
-            icon        = {this.props.icon || DEFAULT_ICON}
-            background  = {this.props.background || DEFAULT_BACKGROUND}
+            icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+            background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
             checked     = {this.state.checked}
-            handleClick = {this.handleIconClick}
-            />
+            handleClick = {this.handleIconClick} />
+
         <div
           style       = {styles.name}
           onClick     = {this.handleNameClick}

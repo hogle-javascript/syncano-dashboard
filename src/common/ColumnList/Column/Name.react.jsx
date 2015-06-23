@@ -1,24 +1,33 @@
-var React       = require('react'),
-    Radium      = require('radium'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var cssClasses = classNames('col-xs-8');
 
 var Header = React.createClass({
-  render: function () {
-    var styles = {
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
+    }
+  },
+
+  getStyles: function () {
+    return {
       fontSize    : 20,
       fontWeight  : 500
-    };
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
-      <div style={styles} className={cssClasses}>
+      <div
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     )
@@ -43,7 +52,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     };
   },
 
@@ -51,6 +61,19 @@ module.exports = Radium(React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
+    }
+  },
+
+  getStyles: function () {
+    return {
+      display         : 'flex',
+      flexDirection   : 'row',
+      fontSize        : 12,
+      paddingTop      : 16,
+      paddingBottom   : 16,
+      alignSelf       : 'center',
+      cursor          : 'pointer',
+      color           : this.state.color
     }
   },
 
@@ -67,21 +90,12 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var style = {
-      display         : 'flex',
-      flexDirection   : 'row',
-      fontSize        : 12,
-      paddingTop      : 16,
-      paddingBottom   : 16,
-      alignSelf       : 'center',
-      cursor          : 'pointer',
-      color           : this.state.color
-    };
+    var styles = this.getStyles();
 
     return (
       <div
-        className   = {cssClasses}
-        style       = {style}
+        className   = {this.props.className}
+        style       = {styles}
         onMouseOver = {this.handleMouseOver}
         onMouseOut  = {this.handleMouseLeave}>
         {this.props.children}

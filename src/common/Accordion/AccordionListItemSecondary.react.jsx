@@ -35,7 +35,7 @@ module.exports = React.createClass({
       'accordion-list-item-secondary': true,
       'accordion-list-item-active': this.props.selectedItemId === this.props.item.id,
     });
-    var style = {
+    var styles = {
       backgroundColor: this.props.item.data.color || "#50A5E3"
     };
     var actions = ConfigStore.getConfig()[this.props.item.type].actions;
@@ -43,7 +43,7 @@ module.exports = React.createClass({
     return (
       <div className={cssClasses} onClick={this.onItemClick}>
         <div className="accordion-list-item-content">
-          <div className="accordion-list-item-symbol" style={style}></div>
+          <div className="accordion-list-item-symbol" style={styles}></div>
           <div className="accordion-list-item-text">{this.props.item.data.name}</div>
         </div>
         <div className="accordion-list-item-icon accordion-list-item-icon-options">
