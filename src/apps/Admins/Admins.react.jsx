@@ -7,6 +7,7 @@ var React                    = require('react'),
     ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
     DialogsMixin             = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
+    Show                     = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions           = require('../Session/SessionActions'),
@@ -16,13 +17,12 @@ var React                    = require('react'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
     AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
 
-
     // Components
     mui                      = require('material-ui'),
-    FloatingActionButton     = mui.FloatingActionButton,
     Dialog                   = mui.Dialog,
     Container                = require('../../common/Container/Container.react'),
     FabList                  = require('../../common/Fab/FabList.react'),
+    FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
@@ -86,7 +86,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?',
+          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?'
         }
       },
       {
@@ -112,7 +112,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?',
+           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?'
         }
       }
     ]
@@ -157,64 +157,57 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedAdmins ? 'block': 'none'}}>
+        <Show if={checkedAdmins > 0}>
+          <FabList position="top">
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to delete Administrator"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteAdminDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Administrator" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteAdminDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to edit Admin"
+              mini          = {true}
+              disabled      = {checkedAdmins > 1}
+              onClick       = {this.showDialog('editAdminDialog')}
+              iconClassName = "synicon-pencil" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Admin" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedAdmins > 1}
-            onClick       = {this.showDialog('editAdminDialog')}
-            iconClassName = "synicon-pencil" />
+          </FabList>
+        </Show>
 
-        </FabList>
+        <Show if={checkedInvitations > 0}>
+          <FabList position="top">
 
-        <FabList
-          style={{top: 200, display: checkedInvitations ? 'block': 'none'}}>
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to delete Invitation"
+              mini          = {true}
+              onClick       = {this.showDialog('removeInvitationDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Invitation" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeInvitationDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to resend invitation"
+              mini          = {true}
+              onClick       = {this.showDialog('resendInvitationDialog')}
+              iconClassName = "synicon-backup-restore" />
 
-          <FloatingActionButton
-            label         = "Click here to resend invitation" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('resendInvitationDialog')}
-            iconClassName = "synicon-backup-restore" />
+          </FabList>
+        </Show>
 
-        </FabList>
-
-        <FabList
-          style={{bottom: 100}}>
-          <FloatingActionButton
-            label         = "Click here to invite Admin" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList>
+          <FabListItem
+            label         = "Click here to invite Admin"
             onClick       = {this.showDialog('addAdminDialog')}
             iconClassName = "synicon-plus" />
         </FabList>

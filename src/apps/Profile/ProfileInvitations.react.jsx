@@ -4,6 +4,7 @@ var React                   = require('react'),
     // Utils
     HeaderMixin             = require('../Header/HeaderMixin'),
     DialogsMixin            = require('../../mixins/DialogsMixin'),
+    Show                    = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     ProfileActions          = require('./ProfileActions'),
@@ -11,10 +12,10 @@ var React                   = require('react'),
 
     // Components
     mui                     = require('material-ui'),
-    Colors                  = require('material-ui/lib/styles/colors'),
-    FloatingActionButton    = mui.FloatingActionButton,
+    Colors                  = mui.Styles.Colors,
     Dialog                  = mui.Dialog,
     FabList                 = require('../../common/Fab/FabList.react'),
+    FabListItem             = require('../../common/Fab/FabListItem.react'),
     Container               = require('../../common/Container/Container.react'),
 
     // List
@@ -26,7 +27,6 @@ var React                   = require('react'),
     ColumnDesc              = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate              = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon         = require('../../common/ColumnList/Column/CheckIcon.react');
-
 
 
 module.exports = React.createClass({
@@ -42,34 +42,34 @@ module.exports = React.createClass({
   headerBreadcrumbs: [
     {
       route: 'dashboard',
-      label: 'Home',
+      label: 'Home'
     },
     {
       route: 'profile-settings',
-      label: 'Account',
+      label: 'Account'
     },
     {
       route: 'profile-invitations',
-      label: 'Invitations',
+      label: 'Invitations'
     }
   ],
 
   headerMenuItems: [
     {
       route: 'profile-settings',
-      label: 'Profile',
+      label: 'Profile'
     },
     {
       route: 'profile-authentication',
-      label: 'Authentication',
+      label: 'Authentication'
     },
     {
       route: 'profile-billing',
-      label: 'Billing',
+      label: 'Billing'
     },
     {
       route: 'profile-invitations',
-      label: 'Invitations',
+      label: 'Invitations'
     }
   ],
 
@@ -87,7 +87,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleAccept}
           ],
           modal: true,
-          children: 'Do you really want to accept ' + checked +' Invitations?',
+          children: 'Do you really want to accept ' + checked +' Invitations?'
         }
       },
       {
@@ -100,7 +100,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleDecline}
           ],
           modal: true,
-          children: 'Do you really want to decline ' + checked +' Invitations?',
+          children: 'Do you really want to decline ' + checked +' Invitations?'
         }
       }
     ]
@@ -179,31 +179,29 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedInvitations ? 'block': 'none'}}>
+        <Show if={checkedInvitations > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to accept Invitations" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('acceptInvitationsDialog')}
-            iconClassName = "synicon-check" />
+            <FabListItem
+              label         = "Click here to accept Invitations"
+              mini          = {true}
+              onClick       = {this.showDialog('acceptInvitationsDialog')}
+              iconClassName = "synicon-check" />
 
-          <FloatingActionButton
-            label         = "Click here to decline Invitations" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('declineInvitationsDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to decline Invitations"
+              mini          = {true}
+              onClick       = {this.showDialog('declineInvitationsDialog')}
+              iconClassName = "synicon-delete" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
         <ListContainer>
           <Header>
