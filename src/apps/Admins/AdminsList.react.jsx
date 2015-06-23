@@ -88,8 +88,6 @@ module.exports = React.createClass({
       return <LoadingItem />;
     }
 
-    console.log(this.state);
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));

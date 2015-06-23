@@ -84,7 +84,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    console.log(this.state);
     var title = this.props.mode === 'edit' ? 'Update an Instance': 'Create an Instance';
 
     var dialogCustomActions = [

@@ -1,5 +1,5 @@
-var objectAssign    = require('object-assign'),
-    validate        = require('validate.js');
+var objectAssign = require('object-assign'),
+    validate     = require('validate.js');
 
 
 validate.moment = require('moment');

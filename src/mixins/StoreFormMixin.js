@@ -1,3 +1,4 @@
+var objectAssign = require('object-assign');
 
 // TODO: add some options like: exclude, ignore, prefix etc
 var StoreFormMixin = {
@@ -6,7 +7,8 @@ var StoreFormMixin = {
     return {
       errors    : {},
       feedback  : null,
-      canSubmit : true
+      canSubmit : true,
+      hideDialogs: false // Non related field HACK!
     }
   },
 
@@ -36,11 +38,12 @@ var StoreFormMixin = {
   },
 
   handleFormCompleted: function (payload) {
+    console.log('StoreFormMixin::handleFormCompleted');
     this.trigger(this.getInitialFormState());
   },
 
   handleFormFailure: function (payload) {
-    var state = this.getInitialFormState();
+    var state = objectAssign(this.data, this.getInitialFormState());
 
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
@@ -50,10 +53,17 @@ var StoreFormMixin = {
       }
 
       for (var field in payload) {
-        state.errors[field] = payload[field];
+        state.errors[field] = [].concat(payload[field]);
       }
     }
 
+    for (var key in state) {
+      if (state[key] === null || state[key] === undefined) {
+        delete state[key];
+      }
+    }
+
+    console.log('StoreFormMixin::handleFormFailure', state);
     this.trigger(state);
   }
 };
