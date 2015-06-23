@@ -142,10 +142,6 @@ module.exports = React.createClass({
       iconType: 'view-module'
     }];
 
-    var dummyClick = function (action) {
-      console.log('Click!', action);
-    };
-
     console.log(Icon.propTypes);
 
     var text = "Dummy text";
@@ -336,7 +332,7 @@ module.exports = React.createClass({
         style         : {}
       },
       name            : "activation",
-      handleLinkClick : this.handleResendEmail
+      handleLinkClick : dummyClick
     }, {
       type     : "invitation",
       leftIcon : {
@@ -346,13 +342,13 @@ module.exports = React.createClass({
         }
       },
       content  : {
-        text   : <div><b>{item.inviter}</b><span> invited you to his instance </span><b>{item.instance}</b></div>,
+        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
         style  : {}
       },
       buttonsText   : ["Accept", "Decline"],
       name          : "billing",
-      handleAccept  : this.handleAcceptInvitation.bind(this, [item]),
-      handleDecline : this.handleDeclineInvitation.bind(this, [item])
+      handleAccept  : dummyClick.bind(this, [item]),
+      handleDecline : dummyClick.bind(this, [item])
     }];
 
     return (
@@ -369,9 +365,31 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Material dropdown</h2>
+          <div style={{
+                 display        : 'flex',
+                 float          : 'none',
+                 alignItems     : 'center',
+                 justifyContent : 'center'
+               }}>
           <MaterialDropdown
-              items={dropdownItems}
-              headerContent={dropdownHeader} />
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {notifications}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {true} />
+            </div>
         </div>
 
         <div className="exampleBox">

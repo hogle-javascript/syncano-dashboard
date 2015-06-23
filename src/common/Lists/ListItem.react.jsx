@@ -80,10 +80,9 @@ module.exports = React.createClass({
         visible={this.props.dropdownVisible}
         handleItemClick={this.handleItemMenuClick}/>;
     }
-
+    var style = null;
     if (this.props.style === "cards") {
-
-      var styles = {
+      style = {
         backgroundColor: this.state.color
       };
 

@@ -151,7 +151,7 @@ module.exports = Radium(React.createClass({
         marginLeft     : '-32px'
       },
       bottomToolbarGroupIcon: {
-        padding        : '0 4px',
+        padding        : '0 4px'
       },
       dropdownLabelContainer: {
         display        : '-webkit-box; display: flex',
@@ -290,6 +290,10 @@ module.exports = Radium(React.createClass({
   handleResendEmail: function (e) {
     console.info("EMAIL SENT");
     e.stopPropagation();
+  },
+
+  handleClickNotifications: function () {
+    ProfileActions.getInvitations();
   },
 
   getDropdownItems: function () {
@@ -441,7 +445,8 @@ module.exports = Radium(React.createClass({
                 icon          = {this.getNotifiIcon()}
                 items         = {this.getNotificationItems()}
                 isLoading     = {this.state.accountInvitations.isLoading}
-                iconStyle     = {styles.bottomToolbarGroupIcon} />
+                iconStyle     = {styles.bottomToolbarGroupIcon}
+                handleOnClick = {this.handleClickNotifications}  />
               <MaterialDropdown
                 items         = {this.getDropdownItems()}
                 headerContent = {this.getDropdownHeaderItems()}

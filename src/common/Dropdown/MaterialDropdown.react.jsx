@@ -37,6 +37,7 @@ module.exports = React.createClass({
 
   getDefaultProps: function () {
     return {
+      icon: "dots-vertical",
       iconStyle: {
         width  : "18px",
         height : "18px", 
@@ -49,7 +50,6 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      icon   : this.props.icon || "dots-vertical",
       isOpen : false
     }
   },
@@ -58,12 +58,12 @@ module.exports = React.createClass({
     this.setState(nextProps);
   },
 
-  toggleOpenClose: function (e) {
+  toggleOpenClose: function () {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
     }, function() {
-      if (this.state.isOpen) {
-        ProfileActions.getInvitations();
+      if (this.state.isOpen && this.props.handleOnClick) {
+        this.props.handleOnClick()
       }
     });
   },
@@ -100,7 +100,7 @@ module.exports = React.createClass({
     }
     return <div>
              <FontIcon
-               className = {"synicon-" + this.state.icon}
+               className = {"synicon-" + this.props.icon}
                style     = {this.props.iconStyle} />
              {notificationCountIcon}
            </div>
