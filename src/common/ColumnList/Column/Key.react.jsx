@@ -1,6 +1,7 @@
 var React              = require('react'),
     Radium             = require('radium'),
     ReactZeroClipboard = require('react-zeroclipboard'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
     mui                = require('material-ui'),
     Colors             = mui.Styles.Colors,
@@ -9,13 +10,11 @@ var React              = require('react'),
     FontIcon           = mui.FontIcon;
 
 
-var defaultClassName = 'col-flex-1';
-
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     }
   },
 
@@ -46,7 +45,7 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'rgba(0,0,0,.54)',
       hoverColor : Colors.blue600,
-      className  : defaultClassName
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
   },
 

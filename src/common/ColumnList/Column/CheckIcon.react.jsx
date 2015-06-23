@@ -1,23 +1,19 @@
-var React      = require('react'),
-    Radium     = require('radium'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors,
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors,
 
-    CheckIcon = require('../../../common/CheckIcon/CheckIcon.react');
+    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
 
-// Move it later to some theme? Constants?
-var DEFAULT_BACKGROUND = 'green',
-    DEFAULT_ICON       = 'folder';
-
-var defaultClassName = 'col-xs-10';
 
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
     }
   },
 
@@ -129,8 +125,8 @@ module.exports = Radium(React.createClass({
         style     = {styles.container}>
         <CheckIcon
             id          = {this.props.id}
-            icon        = {this.props.icon || DEFAULT_ICON}
-            background  = {this.props.background || DEFAULT_BACKGROUND}
+            icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+            background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
             checked     = {this.state.checked}
             handleClick = {this.handleIconClick} />
 

@@ -1,18 +1,17 @@
-var React       = require('react'),
-    Radium      = require('radium'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var defaultClassName = 'col-flex-1';
 
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.DESC
     }
   },
 

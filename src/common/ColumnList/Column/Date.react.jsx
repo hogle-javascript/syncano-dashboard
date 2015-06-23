@@ -1,19 +1,18 @@
-var React       = require('react'),
-    Radium      = require('radium'),
-    Moment      = require('moment'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    Moment             = require('moment'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var defaultClassName = 'col-xs-4';
 
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.DATE
     }
   },
 

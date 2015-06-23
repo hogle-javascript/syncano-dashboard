@@ -1,22 +1,17 @@
-var React       = require('react'),
-    Radium      = require('radium'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-// Move it later to some theme? Constants?
-var DEFAULT_BACKGROUND = 'green',
-    DEFAULT_ICON       = 'folder';
-
-var defaultClassName = 'col-xs-10';
 
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     }
   },
 
@@ -61,7 +56,7 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'black',
       hoverColor : Colors.blue600,
-      className  : defaultClassName
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     }
   },
 

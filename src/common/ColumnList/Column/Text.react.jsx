@@ -1,17 +1,16 @@
-var React       = require('react'),
-    Radium      = require('radium'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var defaultClassName = 'col-xs-4';
 
 var Header = React.createClass({
   getDefaultProps: function () {
     return {
-      className : defaultClassName
+      className : ColumnListConstans.DEFAULT_CLASSNAME.TEXT
     }
   },
 
@@ -42,7 +41,7 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'rgba(0,0,0,.54)',
       hoverColor : Colors.blue600,
-      className  : defaultClassName
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.TEXT
     };
   },
 
