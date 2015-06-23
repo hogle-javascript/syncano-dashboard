@@ -22,7 +22,7 @@ var React                = require('react'),
     LoadingItem          = require('../../common/ColumnList/LoadingItem.react'),
 
     FabList              = require('../../common/Fab/FabList.react'),
-    FloatingActionButton = require('../../common/Fab/Fab.react'),
+    FabListItem          = require('../../common/Fab/FabListItem.react'),
     Dialog               = require('material-ui/lib/dialog'),
 
     Editor               = require('../../common/Editor/Editor.react'),
@@ -61,9 +61,6 @@ module.exports = React.createClass({
         width    : '80%',
         maxWidth : '1140px'
       },
-      fabList: {
-        top: 200
-      },
       tracePanel: {
         marginTop : 30,
         height    : 300
@@ -96,15 +93,13 @@ module.exports = React.createClass({
 
     return (
       <Container style={styles.container}>
-        <FabList style={styles.fabList}>
 
-          <FloatingActionButton
-            label         = "Click here to execute CodeBox" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList position="top">
+          <FabListItem
+            label         = "Click here to execute CodeBox"
             mini          = {true}
             onClick       = {this.handleRun}
             iconClassName = "synicon-play" />
-
         </FabList>
 
         <div>Codebox: {codeBox.name}</div>

@@ -16,6 +16,17 @@ var SchedulesStore = Reflux.createStore({
     StoreFormMixin
   ],
 
+  crontabItems: [
+    {
+      payload: '*/5 * * *',
+      text: 'Each 5 minutes'
+    },
+    {
+      payload: '0 * * * *',
+      text: 'Each round hour'
+    }
+  ],
+
   getInitialState: function () {
     return {
       items     : [],
@@ -34,6 +45,10 @@ var SchedulesStore = Reflux.createStore({
     if (SessionStore.getInstance() !== null) {
       SchedulesActions.getSchedules();
     }
+  },
+
+  getCrontabDropdown: function () {
+    return this.crontabItems;
   },
 
   onGetSchedules: function(items) {

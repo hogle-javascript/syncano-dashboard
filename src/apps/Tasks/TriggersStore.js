@@ -31,6 +31,18 @@ var TriggersStore = Reflux.createStore({
     }
   ],
 
+  classMenuItems: [
+    {
+      payload : 'user_profile',
+      text    : 'UserProfile'
+    },
+    {
+      payload : 'user_profile',
+      text    : 'UserProfile'
+    }
+
+  ],
+
   getInitialState: function () {
     return {
       items     : [],
@@ -55,15 +67,8 @@ var TriggersStore = Reflux.createStore({
     return this.signalMenuItems;
   },
 
-  getSignalIndex: function(signalName) {
-    var signalIndex = null;
-    this.signalMenuItems.some(function(item, index) {
-      if (item.payload === signalName) {
-        signalIndex = index;
-        return true;
-      }
-    });
-    return signalIndex;
+  getClassesDropdown: function() {
+    return this.classMenuItems;
   },
 
   onGetTriggers: function(items) {

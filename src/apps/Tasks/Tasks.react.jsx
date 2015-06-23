@@ -7,6 +7,7 @@ var React                    = require('react'),
     ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
     DialogsMixin             = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
+    Show                     = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions           = require('../Session/SessionActions'),
@@ -19,10 +20,10 @@ var React                    = require('react'),
 
     // Components
     mui                      = require('material-ui'),
-    FloatingActionButton     = mui.FloatingActionButton,
     Dialog                   = mui.Dialog,
     Container                = require('../../common/Container/Container.react'),
     FabList                  = require('../../common/Fab/FabList.react'),
+    FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
@@ -59,19 +60,6 @@ module.exports = React.createClass({
     TriggersStore.refreshData();
   },
 
-  getStyles: function() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
   // Dialogs config
   initDialogs: function () {
 
@@ -157,9 +145,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-
-    var styles = this.getStyles();
-
     var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
         checkedTriggers       = TriggersStore.getNumberOfChecked();
 
@@ -167,71 +152,66 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedSchedules ? 'block': 'none'}}>
+        <Show if={checkedSchedules > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Schedules" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeScheduleDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Schedules"
+              mini          = {true}
+              onClick       = {this.showDialog('removeScheduleDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Schedule" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedSchedules > 1}
-            onClick       = {this.showDialog('editScheduleDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Schedule"
+              mini          = {true}
+              disabled      = {checkedSchedules > 1}
+              onClick       = {this.showDialog('editScheduleDialog')}
+              iconClassName = "synicon-pencil" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={{top: 200, display: checkedTriggers ? 'block': 'none'}}>
+        <Show if={checkedTriggers > 0}>
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to delete Schedules" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeTriggerDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Trigger" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedSchedules > 1}
-            onClick       = {this.showDialog('editTriggerDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to delete Schedules"
+              mini          = {true}
+              onClick       = {this.showDialog('removeTriggerDialog')}
+              iconClassName = "synicon-delete" />
 
-        </FabList>
+            <FabListItem
+              label         = "Click here to edit Trigger"
+              mini          = {true}
+              disabled      = {checkedSchedules > 1}
+              onClick       = {this.showDialog('editTriggerDialog')}
+              iconClassName = "synicon-pencil" />
 
-        <FabList style={styles.fabListBottom}>
-          <FloatingActionButton
-            label         = "Click here to create schedule" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
+          </FabList>
+        </Show>
+
+        <FabList>
+
+          <FabListItem
+            label         = "Click here to create schedule"
             onClick       = {this.showDialog('addScheduleDialog')}
             iconClassName = "synicon-camera-timer" />
-          <FloatingActionButton
-            label         = "Click here to create Trigger" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
+
+          <FabListItem
+            label         = "Click here to create Trigger"
             onClick       = {this.showDialog('addTriggerDialog')}
             iconClassName = "synicon-arrow-up-bold" />
 
