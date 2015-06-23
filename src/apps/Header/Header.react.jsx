@@ -275,20 +275,20 @@ module.exports = Radium(React.createClass({
     e.stopPropagation();
   },
 
-  handleAcceptInvitation: function (item, e) {
-    console.info("Invitation ACCEPTED");
-    ProfileActions.acceptInvitations(item);
+  handleAcceptInvitations: function (items, e) {
+    console.info("Header::handleAcceptInvitations");
+    ProfileActions.acceptInvitations(items);
     e.stopPropagation();
   },
 
-  handleDeclineInvitation: function (item, e) {
-    console.info("Invitation DECLINED");
-    ProfileActions.declineInvitations(item);
+  handleDeclineInvitations: function (items, e) {
+    console.info("Header::handleDeclineInvitations");
+    ProfileActions.declineInvitations(items);
     e.stopPropagation();
   },
 
   handleResendEmail: function (e) {
-    console.info("EMAIL SENT");
+    console.info("Header::handleResendEmail");
     e.stopPropagation();
   },
 
@@ -353,8 +353,8 @@ module.exports = Radium(React.createClass({
         },
         buttonsText: ["Accept", "Decline"],
         name: "billing",
-        handleAccept: this.handleAcceptInvitation.bind(this, [item]),
-        handleDecline: this.handleDeclineInvitation.bind(this, [item])
+        handleAccept: this.handleAcceptInvitations.bind(this, [item]),
+        handleDecline: this.handleDeclineInvitations.bind(this, [item])
       }
     }.bind(this));
 
@@ -391,9 +391,9 @@ module.exports = Radium(React.createClass({
   getNotifiIcon: function() {
     var notifications = this.getNotificationItems();
     if (notifications.length > 0) {
-      return 'bell'
+      return 'bell';
     }
-    return 'bell-outline'
+    return 'bell-outline';
   },
 
   render: function () {
