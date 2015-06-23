@@ -1622,10 +1622,10 @@ var Syncano = (function() {
      * @method Syncano#createCodeBox
      * @alias Syncano.CodeBoxes.create
      * @param {object} params
-     * @param {string} params.runtime_name - python / nodejs / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - name of the codebox
      * @param {string} params.description - name of the codebox
-     * @param {string} params.source - source code (will be automatically URL-encoded)
+     * @param {string} params.source - source code in Node.js / Python / Ruby
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
@@ -1639,9 +1639,6 @@ var Syncano = (function() {
       }
       if (typeof params.runtime_name === 'undefined') {
         params.runtime_name = 'nodejs';
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('POST', linksObject.instance_codeboxes, params, callbackOK, callbackError);
     },
@@ -1697,7 +1694,7 @@ var Syncano = (function() {
      * @param {Number} id - codebox id
      * @param {Object} params - new values of the codebox parameters
      * @param {string} params.config -
-     * @param {string} params.runtime_name - nodejs / python / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - new codebox name
      * @param {string} params.description -
      * @param {string} params.source - source code in Node.js / Python / Ruby
@@ -1716,9 +1713,6 @@ var Syncano = (function() {
       }
       if (typeof linksObject.instance_codeboxes === 'undefined') {
         throw new Error('Not connected to any instance');
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('PATCH', linksObject.instance_codeboxes + id, params, callbackOK, callbackError);
     },

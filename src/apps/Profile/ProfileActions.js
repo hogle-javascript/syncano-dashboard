@@ -27,7 +27,6 @@ var ProfileActions = Reflux.createActions({
   }
 });
 
-
 ProfileActions.updateSettings.listen(function (payload) {
   Connection
     .Accounts

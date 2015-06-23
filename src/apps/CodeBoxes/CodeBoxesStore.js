@@ -27,7 +27,6 @@ var CodeBoxesStore = Reflux.createStore({
       AddDialogVisible: true,
       availableRuntimes: null,
       runtimes: null,
-      canSubmit: true,
       label: '',
       payload: '{"112":111}',
       description: '',
