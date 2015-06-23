@@ -24,6 +24,10 @@ var ProfileActions = Reflux.createActions({
   'acceptInvitations': {
       asyncResult: true,
       children: ['completed', 'failure'],
+  },
+  'changePassword': {
+      asyncResult: true,
+      children: ['completed', 'failure'],
   }
 });
 
@@ -65,6 +69,17 @@ ProfileActions.declineInvitations.listen(function (items) {
   D.all(promises)
     .success(this.completed)
     .error(this.failure);
+});
+
+ProfileActions.changePassword.listen(function (payload) {
+  Connection
+    .Accounts
+    .changePassword({
+      current_password: payload.currentPassword,
+      new_password: payload.newPassword
+    })
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 module.exports = ProfileActions;

@@ -348,6 +348,7 @@ var Syncano = (function() {
       create: this.createAccount.bind(this),
       get: this.getAccount.bind(this),
       update: this.updateAccount.bind(this),
+      changePassword: this.changeAccountPassword.bind(this),
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
@@ -1106,6 +1107,22 @@ var Syncano = (function() {
      */
     updateAccount: function(params, callbackOK, callbackError) {
       return this.request('PUT', 'v1/account/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates account of the currently logged user
+     *
+     * @method Syncano#changeAccountPassword
+     * @alias Syncano.Accounts.changePassword
+     * @param {Object} params - old and new password
+     * @param {string} params.current_password - current password
+     * @param {string} params.new_password - current password
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    changeAccountPassword: function(params, callbackOK, callbackError) {
+      return this.request('POST', 'v1/account/password/', params, callbackOK, callbackError);
     },
 
     /**
