@@ -14,6 +14,7 @@ var React                   = require('react'),
     mui                     = require('material-ui'),
     Colors                  = mui.Styles.Colors,
     Dialog                  = mui.Dialog,
+    FontIcon                = mui.FontIcon,
     FabList                 = require('../../common/Fab/FabList.react'),
     FabListItem             = require('../../common/Fab/FabListItem.react'),
     Container               = require('../../common/Container/Container.react'),
@@ -136,6 +137,26 @@ module.exports = React.createClass({
     ProfileActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
+  getStyles: function() {
+    return {
+      container: {
+        margin       : '64px auto',
+        textAlign    : 'center'
+      },
+      icon: {
+        fontSize     : 96,
+        lineHeight   : 1,
+        marginBottom : 16,
+        color        : 'rgba(0, 0, 0, 0.24)'
+      },
+      text: {
+        color        : 'rgba(0, 0, 0, 0.87)',
+        fontSize     : 34,
+        margin       : 0
+      }
+    }
+  },
+
   renderItem: function (item) {
     return (
       <Item key={item.id}>
@@ -168,12 +189,11 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
   },
 
-
   render: function () {
-    var checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
+    var styles             = this.getStyles(),
+        checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 
     return (
       <Container>
@@ -203,17 +223,26 @@ module.exports = React.createClass({
           </FabList>
         </Show>
 
-        <ListContainer>
-          <Header>
-            <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
-            <ColumnDesc.Header>From</ColumnDesc.Header>
-            <ColumnDesc.Header>Role</ColumnDesc.Header>
-            <ColumnDate.Header>Created</ColumnDate.Header>
-          </Header>
-          <List>
-            {this.renderList()}
-          </List>
-        </ListContainer>
+        <Show if={this.state.items < 1}>
+          <div style={styles.container}>
+            <FontIcon style={styles.icon} className="synicon-email-outline" />
+            <p style={styles.text}>You have no invitations</p>
+          </div>
+        </Show>
+
+        <Show if={this.state.items > 0}>
+          <ListContainer>
+            <Header>
+              <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
+              <ColumnDesc.Header>From</ColumnDesc.Header>
+              <ColumnDesc.Header>Role</ColumnDesc.Header>
+              <ColumnDate.Header>Created</ColumnDate.Header>
+            </Header>
+            <List>
+              {this.renderList()}
+            </List>
+          </ListContainer>
+        </Show>
       </Container>
     );
   }
