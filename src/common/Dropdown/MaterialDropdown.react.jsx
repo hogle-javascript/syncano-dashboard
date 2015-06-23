@@ -1,24 +1,25 @@
-var React                = require('react'),
-    classNames           = require('classnames'),
-    gravatar             = require('gravatar'),
-    OutsideClickHandler  = require('react-outsideclickhandler'),
+var React                = require("react"),
+    classNames           = require("classnames"),
+    gravatar             = require("gravatar"),
+    OutsideClickHandler  = require("react-outsideclickhandler"),
+    mui                  = require("material-ui"),
 
-    mui                  = require('material-ui'),
+    ProfileActions       = require("../../apps/Profile/ProfileActions"),
     List                 = mui.List,
     ListItem             = mui.ListItem, 
     ListDivider          = mui.ListDivider,
     Avatar               = mui.Avatar,
     FontIcon             = mui.FontIcon,
-    MaterialDropdownItem = require('./MaterialDropdownItem.react'),
-    DropdownNotifiItem   = require('./DropdownNotifiItem.react');
+    MaterialDropdownItem = require("./MaterialDropdownItem.react"),
+    DropdownNotifiItem   = require("./DropdownNotifiItem.react");
 
 
-require('./Dropdown.css');
+require("./Dropdown.css");
 
 
 module.exports = React.createClass({
 
-  displayName: 'MaterialDropdown',
+  displayName: "MaterialDropdown",
 
   propTypes: {
     type : React.PropTypes.string, 
@@ -55,14 +56,14 @@ module.exports = React.createClass({
         height : "18px", 
         fill   : "#FFF"
       },
-      type      : "normal",
+      type      : "normal-link",
       clickable : true
     }
   },
 
   getInitialState: function () {
     return {
-      icon   : this.props.icon || 'dots-vertical',
+      icon   : this.props.icon || "dots-vertical",
       isOpen : false
     }
   },
@@ -73,69 +74,62 @@ module.exports = React.createClass({
 
   toggleOpenClose: function (e) {
     this.setState({isOpen: (!this.state.isOpen && this.props.clickable)});
+    ProfileActions.getInvitations();
   },
 
   close: function () {
-    this.setState({'isOpen': false});
+    this.setState({"isOpen": false});
   },
 
-  getItems: function () {
+  renderItems: function () {
     if (this.props.type === "notification") {
-      return <DropdownNotifiItem items={this.props.items} />
+      return <DropdownNotifiItem
+               items={this.props.items}
+               isLoading={this.props.isLoading} />
     } else {
       return <MaterialDropdownItem
-                items         = {this.props.items}
-                headerContent = {this.props.headerContent} />
+               items         = {this.props.items}
+               headerContent = {this.props.headerContent} />
     }
   },
 
+  renderIcon: function () {
+    var notificationCountIcon = null;
+    if (this.props.type === "notification" && this.props.items[0].name !== "empty-notification"  && this.props.items.length > 0) {
+      notificationCountIcon = <FontIcon
+                                className = {"synicon-numeric-" + this.props.items.length + "-box" }
+                                style     = {{
+                                  padding  : "0 4px",
+                                  color    : "#ff3d00",
+                                  position : "absolute",
+                                  top      : "-10px",
+                                  right    : "-10px"
+                                }} />
+    }
+    return <div>
+             <FontIcon
+               className = {"synicon-" + this.state.icon}
+               style     = {this.props.iconStyle} />
+             {notificationCountIcon}
+           </div>
+  },
+
   render: function () {
+
     var cssClasses = classNames({
-      'dropdown-menu'         : true,
-      'dropdown-menu-visible' : this.state.isOpen
+      "dropdown-menu"         : true,
+      "dropdown-menu-visible" : this.state.isOpen
     });
-
-    var headerContent = null;
-
-    if (this.props.headerContent) {
-      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true),
-          avatar = <Avatar src={gravatarUrl} />;
-
-      headerContent =
-        <List>
-          <ListItem 
-            leftAvatar      = {avatar}
-            secondaryText   = {this.props.headerContent.userEmail} 
-            disableTouchTap = {!this.props.headerContent.clickable}
-            onClick         = {this.props.headerContent.handleItemClick}>
-            {this.props.headerContent.userFullName}
-          </ListItem>
-          <ListDivider />
-        </List>
-    };
-
-    var items = this.props.items.map(function (item, i) {
-      return (
-        <List>
-          <ListItem 
-            key     = {item.name + i} 
-            onClick = {item.handleItemClick}>
-            {item.content}
-          </ListItem>
-        </List>)
-    }.bind(this));
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
           <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
-            <FontIcon 
-              className = {"synicon-" + this.state.icon} 
-              style     = {this.props.iconStyle} />
+            {this.renderIcon()}
           </div>
           <div className={cssClasses}>
             <div className="dropdown-menu-section">
-              {this.getItems()}
+              {this.renderItems()}
             </div>
           </div>
         </div>

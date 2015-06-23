@@ -6,8 +6,10 @@ var React               = require('react'),
     List                = mui.List,
     ListItem            = mui.ListItem, 
     ListDivider         = mui.ListDivider,
-    Avatar              = mui.Avatar, 
-    FontIcon            = mui.FontIcon;
+    Avatar              = mui.Avatar,
+    FontIcon            = mui.FontIcon,
+
+    LoadingItem         = require('../../common/ColumnList/LoadingItem.react');
 
 require('./Dropdown.css');
 
@@ -41,19 +43,35 @@ module.exports = React.createClass({
     })
   },
 
+  componentWillUpdate: function (nextProps) {
+    this.getItems();  
+  },
+
+  getItems: function () {
+    
+    if (this.props.isLoading === true) {
+      return <LoadingItem size={0.5} />;
+    } else {
+      var items = [];
+      items.push(this.getInvitationItems());
+      items.push(this.getNormalLinkItems());
+      return items;
+    }
+  },
+
   getInvitationItems: function () {
-    var invitationItems = this.props.items.filter(function (item) {
-      return item.type === "invitation"
+    var invitationItems = this.props.items.filter(function (item, index) {
+      return item.type === "invitation";
     });
     var items = invitationItems.map(function (item) {
-      var icon = <FontIcon 
-                   className = {item.leftIcon.name || null} 
+      var icon = <FontIcon
+                   className = {item.leftIcon.name || null}
                    style     = {item.leftIcon.style} />
       var buttons = <div>
-                      <span onClick={item.handleAccept} className="cursor-pointer left-button">  
+                      <span onClick={item.handleAccept} className="cursor-pointer left-button">
                       {item.buttonsText[0]}
                       </span>
-                      <span onClick={item.handleDecline} className="cursor-pointer right-button">  
+                      <span onClick={item.handleDecline} className="cursor-pointer right-button">
                       {item.buttonsText[1]}
                       </span>
                     </div>
@@ -71,14 +89,13 @@ module.exports = React.createClass({
                <ListDivider />
              </List>;
     })
-    return items;
+    return items
   },
 
   getNormalLinkItems: function () {
     var linkItems = this.props.items.filter(function (item) {
       return item.type === "normal-link"
     });
-
     var items = linkItems.map(function (item, i) {
       var icon = <FontIcon 
                    className = {item.leftIcon.name || null} 
@@ -92,8 +109,8 @@ module.exports = React.createClass({
             key                = {item.name + i} 
             disableTouchTap    = {true}
             leftIcon           = {icon}
-            secondaryText      = {item.secondaryText ? link : null}
-            secondaryTextLines = {item.secondaryTextLines || 1}>
+            secondaryText      = {item.content.secondaryText ? link : null}
+            secondaryTextLines = {item.content.secondaryTextLines || 1}>
             <span style={item.content.style}>
             {item.content.text}
             </span>
@@ -106,8 +123,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
-      {this.getInvitationItems()}
-      {this.getNormalLinkItems()}
+      {this.getItems()}
       </div>
     );
   }

@@ -41,7 +41,7 @@ module.exports = React.createClass({
     })
   },
 
-  getHeaderContent: function () {
+  renderHeaderContent: function () {
     var headerContent;
 
     if (this.props.headerContent) {
@@ -61,7 +61,7 @@ module.exports = React.createClass({
     return headerContent;
   },
 
-  getItems: function () {
+  renderItems: function () {
     var items = this.props.items.map(function (item, i) {
       var icon = <FontIcon 
                    className = {item.leftIcon.name || null} 
@@ -88,8 +88,8 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
-      {this.getHeaderContent()}
-      {this.getItems()}
+      {this.renderHeaderContent()}
+      {this.renderItems()}
       </div>
     );
   }
