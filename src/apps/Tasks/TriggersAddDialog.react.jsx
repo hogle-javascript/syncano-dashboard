@@ -14,7 +14,7 @@ var React           = require('react'),
     mui             = require('material-ui'),
     Toggle          = mui.Toggle,
     TextField       = mui.TextField,
-    DropDownMenu    = mui.DropDownMenu,
+    SelectField     = mui.SelectField,
     Dialog          = mui.Dialog;
 
 
@@ -34,6 +34,15 @@ module.exports = React.createClass({
     label: {
       presence: true
     },
+    signal: {
+      presence: true
+    },
+    doClass: {
+      presence: true
+    },
+    codebox: {
+      presence: true
+    }
   },
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -48,7 +57,7 @@ module.exports = React.createClass({
     this.setState({
       'class' : 'user_profile',
       signal  : 'post_create',
-      errors  : {},
+      errors  : {}
     })
   },
 
@@ -84,18 +93,6 @@ module.exports = React.createClass({
       });
   },
 
-  handleCodeBoxChange: function (event, selectedIndex, menuItem){
-    this.setState({codebox: menuItem.payload});
-  },
-
-  handleClassChange: function (event, selectedIndex, menuItem){
-    this.setState({'class': menuItem.payload});
-  },
-
-  handleSignalChange: function (event, selectedIndex, menuItem){
-    this.setState({signal: menuItem.payload});
-  },
-
   render: function () {
     console.log(this.state);
     var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
@@ -111,35 +108,12 @@ module.exports = React.createClass({
             text    : {submitLabel},
             onClick : this.handleSubmit
           }
-        ],
-        // TODO: move it to the store
-        classMenuItems = [
-          {
-            payload : 'user_profile',
-            text    : 'UserProfile'
-          },
-          {
-            payload : 'user_profile',
-            text    : 'UserProfile'
-          },
-
         ];
 
     var cb = [{payload: 'dummy', text: 'loading...'}];
     if (this.state.codeboxes.items.length > 0) {
         cb = CodeBoxesStore.getCodeBoxesDropdown();
     }
-
-    var codeBoxSelectedIndex = 0;
-    if (this.state.codebox) {
-      codeBoxSelectedIndex = CodeBoxesStore.getCodeBoxIndex(this.state.codebox);
-    }
-
-    var signalSelectedIndex = 0;
-    if (this.state.signal) {
-      signalSelectedIndex = TriggersStore.getSignalIndex(this.state.signal);
-    }
-
 
     return (
       <Dialog
@@ -157,39 +131,44 @@ module.exports = React.createClass({
           <TextField
             ref               = "label"
             name              = "label"
-            style             = {{width:'100%'}}
+            fullWidth         = {true}
             valueLink         = {this.linkState('label')}
             errorText         = {this.getValidationMessages('label').join()}
             hintText          = "Label of the trigger"
             floatingLabelText = "Label" />
 
-          <DropDownMenu
+          <SelectField
             ref               = "signal"
             name              = "signal"
-            autoWidth         = {true}
             floatingLabelText = "Signal"
-            style             = {{width:500}}
-            selectedIndex     = {signalSelectedIndex}
-            onChange          = {this.handleSignalChange}
+            fullWidth         = {true}
+            valueLink         = {this.linkState("signal")}
+            errorText         = {this.getValidationMessages('signal').join()}
+
+            valueMember       = "payload"
+            displayMember     = "text"
             menuItems         = {TriggersStore.getSignalsDropdown()} />
 
-          <DropDownMenu
+          <SelectField
             ref               = "doClass"
             name              = "doClass"
-            autoWidth         = {true}
             floatingLabelText = "Class"
-            style             = {{width:500}}
-            onChange          = {this.handleClassChange}
-            menuItems         = {classMenuItems} />
+            fullWidth         = {true}
+            valueLink         = {this.linkState("class")}
+            errorText         = {this.getValidationMessages('class').join()}
+            valueMember       = "payload"
+            displayMember     = "text"
+            menuItems         = {TriggersStore.getClassesDropdown()} />
 
-          <DropDownMenu
+          <SelectField
             ref               = "codebox"
             name              = "codebox"
-            selectedIndex     = {codeBoxSelectedIndex}
-            autoWidth         = {true}
             floatingLabelText = "CodeBox"
-            style             = {{width:500}}
-            onChange          = {this.handleCodeBoxChange}
+            valueLink         = {this.linkState("codebox")}
+            errorText         = {this.getValidationMessages('codebox').join()}
+            valueMember       = "payload"
+            displayMember     = "text"
+            style             = {{width: '50%'}}
             menuItems         = {cb} />
 
         </form>
