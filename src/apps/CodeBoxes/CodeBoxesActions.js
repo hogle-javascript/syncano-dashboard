@@ -29,7 +29,7 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
       runtime_name : payload.runtime_name,
       label        : payload.label,
       description  : payload.description,
-      source: '#Start coding!',
+      source: '# Start coding!'
     })
     .then(this.completed)
     .catch(this.failure);
