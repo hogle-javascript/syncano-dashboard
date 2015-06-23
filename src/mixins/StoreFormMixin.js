@@ -34,15 +34,18 @@ var StoreFormMixin = {
   },
 
   handleForm: function () {
-    this.trigger({canSubmit: false});
+    this.data.canSubmit = false;
+    this.trigger(this.data);
   },
 
   handleFormCompleted: function (payload) {
     console.log('StoreFormMixin::handleFormCompleted');
-    this.trigger(this.getInitialFormState());
+    this.data = objectAssign(this.data, this.getInitialFormState())
+    this.trigger(this.data);
   },
 
   handleFormFailure: function (payload) {
+    console.log('StoreFormMixin::handleFormFailure');
     var state = objectAssign(this.data, this.getInitialFormState());
 
     if (typeof payload === 'string') {
@@ -63,7 +66,6 @@ var StoreFormMixin = {
       }
     }
 
-    console.log('StoreFormMixin::handleFormFailure', state);
     this.trigger(state);
   }
 };
