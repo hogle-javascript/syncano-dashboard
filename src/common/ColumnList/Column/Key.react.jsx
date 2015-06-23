@@ -1,7 +1,5 @@
 var React              = require('react'),
     Radium             = require('radium'),
-    Moment             = require('moment'),
-    classNames         = require('classnames'),
     ReactZeroClipboard = require('react-zeroclipboard'),
 
     mui                = require('material-ui'),
@@ -11,15 +9,21 @@ var React              = require('react'),
     FontIcon           = mui.FontIcon;
 
 
-// Same classes for column and it's header
-var cssClasses = classNames('col-flex-1');
+var defaultClassName = 'col-flex-1';
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      className : defaultClassName
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
@@ -41,7 +45,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : defaultClassName
     };
   },
 
@@ -69,12 +74,12 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleMouseOver: function (e) {
-    this.setState({'color': this.props.hoverColor})
+  handleMouseOver: function (event) {
+    this.setState({'color': this.props.hoverColor});
   },
 
-  handleMouseLeave: function (e) {
-    this.setState({'color': this.props.color})
+  handleMouseLeave: function (event) {
+    this.setState({'color': this.props.color});
   },
 
   handleClick: function (event) {
@@ -83,12 +88,13 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
+    var styles = this.getStyles();
 
     return (
 
       <div
-        className   = {cssClasses}
-        style       = {this.getStyles().key}>
+        className   = {this.props.className}
+        style       = {styles.key}>
           <div
             ref       = "key"
             className = "col-xs-28">
@@ -100,11 +106,13 @@ module.exports = Radium(React.createClass({
             onClick     = {this.handleClick}
             onMouseOver = {this.handleMouseOver}
             onMouseOut  = {this.handleMouseLeave}
-            style       = {this.getStyles().icon}
+            style       = {styles.icon}
             className   = "synicon-content-copy col-xs-4" />
         </ReactZeroClipboard>
 
-        <Snackbar ref="snackbar" message="API key copied to the clipboard" />
+        <Snackbar
+          ref="snackbar"
+          message="API key copied to the clipboard" />
       </div>
 
     );

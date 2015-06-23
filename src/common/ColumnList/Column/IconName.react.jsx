@@ -1,7 +1,5 @@
 var React       = require('react'),
     Radium      = require('radium'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
 
     mui         = require('material-ui'),
     Paper       = mui.Paper,
@@ -12,18 +10,31 @@ var React       = require('react'),
 var DEFAULT_BACKGROUND = 'green',
     DEFAULT_ICON       = 'folder';
 
-var cssClasses = classNames('col-xs-10');
+var defaultClassName = 'col-xs-10';
 
 var Header = React.createClass({
-  render: function () {
-    var styles = {
+
+  getDefaultProps: function () {
+    return {
+      className : defaultClassName
+    }
+  },
+
+  getStyles: function () {
+    return {
       fontSize    : 20,
       fontWeight  : 500,
       paddingLeft : 16
-    };
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
-      <div style={styles} className={cssClasses}>
+      <div
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     )
@@ -49,7 +60,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function () {
     return {
       color      : 'black',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : defaultClassName
     }
   },
 
@@ -114,12 +126,17 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-
     var styles = this.getStyles();
 
     return (
-      <div className={cssClasses} style={styles.container}>
-        <Paper circle={true} style={styles.icon} />
+      <div
+        className = {this.props.className}
+        style     = {styles.container}>
+
+        <Paper
+          circle = {true}
+          style  = {styles.icon} />
+
         <div
           style       = {styles.name}
           onClick     = {this.handleNameClick}
