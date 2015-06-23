@@ -60,7 +60,9 @@ module.exports = React.createClass({
 
   renderItem: function (item) {
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
