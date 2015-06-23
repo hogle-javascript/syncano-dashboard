@@ -8,18 +8,20 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
-    AdminsActions     = require('./AdminsActions'),
-    AdminsStore       = require('./AdminsStore'),
+    GroupsActions     = require('./GroupsActions'),
+    GroupsStore       = require('./GroupsStore'),
 
     // Components
     mui               = require('material-ui'),
     Colors            = require('material-ui/lib/styles/colors'),
     FontIcon          = mui.FontIcon,
+    DropDownIcon      = mui.DropDownIcon,
 
     // List
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
@@ -31,18 +33,18 @@ var React             = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'AdminsList',
+  displayName: 'GroupsList',
 
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
   ],
 
   getInitialState() {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading
+      isLoading : this.props.isLoading,
     }
   },
 
@@ -59,19 +61,20 @@ module.exports = React.createClass({
   },
 
   renderItem: function (item) {
+
     return (
       <Item key={item.id}>
         <ColumnCheckIcon
-          className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
-          icon            = 'account'
-          background      = {Colors.blue500}
+          icon            = 'account-multiple'
+          background      = {Colors.blue200}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
-          {item.email}
+          handleIconClick = {this.handleItemIconClick} >
+          {item.label}
         </ColumnCheckIcon>
-        <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnID>{item.id}</ColumnID>
+        <ColumnDesc>
+        </ColumnDesc>
       </Item>
     )
   },
@@ -90,16 +93,20 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    )
   },
 
   render: function () {
     return (
-      <ListContainer>
+      <ListContainer style={{width: '100%'}}>
         <Header>
-          <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Role</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
+          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
+          <ColumnID.Header>ID</ColumnID.Header>
+          <ColumnDesc.Header></ColumnDesc.Header>
         </Header>
         <List>
           {this.getList()}

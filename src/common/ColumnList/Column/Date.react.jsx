@@ -1,22 +1,26 @@
-var React       = require('react'),
-    Radium      = require('radium'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    Moment             = require('moment'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-// Same classes for column and it's header
-var cssClasses = classNames('col-xs-4');
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.DATE
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
@@ -38,7 +42,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.DATE
     };
   },
 
@@ -67,11 +72,12 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
+    var styles = this.getStyles();
 
     return (
       <div
-        className = {cssClasses}
-        style     = {this.getStyles()}>
+        className = {this.props.className}
+        style     = {styles}>
         <span>{Moment(this.props.children).format('DD/MM/YYYY')}</span>
         <span>{Moment(this.props.children).format('LTS')}</span>
       </div>

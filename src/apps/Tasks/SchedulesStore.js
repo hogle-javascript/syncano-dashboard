@@ -12,6 +12,17 @@ var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [CheckListStoreMixin],
 
+  crontabItems: [
+    {
+      payload: '*/5 * * *',
+      text: 'Each 5 minutes'
+    },
+    {
+      payload: '0 * * * *',
+      text: 'Each round hour'
+    }
+  ],
+
   getInitialState: function () {
     return {
       // Lists
@@ -19,7 +30,7 @@ var SchedulesStore = Reflux.createStore({
       isLoading: false,
 
       // Dialogs
-      errors: {},
+      errors: {}
     }
   },
 
@@ -32,7 +43,7 @@ var SchedulesStore = Reflux.createStore({
 
       // Dialogs
       errors: {},
-      canSubmit: true,
+      canSubmit: true
     };
 
     // We want to know when we are ready to download data for this store,
@@ -45,6 +56,10 @@ var SchedulesStore = Reflux.createStore({
     if (SessionStore.instance) {
       SchedulesActions.getSchedules();
     }
+  },
+
+  getCrontabDropdown: function () {
+    return this.crontabItems;
   },
   
   onGetSchedules: function(items) {

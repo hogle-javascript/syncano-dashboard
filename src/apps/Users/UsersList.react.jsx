@@ -8,8 +8,9 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
-    AdminsActions     = require('./AdminsActions'),
-    AdminsStore       = require('./AdminsStore'),
+    UsersActions  = require('./UsersActions'),
+    UsersStore    = require('./UsersStore'),
+    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
 
     // Components
     mui               = require('material-ui'),
@@ -20,6 +21,7 @@ var React             = require('react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
@@ -31,7 +33,7 @@ var React             = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'AdminsList',
+  displayName: 'UsersList',
 
   mixins: [
     HeaderMixin,
@@ -62,15 +64,16 @@ module.exports = React.createClass({
     return (
       <Item key={item.id}>
         <ColumnCheckIcon
-          className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
-          {item.email}
+          handleIconClick = {this.handleItemIconClick} >
+          {item.username}
         </ColumnCheckIcon>
-        <ColumnDesc>{item.role}</ColumnDesc>
+        <ColumnID>{item.id}</ColumnID>
+        <ColumnDesc />
+        <ColumnDate>{item.updated_at}</ColumnDate>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -90,15 +93,21 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    )
   },
 
   render: function () {
     return (
-      <ListContainer>
+      <ListContainer style={{width: '100%'}}>
         <Header>
-          <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Role</ColumnDesc.Header>
+          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
+          <ColumnID.Header>ID</ColumnID.Header>
+          <ColumnDesc.Header></ColumnDesc.Header>
+          <ColumnDate.Header>Updated</ColumnDate.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>

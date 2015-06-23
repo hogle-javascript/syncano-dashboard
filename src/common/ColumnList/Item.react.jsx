@@ -13,22 +13,23 @@ module.exports = Radium(React.createClass({
   mixins: [StylePropable],
 
   getStyles: function() {
-    var style = {
+    var styles = {
       display        : 'flex',
-      marginBottom   : '0px',
+      marginBottom   : 0,
       justifyContent : 'center'
     };
-    return this.mergeStyles(style, this.props.style);
+
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function () {
-    var style = this.getStyles();
+    var styles = this.getStyles();
 
     return (
       <Paper
         zDepth    = {1}
         className = {'row'}
-        style     = {style}
+        style     = {styles}
         rounded   = {false}>
         {this.props.children}
       </Paper>
