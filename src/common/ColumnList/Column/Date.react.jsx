@@ -43,7 +43,7 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'rgba(0,0,0,.54)',
       hoverColor : Colors.blue600,
-      className  : defaultClassName
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.DATE
     };
   },
 
