@@ -6,7 +6,6 @@ var StoreLoadingMixin = {
     if (this.listenables){
       var arr = [].concat(this.listenables);
       arr.forEach(function(item) {
-        console.error("ACTIONS ITEMS", item)
         this.setLoadingState(item)
       }.bind(this))
     }
@@ -29,7 +28,7 @@ var StoreLoadingMixin = {
   },
 
   setToNotLoading: function () {
-    console.log('StoreLoadingMixin::setNotLoading');
+    console.log('StoreLoadingMixin::setToNotLoading');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
