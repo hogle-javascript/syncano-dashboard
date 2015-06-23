@@ -35,7 +35,7 @@ module.exports = Radium(React.createClass({
         padding: '14px 16px'
       }
     }
-  }
+  },
 
   getButtonStyles: function () {
     var styles = this.getStyles();

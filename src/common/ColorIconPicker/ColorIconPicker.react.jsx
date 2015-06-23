@@ -76,9 +76,9 @@ module.exports = Radium(React.createClass({
         iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
-      zDepth           = 3;
-      style.background = ColorStore.getColorByName(this.state.selectedColor);
-      iconColor        = '#fff';
+      zDepth            = 3;
+      styles.background = ColorStore.getColorByName(this.state.selectedColor);
+      iconColor         = '#fff';
     }
 
     return (
@@ -103,7 +103,7 @@ module.exports = Radium(React.createClass({
         styles = this.getStyles().item,
         zDepth = 0;
 
-    style.background = ColorStore.getColorByName(color);
+    styles.background = ColorStore.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
