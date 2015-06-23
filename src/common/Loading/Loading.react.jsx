@@ -12,7 +12,7 @@ module.exports = React.createClass({
   displayName: 'Loading',
 
   propTypes: {
-    size: React.PropType.number,
+    size: React.PropTypes.number,
     type: React.PropTypes.oneOf(['circular', 'linear']),
   },
 
