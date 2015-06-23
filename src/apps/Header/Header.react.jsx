@@ -62,23 +62,6 @@ module.exports = Radium(React.createClass({
     //this.getNotificationItems();
   },
 
-  getEmptyNotification: function () {
-    return [{
-      type     : "normal-link",
-      leftIcon : {
-        name  : "synicon-information",
-        style : {
-          color: "#0091EA"
-        }
-      },
-      content: {
-        text  : "You don't have any notifications",
-        style : {}
-      },
-      name: "empty-notification",
-    }]
-  },
-
   handleTabActive: function (tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
@@ -319,8 +302,8 @@ module.exports = Radium(React.createClass({
         text  : "Billing",
         style : {}
       },
-      name            : "billing",
-      handleItemClick : this.handleBillingClick
+      name: "billing",
+      handleItemClick: this.handleBillingClick
     }, {
       leftIcon: {
         name  : "synicon-power",
@@ -329,13 +312,13 @@ module.exports = Radium(React.createClass({
         }
       },
       content: {
-        text   : "Logout",
-        style  : {
+        text  : "Logout",
+        style : {
           color: "#f50057"
         }
       },
-      name            : "logout",
-      handleItemClick : this.handleLogout
+      name: "logout",
+      handleItemClick: this.handleLogout
 
     }]
   },
@@ -353,29 +336,29 @@ module.exports = Radium(React.createClass({
     var notifications = [];
     notifications = this.state.accountInvitations.items.map(function (item) {
       return {
-        type     : "invitation",
-        leftIcon : {
-          name   : "synicon-share-variant",
-          style  : {
+        type: "invitation",
+        leftIcon: {
+          name  : "synicon-share-variant",
+          style : {
             color: "#8bc34a"
           }
         },
-        content  : {
+        content: {
           text   : <div><b>{item.inviter}</b><span> invited you to his instance </span><b>{item.instance}</b></div>,
           style  : {}
         },
-        buttonsText   : ["Accept", "Decline"],
-        name          : "billing",
-        handleAccept  : this.handleAcceptInvitation.bind(this, [item]),
-        handleDecline : this.handleDeclineInvitation.bind(this, [item])
+        buttonsText: ["Accept", "Decline"],
+        name: "billing",
+        handleAccept: this.handleAcceptInvitation.bind(this, [item]),
+        handleDecline: this.handleDeclineInvitation.bind(this, [item])
       }
     }.bind(this));
 
     if (!this.state.user.is_active) {
       notifications.push(
         {
-          type     : "normal-link",
-          leftIcon : {
+          type: "normal-link",
+          leftIcon: {
             name   : "synicon-alert",
             style  : {
               color: "#ff9800"
@@ -386,8 +369,8 @@ module.exports = Radium(React.createClass({
             secondaryText : "Resend activation email",
             style         : {}
           },
-          name            : "activation",
-          handleLinkClick : this.handleResendEmail
+          name: "activation",
+          handleLinkClick: this.handleResendEmail
         }
       )
     }
@@ -397,14 +380,13 @@ module.exports = Radium(React.createClass({
       notifications[0].subheaderStyle = {
         borderBottom: "1px solid #EAEAEA"
       };
-      return notifications
     }
-    return this.getEmptyNotification();
+    return notifications;
   },
 
   getNotifiIcon: function() {
     var notifications = this.getNotificationItems();
-    if (notifications.length > 0 && notifications[0].name !== "empty-notification") {
+    if (notifications.length > 0) {
       return 'bell'
     }
     return 'bell-outline'

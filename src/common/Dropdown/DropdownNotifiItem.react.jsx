@@ -19,22 +19,8 @@ module.exports = React.createClass({
   displayName: 'DropdownNotifiItem',
 
   propTypes: {
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({
-      leftIcon           : React.PropTypes.shape({
-        name  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired
-      }),
-      subheader          : React.PropTypes.string,
-      subheaderStyle     : React.PropTypes.object,
-      content            : React.PropTypes.shape({
-        text  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired 
-      }), 
-      secondaryText      : React.PropTypes.string,
-      secondaryTextLines : React.PropTypes.number,                // Content to view as item can be any object too
-      name               : React.PropTypes.string.isRequired,     // name for DropdownMenuItems kys
-      handleItemClick    : React.PropTypes.func.isRequired        // function to call after DropdownMenuItem click
-    })).isRequired,
+    items: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    isLoading: React.PropTypes.bool,
     headerContent: React.PropTypes.shape({
       userFullName       : React.PropTypes.string.isRequired,
       userEmail          : React.PropTypes.string.isRequired,
@@ -43,23 +29,55 @@ module.exports = React.createClass({
     })
   },
 
-  componentWillUpdate: function (nextProps) {
-    this.getItems();  
-  },
-
-  getItems: function () {
+  renderItems: function () {
     
     if (this.props.isLoading === true) {
-      return <LoadingItem size={0.5} />;
-    } else {
-      var items = [];
-      items.push(this.getInvitationItems());
-      items.push(this.getNormalLinkItems());
-      return items;
+      return <LoadingItem size={0.5} />
+    } else if (this.props.items.length === 0) {
+      return this.renderEmptyNotification()
     }
+    var items = [];
+    items.push(this.renderInvitationItems());
+    items.push(this.renderNormalLinkItems());
+    return items;
   },
 
-  getInvitationItems: function () {
+  renderEmptyNotification: function () {
+    var emptyItem = {
+      subheader: "Notifications",
+      subheaderStyle: {
+        borderBottom: "1px solid #EAEAEA"
+      },
+      name: "empty-notification",
+      leftIcon  : {
+        name  : "synicon-information",
+        style : {
+          color: "#0091EA"
+        }
+      },
+      content: {
+        text  : "You don't have any notifications",
+        style : {}
+      }
+    };
+    var icon = <FontIcon
+        className = {emptyItem.leftIcon.name}
+        style     = {emptyItem.leftIcon.style} />
+    return <List
+             subheader      = {emptyItem.subheader}
+             subheaderStyle = {emptyItem.subheaderStyle}>
+             <ListItem
+               key                = {emptyItem.name}
+               disableTouchTap    = {true}
+               leftIcon           = {icon}>
+               <span style={emptyItem.content.style}>
+               {emptyItem.content.text}
+               </span>
+             </ListItem>
+           </List>
+  },
+
+  renderInvitationItems: function () {
     var invitationItems = this.props.items.filter(function (item, index) {
       return item.type === "invitation";
     });
@@ -92,7 +110,7 @@ module.exports = React.createClass({
     return items
   },
 
-  getNormalLinkItems: function () {
+  renderNormalLinkItems: function () {
     var linkItems = this.props.items.filter(function (item) {
       return item.type === "normal-link"
     });
@@ -123,7 +141,7 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
-      {this.getItems()}
+      {this.renderItems()}
       </div>
     );
   }

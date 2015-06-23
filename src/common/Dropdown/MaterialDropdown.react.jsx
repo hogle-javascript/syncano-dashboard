@@ -24,29 +24,15 @@ module.exports = React.createClass({
   propTypes: {
     type : React.PropTypes.string, 
     icon : React.PropTypes.string,
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({
-      leftIcon           : React.PropTypes.shape({
-        name  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired
-      }),
-      subheader          : React.PropTypes.string,
-      subheaderStyle     : React.PropTypes.object,
-      content            : React.PropTypes.shape({
-        text  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired 
-      }), 
-      secondaryText      : React.PropTypes.string,
-      secondaryTextLines : React.PropTypes.number,                // Content to view as item can be any object too
-      name               : React.PropTypes.string.isRequired,     // name for DropdownMenuItems kys
-      handleItemClick    : React.PropTypes.func.isRequired        // function to call after DropdownMenuItem click
-    })).isRequired,
+    items: React.PropTypes.array.isRequired,
     headerContent: React.PropTypes.shape({
       userFullName       : React.PropTypes.string.isRequired,
       userEmail          : React.PropTypes.string.isRequired,
       handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or 
       clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
     }),
-    iconStyle: React.PropTypes.object
+    iconStyle: React.PropTypes.object,
+    isLoading: React.PropTypes.bool
   },
 
   getDefaultProps: function () {
@@ -73,8 +59,13 @@ module.exports = React.createClass({
   },
 
   toggleOpenClose: function (e) {
-    this.setState({isOpen: (!this.state.isOpen && this.props.clickable)});
-    ProfileActions.getInvitations();
+    this.setState({
+      isOpen: (!this.state.isOpen && this.props.clickable)
+    }, function() {
+      if (this.state.isOpen) {
+        ProfileActions.getInvitations();
+      }
+    });
   },
 
   close: function () {
@@ -95,15 +86,16 @@ module.exports = React.createClass({
 
   renderIcon: function () {
     var notificationCountIcon = null;
-    if (this.props.type === "notification" && this.props.items[0].name !== "empty-notification"  && this.props.items.length > 0) {
+    if (this.props.type === "notification" && this.props.items.length > 0) {
+      var synIconName = this.props.items.length < 10 ? this.props.items.length : "9-plus";
       notificationCountIcon = <FontIcon
-                                className = {"synicon-numeric-" + this.props.items.length + "-box" }
+                                className = {"synicon-numeric-" + synIconName + "-box" }
                                 style     = {{
                                   padding  : "0 4px",
                                   color    : "#ff3d00",
                                   position : "absolute",
-                                  top      : "-10px",
-                                  right    : "-10px"
+                                  top      : "-14px",
+                                  right    : "-14px"
                                 }} />
     }
     return <div>

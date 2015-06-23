@@ -309,6 +309,39 @@ module.exports = React.createClass({
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
+    var notifications = [{
+      type     : "normal-link",
+      leftIcon : {
+        name   : "synicon-alert",
+        style  : {
+          color: "#ff9800"
+        }
+      },
+      content: {
+        text          : "You email address is not yet verified.",
+        secondaryText : "Resend activation email",
+        style         : {}
+      },
+      name            : "activation",
+      handleLinkClick : this.handleResendEmail
+    }, {
+      type     : "invitation",
+      leftIcon : {
+        name   : "synicon-share-variant",
+        style  : {
+          color: "#8bc34a"
+        }
+      },
+      content  : {
+        text   : <div><b>{item.inviter}</b><span> invited you to his instance </span><b>{item.instance}</b></div>,
+        style  : {}
+      },
+      buttonsText   : ["Accept", "Decline"],
+      name          : "billing",
+      handleAccept  : this.handleAcceptInvitation.bind(this, [item]),
+      handleDecline : this.handleDeclineInvitation.bind(this, [item])
+    }];
+
     return (
 
       <div className="examplesContainer">
