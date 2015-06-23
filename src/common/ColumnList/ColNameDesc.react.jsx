@@ -1,6 +1,7 @@
-var React   = require('react'),
+var React  = require('react'),
 
-    Colors  = require('material-ui/lib/styles/colors');
+    mui    = require('material-ui'),
+    Colors = mui.Styles.Colors;
 
 
 module.exports = React.createClass({

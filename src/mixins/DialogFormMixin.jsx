@@ -1,15 +1,4 @@
 var DialogFormMixin = {
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-    return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
-    )
-  },
-
   show: function() {
     console.log('DialogFormMixin::show');
     this.clearData();
@@ -30,7 +19,8 @@ var DialogFormMixin = {
 
   handleCancel: function(event) {
     this.setState({
-      errors: {}});
+      errors: {}
+    });
     this.dismiss();
   },
 
@@ -54,6 +44,17 @@ var DialogFormMixin = {
       }
     }.bind(this));
   },
+
+  // ValidationMixin compatibility
+  handleSuccessfullValidation: function () {
+    console.info('DialogFormMixin::handleSuccessfullValidation');
+
+    if (this.props.mode === 'add') {
+      this.handleAddSubmit();
+    } else if (this.props.mode === 'edit') {
+      this.handleEditSubmit();
+    }
+  }
 
 };
 

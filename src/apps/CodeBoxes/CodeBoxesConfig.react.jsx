@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
+    Router           = require('react-router'),
 
     // Utils
     HeaderMixin      = require('../Header/HeaderMixin'),
@@ -86,8 +86,7 @@ module.exports = React.createClass({
     },{
       label: 'Config',
       route: 'codeboxes-config',
-      params: routeParams,
-      active: true,
+      params: routeParams
     },{
       label: 'Traces',
       route: 'codeboxes-traces',

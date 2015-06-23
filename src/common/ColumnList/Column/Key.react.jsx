@@ -1,29 +1,33 @@
 var React              = require('react'),
-    Moment             = require('moment'),
-    classNames         = require('classnames'),
+    Radium             = require('radium'),
     ReactZeroClipboard = require('react-zeroclipboard'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Colors      = require('material-ui/lib/styles/colors'),
-    Snackbar    = mui.Snackbar,
-    Paper       = mui.Paper,
-    FontIcon    = mui.FontIcon;
+    mui                = require('material-ui'),
+    Colors             = mui.Styles.Colors,
+    Snackbar           = mui.Snackbar,
+    Paper              = mui.Paper,
+    FontIcon           = mui.FontIcon;
 
-
-// Same classes for column and it's header
-var cssClasses = classNames('col-flex-1');
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnID',
 
@@ -40,7 +44,8 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
   },
 
@@ -54,13 +59,13 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       key: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        fontSize: '14px',
-        lineHeight: '16px',
-        paddingTop: 16,
-        paddingBottom: 16,
+        display       : 'flex',
+        flexDirection : 'row',
+        alignItems    : 'center',
+        fontSize      : 14,
+        lineHeight    : '16px',
+        paddingTop    : 16,
+        paddingBottom : 16
       },
       icon: {
         color: this.state.color
@@ -68,26 +73,27 @@ module.exports = React.createClass({
     }
   },
 
-  handleMouseOver: function (e) {
-    this.setState({'color': this.props.hoverColor})
+  handleMouseOver: function (event) {
+    this.setState({'color': this.props.hoverColor});
   },
 
-  handleMouseLeave: function (e) {
-    this.setState({'color': this.props.color})
+  handleMouseLeave: function (event) {
+    this.setState({'color': this.props.color});
   },
 
   handleClick: function (event) {
-    this.setState({'color': this.props.color})
+    this.setState({'color': this.props.color});
     this.refs.snackbar.show();
   },
 
   render: function () {
+    var styles = this.getStyles();
 
     return (
 
       <div
-        className   = {cssClasses}
-        style       = {this.getStyles().key}>
+        className   = {this.props.className}
+        style       = {styles.key}>
           <div
             ref       = "key"
             className = "col-xs-28">
@@ -99,14 +105,16 @@ module.exports = React.createClass({
             onClick     = {this.handleClick}
             onMouseOver = {this.handleMouseOver}
             onMouseOut  = {this.handleMouseLeave}
-            style       = {this.getStyles().icon}
+            style       = {styles.icon}
             className   = "synicon-content-copy col-xs-4" />
         </ReactZeroClipboard>
 
-        <Snackbar ref="snackbar" message="API key copied to the clipboard" />
+        <Snackbar
+          ref="snackbar"
+          message="API key copied to the clipboard" />
       </div>
 
     );
-
   }
-});
+
+}));

@@ -1,29 +1,40 @@
-var React       = require('react'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    Paper       = require('material-ui/lib/paper'),
-    Colors      = require('material-ui/lib/styles/colors');
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var cssClasses = classNames('col-xs-8');
 
 var Header = React.createClass({
-  render: function () {
-    var styles = {
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
+    }
+  },
+
+  getStyles: function () {
+    return {
       fontSize    : 20,
       fontWeight  : 500
-    };
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
-      <div style={styles} className={cssClasses}>
+      <div
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     )
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnName',
 
@@ -40,8 +51,9 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      color: 'rgba(0,0,0,.54)',
-      hoverColor: Colors.blue600
+      color      : 'rgba(0,0,0,.54)',
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     };
   },
 
@@ -49,6 +61,19 @@ module.exports = React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
+    }
+  },
+
+  getStyles: function () {
+    return {
+      display         : 'flex',
+      flexDirection   : 'row',
+      fontSize        : 12,
+      paddingTop      : 16,
+      paddingBottom   : 16,
+      alignSelf       : 'center',
+      cursor          : 'pointer',
+      color           : this.state.color
     }
   },
 
@@ -65,21 +90,12 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var style = {
-      display         : 'flex',
-      flexDirection   : 'row',
-      fontSize        : 12,
-      paddingTop      : 16,
-      paddingBottom   : 16,
-      alignSelf       : 'center',
-      cursor          : 'pointer',
-      color           : this.state.color
-    };
+    var styles = this.getStyles();
 
     return (
       <div
-        className   = {cssClasses}
-        style       = {style}
+        className   = {this.props.className}
+        style       = {styles}
         onMouseOver = {this.handleMouseOver}
         onMouseOut  = {this.handleMouseLeave}>
         {this.props.children}
@@ -87,4 +103,4 @@ module.exports = React.createClass({
     );
 
   }
-});
+}));

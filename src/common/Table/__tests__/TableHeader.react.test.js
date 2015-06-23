@@ -5,6 +5,6 @@ describe("TableHeader.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var TableHeader = require('../TableHeader.react');
+    // var TableHeader = require('../TableHeader.react');
   });
 });

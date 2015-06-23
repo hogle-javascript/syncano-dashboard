@@ -52,7 +52,22 @@ or if you are using `fish` shell:
     $ set -g -x OAUTH_PROXY_URL xx
 
 
-
 # Icons
 
 We are using set of [Material Design Icons](http://materialdesignicons.com/)
+
+
+# E2E Testing
+
+We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
+**nightwatchjs** requires few binary files which can be installed via proper gulp command:
+
+    $ gulp nightwatch-setup:mac32
+    $ gulp nightwatch-setup:linux32
+    $ gulp nightwatch-setup:linux64
+    $ gulp nightwatch-setup:win32
+
+If you are ready just run dev server and start testing:
+
+    $ npm start
+    $ npm run-script nightwatch

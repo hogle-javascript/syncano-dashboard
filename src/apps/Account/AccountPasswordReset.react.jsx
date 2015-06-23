@@ -4,6 +4,7 @@ var React           = require('react'),
     Link            = Router.Link,
 
     // Utils
+    FormMixin       = require('../../mixins/FormMixin'),
     ValidationMixin = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
@@ -14,9 +15,7 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
-
-    Notification    = require('../../common/Notification/Notification.react');
+    Paper           = mui.Paper;
 
 
 require('./Account.sass');
@@ -28,73 +27,46 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin
+
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
     email: {
       presence: true,
-      email: true
-    }
-  },
-
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        AuthActions.passwordReset(this.state.email);
+      email: {
+        message: '^Invalid email address'
       }
-    }.bind(this));
+    }
   },
 
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
-  renderFeedback: function () {
-    if (!this.state.feedback || this.state.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification>{this.state.feedback}</Notification>
-    );
+  handleSuccessfullValidation: function (event) {
+    AuthActions.passwordReset(this.state.email);
   },
 
   render: function() {
     return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
-            <p className="text--gray text--left">Reset password</p>
+            <p className="">Reset your password</p>
           </div>
-          {this.renderError()}
-          {this.renderFeedback()}
+          {this.renderFormNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join()}
+              errorText={this.getValidationMessages('email').join(' ')}
               name="email"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="email"
               hintText="Your email"
               fullWidth={true} />
@@ -102,13 +74,13 @@ module.exports = React.createClass({
               type="submit"
               label="Reset password"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">
               <li><p><Link to="signup">Create your account</Link></p></li>
-              <li><p>Already have an account? <Link to="login">Login</Link>.</p></li>
+              <li><p>Already have an account? <Link to="login">Login</Link></p></li>
             </ul>
           </div>
         </Paper>

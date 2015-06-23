@@ -1,26 +1,26 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
-    Link                  = Router.Link,
+var React                = require('react'),
+    Reflux               = require('reflux'),
+    Router               = require('react-router'),
+    Link                 = Router.Link,
 
     // Utils
-    ValidationMixin       = require('../../mixins/ValidationMixin'),
+    FormMixin            = require('../../mixins/FormMixin'),
+    ValidationMixin      = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
-    SessionStore          = require('../Session/SessionStore'),
-    AuthStore             = require('./AuthStore'),
-    AuthActions           = require('./AuthActions'),
-    AuthConstants         = require('./AuthConstants'),
+    SessionStore         = require('../Session/SessionStore'),
+    AuthStore            = require('./AuthStore'),
+    AuthActions          = require('./AuthActions'),
+    AuthConstants        = require('./AuthConstants'),
 
     // Components
-    mui                   = require('material-ui'),
-    TextField             = mui.TextField,
-    RaisedButton          = mui.RaisedButton,
-    Paper                 = mui.Paper,
+    mui                  = require('material-ui'),
+    TextField            = mui.TextField,
+    RaisedButton         = mui.RaisedButton,
+    Paper                = mui.Paper,
 
-    SocialAuthButton      = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList  = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Notification          = require('../../common/Notification/Notification.react');
+    SocialAuthButton     = require('../../common/SocialAuthButton/SocialAuthButton.react'),
+    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
 
 
 require('./Account.sass');
@@ -33,13 +33,17 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin
+
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
     email: {
       presence: true,
-      email: true
+      email: {
+        message: '^Invalid email address'
+      }
     },
     password: {
       presence: true
@@ -68,21 +72,11 @@ module.exports = React.createClass({
     }
   },
 
-  handleSubmit: function (event) {
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function(isValid){
-      if (isValid === true) {
-        AuthActions.passwordSignUp({
-          email: this.state.email,
-          password: this.state.password
-        });
-      }
-    }.bind(this));
+  handleSuccessfullValidation: function () {
+    AuthActions.passwordSignUp({
+      email: this.state.email,
+      password: this.state.password
+    });
   },
 
   handleSocialSignup: function (network) {
@@ -94,10 +88,9 @@ module.exports = React.createClass({
   renderSocialButton: function (network) {
     return (
       <SocialAuthButton
-          icon={"synicon-" + network}
-          label={"Sign up with " + network}
-          handleClick={this.handleSocialSignup(network)}
-        />
+          icon        = {'synicon-' + network}
+          label       = {'Sign up with ' + network}
+          handleClick = {this.handleSocialSignup(network)}/>
     )
   },
 
@@ -113,23 +106,15 @@ module.exports = React.createClass({
     return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-
-    return (
-      <Notification type="error">{this.state.errors.feedback}</Notification>
-    );
-  },
-
   render: function () {
     return (
       <div className="account-container">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper
+          className = "account-container__content"
+          rounded   = {false}>
           <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Try it now and start creating your apps</p>
             <small>
@@ -137,16 +122,16 @@ module.exports = React.createClass({
                inputting any credit card information.
             </small>
           </div>
-          {this.renderError()}
+          {this.renderFormNotifications()}
           <form
-            onSubmit={this.handleSubmit}
+            onSubmit={this.handleFormValidation}
             className="account-container__content__form"
             acceptCharset="UTF-8"
             method="post">
             <TextField
               ref="email"
               valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join()}
+              errorText={this.getValidationMessages('email').join(' ')}
               name="email"
               className="text-field"
               autoComplete="email"
@@ -155,10 +140,10 @@ module.exports = React.createClass({
             <TextField
               ref="password"
               valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join()}
+              errorText={this.getValidationMessages('password').join(' ')}
               type="password"
               name="password"
-              className="text-field"
+              className="text-field vm-4-b"
               autoComplete="password"
               hintText="Password"
               fullWidth={true} />
@@ -166,7 +151,7 @@ module.exports = React.createClass({
               type="submit"
               label="Sign up for free"
               labelStyle={{fontSize: '16px'}}
-              style={{width: '100%'}}
+              style={{width: '100%', boxShadow: 'none'}}
               primary={true} />
           </form>
           {this.renderSocialButtons()}
@@ -176,7 +161,7 @@ module.exports = React.createClass({
             </ul>
           </div>
         </Paper>
-        <p className="vm-0-b text--center">By signing up you agree to our <Link to="login"> Terms of Use and Privacy Policy</Link>.</p>
+        <p className="vm-0-b text--center">By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>
       </div>
     );
   }

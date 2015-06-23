@@ -149,7 +149,7 @@ module.exports = React.createClass({
             name              = "description"
             style             = {{width:'100%'}}
             valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join()}
+            errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = "Label of API key"
             floatingLabelText = "Label" />
 

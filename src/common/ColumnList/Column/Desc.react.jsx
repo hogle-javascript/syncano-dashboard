@@ -1,51 +1,70 @@
-var React       = require('react'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    Paper       = require('material-ui/lib/paper'),
-    Colors      = require('material-ui/lib/styles/colors');
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-// Same classes for column and it's header
-var cssClasses = classNames('col-flex-1');
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.DESC
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnDesc',
 
   propTypes: {
-    id: React.PropTypes.string,
-    color: React.PropTypes.string.isRequired,
-    hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func
+    id          : React.PropTypes.string,
+    color       : React.PropTypes.string.isRequired,
+    hoverColor  : React.PropTypes.string.isRequired,
+    handleClick : React.PropTypes.func
   },
 
   statics :{
     Header: Header
   },
 
-
   getDefaultProps: function() {
     return {
-      color: 'rgba(0,0,0,.54)',
-      hoverColor: Colors.blue600
+      color      : 'rgba(0,0,0,.54)',
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.DESC
     };
   },
 
   getInitialState: function () {
     return {
-      color: this.props.color,
-      hoverColor: this.props.hoverColor
+      color      : this.props.color,
+      hoverColor : this.props.hoverColor
+    }
+  },
+
+  getStyles: function () {
+    return {
+      display        : 'flex',
+      flexDirection  : 'row',
+      alignItems     : 'center',
+      fontSize       : 12,
+      lineHeight     : '16px',
+      paddingTop     : 16,
+      paddingBottom  : 16,
+      wordBreak      : 'break-all',
+      color          : this.props.color
     }
   },
 
@@ -54,24 +73,15 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var style = {
-      display        : 'flex',
-      flexDirection  : 'row',
-      alignItems     : 'center',
-      fontSize       : '12px',
-      lineHeight     : '16px',
-      paddingTop     : 16,
-      paddingBottom  : 16,
-      color          : this.props.color
-    };
+    var styles = this.getStyles();
 
     return (
       <div
-        className={cssClasses}
-        style={style}>
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     );
 
   }
-});
+}));

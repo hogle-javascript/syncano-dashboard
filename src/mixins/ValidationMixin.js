@@ -1,5 +1,5 @@
-var objectAssign    = require('object-assign'),
-    validate        = require('validate.js');
+var objectAssign = require('object-assign'),
+    validate     = require('validate.js');
 
 
 validate.moment = require('moment');
@@ -45,6 +45,25 @@ var ValidationMixin = {
       errors: errors
     }, this._invokeCallback.bind(this, key, callback));
 
+  },
+
+  handleFormValidation: function (event) {
+    event.preventDefault();
+
+    // FormMixin compatibility
+    if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {
+      return;
+    }
+
+    this.validate(function(isValid, errors){
+      if (isValid === true) {
+        if (this.handleSuccessfullValidation !== undefined) {
+          this.handleSuccessfullValidation.call(this)
+        }
+      } else if (this.handleFailedValidation !== undefined) {
+        this.handleFailedValidation.call(this, errors);
+      }
+    }.bind(this));
   },
 
   handleValidation: function(key, callback) {

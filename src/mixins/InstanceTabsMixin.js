@@ -1,50 +1,36 @@
 var InstanceTabsMixin = {
   headerMenuItems: function() {
+    var params = {
+      instanceName: this.getParams().instanceName
+    };
 
-    var tabs = [
+    return [
       {
         label: 'Data Browser',
         route: 'data-objects',
-      },
-      {
-        label: 'Classes',
-        route: 'classes',
-      },
-      {
-        label: 'API Keys',
-        route: 'api-keys',
-      },
-      {
-        label: 'Admins',
-        route: 'admins',
+        params: params
       },
       {
         label: 'Users',
         route: 'users',
+        params: params
       },
       {
         label: 'CodeBoxes',
         route: 'codeboxes',
+        params: params
       },
       {
         label: 'Webhooks',
         route: 'webhooks',
+        params: params
       },
       {
         label: 'Tasks',
         route: 'tasks',
+        params: params
       }
     ];
-
-    var currentRoute = this.getRoutes().slice(-1)[0].name;
-    tabs.map(function(tab) {
-      tab.params = {instanceName: this.getParams().instanceName};
-      if (tab.route == currentRoute){
-       tab.active = true;
-      }
-    }.bind(this));
-
-    return tabs;
   },
 
 };

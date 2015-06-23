@@ -5,6 +5,6 @@ describe("Accordion.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var Accordion = require('../Accordion.react');
+    // var Accordion = require('../Accordion.react');
   });
 });

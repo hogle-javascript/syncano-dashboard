@@ -11,7 +11,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
       return {
-          headerNameWidth: 11,  
+          headerNameWidth: 11
       };
   },
 
@@ -21,14 +21,14 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.setState({
-      headerNameWidth: this.props.initialHeaderWidth,
+      headerNameWidth: this.props.initialHeaderWidth
     }, function() {
       var updatedHeaderNameWidth = this.state.headerNameWidth;
       this.props.headerColumns.forEach(function(column) {
         updatedHeaderNameWidth -= column.width;
       });
       this.setState({
-        headerNameWidth: updatedHeaderNameWidth,
+        headerNameWidth: updatedHeaderNameWidth
       }, function() {
         this.refs.title.getDOMNode().style.flex = this.state.headerNameWidth;
       });

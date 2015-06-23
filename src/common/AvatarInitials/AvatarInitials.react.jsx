@@ -26,7 +26,7 @@ module.exports = React.createClass({
 
   render: function() {
     var initials;
-    var colors = ColorStore.getAllColors();
+    var colors = ColorStore.getOldColorPickerPalette();
     var nameFragments = this.props.name.split(' ');
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();
@@ -37,11 +37,11 @@ module.exports = React.createClass({
         return nameFragment.charAt(0).toUpperCase();
       }).join('');
     }
-    var style = {
+    var styles = {
       backgroundColor: this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length]
     };
     return (
-      <div className="avatar-initials" style={style}>
+      <div className="avatar-initials" style={styles}>
         <div className="avatar-initials-text">{initials}</div>
       </div>
     );

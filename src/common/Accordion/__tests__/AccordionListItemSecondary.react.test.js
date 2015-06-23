@@ -5,6 +5,6 @@ describe("AccordionListItemSecondary.react", function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
-    var AccordionListItemSecondary = require('../AccordionListItemSecondary.react');
+    // var AccordionListItemSecondary = require('../AccordionListItemSecondary.react');
   });
 });

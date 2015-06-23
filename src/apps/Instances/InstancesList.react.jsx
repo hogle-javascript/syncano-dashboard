@@ -7,9 +7,10 @@ var React  = require('react'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    InstancesActions  = require('./InstancesActions'),
-    InstancesStore    = require('./InstancesStore'),
+    ColorStore       = require('../../common/Color/ColorStore'),
+    SessionActions   = require('../Session/SessionActions'),
+    InstancesActions = require('./InstancesActions'),
+    InstancesStore   = require('./InstancesStore'),
 
     // Components
     mui               = require('material-ui'),
@@ -33,7 +34,6 @@ module.exports = React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
-    Reflux.connect(InstancesStore),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -55,6 +55,7 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function (id, state) {
+    console.info('InstancesList::handleItemIconClick', id, state);
     InstancesActions.checkItem(id, state);
   },
 
@@ -64,13 +65,13 @@ module.exports = React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
     return (
       <Item key={item.name}>
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}
-          background      = {item.metadata.color}
+          background      = {ColorStore.getColorByName(item.metadata.color)}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
@@ -87,23 +88,21 @@ module.exports = React.createClass({
       return <Loading visible={true} />;
     }
 
-    var instances = this.state.items.filter(this.props.filter);
-
-    var items = instances.map(function (item) {
-      return this.generateItem(item)
+    var items = this.state.items.map(function (item) {
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
+    } else if (this.props.emptyItemContent) {
+      return (
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
+      );
     }
-    return (
-      <EmptyListItem
-        handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </EmptyListItem>
-    );
   },
 
   render: function () {

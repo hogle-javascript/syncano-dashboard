@@ -20,6 +20,7 @@ var React  = require('react'),
     ListContainer   = require('../../common/Lists/ListContainer.react'),
     List            = require('../../common/Lists/List.react'),
     Item            = require('../../common/ColumnList/Item.react'),
+    EmptyListItem   = require('../../common/ColumnList/EmptyListItem.react'),
     Header          = require('../../common/ColumnList/Header.react'),
     LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
     ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
@@ -45,7 +46,7 @@ module.exports = React.createClass({
     ApiKeysActions.checkItem(id, state);
   },
 
-  generateItem: function (item) {
+  renderItem: function (item) {
 
     var ignore_acl = null,
         allow_user_create = null;
@@ -85,7 +86,7 @@ module.exports = React.createClass({
     var instances = this.state.items;
 
     var items = instances.map(function (item) {
-      return this.generateItem(item)
+      return this.renderItem(item)
     }.bind(this));
 
     if (items.length > 0) {
@@ -93,7 +94,12 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem
+        handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
   render: function () {

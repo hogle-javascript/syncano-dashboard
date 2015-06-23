@@ -1,25 +1,29 @@
-var React       = require('react'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    Paper       = require('material-ui/lib/paper'),
-    Colors      = require('material-ui/lib/styles/colors');
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-// Same classes for column and it's header
-var cssClasses = classNames('col-xs-4');
 
 var Header = React.createClass({
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.TEXT
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'ColumnText',
 
@@ -36,7 +40,8 @@ module.exports = React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.TEXT
     };
   },
 
@@ -65,14 +70,15 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    var styles = this.getStyles();
 
     return (
       <div
-        className = {cssClasses}
-        style     = {this.getStyles()}>
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     );
 
   }
-});
+}));

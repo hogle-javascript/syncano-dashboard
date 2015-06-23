@@ -1,12 +1,14 @@
 var React       = require('react'),
-    Router      = require('react-router'),
     Reflux      = require('reflux'),
+    Router      = require('react-router'),
+    Link        = Router.Link,
 
     AuthStore   = require('./AuthStore'),
     AuthActions = require('./AuthActions'),
 
-    mui             = require('material-ui'),
-    Paper           = mui.Paper;
+    mui         = require('material-ui'),
+    Paper       = mui.Paper;
+
 
 module.exports = React.createClass({
 
@@ -33,9 +35,9 @@ module.exports = React.createClass({
     return (
       <div className="account-container" ref="loginPage">
         <div className="account-logo">
-          <img src="/img/syncano-logo.svg" />
+          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
         </div>
-        <Paper className="account-container__content">
+        <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
             <p className="vm-0-b">{this.state.status}</p>
           </div>

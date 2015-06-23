@@ -1,19 +1,23 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-    DialogFormMixin = require('../../mixins/DialogFormMixin'),
+    ValidationMixin  = require('../../mixins/ValidationMixin'),
+    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     InstancesActions = require('./InstancesActions'),
     InstancesStore   = require('./InstancesStore'),
+    ColorStore       = require('../../common/Color/ColorStore'),
+    IconStore        = require('../../common/Icon/IconStore'),
 
     // Components
-    mui          = require('material-ui'),
-    TextField    = mui.TextField,
-    DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog;
+    mui              = require('material-ui'),
+    TextField        = mui.TextField,
+    DropDownMenu     = mui.DropDownMenu,
+    Dialog           = mui.Dialog,
+    FlatButton       = mui.FlatButton;
 
 
 module.exports = React.createClass({
@@ -25,6 +29,7 @@ module.exports = React.createClass({
     React.addons.LinkedStateMixin,
     DialogFormMixin,
     ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -33,8 +38,6 @@ module.exports = React.createClass({
       length: {
         minimum: 5
       }
-    },
-    description: {
     }
   },
 
@@ -73,16 +76,27 @@ module.exports = React.createClass({
     InstancesActions.createInstance({
       name        : this.state.name,
       description : this.state.description,
+      metadata: {
+        color     : ColorStore.getRandomColorName(),
+        icon      : IconStore.getRandomIconPickerIcon()
+      }
     });
   },
 
   render: function () {
-    var title = this.props.mode === 'edit' ? 'Edit': 'Add';
-    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create Instance';
+    var title = this.props.mode === 'edit' ? 'Update an Instance': 'Create an Instance';
 
-    var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
+    var dialogCustomActions = [
+      <FlatButton
+        label      = "Cancel"
+        onTouchTap = {this.handleCancel}
+        ref        = "cancel" />,
+
+      <FlatButton
+        label      = "Confirm"
+        primary    = {true}
+        onTouchTap = {this.handleFormValidation}
+        ref        = "submit" />
     ];
 
     return (
@@ -90,35 +104,36 @@ module.exports = React.createClass({
         ref             = "dialogRef"
         title           = {title}
         openImmediately = {this.props.openImmediately}
-        actions         = {dialogStandardActions}
+        actions         = {dialogCustomActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit      = {this.handleSubmit}
-          acceptCharset = "UTF-8"
-          method        = "post">
-
-        <TextField
-            ref               = "name"
-            name              = "name"
-            style             = {{width:'100%'}}
-            disabled          = {this.props.mode === 'edit' ? true: false}
-            valueLink         = {this.linkState('name')}
-            errorText         = {this.getValidationMessages('name').join()}
-            hintText          = "Short name for your Instance"
-            floatingLabelText = "Name of Instance" />
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
           <TextField
-            ref               = "description"
-            name              = "description"
-            multiLine         = {true}
-            style             = {{width:'100%'}}
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join()}
-            hintText          = "Multiline description of Instance (optional)"
-            floatingLabelText = "Description of Instance" />
+              ref               = "name"
+              name              = "name"
+              fullWidth         = {true}
+              disabled          = {this.props.mode === 'edit' ? true : false}
+              valueLink         = {this.linkState('name')}
+              errorText         = {this.getValidationMessages('name').join(' ')}
+              hintText          = "Short name for your Instance"
+              floatingLabelText = "Name" />
 
-        </form>
+            <TextField
+              ref               = "description"
+              name              = "description"
+              multiLine         = {true}
+              fullWidth         = {true}
+              valueLink         = {this.linkState('description')}
+              errorText         = {this.getValidationMessages('description').join(' ')}
+              hintText          = "Multiline description of Instance (optional)"
+              floatingLabelText = "Description" />
+
+          </form>
         </div>
       </Dialog>
     );

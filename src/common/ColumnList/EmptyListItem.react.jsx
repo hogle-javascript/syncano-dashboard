@@ -1,4 +1,5 @@
 var React           = require('react'),
+    Radium          = require('radium'),
 
     mui             = require('material-ui'),
     StylePropable   = mui.Mixins.StylePropable,
@@ -7,44 +8,53 @@ var React           = require('react'),
     Avatar          = mui.Avatar,
     FontIcon        = mui.FontIcon;
 
-require('./EmptyListItem.sass');
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'Item',
 
   mixins: [StylePropable],
 
   getStyles: function() {
-    var style = {
+    var styles = {
       listItem: {
-        display: 'flex',
-        marginBottom: '0px',
-        border: '1px dashed #ddd',
-        backgroundColor: '#fff',
-        paddingTop: 8,
-        paddingBottom: 8
+        display         : 'flex',
+        marginBottom    : 0,
+        border          : '1px dashed #ddd',
+        backgroundColor : '#fff',
+        paddingTop      : 8,
+        paddingBottom   : 8,
+        color           : 'rgba(0, 0, 0, 0.54)',
+        fontSize        : 14
+      },
+      icon: {
+        margin: 0
       },
       leftAvatar: {
-        margin: 0
+        top: '50%',
+        transform: 'translateY(-50%)'
       }
     };
-    return this.mergeStyles(style, this.props.style);
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function () {
-    var style      = this.getStyles(),
-        icon       = <FontIcon className="synicon-plus" style={style.leftAvatar} />,
-        leftAvatar = <Avatar icon={icon} />;
+    var styles     = this.getStyles(),
+        icon       = <FontIcon
+                       className = "synicon-plus"
+                       style     = {styles.icon} />,
+        leftAvatar = <Avatar
+                       icon  = {icon}
+                       style = {styles.leftAvatar} />;
 
     return (
       <ListItem
-        className="empty-list-item"
-        onClick={this.props.handleClick}
-        style={style.listItem}
-        leftAvatar={leftAvatar}>
+        className  = "empty-list-item"
+        onClick    = {this.props.handleClick}
+        style      = {styles.listItem}
+        leftAvatar = {leftAvatar}>
         {this.props.children}
       </ListItem>
     )
   }
-});
+}));

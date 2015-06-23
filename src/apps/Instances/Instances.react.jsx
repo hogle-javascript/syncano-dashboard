@@ -7,6 +7,7 @@ var React  = require('react'),
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
+    Show              = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
@@ -18,8 +19,8 @@ var React  = require('react'),
     mui                   = require('material-ui'),
     Dialog                = mui.Dialog,
     Container             = require('../../common/Container/Container.react'),
-    FloatingActionButton  = require('../../common/Fab/Fab.react'),
     FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
@@ -27,15 +28,19 @@ var React  = require('react'),
     AddDialog     = require('./InstancesAddDialog.react');
 
 
+require('./Instances.sass');
+
+
 module.exports = Radium(React.createClass({
 
   displayName: 'Instances',
 
   mixins: [
-    Reflux.connect(InstancesStore),
-    HeaderMixin,
     Router.State,
     Router.Navigation,
+
+    Reflux.connect(InstancesStore),
+    HeaderMixin,
     DialogsMixin
   ],
 
@@ -50,7 +55,7 @@ module.exports = Radium(React.createClass({
       params: {
         ref  : "addInstanceDialog",
         mode : "add"
-      },
+      }
     }, {
       dialog: AddDialog,
       params: {
@@ -70,13 +75,13 @@ module.exports = Radium(React.createClass({
       dialog: Dialog,
       params: {
         ref:    "deleteInstanceDialog",
-        title:  "Delete Instance",
+        title:  "Delete an Instance",
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure", onClick: this.handleDelete}
+          {text: "Confirm", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?',
+        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?'
       }
      }]
   },
@@ -103,11 +108,11 @@ module.exports = Radium(React.createClass({
   headerMenuItems: function () {
     return [
       {
-        label: 'Instances',
-        route: 'instances',
+        label  : 'Instances',
+        route  : 'instances'
       }, {
-        label: 'Solutions',
-        route: 'dashboard',
+        label : 'Solutions',
+        route : 'solutions'
       }];
   },
 
@@ -136,104 +141,68 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  // List filters
-  filterMyInstances: function(item) {
-    return item.owner.email === SessionStore.user.email;
-  },
-
-  filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.user.email;
-  },
-
-  getStyles: function() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListTopButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
-
   render: function () {
-
-    var checkedInstances = InstancesStore.getNumberOfChecked(),
-        styles = this.getStyles();
+    var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={[styles.fabListTop, {display: checkedInstances ? 'flex': 'none'}]}>
+        <Show if={checkedInstances > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to unselect Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {InstancesActions.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect Instances"
+              mini          = {true}
+              onClick       = {InstancesActions.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to delete Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteInstanceDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Instances"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteInstanceDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to edit Instance" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedInstances > 1}
-            onClick       = {this.showDialog('editInstanceDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Instance"
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showDialog('editInstanceDialog')}
+              iconClassName = "synicon-pencil" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to customize Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            secondary     = {true}
-            mini          = {true}
-            disabled      = {checkedInstances > 1}
-            onClick       = {this.showDialog('pickColorIconDialog')}
-            iconClassName = "synicon-palette" />
+            <FabListItem
+              label         = "Click here to customize Instances"
+              secondary     = {true}
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showDialog('pickColorIconDialog')}
+              iconClassName = "synicon-palette" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={styles.fabListBottom}>
-          <FloatingActionButton
-            label         = "Click here to add Instances" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList>
+          <FabListItem
+            label         = "Click here to add Instances"
             onClick       = {this.showDialog('addInstanceDialog')}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <InstancesList
           name                 = "My instances"
-          items                = {this.state.instances}
-          filter               = {this.filterMyInstances}
+          items                = {InstancesStore.getMyInstances()}
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
           emptyItemContent     = "Create an instance" />
 
+        <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>
         <InstancesList
-          name                 = "Other instances"
-          items                = {this.state.instances}
-          filter               = {this.filterOtherInstances}
-          listType             = "otherInstances"
-          viewMode             = "stream"
-          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
-          emptyItemContent     = "Create an instance" />
+          name                 = "Shared with me"
+          items                = {InstancesStore.getOtherInstances()}
+          listType             = "sharedInstances"
+          viewMode             = "stream" />
+        </Show>
 
       </Container>
     );

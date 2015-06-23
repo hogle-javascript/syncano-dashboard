@@ -1,15 +1,19 @@
-var Reflux            = require('reflux'),
+var Reflux              = require('reflux'),
 
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
 
-    SessionStore      = require('../Session/SessionStore'),
-    AuthStore         = require('../Account/AuthStore'),
-    CodeBoxesActions  = require('./CodeBoxesActions');
+    SessionStore        = require('../Session/SessionStore'),
+    AuthStore           = require('../Account/AuthStore'),
+    CodeBoxesActions    = require('./CodeBoxesActions');
 
 
 var CodeBoxesStore = Reflux.createStore({
-  mixins: [CheckListStoreMixin],
   listenables: CodeBoxesActions,
+  mixins: [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   getInitialState: function () {
     return {
@@ -33,21 +37,17 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   init: function () {
-
-    this.data = {
-      items: []
-    };
+    this.data = this.getInitialState();
 
     this.langMap = {
-      python: 'python',
-      nodejs: 'javascript',
-      ruby: 'ruby',
-      golang: 'golang'
+      python : 'python',
+      nodejs : 'javascript',
+      ruby   : 'ruby',
+      golang : 'golang'
     };
 
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   getEditorMode: function (codeBox) {
@@ -76,6 +76,15 @@ var CodeBoxesStore = Reflux.createStore({
     return runtimeIndex;
   },
 
+  getCodeBoxesDropdown: function() {
+    return this.data.items.map(function(item){
+      return {
+        payload : item.id,
+        text    : item.label
+      }
+    });
+  },
+
   getCurrentCodeBox: function() {
 
     if (!this.data.currentCodeBoxId){
@@ -92,10 +101,32 @@ var CodeBoxesStore = Reflux.createStore({
     return currentItem;
   },
 
+  getCodeBoxById: function(id) {
+    var codeBox = null;
+    this.data.items.some(function(item){
+      if (item.id.toString() === id.toString()) {
+        codeBox = item;
+        return true;
+      }
+    }.bind(this));
+    return codeBox;
+  },
+
+  getCodeBoxIndex: function(id) {
+    var codeBoxIndex = null;
+    this.data.items.some(function(item, index) {
+      if (item.id.toString() === id.toString()) {
+        codeBoxIndex = index;
+        return true;
+      }
+    });
+    return codeBoxIndex;
+  },
+
   refreshData: function () {
     console.debug('CodeBoxesStore::refreshData');
 
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       CodeBoxesActions.getCodeBoxRuntimes();
       CodeBoxesActions.getCodeBoxes();
       if (this.data.currentCodeBoxId) {
