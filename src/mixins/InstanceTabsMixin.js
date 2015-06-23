@@ -11,6 +11,11 @@ var InstanceTabsMixin = {
         params: params
       },
       {
+        label: 'Classes',
+        route: 'classes',
+        params: params,
+      },
+      {
         label: 'Users',
         route: 'users',
         params: params

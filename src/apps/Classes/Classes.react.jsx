@@ -1,75 +1,200 @@
-var React       = require('react'),
-    State       = require('react-router').State,
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
-    HeaderMixin = require('../Header/HeaderMixin');
+    // Utils
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+
+    // Stores and Actions
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    ClassesActions        = require('./ClassesActions'),
+    ClassesStore          = require('./ClassesStore'),
+
+    // Components
+    mui                   = require('material-ui'),
+    FloatingActionButton  = mui.FloatingActionButton,
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+
+    // Local components
+    ClassesList           = require('./ClassesList.react'),
+    AddDialog             = require('./ClassesAddDialog.react');
+
 
 module.exports = React.createClass({
 
   displayName: 'Classes',
 
   mixins: [
+    Router.State,
+    Router.Navigation,
+
+    Reflux.connect(ClassesStore),
     HeaderMixin,
-    State,
+    DialogsMixin,
+    InstanceTabsMixin
   ],
 
-headerBreadcrumbs: function () {
-    var instanceName = this.getParams().instanceName;
-    return [{
-      route: 'instances',
-      label: 'Instances',
-      params: {instanceName: instanceName}
-    },{
-      route: 'instance',
-      label: instanceName,
-      params: {instanceName: instanceName}
-    },{
-      route: 'classes',
-      label: 'Classes',
-      params: {instanceName: instanceName}
-    }]
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('Classes::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
   },
 
-  headerMenuItems: function() {
-    var params = {instanceName: this.getParams().instanceName};
-    return [
-      {
-        label: 'Data Browser', 
-        route: 'data-objects', 
-        params: params, 
-      }, {
-        label: 'Classes', 
-        route: 'classes', 
-        params: params,
-      }, {
-        label: 'API Keys', 
-        route: 'api-keys', 
-        params: params
-      }, {
-        label: 'Admins', 
-        route: 'admins', 
-        params: params
-      }, {
-        label: 'Users', 
-        route: 'users', 
-        params: params
-      }, {
-        label: 'CodeBoxes', 
-        route: 'codeboxes', 
-        params: params
-      }, {
-        label: 'Webhooks', 
-        route: 'webhooks', 
-        params: params
-      }, {
-        label: 'Tasks', 
-        route: 'tasks', 
-        params: params
-      }];
+  componentWillMount: function() {
+    console.info('Classes::componentWillMount');
+    ClassesStore.refreshData();
+  },
+    // Dialogs config
+  initDialogs: function () {
+    var checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
+    return [{
+      dialog: AddDialog,
+      params: {
+        ref  : "addClassDialog",
+        mode : "add"
+      },
+    },{
+      dialog: AddDialog,
+      params: {
+        ref  : "editClassDialog",
+        mode : "edit"
+      },
+    },{
+      dialog: ColorIconPickerDialog,
+      params: {
+        ref          : "pickColorIconDialog",
+        mode         : "add",
+        initialColor : checkedItemIconColor.color,
+        initialIcon  : checkedItemIconColor.icon,
+        handleClick  : this.handleChangePalette
+      }
+    },{
+      dialog: Dialog,
+      params: {
+        ref: "deleteClassDialog",
+        title: "Delete API key",
+        actions: [
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : "Yes, I'm sure.",
+            onClick : this.handleDelete
+          }
+        ],
+        modal: true,
+        children: 'Do you really want to delete ' + ClassesStore.getCheckedItems().length +' Class(es)?',
+      }
+    }]
+  },
+  
+  handleChangePalette: function (color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+
+    ClassesActions.updateClass(
+      ClassesStore.getCheckedItem().name, {
+        metadata: JSON.stringify({
+          color : color,
+          icon  : icon
+        })
+      }
+    );
+    ClassesActions.uncheckAll()
+  },
+
+  handleDelete: function() {
+    console.info('Classes::handleDelete');
+    ClassesActions.removeClasses(ClassesStore.getCheckedItems());
+  },
+
+  handleReset: function() {
+    console.info('Classes::handleReset');
+    ClassesActions.resetClass(ClassesStore.getCheckedItem().id);
+  },
+
+  getStyles: function() {
+    return {
+      fabListTop: {
+        top: 200
+      },
+      fabListTopButton: {
+        margin: '5px 0'
+      },
+      fabListBottom: {
+        bottom: 100
+      }
+    }
   },
 
   render: function () {
+
+    var checkedClasses = ClassesStore.getNumberOfChecked(),
+        styles         = this.getStyles();
+
     return (
-      <div>Classes</div>
+      <Container>
+        {this.getDialogs()}
+
+        <FabList
+          style={{top: 200, display: checkedClasses ? 'block': 'none'}}>
+
+          <FloatingActionButton
+            label         = "Click here to unselect Api Keys" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {ClassesActions.uncheckAll}
+            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+
+          <FloatingActionButton
+            label         = "Click here to delete Classes" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            onClick       = {this.showDialog('deleteClassDialog')}
+            iconClassName = "synicon-delete" />
+
+          <FloatingActionButton
+            label         = "Click here to edit Class" // TODO: extend component
+            color         = "" // TODO: extend component
+            mini          = {true}
+            disabled      = {checkedClasses > 1}
+            onClick       = {this.showDialog('editClassDialog')}
+            iconClassName = "synicon-pencil" />
+
+          <FloatingActionButton
+            style         = {styles.fabListTopButton}
+            label         = "Click here to customize Instances" // TODO: extend component
+            color         = "" // TODO: extend component
+            secondary     = {true}
+            mini          = {true}
+            disabled      = {checkedClasses > 1}
+            onClick       = {this.showDialog('pickColorIconDialog')}
+            iconClassName = "synicon-palette" />
+
+        </FabList>
+
+        <FabList
+          style={{bottom: 100}}>
+          <FloatingActionButton
+            label         = "Click here to add Class" // TODO: extend component
+            color         = "" // TODO: extend component
+            onClick       = {this.showDialog('addClassDialog')}
+            iconClassName = "synicon-plus" />
+        </FabList>
+
+        <ClassesList
+          name                 = "Classes"
+          items                = {this.state.items}
+          emptyItemHandleClick = {this.showDialog('addClassDialog')}
+          emptyItemContent     = "Create a Class" />
+
+      </Container>
     );
   }
 
