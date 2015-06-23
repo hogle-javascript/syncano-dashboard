@@ -11,8 +11,14 @@ module.exports = Radium(React.createClass({
 
   mixins: [StylePropable],
 
+  getDefaultProps: function () {
+    return {
+      position: 'bottom'
+    }
+  },
+
   propTypes: {
-    handleClick: React.PropTypes.func.isRequired
+    position: React.PropTypes.string.isRequired
   },
 
   getStyles: function() {
@@ -24,12 +30,21 @@ module.exports = Radium(React.createClass({
       flexDirection: 'column',
       alignItems: 'flex-end'
     };
+
+    if (this.props.position === 'bottom') {
+      styles.bottom = '50px';
+    } else {
+      styles.top    = '200px';
+    }
+
     return this.mergeStyles(styles, this.props.style);
   },
 
   render: function() {
+    var styles = this.getStyles();
+
     return (
-      <div style={this.getStyles()}>
+      <div style={styles}>
         {this.props.children}
       </div>
     );
