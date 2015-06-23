@@ -4,6 +4,7 @@ var React           = require('react'),
     // Utils
     ValidationMixin = require('../../mixins/ValidationMixin'),
     DialogFormMixin = require('../../mixins/DialogFormMixin'),
+    FormMixin       = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     TriggersActions = require('./TriggersActions'),
@@ -27,7 +28,8 @@ module.exports = React.createClass({
     Reflux.connect(CodeBoxesStore, 'codeboxes'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -94,7 +96,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    console.log(this.state);
     var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
         submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create',
         dialogStandardActions = [
@@ -106,7 +107,7 @@ module.exports = React.createClass({
           {
             ref     : 'submit',
             text    : {submitLabel},
-            onClick : this.handleSubmit
+            onClick : this.handleFormValidation
           }
         ];
 
@@ -123,55 +124,56 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit      = {this.handleSubmit}
-          acceptCharset = "UTF-8"
-          method        = "post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "label"
-            name              = "label"
-            fullWidth         = {true}
-            valueLink         = {this.linkState('label')}
-            errorText         = {this.getValidationMessages('label').join()}
-            hintText          = "Label of the trigger"
-            floatingLabelText = "Label" />
+            <TextField
+              ref               = "label"
+              name              = "label"
+              fullWidth         = {true}
+              valueLink         = {this.linkState('label')}
+              errorText         = {this.getValidationMessages('label').join()}
+              hintText          = "Label of the trigger"
+              floatingLabelText = "Label" />
 
-          <SelectField
-            ref               = "signal"
-            name              = "signal"
-            floatingLabelText = "Signal"
-            fullWidth         = {true}
-            valueLink         = {this.linkState("signal")}
-            errorText         = {this.getValidationMessages('signal').join()}
+            <SelectField
+              ref               = "signal"
+              name              = "signal"
+              floatingLabelText = "Signal"
+              fullWidth         = {true}
+              valueLink         = {this.linkState("signal")}
+              errorText         = {this.getValidationMessages('signal').join()}
 
-            valueMember       = "payload"
-            displayMember     = "text"
-            menuItems         = {TriggersStore.getSignalsDropdown()} />
+              valueMember       = "payload"
+              displayMember     = "text"
+              menuItems         = {TriggersStore.getSignalsDropdown()} />
 
-          <SelectField
-            ref               = "doClass"
-            name              = "doClass"
-            floatingLabelText = "Class"
-            fullWidth         = {true}
-            valueLink         = {this.linkState("class")}
-            errorText         = {this.getValidationMessages('class').join()}
-            valueMember       = "payload"
-            displayMember     = "text"
-            menuItems         = {TriggersStore.getClassesDropdown()} />
+            <SelectField
+              ref               = "doClass"
+              name              = "doClass"
+              floatingLabelText = "Class"
+              fullWidth         = {true}
+              valueLink         = {this.linkState("class")}
+              errorText         = {this.getValidationMessages('class').join()}
+              valueMember       = "payload"
+              displayMember     = "text"
+              menuItems         = {TriggersStore.getClassesDropdown()} />
 
-          <SelectField
-            ref               = "codebox"
-            name              = "codebox"
-            floatingLabelText = "CodeBox"
-            valueLink         = {this.linkState("codebox")}
-            errorText         = {this.getValidationMessages('codebox').join()}
-            valueMember       = "payload"
-            displayMember     = "text"
-            style             = {{width: '50%'}}
-            menuItems         = {cb} />
+            <SelectField
+              ref               = "codebox"
+              name              = "codebox"
+              floatingLabelText = "CodeBox"
+              valueLink         = {this.linkState("codebox")}
+              errorText         = {this.getValidationMessages('codebox').join()}
+              valueMember       = "payload"
+              displayMember     = "text"
+              style             = {{width: '50%'}}
+              menuItems         = {cb} />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

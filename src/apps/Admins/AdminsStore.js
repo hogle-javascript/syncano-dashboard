@@ -2,7 +2,8 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
     AdminsActions       = require('./AdminsActions');
@@ -10,54 +11,42 @@ var Reflux              = require('reflux'),
 
 var AdminsStore = Reflux.createStore({
   listenables : AdminsActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   roleMenuItems: [
     {
-      payload: 'read',
-      text: 'read'
+      payload : 'read',
+      text    : 'read'
     },
     {
-      payload: 'write',
-      text: 'write'
+      payload : 'write',
+      text    : 'write'
     },
     {
-      payload: 'full',
-      text: 'full'
+      payload : 'full',
+      text    : 'full'
     }
   ],
 
   getInitialState: function () {
     return {
-      // Lists
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      isLoading: false
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   refreshData: function (data) {
     console.debug('AdminsStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       AdminsActions.getAdmins();
     }
   },
@@ -65,7 +54,7 @@ var AdminsStore = Reflux.createStore({
   getRoles: function () {
     return this.roleMenuItems;
   },
-  
+
   onGetAdmins: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -88,47 +77,11 @@ var AdminsStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateAdminFailure: function(payload) {
-    console.debug('AdminsStore::onCreateAdminCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
   onUpdateAdminCompleted: function(paylod) {
     console.debug('AdminsStore::onUpdateAdminCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  onUpdateAdminFailure: function(payload) {
-    console.debug('AdminsStore::onUpdateAdminFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
   },
 
   onRemoveAdminsCompleted: function(payload) {

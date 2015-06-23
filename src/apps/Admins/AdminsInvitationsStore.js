@@ -2,7 +2,8 @@ var Reflux                   = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
-  
+    StoreFormMixin           = require('../../mixins/StoreFormMixin'),
+
     //Stores & Actions
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions');
@@ -10,43 +11,31 @@ var Reflux                   = require('reflux'),
 
 var AdminsInvitationsStore = Reflux.createStore({
   listenables : AdminsInvitationsActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
 
   getInitialState: function () {
     return {
-      // Lists
       items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      isLoading: false
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   refreshData: function (data) {
     console.debug('AdminsInvitationsStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       AdminsInvitationsActions.getInvitations();
     }
   },
-  
+
   onGetInvitations: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -76,8 +65,7 @@ var AdminsInvitationsStore = Reflux.createStore({
   onResendInvitationCompleted: function() {
    this.data.hideDialogs = true;
    AdminsInvitationsActions.uncheckAll();
-  },
-
+  }
 
 });
 

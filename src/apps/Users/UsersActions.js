@@ -13,10 +13,12 @@ var UsersActions = Reflux.createActions({
   },
   createUser: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   updateUser: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   removeUsers: {

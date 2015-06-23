@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
+    Router           = require('react-router'),
 
     // Utils
     HeaderMixin      = require('../Header/HeaderMixin'),

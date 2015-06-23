@@ -41,14 +41,14 @@ module.exports = React.createClass({
     Router.Navigation,
   ],
 
-  getInitialState() {
+  getInitialState: function () {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading,
+      isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function (nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading

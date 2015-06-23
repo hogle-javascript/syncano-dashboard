@@ -4,6 +4,7 @@ var React                    = require('react'),
     // Utils
     ValidationMixin          = require('../../mixins/ValidationMixin'),
     DialogFormMixin          = require('../../mixins/DialogFormMixin'),
+    FormMixin                = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
@@ -26,7 +27,8 @@ module.exports = React.createClass({
     Reflux.connect(AdminsStore),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -43,8 +45,8 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      email         : '',
-      role          : ''
+      email : '',
+      role  : ''
     }
   },
 
@@ -94,7 +96,7 @@ module.exports = React.createClass({
           {
             ref     : 'submit',
             text    : {submitLabel},
-            onClick : this.handleSubmit
+            onClick : this.handleFormValidation
           }
         ];
 
@@ -106,34 +108,35 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "email"
-            name              = "email"
-            fullWidth         = {true}
-            disabled          = {this.props.mode === 'edit' ? true: false}
-            valueLink         = {this.linkState('email')}
-            errorText         = {this.getValidationMessages('email').join(' ')}
-            hintText          = "Email of the administrator"
-            floatingLabelText = "Email" />
+            <TextField
+              ref               = "email"
+              name              = "email"
+              fullWidth         = {true}
+              disabled          = {this.props.mode === 'edit' ? true: false}
+              valueLink         = {this.linkState('email')}
+              errorText         = {this.getValidationMessages('email').join(' ')}
+              hintText          = "Email of the administrator"
+              floatingLabelText = "Email" />
 
-          <SelectField
-            ref               = "role"
-            name              = "role"
-            autoWidth         = {true}
-            valueLink         = {this.linkState("role")}
-            valueMember       = "payload"
-            displayMember     = "text"
-            floatingLabelText = "Role of the administrator"
-            style             = {{width: '50%'}}
-            errorText         = {this.getValidationMessages('role').join(' ')}
-            menuItems         = {AdminsStore.getRoles()} />
+            <SelectField
+              ref               = "role"
+              name              = "role"
+              autoWidth         = {true}
+              valueLink         = {this.linkState("role")}
+              valueMember       = "payload"
+              displayMember     = "text"
+              floatingLabelText = "Role of the administrator"
+              style             = {{width: '50%'}}
+              errorText         = {this.getValidationMessages('role').join(' ')}
+              menuItems         = {AdminsStore.getRoles()} />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

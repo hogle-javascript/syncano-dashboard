@@ -1,3 +1,4 @@
+var objectAssign = require('object-assign');
 
 // TODO: add some options like: exclude, ignore, prefix etc
 var StoreFormMixin = {
@@ -6,7 +7,8 @@ var StoreFormMixin = {
     return {
       errors    : {},
       feedback  : null,
-      canSubmit : true
+      canSubmit : true,
+      hideDialogs: false // Non related field HACK!
     }
   },
 
@@ -22,7 +24,7 @@ var StoreFormMixin = {
   listenToForm: function (listenable) {
     for (var key in listenable) {
       var action = listenable[key];
-      if (action.asyncResult === true) {
+      if (action.asyncResult === true && action.asyncForm === true) {
         // TODO: add more checks
         this.listenTo(action, this.handleForm);
         this.listenTo(action.completed, this.handleFormCompleted);
@@ -32,15 +34,19 @@ var StoreFormMixin = {
   },
 
   handleForm: function () {
-    this.trigger({canSubmit: false});
+    this.data.canSubmit = false;
+    this.trigger(this.data);
   },
 
   handleFormCompleted: function (payload) {
-    this.trigger(this.getInitialFormState());
+    console.log('StoreFormMixin::handleFormCompleted');
+    this.data = objectAssign(this.data, this.getInitialFormState())
+    this.trigger(this.data);
   },
 
   handleFormFailure: function (payload) {
-    var state = this.getInitialFormState();
+    console.log('StoreFormMixin::handleFormFailure');
+    var state = objectAssign(this.data, this.getInitialFormState());
 
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
@@ -50,7 +56,13 @@ var StoreFormMixin = {
       }
 
       for (var field in payload) {
-        state.errors[field] = payload[field];
+        state.errors[field] = [].concat(payload[field]);
+      }
+    }
+
+    for (var key in state) {
+      if (state[key] === null || state[key] === undefined) {
+        delete state[key];
       }
     }
 

@@ -4,6 +4,7 @@ var React            = require('react'),
     // Utils
     ValidationMixin  = require('../../mixins/ValidationMixin'),
     DialogFormMixin  = require('../../mixins/DialogFormMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     SchedulesActions = require('./SchedulesActions'),
@@ -27,7 +28,8 @@ module.exports = React.createClass({
     Reflux.connect(CodeBoxesStore, 'codeboxes'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -92,7 +94,7 @@ module.exports = React.createClass({
           {
             ref     : 'submit',
             text    : {submitLabel},
-            onClick : this.handleSubmit
+            onClick : this.handleFormValidation
           }
         ];
 
@@ -109,43 +111,44 @@ module.exports = React.createClass({
         actions         ={dialogStandardActions}
         modal           ={true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "label"
-            name              = "label"
-            fullWidth         = {true}
-            valueLink         = {this.linkState('label')}
-            errorText         = {this.getValidationMessages('label').join()}
-            hintText          = "Label of the schedule"
-            floatingLabelText = "Label" />
+            <TextField
+              ref               = "label"
+              name              = "label"
+              fullWidth         = {true}
+              valueLink         = {this.linkState('label')}
+              errorText         = {this.getValidationMessages('label').join()}
+              hintText          = "Label of the schedule"
+              floatingLabelText = "Label" />
 
-          <SelectField
-            ref               = "codebox"
-            name              = "codebox"
-            floatingLabelText = "CodeBox"
-            valueLink         = {this.linkState("codebox")}
-            errorText         = {this.getValidationMessages('codebox').join()}
-            valueMember       = "payload"
-            displayMember     = "text"
-            fullWidth         = {true}
-            menuItems         = {cb} />
+            <SelectField
+              ref               = "codebox"
+              name              = "codebox"
+              floatingLabelText = "CodeBox"
+              valueLink         = {this.linkState("codebox")}
+              errorText         = {this.getValidationMessages('codebox').join()}
+              valueMember       = "payload"
+              displayMember     = "text"
+              fullWidth         = {true}
+              menuItems         = {cb} />
 
-          <SelectField
-            ref               = "crontab"
-            name              = "crontab"
-            floatingLabelText = "CronTab"
-            valueLink         = {this.linkState("crontab")}
-            errorText         = {this.getValidationMessages('crontab').join()}
-            valueMember       = "payload"
-            displayMember     = "text"
-            fullWidth         = {true}
-            menuItems         = {SchedulesStore.getCrontabDropdown()} />
+            <SelectField
+              ref               = "crontab"
+              name              = "crontab"
+              floatingLabelText = "CronTab"
+              valueLink         = {this.linkState("crontab")}
+              errorText         = {this.getValidationMessages('crontab').join()}
+              valueMember       = "payload"
+              displayMember     = "text"
+              fullWidth         = {true}
+              menuItems         = {SchedulesStore.getCrontabDropdown()} />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

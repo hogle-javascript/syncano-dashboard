@@ -54,7 +54,7 @@ module.exports = React.createClass({
     })
   },
 
-  getStyles() {
+  getStyles: function () {
     return {
       container: {
         margin   : '65px auto',

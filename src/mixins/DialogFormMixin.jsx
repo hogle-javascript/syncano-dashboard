@@ -47,6 +47,8 @@ var DialogFormMixin = {
 
   // ValidationMixin compatibility
   handleSuccessfullValidation: function () {
+    console.info('DialogFormMixin::handleSuccessfullValidation');
+
     if (this.props.mode === 'add') {
       this.handleAddSubmit();
     } else if (this.props.mode === 'edit') {

@@ -25,15 +25,13 @@ var GroupsStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   refreshData: function (data) {
     console.debug('GroupsStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       GroupsActions.getGroups();
     }
   },
