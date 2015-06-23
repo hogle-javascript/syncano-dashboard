@@ -10,6 +10,7 @@ var ProfileActions = Reflux.createActions({
 
   'updateSettings': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure'],
   },
   'getInvitations': {

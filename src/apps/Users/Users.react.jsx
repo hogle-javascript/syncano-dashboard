@@ -40,7 +40,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(UsersStore),
+    Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
     DialogsMixin,
@@ -50,11 +50,11 @@ module.exports = React.createClass({
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Users::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.groups.hideDialogs);
+    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Users::componentWillMount');
+  componentDidMount: function() {
+    console.info('Users::componentDidMount');
     UsersStore.refreshData();
     GroupsStore.refreshData();
   },
@@ -157,6 +157,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
+    console.log('UsersList::render', this.state);
     var styles        = this.getStyles(),
         checkedUsers  = UsersStore.getNumberOfChecked(),
         checkedGroups = GroupsStore.getNumberOfChecked();
@@ -253,7 +254,7 @@ module.exports = React.createClass({
               name                 = "Users"
               checkItem            = {UsersActions.checkItem}
               isLoading            = {UsersActions.isLoading}
-              items                = {this.state.items}
+              items                = {this.state.users.items}
               emptyItemHandleClick = {this.showDialog('addUserDialog')}
               emptyItemContent     = "Create a User" />
           </div>

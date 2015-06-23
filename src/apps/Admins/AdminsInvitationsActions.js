@@ -13,6 +13,7 @@ var AdminsInvitationsActions = Reflux.createActions({
   },
   'createInvitation': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'resendInvitation': {

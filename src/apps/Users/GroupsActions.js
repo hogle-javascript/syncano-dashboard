@@ -13,10 +13,12 @@ var GroupsActions = Reflux.createActions({
   },
   createGroup: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   updateGroup: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   removeGroups: {

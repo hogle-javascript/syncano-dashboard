@@ -13,6 +13,7 @@ var AdminsActions = Reflux.createActions({
   },
   'updateAdmin': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'removeAdmin': {

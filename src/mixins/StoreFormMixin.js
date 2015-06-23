@@ -22,7 +22,7 @@ var StoreFormMixin = {
   listenToForm: function (listenable) {
     for (var key in listenable) {
       var action = listenable[key];
-      if (action.asyncResult === true) {
+      if (action.asyncResult === true && action.asyncForm === true) {
         // TODO: add more checks
         this.listenTo(action, this.handleForm);
         this.listenTo(action.completed, this.handleFormCompleted);

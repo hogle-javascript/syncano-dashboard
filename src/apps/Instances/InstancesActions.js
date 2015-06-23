@@ -14,11 +14,13 @@ var InstancesActions = Reflux.createActions({
 
     createInstance: {
        asyncResult: true,
+       asyncForm: true,
        children: ['completed', 'failure']
     },
 
     updateInstance: {
        asyncResult: true,
+       asyncForm: true,
        children: ['completed', 'failure']
     },
 
