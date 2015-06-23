@@ -15,6 +15,7 @@ var ProfileActions = Reflux.createActions({
   },
   'getInvitations': {
       asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
   },
   'declineInvitations': {

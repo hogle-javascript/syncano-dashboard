@@ -20,18 +20,13 @@ module.exports = React.createClass({
   getDefaultProps: function () {
     return {
       type : 'circular',
-      size : 1
+      size : 1,
+      visible: false
     };
   },
 
-  getInitialState: function () {
-    return {
-      visible : this.props.visible || false,
-    }
-  },
-
   checkVisibility: function() {
-    if (this.state.visible === true) {
+    if (this.props.visible === true) {
       return this.getLoadingItem(this.props.type)
     }
   },
