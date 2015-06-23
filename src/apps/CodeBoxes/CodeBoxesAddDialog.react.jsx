@@ -116,7 +116,7 @@ module.exports = React.createClass({
       },
       {
         text    : submitLabel,
-        onClick : this.handleSubmit,
+        onClick : this.handleFormValidation,
         ref     : 'submit'
       }
     ];
