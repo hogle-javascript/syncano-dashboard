@@ -16,7 +16,7 @@ module.exports = Radium(React.createClass({
   mixins: [StylePropable],
 
   getStyles: function() {
-    var style = {
+    var styles = {
       listItem: {
         display         : 'flex',
         marginBottom    : 0,
@@ -35,23 +35,23 @@ module.exports = Radium(React.createClass({
         transform: 'translateY(-50%)'
       }
     };
-    return this.mergeStyles(style, this.props.style);
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function () {
-    var style      = this.getStyles(),
+    var styles     = this.getStyles(),
         icon       = <FontIcon
                        className = "synicon-plus"
-                       style     = {style.icon} />,
+                       style     = {styles.icon} />,
         leftAvatar = <Avatar
-                       icon={icon}
-                       style={style.leftAvatar} />;
+                       icon  = {icon}
+                       style = {styles.leftAvatar} />;
 
     return (
       <ListItem
         className  = "empty-list-item"
         onClick    = {this.props.handleClick}
-        style      = {style.listItem}
+        style      = {styles.listItem}
         leftAvatar = {leftAvatar}>
         {this.props.children}
       </ListItem>

@@ -19,41 +19,53 @@ module.exports = Radium(React.createClass({
     handleClick: React.PropTypes.func.isRequired
   },
 
+  getStyles: function () {
+    return {
+      button: {
+        width: '100%',
+        borderRadius: '0',
+        textTransform: 'none',
+        color: '#1e88e5',
+        fontWeight: 400
+      },
+      icon: {
+        display: 'flex',
+        fontSize: '18px',
+        lineHeight: '1',
+        padding: '14px 16px'
+      }
+    }
+  }
+
   getButtonStyles: function () {
-    var style = {
-      width: '100%',
-      borderRadius: '0',
-      textTransform: 'none',
-      color: '#1e88e5',
-      fontWeight: 400
-    };
-    return this.mergeStyles(style, this.props.style);
+    var styles = this.getStyles();
+
+    return this.mergeStyles(styles.button, this.props.style);
   },
 
   getIconStyles: function () {
-    var style = {
-      display: 'flex',
-      fontSize: '18px',
-      lineHeight: '1',
-      padding: '14px 16px'
-    };
-    return this.mergeStyles(style, this.props.style);
+    var styles = this.getStyles();
+
+    return this.mergeStyles(styles.icon, this.props.style);
   },
 
   render: function () {
 
-    var buttonStyles = this.getButtonStyles();
-    var iconStyles = this.getIconStyles();
+    var buttonStyles = this.getButtonStyles(),
+        iconStyles   = this.getIconStyles();
 
     return (
       <FlatButton
-        className="social-auth-button"
-        hoverColor="#1e88e5"
-        style={buttonStyles}
-        linkButton={true}
-        onClick={this.props.handleClick}
-        label={this.props.label}>
-        <FontIcon style={iconStyles} className={this.props.icon} />
+        className  = "social-auth-button"
+        hoverColor = "#1e88e5"
+        style      = {buttonStyles}
+        linkButton = {true}
+        onClick    = {this.props.handleClick}
+        label      = {this.props.label}>
+
+        <FontIcon
+          style     = {iconStyles}
+          className = {this.props.icon} />
       </FlatButton>
     )
   }

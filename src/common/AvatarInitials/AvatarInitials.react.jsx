@@ -37,11 +37,11 @@ module.exports = React.createClass({
         return nameFragment.charAt(0).toUpperCase();
       }).join('');
     }
-    var style = {
+    var styles = {
       backgroundColor: this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length]
     };
     return (
-      <div className="avatar-initials" style={style}>
+      <div className="avatar-initials" style={styles}>
         <div className="avatar-initials-text">{initials}</div>
       </div>
     );
