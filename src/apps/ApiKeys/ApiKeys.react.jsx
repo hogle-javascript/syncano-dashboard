@@ -150,8 +150,10 @@ module.exports = React.createClass({
         </FabList>
 
         <ApiKeysList
-          name   = "API Keys"
-          items  = {this.state.items} />
+          name                 = "API Keys"
+          items                = {this.state.items}
+          emptyItemHandleClick = {this.showDialog('addApiKeyDialog')}
+          emptyItemContent     = "Generate an ApiKey" />
 
       </Container>
     );
