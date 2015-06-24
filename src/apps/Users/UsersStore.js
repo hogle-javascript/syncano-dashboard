@@ -7,7 +7,7 @@ var Reflux              = require('reflux'),
 
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
-    UsersActions        = require('./UsersActions');
+    UsersActions        = require('./UsersActions'),
     GroupsActions       = require('./GroupsActions');
 
 
@@ -76,10 +76,11 @@ var UsersStore = Reflux.createStore({
   },
 
   onRemoveUsersCompleted: function(payload) {
+    console.debug('UsersStore::onRemoveUsersCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

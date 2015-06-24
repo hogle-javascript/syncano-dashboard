@@ -53,10 +53,11 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Admins::componentWillMount');
-    AdminsStore.refreshData();
-    AdminsInvitationsStore.refreshData();
+    AdminsInvitationsStore.fetch();
+    AdminsStore.fetch();
   },
-    // Dialogs config
+
+  // Dialogs config
   initDialogs: function () {
 
     return [

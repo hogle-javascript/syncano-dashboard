@@ -7,7 +7,7 @@ var AdminsInvitationsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
 
-  'getInvitations': {
+  fetchInvitations: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
@@ -23,13 +23,12 @@ var AdminsInvitationsActions = Reflux.createActions({
   'removeInvitation': {
       asyncResult: true,
       children: ['completed', 'failure']
-  },
-
+  }
 
 });
 
-AdminsInvitationsActions.getInvitations.listen( function(payload) {
-  console.info('AdminsInvitationsActions::getAdmins');
+AdminsInvitationsActions.fetchInvitations.listen( function() {
+  console.info('AdminsInvitationsActions::fetchInvitations');
   Connection
     .Invitations
     .list()

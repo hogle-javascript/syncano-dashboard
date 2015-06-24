@@ -3,8 +3,10 @@ var Reflux                   = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin           = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    SessionActions           = require('../Session/SessionActions'),
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions');
 
@@ -13,7 +15,8 @@ var AdminsInvitationsStore = Reflux.createStore({
   listenables : AdminsInvitationsActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -26,14 +29,17 @@ var AdminsInvitationsStore = Reflux.createStore({
   init: function () {
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
     this.listenToForms();
   },
 
-  refreshData: function (data) {
+  refreshData: function () {
     console.debug('AdminsInvitationsStore::refreshData');
-    if (SessionStore.getInstance() !== null) {
-      AdminsInvitationsActions.getInvitations();
-    }
+    AdminsInvitationsActions.fetchInvitations();
   },
 
   onGetInvitations: function(items) {
@@ -41,7 +47,7 @@ var AdminsInvitationsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onGetInvitationsCompleted: function(items) {
+  onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map(function(item) {
         return items[item];
