@@ -65,13 +65,13 @@ module.exports = React.createClass({
     var items = this.props.items.map(function (item, i) {
       var icon = <FontIcon 
                    className = {item.leftIcon.name || null} 
-                   style     = {item.leftIcon.style} />
+                   style     = {item.leftIcon.style} />;
       return (
-        <List 
+        <List
+          key            = {item.name + i}
           subheader      = {item.subheader || null}
           subheaderStyle = {item.subheaderStyle}>
-          <ListItem 
-            key                = {item.name + i} 
+          <ListItem
             onClick            = {item.handleItemClick}
             leftIcon           = {icon}
             secondaryText      = {item.secondaryText}
