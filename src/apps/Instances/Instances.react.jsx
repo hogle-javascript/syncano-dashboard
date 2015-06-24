@@ -88,7 +88,7 @@ module.exports = Radium(React.createClass({
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
-    SessionStore.clearInstance();
+    SessionStore.removeInstance();
     InstancesStore.refreshData();
   },
 
@@ -137,7 +137,7 @@ module.exports = Radium(React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.registerInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 

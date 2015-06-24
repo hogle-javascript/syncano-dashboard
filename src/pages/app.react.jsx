@@ -28,8 +28,8 @@ module.exports = React.createClass({
   },
 
   componentWillMount: function () {
-    SessionActions.registerRouter(this.context.router);
-    SessionActions.registerTheme(ThemeManager);
+    SessionActions.setRouter(this.context.router);
+    SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 

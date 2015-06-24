@@ -195,7 +195,7 @@ module.exports = Radium(React.createClass({
     var instanceName = menuItem.text._store.props.children[1]._store.props.children;
 
     // Redirect to main instance screen
-    SessionActions.registerInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 

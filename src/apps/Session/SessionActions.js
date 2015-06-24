@@ -4,15 +4,17 @@ var Reflux     = require('reflux'),
 
 var SessionActions = Reflux.createActions({
   'login': {},
+  'logout': {},
+  'setToken': {},
+  'setRouter': {},
+  'setUser': {},
+  'setTheme': {},
+  'setInstance': {},
   'fetchUser': {
     asyncResult: true,
     children: ['completed', 'failure']
   },
-  'logout': {},
-  'registerRouter': {},
-  'registerUser': {},
-  'registerTheme': {},
-  'registerInstance': {
+  'fetchInstance': {
       asyncResult: true,
       children: ['completed', 'failure']
   }
@@ -29,8 +31,8 @@ SessionActions.fetchUser.listen(function (token) {
     .catch(this.failure)
 });
 
-SessionActions.registerInstance.listen(function (name) {
-  console.info('SessionActions::registerInstance');
+SessionActions.fetchInstance.listen(function (name) {
+  console.info('SessionActions::fetchInstance');
   Connection
     .setInstance(name)
     .then(this.completed)

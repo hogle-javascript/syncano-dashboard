@@ -26,8 +26,8 @@ var UsersStore = Reflux.createStore({
   init: function () {
     this.data    = this.getInitialState();
     this.joinTrailing(
-      SessionActions.registerUser,
-      SessionActions.registerInstance,
+      SessionActions.setUser,
+      SessionActions.setInstance,
       UsersActions.fetch,
       this.fetch
     );
