@@ -16,12 +16,12 @@ module.exports = Radium(React.createClass({
   getStyles: function() {
     return {
       base: {
-        display        : 'flex',
-        marginBottom   : 0,
-        justifyContent : 'center'
+        display         : 'flex',
+        marginBottom    : 0,
+        justifyContent  : 'center'
       },
       checked: {
-        background     : Colors.lightBlue50
+        backgroundColor : Colors.lightBlue50
       }
     };
   },
