@@ -30,7 +30,6 @@ var GroupsStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
-      GroupsActions.fetch,
       this.refreshData
     );
     this.listenToForms();
@@ -39,8 +38,8 @@ var GroupsStore = Reflux.createStore({
   setItems: function (items) {
     console.debug('GroupsStore::setItems');
 
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
     });
 
     this.data.items = items;
@@ -48,7 +47,7 @@ var GroupsStore = Reflux.createStore({
   },
 
   getItems: function (empty) {
-    return this.items || empty || null;
+    return this.data.items || empty || null;
   },
 
   refreshData: function () {

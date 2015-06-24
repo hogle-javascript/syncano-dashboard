@@ -28,6 +28,16 @@ var WaitForStoreMixin = {
         callback     = args.pop(),
         listenMethod = (args.length > 1) ? this.joinTrailing: this.listenTo;
 
+    if (this.listenables){
+        var listenables = [].concat(this.listenables);
+        for(var i=0; i < listenables.length; i++){
+            var listenable = listenables[i];
+            if (listenable.fetch !== undefined) {
+              args.push(listenable.fetch)
+            }
+        }
+    }
+
     this._fetchCallback = callback;
     args.push(this.fetch);
     listenMethod.apply(this, args);
