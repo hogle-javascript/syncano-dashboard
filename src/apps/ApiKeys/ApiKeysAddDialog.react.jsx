@@ -124,7 +124,7 @@ module.exports = React.createClass({
 
   render: function () {
     var title = this.props.mode === 'edit' ? 'Edit': 'Generate';
-    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Generate Api Key';
+    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
 
     var dialogStandardActions = [
       {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
@@ -134,7 +134,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref="createApiKeyDialog"
-        title={title + " API Key"}
+        title={title + " an API Key"}
         openImmediately={this.props.openImmediately}
         actions={dialogStandardActions}
         modal={true}>
@@ -147,11 +147,10 @@ module.exports = React.createClass({
           <TextField
             ref               = "description"
             name              = "description"
-            style             = {{width:'100%'}}
+            fullWidth         = "true"
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = "Label of API key"
-            floatingLabelText = "Label" />
+            floatingLabelText = "Label of an API Key" />
 
           <Toggle
             name     = "ignore_acl"
