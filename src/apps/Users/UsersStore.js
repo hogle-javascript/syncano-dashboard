@@ -31,29 +31,34 @@ var UsersStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
-      GroupsActions.setItems,
+      GroupsActions.setGroups,
+      UsersActions.fetch,
       this.refreshData
     );
     this.listenToForms();
   },
 
   refreshData: function () {
-    UsersActions.getUsers();
+    UsersActions.fetchUsers();
   },
 
-  onGetUsers: function(items) {
+  setUsers: function (users) {
+    this.data.items = Object.keys(users).map(function(key) {
+        return users[key];
+    });
+    this.trigger(this.data);
+  },
+
+  onFetchUsers: function(items) {
+    console.debug('UsersStore::onFetchUsers');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetUsersCompleted: function(items) {
-    console.debug('UsersStore::onGetUsersCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchUsersCompleted: function(users) {
+    console.debug('UsersStore::onFetchUsersCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    UsersActions.setUsers(users);
   },
 
   onCreateUserCompleted: function(payload) {

@@ -7,7 +7,7 @@ var GroupsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
   fetch      : {},
-  setItems   : {},
+  setGroups  : {},
 
   fetchGroups: {
       asyncResult: true,

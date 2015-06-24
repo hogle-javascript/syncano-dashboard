@@ -35,18 +35,17 @@ var GroupsStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  setItems: function (items) {
-    console.debug('GroupsStore::setItems');
+  setGroups: function (groups) {
+    console.debug('GroupsStore::setGroups');
 
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
+    this.data.items = Object.keys(groups).map(function(key) {
+      return groups[key];
     });
 
-    this.data.items = items;
     this.trigger(this.data);
   },
 
-  getItems: function (empty) {
+  getGroups: function (empty) {
     return this.data.items || empty || null;
   },
 
@@ -55,14 +54,15 @@ var GroupsStore = Reflux.createStore({
   },
 
   onFetchGroups: function(items) {
+    console.debug('GroupsStore::onFetchGroups');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchGroupsCompleted: function(items) {
-    console.debug('GroupsStore::onGetInstanesCompleted');
+    console.debug('GroupsStore::onFetchGroupsCompleted');
     this.data.isLoading = false;
-    GroupsActions.setItems(items);
+    GroupsActions.setGroups(items);
   },
 
   onCreateGroupCompleted: function(payload) {
