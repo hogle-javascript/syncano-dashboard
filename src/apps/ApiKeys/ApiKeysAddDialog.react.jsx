@@ -23,19 +23,19 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ApiKeysStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin,
+    ValidationMixin
   ],
 
   validatorConstraints: {
     description: {
-    },
+    }
   },
 
   getInitialState: function() {
     return {
       description       : "",
       ignore_acl        : false,
-      allow_user_create : false,
+      allow_user_create : false
     }
   },
 
@@ -44,7 +44,7 @@ module.exports = React.createClass({
       description       : '',
       ignore_acl        : false,
       allow_user_create : false,
-      errors            : {},
+      errors            : {}
     })
   },
   componentWillUpdate: function() {
@@ -123,18 +123,25 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title = this.props.mode === 'edit' ? 'Edit': 'Generate';
-    var submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Generate Api Key';
-
-    var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
-    ];
+    var title                 = this.props.mode === 'edit' ? 'Edit': 'Generate',
+        submitLabel           = this.props.mode === 'edit' ? 'Save changes': 'Confirm',
+        dialogStandardActions = [
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel,
+            ref     : 'cancel'
+          },
+          {
+            text    : {submitLabel},
+            onClick : this.handleSubmit,
+            ref     : 'submit'
+          }
+        ];
 
     return (
       <Dialog
         ref="createApiKeyDialog"
-        title={title + " API Key"}
+        title={title + " an API Key"}
         openImmediately={this.props.openImmediately}
         actions={dialogStandardActions}
         modal={true}>
@@ -147,11 +154,10 @@ module.exports = React.createClass({
           <TextField
             ref               = "description"
             name              = "description"
-            style             = {{width:'100%'}}
+            fullWidth         = "true"
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = "Label of API key"
-            floatingLabelText = "Label" />
+            floatingLabelText = "Label of an API Key" />
 
           <Toggle
             name     = "ignore_acl"
