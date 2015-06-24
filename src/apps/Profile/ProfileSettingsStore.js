@@ -38,7 +38,7 @@ var ProfileSettingsStore = Reflux.createStore({
   },
 
   onUpdateSettingsCompleted: function (payload) {
-    SessionActions.registerUser(payload);
+    SessionActions.setUser(payload);
 
     this.trigger({
       feedback: 'Profile saved successfully.'

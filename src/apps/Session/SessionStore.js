@@ -16,7 +16,7 @@ var SessionStore = Reflux.createStore({
     this.token      = sessionStorage.getItem('token') || null;
     this.user       = null;
     this.instance   = null;
-    this.route      = null;
+    this.router     = null;
     this.theme      = null;
 
     if (this.isAuthenticated() && !this.user) {
@@ -28,7 +28,88 @@ var SessionStore = Reflux.createStore({
     }
   },
 
-  clearInstance: function() {
+  getConnection: function (empty) {
+    return this.connection || empty || null;
+  },
+
+  getToken: function (empty) {
+    return this.token || empty || null;
+  },
+
+  getUser: function (empty) {
+    return this.user || empty || null;
+  },
+
+  getInstance: function (empty) {
+    return this.instance || empty || null;
+  },
+
+  setRouter: function (empty) {
+    return this.router || empty || null;
+  },
+
+  getTheme: function (empty) {
+    return this.theme || empty || null;
+  },
+
+  setToken: function (token) {
+    console.info('SessionStore::setToken');
+    this.token = token;
+  },
+
+  setUser: function (user) {
+    console.info('SessionStore::setUser');
+    if (user === undefined) {
+      return;
+    }
+
+    this.user             = user;
+    this.user.account_key = this.token;
+    this.trigger(this);
+  },
+
+  setInstance: function (instance) {
+    console.info('SessionStore::setInstance');
+    var colorName       = instance.metadata.color,
+        secondColorName = 'indigo';
+
+    if (ColorStore.getColorByName(colorName)) {
+        this.theme.setPalette(this.makePalette(colorName, secondColorName));
+    }
+    this.instance = instance;
+    this.trigger(this);
+  },
+
+  setRouter: function (router) {
+    console.info('SessionStore::setRouter');
+    this.router = router;
+  },
+
+  setTheme: function (theme) {
+    console.info('SessionStore::setTheme');
+    this.theme = theme;
+  },
+
+  onFetchInstanceCompleted: function (payload) {
+    console.info('SessionStore::onFetchInstanceCompleted');
+    SessionActions.setInstance(payload);
+  },
+
+  onFetchInstanceFailure: function () {
+    this.router.transitionTo('/404');
+  },
+
+  onFetchUserCompleted: function (payload) {
+    console.info('SessionStore::onFetchUserCompleted');
+    SessionActions.setUser(payload);
+  },
+
+  onFetchUserFailure: function () {
+    console.info('SessionStore::onFetchUserFailure');
+    this.onLogout();
+  },
+
+  removeInstance: function() {
     this.instance = null;
     if (this.theme) {
       this.theme.setTheme(SyncanoTheme);
@@ -47,66 +128,27 @@ var SessionStore = Reflux.createStore({
     }
   },
 
-  onTokenLoginCompleted: function(payload) {
-    console.info('SessionStore::onTokenLoginComplete');
-  },
-
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
     if (payload === undefined || payload.account_key === undefined) {
       return
     }
 
-    sessionStorage.setItem('token', payload.account_key);
-
     this.token = payload.account_key;
-    this.user  = payload;
-
     this.connection.setApiKey(this.token);
-    this.trigger(this);
+    sessionStorage.setItem('token', this.token);
+    SessionActions.setUser(payload);
   },
 
   onLogout: function() {
     this.token      = null;
     this.user       = null;
-    this.instance   = null;
     this.connection = Connection.reset();
 
     sessionStorage.removeItem('token');
+    this.removeInstance();
     this.router.transitionTo('login');
     this.trigger(this);
-  },
-
-  onRegisterRouter: function (router) {
-    this.router = router;
-  },
-
-  onRegisterUser: function (user) {
-    console.info('SessionStore::onRegisterUser');
-    this.user             = user;
-    this.user.account_key = this.token;
-    this.trigger(this);
-  },
-
-  onRegisterTheme: function (theme) {
-    console.info('SessionStore::onRegisterTheme');
-    this.theme = theme;
-  },
-
-  onSetInstanceCompleted: function (payload) {
-    console.info('SessionStore::onSetInstanceCompleted');
-    var colorName       = payload.metadata.color,
-        secondColorName = 'indigo';
-
-    if (ColorStore.getColorByName(colorName)) {
-        this.theme.setPalette(this.makePalette(colorName, secondColorName));
-    }
-    this.instance = payload;
-    this.trigger(this)
-  },
-
-  onSetInstanceFailure: function () {
-    this.router.transitionTo('/404');
   },
 
   isAuthenticated: function () {
@@ -116,33 +158,8 @@ var SessionStore = Reflux.createStore({
     return this.token ? true : false;
   },
 
-  onFetchUserCompleted: function (payload) {
-    console.info('SessionStore::onFetchUserCompleted');
-
-    if (payload === undefined) {
-      return
-    }
-
-    this.user             = payload;
-    this.user.account_key = this.token;
-    this.trigger(this);
-  },
-
-  onFetchUserFailure: function () {
-    console.info('SessionStore::onFetchUserFailure');
-    this.onLogout();
-  },
-
   isReady: function () {
     return this.isAuthenticated() && this.user !== null;
-  },
-
-  getUser: function (empty) {
-    return this.user || empty || null;
-  },
-
-  getInstance: function (empty) {
-    return this.instance || empty || null;
   }
 
 });

@@ -6,8 +6,9 @@ var Reflux     = require('reflux'),
 var UsersActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
-
-  getUsers: {
+  fetch      : {},
+  setUsers   : {},
+  fetchUsers: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
@@ -27,8 +28,8 @@ var UsersActions = Reflux.createActions({
   }
 });
 
-UsersActions.getUsers.listen( function() {
-  console.info('UsersActions::getUsers');
+UsersActions.fetchUsers.listen( function() {
+  console.info('UsersActions::fetchUsers');
   Connection
     .Users
     .list()
