@@ -49,7 +49,7 @@ var AuthActions = Reflux.createActions({
   },
 });
 
-AuthActions.activate.listen(function (payload) {
+AuthActions.activate.listen(function(payload) {
   Connection
     .Accounts
     .activate(payload)
@@ -57,7 +57,7 @@ AuthActions.activate.listen(function (payload) {
     .catch(this.failure);
 });
 
-AuthActions.passwordSignIn.listen(function (payload) {
+AuthActions.passwordSignIn.listen(function(payload) {
   Connection
     .connect(payload.email, payload.password)
     .then(this.completed)
