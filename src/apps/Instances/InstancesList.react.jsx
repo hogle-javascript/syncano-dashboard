@@ -25,6 +25,7 @@ var React  = require('react'),
     ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
@@ -84,7 +85,7 @@ module.exports = React.createClass({
 
   getList: function () {
     if (this.state.isLoading) {
-      return <LoadingItem />;
+      return <Loading visible={true} />;
     }
 
     var items = this.state.items.map(function (item) {

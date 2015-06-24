@@ -41,6 +41,7 @@ var React                = require('react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
+    Loading              = require('../common/Loading/Loading.react'),
 
     ColumnListItem       = require('../common/ColumnList/Item.react'),
     ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
@@ -701,7 +702,18 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>TraceResultWithMeta</h2>
-          <TraceResultWithMeta meta={{'test': 'Some meta'}} args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  result={"Some not very long result: " + source} />
+          <TraceResultWithMeta 
+            meta={{'test': 'Some meta'}} 
+            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  
+            result={"Some not very long result: " + source} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>Loading</h2>
+          <Loading 
+            type    = "linear"
+            visible = {true} />
+          <Loading visible={true}/>
         </div>
 
       </div>

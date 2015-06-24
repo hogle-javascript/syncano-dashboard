@@ -1,26 +1,31 @@
 var Reflux              = require('reflux'),
+
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
+
     ProfileActions      = require('./ProfileActions');
 
 
 var ProfileInvitationsStore = Reflux.createStore({
   listenables: ProfileActions,
-  mixins: [CheckListStoreMixin],
+  mixins: [
+    CheckListStoreMixin,
+    StoreLoadingMixin
+  ],
 
   getInitialState: function () {
     return {
-      items     : [],
-      isLoading : false
+      items: []
     }
   },
 
   init: function () {
     this.data = this.getInitialState();
+    this.setLoadingStates();
   },
 
   onGetInvitations: function() {
     console.debug('ProfileInvitationsStore::onGetInvitations');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -29,13 +34,11 @@ var ProfileInvitationsStore = Reflux.createStore({
     this.data.items = Object.keys(items).map(function(item) {
         return items[item];
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   onGetInvitationsFailure: function(items) {
     console.debug('ProfileInvitationsStore::onGetInvitationsFailure');
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
