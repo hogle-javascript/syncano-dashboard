@@ -54,7 +54,6 @@ module.exports = React.createClass({
     })
   },
 
-  // List
   handleItemIconClick: function (id, state) {
     this.props.checkItem(id, state);
   },

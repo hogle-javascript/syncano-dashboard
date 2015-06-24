@@ -53,8 +53,8 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Admins::componentWillMount');
-    AdminsInvitationsStore.fetch();
-    AdminsStore.fetch();
+    AdminsInvitationsActions.fetch();
+    AdminsActions.fetch();
   },
 
   // Dialogs config

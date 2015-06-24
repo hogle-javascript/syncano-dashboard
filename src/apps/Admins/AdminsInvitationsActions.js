@@ -6,22 +6,23 @@ var Reflux     = require('reflux'),
 var AdminsInvitationsActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
+  fetch          : {},
   setInvitations : {},
 
   fetchInvitations: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'createInvitation': {
+  createInvitation: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure']
   },
-  'resendInvitation': {
+  resendInvitation: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'removeInvitation': {
+  removeInvitation: {
       asyncResult: true,
       children: ['completed', 'failure']
   }
