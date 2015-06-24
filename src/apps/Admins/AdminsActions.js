@@ -6,6 +6,7 @@ var Reflux     = require('reflux'),
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  setAdmins  : {},
 
   fetchAdmins: {
       asyncResult: true,

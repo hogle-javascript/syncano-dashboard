@@ -21,8 +21,8 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      items: [],
-      isLoading: false
+      items     : [],
+      isLoading : true
     }
   },
 
@@ -42,18 +42,25 @@ var AdminsInvitationsStore = Reflux.createStore({
     AdminsInvitationsActions.fetchInvitations();
   },
 
-  onGetInvitations: function(items) {
+  setInvitations: function (items) {
+    console.debug('AdminsInvitationsStore::setInvitations');
+
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+
+    this.trigger(this.data);
+  },
+
+  onFetchInvitations: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
     this.data.isLoading = false;
-    this.trigger(this.data);
+    AdminsInvitationsActions.setInvitations(items);
   },
 
   onCreateInvitationCompleted: function() {

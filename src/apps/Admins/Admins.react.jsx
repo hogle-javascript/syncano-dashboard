@@ -216,15 +216,17 @@ module.exports = React.createClass({
         <AdminsList
           name       = "Administrators"
           checkItem  = {this.checkAdminItem}
-          isLoading  = {AdminsActions.isLoading}
+          isLoading  = {this.state.admins.isLoading}
           items      = {this.state.admins.items}/>
 
         <AdminsList
-          name      = "Invitations"
-          mode      = "invitations"
-          checkItem = {this.checkInvitationItem}
-          isLoading = {AdminsInvitationsActions.isLoading}
-          items     = {this.state.invitations.items} />
+          name                 = "Invitations"
+          mode                 = "invitations"
+          emptyItemHandleClick = {this.showDialog('addAdminDialog')}
+          emptyItemContent     = "Invite administrators"
+          checkItem            = {this.checkInvitationItem}
+          isLoading            = {this.state.invitations.isLoading}
+          items                = {this.state.invitations.items} />
 
       </Container>
     );

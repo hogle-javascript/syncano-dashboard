@@ -11,6 +11,7 @@ var Reflux                   = require('reflux'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
     AdminsActions            = require('./AdminsActions');
 
+
 var AdminsStore = Reflux.createStore({
   listenables : AdminsActions,
   mixins      : [
@@ -36,8 +37,8 @@ var AdminsStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      items: [],
-      isLoading: false
+      items     : [],
+      isLoading : true
     }
   },
 
@@ -55,6 +56,16 @@ var AdminsStore = Reflux.createStore({
     AdminsActions.fetchAdmins();
   },
 
+  setAdmins: function (items) {
+    console.debug('AdminsStore::setInvitations');
+
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+
+    this.trigger(this.data);
+  },
+
   getRoles: function () {
     return this.roleMenuItems;
   },
@@ -67,12 +78,8 @@ var AdminsStore = Reflux.createStore({
 
   onFetchAdminsCompleted: function(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
     this.data.isLoading = false;
-    this.trigger(this.data);
+    AdminsActions.setAdmins(items);
   },
 
   onFetchAdminCompleted: function(payload) {

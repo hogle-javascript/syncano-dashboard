@@ -4,8 +4,9 @@ var Reflux     = require('reflux'),
 
 
 var AdminsInvitationsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
+  checkItem      : {},
+  uncheckAll     : {},
+  setInvitations : {},
 
   fetchInvitations: {
       asyncResult: true,
@@ -24,7 +25,6 @@ var AdminsInvitationsActions = Reflux.createActions({
       asyncResult: true,
       children: ['completed', 'failure']
   }
-
 });
 
 AdminsInvitationsActions.fetchInvitations.listen( function() {

@@ -17,6 +17,7 @@ var React             = require('react'),
     FontIcon          = mui.FontIcon,
 
     // List
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
@@ -92,7 +93,11 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
+      );
   },
 
   render: function () {
