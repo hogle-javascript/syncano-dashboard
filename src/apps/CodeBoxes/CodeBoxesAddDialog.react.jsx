@@ -71,7 +71,7 @@ module.exports = React.createClass({
   },
 
   handleAddSubmit: function () {
-    CodeBoxesActions.addCodeBox({
+    CodeBoxesActions.createCodeBox({
       label        : this.state.label,
       description  : this.state.description,
       runtime_name : this.state.runtimes[this.state.selectedRuntimeIndex].text
