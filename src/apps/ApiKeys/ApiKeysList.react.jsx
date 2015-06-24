@@ -38,7 +38,7 @@ module.exports = React.createClass({
     Reflux.connect(ApiKeysStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
   // List
