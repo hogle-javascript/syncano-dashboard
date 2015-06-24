@@ -3,6 +3,7 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
@@ -13,7 +14,8 @@ var UsersStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -24,23 +26,14 @@ var UsersStore = Reflux.createStore({
   },
 
   init: function () {
-    this.data    = this.getInitialState();
-    this.joinTrailing(
+    this.data = this.getInitialState();
+    this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
       UsersActions.fetch,
-      this.fetch
+      this.refreshData
     );
     this.listenToForms();
-    this.isReady = false;
-  },
-
-  fetch: function () {
-    console.debug('UsersStore::fetch', this.isReady);
-    if (this.isReady === false) {
-      return this.isReady = true;
-    }
-    UsersActions.getUsers();
   },
 
   refreshData: function () {
