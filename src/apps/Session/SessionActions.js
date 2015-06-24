@@ -12,7 +12,7 @@ var SessionActions = Reflux.createActions({
   'registerRouter': {},
   'registerUser': {},
   'registerTheme': {},
-  'setInstance': {
+  'registerInstance': {
       asyncResult: true,
       children: ['completed', 'failure']
   }
@@ -29,8 +29,8 @@ SessionActions.fetchUser.listen(function (token) {
     .catch(this.failure)
 });
 
-SessionActions.setInstance.listen(function (name) {
-  console.info('SessionActions::setInstance');
+SessionActions.registerInstance.listen(function (name) {
+  console.info('SessionActions::registerInstance');
   Connection
     .setInstance(name)
     .then(this.completed)

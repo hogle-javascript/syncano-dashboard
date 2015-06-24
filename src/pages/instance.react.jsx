@@ -22,7 +22,7 @@ module.exports = React.createClass({
  componentWillMount: function () {
    var params = this.getParams();
    if (params.instanceName) {
-      SessionActions.setInstance(params.instanceName);
+      SessionActions.registerInstance(params.instanceName);
    }
  },
 

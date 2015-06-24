@@ -6,7 +6,7 @@ var Reflux     = require('reflux'),
 var UsersActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
-
+  fetch      : {},
   getUsers: {
       asyncResult: true,
       children: ['completed', 'failure']

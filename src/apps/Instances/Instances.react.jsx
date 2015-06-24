@@ -137,7 +137,7 @@ module.exports = Radium(React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.registerInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 

@@ -47,32 +47,25 @@ var SessionStore = Reflux.createStore({
     }
   },
 
-  onTokenLoginCompleted: function(payload) {
-    console.info('SessionStore::onTokenLoginComplete');
-  },
-
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
     if (payload === undefined || payload.account_key === undefined) {
       return
     }
 
-    sessionStorage.setItem('token', payload.account_key);
-
     this.token = payload.account_key;
-    this.user  = payload;
-
     this.connection.setApiKey(this.token);
-    this.trigger(this);
+    sessionStorage.setItem('token', this.token);
+    SessionActions.registerUser(payload);
   },
 
   onLogout: function() {
     this.token      = null;
     this.user       = null;
-    this.instance   = null;
     this.connection = Connection.reset();
 
     sessionStorage.removeItem('token');
+    this.clearInstance();
     this.router.transitionTo('login');
     this.trigger(this);
   },
@@ -83,6 +76,11 @@ var SessionStore = Reflux.createStore({
 
   onRegisterUser: function (user) {
     console.info('SessionStore::onRegisterUser');
+
+    if (user === undefined) {
+      return;
+    }
+
     this.user             = user;
     this.user.account_key = this.token;
     this.trigger(this);
@@ -93,8 +91,8 @@ var SessionStore = Reflux.createStore({
     this.theme = theme;
   },
 
-  onSetInstanceCompleted: function (payload) {
-    console.info('SessionStore::onSetInstanceCompleted');
+  onRegisterInstanceCompleted: function (payload) {
+    console.info('SessionStore::onRegisterInstanceCompleted');
     var colorName       = payload.metadata.color,
         secondColorName = 'indigo';
 
@@ -105,7 +103,7 @@ var SessionStore = Reflux.createStore({
     this.trigger(this)
   },
 
-  onSetInstanceFailure: function () {
+  onRegisterInstanceFailure: function () {
     this.router.transitionTo('/404');
   },
 
@@ -118,14 +116,7 @@ var SessionStore = Reflux.createStore({
 
   onFetchUserCompleted: function (payload) {
     console.info('SessionStore::onFetchUserCompleted');
-
-    if (payload === undefined) {
-      return
-    }
-
-    this.user             = payload;
-    this.user.account_key = this.token;
-    this.trigger(this);
+    SessionActions.registerUser(payload);
   },
 
   onFetchUserFailure: function () {

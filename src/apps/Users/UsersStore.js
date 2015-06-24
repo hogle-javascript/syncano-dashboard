@@ -5,7 +5,7 @@ var Reflux              = require('reflux'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     UsersActions        = require('./UsersActions');
 
 
@@ -24,16 +24,27 @@ var UsersStore = Reflux.createStore({
   },
 
   init: function () {
-    this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.data    = this.getInitialState();
+    this.joinTrailing(
+      SessionActions.registerUser,
+      SessionActions.registerInstance,
+      UsersActions.fetch,
+      this.fetch
+    );
     this.listenToForms();
+    this.isReady = false;
   },
 
-  refreshData: function (data) {
-    console.debug('UsersStore::refreshData');
-    if (SessionStore.instance) {
-      UsersActions.getUsers();
+  fetch: function () {
+    console.debug('UsersStore::fetch', this.isReady);
+    if (this.isReady === false) {
+      return this.isReady = true;
     }
+    UsersActions.getUsers();
+  },
+
+  refreshData: function () {
+    UsersActions.getUsers();
   },
 
   onGetUsers: function(items) {
@@ -42,7 +53,7 @@ var UsersStore = Reflux.createStore({
   },
 
   onGetUsersCompleted: function(items) {
-    console.debug('UsersStore::onGetInstanesCompleted');
+    console.debug('UsersStore::onGetUsersCompleted');
 
     this.data.items = Object.keys(items).map(function(item) {
         return items[item];
