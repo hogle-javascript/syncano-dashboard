@@ -223,14 +223,14 @@ module.exports = React.createClass({
           </FabList>
         </Show>
 
-        <Show if={this.state.items < 1}>
+        <Show if={this.state.items.length < 1}>
           <div style={styles.container}>
             <FontIcon style={styles.icon} className="synicon-email-outline" />
             <p style={styles.text}>You have no invitations</p>
           </div>
         </Show>
 
-        <Show if={this.state.items > 0}>
+        <Show if={this.state.items.length > 0}>
           <ListContainer>
             <Header>
               <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
