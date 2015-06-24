@@ -8,6 +8,7 @@ var Reflux              = require('reflux'),
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
     UsersActions        = require('./UsersActions');
+    GroupsActions       = require('./GroupsActions');
 
 
 var UsersStore = Reflux.createStore({
@@ -30,6 +31,7 @@ var UsersStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
+      GroupsActions.setItems,
       UsersActions.fetch,
       this.refreshData
     );

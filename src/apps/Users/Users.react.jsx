@@ -57,7 +57,7 @@ module.exports = React.createClass({
   componentDidMount: function() {
     console.info('Users::componentDidMount');
     UsersActions.fetch();
-    // GroupsStore.refreshData();
+    GroupsActions.fetch();
   },
 
   // Dialogs config
