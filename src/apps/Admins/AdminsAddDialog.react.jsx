@@ -85,7 +85,7 @@ module.exports = React.createClass({
 
   render: function () {
     var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Invite Administrator';
+        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
 
         dialogStandardActions = [
           {
@@ -103,7 +103,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref             = "dialogRef"
-        title           = {title + " Administrator"}
+        title           = {title + " an Administrator"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         modal           = {true}>
