@@ -63,7 +63,7 @@ module.exports = React.createClass({
     },{
       dialog: Dialog,
       params: {
-        title:  "Reset API Key",
+        title:  "Reset an API Key",
         ref  : "resetApiKeyDialog",
         actions: [
           {
@@ -71,7 +71,7 @@ module.exports = React.createClass({
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : "Confirm",
             onClick : this.handleReset
           }
         ],
