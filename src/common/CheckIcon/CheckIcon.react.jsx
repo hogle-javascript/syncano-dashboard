@@ -4,6 +4,7 @@ var React      = require('react'),
     ColorStore = require('../Color/ColorStore'),
 
     mui        = require('material-ui'),
+    Colors     = mui.Styles.Colors,
     FontIcon   = mui.FontIcon,
     Paper      = mui.Paper;
 
@@ -58,12 +59,18 @@ module.exports = Radium(React.createClass({
 
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
-      return {icon: 'checkbox-marked-outline', color: GREY};
+      return {
+        icon  : 'checkbox-marked-outline',
+        color : Colors.lightBlue500
+      };
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
     if (this.state.hovered ) {
-      return {icon: 'checkbox-blank-outline', color: GREY};
+      return {
+        icon  : 'checkbox-blank-outline',
+        color : GREY
+      };
     }
 
     // Otherwise we have original colorful icon
@@ -73,19 +80,19 @@ module.exports = Radium(React.createClass({
   getStyles: function() {
     return {
       icon: {
-        color       : '#fff',
-        display     : 'flex',
-        fontSize    : 18,
-        lineHeight  : 1
+        color      : '#fff',
+        display    : 'flex',
+        fontSize   : 22,
+        lineHeight : 1
       },
       background: {
-        margin          : '0 16px 0 8px',
-        height          : 40,
-        minWidth        : 40,
-        display         : 'flex',
-        justifyContent  : 'center',
-        alignItems      : 'center',
-        cursor          : 'pointer'
+        margin         : '0 16px 0 8px',
+        height         : 40,
+        minWidth       : 40,
+        display        : 'flex',
+        justifyContent : 'center',
+        alignItems     : 'center',
+        cursor         : 'pointer'
       }
     }
   },

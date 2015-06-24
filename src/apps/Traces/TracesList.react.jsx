@@ -102,19 +102,21 @@ module.exports = Radium(React.createClass({
 
     return (
       <div key={item.id}>
-      <Item style={styles.item}>
-       <ColumnIconName
-         id              = {item.id}
-         background      = {background}
-         handleNameClick = {this.toggleTrace}>
-           {item.status}
-        </ColumnIconName>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{item.duration}ms</ColumnDesc>
-        <ColumnDate>{item.executed_at}</ColumnDate>
-      </Item>
+        <Item
+          checked = {item.checked}
+          style   = {styles.item}>
+          <ColumnIconName
+            id              = {item.id}
+            background      = {background}
+            handleNameClick = {this.toggleTrace}>
+            {item.status}
+          </ColumnIconName>
+          <ColumnID>{item.id}</ColumnID>
+          <ColumnDesc>{item.duration}ms</ColumnDesc>
+          <ColumnDate>{item.executed_at}</ColumnDate>
+        </Item>
         <Paper zDepth={1} style={styles.trace}>
-            <Trace result={item.result}/>
+          <Trace result={item.result}/>
         </Paper>
       </div>
     )

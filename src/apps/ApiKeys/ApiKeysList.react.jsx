@@ -58,7 +58,9 @@ module.exports = React.createClass({
     }
 
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'key'
