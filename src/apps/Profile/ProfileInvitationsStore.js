@@ -15,13 +15,13 @@ var ProfileInvitationsStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      items: [],
+      items: []
     }
   },
 
   init: function () {
     this.data = this.getInitialState();
-    this.setLoadingStates()
+    this.setLoadingStates();
   },
 
   onGetInvitations: function() {

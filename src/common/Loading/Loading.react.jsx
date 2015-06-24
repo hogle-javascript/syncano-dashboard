@@ -5,15 +5,13 @@ var React            = require('react'),
     CircularProgress = mui.CircularProgress,
     LinearProgress   = mui.LinearProgress;
 
-require('./Loading.css');
-
 module.exports = React.createClass({
 
   displayName: 'Loading',
 
   propTypes: {
     size: React.PropTypes.number,
-    type: React.PropTypes.oneOf(['circular', 'linear']),
+    type: React.PropTypes.oneOf(['circular', 'linear'])
   },
 
   getDefaultProps: function () {
@@ -23,17 +21,23 @@ module.exports = React.createClass({
     }
   },
 
+  getStyles: function () {
+    return {
+      display: 'flex',
+      justifyContent: 'center'
+    }
+  },
+
   renderItem: function(type) {
     if (type === 'linear') {
       return <LinearProgress mode='indeterminate' />
-    } else {
-      return <CircularProgress mode='indeterminate' size={this.props.size} />
     }
+    return <CircularProgress mode='indeterminate' size={this.props.size} />
   },
 
   render: function () {
     return (
-      <div className="loading">
+      <div style={this.getStyles()} >
         {this.renderItem(this.props.type)}
       </div>
     )

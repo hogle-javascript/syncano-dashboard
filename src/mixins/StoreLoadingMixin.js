@@ -6,7 +6,7 @@ var StoreLoadingMixin = {
     if (this.listenables){
       var arr = [].concat(this.listenables);
       arr.forEach(function(item) {
-        this.setLoadingState(item)
+        this.setLoadingState(item);
       }.bind(this))
     }
   },
