@@ -83,11 +83,18 @@ module.exports = Radium(React.createClass({
         display        : 'flex',
         flexDirection  : 'column',
         justifyContent : 'center',
-        cursor         : 'pointer',
         wordBreak      : 'break-all',
+        pointerEvents  : 'none',
         color          : this.state.color
+      },
+      link: {
+        cursor         : 'pointer',
+        pointerEvents  : 'auto',
+        ':hover'       : {
+          color        : this.props.hoverColor
+        }
       }
-    };
+    }
   },
 
   componentWillReceiveProps: function(newProps) {
@@ -106,32 +113,24 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleMouseOver: function () {
-    console.info('ColumnCheckIcon::handleMouseOver');
-    this.setState({'color': this.props.hoverColor});
-  },
-
-  handleMouseLeave: function () {
-    console.info('ColumnCheckIcon::handleMouseLeave');
-    this.setState({'color': this.props.color});
-  },
-
   render: function () {
-    var styles = this.getStyles();
+    var styles             = this.getStyles();
 
     return (
       <div
         className = {this.props.className}
         style     = {styles.container}>
         <CheckIcon
-            id          = {this.props.id}
-            icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-            background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-            checked     = {this.state.checked}
-            handleClick = {this.handleIconClick} />
+          id          = {this.props.id}
+          icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+          background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
+          checked     = {this.state.checked}
+          handleClick = {this.handleIconClick} />
 
         <div
-          style       = {styles.name}
+          style       = {[
+                        styles.name,
+                        this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>
