@@ -93,7 +93,7 @@ module.exports = Radium(React.createClass({
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
     SessionStore.removeInstance();
-    InstancesStore.refreshData();
+    InstancesStore.fetch();
   },
 
   componentDidMount: function() {
