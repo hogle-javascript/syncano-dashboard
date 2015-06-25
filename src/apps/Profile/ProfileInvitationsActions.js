@@ -5,23 +5,22 @@ var Reflux     = require('reflux'),
 
 
 var ProfileInvitationsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
+  checkItem: {},
+  uncheckAll: {},
+  fetch: {},
   setInvitations: {},
-
   fetchInvitations: {
       asyncResult: true,
       loading: true,
-      children: ['completed', 'failure'],
+      children: ['completed', 'failure']
   },
   declineInvitations: {
       asyncResult: true,
-      children: ['completed', 'failure'],
+      children: ['completed', 'failure']
   },
   acceptInvitations: {
       asyncResult: true,
-      children: ['completed', 'failure'],
+      children: ['completed', 'failure']
   }
 });
 

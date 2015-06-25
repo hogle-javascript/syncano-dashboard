@@ -6,11 +6,11 @@ var ProfileActions = Reflux.createActions({
   updateSettings: {
       asyncResult: true,
       asyncForm: true,
-      children: ['completed', 'failure'],
+      children: ['completed', 'failure']
   },
   changePassword: {
       asyncResult: true,
-      children: ['completed', 'failure'],
+      children: ['completed', 'failure']
   }
 });
 
