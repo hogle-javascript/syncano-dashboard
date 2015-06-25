@@ -9,6 +9,7 @@ var SchedulesActions = Reflux.createActions({
   checkItem    : {},
   uncheckAll   : {},
   fetch        : {},
+  getSchedules : {},
   setSchedules : {},
 
   fetchSchedules: {
