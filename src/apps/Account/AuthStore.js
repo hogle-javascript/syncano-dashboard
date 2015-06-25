@@ -31,12 +31,12 @@ var AuthStore = Reflux.createStore({
     });
   },
 
-  onActivateCompleted: function () {
+  onActivateCompleted: function (payload) {
     this.trigger({
       status: "Account activated successfully. You'll now be redirected to Syncano Dashboard."
     });
-    setTimeout(function(){
-      SessionStore.getRouter().transitionTo('dashboard');
+    setTimeout(function() {
+      this.onPasswordSignInCompleted(payload);
     }, 3000);
   },
 
