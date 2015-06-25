@@ -6,8 +6,9 @@ var Reflux     = require('reflux'),
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  setAdmins  : {},
 
-  'getAdmins': {
+  fetchAdmins: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
@@ -22,8 +23,8 @@ var AdminsActions = Reflux.createActions({
   }
 });
 
-AdminsActions.getAdmins.listen( function(payload) {
-  console.info('AdminsActions::getAdmins');
+AdminsActions.fetchAdmins.listen( function() {
+  console.info('AdminsActions::fetchAdmins');
   Connection
     .Admins
     .list()
