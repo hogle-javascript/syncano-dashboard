@@ -78,7 +78,7 @@ module.exports = React.createClass({
           {item.label}
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{codeBoxLabel}</ColumnDesc>
+        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.crontab}</ColumnDesc>
         <ColumnDate>{item.scheduled_next}</ColumnDate>
         <ColumnDate>{item.created_at}</ColumnDate>
@@ -113,7 +113,7 @@ module.exports = React.createClass({
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>CodeBox</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
           <ColumnDesc.Header>Crontab</ColumnDesc.Header>
           <ColumnDate.Header>Next run</ColumnDate.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
