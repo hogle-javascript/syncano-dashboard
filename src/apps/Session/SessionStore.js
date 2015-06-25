@@ -1,5 +1,5 @@
 var Reflux         = require('reflux'),
-    Raven          = require('../../raven');
+    Raven          = require('../../raven'),
     Connection     = require('./Connection'),
     SessionActions = require('./SessionActions'),
 
