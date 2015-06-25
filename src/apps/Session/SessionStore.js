@@ -138,7 +138,7 @@ var SessionStore = Reflux.createStore({
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
     if (payload === undefined || payload.account_key === undefined) {
-      return
+      return;
     }
 
     this.token = payload.account_key;

@@ -3,20 +3,20 @@ var Reflux     = require('reflux'),
 
 
 var SessionActions = Reflux.createActions({
-  'login': {},
-  'logout': {},
-  'setToken': {},
-  'setRouter': {},
-  'setUser': {},
-  'setTheme': {},
-  'setInstance': {},
-  'fetchUser': {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  login       : {},
+  logout      : {},
+  setToken    : {},
+  setRouter   : {},
+  setUser     : {},
+  setTheme    : {},
+  setInstance : {},
+  fetchUser: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  'fetchInstance': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  fetchInstance: {
+      asyncResult : true,
+      children    : ['completed', 'failure']
   }
 });
 

@@ -118,6 +118,8 @@ var Syncano = (function() {
       params.url += (params.url.indexOf('?') === -1 ? '?' : '&') + prepareAjaxParams(params.data);
     }
     request.open(mtype, params.url, true);
+    request.setRequestHeader('Accept', 'application/json;charset=UTF-8');
+
     if (mtype !== 'GET') {
       request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     }
@@ -2526,7 +2528,7 @@ var Syncano = (function() {
       }
       var url = normalizeUrl(baseURL + linksObject.instance_channels + name + '/poll/');
       if (apiKey !== null) {
-        url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey + '&format=json';
+        url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey;
       }
       (function poll() {
         $.ajax({
@@ -2540,7 +2542,7 @@ var Syncano = (function() {
               url = [
                 normalizeUrl(baseURL + linksObject.instance_channels),
                 name + '/poll/?last_id=' + xhr.responseJSON.id,
-                '&api_key=' + apiKey + '&format=json'
+                '&api_key=' + apiKey
               ].join('');
             }
             poll();
@@ -2673,7 +2675,7 @@ var Syncano = (function() {
         params = params || {};
         var url = normalizeUrl(baseURL + method);
         if (apiKey !== null) {
-          url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey + '&format=json';
+          url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey;
         }
         var ajaxParams = {
           type: requestType,
