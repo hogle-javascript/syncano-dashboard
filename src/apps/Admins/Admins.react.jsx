@@ -80,13 +80,13 @@ module.exports = React.createClass({
         dialog: Dialog,
         params: {
           ref:    "deleteAdminDialog",
-          title:  "Delete API key",
+          title:  "Remove an Administrator",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleDeleteAdmin}
+            {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?'
+          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?'
         }
       },
       {
