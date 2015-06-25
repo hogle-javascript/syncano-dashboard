@@ -92,27 +92,27 @@ module.exports = React.createClass({
       {
         dialog: Dialog,
         params: {
-          title:  "Resend Invitation",
+          title:  "Resend an Invitation",
           ref  : "resendInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleResendInvitation}
+            {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: 'Do you really want to resend this Invitation?'
+          children: 'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
         }
       },
       {
         dialog: Dialog,
         params: {
-          title:  "Delete Invitation",
+          title:  "Delete an Invitation",
           ref  : "removeInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
+            {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?'
+           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
         }
       }
     ]
