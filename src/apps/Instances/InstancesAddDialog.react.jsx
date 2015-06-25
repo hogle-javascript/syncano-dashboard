@@ -1,9 +1,10 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-    DialogFormMixin = require('../../mixins/DialogFormMixin'),
+    ValidationMixin  = require('../../mixins/ValidationMixin'),
+    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     InstancesActions = require('./InstancesActions'),
@@ -12,11 +13,11 @@ var React  = require('react'),
     IconStore        = require('../../common/Icon/IconStore'),
 
     // Components
-    mui          = require('material-ui'),
-    TextField    = mui.TextField,
-    DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog,
-    FlatButton   = mui.FlatButton;
+    mui              = require('material-ui'),
+    TextField        = mui.TextField,
+    DropDownMenu     = mui.DropDownMenu,
+    Dialog           = mui.Dialog,
+    FlatButton       = mui.FlatButton;
 
 
 module.exports = React.createClass({
@@ -27,7 +28,8 @@ module.exports = React.createClass({
     Reflux.connect(InstancesStore),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -36,8 +38,6 @@ module.exports = React.createClass({
       length: {
         minimum: 5
       }
-    },
-    description: {
     }
   },
 
@@ -95,7 +95,7 @@ module.exports = React.createClass({
       <FlatButton
         label      = "Confirm"
         primary    = {true}
-        onTouchTap = {this.handleSubmit}
+        onTouchTap = {this.handleFormValidation}
         ref        = "submit" />
     ];
 
@@ -107,8 +107,9 @@ module.exports = React.createClass({
         actions         = {dialogCustomActions}
         modal           = {true}>
         <div>
+          {this.renderFormNotifications()}
           <form
-            onSubmit      = {this.handleSubmit}
+            onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
             method        = "post">
 

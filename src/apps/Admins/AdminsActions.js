@@ -6,23 +6,26 @@ var Reflux     = require('reflux'),
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  fetch      : {},
+  setAdmins  : {},
 
-  'getAdmins': {
+  fetchAdmins: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'updateAdmin': {
+  updateAdmin: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
-  'removeAdmin': {
+  removeAdmin: {
       asyncResult: true,
       children: ['completed', 'failure']
   }
 });
 
-AdminsActions.getAdmins.listen( function(payload) {
-  console.info('AdminsActions::getAdmins');
+AdminsActions.fetchAdmins.listen( function() {
+  console.info('AdminsActions::fetchAdmins');
   Connection
     .Admins
     .list()

@@ -3,17 +3,20 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
-    UsersActions        = require('./UsersActions');
+    SessionActions      = require('../Session/SessionActions'),
+    UsersActions        = require('./UsersActions'),
+    GroupsActions       = require('./GroupsActions');
 
 
 var UsersStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -25,32 +28,36 @@ var UsersStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      GroupsActions.setGroups,
+      this.refreshData
+    );
+    this.listenToForms();
   },
 
-  refreshData: function (data) {
-    console.debug('UsersStore::refreshData');
-    if (SessionStore.instance) {
-      UsersActions.getUsers();
-    }
+  refreshData: function () {
+    UsersActions.fetchUsers();
   },
 
-  onGetUsers: function(items) {
+  setUsers: function (users) {
+    this.data.items = Object.keys(users).map(function(key) {
+        return users[key];
+    });
+    this.trigger(this.data);
+  },
+
+  onFetchUsers: function(items) {
+    console.debug('UsersStore::onFetchUsers');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetUsersCompleted: function(items) {
-    console.debug('UsersStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchUsersCompleted: function(users) {
+    console.debug('UsersStore::onFetchUsersCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    UsersActions.setUsers(users);
   },
 
   onCreateUserCompleted: function(payload) {
@@ -68,10 +75,11 @@ var UsersStore = Reflux.createStore({
   },
 
   onRemoveUsersCompleted: function(payload) {
+    console.debug('UsersStore::onRemoveUsersCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

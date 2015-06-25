@@ -6,17 +6,21 @@ var Reflux     = require('reflux'),
 var GroupsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  fetch      : {},
+  setGroups  : {},
 
-  getGroups: {
+  fetchGroups: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
   createGroup: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   updateGroup: {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   removeGroups: {
@@ -34,8 +38,8 @@ GroupsActions.createGroup.listen( function(label) {
     .catch(this.failure);
 });
 
-GroupsActions.getGroups.listen( function() {
-  console.info('GroupsActions::getGroups');
+GroupsActions.fetchGroups.listen( function() {
+  console.info('GroupsActions::fetchGroups');
   Connection
     .Groups
     .list()

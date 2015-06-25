@@ -3,6 +3,7 @@ var React           = require('react'),
 
     mui             = require('material-ui'),
     StylePropable   = mui.Mixins.StylePropable,
+    Colors          = mui.Styles.Colors,
     Paper           = mui.Paper;
 
 
@@ -13,22 +14,27 @@ module.exports = Radium(React.createClass({
   mixins: [StylePropable],
 
   getStyles: function() {
-    var style = {
-      display        : 'flex',
-      marginBottom   : '0px',
-      justifyContent : 'center'
+    return {
+      base: {
+        display         : 'flex',
+        marginBottom    : 0,
+        justifyContent  : 'center'
+      },
+      checked: {
+        backgroundColor : Colors.lightBlue50
+      }
     };
-    return this.mergeStyles(style, this.props.style);
   },
 
   render: function () {
-    var style = this.getStyles();
+    var styles     = this.getStyles();
 
     return (
       <Paper
         zDepth    = {1}
         className = {'row'}
-        style     = {style}
+        style     = {[styles.base,
+                    this.props.checked && styles.checked]}
         rounded   = {false}>
         {this.props.children}
       </Paper>

@@ -3,9 +3,10 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     GroupsActions       = require('./GroupsActions');
 
 
@@ -13,7 +14,8 @@ var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -25,32 +27,42 @@ var GroupsStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.listenToForms();
   },
 
-  refreshData: function (data) {
-    console.debug('GroupsStore::refreshData');
-    if (SessionStore.instance) {
-      GroupsActions.getGroups();
-    }
+  setGroups: function (groups) {
+    console.debug('GroupsStore::setGroups');
+
+    this.data.items = Object.keys(groups).map(function(key) {
+      return groups[key];
+    });
+
+    this.trigger(this.data);
   },
 
-  onGetGroups: function(items) {
+  getGroups: function (empty) {
+    return this.data.items || empty || null;
+  },
+
+  refreshData: function () {
+    GroupsActions.fetchGroups();
+  },
+
+  onFetchGroups: function(items) {
+    console.debug('GroupsStore::onFetchGroups');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetGroupsCompleted: function(items) {
-    console.debug('GroupsStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchGroupsCompleted: function(items) {
+    console.debug('GroupsStore::onFetchGroupsCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    GroupsActions.setGroups(items);
   },
 
   onCreateGroupCompleted: function(payload) {

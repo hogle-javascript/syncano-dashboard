@@ -7,16 +7,18 @@ var SchedulesActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
 
-  'createSchedule': {
-      asyncResult: true,
-      children: ['completed', 'failure']
-  },
   'getSchedules': {
       asyncResult: true,
       children: ['completed', 'failure']
   },
+  'createSchedule': {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure']
+  },
   'updateSchedule': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'removeSchedules': {

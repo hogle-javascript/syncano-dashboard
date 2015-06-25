@@ -9,6 +9,7 @@ var TriggersActions = Reflux.createActions({
 
   'createTrigger': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'getTriggers': {
@@ -17,6 +18,7 @@ var TriggersActions = Reflux.createActions({
   },
   'updateTrigger': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'removeTriggers': {

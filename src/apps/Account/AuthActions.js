@@ -11,18 +11,22 @@ var AuthActions = Reflux.createActions({
   },
   'passwordSignIn': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'passwordSignUp': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'passwordReset': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'passwordResetConfirm': {
       asyncResult: true,
+      asyncForm: true,
       children: ['completed', 'failure']
   },
   'socialLogin': {

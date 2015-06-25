@@ -348,6 +348,7 @@ var Syncano = (function() {
       create: this.createAccount.bind(this),
       get: this.getAccount.bind(this),
       update: this.updateAccount.bind(this),
+      changePassword: this.changeAccountPassword.bind(this),
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
@@ -1109,6 +1110,22 @@ var Syncano = (function() {
     },
 
     /**
+     * Updates account of the currently logged user
+     *
+     * @method Syncano#changeAccountPassword
+     * @alias Syncano.Accounts.changePassword
+     * @param {Object} params - old and new password
+     * @param {string} params.current_password - current password
+     * @param {string} params.new_password - current password
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    changeAccountPassword: function(params, callbackOK, callbackError) {
+      return this.request('POST', 'v1/account/password/', params, callbackOK, callbackError);
+    },
+
+    /**
      * Sets new auth key for api calls and removes previous one.
      *
      * @method  Syncano#resetAccountKey
@@ -1622,10 +1639,10 @@ var Syncano = (function() {
      * @method Syncano#createCodeBox
      * @alias Syncano.CodeBoxes.create
      * @param {object} params
-     * @param {string} params.runtime_name - python / nodejs / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - name of the codebox
      * @param {string} params.description - name of the codebox
-     * @param {string} params.source - source code (will be automatically URL-encoded)
+     * @param {string} params.source - source code in Node.js / Python / Ruby
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
@@ -1639,9 +1656,6 @@ var Syncano = (function() {
       }
       if (typeof params.runtime_name === 'undefined') {
         params.runtime_name = 'nodejs';
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('POST', linksObject.instance_codeboxes, params, callbackOK, callbackError);
     },
@@ -1697,7 +1711,7 @@ var Syncano = (function() {
      * @param {Number} id - codebox id
      * @param {Object} params - new values of the codebox parameters
      * @param {string} params.config -
-     * @param {string} params.runtime_name - nodejs / python / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - new codebox name
      * @param {string} params.description -
      * @param {string} params.source - source code in Node.js / Python / Ruby
@@ -1716,9 +1730,6 @@ var Syncano = (function() {
       }
       if (typeof linksObject.instance_codeboxes === 'undefined') {
         throw new Error('Not connected to any instance');
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('PATCH', linksObject.instance_codeboxes + id, params, callbackOK, callbackError);
     },

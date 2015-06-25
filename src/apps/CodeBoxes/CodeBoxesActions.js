@@ -21,7 +21,7 @@ CodeBoxesActions.getCodeBoxes.listen( function(payload) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure']});
 CodeBoxesActions.addCodeBox.listen( function(payload) {
   console.info('CodeBoxesActions::addCodeBox');
   Connection
@@ -29,13 +29,13 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
       runtime_name : payload.runtime_name,
       label        : payload.label,
       description  : payload.description,
-      source: '#Start coding!',
+      source: '# Start coding!'
     })
     .then(this.completed)
     .catch(this.failure);
 });
 
-CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure']});
 CodeBoxesActions.updateCodeBox.listen( function(codeboxId, params) {
   console.info('CodeBoxesActions::updateCodeBox');
   Connection

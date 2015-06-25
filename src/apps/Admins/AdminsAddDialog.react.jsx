@@ -4,6 +4,7 @@ var React                    = require('react'),
     // Utils
     ValidationMixin          = require('../../mixins/ValidationMixin'),
     DialogFormMixin          = require('../../mixins/DialogFormMixin'),
+    FormMixin                = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
@@ -14,7 +15,7 @@ var React                    = require('react'),
     mui                       = require('material-ui'),
     Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
-    DropDownMenu              = mui.DropDownMenu,
+    SelectField               = mui.SelectField,
     Dialog                    = mui.Dialog;
 
 
@@ -26,7 +27,8 @@ module.exports = React.createClass({
     Reflux.connect(AdminsStore),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
-    ValidationMixin
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -36,12 +38,15 @@ module.exports = React.createClass({
         message: '^Invalid email address'
       }
     },
+    role: {
+      presence: true
+    }
   },
 
   getInitialState: function() {
     return {
-      email         : '',
-      role          : ''
+      email : '',
+      role  : ''
     }
   },
 
@@ -78,14 +83,9 @@ module.exports = React.createClass({
     });
   },
 
-  handleRoleChange: function (event, selectedIndex, menuItem){
-    console.info('AdminInvitationDialog::handleRoleChange', selectedIndex, menuItem );
-    this.setState({role : menuItem.payload});
-  },
-
   render: function () {
     var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Invite Administrator';
+        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
 
         dialogStandardActions = [
           {
@@ -96,44 +96,47 @@ module.exports = React.createClass({
           {
             ref     : 'submit',
             text    : {submitLabel},
-            onClick : this.handleSubmit
+            onClick : this.handleFormValidation
           }
         ];
 
     return (
       <Dialog
         ref             = "dialogRef"
-        title           = {title + " Administrator"}
+        title           = {title + " an Administrator"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "email"
-            name              = "email"
-            style             = {{width:'100%'}}
-            disabled          = {this.props.mode === 'edit' ? true: false}
-            valueLink         = {this.linkState('email')}
-            errorText         = {this.getValidationMessages('email').join(' ')}
-            hintText          = "Email of the administrator"
-            floatingLabelText = "Email" />
+            <TextField
+              ref               = "email"
+              name              = "email"
+              fullWidth         = {true}
+              disabled          = {this.props.mode === 'edit' ? true: false}
+              valueLink         = {this.linkState('email')}
+              errorText         = {this.getValidationMessages('email').join(' ')}
+              hintText          = "Email of the administrator"
+              floatingLabelText = "Email" />
 
-          <DropDownMenu
-            ref               = "role"
-            name              = "role"
-            autoWidth         = {true}
-            selectedIndex     = {AdminsStore.getRoleMenuIndex(this.state.role) || 0}
-            floatingLabelText = "Role of the administrator"
-            style             = {{width:500}}
-            onChange          = {this.handleRoleChange}
-            menuItems         = {AdminsStore.roleMenuItems} />
+            <SelectField
+              ref               = "role"
+              name              = "role"
+              autoWidth         = {true}
+              valueLink         = {this.linkState("role")}
+              valueMember       = "payload"
+              displayMember     = "text"
+              floatingLabelText = "Role of the administrator"
+              style             = {{width: '50%'}}
+              errorText         = {this.getValidationMessages('role').join(' ')}
+              menuItems         = {AdminsStore.getRoles()} />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

@@ -41,6 +41,7 @@ var React                = require('react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
+    Loading              = require('../common/Loading/Loading.react'),
 
     ColumnListItem       = require('../common/ColumnList/Item.react'),
     ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
@@ -141,10 +142,6 @@ module.exports = React.createClass({
       name: 'switchToCardView',
       iconType: 'view-module'
     }];
-
-    var dummyClick = function (action) {
-      console.log('Click!', action);
-    };
 
     console.log(Icon.propTypes);
 
@@ -322,6 +319,39 @@ module.exports = React.createClass({
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
+    var notifications = [{
+      type     : "normal-link",
+      leftIcon : {
+        name   : "synicon-alert",
+        style  : {
+          color: "#ff9800"
+        }
+      },
+      content: {
+        text          : "You email address is not yet verified.",
+        secondaryText : "Resend activation email",
+        style         : {}
+      },
+      name            : "activation",
+      handleLinkClick : dummyClick
+    }, {
+      type     : "invitation",
+      leftIcon : {
+        name   : "synicon-share-variant",
+        style  : {
+          color: "#8bc34a"
+        }
+      },
+      content  : {
+        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
+        style  : {}
+      },
+      buttonsText   : ["Accept", "Decline"],
+      name          : "billing",
+      handleAccept  : dummyClick.bind(this, [item]),
+      handleDecline : dummyClick.bind(this, [item])
+    }];
+
     return (
 
       <div className="examplesContainer">
@@ -336,9 +366,31 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Material dropdown</h2>
+          <div style={{
+                 display        : 'flex',
+                 float          : 'none',
+                 alignItems     : 'center',
+                 justifyContent : 'center'
+               }}>
           <MaterialDropdown
-              items={dropdownItems}
-              headerContent={dropdownHeader} />
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {notifications}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {true} />
+            </div>
         </div>
 
         <div className="exampleBox">
@@ -650,7 +702,18 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>TraceResultWithMeta</h2>
-          <TraceResultWithMeta meta={{'test': 'Some meta'}} args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  result={"Some not very long result: " + source} />
+          <TraceResultWithMeta 
+            meta={{'test': 'Some meta'}} 
+            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  
+            result={"Some not very long result: " + source} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>Loading</h2>
+          <Loading 
+            type    = "linear"
+            visible = {true} />
+          <Loading visible={true}/>
         </div>
 
       </div>

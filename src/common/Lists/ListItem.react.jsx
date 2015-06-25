@@ -17,7 +17,7 @@ module.exports = React.createClass({
     handleItemMenuClick: React.PropTypes.func.isRequired, // Click on item's option from Dropdown
     style: React.PropTypes.oneOf(['stream', 'cards']),
     dropdownVisible: React.PropTypes.bool,
-    avatarStyle: React.PropTypes.oneOf(['user', 'icon']),
+    avatarStyle: React.PropTypes.oneOf(['user', 'icon'])
   },
 
   getInitialState: function () {
@@ -33,7 +33,7 @@ module.exports = React.createClass({
       animateInk: false,
       dropdownViable: this.props.dropdownViable || false,
       color: color,
-      icon: icon,
+      icon: icon
     }
   },
 
@@ -54,7 +54,7 @@ module.exports = React.createClass({
       height: "200px",
       width: "200px",
       top: "0px",
-      left: "0px",
+      left: "0px"
     };
 
     var cssClasses = classNames('list-item', 'list-item-' + this.props.style, {
@@ -78,10 +78,9 @@ module.exports = React.createClass({
         visible={this.props.dropdownVisible}
         handleItemClick={this.handleItemMenuClick}/>;
     }
-
+    var style = null;
     if (this.props.style === "cards") {
-
-      var style = {
+      style = {
         backgroundColor: this.state.color
       };
 

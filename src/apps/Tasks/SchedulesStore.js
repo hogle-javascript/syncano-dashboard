@@ -2,7 +2,8 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
     SchedulesActions    = require('./SchedulesActions');
@@ -10,43 +11,46 @@ var Reflux              = require('reflux'),
 
 var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin
+  ],
+
+  crontabItems: [
+    {
+      payload: '*/5 * * *',
+      text: 'Each 5 minutes'
+    },
+    {
+      payload: '0 * * * *',
+      text: 'Each round hour'
+    }
+  ],
 
   getInitialState: function () {
     return {
-      // Lists
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      items     : [],
+      isLoading : false
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
+    this.listenToForms();
   },
 
   refreshData: function (data) {
     console.debug('SchedulesStore::refreshData');
-    if (SessionStore.instance) {
+    if (SessionStore.getInstance() !== null) {
       SchedulesActions.getSchedules();
     }
   },
-  
+
+  getCrontabDropdown: function () {
+    return this.crontabItems;
+  },
+
   onGetSchedules: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -69,24 +73,6 @@ var SchedulesStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateScheduleFailure: function(payload) {
-    console.debug('SchedulesStore::onCreateScheduleCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
   onUpdateScheduleCompleted: function(paylod) {
     console.debug('SchedulesStore::onUpdateScheduleCompleted');
     this.data.hideDialogs = true;
@@ -94,29 +80,11 @@ var SchedulesStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onUpdateScheduleFailure: function(payload) {
-    console.debug('SchedulesStore::onUpdateScheduleFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
   onRemoveSchedulesCompleted: function(payload) {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

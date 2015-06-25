@@ -4,31 +4,32 @@ var Reflux     = require('reflux'),
 
 
 var AdminsInvitationsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
+  checkItem      : {},
+  uncheckAll     : {},
+  fetch          : {},
+  setInvitations : {},
 
-  'getInvitations': {
+  fetchInvitations: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'createInvitation': {
+  createInvitation: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure']
+  },
+  resendInvitation: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'resendInvitation': {
+  removeInvitation: {
       asyncResult: true,
       children: ['completed', 'failure']
-  },
-  'removeInvitation': {
-      asyncResult: true,
-      children: ['completed', 'failure']
-  },
-
-
+  }
 });
 
-AdminsInvitationsActions.getInvitations.listen( function(payload) {
-  console.info('AdminsInvitationsActions::getAdmins');
+AdminsInvitationsActions.fetchInvitations.listen( function() {
+  console.info('AdminsInvitationsActions::fetchInvitations');
   Connection
     .Invitations
     .list()

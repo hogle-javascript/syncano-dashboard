@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
 
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
@@ -8,8 +8,8 @@ var React  = require('react'),
 
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
-    ApiKeysActions = require('./ApiKeysActions'),
-    ApiKeysStore   = require('./ApiKeysStore'),
+    ApiKeysActions   = require('./ApiKeysActions'),
+    ApiKeysStore     = require('./ApiKeysStore'),
 
     // Components
     mui              = require('material-ui'),
@@ -17,16 +17,17 @@ var React  = require('react'),
     FontIcon         = mui.FontIcon,
 
     // List
-    ListContainer   = require('../../common/Lists/ListContainer.react'),
-    List            = require('../../common/Lists/List.react'),
-    Item            = require('../../common/ColumnList/Item.react'),
-    Header          = require('../../common/ColumnList/Header.react'),
-    LoadingItem     = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnDate      = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID        = require('../../common/ColumnList/Column/ID.react'),
-    ColumnText      = require('../../common/ColumnList/Column/Text.react'),
-    ColumnKey       = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer    = require('../../common/Lists/ListContainer.react'),
+    List             = require('../../common/Lists/List.react'),
+    Item             = require('../../common/ColumnList/Item.react'),
+    EmptyListItem    = require('../../common/ColumnList/EmptyListItem.react'),
+    Header           = require('../../common/ColumnList/Header.react'),
+    LoadingItem      = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnDate       = require('../../common/ColumnList/Column/Date.react'),
+    ColumnID         = require('../../common/ColumnList/Column/ID.react'),
+    ColumnText       = require('../../common/ColumnList/Column/Text.react'),
+    ColumnKey        = require('../../common/ColumnList/Column/Key.react'),
+    ColumnCheckIcon  = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -37,10 +38,9 @@ module.exports = React.createClass({
     Reflux.connect(ApiKeysStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
-  // List
   handleItemIconClick: function (id, state) {
     ApiKeysActions.checkItem(id, state);
   },
@@ -49,6 +49,7 @@ module.exports = React.createClass({
 
     var ignore_acl = null,
         allow_user_create = null;
+
     if (item.ignore_acl) {
       ignore_acl = <div>Ignore ACL</div>;
     }
@@ -57,7 +58,9 @@ module.exports = React.createClass({
     }
 
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'key'
@@ -82,9 +85,7 @@ module.exports = React.createClass({
       return <LoadingItem />;
     }
 
-    var instances = this.state.items;
-
-    var items = instances.map(function (item) {
+    var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
 
@@ -93,7 +94,12 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+      <EmptyListItem
+        handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
   render: function () {

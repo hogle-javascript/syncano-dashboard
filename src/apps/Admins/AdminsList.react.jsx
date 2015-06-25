@@ -17,6 +17,7 @@ var React             = require('react'),
     FontIcon          = mui.FontIcon,
 
     // List
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
@@ -36,47 +37,41 @@ module.exports = React.createClass({
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
-  getInitialState() {
+  getInitialState: function () {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading,
+      isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function (nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  // List
   handleItemIconClick: function (id, state) {
     this.props.checkItem(id, state);
   },
 
   renderItem: function (item) {
-
-    // TODO: is there any better way to hide/disable components?
-    var nameColumn =  <ColumnDesc>{item.first_name + ' ' + item.last_name}</ColumnDesc>;
-    if (this.props.mode == "invitations") {
-      nameColumn = null;
-    }
-
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
+          className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}>
           {item.email}
         </ColumnCheckIcon>
-        {nameColumn}
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
@@ -97,22 +92,18 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return (
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
+      );
   },
 
   render: function () {
-
-    // TODO: is there any better way to hide/disable components?
-    var nameColumnHeader = <ColumnDesc.Header>Name</ColumnDesc.Header>;
-    if (this.props.mode == "invitations") {
-      nameColumnHeader = null;
-    }
-
     return (
       <ListContainer>
         <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          {nameColumnHeader}
+          <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Role</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

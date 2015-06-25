@@ -41,14 +41,14 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState() {
+  getInitialState: function () {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function (nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
@@ -62,7 +62,9 @@ module.exports = React.createClass({
 
   renderItem: function (item) {
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'account'

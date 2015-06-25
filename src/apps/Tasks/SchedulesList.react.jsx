@@ -66,7 +66,9 @@ module.exports = React.createClass({
         codeBoxLabel = codeBox ? codeBox.label: '';
 
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'camera-timer'

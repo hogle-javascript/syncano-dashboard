@@ -19,8 +19,8 @@ var React  = require('react'),
     mui                   = require('material-ui'),
     Dialog                = mui.Dialog,
     Container             = require('../../common/Container/Container.react'),
-    FloatingActionButton  = require('../../common/Fab/Fab.react'),
     FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
@@ -53,18 +53,21 @@ module.exports = Radium(React.createClass({
     return [{
       dialog: AddDialog,
       params: {
+        key  : "addInstanceDialog",
         ref  : "addInstanceDialog",
         mode : "add"
       }
     }, {
       dialog: AddDialog,
       params: {
+        key  : "editInstanceDialog",
         ref  : "editInstanceDialog",
         mode : "edit"
       }
     },{
       dialog: ColorIconPickerDialog,
       params: {
+        key          : "pickColorIconDialog",
         ref          : "pickColorIconDialog",
         mode         : "add",
         initialColor : checkedItemIconColor.color,
@@ -74,6 +77,7 @@ module.exports = Radium(React.createClass({
     },{
       dialog: Dialog,
       params: {
+        key:    "deleteInstanceDialog",
         ref:    "deleteInstanceDialog",
         title:  "Delete an Instance",
         actions: [
@@ -88,8 +92,8 @@ module.exports = Radium(React.createClass({
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
-    SessionStore.clearInstance();
-    InstancesStore.refreshData();
+    SessionStore.removeInstance();
+    InstancesStore.fetch();
   },
 
   componentDidMount: function() {
@@ -137,78 +141,53 @@ module.exports = Radium(React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  getStyles: function() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListTopButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
-
   render: function () {
-
-    var checkedInstances = InstancesStore.getNumberOfChecked(),
-        styles = this.getStyles();
+    var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={[styles.fabListTop, {display: checkedInstances ? 'flex': 'none'}]}>
+        <Show if={checkedInstances > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to unselect Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {InstancesActions.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect Instances"
+              mini          = {true}
+              onClick       = {InstancesActions.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to delete Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteInstanceDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Instances"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteInstanceDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to edit Instance" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedInstances > 1}
-            onClick       = {this.showDialog('editInstanceDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Instance"
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showDialog('editInstanceDialog')}
+              iconClassName = "synicon-pencil" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to customize Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            secondary     = {true}
-            mini          = {true}
-            disabled      = {checkedInstances > 1}
-            onClick       = {this.showDialog('pickColorIconDialog')}
-            iconClassName = "synicon-palette" />
+            <FabListItem
+              label         = "Click here to customize Instances"
+              secondary     = {true}
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showDialog('pickColorIconDialog')}
+              iconClassName = "synicon-palette" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={styles.fabListBottom}>
-          <FloatingActionButton
-            label         = "Click here to add Instances" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList>
+          <FabListItem
+            label         = "Click here to add Instances"
             onClick       = {this.showDialog('addInstanceDialog')}
             iconClassName = "synicon-plus" />
         </FabList>

@@ -99,12 +99,16 @@ module.exports = React.createClass({
 
     if (this.props.style === "cards") {
 
-      var style = {
+      var styles = {
         backgroundColor: color
       };
 
       return (
-        <div className={cssClasses} style={style} onClick={this.handleCardClick}>
+        <div
+          className = {cssClasses}
+          style     = {styles}
+          onClick   = {this.handleCardClick}>
+
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
