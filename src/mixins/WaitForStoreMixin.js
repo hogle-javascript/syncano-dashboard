@@ -26,7 +26,7 @@ var WaitForStoreMixin = {
 
     var args         = [].splice.call(arguments, 0),
         callback     = args.pop(),
-        listenMethod = (args.length > 1) ? this.joinTrailing: this.listenTo;
+        listenMethod = null;
 
     if (this.listenables){
         var listenables = [].concat(this.listenables);
@@ -40,6 +40,7 @@ var WaitForStoreMixin = {
 
     this._fetchCallback = callback;
     args.push(this.fetch);
+    listenMethod = ( (args.length - 1) > 1) ? this.joinTrailing: this.listenTo;
     listenMethod.apply(this, args);
   }
 

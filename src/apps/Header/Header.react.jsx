@@ -58,7 +58,7 @@ module.exports = Radium(React.createClass({
 
   componentWillMount: function () {
     //Refresh notification on dropdown click!!!
-    ProfileActions.getInvitations();
+    ProfileActions.fetchInvitations();
     //this.getNotificationItems();
   },
 
@@ -293,7 +293,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleClickNotifications: function () {
-    ProfileActions.getInvitations();
+    ProfileActions.fetchInvitations();
   },
 
   getDropdownItems: function () {

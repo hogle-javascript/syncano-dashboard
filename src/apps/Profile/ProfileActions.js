@@ -7,32 +7,34 @@ var Reflux     = require('reflux'),
 var ProfileActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  setInvitations: {},
 
-  'updateSettings': {
+  updateSettings: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
   },
-  'getInvitations': {
+  fetchInvitations: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
   },
-  'declineInvitations': {
+  declineInvitations: {
       asyncResult: true,
       children: ['completed', 'failure'],
   },
-  'acceptInvitations': {
+  acceptInvitations: {
       asyncResult: true,
       children: ['completed', 'failure'],
   },
-  'changePassword': {
+  changePassword: {
       asyncResult: true,
       children: ['completed', 'failure'],
   }
 });
 
 ProfileActions.updateSettings.listen(function (payload) {
+  console.info('ProfileActions::updateSettings');
   Connection
     .Accounts
     .update({
@@ -43,7 +45,8 @@ ProfileActions.updateSettings.listen(function (payload) {
     .catch(this.failure);
 });
 
-ProfileActions.getInvitations.listen(function () {
+ProfileActions.fetchInvitations.listen(function () {
+  console.info('ProfileActions::fetchInvitations');
   Connection
     .AccountInvitations
     .list()
@@ -52,6 +55,7 @@ ProfileActions.getInvitations.listen(function () {
 });
 
 ProfileActions.acceptInvitations.listen(function (items) {
+  console.info('ProfileActions::acceptInvitations');
   var promises = items.map(function (item) {
     return Connection.AccountInvitations.accept(item.key);
   });
@@ -62,6 +66,7 @@ ProfileActions.acceptInvitations.listen(function (items) {
 });
 
 ProfileActions.declineInvitations.listen(function (items) {
+  console.info('ProfileActions::declineInvitations');
   var promises = items.map(function (item) {
     return Connection.AccountInvitations.remove(item.id);
   });
@@ -72,6 +77,7 @@ ProfileActions.declineInvitations.listen(function (items) {
 });
 
 ProfileActions.changePassword.listen(function (payload) {
+  console.info('ProfileActions::changePassword');
   Connection
     .Accounts
     .changePassword({
