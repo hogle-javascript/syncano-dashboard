@@ -383,10 +383,12 @@ var Syncano = (function() {
      * @type {object}
      * @property {function} list - shortcut to {@link Syncano#listAdmins} method
      * @property {function} update - shortcut to {@link Syncano#updateAdmin} method
+     * @property {function} remove - shortcut to {@link Syncano#removeAdmin} method
      */
     this.Admins = {
       list: this.listAdmins.bind(this),
-      update: this.updateAdmin.bind(this)
+      update: this.updateAdmin.bind(this),
+      remove: this.removeAdmin.bind(this)
     };
 
     /**
@@ -933,7 +935,7 @@ var Syncano = (function() {
     /**
      * Updates admin identified by id
      *
-     * @method Syncano#updateAdmins
+     * @method Syncano#updateAdmin
      * @alias Syncano.Admins.update
      * @param  {object} [params]
      * @param {function} [callbackOK] - optional method to call on success
@@ -944,6 +946,24 @@ var Syncano = (function() {
     updateAdmin: function(id, params, callbackOK, callbackError) {
       params = params || {};
       return this.request('PUT', linksObject.instance_admins + id, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Remove admin identified by id
+     *
+     * @method Syncano#removeAdmin
+     * @alias Syncano.Admins.remove
+     * @param {Number|object} id - id of admin to delete. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeAdmin: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      return this.request('DELETE', linksObject.instance_admins + id, {}, callbackOK, callbackError);
     },
 
 
