@@ -63,8 +63,9 @@ var AuthStore = Reflux.createStore({
     });
   },
 
-  onPasswordResetConfirmCompleted: function () {
+  onPasswordResetConfirmCompleted: function (payload) {
     this.data = this.getInitialState();
+    this.onPasswordSignInCompleted(payload);
     SessionStore.getRouter().transitionTo('password-update');
   },
 

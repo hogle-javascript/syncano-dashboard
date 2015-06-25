@@ -5,6 +5,7 @@ var React        = require('react'),
 
     AuthStore    = require('./AuthStore'),
     AuthActions  = require('./AuthActions'),
+    AuthConstans = require('./AuthConstants'),
 
     mui          = require('material-ui'),
     Paper        = mui.Paper,
@@ -45,7 +46,7 @@ module.exports = React.createClass({
   },
 
   handleButtonClick: function() {
-    this.transitionTo('login');
+    this.transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
   },
 
   render: function() {
@@ -68,7 +69,7 @@ module.exports = React.createClass({
             <RaisedButton
               style      = {styles.button}
               labelStyle = {styles.buttonLabel}
-              label      = "Log in"
+              label      = "Go to dashboard"
               onClick    = {this.handleButtonClick}
               primary    = {true} />
           </div>
