@@ -82,13 +82,6 @@ var AdminsStore = Reflux.createStore({
     AdminsActions.setAdmins(items);
   },
 
-  onFetchAdminCompleted: function(payload) {
-    console.debug('AdminsStore::onCreateAdminCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
   onUpdateAdminCompleted: function(paylod) {
     console.debug('AdminsStore::onUpdateAdminCompleted');
     this.data.hideDialogs = true;
