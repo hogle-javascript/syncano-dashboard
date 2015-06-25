@@ -30,11 +30,7 @@ module.exports = React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    description: {
-      presence: true
-    }
-  },
+  validatorConstraints: {},
 
   getInitialState: function() {
     return {
