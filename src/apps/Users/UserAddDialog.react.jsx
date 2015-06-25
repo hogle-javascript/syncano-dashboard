@@ -16,7 +16,8 @@ var React            = require('react'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog;
+    Dialog           = mui.Dialog,
+    Loading          = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -25,7 +26,7 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(UsersStore),
+    Reflux.connect(UsersStore, 'users'),
     DialogFormMixin,
     ValidationMixin,
     FormMixin
@@ -127,6 +128,10 @@ module.exports = React.createClass({
               floatingLabelText = "Password" />
 
           </form>
+          <Loading
+            type="linear"
+            position="bottom"
+            show={this.state.users.isLoading} />
         </div>
       </Dialog>
     );

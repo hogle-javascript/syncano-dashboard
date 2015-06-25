@@ -9,6 +9,7 @@ var React                    = require('react'),
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
+    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
     AdminsStore              = require('./AdminsStore'),
 
     // Components
@@ -16,7 +17,8 @@ var React                    = require('react'),
     Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
     SelectField               = mui.SelectField,
-    Dialog                    = mui.Dialog;
+    Dialog                    = mui.Dialog,
+    Loading                   = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -25,6 +27,7 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(AdminsStore),
+    Reflux.connect(AdminsInvitationsStore, 'adminsInvitationsStore'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
     ValidationMixin,
@@ -138,6 +141,11 @@ module.exports = React.createClass({
 
           </form>
         </div>
+        <Loading
+            type     ="linear"
+            position ="bottom"
+            show     ={this.state.adminsInvitationsStore.isLoading || this.state.isLoading} />
+
       </Dialog>
     );
   }

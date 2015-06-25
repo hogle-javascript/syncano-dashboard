@@ -34,9 +34,10 @@ module.exports = React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Reflux.connect(InstancesStore, "instancesStore"),
+    HeaderMixin
   ],
 
   getInitialState: function() {
@@ -84,8 +85,8 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <Loading visible={true} />;
+    if (this.state.instancesStore.isLoading) {
+      return <Loading show={true} />;
     }
 
     var items = this.state.items.map(function (item) {
@@ -96,13 +97,10 @@ module.exports = React.createClass({
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
-    } else if (this.props.emptyItemContent) {
-      return (
-        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </EmptyListItem>
-      );
     }
+    return <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+             {this.props.emptyItemContent}
+           </EmptyListItem>
   },
 
   render: function () {

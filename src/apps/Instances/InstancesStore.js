@@ -3,6 +3,7 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     SessionStore        = require('../Session/SessionStore'),
     InstancesActions    = require('./InstancesActions');
@@ -12,13 +13,13 @@ var InstancesStore = Reflux.createStore({
   listenables : InstancesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState: function () {
     return {
       items: [],
-      isLoading: false
     }
   },
 
@@ -26,6 +27,7 @@ var InstancesStore = Reflux.createStore({
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData: function () {
@@ -73,20 +75,17 @@ var InstancesStore = Reflux.createStore({
   onCreateInstanceCompleted: function(payload) {
     console.debug('InstancesStore::onCreateInstanceCompleted');
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onUpdateInstanceCompleted: function(paylod) {
     console.debug('InstancesStore::onUpdateInstanceCompleted');
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onRemoveInstancesCompleted: function(payload) {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

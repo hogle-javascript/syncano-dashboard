@@ -24,6 +24,7 @@ var React                    = require('react'),
     FabList                  = require('../../common/Fab/FabList.react'),
     FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading                  = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
@@ -80,13 +81,13 @@ module.exports = React.createClass({
         dialog: Dialog,
         params: {
           ref:    "deleteAdminDialog",
-          title:  "Delete API key",
+          title:  "Delete Admins",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: "Yes, I'm sure.", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?'
+          children: ['Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?', <Loading type="linear" position="bottom" show={this.state.admins.isLoading} /> ]
         }
       },
       {
@@ -99,7 +100,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: 'Do you really want to resend this Invitation?'
+          children: ['Do you really want to resend this Invitation?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
         }
       },
       {
@@ -112,7 +113,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?'
+           children: ['Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
         }
       }
     ]

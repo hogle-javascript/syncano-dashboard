@@ -16,20 +16,21 @@ module.exports = Radium(React.createClass({
   },
 
   getStyles: function() {
-      return {
-        display        : 'flex',
-        justifyContent : 'center',
-        alignItems     : 'center'
-      }
+    return {
+      display        : 'flex',
+      justifyContent : 'center',
+      alignItems     : 'center'
+    }
   },
 
   render: function () {
-      return (
-        <div style={this.getStyles()}>
-          <CircularProgress 
-            mode="indeterminate" 
-            size={this.props.size} />
-        </div>
+    var styles = this.getStyles();
+    return (
+      <div style={styles}>
+        <CircularProgress
+          mode="indeterminate"
+          size={this.props.size} />
+      </div>
     )
   }
 }));

@@ -8,22 +8,25 @@ var GroupsActions = Reflux.createActions({
   uncheckAll : {},
 
   getGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
   createGroup: {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateGroup: {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   removeGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children: ['completed', 'failure']
   }
 });
 

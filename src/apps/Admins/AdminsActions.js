@@ -8,17 +8,19 @@ var AdminsActions = Reflux.createActions({
   uncheckAll : {},
 
   'getAdmins': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
   'updateAdmin': {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
-  'removeAdmin': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  'removeAdmins': {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   }
 });
 
@@ -40,12 +42,12 @@ AdminsActions.updateAdmin.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-AdminsActions.removeAdmin.listen( function(names) {
-  names.map(function(name) {
-    console.info('AdminsActions::removeAdmins');
+AdminsActions.removeAdmins.listen( function(admins) {
+  admins.map(function(admin) {
+    console.error('AdminsActions::removeAdmins');
     Connection
       .Admins
-      .remove(name)
+      .remove(admin)
       .then(this.completed)
       .catch(this.failure);
   }.bind(this));

@@ -22,6 +22,7 @@ var React                 = require('react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     ApiKeysList           = require('./ApiKeysList.react'),
@@ -76,7 +77,7 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: 'Do you really want to reset this API key?'
+        children: ['Do you really want to reset this API key?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
       }
     }, {
       dialog: Dialog,
@@ -94,7 +95,7 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: 'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?'
+        children: ['Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
       }
     }]
   },
@@ -107,6 +108,7 @@ module.exports = React.createClass({
   handleReset: function() {
     console.info('ApiKeys::handleReset');
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
+    debugger;
   },
 
   render: function () {

@@ -16,6 +16,7 @@ var React  = require('react'),
     // Components
     mui                  = require('material-ui'),
     Dialog               = mui.Dialog,
+    Loading              = require('../../common/Loading/Loading.react.jsx'),
     Container            = require('../../common/Container/Container.react'),
     FabList              = require('../../common/Fab/FabList.react'),
     FabListItem          = require('../../common/Fab/FabListItem.react'),
@@ -80,7 +81,7 @@ module.exports = React.createClass({
           {text: "Yes, I'm sure", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?'
+        children: ['Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?', <Loading type="linear" position="bottom" show={this.state.isLoading} />]
       }
     }]
   },

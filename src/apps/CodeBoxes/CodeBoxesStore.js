@@ -2,6 +2,7 @@ var Reflux              = require('reflux'),
 
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     SessionStore        = require('../Session/SessionStore'),
     AuthStore           = require('../Account/AuthStore'),
@@ -12,7 +13,8 @@ var CodeBoxesStore = Reflux.createStore({
   listenables: CodeBoxesActions,
   mixins: [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState: function () {
@@ -21,7 +23,6 @@ var CodeBoxesStore = Reflux.createStore({
       CodeBoxList: null,
 
       items: [],
-      isLoading: true,
 
       checkedItemNumber: 0,
       AddDialogVisible: true,
@@ -47,6 +48,7 @@ var CodeBoxesStore = Reflux.createStore({
 
     this.listenTo(SessionStore, this.refreshData);
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   getEditorMode: function (codeBox) {
@@ -157,13 +159,11 @@ var CodeBoxesStore = Reflux.createStore({
 
   onRemoveCodeBoxesCompleted: function(payload) {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onGetCodeBoxes: function() {
     if (!this.data.isLoading) {
-      this.data.isLoading = true;
       this.trigger(this.data);
     }
   },
@@ -176,7 +176,6 @@ var CodeBoxesStore = Reflux.createStore({
     Object.keys(items).map(function(item) {
         data.items.push(items[item]);
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -190,7 +189,6 @@ var CodeBoxesStore = Reflux.createStore({
     console.debug('CodeBoxesStore::onUpdateCodeBoxCompleted');
     CodeBoxesActions.getCodeBoxes();
     this.data.hideDialogs = true;
-    this.trigger(this.data);
   },
 
   onRunCodeBox: function (trace) {
@@ -200,7 +198,7 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   onRunCodeBoxCompleted: function (trace) {
-    console.debug('CodeBoxesStore::onAddCodeBoxCompleted');
+    console.debug('CodeBoxesStore::onRunCodeBoxCompleted');
     this.data.lastTrace = trace;
     CodeBoxesActions.getCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },

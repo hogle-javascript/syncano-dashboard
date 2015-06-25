@@ -1,20 +1,24 @@
-var Reflux = require('reflux'),
+var Reflux            = require('reflux'),
 
-    SessionStore  = require('../Session/SessionStore'),
-    ApiKeysActions = require('./ApiKeysActions');
+    SessionStore      = require('../Session/SessionStore'),
+    ApiKeysActions    = require('./ApiKeysActions'),
+    StoreLoadingMixin = require('../../mixins/StoreLoadingMixin');
 
 
 var ApiKeysStore = Reflux.createStore({
   listenables: ApiKeysActions,
 
+  mixins: [
+    StoreLoadingMixin
+  ],
+
   getInitialState: function () {
     return {
       // Lists
       items: [],
-      isLoading: false,
 
       // Dialogs
-      errors: {},
+      errors: {}
     }
   },
 
@@ -23,16 +27,16 @@ var ApiKeysStore = Reflux.createStore({
     this.data = {
       // List
       items: [],
-      isLoading: false,
 
       // Dialogs
       errors: {},
-      canSubmit: true,
+      canSubmit: true
     };
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
     this.listenTo(SessionStore, this.refreshData);
+    this.setLoadingStates();
   },
 
   refreshData: function (data) {
@@ -55,7 +59,7 @@ var ApiKeysStore = Reflux.createStore({
   },
 
   onGetApiKeysCompleted: function(items) {
-    console.debug('ApiKeysStore::onGetInstanesCompleted');
+    console.debug('ApiKeysStore::onGetApiKeysCompleted');
 
     var data = this.data;
     data.items = [];
@@ -74,32 +78,7 @@ var ApiKeysStore = Reflux.createStore({
   },
 
   onCreateApiKeyFailure: function(payload) {
-    console.debug('ApiKeysStore::onCreateApiKeyCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
-  onUpdateApiKeyCompleted: function(paylod) {
-    console.debug('ApiKeysStore::onUpdateApiKeyCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateApiKeyFailure: function(payload) {
-    console.debug('ApiKeysStore::onUpdateApiKeyFailure');
+    console.debug('ApiKeysStore::onCreateApiKeyFailure');
 
     // TODO: create a mixin for that
     if (typeof payload === 'string') {
@@ -137,12 +116,14 @@ var ApiKeysStore = Reflux.createStore({
   },
 
   onRemoveApiKeysCompleted: function(payload) {
+    console.debug('ApiKeysStore::onRemoveApiKeyFailure');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
   onResetApiKeyCompleted: function(payload) {
+    console.debug('ApiKeysStore::onResetApiKeyFailure');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

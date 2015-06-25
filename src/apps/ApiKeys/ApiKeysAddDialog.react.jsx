@@ -13,7 +13,8 @@ var React  = require('react'),
     Toggle       = mui.Toggle,
     TextField    = mui.TextField,
     DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog;
+    Dialog       = mui.Dialog,
+    Loading      = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -23,7 +24,7 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ApiKeysStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin,
+    ValidationMixin
   ],
 
   validatorConstraints: {
@@ -167,6 +168,10 @@ module.exports = React.createClass({
 
         </form>
         </div>
+        <Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
       </Dialog>
     );
   }

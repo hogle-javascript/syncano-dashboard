@@ -6,6 +6,7 @@ var Reflux              = require('reflux'),
 
     //Stores & Actions
     SessionStore        = require('../Session/SessionStore'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
     UsersActions        = require('./UsersActions');
 
 
@@ -13,7 +14,8 @@ var UsersStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState: function () {
@@ -27,6 +29,7 @@ var UsersStore = Reflux.createStore({
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData: function (data) {

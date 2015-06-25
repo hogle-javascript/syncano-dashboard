@@ -11,7 +11,7 @@ CodeBoxesActions.setCurrentCodeBoxId = Reflux.createAction();
 CodeBoxesActions.checkItem = Reflux.createAction();
 CodeBoxesActions.uncheckAll = Reflux.createAction();
 
-CodeBoxesActions.getCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.getCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure'], loading: true});
 CodeBoxesActions.getCodeBoxes.listen( function(payload) {
   console.info('CodeBoxesActions::getCodeBoxes');
   Connection
@@ -21,7 +21,7 @@ CodeBoxesActions.getCodeBoxes.listen( function(payload) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure']});
+CodeBoxesActions.addCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure'], loading: true});
 CodeBoxesActions.addCodeBox.listen( function(payload) {
   console.info('CodeBoxesActions::addCodeBox');
   Connection
@@ -35,7 +35,7 @@ CodeBoxesActions.addCodeBox.listen( function(payload) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure']});
+CodeBoxesActions.updateCodeBox = Reflux.createAction({asyncResult: true, asyncForm: true, children: ['completed', 'failure'], loading: true});
 CodeBoxesActions.updateCodeBox.listen( function(codeboxId, params) {
   console.info('CodeBoxesActions::updateCodeBox');
   Connection
@@ -53,7 +53,7 @@ CodeBoxesActions.runCodeBox.listen( function(params) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.removeCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
+CodeBoxesActions.removeCodeBoxes = Reflux.createAction({asyncResult: true, children: ['completed', 'failure'], loading: true});
 CodeBoxesActions.removeCodeBoxes.listen( function(idArray) {
   console.info('CodeBoxesActions::removeCodeBoxes');
   idArray.map(function(id) {

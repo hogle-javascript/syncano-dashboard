@@ -8,21 +8,24 @@ var AdminsInvitationsActions = Reflux.createActions({
   uncheckAll : {},
 
   'getInvitations': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   'createInvitation': {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure']
   },
   'resendInvitation': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure']
   },
   'removeInvitation': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure']
   },
 
 

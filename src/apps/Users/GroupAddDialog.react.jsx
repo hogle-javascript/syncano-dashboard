@@ -15,7 +15,8 @@ var React           = require('react'),
     Toggle          = mui.Toggle,
     TextField       = mui.TextField,
     DropDownMenu    = mui.DropDownMenu,
-    Dialog          = mui.Dialog;
+    Dialog          = mui.Dialog,
+    Loading         = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -23,7 +24,7 @@ module.exports = React.createClass({
   displayName: 'GroupsAddDialog',
 
   mixins: [
-    Reflux.connect(GroupsStore),
+    Reflux.connect(GroupsStore, 'groups'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
     ValidationMixin,
@@ -106,6 +107,10 @@ module.exports = React.createClass({
               floatingLabelText = "Group Name" />
 
           </form>
+          <Loading
+              type="linear"
+              position="bottom"
+              show={this.state.groups.isLoading} />
         </div>
       </Dialog>
     );
