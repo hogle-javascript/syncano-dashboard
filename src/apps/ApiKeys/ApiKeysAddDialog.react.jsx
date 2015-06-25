@@ -1,19 +1,21 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
+var React           = require('react'),
+    Reflux          = require('reflux'),
 
     // Utils
     ValidationMixin = require('../../mixins/ValidationMixin'),
+    DialogFormMixin = require('../../mixins/DialogFormMixin'),
+    FormMixin       = require('../../mixins/FormMixin'),
 
     // Stores and Actions
-    ApiKeysActions = require('./ApiKeysActions'),
-    ApiKeysStore   = require('./ApiKeysStore'),
+    ApiKeysActions  = require('./ApiKeysActions'),
+    ApiKeysStore    = require('./ApiKeysStore'),
 
     // Components
-    mui          = require('material-ui'),
-    Toggle       = mui.Toggle,
-    TextField    = mui.TextField,
-    DropDownMenu = mui.DropDownMenu,
-    Dialog       = mui.Dialog;
+    mui             = require('material-ui'),
+    Toggle          = mui.Toggle,
+    TextField       = mui.TextField,
+    DropDownMenu    = mui.DropDownMenu,
+    Dialog          = mui.Dialog;
 
 
 module.exports = React.createClass({
@@ -23,11 +25,14 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ApiKeysStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin
+    DialogFormMixin,
+    ValidationMixin,
+    FormMixin
   ],
 
   validatorConstraints: {
     description: {
+      presence: true
     }
   },
 
@@ -47,60 +52,13 @@ module.exports = React.createClass({
       errors            : {}
     })
   },
-  componentWillUpdate: function() {
-    console.log('ApiKeysAddDialog::componentWillUpdate');
-  },
 
-  show: function() {
-    console.log('ApiKeysAddDialog::show');
-    this.clearData();
-
-    // When it is "edit" mode, we want to set values
-    if (this.props.mode === "edit"){
-      var checkedItem = ApiKeysStore.getCheckedItem();
-      if (checkedItem) {
-        this.setState({
-            description : checkedItem.description
-        });
-      }
-    }
-
-    this.refs.createApiKeyDialog.show();
-  },
-
-  dismiss: function() {
-    this.refs.createApiKeyDialog.dismiss();
-  },
-
-  handleSubmit: function (event) {
-    console.info('ApiKeysAddDialog::handleSubmit');
-    event.preventDefault();
-
-    if (!this.state.canSubmit) {
-      return
-    }
-
-    this.validate(function (isValid) {
-      console.info('ApiKeysAddDialog::handleSubmit isValid:', isValid);
-      if (isValid === true) {
-
-        if (this.props.mode === 'add') {
-          ApiKeysActions.createApiKey({
-            description       : this.state.description,
-            allow_user_create : this.state.allow_user_create,
-            ignore_acl        : this.state.ignore_acl
-          });
-        } else if (this.props.mode === 'edit') {
-          ApiKeysActions.updateApiKey(this.state.name, {description: this.state.description});
-        }
-      }
-    }.bind(this));
-  },
-
-  handleCancel: function(event) {
-    this.setState({
-      errors: {}});
-    this.dismiss();
+  handleAddSubmit: function () {
+    ApiKeysActions.createApiKey({
+      description       : this.state.description,
+      allow_user_create : this.state.allow_user_create,
+      ignore_acl        : this.state.ignore_acl
+    });
   },
 
   handleToogle: function(field) {
@@ -109,17 +67,6 @@ module.exports = React.createClass({
       stateObj[field] = !this.state[field];
       this.setState(stateObj);
     }.bind(this);
-  },
-
-  renderError: function () {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return
-    }
-    return (
-      <div>
-        <p>{this.state.errors.feedback}</p>
-      </div>
-    )
   },
 
   render: function () {
@@ -140,16 +87,16 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref="createApiKeyDialog"
-        title={title + " an API Key"}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        modal={true}>
+        ref             = "dialogRef"
+        title           = {title + " an API Key"}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogStandardActions}
+        modal           = {true}>
         <div>
         <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          onSubmit      = {this.handleSubmit}
+          acceptCharset = "UTF-8"
+          method        = "post">
 
           <TextField
             ref               = "description"
@@ -157,7 +104,7 @@ module.exports = React.createClass({
             fullWidth         = "true"
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
-            floatingLabelText = "Label of an API Key" />
+            floatingLabelText = "Description of an API Key" />
 
           <Toggle
             name     = "ignore_acl"
