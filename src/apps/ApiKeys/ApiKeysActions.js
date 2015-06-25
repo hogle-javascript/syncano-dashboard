@@ -17,19 +17,23 @@ var ApiKeysActions = Reflux.createActions({
   createApiKey: {
     asyncResult : true,
     asyncForm   : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   updateApiKey: {
     asyncResult : true,
     asyncForm   : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   removeApiKeys: {
     asyncResult : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   resetApiKey: {
     asyncResult : true,
+    loading     : true,
     children    : ['completed', 'failure']
   }
 });

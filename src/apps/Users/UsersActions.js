@@ -42,7 +42,7 @@ UsersActions.fetchUsers.listen( function() {
 });
 
 UsersActions.createUser.listen( function(payload) {
-  console.info('UsersActions::createUser', payload);
+  console.info('UsersActions::createUser');
   Connection
     .Users
     .create(payload)

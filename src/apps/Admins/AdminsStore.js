@@ -4,12 +4,13 @@ var Reflux                   = require('reflux'),
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin           = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
-    StoreLoadingMixin      = require('../../mixins/StoreLoadingMixin'),
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
     SessionActions           = require('../Session/SessionActions'),
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
+    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
     AdminsActions            = require('./AdminsActions');
 
 var AdminsStore = Reflux.createStore({

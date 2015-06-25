@@ -108,7 +108,6 @@ module.exports = React.createClass({
   handleReset: function() {
     console.info('ApiKeys::handleReset');
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
-    debugger;
   },
 
   render: function () {

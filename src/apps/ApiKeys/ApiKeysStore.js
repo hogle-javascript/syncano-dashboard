@@ -76,14 +76,14 @@ var ApiKeysStore = Reflux.createStore({
   },
 
   onRemoveApiKeysCompleted: function(payload) {
-    console.debug('ApiKeysStore::onRemoveApiKeyFailure');
+    console.debug('ApiKeysStore::onRemoveApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
   onResetApiKeyCompleted: function(payload) {
-    console.debug('ApiKeysStore::onResetApiKeyFailure');
+    console.debug('ApiKeysStore::onResetApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
