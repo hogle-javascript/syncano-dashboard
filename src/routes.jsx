@@ -15,6 +15,7 @@ var React                       = require('react'),
     AccountLogin                = require('./apps/Account/AccountLogin.react'),
     AccountSignup               = require('./apps/Account/AccountSignup.react'),
     AccountActivate             = require('./apps/Account/AccountActivate.react'),
+    AccountPasswordUpdate       = require('./apps/Account/AccountPasswordUpdate.react'),
     AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
     AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
 
@@ -50,6 +51,7 @@ module.exports = (
     <Route name="login" handler={AccountLogin} />
     <Route name="signup" handler={AccountSignup} />
     <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
+    <Route name="password-update" handler={AccountPasswordUpdate} path="/password/update" />
     <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
     <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
 
