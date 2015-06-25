@@ -80,7 +80,7 @@ module.exports = React.createClass({
           },
           {
             text    : {submitLabel},
-            onClick : this.handleSubmit,
+            onClick : this.handleFormValidation,
             ref     : 'submit'
           }
         ];
@@ -93,32 +93,33 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit      = {this.handleSubmit}
-          acceptCharset = "UTF-8"
-          method        = "post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "description"
-            name              = "description"
-            fullWidth         = "true"
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join(' ')}
-            floatingLabelText = "Description of an API Key" />
+            <TextField
+              ref               = "description"
+              name              = "description"
+              fullWidth         = "true"
+              valueLink         = {this.linkState('description')}
+              errorText         = {this.getValidationMessages('description').join(' ')}
+              floatingLabelText = "Description of an API Key" />
 
-          <Toggle
-            name     = "ignore_acl"
-            onToggle = {this.handleToogle('ignore_acl')}
-            style    = {{marginTop: 20}}
-            label    = "Ignore ACL?" />
+            <Toggle
+              name     = "ignore_acl"
+              onToggle = {this.handleToogle('ignore_acl')}
+              style    = {{marginTop: 20}}
+              label    = "Ignore ACL?" />
 
-          <Toggle
-            name     = "allow_user_create"
-            onToggle = {this.handleToogle('allow_user_create')}
-            style    = {{marginTop: 20}}
-            label    = "User registration?" />
+            <Toggle
+              name     = "allow_user_create"
+              onToggle = {this.handleToogle('allow_user_create')}
+              style    = {{marginTop: 20}}
+              label    = "User registration?" />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );
