@@ -36,7 +36,7 @@ var AuthStore = Reflux.createStore({
       status: "Account activated successfully. You'll now be redirected to Syncano Dashboard."
     });
     setTimeout(function(){
-      SessionStore.router.transitionTo('dashboard');
+      SessionStore.getRouter().transitionTo('dashboard');
     }, 3000);
   },
 
@@ -75,8 +75,9 @@ var AuthStore = Reflux.createStore({
   },
 
   onSocialLoginCompleted: function (payload) {
+    console.debug('AuthStore::onSocialLoginCompleted');
     this.onPasswordSignInCompleted(payload);
-  },
+  }
 
 });
 

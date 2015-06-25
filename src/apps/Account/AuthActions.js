@@ -5,37 +5,38 @@ var Reflux     = require('reflux'),
 
 // TODO: https://github.com/spoike/refluxjs/issues/296
 var AuthActions = Reflux.createActions({
-  'activate': {
+  activate: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
-  'passwordSignIn': {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
-  },
-  'passwordSignUp': {
+  passwordSignIn: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure']
   },
-  'passwordReset': {
+  passwordSignUp: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure']
   },
-  'passwordResetConfirm': {
+  passwordReset: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure']
   },
-  'socialLogin': {
+  passwordResetConfirm: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure']
+  },
+  socialLogin: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
 });
 
 AuthActions.activate.listen(function (payload) {
+  console.info('AuthActions::activate');
   Connection
     .Accounts
     .activate(payload)
@@ -44,6 +45,7 @@ AuthActions.activate.listen(function (payload) {
 });
 
 AuthActions.passwordSignIn.listen(function (payload) {
+  console.info('AuthActions::passwordSignIn');
   Connection
     .connect(payload.email, payload.password)
     .then(this.completed)
@@ -51,6 +53,7 @@ AuthActions.passwordSignIn.listen(function (payload) {
 });
 
 AuthActions.passwordSignUp.listen(function (payload) {
+  console.info('AuthActions::passwordSignUp');
   Connection
     .Accounts
     .create({
@@ -62,6 +65,7 @@ AuthActions.passwordSignUp.listen(function (payload) {
 });
 
 AuthActions.passwordReset.listen(function (email) {
+  console.info('AuthActions::passwordReset');
   Connection
     .Accounts
     .passwordReset(email)
@@ -70,6 +74,7 @@ AuthActions.passwordReset.listen(function (email) {
 });
 
 AuthActions.passwordResetConfirm.listen(function (payload) {
+  console.info('AuthActions::passwordResetConfirm');
   Connection
     .Accounts
     .passwordResetConfirm(payload)
@@ -78,6 +83,7 @@ AuthActions.passwordResetConfirm.listen(function (payload) {
 });
 
 AuthActions.socialLogin.listen(function (network) {
+  console.info('AuthActions::socialLogin', network);
   Hello
     .login(network)
     .then(function (auth) {
