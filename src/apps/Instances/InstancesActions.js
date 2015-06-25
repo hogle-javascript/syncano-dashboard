@@ -4,12 +4,15 @@ var Reflux     = require('reflux'),
 
 
 var InstancesActions = Reflux.createActions({
-    checkItem  : {},
-    uncheckAll : {},
+    checkItem: {},
+    uncheckAll: {},
+    fetch: {},
+    setInstances: {},
 
-    getInstances: {
-       asyncResult : true,
-       children    : ['completed', 'failure']
+    fetchInstances: {
+      asyncResult: true,
+      loading    : true,
+      children   : ['completed', 'failure']
     },
 
     createInstance: {
@@ -36,8 +39,8 @@ var InstancesActions = Reflux.createActions({
 
 
 
-InstancesActions.getInstances.listen( function(payload) {
-  console.info('InstancesActions::getInstances');
+InstancesActions.fetchInstances.listen( function(payload) {
+  console.info('InstancesActions::fetchInstances');
   Connection
     .Instances
     .list()

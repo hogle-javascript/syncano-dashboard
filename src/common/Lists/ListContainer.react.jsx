@@ -12,7 +12,7 @@ module.exports = React.createClass({
   mixins: [StylePropable],
 
   propTypes: {
-    style: React.PropTypes.object,
+    style: React.PropTypes.object
   },
 
   getStyles: function() {
@@ -25,6 +25,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    return <div style={this.getStyles()}>{this.props.children}</div>;
+    var styles = this.getStyles();
+
+    return <div style={styles}>{this.props.children}</div>;
   }
 });

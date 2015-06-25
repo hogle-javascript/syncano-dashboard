@@ -4,8 +4,10 @@ var Reflux                   = require('reflux'),
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin           = require('../../mixins/StoreFormMixin'),
     StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
+    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    SessionActions           = require('../Session/SessionActions'),
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions');
 
@@ -15,40 +17,54 @@ var AdminsInvitationsStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
     return {
       items     : [],
-      isLoading : false
+      isLoading : true
     }
   },
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
     this.listenToForms();
     this.setLoadingStates();
   },
 
-  refreshData: function (data) {
+  refreshData: function () {
     console.debug('AdminsInvitationsStore::refreshData');
-    if (SessionStore.getInstance() !== null) {
-      AdminsInvitationsActions.getInvitations();
-    }
+    AdminsInvitationsActions.fetchInvitations();
   },
 
-  onGetInvitations: function(items) {
+  setInvitations: function (items) {
+    console.debug('AdminsInvitationsStore::setInvitations');
+
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+
     this.trigger(this.data);
   },
 
-  onGetInvitationsCompleted: function(items) {
+  onFetchInvitations: function(items) {
+    this.trigger(this.data);
+  },
+
+  onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map(function(item) {
         return items[item];
     });
     this.trigger(this.data);
+    AdminsInvitationsActions.setInvitations(items);
   },
 
   onCreateInvitationCompleted: function() {

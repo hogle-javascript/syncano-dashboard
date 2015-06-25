@@ -54,10 +54,10 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Admins::componentWillMount');
-    AdminsStore.refreshData();
-    AdminsInvitationsStore.refreshData();
+    AdminsActions.fetch();
   },
-    // Dialogs config
+
+  // Dialogs config
   initDialogs: function () {
 
     return [
@@ -81,39 +81,39 @@ module.exports = React.createClass({
         dialog: Dialog,
         params: {
           ref:    "deleteAdminDialog",
-          title:  "Delete Admins",
+          title:  "Remove an Administrator",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleDeleteAdmin}
+            {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: ['Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?', <Loading type="linear" position="bottom" show={this.state.admins.isLoading} /> ]
+          children: ['Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?', <Loading type="linear" position="bottom" show={this.state.admins.isLoading} /> ]
         }
       },
       {
         dialog: Dialog,
         params: {
-          title:  "Resend Invitation",
+          title:  "Resend an Invitation",
           ref  : "resendInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleResendInvitation}
+            {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: ['Do you really want to resend this Invitation?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
+          children: ['Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
         }
       },
       {
         dialog: Dialog,
         params: {
-          title:  "Delete Invitation",
+          title:  "Delete an Invitation",
           ref  : "removeInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
+            {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: ['Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
+           children: ['Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
         }
       }
     ]
@@ -216,15 +216,17 @@ module.exports = React.createClass({
         <AdminsList
           name       = "Administrators"
           checkItem  = {this.checkAdminItem}
-          isLoading  = {AdminsActions.isLoading}
+          isLoading  = {this.state.admins.isLoading}
           items      = {this.state.admins.items}/>
 
         <AdminsList
-          name      = "Invitations"
-          mode      = "invitations"
-          checkItem = {this.checkInvitationItem}
-          isLoading = {AdminsInvitationsActions.isLoading}
-          items     = {this.state.invitations.items} />
+          name                 = "Invitations"
+          mode                 = "invitations"
+          emptyItemHandleClick = {this.showDialog('addAdminDialog')}
+          emptyItemContent     = "Invite administrators"
+          checkItem            = {this.checkInvitationItem}
+          isLoading            = {this.state.invitations.isLoading}
+          items                = {this.state.invitations.items} />
 
       </Container>
     );

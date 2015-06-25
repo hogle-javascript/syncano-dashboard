@@ -50,7 +50,7 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('ApiKeys::componentWillMount');
-    ApiKeysStore.refreshData();
+    ApiKeysActions.fetch();
   },
     // Dialogs config
   initDialogs: function () {
@@ -64,7 +64,7 @@ module.exports = React.createClass({
     },{
       dialog: Dialog,
       params: {
-        title:  "Reset API Key",
+        title:  "Reset an API Key",
         ref  : "resetApiKeyDialog",
         actions: [
           {
@@ -72,7 +72,7 @@ module.exports = React.createClass({
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : "Confirm",
             onClick : this.handleReset
           }
         ],
@@ -155,7 +155,7 @@ module.exports = React.createClass({
           name                 = "API Keys"
           items                = {this.state.items}
           emptyItemHandleClick = {this.showDialog('addApiKeyDialog')}
-          emptyItemContent     = "Generate an ApiKey" />
+          emptyItemContent     = "Generate an APIKey" />
 
       </Container>
     );

@@ -3,10 +3,11 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
     StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     GroupsActions       = require('./GroupsActions');
 
 
@@ -15,7 +16,8 @@ var GroupsStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -27,31 +29,41 @@ var GroupsStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
     this.listenToForms();
     this.setLoadingStates();
   },
 
-  refreshData: function (data) {
-    console.debug('GroupsStore::refreshData');
-    if (SessionStore.getInstance() !== null) {
-      GroupsActions.getGroups();
-    }
-  },
+  setGroups: function (groups) {
+    console.debug('GroupsStore::setGroups');
 
-  onGetGroups: function(items) {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
-  onGetGroupsCompleted: function(items) {
-    console.debug('GroupsStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+    this.data.items = Object.keys(groups).map(function(key) {
+      return groups[key];
     });
-    this.data.isLoading = false;
+
     this.trigger(this.data);
+  },
+
+  getGroups: function (empty) {
+    return this.data.items || empty || null;
+  },
+
+  refreshData: function () {
+    GroupsActions.fetchGroups();
+  },
+
+  onFetchGroups: function(items) {
+    console.debug('GroupsStore::onFetchGroups');
+    this.trigger(this.data);
+  },
+
+  onFetchGroupsCompleted: function(items) {
+    console.debug('GroupsStore::onFetchGroupsCompleted');
+    GroupsActions.setGroups(items);
   },
 
   onCreateGroupCompleted: function(payload) {

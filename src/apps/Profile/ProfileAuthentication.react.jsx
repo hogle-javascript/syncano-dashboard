@@ -77,32 +77,32 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       container: {
-        marginTop: 96,
-        marginBottom: 96
+        marginTop       : 96,
+        marginBottom    : 96
       },
       header: {
-        padding: '48px 48px 0',
-        color: 'rgba(0, 0, 0, 0.87)',
-        fontSize: 20,
-        lineHeight: '24px'
+        padding         : '48px 48px 0',
+        color           : 'rgba(0, 0, 0, 0.87)',
+        fontSize        : 20,
+        lineHeight      : '24px'
       },
       content: {
-        padding: 48
+        padding         : 48
       },
       form: {
-        maxWidth: 416
+        maxWidth        : 416
       },
       updateButton: {
-        height: 36,
-        lineHeight: '36px',
-        fontWeigh: 400,
-        boxShadow: 0
+        height          : 36,
+        lineHeight      : '36px',
+        fontWeigh       : 400,
+        boxShadow       : 0
       },
-      updateButtonLabel: {
-        lineHeight: '36px',
-        fontWeight: 400,
-        paddingLeft: 30,
-        paddingRight: 30
+      updateButtonLabel : {
+        lineHeight      : '36px',
+        fontWeight      : 400,
+        paddingLeft     : 30,
+        paddingRight    : 30
       }
     }
   },

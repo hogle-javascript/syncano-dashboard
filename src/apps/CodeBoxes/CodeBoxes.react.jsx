@@ -41,7 +41,7 @@ module.exports = React.createClass({
   ],
 
   componentWillMount: function() {
-    CodeBoxesStore.refreshData();
+    CodeBoxesActions.fetch();
   },
 
   componentWillUpdate: function(nextProps, nextState) {

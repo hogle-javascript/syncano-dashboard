@@ -54,18 +54,21 @@ module.exports = Radium(React.createClass({
     return [{
       dialog: AddDialog,
       params: {
+        key  : "addInstanceDialog",
         ref  : "addInstanceDialog",
         mode : "add"
       }
     }, {
       dialog: AddDialog,
       params: {
+        key  : "editInstanceDialog",
         ref  : "editInstanceDialog",
         mode : "edit"
       }
     },{
       dialog: ColorIconPickerDialog,
       params: {
+        key          : "pickColorIconDialog",
         ref          : "pickColorIconDialog",
         mode         : "add",
         initialColor : checkedItemIconColor.color,
@@ -75,6 +78,7 @@ module.exports = Radium(React.createClass({
     },{
       dialog: Dialog,
       params: {
+        key:    "deleteInstanceDialog",
         ref:    "deleteInstanceDialog",
         title:  "Delete an Instance",
         actions: [
@@ -89,8 +93,8 @@ module.exports = Radium(React.createClass({
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
-    SessionStore.clearInstance();
-    InstancesStore.refreshData();
+    SessionStore.removeInstance();
+    InstancesStore.fetch();
   },
 
   componentDidMount: function() {
@@ -138,7 +142,7 @@ module.exports = Radium(React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 

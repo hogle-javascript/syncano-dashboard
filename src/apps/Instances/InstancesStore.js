@@ -4,7 +4,10 @@ var Reflux              = require('reflux'),
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
+    // Stores & Actions
+    SessionActions      = require('../Session/SessionActions'),
     SessionStore        = require('../Session/SessionStore'),
     InstancesActions    = require('./InstancesActions');
 
@@ -14,7 +17,8 @@ var InstancesStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
-    StoreLoadingMixin
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -25,14 +29,17 @@ var InstancesStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      this.refreshData
+    );
     this.listenToForms();
     this.setLoadingStates();
   },
 
   refreshData: function () {
     console.debug('InstancesStore::refreshData');
-    InstancesActions.getInstances();
+    InstancesActions.fetchInstances();
   },
 
   // Filters
@@ -52,23 +59,26 @@ var InstancesStore = Reflux.createStore({
     return this.data.items.filter(this.filterOtherInstances);
   },
 
-  onGetInstances: function(instances) {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
-  onGetInstancesCompleted: function(items) {
-    console.debug('InstancesStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+  setInstances: function (instances) {
+    console.debug('InstancesStore::setInstances');
+    this.data.items = Object.keys(instances).map(function(key) {
+        return instances[key];
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onGetInstancesFailure: function () {
-    this.data.isLoading = false;
+  onFetchInstances: function(instances) {
+    console.debug('InstancesStore::onFetchInstances');
+    this.trigger(this.data);
+  },
+
+  onFetchInstancesCompleted: function(items) {
+    console.debug('InstancesStore::onFetchInstancesCompleted');
+    InstancesActions.setInstances(items);
+  },
+
+  onFetchInstancesFailure: function () {
+    console.debug('InstancesStore::onFetchInstancesFailure');
     this.trigger(this.data);
   },
 

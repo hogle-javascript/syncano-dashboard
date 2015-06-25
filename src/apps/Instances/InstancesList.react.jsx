@@ -62,13 +62,15 @@ module.exports = React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
   renderItem: function (item) {
     return (
-      <Item key={item.name}>
+      <Item
+        checked = {item.checked}
+        key     = {item.name}>
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}

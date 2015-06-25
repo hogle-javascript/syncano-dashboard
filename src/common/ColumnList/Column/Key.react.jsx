@@ -7,7 +7,7 @@ var React              = require('react'),
     Colors             = mui.Styles.Colors,
     Snackbar           = mui.Snackbar,
     Paper              = mui.Paper,
-    FontIcon           = mui.FontIcon;
+    FlatButton         = mui.FlatButton;
 
 
 var Header = React.createClass({
@@ -33,7 +33,6 @@ module.exports = Radium(React.createClass({
 
   propTypes: {
     id          : React.PropTypes.string,
-    color       : React.PropTypes.string.isRequired,
     handleClick : React.PropTypes.func
   },
 
@@ -43,17 +42,8 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
-  },
-
-  getInitialState: function () {
-    return {
-      color      : this.props.color,
-      hoverColor : this.props.hoverColor
-    }
   },
 
   getStyles: function() {
@@ -66,23 +56,11 @@ module.exports = Radium(React.createClass({
         lineHeight    : '16px',
         paddingTop    : 16,
         paddingBottom : 16
-      },
-      icon: {
-        color: this.state.color
       }
     }
   },
 
-  handleMouseOver: function (event) {
-    this.setState({'color': this.props.hoverColor});
-  },
-
-  handleMouseLeave: function (event) {
-    this.setState({'color': this.props.color});
-  },
-
   handleClick: function (event) {
-    this.setState({'color': this.props.color});
     this.refs.snackbar.show();
   },
 
@@ -95,18 +73,16 @@ module.exports = Radium(React.createClass({
         className   = {this.props.className}
         style       = {styles.key}>
           <div
-            ref       = "key"
-            className = "col-xs-28">
+            ref = "key"
+            className = "col-xs-25">
             {this.props.children}
           </div>
 
         <ReactZeroClipboard text={this.props.children}>
-          <FontIcon
-            onClick     = {this.handleClick}
-            onMouseOver = {this.handleMouseOver}
-            onMouseOut  = {this.handleMouseLeave}
-            style       = {styles.icon}
-            className   = "synicon-content-copy col-xs-4" />
+            <FlatButton
+              label       = "COPY"
+              primary     = {true}
+              onClick     = {this.handleClick} />
         </ReactZeroClipboard>
 
         <Snackbar

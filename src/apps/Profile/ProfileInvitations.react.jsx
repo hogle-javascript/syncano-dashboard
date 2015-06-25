@@ -1,32 +1,33 @@
-var React                   = require('react'),
-    Reflux                  = require('reflux'),
+var React                     = require('react'),
+    Reflux                    = require('reflux'),
 
     // Utils
-    HeaderMixin             = require('../Header/HeaderMixin'),
-    DialogsMixin            = require('../../mixins/DialogsMixin'),
-    Show                    = require('../../common/Show/Show.react'),
+    HeaderMixin               = require('../Header/HeaderMixin'),
+    DialogsMixin              = require('../../mixins/DialogsMixin'),
+    Show                      = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    ProfileActions          = require('./ProfileActions'),
-    ProfileInvitationsStore = require('./ProfileInvitationsStore'),
+    ProfileInvitationsActions = require('./ProfileInvitationsActions'),
+    ProfileInvitationsStore   = require('./ProfileInvitationsStore'),
 
     // Components
-    mui                     = require('material-ui'),
-    Colors                  = mui.Styles.Colors,
-    Dialog                  = mui.Dialog,
-    FabList                 = require('../../common/Fab/FabList.react'),
-    FabListItem             = require('../../common/Fab/FabListItem.react'),
-    Container               = require('../../common/Container/Container.react'),
+    mui                       = require('material-ui'),
+    Colors                    = mui.Styles.Colors,
+    Dialog                    = mui.Dialog,
+    FontIcon                  = mui.FontIcon,
+    FabList                   = require('../../common/Fab/FabList.react'),
+    FabListItem               = require('../../common/Fab/FabListItem.react'),
+    Container                 = require('../../common/Container/Container.react'),
 
     // List
-    ListContainer           = require('../../common/Lists/ListContainer.react'),
-    List                    = require('../../common/Lists/List.react'),
-    Item                    = require('../../common/ColumnList/Item.react'),
-    Header                  = require('../../common/ColumnList/Header.react'),
-    LoadingItem             = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnDesc              = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate              = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon         = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer             = require('../../common/Lists/ListContainer.react'),
+    List                      = require('../../common/Lists/List.react'),
+    Item                      = require('../../common/ColumnList/Item.react'),
+    Header                    = require('../../common/ColumnList/Header.react'),
+    LoadingItem               = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnDesc                = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -113,32 +114,54 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     console.info('ProfileInvitations::componentDidMount');
-    ProfileActions.getInvitations();
+    ProfileInvitationsActions.fetch();
   },
 
   uncheckAll: function() {
     console.info('ProfileInvitations::uncheckAll');
-    ProfileActions.uncheckAll();
+    ProfileInvitationsActions.uncheckAll();
   },
 
   checkItem: function(id, state){
     console.info('ProfileInvitations::checkItem');
-    ProfileActions.checkItem(id, state);
+    ProfileInvitationsActions.checkItem(id, state);
   },
 
   handleAccept: function() {
     console.info('ProfileInvitations::handleAccept');
-    ProfileActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
+    ProfileInvitationsActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
   handleDecline: function() {
     console.info('ProfileInvitations::handleDecline');
-    ProfileActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
+    ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
+  },
+
+  getStyles: function() {
+    return {
+      container: {
+        margin       : '64px auto',
+        textAlign    : 'center'
+      },
+      icon: {
+        fontSize     : 96,
+        lineHeight   : 1,
+        marginBottom : 16,
+        color        : 'rgba(0, 0, 0, 0.24)'
+      },
+      text: {
+        color        : 'rgba(0, 0, 0, 0.87)',
+        fontSize     : 34,
+        margin       : 0
+      }
+    }
   },
 
   renderItem: function (item) {
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
@@ -168,12 +191,11 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
   },
 
-
   render: function () {
-    var checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
+    var styles             = this.getStyles(),
+        checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 
     return (
       <Container>
@@ -203,17 +225,26 @@ module.exports = React.createClass({
           </FabList>
         </Show>
 
-        <ListContainer>
-          <Header>
-            <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
-            <ColumnDesc.Header>From</ColumnDesc.Header>
-            <ColumnDesc.Header>Role</ColumnDesc.Header>
-            <ColumnDate.Header>Created</ColumnDate.Header>
-          </Header>
-          <List>
-            {this.renderList()}
-          </List>
-        </ListContainer>
+        <Show if={this.state.items.length < 1}>
+          <div style={styles.container}>
+            <FontIcon style={styles.icon} className="synicon-email-outline" />
+            <p style={styles.text}>You have no invitations</p>
+          </div>
+        </Show>
+
+        <Show if={this.state.items.length > 0}>
+          <ListContainer>
+            <Header>
+              <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
+              <ColumnDesc.Header>From</ColumnDesc.Header>
+              <ColumnDesc.Header>Role</ColumnDesc.Header>
+              <ColumnDate.Header>Created</ColumnDate.Header>
+            </Header>
+            <List>
+              {this.renderList()}
+            </List>
+          </ListContainer>
+        </Show>
       </Container>
     );
   }

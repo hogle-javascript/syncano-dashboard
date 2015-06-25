@@ -1,73 +1,64 @@
 var Reflux            = require('reflux'),
 
-    SessionStore      = require('../Session/SessionStore'),
-    ApiKeysActions    = require('./ApiKeysActions'),
-    StoreLoadingMixin = require('../../mixins/StoreLoadingMixin');
+    // Utils & Mixins
+    CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin           = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
+    //Stores & Actions
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin')
+    SessionActions           = require('../Session/SessionActions'),
+    ApiKeysActions           = require('./ApiKeysActions');
 
 var ApiKeysStore = Reflux.createStore({
-  listenables: ApiKeysActions,
-
-  mixins: [
+  listenables : ApiKeysActions,
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin,
+    WaitForStoreMixin,
     StoreLoadingMixin
   ],
 
   getInitialState: function () {
     return {
-      // Lists
-      items: [],
-
-      // Dialogs
-      errors: {}
+      items     : [],
+      isLoading : true
     }
   },
 
   init: function () {
-
-    this.data = {
-      // List
-      items: [],
-
-      // Dialogs
-      errors: {},
-      canSubmit: true
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.listenToForms();
     this.setLoadingStates();
   },
 
-  refreshData: function (data) {
+  refreshData: function () {
     console.debug('ApiKeysStore::refreshData');
-    if (SessionStore.instance) {
-      ApiKeysActions.getApiKeys();
-    }
+    ApiKeysActions.fetchApiKeys();
   },
 
-  getNumberOfChecked: function() {
-    var checkedFilter = function(item) {
-      return item.checked === true;
-    };
-    return this.data.items.filter(checkedFilter).length;
+  setApiKeys: function (items) {
+    console.debug('AdminsStore::setApiKeys');
+
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+
+    this.trigger(this.data);
   },
   
-  onGetApiKeys: function(items) {
-    this.data.isLoading = true;
+  onFetchApiKeys: function(items) {
     this.trigger(this.data);
   },
 
-  onGetApiKeysCompleted: function(items) {
-    console.debug('ApiKeysStore::onGetApiKeysCompleted');
-
-    var data = this.data;
-    data.items = [];
-    Object.keys(items).map(function(item) {
-        data.items.push(items[item]);
-    });
-    this.data.isLoading = false;
-    this.trigger(this.data);
+  onFetchApiKeysCompleted: function(items) {
+    console.debug('ApiKeysStore::onFetchApiKeysCompleted');
+    ApiKeysActions.setApiKeys(items);
   },
 
   onCreateApiKeyCompleted: function(payload) {
@@ -76,43 +67,12 @@ var ApiKeysStore = Reflux.createStore({
     this.trigger(this.data);
     this.refreshData();
   },
-
-  onCreateApiKeyFailure: function(payload) {
-    console.debug('ApiKeysStore::onCreateApiKeyFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
+  
+  onUpdateApiKeyCompleted: function(paylod) {
+    console.debug('ApiKeysStore::onUpdateApiKeyCompleted');
+    this.data.hideDialogs = true;
     this.trigger(this.data);
-  },
-
-  onCheckItem: function(checkId, state) {
-    console.debug('ApiKeysStore::onCheckItem');
-
-    this.data.items.forEach(function(item) {
-      if (checkId == item.id) {
-        item.checked = state;
-      }
-    }.bind(this));
-    this.trigger(this.data);
-  },
-
-  onUncheckAll: function() {
-    console.debug('ApiKeysStore::onCheckItem');
-
-    this.data.items.forEach(function(item) {
-        item.checked = false;
-    });
-    this.trigger(this.data);
+    this.refreshData();
   },
 
   onRemoveApiKeysCompleted: function(payload) {
@@ -127,31 +87,6 @@ var ApiKeysStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  getCheckedItem: function() {
-    console.debug('ApiKeysStore::getCheckedItem');
-
-    // Looking for the first 'checked' item
-    var checkedItem = null;
-    this.data.items.some(function (item) {
-      if (item.checked) {
-        checkedItem = item;
-        return true;
-      }
-    });
-    return checkedItem;
-  },
-
-  getCheckedItems: function() {
-    // Looking for the first 'checked' item
-    var checkedItems = [];
-    this.data.items.map(function (item) {
-      if (item.checked) {
-        checkedItems.push(item);
-      }
-    });
-    return checkedItems;
   }
 
 });

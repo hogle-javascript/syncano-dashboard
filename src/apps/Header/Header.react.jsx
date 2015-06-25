@@ -1,39 +1,39 @@
-var React                   = require('react'),
-    Reflux                  = require('reflux'),
-    Radium                  = require('radium'),
-    classNames              = require('classnames'),
-    Router                  = require('react-router'),
-    Link                    = Router.Link,
-    mui                     = require('material-ui'),
+var React                     = require('react'),
+    Reflux                    = require('reflux'),
+    Radium                    = require('radium'),
+    classNames                = require('classnames'),
+    Router                    = require('react-router'),
+    Link                      = Router.Link,
+    mui                       = require('material-ui'),
 
     // Utils & Mixins
-    StylePropable           = mui.Mixins.StylePropable,
+    StylePropable             = mui.Mixins.StylePropable,
 
     // Stores & Actions
-    HeaderActions           = require('./HeaderActions'),
-    HeaderStore             = require('./HeaderStore'),
-    SessionActions          = require('../Session/SessionActions'),
-    SessionStore            = require('../Session/SessionStore'),
-    InstancesActions        = require('../Instances/InstancesActions'),
-    InstancesStore          = require('../Instances/InstancesStore'),
-    ColorStore              = require('../../common/Color/ColorStore'),
-    ProfileInvitationsStore = require('../Profile/ProfileInvitationsStore'),
-    ProfileActions          = require('../Profile/ProfileActions'),
+    HeaderActions             = require('./HeaderActions'),
+    HeaderStore               = require('./HeaderStore'),
+    SessionActions            = require('../Session/SessionActions'),
+    SessionStore              = require('../Session/SessionStore'),
+    InstancesActions          = require('../Instances/InstancesActions'),
+    InstancesStore            = require('../Instances/InstancesStore'),
+    ColorStore                = require('../../common/Color/ColorStore'),
+    ProfileInvitationsStore   = require('../Profile/ProfileInvitationsStore'),
+    ProfileInvitationsActions = require('../Profile/ProfileInvitationsActions'),
 
     // Components
-    Colors                  = mui.Styles.Colors,
-    Tabs                    = mui.Tabs,
-    Tab                     = mui.Tab,
-    Toolbar                 = mui.Toolbar,
-    ToolbarGroup            = mui.ToolbarGroup,
-    FontIcon                = mui.FontIcon,
-    Paper                   = mui.Paper,
-    DropDownMenu            = mui.DropDownMenu,
+    Colors                    = mui.Styles.Colors,
+    Tabs                      = mui.Tabs,
+    Tab                       = mui.Tab,
+    Toolbar                   = mui.Toolbar,
+    ToolbarGroup              = mui.ToolbarGroup,
+    FontIcon                  = mui.FontIcon,
+    Paper                     = mui.Paper,
+    DropDownMenu              = mui.DropDownMenu,
 
-    MaterialDropdown        = require('../../common/Dropdown/MaterialDropdown.react'),
-    MaterialIcon            = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon               = require('../../common/Icon/RoundIcon.react'),
-    HeaderMenu              = require('./HeaderMenu.react');
+    MaterialDropdown          = require('../../common/Dropdown/MaterialDropdown.react'),
+    MaterialIcon              = require('../../common/Icon/MaterialIcon.react'),
+    RoundIcon                 = require('../../common/Icon/RoundIcon.react'),
+    HeaderMenu                = require('./HeaderMenu.react');
 
 require('./Header.sass');
 
@@ -57,9 +57,7 @@ module.exports = Radium(React.createClass({
   },
 
   componentWillMount: function () {
-    //Refresh notification on dropdown click!!!
-    ProfileActions.getInvitations();
-    //this.getNotificationItems();
+    ProfileInvitationsActions.fetch();
   },
 
   handleTabActive: function (tab) {
@@ -195,7 +193,7 @@ module.exports = Radium(React.createClass({
     var instanceName = menuItem.text._store.props.children[1]._store.props.children;
 
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
@@ -277,13 +275,13 @@ module.exports = Radium(React.createClass({
 
   handleAcceptInvitations: function (items, e) {
     console.info("Header::handleAcceptInvitations");
-    ProfileActions.acceptInvitations(items);
+    ProfileInvitationsActions.acceptInvitations(items);
     e.stopPropagation();
   },
 
   handleDeclineInvitations: function (items, e) {
     console.info("Header::handleDeclineInvitations");
-    ProfileActions.declineInvitations(items);
+    ProfileInvitationsActions.declineInvitations(items);
     e.stopPropagation();
   },
 
@@ -293,7 +291,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleClickNotifications: function () {
-    ProfileActions.getInvitations();
+    ProfileInvitationsActions.fetch();
   },
 
   getDropdownItems: function () {
