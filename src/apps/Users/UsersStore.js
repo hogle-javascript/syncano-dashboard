@@ -32,7 +32,6 @@ var UsersStore = Reflux.createStore({
       SessionActions.setUser,
       SessionActions.setInstance,
       GroupsActions.setGroups,
-      UsersActions.fetch,
       this.refreshData
     );
     this.listenToForms();
