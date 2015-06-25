@@ -4,19 +4,20 @@ var Reflux     = require('reflux'),
 
 
 var CodeBoxesActions = Reflux.createActions({
-  checkItem           : {},
-  uncheckAll          : {},
+  checkItem        : {},
+  uncheckAll       : {},
 
-  fetch      : {},
-  setAdmins  : {},
+  fetch            : {},
+  setCodeBoxes     : {},
+  setCodeBoxTraces : {},
 
   setCurrentCodeBoxId: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxes: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   createCodeBox: {
       asyncForm   : true,
@@ -24,33 +25,29 @@ var CodeBoxesActions = Reflux.createActions({
       children    : ['completed', 'failure']
   },
   updateCodeBox: {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
-  },
-  removeAdmin: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      asyncForm   : true,
+      children    : ['completed', 'failure']
   },
   runCodeBox: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
   removeCodeBoxes: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxTrace: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxTraces: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxRuntimes: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   }
 });
 

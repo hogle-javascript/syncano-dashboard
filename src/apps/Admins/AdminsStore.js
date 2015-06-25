@@ -58,7 +58,7 @@ var AdminsStore = Reflux.createStore({
   },
 
   setAdmins: function (items) {
-    console.debug('AdminsStore::setInvitations');
+    console.debug('AdminsStore::setAdmins');
 
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
