@@ -24,7 +24,7 @@ var AdminsActions = Reflux.createActions({
 });
 
 AdminsActions.fetchAdmins.listen( function() {
-  console.info('AdminsActions::fetchUsers');
+  console.info('AdminsActions::fetchAdmins');
   Connection
     .Admins
     .list()

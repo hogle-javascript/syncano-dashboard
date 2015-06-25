@@ -57,7 +57,7 @@ var AdminsStore = Reflux.createStore({
   },
 
   setAdmins: function (items) {
-    console.debug('AdminsStore::setInvitations');
+    console.debug('AdminsStore::setAdmins');
 
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
@@ -83,7 +83,7 @@ var AdminsStore = Reflux.createStore({
   },
 
   onFetchAdminCompleted: function(payload) {
-    console.debug('AdminsStore::onCreateAdminCompleted');
+    console.debug('AdminsStore::onFetchAdminCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
