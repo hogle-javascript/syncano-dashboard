@@ -53,7 +53,6 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Admins::componentWillMount');
-    AdminsInvitationsActions.fetch();
     AdminsActions.fetch();
   },
 

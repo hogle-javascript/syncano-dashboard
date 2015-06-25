@@ -47,11 +47,9 @@ module.exports = React.createClass({
   ],
 
   componentWillMount: function() {
-    CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
-    this.setState({
-      currentCodeBoxId : this.getParams().codeboxId,
-      instanceName     : this.getParams().instanceName
-    })
+    CodeBoxesActions.fetch().then(
+      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId)
+    );
   },
 
   getStyles: function () {
@@ -75,8 +73,17 @@ module.exports = React.createClass({
     });
   },
 
-  render: function () {
+  handleUpdate: function() {
+    CodeBoxesActions.updateCodeBox(
+      this.state.currentCodeBoxId,
+      {
+        source : this.refs.editor.editor.getValue()
+      }
+    );
+  },
 
+  render: function () {
+    console.debug('CodeBoxesEdit::render');
     var styles     = this.getStyles(),
         source     = null,
         codeBox    = CodeBoxesStore.getCurrentCodeBox(),
@@ -95,6 +102,11 @@ module.exports = React.createClass({
       <Container style={styles.container}>
 
         <FabList position="top">
+          <FabListItem
+            label         = "Click here to save CodeBox"
+            mini          = {true}
+            onClick       = {this.handleUpdate}
+            iconClassName = "synicon-content-save" />
           <FabListItem
             label         = "Click here to execute CodeBox"
             mini          = {true}
