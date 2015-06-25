@@ -42,22 +42,22 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(SchedulesStore),
-    Reflux.connect(TriggersStore, 'invitations'),
+    Reflux.connect(TriggersStore, 'triggers'),
     HeaderMixin,
     DialogsMixin,
     InstanceTabsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
-    console.info('Schedules::componentWillUpdate');
+    console.info('Tasks::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.invitations.hideDialogs);
+    this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
   },
 
   componentWillMount: function() {
-    console.info('Schedules::componentWillMount');
-    SchedulesStore.refreshData();
-    TriggersStore.refreshData();
+    console.info('Tasks::componentWillMount');
+    SchedulesStore.fetch();
+    TriggersStore.fetch();
   },
 
   // Dialogs config
@@ -129,24 +129,24 @@ module.exports = React.createClass({
   },
 
   handleRemoveTriggers: function() {
-    console.info('Schedules::handleDelete');
+    console.info('Tasks::handleDelete');
     TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
   },
 
   handleRemoveSchedules: function() {
-    console.info('Schedules::handleRemoveSchedules');
+    console.info('Tasks::handleRemoveSchedules');
     SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   uncheckAll: function() {
-    console.info('Schedules::uncheckAll');
+    console.info('Tasks::uncheckAll');
     SchedulesActions.uncheckAll();
     TriggersActions.uncheckAll();
   },
 
   render: function () {
-    var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
-        checkedTriggers       = TriggersStore.getNumberOfChecked();
+    var checkedSchedules = SchedulesStore.getNumberOfChecked(),
+        checkedTriggers  = TriggersStore.getNumberOfChecked();
 
     return (
       <Container>
@@ -220,7 +220,7 @@ module.exports = React.createClass({
         <SchedulesList
           name                 = "Schedules"
           checkItem            = {SchedulesActions.checkItem}
-          isLoading            = {SchedulesActions.isLoading}
+          isLoading            = {this.state.isLoading}
           items                = {this.state.items}
           emptyItemHandleClick = {this.showDialog('addScheduleDialog')}
           emptyItemContent     = "Create a Schedule" />
@@ -228,8 +228,8 @@ module.exports = React.createClass({
         <TriggersList
           name                 = "Triggers"
           checkItem            = {TriggersActions.checkItem}
-          isLoading            = {TriggersActions.isLoading}
-          items                = {this.state.invitations.items}
+          isLoading            = {this.state.triggers.isLoading}
+          items                = {this.state.triggers.items}
           emptyItemHandleClick = {this.showDialog('addTriggerDialog')}
           emptyItemContent     = "Create a Trigger" />
 
