@@ -60,10 +60,11 @@ var CodeBoxesStore = Reflux.createStore({
     );
     this.listenToForms();
 
-    this.listenTo(CodeBoxesActions.setCurrentCodeBoxId.completed, this.fetchTraces)
+    this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.fetchTraces)
   },
 
   fetchTraces: function() {
+    console.debug('CodeBoxesStore::fetchTraces');
     CodeBoxesActions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
   },
 
@@ -160,8 +161,8 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onSetCurrentCodeBoxIdCompleted: function(CodeBoxId) {
-    console.debug('CodeBoxesStore::onSetCurrentCodeBoxIdCompleted', CodeBoxId);
+  onSetCurrentCodeBoxId: function(CodeBoxId) {
+    console.debug('CodeBoxesStore::onSetCurrentCodeBoxId', CodeBoxId);
     this.data.currentCodeBoxId = CodeBoxId;
     this.trigger(this.data);
   },

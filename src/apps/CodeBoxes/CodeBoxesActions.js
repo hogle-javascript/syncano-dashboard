@@ -4,17 +4,14 @@ var Reflux     = require('reflux'),
 
 
 var CodeBoxesActions = Reflux.createActions({
-  checkItem        : {},
-  uncheckAll       : {},
+  checkItem           : {},
+  uncheckAll          : {},
 
-  fetch            : {},
-  setCodeBoxes     : {},
-  setCodeBoxTraces : {},
+  fetch               : {},
+  setCodeBoxes        : {},
+  setCodeBoxTraces    : {},
+  setCurrentCodeBoxId : {},
 
-  setCurrentCodeBoxId: {
-      asyncResult : true,
-      children    : ['completed', 'failure']
-  },
   fetchCodeBoxes: {
       asyncResult : true,
       children    : ['completed', 'failure']
@@ -49,11 +46,6 @@ var CodeBoxesActions = Reflux.createActions({
       asyncResult : true,
       children    : ['completed', 'failure']
   }
-});
-
-CodeBoxesActions.setCurrentCodeBoxId.listen( function(id) {
-  console.info('CodeBoxesActions::setCurrentCodeBoxId');
-  this.completed(id);
 });
 
 CodeBoxesActions.fetchCodeBoxes.listen( function() {
