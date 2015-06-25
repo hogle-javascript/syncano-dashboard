@@ -4,7 +4,8 @@ var Reflux         = require('reflux'),
 
     SessionActions = require('../Session/SessionActions'),
     SessionStore   = require('../Session/SessionStore'),
-    AuthActions    = require('./AuthActions');
+    AuthActions    = require('./AuthActions'),
+    AuthConstans   = require('./AuthConstants');
 
 
 var AuthStore = Reflux.createStore({
@@ -35,8 +36,9 @@ var AuthStore = Reflux.createStore({
     this.trigger({
       status: "Account activated successfully. You'll now be redirected to Syncano Dashboard."
     });
+    this.onPasswordSignInCompleted(payload);
     setTimeout(function() {
-      this.onPasswordSignInCompleted(payload);
+      SessionStore.getRouter().transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
     }, 3000);
   },
 
@@ -63,7 +65,7 @@ var AuthStore = Reflux.createStore({
 
   onPasswordResetConfirmCompleted: function () {
     this.data = this.getInitialState();
-    SessionStore.router.transitionTo('password-update');
+    SessionStore.getRouter().transitionTo('password-update');
   },
 
   checkSession: function (Session) {
