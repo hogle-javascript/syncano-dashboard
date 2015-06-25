@@ -34,7 +34,7 @@ var ApiKeysActions = Reflux.createActions({
 });
 
 ApiKeysActions.fetchApiKeys.listen( function() {
-  console.info('ApiKeysActions::getApiKeys');
+  console.info('ApiKeysActions::fetchApiKeys');
   Connection
     .ApiKeys
     .list()
