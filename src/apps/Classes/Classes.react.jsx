@@ -18,9 +18,11 @@ var React                 = require('react'),
     mui                   = require('material-ui'),
     FloatingActionButton  = mui.FloatingActionButton,
     Dialog                = mui.Dialog,
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Local components
     ClassesList           = require('./ClassesList.react'),
@@ -48,7 +50,7 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Classes::componentWillMount');
-    ClassesStore.refreshData();
+    ClassesActions.fetch();
   },
     // Dialogs config
   initDialogs: function () {
@@ -58,13 +60,13 @@ module.exports = React.createClass({
       params: {
         ref  : "addClassDialog",
         mode : "add"
-      },
+      }
     },{
       dialog: AddDialog,
       params: {
         ref  : "editClassDialog",
         mode : "edit"
-      },
+      }
     },{
       dialog: ColorIconPickerDialog,
       params: {
@@ -142,42 +144,43 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedClasses ? 'block': 'none'}}>
+        <Show if={checkedClasses > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect Api Keys" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {ClassesActions.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect Api Keys" // TODO: extend component
+              color         = "" // TODO: extend component
+              mini          = {true}
+              onClick       = {ClassesActions.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Classes" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteClassDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Classes" // TODO: extend component
+              color         = "" // TODO: extend component
+              mini          = {true}
+              onClick       = {this.showDialog('deleteClassDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Class" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedClasses > 1}
-            onClick       = {this.showDialog('editClassDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Class" // TODO: extend component
+              color         = "" // TODO: extend component
+              mini          = {true}
+              disabled      = {checkedClasses > 1}
+              onClick       = {this.showDialog('editClassDialog')}
+              iconClassName = "synicon-pencil" />
 
-          <FloatingActionButton
-            style         = {styles.fabListTopButton}
-            label         = "Click here to customize Instances" // TODO: extend component
-            color         = "" // TODO: extend component
-            secondary     = {true}
-            mini          = {true}
-            disabled      = {checkedClasses > 1}
-            onClick       = {this.showDialog('pickColorIconDialog')}
-            iconClassName = "synicon-palette" />
+            <FabListItem
+              style         = {styles.fabListTopButton}
+              label         = "Click here to customize Instances" // TODO: extend component
+              color         = "" // TODO: extend component
+              secondary     = {true}
+              mini          = {true}
+              disabled      = {checkedClasses > 1}
+              onClick       = {this.showDialog('pickColorIconDialog')}
+              iconClassName = "synicon-palette" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
         <FabList
           style={{bottom: 100}}>

@@ -43,11 +43,11 @@ module.exports = Radium(React.createClass({
   displayName: 'ColumnCheckIcon',
 
   propTypes: {
-    id: React.PropTypes.string,
-    color: React.PropTypes.string,
-    hoverColor: React.PropTypes.string,
-    handleIconClick: React.PropTypes.func,
-    handleNameClick: React.PropTypes.func
+    id              : React.PropTypes.string,
+    color           : React.PropTypes.string,
+    hoverColor      : React.PropTypes.string,
+    handleIconClick : React.PropTypes.func,
+    handleNameClick : React.PropTypes.func
   },
 
   statics :{
@@ -114,7 +114,7 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var styles             = this.getStyles();
+    var styles = this.getStyles();
 
     return (
       <div
@@ -128,9 +128,8 @@ module.exports = Radium(React.createClass({
           handleClick = {this.handleIconClick} />
 
         <div
-          style       = {[
-                        styles.name,
-                        this.props.handleNameClick && styles.link]}
+          style       = {[styles.name,
+                          this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>

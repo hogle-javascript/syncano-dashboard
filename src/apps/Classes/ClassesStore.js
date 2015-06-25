@@ -3,8 +3,10 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    SessionActions      = require('../Session/SessionActions'),
     SessionStore        = require('../Session/SessionStore'),
     ClassesActions      = require('./ClassesActions');
 
@@ -13,7 +15,8 @@ var ClassesStore = Reflux.createStore({
   listenables : ClassesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   getInitialState: function () {
@@ -25,32 +28,30 @@ var ClassesStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
   },
 
   refreshData: function (data) {
     console.debug('ClassesStore::refreshData');
-    if (SessionStore.instance) {
-      ClassesActions.getClasses();
-    }
+    ClassesActions.fetchClasses();
   },
 
-  getTableHeader: function() {
-    if (this.getCheckedItem()) {
+  getItems: function() {
+    return this.data.items;
+  },
 
-      // TODO: default columns, it should be controled somehow
-      var header = {
-        id         : {content: 'ID', tooltip: 'ID'},
-        created_at : {content: 'Created', tooltip: 'Created'}
-      };
-      this.getCheckedItem().schema.map(function(item) {
-        header[item.name] = {content: item.name, tooltip: item.type}
-      });
-      return header;
-    }
+  onGetClassByName: function(className) {
+    var classObj = null;
+    this.data.items.some(function (item) {
+      if (item.name == className) {
+        classObj = item;
+      }
+    });
+    return classObj;
   },
 
   getCheckedItemIconColor: function() {
@@ -62,26 +63,28 @@ var ClassesStore = Reflux.createStore({
         icon  : null
       }
     }
-
     return {
       color : singleItem.metadata.color,
       icon  : singleItem.metadata.icon
     };
   },
 
-  onGetClasses: function(items) {
+  setClasses: function (items) {
+    this.data.items = Object.keys(items).map(function(item) {
+        return items[item];
+    });
+    this.trigger(this.data);
+  },
+
+  onFetchClasses: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetClassesCompleted: function(items) {
-    console.debug('ClassesStore::onGetClassesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchClassesCompleted: function (items) {
+    console.debug('ClassesStore::onFetchClassesCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    ClassesActions.setClasses(items);
   },
 
   onCreateClassCompleted: function(payload) {

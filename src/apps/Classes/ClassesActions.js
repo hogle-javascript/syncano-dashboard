@@ -4,10 +4,14 @@ var Reflux     = require('reflux'),
 
 
 var ClassesActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
+  checkItem      : {},
+  uncheckAll     : {},
 
-  getClasses: {
+  setClasses     : {},
+  fetch          : {},
+  getClassByName : {},
+
+  fetchClasses: {
       asyncResult: true,
       children: ['completed', 'failure']
   },
@@ -25,8 +29,8 @@ var ClassesActions = Reflux.createActions({
   }
 });
 
-ClassesActions.getClasses.listen( function() {
-  console.info('ClassesActions::getClasses');
+ClassesActions.fetchClasses.listen( function() {
+  console.info('ClassesActions::fetchClasses');
   Connection
     .Classes
     .list()

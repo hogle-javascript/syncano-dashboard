@@ -8,6 +8,7 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
+    SessionStore      = require('../Session/SessionStore'),
     ClassesActions    = require('./ClassesActions'),
     ClassesStore      = require('./ClassesStore'),
 
@@ -47,10 +48,21 @@ module.exports = React.createClass({
     ClassesActions.checkItem(id, state);
   },
 
+  handleItemClick: function (className) {
+    SessionStore.router.transitionTo(
+      'classes-data-objects',
+      {
+        instanceName : SessionStore.getInstance().name,
+        className    : className
+      }
+    );
+    console.info('ClassesList::handleItemClick');
+  },
+
   renderItem: function (item) {
 
     return (
-      <Item key={item.id}>
+      <Item key={item.name} id={item.name} handleClick={this.handleItemClick}>
         <ColumnCheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata.icon}
@@ -60,7 +72,9 @@ module.exports = React.createClass({
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnID>{item.objects_count}</ColumnID>
+        <ColumnID className="col-xs-5 col-md-5">
+          {item.objects_count}
+        </ColumnID>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -93,7 +107,7 @@ module.exports = React.createClass({
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
-          <ColumnID.Header>Objects</ColumnID.Header>
+          <ColumnID.Header className="col-xs-5 col-md-5">Objects</ColumnID.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>

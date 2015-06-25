@@ -44,6 +44,10 @@ var SessionStore = Reflux.createStore({
     return this.instance || empty || null;
   },
 
+  getRouter: function (empty) {
+    return this.router || empty || null;
+  },
+
   setRouter: function (empty) {
     return this.router || empty || null;
   },
