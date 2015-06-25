@@ -21,6 +21,7 @@ var ProfileSettingsStore = Reflux.createStore({
   },
 
   init: function () {
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },

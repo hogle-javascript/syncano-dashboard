@@ -1,33 +1,33 @@
-var React                   = require('react'),
-    Reflux                  = require('reflux'),
+var React                     = require('react'),
+    Reflux                    = require('reflux'),
 
     // Utils
-    HeaderMixin             = require('../Header/HeaderMixin'),
-    DialogsMixin            = require('../../mixins/DialogsMixin'),
-    Show                    = require('../../common/Show/Show.react'),
+    HeaderMixin               = require('../Header/HeaderMixin'),
+    DialogsMixin              = require('../../mixins/DialogsMixin'),
+    Show                      = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    ProfileActions          = require('./ProfileActions'),
-    ProfileInvitationsStore = require('./ProfileInvitationsStore'),
+    ProfileInvitationsActions = require('./ProfileInvitationsActions'),
+    ProfileInvitationsStore   = require('./ProfileInvitationsStore'),
 
     // Components
-    mui                     = require('material-ui'),
-    Colors                  = mui.Styles.Colors,
-    Dialog                  = mui.Dialog,
-    FontIcon                = mui.FontIcon,
-    FabList                 = require('../../common/Fab/FabList.react'),
-    FabListItem             = require('../../common/Fab/FabListItem.react'),
-    Container               = require('../../common/Container/Container.react'),
+    mui                       = require('material-ui'),
+    Colors                    = mui.Styles.Colors,
+    Dialog                    = mui.Dialog,
+    FontIcon                  = mui.FontIcon,
+    FabList                   = require('../../common/Fab/FabList.react'),
+    FabListItem               = require('../../common/Fab/FabListItem.react'),
+    Container                 = require('../../common/Container/Container.react'),
 
     // List
-    ListContainer           = require('../../common/Lists/ListContainer.react'),
-    List                    = require('../../common/Lists/List.react'),
-    Item                    = require('../../common/ColumnList/Item.react'),
-    Header                  = require('../../common/ColumnList/Header.react'),
-    LoadingItem             = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnDesc              = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate              = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon         = require('../../common/ColumnList/Column/CheckIcon.react');
+    ListContainer             = require('../../common/Lists/ListContainer.react'),
+    List                      = require('../../common/Lists/List.react'),
+    Item                      = require('../../common/ColumnList/Item.react'),
+    Header                    = require('../../common/ColumnList/Header.react'),
+    LoadingItem               = require('../../common/ColumnList/LoadingItem.react'),
+    ColumnDesc                = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
+    ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
@@ -114,27 +114,27 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     console.info('ProfileInvitations::componentDidMount');
-    ProfileActions.getInvitations();
+    ProfileInvitationsActions.fetch();
   },
 
   uncheckAll: function() {
     console.info('ProfileInvitations::uncheckAll');
-    ProfileActions.uncheckAll();
+    ProfileInvitationsActions.uncheckAll();
   },
 
   checkItem: function(id, state){
     console.info('ProfileInvitations::checkItem');
-    ProfileActions.checkItem(id, state);
+    ProfileInvitationsActions.checkItem(id, state);
   },
 
   handleAccept: function() {
     console.info('ProfileInvitations::handleAccept');
-    ProfileActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
+    ProfileInvitationsActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
   handleDecline: function() {
     console.info('ProfileInvitations::handleDecline');
-    ProfileActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
+    ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
   getStyles: function() {

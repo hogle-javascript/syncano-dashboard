@@ -125,10 +125,10 @@ module.exports = React.createClass({
             <div style={styles.content}>
               {this.renderFormNotifications()}
               <form
-                style={styles.form}
-                onSubmit={this.handleFormValidation}
-                acceptCharset="UTF-8"
-                method="post">
+                style         = {styles.form}
+                onSubmit      = {this.handleFormValidation}
+                acceptCharset = "UTF-8"
+                method        = "post">
                 <TextField
                   ref               = "firstName"
                   valueLink         = {this.linkState('firstName')}
