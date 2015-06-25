@@ -28,7 +28,6 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,

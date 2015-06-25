@@ -33,7 +33,7 @@ var WaitForStoreMixin = {
         for(var i=0; i < listenables.length; i++){
             var listenable = listenables[i];
             if (listenable.fetch !== undefined) {
-              args.push(listenable.fetch)
+              args.push(listenable.fetch);
             }
         }
     }
