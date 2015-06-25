@@ -25,7 +25,8 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
         'bmi_SafeAddOnload',
         'EBCallBackMessageReceived',
         // See http://toolbar.conduit.com/Developer/HtmlAndGadget/Methods/JSInjection.aspx
-        'conduitPage'
+        'conduitPage',
+        '/No route matches path/i'
       ],
       ignoreUrls: [
         // Facebook flakiness

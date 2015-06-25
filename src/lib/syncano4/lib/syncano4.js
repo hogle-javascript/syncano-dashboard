@@ -120,6 +120,10 @@ var Syncano = (function() {
     request.open(mtype, params.url, true);
     request.setRequestHeader('Accept', 'application/json;charset=UTF-8');
 
+    if (apiKey !== null) {
+      request.setRequestHeader('Authorization', 'Token ' + apiKey);
+    }
+
     if (mtype !== 'GET') {
       request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     }
@@ -177,13 +181,17 @@ var Syncano = (function() {
       url: params.url,
       method: params.type,
       strictSSL: false,
-      body: buildUrlParams(params.data)
+      body: buildUrlParams(params.data),
+      headers: {'Accept': 'application/json;charset=UTF-8'}
     };
+
+    if (apiKey !== null) {
+      opt.headers['Authorization'] = 'Token ' + apiKey;
+    }
+
     if (params.type !== 'GET') {
-      opt.headers = {
-        'content-type': 'application/x-www-form-urlencoded',
-        'user-agent': 'syncano-nodejs-4.0'
-      };
+      opt.headers['content-type'] = 'application/json;charset=UTF-8';
+      opt.headers['user-agent']   = 'syncano-nodejs-4.0';
     }
 
     if (params.headers !== undefined) {
@@ -2527,9 +2535,6 @@ var Syncano = (function() {
         throw new Error('Missing channel name');
       }
       var url = normalizeUrl(baseURL + linksObject.instance_channels + name + '/poll/');
-      if (apiKey !== null) {
-        url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey;
-      }
       (function poll() {
         $.ajax({
           url: url,
@@ -2541,8 +2546,7 @@ var Syncano = (function() {
             if (xhr.responseJSON && xhr.responseJSON.id) {
               url = [
                 normalizeUrl(baseURL + linksObject.instance_channels),
-                name + '/poll/?last_id=' + xhr.responseJSON.id,
-                '&api_key=' + apiKey
+                name + '/poll/?last_id=' + xhr.responseJSON.id
               ].join('');
             }
             poll();
@@ -2674,9 +2678,6 @@ var Syncano = (function() {
       } else {
         params = params || {};
         var url = normalizeUrl(baseURL + method);
-        if (apiKey !== null) {
-          url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey;
-        }
         var ajaxParams = {
           type: requestType,
           url: url,
