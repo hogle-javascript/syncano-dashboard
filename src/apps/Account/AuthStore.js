@@ -65,7 +65,7 @@ var AuthStore = Reflux.createStore({
 
   onPasswordResetConfirmCompleted: function () {
     this.data = this.getInitialState();
-    SessionStore.router.transitionTo('password-update');
+    SessionStore.getRouter().transitionTo('password-update');
   },
 
   checkSession: function (Session) {
