@@ -3,9 +3,10 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     SchedulesActions    = require('./SchedulesActions');
 
 
@@ -13,7 +14,8 @@ var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   crontabItems: [
@@ -36,34 +38,45 @@ var SchedulesStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
     this.listenToForms();
   },
 
-  refreshData: function (data) {
+  getSchedules: function (empty) {
+    return this.data.items || empty || null;
+  },
+
+  setSchedules: function (items) {
+    console.debug('SchedulesStore::setSchedules');
+    this.data.items = Object.keys(items).map(function(key) {
+        return items[key];
+    });
+    this.trigger(this.data);
+  },
+
+  refreshData: function () {
     console.debug('SchedulesStore::refreshData');
-    if (SessionStore.getInstance() !== null) {
-      SchedulesActions.getSchedules();
-    }
+    SchedulesActions.fetchSchedules();
   },
 
   getCrontabDropdown: function () {
     return this.crontabItems;
   },
 
-  onGetSchedules: function(items) {
+  onFetchSchedules: function(items) {
+    console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetSchedulesCompleted: function(items) {
-    console.debug('SchedulesStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchSchedulesCompleted: function(items) {
+    console.debug('SchedulesStore::onFetchSchedulesCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    SchedulesActions.setSchedules(items);
   },
 
   onCreateScheduleCompleted: function(payload) {
@@ -81,6 +94,7 @@ var SchedulesStore = Reflux.createStore({
   },
 
   onRemoveSchedulesCompleted: function(payload) {
+    console.debug('SchedulesStore::onRemoveSchedulesCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

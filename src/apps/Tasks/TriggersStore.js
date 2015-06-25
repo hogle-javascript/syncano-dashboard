@@ -3,9 +3,10 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     TriggersActions     = require('./TriggersActions');
 
 
@@ -13,7 +14,8 @@ var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreFormMixin,
+    WaitForStoreMixin
   ],
 
   signalMenuItems: [
@@ -52,15 +54,27 @@ var TriggersStore = Reflux.createStore({
 
   init: function () {
     this.data = this.getInitialState();
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
     this.listenToForms();
   },
 
-  refreshData: function (data) {
-    console.debug('TriggersStore::refreshData');
-    if (SessionStore.getInstance() !== null) {
-      TriggersActions.getTriggers();
-    }
+  setTriggers: function (items) {
+    this.data.items = Object.keys(items).map(function(item) {
+        return items[item];
+    });
+    this.trigger(this.data);
+  },
+
+  getTriggers: function (empty) {
+    return this.data.items || empty || null;
+  },
+
+  refreshData: function () {
+    TriggersActions.fetchTriggers();
   },
 
   getSignalsDropdown: function() {
@@ -71,19 +85,16 @@ var TriggersStore = Reflux.createStore({
     return this.classMenuItems;
   },
 
-  onGetTriggers: function(items) {
+  onFetchTriggers: function() {
+    console.debug('TriggersStore::onFetchTriggers');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetTriggersCompleted: function(items) {
-    console.debug('TriggersStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchTriggersCompleted: function(items) {
+    console.debug('TriggersStore::onFetchTriggersCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    TriggersActions.setTriggers(items);
   },
 
   onCreateTriggerCompleted: function(payload) {

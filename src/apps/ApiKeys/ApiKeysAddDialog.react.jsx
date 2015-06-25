@@ -30,11 +30,7 @@ module.exports = React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    description: {
-      presence: true
-    }
-  },
+  validatorConstraints: {},
 
   getInitialState: function() {
     return {
@@ -45,6 +41,9 @@ module.exports = React.createClass({
   },
 
   clearData: function() {
+    this.refs.ignore_acl.setToggled(false);
+    this.refs.allow_user_create.setToggled(false);
+
     this.setState({
       description       : '',
       ignore_acl        : false,
@@ -80,7 +79,7 @@ module.exports = React.createClass({
           },
           {
             text    : {submitLabel},
-            onClick : this.handleSubmit,
+            onClick : this.handleFormValidation,
             ref     : 'submit'
           }
         ];
@@ -93,32 +92,35 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal           = {true}>
         <div>
-        <form
-          onSubmit      = {this.handleSubmit}
-          acceptCharset = "UTF-8"
-          method        = "post">
+          {this.renderFormNotifications()}
+          <form
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post">
 
-          <TextField
-            ref               = "description"
-            name              = "description"
-            fullWidth         = "true"
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join(' ')}
-            floatingLabelText = "Description of an API Key" />
+            <TextField
+              ref               = "description"
+              name              = "description"
+              fullWidth         = "true"
+              valueLink         = {this.linkState('description')}
+              errorText         = {this.getValidationMessages('description').join(' ')}
+              floatingLabelText = "Description of an API Key" />
 
-          <Toggle
-            name     = "ignore_acl"
-            onToggle = {this.handleToogle('ignore_acl')}
-            style    = {{marginTop: 20}}
-            label    = "Ignore ACL?" />
+            <Toggle
+              ref      = "ignore_acl"
+              name     = "ignore_acl"
+              onToggle = {this.handleToogle('ignore_acl')}
+              style    = {{marginTop: 20}}
+              label    = "Ignore ACL?" />
 
-          <Toggle
-            name     = "allow_user_create"
-            onToggle = {this.handleToogle('allow_user_create')}
-            style    = {{marginTop: 20}}
-            label    = "User registration?" />
+            <Toggle
+              ref      = "allow_user_create"
+              name     = "allow_user_create"
+              onToggle = {this.handleToogle('allow_user_create')}
+              style    = {{marginTop: 20}}
+              label    = "User registration?" />
 
-        </form>
+          </form>
         </div>
       </Dialog>
     );

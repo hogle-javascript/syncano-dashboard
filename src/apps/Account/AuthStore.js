@@ -4,7 +4,8 @@ var Reflux         = require('reflux'),
 
     SessionActions = require('../Session/SessionActions'),
     SessionStore   = require('../Session/SessionStore'),
-    AuthActions    = require('./AuthActions');
+    AuthActions    = require('./AuthActions'),
+    AuthConstans   = require('./AuthConstants');
 
 
 var AuthStore = Reflux.createStore({
@@ -31,12 +32,13 @@ var AuthStore = Reflux.createStore({
     });
   },
 
-  onActivateCompleted: function () {
+  onActivateCompleted: function (payload) {
     this.trigger({
       status: "Account activated successfully. You'll now be redirected to Syncano Dashboard."
     });
-    setTimeout(function(){
-      SessionStore.router.transitionTo('dashboard');
+    this.onPasswordSignInCompleted(payload);
+    setTimeout(function() {
+      SessionStore.getRouter().transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
     }, 3000);
   },
 
@@ -61,11 +63,9 @@ var AuthStore = Reflux.createStore({
     });
   },
 
-  onPasswordResetConfirmCompleted: function () {
-    this.data = this.getInitialState();
-    this.trigger({
-      feedback: 'Password changed successfully'
-    });
+  onPasswordResetConfirmCompleted: function (payload) {
+    this.onPasswordSignInCompleted(payload);
+    SessionStore.getRouter().transitionTo('password-update');
   },
 
   checkSession: function (Session) {
@@ -75,8 +75,9 @@ var AuthStore = Reflux.createStore({
   },
 
   onSocialLoginCompleted: function (payload) {
+    console.debug('AuthStore::onSocialLoginCompleted');
     this.onPasswordSignInCompleted(payload);
-  },
+  }
 
 });
 

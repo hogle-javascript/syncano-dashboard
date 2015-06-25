@@ -82,14 +82,14 @@ module.exports = React.createClass({
       dialog: Dialog,
       params: {
         ref: "deleteApiKeyDialog",
-        title: "Delete API key",
+        title: "Delete an API key",
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : "Confirm",
             onClick : this.handleDelete
           }
         ],
@@ -121,19 +121,19 @@ module.exports = React.createClass({
 
           <FabList position="top">
             <FabListItem
-              label         = "Click here to unselect Api Keys"
+              label         = "Click here to unselect API Keys"
               mini          = {true}
               onClick       = {ApiKeysActions.uncheckAll}
               iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
             <FabListItem
-              label         = "Click here to delete ApiKeys"
+              label         = "Click here to delete API Keys"
               mini          = {true}
               onClick       = {this.showDialog('deleteApiKeyDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
-              label         = "Click here to edit ApiKey"
+              label         = "Click here to edit an API Key"
               mini          = {true}
               disabled      = {checkedApiKeys > 1}
               onClick       = {this.showDialog('resetApiKeyDialog')}
@@ -144,7 +144,7 @@ module.exports = React.createClass({
 
         <FabList>
           <FabListItem
-            label         = "Click here to add ApiKey"
+            label         = "Click here to add an API Key"
             onClick       = {this.showDialog('addApiKeyDialog')}
             iconClassName = "synicon-plus" />
         </FabList>
@@ -153,7 +153,7 @@ module.exports = React.createClass({
           name                 = "API Keys"
           items                = {this.state.items}
           emptyItemHandleClick = {this.showDialog('addApiKeyDialog')}
-          emptyItemContent     = "Generate an APIKey" />
+          emptyItemContent     = "Generate an API Key" />
 
       </Container>
     );
