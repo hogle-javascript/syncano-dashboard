@@ -953,15 +953,17 @@ var Syncano = (function() {
      *
      * @method Syncano#removeAdmin
      * @alias Syncano.Admins.remove
-     * @param  {object} [params]
+     * @param {Number|object} id - id of admin to delete. If param is an object the id key is taken
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
 
-    removeAdmin: function(id, params, callbackOK, callbackError) {
-      params = params || {};
-      return this.request('DELETE', linksObject.instance_admins + id, params, callbackOK, callbackError);
+    removeAdmin: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      return this.request('DELETE', linksObject.instance_admins + id, {}, callbackOK, callbackError);
     },
 
 
