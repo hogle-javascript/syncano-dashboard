@@ -60,7 +60,7 @@ var SchedulesStore = Reflux.createStore({
 
   refreshData: function () {
     console.debug('SchedulesStore::refreshData');
-    SchedulesActions.getSchedules();
+    SchedulesActions.fetchSchedules();
   },
 
   getCrontabDropdown: function () {
