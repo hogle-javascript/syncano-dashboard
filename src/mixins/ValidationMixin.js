@@ -92,7 +92,7 @@ var ValidationMixin = {
   },
 
   clearValidations: function() {
-    return this.setState({
+    this.setState({
       errors: {}
     });
   },
