@@ -1,4 +1,5 @@
 var Reflux         = require('reflux'),
+    Raven          = require('../../raven');
     Connection     = require('./Connection'),
     SessionActions = require('./SessionActions'),
 
@@ -65,6 +66,12 @@ var SessionStore = Reflux.createStore({
 
     this.user             = user;
     this.user.account_key = this.token;
+
+    Raven.setUserContext({
+      email: user.email,
+      id: user.id
+    });
+
     this.trigger(this);
   },
 
@@ -149,6 +156,7 @@ var SessionStore = Reflux.createStore({
     this.removeInstance();
     this.router.transitionTo('login');
     this.trigger(this);
+    Raven.setUserContext();
   },
 
   isAuthenticated: function () {
