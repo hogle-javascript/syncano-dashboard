@@ -49,10 +49,6 @@ var SessionStore = Reflux.createStore({
     return this.router || empty || null;
   },
 
-  setRouter: function (empty) {
-    return this.router || empty || null;
-  },
-
   getTheme: function (empty) {
     return this.theme || empty || null;
   },
