@@ -21,7 +21,7 @@ var React            = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'UsersAddDialog',
+  displayName: 'UserDialog',
 
   mixins: [
     React.addons.LinkedStateMixin,

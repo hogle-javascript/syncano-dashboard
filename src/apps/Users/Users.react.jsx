@@ -1,36 +1,36 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
-    Show                     = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
 
-    UsersActions             = require('./UsersActions'),
-    UsersStore               = require('./UsersStore'),
-    GroupsActions            = require('./GroupsActions'),
-    GroupsStore              = require('./GroupsStore'),
+    UsersActions          = require('./UsersActions'),
+    UsersStore            = require('./UsersStore'),
+    GroupsActions         = require('./GroupsActions'),
+    GroupsStore           = require('./GroupsStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    FabListItem              = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    UsersList                = require('./UsersList.react'),
-    GroupsList               = require('./GroupsList.react'),
-    UserAddDialog            = require('./UserAddDialog.react'),
-    GroupAddDialog           = require('./GroupAddDialog.react');
+    UsersList             = require('./UsersList.react'),
+    GroupsList            = require('./GroupsList.react'),
+    UserDialog            = require('./UserDialog.react'),
+    GroupAddDialog        = require('./GroupAddDialog.react');
 
 
 module.exports = React.createClass({
@@ -99,14 +99,14 @@ module.exports = React.createClass({
 
       // Users
       {
-        dialog: UserAddDialog,
+        dialog: UserDialog,
         params: {
           ref  : "addUserDialog",
           mode : "add"
         }
       },
       {
-        dialog: UserAddDialog,
+        dialog: UserDialog,
         params: {
           ref  : "editUserDialog",
           mode : "edit"
