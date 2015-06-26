@@ -1,22 +1,22 @@
-var Reflux         = require('reflux'),
-    objectAssign   = require('object-assign'),
+var Reflux           = require('reflux'),
 
     // Utils & Mixins
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
+    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
 
     //Stores & Actions
-    UsersActions   = require('./UsersActions');
+    UsersActions     = require('./UsersActions');
 
 
 var UserDialogStore = Reflux.createStore({
   listenables : UsersActions,
-  mixins      : [StoreFormMixin],
+  mixins      : [
+    StoreFormMixin,
+    DialogStoreMixin
+  ],
 
   getInitialState: function () {
     return {
-      mode     : 'add',
-      visible  : false,
-
       username : null,
       password : null
     }
@@ -24,22 +24,6 @@ var UserDialogStore = Reflux.createStore({
 
   init: function () {
     this.listenToForms();
-  },
-
-  showDialog: function (instance) {
-    console.debug('UserDialogStore::showDialog');
-
-    var state = {visible: true};
-    if (instance !== undefined) {
-      state = objectAssign(state, instance, {mode: 'edit'});
-    }
-
-    this.trigger(state);
-  },
-
-  dismissDialog: function () {
-    console.debug('UserDialogStore::dismissDialog');
-    this.trigger(this.getInitialState());
   },
 
   onCreateUserCompleted: function(payload) {
