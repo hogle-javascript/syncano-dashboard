@@ -6,11 +6,8 @@ var React                 = require('react'),
     HeaderMixin           = require('../Header/HeaderMixin'),
     ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
     InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
     Show                  = require('../../common/Show/Show.react'),
-
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
 
     UsersActions          = require('./UsersActions'),
     UsersStore            = require('./UsersStore'),
@@ -43,8 +40,14 @@ module.exports = React.createClass({
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    DialogsMixin
   ],
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('Users::componentWillUpdate');
+    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
+  },
 
   componentDidMount: function() {
     console.info('Users::componentDidMount');
@@ -84,12 +87,52 @@ module.exports = React.createClass({
     GroupsActions.showDialog(GroupsStore.getCheckedItem());
   },
 
+  initDialogs: function () {
+
+    return [
+      // Groups
+      {
+        dialog: Dialog,
+        params: {
+          ref:    "removeGroupDialog",
+          title:  "Delete Group",
+          actions: [
+            {
+              text    : 'Cancel',
+              onClick : this.handleCancel},
+            {
+              text    : "Yes, I'm sure",
+              onClick : this.handleRemoveGroups}
+          ],
+          modal: true,
+          children: 'Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?'
+        }
+      },
+
+      // Users
+      {
+        dialog: Dialog,
+        params: {
+          ref:    "removeUserDialog",
+          title:  "Delete User",
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: "Yes, I'm sure", onClick: this.handleRemoveUsers}
+          ],
+          modal: true,
+          children: 'Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?'
+        }
+      }
+    ]
+  },
+
   render: function () {
     var checkedUsers  = UsersStore.getNumberOfChecked(),
         checkedGroups = GroupsStore.getNumberOfChecked();
 
     return (
       <Container>
+        {this.getDialogs()}
         <UserDialog />
         <GroupDialog />
 
@@ -105,7 +148,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Users"
               mini          = {true}
-              // onClick       = {this.showDialog('removeUserDialog')}
+              onClick       = {this.showDialog('removeUserDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -130,7 +173,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Users"
               mini          = {true}
-              // onClick       = {this.showDialog('removeGroupDialog')}
+              onClick       = {this.showDialog('removeGroupDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
