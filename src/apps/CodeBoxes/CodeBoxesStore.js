@@ -67,7 +67,9 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   getEditorMode: function(codeBox) {
-    return this.langMap[codeBox.runtime_name]
+    // jscs:disable
+    return this.langMap[codeBox.runtime_name];
+    // jscs:enable
   },
 
   getRuntimeColorIcon: function(runtime) {

@@ -33,7 +33,7 @@ var AuthStore = Reflux.createStore({
 
   onActivateCompleted: function(payload) {
     this.trigger({
-      status: "Account activated successfully. You'll now be redirected to Syncano Dashboard."
+      status: 'Account activated successfully. You\'ll now be redirected to Syncano Dashboard.'
     });
     this.onPasswordSignInCompleted(payload);
     setTimeout(function() {

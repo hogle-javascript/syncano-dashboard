@@ -14,7 +14,7 @@ var ColorStore = {
   getColorPickerPalette: function() {
     var colors = [],
         uniqueColors = Object.keys(Colors).filter(function(key) {
-          return key.slice(-3) === "500";
+          return key.slice(-3) === '500';
         });
 
     uniqueColors.map(function(color) {

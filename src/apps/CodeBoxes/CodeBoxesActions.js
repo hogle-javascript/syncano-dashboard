@@ -60,7 +60,9 @@ CodeBoxesActions.createCodeBox.listen(function(payload) {
   console.info('CodeBoxesActions::createCodeBox');
   Connection
     .CodeBoxes.create({
+      // jscs:disable
       runtime_name : payload.runtime_name,
+      // jscs:enable
       label        : payload.label,
       description  : payload.description,
       source: '# Start coding!'

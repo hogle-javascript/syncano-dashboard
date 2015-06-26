@@ -7,6 +7,8 @@ describe('ColNameDesc', function() {
     var TestUtils = React.addons.TestUtils;
     var ColNameDesc = require('../ColNameDesc.react');
 
-    var component = TestUtils.renderIntoDocument(<ColNameDesc name="My Codebox" description="Description of my codebox"/>);
+    var component = TestUtils.renderIntoDocument(
+      <ColNameDesc name="My Codebox" description="Description of my codebox"/>
+    );
   });
 });

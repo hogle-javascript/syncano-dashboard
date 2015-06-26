@@ -13,8 +13,10 @@ describe('UsageBar.react', function() {
 
     // Sample data
     var billingProfile = {
+      // jscs:disable
       soft_limit: 3000,
       hard_limit: 5000,
+      // jscs:enable
       balance: {
         total: 4000
       }
@@ -27,7 +29,9 @@ describe('UsageBar.react', function() {
 
     // First element with class 'usage-text-amount' is total balance, second one is hard limit
     expect(element[0].props.children).toBe('$' + billingProfile.balance.total);
+    // jscs:disable
     expect(element[1].props.children).toBe('$' + billingProfile.hard_limit);
+    // jscs:enable
 
   });
 

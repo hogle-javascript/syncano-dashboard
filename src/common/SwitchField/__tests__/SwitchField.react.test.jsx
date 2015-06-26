@@ -2,9 +2,9 @@ jest.dontMock('../SwitchField.react');
 
 describe('SwitchField.react', function() {
   beforeEach(function() {
-    React = require("react/addons');
+    React = require('react/addons');
     TestUtils = React.addons.TestUtils;
-    SwitchField = require("../SwitchField.react');
+    SwitchField = require('../SwitchField.react');
    
     // Test data
     dummyClick = jest.genMockFn();
@@ -23,13 +23,13 @@ describe('SwitchField.react', function() {
     var node = React.findDOMNode(component);
     var nodeText = React.findDOMNode(node.children[0]);
     
-    expect(node.className).toBe("switch-field');
-    expect(node.children[1].className).toBe("switch-field-input');
-    expect(nodeText.className).toBe("switch-field-text');
+    expect(node.className).toBe('switch-field');
+    expect(node.children[1].className).toBe('switch-field-input');
+    expect(nodeText.className).toBe('switch-field-text');
     
-    expect(nodeText.children[0].className).toBe("switch-field-heading');
+    expect(nodeText.children[0].className).toBe('switch-field-heading');
     expect(nodeText.textContent).toBe(component.props.heading);
-    expect(nodeText.children[1].className).toBe("switch-field-description');
+    expect(nodeText.children[1].className).toBe('switch-field-description');
   });
 
   it('tests getText() method', function() {
@@ -43,7 +43,7 @@ describe('SwitchField.react', function() {
     component.setState({toggled: true});
     var linkNode = TestUtils.findRenderedDOMComponentWithTag(component, "span');
     expect(component.getText().props.children[0]).toBe(component.props.textEnabled);
-    expect(linkNode.getDOMNode().textContent).toBe(" Change " + component.props.name  + ".")
+    expect(linkNode.getDOMNode().textContent).toBe(' Change " + component.props.name  + ".")
   });
 
   it('tests handleFieldLinkClick() method', function() {

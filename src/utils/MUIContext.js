@@ -17,7 +17,7 @@ var MUIContext = function MUIContext(Component, props) {
         muiTheme: ThemeManager.getCurrentTheme()
       };
     },
-    
+
     render: function render() {
       return React.createElement(Component, props);
     }

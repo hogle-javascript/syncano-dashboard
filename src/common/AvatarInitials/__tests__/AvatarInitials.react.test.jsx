@@ -34,7 +34,9 @@ describe('AvatarInitials.react', function() {
 
   it('should change background color', function() {
 
-    var renderedComponent = TestUtils.renderIntoDocument(<AvatarInitials name="George R. R. Martin" backgroundColor="rgb(255, 255, 255)" />);
+    var renderedComponent = TestUtils.renderIntoDocument(
+      <AvatarInitials name="George R. R. Martin" backgroundColor="rgb(255, 255, 255)" />
+    );
     var node = React.findDOMNode(renderedComponent);
     expect(node.style.backgroundColor).toBe('rgb(255, 255, 255)');
 

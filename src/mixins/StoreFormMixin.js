@@ -51,9 +51,11 @@ var StoreFormMixin = {
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
     } else {
+      // jscs:disable
       if (payload.non_field_errors !== undefined) {
         state.errors.feedback = payload.non_field_errors.join();
       }
+      // jscs:enable
 
       for (var field in payload) {
         state.errors[field] = [].concat(payload[field]);

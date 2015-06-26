@@ -18,8 +18,10 @@ ProfileActions.updateSettings.listen(function(payload) {
   Connection
     .Accounts
     .update({
-      first_name: payload.firstName,
-      last_name: payload.lastName
+      // jscs:disable
+      first_name : payload.firstName,
+      last_name  : payload.lastName
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
@@ -30,8 +32,10 @@ ProfileActions.changePassword.listen(function(payload) {
   Connection
     .Accounts
     .changePassword({
-      current_password: payload.currentPassword,
-      new_password: payload.newPassword
+      // jscs:disable
+      current_password : payload.currentPassword,
+      new_password     : payload.newPassword
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);

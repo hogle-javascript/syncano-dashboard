@@ -31,7 +31,7 @@ describe('SwitchFieldList.react', function() {
                                          fields={switchFields} />);
     var node = React.findDOMNode(component);
     // Check component class name
-    expect(node.className).toBe("switch-field-list');
+    expect(node.className).toBe('switch-field-list');
     // Check component childrens props
     expect(node.children.length).toBe(switchFields.length);
     expect(component.refs[switchFields[0].name]).toBeDefined();

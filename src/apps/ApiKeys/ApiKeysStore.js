@@ -48,7 +48,7 @@ var ApiKeysStore = Reflux.createStore({
 
     this.trigger(this.data);
   },
-  
+
   onFetchApiKeys: function(items) {
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -67,7 +67,7 @@ var ApiKeysStore = Reflux.createStore({
     this.trigger(this.data);
     this.refreshData();
   },
-  
+
   onUpdateApiKeyCompleted: function(paylod) {
     console.debug('ApiKeysStore::onUpdateApiKeyCompleted');
     this.data.hideDialogs = true;

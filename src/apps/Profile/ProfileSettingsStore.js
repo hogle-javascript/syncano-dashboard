@@ -13,8 +13,10 @@ var ProfileSettingsStore = Reflux.createStore({
   getInitialState: function() {
     var user = SessionStore.getUser({});
     return {
+      // jscs:disable
       firstName : user.first_name,
       lastName  : user.last_name,
+      // jscs:enable
       email     : user.email
     }
   },
@@ -30,8 +32,10 @@ var ProfileSettingsStore = Reflux.createStore({
     if (Session.isReady()) {
       var user = SessionStore.getUser({});
       this.trigger({
+        // jscs:disable
         firstName : user.first_name,
         lastName  : user.last_name,
+        // jscs:enable
         email     : user.email
       });
     }

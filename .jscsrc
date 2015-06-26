@@ -2,5 +2,5 @@
   "preset": "google",
   "maximumLineLength": 120,
   "disallowMultipleVarDecl": null,
-  "excludeFiles": ["src/lib"]
+  "excludeFiles": ["src/lib", "src/apps/Account/Hello.js"]
 }

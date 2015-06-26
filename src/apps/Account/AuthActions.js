@@ -89,7 +89,9 @@ AuthActions.socialLogin.listen(function(network) {
       Connection
         .socialConnect(
           auth.network,
+          // jscs:disable
           auth.authResponse.access_token
+          // jscs:enable
         )
         .then(this.completed)
         .catch(this.failure);

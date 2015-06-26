@@ -2,11 +2,11 @@ jest.dontMock('../IconStore');
 
 describe('Icon store', function() {
   beforeEach(function() {
-    IconStore = require("../IconStore');
-    
+    IconStore = require('../IconStore');
+
     // Test data
-    existingIcon = "account-multiple";
-    nonExistingIcon = "dummy_icon";
+    existingIcon    = 'account-multiple';
+    nonExistingIcon = 'dummy_icon';
   });
 
   it('tests Icon store methods', function() {

@@ -47,8 +47,10 @@ ApiKeysActions.createApiKey.listen(function(payload) {
     .ApiKeys
     .create({
       description       : payload.description,
+      // jscs:disable
       allow_user_create : payload.allow_user_create,
       ignore_acl        : payload.ignore_acl
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);

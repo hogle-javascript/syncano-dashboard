@@ -14,6 +14,7 @@ describe('Instances.react', function() {
     // Instances = require('../Instances.react');
 
     //var InstancesView = TestUtils.renderIntoDocument(<Instances />);
-    //TestUtils.findRenderedDOMComponentWithTag(InstancesView, <div class="header-title" data-reactid=".0.1.0.0.1.0">Instances</div>
+    //TestUtils.findRenderedDOMComponentWithTag(InstancesView,
+    // <div class="header-title" data-reactid=".0.1.0.0.1.0">Instances</div>
   });
 });

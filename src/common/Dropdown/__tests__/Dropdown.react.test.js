@@ -3,8 +3,8 @@ jest.dontMock('../Dropdown.react');
 describe('Dropdown', function() {
   it('renders object', function() {
 
-    // var React = require("react/addons');
-    // var Dropdown = require("../Dropdown.react');
+    // var React = require('react/addons');
+    // var Dropdown = require('../Dropdown.react');
 
     // var TestUtils = React.addons.TestUtils;
     // // Test data
