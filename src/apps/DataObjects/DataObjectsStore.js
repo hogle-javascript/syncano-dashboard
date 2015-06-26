@@ -31,7 +31,7 @@ var DataObjectsStore = Reflux.createStore({
   getInitialState: function () {
     return {
       items        : null,
-      isLoading    : true,
+      isLoading    : false,
       selectedRows : null
     }
   },
@@ -147,18 +147,19 @@ var DataObjectsStore = Reflux.createStore({
       return items[key];
     });
 
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   onFetchDataObjects: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    this.data.isLoading = true;
+    //this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchDataObjectsCompleted: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
-    this.data.isLoading = false;
+    //this.data.isLoading = false;
     DataObjectsActions.setDataObjects(items);
   },
 
@@ -166,20 +167,25 @@ var DataObjectsStore = Reflux.createStore({
     console.debug('DataObjectsStore::onCreateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
   },
 
   onUpdateDataObjectCompleted: function(paylod) {
     console.debug('DataObjectsStore::onUpdateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
+  },
+  onRemoveDataObjects: function(payload) {
+    this.data.isLoading = true;
+    this.trigger(this.data);
   },
 
   onRemoveDataObjectsCompleted: function(payload) {
     this.data.hideDialogs = true;
+    this.data.selectedRows = null;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
   },
 
 });

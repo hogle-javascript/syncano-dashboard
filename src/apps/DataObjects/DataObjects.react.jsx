@@ -57,12 +57,17 @@ module.exports = React.createClass({
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs || nextState.hideDialogs);
+
+    if (!nextState.selectedRows) {
+      if (this.refs.table) {
+        this.refs.table.setState({ selectedRows: [] });
+      }
+    }
   },
 
   componentWillMount: function() {
     console.info('DataObjects::componentWillMount');
     DataObjectsActions.fetch();
-
   },
 
   //Dialogs config
@@ -190,7 +195,6 @@ module.exports = React.createClass({
         {this.getDialogs()}
 
         <div className="col-flex-1" style={{padding: 0}}>
-
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
 
             <ToolbarGroup float="left" style={{padding: '0px'}}>
@@ -211,8 +215,10 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
           </Toolbar>
-
           <div style={{clear: 'both', height: '100%'}}>
+            <Show if={this.state.isLoading}>
+              <Loading type='linear' />
+            </Show>
             {table}
           </div>
 
