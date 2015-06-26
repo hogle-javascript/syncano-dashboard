@@ -6,11 +6,12 @@ var Reflux         = require('reflux'),
     SessionActions = require('../Session/SessionActions'),
     ProfileActions = require('./ProfileActions');
 
+
 var ProfileSettingsStore = Reflux.createStore({
   listenables: ProfileActions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function() {
+  getInitialState: function () {
     var user = SessionStore.getUser({});
     return {
       firstName : user.first_name,
@@ -19,13 +20,13 @@ var ProfileSettingsStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init: function () {
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },
 
-  checkSession: function(Session) {
+  checkSession: function (Session) {
     console.debug('ProfileSettingsStore:checkSession');
     if (Session.isReady()) {
       var user = SessionStore.getUser({});
@@ -37,7 +38,7 @@ var ProfileSettingsStore = Reflux.createStore({
     }
   },
 
-  onUpdateSettingsCompleted: function(payload) {
+  onUpdateSettingsCompleted: function (payload) {
     SessionActions.setUser(payload);
 
     this.trigger({

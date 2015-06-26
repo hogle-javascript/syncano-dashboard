@@ -2,6 +2,7 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
+
 var AdminsInvitationsActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
@@ -9,25 +10,25 @@ var AdminsInvitationsActions = Reflux.createActions({
   setInvitations : {},
 
   fetchInvitations: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      children: ['completed', 'failure']
   },
   createInvitation: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure']
   },
   resendInvitation: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      children: ['completed', 'failure']
   },
   removeInvitation: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      children: ['completed', 'failure']
   }
 });
 
-AdminsInvitationsActions.fetchInvitations.listen(function() {
+AdminsInvitationsActions.fetchInvitations.listen( function() {
   console.info('AdminsInvitationsActions::fetchInvitations');
   Connection
     .Invitations
@@ -36,7 +37,7 @@ AdminsInvitationsActions.fetchInvitations.listen(function() {
     .catch(this.failure);
 });
 
-AdminsInvitationsActions.createInvitation.listen(function(payload) {
+AdminsInvitationsActions.createInvitation.listen( function(payload) {
   console.info('AdminsInvitationsActions::createAdmin');
   Connection
     .Invitations
@@ -45,7 +46,7 @@ AdminsInvitationsActions.createInvitation.listen(function(payload) {
     .catch(this.failure);
 });
 
-AdminsInvitationsActions.removeInvitation.listen(function(items) {
+AdminsInvitationsActions.removeInvitation.listen( function(items) {
   console.info('AdminsInvitationsActions::createAdmin');
   items.map(function(item) {
     Connection
@@ -56,7 +57,7 @@ AdminsInvitationsActions.removeInvitation.listen(function(items) {
   }.bind(this));
 });
 
-AdminsInvitationsActions.resendInvitation.listen(function(items) {
+AdminsInvitationsActions.resendInvitation.listen( function(items) {
   console.info('AdminsInvitationsActions::createAdmin');
   items.map(function(item) {
     Connection

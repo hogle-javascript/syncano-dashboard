@@ -1,5 +1,5 @@
 module.exports = {
-  colorToHex: function(color) {
+  colorToHex: function (color) {
     if (color.substr(0, 1) === '#') {
       return color;
     }

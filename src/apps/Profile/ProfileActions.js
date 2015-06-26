@@ -1,19 +1,20 @@
 var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get();
 
+
 var ProfileActions = Reflux.createActions({
   updateSettings: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure']
   },
   changePassword: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      children: ['completed', 'failure']
   }
 });
 
-ProfileActions.updateSettings.listen(function(payload) {
+ProfileActions.updateSettings.listen(function (payload) {
   console.info('ProfileActions::updateSettings');
   Connection
     .Accounts
@@ -25,7 +26,7 @@ ProfileActions.updateSettings.listen(function(payload) {
     .catch(this.failure);
 });
 
-ProfileActions.changePassword.listen(function(payload) {
+ProfileActions.changePassword.listen(function (payload) {
   console.info('ProfileActions::changePassword');
   Connection
     .Accounts

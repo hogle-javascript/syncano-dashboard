@@ -9,6 +9,7 @@ var Reflux              = require('reflux'),
     SessionActions      = require('../Session/SessionActions'),
     SchedulesActions    = require('./SchedulesActions');
 
+
 var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [
@@ -28,14 +29,14 @@ var SchedulesStore = Reflux.createStore({
     }
   ],
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       items     : [],
       isLoading : false
     }
   },
 
-  init: function() {
+  init: function () {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -45,24 +46,24 @@ var SchedulesStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  getSchedules: function(empty) {
+  getSchedules: function (empty) {
     return this.data.items || empty || null;
   },
 
-  setSchedules: function(items) {
+  setSchedules: function (items) {
     console.debug('SchedulesStore::setSchedules');
     this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
+        return items[key];
     });
     this.trigger(this.data);
   },
 
-  refreshData: function() {
+  refreshData: function () {
     console.debug('SchedulesStore::refreshData');
     SchedulesActions.fetchSchedules();
   },
 
-  getCrontabDropdown: function() {
+  getCrontabDropdown: function () {
     return this.crontabItems;
   },
 

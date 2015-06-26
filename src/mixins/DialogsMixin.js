@@ -8,7 +8,7 @@ var DialogsMixin = {
     }.bind(this))
   },
 
-  showDialog: function(ref) {
+  showDialog: function (ref) {
     return function() {
       this.refs[ref].show();
     }.bind(this);

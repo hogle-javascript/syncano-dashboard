@@ -1,7 +1,7 @@
 jest.dontMock("../AccountSignup.react");
 
-describe("AccountSignup.react", function() {
-  it("testing component", function() {
+describe("AccountSignup.react", function () {
+  it("testing component", function () {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

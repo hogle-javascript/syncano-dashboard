@@ -3,6 +3,7 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get(),
     D          = Syncano.D;
 
+
 var ClassesActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
@@ -12,26 +13,26 @@ var ClassesActions = Reflux.createActions({
   getClassByName : {},
 
   fetchClasses: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   createClass: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncForm   : true,
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   updateClass: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncForm   : true,
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   removeClasses: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   }
 });
 
-ClassesActions.fetchClasses.listen(function() {
+ClassesActions.fetchClasses.listen( function() {
   console.info('ClassesActions::fetchClasses');
   Connection
     .Classes
@@ -40,7 +41,7 @@ ClassesActions.fetchClasses.listen(function() {
     .catch(this.failure);
 });
 
-ClassesActions.createClass.listen(function(payload) {
+ClassesActions.createClass.listen( function(payload) {
   console.info('ClassesActions::createClass', payload);
   Connection
     .Classes
@@ -49,7 +50,8 @@ ClassesActions.createClass.listen(function(payload) {
     .catch(this.failure);
 });
 
-ClassesActions.updateClass.listen(function(classname, payload) {
+
+ClassesActions.updateClass.listen( function(classname, payload) {
   console.info('ClassesActions::updateClass');
   Connection
     .Classes
@@ -58,7 +60,7 @@ ClassesActions.updateClass.listen(function(classname, payload) {
     .catch(this.failure);
 });
 
-ClassesActions.removeClasses.listen(function(classnames) {
+ClassesActions.removeClasses.listen( function(classnames) {
   console.info('ClassesActions::removeClasses');
   var promises = classnames.map(function(classname) {
     return Connection.Classes.remove(classname);

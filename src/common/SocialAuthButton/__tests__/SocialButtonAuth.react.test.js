@@ -1,7 +1,7 @@
 jest.dontMock("../SocialAuthButton.react");
 
-describe("SocialButtonAuth", function() {
-  it("testing component", function() {
+describe("SocialButtonAuth", function () {
+  it("testing component", function () {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

@@ -7,6 +7,7 @@ var Reflux                    = require('reflux'),
     SessionActions            = require('../Session/SessionActions'),
     ProfileInvitationsActions = require('./ProfileInvitationsActions');
 
+
 var ProfileInvitationsStore = Reflux.createStore({
   listenables: ProfileInvitationsActions,
   mixins: [
@@ -15,13 +16,13 @@ var ProfileInvitationsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       items: []
     }
   },
 
-  init: function() {
+  init: function () {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -30,18 +31,18 @@ var ProfileInvitationsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function() {
+  refreshData: function () {
     console.debug('ProfileInvitationsStore::refreshData');
     ProfileInvitationsActions.fetchInvitations();
   },
 
-  getInviations: function(empty) {
+  getInviations: function (empty) {
     return this.data.items || empty || null;
   },
 
-  setInvitations: function(items) {
+  setInvitations: function (items) {
     this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
+        return items[key];
     });
     this.trigger(this.data);
   },
@@ -62,27 +63,27 @@ var ProfileInvitationsStore = Reflux.createStore({
   },
 
   onAcceptInvitationsCompleted: function() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   this.refreshData();
   },
 
   onAcceptInvitationsFailure: function() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   this.refreshData();
   },
 
   onDeclineInvitationsCompleted: function() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   this.refreshData();
   },
 
   onDeclineInvitationsFailure: function() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
+   this.data.hideDialogs = true;
+   this.trigger(this.data);
+   this.refreshData();
   }
 
 });

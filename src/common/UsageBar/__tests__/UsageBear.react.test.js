@@ -1,15 +1,16 @@
 jest.dontMock("classnames");
 jest.dontMock("../UsageBar.react");
 
-describe("UsageBar.react", function() {
-  beforeEach(function() {
+
+describe("UsageBar.react", function () {
+  beforeEach(function () {
     React = require('react/addons');
     TestUtils = React.addons.TestUtils;
     Utils = require('../../../utils/utils');
     UsageBar = require('../UsageBar.react');
   });
 
-  it('checks UsageBar settings', function() {
+  it('checks UsageBar settings', function () {
 
     // Sample data
     var billingProfile = {

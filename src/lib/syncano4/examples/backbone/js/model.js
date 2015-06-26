@@ -1,10 +1,10 @@
 var Todo = SyncanoModel.extend({
-  syncanoParams: {
-    className: 'todomvc'
-  },
+	syncanoParams: {
+		className: 'todomvc'
+	},
 
-  defaults: {
-    title: '',
-    completed: false
-  }
+	defaults: {
+		title: '',
+		completed: false
+	}
 });

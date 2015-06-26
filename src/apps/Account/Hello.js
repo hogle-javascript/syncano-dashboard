@@ -2,6 +2,7 @@ var hello       = require('hellojs'),
     credentials = {},
     options     = {};
 
+
 credentials.facebook = FACEBOOK_ID;
 credentials.google   = GOOGLE_ID;
 credentials.github   = GITHUB_ID;

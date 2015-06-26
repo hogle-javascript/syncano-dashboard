@@ -6,15 +6,15 @@ jest.dontMock("request");
 jest.dontMock('react-router');
 jest.dontMock('hellojs');
 
-describe("CodeBoxes.react", function() {
-  it("testing component", function() {
+describe("CodeBoxes.react", function () {
+  it("testing component", function () {
 
     var React         = require('react/addons'),
         TestUtils     = React.addons.TestUtils,
         StorageMock   = require('../../../utils/StorageMock'),
         ConsoleMock   = require('../../../utils/ConsoleMock');
-    // Codeboxes     = require('../CodeBoxes.react');
-    //CodeboxesView = TestUtils.renderIntoDocument(<Codeboxes />);
+        // Codeboxes     = require('../CodeBoxes.react');
+        //CodeboxesView = TestUtils.renderIntoDocument(<Codeboxes />);
 
   });
 });

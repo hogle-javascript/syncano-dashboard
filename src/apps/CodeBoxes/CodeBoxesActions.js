@@ -2,6 +2,7 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
+
 var CodeBoxesActions = Reflux.createActions({
   checkItem           : {},
   uncheckAll          : {},
@@ -12,42 +13,42 @@ var CodeBoxesActions = Reflux.createActions({
   setCurrentCodeBoxId : {},
 
   fetchCodeBoxes: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   createCodeBox: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncForm   : true,
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   updateCodeBox: {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      asyncForm   : true,
+      children    : ['completed', 'failure']
   },
   runCodeBox: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+      asyncResult: true,
+      children: ['completed', 'failure']
   },
   removeCodeBoxes: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxTrace: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxTraces: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   fetchCodeBoxRuntimes: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   }
 });
 
-CodeBoxesActions.fetchCodeBoxes.listen(function() {
+CodeBoxesActions.fetchCodeBoxes.listen( function() {
   console.info('CodeBoxesActions::fetchCodeBoxes');
   Connection
     .CodeBoxes
@@ -56,7 +57,7 @@ CodeBoxesActions.fetchCodeBoxes.listen(function() {
     .catch(this.failure);
 });
 
-CodeBoxesActions.createCodeBox.listen(function(payload) {
+CodeBoxesActions.createCodeBox.listen( function(payload) {
   console.info('CodeBoxesActions::createCodeBox');
   Connection
     .CodeBoxes.create({
@@ -69,7 +70,7 @@ CodeBoxesActions.createCodeBox.listen(function(payload) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.updateCodeBox.listen(function(codeboxId, params) {
+CodeBoxesActions.updateCodeBox.listen( function(codeboxId, params) {
   console.info('CodeBoxesActions::updateCodeBox');
   Connection
     .CodeBoxes.update(codeboxId, params)
@@ -77,7 +78,7 @@ CodeBoxesActions.updateCodeBox.listen(function(codeboxId, params) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.runCodeBox.listen(function(params) {
+CodeBoxesActions.runCodeBox.listen( function(params) {
   console.info('CodeBoxesActions::runCodeBox');
   Connection
     .CodeBoxes.run(params.id, {payload: params.payload})
@@ -85,7 +86,7 @@ CodeBoxesActions.runCodeBox.listen(function(params) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.removeCodeBoxes.listen(function(idArray) {
+CodeBoxesActions.removeCodeBoxes.listen( function(idArray) {
   console.info('CodeBoxesActions::removeCodeBoxes');
   idArray.map(function(id) {
     Connection
@@ -95,7 +96,7 @@ CodeBoxesActions.removeCodeBoxes.listen(function(idArray) {
   }.bind(this));
 });
 
-CodeBoxesActions.fetchCodeBoxTrace.listen(function(codeboxId, traceId) {
+CodeBoxesActions.fetchCodeBoxTrace.listen( function(codeboxId, traceId) {
   console.info('CodeBoxesActions::fetchCodeBoxTrace');
   Connection
     .CodeBoxes.trace(traceId, codeboxId, {})
@@ -103,7 +104,7 @@ CodeBoxesActions.fetchCodeBoxTrace.listen(function(codeboxId, traceId) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.fetchCodeBoxTraces.listen(function(codeboxId) {
+CodeBoxesActions.fetchCodeBoxTraces.listen( function(codeboxId) {
   console.info('CodeBoxesActions::fetchCodeBoxTraces', codeboxId);
   Connection
     .CodeBoxes.traces(codeboxId, {})
@@ -111,7 +112,7 @@ CodeBoxesActions.fetchCodeBoxTraces.listen(function(codeboxId) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.fetchCodeBoxRuntimes.listen(function() {
+CodeBoxesActions.fetchCodeBoxRuntimes.listen( function() {
   console.info('CodeBoxesActions::fetchCodeBoxRuntimes');
   Connection
     .CodeBoxes.listRuntimes()

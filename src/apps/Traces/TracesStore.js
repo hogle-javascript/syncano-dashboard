@@ -8,10 +8,11 @@ var Reflux              = require('reflux'),
     AuthStore           = require('../Account/AuthStore'),
     TracesActions       = require('./TracesActions');
 
+
 var CodeBoxesStore = Reflux.createStore({
   listenables: TracesActions,
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       items     : [],
       objectId  : null,
@@ -20,7 +21,7 @@ var CodeBoxesStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init: function () {
 
     this.data = {
       items: []
@@ -31,7 +32,7 @@ var CodeBoxesStore = Reflux.createStore({
     this.listenTo(SessionStore, this.refreshData);
   },
 
-  refreshData: function() {
+  refreshData: function () {
     console.debug('CodeBoxesStore::refreshData');
 
     if (SessionStore.instance) {
@@ -47,13 +48,13 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data)
   },
 
-  onGetTracesCompleted: function(tracesObj) {
+  onGetTracesCompleted: function (tracesObj) {
     console.debug('CodeBoxesStore::onGetCodeBoxTraces', tracesObj);
 
     var data = this.data;
     data.traces = [];
     Object.keys(tracesObj).map(function(item) {
-      data.traces.push(tracesObj[item]);
+        data.traces.push(tracesObj[item]);
     });
 
     this.data.isLoading = false;

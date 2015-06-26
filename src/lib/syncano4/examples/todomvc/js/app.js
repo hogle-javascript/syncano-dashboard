@@ -6,5 +6,5 @@ var ESC_KEY = 27;
 
 var syncano = new Syncano(Config.instance);
 syncano.connect(Config.apiKey).then(function() {
-  new app.AppView();
+	new app.AppView();
 });

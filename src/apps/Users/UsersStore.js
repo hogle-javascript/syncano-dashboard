@@ -10,6 +10,7 @@ var Reflux              = require('reflux'),
     UsersActions        = require('./UsersActions'),
     GroupsActions       = require('./GroupsActions');
 
+
 var UsersStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
@@ -18,14 +19,14 @@ var UsersStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       items: [],
       isLoading: false
     }
   },
 
-  init: function() {
+  init: function () {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -36,13 +37,13 @@ var UsersStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData: function () {
     UsersActions.fetchUsers();
   },
 
-  setUsers: function(users) {
+  setUsers: function (users) {
     this.data.items = Object.keys(users).map(function(key) {
-      return users[key];
+        return users[key];
     });
     this.trigger(this.data);
   },

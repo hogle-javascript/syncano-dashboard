@@ -9,6 +9,7 @@ var Reflux = require('reflux'),
     SessionActions           = require('../Session/SessionActions'),
     ApiKeysActions           = require('./ApiKeysActions');
 
+
 var ApiKeysStore = Reflux.createStore({
   listenables : ApiKeysActions,
   mixins      : [
@@ -17,14 +18,14 @@ var ApiKeysStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       items     : [],
       isLoading : false
     }
   },
 
-  init: function() {
+  init: function () {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -34,12 +35,12 @@ var ApiKeysStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData: function () {
     console.debug('ApiKeysStore::refreshData');
     ApiKeysActions.fetchApiKeys();
   },
 
-  setApiKeys: function(items) {
+  setApiKeys: function (items) {
     console.debug('AdminsStore::setApiKeys');
 
     this.data.items = Object.keys(items).map(function(key) {

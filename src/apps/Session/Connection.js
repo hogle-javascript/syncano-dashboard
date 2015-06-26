@@ -6,15 +6,15 @@ module.exports = {
   Deferred: connection.Deferred,
   D: connection.Deferred,
 
-  get: function() {
+  get: function () {
     return connection;
   },
 
-  set: function(_connection) {
+  set: function (_connection) {
     connection = _connection;
   },
 
-  reset: function() {
+  reset: function () {
     connection = new Syncano();
     return connection;
   }
