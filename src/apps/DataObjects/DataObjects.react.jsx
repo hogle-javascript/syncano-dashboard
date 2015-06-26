@@ -9,11 +9,11 @@ var React              = require('react'),
     InstanceTabsMixin  = require('../../mixins/InstanceTabsMixin'),
     Show               = require('../../common/Show/Show.react'),
 
-    ClassesActions     = require("../Classes/ClassesActions"),
-    SessionStore       = require("../Session/SessionStore"),
-    ClassesStore       = require("../Classes/ClassesStore"),
-    DataObjectsActions = require("./DataObjectsActions"),
-    DataObjectsStore   = require("./DataObjectsStore"),
+    ClassesActions     = require('../Classes/ClassesActions'),
+    SessionStore       = require('../Session/SessionStore'),
+    ClassesStore       = require('../Classes/ClassesStore'),
+    DataObjectsActions = require('./DataObjectsActions'),
+    DataObjectsStore   = require('./DataObjectsStore'),
 
     mui                = require('material-ui'),
     Transitions        = mui.Styles.Transitions,
@@ -36,8 +36,7 @@ var React              = require('react'),
     RaisedButton       = mui.RaisedButton,
 
     Loading            = require('../../common/Loading/Loading.react'),
-    CheckAvatar        = require("./CheckAvatar.react");
-
+    CheckAvatar        = require('./CheckAvatar.react');
 
 module.exports = React.createClass({
 
@@ -66,39 +65,36 @@ module.exports = React.createClass({
   },
 
   //Dialogs config
-  initDialogs: function () {
-  
-    //var checkedItemIconColor = DataObjectsStore.getCheckedItemIconColor();
-  
+  initDialogs: function() {
     return [{
-    //  dialog: AddDialog,
-    //  params: {
-    //    key  : "addDataObjectDialog",
-    //    ref  : "addDataObjectDialog",
-    //    mode : "add"
-    //  }
-    //}, {
-    //  dialog: AddDialog,
-    //  params: {
-    //    key  : "editDataObjectDialog",
-    //    ref  : "editDataObjectDialog",
-    //    mode : "edit"
-    //  }
-    //},
+      //  dialog: AddDialog,
+      //  params: {
+      //    key  : "addDataObjectDialog",
+      //    ref  : "addDataObjectDialog",
+      //    mode : "add"
+      //  }
+      //}, {
+      //  dialog: AddDialog,
+      //  params: {
+      //    key  : "editDataObjectDialog",
+      //    ref  : "editDataObjectDialog",
+      //    mode : "edit"
+      //  }
+      //},
 
       dialog: Dialog,
       params: {
-        key:    "deleteDataObjectDialog",
-        ref:    "deleteDataObjectDialog",
-        title:  "Delete an DataObject",
+        key:    'deleteDataObjectDialog',
+        ref:    'deleteDataObjectDialog',
+        title:  'Delete an DataObject',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Confirm", onClick: this.handleDelete}
+          {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() +' DataObject(s)?'
+        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
       }
-     }]
+    }]
   },
 
   handleDelete: function() {
@@ -120,14 +116,14 @@ module.exports = React.createClass({
         end   = selectedRow[1].start;
         start = selectedRow[1].end;
       }
-      rowsSelection = Array.apply(null, Array(end)).map(function (_, i) {return i;}).slice(start);
+      rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
     }
 
     // Writing to the store
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
-  renderTable: function () {
+  renderTable: function() {
     var tableData   = DataObjectsStore.renderTableData(),
         tableHeader = DataObjectsStore.getTableHeader(),
         colOrder    = Object.keys(tableHeader);
@@ -172,7 +168,7 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
+  render: function() {
 
     var table = null;
     if (this.state.items) {
@@ -184,7 +180,7 @@ module.exports = React.createClass({
     var selecteMessageText = null;
 
     if (this.state.selectedRows) {
-      selecteMessageText = "selected: " + this.state.selectedRows.length;
+      selecteMessageText = 'selected: ' + this.state.selectedRows.length;
     }
 
     return (
@@ -202,7 +198,7 @@ module.exports = React.createClass({
                 className = "synicon-arrow-left"
                 onClick   = {this.handleBackClick} />
 
-              <ToolbarTitle text={"Class: " + this.getParams().className} />
+              <ToolbarTitle text={'Class: ' + this.getParams().className} />
               <ToolbarTitle text={selecteMessageText} />
             </ToolbarGroup>
 

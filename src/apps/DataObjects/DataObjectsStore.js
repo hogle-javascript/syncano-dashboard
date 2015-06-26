@@ -12,7 +12,6 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     DataObjectsActions  = require('./DataObjectsActions');
 
-
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
   mixins      : [
@@ -28,7 +27,7 @@ var DataObjectsStore = Reflux.createStore({
     //created_at : 100
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items        : null,
       isLoading    : true,
@@ -36,7 +35,7 @@ var DataObjectsStore = Reflux.createStore({
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -45,10 +44,11 @@ var DataObjectsStore = Reflux.createStore({
     );
     this.listenToForms();
 
-    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects); // TODO why not setCurrentClassObj why?
+    // TODO why not setCurrentClassObj why?
+    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('DataObjectsStore::refreshData');
     DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className)
   },
@@ -95,10 +95,10 @@ var DataObjectsStore = Reflux.createStore({
 
   },
   getTableHeader: function() {
-      console.debug('ClassesStore::getTableHeader');
-      //// TODO: default columns, it should be controled somehow
+    console.debug('ClassesStore::getTableHeader');
+    //// TODO: default columns, it should be controled somehow
     //var classObj = null,
-        header = {
+    header = {
           id: {
             content: 'ID',
             tooltip: 'Built-in property: ID'
@@ -111,7 +111,7 @@ var DataObjectsStore = Reflux.createStore({
             content: 'Group',
             tooltip: 'Built-in property: Group'
           },
-          created_at: {
+          'created_at': {
             content: 'Created',
             tooltip: 'Built-in property: Created At'
           }
@@ -123,7 +123,7 @@ var DataObjectsStore = Reflux.createStore({
       }
     });
 
-    Object.keys(header).map(function(key){
+    Object.keys(header).map(function(key) {
       header[key].style = {width: this.columnWidthMap[key]}
     }.bind(this));
 
@@ -141,7 +141,7 @@ var DataObjectsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  setDataObjects: function (items) {
+  setDataObjects: function(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.items = Object.keys(items).map(function(key) {
