@@ -46,8 +46,6 @@ module.exports = React.createClass({
 
   render: function () {
 
-    console.log('Rendering List element');
-
     var item = this.props.item;
 
     var info = "Updated " + Moment(item.updated_at).fromNow();

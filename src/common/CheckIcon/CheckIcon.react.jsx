@@ -32,7 +32,8 @@ module.exports = Radium(React.createClass({
     this.setState({checked: newProps.checked})
   },
 
-  handleClick: function () {
+  handleClick: function (event) {
+    event.stopPropagation();
     if (this.props.handleClick) {
       this.props.handleClick(this.props.id, !this.state.checked);
     }
