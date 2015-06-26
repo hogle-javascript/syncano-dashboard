@@ -50,29 +50,12 @@ module.exports = React.createClass({
     this.refs.dialog.dismiss();
 
     if (typeof this.getInitialState === 'function') {
-      this.setState(this.getInitialState());
+      this.replaceState(this.getInitialState());
     }
-  },
-
-  hasInstance: function () {
-    if (this.state.instance === undefined) {
-      return false;
-    }
-
-    if (typeof this.state.instance !== 'object') {
-      return false;
-    }
-
-    if (Object.keys(this.state.instance).length === 0) {
-      return false;
-    }
-
-    return true;
   },
 
   handleSuccessfullValidation: function () {
-    console.log(this.hasInstance(), 'this.hasInstance()', this.state.instance);
-    if (this.hasInstance()) {
+    if (this.state.mode === 'edit') {
       this.handleEditSubmit();
     } else {
       this.handleAddSubmit();
@@ -94,7 +77,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title       = this.hasInstance() ? 'Edit': 'Add',
+    var title       = this.state.mode === 'edit' ? 'Edit': 'Add',
         submitLabel = 'Confirm';
 
         dialogStandardActions = [
@@ -109,6 +92,8 @@ module.exports = React.createClass({
             onClick : this.handleFormValidation
           }
         ];
+
+    console.log('this.state', this.state);
 
     return (
       <Dialog

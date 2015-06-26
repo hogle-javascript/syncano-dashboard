@@ -74,6 +74,10 @@ module.exports = React.createClass({
     GroupsActions.uncheckAll();
   },
 
+  showDialog: function () {
+    UsersActions.showDialog();
+  },
+
   showEditDialog: function () {
     UsersActions.showDialog(UsersStore.getCheckedItem());
   },
@@ -140,7 +144,7 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create User account"
-            onClick       = {UsersActions.showDialog}
+            onClick       = {this.showDialog}
             iconClassName = "synicon-account-plus" />
 
           <FabListItem
