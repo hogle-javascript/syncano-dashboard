@@ -23,6 +23,7 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Avatar             = mui.Avatar,
     FontIcon           = mui.FontIcon,
+    IconButton         = mui.IconButton,
     List               = mui.List,
     ListDivider        = mui.ListDivider,
     ListItem           = mui.ListItem,
@@ -129,7 +130,7 @@ module.exports = React.createClass({
 
   renderTable: function () {
     var tableData   = DataObjectsStore.renderTableData(),
-        tableHeader = DataObjectsStore.getTableHeader(),
+        tableHeader = DataObjectsStore.renderTableHeader(),
         colOrder    = Object.keys(tableHeader);
 
     return (
@@ -207,9 +208,19 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-            <FontIcon
-              className = "synicon-delete"
-              onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-delete"
+                tooltip   = "Delete Data Objects"
+                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-view-column"
+                tooltip   = "Columns"
+                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
             </ToolbarGroup>
 
           </Toolbar>

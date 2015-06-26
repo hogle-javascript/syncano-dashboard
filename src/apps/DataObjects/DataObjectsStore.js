@@ -5,6 +5,8 @@ var Reflux              = require('reflux'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
+    DataObjectsRenderer = require('./DataObjectsRenderer'),
+
     //Stores & Actions
     ClassesActions      = require('../Classes/ClassesActions'),
     ClassesStore        = require('../Classes/ClassesStore'),
@@ -21,19 +23,12 @@ var DataObjectsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  columnWidthMap: {
-    id         : 20,
-    revision   : 20,
-    group      : 30,
-    //created_at : 100
-  },
-
   getInitialState: function () {
     return {
       items        : null,
       isLoading    : true,
       selectedRows : null
-    }
+    };
   },
 
   init: function () {
@@ -74,67 +69,6 @@ var DataObjectsStore = Reflux.createStore({
     this.data.classObj = classObj;
   },
 
-  onFetchCurrentClassObjCompleted: function(classObj) {
-    console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
-    this.data.classObj = classObj; // TODO why, why?
-    DataObjectsActions.setCurrentClassObj(classObj);
-  },
-
-  renderTableData: function() {
-    var tableItems = [];
-    this.data.items.map(function(item) {
-      var row = {};
-      Object.keys(item).map(function(key) {
-        var value = item[key] ? item[key] : '';
-
-        row[key] = {content: value.toString(), style: {width: this.columnWidthMap[key]}}
-      }.bind(this));
-      tableItems.push(row);
-    }.bind(this));
-    return tableItems;
-
-  },
-  getTableHeader: function() {
-      console.debug('ClassesStore::getTableHeader');
-      //// TODO: default columns, it should be controled somehow
-    //var classObj = null,
-        header = {
-          id: {
-            content: 'ID',
-            tooltip: 'Built-in property: ID'
-          },
-          revision: {
-            content: 'Rev',
-            tooltip: 'Built-in property: Revision'
-          },
-          group: {
-            content: 'Group',
-            tooltip: 'Built-in property: Group'
-          },
-          created_at: {
-            content: 'Created',
-            tooltip: 'Built-in property: Created At'
-          }
-        };
-
-    this.data.classObj.schema.map(function(item) {
-      if (!header[item.name]) {
-        header[item.name] = {content: item.name, tooltip: item.type}
-      }
-    });
-
-    Object.keys(header).map(function(key){
-      header[key].style = {width: this.columnWidthMap[key]}
-    }.bind(this));
-
-    return header;
-  },
-
-  // We know number of selected rows, now we need to get ID of the objects
-  getIDsFromTable: function() {
-    return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
-  },
-
   setSelectedRows: function(selectedRows) {
     console.debug('DataObjectsStore::setSelectedRows');
     this.data.selectedRows = selectedRows;
@@ -149,6 +83,27 @@ var DataObjectsStore = Reflux.createStore({
     });
 
     this.trigger(this.data);
+  },
+
+  // We know number of selected rows, now we need to get ID of the objects
+  getIDsFromTable: function() {
+    return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
+  },
+
+
+  // Table stuff
+  renderTableData: function() {
+    return DataObjectsRenderer.renderTableData(this.data.items);
+  },
+
+  renderTableHeader: function () {
+    return DataObjectsRenderer.renderTableHeader(this.data.classObj);
+  },
+
+  onFetchCurrentClassObjCompleted: function(classObj) {
+    console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
+    this.data.classObj = classObj; // TODO why, why?
+    DataObjectsActions.setCurrentClassObj(classObj);
   },
 
   onFetchDataObjects: function(items) {
