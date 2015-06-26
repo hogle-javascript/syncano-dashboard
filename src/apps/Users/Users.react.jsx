@@ -94,7 +94,13 @@ module.exports = React.createClass({
               onClick : this.handleRemoveGroups}
           ],
           modal: true,
-          children: ['Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?', <Loading type="linear" position="bottom" show={this.state.groups.isLoading} />]
+          children: [
+            'Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.groups.isLoading} />
+          ]
         }
       },
 
@@ -123,7 +129,13 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure", onClick: this.handleRemoveUsers}
           ],
           modal: true,
-          children: ['Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?', <Loading type="linear" position="bottom" show={this.state.users.isLoading} />]
+          children: [
+            'Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.users.isLoading} />
+          ]
         }
       }
     ]

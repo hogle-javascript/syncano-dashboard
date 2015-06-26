@@ -142,9 +142,9 @@ module.exports = React.createClass({
           </form>
         </div>
         <Loading
-            type     ="linear"
-            position ="bottom"
-            show     ={this.state.adminsInvitationsStore.isLoading || this.state.isLoading} />
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.adminsInvitationsStore.isLoading || this.state.isLoading} />
 
       </Dialog>
     );

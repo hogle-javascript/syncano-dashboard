@@ -81,7 +81,13 @@ module.exports = React.createClass({
           {text: "Yes, I'm sure", onClick: this.handleDelete}
         ],
         modal: true,
-        children: ['Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?', <Loading type="linear" position="bottom" show={this.state.isLoading} />]
+        children: [
+          'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },

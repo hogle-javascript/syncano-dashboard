@@ -11,7 +11,7 @@ var AdminsActions = Reflux.createActions({
 
   fetchAdmins: {
     asyncResult : true,
-    loading     :true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   updateAdmin: {

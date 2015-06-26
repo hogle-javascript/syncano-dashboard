@@ -124,10 +124,10 @@ module.exports = React.createClass({
     return (
       <div>
         <Dialog
-          ref     = "dialogRef"
-          title   = {title + " CodeBox"}
-          actions = {dialogStandardActions}
-          modal   = {modalState}
+          ref          = "dialogRef"
+          title        = {title + " CodeBox"}
+          actions      = {dialogStandardActions}
+          modal        = {modalState}
           contentStyle = {{padding: "8px 0 0 0"}}  >
           <div>
             {this.renderFormNotifications()}
@@ -159,9 +159,9 @@ module.exports = React.createClass({
             </form>
           </div>
           <Loading
-            type     ="linear"
-            position ="bottom"
-            show     ={this.state.isLoading} />
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
         </Dialog>
       </div>
     );

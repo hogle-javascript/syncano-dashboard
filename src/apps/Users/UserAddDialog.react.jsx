@@ -129,9 +129,9 @@ module.exports = React.createClass({
 
           </form>
           <Loading
-            type="linear"
-            position="bottom"
-            show={this.state.users.isLoading} />
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.users.isLoading} />
         </div>
       </Dialog>
     );

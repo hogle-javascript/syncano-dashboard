@@ -51,8 +51,8 @@ module.exports = Radium(React.createClass({
         return <LinearProgress mode='indeterminate' />
       }
       return <CircularProgress
-               mode='indeterminate'
-               size={this.props.size} />
+               mode = 'indeterminate'
+               size = {this.props.size} />
     }
   },
 

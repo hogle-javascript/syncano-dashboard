@@ -87,7 +87,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: ['Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?', <Loading type="linear" position="bottom" show={this.state.admins.isLoading} /> ]
+          children: [
+            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.admins.isLoading} />
+          ]
         }
       },
       {
@@ -100,7 +106,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: ['Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
+          children: [
+            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       },
       {
@@ -113,7 +125,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: ['Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?', <Loading type="linear" position="bottom" show={this.state.invitations.isLoading} /> ]
+           children: [
+             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
+             <Loading
+               type     = "linear"
+               position = "bottom"
+               show     = {this.state.invitations.isLoading} />
+           ]
         }
       }
     ]

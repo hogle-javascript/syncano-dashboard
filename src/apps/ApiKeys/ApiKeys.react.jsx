@@ -77,7 +77,13 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: ['Do you really want to reset this API key?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
+        children: [
+          'Do you really want to reset this API key?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }, {
       dialog: Dialog,
@@ -95,7 +101,13 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: ['Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
+        children: [
+          'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },
