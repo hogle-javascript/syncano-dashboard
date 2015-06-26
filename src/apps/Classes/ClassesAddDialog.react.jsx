@@ -110,7 +110,7 @@ module.exports = React.createClass({
         <div>
         {this.renderFormNotifications()}
         <form
-          onSubmit      = {this.handleSubmit}
+          onSubmit      = {this.handleFormValidation}
           acceptCharset = "UTF-8"
           method        = "post">
 

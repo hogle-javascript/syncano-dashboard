@@ -17,10 +17,12 @@ var ClassesActions = Reflux.createActions({
       children    : ['completed', 'failure']
   },
   createClass: {
+      asyncForm   : true,
       asyncResult : true,
       children    : ['completed', 'failure']
   },
   updateClass: {
+      asyncForm   : true,
       asyncResult : true,
       children    : ['completed', 'failure']
   },
