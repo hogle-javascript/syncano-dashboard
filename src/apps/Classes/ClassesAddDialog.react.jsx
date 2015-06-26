@@ -101,9 +101,9 @@ module.exports = React.createClass({
         modal={true}>
         <div>
         <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          onSubmit      = {this.handleSubmit}
+          acceptCharset = "UTF-8"
+          method        = "post">
 
           <TextField
             ref               = "name"

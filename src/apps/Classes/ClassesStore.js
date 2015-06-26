@@ -49,6 +49,7 @@ var ClassesStore = Reflux.createStore({
     this.data.items.some(function (item) {
       if (item.name == className) {
         classObj = item;
+        return true;
       }
     });
     return classObj;

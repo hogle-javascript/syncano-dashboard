@@ -56,7 +56,7 @@ module.exports = React.createClass({
   componentWillUpdate: function(nextProps, nextState) {
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.hideDialogs);
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   componentWillMount: function() {
@@ -133,7 +133,6 @@ module.exports = React.createClass({
         colOrder    = Object.keys(tableHeader);
 
     return (
-
       <div>
         <Table
           ref             = "table"
@@ -144,10 +143,14 @@ module.exports = React.createClass({
           //onCellClick  = {this.handleCellClick}
           onRowSelection  = {this.handleRowSelection} />
 
-        <div className="row align-center" style={{margin: 50}}>
+        <div
+          className="row align-center"
+          style={{margin: 50}} >
           <div>Loaded {tableData.length} data objects</div>
         </div>
-        <div className="row align-center" style={{margin: 50}}>
+        <div
+          className="row align-center"
+          style={{margin: 50}} >
           <RaisedButton
             label="Load more"
             onClick={this.handleMoreRows}/>
@@ -185,7 +188,6 @@ module.exports = React.createClass({
     }
 
     return (
-
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
