@@ -1,7 +1,7 @@
-jest.dontMock("../Calendar.react");
+jest.dontMock('../Calendar.react');
 
-describe("Calendar.react", function() {
-  it("testing component", function() {
+describe('Calendar.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

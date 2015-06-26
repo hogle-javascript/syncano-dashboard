@@ -1,15 +1,15 @@
-jest.dontMock("../IconStore");
+jest.dontMock('../IconStore');
 
-describe("Icon store", function() {
+describe('Icon store', function() {
   beforeEach(function() {
-    IconStore = require("../IconStore");
+    IconStore = require("../IconStore');
     
     // Test data
     existingIcon = "account-multiple";
     nonExistingIcon = "dummy_icon";
   });
 
-  it("tests Icon store methods", function() {
+  it('tests Icon store methods', function() {
     var allIcons = IconStore.getAllIcons();
     var pickerIcons = IconStore.getIconPickerIcons();
     expect(allIcons.length).toBeGreaterThan(0);
@@ -18,13 +18,13 @@ describe("Icon store", function() {
     expect(IconStore.contains(nonExistingIcon)).toBeFalsy();
   });
 
-  it("tests if allIcons store contain icons", function() {
+  it('tests if allIcons store contain icons', function() {
     var array = IconStore.getAllIcons();
     expect(array).toContain(existingIcon);
     expect(array).not.toContain(nonExistingIcon);
   });
 
-  it("tests if pickerIcons store contain icons", function() {
+  it('tests if pickerIcons store contain icons', function() {
     var array = IconStore.getIconPickerIcons();
     expect(array).toContain(existingIcon);
     expect(array).not.toContain(nonExistingIcon);

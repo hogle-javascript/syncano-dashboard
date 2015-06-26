@@ -1,7 +1,7 @@
 jest.dontMock('../Header.react');
 
-describe("Header", function() {
-  it("testing component", function() {
+describe('Header', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var Header = require('../Header.react');

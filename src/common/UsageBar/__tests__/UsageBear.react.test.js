@@ -1,7 +1,7 @@
-jest.dontMock("classnames");
-jest.dontMock("../UsageBar.react");
+jest.dontMock('classnames');
+jest.dontMock('../UsageBar.react');
 
-describe("UsageBar.react", function() {
+describe('UsageBar.react', function() {
   beforeEach(function() {
     React = require('react/addons');
     TestUtils = React.addons.TestUtils;

@@ -1,7 +1,7 @@
-jest.dontMock("../ApiKeys.react");
+jest.dontMock('../ApiKeys.react');
 
-describe("ApiKeys.react", function() {
-  it("testing component", function() {
+describe('ApiKeys.react', function() {
+  it('testing component', function() {
 
     var React       = require('react/addons'),
         TestUtils   = React.addons.TestUtils;

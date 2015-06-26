@@ -1,7 +1,7 @@
-jest.dontMock("../notfound.react");
+jest.dontMock('../notfound.react');
 
-describe("notfound.react", function() {
-  it("testing component", function() {
+describe('notfound.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

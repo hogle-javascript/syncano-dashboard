@@ -1,10 +1,10 @@
-jest.dontMock("../InstancesList.react");
-jest.dontMock("../../Session/Connection");
-jest.dontMock("../../Session/SessionStore");
-jest.dontMock("../../../lib/syncano4/lib/syncano4");
+jest.dontMock('../InstancesList.react');
+jest.dontMock('../../Session/Connection');
+jest.dontMock('../../Session/SessionStore');
+jest.dontMock('../../../lib/syncano4/lib/syncano4');
 
-describe("InstancesList.react", function() {
-  it("testing component", function() {
+describe('InstancesList.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons'),
         TestUtils = React.addons.TestUtils;

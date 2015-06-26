@@ -1,7 +1,7 @@
-jest.dontMock("../HeaderActions");
+jest.dontMock('../HeaderActions');
 
-describe("HeaderActions", function() {
-  it("testing component", function() {
+describe('HeaderActions', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

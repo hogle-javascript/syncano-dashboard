@@ -1,7 +1,7 @@
-jest.dontMock("../ColNameDesc.react");
+jest.dontMock('../ColNameDesc.react');
 
-describe("ColNameDesc", function() {
-  it("testing component", function() {
+describe('ColNameDesc', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

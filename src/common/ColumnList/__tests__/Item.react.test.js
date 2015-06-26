@@ -1,9 +1,9 @@
-jest.dontMock("../Item.react");
-jest.dontMock("../ItemColumn.react");
-jest.dontMock("material-ui/lib/paper");
+jest.dontMock('../Item.react');
+jest.dontMock('../ItemColumn.react');
+jest.dontMock('material-ui/lib/paper');
 
-describe("Item", function() {
-  it("testing component", function() {
+describe('Item', function() {
+  it('testing component', function() {
 
     var React     = require('react/addons');
     var TestUtils = React.addons.TestUtils;

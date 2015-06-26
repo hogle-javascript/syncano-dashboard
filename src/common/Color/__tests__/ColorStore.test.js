@@ -1,7 +1,7 @@
-jest.dontMock("../ColorStore.js");
+jest.dontMock('../ColorStore.js');
 
-describe("store.js", function() {
-  it("testing component", function() {
+describe('store.js', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
