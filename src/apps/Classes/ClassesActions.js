@@ -63,7 +63,7 @@ ClassesActions.updateClass.listen( function(classname, payload) {
 ClassesActions.removeClasses.listen( function(classnames) {
   console.info('ClassesActions::removeClasses');
   var promises = classnames.map(function(classname) {
-    Connection.Classes.remove(classname);
+    return Connection.Classes.remove(classname);
   });
 
   D.all(promises)
