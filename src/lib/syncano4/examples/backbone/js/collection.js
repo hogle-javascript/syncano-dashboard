@@ -1,3 +1,3 @@
 var Todos = SyncanoCollection.extend({
-	model: Todo
+  model: Todo
 });

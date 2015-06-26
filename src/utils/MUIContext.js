@@ -5,7 +5,6 @@ var React        = require('react'),
 // More info
 // https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
 
-
 var MUIContext = function MUIContext(Component, props) {
   return React.createClass({
 

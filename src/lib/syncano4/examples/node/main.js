@@ -18,14 +18,14 @@ var Syncano = require('../../lib/syncano4.js');
 
 var syncano = new Syncano(Config.instance);
 syncano.connect(Config.email, Config.password).then(function() {
-	syncano.ApiKeys.list().then(function(List) {
-		console.log('ApiKeys found:', List.length);
-		if (List.length > 0) {
-			console.log('First apiKey details:', List.at(0));
-		}
-	});
+  syncano.ApiKeys.list().then(function(List) {
+    console.log('ApiKeys found:', List.length);
+    if (List.length > 0) {
+      console.log('First apiKey details:', List.at(0));
+    }
+  });
 }, function(err) {
-	console.log('ERROR: ', err);
+  console.log('ERROR: ', err);
 }).then(function() {
-	// pass your own code here...
+  // pass your own code here...
 });

@@ -10,7 +10,6 @@ var Reflux                   = require('reflux'),
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions');
 
-
 var AdminsInvitationsStore = Reflux.createStore({
   listenables : AdminsInvitationsActions,
   mixins      : [
@@ -19,14 +18,14 @@ var AdminsInvitationsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -36,12 +35,12 @@ var AdminsInvitationsStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('AdminsInvitationsStore::refreshData');
     AdminsInvitationsActions.fetchInvitations();
   },
 
-  setInvitations: function (items) {
+  setInvitations: function(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
 
     this.data.items = Object.keys(items).map(function(key) {
@@ -63,9 +62,9 @@ var AdminsInvitationsStore = Reflux.createStore({
   },
 
   onCreateInvitationCompleted: function() {
-   this.data.hideDialogs = true;
-   this.trigger(this.data);
-   this.refreshData()
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData()
   },
 
   onRemoveInvitationCompleted: function() {
@@ -75,8 +74,8 @@ var AdminsInvitationsStore = Reflux.createStore({
   },
 
   onResendInvitationCompleted: function() {
-   this.data.hideDialogs = true;
-   AdminsInvitationsActions.uncheckAll();
+    this.data.hideDialogs = true;
+    AdminsInvitationsActions.uncheckAll();
   }
 
 });
