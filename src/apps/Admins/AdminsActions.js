@@ -1,6 +1,8 @@
 var Reflux     = require('reflux'),
 
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = require('../Session/Connection').get(),
+    D          = Syncano.D;
 
 
 var AdminsActions = Reflux.createActions({
@@ -46,14 +48,15 @@ AdminsActions.updateAdmin.listen( function(name, payload) {
 });
 
 AdminsActions.removeAdmins.listen( function(admins) {
-  admins.map(function(admin) {
-    console.error('AdminsActions::removeAdmins');
-    Connection
-      .Admins
-      .remove(admin)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+  console.info('AdminsActions::removeAdmins');
+  var promises = admins.map(function(admin) {
+    Connection.Admins.remove(admin)
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
+
 });
 
 module.exports = AdminsActions;
