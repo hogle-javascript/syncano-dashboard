@@ -1,6 +1,6 @@
 jest.dontMock("../Icon.react");
 
-describe("Icon", function () {
+describe("Icon", function() {
   beforeEach(function() {
     React     = require("react/addons");
     TestUtils = React.addons.TestUtils;

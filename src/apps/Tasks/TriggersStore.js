@@ -9,7 +9,6 @@ var Reflux              = require('reflux'),
     SessionActions      = require('../Session/SessionActions'),
     TriggersActions     = require('./TriggersActions');
 
-
 var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [
@@ -45,14 +44,14 @@ var TriggersStore = Reflux.createStore({
 
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : [],
       isLoading : false
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -62,18 +61,18 @@ var TriggersStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  setTriggers: function (items) {
+  setTriggers: function(items) {
     this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+      return items[item];
     });
     this.trigger(this.data);
   },
 
-  getTriggers: function (empty) {
+  getTriggers: function(empty) {
     return this.data.items || empty || null;
   },
 
-  refreshData: function () {
+  refreshData: function() {
     TriggersActions.fetchTriggers();
   },
 

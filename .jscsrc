@@ -1,5 +1,6 @@
 {
   "preset": "google",
   "maximumLineLength": 120,
-  "disallowMultipleVarDecl": null
+  "disallowMultipleVarDecl": null,
+  "excludeFiles": ["src/lib"]
 }

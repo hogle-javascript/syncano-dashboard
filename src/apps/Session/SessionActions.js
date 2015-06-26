@@ -1,7 +1,6 @@
 var Reflux     = require('reflux'),
     Connection = require('./Connection').get();
 
-
 var SessionActions = Reflux.createActions({
   login       : {},
   logout      : {},
@@ -15,12 +14,12 @@ var SessionActions = Reflux.createActions({
     children    : ['completed', 'failure']
   },
   fetchInstance: {
-      asyncResult : true,
-      children    : ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure']
   }
 });
 
-SessionActions.fetchUser.listen(function (token) {
+SessionActions.fetchUser.listen(function(token) {
   console.info('SessionActions::fetchUser');
 
   Connection
@@ -31,7 +30,7 @@ SessionActions.fetchUser.listen(function (token) {
     .catch(this.failure)
 });
 
-SessionActions.fetchInstance.listen(function (name) {
+SessionActions.fetchInstance.listen(function(name) {
   console.info('SessionActions::fetchInstance');
   Connection
     .setInstance(name)

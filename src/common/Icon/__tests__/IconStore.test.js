@@ -1,6 +1,6 @@
 jest.dontMock("../IconStore");
 
-describe("Icon store", function () {
+describe("Icon store", function() {
   beforeEach(function() {
     IconStore = require("../IconStore");
     
@@ -18,7 +18,7 @@ describe("Icon store", function () {
     expect(IconStore.contains(nonExistingIcon)).toBeFalsy();
   });
 
-  it("tests if allIcons store contain icons", function () {
+  it("tests if allIcons store contain icons", function() {
     var array = IconStore.getAllIcons();
     expect(array).toContain(existingIcon);
     expect(array).not.toContain(nonExistingIcon);
