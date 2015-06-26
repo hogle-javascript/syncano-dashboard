@@ -4,10 +4,12 @@ var Reflux     = require('reflux'),
 
 
 var UsersActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
-  setUsers   : {},
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setUsers      : {},
+  showDialog    : {},
+  dismissDialog : {},
   fetchUsers: {
       asyncResult: true,
       children: ['completed', 'failure']

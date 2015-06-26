@@ -5,7 +5,6 @@ var React                 = require('react'),
     // Utils
     HeaderMixin           = require('../Header/HeaderMixin'),
     ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
     Show                  = require('../../common/Show/Show.react'),
 
@@ -44,88 +43,19 @@ module.exports = React.createClass({
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
-    DialogsMixin,
     InstanceTabsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Users::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
+    // this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
   componentDidMount: function() {
     console.info('Users::componentDidMount');
     UsersActions.fetch();
     GroupsActions.fetch();
-  },
-
-  // Dialogs config
-  initDialogs: function () {
-
-    return [
-      // Groups
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "addGroupDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "editGroupDialog",
-          mode : "edit"
-        }
-      },
-      {
-        dialog: Dialog,
-        params: {
-          ref:    "removeGroupDialog",
-          title:  "Delete Group",
-          actions: [
-            {
-              text    : 'Cancel',
-              onClick : this.handleCancel},
-            {
-              text    : "Yes, I'm sure",
-              onClick : this.handleRemoveGroups}
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?'
-        }
-      },
-
-      // Users
-      {
-        dialog: UserDialog,
-        params: {
-          ref  : "addUserDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: UserDialog,
-        params: {
-          ref  : "editUserDialog",
-          mode : "edit"
-        }
-      },
-      {
-        dialog: Dialog,
-        params: {
-          ref:    "removeUserDialog",
-          title:  "Delete User",
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveUsers}
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?'
-        }
-      }
-    ]
   },
 
   handleRemoveGroups: function() {
@@ -144,13 +74,17 @@ module.exports = React.createClass({
     GroupsActions.uncheckAll();
   },
 
+  showEditDialog: function () {
+    UsersActions.showDialog(UsersStore.getCheckedItem());
+  },
+
   render: function () {
     var checkedUsers  = UsersStore.getNumberOfChecked(),
         checkedGroups = GroupsStore.getNumberOfChecked();
 
     return (
       <Container>
-        {this.getDialogs()}
+        <UserDialog />
 
         <Show if={checkedUsers > 0}>
           <FabList position="top">
@@ -164,14 +98,14 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Users"
               mini          = {true}
-              onClick       = {this.showDialog('removeUserDialog')}
+              // onClick       = {this.showDialog('removeUserDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
               label         = "Click here to edit User"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              onClick       = {this.showDialog('editUserDialog')}
+              onClick       = {this.showEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -189,14 +123,14 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Users"
               mini          = {true}
-              onClick       = {this.showDialog('removeGroupDialog')}
+              // onClick       = {this.showDialog('removeGroupDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
               label         = "Click here to edit Group"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              onClick       = {this.showDialog('editGroupDialog')}
+              // onClick       = {this.showDialog('editGroupDialog')}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -206,12 +140,12 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create User account"
-            onClick       = {this.showDialog('addUserDialog')}
+            onClick       = {UsersActions.showDialog}
             iconClassName = "synicon-account-plus" />
 
           <FabListItem
             label         = "Click here to create Group"
-            onClick       = {this.showDialog('addGroupDialog')}
+            // onClick       = {this.showDialog('addGroupDialog')}
             iconClassName = "synicon-account-multiple-plus" />
 
         </FabList>
@@ -224,7 +158,7 @@ module.exports = React.createClass({
               checkItem            = {GroupsActions.checkItem}
               isLoading            = {GroupsActions.isLoading}
               items                = {this.state.groups.items}
-              emptyItemHandleClick = {this.showDialog('addGroupDialog')}
+              // emptyItemHandleClick = {this.showDialog('addGroupDialog')}
               emptyItemContent     = "Create a Group" />
 
           </div>
@@ -235,7 +169,7 @@ module.exports = React.createClass({
               checkItem            = {UsersActions.checkItem}
               isLoading            = {UsersActions.isLoading}
               items                = {this.state.users.items}
-              emptyItemHandleClick = {this.showDialog('addUserDialog')}
+              emptyItemHandleClick = {UsersActions.showDialog}
               emptyItemContent     = "Create a User" />
           </div>
 

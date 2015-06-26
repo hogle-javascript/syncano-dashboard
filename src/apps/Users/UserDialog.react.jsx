@@ -3,12 +3,11 @@ var React            = require('react'),
 
     // Utils
     ValidationMixin  = require('../../mixins/ValidationMixin'),
-    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
     FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     UsersActions     = require('./UsersActions'),
-    UsersStore       = require('./UsersStore'),
+    UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
 
     // Components
@@ -25,8 +24,7 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(UsersStore),
-    DialogFormMixin,
+    Reflux.connect(UserDialogStore),
     ValidationMixin,
     FormMixin
   ],
@@ -40,44 +38,63 @@ module.exports = React.createClass({
     }
   },
 
-  clearData: function() {
-    this.setState({
-      username  : '',
-      password  : '',
-      errors : {},
-    })
+  componentWillUpdate: function (nextProps, nextState) {
+    if (nextState.visible === false) {
+      this.refs.dialog.dismiss();
+    } else if (nextState.visible === true) {
+      this.refs.dialog.show();
+    }
   },
 
-  editShow: function() {
-    var checkedItem = UsersStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-          id       : checkedItem.id,
-          username : checkedItem.username,
-          password : checkedItem.password
-      });
+  handleCancel: function () {
+    this.refs.dialog.dismiss();
+
+    if (typeof this.getInitialState === 'function') {
+      this.setState(this.getInitialState());
+    }
+  },
+
+  hasInstance: function () {
+    if (this.state.instance === undefined) {
+      return false;
+    }
+
+    if (typeof this.state.instance !== 'object') {
+      return false;
+    }
+
+    if (Object.keys(this.state.instance).length === 0) {
+      return false;
+    }
+
+    return true;
+  },
+
+  handleSuccessfullValidation: function () {
+    console.log(this.hasInstance(), 'this.hasInstance()', this.state.instance);
+    if (this.hasInstance()) {
+      this.handleEditSubmit();
+    } else {
+      this.handleAddSubmit();
     }
   },
 
   handleAddSubmit: function () {
-    var checkedItem = UsersStore.getCheckedItem();
     UsersActions.createUser({
-        username : this.state.username,
-        password : this.state.password
+      username : this.state.username,
+      password : this.state.password
     });
   },
 
   handleEditSubmit: function () {
-    UsersActions.updateUser(
-      this.state.id, {
-        username : this.state.username,
-        password : this.state.password
-      }
-    );
+    UsersActions.updateUser(this.state.instance.id, {
+      username : this.state.username,
+      password : this.state.password
+    });
   },
 
   render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
+    var title       = this.hasInstance() ? 'Edit': 'Add',
         submitLabel = 'Confirm';
 
         dialogStandardActions = [
@@ -95,11 +112,10 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialogRef"
-        title           = {title + " User"}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogStandardActions}
-        modal           = {true}>
+        ref       = "dialog"
+        title     = {title + " User"}
+        actions   = {dialogStandardActions}
+        modal     = {true}>
         <div>
           {this.renderFormNotifications()}
           <form
