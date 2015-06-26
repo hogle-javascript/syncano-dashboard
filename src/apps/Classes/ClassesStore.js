@@ -33,6 +33,7 @@ var ClassesStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.listenToForms();
   },
 
   refreshData: function (data) {
