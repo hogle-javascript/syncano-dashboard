@@ -43,6 +43,7 @@ var DataObjectsStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.listenToForms();
 
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects); // TODO why not setCurrentClassObj why?
   },

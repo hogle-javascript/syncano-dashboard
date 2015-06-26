@@ -88,8 +88,16 @@ module.exports = React.createClass({
     var submitLabel = 'Confirm';
 
     var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: {submitLabel}, onClick: this.handleSubmit, ref: 'submit'}
+      {
+        ref      : 'cancel',
+        text     : 'Cancel',
+        onClick  : this.handleCancel
+      },
+      {
+        ref     : 'submit',
+        text    : {submitLabel},
+        onClick : this.handleFormValidation
+      }
     ];
 
     return (
@@ -100,10 +108,11 @@ module.exports = React.createClass({
         actions         = {dialogStandardActions}
         modal={true}>
         <div>
+        {this.renderFormNotifications()}
         <form
-          onSubmit={this.handleSubmit}
-          acceptCharset="UTF-8"
-          method="post">
+          onSubmit      = {this.handleFormValidation}
+          acceptCharset = "UTF-8"
+          method        = "post">
 
           <TextField
             ref               = "name"

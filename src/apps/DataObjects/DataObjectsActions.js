@@ -77,7 +77,7 @@ DataObjectsActions.updateDataObject.listen( function(id, payload) {
 DataObjectsActions.removeDataObjects.listen( function(className, dataobjects) {
   console.info('DataObjectsActions::removeDataObjects');
   var promises = dataobjects.map(function (dataobject) {
-    Connection.DataObjects.remove(className, dataobject)
+    return Connection.DataObjects.remove(className, dataobject)
   });
 
   D.all(promises)

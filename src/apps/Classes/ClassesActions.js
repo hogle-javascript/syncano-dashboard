@@ -1,6 +1,7 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = require('../Session/Connection').get(),
+    D          = Syncano.D;
 
 
 var ClassesActions = Reflux.createActions({
@@ -12,20 +13,22 @@ var ClassesActions = Reflux.createActions({
   getClassByName : {},
 
   fetchClasses: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   createClass: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncForm   : true,
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   updateClass: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncForm   : true,
+      asyncResult : true,
+      children    : ['completed', 'failure']
   },
   removeClasses: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+      asyncResult : true,
+      children    : ['completed', 'failure']
   }
 });
 
@@ -58,14 +61,14 @@ ClassesActions.updateClass.listen( function(classname, payload) {
 });
 
 ClassesActions.removeClasses.listen( function(classnames) {
-  classnames.map(function(classname) {
-    console.info('ClassesActions::removeClasses');
-    Connection
-      .Classes
-      .remove(classname)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+  console.info('ClassesActions::removeClasses');
+  var promises = classnames.map(function(classname) {
+    return Connection.Classes.remove(classname);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = ClassesActions;

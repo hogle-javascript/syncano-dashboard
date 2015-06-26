@@ -49,7 +49,7 @@ module.exports = React.createClass({
   },
 
   handleItemClick: function (className) {
-    SessionStore.router.transitionTo(
+    SessionStore.getRouter().transitionTo(
       'classes-data-objects',
       {
         instanceName : SessionStore.getInstance().name,
