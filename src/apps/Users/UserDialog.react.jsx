@@ -4,6 +4,7 @@ var React            = require('react'),
     // Utils
     ValidationMixin  = require('../../mixins/ValidationMixin'),
     FormMixin        = require('../../mixins/FormMixin'),
+    DialogMixin      = require('../../mixins/DialogMixin'),
 
     // Stores and Actions
     UsersActions     = require('./UsersActions'),
@@ -26,7 +27,8 @@ module.exports = React.createClass({
     React.addons.LinkedStateMixin,
     Reflux.connect(UserDialogStore),
     ValidationMixin,
-    FormMixin
+    FormMixin,
+    DialogMixin
   ],
 
   validatorConstraints: {
@@ -35,30 +37,6 @@ module.exports = React.createClass({
     },
     password: {
       presence: true
-    }
-  },
-
-  componentWillUpdate: function (nextProps, nextState) {
-    if (nextState.visible === false) {
-      this.refs.dialog.dismiss();
-    } else if (nextState.visible === true) {
-      this.refs.dialog.show();
-    }
-  },
-
-  handleCancel: function () {
-    this.refs.dialog.dismiss();
-
-    if (typeof this.getInitialState === 'function') {
-      this.replaceState(this.getInitialState());
-    }
-  },
-
-  handleSuccessfullValidation: function () {
-    if (this.state.mode === 'edit') {
-      this.handleEditSubmit();
-    } else {
-      this.handleAddSubmit();
     }
   },
 
@@ -77,7 +55,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title       = this.state.mode === 'edit' ? 'Edit': 'Add',
+    var title       = this.hasEditMode() ? 'Edit': 'Add',
         submitLabel = 'Confirm';
 
         dialogStandardActions = [
@@ -92,8 +70,6 @@ module.exports = React.createClass({
             onClick : this.handleFormValidation
           }
         ];
-
-    console.log('this.state', this.state);
 
     return (
       <Dialog
