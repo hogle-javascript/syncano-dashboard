@@ -26,13 +26,13 @@ var UserDialogStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  onCreateUserCompleted: function(payload) {
+  onCreateUserCompleted: function() {
     console.debug('UserDialogStore::onCreateUserCompleted');
     this.dismissDialog();
     UsersActions.fetchUsers();
   },
 
-  onUpdateUserCompleted: function(paylod) {
+  onUpdateUserCompleted: function() {
     console.debug('UserDialogStore::onUpdateUserCompleted');
     this.dismissDialog();
     UsersActions.fetchUsers();

@@ -29,7 +29,7 @@ var React                 = require('react'),
     UsersList             = require('./UsersList.react'),
     GroupsList            = require('./GroupsList.react'),
     UserDialog            = require('./UserDialog.react'),
-    GroupAddDialog        = require('./GroupAddDialog.react');
+    GroupDialog           = require('./GroupDialog.react');
 
 
 module.exports = React.createClass({
@@ -45,12 +45,6 @@ module.exports = React.createClass({
     HeaderMixin,
     InstanceTabsMixin
   ],
-
-  componentWillUpdate: function(nextProps, nextState) {
-    console.info('Users::componentWillUpdate');
-    // Merging "hideDialogs
-    // this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
-  },
 
   componentDidMount: function() {
     console.info('Users::componentDidMount');
@@ -74,12 +68,20 @@ module.exports = React.createClass({
     GroupsActions.uncheckAll();
   },
 
-  showDialog: function () {
+  showUserDialog: function () {
     UsersActions.showDialog();
   },
 
-  showEditDialog: function () {
+  showUserEditDialog: function () {
     UsersActions.showDialog(UsersStore.getCheckedItem());
+  },
+
+  showGroupDialog: function () {
+    GroupsActions.showDialog();
+  },
+
+  showGroupEditDialog: function () {
+    GroupsActions.showDialog(GroupsStore.getCheckedItem());
   },
 
   render: function () {
@@ -89,6 +91,7 @@ module.exports = React.createClass({
     return (
       <Container>
         <UserDialog />
+        <GroupDialog />
 
         <Show if={checkedUsers > 0}>
           <FabList position="top">
@@ -109,7 +112,7 @@ module.exports = React.createClass({
               label         = "Click here to edit User"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              onClick       = {this.showEditDialog}
+              onClick       = {this.showUserEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -134,7 +137,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Group"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              // onClick       = {this.showDialog('editGroupDialog')}
+              onClick       = {this.showGroupEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -144,12 +147,12 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create User account"
-            onClick       = {this.showDialog}
+            onClick       = {this.showUserDialog}
             iconClassName = "synicon-account-plus" />
 
           <FabListItem
             label         = "Click here to create Group"
-            // onClick       = {this.showDialog('addGroupDialog')}
+            onClick       = {this.showGroupDialog}
             iconClassName = "synicon-account-multiple-plus" />
 
         </FabList>
@@ -160,9 +163,9 @@ module.exports = React.createClass({
             <GroupsList
               name                 = "Groups"
               checkItem            = {GroupsActions.checkItem}
-              isLoading            = {GroupsActions.isLoading}
+              isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
-              // emptyItemHandleClick = {this.showDialog('addGroupDialog')}
+              emptyItemHandleClick = {this.showGroupDialog}
               emptyItemContent     = "Create a Group" />
 
           </div>
@@ -171,9 +174,9 @@ module.exports = React.createClass({
             <UsersList
               name                 = "Users"
               checkItem            = {UsersActions.checkItem}
-              isLoading            = {UsersActions.isLoading}
+              isLoading            = {this.state.users.isLoading}
               items                = {this.state.users.items}
-              emptyItemHandleClick = {UsersActions.showDialog}
+              emptyItemHandleClick = {this.showUserDialog}
               emptyItemContent     = "Create a User" />
           </div>
 
