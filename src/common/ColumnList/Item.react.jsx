@@ -26,11 +26,16 @@ module.exports = Radium(React.createClass({
     };
   },
 
+  handleClick: function() {
+    this.props.handleClick(this.props.id);
+  },
+
   render: function () {
-    var styles     = this.getStyles();
+    var styles = this.getStyles();
 
     return (
       <Paper
+        onClick   = {this.handleClick}
         zDepth    = {1}
         className = {'row'}
         style     = {[styles.base,

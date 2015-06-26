@@ -8,9 +8,9 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
-    SchedulesActions  = require('./SchedulesActions'),
-    SchedulesStore    = require('./SchedulesStore'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
+    SessionStore      = require('../Session/SessionStore'),
+    ClassesActions    = require('./ClassesActions'),
+    ClassesStore      = require('./ClassesStore'),
 
     // Components
     mui               = require('material-ui'),
@@ -19,68 +19,62 @@ var React             = require('react'),
 
     // List
     ListContainer     = require('../../common/Lists/ListContainer.react'),
+    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
+    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
+    ColumnText        = require('../../common/ColumnList/Column/Text.react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 
 module.exports = React.createClass({
 
-  displayName: 'SchedulesList',
+  displayName: 'ClassesList',
 
   mixins: [
+    Reflux.connect(ClassesStore),
     HeaderMixin,
     Router.State,
     Router.Navigation
   ],
 
-  getInitialState() {
-    return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
-    })
-  },
-
   // List
   handleItemIconClick: function (id, state) {
-    this.props.checkItem(id, state);
+    ClassesActions.checkItem(id, state);
+  },
+
+  handleItemClick: function (className) {
+    SessionStore.getRouter().transitionTo(
+      'classes-data-objects',
+      {
+        instanceName : SessionStore.getInstance().name,
+        className    : className
+      }
+    );
+    console.info('ClassesList::handleItemClick');
   },
 
   renderItem: function (item) {
-    // TODO: move to store
-    var codeBox      = CodeBoxesStore.getCodeBoxById(item.codebox),
-        codeBoxLabel = codeBox ? codeBox.label: '';
 
     return (
-      <Item
-        checked = {item.checked}
-        key     = {item.id}>
+      <Item key={item.name} id={item.name} handleClick={this.handleItemClick}>
         <ColumnCheckIcon
-          id              = {item.id.toString()}
-          icon            = 'camera-timer'
-          background      = {Colors.blue500}
+          id              = {item.name.toString()}
+          icon            = {item.metadata.icon}
+          background      = {item.metadata.color}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick} >
-          {item.label}
+          {item.name}
         </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
-        <ColumnDesc>{item.crontab}</ColumnDesc>
-        <ColumnDate>{item.scheduled_next}</ColumnDate>
+        <ColumnDesc>{item.description}</ColumnDesc>
+        <ColumnID className="col-xs-5 col-md-5">
+          {item.objects_count}
+        </ColumnID>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -100,9 +94,9 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return (
+    return  (
       <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
+          {this.props.emptyItemContent}
       </EmptyListItem>
     )
   },
@@ -112,10 +106,8 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
-          <ColumnDesc.Header>Crontab</ColumnDesc.Header>
-          <ColumnDate.Header>Next run</ColumnDate.Header>
+          <ColumnDesc.Header>Description</ColumnDesc.Header>
+          <ColumnID.Header className="col-xs-5 col-md-5">Objects</ColumnID.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>

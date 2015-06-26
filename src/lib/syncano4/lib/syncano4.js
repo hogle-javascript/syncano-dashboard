@@ -1081,9 +1081,9 @@ var Syncano = (function() {
       if (typeof name === 'undefined' || name.length === 0) {
         throw new Error('Missing class name');
       }
-      if (typeof params.schema !== 'string') {
-        params.schema = params.schema.toString();
-      }
+      //if (typeof params.schema !== 'string') {
+      //  params.schema = params.schema.toString();
+      //}
       return this.request('PATCH', linksObject.instance_classes + name, params, callbackOK, callbackError);
     },
 

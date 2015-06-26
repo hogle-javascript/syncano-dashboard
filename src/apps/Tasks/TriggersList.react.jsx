@@ -79,7 +79,7 @@ module.exports = React.createClass({
           {item.label}
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{codeBoxLabel}</ColumnDesc>
+        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.signal}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
@@ -113,7 +113,7 @@ module.exports = React.createClass({
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>CodeBox</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
           <ColumnDesc.Header>Signal</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>

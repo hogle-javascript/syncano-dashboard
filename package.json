@@ -13,7 +13,7 @@
     "gravatar": "^1.1.0",
     "hellojs": "^1.5.0",
     "keymaster": "~1.6.2",
-    "material-ui": "latest",
+    "material-ui": "Syncano/material-ui#build",
     "moment": "^2.9.0",
     "node-uuid": "^1.4.3",
     "normalize.css": "^3.0.3",

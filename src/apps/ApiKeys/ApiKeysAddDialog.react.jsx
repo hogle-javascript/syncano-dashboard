@@ -30,11 +30,7 @@ module.exports = React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    description: {
-      presence: true
-    }
-  },
+  validatorConstraints: {},
 
   getInitialState: function() {
     return {
@@ -45,6 +41,9 @@ module.exports = React.createClass({
   },
 
   clearData: function() {
+    this.refs.ignore_acl.setToggled(false);
+    this.refs.allow_user_create.setToggled(false);
+
     this.setState({
       description       : '',
       ignore_acl        : false,
@@ -108,12 +107,14 @@ module.exports = React.createClass({
               floatingLabelText = "Description of an API Key" />
 
             <Toggle
+              ref      = "ignore_acl"
               name     = "ignore_acl"
               onToggle = {this.handleToogle('ignore_acl')}
               style    = {{marginTop: 20}}
               label    = "Ignore ACL?" />
 
             <Toggle
+              ref      = "allow_user_create"
               name     = "allow_user_create"
               onToggle = {this.handleToogle('allow_user_create')}
               style    = {{marginTop: 20}}
