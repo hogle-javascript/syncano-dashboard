@@ -42,14 +42,8 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       checkingState: false,
-      checkedItemNumber: 0,
+      checkedItemNumber: 0
     }
-  },
-
-  componentWillMount: function () {
-  },
-
-  componentDidMount: function () {
   },
 
   handleIconClick: function (id, state) {
