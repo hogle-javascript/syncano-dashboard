@@ -1,6 +1,12 @@
 {
-  "preset": "google",
+  "preset": "airbnb",
   "maximumLineLength": 120,
   "disallowMultipleVarDecl": null,
+  "disallowSpaceAfterKeywords": null,
+  "requirePaddingNewLinesAfterBlocks": null,
+  "requirePaddingNewLinesBeforeLineComments": null,
+  "disallowSpaceAfterObjectKeys": null,
+  "disallowQuotedKeysInObjects": null,
+  "disallowTrailingComma": null,
   "excludeFiles": ["src/lib", "src/apps/Account/Hello.js"]
 }
