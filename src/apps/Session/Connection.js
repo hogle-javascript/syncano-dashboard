@@ -16,6 +16,7 @@ module.exports = {
 
   reset: function () {
     connection = new Syncano();
+    connection.setApiKey(null);
     return connection;
   }
 };
