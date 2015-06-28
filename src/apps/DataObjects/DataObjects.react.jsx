@@ -23,6 +23,7 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Avatar             = mui.Avatar,
     FontIcon           = mui.FontIcon,
+    IconButton         = mui.IconButton,
     List               = mui.List,
     ListDivider        = mui.ListDivider,
     ListItem           = mui.ListItem,
@@ -56,12 +57,17 @@ module.exports = React.createClass({
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
+
+    if (!nextState.selectedRows) {
+      if (this.refs.table) {
+        this.refs.table.setState({ selectedRows: [] });
+      }
+    }
   },
 
   componentWillMount: function() {
     console.info('DataObjects::componentWillMount');
     DataObjectsActions.fetch();
-
   },
 
   //Dialogs config
@@ -125,7 +131,7 @@ module.exports = React.createClass({
 
   renderTable: function() {
     var tableData   = DataObjectsStore.renderTableData(),
-        tableHeader = DataObjectsStore.getTableHeader(),
+        tableHeader = DataObjectsStore.renderTableHeader(),
         colOrder    = Object.keys(tableHeader);
 
     return (
@@ -140,16 +146,16 @@ module.exports = React.createClass({
           onRowSelection  = {this.handleRowSelection} />
 
         <div
-          className="row align-center"
-          style={{margin: 50}} >
+          className = "row align-center"
+          style     = {{margin: 50}} >
           <div>Loaded {tableData.length} data objects</div>
         </div>
         <div
-          className="row align-center"
-          style={{margin: 50}} >
+          className = "row align-center"
+          style     = {{margin: 50}} >
           <RaisedButton
-            label="Load more"
-            onClick={this.handleMoreRows}/>
+            label   = "Load more"
+            onClick = {this.handleMoreRows}/>
         </div>
       </div>
     )
@@ -184,13 +190,14 @@ module.exports = React.createClass({
     }
 
     return (
+      
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
         <div className="col-flex-1" style={{padding: 0}}>
-
+          
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
-
+          
             <ToolbarGroup float="left" style={{padding: '0px'}}>
 
               <FontIcon
@@ -203,14 +210,27 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-            <FontIcon
-              className = "synicon-delete"
-              onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-delete"
+                tooltip   = "Delete Data Objects"
+                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-view-column"
+                tooltip   = "Columns"
+                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
             </ToolbarGroup>
 
           </Toolbar>
-
+          
           <div style={{clear: 'both', height: '100%'}}>
+            <Show if={this.state.isLoading}>
+              <Loading type='linear' />
+            </Show>
             {table}
           </div>
 

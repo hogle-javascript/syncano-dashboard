@@ -46,6 +46,9 @@ module.exports = React.createClass({
     }
   },
 
+  componentDidMount: function () {
+  },
+
   handleIconClick: function (id, state) {
     var checkedItemNumber;
     if (state) {
