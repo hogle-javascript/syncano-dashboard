@@ -1,4 +1,4 @@
 languages:
   JavaScript: true
 exclude_paths:
-- "src/lib/syncano4/"
+- "src/lib/syncano4/**/*"
