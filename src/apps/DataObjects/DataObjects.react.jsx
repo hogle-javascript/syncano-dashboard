@@ -215,7 +215,7 @@ module.exports = React.createClass({
               <IconButton
                 style     = {{fontSize: 25, marginTop: 5}}
                 className = "synicon-delete"
-                tooltip   = "Delete Data Objecs"
+                tooltip   = "Delete Data Objects"
                 onClick   = {this.showDialog('deleteDataObjectDialog')} />
 
               <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
