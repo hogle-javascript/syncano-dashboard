@@ -21,7 +21,6 @@ var React                = require('react'),
     ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
     Editor               = require('../common/Editor/Editor.react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
-    Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 

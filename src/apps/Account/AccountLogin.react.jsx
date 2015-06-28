@@ -20,7 +20,8 @@ var React                = require('react'),
     Paper                = mui.Paper,
 
     SocialAuthButton     = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
+    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
+    Logo                 = require('../../common/Logo/Logo.react');
 
 
 require('./Account.sass');
@@ -110,7 +111,7 @@ module.exports = React.createClass({
 	  return (
       <div className="account-container">
         <div className="account-logo">
-          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
+          <Link to="login"><Logo className="logo-blue" /></Link>
         </div>
         <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">

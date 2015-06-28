@@ -9,7 +9,6 @@ var HeaderStore = Reflux.createStore({
 
   getInitialState: function () {
     return {
-      breadcrumbs : [],
       menuItems   : [],
       user        : SessionStore.getUser({})
     }
@@ -26,16 +25,6 @@ var HeaderStore = Reflux.createStore({
       this.trigger({user: Session.getUser()});
     }
 
-  },
-
-  onSetBreadcrumbs: function (payload) {
-    console.debug('HeaderStore::onSetBreadcrumbs');
-    this.trigger({breadcrumbs: payload});
-  },
-
-  onClearBreadcrumbs: function () {
-    console.debug('HeaderStore::onClearBreadcrumbs');
-    this.trigger({breadcrumbs: []});
   },
 
   onSetMenuItems: function (payload) {
@@ -56,7 +45,6 @@ var HeaderStore = Reflux.createStore({
   onClear: function (payload) {
     console.debug('HeaderStore::onClear');
     this.trigger({
-      breadcrumbs: [],
       menuItems: []
     });
   }

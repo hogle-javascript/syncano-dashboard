@@ -10,11 +10,14 @@ var React                = require("react"),
     ListDivider          = mui.ListDivider,
     Avatar               = mui.Avatar,
     FontIcon             = mui.FontIcon,
+    DropDownArrow        = require('material-ui/lib/svg-icons/navigation/arrow-drop-down'),
+
     MaterialDropdownItem = require("./MaterialDropdownItem.react"),
     DropdownNotifiItem   = require("./DropdownNotifiItem.react");
 
 
-require("./Dropdown.css");
+
+require("./Dropdown.sass");
 
 
 module.exports = React.createClass({
@@ -99,6 +102,7 @@ module.exports = React.createClass({
                                 }} />
     }
     return <div>
+
              <FontIcon
                className = {"synicon-" + this.props.icon}
                style     = {this.props.iconStyle} />
@@ -117,6 +121,7 @@ module.exports = React.createClass({
       <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
           <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
+            {this.props.children}
             {this.renderIcon()}
           </div>
           <div className={cssClasses}>

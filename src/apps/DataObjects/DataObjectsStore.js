@@ -98,7 +98,7 @@ var DataObjectsStore = Reflux.createStore({
       console.debug('ClassesStore::getTableHeader');
       //// TODO: default columns, it should be controled somehow
     //var classObj = null,
-        header = {
+      var header = {
           id: {
             content: 'ID',
             tooltip: 'Built-in property: ID'

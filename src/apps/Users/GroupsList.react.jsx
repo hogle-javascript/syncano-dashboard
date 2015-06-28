@@ -67,6 +67,7 @@ module.exports = React.createClass({
         checked = {item.checked}
         key     = {item.id}>
         <ColumnCheckIcon
+          className       = "col-xs-30"
           id              = {item.id.toString()}
           icon            = 'account-multiple'
           background      = {Colors.blue200}
@@ -74,9 +75,7 @@ module.exports = React.createClass({
           handleIconClick = {this.handleItemIconClick} >
           {item.label}
         </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>
-        </ColumnDesc>
+        <ColumnID className="col-flex-1">{item.id}</ColumnID>
       </Item>
     )
   },
@@ -106,9 +105,8 @@ module.exports = React.createClass({
     return (
       <ListContainer style={{width: '100%'}}>
         <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header></ColumnDesc.Header>
+          <ColumnCheckIcon.Header className="col-xs-30">{this.props.name}</ColumnCheckIcon.Header>
+          <ColumnID.Header className="col-flex-1">ID</ColumnID.Header>
         </Header>
         <List>
           {this.getList()}
