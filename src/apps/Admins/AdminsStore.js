@@ -7,7 +7,6 @@ var Reflux                   = require('reflux'),
 
     //Stores & Actions
     SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
     AdminsActions            = require('./AdminsActions');
 
@@ -70,7 +69,7 @@ var AdminsStore = Reflux.createStore({
     return this.roleMenuItems;
   },
 
-  onFetchAdmins: function(items) {
+  onFetchAdmins: function() {
     console.debug('AdminsStore::onFetchAdmins');
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -82,14 +81,14 @@ var AdminsStore = Reflux.createStore({
     AdminsActions.setAdmins(items);
   },
 
-  onUpdateAdminCompleted: function(paylod) {
+  onUpdateAdminCompleted: function() {
     console.debug('AdminsStore::onUpdateAdminCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveAdminsCompleted: function(payload) {
+  onRemoveAdminsCompleted: function() {
     console.debug('AdminsStore::onRemoveAdminsCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
