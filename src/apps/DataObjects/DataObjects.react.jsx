@@ -37,6 +37,7 @@ var React              = require('react'),
     RaisedButton       = mui.RaisedButton,
 
     Loading            = require('../../common/Loading/Loading.react'),
+    ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
     CheckAvatar        = require('./CheckAvatar.react');
 
 module.exports = React.createClass({
@@ -210,18 +211,14 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-
+              
               <IconButton
                 style     = {{fontSize: 25, marginTop: 5}}
                 className = "synicon-delete"
-                tooltip   = "Delete Data Objects"
+                tooltip   = "Delete Data Objecs"
                 onClick   = {this.showDialog('deleteDataObjectDialog')} />
 
-              <IconButton
-                style     = {{fontSize: 25, marginTop: 5}}
-                className = "synicon-view-column"
-                tooltip   = "Columns"
-                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+              <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
 
             </ToolbarGroup>
 

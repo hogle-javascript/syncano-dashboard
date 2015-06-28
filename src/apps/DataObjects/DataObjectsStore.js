@@ -100,6 +100,23 @@ var DataObjectsStore = Reflux.createStore({
     return DataObjectsRenderer.renderTableHeader(this.data.classObj);
   },
 
+  getTableColumns: function () {
+    return [
+      {
+        name    : 'Id',
+        checked : true
+      },
+      {
+        name    : 'User',
+        checked : true
+      },
+      {
+        name    : 'Group',
+        checked : true
+      },
+    ]
+  },
+
   onFetchCurrentClassObjCompleted: function(classObj) {
     console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
     this.data.classObj = classObj; // TODO why, why?
