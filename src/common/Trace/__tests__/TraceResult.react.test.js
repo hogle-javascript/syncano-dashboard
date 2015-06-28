@@ -1,7 +1,7 @@
-jest.dontMock("../TraceResult.react");
+jest.dontMock('../TraceResult.react');
 
-describe("TraceResult.react", function() {
-  it("testing component", function() {
+describe('TraceResult.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

@@ -1,8 +1,8 @@
-jest.dontMock("../ProgressBar.react");
-jest.dontMock("classnames");
+jest.dontMock('../ProgressBar.react');
+jest.dontMock('classnames');
 
-describe("ProgressBar.react", function() {
-  it("testing component", function() {
+describe('ProgressBar.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

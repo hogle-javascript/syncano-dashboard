@@ -1,7 +1,7 @@
 var StoreLoadingMixin = {
 
-  setLoadingStates: function () {
-    if (this.listenables){
+  setLoadingStates: function() {
+    if (this.listenables) {
       var arr = [].concat(this.listenables);
       arr.forEach(function(item) {
         this.setLoadingState(item);
@@ -9,7 +9,7 @@ var StoreLoadingMixin = {
     }
   },
 
-  setLoadingState: function (listenable) {
+  setLoadingState: function(listenable) {
     for (var key in listenable) {
       var action = listenable[key];
       if (action.asyncResult === true && action.loading === true) {
@@ -20,13 +20,13 @@ var StoreLoadingMixin = {
     }
   },
 
-  setToLoading: function () {
+  setToLoading: function() {
     console.log('StoreLoadingMixin::setToLoading');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  setToNotLoading: function () {
+  setToNotLoading: function() {
     console.log('StoreLoadingMixin::setToNotLoading');
     this.data.isLoading = false;
     this.trigger(this.data);

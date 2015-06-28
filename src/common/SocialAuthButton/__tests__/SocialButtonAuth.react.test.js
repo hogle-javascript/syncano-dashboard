@@ -1,7 +1,7 @@
-jest.dontMock("../SocialAuthButton.react");
+jest.dontMock('../SocialAuthButton.react');
 
-describe("SocialButtonAuth", function () {
-  it("testing component", function () {
+describe('SocialButtonAuth', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
@@ -19,11 +19,11 @@ describe("SocialButtonAuth", function () {
     //     icon={button.icon}
     //     label={button.label}/>
     // );
-    //var node = TestUtils.scryRenderedDOMComponentsWithClass(SocialAuthButton, "social-auth-button");
+    //var node = TestUtils.scryRenderedDOMComponentsWithClass(SocialAuthButton, "social-auth-button');
     //TestUtils.Simulate.click(node);
     //expect(button.handleClick.mock.calls.length).toBe(1);
     //
-    //var textNode = TestUtils.scryRenderedDOMComponentsWithTag(SocialAuthButton, "span");
+    //var textNode = TestUtils.scryRenderedDOMComponentsWithTag(SocialAuthButton, "span');
     //expect(textNode.getDOMNode().textContent).toEqual(button.text);
   });
 });

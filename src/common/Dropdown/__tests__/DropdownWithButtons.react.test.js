@@ -1,7 +1,7 @@
-jest.dontMock("../DropdownWithButtons.react");
+jest.dontMock('../DropdownWithButtons.react');
 
-describe("DropdownWithButtons.react", function() {
-  it("testing component", function() {
+describe('DropdownWithButtons.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

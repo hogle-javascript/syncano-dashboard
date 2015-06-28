@@ -1,7 +1,7 @@
-jest.dontMock("../DropdownMenuItemToggle.react");
+jest.dontMock('../DropdownMenuItemToggle.react');
 
-describe("DropdownMenuItemToggle.react", function() {
-  it("testing component", function() {
+describe('DropdownMenuItemToggle.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

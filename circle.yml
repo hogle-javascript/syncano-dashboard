@@ -12,6 +12,7 @@ test:
   override:
     - npm test
     - npm run-script nightwatch
+    - jscs --esprima=esprima-fb src
 
 deployment:
   staging:

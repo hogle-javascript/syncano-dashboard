@@ -13,8 +13,8 @@ var ColorStore = {
 
   getColorPickerPalette: function() {
     var colors = [],
-        uniqueColors = Object.keys(Colors).filter(function(key){
-          return key.slice(-3) === "500";
+        uniqueColors = Object.keys(Colors).filter(function(key) {
+          return key.slice(-3) === '500';
         });
 
     uniqueColors.map(function(color) {
@@ -27,18 +27,18 @@ var ColorStore = {
     return colors;
   },
 
-  getColorByName: function(name,variation){
-    if (variation === 'dark'){
-      return Colors[name+'700'];
+  getColorByName: function(name, variation) {
+    if (variation === 'dark') {
+      return Colors[name + '700'];
     }
-    if (variation === 'light'){
-      return Colors[name+'100'];
+    if (variation === 'light') {
+      return Colors[name + '100'];
     }
-    return Colors[name+'500'];
+    return Colors[name + '500'];
   },
 
   // To remove with AvatarInitials component
-  getOldColorPickerPalette: function () {
+  getOldColorPickerPalette: function() {
     return colorPickerPalette;
   },
 

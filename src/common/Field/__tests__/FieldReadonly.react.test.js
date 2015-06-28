@@ -1,7 +1,7 @@
-jest.dontMock("../FieldReadonly.react");
+jest.dontMock('../FieldReadonly.react');
 
-describe("FieldReadonly.react", function() {
-  it("testing component", function() {
+describe('FieldReadonly.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

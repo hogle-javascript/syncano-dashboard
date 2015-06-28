@@ -1,7 +1,7 @@
-jest.dontMock("../ActivationView");
+jest.dontMock('../ActivationView');
 
-describe("ActivationView", function() {
-  it("testing component", function() {
+describe('ActivationView', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

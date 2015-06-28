@@ -1,11 +1,11 @@
 var WaitForStoreMixin = {
 
-  init: function () {
+  init: function() {
     this._shouldFetch   = false;
     this._fetchCallback = null;
   },
 
-  fetch: function () {
+  fetch: function() {
     console.debug('WaitForStoreMixin::fetch', this._shouldFetch);
 
     if (this._shouldFetch === false) {
@@ -17,7 +17,7 @@ var WaitForStoreMixin = {
     }
   },
 
-  waitFor: function () {
+  waitFor: function() {
     console.debug('WaitForStoreMixin::waitFor');
 
     if (arguments.length < 2) {
@@ -26,16 +26,16 @@ var WaitForStoreMixin = {
 
     var args         = [].splice.call(arguments, 0),
         callback     = args.pop(),
-        listenMethod = (args.length > 1) ? this.joinTrailing: this.listenTo;
+        listenMethod = (args.length > 1) ? this.joinTrailing : this.listenTo;
 
-    if (this.listenables){
-        var listenables = [].concat(this.listenables);
-        for(var i=0; i < listenables.length; i++){
-            var listenable = listenables[i];
-            if (listenable.fetch !== undefined) {
-              args.push(listenable.fetch);
-            }
+    if (this.listenables) {
+      var listenables = [].concat(this.listenables);
+      for (var i = 0; i < listenables.length; i++) {
+        var listenable = listenables[i];
+        if (listenable.fetch !== undefined) {
+          args.push(listenable.fetch);
         }
+      }
     }
 
     this._fetchCallback = callback;

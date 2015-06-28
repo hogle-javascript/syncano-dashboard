@@ -14,7 +14,6 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     DataObjectsActions  = require('./DataObjectsActions');
 
-
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
   mixins      : [
@@ -23,7 +22,7 @@ var DataObjectsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items        : null,
       isLoading    : false,
@@ -31,7 +30,7 @@ var DataObjectsStore = Reflux.createStore({
     };
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -40,10 +39,11 @@ var DataObjectsStore = Reflux.createStore({
     );
     this.listenToForms();
 
-    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects); // TODO why not setCurrentClassObj why?
+    // TODO why not setCurrentClassObj why?
+    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('DataObjectsStore::refreshData');
     DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className)
   },
@@ -75,7 +75,7 @@ var DataObjectsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  setDataObjects: function (items) {
+  setDataObjects: function(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.items = Object.keys(items).map(function(key) {
@@ -91,13 +91,12 @@ var DataObjectsStore = Reflux.createStore({
     return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
   },
 
-
   // Table stuff
   renderTableData: function() {
     return DataObjectsRenderer.renderTableData(this.data.items);
   },
 
-  renderTableHeader: function () {
+  renderTableHeader: function() {
     return DataObjectsRenderer.renderTableHeader(this.data.classObj);
   },
 
