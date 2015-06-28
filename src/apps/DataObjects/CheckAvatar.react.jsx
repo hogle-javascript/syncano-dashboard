@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      checked    : this.props.checked
+      checked : this.props.checked
     }
   },
 
@@ -49,13 +49,14 @@ module.exports = React.createClass({
   },
 
   handleMouseOver: function () {
-    console.info('ColumnAvatarCheck::handleMouseOver');
-    this.setState({'color': this.props.hoverColor, hovered: true});
+    this.setState({
+      hovered: true
+    });
   },
-
   handleMouseLeave: function () {
-    console.info('ColumnAvatarCheck::handleMouseLeave');
-    this.setState({'color': this.props.color, hovered: false});
+    this.setState({
+      hovered: false
+    });
   },
 
   getIconState: function () {

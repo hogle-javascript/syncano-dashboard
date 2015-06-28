@@ -1,5 +1,5 @@
 var ButtonActionMixin = {
-  handleButtonClick: function (buttonName) {
+  handleButtonClick: function(buttonName) {
     var buttons = this.buttons;
 
     if (typeof buttons === 'function') {
@@ -7,7 +7,7 @@ var ButtonActionMixin = {
     }
 
     var buttonConf = buttons[buttonName],
-        params = typeof buttonConf.params === 'function' ? buttonConf.params(): buttonConf.params;
+        params = typeof buttonConf.params === 'function' ? buttonConf.params() : buttonConf.params;
     buttonConf.action(params);
   },
 };

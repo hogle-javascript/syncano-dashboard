@@ -4,7 +4,6 @@ var React        = require('react'),
 // More info
 // https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
 
-
 var ReactRouterContext = function ReactRouterContext(Component, props, stubs) {
   function RouterStub() {}
 

@@ -1,7 +1,7 @@
-jest.dontMock("../SwitchInput.react");
+jest.dontMock('../SwitchInput.react');
 
-describe("SwitchInput.react", function() {
-  it("testing component", function() {
+describe('SwitchInput.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

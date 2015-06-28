@@ -2,7 +2,6 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
-
 var ApiKeysActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
@@ -10,30 +9,30 @@ var ApiKeysActions = Reflux.createActions({
   setApiKeys : {},
 
   fetchApiKeys: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   },
   createApiKey: {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure']
   },
   updateApiKey: {
-      asyncResult: true,
-      asyncForm: true,
-      children: ['completed', 'failure']
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure']
   },
   removeApiKeys: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   },
   resetApiKey: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   }
 });
 
-ApiKeysActions.fetchApiKeys.listen( function() {
+ApiKeysActions.fetchApiKeys.listen(function() {
   console.info('ApiKeysActions::fetchApiKeys');
   Connection
     .ApiKeys
@@ -42,20 +41,22 @@ ApiKeysActions.fetchApiKeys.listen( function() {
     .catch(this.failure);
 });
 
-ApiKeysActions.createApiKey.listen( function(payload) {
+ApiKeysActions.createApiKey.listen(function(payload) {
   console.info('ApiKeysActions::createApiKey');
   Connection
     .ApiKeys
     .create({
       description       : payload.description,
+      // jscs:disable
       allow_user_create : payload.allow_user_create,
       ignore_acl        : payload.ignore_acl
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
 });
 
-ApiKeysActions.updateApiKey.listen( function(name, payload) {
+ApiKeysActions.updateApiKey.listen(function(name, payload) {
   console.info('ApiKeysActions::updateApiKey');
   Connection
     .ApiKeys
@@ -64,7 +65,7 @@ ApiKeysActions.updateApiKey.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-ApiKeysActions.removeApiKeys.listen( function(names) {
+ApiKeysActions.removeApiKeys.listen(function(names) {
   names.map(function(name) {
     console.info('ApiKeysActions::removeApiKeys');
     Connection
@@ -75,7 +76,7 @@ ApiKeysActions.removeApiKeys.listen( function(names) {
   }.bind(this));
 });
 
-ApiKeysActions.resetApiKey.listen( function(id) {
+ApiKeysActions.resetApiKey.listen(function(id) {
   console.info('ApiKeysActions::resetApiKey');
   Connection
     .ApiKeys

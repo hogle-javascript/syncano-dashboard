@@ -7,7 +7,7 @@ module.exports = React.createClass({
   displayName: 'Label',
 
   propTypes: {
-    text: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired
   },
 
   render: function() {

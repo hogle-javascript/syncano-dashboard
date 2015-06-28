@@ -1,17 +1,18 @@
 var Reflux              = require('reflux'),
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+  CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+  StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+  WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
-    //Stores & Actions
-    ClassesActions      = require('../Classes/ClassesActions'),
-    ClassesStore        = require('../Classes/ClassesStore'),
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    DataObjectsActions  = require('./DataObjectsActions');
+  DataObjectsRenderer = require('./DataObjectsRenderer'),
 
+//Stores & Actions
+  ClassesActions      = require('../Classes/ClassesActions'),
+  ClassesStore        = require('../Classes/ClassesStore'),
+  SessionActions      = require('../Session/SessionActions'),
+  SessionStore        = require('../Session/SessionStore'),
+  DataObjectsActions  = require('./DataObjectsActions');
 
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
@@ -21,22 +22,15 @@ var DataObjectsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  columnWidthMap: {
-    id         : 20,
-    revision   : 20,
-    group      : 30,
-    //created_at : 100
-  },
-
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items        : null,
-      isLoading    : true,
+      isLoading    : false,
       selectedRows : null
-    }
+    };
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -45,10 +39,11 @@ var DataObjectsStore = Reflux.createStore({
     );
     this.listenToForms();
 
-    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects); // TODO why not setCurrentClassObj why?
+    // TODO why not setCurrentClassObj why?
+    this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('DataObjectsStore::refreshData');
     DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className)
   },
@@ -74,60 +69,21 @@ var DataObjectsStore = Reflux.createStore({
     this.data.classObj = classObj;
   },
 
-  onFetchCurrentClassObjCompleted: function(classObj) {
-    console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
-    this.data.classObj = classObj; // TODO why, why?
-    DataObjectsActions.setCurrentClassObj(classObj);
+  setSelectedRows: function(selectedRows) {
+    console.debug('DataObjectsStore::setSelectedRows');
+    this.data.selectedRows = selectedRows;
+    this.trigger(this.data);
   },
 
-  renderTableData: function() {
-    var tableItems = [];
-    this.data.items.map(function(item) {
-      var row = {};
-      Object.keys(item).map(function(key) {
-        var value = item[key] ? item[key] : '';
+  setDataObjects: function(items) {
+    console.debug('DataObjectsStore::setDataObjects');
 
-        row[key] = {content: value.toString(), style: {width: this.columnWidthMap[key]}}
-      }.bind(this));
-      tableItems.push(row);
-    }.bind(this));
-    return tableItems;
-
-  },
-  getTableHeader: function() {
-      console.debug('ClassesStore::getTableHeader');
-      //// TODO: default columns, it should be controled somehow
-    //var classObj = null,
-      var header = {
-          id: {
-            content: 'ID',
-            tooltip: 'Built-in property: ID'
-          },
-          revision: {
-            content: 'Rev',
-            tooltip: 'Built-in property: Revision'
-          },
-          group: {
-            content: 'Group',
-            tooltip: 'Built-in property: Group'
-          },
-          created_at: {
-            content: 'Created',
-            tooltip: 'Built-in property: Created At'
-          }
-        };
-
-    this.data.classObj.schema.map(function(item) {
-      if (!header[item.name]) {
-        header[item.name] = {content: item.name, tooltip: item.type}
-      }
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
     });
 
-    Object.keys(header).map(function(key){
-      header[key].style = {width: this.columnWidthMap[key]}
-    }.bind(this));
-
-    return header;
+    this.data.isLoading = false;
+    this.trigger(this.data);
   },
 
   // We know number of selected rows, now we need to get ID of the objects
@@ -135,31 +91,47 @@ var DataObjectsStore = Reflux.createStore({
     return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
   },
 
-  setSelectedRows: function(selectedRows) {
-    console.debug('DataObjectsStore::setSelectedRows');
-    this.data.selectedRows = selectedRows;
-    this.trigger(this.data);
+  // Table stuff
+  renderTableData: function() {
+    return DataObjectsRenderer.renderTableData(this.data.items);
   },
 
-  setDataObjects: function (items) {
-    console.debug('DataObjectsStore::setDataObjects');
+  renderTableHeader: function() {
+    return DataObjectsRenderer.renderTableHeader(this.data.classObj);
+  },
 
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+  getTableColumns: function() {
+    return [
+      {
+        name    : 'Id',
+        checked : true
+      },
+      {
+        name    : 'User',
+        checked : true
+      },
+      {
+        name    : 'Group',
+        checked : true
+      },
+    ]
+  },
 
-    this.trigger(this.data);
+  onFetchCurrentClassObjCompleted: function(classObj) {
+    console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
+    this.data.classObj = classObj; // TODO why, why?
+    DataObjectsActions.setCurrentClassObj(classObj);
   },
 
   onFetchDataObjects: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    this.data.isLoading = true;
+    //this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchDataObjectsCompleted: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
-    this.data.isLoading = false;
+    //this.data.isLoading = false;
     DataObjectsActions.setDataObjects(items);
   },
 
@@ -167,20 +139,25 @@ var DataObjectsStore = Reflux.createStore({
     console.debug('DataObjectsStore::onCreateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
   },
 
   onUpdateDataObjectCompleted: function(paylod) {
     console.debug('DataObjectsStore::onUpdateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
+  },
+  onRemoveDataObjects: function(payload) {
+    this.data.isLoading = true;
+    this.trigger(this.data);
   },
 
   onRemoveDataObjectsCompleted: function(payload) {
     this.data.hideDialogs = true;
+    this.data.selectedRows = null;
     this.trigger(this.data);
-    this.refreshData();
+    this.refreshDataObjects();
   },
 
 });

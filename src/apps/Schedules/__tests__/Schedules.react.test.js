@@ -1,7 +1,7 @@
-jest.dontMock("../Schedules.react");
+jest.dontMock('../Schedules.react');
 
-describe("Schedules.react", function () {
-  it("testing component", function () {
+describe('Schedules.react', function() {
+  it('testing component', function() {
 
     var React         = require('react/addons'),
         TestUtils     = React.addons.TestUtils,

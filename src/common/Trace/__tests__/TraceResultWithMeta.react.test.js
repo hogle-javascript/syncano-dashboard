@@ -1,7 +1,7 @@
-jest.dontMock("../TraceResultWithMeta.react");
+jest.dontMock('../TraceResultWithMeta.react');
 
-describe("TraceResultWithMeta.react", function() {
-  it("testing component", function() {
+describe('TraceResultWithMeta.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

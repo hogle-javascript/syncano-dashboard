@@ -1,7 +1,7 @@
-jest.dontMock("../TableHeader.react");
+jest.dontMock('../TableHeader.react');
 
-describe("TableHeader.react", function() {
-  it("testing component", function() {
+describe('TableHeader.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

@@ -1,9 +1,7 @@
 var objectAssign = require('object-assign'),
     validate     = require('validate.js');
 
-
 validate.moment = require('moment');
-
 
 var ValidationMixin = {
 
@@ -37,7 +35,7 @@ var ValidationMixin = {
 
     var errors = objectAssign(
       {},
-      (key !== undefined) ? this.state.errors: {},
+      (key !== undefined) ? this.state.errors : {},
       validate(attributes, constraints)
     );
 
@@ -47,7 +45,7 @@ var ValidationMixin = {
 
   },
 
-  handleFormValidation: function (event) {
+  handleFormValidation: function(event) {
     event.preventDefault();
 
     // FormMixin compatibility
@@ -55,7 +53,7 @@ var ValidationMixin = {
       return;
     }
 
-    this.validate(function(isValid, errors){
+    this.validate(function(isValid, errors) {
       if (isValid === true) {
         if (this.handleSuccessfullValidation !== undefined) {
           this.handleSuccessfullValidation.call(this)
@@ -88,7 +86,7 @@ var ValidationMixin = {
       return flattenErrors;
     }
 
-    return errors[key] ? errors[key]: [];
+    return errors[key] ? errors[key] : [];
   },
 
   clearValidations: function() {

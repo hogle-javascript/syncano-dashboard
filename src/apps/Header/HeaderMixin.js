@@ -7,7 +7,7 @@ var HeaderMixin = {
   },
 
   statics: {
-    willTransitionTo: function () {
+    willTransitionTo: function() {
       HeaderActions.clear();
     }
   },
@@ -32,7 +32,7 @@ var HeaderMixin = {
 
   },
 
-  setHeaderMenuItems: function (menuItems) {
+  setHeaderMenuItems: function(menuItems) {
     HeaderActions.setMenuItems(menuItems);
   }
 

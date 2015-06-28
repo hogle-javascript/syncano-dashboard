@@ -17,7 +17,7 @@ var CheckListStoreMixin = {
           item.checked = state;
         }
       } else if (checkId == item.name) {
-          item.checked = state;
+        item.checked = state;
       }
     }.bind(this));
     this.trigger(this.data);
@@ -26,7 +26,7 @@ var CheckListStoreMixin = {
   onUncheckAll: function() {
 
     this.data.items.forEach(function(item) {
-        item.checked = false;
+      item.checked = false;
     });
     this.trigger(this.data);
   },
@@ -35,7 +35,7 @@ var CheckListStoreMixin = {
 
     // Looking for the first 'checked' item
     var checkedItem = null;
-    this.data.items.some(function (item) {
+    this.data.items.some(function(item) {
       if (item.checked) {
         checkedItem = item;
         return true;
@@ -45,7 +45,7 @@ var CheckListStoreMixin = {
   },
 
   getCheckedItems: function() {
-    return this.data.items.filter(function (item) {
+    return this.data.items.filter(function(item) {
       return item.checked;
     });
   },

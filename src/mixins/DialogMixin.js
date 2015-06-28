@@ -1,6 +1,6 @@
 var DialogMixin = {
 
-  componentWillUpdate: function (nextProps, nextState) {
+  componentWillUpdate: function(nextProps, nextState) {
     console.debug('DialogMixin::componentWillUpdate');
 
     if (nextState.visible === false) {
@@ -10,7 +10,7 @@ var DialogMixin = {
     }
   },
 
-  handleCancel: function () {
+  handleCancel: function() {
     console.debug('DialogMixin::handleCancel');
 
     this.refs.dialog.dismiss();
@@ -20,7 +20,7 @@ var DialogMixin = {
     }
   },
 
-  handleSuccessfullValidation: function () {
+  handleSuccessfullValidation: function() {
     console.debug('DialogMixin::handleSuccessfullValidation');
 
     if (this.hasEditMode()) {
@@ -32,11 +32,11 @@ var DialogMixin = {
     }
   },
 
-  hasEditMode: function () {
+  hasEditMode: function() {
     return this.state.mode === 'edit';
   },
 
-  hasAddMode: function () {
+  hasAddMode: function() {
     return this.state.mode === 'add';
   }
 };
