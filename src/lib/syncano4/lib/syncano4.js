@@ -708,7 +708,7 @@ var Syncano = (function() {
         {},
         callbackOK,
         callbackError,
-        {'Authorization': 'token ' + token}
+        {'Authorization': 'Token ' + token}
       );
     },
 

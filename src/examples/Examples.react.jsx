@@ -8,6 +8,9 @@ var React                = require('react'),
     Dialog               = require('material-ui/lib/dialog'),
     Snackbar             = require('material-ui/lib/snackbar'),
     FlatButton           = require('material-ui/lib/flat-button'),
+    TextField            = mui.TextField,
+    DatePicker           = mui.DatePicker,
+    TimePicker           = mui.TimePicker,
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
@@ -24,7 +27,6 @@ var React                = require('react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
-    TextField            = mui.TextField,
     FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
     FieldDatetime        = require('../common/Field/FieldDatetime.react'),
     FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
@@ -105,7 +107,41 @@ module.exports = React.createClass({
     }
   },
 
+  getDateNow: function() {
+    var date = new Date();
+    return date;
+  },
+
+  getDateFormat: function(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return d + '-' + m + '-' + y;
+  },
+
+  logDate: function() {
+    console.debug(this.refs.modifiedDatePicker.getDate())
+  },
+
+  logTime: function() {
+    console.debug(this.refs.modifiedTimePicker.getTime());
+  },
+
+  getMinDate: function(minYear) {
+    var date = new Date();
+    date.setFullYear(minYear)
+    return date;
+  },
+
+  getMaxDate: function(maxYear) {
+    var date = new Date;
+    date.setFullYear(maxYear)
+    return date;
+  },
+
   render: function () {
+
+
     var dummyClick = function (action) {
       console.log('Click!', action);
     };
@@ -713,6 +749,33 @@ module.exports = React.createClass({
             type    = "linear"
             visible = {true} />
           <Loading visible={true}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>DatePicker</h2>
+          <DatePicker hintText="Portrait Dialog" />
+          <DatePicker
+            hintText = "Landscape Dialog"
+            mode     = "landscape" />
+          <DatePicker
+            maxDate          = {this.getMaxDate(2020)}
+            minDate          = {this.getMinDate(1990)}
+            formatDate       = {this.getDateFormat}
+            defaultDate      = {this.getDateNow()}
+            ref              = "modifiedDatePicker"
+            hintText         = "Ranged Date Picker"
+            showYearSelector = {true}
+            onChange         = {this.logDate} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>TimePicker</h2>
+          <TimePicker
+            format="ampm" />
+          <TimePicker
+            ref      = "modifiedTimePicker"
+            format   = "24hr"
+            onChange = {this.logTime}/>
         </div>
 
       </div>

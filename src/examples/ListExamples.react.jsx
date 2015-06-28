@@ -42,7 +42,7 @@ module.exports = React.createClass({
   getInitialState: function () {
     return {
       checkingState: false,
-      checkedItemNumber: 0,
+      checkedItemNumber: 0
     }
   },
 
