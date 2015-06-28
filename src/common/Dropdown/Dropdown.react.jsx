@@ -1,6 +1,6 @@
 var React               = require('react'),
     classNames          = require('classnames'),
-    OutsideClickHandler = require('react-outsideclickhandler');
+    OutsideClickHandler = require('react-outsideclickhandler'),
 
     Constants           = require('../../constants/Constants'),
 

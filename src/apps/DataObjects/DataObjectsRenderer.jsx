@@ -49,22 +49,22 @@ var DataObjectsRenderer = {
     //// TODO: default columns, it should be controled somehow
 
     var builtInColumnsConfig = this.builtInColumnsConfig();
-    header = {
+    var header = {
       id: {
-        content: 'ID',
-        tooltip: 'Built-in property: ID'
+        content : 'ID',
+        tooltip : 'Built-in property: ID'
       },
       revision: {
-        content: 'Rev',
-        tooltip: 'Built-in property: Revision'
+        content : 'Rev',
+        tooltip : 'Built-in property: Revision'
       },
       group: {
-        content: 'Group',
-        tooltip: 'Built-in property: Group'
+        content : 'Group',
+        tooltip : 'Built-in property: Group'
       },
       created_at: {
-        content: 'Created',
-        tooltip: 'Built-in property: Created At'
+        content : 'Created',
+        tooltip : 'Built-in property: Created At'
       }
     };
 
@@ -108,10 +108,8 @@ var DataObjectsRenderer = {
         } else if (typeof value === 'string' || typeof item[key] === 'number') {
 
           // Simple string or renderer
-          if (config) {
-            if (config.renderer) {
+          if (config && config.renderer) {
               value = config.renderer(item[key])
-            }
           }
         }
 
