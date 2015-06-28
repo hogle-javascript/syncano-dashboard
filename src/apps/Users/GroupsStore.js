@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -13,7 +12,6 @@ var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     WaitForStoreMixin
   ],
 
@@ -31,7 +29,6 @@ var GroupsStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
   },
 
   setGroups: function(groups) {
@@ -62,20 +59,6 @@ var GroupsStore = Reflux.createStore({
     console.debug('GroupsStore::onFetchGroupsCompleted');
     this.data.isLoading = false;
     GroupsActions.setGroups(items);
-  },
-
-  onCreateGroupCompleted: function(payload) {
-    console.debug('GroupsStore::onCreateGroupCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateGroupCompleted: function(paylod) {
-    console.debug('GroupsStore::onUpdateGroupCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveGroupsCompleted: function(payload) {

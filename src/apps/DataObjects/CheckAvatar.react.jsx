@@ -50,23 +50,12 @@ module.exports = React.createClass({
 
   handleMouseOver: function () {
     console.info('ColumnAvatarCheck::handleMouseOver');
-    this.setState({'color': this.props.hoverColor});
+    this.setState({'color': this.props.hoverColor, hovered: true});
   },
 
   handleMouseLeave: function () {
     console.info('ColumnAvatarCheck::handleMouseLeave');
-    this.setState({'color': this.props.color});
-  },
-
-  handleMouseOver: function () {
-    this.setState({
-      hovered: true
-    });
-  },
-  handleMouseLeave: function () {
-    this.setState({
-      hovered: false
-    });
+    this.setState({'color': this.props.color, hovered: false});
   },
 
   getIconState: function () {

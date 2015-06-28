@@ -35,6 +35,7 @@ var React                     = require('react'),
     RoundIcon                 = require('../../common/Icon/RoundIcon.react'),
     HeaderMenu                = require('./HeaderMenu.react');
 
+
 require('./Header.sass');
 
 
@@ -184,11 +185,6 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleAccountClick: function(e) {
-    this.transitionTo("profile-settings");
-    e.stopPropagation();
-  },
-
   handleDropdownItemClick: function(e, selectedIndex, menuItem) {
     var instanceName = menuItem.text._store.props.children[1]._store.props.children;
 
@@ -260,7 +256,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleAccountClick: function (e) {
-    this.transitionTo("profile-settings");
+    this.transitionTo('profile-settings');
     e.stopPropagation();
   },
 
@@ -269,7 +265,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleBillingClick: function (e) {
-    this.transitionTo("profile-billing");
+    this.transitionTo('profile-billing');
     e.stopPropagation();
   },
 

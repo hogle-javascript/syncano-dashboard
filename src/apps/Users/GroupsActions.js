@@ -3,10 +3,12 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get();
 
 var GroupsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
-  setGroups  : {},
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setGroups     : {},
+  showDialog    : {},
+  dismissDialog : {},
 
   fetchGroups: {
     asyncResult: true,

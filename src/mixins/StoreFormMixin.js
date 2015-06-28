@@ -34,19 +34,17 @@ var StoreFormMixin = {
   },
 
   handleForm: function() {
-    this.data.canSubmit = false;
-    this.trigger(this.data);
+    this.trigger({canSubmit: false});
   },
 
   handleFormCompleted: function(payload) {
     console.log('StoreFormMixin::handleFormCompleted');
-    this.data = objectAssign(this.data, this.getInitialFormState())
-    this.trigger(this.data);
+    this.trigger(this.getInitialFormState());
   },
 
   handleFormFailure: function(payload) {
     console.log('StoreFormMixin::handleFormFailure');
-    var state = objectAssign(this.data, this.getInitialFormState());
+    var state = this.getInitialFormState();
 
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
@@ -59,12 +57,6 @@ var StoreFormMixin = {
 
       for (var field in payload) {
         state.errors[field] = [].concat(payload[field]);
-      }
-    }
-
-    for (var key in state) {
-      if (state[key] === null || state[key] === undefined) {
-        delete state[key];
       }
     }
 
