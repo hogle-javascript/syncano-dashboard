@@ -1,5 +1,3 @@
-var objectAssign = require('object-assign');
-
 var StoreLoadingMixin = {
 
   setLoadingStates: function () {
@@ -23,6 +21,7 @@ var StoreLoadingMixin = {
   },
 
   setToLoading: function () {
+    console.log('StoreLoadingMixin::setToLoading');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
