@@ -120,7 +120,7 @@ module.exports = React.createClass({
 
   handleDeleteAdmin: function() {
     console.info('Admins::handleDelete');
-    AdminsActions.removeAdmins(AdminsStore.getCheckedItems());
+    AdminsActions.removeAdmin(AdminsStore.getCheckedItems());
   },
 
   handleResendInvitation: function() {

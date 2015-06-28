@@ -23,16 +23,11 @@ var React                       = require('react'),
     Tab                         = mui.Tab,
     Toolbar                     = mui.Toolbar,
     ToolbarGroup                = mui.ToolbarGroup,
-    FontIcon                    = mui.FontIcon,
     Paper                       = mui.Paper,
-    DropDownMenu                = mui.DropDownMenu,
-    IconMenu                    = mui.IconMenu,
-    MenuItem                    = mui.MenuItem,
     IconButton                  = mui.IconButton,
     MoreVertIcon                = mui.Icons.NavigationMenu,
 
     MaterialDropdown            = require('../../common/Dropdown/MaterialDropdown.react'),
-    MaterialIcon                = require('../../common/Icon/MaterialIcon.react'),
     RoundIcon                   = require('../../common/Icon/RoundIcon.react'),
     HeaderMenu                  = require('./HeaderMenu.react'),
     HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react.jsx'),
@@ -67,6 +62,20 @@ module.exports = Radium(React.createClass({
 
   handleTabActive: function (tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick: function (event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout: function () {
+    SessionActions.logout();
+  },
+
+  handleBillingClick: function (event) {
+    this.transitionTo('profile-billing');
+    event.stopPropagation();
   },
 
   getStyles: function() {

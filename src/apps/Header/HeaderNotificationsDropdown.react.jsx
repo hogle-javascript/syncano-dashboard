@@ -8,7 +8,14 @@ var React                     = require('react'),
     ProfileInvitationsStore   = require('../Profile/ProfileInvitationsStore'),
     ProfileInvitationsActions = require('../Profile/ProfileInvitationsActions'),
 
-    MaterialDropdown          = require('../../common/Dropdown/MaterialDropdown.react');
+    mui                       = require('material-ui'),
+    IconMenu                  = mui.IconMenu,
+    MenuItem                  = mui.MenuItem,
+    FontIcon                  = mui.FontIcon,
+    MenuDivider               = require('material-ui/lib/menus/menu-divider'),
+    IconButton                = mui.IconButton,
+    DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
+
 
 
 module.exports = React.createClass({
@@ -31,20 +38,6 @@ module.exports = React.createClass({
     ProfileInvitationsActions.fetch();
   },
 
-  handleAccountClick: function (event) {
-    this.transitionTo('profile-settings');
-    event.stopPropagation();
-  },
-
-  handleLogout: function () {
-    SessionActions.logout();
-  },
-
-  handleBillingClick: function (event) {
-    this.transitionTo('profile-billing');
-    event.stopPropagation();
-  },
-
   handleAcceptInvitations: function (items, event) {
     console.info("Header::handleAcceptInvitations");
     ProfileInvitationsActions.acceptInvitations(items);
@@ -62,16 +55,13 @@ module.exports = React.createClass({
     event.stopPropagation();
   },
 
-  handleClickNotifications: function () {
-    ProfileInvitationsActions.fetch();
-  },
-
-  getNotifiIcon: function() {
-    var notifications = this.getNotificationItems();
-    if (notifications.length > 0) {
-      return 'bell';
+  getStyles: function() {
+    return {
+      icon: {
+        color : '#fff',
+        fontSize: 21
+      }
     }
-    return 'bell-outline';
   },
 
   getNotificationItems: function () {
@@ -117,34 +107,56 @@ module.exports = React.createClass({
       )
     }
 
-    if (notifications.length > 0) {
-      notifications[0].subheader = "Notifications";
-      notifications[0].subheaderStyle = {
-        borderBottom: "1px solid #EAEAEA"
-      };
-    }
     return notifications;
   },
 
-  getStyles: function() {
-    return {
-      bottomToolbarGroupIcon: {
-        color          : '#fff'
-      }
+  renderIcon: function () {
+    var notifications         = this.getNotificationItems(),
+      notificationCountIcon = null,
+      iconClassName         = "synicon-",
+      styles                = this.getStyles();
+
+    if (notifications.length > 0) {
+      iconClassName += 'bell';
+    } else {
+      iconClassName += 'bell-outline';
     }
+
+    if (notifications.length > 0) {
+      var synIconName = notifications.length < 10 ? notifications.length : "9-plus";
+      notificationCountIcon = <FontIcon
+        className = {"synicon-numeric-" + synIconName + "-box" }
+        style     = {{
+                                  padding  : "0 4px",
+                                  color    : "#ff3d00",
+                                  position : "absolute",
+                                  top      : "0",
+                                  right    : "-4px"
+                                }} />
+    }
+    return(
+      <IconButton style={styles.icon} className={iconClassName}>
+        {notificationCountIcon}
+      </IconButton>
+    )
+  },
+
+  renderItems: function (items) {
+    return(
+      <DropdownNotifiItem
+        items={items}
+        isLoading={this.props.isLoading}
+      />
+    )
   },
 
   render: function() {
-    var styles = this.getStyles();
-
     return(
-      <MaterialDropdown
-        type          = "notification"
-        icon          = {this.getNotifiIcon()}
-        items         = {this.getNotificationItems()}
-        isLoading     = {this.state.accountInvitations.isLoading}
-        iconStyle     = {styles.bottomToolbarGroupIcon}
-        handleOnClick = {this.handleClickNotifications}  />
+      <IconMenu desktop={true} iconButtonElement={this.renderIcon()}>
+        <MenuItem>Notifications</MenuItem>
+        <MenuDivider />
+        {this.renderItems(this.getNotificationItems())}
+      </IconMenu>
     )
   }
 });

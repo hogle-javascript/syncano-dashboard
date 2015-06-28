@@ -31,7 +31,7 @@ var AuthActions = Reflux.createActions({
   socialLogin: {
     asyncResult: true,
     children: ['completed', 'failure']
-  },
+  }
 });
 
 AuthActions.activate.listen(function(payload) {

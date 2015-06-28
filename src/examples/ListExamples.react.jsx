@@ -2,6 +2,9 @@ var React         = require('react'),
 
     ThemeManager  = require('material-ui/lib/styles/theme-manager')(),
 
+    mui           = require('material-ui'),
+    FontIcon      = mui.FontIcon,
+
     ListHeader    = require('../common/Lists/ListHeader.react'),
     ListItem      = require('../common/Lists/ListItem.react'),
     List          = require('../common/Lists/List.react'),
@@ -173,8 +176,8 @@ module.exports = React.createClass({
           <div className="content-group">
             <div style={listGroupCss}>
               <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
-                <MaterialIcon name="group_add" handleClick={dummyClick} />
-                <MaterialIcon name="home" handleClick={dummyClick} />
+                <FontIcon className="synicon-account-multiple-plus" handleClick={dummyClick} />
+                <FontIcon className="synicon-home" handleClick={dummyClick} />
               </Header>
 
               <List viewMode={list.viewMode}>

@@ -101,13 +101,15 @@ module.exports = React.createClass({
                                   right    : "-14px"
                                 }} />
     }
-    return <div>
-
-             <FontIcon
-               className = {"synicon-" + this.props.icon}
-               style     = {this.props.iconStyle} />
-             {notificationCountIcon}
-           </div>
+    //return(
+    //  <div>
+    //    <FontIcon
+    //      className = {"synicon-" + this.props.icon}
+    //      style     = {this.props.iconStyle}
+    //    />
+    //    {notificationCountIcon}
+    //  </div>
+    //)
   },
 
   render: function () {

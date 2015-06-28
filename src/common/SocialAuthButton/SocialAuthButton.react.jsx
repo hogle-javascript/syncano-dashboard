@@ -4,7 +4,9 @@ var React           = require('react'),
     mui             = require('material-ui'),
     StylePropable   = mui.Mixins.StylePropable,
     FlatButton      = mui.FlatButton,
-    FontIcon        = mui.FontIcon;
+    FontIcon        = mui.FontIcon,
+
+    Colors          = mui.Styles.Colors;
 
 
 module.exports = Radium(React.createClass({
@@ -26,45 +28,38 @@ module.exports = Radium(React.createClass({
         borderRadius: '0',
         textTransform: 'none',
         color: '#1e88e5',
-        fontWeight: 400
+        fontWeight: 400,
+        ':hover': {
+          color: '#fff'
+        }
       },
       icon: {
         display: 'flex',
         fontSize: '18px',
         lineHeight: '1',
-        padding: '14px 16px'
+        padding: '14px 16px',
+        color: 'inherit',
+        transition: 'none'
       }
     }
   },
 
-  getButtonStyles: function () {
-    var styles = this.getStyles();
-
-    return this.mergeStyles(styles.button, this.props.style);
-  },
-
-  getIconStyles: function () {
-    var styles = this.getStyles();
-
-    return this.mergeStyles(styles.icon, this.props.style);
-  },
-
   render: function () {
-
-    var buttonStyles = this.getButtonStyles(),
-        iconStyles   = this.getIconStyles();
+    var styles = this.getStyles();
 
     return (
       <FlatButton
+        key = {0}
         className  = "social-auth-button"
         hoverColor = "#1e88e5"
-        style      = {buttonStyles}
+        style      = {styles.button}
         linkButton = {true}
         onClick    = {this.props.handleClick}
         label      = {this.props.label}>
 
         <FontIcon
-          style     = {iconStyles}
+          key = {1}
+          style     = {styles.icon}
           className = {this.props.icon} />
       </FlatButton>
     )
