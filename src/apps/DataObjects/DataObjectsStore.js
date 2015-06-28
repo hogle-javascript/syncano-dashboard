@@ -100,7 +100,7 @@ var DataObjectsStore = Reflux.createStore({
     return DataObjectsRenderer.renderTableHeader(this.data.classObj);
   },
 
-  getTableColumns: function () {
+  getTableColumns: function() {
     return [
       {
         name    : 'Id',
