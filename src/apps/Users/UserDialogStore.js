@@ -7,7 +7,6 @@ var Reflux           = require('reflux'),
     //Stores & Actions
     UsersActions     = require('./UsersActions');
 
-
 var UserDialogStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
@@ -15,14 +14,14 @@ var UserDialogStore = Reflux.createStore({
     DialogStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       username : null,
       password : null
     }
   },
 
-  init: function () {
+  init: function() {
     this.listenToForms();
   },
 

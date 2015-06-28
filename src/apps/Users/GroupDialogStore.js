@@ -7,7 +7,6 @@ var Reflux           = require('reflux'),
     //Stores & Actions
     GroupsActions    = require('./GroupsActions');
 
-
 var GroupDialogStore = Reflux.createStore({
   listenables : GroupsActions,
   mixins      : [
@@ -15,11 +14,11 @@ var GroupDialogStore = Reflux.createStore({
     DialogStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {label : null}
   },
 
-  init: function () {
+  init: function() {
     this.listenToForms();
   },
 
