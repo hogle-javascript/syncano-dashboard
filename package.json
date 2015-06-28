@@ -63,7 +63,8 @@
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
-    "jscs": "latest"
+    "jscs": "latest",
+    "codeclimate-test-reporter": "0.0.4"
   },
   "jest": {
     "rootDir": ".",
