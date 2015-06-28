@@ -4,11 +4,10 @@ var React       = require('react'),
     mui         = require('material-ui'),
     Avatar      = mui.Avatar,
     Paper       = mui.Paper,
-    FontIcon             = require('material-ui/lib/font-icon'),
-    IconMenu             = require('material-ui/lib/menus/icon-menu'),
-    Menu                 = require('material-ui/lib/menus/menu'),
-    MenuItem             = require('material-ui/lib/menus/menu-item'),
-
+    IconButton  = mui.IconButton,
+    IconMenu    = mui.IconMenu,
+    Menu        = require('material-ui/lib/menus/menu'),
+    MenuItem    = require('material-ui/lib/menus/menu-item'),
 
     Colors      = mui.Styles.Colors;
 
@@ -19,7 +18,7 @@ module.exports = React.createClass({
 
   propTypes: {
     disabled : React.PropTypes.bool,
-    columns  : React.PropTypes.object,
+    columns  : React.PropTypes.object
   },
 
   getDefaultProps: function () {
@@ -35,8 +34,9 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       icon: {
-        margin: 0
-      },
+        margin: 0,
+        padding: 0
+      }
     };
   },
 
@@ -52,21 +52,19 @@ module.exports = React.createClass({
   renderMenuItems: function() {
     var styles = this.getStyles();
     return this.state.columns.map(function(column) {
-      var icon = null;
-      if (column.checked) {
-        icon = <FontIcon className={"synicon-check"} style={styles.icon}/>;
-      }
-      return <MenuItem checked={true}>{column.name}</MenuItem>
+      return (
+        <MenuItem checked={true}>{column.name}</MenuItem>
+      )
     })
   },
 
   render: function () {
     var styles = this.getStyles();
 
-    var mainIcon = <mui.IconButton><FontIcon className="synicon-view-column" /></mui.IconButton>;
+    var mainIcon = <IconButton iconClassName="synicon-view-column" />;
 
     return (
-      <IconMenu iconButtonElement={mainIcon} openDirection="bottom-left">
+      <IconMenu iconButtonElement={mainIcon} openDirection="bottom-left" desktop={true}>
         {this.renderMenuItems()}
       </IconMenu>
     )
