@@ -75,7 +75,7 @@ var DataObjectsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  setDataObjects: function (items) {
+  setDataObjects: function(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.items = Object.keys(items).map(function(key) {
@@ -91,13 +91,12 @@ var DataObjectsStore = Reflux.createStore({
     return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
   },
 
-
   // Table stuff
   renderTableData: function() {
     return DataObjectsRenderer.renderTableData(this.data.items);
   },
 
-  renderTableHeader: function () {
+  renderTableHeader: function() {
     return DataObjectsRenderer.renderTableHeader(this.data.classObj);
   },
 
