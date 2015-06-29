@@ -10,6 +10,7 @@ var React           = require('react'),
     TriggersActions = require('./TriggersActions'),
     TriggersStore   = require('./TriggersStore'),
     CodeBoxesStore  = require('../CodeBoxes/CodeBoxesStore'),
+    ClassesStore    = require('../Classes/ClassesStore'),
 
     // Components
     mui             = require('material-ui'),
@@ -18,7 +19,6 @@ var React           = require('react'),
     SelectField     = mui.SelectField,
     Dialog          = mui.Dialog;
 
-
 module.exports = React.createClass({
 
   displayName: 'TriggersAddDialog',
@@ -26,6 +26,7 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(TriggersStore),
     Reflux.connect(CodeBoxesStore, 'codeboxes'),
+    Reflux.connect(ClassesStore, 'classes'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
     ValidationMixin,
@@ -48,11 +49,6 @@ module.exports = React.createClass({
   },
 
   componentWillUpdate: function(nextProps, nextState) {
-    if (nextState.codeboxes.items.length > 0 && !this.state.codebox) {
-      this.setState({
-        codebox: CodeBoxesStore.getCodeBoxesDropdown()[0].payload
-      })
-    }
   },
 
   clearData: function() {
@@ -67,16 +63,16 @@ module.exports = React.createClass({
     var checkedItem = TriggersStore.getCheckedItem();
     if (checkedItem) {
       this.setState({
-          id      : checkedItem.id,
-          label   : checkedItem.label,
-          signal  : checkedItem.signal,
-          'class' : checkedItem.class,
-          codebox : checkedItem.codebox
+        id      : checkedItem.id,
+        label   : checkedItem.label,
+        signal  : checkedItem.signal,
+        'class' : checkedItem.class,
+        codebox : checkedItem.codebox
       });
     }
   },
 
-  handleAddSubmit: function (event) {
+  handleAddSubmit: function() {
     TriggersActions.createTrigger({
       label   : this.state.label,
       codebox : this.state.codebox,
@@ -85,7 +81,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function (event) {
+  handleEditSubmit: function() {
     TriggersActions.updateTrigger(
       this.state.id, {
         label   : this.state.label,
@@ -95,9 +91,9 @@ module.exports = React.createClass({
       });
   },
 
-  render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create',
+  render: function() {
+    var title       = this.props.mode === 'edit' ? 'Edit' : 'Add',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -111,15 +107,10 @@ module.exports = React.createClass({
           }
         ];
 
-    var cb = [{payload: 'dummy', text: 'loading...'}];
-    if (this.state.codeboxes.items.length > 0) {
-        cb = CodeBoxesStore.getCodeBoxesDropdown();
-    }
-
     return (
       <Dialog
         ref             = "dialogRef"
-        title           = {title + " Trigger"}
+        title           = {title + ' Trigger'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         modal           = {true}>
@@ -144,7 +135,7 @@ module.exports = React.createClass({
               name              = "signal"
               floatingLabelText = "Signal"
               fullWidth         = {true}
-              valueLink         = {this.linkState("signal")}
+              valueLink         = {this.linkState('signal')}
               errorText         = {this.getValidationMessages('signal').join()}
 
               valueMember       = "payload"
@@ -156,22 +147,22 @@ module.exports = React.createClass({
               name              = "doClass"
               floatingLabelText = "Class"
               fullWidth         = {true}
-              valueLink         = {this.linkState("class")}
+              valueLink         = {this.linkState('class')}
               errorText         = {this.getValidationMessages('class').join()}
               valueMember       = "payload"
               displayMember     = "text"
-              menuItems         = {TriggersStore.getClassesDropdown()} />
+              menuItems         = {ClassesStore.getClassesDropdown()} />
 
             <SelectField
               ref               = "codebox"
               name              = "codebox"
               floatingLabelText = "CodeBox"
-              valueLink         = {this.linkState("codebox")}
+              fullWidth         = {true}
+              valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join()}
               valueMember       = "payload"
               displayMember     = "text"
-              style             = {{width: '50%'}}
-              menuItems         = {cb} />
+              menuItems         = {CodeBoxesStore.getCodeBoxesDropdown()} />
 
           </form>
         </div>
