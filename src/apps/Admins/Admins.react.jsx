@@ -147,19 +147,6 @@ module.exports = React.createClass({
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  getPendingInvitations: function() {
-    var invitations        = this.state.invitations.items || [],
-        pendingInvitations = [];
-
-    if (invitations.length > 0) {
-      pendingInvitations = this.state.invitations.items.filter(function(element) {
-        return (element.state !== "accepted");
-      });
-    }
-
-    return pendingInvitations;
-  },
-
   render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
@@ -237,7 +224,7 @@ module.exports = React.createClass({
           emptyItemContent     = "Invite administrators"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
-          items                = {this.getPendingInvitations()} />
+          items                = {AdminsInvitationsStore.getPendingInvitations()} />
 
       </Container>
     );
