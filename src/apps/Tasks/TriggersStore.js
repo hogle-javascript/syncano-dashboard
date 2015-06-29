@@ -6,8 +6,11 @@ var Reflux              = require('reflux'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    ClassesActions      = require('../Classes/ClassesActions'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
     SessionActions      = require('../Session/SessionActions'),
     TriggersActions     = require('./TriggersActions');
+
 
 var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
@@ -56,6 +59,8 @@ var TriggersStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
+      ClassesActions.fetchClasses,
+      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
     this.listenToForms();
@@ -80,10 +85,6 @@ var TriggersStore = Reflux.createStore({
     return this.signalMenuItems;
   },
 
-  getClassesDropdown: function() {
-    return this.classMenuItems;
-  },
-
   onFetchTriggers: function() {
     console.debug('TriggersStore::onFetchTriggers');
     this.data.isLoading = true;
@@ -96,21 +97,21 @@ var TriggersStore = Reflux.createStore({
     TriggersActions.setTriggers(items);
   },
 
-  onCreateTriggerCompleted: function(payload) {
+  onCreateTriggerCompleted: function() {
     console.debug('TriggersStore::onCreateTriggerCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateTriggerCompleted: function(paylod) {
+  onUpdateTriggerCompleted: function() {
     console.debug('TriggersStore::onUpdateTriggerCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveTriggersCompleted: function(payload) {
+  onRemoveTriggersCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

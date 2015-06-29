@@ -1,37 +1,37 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
-    Show                     = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
-
-    SchedulesActions         = require('./SchedulesActions'),
-    SchedulesStore           = require('./SchedulesStore'),
-    TriggersActions          = require('./TriggersActions'),
-    TriggersStore            = require('./TriggersStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    ClassesActions        = require('../Classes/ClassesActions'),
+    CodeBoxesActions      = require('../CodeBoxes/CodeBoxesActions'),
+    SchedulesActions      = require('./SchedulesActions'),
+    SchedulesStore        = require('./SchedulesStore'),
+    TriggersActions       = require('./TriggersActions'),
+    TriggersStore         = require('./TriggersStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    FabListItem              = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    SchedulesList            = require('./SchedulesList.react'),
-    TriggersList             = require('./TriggersList.react'),
-    SchedulesAddDialog       = require('./SchedulesAddDialog.react'),
-    TriggersAddDialog        = require('./TriggersAddDialog.react');
-
+    SchedulesList         = require('./SchedulesList.react'),
+    TriggersList          = require('./TriggersList.react'),
+    SchedulesAddDialog    = require('./SchedulesAddDialog.react'),
+    TriggersAddDialog     = require('./TriggersAddDialog.react');
 
 module.exports = React.createClass({
 
@@ -56,44 +56,46 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Tasks::componentWillMount');
-    SchedulesStore.fetch();
-    TriggersStore.fetch();
+    ClassesActions.fetch();
+    CodeBoxesActions.fetch();
+    SchedulesActions.fetch();
+    TriggersActions.fetch();
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       // Triggers
       {
         dialog: TriggersAddDialog,
         params: {
-          ref  : "addTriggerDialog",
-          mode : "add"
+          ref  : 'addTriggerDialog',
+          mode : 'add'
         }
       },
       {
         dialog: TriggersAddDialog,
         params: {
-          ref  : "editTriggerDialog",
-          mode : "edit"
+          ref  : 'editTriggerDialog',
+          mode : 'edit'
         }
       },
       {
         dialog: Dialog,
         params: {
-          ref:    "removeTriggerDialog",
-          title:  "Delete Trigger",
+          ref:    'removeTriggerDialog',
+          title:  'Delete Trigger',
           actions: [
             {
               text    : 'Cancel',
               onClick : this.handleCancel},
             {
-              text    : "Yes, I'm sure",
+              text    : 'Yes, I\'m sure',
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
+          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
         }
       },
 
@@ -101,28 +103,28 @@ module.exports = React.createClass({
       {
         dialog: SchedulesAddDialog,
         params: {
-          ref  : "addScheduleDialog",
-          mode : "add"
+          ref  : 'addScheduleDialog',
+          mode : 'add'
         }
       },
       {
         dialog: SchedulesAddDialog,
         params: {
-          ref  : "editScheduleDialog",
-          mode : "edit"
+          ref  : 'editScheduleDialog',
+          mode : 'edit'
         }
       },
       {
         dialog: Dialog,
         params: {
-          ref:    "removeScheduleDialog",
-          title:  "Delete Schedule",
+          ref:    'removeScheduleDialog',
+          title:  'Delete Schedule',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveSchedules}
+            {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?'
+          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length + ' schedule?'
         }
       }
     ]
@@ -144,7 +146,7 @@ module.exports = React.createClass({
     TriggersActions.uncheckAll();
   },
 
-  render: function () {
+  render: function() {
     var checkedSchedules = SchedulesStore.getNumberOfChecked(),
         checkedTriggers  = TriggersStore.getNumberOfChecked();
 

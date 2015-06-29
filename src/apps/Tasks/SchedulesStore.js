@@ -6,6 +6,8 @@ var Reflux              = require('reflux'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    Constants           = require('../../Constants/Constants'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
     SessionActions      = require('../Session/SessionActions'),
     SchedulesActions    = require('./SchedulesActions');
 
@@ -15,17 +17,6 @@ var SchedulesStore = Reflux.createStore({
     CheckListStoreMixin,
     StoreFormMixin,
     WaitForStoreMixin
-  ],
-
-  crontabItems: [
-    {
-      payload: '*/5 * * *',
-      text: 'Each 5 minutes'
-    },
-    {
-      payload: '0 * * * *',
-      text: 'Each round hour'
-    }
   ],
 
   getInitialState: function() {
@@ -40,6 +31,7 @@ var SchedulesStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
+      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
     this.listenToForms();
@@ -63,10 +55,15 @@ var SchedulesStore = Reflux.createStore({
   },
 
   getCrontabDropdown: function() {
-    return this.crontabItems;
+    return Constants.crontabs.map(function(item) {
+      return {
+        payload : item.crontab,
+        text    : item.description,
+      }
+    });
   },
 
-  onFetchSchedules: function(items) {
+  onFetchSchedules: function() {
     console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -78,21 +75,21 @@ var SchedulesStore = Reflux.createStore({
     SchedulesActions.setSchedules(items);
   },
 
-  onCreateScheduleCompleted: function(payload) {
+  onCreateScheduleCompleted: function() {
     console.debug('SchedulesStore::onCreateScheduleCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateScheduleCompleted: function(paylod) {
+  onUpdateScheduleCompleted: function() {
     console.debug('SchedulesStore::onUpdateScheduleCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveSchedulesCompleted: function(payload) {
+  onRemoveSchedulesCompleted: function() {
     console.debug('SchedulesStore::onRemoveSchedulesCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);

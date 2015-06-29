@@ -18,7 +18,6 @@ var React            = require('react'),
     SelectField      = mui.SelectField,
     Dialog           = mui.Dialog;
 
-
 module.exports = React.createClass({
 
   displayName: 'SchedulesAddDialog',
@@ -55,15 +54,15 @@ module.exports = React.createClass({
     var checkedItem = SchedulesStore.getCheckedItem();
     if (checkedItem) {
       this.setState({
-          id      : checkedItem.id,
-          label   : checkedItem.label,
-          crontab : checkedItem.crontab,
-          codebox : checkedItem.codebox
+        id      : checkedItem.id,
+        label   : checkedItem.label,
+        crontab : checkedItem.crontab,
+        codebox : checkedItem.codebox
       });
     }
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     SchedulesActions.createSchedule({
       label    : this.state.label,
       crontab  : this.state.crontab,
@@ -71,7 +70,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     SchedulesActions.updateSchedule(
       this.state.id, {
         label    : this.state.label,
@@ -81,9 +80,9 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create',
+  render: function() {
+    var title       = this.props.mode === 'edit' ? 'Edit' : 'Add',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Create',
 
         dialogStandardActions = [
           {
@@ -98,53 +97,48 @@ module.exports = React.createClass({
           }
         ];
 
-    var cb = [{payload: 'dummy', text: 'loading...'}];
-    if (this.state.codeboxes.items.length > 0) {
-        cb = CodeBoxesStore.getCodeBoxesDropdown();
-    }
-
     return (
       <Dialog
-        ref             ="dialogRef"
-        title           ={title + " Schedule"}
-        openImmediately ={this.props.openImmediately}
-        actions         ={dialogStandardActions}
-        modal           ={true}>
+        ref             = 'dialogRef'
+        title           = {title + ' Schedule'}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogStandardActions}
+        modal           = {true}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
+            acceptCharset = 'UTF-8'
+            method        = 'post'>
 
             <TextField
-              ref               = "label"
-              name              = "label"
+              ref               = 'label'
+              name              = 'label'
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join()}
-              hintText          = "Label of the schedule"
-              floatingLabelText = "Label" />
+              hintText          = 'Label of the schedule'
+              floatingLabelText = 'Label' />
 
             <SelectField
-              ref               = "codebox"
-              name              = "codebox"
-              floatingLabelText = "CodeBox"
-              valueLink         = {this.linkState("codebox")}
+              ref               = 'codebox'
+              name              = 'codebox'
+              floatingLabelText = 'CodeBox'
+              valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join()}
-              valueMember       = "payload"
-              displayMember     = "text"
+              valueMember       = 'payload'
+              displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {cb} />
+              menuItems         = {CodeBoxesStore.getCodeBoxesDropdown()} />
 
             <SelectField
-              ref               = "crontab"
-              name              = "crontab"
-              floatingLabelText = "CronTab"
-              valueLink         = {this.linkState("crontab")}
+              ref               = 'crontab'
+              name              = 'crontab'
+              floatingLabelText = 'CronTab'
+              valueLink         = {this.linkState('crontab')}
               errorText         = {this.getValidationMessages('crontab').join()}
-              valueMember       = "payload"
-              displayMember     = "text"
+              valueMember       = 'payload'
+              displayMember     = 'text'
               fullWidth         = {true}
               menuItems         = {SchedulesStore.getCrontabDropdown()} />
 
