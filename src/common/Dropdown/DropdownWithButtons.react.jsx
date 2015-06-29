@@ -1,12 +1,11 @@
-var React                  = require('react');
-var classNames             = require('classnames');
+var React                  = require('react'),
+    classNames             = require('classnames'),
+    mui                    = require('material-ui'),
 
-var Icon                   = require('../Icon/Icon.react');
-
-var DropdownMenuItem       = require('./Dropdown.react').DropdownMenuItem;
-var DropdownMenuButton       = require('./Dropdown.react').DropdownMenuButton;
-
-var DropdownMenuItemToggle = require('./DropdownMenuItemToggle.react');
+    FontIcon               = mui.FontIcon,
+    DropdownMenuItem       = require('./Dropdown.react').DropdownMenuItem,
+    DropdownMenuButton     = require('./Dropdown.react').DropdownMenuButton,
+    DropdownMenuItemToggle = require('./DropdownMenuItemToggle.react');
 
 require('./Dropdown.css');
 
@@ -40,7 +39,7 @@ module.exports = React.createClass({
     return (
       <div className="dropdown">
         <div className="dropdown-button clickable" onClick={this.toggleDropdownMenu}>
-          <Icon icon={this.props.icon} />
+          <FontIcon className={this.props.icon} />
         </div>
         <div className={cssClasses}>
           <div className="dropdown-menu-section">

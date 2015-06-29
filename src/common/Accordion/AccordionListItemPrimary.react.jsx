@@ -1,10 +1,11 @@
-var React = require('react');
-var classNames = require('classnames');
+var React                      = require('react'),
+    classNames                 = require('classnames'),
+    mui                        = require('material-ui'),
 
 //var ViewActions = require('../actions/ViewActions');
 
-var Icon = require('../Icon/Icon.react');
-var AccordionListItemSecondary = require('./AccordionListItemSecondary.react');
+    FontIcon                   = mui.FontIcon,
+    AccordionListItemSecondary = require('./AccordionListItemSecondary.react');
 
 
 module.exports = React.createClass({
@@ -35,7 +36,7 @@ module.exports = React.createClass({
           <div className="accordion-list-item-content">
             <div className="accordion-list-item-text">{this.props.item.displayName}</div>
             <div className="accordion-list-item-icon accordion-list-item-icon-toggle">
-              <Icon icon="keyboard-arrow-right"/>
+              <FontIcon className="synicon-arrow-right"/>
             </div>
           </div>
           <div className="accordion-list-item-payload">

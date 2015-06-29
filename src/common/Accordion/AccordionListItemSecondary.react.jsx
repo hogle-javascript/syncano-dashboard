@@ -1,11 +1,7 @@
-var React       = require('react');
-var classNames  = require('classnames');
+var React       = require('react'),
+    classNames  = require('classnames'),
 
-//var ViewActions = require('../actions/ViewActions');
-//var ConfigStore = require('../stores/ConfigStore');
-
-var Icon        = require('../Icon/Icon.react');
-var Dropdown    = require('../Dropdown/Dropdown.react');
+    Dropdown    = require('../Dropdown/Dropdown.react');
 
 
 module.exports = React.createClass({

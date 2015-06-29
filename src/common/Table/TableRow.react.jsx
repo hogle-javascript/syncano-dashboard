@@ -1,12 +1,8 @@
-var React = require('react');
-var Moment = require('moment');
+var React     = require('react');
+    Moment    = require('moment'),
 
-//var ConfigStore = require('../stores/ConfigStore');
-//var ViewActions = require('../actions/ViewActions');
-
-var Icon = require('../Icon/Icon.react');
-var Dropdown = require('../Dropdown/Dropdown.react');
-var TableData = require('./TableData.react');
+    Dropdown  = require('../Dropdown/Dropdown.react'),
+    TableData = require('./TableData.react');
 
 module.exports = React.createClass({
 

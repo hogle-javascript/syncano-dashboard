@@ -1,18 +1,19 @@
-var React = require('react/addons');
-var classNames = require('classnames');
-var Gravatar = require('gravatar');
+var React               = require('react/addons'),
+    classNames          = require('classnames'),
+    Gravatar            = require('gravatar'),
+    mui                 = require('material-ui'),
 
-var AuthAppStore = require('../Auth/store');
-var AuthAppActions = require('../Auth/actions');
+    AuthAppStore        = require('../Auth/store'),
+    AuthAppActions      = require('../Auth/actions'),
 
-var Icon = require('../../common/Icon/Icon.react');
-var DropdownMenuItem = require('../../common/Dropdown/DropdownMenuItem.react');
+    FontIcon            = mui.FontIcon,
+    DropdownMenuItem    = require('../../common/Dropdown/DropdownMenuItem.react'),
 
 
 //var ViewActions = require('../actions/ViewActions');
-var InvitationsMenuItem = require('./InvitationsMenuItem.react');
+    InvitationsMenuItem = require('./InvitationsMenuItem.react'),
 
-var Mixins = require('../../mixins/mixins');
+    Mixins = require('../../mixins/mixins');
 
 
 module.exports = React.createClass({
@@ -73,7 +74,7 @@ module.exports = React.createClass({
     var gravatarUrl = Gravatar.url(AuthAppStore.getAccountInfo('email'), {s: '50'}, true);
     var fullname = AuthAppStore.getAccountInfo('first_name') + ' ' + AuthAppStore.getAccountInfo('last_name');
 
-    var notificationIcon = notificationItems.length > 0 ? 'notifications' : 'notifications-none';
+    var notificationIcon = notificationItems.length > 0 ? 'synicon-bell' : 'synicon-bell-outline';
 
     // Search
     //
@@ -87,7 +88,7 @@ module.exports = React.createClass({
         </div>
         <div className="header-option" onClick={this.toggleMenu.bind(this, 'notificationMenu')}>
           <div className="header-option-button">
-            <Icon icon={notificationIcon} glowing={notificationItems.length > 0}/>
+            <FontIcon icon={notificationIcon} glowing={notificationItems.length > 0}/>
           </div>
           <div className="dropdown-menu notifications-menu">
             <div className="dropdown-menu-section">
@@ -97,7 +98,7 @@ module.exports = React.createClass({
         </div>
         <div className="header-option" onClick={this.onOptionsClick}>
           <div className="header-option-button" onClick={this.toggleMenu.bind(this, 'accountMenu')}>
-            <Icon icon="more-vert"/>
+            <FontIcon className="synicon-dots-vertical"/>
           </div>
           <div className="dropdown-menu account-menu">
             <div className="dropdown-menu-section">

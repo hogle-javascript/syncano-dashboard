@@ -1,9 +1,10 @@
-var React = require('react');
-var Moment = require('moment');
-var classNames = require('classnames');
+var React      = require('react'),
+    Moment     = require('moment'),
+    classNames = require('classnames'),
+    mui        = require('material-ui'),
 
-var Icon = require('../../common/Icon/Icon.react');
-var Dropdown = require('../../common/Dropdown/Dropdown.react');
+    FontIcon   = mui.FontIcon,
+    Dropdown   = require('../../common/Dropdown/Dropdown.react');
 
 
 require('../../common/Lists/Card.css');
@@ -112,7 +113,7 @@ module.exports = React.createClass({
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
-                <Icon icon={icon}/>
+                <FontIcon className={icon}/>
               </div>
               <div className="list-item-text card-text">
                 <div className="list-item-title card-title"><span>{this.props.item.name}</span></div>
@@ -152,7 +153,7 @@ module.exports = React.createClass({
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
-        avatar = <Icon icon={icon} style={iconStyle}/>;
+        avatar = <FontIcon className={icon} style={iconStyle}/>;
       }
 
       console.log('avatarStyle', this.props.avatarStyle);

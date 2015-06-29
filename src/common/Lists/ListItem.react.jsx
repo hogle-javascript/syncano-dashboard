@@ -1,8 +1,9 @@
 var React       = require('react'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
+    mui         = require('material-ui'),
 
-    Icon        = require('../Icon/Icon.react'),
+    FontIcon    = mui.FontIcon,
     Dropdown    = require('../Dropdown/Dropdown.react');
 
 require('./Card.css');
@@ -26,7 +27,7 @@ module.exports = React.createClass({
     var icon = '';
     if (this.props.item.metadata) {
       color = this.props.item.metadata.color;
-      icon = this.props.item.metadata.icon;
+      icon = 'synicon-' + this.props.item.metadata.icon;
     }
 
     return {
@@ -89,7 +90,7 @@ module.exports = React.createClass({
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
-                <Icon icon={this.state.icon}/>
+                <FontIcon className={this.state.icon}/>
               </div>
               <div className="list-item-text card-text">
                 <div className="list-item-title card-title"><span>{this.props.item.name}</span></div>
@@ -120,7 +121,7 @@ module.exports = React.createClass({
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
-        avatar = <Icon icon={this.state.icon} style={iconStyle}/>;
+        avatar = <FontIcon className={this.state.icon} style={iconStyle}/>;
       }
 
       return (
