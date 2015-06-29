@@ -13,30 +13,31 @@ module.exports = function(client) {
   return {
     goToLoginPage: function() {
       return client
-          .url(LOCATORS.url)
-          .waitForElementVisible('body', 1000)
+        .url(LOCATORS.url)
+        .waitForElementVisible('body', 1000)
     },
     typeEmail: function() {
       return client
-          .waitForElementVisible(LOCATORS.emailInput, 5000)
-          .setValue(LOCATORS.emailInput, LOCATORS.email)
+        .waitForElementVisible(LOCATORS.emailInput, 5000)
+        .saveScreenshot('./reports/screenshots/fail.png')
+        .setValue(LOCATORS.emailInput, LOCATORS.email)
     },
     typePassword: function() {
       return client
-          .waitForElementVisible(LOCATORS.passInput, 1000)
-          .setValue(LOCATORS.passInput, LOCATORS.pass)
-          .pause(3000);
+        .waitForElementVisible(LOCATORS.passInput, 1000)
+        .setValue(LOCATORS.passInput, LOCATORS.pass)
+        .pause(3000);
     },
     clickSignInButton: function() {
       return client
-          .waitForElementVisible(LOCATORS.loginButton, 1000)
-          .click(LOCATORS.loginButton)
-          .pause(5000);
+        .waitForElementVisible(LOCATORS.loginButton, 1000)
+        .click(LOCATORS.loginButton)
+        .pause(5000);
     },
     verifyLoginSuccessful: function() {
       return client
-          .waitForElementVisible(LOCATORS.instancesDiv, 20000)
-          .assert.containsText(LOCATORS.instancesDiv, 'My instances');
+        .waitForElementVisible(LOCATORS.instancesDiv, 20000)
+        .assert.containsText(LOCATORS.instancesDiv, 'My instances');
     }
   };
-}
+};

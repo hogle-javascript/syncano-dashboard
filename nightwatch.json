@@ -1,6 +1,6 @@
 {
   "src_folders" : ["tests"],
-  "output_folder" : "reports",
+  "output_folder" : "./reports",
   "custom_commands_path" : "",
   "custom_assertions_path" : "",
   "page_objects_path" : "tests/pages",
@@ -25,8 +25,9 @@
       "selenium_host"  : "localhost",
       "silent": true,
       "screenshots" : {
-        "enabled" : false,
-        "path" : ""
+        "enabled" : true,
+        "on_failure" : true,
+        "path" : "./reports/screenshots"
       },
       "desiredCapabilities": {
         "browserName": "chrome",
