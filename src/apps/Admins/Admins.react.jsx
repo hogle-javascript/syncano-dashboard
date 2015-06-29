@@ -29,7 +29,6 @@ var React                    = require('react'),
     AdminsList               = require('./AdminsList.react'),
     AddDialog                = require('./AdminsAddDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'Admins',
@@ -57,7 +56,7 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       {
@@ -86,7 +85,7 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?'
+          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length + ' Administrator(s)?'
         }
       },
       {
@@ -112,7 +111,7 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
+          children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
         }
       }
     ]
@@ -138,12 +137,12 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
-  checkAdminItem: function(id, state){
+  checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
   },
 
-  checkInvitationItem: function(id, state){
+  checkInvitationItem: function(id, state) {
     AdminsActions.uncheckAll();
     AdminsInvitationsActions.checkItem(id, state);
   },
@@ -161,7 +160,7 @@ module.exports = React.createClass({
     return pendingInvitations;
   },
 
-  render: function () {
+  render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
         checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();

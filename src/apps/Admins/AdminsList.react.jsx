@@ -29,7 +29,6 @@ var React             = require('react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'AdminsList',
@@ -40,25 +39,25 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick: function(id, state) {
     this.props.checkItem(id, state);
   },
 
-  renderItem: function (item) {
+  renderItem: function(item) {
     return (
       <Item
         checked = {item.checked}
@@ -78,7 +77,7 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function () {
+  getList: function() {
     var items = this.state.items || [];
 
     if (this.state.isLoading) {
@@ -86,7 +85,7 @@ module.exports = React.createClass({
     }
 
     if (items.length > 0) {
-      items = this.state.items.map(function (item) {
+      items = this.state.items.map(function(item) {
         return this.renderItem(item)
       }.bind(this));
 
@@ -101,7 +100,7 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
+  render: function() {
     return (
       <ListContainer>
         <Header>
