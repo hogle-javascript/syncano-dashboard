@@ -18,7 +18,6 @@ module.exports = function(client) {
     },
     typeEmail: function() {
       return client
-        .saveScreenshot('./reports/screenshots/fail.png')
         .waitForElementPresent(LOCATORS.emailInput, 5000)
         .setValue(LOCATORS.emailInput, LOCATORS.email)
     },
