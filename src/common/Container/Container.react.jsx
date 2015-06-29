@@ -23,6 +23,12 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    return <div style={this.getStyles()}>{this.props.children}</div>;
+    return (
+      <div
+        id={this.props.id}
+        style={this.getStyles()}>
+        {this.props.children}
+      </div>
+    );
   }
 });
