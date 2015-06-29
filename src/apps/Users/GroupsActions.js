@@ -1,6 +1,8 @@
 var Reflux     = require('reflux'),
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
-    Connection = require('../Session/Connection').get();
 
 var GroupsActions = Reflux.createActions({
   checkItem     : {},
@@ -58,14 +60,14 @@ GroupsActions.updateGroup.listen(function(id, payload) {
 });
 
 GroupsActions.removeGroups.listen(function(ids) {
-  ids.map(function(id) {
-    console.info('GroupsActions::removeGroups');
-    Connection
-      .Groups
-      .remove(id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+  console.info('GroupsActions::removeGroups');
+  var promises = ids.map(function(id) {
+    return Connection.Groups.remove(id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = GroupsActions;

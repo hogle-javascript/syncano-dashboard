@@ -1,19 +1,19 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
-    Radium = require('radium'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
+    Radium                = require('radium'),
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
-    Show              = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    InstancesActions = require('./InstancesActions'),
-    InstancesStore   = require('./InstancesStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    InstancesActions      = require('./InstancesActions'),
+    InstancesStore        = require('./InstancesStore'),
 
     // Components
     mui                   = require('material-ui'),
@@ -24,8 +24,8 @@ var React  = require('react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    InstancesList = require('./InstancesList.react'),
-    AddDialog     = require('./InstancesAddDialog.react');
+    InstancesList         = require('./InstancesList.react'),
+    InstanceDialog        = require('./InstanceDialog.react');
 
 
 require('./Instances.sass');
@@ -51,14 +51,14 @@ module.exports = Radium(React.createClass({
     var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
 
     return [{
-      dialog: AddDialog,
+      dialog: InstanceDialog,
       params: {
         key  : "addInstanceDialog",
         ref  : "addInstanceDialog",
         mode : "add"
       }
     }, {
-      dialog: AddDialog,
+      dialog: InstanceDialog,
       params: {
         key  : "editInstanceDialog",
         ref  : "editInstanceDialog",

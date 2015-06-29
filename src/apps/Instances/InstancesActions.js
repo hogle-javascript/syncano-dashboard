@@ -1,12 +1,15 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var InstancesActions = Reflux.createActions({
-  checkItem: {},
-  uncheckAll: {},
-  fetch: {},
-  setInstances: {},
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setInstances  : {},
+  showDialog    : {},
+  dismissDialog : {},
   fetchInstances: {
     asyncResult: true,
     children: ['completed', 'failure']
@@ -31,7 +34,7 @@ var InstancesActions = Reflux.createActions({
 
 });
 
-InstancesActions.fetchInstances.listen(function(payload) {
+InstancesActions.fetchInstances.listen(function() {
   console.info('InstancesActions::fetchInstances');
   Connection
     .Instances
@@ -63,14 +66,14 @@ InstancesActions.updateInstance.listen(function(name, payload) {
 });
 
 InstancesActions.removeInstances.listen(function(names) {
-  names.map(function(name) {
-    console.info('InstancesActions::removeInstances');
-    Connection
-      .Instances
-      .remove(name)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+  console.info('InstancesActions::removeInstances');
+  var promises = names.map(function(name) {
+    return Connection.Instances.remove(name);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = InstancesActions;
