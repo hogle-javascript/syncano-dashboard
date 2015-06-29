@@ -51,20 +51,6 @@ module.exports = Radium(React.createClass({
     var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
 
     return [{
-      dialog: InstanceDialog,
-      params: {
-        key  : "addInstanceDialog",
-        ref  : "addInstanceDialog",
-        mode : "add"
-      }
-    }, {
-      dialog: InstanceDialog,
-      params: {
-        key  : "editInstanceDialog",
-        ref  : "editInstanceDialog",
-        mode : "edit"
-      }
-    },{
       dialog: ColorIconPickerDialog,
       params: {
         key          : "pickColorIconDialog",
@@ -145,11 +131,20 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
+  showInstanceDialog: function () {
+    InstancesActions.showDialog();
+  },
+
+  showInstanceEditDialog: function () {
+    InstancesActions.showDialog(InstancesStore.getCheckedItem());
+  },
+
   render: function () {
     var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
       <Container>
+        <InstanceDialog />
         {this.getDialogs()}
 
         <Show if={checkedInstances > 0}>
@@ -171,7 +166,7 @@ module.exports = Radium(React.createClass({
               label         = "Click here to edit Instance"
               mini          = {true}
               disabled      = {checkedInstances > 1}
-              onClick       = {this.showDialog('editInstanceDialog')}
+              onClick       = {this.showInstanceEditDialog}
               iconClassName = "synicon-pencil" />
 
             <FabListItem
@@ -188,7 +183,7 @@ module.exports = Radium(React.createClass({
         <FabList>
           <FabListItem
             label         = "Click here to add Instances"
-            onClick       = {this.showDialog('addInstanceDialog')}
+            onClick       = {this.showInstanceDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
