@@ -15,7 +15,7 @@ var React           = require('react'),
     Toggle          = mui.Toggle,
     TextField       = mui.TextField,
     DropDownMenu    = mui.DropDownMenu,
-    Dialog          = mui.Dialog;
+    Dialog          = mui.Dialog,
     Loading         = require('../../common/Loading/Loading.react.jsx');
 
 module.exports = React.createClass({

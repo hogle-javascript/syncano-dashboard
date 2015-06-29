@@ -68,12 +68,8 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   onCreateInvitationCompleted: function() {
     this.data.hideDialogs = true;
-<<<<<<< HEAD
-    this.refreshData();
-=======
     this.trigger(this.data);
     this.refreshData()
->>>>>>> cd6c2f5064e840b0f714f7e0fa4ced62126213bd
   },
 
   onRemoveInvitationCompleted: function() {
@@ -84,10 +80,7 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   onResendInvitationCompleted: function() {
     this.data.hideDialogs = true;
-<<<<<<< HEAD
     this.trigger(this.data);
-=======
->>>>>>> cd6c2f5064e840b0f714f7e0fa4ced62126213bd
     AdminsInvitationsActions.uncheckAll();
   }
 

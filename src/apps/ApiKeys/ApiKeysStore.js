@@ -6,7 +6,7 @@ var Reflux            = require('reflux'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin')
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
     SessionActions           = require('../Session/SessionActions'),
     ApiKeysActions           = require('./ApiKeysActions');
 

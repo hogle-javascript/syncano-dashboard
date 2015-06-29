@@ -13,7 +13,6 @@ var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
   ],
@@ -32,7 +31,6 @@ var GroupsStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
     this.setLoadingStates();
   },
 

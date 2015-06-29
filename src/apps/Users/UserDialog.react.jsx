@@ -10,6 +10,7 @@ var React            = require('react'),
     UsersActions     = require('./UsersActions'),
     UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
+    UsersStore       = require('./UsersStore'),
 
     // Components
     mui              = require('material-ui'),
@@ -27,7 +28,7 @@ module.exports = React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(UsersStore, 'users'),
-    DialogFormMixin,
+    Reflux.connect(UserDialogStore),
     ValidationMixin,
     FormMixin,
     DialogMixin
@@ -58,7 +59,7 @@ module.exports = React.createClass({
 
   render: function () {
     var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = 'Confirm';
+        submitLabel = 'Confirm',
 
         dialogStandardActions = [
           {

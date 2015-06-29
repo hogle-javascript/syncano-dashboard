@@ -9,19 +9,16 @@ var React            = require('react'),
     // Stores and Actions
     GroupsActions    = require('./GroupsActions'),
     GroupDialogStore = require('./GroupDialogStore'),
+    GroupsStore      = require('./GroupsStore'),
 
     // Components
-    mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
-    TextField        = mui.TextField,
-    DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog,
-    Loading          = require('../../common/Loading/Loading.react.jsx');
+    Loading          = require('../../common/Loading/Loading.react.jsx'),
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     DropDownMenu     = mui.DropDownMenu,
     Dialog           = mui.Dialog;
+
 
 module.exports = React.createClass({
 
@@ -29,6 +26,7 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(GroupsStore, 'groups'),
+    Reflux.connect(GroupDialogStore),
     React.addons.LinkedStateMixin,
     DialogMixin,
     ValidationMixin,
