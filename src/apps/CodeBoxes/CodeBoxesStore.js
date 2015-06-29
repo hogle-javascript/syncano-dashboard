@@ -10,7 +10,6 @@ var Reflux              = require('reflux'),
     AuthStore           = require('../Account/AuthStore'),
     CodeBoxesActions    = require('./CodeBoxesActions');
 
-
 var CodeBoxesStore = Reflux.createStore({
   listenables: CodeBoxesActions,
   mixins: [
@@ -21,21 +20,20 @@ var CodeBoxesStore = Reflux.createStore({
   ],
 
   langMap: {
-      python : 'python',
-      nodejs : 'javascript',
-      ruby   : 'ruby',
-      golang : 'golang'
+    python : 'python',
+    nodejs : 'javascript',
+    ruby   : 'ruby',
+    golang : 'golang'
   },
 
   runtimeColors: {
-      nodejs: {color: '#80BD01', icon: 'language-python'},
-      python: {color: '#4984B1', icon: 'language-javascript'},
-      golang: {color: '#E0EBF5', icon: 'code-array'},
-      ruby:   {color: '#B21000', icon: 'code-array'}
+    nodejs: {color: '#80BD01', icon: 'language-python'},
+    python: {color: '#4984B1', icon: 'language-javascript'},
+    golang: {color: '#E0EBF5', icon: 'code-array'},
+    ruby:   {color: '#B21000', icon: 'code-array'}
   },
 
-
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
 
@@ -52,7 +50,7 @@ var CodeBoxesStore = Reflux.createStore({
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -69,8 +67,10 @@ var CodeBoxesStore = Reflux.createStore({
     CodeBoxesActions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
   },
 
-  getEditorMode: function (codeBox) {
-    return this.langMap[codeBox.runtime_name]
+  getEditorMode: function(codeBox) {
+    // jscs:disable
+    return this.langMap[codeBox.runtime_name];
+    // jscs:enable
   },
 
   getRuntimeColorIcon: function(runtime) {
@@ -90,7 +90,7 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   getCodeBoxesDropdown: function() {
-    return this.data.items.map(function(item){
+    return this.data.items.map(function(item) {
       return {
         payload : item.id,
         text    : item.label
@@ -100,12 +100,12 @@ var CodeBoxesStore = Reflux.createStore({
 
   getCurrentCodeBox: function() {
 
-    if (!this.data.currentCodeBoxId){
+    if (!this.data.currentCodeBoxId) {
       return null;
     }
 
     var currentItem = null;
-    this.data.items.some(function(item){
+    this.data.items.some(function(item) {
       if (item.id.toString() === this.data.currentCodeBoxId.toString()) {
         currentItem = item;
         return true;
@@ -116,7 +116,7 @@ var CodeBoxesStore = Reflux.createStore({
 
   getCodeBoxById: function(id) {
     var codeBox = null;
-    this.data.items.some(function(item){
+    this.data.items.some(function(item) {
       if (item.id.toString() === id.toString()) {
         codeBox = item;
         return true;
@@ -136,16 +136,16 @@ var CodeBoxesStore = Reflux.createStore({
     return codeBoxIndex;
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('CodeBoxesStore::refreshData');
 
     CodeBoxesActions.fetchCodeBoxes();
     if (!this.data.runtimes) {
       CodeBoxesActions.fetchCodeBoxRuntimes();
     }
-      //if (this.data.currentCodeBoxId) {
-      //  CodeBoxesActions.getCodeBoxTraces(this.data.currentCodeBoxId);
-      //}
+    //if (this.data.currentCodeBoxId) {
+    //  CodeBoxesActions.getCodeBoxTraces(this.data.currentCodeBoxId);
+    //}
   },
 
   setCodeBoxes: function(items) {
@@ -174,7 +174,7 @@ var CodeBoxesStore = Reflux.createStore({
 
   onFetchCodeBoxRuntimesCompleted: function(runtimes) {
     console.debug('CodeBoxesStore::onFetchCodeBoxRuntimesCompleted');
-    this.data.runtimes = Object.keys(runtimes).map(function(runtime){
+    this.data.runtimes = Object.keys(runtimes).map(function(runtime) {
       return {payload: runtime, text: runtime}
     });
     this.trigger(this.data);
@@ -191,12 +191,12 @@ var CodeBoxesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchCodeBoxesCompleted: function (items) {
+  onFetchCodeBoxesCompleted: function(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
     CodeBoxesActions.setCodeBoxes(items);
   },
 
-  onCreateCodeBoxCompleted: function (resp) {
+  onCreateCodeBoxCompleted: function(resp) {
     console.debug('CodeBoxesStore::onCreateCodeBoxCompleted');
     SessionStore.router.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: resp.id});
     CodeBoxesActions.fetchCodeBoxes();
@@ -208,29 +208,29 @@ var CodeBoxesStore = Reflux.createStore({
     this.data.hideDialogs = true;
   },
 
-  onRunCodeBox: function (trace) {
+  onRunCodeBox: function(trace) {
     console.debug('CodeBoxesStore::onRunCodeBox');
     this.trigger(this.data);
   },
 
-  onRunCodeBoxCompleted: function (trace) {
+  onRunCodeBoxCompleted: function(trace) {
     console.debug('CodeBoxesStore::onRunCodeBoxCompleted');
     this.data.lastTrace = trace;
     CodeBoxesActions.fetchCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },
 
-  onFetchCodeBoxTraceCompleted: function (trace) {
+  onFetchCodeBoxTraceCompleted: function(trace) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTrace');
     if (trace.status == 'pending') {
       var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function(){CodeBoxesActions.fetchCodeBoxTrace(CodeBoxId, trace.id)}, 300);
+      setTimeout(function() {CodeBoxesActions.fetchCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
     }
     this.trigger(this.data);
   },
 
-  onFetchCodeBoxTracesCompleted: function (items) {
+  onFetchCodeBoxTracesCompleted: function(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTraces');
     CodeBoxesActions.setCodeBoxTraces(items);
   }

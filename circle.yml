@@ -11,7 +11,9 @@ general:
 test:
   override:
     - npm test
+    - codeclimate < coverage/lcov.info
     - npm run-script nightwatch
+    - jscs --esprima=esprima-fb src
 
 deployment:
   staging:

@@ -1,7 +1,7 @@
-jest.dontMock("../TableData.react");
+jest.dontMock('../TableData.react');
 
-describe("TableData.react", function() {
-  it("testing component", function() {
+describe('TableData.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

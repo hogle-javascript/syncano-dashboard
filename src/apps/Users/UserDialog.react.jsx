@@ -3,12 +3,12 @@ var React            = require('react'),
 
     // Utils
     ValidationMixin  = require('../../mixins/ValidationMixin'),
-    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
     FormMixin        = require('../../mixins/FormMixin'),
+    DialogMixin      = require('../../mixins/DialogMixin'),
 
     // Stores and Actions
     UsersActions     = require('./UsersActions'),
-    UsersStore       = require('./UsersStore'),
+    UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
 
     // Components
@@ -22,14 +22,15 @@ var React            = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'UsersAddDialog',
+  displayName: 'UserDialog',
 
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(UsersStore, 'users'),
     DialogFormMixin,
     ValidationMixin,
-    FormMixin
+    FormMixin,
+    DialogMixin
   ],
 
   validatorConstraints: {
@@ -41,44 +42,22 @@ module.exports = React.createClass({
     }
   },
 
-  clearData: function() {
-    this.setState({
-      username  : '',
-      password  : '',
-      errors : {},
-    })
-  },
-
-  editShow: function() {
-    var checkedItem = UsersStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-          id       : checkedItem.id,
-          username : checkedItem.username,
-          password : checkedItem.password
-      });
-    }
-  },
-
   handleAddSubmit: function () {
-    var checkedItem = UsersStore.getCheckedItem();
     UsersActions.createUser({
-        username : this.state.username,
-        password : this.state.password
+      username : this.state.username,
+      password : this.state.password
     });
   },
 
   handleEditSubmit: function () {
-    UsersActions.updateUser(
-      this.state.id, {
-        username : this.state.username,
-        password : this.state.password
-      }
-    );
+    UsersActions.updateUser(this.state.instance.id, {
+      username : this.state.username,
+      password : this.state.password
+    });
   },
 
   render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
+    var title       = this.hasEditMode() ? 'Edit': 'Add',
         submitLabel = 'Confirm';
 
         dialogStandardActions = [
@@ -96,11 +75,10 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialogRef"
-        title           = {title + " User"}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogStandardActions}
-        modal           = {true}>
+        ref       = "dialog"
+        title     = {title + " User"}
+        actions   = {dialogStandardActions}
+        modal     = {true}>
         <div>
           {this.renderFormNotifications()}
           <form

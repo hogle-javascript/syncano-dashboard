@@ -2,14 +2,12 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
     StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
     GroupsActions       = require('./GroupsActions');
-
 
 var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
@@ -20,14 +18,14 @@ var GroupsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
       isLoading: false
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -38,7 +36,7 @@ var GroupsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  setGroups: function (groups) {
+  setGroups: function(groups) {
     console.debug('GroupsStore::setGroups');
 
     this.data.items = Object.keys(groups).map(function(key) {
@@ -48,11 +46,11 @@ var GroupsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getGroups: function (empty) {
+  getGroups: function(empty) {
     return this.data.items || empty || null;
   },
 
-  refreshData: function () {
+  refreshData: function() {
     GroupsActions.fetchGroups();
   },
 
@@ -64,20 +62,6 @@ var GroupsStore = Reflux.createStore({
   onFetchGroupsCompleted: function(items) {
     console.debug('GroupsStore::onFetchGroupsCompleted');
     GroupsActions.setGroups(items);
-  },
-
-  onCreateGroupCompleted: function(payload) {
-    console.debug('GroupsStore::onCreateGroupCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateGroupCompleted: function(paylod) {
-    console.debug('GroupsStore::onUpdateGroupCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveGroupsCompleted: function(payload) {

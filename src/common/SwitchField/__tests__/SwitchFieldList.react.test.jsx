@@ -1,7 +1,7 @@
-jest.dontMock("../SwitchFieldList.react");
-jest.dontMock("../SwitchField.react");
+jest.dontMock('../SwitchFieldList.react');
+jest.dontMock('../SwitchField.react');
 
-describe("SwitchFieldList.react", function() {
+describe('SwitchFieldList.react', function() {
   beforeEach(function() {
     React = require('react/addons');
     TestUtils = React.addons.TestUtils;
@@ -24,14 +24,14 @@ describe("SwitchFieldList.react", function() {
       }];
   });
 
-  it("tests if items are rendered correctly", function() {
+  it('tests if items are rendered correctly', function() {
     var component = TestUtils.renderIntoDocument(<SwitchFieldList 
                                          handleSwitchClick={mockFn}
                                          handleFieldLinkClick={mockFn}
                                          fields={switchFields} />);
     var node = React.findDOMNode(component);
     // Check component class name
-    expect(node.className).toBe("switch-field-list");
+    expect(node.className).toBe('switch-field-list');
     // Check component childrens props
     expect(node.children.length).toBe(switchFields.length);
     expect(component.refs[switchFields[0].name]).toBeDefined();

@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
     StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
@@ -10,7 +9,6 @@ var Reflux              = require('reflux'),
     SessionActions      = require('../Session/SessionActions'),
     UsersActions        = require('./UsersActions'),
     GroupsActions       = require('./GroupsActions');
-
 
 var UsersStore = Reflux.createStore({
   listenables : UsersActions,
@@ -21,14 +19,14 @@ var UsersStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
       isLoading: false
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -40,13 +38,13 @@ var UsersStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function () {
+  refreshData: function() {
     UsersActions.fetchUsers();
   },
 
-  setUsers: function (users) {
+  setUsers: function(users) {
     this.data.items = Object.keys(users).map(function(key) {
-        return users[key];
+      return users[key];
     });
     this.trigger(this.data);
   },
@@ -59,20 +57,6 @@ var UsersStore = Reflux.createStore({
   onFetchUsersCompleted: function(users) {
     console.debug('UsersStore::onFetchUsersCompleted');
     UsersActions.setUsers(users);
-  },
-
-  onCreateUserCompleted: function(payload) {
-    console.debug('UsersStore::onCreateUserCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateUserCompleted: function(paylod) {
-    console.debug('UsersStore::onUpdateUserCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveUsersCompleted: function(payload) {

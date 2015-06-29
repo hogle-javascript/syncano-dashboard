@@ -10,7 +10,6 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     ClassesActions      = require('./ClassesActions');
 
-
 var ClassesStore = Reflux.createStore({
   listenables : ClassesActions,
   mixins      : [
@@ -19,14 +18,14 @@ var ClassesStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
       isLoading: false
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -36,7 +35,7 @@ var ClassesStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function (data) {
+  refreshData: function() {
     console.debug('ClassesStore::refreshData');
     ClassesActions.fetchClasses();
   },
@@ -47,7 +46,7 @@ var ClassesStore = Reflux.createStore({
 
   onGetClassByName: function(className) {
     var classObj = null;
-    this.data.items.some(function (item) {
+    this.data.items.some(function(item) {
       if (item.name == className) {
         classObj = item;
         return true;
@@ -71,39 +70,39 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
-  setClasses: function (items) {
+  setClasses: function(items) {
     this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+      return items[item];
     });
     this.trigger(this.data);
   },
 
-  onFetchClasses: function(items) {
+  onFetchClasses: function() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchClassesCompleted: function (items) {
+  onFetchClassesCompleted: function(items) {
     console.debug('ClassesStore::onFetchClassesCompleted');
     this.data.isLoading = false;
     ClassesActions.setClasses(items);
   },
 
-  onCreateClassCompleted: function(payload) {
+  onCreateClassCompleted: function() {
     console.debug('ClassesStore::onCreateClassCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateClassCompleted: function(paylod) {
+  onUpdateClassCompleted: function() {
     console.debug('ClassesStore::onUpdateClassCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveClassesCompleted: function(payload) {
+  onRemoveClassesCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

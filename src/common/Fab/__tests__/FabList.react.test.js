@@ -1,7 +1,7 @@
-jest.dontMock("../FabList.react");
+jest.dontMock('../FabList.react');
 
-describe("FabList.react", function() {
-  it("testing component", function() {
+describe('FabList.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

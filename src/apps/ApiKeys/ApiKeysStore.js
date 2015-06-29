@@ -19,14 +19,14 @@ var ApiKeysStore = Reflux.createStore({
     StoreLoadingMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : [],
-      isLoading : true
-    }
+      isLoading : false
+    };
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -37,12 +37,12 @@ var ApiKeysStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('ApiKeysStore::refreshData');
     ApiKeysActions.fetchApiKeys();
   },
 
-  setApiKeys: function (items) {
+  setApiKeys: function(items) {
     console.debug('AdminsStore::setApiKeys');
 
     this.data.items = Object.keys(items).map(function(key) {
@@ -51,8 +51,9 @@ var ApiKeysStore = Reflux.createStore({
 
     this.trigger(this.data);
   },
-  
-  onFetchApiKeys: function(items) {
+
+  onFetchApiKeys: function() {
+    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -61,29 +62,27 @@ var ApiKeysStore = Reflux.createStore({
     ApiKeysActions.setApiKeys(items);
   },
 
-  onCreateApiKeyCompleted: function(payload) {
+  onCreateApiKeyCompleted: function() {
     console.debug('ApiKeysStore::onCreateApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
-  
-  onUpdateApiKeyCompleted: function(paylod) {
+
+  onUpdateApiKeyCompleted: function() {
     console.debug('ApiKeysStore::onUpdateApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveApiKeysCompleted: function(payload) {
-    console.debug('ApiKeysStore::onRemoveApiKeyCompleted');
+  onRemoveApiKeysCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onResetApiKeyCompleted: function(payload) {
-    console.debug('ApiKeysStore::onResetApiKeyCompleted');
+  onResetApiKeyCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

@@ -3,11 +3,20 @@ var React                = require('react'),
     gravatar             = require('gravatar'),
 
     ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
+    TextField            = mui.TextField,
+    DatePicker           = mui.DatePicker,
+    TimePicker           = mui.TimePicker,
     Colors               = require('material-ui/lib/styles/colors'),
     LinearProgress       = require('material-ui/lib/linear-progress'),
     Dialog               = require('material-ui/lib/dialog'),
     Snackbar             = require('material-ui/lib/snackbar'),
     FlatButton           = require('material-ui/lib/flat-button'),
+    ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
+    FontIcon             = require('material-ui/lib/font-icon'),
+    IconMenu             = require('material-ui/lib/menus/icon-menu'),
+    Menu                 = require('material-ui/lib/menus/menu'),
+    MenuItem             = require('material-ui/lib/menus/menu-item'),
+    FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
@@ -24,8 +33,6 @@ var React                = require('react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
-    TextField            = mui.TextField,
-    FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
     FieldDatetime        = require('../common/Field/FieldDatetime.react'),
     FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
     FieldSelect          = require('../common/Field/FieldSelect.react'),
@@ -35,7 +42,6 @@ var React                = require('react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
     SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Icon                 = require('../common/Icon/Icon.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
     MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
@@ -106,7 +112,41 @@ module.exports = React.createClass({
     }
   },
 
+  getDateNow: function() {
+    var date = new Date();
+    return date;
+  },
+
+  getDateFormat: function(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return d + '-' + m + '-' + y;
+  },
+
+  logDate: function() {
+    console.debug(this.refs.modifiedDatePicker.getDate())
+  },
+
+  logTime: function() {
+    console.debug(this.refs.modifiedTimePicker.getTime());
+  },
+
+  getMinDate: function(minYear) {
+    var date = new Date();
+    date.setFullYear(minYear);
+    return date;
+  },
+
+  getMaxDate: function(maxYear) {
+    var date = new Date;
+    date.setFullYear(maxYear);
+    return date;
+  },
+
   render: function () {
+
+
     var dummyClick = function (action) {
       console.log('Click!', action);
     };
@@ -351,6 +391,8 @@ module.exports = React.createClass({
       handleAccept  : dummyClick.bind(this, [item]),
       handleDecline : dummyClick.bind(this, [item])
     }];
+
+    var icon = <FontIcon className = "synicon-delete" />;
 
     return (
 
@@ -714,6 +756,85 @@ module.exports = React.createClass({
             type    = "linear"
             visible = {true} />
           <Loading visible={true}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>DatePicker</h2>
+          <DatePicker hintText="Portrait Dialog" />
+          <DatePicker
+            hintText = "Landscape Dialog"
+            mode     = "landscape" />
+          <DatePicker
+            maxDate          = {this.getMaxDate(2020)}
+            minDate          = {this.getMinDate(1990)}
+            formatDate       = {this.getDateFormat}
+            defaultDate      = {this.getDateNow()}
+            ref              = "modifiedDatePicker"
+            hintText         = "Ranged Date Picker"
+            showYearSelector = {true}
+            onChange         = {this.logDate} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>TimePicker</h2>
+          <TimePicker
+            format="ampm" />
+          <TimePicker
+            ref      = "modifiedTimePicker"
+            format   = "24hr"
+            onChange = {this.logTime}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Menu</h2>
+          <Menu style   ={{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}>
+            <MenuItem>Maps</MenuItem>
+            <MenuItem>Books</MenuItem>
+            <MenuItem>Flights</MenuItem>
+            <MenuItem>Apps</MenuItem>
+          </Menu>
+
+          <IconMenu iconButtonElement={<mui.IconButton>{icon}</mui.IconButton>} openDirection="top-right">
+            <MenuItem insetChildren={true} leftIcon={icon}>Refresh</MenuItem>
+            <MenuItem>Send Feedback More</MenuItem>
+            <MenuItem checked={true}>Settings</MenuItem>
+            <MenuItem checked={true}>Help</MenuItem>
+            <MenuItem>Sign out</MenuItem>
+          </IconMenu>
+
+
+          <Menu
+            desktop = {true}
+            width   = {320}
+            style   = {{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}>
+            <MenuItem>Refresh</MenuItem>
+            <MenuItem >Send Feedback More</MenuItem>
+            <MenuItem checked={true}>Settings</MenuItem>
+            <MenuItem checked={true}>Help</MenuItem>
+            <MenuItem>Sign out</MenuItem>
+            <MenuItem secondaryText="&#8984;B">Bold</MenuItem>
+            <MenuItem secondaryText="&#8984;I">Italic</MenuItem>
+            <MenuItem secondaryText="&#8984;U">Underline</MenuItem>
+            <MenuItem secondaryText="Alt+Shift+5">Strikethrough</MenuItem>
+            <MenuItem secondaryText="&#8984;.">Superscript</MenuItem>
+            <MenuItem secondaryText="&#8984;,">Subscript</MenuItem>
+            <MenuItem rightIcon={<ArrowDropRight />}>Paragraph styles</MenuItem>
+            <MenuItem rightIcon={<ArrowDropRight />}>Align</MenuItem>
+            <MenuItem rightIcon={<ArrowDropRight />}>Line spacing</MenuItem>
+            <MenuItem rightIcon={<ArrowDropRight />}>Numbered list</MenuItem>
+            <MenuItem rightIcon={<ArrowDropRight />}>List options</MenuItem>
+            <MenuItem secondaryText="&#8984;/">Clear formatting</MenuItem>
+          </Menu>
         </div>
 
       </div>

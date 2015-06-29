@@ -1,32 +1,36 @@
-var React           = require('react'),
-    Reflux          = require('reflux'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-    DialogFormMixin = require('../../mixins/DialogFormMixin'),
-    FormMixin       = require('../../mixins/FormMixin'),
+    ValidationMixin  = require('../../mixins/ValidationMixin'),
+    DialogMixin      = require('../../mixins/DialogMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
 
     // Stores and Actions
-    GroupsActions   = require('./GroupsActions'),
-    GroupsStore     = require('./GroupsStore'),
+    GroupsActions    = require('./GroupsActions'),
+    GroupDialogStore = require('./GroupDialogStore'),
 
     // Components
-    mui             = require('material-ui'),
-    Toggle          = mui.Toggle,
-    TextField       = mui.TextField,
-    DropDownMenu    = mui.DropDownMenu,
-    Dialog          = mui.Dialog,
-    Loading         = require('../../common/Loading/Loading.react.jsx');
-
+    mui              = require('material-ui'),
+    Toggle           = mui.Toggle,
+    TextField        = mui.TextField,
+    DropDownMenu     = mui.DropDownMenu,
+    Dialog           = mui.Dialog,
+    Loading          = require('../../common/Loading/Loading.react.jsx');
+    mui              = require('material-ui'),
+    Toggle           = mui.Toggle,
+    TextField        = mui.TextField,
+    DropDownMenu     = mui.DropDownMenu,
+    Dialog           = mui.Dialog;
 
 module.exports = React.createClass({
 
-  displayName: 'GroupsAddDialog',
+  displayName: 'GroupDialog',
 
   mixins: [
     Reflux.connect(GroupsStore, 'groups'),
     React.addons.LinkedStateMixin,
-    DialogFormMixin,
+    DialogMixin,
     ValidationMixin,
     FormMixin
   ],
@@ -37,39 +41,19 @@ module.exports = React.createClass({
     }
   },
 
-  clearData: function() {
-    this.setState({
-      label  : '',
-      errors : {}
-    })
-  },
-
-  editShow: function() {
-    var checkedItem = GroupsStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-          id    : checkedItem.id,
-          label : checkedItem.label
-      });
-    }
-  },
-
   handleAddSubmit: function (event) {
     GroupsActions.createGroup(this.state.label);
   },
 
   handleEditSubmit: function (event) {
-    GroupsActions.updateGroup(
-      this.state.id, {
-        label   : this.state.label
-      });
+    GroupsActions.updateGroup(this.state.id, {
+      label: this.state.label
+    });
   },
 
-
   render: function () {
-
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Add',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Create',
+    var title       = this.hasEditMode() ? 'Edit': 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -85,7 +69,7 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialogRef"
+        ref             = "dialog"
         title           = {title + " Group"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
@@ -102,7 +86,7 @@ module.exports = React.createClass({
               label             = "label"
               style             = {{width:'100%'}}
               valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join()}
+              errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = "Name of the group"
               floatingLabelText = "Group Name" />
 

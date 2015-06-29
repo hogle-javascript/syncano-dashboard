@@ -4,7 +4,6 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get(),
     D          = Syncano.D;
 
-
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
@@ -29,7 +28,7 @@ var AdminsActions = Reflux.createActions({
   }
 });
 
-AdminsActions.fetchAdmins.listen( function() {
+AdminsActions.fetchAdmins.listen(function() {
   console.info('AdminsActions::fetchAdmins');
   Connection
     .Admins
@@ -38,7 +37,7 @@ AdminsActions.fetchAdmins.listen( function() {
     .catch(this.failure);
 });
 
-AdminsActions.updateAdmin.listen( function(name, payload) {
+AdminsActions.updateAdmin.listen(function(name, payload) {
   console.info('AdminsActions::updateAdmin');
   Connection
     .Admins
@@ -47,7 +46,7 @@ AdminsActions.updateAdmin.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-AdminsActions.removeAdmins.listen( function(admins) {
+AdminsActions.removeAdmins.listen(function(admins) {
   console.info('AdminsActions::removeAdmins');
   var promises = admins.map(function(admin) {
     Connection.Admins.remove(admin)
@@ -56,7 +55,6 @@ AdminsActions.removeAdmins.listen( function(admins) {
   D.all(promises)
     .success(this.completed)
     .error(this.failure);
-
 });
 
 module.exports = AdminsActions;

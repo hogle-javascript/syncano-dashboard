@@ -1,8 +1,8 @@
-jest.dontMock("../EditorPanel.react");
-jest.dontMock("../Editor.react");
+jest.dontMock('../EditorPanel.react');
+jest.dontMock('../Editor.react');
 
-describe("EditorPanel.react", function() {
-  it("testing component", function() {
+describe('EditorPanel.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

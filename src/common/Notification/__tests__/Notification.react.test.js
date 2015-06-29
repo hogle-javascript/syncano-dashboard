@@ -1,7 +1,7 @@
-jest.dontMock("../Notification.react");
+jest.dontMock('../Notification.react');
 
-describe("Notification.react", function() {
-  it("testing component", function() {
+describe('Notification.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

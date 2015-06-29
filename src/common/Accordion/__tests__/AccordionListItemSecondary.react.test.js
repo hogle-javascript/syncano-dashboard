@@ -1,7 +1,7 @@
-jest.dontMock("../AccordionListItemSecondary.react");
+jest.dontMock('../AccordionListItemSecondary.react');
 
-describe("AccordionListItemSecondary.react", function() {
-  it("testing component", function() {
+describe('AccordionListItemSecondary.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

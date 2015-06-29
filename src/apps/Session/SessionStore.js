@@ -8,11 +8,10 @@ var Reflux         = require('reflux'),
     ColorStore     = require('../../common/Color/ColorStore'),
     SyncanoTheme   = require('../../common/SyncanoTheme');
 
-
 var SessionStore = Reflux.createStore({
   listenables: SessionActions,
 
-  init: function () {
+  init: function() {
     this.connection = Connection.get();
     this.token      = sessionStorage.getItem('token') || null;
     this.user       = null;
@@ -29,43 +28,45 @@ var SessionStore = Reflux.createStore({
     }
   },
 
-  getConnection: function (empty) {
+  getConnection: function(empty) {
     return this.connection || empty || null;
   },
 
-  getToken: function (empty) {
+  getToken: function(empty) {
     return this.token || empty || null;
   },
 
-  getUser: function (empty) {
+  getUser: function(empty) {
     return this.user || empty || null;
   },
 
-  getInstance: function (empty) {
+  getInstance: function(empty) {
     return this.instance || empty || null;
   },
 
-  getRouter: function (empty) {
+  getRouter: function(empty) {
     return this.router || empty || null;
   },
 
-  getTheme: function (empty) {
+  getTheme: function(empty) {
     return this.theme || empty || null;
   },
 
-  setToken: function (token) {
+  setToken: function(token) {
     console.info('SessionStore::setToken');
     this.token = token;
   },
 
-  setUser: function (user) {
+  setUser: function(user) {
     console.info('SessionStore::setUser');
     if (user === undefined) {
       return;
     }
 
     this.user             = user;
+    // jscs:disable
     this.user.account_key = this.token;
+    // jscs:enable
 
     Raven.setUserContext({
       email: user.email,
@@ -75,43 +76,43 @@ var SessionStore = Reflux.createStore({
     this.trigger(this);
   },
 
-  setInstance: function (instance) {
+  setInstance: function(instance) {
     console.info('SessionStore::setInstance');
     var colorName       = instance.metadata.color,
         secondColorName = 'indigo';
 
     if (ColorStore.getColorByName(colorName)) {
-        this.theme.setPalette(this.makePalette(colorName, secondColorName));
+      this.theme.setPalette(this.makePalette(colorName, secondColorName));
     }
     this.instance = instance;
     this.trigger(this);
   },
 
-  setRouter: function (router) {
+  setRouter: function(router) {
     console.info('SessionStore::setRouter');
     this.router = router;
   },
 
-  setTheme: function (theme) {
+  setTheme: function(theme) {
     console.info('SessionStore::setTheme');
     this.theme = theme;
   },
 
-  onFetchInstanceCompleted: function (payload) {
+  onFetchInstanceCompleted: function(payload) {
     console.info('SessionStore::onFetchInstanceCompleted');
     SessionActions.setInstance(payload);
   },
 
-  onFetchInstanceFailure: function () {
+  onFetchInstanceFailure: function() {
     this.router.transitionTo('/404');
   },
 
-  onFetchUserCompleted: function (payload) {
+  onFetchUserCompleted: function(payload) {
     console.info('SessionStore::onFetchUserCompleted');
     SessionActions.setUser(payload);
   },
 
-  onFetchUserFailure: function () {
+  onFetchUserFailure: function() {
     console.info('SessionStore::onFetchUserFailure');
     this.onLogout();
   },
@@ -125,23 +126,27 @@ var SessionStore = Reflux.createStore({
 
   makePalette: function(mainColor, accentColor) {
     return {
-      primary1Color : Colors[mainColor+'700'],
-      primary2Color : Colors[mainColor+'500'],
-      primary3Color : Colors[mainColor+'100'],
+      primary1Color : Colors[mainColor + '700'],
+      primary2Color : Colors[mainColor + '500'],
+      primary3Color : Colors[mainColor + '100'],
 
-      accent1Color  : Colors[accentColor+'700'],
-      accent2Color  : Colors[accentColor+'300'],
-      accent3Color  : Colors[accentColor+'200']
+      accent1Color  : Colors[accentColor + '700'],
+      accent2Color  : Colors[accentColor + '300'],
+      accent3Color  : Colors[accentColor + '200']
     }
   },
 
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
+    // jscs:disable
     if (payload === undefined || payload.account_key === undefined) {
+      // jscs:enable
       return;
     }
 
+    // jscs:disable
     this.token = payload.account_key;
+    // jscs:enable
     this.connection.setApiKey(this.token);
     sessionStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
@@ -159,14 +164,14 @@ var SessionStore = Reflux.createStore({
     Raven.setUserContext();
   },
 
-  isAuthenticated: function () {
+  isAuthenticated: function() {
     if (this.token === 'undefined') {
-       return false;
+      return false;
     }
     return this.token ? true : false;
   },
 
-  isReady: function () {
+  isReady: function() {
     return this.isAuthenticated() && this.user !== null;
   }
 

@@ -9,11 +9,11 @@ var React              = require('react'),
     InstanceTabsMixin  = require('../../mixins/InstanceTabsMixin'),
     Show               = require('../../common/Show/Show.react'),
 
-    ClassesActions     = require("../Classes/ClassesActions"),
-    SessionStore       = require("../Session/SessionStore"),
-    ClassesStore       = require("../Classes/ClassesStore"),
-    DataObjectsActions = require("./DataObjectsActions"),
-    DataObjectsStore   = require("./DataObjectsStore"),
+    ClassesActions     = require('../Classes/ClassesActions'),
+    SessionStore       = require('../Session/SessionStore'),
+    ClassesStore       = require('../Classes/ClassesStore'),
+    DataObjectsActions = require('./DataObjectsActions'),
+    DataObjectsStore   = require('./DataObjectsStore'),
 
     mui                = require('material-ui'),
     Transitions        = mui.Styles.Transitions,
@@ -23,6 +23,7 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Avatar             = mui.Avatar,
     FontIcon           = mui.FontIcon,
+    IconButton         = mui.IconButton,
     List               = mui.List,
     ListDivider        = mui.ListDivider,
     ListItem           = mui.ListItem,
@@ -36,8 +37,8 @@ var React              = require('react'),
     RaisedButton       = mui.RaisedButton,
 
     Loading            = require('../../common/Loading/Loading.react'),
-    CheckAvatar        = require("./CheckAvatar.react");
-
+    ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
+    CheckAvatar        = require('./CheckAvatar.react');
 
 module.exports = React.createClass({
 
@@ -57,48 +58,50 @@ module.exports = React.createClass({
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
+
+    if (!nextState.selectedRows) {
+      if (this.refs.table) {
+        this.refs.table.setState({ selectedRows: [] });
+      }
+    }
   },
 
   componentWillMount: function() {
     console.info('DataObjects::componentWillMount');
     DataObjectsActions.fetch();
-
   },
 
   //Dialogs config
-  initDialogs: function () {
-  
-    //var checkedItemIconColor = DataObjectsStore.getCheckedItemIconColor();
-  
+  initDialogs: function() {
     return [{
-    //  dialog: AddDialog,
-    //  params: {
-    //    key  : "addDataObjectDialog",
-    //    ref  : "addDataObjectDialog",
-    //    mode : "add"
-    //  }
-    //}, {
-    //  dialog: AddDialog,
-    //  params: {
-    //    key  : "editDataObjectDialog",
-    //    ref  : "editDataObjectDialog",
-    //    mode : "edit"
-    //  }
-    //},
+      //  dialog: AddDialog,
+      //  params: {
+      //    key  : "addDataObjectDialog",
+      //    ref  : "addDataObjectDialog",
+      //    mode : "add"
+      //  }
+      //}, {
+      //  dialog: AddDialog,
+      //  params: {
+      //    key  : "editDataObjectDialog",
+      //    ref  : "editDataObjectDialog",
+      //    mode : "edit"
+      //  }
+      //},
 
       dialog: Dialog,
       params: {
-        key:    "deleteDataObjectDialog",
-        ref:    "deleteDataObjectDialog",
-        title:  "Delete an DataObject",
+        key:    'deleteDataObjectDialog',
+        ref:    'deleteDataObjectDialog',
+        title:  'Delete an DataObject',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Confirm", onClick: this.handleDelete}
+          {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() +' DataObject(s)?'
+        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
       }
-     }]
+    }]
   },
 
   handleDelete: function() {
@@ -120,16 +123,16 @@ module.exports = React.createClass({
         end   = selectedRow[1].start;
         start = selectedRow[1].end;
       }
-      rowsSelection = Array.apply(null, Array(end)).map(function (_, i) {return i;}).slice(start);
+      rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
     }
 
     // Writing to the store
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
-  renderTable: function () {
+  renderTable: function() {
     var tableData   = DataObjectsStore.renderTableData(),
-        tableHeader = DataObjectsStore.getTableHeader(),
+        tableHeader = DataObjectsStore.renderTableHeader(),
         colOrder    = Object.keys(tableHeader);
 
     return (
@@ -144,16 +147,16 @@ module.exports = React.createClass({
           onRowSelection  = {this.handleRowSelection} />
 
         <div
-          className="row align-center"
-          style={{margin: 50}} >
+          className = "row align-center"
+          style     = {{margin: 50}} >
           <div>Loaded {tableData.length} data objects</div>
         </div>
         <div
-          className="row align-center"
-          style={{margin: 50}} >
+          className = "row align-center"
+          style     = {{margin: 50}} >
           <RaisedButton
-            label="Load more"
-            onClick={this.handleMoreRows}/>
+            label   = "Load more"
+            onClick = {this.handleMoreRows}/>
         </div>
       </div>
     )
@@ -172,7 +175,7 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
+  render: function() {
 
     var table = null;
     if (this.state.items) {
@@ -184,17 +187,18 @@ module.exports = React.createClass({
     var selecteMessageText = null;
 
     if (this.state.selectedRows) {
-      selecteMessageText = "selected: " + this.state.selectedRows.length;
+      selecteMessageText = 'selected: ' + this.state.selectedRows.length;
     }
 
     return (
+      
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
         <div className="col-flex-1" style={{padding: 0}}>
-
+          
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
-
+          
             <ToolbarGroup float="left" style={{padding: '0px'}}>
 
               <FontIcon
@@ -202,19 +206,28 @@ module.exports = React.createClass({
                 className = "synicon-arrow-left"
                 onClick   = {this.handleBackClick} />
 
-              <ToolbarTitle text={"Class: " + this.getParams().className} />
+              <ToolbarTitle text={'Class: ' + this.getParams().className} />
               <ToolbarTitle text={selecteMessageText} />
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-            <FontIcon
-              className = "synicon-delete"
-              onClick   = {this.showDialog('deleteDataObjectDialog')} />
+              
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-delete"
+                tooltip   = "Delete Data Objects"
+                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+
+              <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
+
             </ToolbarGroup>
 
           </Toolbar>
-
+          
           <div style={{clear: 'both', height: '100%'}}>
+            <Show if={this.state.isLoading}>
+              <Loading type='linear' />
+            </Show>
             {table}
           </div>
 

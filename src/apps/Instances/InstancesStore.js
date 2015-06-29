@@ -11,7 +11,6 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     InstancesActions    = require('./InstancesActions');
 
-
 var InstancesStore = Reflux.createStore({
   listenables : InstancesActions,
   mixins      : [
@@ -21,13 +20,13 @@ var InstancesStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -37,7 +36,7 @@ var InstancesStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('InstancesStore::refreshData');
     InstancesActions.fetchInstances();
   },
@@ -51,18 +50,18 @@ var InstancesStore = Reflux.createStore({
     return item.owner.email !== SessionStore.getUser().email;
   },
 
-  getMyInstances: function(){
+  getMyInstances: function() {
     return this.data.items.filter(this.filterMyInstances);
   },
 
-  getOtherInstances: function(){
+  getOtherInstances: function() {
     return this.data.items.filter(this.filterOtherInstances);
   },
 
-  setInstances: function (instances) {
+  setInstances: function(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map(function(key) {
-        return instances[key];
+      return instances[key];
     });
     this.trigger(this.data);
   },
@@ -77,7 +76,7 @@ var InstancesStore = Reflux.createStore({
     InstancesActions.setInstances(items);
   },
 
-  onFetchInstancesFailure: function () {
+  onFetchInstancesFailure: function() {
     console.debug('InstancesStore::onFetchInstancesFailure');
     this.trigger(this.data);
   },

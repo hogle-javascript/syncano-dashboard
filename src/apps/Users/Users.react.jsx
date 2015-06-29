@@ -1,37 +1,33 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
-    Show                     = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
-    // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
-
-    UsersActions             = require('./UsersActions'),
-    UsersStore               = require('./UsersStore'),
-    GroupsActions            = require('./GroupsActions'),
-    GroupsStore              = require('./GroupsStore'),
+    UsersActions          = require('./UsersActions'),
+    UsersStore            = require('./UsersStore'),
+    GroupsActions         = require('./GroupsActions'),
+    GroupsStore           = require('./GroupsStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    FabListItem              = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
-    Loading                  = require('../../common/Loading/Loading.react.jsx'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
-    UsersList                = require('./UsersList.react'),
-    GroupsList               = require('./GroupsList.react'),
-    UserAddDialog            = require('./UserAddDialog.react'),
-    GroupAddDialog           = require('./GroupAddDialog.react');
+    UsersList             = require('./UsersList.react'),
+    GroupsList            = require('./GroupsList.react'),
+    UserDialog            = require('./UserDialog.react'),
+    GroupDialog           = require('./GroupDialog.react');
 
 
 module.exports = React.createClass({
@@ -45,13 +41,12 @@ module.exports = React.createClass({
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    DialogsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Users::componentWillUpdate');
-    // Merging "hideDialogs
     this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
@@ -61,25 +56,42 @@ module.exports = React.createClass({
     GroupsActions.fetch();
   },
 
-  // Dialogs config
+  handleRemoveGroups: function() {
+    console.info('Users::handleDelete');
+    GroupsActions.removeGroups(GroupsStore.getCheckedItems());
+  },
+
+  handleRemoveUsers: function() {
+    console.info('Users::handleRemoveUsers');
+    UsersActions.removeUsers(UsersStore.getCheckedItems());
+  },
+
+  uncheckAll: function() {
+    console.info('Users::uncheckAll');
+    UsersActions.uncheckAll();
+    GroupsActions.uncheckAll();
+  },
+
+  showUserDialog: function () {
+    UsersActions.showDialog();
+  },
+
+  showUserEditDialog: function () {
+    UsersActions.showDialog(UsersStore.getCheckedItem());
+  },
+
+  showGroupDialog: function () {
+    GroupsActions.showDialog();
+  },
+
+  showGroupEditDialog: function () {
+    GroupsActions.showDialog(GroupsStore.getCheckedItem());
+  },
+
   initDialogs: function () {
 
     return [
       // Groups
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "addGroupDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "editGroupDialog",
-          mode : "edit"
-        }
-      },
       {
         dialog: Dialog,
         params: {
@@ -106,20 +118,6 @@ module.exports = React.createClass({
 
       // Users
       {
-        dialog: UserAddDialog,
-        params: {
-          ref  : "addUserDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: UserAddDialog,
-        params: {
-          ref  : "editUserDialog",
-          mode : "edit"
-        }
-      },
-      {
         dialog: Dialog,
         params: {
           ref:    "removeUserDialog",
@@ -141,22 +139,6 @@ module.exports = React.createClass({
     ]
   },
 
-  handleRemoveGroups: function() {
-    console.info('Users::handleDelete');
-    GroupsActions.removeGroups(GroupsStore.getCheckedItems());
-  },
-
-  handleRemoveUsers: function() {
-    console.info('Users::handleRemoveUsers');
-    UsersActions.removeUsers(UsersStore.getCheckedItems());
-  },
-
-  uncheckAll: function() {
-    console.info('Users::uncheckAll');
-    UsersActions.uncheckAll();
-    GroupsActions.uncheckAll();
-  },
-
   render: function () {
     var checkedUsers  = UsersStore.getNumberOfChecked(),
         checkedGroups = GroupsStore.getNumberOfChecked();
@@ -164,6 +146,8 @@ module.exports = React.createClass({
     return (
       <Container>
         {this.getDialogs()}
+        <UserDialog />
+        <GroupDialog />
 
         <Show if={checkedUsers > 0}>
           <FabList position="top">
@@ -184,7 +168,7 @@ module.exports = React.createClass({
               label         = "Click here to edit User"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              onClick       = {this.showDialog('editUserDialog')}
+              onClick       = {this.showUserEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -209,7 +193,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Group"
               mini          = {true}
               disabled      = {checkedUsers > 1}
-              onClick       = {this.showDialog('editGroupDialog')}
+              onClick       = {this.showGroupEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -219,12 +203,12 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create User account"
-            onClick       = {this.showDialog('addUserDialog')}
+            onClick       = {this.showUserDialog}
             iconClassName = "synicon-account-plus" />
 
           <FabListItem
             label         = "Click here to create Group"
-            onClick       = {this.showDialog('addGroupDialog')}
+            onClick       = {this.showGroupDialog}
             iconClassName = "synicon-account-multiple-plus" />
 
         </FabList>
@@ -235,9 +219,9 @@ module.exports = React.createClass({
             <GroupsList
               name                 = "Groups"
               checkItem            = {GroupsActions.checkItem}
-              isLoading            = {GroupsActions.isLoading}
+              isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
-              emptyItemHandleClick = {this.showDialog('addGroupDialog')}
+              emptyItemHandleClick = {this.showGroupDialog}
               emptyItemContent     = "Create a Group" />
 
           </div>
@@ -246,9 +230,9 @@ module.exports = React.createClass({
             <UsersList
               name                 = "Users"
               checkItem            = {UsersActions.checkItem}
-              isLoading            = {UsersActions.isLoading}
+              isLoading            = {this.state.users.isLoading}
               items                = {this.state.users.items}
-              emptyItemHandleClick = {this.showDialog('addUserDialog')}
+              emptyItemHandleClick = {this.showUserDialog}
               emptyItemContent     = "Create a User" />
           </div>
 

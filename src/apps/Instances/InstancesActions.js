@@ -2,7 +2,6 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
-
 var InstancesActions = Reflux.createActions({
     checkItem: {},
     uncheckAll: {},
@@ -10,9 +9,9 @@ var InstancesActions = Reflux.createActions({
     setInstances: {},
 
     fetchInstances: {
-      asyncResult: true,
-      loading    : true,
-      children   : ['completed', 'failure']
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure']
     },
 
     createInstance: {
@@ -33,13 +32,10 @@ var InstancesActions = Reflux.createActions({
        asyncResult : true,
        loading     : true,
        children    : ['completed', 'failure']
-    },
-
+    }
 });
 
-
-
-InstancesActions.fetchInstances.listen( function(payload) {
+InstancesActions.fetchInstances.listen(function(payload) {
   console.info('InstancesActions::fetchInstances');
   Connection
     .Instances
@@ -48,7 +44,7 @@ InstancesActions.fetchInstances.listen( function(payload) {
     .catch(this.failure);
 });
 
-InstancesActions.createInstance.listen( function(payload) {
+InstancesActions.createInstance.listen(function(payload) {
   console.info('InstancesActions::createInstance');
   Connection
     .Instances
@@ -61,7 +57,7 @@ InstancesActions.createInstance.listen( function(payload) {
     .catch(this.failure);
 });
 
-InstancesActions.updateInstance.listen( function(name, payload) {
+InstancesActions.updateInstance.listen(function(name, payload) {
   console.info('InstancesActions::updateInstance');
   Connection
     .Instances
@@ -70,7 +66,7 @@ InstancesActions.updateInstance.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-InstancesActions.removeInstances.listen( function(names) {
+InstancesActions.removeInstances.listen(function(names) {
   names.map(function(name) {
     console.info('InstancesActions::removeInstances');
     Connection

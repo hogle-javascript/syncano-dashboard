@@ -6,16 +6,15 @@ var Reflux         = require('reflux'),
     SessionActions = require('../Session/SessionActions'),
     ProfileActions = require('./ProfileActions');
 
-
 var ProfileAuthenticationStore = Reflux.createStore({
   listenables: ProfileActions,
   mixins: [StoreFormMixin],
 
-  init: function () {
+  init: function() {
     this.listenToForms();
   },
 
-  onChangePasswordCompleted: function (payload) {
+  onChangePasswordCompleted: function(payload) {
     this.trigger({
       feedback: 'Password changed successfully.',
       currentPassword: null,

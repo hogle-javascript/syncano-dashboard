@@ -2,7 +2,6 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
-
 var GroupsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
@@ -32,7 +31,7 @@ var GroupsActions = Reflux.createActions({
   }
 });
 
-GroupsActions.createGroup.listen( function(label) {
+GroupsActions.createGroup.listen(function(label) {
   console.info('GroupsActions::createGroup');
   Connection
     .Groups
@@ -41,7 +40,7 @@ GroupsActions.createGroup.listen( function(label) {
     .catch(this.failure);
 });
 
-GroupsActions.fetchGroups.listen( function() {
+GroupsActions.fetchGroups.listen(function() {
   console.info('GroupsActions::fetchGroups');
   Connection
     .Groups
@@ -50,7 +49,7 @@ GroupsActions.fetchGroups.listen( function() {
     .catch(this.failure);
 });
 
-GroupsActions.updateGroup.listen( function(id, payload) {
+GroupsActions.updateGroup.listen(function(id, payload) {
   console.info('GroupsActions::updateGroup');
   Connection
     .Groups
@@ -59,7 +58,7 @@ GroupsActions.updateGroup.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-GroupsActions.removeGroups.listen( function(ids) {
+GroupsActions.removeGroups.listen(function(ids) {
   ids.map(function(id) {
     console.info('GroupsActions::removeGroups');
     Connection

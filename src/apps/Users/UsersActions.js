@@ -2,12 +2,13 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
-
 var UsersActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
-  setUsers   : {},
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setUsers      : {},
+  showDialog    : {},
+  dismissDialog : {},
   fetchUsers: {
     asyncResult: true,
     loading    : true,
@@ -32,7 +33,7 @@ var UsersActions = Reflux.createActions({
   }
 });
 
-UsersActions.fetchUsers.listen( function() {
+UsersActions.fetchUsers.listen(function() {
   console.info('UsersActions::fetchUsers');
   Connection
     .Users
@@ -41,8 +42,8 @@ UsersActions.fetchUsers.listen( function() {
     .catch(this.failure);
 });
 
-UsersActions.createUser.listen( function(payload) {
-  console.info('UsersActions::createUser');
+UsersActions.createUser.listen(function(payload) {
+  console.info('UsersActions::createUser', payload);
   Connection
     .Users
     .create(payload)
@@ -50,8 +51,7 @@ UsersActions.createUser.listen( function(payload) {
     .catch(this.failure);
 });
 
-
-UsersActions.updateUser.listen( function(id, payload) {
+UsersActions.updateUser.listen(function(id, payload) {
   console.info('UsersActions::updateUser');
   Connection
     .Users
@@ -60,7 +60,7 @@ UsersActions.updateUser.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-UsersActions.removeUsers.listen( function(schedules) {
+UsersActions.removeUsers.listen(function(schedules) {
   schedules.map(function(schedule) {
     console.info('UsersActions::removeUsers');
     Connection

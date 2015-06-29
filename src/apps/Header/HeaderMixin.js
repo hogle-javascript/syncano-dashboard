@@ -7,12 +7,12 @@ var HeaderMixin = {
   },
 
   statics: {
-    willTransitionTo: function () {
+    willTransitionTo: function() {
       HeaderActions.clear();
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     var breadcrumbs = this.headerBreadcrumbs || [],
         menuItems   = this.headerMenuItems   || [];
 
@@ -41,11 +41,11 @@ var HeaderMixin = {
 
   },
 
-  setHeaderBreadcrumbs: function (breadcrumbs) {
+  setHeaderBreadcrumbs: function(breadcrumbs) {
     HeaderActions.setBreadcrumbs(breadcrumbs);
   },
 
-  setHeaderMenuItems: function (menuItems) {
+  setHeaderMenuItems: function(menuItems) {
     HeaderActions.setMenuItems(menuItems);
   },
 
