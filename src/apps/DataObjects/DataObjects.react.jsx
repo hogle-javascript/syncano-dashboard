@@ -191,12 +191,12 @@ module.exports = React.createClass({
     }
 
     return (
-      
+
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
         <div className="col-flex-1" style={{padding: 0}}>
-          
+
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
           
             <ToolbarGroup float="left" style={{padding: '0px'}}>
