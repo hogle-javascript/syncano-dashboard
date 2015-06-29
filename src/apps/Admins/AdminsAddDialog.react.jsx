@@ -85,8 +85,7 @@ module.exports = React.createClass({
 
   render: function () {
     var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
-
+        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm',
         dialogStandardActions = [
           {
             ref     : 'cancel',

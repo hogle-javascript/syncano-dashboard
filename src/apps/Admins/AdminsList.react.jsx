@@ -79,24 +79,26 @@ module.exports = React.createClass({
   },
 
   getList: function () {
+    var items = this.state.items || [];
+
     if (this.state.isLoading) {
       return <LoadingItem />;
     }
 
-    var items = this.state.items.map(function (item) {
-      return this.renderItem(item)
-    }.bind(this));
-
     if (items.length > 0) {
+      items = this.state.items.map(function (item) {
+        return this.renderItem(item)
+      }.bind(this));
+
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
     return (
-        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </EmptyListItem>
-      );
+      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
   render: function () {
