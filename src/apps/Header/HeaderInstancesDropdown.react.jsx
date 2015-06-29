@@ -19,7 +19,6 @@ var React              = require('react'),
     DropDownMenu       = mui.DropDownMenu,
     ToolbarGroup       = mui.ToolbarGroup;
 
-
 module.exports = React.createClass({
 
   displayName: 'HeaderInstancesDropdown',
@@ -51,11 +50,11 @@ module.exports = React.createClass({
 
   handleInstanceActive: function() {
     var currentInstance     = SessionStore.instance,
-        instancesList       = InstancesStore.data.items,
+        instancesList       = InstancesStore.getMyInstances().reverse(),
         instanceActiveIndex = null;
 
-    instancesList.some(function(e, index){
-      if(e.name === currentInstance.name) {
+    instancesList.some(function(e, index) {
+      if (e.name === currentInstance.name) {
         instanceActiveIndex = index;
         return true;
       }
@@ -117,15 +116,13 @@ module.exports = React.createClass({
   render: function() {
     var styles        = this.getStyles(),
         instance      = SessionStore.instance,
-        instancesList = InstancesStore.getMyInstances();
+        instancesList = InstancesStore.getMyInstances().reverse();
 
     if (!instance || !instancesList.length > 0) {
       return null;
-    } else if (instancesList.length > 0) {
-      instancesList = instancesList.reverse();
     }
 
-    var dropDownMenuItems = InstancesStore.data.items.map(function(item, index) {
+    var dropDownMenuItems = instancesList.map(function(item, index) {
       var iconBackground = {
           backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark') || ColumnListConstans.DEFAULT_BACKGROUND
         },
@@ -147,8 +144,8 @@ module.exports = React.createClass({
 
     return (
       <ToolbarGroup
-        key={0}
-        style={styles.instanceToolbarGroup}>
+        key   = {0}
+        style = {styles.instanceToolbarGroup}>
         <DropDownMenu
           className      = "instances-dropdown"
           labelStyle     = {styles.dropdownLabel}
