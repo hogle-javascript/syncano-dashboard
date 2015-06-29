@@ -26,7 +26,7 @@ var HeaderStore = Reflux.createStore({
 
   },
 
-  onSetMenuItems: function (payload) {
+  onSetMenuItems: function(payload) {
     console.debug('HeaderStore::onSetMenuItems');
     this.trigger({menuItems: payload});
   },

@@ -12,7 +12,7 @@ var HeaderMixin = {
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     var menuItems   = this.headerMenuItems || [];
 
     if (typeof menuItems === 'function') {
