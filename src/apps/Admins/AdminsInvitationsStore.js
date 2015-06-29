@@ -54,7 +54,7 @@ var AdminsInvitationsStore = Reflux.createStore({
     console.debug('AdminsInvitationsStore::getPendingInvitations');
 
     var isInvitationPending = function(element) {
-      return (element.state === "new");
+      return (element.state === 'new');
     };
 
     var pendingInvitations = this.data.items.filter(isInvitationPending);
