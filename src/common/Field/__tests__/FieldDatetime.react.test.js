@@ -1,5 +1,4 @@
 jest.dontMock('../FieldDatetime.react');
-jest.dontMock('../../Icon/Icon.react');
 jest.dontMock('../../Calendar/Calendar.react');
 
 describe('FieldDatetime.react', function() {
