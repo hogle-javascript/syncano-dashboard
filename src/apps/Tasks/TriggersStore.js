@@ -11,7 +11,6 @@ var Reflux              = require('reflux'),
     SessionActions      = require('../Session/SessionActions'),
     TriggersActions     = require('./TriggersActions');
 
-
 var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [

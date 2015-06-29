@@ -58,7 +58,7 @@ var SchedulesStore = Reflux.createStore({
     return Constants.crontabs.map(function(item) {
       return {
         payload : item.crontab,
-        text    : item.description,
+        text    : item.description
       }
     });
   },
