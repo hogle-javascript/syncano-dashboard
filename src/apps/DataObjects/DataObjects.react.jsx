@@ -151,19 +151,24 @@ module.exports = React.createClass({
           style     = {{margin: 50}} >
           <div>Loaded {tableData.length} data objects</div>
         </div>
-        <div
-          className = "row align-center"
-          style     = {{margin: 50}} >
-          <RaisedButton
-            label   = "Load more"
-            onClick = {this.handleMoreRows}/>
-        </div>
+        <Show if={this.state.hasNextPage}>
+          <div
+            className = "row align-center"
+            style     = {{margin: 50}} >
+            <RaisedButton
+              label   = "Load more"
+              onClick = {this.handleMoreRows}/>
+          </div>
+        </Show>
       </div>
     )
   },
 
   handleMoreRows: function() {
-    this.setState({pages: this.state.pages + 1})
+    DataObjectsActions.subFetchDataObjects({
+      className : this.state.classObj.name,
+      lastItem  : this.state.items[this.state.items.length - 1]
+    });
   },
 
   handleBackClick: function() {
@@ -223,7 +228,7 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
           </Toolbar>
-          
+
           <div style={{clear: 'both', height: '100%'}}>
             <Show if={this.state.isLoading}>
               <Loading type='linear' />

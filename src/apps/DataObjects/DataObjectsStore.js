@@ -78,9 +78,18 @@ var DataObjectsStore = Reflux.createStore({
   setDataObjects: function(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+    this.data.hasNextPage = false;
+    if (items.hasNextPage()) {
+      this.data.hasNextPage = true;
+    }
+
+    if (!this.data.items) {
+      this.data.items = []
+    }
+
+    Object.keys(items).map(function(key) {
+      this.data.items.push(items[key]);
+    }.bind(this));
 
     this.data.isLoading = false;
     this.trigger(this.data);
@@ -113,7 +122,7 @@ var DataObjectsStore = Reflux.createStore({
       {
         name    : 'Group',
         checked : true
-      },
+      }
     ]
   },
 
@@ -131,7 +140,11 @@ var DataObjectsStore = Reflux.createStore({
 
   onFetchDataObjectsCompleted: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
-    //this.data.isLoading = false;
+    DataObjectsActions.setDataObjects(items);
+  },
+
+  onSubFetchDataObjectsCompleted: function(items) {
+    console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     DataObjectsActions.setDataObjects(items);
   },
 

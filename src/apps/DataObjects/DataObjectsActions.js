@@ -3,6 +3,7 @@ var Reflux         = require('reflux'),
     Connection     = require('../Session/Connection').get(),
     D              = Syncano.D,
 
+    Constants      = require('../../constants/Constants'),
     ClassesActions = require('../Classes/ClassesActions');
 
 var DataObjectsActions = Reflux.createActions({
@@ -20,6 +21,10 @@ var DataObjectsActions = Reflux.createActions({
     children    : ['completed', 'failure']
   },
   fetchDataObjects: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
+  },
+  subFetchDataObjects: {
     asyncResult : true,
     children    : ['completed', 'failure']
   },
@@ -50,7 +55,21 @@ DataObjectsActions.fetchDataObjects.listen(function(className) {
   console.info('DataObjectsActions::fetchDataObjects');
   Connection
     .DataObjects
-    .list(className)
+    .list(className, {'page_size': Constants.DATAOBJECTS_PAGE_SIZE})
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+DataObjectsActions.subFetchDataObjects.listen(function(payload) {
+  console.info('DataObjectsActions::subFetchDataObjects');
+
+  Connection
+    .DataObjects
+    .list(payload.className, {
+      'last_pk'   : payload.lastItem.id,
+      'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
+      'direction' : 1
+    })
     .then(this.completed)
     .catch(this.failure);
 });
