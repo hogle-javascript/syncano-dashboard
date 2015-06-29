@@ -203,9 +203,9 @@ module.exports = Radium(React.createClass({
         </Toolbar>
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
-            <Show if={SessionStore.instance}>
+            <Show if={SessionStore.getInstance() !== null}>
+              <HeaderInstancesDropdown />
             </Show>
-            <HeaderInstancesDropdown />
 
             <ToolbarGroup
               className = "col-flex-1"
