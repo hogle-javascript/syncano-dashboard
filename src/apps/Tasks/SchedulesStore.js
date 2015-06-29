@@ -6,7 +6,7 @@ var Reflux              = require('reflux'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
-    Constants           = require('../../Constants/Constants'),
+    Constants           = require('../../constants/Constants'),
     CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
     SessionActions      = require('../Session/SessionActions'),
     SchedulesActions    = require('./SchedulesActions');

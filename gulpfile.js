@@ -5,7 +5,6 @@ var gulp             = require('gulp'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
-    path             = require('path'),
     download         = require('gulp-download'),
     unzip            = require('gulp-unzip'),
     chmod            = require('gulp-chmod'),
@@ -31,7 +30,7 @@ gulp.task('clean', function(cb) {
 
 gulp.task('copy-index', ['clean'], function() {
   return gulp.src(paths.index)
-  .pipe(gulp.dest(paths.dist))
+  .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('copy-images', ['clean'], function() {
@@ -65,7 +64,7 @@ gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
   config.devtool = 'sourcemap';
   config.debug   = true;
 
-  if (ENV == 'production') {
+  if (ENV === 'production') {
     config.progress = false;
     config.debug    = false;
     config.plugins  = config.plugins.concat(
@@ -99,7 +98,9 @@ gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
       colors: true
     }
   }).listen(8080, 'localhost', function(err) {
-    if (err) throw new gutil.PluginError('webpack-dev-server', err);
+    if (err) {
+      throw new gutil.PluginError('webpack-dev-server', err);
+    }
     gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
   });
 });
@@ -118,7 +119,7 @@ gulp.task('revision', ['clean', 'iconfont', 'webpack:build', 'stripDebug'], func
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
-    .pipe(gulp.dest(paths.dist))
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevisioned'], function() {
