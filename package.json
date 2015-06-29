@@ -103,6 +103,8 @@
     "publish": "gulp publish",
     "clean": "gulp clean",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
-    "nightwatch": "nightwatch"
+    "nightwatch": "nightwatch",
+    "jscs": "jscs --esprima=esprima-fb src",
+    "codeclimate": "codeclimate < coverage/lcov.info"
   }
 }
