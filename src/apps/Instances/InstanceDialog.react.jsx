@@ -1,36 +1,34 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
+var React               = require('react'),
+    Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin  = require('../../mixins/ValidationMixin'),
-    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
-    FormMixin        = require('../../mixins/FormMixin'),
+    ValidationMixin     = require('../../mixins/ValidationMixin'),
+    FormMixin           = require('../../mixins/FormMixin'),
+    DialogMixin         = require('../../mixins/DialogMixin'),
 
     // Stores and Actions
-    InstancesActions = require('./InstancesActions'),
-    InstancesStore   = require('./InstancesStore'),
-    ColorStore       = require('../../common/Color/ColorStore'),
-    IconStore        = require('../../common/Icon/IconStore'),
+    InstancesActions    = require('./InstancesActions'),
+    InstanceDialogStore = require('./InstanceDialogStore'),
+    ColorStore          = require('../../common/Color/ColorStore'),
+    IconStore           = require('../../common/Icon/IconStore'),
 
     // Components
-    mui              = require('material-ui'),
-    TextField        = mui.TextField,
-    DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog,
-    FlatButton       = mui.FlatButton,
-    Loading          = require('../../common/Loading/Loading.react.jsx');
-
+    mui                 = require('material-ui'),
+    TextField           = mui.TextField,
+    DropDownMenu        = mui.DropDownMenu,
+    Dialog              = mui.Dialog,
+    FlatButton          = mui.FlatButton;
 
 module.exports = React.createClass({
 
-  displayName: 'InstancesAddDialog',
+  displayName: 'InstanceDialog',
 
   mixins: [
-    Reflux.connect(InstancesStore),
+    Reflux.connect(InstanceDialogStore),
     React.addons.LinkedStateMixin,
-    DialogFormMixin,
     ValidationMixin,
-    FormMixin
+    FormMixin,
+    DialogMixin
   ],
 
   validatorConstraints: {
@@ -39,30 +37,6 @@ module.exports = React.createClass({
       length: {
         minimum: 5
       }
-    }
-  },
-
-  getInitialState: function() {
-    return {
-      description: ""
-    }
-  },
-
-  clearData: function() {
-    this.setState({
-      name        : '',
-      description : '',
-      errors      : {}
-    })
-  },
-
-  editShow: function() {
-    var checkedItem = InstancesStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-            name        : checkedItem.name,
-            description : checkedItem.description
-      });
     }
   },
 
@@ -85,7 +59,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title = this.props.mode === 'edit' ? 'Update an Instance': 'Create an Instance';
+    var title = this.hasEditMode() ? 'Update an Instance': 'Create an Instance';
 
     var dialogCustomActions = [
       <FlatButton
@@ -104,7 +78,7 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialogRef"
+        ref             = "dialog"
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
@@ -120,7 +94,7 @@ module.exports = React.createClass({
               ref               = "name"
               name              = "name"
               fullWidth         = {true}
-              disabled          = {this.props.mode === 'edit' ? true : false}
+              disabled          = {this.hasEditMode() ? true : false}
               valueLink         = {this.linkState('name')}
               errorText         = {this.getValidationMessages('name').join(' ')}
               hintText          = "Short name for your Instance"
@@ -138,10 +112,6 @@ module.exports = React.createClass({
 
           </form>
         </div>
-        <Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading} />
       </Dialog>
     );
   }

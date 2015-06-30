@@ -1,32 +1,31 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
+var React               = require('react'),
+    Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin  = require('../../mixins/ValidationMixin'),
-    DialogFormMixin  = require('../../mixins/DialogFormMixin'),
-    FormMixin        = require('../../mixins/FormMixin'),
+    ValidationMixin     = require('../../mixins/ValidationMixin'),
+    DialogMixin         = require('../../mixins/DialogMixin'),
+    FormMixin           = require('../../mixins/FormMixin'),
 
     // Stores and Actions
-    SchedulesActions = require('./SchedulesActions'),
-    SchedulesStore   = require('./SchedulesStore'),
-    CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
+    SchedulesActions    = require('./SchedulesActions'),
+    ScheduleDialogStore = require('./ScheduleDialogStore'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
 
     // Components
-    mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
-    TextField        = mui.TextField,
-    SelectField      = mui.SelectField,
-    Dialog           = mui.Dialog;
+    mui                 = require('material-ui'),
+    Toggle              = mui.Toggle,
+    TextField           = mui.TextField,
+    SelectField         = mui.SelectField,
+    Dialog              = mui.Dialog;
 
 module.exports = React.createClass({
 
-  displayName: 'SchedulesAddDialog',
+  displayName: 'ScheduleDialog',
 
   mixins: [
-    Reflux.connect(SchedulesStore),
-    Reflux.connect(CodeBoxesStore, 'codeboxes'),
+    Reflux.connect(ScheduleDialogStore),
     React.addons.LinkedStateMixin,
-    DialogFormMixin,
+    DialogMixin,
     ValidationMixin,
     FormMixin
   ],
@@ -43,23 +42,9 @@ module.exports = React.createClass({
     }
   },
 
-  clearData: function() {
-    this.setState({
-      email  : '',
-      errors : {}
-    })
-  },
-
-  editShow: function() {
-    var checkedItem = SchedulesStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-        id      : checkedItem.id,
-        label   : checkedItem.label,
-        crontab : checkedItem.crontab,
-        codebox : checkedItem.codebox
-      });
-    }
+  handleDialogShow: function() {
+    console.info('ScheduleDialog::handleDialogShow');
+    CodeBoxesActions.fetch();
   },
 
   handleAddSubmit: function() {
@@ -80,10 +65,9 @@ module.exports = React.createClass({
     );
   },
 
-  render: function() {
-    var title       = this.props.mode === 'edit' ? 'Edit' : 'Add',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Create',
-
+  render: function () {
+    var title       = this.hasEditMode() ? 'Edit': 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -99,10 +83,11 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = 'dialogRef'
+        ref             = 'dialog'
         title           = {title + ' Schedule'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
+        onShow          = {this.handleDialogShow}
         modal           = {true}>
         <div>
           {this.renderFormNotifications()}
@@ -116,7 +101,7 @@ module.exports = React.createClass({
               name              = 'label'
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join()}
+              errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = 'Label of the schedule'
               floatingLabelText = 'Label' />
 
@@ -125,22 +110,22 @@ module.exports = React.createClass({
               name              = 'codebox'
               floatingLabelText = 'CodeBox'
               valueLink         = {this.linkState('codebox')}
-              errorText         = {this.getValidationMessages('codebox').join()}
+              errorText         = {this.getValidationMessages('codebox').join(' ')}
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {CodeBoxesStore.getCodeBoxesDropdown()} />
+              menuItems         = {this.state.codeboxes} />
 
             <SelectField
               ref               = 'crontab'
               name              = 'crontab'
               floatingLabelText = 'CronTab'
               valueLink         = {this.linkState('crontab')}
-              errorText         = {this.getValidationMessages('crontab').join()}
+              errorText         = {this.getValidationMessages('crontab').join(' ')}
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {SchedulesStore.getCrontabDropdown()} />
+              menuItems         = {ScheduleDialogStore.getCrontabDropdown()} />
 
           </form>
         </div>

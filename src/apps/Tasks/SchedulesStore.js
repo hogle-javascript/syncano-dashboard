@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -15,7 +14,6 @@ var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     WaitForStoreMixin
   ],
 
@@ -34,7 +32,6 @@ var SchedulesStore = Reflux.createStore({
       CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
-    this.listenToForms();
   },
 
   getSchedules: function(empty) {
@@ -54,15 +51,6 @@ var SchedulesStore = Reflux.createStore({
     SchedulesActions.fetchSchedules();
   },
 
-  getCrontabDropdown: function() {
-    return Constants.crontabs.map(function(item) {
-      return {
-        payload : item.crontab,
-        text    : item.description
-      }
-    });
-  },
-
   onFetchSchedules: function() {
     console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
@@ -73,20 +61,6 @@ var SchedulesStore = Reflux.createStore({
     console.debug('SchedulesStore::onFetchSchedulesCompleted');
     this.data.isLoading = false;
     SchedulesActions.setSchedules(items);
-  },
-
-  onCreateScheduleCompleted: function() {
-    console.debug('SchedulesStore::onCreateScheduleCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateScheduleCompleted: function() {
-    console.debug('SchedulesStore::onUpdateScheduleCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveSchedulesCompleted: function() {

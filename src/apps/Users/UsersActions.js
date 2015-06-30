@@ -1,6 +1,7 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var UsersActions = Reflux.createActions({
   checkItem     : {},
@@ -60,15 +61,15 @@ UsersActions.updateUser.listen(function(id, payload) {
     .catch(this.failure);
 });
 
-UsersActions.removeUsers.listen(function(schedules) {
-  schedules.map(function(schedule) {
-    console.info('UsersActions::removeUsers');
-    Connection
-      .Users
-      .remove(schedule.id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+UsersActions.removeUsers.listen(function(users) {
+  console.info('UsersActions::removeUsers');
+  var promises = users.map(function(user) {
+    return Connection.Users.remove(user.id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = UsersActions;
