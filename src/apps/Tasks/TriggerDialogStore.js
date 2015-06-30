@@ -44,7 +44,7 @@ var TriggerDialogStore = Reflux.createStore({
       codeboxes: [
         {payload: null, text: 'Loading...'}
       ]
-    }
+    };
   },
 
   init: function() {
@@ -65,7 +65,7 @@ var TriggerDialogStore = Reflux.createStore({
     var dropdowns = {
       codeboxes: CodeBoxesStore.getCodeBoxesDropdown(),
       classes: ClassesStore.getClassesDropdown()
-    }
+    };
 
     if (dropdowns.codeboxes.length === 0) {
       dropdowns.codeboxes = [{payload: null, text: 'No codeboxes, add one first'}];

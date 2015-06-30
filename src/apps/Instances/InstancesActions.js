@@ -11,27 +11,30 @@ var InstancesActions = Reflux.createActions({
   showDialog    : {},
   dismissDialog : {},
   fetchInstances: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
 
   createInstance: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
 
   updateInstance: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
 
   removeInstances: {
-    asyncResult: true,
-    children: ['completed', 'failure']
-  },
-
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  }
 });
 
 InstancesActions.fetchInstances.listen(function() {

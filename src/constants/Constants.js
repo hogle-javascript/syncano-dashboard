@@ -8,6 +8,7 @@ module.exports = {
   API: api,
 
   // Views constrains
+  DATAOBJECTS_PAGE_SIZE: 50,
   VIEW_MODES: ['cards', 'stream'],
   SORT_MODES: [
       'sortByName',
@@ -77,5 +78,17 @@ module.exports = {
       description : 'Once a year (0 0 1 1 *)',
       crontab     : '0 0 1 1 *'
     }
+  ],
+
+  fieldTypes : [
+    'string',
+    'text',
+    'integer',
+    'number',
+    'float',
+    'boolean',
+    'datetime',
+    'file',
+    'reference'
   ]
 };

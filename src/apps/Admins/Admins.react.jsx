@@ -24,11 +24,11 @@ var React                    = require('react'),
     FabList                  = require('../../common/Fab/FabList.react'),
     FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading                  = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
     AddDialog                = require('./AdminsAddDialog.react');
-
 
 module.exports = React.createClass({
 
@@ -57,7 +57,7 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       {
@@ -86,7 +86,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?'
+          children: [
+            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.admins.isLoading} />
+          ]
         }
       },
       {
@@ -99,7 +105,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: 'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
+          children: [
+            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       },
       {
@@ -112,7 +124,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
+           children: [
+             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
+             <Loading
+               type     = "linear"
+               position = "bottom"
+               show     = {this.state.invitations.isLoading} />
+           ]
         }
       }
     ]
@@ -120,7 +138,7 @@ module.exports = React.createClass({
 
   handleDeleteAdmin: function() {
     console.info('Admins::handleDelete');
-    AdminsActions.removeAdmins(AdminsStore.getCheckedItems());
+    AdminsActions.removeAdmin(AdminsStore.getCheckedItems());
   },
 
   handleResendInvitation: function() {
@@ -138,17 +156,17 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
-  checkAdminItem: function(id, state){
+  checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
   },
 
-  checkInvitationItem: function(id, state){
+  checkInvitationItem: function(id, state) {
     AdminsActions.uncheckAll();
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  render: function () {
+  render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
         checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
@@ -225,7 +243,7 @@ module.exports = React.createClass({
           emptyItemContent     = "Invite administrators"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
-          items                = {this.state.invitations.items} />
+          items                = {AdminsInvitationsStore.getPendingInvitations()} />
 
       </Container>
     );

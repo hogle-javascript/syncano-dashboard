@@ -15,7 +15,9 @@ var React           = require('react'),
     mui             = require('material-ui'),
     TextField       = mui.TextField,
     RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper;
+    Paper           = mui.Paper,
+
+    Logo            = require('../../common/Logo/Logo.react');
 
 
 require('./Account.sass');
@@ -41,7 +43,7 @@ module.exports = React.createClass({
     }
   },
 
-  handleSuccessfullValidation: function (event) {
+  handleSuccessfullValidation: function() {
     AuthActions.passwordReset(this.state.email);
   },
 
@@ -49,33 +51,41 @@ module.exports = React.createClass({
     return (
       <div className="account-container">
         <div className="account-logo">
-          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
+          <Link to="login"><Logo className="logo-blue" /></Link>
         </div>
-        <Paper className="account-container__content" rounded={false}>
+        <Paper
+          className="account-container__content"
+          rounded={false}
+        >
           <div className="account-container__content__header">
             <p className="">Reset your password</p>
           </div>
           {this.renderFormNotifications()}
           <form
-            onSubmit={this.handleFormValidation}
-            className="account-container__content__form"
-            acceptCharset="UTF-8"
-            method="post">
+            onSubmit      = {this.handleFormValidation}
+            className     = "account-container__content__form"
+            acceptCharset = "UTF-8"
+            method        = "post"
+          >
+
             <TextField
               ref="email"
-              valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join(' ')}
-              name="email"
-              className="text-field vm-4-b"
-              autoComplete="email"
-              hintText="Your email"
-              fullWidth={true} />
+              valueLink    = {this.linkState('email')}
+              errorText    = {this.getValidationMessages('email').join(' ')}
+              name         = "email"
+              className    = "text-field vm-4-b"
+              autoComplete = "email"
+              hintText     = "Your email"
+              fullWidth    = {true}
+            />
+
             <RaisedButton
-              type="submit"
-              label="Reset password"
-              labelStyle={{fontSize: '16px'}}
-              style={{width: '100%', boxShadow: 'none'}}
-              primary={true} />
+              type       = "submit"
+              label      = "Reset password"
+              labelStyle = {{fontSize: '16px'}}
+              style      = {{width: '100%', boxShadow: 'none'}}
+              primary    = {true}
+            />
           </form>
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">

@@ -21,6 +21,7 @@ var React                 = require('react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
@@ -71,7 +72,7 @@ module.exports = Radium(React.createClass({
           {text: "Confirm", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?'
+        children: ['Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
       }
      }]
   },
@@ -143,7 +144,7 @@ module.exports = Radium(React.createClass({
     var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
-      <Container>
+      <Container id="instances">
         <InstanceDialog />
         {this.getDialogs()}
 

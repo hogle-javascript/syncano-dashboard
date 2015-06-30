@@ -40,21 +40,6 @@ module.exports = React.createClass({
     DialogsMixin
   ],
 
-  headerBreadcrumbs: [
-    {
-      route: 'dashboard',
-      label: 'Home'
-    },
-    {
-      route: 'profile-settings',
-      label: 'Account'
-    },
-    {
-      route: 'profile-invitations',
-      label: 'Invitations'
-    }
-  ],
-
   headerMenuItems: [
     {
       route: 'profile-settings',

@@ -18,7 +18,6 @@ var React               = require('react'),
     SelectField         = mui.SelectField,
     Dialog              = mui.Dialog;
 
-
 module.exports = React.createClass({
 
   displayName: 'ScheduleDialog',
@@ -48,7 +47,7 @@ module.exports = React.createClass({
     CodeBoxesActions.fetch();
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     SchedulesActions.createSchedule({
       label    : this.state.label,
       crontab  : this.state.crontab,
@@ -56,7 +55,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     SchedulesActions.updateSchedule(
       this.state.id, {
         label    : this.state.label,
@@ -69,7 +68,6 @@ module.exports = React.createClass({
   render: function () {
     var title       = this.hasEditMode() ? 'Edit': 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
-
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -85,8 +83,8 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialog"
-        title           = {title + " Schedule"}
+        ref             = 'dialog'
+        title           = {title + ' Schedule'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
@@ -95,37 +93,37 @@ module.exports = React.createClass({
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
+            acceptCharset = 'UTF-8'
+            method        = 'post'>
 
             <TextField
-              ref               = "label"
-              name              = "label"
+              ref               = 'label'
+              name              = 'label'
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = "Label of the schedule"
-              floatingLabelText = "Label" />
+              hintText          = 'Label of the schedule'
+              floatingLabelText = 'Label' />
 
             <SelectField
-              ref               = "codebox"
-              name              = "codebox"
-              floatingLabelText = "CodeBox"
-              valueLink         = {this.linkState("codebox")}
+              ref               = 'codebox'
+              name              = 'codebox'
+              floatingLabelText = 'CodeBox'
+              valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join(' ')}
-              valueMember       = "payload"
-              displayMember     = "text"
+              valueMember       = 'payload'
+              displayMember     = 'text'
               fullWidth         = {true}
               menuItems         = {this.state.codeboxes} />
 
             <SelectField
-              ref               = "crontab"
-              name              = "crontab"
-              floatingLabelText = "CronTab"
-              valueLink         = {this.linkState("crontab")}
+              ref               = 'crontab'
+              name              = 'crontab'
+              floatingLabelText = 'CronTab'
+              valueLink         = {this.linkState('crontab')}
               errorText         = {this.getValidationMessages('crontab').join(' ')}
-              valueMember       = "payload"
-              displayMember     = "text"
+              valueMember       = 'payload'
+              displayMember     = 'text'
               fullWidth         = {true}
               menuItems         = {ScheduleDialogStore.getCrontabDropdown()} />
 

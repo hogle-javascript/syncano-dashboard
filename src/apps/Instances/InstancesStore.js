@@ -3,8 +3,10 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
+    // Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
     SessionStore        = require('../Session/SessionStore'),
     InstancesActions    = require('./InstancesActions');
@@ -14,13 +16,13 @@ var InstancesStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
+    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
   getInitialState: function() {
     return {
       items: [],
-      isLoading: false
     }
   },
 
@@ -31,6 +33,7 @@ var InstancesStore = Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData: function() {
@@ -65,25 +68,21 @@ var InstancesStore = Reflux.createStore({
 
   onFetchInstances: function(instances) {
     console.debug('InstancesStore::onFetchInstances');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchInstancesCompleted: function(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
-    this.data.isLoading = false;
     InstancesActions.setInstances(items);
   },
 
   onFetchInstancesFailure: function() {
     console.debug('InstancesStore::onFetchInstancesFailure');
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onRemoveInstancesCompleted: function(payload) {
+  onRemoveInstancesCompleted: function() {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

@@ -19,7 +19,6 @@ var React              = require('react'),
     SelectField        = mui.SelectField,
     Dialog             = mui.Dialog;
 
-
 module.exports = React.createClass({
 
   displayName: 'TriggerDialog',
@@ -117,9 +116,8 @@ module.exports = React.createClass({
               name              = "signal"
               floatingLabelText = "Signal"
               fullWidth         = {true}
-              valueLink         = {this.linkState("signal")}
+              valueLink         = {this.linkState('signal')}
               errorText         = {this.getValidationMessages('signal').join(' ')}
-
               valueMember       = "payload"
               displayMember     = "text"
               menuItems         = {TriggerDialogStore.getSignalsDropdown()} />
@@ -129,7 +127,7 @@ module.exports = React.createClass({
               name              = "doClass"
               floatingLabelText = "Class"
               fullWidth         = {true}
-              valueLink         = {this.linkState("class")}
+              valueLink         = {this.linkState('class')}
               errorText         = {this.getValidationMessages('class').join(' ')}
               valueMember       = "payload"
               displayMember     = "text"
@@ -139,7 +137,7 @@ module.exports = React.createClass({
               ref               = "codebox"
               name              = "codebox"
               floatingLabelText = "CodeBox"
-              valueLink         = {this.linkState("codebox")}
+              valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join(' ')}
               valueMember       = "payload"
               displayMember     = "text"

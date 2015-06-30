@@ -35,7 +35,7 @@ var ScheduleDialogStore = Reflux.createStore({
       codeboxes : [
         {payload: null, text: 'Loading...'}
       ]
-    }
+    };
   },
 
   init: function() {

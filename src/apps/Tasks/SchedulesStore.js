@@ -5,6 +5,8 @@ var Reflux              = require('reflux'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    Constants           = require('../../constants/Constants'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
     SessionActions      = require('../Session/SessionActions'),
     SchedulesActions    = require('./SchedulesActions');
 
@@ -27,6 +29,7 @@ var SchedulesStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
+      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
   },
@@ -48,7 +51,7 @@ var SchedulesStore = Reflux.createStore({
     SchedulesActions.fetchSchedules();
   },
 
-  onFetchSchedules: function(items) {
+  onFetchSchedules: function() {
     console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
     this.trigger(this.data);
@@ -60,7 +63,7 @@ var SchedulesStore = Reflux.createStore({
     SchedulesActions.setSchedules(items);
   },
 
-  onRemoveSchedulesCompleted: function(payload) {
+  onRemoveSchedulesCompleted: function() {
     console.debug('SchedulesStore::onRemoveSchedulesCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);

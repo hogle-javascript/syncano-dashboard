@@ -1,6 +1,8 @@
 var Reflux     = require('reflux'),
 
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = require('../Session/Connection').get(),
+    D          = Syncano.D;
 
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
@@ -9,17 +11,20 @@ var AdminsActions = Reflux.createActions({
   setAdmins  : {},
 
   fetchAdmins: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateAdmin: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
-  removeAdmin: {
+  removeAdmins: {
     asyncResult: true,
-    children: ['completed', 'failure']
+    loading    : true,
+    children   : ['completed', 'failure']
   }
 });
 
@@ -41,15 +46,15 @@ AdminsActions.updateAdmin.listen(function(name, payload) {
     .catch(this.failure);
 });
 
-AdminsActions.removeAdmin.listen(function(names) {
-  names.map(function(name) {
-    console.info('AdminsActions::removeAdmins');
-    Connection
-      .Admins
-      .remove(name)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+AdminsActions.removeAdmins.listen(function(admins) {
+  console.info('AdminsActions::removeAdmins');
+  var promises = admins.map(function(admin) {
+    Connection.Admins.remove(admin)
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = AdminsActions;

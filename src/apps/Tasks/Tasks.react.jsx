@@ -12,7 +12,6 @@ var React                 = require('react'),
     // Stores and Actions
     SessionActions        = require('../Session/SessionActions'),
     SessionStore          = require('../Session/SessionStore'),
-
     SchedulesActions      = require('./SchedulesActions'),
     SchedulesStore        = require('./SchedulesStore'),
     TriggersActions       = require('./TriggersActions'),
@@ -31,7 +30,6 @@ var React                 = require('react'),
     TriggersList          = require('./TriggersList.react'),
     ScheduleDialog        = require('./ScheduleDialog.react'),
     TriggerDialog         = require('./TriggerDialog.react');
-
 
 module.exports = React.createClass({
 
@@ -61,37 +59,37 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       {
         dialog: Dialog,
         params: {
-          ref:    "removeTriggerDialog",
-          title:  "Delete Trigger",
+          ref:    'removeTriggerDialog',
+          title:  'Delete Trigger',
           actions: [
             {
               text    : 'Cancel',
               onClick : this.handleCancel},
             {
-              text    : "Yes, I'm sure",
+              text    : 'Yes, I\'m sure',
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
+          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
         }
       },
       {
         dialog: Dialog,
         params: {
-          ref:    "removeScheduleDialog",
-          title:  "Delete Schedule",
+          ref:    'removeScheduleDialog',
+          title:  'Delete Schedule',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveSchedules}
+            {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?'
+          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length + ' schedule?'
         }
       }
     ]

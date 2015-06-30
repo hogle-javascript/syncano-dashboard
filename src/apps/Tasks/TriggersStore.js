@@ -5,6 +5,8 @@ var Reflux              = require('reflux'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    ClassesActions      = require('../Classes/ClassesActions'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
     SessionActions      = require('../Session/SessionActions'),
     TriggersActions     = require('./TriggersActions');
 
@@ -27,6 +29,8 @@ var TriggersStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
+      ClassesActions.fetchClasses,
+      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
   },
@@ -58,7 +62,7 @@ var TriggersStore = Reflux.createStore({
     TriggersActions.setTriggers(items);
   },
 
-  onRemoveTriggersCompleted: function(payload) {
+  onRemoveTriggersCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

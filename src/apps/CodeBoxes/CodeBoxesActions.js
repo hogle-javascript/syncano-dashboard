@@ -13,6 +13,7 @@ var CodeBoxesActions = Reflux.createActions({
 
   fetchCodeBoxes: {
     asyncResult : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   createCodeBox: {
@@ -27,7 +28,8 @@ var CodeBoxesActions = Reflux.createActions({
   },
   runCodeBox: {
     asyncResult: true,
-    children: ['completed', 'failure']
+    loading    : true,
+    children   : ['completed', 'failure']
   },
   removeCodeBoxes: {
     asyncResult : true,
@@ -35,10 +37,12 @@ var CodeBoxesActions = Reflux.createActions({
   },
   fetchCodeBoxTrace: {
     asyncResult : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   fetchCodeBoxTraces: {
     asyncResult : true,
+    loading     : true,
     children    : ['completed', 'failure']
   },
   fetchCodeBoxRuntimes: {

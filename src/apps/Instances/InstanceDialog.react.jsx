@@ -19,7 +19,6 @@ var React               = require('react'),
     Dialog              = mui.Dialog,
     FlatButton          = mui.FlatButton;
 
-
 module.exports = React.createClass({
 
   displayName: 'InstanceDialog',

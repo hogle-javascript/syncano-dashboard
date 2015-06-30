@@ -82,7 +82,7 @@ module.exports = React.createClass({
 
     var dialogStandardActions = [
       {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: 'Submit', onClick: this.handleSubmit, ref: 'submit'}
+      {text: 'Confirm', onClick: this.handleSubmit, ref: 'submit'}
     ];
 
     return (

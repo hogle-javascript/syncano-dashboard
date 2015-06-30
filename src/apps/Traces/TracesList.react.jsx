@@ -27,7 +27,6 @@ var React             = require('react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
     ColumnIconName    = require('../../common/ColumnList/Column/IconName.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react');
 
@@ -83,7 +82,7 @@ module.exports = Radium(React.createClass({
   renderItem: function (item) {
 
     var styles = this.getStyles(),
-        background = item.status.success ? 'red': 'green';
+        background = item.status === 'success' ? 'green': 'red';
 
     if (item.id == this.state.visibleTraceId) {
       styles.item = {

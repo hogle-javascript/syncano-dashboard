@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
   getInitialState: function () {
     return {
-      checked : this.props.checked,
+      checked : this.props.checked
     }
   },
 
@@ -35,7 +35,7 @@ module.exports = React.createClass({
     return {
       icon: {
         margin: 0
-      },
+      }
     };
   },
 

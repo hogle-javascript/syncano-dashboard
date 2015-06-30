@@ -10,25 +10,30 @@ var ApiKeysActions = Reflux.createActions({
 
   fetchApiKeys: {
     asyncResult: true,
-    children: ['completed', 'failure']
+    loading    : true,
+    children    : ['completed', 'failure']
   },
   createApiKey: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateApiKey: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   removeApiKeys: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   resetApiKey: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   }
 });
 
