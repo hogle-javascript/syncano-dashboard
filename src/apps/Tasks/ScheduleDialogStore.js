@@ -32,7 +32,9 @@ var ScheduleDialogStore = Reflux.createStore({
       label     : null,
       crontab   : null,
       codebox   : null,
-      codeboxes : []
+      codeboxes : [
+        {payload: null, text: 'Loading...'}
+      ]
     }
   },
 
@@ -43,7 +45,13 @@ var ScheduleDialogStore = Reflux.createStore({
 
   getCodeBoxesDropdown: function () {
     console.debug('ScheduleDialogStore::getCodeBoxesDropdown');
-    this.trigger({codeboxes: CodeBoxesStore.getCodeBoxesDropdown()})
+    var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
+
+    if (codeboxes.length === 0) {
+      codeboxes = [{payload: null, text: 'No codeboxes, add one first'}];
+    }
+
+    this.trigger({codeboxes: codeboxes})
   },
 
   getCrontabDropdown: function() {
