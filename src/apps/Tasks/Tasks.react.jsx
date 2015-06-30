@@ -121,6 +121,14 @@ module.exports = React.createClass({
     SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
   },
 
+  showTriggerDialog: function () {
+    TriggersActions.showDialog();
+  },
+
+  showTriggerEditDialog: function () {
+    TriggersActions.showDialog(TriggersStore.getCheckedItem());
+  },
+
   render: function () {
     var checkedSchedules = SchedulesStore.getNumberOfChecked(),
         checkedTriggers  = TriggersStore.getNumberOfChecked();
@@ -176,7 +184,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Trigger"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
-              onClick       = {this.showDialog('editTriggerDialog')}
+              onClick       = {this.showTriggerEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -191,7 +199,7 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create Trigger"
-            onClick       = {this.showDialog('addTriggerDialog')}
+            onClick       = {this.showTriggerDialog}
             iconClassName = "synicon-arrow-up-bold" />
 
         </FabList>
@@ -209,7 +217,7 @@ module.exports = React.createClass({
           checkItem            = {TriggersActions.checkItem}
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
-          emptyItemHandleClick = {this.showDialog('addTriggerDialog')}
+          emptyItemHandleClick = {this.showTriggerDialog}
           emptyItemContent     = "Create a Trigger" />
 
       </Container>

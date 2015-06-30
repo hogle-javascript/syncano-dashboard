@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -13,35 +12,7 @@ var TriggersStore = Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     WaitForStoreMixin
-  ],
-
-  signalMenuItems: [
-    {
-      payload : 'post_create',
-      text    : 'create'
-    },
-    {
-      payload : 'post_update',
-      text    : 'update'
-    },
-    {
-      payload : 'post_delete',
-      text    : 'delete'
-    }
-  ],
-
-  classMenuItems: [
-    {
-      payload : 'user_profile',
-      text    : 'UserProfile'
-    },
-    {
-      payload : 'user_profile',
-      text    : 'UserProfile'
-    }
-
   ],
 
   getInitialState: function() {
@@ -58,7 +29,6 @@ var TriggersStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
   },
 
   setTriggers: function(items) {
@@ -76,14 +46,6 @@ var TriggersStore = Reflux.createStore({
     TriggersActions.fetchTriggers();
   },
 
-  getSignalsDropdown: function() {
-    return this.signalMenuItems;
-  },
-
-  getClassesDropdown: function() {
-    return this.classMenuItems;
-  },
-
   onFetchTriggers: function() {
     console.debug('TriggersStore::onFetchTriggers');
     this.data.isLoading = true;
@@ -94,20 +56,6 @@ var TriggersStore = Reflux.createStore({
     console.debug('TriggersStore::onFetchTriggersCompleted');
     this.data.isLoading = false;
     TriggersActions.setTriggers(items);
-  },
-
-  onCreateTriggerCompleted: function(payload) {
-    console.debug('TriggersStore::onCreateTriggerCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateTriggerCompleted: function(paylod) {
-    console.debug('TriggersStore::onUpdateTriggerCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveTriggersCompleted: function(payload) {

@@ -5,11 +5,12 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var TriggersActions = Reflux.createActions({
-  checkItem   : {},
-  uncheckAll  : {},
-  fetch       : {},
-  setTriggers : {},
-
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setTriggers   : {},
+  showDialog    : {},
+  dismissDialog : {},
   createTrigger: {
     asyncResult : true,
     asyncForm   : true,

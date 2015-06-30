@@ -51,7 +51,7 @@ var ScheduleDialogStore = Reflux.createStore({
       codeboxes = [{payload: null, text: 'No codeboxes, add one first'}];
     }
 
-    this.trigger({codeboxes: codeboxes})
+    this.trigger({codeboxes: codeboxes});
   },
 
   getCrontabDropdown: function() {

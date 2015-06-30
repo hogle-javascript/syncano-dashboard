@@ -70,6 +70,15 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
+  getClassesDropdown: function() {
+    return this.data.items.map(function(item) {
+      return {
+        payload : item.id,
+        text    : item.name
+      }
+    });
+  },
+
   setClasses: function(items) {
     this.data.items = Object.keys(items).map(function(item) {
       return items[item];

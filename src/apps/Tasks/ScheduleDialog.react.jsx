@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
   handleDialogShow: function() {
     console.info('ScheduleDialog::handleDialogShow');
-    CodeBoxesActions.fetchCodeBoxes();
+    CodeBoxesActions.fetch();
   },
 
   handleAddSubmit: function () {
