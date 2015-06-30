@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -13,19 +12,7 @@ var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     WaitForStoreMixin
-  ],
-
-  crontabItems: [
-    {
-      payload: '*/5 * * *',
-      text: 'Each 5 minutes'
-    },
-    {
-      payload: '0 * * * *',
-      text: 'Each round hour'
-    }
   ],
 
   getInitialState: function() {
@@ -42,7 +29,6 @@ var SchedulesStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
   },
 
   getSchedules: function(empty) {
@@ -62,10 +48,6 @@ var SchedulesStore = Reflux.createStore({
     SchedulesActions.fetchSchedules();
   },
 
-  getCrontabDropdown: function() {
-    return this.crontabItems;
-  },
-
   onFetchSchedules: function(items) {
     console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
@@ -76,20 +58,6 @@ var SchedulesStore = Reflux.createStore({
     console.debug('SchedulesStore::onFetchSchedulesCompleted');
     this.data.isLoading = false;
     SchedulesActions.setSchedules(items);
-  },
-
-  onCreateScheduleCompleted: function(payload) {
-    console.debug('SchedulesStore::onCreateScheduleCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateScheduleCompleted: function(paylod) {
-    console.debug('SchedulesStore::onUpdateScheduleCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveSchedulesCompleted: function(payload) {

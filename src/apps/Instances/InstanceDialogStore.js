@@ -7,7 +7,6 @@ var Reflux           = require('reflux'),
     //Stores & Actions
     InstancesActions = require('./InstancesActions');
 
-
 var InstanceDialogStore = Reflux.createStore({
   listenables : InstancesActions,
   mixins      : [

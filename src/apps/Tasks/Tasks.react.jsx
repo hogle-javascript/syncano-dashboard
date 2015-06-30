@@ -1,36 +1,36 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
-    Show                     = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
 
-    SchedulesActions         = require('./SchedulesActions'),
-    SchedulesStore           = require('./SchedulesStore'),
-    TriggersActions          = require('./TriggersActions'),
-    TriggersStore            = require('./TriggersStore'),
+    SchedulesActions      = require('./SchedulesActions'),
+    SchedulesStore        = require('./SchedulesStore'),
+    TriggersActions       = require('./TriggersActions'),
+    TriggersStore         = require('./TriggersStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    FabListItem              = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    SchedulesList            = require('./SchedulesList.react'),
-    TriggersList             = require('./TriggersList.react'),
-    SchedulesAddDialog       = require('./SchedulesAddDialog.react'),
-    TriggersAddDialog        = require('./TriggersAddDialog.react');
+    SchedulesList         = require('./SchedulesList.react'),
+    TriggersList          = require('./TriggersList.react'),
+    ScheduleDialog        = require('./ScheduleDialog.react'),
+    TriggerDialog         = require('./TriggerDialog.react');
 
 
 module.exports = React.createClass({
@@ -54,8 +54,8 @@ module.exports = React.createClass({
     this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Tasks::componentWillMount');
+  componentDidMount: function() {
+    console.info('Tasks::componentDidMount');
     SchedulesStore.fetch();
     TriggersStore.fetch();
   },
@@ -64,21 +64,6 @@ module.exports = React.createClass({
   initDialogs: function () {
 
     return [
-      // Triggers
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : "addTriggerDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : "editTriggerDialog",
-          mode : "edit"
-        }
-      },
       {
         dialog: Dialog,
         params: {
@@ -94,22 +79,6 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
-        }
-      },
-
-      // Schedules
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : "addScheduleDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : "editScheduleDialog",
-          mode : "edit"
         }
       },
       {
@@ -144,12 +113,22 @@ module.exports = React.createClass({
     TriggersActions.uncheckAll();
   },
 
+  showScheduleDialog: function () {
+    SchedulesActions.showDialog();
+  },
+
+  showScheduleEditDialog: function () {
+    SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
+  },
+
   render: function () {
     var checkedSchedules = SchedulesStore.getNumberOfChecked(),
         checkedTriggers  = TriggersStore.getNumberOfChecked();
 
     return (
       <Container>
+        <TriggerDialog />
+        <ScheduleDialog />
         {this.getDialogs()}
 
         <Show if={checkedSchedules > 0}>
@@ -171,7 +150,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Schedule"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
-              onClick       = {this.showDialog('editScheduleDialog')}
+              onClick       = {this.showScheduleEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -207,7 +186,7 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create schedule"
-            onClick       = {this.showDialog('addScheduleDialog')}
+            onClick       = {this.showScheduleDialog}
             iconClassName = "synicon-camera-timer" />
 
           <FabListItem
@@ -222,7 +201,7 @@ module.exports = React.createClass({
           checkItem            = {SchedulesActions.checkItem}
           isLoading            = {this.state.isLoading}
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addScheduleDialog')}
+          emptyItemHandleClick = {this.showScheduleDialog}
           emptyItemContent     = "Create a Schedule" />
 
         <TriggersList

@@ -3,10 +3,16 @@ var DialogMixin = {
   componentWillUpdate: function(nextProps, nextState) {
     console.debug('DialogMixin::componentWillUpdate');
 
+    if (this.state.visible === nextState.visible) {
+      return;
+    }
+
     if (nextState.visible === false) {
-      this.refs.dialog.dismiss();
-    } else if (nextState.visible === true) {
-      this.refs.dialog.show();
+      return this.refs.dialog.dismiss();
+    }
+
+    if (nextState.visible === true) {
+      return this.refs.dialog.show();
     }
   },
 

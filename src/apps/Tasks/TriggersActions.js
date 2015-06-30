@@ -39,7 +39,7 @@ TriggersActions.createTrigger.listen(function(payload) {
     .catch(this.failure);
 });
 
-TriggersActions.fetchTriggers.listen(function(payload) {
+TriggersActions.fetchTriggers.listen(function() {
   console.info('TriggersActions::fetchTriggers');
   Connection
     .Triggers

@@ -3,7 +3,6 @@ var Reflux     = require('reflux'),
     Connection = Syncano.get(),
     D          = Syncano.D;
 
-
 var GroupsActions = Reflux.createActions({
   checkItem     : {},
   uncheckAll    : {},
