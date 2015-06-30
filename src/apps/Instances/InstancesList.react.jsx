@@ -46,9 +46,6 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount: function() {
-  },
-
   componentWillReceiveProps: function(nextProps, nextState) {
     this.setState({items : nextProps.items})
   },
