@@ -9,25 +9,8 @@ module.exports = React.createClass({
 
   mixins: [
     HeaderMixin,
-    State,
+    State
   ],
-
-  headerBreadcrumbs: function () {
-    var instanceName = this.getParams().instanceName;
-    return [{
-      route: 'instances',
-      label: 'Instances',
-      params: {instanceName: instanceName}
-    },{
-      route: 'instance',
-      label: instanceName,
-      params: {instanceName: instanceName}
-    },{
-      route: 'schedules',
-      label: 'Schedules',
-      params: {instanceName: instanceName}
-    }]
-  },
 
   render: function () {
     return (

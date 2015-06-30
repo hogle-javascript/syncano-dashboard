@@ -2,9 +2,7 @@ var React         = require('react'),
     Radium        = require('radium'),
 
     mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable,
-
-    MaterialIcon  = require('../Icon/MaterialIcon.react');
+    StylePropable = mui.Mixins.StylePropable;
 
 
 module.exports = Radium(React.createClass({

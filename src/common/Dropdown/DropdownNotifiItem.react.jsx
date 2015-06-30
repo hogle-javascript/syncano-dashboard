@@ -12,8 +12,6 @@ var React               = require('react'),
     Loading             = require('../../common/Loading/Loading.react.jsx'),
     LoadingItem         = require('../../common/ColumnList/LoadingItem.react');
 
-require('./Dropdown.css');
-
 
 module.exports = React.createClass({
 

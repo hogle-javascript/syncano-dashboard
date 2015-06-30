@@ -30,7 +30,6 @@ var React                    = require('react'),
     AdminsList               = require('./AdminsList.react'),
     AddDialog                = require('./AdminsAddDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'Admins',
@@ -58,7 +57,7 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       {
@@ -139,7 +138,7 @@ module.exports = React.createClass({
 
   handleDeleteAdmin: function() {
     console.info('Admins::handleDelete');
-    AdminsActions.removeAdmins(AdminsStore.getCheckedItems());
+    AdminsActions.removeAdmin(AdminsStore.getCheckedItems());
   },
 
   handleResendInvitation: function() {
@@ -157,17 +156,17 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
-  checkAdminItem: function(id, state){
+  checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
   },
 
-  checkInvitationItem: function(id, state){
+  checkInvitationItem: function(id, state) {
     AdminsActions.uncheckAll();
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  render: function () {
+  render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
         checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
@@ -244,7 +243,7 @@ module.exports = React.createClass({
           emptyItemContent     = "Invite administrators"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
-          items                = {this.state.invitations.items} />
+          items                = {AdminsInvitationsStore.getPendingInvitations()} />
 
       </Container>
     );

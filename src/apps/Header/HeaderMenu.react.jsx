@@ -48,7 +48,7 @@ module.exports = React.createClass({
       },
       menu: {
         backgroundColor : 'transparent',
-        height          : 60
+        height          : 56
       },
       menuItemStyles: {
         color           : this.context.muiTheme.palette.primary3Color,

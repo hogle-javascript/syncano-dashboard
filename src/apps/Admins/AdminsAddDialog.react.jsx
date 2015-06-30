@@ -20,7 +20,6 @@ var React                    = require('react'),
     Dialog                    = mui.Dialog,
     Loading                   = require('../../common/Loading/Loading.react.jsx');
 
-
 module.exports = React.createClass({
 
   displayName: 'AdminInvitationDialog',
@@ -66,30 +65,29 @@ module.exports = React.createClass({
     var checkedItem = this.props.store.getCheckedItem();
     if (checkedItem) {
       this.setState({
-            email : checkedItem.email,
-            role  : checkedItem.role
+        email : checkedItem.email,
+        role  : checkedItem.role
       });
     }
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     AdminsInvitationsActions.createInvitation({
       email : this.state.email,
       role  : this.state.role
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     var checkedItem = this.props.store.getCheckedItem();
     AdminsActions.updateAdmin(checkedItem.id, {
       role  : this.state.role
     });
   },
 
-  render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
-
+  render: function() {
+    var title       = this.props.mode === 'edit' ? 'Edit' : 'Invite',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -121,7 +119,7 @@ module.exports = React.createClass({
               ref               = "email"
               name              = "email"
               fullWidth         = {true}
-              disabled          = {this.props.mode === 'edit' ? true: false}
+              disabled          = {this.props.mode === 'edit' ? true : false}
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
               hintText          = "Email of the administrator"

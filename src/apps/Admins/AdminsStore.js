@@ -54,6 +54,7 @@ var AdminsStore = Reflux.createStore({
     this.listenToForms();
     this.setLoadingStates();
   },
+
   refreshData: function() {
     console.debug('AdminsStore::refreshData');
     AdminsActions.fetchAdmins();
@@ -97,7 +98,7 @@ var AdminsStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

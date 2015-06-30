@@ -60,7 +60,6 @@ module.exports = React.createClass({
   render: function () {
     var title       = this.hasEditMode() ? 'Edit': 'Add',
         submitLabel = 'Confirm',
-
         dialogStandardActions = [
           {
             ref     : 'cancel',

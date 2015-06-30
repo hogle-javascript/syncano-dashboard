@@ -146,11 +146,11 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  render: function () {
+  render: function() {
     var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
-      <Container>
+      <Container id='instances'>
         {this.getDialogs()}
 
         <Show if={checkedInstances > 0}>

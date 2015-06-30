@@ -21,7 +21,6 @@ var React             = require('react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');

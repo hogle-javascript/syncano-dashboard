@@ -9,7 +9,9 @@ var React        = require('react'),
 
     mui          = require('material-ui'),
     Paper        = mui.Paper,
-    RaisedButton = mui.RaisedButton;
+    RaisedButton = mui.RaisedButton,
+
+    Logo         = require('../../common/Logo/Logo.react');
 
 
 module.exports = React.createClass({
@@ -55,7 +57,7 @@ module.exports = React.createClass({
     return (
       <div className="account-container" ref="loginPage">
         <div className="account-logo">
-          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
+          <Link to="login"><Logo className="logo-blue" /></Link>
         </div>
         <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">
@@ -64,14 +66,18 @@ module.exports = React.createClass({
           <div>
             <p
               className = "vm-4-b"
-              style     = {styles.text}>Sweet! Your new password has now been set and you can log in.</p>
+              style     = {styles.text}
+            >
+              Sweet! Your new password has now been set and you can log in.
+            </p>
 
             <RaisedButton
               style      = {styles.button}
               labelStyle = {styles.buttonLabel}
               label      = "Go to dashboard"
               onClick    = {this.handleButtonClick}
-              primary    = {true} />
+              primary    = {true}
+            />
           </div>
         </Paper>
       </div>

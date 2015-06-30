@@ -113,7 +113,7 @@ var DataObjectsStore = Reflux.createStore({
       {
         name    : 'Group',
         checked : true
-      },
+      }
     ]
   },
 
@@ -123,7 +123,7 @@ var DataObjectsStore = Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjects: function(items) {
+  onFetchDataObjects: function() {
     console.debug('DataObjectsStore::onFetchDataObjects');
     //this.data.isLoading = true;
     this.trigger(this.data);
@@ -135,30 +135,30 @@ var DataObjectsStore = Reflux.createStore({
     DataObjectsActions.setDataObjects(items);
   },
 
-  onCreateDataObjectCompleted: function(payload) {
+  onCreateDataObjectCompleted: function() {
     console.debug('DataObjectsStore::onCreateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshDataObjects();
   },
 
-  onUpdateDataObjectCompleted: function(paylod) {
+  onUpdateDataObjectCompleted: function() {
     console.debug('DataObjectsStore::onUpdateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshDataObjects();
   },
-  onRemoveDataObjects: function(payload) {
+  onRemoveDataObjects: function() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onRemoveDataObjectsCompleted: function(payload) {
+  onRemoveDataObjectsCompleted: function() {
     this.data.hideDialogs = true;
     this.data.selectedRows = null;
     this.trigger(this.data);
     this.refreshDataObjects();
-  },
+  }
 
 });
 

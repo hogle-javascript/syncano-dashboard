@@ -53,6 +53,18 @@ var AdminsInvitationsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  getPendingInvitations: function() {
+    console.debug('AdminsInvitationsStore::getPendingInvitations');
+
+    var isInvitationPending = function(element) {
+      return (element.state === 'new');
+    };
+
+    var pendingInvitations = this.data.items.filter(isInvitationPending);
+
+    return pendingInvitations;
+  },
+
   onFetchInvitations: function(items) {
     this.trigger(this.data);
   },

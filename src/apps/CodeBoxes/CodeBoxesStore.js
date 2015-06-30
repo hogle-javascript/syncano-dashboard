@@ -67,6 +67,10 @@ var CodeBoxesStore = Reflux.createStore({
     CodeBoxesActions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
   },
 
+  getItems: function() {
+    return this.data.items;
+  },
+
   getEditorMode: function(codeBox) {
     // jscs:disable
     return this.langMap[codeBox.runtime_name];
