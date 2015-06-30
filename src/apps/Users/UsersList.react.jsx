@@ -41,14 +41,14 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
@@ -81,12 +81,12 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function () {
+  getList: function() {
     if (this.state.isLoading) {
       return <LoadingItem />;
     }
 
-    var items = this.state.items.map(function (item) {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item)
     }.bind(this));
 
