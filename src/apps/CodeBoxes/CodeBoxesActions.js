@@ -1,6 +1,7 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var CodeBoxesActions = Reflux.createActions({
   checkItem           : {},
@@ -9,7 +10,11 @@ var CodeBoxesActions = Reflux.createActions({
   fetch               : {},
   setCodeBoxes        : {},
   setCodeBoxTraces    : {},
+  setCodeBoxRuntimes  : {},
   setCurrentCodeBoxId : {},
+
+  showDialog          : {},
+  dismissDialog       : {},
 
   fetchCodeBoxes: {
     asyncResult : true,
@@ -91,14 +96,15 @@ CodeBoxesActions.runCodeBox.listen(function(params) {
     .catch(this.failure);
 });
 
-CodeBoxesActions.removeCodeBoxes.listen(function(idArray) {
+CodeBoxesActions.removeCodeBoxes.listen(function(ids) {
   console.info('CodeBoxesActions::removeCodeBoxes');
-  idArray.map(function(id) {
-    Connection
-      .CodeBoxes.remove(id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+  var promises = ids.map(function(id) {
+    return Connection.CodeBoxes.remove(id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 CodeBoxesActions.fetchCodeBoxTrace.listen(function(codeboxId, traceId) {
