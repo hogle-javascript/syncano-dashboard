@@ -18,7 +18,7 @@ var UserDialogStore = Reflux.createStore({
     return {
       username : '',
       password : ''
-    }
+    };
   },
 
   init: function() {

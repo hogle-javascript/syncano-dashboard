@@ -20,7 +20,7 @@ var ApiKeyDialogStore = Reflux.createStore({
       description       : '',
       ignore_acl        : false,
       allow_user_create : false
-    }
+    };
     // jscs:enable
   },
 
