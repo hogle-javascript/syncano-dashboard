@@ -15,7 +15,6 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     DataObjectsActions  = require('./DataObjectsActions');
 
-
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
   mixins      : [
