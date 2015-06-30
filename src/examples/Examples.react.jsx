@@ -2,7 +2,7 @@ var React                = require('react'),
     mui                  = require('material-ui'),
     gravatar             = require('gravatar'),
 
-    ThemeManager         = mui.Styles.ThemeManager(),
+    ThemeManager         = new mui.Styles.ThemeManager(),
     TextField            = mui.TextField,
     DatePicker           = mui.DatePicker,
     TimePicker           = mui.TimePicker,
@@ -12,7 +12,7 @@ var React                = require('react'),
     Snackbar             = mui.Snackbar,
     FlatButton           = mui.FlatButton,
     List                 = mui.List,
-    MuiListItem          = mui.ListItem,
+    ListItem             = mui.ListItem,
     ListDivider          = mui.ListDivider,
     Avatar               = mui.Avatar,
     Toggle               = mui.Toggle,
@@ -21,7 +21,7 @@ var React                = require('react'),
     IconMenu             = mui.IconMenu,
     Menu2                = mui.Menu,       // this menu is from lib/menu/menu
     MenuItem2            = mui.MenuItem,   // this menu item is from lib/menu/menu-items
-    FieldSelectMUI       = mui.SelectField,
+    SelectField          = mui.SelectField,
     ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
     Menu                 = require('material-ui/lib/menus/menu'),
     MenuItem             = require('material-ui/lib/menus/menu-item'),
@@ -48,7 +48,6 @@ var React                = require('react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
     SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
-    ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
@@ -443,19 +442,19 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h4>Material List items</h4>
           <List>
-            <MuiListItem
+            <ListItem
               leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
               secondaryTextLines={1} 
               onClick={dummyClick} >
               Name LastName
-            </MuiListItem>
-            <MuiListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</MuiListItem>
-            <MuiListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</MuiListItem>
+            </ListItem>
+            <ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</ListItem>
+            <ListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</ListItem>
             <ListDivider />
-            <MuiListItem leftAvatar={<Avatar src={avatarUrl} />}>item with gravatar</MuiListItem>
-            <MuiListItem>item empty</MuiListItem>
-            <MuiListItem
+            <ListItem leftAvatar={<Avatar src={avatarUrl} />}>item with gravatar</ListItem>
+            <ListItem>item empty</ListItem>
+            <ListItem
               leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText={
                 <p>
@@ -465,7 +464,7 @@ module.exports = React.createClass({
                 </p>
               }
               secondaryTextLines={2} >item with gravatar and text
-            </MuiListItem>
+            </ListItem>
             <ListDivider inset={true} />
           </List>
         </div>
@@ -488,28 +487,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h4>Label</h4>
           <Label text={text}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItem (card)</h4>
-          <ListItem
-            handleClick={dummyClick}
-            item={item}
-            style={"cards"}
-            dropdownVisible={false}
-            avatarStyle={"icon"}
-            actions={dropdownItems} />
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItem (stream)</h4>
-          <ListItem
-            handleClick={dummyClick}
-            item={item}
-            style={"stream"}
-            dropdownVisible={false}
-            avatarStyle={"icon"}
-            actions={dropdownItems}/>
         </div>
 
         <div className="exampleBox">
@@ -618,8 +595,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldSelect (Drop Down from material UI)</h2>
-          <FieldSelectMUI
+          <h2>SelectField (Drop Down from material UI)</h2>
+          <SelectField
             menuItems={fieldSelectMUI} />
         </div>
 
@@ -749,8 +726,8 @@ module.exports = React.createClass({
           <h2>Loading</h2>
           <Loading 
             type    = "linear"
-            visible = {true} />
-          <Loading visible={true}/>
+            show    = {true} />
+          <Loading show={true}/>
         </div>
 
         <div className="exampleBox">
