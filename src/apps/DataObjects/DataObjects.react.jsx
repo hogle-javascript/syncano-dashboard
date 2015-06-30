@@ -38,7 +38,8 @@ var React              = require('react'),
 
     Loading            = require('../../common/Loading/Loading.react'),
     ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
-    CheckAvatar        = require('./CheckAvatar.react');
+    CheckAvatar        = require('./CheckAvatar.react'),
+    DataObjectDialog   = require('./DataObjectDialog.react');
 
 module.exports = React.createClass({
 
@@ -104,6 +105,10 @@ module.exports = React.createClass({
     }]
   },
 
+  showDataObjectDialog: function() {
+    DataObjectsActions.showDialog();
+  },
+
   handleDelete: function() {
     console.info('DataObjects::handleDelete');
     DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
@@ -151,19 +156,24 @@ module.exports = React.createClass({
           style     = {{margin: 50}} >
           <div>Loaded {tableData.length} data objects</div>
         </div>
-        <div
-          className = "row align-center"
-          style     = {{margin: 50}} >
-          <RaisedButton
-            label   = "Load more"
-            onClick = {this.handleMoreRows}/>
-        </div>
+        <Show if={this.state.hasNextPage}>
+          <div
+            className = "row align-center"
+            style     = {{margin: 50}} >
+            <RaisedButton
+              label   = "Load more"
+              onClick = {this.handleMoreRows}/>
+          </div>
+        </Show>
       </div>
     )
   },
 
   handleMoreRows: function() {
-    this.setState({pages: this.state.pages + 1})
+    DataObjectsActions.subFetchDataObjects({
+      className : this.state.classObj.name,
+      lastItem  : this.state.items[this.state.items.length - 1]
+    });
   },
 
   handleBackClick: function() {
@@ -191,12 +201,14 @@ module.exports = React.createClass({
     }
 
     return (
-      
+
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
+        <DataObjectDialog />
+
         <div className="col-flex-1" style={{padding: 0}}>
-          
+
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
           
             <ToolbarGroup float="left" style={{padding: '0px'}}>
@@ -211,7 +223,13 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-              
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-plus"
+                tooltip   = "Add Data Objects"
+                onClick   = {this.showDataObjectDialog} />
+
               <IconButton
                 style     = {{fontSize: 25, marginTop: 5}}
                 className = "synicon-delete"
@@ -223,7 +241,7 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
           </Toolbar>
-          
+
           <div style={{clear: 'both', height: '100%'}}>
             <Show if={this.state.isLoading}>
               <Loading type='linear' />

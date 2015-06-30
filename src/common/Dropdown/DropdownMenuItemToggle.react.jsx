@@ -1,8 +1,9 @@
-var React       = require('react');
+var React    = require('react'),
+    mui      = require('material-ui'),
 
 //var ViewActions = require('../actions/ViewActions');
 
-var Icon        = require('../Icon/Icon.react');
+    FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
@@ -14,10 +15,12 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var type = this.props.action.selected ? "checkbox-marked" : "checkbox-blank";
+    var type = this.props.action.selected ? "synicon-checkbox-marked" : "synicon-checkbox-blank";
     return (
-      <div className="dropdown-menu-item dropdown-menu-item-toggle" onClick={this.handleClick}>
-        <Icon icon={type} />
+      <div
+        className = "dropdown-menu-item dropdown-menu-item-toggle"
+        onClick   = {this.handleClick}>
+        <FontIcon className={type} />
         <span>{this.props.action.displayName}</span>
       </div>
     );

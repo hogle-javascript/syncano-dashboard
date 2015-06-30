@@ -57,7 +57,7 @@ module.exports = (
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
-        <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
+        <Redirect name="instance" from="instance" to="classes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />

@@ -9,7 +9,8 @@ var SchedulesActions = Reflux.createActions({
   uncheckAll   : {},
   fetch        : {},
   setSchedules : {},
-
+  showDialog   : {},
+  dismissDialog: {},
   fetchSchedules: {
     asyncResult : true,
     children    : ['completed', 'failure']
@@ -40,7 +41,7 @@ SchedulesActions.createSchedule.listen(function(payload) {
     .catch(this.failure);
 });
 
-SchedulesActions.fetchSchedules.listen(function(payload) {
+SchedulesActions.fetchSchedules.listen(function() {
   console.info('SchedulesActions::fetchSchedules');
   Connection
     .Schedules

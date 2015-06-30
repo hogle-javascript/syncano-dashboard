@@ -3,11 +3,15 @@ var Reflux         = require('reflux'),
     Connection     = require('../Session/Connection').get(),
     D              = Syncano.D,
 
+    Constants      = require('../../constants/Constants'),
     ClassesActions = require('../Classes/ClassesActions');
 
 var DataObjectsActions = Reflux.createActions({
   checkItem             : {},
   uncheckAll            : {},
+
+  showDialog            : {},
+  dismissDialog         : {},
 
   fetch                 : {},
   setDataObjects        : {},
@@ -20,6 +24,10 @@ var DataObjectsActions = Reflux.createActions({
     children    : ['completed', 'failure']
   },
   fetchDataObjects: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
+  },
+  subFetchDataObjects: {
     asyncResult : true,
     children    : ['completed', 'failure']
   },
@@ -47,10 +55,27 @@ DataObjectsActions.fetchCurrentClassObj.listen(function(className) {
 });
 
 DataObjectsActions.fetchDataObjects.listen(function(className) {
-  console.info('DataObjectsActions::fetchDataObjects');
+  console.info('DataObjectsActions::fetchDataObjects', className);
   Connection
     .DataObjects
-    .list(className)
+    .list(className, {
+      'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
+      'order_by'  : '-created_at',
+    })
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+DataObjectsActions.subFetchDataObjects.listen(function(payload) {
+  console.info('DataObjectsActions::subFetchDataObjects');
+
+  Connection
+    .DataObjects
+    .list(payload.className, {
+      'last_pk'   : payload.lastItem.id,
+      'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
+      'order_by'  : '-created_at'
+    })
     .then(this.completed)
     .catch(this.failure);
 });
@@ -59,7 +84,7 @@ DataObjectsActions.createDataObject.listen(function(payload) {
   console.info('DataObjectsActions::createDataObject', payload);
   Connection
     .DataObjects
-    .create(payload)
+    .create(payload.className, payload.payload)
     .then(this.completed)
     .catch(this.failure);
 });

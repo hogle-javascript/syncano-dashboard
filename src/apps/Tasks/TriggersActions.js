@@ -5,11 +5,12 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var TriggersActions = Reflux.createActions({
-  checkItem   : {},
-  uncheckAll  : {},
-  fetch       : {},
-  setTriggers : {},
-
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setTriggers   : {},
+  showDialog    : {},
+  dismissDialog : {},
   createTrigger: {
     asyncResult : true,
     asyncForm   : true,
@@ -39,7 +40,7 @@ TriggersActions.createTrigger.listen(function(payload) {
     .catch(this.failure);
 });
 
-TriggersActions.fetchTriggers.listen(function(payload) {
+TriggersActions.fetchTriggers.listen(function() {
   console.info('TriggersActions::fetchTriggers');
   Connection
     .Triggers

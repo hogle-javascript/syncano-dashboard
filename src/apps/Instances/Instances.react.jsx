@@ -1,19 +1,19 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
-    Radium = require('radium'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
+    Radium                = require('radium'),
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
-    Show              = require('../../common/Show/Show.react'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    InstancesActions = require('./InstancesActions'),
-    InstancesStore   = require('./InstancesStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    InstancesActions      = require('./InstancesActions'),
+    InstancesStore        = require('./InstancesStore'),
 
     // Components
     mui                   = require('material-ui'),
@@ -25,8 +25,8 @@ var React  = require('react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    InstancesList = require('./InstancesList.react'),
-    AddDialog     = require('./InstancesAddDialog.react');
+    InstancesList         = require('./InstancesList.react'),
+    InstanceDialog        = require('./InstanceDialog.react');
 
 
 require('./Instances.sass');
@@ -52,20 +52,6 @@ module.exports = Radium(React.createClass({
     var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
 
     return [{
-      dialog: AddDialog,
-      params: {
-        key  : "addInstanceDialog",
-        ref  : "addInstanceDialog",
-        mode : "add"
-      }
-    }, {
-      dialog: AddDialog,
-      params: {
-        key  : "editInstanceDialog",
-        ref  : "editInstanceDialog",
-        mode : "edit"
-      }
-    },{
       dialog: ColorIconPickerDialog,
       params: {
         key          : "pickColorIconDialog",
@@ -146,11 +132,20 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  render: function() {
+  showInstanceDialog: function () {
+    InstancesActions.showDialog();
+  },
+
+  showInstanceEditDialog: function () {
+    InstancesActions.showDialog(InstancesStore.getCheckedItem());
+  },
+
+  render: function () {
     var checkedInstances = InstancesStore.getNumberOfChecked();
 
     return (
-      <Container id='instances'>
+      <Container id="instances">
+        <InstanceDialog />
         {this.getDialogs()}
 
         <Show if={checkedInstances > 0}>
@@ -172,7 +167,7 @@ module.exports = Radium(React.createClass({
               label         = "Click here to edit Instance"
               mini          = {true}
               disabled      = {checkedInstances > 1}
-              onClick       = {this.showDialog('editInstanceDialog')}
+              onClick       = {this.showInstanceEditDialog}
               iconClassName = "synicon-pencil" />
 
             <FabListItem
@@ -189,7 +184,7 @@ module.exports = Radium(React.createClass({
         <FabList>
           <FabListItem
             label         = "Click here to add Instances"
-            onClick       = {this.showDialog('addInstanceDialog')}
+            onClick       = {this.showInstanceDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 

@@ -144,7 +144,7 @@ gulp.task('revision:index', ['clean', 'iconfont', 'clean:unrevisioned', 'revrepl
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
-    .pipe(gulp.dest(paths.dist))
+    .pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function() {

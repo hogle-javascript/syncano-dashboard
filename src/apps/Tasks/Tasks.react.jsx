@@ -12,8 +12,6 @@ var React                 = require('react'),
     // Stores and Actions
     SessionActions        = require('../Session/SessionActions'),
     SessionStore          = require('../Session/SessionStore'),
-    ClassesActions        = require('../Classes/ClassesActions'),
-    CodeBoxesActions      = require('../CodeBoxes/CodeBoxesActions'),
     SchedulesActions      = require('./SchedulesActions'),
     SchedulesStore        = require('./SchedulesStore'),
     TriggersActions       = require('./TriggersActions'),
@@ -30,8 +28,8 @@ var React                 = require('react'),
     // Local components
     SchedulesList         = require('./SchedulesList.react'),
     TriggersList          = require('./TriggersList.react'),
-    SchedulesAddDialog    = require('./SchedulesAddDialog.react'),
-    TriggersAddDialog     = require('./TriggersAddDialog.react');
+    ScheduleDialog        = require('./ScheduleDialog.react'),
+    TriggerDialog         = require('./TriggerDialog.react');
 
 module.exports = React.createClass({
 
@@ -54,33 +52,16 @@ module.exports = React.createClass({
     this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Tasks::componentWillMount');
-    ClassesActions.fetch();
-    CodeBoxesActions.fetch();
-    SchedulesActions.fetch();
-    TriggersActions.fetch();
+  componentDidMount: function() {
+    console.info('Tasks::componentDidMount');
+    SchedulesStore.fetch();
+    TriggersStore.fetch();
   },
 
   // Dialogs config
   initDialogs: function() {
 
     return [
-      // Triggers
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : 'addTriggerDialog',
-          mode : 'add'
-        }
-      },
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : 'editTriggerDialog',
-          mode : 'edit'
-        }
-      },
       {
         dialog: Dialog,
         params: {
@@ -96,22 +77,6 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
-        }
-      },
-
-      // Schedules
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : 'addScheduleDialog',
-          mode : 'add'
-        }
-      },
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : 'editScheduleDialog',
-          mode : 'edit'
         }
       },
       {
@@ -146,12 +111,30 @@ module.exports = React.createClass({
     TriggersActions.uncheckAll();
   },
 
-  render: function() {
+  showScheduleDialog: function () {
+    SchedulesActions.showDialog();
+  },
+
+  showScheduleEditDialog: function () {
+    SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
+  },
+
+  showTriggerDialog: function () {
+    TriggersActions.showDialog();
+  },
+
+  showTriggerEditDialog: function () {
+    TriggersActions.showDialog(TriggersStore.getCheckedItem());
+  },
+
+  render: function () {
     var checkedSchedules = SchedulesStore.getNumberOfChecked(),
         checkedTriggers  = TriggersStore.getNumberOfChecked();
 
     return (
       <Container>
+        <TriggerDialog />
+        <ScheduleDialog />
         {this.getDialogs()}
 
         <Show if={checkedSchedules > 0}>
@@ -173,7 +156,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Schedule"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
-              onClick       = {this.showDialog('editScheduleDialog')}
+              onClick       = {this.showScheduleEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -199,7 +182,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Trigger"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
-              onClick       = {this.showDialog('editTriggerDialog')}
+              onClick       = {this.showTriggerEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -209,12 +192,12 @@ module.exports = React.createClass({
 
           <FabListItem
             label         = "Click here to create schedule"
-            onClick       = {this.showDialog('addScheduleDialog')}
+            onClick       = {this.showScheduleDialog}
             iconClassName = "synicon-camera-timer" />
 
           <FabListItem
             label         = "Click here to create Trigger"
-            onClick       = {this.showDialog('addTriggerDialog')}
+            onClick       = {this.showTriggerDialog}
             iconClassName = "synicon-arrow-up-bold" />
 
         </FabList>
@@ -224,7 +207,7 @@ module.exports = React.createClass({
           checkItem            = {SchedulesActions.checkItem}
           isLoading            = {this.state.isLoading}
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addScheduleDialog')}
+          emptyItemHandleClick = {this.showScheduleDialog}
           emptyItemContent     = "Create a Schedule" />
 
         <TriggersList
@@ -232,7 +215,7 @@ module.exports = React.createClass({
           checkItem            = {TriggersActions.checkItem}
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
-          emptyItemHandleClick = {this.showDialog('addTriggerDialog')}
+          emptyItemHandleClick = {this.showTriggerDialog}
           emptyItemContent     = "Create a Trigger" />
 
       </Container>

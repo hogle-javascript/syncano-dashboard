@@ -14,7 +14,6 @@ var React             = require('react'),
     // Components
     mui               = require('material-ui'),
     Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
 
     // List
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),

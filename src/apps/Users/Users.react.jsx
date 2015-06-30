@@ -72,45 +72,46 @@ module.exports = React.createClass({
     GroupsActions.uncheckAll();
   },
 
-  showUserDialog: function () {
+  showUserDialog: function() {
     UsersActions.showDialog();
   },
 
-  showUserEditDialog: function () {
+  showUserEditDialog: function() {
     UsersActions.showDialog(UsersStore.getCheckedItem());
   },
 
-  showGroupDialog: function () {
+  showGroupDialog: function() {
     GroupsActions.showDialog();
   },
 
-  showGroupEditDialog: function () {
+  showGroupEditDialog: function() {
     GroupsActions.showDialog(GroupsStore.getCheckedItem());
   },
 
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
       // Groups
       {
         dialog: Dialog,
         params: {
-          ref:    "removeGroupDialog",
-          title:  "Delete Group",
+          ref:    'removeGroupDialog',
+          title:  'Delete Group',
           actions: [
             {
               text    : 'Cancel',
-              onClick : this.handleCancel},
+              onClick : this.handleCancel
+            },
             {
-              text    : "Yes, I'm sure",
+              text    : 'Yes, I\'m sure',
               onClick : this.handleRemoveGroups}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?',
+            'Do you really want to delete ' + GroupsStore.getCheckedItems().length + ' groups?',
             <Loading
-              type     = "linear"
-              position = "bottom"
+              type     = 'linear'
+              position = 'bottom'
               show     = {this.state.groups.isLoading} />
           ]
         }
@@ -120,18 +121,18 @@ module.exports = React.createClass({
       {
         dialog: Dialog,
         params: {
-          ref:    "removeUserDialog",
-          title:  "Delete User",
+          ref:    'removeUserDialog',
+          title:  'Delete User',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveUsers}
+            {text: 'Yes, I\'m sure', onClick: this.handleRemoveUsers}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?',
+            'Do you really want to delete ' + UsersStore.getCheckedItems().length + ' users?',
             <Loading
-              type     = "linear"
-              position = "bottom"
+              type     = 'linear'
+              position = 'bottom'
               show     = {this.state.users.isLoading} />
           ]
         }
@@ -139,7 +140,7 @@ module.exports = React.createClass({
     ]
   },
 
-  render: function () {
+  render: function() {
     var checkedUsers  = UsersStore.getNumberOfChecked(),
         checkedGroups = GroupsStore.getNumberOfChecked();
 

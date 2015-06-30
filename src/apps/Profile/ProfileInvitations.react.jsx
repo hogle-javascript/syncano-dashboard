@@ -168,7 +168,7 @@ module.exports = React.createClass({
     }
 
     var items = this.state.items.map(function (item) {
-      return this.renderItem(item)
+      return this.renderItem(item);
     }.bind(this));
 
     if (items.length > 0) {

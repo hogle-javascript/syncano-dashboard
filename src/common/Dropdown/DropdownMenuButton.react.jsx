@@ -1,11 +1,12 @@
-var React = require('react');
-var classNames = require('classnames');
+var React      = require('react');
+    classNames = require('classnames'),
+    mui        = require('material-ui'),
 
 //var ViewActions = require('../actions/ViewActions');
-var Constants = require('../../constants/Constants');
+    Constants  = require('../../constants/Constants'),
 
-var Icon = require('../Icon/Icon.react');
-var Mixins = require('../../mixins/mixins');
+    FontIcon   = mui.FontIcon,
+    Mixins     = require('../../mixins/mixins');
 
 module.exports = React.createClass({
 
@@ -15,8 +16,10 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div className="dropdown-menu-button" onClick={this.handleDropdownClick}>
-        <Icon icon={this.props.action.iconType} />
+      <div
+        className = "dropdown-menu-button"
+        onClick   = {this.handleDropdownClick}>
+        <FontIcon className={this.props.action.iconType} />
       </div>
     );
   }
