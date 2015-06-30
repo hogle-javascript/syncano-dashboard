@@ -126,15 +126,15 @@ module.exports = React.createClass({
       var iconBackground = {
           backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark') || ColumnListConstans.DEFAULT_BACKGROUND
         },
-        icon = item.metadata.icon ? item.metadata.icon : ColumnListConstans.DEFAULT_ICON,
-        iconClassName  = 'synicon-' + icon,
-        text           = <div style={styles.dropdownLabelContainer}>
-                           <FontIcon
-                             className = {iconClassName}
-                             style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
+        icon             = item.metadata.icon ? item.metadata.icon : ColumnListConstans.DEFAULT_ICON,
+        iconClassName    = 'synicon-' + icon,
+        text             = <div style={styles.dropdownLabelContainer}>
+                             <FontIcon
+                               className = {iconClassName}
+                               style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
 
-                           {item.name}
-                         </div>;
+                             {item.name}
+                           </div>;
 
       return {
         payload: index + '',

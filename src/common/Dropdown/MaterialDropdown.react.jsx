@@ -15,10 +15,7 @@ var React                = require("react"),
     MaterialDropdownItem = require("./MaterialDropdownItem.react"),
     DropdownNotifiItem   = require("./DropdownNotifiItem.react");
 
-
-
 require("./Dropdown.sass");
-
 
 module.exports = React.createClass({
 
@@ -38,7 +35,7 @@ module.exports = React.createClass({
     isLoading: React.PropTypes.bool
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       icon: "dots-vertical",
       iconStyle: {
@@ -51,7 +48,7 @@ module.exports = React.createClass({
     }
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       isOpen : false
     }
@@ -61,7 +58,7 @@ module.exports = React.createClass({
     this.setState(nextProps);
   },
 
-  toggleOpenClose: function () {
+  toggleOpenClose: function() {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
     }, function() {
@@ -71,11 +68,11 @@ module.exports = React.createClass({
     });
   },
 
-  close: function () {
+  close: function() {
     this.setState({"isOpen": false});
   },
 
-  renderItems: function () {
+  renderItems: function() {
     if (this.props.type === "notification") {
       return <DropdownNotifiItem
                items={this.props.items}
@@ -87,7 +84,7 @@ module.exports = React.createClass({
     }
   },
 
-  renderIcon: function () {
+  renderIcon: function() {
     var notificationCountIcon = null;
     if (this.props.type === "notification" && this.props.items.length > 0) {
       var synIconName = this.props.items.length < 10 ? this.props.items.length : "9-plus";
@@ -112,7 +109,7 @@ module.exports = React.createClass({
     //)
   },
 
-  render: function () {
+  render: function() {
 
     var cssClasses = classNames({
       "dropdown-menu"         : true,

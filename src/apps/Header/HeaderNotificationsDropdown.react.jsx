@@ -17,7 +17,6 @@ var React                     = require('react'),
     DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
 
 
-
 module.exports = React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',

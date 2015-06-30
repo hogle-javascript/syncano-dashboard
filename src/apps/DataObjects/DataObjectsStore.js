@@ -1,18 +1,18 @@
 var Reflux              = require('reflux'),
 
-// Utils & Mixins
-  CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-  WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+    // Utils & Mixins
+    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
-  DataObjectsRenderer = require('./DataObjectsRenderer'),
+    DataObjectsRenderer = require('./DataObjectsRenderer'),
 
-//Stores & Actions
-  ClassesActions      = require('../Classes/ClassesActions'),
-  ClassesStore        = require('../Classes/ClassesStore'),
-  SessionActions      = require('../Session/SessionActions'),
-  SessionStore        = require('../Session/SessionStore'),
-  DataObjectsActions  = require('./DataObjectsActions');
+    //Stores & Actions
+    ClassesActions      = require('../Classes/ClassesActions'),
+    ClassesStore        = require('../Classes/ClassesStore'),
+    SessionActions      = require('../Session/SessionActions'),
+    SessionStore        = require('../Session/SessionStore'),
+    DataObjectsActions  = require('./DataObjectsActions');
 
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
@@ -158,7 +158,7 @@ var DataObjectsStore = Reflux.createStore({
     this.data.selectedRows = null;
     this.trigger(this.data);
     this.refreshDataObjects();
-  },
+  }
 
 });
 
