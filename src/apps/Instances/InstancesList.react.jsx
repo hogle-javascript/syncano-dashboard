@@ -22,7 +22,6 @@ var React  = require('react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     Loading           = require('../../common/Loading/Loading.react'),
@@ -107,7 +106,18 @@ module.exports = React.createClass({
     }
   },
 
+  getStyles: function() {
+    return {
+      list: {
+        padding: 0,
+        background: 'none'
+      }
+    }
+  },
+
   render: function () {
+    var styles = this.getStyles();
+
     return (
       <ListContainer>
         <Header>
@@ -115,7 +125,7 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List style={styles.list}>
           {this.getList()}
         </List>
       </ListContainer>

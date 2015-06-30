@@ -7,7 +7,8 @@ var React       = require('react'),
     AuthActions = require('./AuthActions'),
 
     mui         = require('material-ui'),
-    Paper       = mui.Paper;
+    Paper       = mui.Paper,
+    Logo        = require('../../common/Logo/Logo.react');
 
 
 module.exports = React.createClass({
@@ -25,6 +26,7 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     var params = this.getParams();
+
     AuthActions.activate({
       uid: params.uid,
       token: params.token
@@ -35,7 +37,7 @@ module.exports = React.createClass({
     return (
       <div className="account-container" ref="loginPage">
         <div className="account-logo">
-          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
+          <Link to="login"><Logo className="logo-blue" /></Link>
         </div>
         <Paper className="account-container__content" rounded={false}>
           <div className="account-container__content__header">

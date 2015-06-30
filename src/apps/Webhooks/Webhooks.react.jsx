@@ -9,25 +9,8 @@ module.exports = React.createClass({
 
   mixins: [
     HeaderMixin,
-    State,
+    State
   ],
-
-  headerBreadcrumbs: function () {
-    var instanceName = this.getParams().instanceName;
-    return [{
-      route: 'instances',
-      label: 'Instances',
-      params: {instanceName: instanceName}
-    },{
-      route: 'instance',
-      label: instanceName,
-      params: {instanceName: instanceName}
-    },{
-      route: 'webhooks',
-      label: 'Webhooks',
-      params: {instanceName: instanceName}
-    }]
-  },
 
   headerMenuItems: function() {
     var params = {instanceName: this.getParams().instanceName};
@@ -35,7 +18,7 @@ module.exports = React.createClass({
       {
         label: 'Data Browser', 
         route: 'data-objects', 
-        params: params, 
+        params: params
       }, {
         label: 'Classes', 
         route: 'classes', 

@@ -27,7 +27,6 @@ var React                = require('react'),
     ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
     Editor               = require('../common/Editor/Editor.react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
-    Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
@@ -44,7 +43,6 @@ var React                = require('react'),
     SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
     ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
-    MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
     Loading              = require('../common/Loading/Loading.react'),
@@ -445,8 +443,8 @@ module.exports = React.createClass({
               onClick={dummyClick} >
               Name LastName
             </mui.ListItem>
-            <mui.ListItem leftIcon={<MaterialIcon name="favorite" />}>Item with left icon</mui.ListItem>
-            <mui.ListItem rightIcon={<MaterialIcon name="favorite" />}>item with right icon</mui.ListItem>
+            <mui.ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</mui.ListItem>
+            <mui.ListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</mui.ListItem>
             <mui.ListDivider />
             <mui.ListItem leftAvatar={<mui.Avatar src={avatarUrl} />}>item with gravatar</mui.ListItem>
             <mui.ListItem>item empty</mui.ListItem>
@@ -557,11 +555,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>EditorPanel</h2>
           <EditorPanel trace={source} payload={payload}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>Fab</h4>
-          <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
@@ -730,11 +723,6 @@ module.exports = React.createClass({
             handleClick={dummyClick.bind(this, "Icon")}
             style={{fill: "#0091EA"}}
             glowing={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>MaterialIcon - from google font</h2>
-          <MaterialIcon name="favorite" />
         </div>
 
         <div className="exampleBox">
