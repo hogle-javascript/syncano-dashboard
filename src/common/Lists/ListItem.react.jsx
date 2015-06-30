@@ -1,8 +1,9 @@
 var React       = require('react'),
     Moment      = require('moment'),
     classNames  = require('classnames'),
+    mui         = require('material-ui'),
 
-    Icon        = require('../Icon/Icon.react'),
+    FontIcon    = mui.FontIcon,
     Dropdown    = require('../Dropdown/Dropdown.react');
 
 require('./Card.css');
@@ -26,7 +27,7 @@ module.exports = React.createClass({
     var icon = '';
     if (this.props.item.metadata) {
       color = this.props.item.metadata.color;
-      icon = this.props.item.metadata.icon;
+      icon = 'synicon-' + this.props.item.metadata.icon;
     }
 
     return {
@@ -74,9 +75,9 @@ module.exports = React.createClass({
     var dropdownComponent = null;
     if (this.props.actions) {
       dropdownComponent = <Dropdown
-        items={this.props.actions}
-        visible={this.props.dropdownVisible}
-        handleItemClick={this.handleItemMenuClick}/>;
+        items           = {this.props.actions}
+        visible         = {this.props.dropdownVisible}
+        handleItemClick = {this.handleItemMenuClick}/>;
     }
     var style = null;
     if (this.props.style === "cards") {
@@ -85,18 +86,23 @@ module.exports = React.createClass({
       };
 
       return (
-        <div className={cssClasses} style={style} onClick={this.handleCardClick}>
+        <div
+          className = {cssClasses}
+          style     = {style}
+          onClick   = {this.handleCardClick}>
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
-                <Icon icon={this.state.icon}/>
+                <FontIcon className={this.state.icon}/>
               </div>
               <div className="list-item-text card-text">
                 <div className="list-item-title card-title"><span>{this.props.item.name}</span></div>
                 <div className="list-item-description card-description">{this.props.item.description}</div>
               </div>
             </div>
-            <div className="ink" style={inkStyle}></div>
+            <div
+              className = "ink"
+              style     = {inkStyle}></div>
             <div className="list-item-extras card-extras">
               {dropdownComponent}
             </div>
@@ -120,12 +126,16 @@ module.exports = React.createClass({
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
-        avatar = <Icon icon={this.state.icon} style={iconStyle}/>;
+        avatar = <FontIcon
+                   className = {this.state.icon}
+                   style     = {iconStyle}/>;
       }
 
       return (
         <div className={cssClasses}>
-          <div className="list-item-header card-header" onClick={this.props.handleItemHeaderClick}>
+          <div
+            className = "list-item-header card-header"
+            onClick   = {this.props.handleItemHeaderClick}>
             <div className="list-item-details card-details-other">
               <div className="list-item-icon card-icon">
                 {avatar}

@@ -1,12 +1,11 @@
-var React                  = require('react');
-var classNames             = require('classnames');
+var React                  = require('react'),
+    classNames             = require('classnames'),
+    mui                    = require('material-ui'),
 
-var Icon                   = require('../Icon/Icon.react');
-
-var DropdownMenuItem       = require('./Dropdown.react').DropdownMenuItem;
-var DropdownMenuButton       = require('./Dropdown.react').DropdownMenuButton;
-
-var DropdownMenuItemToggle = require('./DropdownMenuItemToggle.react');
+    FontIcon               = mui.FontIcon,
+    DropdownMenuItem       = require('./Dropdown.react').DropdownMenuItem,
+    DropdownMenuButton     = require('./Dropdown.react').DropdownMenuButton,
+    DropdownMenuItemToggle = require('./DropdownMenuItemToggle.react');
 
 
 module.exports = React.createClass({
@@ -27,19 +26,27 @@ module.exports = React.createClass({
     var items = this.props.actions.filter(function(action){
       return !action.hasOwnProperty('iconType')
     }).map(function(action, i) {
-      return <DropdownMenuItem {...this.props} key={i} action={action} />
+      return <DropdownMenuItem
+               {...this.props}
+               key={i}
+               action={action} />
     }.bind(this));
 
     var buttons = this.props.actions.filter(function(action){
       return action.hasOwnProperty('iconType')
     }).map(function(action, i){
-      return <DropdownMenuButton {...this.props} key={i} action={action} />
+      return <DropdownMenuButton
+               {...this.props}
+               key={i}
+               action={action} />
     }.bind(this));
 
     return (
       <div className="dropdown">
-        <div className="dropdown-button clickable" onClick={this.toggleDropdownMenu}>
-          <Icon icon={this.props.icon} />
+        <div
+          className = "dropdown-button clickable"
+          onClick   = {this.toggleDropdownMenu}>
+          <FontIcon className={this.props.icon} />
         </div>
         <div className={cssClasses}>
           <div className="dropdown-menu-section">

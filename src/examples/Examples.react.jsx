@@ -12,15 +12,14 @@ var React                = require('react'),
     Snackbar             = require('material-ui/lib/snackbar'),
     FlatButton           = require('material-ui/lib/flat-button'),
     ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-    FontIcon             = require('material-ui/lib/font-icon'),
     IconMenu             = require('material-ui/lib/menus/icon-menu'),
     Menu                 = require('material-ui/lib/menus/menu'),
     MenuItem             = require('material-ui/lib/menus/menu-item'),
     FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
+    FontIcon             = mui.FontIcon,
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
-    Icon                 = require('../common/Icon/Icon.react'),
     CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
     ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
     Label                = require('../common/Label/Label.react'),
@@ -180,8 +179,6 @@ module.exports = React.createClass({
       name: 'switchToCardView',
       iconType: 'view-module'
     }];
-
-    console.log(Icon.propTypes);
 
     var text = "Dummy text";
 
@@ -464,8 +461,11 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>Icon</h4>
-          <Icon icon="notifications" style={{width: '40px'}}/>
+          <h4>Icon 1</h4>
+          <FontIcon
+            className  = "synicon-bell"
+            color      = "#0091EA"
+            hoverColor = "#1a237e"  />
         </div>
 
         <div className="exampleBox">
@@ -714,15 +714,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h4>UsageBar</h4>
           <UsageBar billingProfile={billingProfile}/>
-        </div>
-
-        <div className="exampleBox">
-          <h2>Icon</h2>
-          <Icon
-            icon="warning"
-            handleClick={dummyClick.bind(this, "Icon")}
-            style={{fill: "#0091EA"}}
-            glowing={true} />
         </div>
 
         <div className="exampleBox">
