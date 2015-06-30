@@ -133,7 +133,7 @@ var DataObjectsStore = Reflux.createStore({
 
   getColumn: function(columnId) {
     var column = null;
-    this.data.columns.some(function(columnObj){
+    this.data.columns.some(function(columnObj) {
       if (column.id = columnId) {
         column = columnObj;
         return true;
