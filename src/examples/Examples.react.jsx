@@ -19,12 +19,13 @@ var React                = require('react'),
     IconButton           = mui.IconButton,
     FontIcon             = mui.FontIcon,
     IconMenu             = mui.IconMenu,
-    Menu2                = mui.Menu,       // this menu is from lib/menu/menu
-    MenuItem2            = mui.MenuItem,   // this menu item is from lib/menu/menu-items
+    Menu                 = mui.Menu,       // this menu is from lib/menu/menu
+    MenuItem             = mui.MenuItem,   // this menu item is from lib/menu/menu-items
     SelectField          = mui.SelectField,
     ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-    Menu                 = require('material-ui/lib/menus/menu'),
-    MenuItem             = require('material-ui/lib/menus/menu-item'),
+    MenuNew              = require('material-ui/lib/menus/menu'),
+    MenuItemNew          = require('material-ui/lib/menus/menu-item'),
+
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
     Icon                 = require('../common/Icon/Icon.react'),
@@ -758,29 +759,31 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>Menu</h2>
-          <Menu style ={{
+          <h2>Menu (component build in progress)</h2>
+          <MenuNew style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
                   position: 'relative',
                   zIndex: 0}}>
-            <MenuItem>Maps</MenuItem>
-            <MenuItem>Books</MenuItem>
-            <MenuItem>Flights</MenuItem>
-            <MenuItem>Apps</MenuItem>
-          </Menu>
+            <MenuItemNew>Maps</MenuItemNew>
+            <MenuItemNew>Books</MenuItemNew>
+            <MenuItemNew>Flights</MenuItemNew>
+            <MenuItemNew>Apps</MenuItemNew>
+          </MenuNew>
 
           <IconMenu iconButtonElement={<IconButton>{icon}</IconButton>} openDirection="top-right">
-            <MenuItem insetChildren={true} leftIcon={icon}>Refresh</MenuItem>
-            <MenuItem>Send Feedback More</MenuItem>
-            <MenuItem checked={true}>Settings</MenuItem>
-            <MenuItem checked={true}>Help</MenuItem>
-            <MenuItem>Sign out</MenuItem>
+            <MenuItemNew
+              insetChildren = {true}
+              leftIcon      = {icon}>Refresh</MenuItemNew>
+            <MenuItemNew>Send Feedback More</MenuItemNew>
+            <MenuItemNew checked={true}>Settings</MenuItemNew>
+            <MenuItemNew checked={true}>Help</MenuItemNew>
+            <MenuItemNew>Sign out</MenuItemNew>
           </IconMenu>
 
 
-          <Menu
+          <MenuNew
             desktop = {true}
             width   = {320}
             style   = {{
@@ -789,41 +792,41 @@ module.exports = React.createClass({
                   float: 'left',
                   position: 'relative',
                   zIndex: 0}}>
-            <MenuItem>Refresh</MenuItem>
-            <MenuItem >Send Feedback More</MenuItem>
-            <MenuItem checked={true}>Settings</MenuItem>
-            <MenuItem checked={true}>Help</MenuItem>
-            <MenuItem>Sign out</MenuItem>
-            <MenuItem secondaryText="&#8984;B">Bold</MenuItem>
-            <MenuItem secondaryText="&#8984;I">Italic</MenuItem>
-            <MenuItem secondaryText="&#8984;U">Underline</MenuItem>
-            <MenuItem secondaryText="Alt+Shift+5">Strikethrough</MenuItem>
-            <MenuItem secondaryText="&#8984;.">Superscript</MenuItem>
-            <MenuItem secondaryText="&#8984;,">Subscript</MenuItem>
-            <MenuItem rightIcon={<ArrowDropRight />}>Paragraph styles</MenuItem>
-            <MenuItem rightIcon={<ArrowDropRight />}>Align</MenuItem>
-            <MenuItem rightIcon={<ArrowDropRight />}>Line spacing</MenuItem>
-            <MenuItem rightIcon={<ArrowDropRight />}>Numbered list</MenuItem>
-            <MenuItem rightIcon={<ArrowDropRight />}>List options</MenuItem>
-            <MenuItem secondaryText="&#8984;/">Clear formatting</MenuItem>
-          </Menu>
+            <MenuItemNew>Refresh</MenuItemNew>
+            <MenuItemNew >Send Feedback More</MenuItemNew>
+            <MenuItemNew checked={true}>Settings</MenuItemNew>
+            <MenuItemNew checked={true}>Help</MenuItemNew>
+            <MenuItemNew>Sign out</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;B">Bold</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;I">Italic</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;U">Underline</MenuItemNew>
+            <MenuItemNew secondaryText="Alt+Shift+5">Strikethrough</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;.">Superscript</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;,">Subscript</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Paragraph styles</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Align</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Line spacing</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Numbered list</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>List options</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;/">Clear formatting</MenuItemNew>
+          </MenuNew>
         </div>
 
         <div className="exampleBox">
-          <h2>Menu 2</h2>
-          <Menu2 style ={{
+          <h2>Menu</h2>
+          <Menu style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
                   position: 'relative',
                   zIndex: 0}}
                   menuItems={[
-                  {text: <MenuItem2>ASDASD</MenuItem2>},
-                  {text: <MenuItem2>ASDASD</MenuItem2>},
-                  {text: <MenuItem2>ASDASD</MenuItem2>}
+                  {text: <MenuItem>ASDASD</MenuItem>},
+                  {text: <MenuItem>ASDASD</MenuItem>},
+                  {text: <MenuItem>ASDASD</MenuItem>}
                   ]}>
 
-          </Menu2>
+          </Menu>
 
         </div>
 
