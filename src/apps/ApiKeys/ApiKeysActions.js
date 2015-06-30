@@ -7,7 +7,8 @@ var ApiKeysActions = Reflux.createActions({
   uncheckAll : {},
   fetch      : {},
   setApiKeys : {},
-
+  showDialog    : {},
+  dismissDialog : {},
   fetchApiKeys: {
     asyncResult: true,
     loading    : true,

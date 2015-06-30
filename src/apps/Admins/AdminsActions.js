@@ -9,7 +9,8 @@ var AdminsActions = Reflux.createActions({
   uncheckAll : {},
   fetch      : {},
   setAdmins  : {},
-
+  showDialog    : {},
+  dismissDialog : {},
   fetchAdmins: {
     asyncResult : true,
     loading     : true,

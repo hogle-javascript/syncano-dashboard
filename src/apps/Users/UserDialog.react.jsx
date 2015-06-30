@@ -43,7 +43,7 @@ module.exports = React.createClass({
     }
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     UsersActions.createUser({
       username : this.state.username,
       password : this.state.password
@@ -57,8 +57,8 @@ module.exports = React.createClass({
     });
   },
 
-  render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
+  render: function() {
+    var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = 'Confirm',
         dialogStandardActions = [
           {
@@ -76,7 +76,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref       = "dialog"
-        title     = {title + " User"}
+        title     = {title + ' User'}
         actions   = {dialogStandardActions}
         modal     = {true}>
         <div>
@@ -87,28 +87,28 @@ module.exports = React.createClass({
             method        = "post">
 
             <TextField
-              ref               = "username"
-              name              = "username"
+              ref               = 'username'
+              name              = 'username'
               style             = {{width:'100%'}}
               valueLink         = {this.linkState('username')}
               errorText         = {this.getValidationMessages('username').join(' ')}
-              hintText          = "Username"
-              floatingLabelText = "Username" />
+              hintText          = 'Username'
+              floatingLabelText = 'Username' />
 
             <TextField
-              ref               = "password"
-              name              = "password"
-              type              = "password"
+              ref               = 'password'
+              name              = 'password'
+              type              = 'password'
               style             = {{width:'100%'}}
               valueLink         = {this.linkState('password')}
               errorText         = {this.getValidationMessages('password').join(' ')}
-              hintText          = "User password"
-              floatingLabelText = "Password" />
+              hintText          = 'User password'
+              floatingLabelText = 'Password' />
 
           </form>
           <Loading
-            type     = "linear"
-            position = "bottom"
+            type     = 'linear'
+            position = 'bottom'
             show     = {this.state.users.isLoading} />
         </div>
       </Dialog>

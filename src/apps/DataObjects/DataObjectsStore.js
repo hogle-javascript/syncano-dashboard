@@ -49,12 +49,19 @@ var DataObjectsStore = Reflux.createStore({
   },
 
   refreshDataObjects: function() {
-    console.debug('DataObjectsStore::refreshDataObjects');
+    console.debug('DataObjectsStore::refreshDataObjects', this.getCurrentClassName());
     DataObjectsActions.fetchDataObjects(this.getCurrentClassName());
   },
 
   getCurrentClassName: function() {
-    return this.data.classObj.name;
+    if (this.data.classObj) {
+      return this.data.classObj.name;
+    }
+    return null;
+  },
+
+  getCurrentClassObj: function() {
+    return this.data.classObj;
   },
 
   getSelectedRowsLength: function() {
@@ -78,17 +85,14 @@ var DataObjectsStore = Reflux.createStore({
   setDataObjects: function(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
-    this.data.hasNextPage = false;
-    if (items.hasNextPage()) {
-      this.data.hasNextPage = true;
-    }
+    this.data.hasNextPage = items.hasNextPage();
 
     if (!this.data.items) {
       this.data.items = []
     }
 
     Object.keys(items).map(function(key) {
-      this.data.items.push(items[key]);
+      this.data.items.splice(0, 0, items[key]);
     }.bind(this));
 
     this.data.isLoading = false;
@@ -140,6 +144,7 @@ var DataObjectsStore = Reflux.createStore({
 
   onFetchDataObjectsCompleted: function(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
+    this.data.items = [];
     DataObjectsActions.setDataObjects(items);
   },
 

@@ -38,7 +38,8 @@ var React              = require('react'),
 
     Loading            = require('../../common/Loading/Loading.react'),
     ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
-    CheckAvatar        = require('./CheckAvatar.react');
+    CheckAvatar        = require('./CheckAvatar.react'),
+    DataObjectDialog   = require('./DataObjectDialog.react');
 
 module.exports = React.createClass({
 
@@ -102,6 +103,10 @@ module.exports = React.createClass({
         children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
       }
     }]
+  },
+
+  showDataObjectDialog: function() {
+    DataObjectsActions.showDialog();
   },
 
   handleDelete: function() {
@@ -200,6 +205,8 @@ module.exports = React.createClass({
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
 
+        <DataObjectDialog />
+
         <div className="col-flex-1" style={{padding: 0}}>
 
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
@@ -216,7 +223,13 @@ module.exports = React.createClass({
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-              
+
+              <IconButton
+                style     = {{fontSize: 25, marginTop: 5}}
+                className = "synicon-plus"
+                tooltip   = "Add Data Objects"
+                onClick   = {this.showDataObjectDialog} />
+
               <IconButton
                 style     = {{fontSize: 25, marginTop: 5}}
                 className = "synicon-delete"

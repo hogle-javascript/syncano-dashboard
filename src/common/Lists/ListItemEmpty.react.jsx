@@ -1,6 +1,8 @@
-var React      = require('react');
+var React    = require('react'),
 
-var Icon       = require('../Icon/Icon.react');
+    mui      = require('material-ui'),
+    FontIcon = mui.FontIcon;
+
 
 module.exports = React.createClass({
 
@@ -21,7 +23,7 @@ module.exports = React.createClass({
         <div className="card-header">
           <div className="list-item-details card-details">
             <div className="list-item-icon card-icon">
-              <Icon icon={this.props.icon} />
+              <FontIcon className={this.props.icon} />
             </div>
             <div className="list-item-text card-text">
               <div className="list-item-title card-title"><span>{this.props.text}</span></div>

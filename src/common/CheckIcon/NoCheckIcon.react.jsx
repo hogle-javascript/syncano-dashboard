@@ -50,9 +50,9 @@ module.exports = Radium(React.createClass({
 
     return (
         <Paper
-            zDepth       = {0}
-            circle       = {true}
-            style        = {backgroundStyle} >
+            zDepth = {0}
+            circle = {true}
+            style  = {backgroundStyle} >
           <FontIcon
             className = {"synicon-" + this.props.icon}
             style     = {iconStyle} />

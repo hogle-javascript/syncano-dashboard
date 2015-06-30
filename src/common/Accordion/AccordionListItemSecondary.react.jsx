@@ -1,11 +1,7 @@
-var React       = require('react');
-var classNames  = require('classnames');
+var React       = require('react'),
+    classNames  = require('classnames'),
 
-//var ViewActions = require('../actions/ViewActions');
-//var ConfigStore = require('../stores/ConfigStore');
-
-var Icon        = require('../Icon/Icon.react');
-var Dropdown    = require('../Dropdown/Dropdown.react');
+    Dropdown    = require('../Dropdown/Dropdown.react');
 
 
 module.exports = React.createClass({
@@ -41,13 +37,21 @@ module.exports = React.createClass({
     var actions = ConfigStore.getConfig()[this.props.item.type].actions;
     var dropdownVisible = this.props.dropdown === this.props.item.uuid;
     return (
-      <div className={cssClasses} onClick={this.onItemClick}>
+      <div
+        className = {cssClasses}
+        onClick   = {this.onItemClick}>
         <div className="accordion-list-item-content">
-          <div className="accordion-list-item-symbol" style={styles}></div>
+          <div
+            className = "accordion-list-item-symbol"
+            style     = {styles}></div>
           <div className="accordion-list-item-text">{this.props.item.data.name}</div>
         </div>
         <div className="accordion-list-item-icon accordion-list-item-icon-options">
-          <Dropdown actions={actions} visible={dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu} handleClick={this.handleDropdownMenuItemClick} />
+          <Dropdown
+            actions            = {actions}
+            visible            = {dropdownVisible}
+            toggleDropdownMenu = {this.toggleDropdownMenu}
+            handleClick        = {this.handleDropdownMenuItemClick} />
         </div>
       </div>
     );

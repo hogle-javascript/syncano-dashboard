@@ -2,7 +2,6 @@ var Reflux                   = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin           = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
     StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
 
@@ -17,24 +16,8 @@ var AdminsStore = Reflux.createStore({
   mixins      : [
     Reflux.connect(AdminsInvitationsStore),
     CheckListStoreMixin,
-    StoreFormMixin,
     StoreLoadingMixin,
     WaitForStoreMixin
-  ],
-
-  roleMenuItems: [
-    {
-      payload : 'read',
-      text    : 'read'
-    },
-    {
-      payload : 'write',
-      text    : 'write'
-    },
-    {
-      payload : 'full',
-      text    : 'full'
-    }
   ],
 
   getInitialState: function() {
@@ -51,7 +34,6 @@ var AdminsStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
     this.setLoadingStates();
   },
 
@@ -71,10 +53,6 @@ var AdminsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getRoles: function() {
-    return this.roleMenuItems;
-  },
-
   onFetchAdmins: function() {
     console.debug('AdminsStore::onFetchAdmins');
     this.trigger(this.data);
@@ -84,13 +62,6 @@ var AdminsStore = Reflux.createStore({
     console.debug('AdminsStore::onFetchAdminsCompleted');
     this.trigger(this.data);
     AdminsActions.setAdmins(items);
-  },
-
-  onUpdateAdminCompleted: function() {
-    console.debug('AdminsStore::onUpdateAdminCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveAdminsCompleted: function() {
