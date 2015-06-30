@@ -26,7 +26,6 @@ var React                = require('react'),
 
 require('./Account.sass');
 
-
 module.exports = React.createClass({
 
   displayName: 'AccountLogin',
@@ -56,14 +55,14 @@ module.exports = React.createClass({
   },
 
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo: function(transition) {
       if (SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     }
   },
 
-  componentWillUpdate: function () {
+  componentWillUpdate: function() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       var router = this.context.router,
@@ -73,13 +72,13 @@ module.exports = React.createClass({
     }
   },
 
-  handleSocialSignup: function (network) {
-    return function () {
+  handleSocialSignup: function(network) {
+    return function() {
       AuthActions.socialLogin(network)
     };
   },
 
-  renderSocialButton: function (network) {
+  renderSocialButton: function(network) {
     return (
       <SocialAuthButton
         icon        = {'synicon-' + network}
@@ -88,8 +87,8 @@ module.exports = React.createClass({
     )
   },
 
-  renderSocialButtons: function () {
-    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function (network){
+  renderSocialButtons: function() {
+    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function(network) {
       return (
         <li key={network}>
           {this.renderSocialButton(network)}
@@ -100,7 +99,7 @@ module.exports = React.createClass({
     return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
   },
 
-  handleSuccessfullValidation: function () {
+  handleSuccessfullValidation: function() {
     AuthActions.passwordSignIn({
       email: this.state.email,
       password: this.state.password
@@ -108,7 +107,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-	  return (
+    return (
       <div className="account-container">
         <div className="account-logo">
           <Link to="login"><Logo className="logo-blue" /></Link>
