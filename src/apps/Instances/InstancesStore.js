@@ -22,7 +22,8 @@ var InstancesStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      items: [],
+      items     : [],
+      isLoading : true
     }
   },
 

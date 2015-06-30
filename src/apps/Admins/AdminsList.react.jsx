@@ -21,7 +21,7 @@ var React             = require('react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -79,10 +79,6 @@ module.exports = React.createClass({
   getList: function() {
     var items = this.state.items || [];
 
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     if (items.length > 0) {
       items = this.state.items.map(function(item) {
         return this.renderItem(item)
@@ -93,9 +89,9 @@ module.exports = React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </EmptyListItem>
+        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </EmptyListItem>
     );
   },
 
@@ -108,7 +104,9 @@ module.exports = React.createClass({
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );
