@@ -3,14 +3,13 @@ var React                    = require('react'),
 
     // Utils
     ValidationMixin          = require('../../mixins/ValidationMixin'),
-    DialogFormMixin          = require('../../mixins/DialogFormMixin'),
+    DialogMixin              = require('../../mixins/DialogMixin'),
     FormMixin                = require('../../mixins/FormMixin'),
 
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
-    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
-    AdminsStore              = require('./AdminsStore'),
+    AdminDialogStore         = require('./AdminDialogStore'),
 
     // Components
     mui                       = require('material-ui'),
@@ -22,13 +21,12 @@ var React                    = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'AdminInvitationDialog',
+  displayName: 'AdminDialog',
 
   mixins: [
-    Reflux.connect(AdminsStore),
-    Reflux.connect(AdminsInvitationsStore, 'adminsInvitationsStore'),
+    Reflux.connect(AdminDialogStore),
     React.addons.LinkedStateMixin,
-    DialogFormMixin,
+    DialogMixin,
     ValidationMixin,
     FormMixin
   ],
@@ -45,32 +43,6 @@ module.exports = React.createClass({
     }
   },
 
-  getInitialState: function() {
-    return {
-      email : '',
-      role  : ''
-    }
-  },
-
-  clearData: function() {
-    this.setState({
-      email  : '',
-      role   : '',
-      errors : {}
-    })
-  },
-
-  editShow: function() {
-    console.info('AdminInvitationDialog::editShow');
-    var checkedItem = this.props.store.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-        email : checkedItem.email,
-        role  : checkedItem.role
-      });
-    }
-  },
-
   handleAddSubmit: function() {
     AdminsInvitationsActions.createInvitation({
       email : this.state.email,
@@ -79,15 +51,14 @@ module.exports = React.createClass({
   },
 
   handleEditSubmit: function() {
-    var checkedItem = this.props.store.getCheckedItem();
-    AdminsActions.updateAdmin(checkedItem.id, {
+    AdminsActions.updateAdmin(this.state.id, {
       role  : this.state.role
     });
   },
 
   render: function() {
-    var title       = this.props.mode === 'edit' ? 'Edit' : 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Confirm',
+    var title       = this.hasEditMode() ? 'Edit' : 'Invite',
+        submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -103,8 +74,8 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialogRef"
-        title           = {title + " an Administrator"}
+        ref             = 'dialog'
+        title           = {title + ' an Administrator'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         modal           = {true}>
@@ -112,37 +83,33 @@ module.exports = React.createClass({
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
+            acceptCharset = 'UTF-8'
+            method        = 'post'>
 
             <TextField
-              ref               = "email"
-              name              = "email"
+              ref               = 'email'
+              name              = 'email'
               fullWidth         = {true}
-              disabled          = {this.props.mode === 'edit' ? true : false}
+              disabled          = {this.hasEditMode() ? true : false}
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
-              hintText          = "Email of the administrator"
-              floatingLabelText = "Email" />
+              hintText          = 'Email of the administrator'
+              floatingLabelText = 'Email' />
 
             <SelectField
-              ref               = "role"
-              name              = "role"
+              ref               = 'role'
+              name              = 'role'
               autoWidth         = {true}
-              valueLink         = {this.linkState("role")}
-              valueMember       = "payload"
-              displayMember     = "text"
-              floatingLabelText = "Role of the administrator"
+              valueLink         = {this.linkState('role')}
+              valueMember       = 'payload'
+              displayMember     = 'text'
+              floatingLabelText = 'Role of the administrator'
               style             = {{width: '50%'}}
               errorText         = {this.getValidationMessages('role').join(' ')}
-              menuItems         = {AdminsStore.getRoles()} />
+              menuItems         = {AdminDialogStore.getRoles()} />
 
           </form>
         </div>
-        <Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.adminsInvitationsStore.isLoading || this.state.isLoading} />
 
       </Dialog>
     );

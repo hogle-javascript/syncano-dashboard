@@ -119,7 +119,7 @@ module.exports = React.createClass({
           <div className="account-container__content__header vm-3-b">
             <p className="vm-2-b">Start Building Now</p>
             <small>
-              Simply enter your email, create a password and you're in!<br/>
+              Simply enter your email, create a password and you're in!<br />
               No credit card required.
             </small>
           </div>

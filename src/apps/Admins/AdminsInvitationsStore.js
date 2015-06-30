@@ -78,12 +78,6 @@ var AdminsInvitationsStore = Reflux.createStore({
     AdminsInvitationsActions.setInvitations(items);
   },
 
-  onCreateInvitationCompleted: function() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData()
-  },
-
   onRemoveInvitationCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);

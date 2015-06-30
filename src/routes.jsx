@@ -36,7 +36,6 @@ var React                       = require('react'),
     Traces                      = require('./apps/Traces/Traces.react'),
     CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
-    Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
     Users                       = require('./apps/Users/Users.react'),
     Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
@@ -68,7 +67,6 @@ module.exports = (
         <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
-        <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="users" handler={Users} path=":instanceName/users" />
         <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />

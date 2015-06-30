@@ -28,7 +28,7 @@ var React                    = require('react'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
-    AddDialog                = require('./AdminsAddDialog.react');
+    AdminDialog              = require('./AdminDialog.react');
 
 module.exports = React.createClass({
 
@@ -60,22 +60,6 @@ module.exports = React.createClass({
   initDialogs: function() {
 
     return [
-      {
-        dialog: AddDialog,
-        params: {
-          ref   : "addAdminDialog",
-          mode  : "add",
-          store : AdminsStore
-        }
-      },
-      {
-        dialog: AddDialog,
-        params: {
-          ref   : "editAdminDialog",
-          mode  : "edit",
-          store : AdminsStore
-        }
-      },
       {
         dialog: Dialog,
         params: {
@@ -166,6 +150,14 @@ module.exports = React.createClass({
     AdminsInvitationsActions.checkItem(id, state);
   },
 
+  showAdminDialog: function () {
+    AdminsActions.showDialog();
+  },
+
+  showAdminEditDialog: function () {
+    AdminsActions.showDialog(AdminsStore.getCheckedItem());
+  },
+
   render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
@@ -173,6 +165,7 @@ module.exports = React.createClass({
 
     return (
       <Container>
+        <AdminDialog />
         {this.getDialogs()}
 
         <Show if={checkedAdmins > 0}>
@@ -193,7 +186,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Admin"
               mini          = {true}
               disabled      = {checkedAdmins > 1}
-              onClick       = {this.showDialog('editAdminDialog')}
+              onClick       = {this.showAdminEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -226,7 +219,7 @@ module.exports = React.createClass({
         <FabList>
           <FabListItem
             label         = "Click here to invite Admin"
-            onClick       = {this.showDialog('addAdminDialog')}
+            onClick       = {this.showAdminDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
@@ -239,7 +232,7 @@ module.exports = React.createClass({
         <AdminsList
           name                 = "Invitations"
           mode                 = "invitations"
-          emptyItemHandleClick = {this.showDialog('addAdminDialog')}
+          emptyItemHandleClick = {this.showAdminDialog}
           emptyItemContent     = "Invite administrators"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}

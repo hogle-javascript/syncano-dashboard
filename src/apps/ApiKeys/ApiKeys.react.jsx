@@ -26,7 +26,7 @@ var React                 = require('react'),
 
     // Local components
     ApiKeysList           = require('./ApiKeysList.react'),
-    AddDialog             = require('./ApiKeysAddDialog.react');
+    ApiKeyDialog          = require('./ApiKeyDialog.react');
 
 
 module.exports = React.createClass({
@@ -56,12 +56,6 @@ module.exports = React.createClass({
   initDialogs: function () {
 
     return [{
-      dialog: AddDialog,
-      params: {
-        ref  : "addApiKeyDialog",
-        mode : "add"
-      }
-    },{
       dialog: Dialog,
       params: {
         title:  "Reset an API Key",
@@ -122,12 +116,17 @@ module.exports = React.createClass({
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
   },
 
-  render: function () {
+  showApiKeyDialog: function() {
+    ApiKeysActions.showDialog();
+  },
+
+  render: function() {
 
     var checkedApiKeys = ApiKeysStore.getNumberOfChecked();
 
     return (
       <Container>
+        <ApiKeyDialog />
         {this.getDialogs()}
 
         <Show if={checkedApiKeys > 0}>
@@ -158,14 +157,14 @@ module.exports = React.createClass({
         <FabList>
           <FabListItem
             label         = "Click here to add an API Key"
-            onClick       = {this.showDialog('addApiKeyDialog')}
+            onClick       = {this.showApiKeyDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <ApiKeysList
           name                 = "API Keys"
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addApiKeyDialog')}
+          emptyItemHandleClick = {this.showApiKeyDialog}
           emptyItemContent     = "Generate an API Key" />
 
       </Container>
