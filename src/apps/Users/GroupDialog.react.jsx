@@ -9,8 +9,10 @@ var React            = require('react'),
     // Stores and Actions
     GroupsActions    = require('./GroupsActions'),
     GroupDialogStore = require('./GroupDialogStore'),
+    GroupsStore      = require('./GroupsStore'),
 
     // Components
+    Loading          = require('../../common/Loading/Loading.react.jsx'),
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
@@ -23,6 +25,7 @@ module.exports = React.createClass({
   displayName: 'GroupDialog',
 
   mixins: [
+    Reflux.connect(GroupsStore, 'groups'),
     Reflux.connect(GroupDialogStore),
     React.addons.LinkedStateMixin,
     DialogMixin,
@@ -86,6 +89,10 @@ module.exports = React.createClass({
               floatingLabelText = "Group Name" />
 
           </form>
+          <Loading
+              type="linear"
+              position="bottom"
+              show={this.state.groups.isLoading} />
         </div>
       </Dialog>
     );

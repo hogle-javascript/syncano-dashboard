@@ -14,7 +14,8 @@ var React               = require('react'),
     mui                 = require('material-ui'),
     TextField           = mui.TextField,
     DropDownMenu        = mui.DropDownMenu,
-    Dialog              = mui.Dialog;
+    Dialog              = mui.Dialog,
+    Loading             = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -113,8 +114,7 @@ module.exports = React.createClass({
         text    : 'Cancel',
         onClick : this.handleCancel,
         ref     : 'cancel'
-      },
-      {
+      }, {
         text    : submitLabel,
         onClick : this.handleFormValidation,
         ref     : 'submit'
@@ -122,41 +122,48 @@ module.exports = React.createClass({
     ];
 
     return (
-      <Dialog
-        ref     = "dialogRef"
-        title   = {title + " CodeBox"}
-        actions = {dialogStandardActions}
-        modal   = {modalState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
-            <TextField
-                ref               = "label"
-                valueLink         = {this.linkState('label')}
-                errorText         = {this.getValidationMessages('label').join(' ')}
-                name              = "label"
-                style             = {{width:500}}
-                hintText          = "Short name for your CodeBox"
-                floatingLabelText = "Label of CodeBox" />
-            <TextField
-                ref               = "description"
-                name              = "description"
-                valueLink         = {this.linkState('description')}
-                errorText         = {this.getValidationMessages('description').join(' ')}
-                style             = {{width:500}}
-                className         = "text-field"
-                multiLine         = {true}
-                hintText          = "Multiline description of CodeBox (optional)"
-                floatingLabelText = "Description of CodeBox" />
-            <div>
-              <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
-            </div>
-        </form>
-        </div>
-      </Dialog>
+      <div>
+        <Dialog
+          ref          = "dialogRef"
+          title        = {title + " CodeBox"}
+          actions      = {dialogStandardActions}
+          modal        = {modalState}
+          contentStyle = {{padding: "8px 0 0 0"}}  >
+          <div>
+            {this.renderFormNotifications()}
+            <form
+                onSubmit      = {this.handleFormValidation}
+                acceptCharset = "UTF-8"
+                method        = "post">
+              <TextField
+                  ref               = "label"
+                  valueLink         = {this.linkState('label')}
+                  errorText         = {this.getValidationMessages('label').join(' ')}
+                  name              = "label"
+                  style             = {{width:500}}
+                  hintText          = "Short name for your CodeBox"
+                  floatingLabelText = "Label of CodeBox" />
+              <TextField
+                  ref               = "description"
+                  name              = "description"
+                  valueLink         = {this.linkState('description')}
+                  errorText         = {this.getValidationMessages('description').join(' ')}
+                  style             = {{width:500}}
+                  className         = "text-field"
+                  multiLine         = {true}
+                  hintText          = "Multiline description of CodeBox (optional)"
+                  floatingLabelText = "Description of CodeBox" />
+              <div>
+                <label style={(floatingLabel)}>Runtime</label>{runtimesMenu}
+              </div>
+            </form>
+          </div>
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        </Dialog>
+      </div>
     );
   }
 

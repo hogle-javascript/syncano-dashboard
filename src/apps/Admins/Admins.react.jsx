@@ -24,6 +24,7 @@ var React                    = require('react'),
     FabList                  = require('../../common/Fab/FabList.react'),
     FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading                  = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
@@ -85,7 +86,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length + ' Administrator(s)?'
+          children: [
+            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.admins.isLoading} />
+          ]
         }
       },
       {
@@ -98,7 +105,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: 'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
+          children: [
+            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       },
       {
@@ -111,7 +124,13 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?'
+           children: [
+             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
+             <Loading
+               type     = "linear"
+               position = "bottom"
+               show     = {this.state.invitations.isLoading} />
+           ]
         }
       }
     ]

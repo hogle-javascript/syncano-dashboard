@@ -3,6 +3,7 @@ var Reflux                   = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin           = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -15,6 +16,7 @@ var AdminsInvitationsStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
+    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
@@ -33,6 +35,7 @@ var AdminsInvitationsStore = Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData: function() {
@@ -63,13 +66,15 @@ var AdminsInvitationsStore = Reflux.createStore({
   },
 
   onFetchInvitations: function(items) {
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
-    this.data.isLoading = false;
+    this.data.items = Object.keys(items).map(function(item) {
+      return items[item];
+    });
+    this.trigger(this.data);
     AdminsInvitationsActions.setInvitations(items);
   },
 
@@ -87,6 +92,7 @@ var AdminsInvitationsStore = Reflux.createStore({
 
   onResendInvitationCompleted: function() {
     this.data.hideDialogs = true;
+    this.trigger(this.data);
     AdminsInvitationsActions.uncheckAll();
   }
 
