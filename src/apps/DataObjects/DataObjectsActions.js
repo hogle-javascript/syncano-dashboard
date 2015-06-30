@@ -9,10 +9,9 @@ var Reflux         = require('reflux'),
 var DataObjectsActions = Reflux.createActions({
   checkItem             : {},
   uncheckAll            : {},
-
+  checkToggleColumn     : {},
   showDialog            : {},
   dismissDialog         : {},
-
   fetch                 : {},
   setDataObjects        : {},
   setCurrentClassObj    : {},

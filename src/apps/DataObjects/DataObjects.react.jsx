@@ -136,9 +136,10 @@ module.exports = React.createClass({
   },
 
   renderTable: function() {
+    console.info('DataObjects::renderTable');
     var tableData   = DataObjectsStore.renderTableData(),
         tableHeader = DataObjectsStore.renderTableHeader(),
-        colOrder    = Object.keys(tableHeader);
+        colOrder    = DataObjectsStore.getCheckedColumnsIDs();
 
     return (
       <div>
@@ -148,7 +149,6 @@ module.exports = React.createClass({
           columnOrder     = {colOrder}
           rowData         = {tableData}
           multiSelectable = {true}
-          //onCellClick  = {this.handleCellClick}
           onRowSelection  = {this.handleRowSelection} />
 
         <div
@@ -236,7 +236,9 @@ module.exports = React.createClass({
                 tooltip   = "Delete Data Objects"
                 onClick   = {this.showDialog('deleteDataObjectDialog')} />
 
-              <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
+              <ColumnsFilterMenu
+                columns           = {DataObjectsStore.getTableColumns()}
+                checkToggleColumn = {DataObjectsActions.checkToggleColumn} />
 
             </ToolbarGroup>
 
