@@ -105,7 +105,7 @@ module.exports = React.createClass({
     }]
   },
 
-  showUserDialog: function() {
+  showDataObjectDialog: function() {
     DataObjectsActions.showDialog();
   },
 
@@ -228,7 +228,7 @@ module.exports = React.createClass({
                 style     = {{fontSize: 25, marginTop: 5}}
                 className = "synicon-plus"
                 tooltip   = "Add Data Objects"
-                onClick   = {this.showUserDialog} />
+                onClick   = {this.showDataObjectDialog} />
 
               <IconButton
                 style     = {{fontSize: 25, marginTop: 5}}

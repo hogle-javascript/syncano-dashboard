@@ -74,7 +74,7 @@ DataObjectsActions.subFetchDataObjects.listen(function(payload) {
     .list(payload.className, {
       'last_pk'   : payload.lastItem.id,
       'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
-      'order_by'  : '-created_at',
+      'order_by'  : '-created_at'
     })
     .then(this.completed)
     .catch(this.failure);
