@@ -7,7 +7,6 @@ var React                  = require('react'),
     DropdownMenuButton     = require('./Dropdown.react').DropdownMenuButton,
     DropdownMenuItemToggle = require('./DropdownMenuItemToggle.react');
 
-require('./Dropdown.css');
 
 module.exports = React.createClass({
 

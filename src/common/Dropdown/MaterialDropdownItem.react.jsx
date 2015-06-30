@@ -9,8 +9,6 @@ var React               = require('react'),
     Avatar              = mui.Avatar, 
     FontIcon            = mui.FontIcon;
 
-require('./Dropdown.css');
-
 
 module.exports = React.createClass({
 

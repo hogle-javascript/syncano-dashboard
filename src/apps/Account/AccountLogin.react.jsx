@@ -20,7 +20,8 @@ var React                = require('react'),
     Paper                = mui.Paper,
 
     SocialAuthButton     = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react');
+    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
+    Logo                 = require('../../common/Logo/Logo.react');
 
 
 require('./Account.sass');
@@ -110,43 +111,56 @@ module.exports = React.createClass({
 	  return (
       <div className="account-container">
         <div className="account-logo">
-          <Link to="login"><img src="/img/syncano-logo.svg" /></Link>
+          <Link to="login"><Logo className="logo-blue" /></Link>
         </div>
-        <Paper className="account-container__content" rounded={false}>
-          <div className="account-container__content__header">
-            <p>Log in and start creating your apps</p>
+        <Paper
+          className = "account-container__content"
+          ounded    = {false}
+        >
+          <div className="account-container__content__header vm-3-b">
+            <p className="vm-2-b">Start Building Now</p>
+            <small>
+              Simply enter your email, create a password and you're in!<br/>
+              No credit card required.
+            </small>
           </div>
           {this.renderFormNotifications()}
           <form
-            onSubmit={this.handleFormValidation}
-            className="account-container__content__form"
-            acceptCharset="UTF-8"
-            method="post">
+            onSubmit      = {this.handleFormValidation}
+            className     = "account-container__content__form"
+            acceptCharset = "UTF-8"
+            method        = "post">
+
             <TextField
               ref="email"
-              valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join(' ')}
-              name="email"
-              className="text-field"
-              autoComplete="email"
-              hintText="Your email"
-              fullWidth={true} />
+              valueLink    = {this.linkState('email')}
+              errorText    = {this.getValidationMessages('email').join(' ')}
+              name         = "email"
+              className    = "text-field"
+              autoComplete = "email"
+              hintText     = "Email"
+              fullWidth    = {true}
+            />
+
             <TextField
-              ref="password"
-              valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join(' ')}
-              type="password"
-              name="password"
-              className="text-field vm-4-b"
-              autoComplete="password"
-              hintText="Password"
-              fullWidth={true} />
+              ref          = "password"
+              valueLink    = {this.linkState('password')}
+              errorText    = {this.getValidationMessages('password').join(' ')}
+              type         = "password"
+              name         = "password"
+              className    = "text-field vm-4-b"
+              autoComplete = "password"
+              hintText     = "My password"
+              fullWidth    = {true}
+            />
+
             <RaisedButton
-              type="submit"
-              label="Log in"
-              labelStyle={{fontSize: '16px'}}
-              style={{width: '100%', boxShadow: 'none'}}
-              primary={true} />
+              type       = "submit"
+              label      = "Log in"
+              labelStyle = {{fontSize: '16px'}}
+              style      = {{width: '100%', boxShadow: 'none'}}
+              primary    = {true}
+            />
           </form>
           {this.renderSocialButtons()}
           <div className="account-container__content__footer">

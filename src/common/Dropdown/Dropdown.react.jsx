@@ -12,7 +12,6 @@ var React               = require('react'),
 
 
 
-require('./Dropdown.css');
 
 
 module.exports = React.createClass({

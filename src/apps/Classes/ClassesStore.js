@@ -44,6 +44,15 @@ var ClassesStore = Reflux.createStore({
     return this.data.items;
   },
 
+  getClassesDropdown: function() {
+    return this.data.items.map(function(item) {
+      return {
+        payload : item.name,
+        text    : item.name
+      }
+    });
+  },
+
   onGetClassByName: function(className) {
     var classObj = null;
     this.data.items.some(function(item) {
@@ -106,7 +115,7 @@ var ClassesStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 
