@@ -6,14 +6,15 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors,
 
-    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
+    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react'),
+    NoCheckIcon        = require('../../../common/CheckIcon/NoCheckIcon.react');
 
 
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
     }
   },
 
@@ -58,7 +59,8 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'black',
       hoverColor : Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
+      checkable  : true,
     }
   },
 
@@ -113,6 +115,21 @@ module.exports = Radium(React.createClass({
     }
   },
 
+  getIcon: function() {
+    if (this.props.checkable === true) {
+      return <CheckIcon
+               id          = {this.props.id}
+               icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+               background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
+               checked     = {this.state.checked}
+               handleClick = {this.handleIconClick} />
+    }
+    return <NoCheckIcon
+             id          = {this.props.id}
+             icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+             background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND} />
+  },
+
   render: function () {
     var styles = this.getStyles();
 
@@ -120,16 +137,9 @@ module.exports = Radium(React.createClass({
       <div
         className = {this.props.className}
         style     = {styles.container}>
-        <CheckIcon
-          id          = {this.props.id}
-          icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-          background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-          checked     = {this.state.checked}
-          handleClick = {this.handleIconClick} />
-
+        {this.getIcon()}
         <div
-          style       = {[styles.name,
-                          this.props.handleNameClick && styles.link]}
+          style       = {[styles.name, this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>

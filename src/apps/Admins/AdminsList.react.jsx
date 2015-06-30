@@ -8,6 +8,7 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
+    SessionStore      = require('../Session/SessionStore'),
     AdminsActions     = require('./AdminsActions'),
     AdminsStore       = require('./AdminsStore'),
 
@@ -15,6 +16,7 @@ var React             = require('react'),
     mui               = require('material-ui'),
     Colors            = require('material-ui/lib/styles/colors'),
     FontIcon          = mui.FontIcon,
+    Paper             = mui.Paper,
 
     // List
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
@@ -27,6 +29,7 @@ var React             = require('react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
+    NoCheckIcon       = require('../../common/CheckIcon/NoCheckIcon.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 module.exports = React.createClass({
@@ -34,6 +37,7 @@ module.exports = React.createClass({
   displayName: 'AdminsList',
 
   mixins: [
+    Reflux.connect(SessionStore, 'session'),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -77,6 +81,29 @@ module.exports = React.createClass({
     )
   },
 
+  renderOwnerItem: function(item) {
+    return (
+        <Item
+            key     = {item.id}>
+          <ColumnCheckIcon
+              className  = "col-xs-25 col-md-20"
+              id         = {item.id.toString()}
+              icon       = 'account'
+              background = {Colors.blue500}
+              checkable  = {false}>
+            <div>
+              {item.email}
+              <div>
+                Instance owner (cannot be edited)
+              </div>
+            </div>
+          </ColumnCheckIcon>
+          <ColumnDesc>{item.role}</ColumnDesc>
+          <ColumnDate>{item.created_at}</ColumnDate>
+        </Item>
+    )
+  },
+
   getList: function() {
     var items = this.state.items || [];
 
@@ -86,7 +113,11 @@ module.exports = React.createClass({
 
     if (items.length > 0) {
       items = this.state.items.map(function(item) {
-        return this.renderItem(item)
+        if (item.id !== this.state.session.instance.owner.id) {
+          return this.renderItem(item)
+        }
+        return this.renderOwnerItem(item);
+        //console.error("ASDASDA", this.state.session.instance.owner, item)
       }.bind(this));
 
       // TODO: Fix this dirty hack, that should be done in store by sorting!
