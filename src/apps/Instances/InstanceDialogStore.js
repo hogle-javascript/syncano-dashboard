@@ -18,7 +18,7 @@ var InstanceDialogStore = Reflux.createStore({
     return {
       name        : null,
       description : null
-    }
+    };
   },
 
   init: function() {
