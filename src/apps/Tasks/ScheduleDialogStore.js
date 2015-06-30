@@ -43,7 +43,7 @@ var ScheduleDialogStore = Reflux.createStore({
     this.listenTo(CodeBoxesActions.setCodeBoxes, this.getCodeBoxesDropdown);
   },
 
-  getCodeBoxesDropdown: function () {
+  getCodeBoxesDropdown: function() {
     console.debug('ScheduleDialogStore::getCodeBoxesDropdown');
     var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
 
