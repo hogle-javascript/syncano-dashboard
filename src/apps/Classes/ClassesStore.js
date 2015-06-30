@@ -35,13 +35,22 @@ var ClassesStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function(data) {
+  refreshData: function() {
     console.debug('ClassesStore::refreshData');
     ClassesActions.fetchClasses();
   },
 
   getItems: function() {
     return this.data.items;
+  },
+
+  getClassesDropdown: function() {
+    return this.data.items.map(function(item) {
+      return {
+        payload : item.name,
+        text    : item.name
+      }
+    });
   },
 
   onGetClassByName: function(className) {
@@ -77,7 +86,7 @@ var ClassesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchClasses: function(items) {
+  onFetchClasses: function() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
@@ -88,25 +97,25 @@ var ClassesStore = Reflux.createStore({
     ClassesActions.setClasses(items);
   },
 
-  onCreateClassCompleted: function(payload) {
+  onCreateClassCompleted: function() {
     console.debug('ClassesStore::onCreateClassCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateClassCompleted: function(paylod) {
+  onUpdateClassCompleted: function() {
     console.debug('ClassesStore::onUpdateClassCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveClassesCompleted: function(payload) {
+  onRemoveClassesCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

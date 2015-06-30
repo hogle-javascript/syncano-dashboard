@@ -21,7 +21,7 @@ var ApiKeysStore = Reflux.createStore({
     return {
       items     : [],
       isLoading : false
-    }
+    };
   },
 
   init: function() {
@@ -49,7 +49,7 @@ var ApiKeysStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchApiKeys: function(items) {
+  onFetchApiKeys: function() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
@@ -61,27 +61,27 @@ var ApiKeysStore = Reflux.createStore({
 
   },
 
-  onCreateApiKeyCompleted: function(payload) {
+  onCreateApiKeyCompleted: function() {
     console.debug('ApiKeysStore::onCreateApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateApiKeyCompleted: function(paylod) {
+  onUpdateApiKeyCompleted: function() {
     console.debug('ApiKeysStore::onUpdateApiKeyCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onRemoveApiKeysCompleted: function(payload) {
+  onRemoveApiKeysCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onResetApiKeyCompleted: function(payload) {
+  onResetApiKeyCompleted: function() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

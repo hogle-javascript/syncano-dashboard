@@ -55,7 +55,7 @@
     "node-libcompass": "git://github.com/patrykkopycinski/node-libcompass.git",
     "node-sass": "~3.2.0",
     "q": "^2.0.3",
-    "radium": "^0.13.0",
+    "radium": "0.13.0",
     "raw-loader": "^0.5.1",
     "react-inlinesvg": "patrykkopycinski/react-inlinesvg#build",
     "sass-loader": "~1.0.2",
@@ -64,7 +64,8 @@
     "webpack": "^1.4.13",
     "webpack-dev-server": "^1.6.6",
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
-    "jscs": "latest"
+    "jscs": "latest",
+    "codeclimate-test-reporter": "0.0.4"
   },
   "jest": {
     "rootDir": ".",
@@ -103,6 +104,8 @@
     "publish": "gulp publish",
     "clean": "gulp clean",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
-    "nightwatch": "nightwatch"
+    "nightwatch": "nightwatch",
+    "jscs": "jscs --esprima=esprima-fb src",
+    "codeclimate": "codeclimate < coverage/lcov.info"
   }
 }
