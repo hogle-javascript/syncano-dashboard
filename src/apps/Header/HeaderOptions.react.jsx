@@ -60,7 +60,10 @@ module.exports = React.createClass({
     });
 
     var items = this.props.actions.map(function (action, i) {
-      return <DropdownMenuItem key={i} action={action} handleClick={this.handleAccountMenuItemClick}/>
+      return <DropdownMenuItem
+               key={i}
+               action={action}
+               handleClick={this.handleAccountMenuItemClick}/>
     }.bind(this));
 
     //var notificationItems = this.props.invitations.filter(function (invitation) {
@@ -86,9 +89,13 @@ module.exports = React.createClass({
       <div className={cssClasses}>
         <div className="header-option">
         </div>
-        <div className="header-option" onClick={this.toggleMenu.bind(this, 'notificationMenu')}>
+        <div
+          className = "header-option"
+          onClick   = {this.toggleMenu.bind(this, 'notificationMenu')}>
           <div className="header-option-button">
-            <FontIcon icon={notificationIcon} glowing={notificationItems.length > 0}/>
+            <FontIcon
+              icon    = {notificationIcon}
+              glowing = {notificationItems.length > 0}/>
           </div>
           <div className="dropdown-menu notifications-menu">
             <div className="dropdown-menu-section">
@@ -96,8 +103,12 @@ module.exports = React.createClass({
             </div>
           </div>
         </div>
-        <div className="header-option" onClick={this.onOptionsClick}>
-          <div className="header-option-button" onClick={this.toggleMenu.bind(this, 'accountMenu')}>
+        <div
+          className="header-option"
+          onClick={this.onOptionsClick}>
+          <div
+            className = "header-option-button"
+            onClick   = {this.toggleMenu.bind(this, 'accountMenu')}>
             <FontIcon className="synicon-dots-vertical"/>
           </div>
           <div className="dropdown-menu account-menu">

@@ -120,9 +120,13 @@ module.exports = React.createClass({
                 <div className="list-item-description card-description">{this.props.item.description}</div>
               </div>
             </div>
-            <div className="ink" style={inkStyle}></div>
+            <div
+              className = "ink"
+              style     = {inkStyle}></div>
             <div className="list-item-extras card-extras">
-              <Dropdown actions={this.props.actions} handleItemClick={this.handleItemMenuClick}/>
+              <Dropdown
+                actions         = {this.props.actions}
+                handleItemClick = {this.handleItemMenuClick}/>
             </div>
           </div>
         </div>
@@ -140,9 +144,9 @@ module.exports = React.createClass({
 
       //var trac  eResult = this.props.expanded ? <TraceResult result={this.props.item.data.result}/> : null;
 
-      var dropdown = <Dropdown actions={this.props.actions}
-                               visible={this.props.dropdownVisible}
-                               handleItemClick={this.handleItemMenuClick}/>;
+      var dropdown = <Dropdown actions         = {this.props.actions}
+                               visible         = {this.props.dropdownVisible}
+                               handleItemClick = {this.handleItemMenuClick}/>;
 
       //toggleDropdownMenu={this.toggleDropdownMenu}
 
@@ -153,7 +157,9 @@ module.exports = React.createClass({
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
-        avatar = <FontIcon className={icon} style={iconStyle}/>;
+        avatar = <FontIcon
+                   className = {icon}
+                   style     = {iconStyle}/>;
       }
 
       console.log('avatarStyle', this.props.avatarStyle);
@@ -170,7 +176,9 @@ module.exports = React.createClass({
 
       return (
         <div className={cssClasses}>
-          <div className="list-item-header card-header" onClick={this.handleItemHeaderClick}>
+          <div
+            className = "list-item-header card-header"
+            onClick   = {this.handleItemHeaderClick}>
             <div className="list-item-details card-details-other">
               <div className="list-item-icon card-icon">
                 {avatar}

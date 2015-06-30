@@ -26,18 +26,26 @@ module.exports = React.createClass({
     var items = this.props.actions.filter(function(action){
       return !action.hasOwnProperty('iconType')
     }).map(function(action, i) {
-      return <DropdownMenuItem {...this.props} key={i} action={action} />
+      return <DropdownMenuItem
+               {...this.props}
+               key={i}
+               action={action} />
     }.bind(this));
 
     var buttons = this.props.actions.filter(function(action){
       return action.hasOwnProperty('iconType')
     }).map(function(action, i){
-      return <DropdownMenuButton {...this.props} key={i} action={action} />
+      return <DropdownMenuButton
+               {...this.props}
+               key={i}
+               action={action} />
     }.bind(this));
 
     return (
       <div className="dropdown">
-        <div className="dropdown-button clickable" onClick={this.toggleDropdownMenu}>
+        <div
+          className = "dropdown-button clickable"
+          onClick   = {this.toggleDropdownMenu}>
           <FontIcon className={this.props.icon} />
         </div>
         <div className={cssClasses}>

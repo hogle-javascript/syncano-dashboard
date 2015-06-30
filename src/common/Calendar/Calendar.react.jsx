@@ -111,8 +111,8 @@ module.exports = React.createClass({
      };
      for (var i = (prevMonth.length - dayOfWeek); i < prevMonth.length; i++) {
        days.push(<div 
-                   onClick={this.handleClickDay.bind(this, "previous")}
-                   className="calendar-day-other">{prevMonth[i]}
+                   onClick   = {this.handleClickDay.bind(this, "previous")}
+                   className = "calendar-day-other">{prevMonth[i]}
                  </div>);
      };
    });
@@ -121,12 +121,14 @@ module.exports = React.createClass({
    }, function () {
      for (var i = 1; i <= this.state.currentMonthDaysCount; i++) {
        days.push(<div 
-                   onClick={this.handleClickDay.bind(this, "current")} 
-                   className="calendar-day">{i}
+                   onClick   = {this.handleClickDay.bind(this, "current")}
+                   className = "calendar-day">{i}
                  </div>);
      };
      for (var i = 1; i <= 42 - (dayOfWeek + this.state.currentMonthDaysCount); i++) {
-       days.push(<div onClick={this.handleClickDay.bind(this, "next")} className="calendar-day-other">{i}</div>)
+       days.push(<div
+                   onClick   = {this.handleClickDay.bind(this, "next")}
+                   className = "calendar-day-other">{i}</div>)
      };
      this.setState({
        displayedDays: days.map(function (day, i) {
@@ -320,7 +322,9 @@ module.exports = React.createClass({
     var iconStyle = {fill: "#FAFAFA", width: "16px", height: "16px"};
     var hoursIconStyle = {fill: "#FAFAFA", width: "16px", height: "16px"};
     var weekDays = this.props.weekDays.map(function (weekDay, i) {
-      return <div className="calendar-week-days" key={i}>{weekDay}</div>;
+      return <div
+               className = "calendar-week-days"
+               key       = {i}>{weekDay}</div>;
     });
 
     return (
@@ -328,13 +332,17 @@ module.exports = React.createClass({
         <div className="calendar-head">
           <div className="calendar-head-content">
             <FontIcon
-              style       ={iconStyle}
-              className   ="synicon-chevron-left"
-              handleClick ={this.handlePreviousMonthClick}/>
+              style       = {iconStyle}
+              className   = "synicon-chevron-left"
+              handleClick = {this.handlePreviousMonthClick}/>
           </div>
           <div className="calendar-head-date">
-            <div ref="month" className="calendar-head-content">{this.props.months[this.state.displayedMonth - 1]}</div>
-            <div ref="year" className="calendar-head-content">{this.state.displayedYear}</div>
+            <div
+              ref       = "month"
+              className = "calendar-head-content">{this.props.months[this.state.displayedMonth - 1]}</div>
+            <div
+              ref       = "year"
+              className = "calendar-head-content">{this.state.displayedYear}</div>
           </div>
           <div className="calendar-head-content">
             <FontIcon
@@ -356,8 +364,13 @@ module.exports = React.createClass({
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-up"
                 handleClick = {this.increaseHMS.bind(this, "hours")} />
-              <input ref="hours" className="calendar-input" type="text" maxLength={2}
-                     onChange={this.handleOnChange.bind(this, "hours")} value={this.state.displayedHours}></input>
+              <input
+                ref       = "hours"
+                className = "calendar-input"
+                type      = "text"
+                maxLength = {2}
+                onChange  = {this.handleOnChange.bind(this, "hours")}
+                value     = {this.state.displayedHours}></input>
               <FontIcon
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-down"
@@ -370,8 +383,13 @@ module.exports = React.createClass({
                 style       = {hoursIconStyle}
                 className   = "arrow_up"
                 handleClick = {this.increaseHMS.bind(this, "minutes")} />
-              <input ref="minutes" className="calendar-input" type="text" maxLength={2}
-                     onChange={this.handleOnChange.bind(this, "minutes")} value={this.state.displayedMinutes}></input>
+              <input
+                ref       = "minutes"
+                className = "calendar-input"
+                type      = "text"
+                maxLength = {2}
+                onChange  = {this.handleOnChange.bind(this, "minutes")}
+                value     = {this.state.displayedMinutes}></input>
               <FontIcon
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-down"
@@ -384,8 +402,13 @@ module.exports = React.createClass({
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-up"
                 handleClick = {this.increaseHMS.bind(this, "seconds")} />
-              <input ref="seconds" className="calendar-input" type="text" maxLength={2}
-                     onChange={this.handleOnChange.bind(this, "seconds")} value={this.state.displayedSeconds}></input>
+              <input
+                ref       = "seconds"
+                className = "calendar-input"
+                type      = "text"
+                maxLength = {2}
+                onChange  = {this.handleOnChange.bind(this, "seconds")}
+                value     = {this.state.displayedSeconds}></input>
               <FontIcon
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-down"
@@ -398,8 +421,13 @@ module.exports = React.createClass({
                 style       = {hoursIconStyle}
                 className   = "synicon-chevron-up"
                 handleClick = {this.increaseHMS.bind(this, "timezone")} />
-              <input ref="timezone" className="calendar-input" type="text" maxLength={3}
-                     onChange={this.handleOnChange.bind(this, "timezone")} value={this.state.displayedTimezone}>
+              <input
+                ref       = "timezone"
+                className = "calendar-input"
+                type      = "text"
+                maxLength = {3}
+                onChange  = {this.handleOnChange.bind(this, "timezone")}
+                value     = {this.state.displayedTimezone}>
                 GMT</input>
               <FontIcon
                 style       = {hoursIconStyle}

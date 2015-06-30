@@ -71,10 +71,17 @@ module.exports = React.createClass({
                handleClick = {this.onOptionClick}/>
     }.bind(this));
     return (
-      <div className={cssClasses} onClick={this.toggleOptions}>
+      <div
+        className = {cssClasses}
+        onClick   = {this.toggleOptions}>
         <div className="field-label">{this.props.field.displayName}</div>
-        <div className="field-input-group" onClick={this.onClick}>
-          <div className="field-input" ref="input" onFocus={this.onFocus}>{selectedOptionDisplayName}</div>
+        <div
+          className = "field-input-group"
+          onClick   = {this.onClick}>
+          <div
+            className = "field-input"
+            ref       = "input"
+            onFocus   = {this.onFocus}>{selectedOptionDisplayName}</div>
           <FontIcon className="synicon-menu-down" />
         </div>
         <div className="field-options-group">

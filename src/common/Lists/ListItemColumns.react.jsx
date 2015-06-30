@@ -99,7 +99,10 @@ module.exports = React.createClass({
     }
     if (this.props.list.viewMode === "cards") {
       return (
-        <div className={cssClasses} style={color} onClick={this.handleCardClick}>
+        <div
+          className = {cssClasses}
+          style     = {color}
+          onClick   = {this.handleCardClick}>
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
@@ -110,9 +113,15 @@ module.exports = React.createClass({
                 <div className="list-item-description card-description">{this.props.description}</div>
               </div>
             </div>
-            <div className="ink" style={inkStyle}></div>
+            <div
+              className = "ink"
+              style     = {inkStyle}></div>
             <div className="list-item-extras card-extras">
-              <Dropdown actions={this.props.actions} visible={this.props.dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu} handleClick={this.handleDropdownMenuItemClick} />
+              <Dropdown
+                actions            = {this.props.actions}
+                visible            = {this.props.dropdownVisible}
+                toggleDropdownMenu = {this.toggleDropdownMenu}
+                handleClick        = {this.handleDropdownMenuItemClick} />
             </div>
           </div>
         </div>
@@ -120,15 +129,23 @@ module.exports = React.createClass({
     } else if (this.props.list.viewMode === "stream") {
       var traceResult = this.props.expanded ? <TraceResult result={this.props.item.data.result} /> : null;
       var initialsComponent = <AvatarInitials text={this.props.title} />;
-      var dropdownComponent = <Dropdown actions={this.props.actions} visible={this.props.dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu} handleClick={this.handleDropdownMenuItemClick} />;
-      var iconComponent = <FontIcon className={this.props.icon} style={color} />;
+      var dropdownComponent = <Dropdown
+                                actions            = {this.props.actions}
+                                visible            = {this.props.dropdownVisible}
+                                toggleDropdownMenu = {this.toggleDropdownMenu}
+                                handleClick        = {this.handleDropdownMenuItemClick} />;
+      var iconComponent = <FontIcon
+                            className = {this.props.icon}
+                            style     = {color} />;
       var avatar = contentType === "users" ? initialsComponent : iconComponent;
       var dropdown = this.props.actions.length > 0 ? dropdownComponent : null;
       var buttonExpandToggle = this.props.expandable ? <ButtonExpandToggle parentExpanded={this.props.expanded} /> : null;
       
       return (
         <div className={cssClasses}>
-          <div className="list-item-header card-header" onClick={this.handleItemHeaderClick}>
+          <div
+            className = "list-item-header card-header"
+            onClick   = {this.handleItemHeaderClick}>
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
                 {avatar}
@@ -136,7 +153,9 @@ module.exports = React.createClass({
               <div className="list-item-title card-title">{this.props.title}</div>
             </div>
             <div className="list-item-title card-id">{this.props.item.id}</div>
-            <div ref="description" className="list-item-description card-description">{this.props.description}</div>
+            <div
+              ref       = "description"
+              className = "list-item-description card-description">{this.props.description}</div>
             <div className="list-item-highlight card-highlight"></div>
             <div className="list-item-extras card-extras">
               <div className="card-info-date">{this.props.info.created_at}</div>

@@ -39,15 +39,24 @@ module.exports = React.createClass({
       if (column.type === "boolean") {
         data = this.props.item[column.name].toString();
       }
-      return <TableData {...this.props} key={i} data={data} column={column}/>
+      return <TableData
+               {...this.props}
+               key={i} data={data}
+               column={column}/>
     }.bind(this));
     var optionsColumn = null;
     if (!this.props.readOnly) {
       var actions = ConfigStore.getConfig()[this.props.item.type].actions;
       var optionsColumn = (
-        <TableData {...this.props} key="options" column={{"name":"options", "type":"options"}}>
-          <Dropdown actions={actions} visible={dropdownVisible} toggleDropdownMenu={this.toggleDropdownMenu}
-                    handleClick={this.handleDropdownMenuItemClick}/>
+        <TableData
+          {...this.props}
+          key="options"
+          column={{"name":"options", "type":"options"}}>
+          <Dropdown
+            actions            = {actions}
+            visible            = {dropdownVisible}
+            toggleDropdownMenu = {this.toggleDropdownMenu}
+            handleClick        = {this.handleDropdownMenuItemClick}/>
         </TableData>);
     }
     return (

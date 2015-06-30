@@ -66,7 +66,9 @@ module.exports = React.createClass({
           hintText          = {this.props.dateFormat}
           floatingLabelText = {this.props.labelText}
           style             = {this.props.fieldStyle} />
-        <div className={calendarClasses} ref="calendar">
+        <div
+          className = {calendarClasses}
+          ref       = "calendar">
           <Calendar inputField={this.refs.input}/>
         </div>
         <FontIcon

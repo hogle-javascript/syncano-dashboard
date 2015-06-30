@@ -17,7 +17,9 @@ module.exports = React.createClass({
   render: function() {
     var type = this.props.action.selected ? "synicon-checkbox-marked" : "synicon-checkbox-blank";
     return (
-      <div className="dropdown-menu-item dropdown-menu-item-toggle" onClick={this.handleClick}>
+      <div
+        className = "dropdown-menu-item dropdown-menu-item-toggle"
+        onClick   = {this.handleClick}>
         <FontIcon className={type} />
         <span>{this.props.action.displayName}</span>
       </div>

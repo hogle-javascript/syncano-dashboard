@@ -16,7 +16,9 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div className="dropdown-menu-button" onClick={this.handleDropdownClick}>
+      <div
+        className = "dropdown-menu-button"
+        onClick   = {this.handleDropdownClick}>
         <FontIcon className={this.props.action.iconType} />
       </div>
     );
