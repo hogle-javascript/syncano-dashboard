@@ -3,36 +3,36 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get();
 
 var InstancesActions = Reflux.createActions({
-    checkItem: {},
-    uncheckAll: {},
-    fetch: {},
-    setInstances: {},
+  checkItem: {},
+  uncheckAll: {},
+  fetch: {},
+  setInstances: {},
 
-    fetchInstances: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure']
-    },
+  fetchInstances: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-    createInstance: {
-       asyncResult : true,
-       asyncForm   : true,
-       loading     : true,
-       children    : ['completed', 'failure']
-    },
+  createInstance: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-    updateInstance: {
-       asyncResult : true,
-       asyncForm   : true,
-       loading     : true,
-       children    : ['completed', 'failure']
-    },
+  updateInstance: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-     removeInstances: {
-       asyncResult : true,
-       loading     : true,
-       children    : ['completed', 'failure']
-    }
+  removeInstances: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  }
 });
 
 InstancesActions.fetchInstances.listen(function(payload) {

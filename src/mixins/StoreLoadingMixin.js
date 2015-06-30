@@ -20,13 +20,13 @@ var StoreLoadingMixin = {
     }
   },
 
-  setToLoading: function () {
+  setToLoading: function() {
     console.debug('StoreLoadingMixin::setToLoading')
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  setToNotLoading: function () {
+  setToNotLoading: function() {
     console.debug('StoreLoadingMixin::setToNotLoading');
     this.data.isLoading = false;
     this.data.hideDialogs = true;

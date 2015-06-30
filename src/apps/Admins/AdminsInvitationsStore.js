@@ -60,7 +60,7 @@ var AdminsInvitationsStore = Reflux.createStore({
   onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+      return items[item];
     });
     this.trigger(this.data);
     AdminsInvitationsActions.setInvitations(items);
