@@ -2,6 +2,7 @@ var React                     = require('react'),
     Reflux                    = require('reflux'),
     Router                    = require('react-router'),
     Link                      = Router.Link,
+    Radium                    = require('radium'),
 
     HeaderActions             = require('./HeaderActions'),
     HeaderStore               = require('./HeaderStore'),
@@ -17,7 +18,7 @@ var React                     = require('react'),
     DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
 
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',
 
@@ -59,6 +60,10 @@ module.exports = React.createClass({
       icon: {
         color : '#fff',
         fontSize: 21
+      },
+
+      notificationIcon: {
+        color: '#ff3d00'
       }
     }
   },
@@ -111,9 +116,9 @@ module.exports = React.createClass({
 
   renderIcon: function () {
     var notifications         = this.getNotificationItems(),
-      notificationCountIcon = null,
-      iconClassName         = "synicon-",
-      styles                = this.getStyles();
+        notificationCountIcon = null,
+        iconClassName         = "synicon-",
+        styles                = this.getStyles();
 
     if (notifications.length > 0) {
       iconClassName += 'bell';
@@ -124,17 +129,12 @@ module.exports = React.createClass({
     if (notifications.length > 0) {
       var synIconName = notifications.length < 10 ? notifications.length : "9-plus";
       notificationCountIcon = <FontIcon
-        className = {"synicon-numeric-" + synIconName + "-box" }
-        style     = {{
-                                  padding  : "0 4px",
-                                  color    : "#ff3d00",
-                                  position : "absolute",
-                                  top      : "0",
-                                  right    : "-4px"
-                                }} />
+        className = {"synicon-numeric-" + synIconName + "-box notification-count-icon"}
+        color     = {styles.notificationIcon.color}/>
     }
+
     return(
-      <IconButton style={styles.icon} className={iconClassName}>
+      <IconButton iconStyle={styles.icon} iconClassName={iconClassName}>
         {notificationCountIcon}
       </IconButton>
     )
@@ -158,4 +158,4 @@ module.exports = React.createClass({
       </IconMenu>
     )
   }
-});
+}));
