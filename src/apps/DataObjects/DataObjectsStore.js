@@ -136,7 +136,7 @@ var DataObjectsStore = Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjects: function(items) {
+  onFetchDataObjects: function() {
     console.debug('DataObjectsStore::onFetchDataObjects');
     //this.data.isLoading = true;
     this.trigger(this.data);

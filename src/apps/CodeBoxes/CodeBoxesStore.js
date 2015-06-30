@@ -2,6 +2,7 @@ var Reflux              = require('reflux'),
 
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     SessionActions      = require('../Session/SessionActions'),
@@ -14,6 +15,7 @@ var CodeBoxesStore = Reflux.createStore({
   mixins: [
     CheckListStoreMixin,
     StoreFormMixin,
+    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
@@ -34,7 +36,6 @@ var CodeBoxesStore = Reflux.createStore({
   getInitialState: function() {
     return {
       items: [],
-      isLoading: true,
 
       currentCodeBoxId: null,
 
@@ -57,7 +58,7 @@ var CodeBoxesStore = Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
-
+    this.setLoadingStates();
     this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.fetchTraces)
   },
 
@@ -186,19 +187,16 @@ var CodeBoxesStore = Reflux.createStore({
   onRemoveCodeBoxesCompleted: function(payload) {
     console.debug('CodeBoxesStore::onRemoveCodeBoxesCompleted');
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onFetchCodeBoxes: function() {
     console.debug('CodeBoxesStore::onFetchCodeBoxes');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchCodeBoxesCompleted: function(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    this.data.isLoading = false;
     CodeBoxesActions.setCodeBoxes(items);
   },
 
@@ -212,12 +210,10 @@ var CodeBoxesStore = Reflux.createStore({
     console.debug('CodeBoxesStore::onUpdateCodeBoxCompleted');
     CodeBoxesActions.fetchCodeBoxes();
     this.data.hideDialogs = true;
-    this.trigger(this.data);
   },
 
   onRunCodeBox: function(trace) {
     console.debug('CodeBoxesStore::onRunCodeBox');
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -234,14 +230,12 @@ var CodeBoxesStore = Reflux.createStore({
       setTimeout(function() {CodeBoxesActions.fetchCodeBoxTrace(CodeBoxId, trace.id)}, 300);
     } else {
       this.data.lastTraceResult = trace.result;
-      this.data.isLoading = false;
     }
     this.trigger(this.data);
   },
 
   onFetchCodeBoxTracesCompleted: function(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTraces');
-    this.data.isLoading = false;
     CodeBoxesActions.setCodeBoxTraces(items);
   }
 

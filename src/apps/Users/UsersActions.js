@@ -11,21 +11,25 @@ var UsersActions = Reflux.createActions({
   dismissDialog : {},
   fetchUsers: {
     asyncResult: true,
-    children: ['completed', 'failure']
+    loading    : true,
+    children   : ['completed', 'failure']
   },
   createUser: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateUser: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   removeUsers: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   }
 });
 

@@ -13,6 +13,12 @@ module.exports = Radium(React.createClass({
 
   mixins: [StylePropable],
 
+  getDefaultProps: function() {
+    return {
+      handleClick: function() {}
+    }
+  },
+
   getStyles: function() {
     return {
       base: {

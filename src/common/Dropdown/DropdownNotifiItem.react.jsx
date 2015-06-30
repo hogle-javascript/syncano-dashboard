@@ -9,9 +9,8 @@ var React               = require('react'),
     Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon,
 
+    Loading             = require('../../common/Loading/Loading.react.jsx'),
     LoadingItem         = require('../../common/ColumnList/LoadingItem.react');
-
-require('./Dropdown.css');
 
 
 module.exports = React.createClass({
@@ -31,9 +30,7 @@ module.exports = React.createClass({
 
   renderItems: function () {
     
-    if (this.props.isLoading === true) {
-      return <LoadingItem size={0.5} />
-    } else if (this.props.items.length === 0) {
+    if (this.props.items.length === 0) {
       return this.renderEmptyNotification()
     }
     var items = [];
@@ -97,7 +94,7 @@ module.exports = React.createClass({
                subheader      = {item.subheader || null}
                subheaderStyle = {item.subheaderStyle}>
                <ListItem 
-                 leftIcon      = {icon}
+                 leftIcon        = {icon}
                  disableTouchTap = {true} >
                  {item.content.text}
                </ListItem>
@@ -141,6 +138,9 @@ module.exports = React.createClass({
   render: function () {
     return (
       <div>
+      <Loading
+        show = {this.props.isLoading}
+        size = {1} />
       {this.renderItems()}
       </div>
     );

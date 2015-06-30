@@ -15,12 +15,12 @@ module.exports = React.createClass({
         type: "flat",
         isDefault: false,
         name: "declined",
-        displayName: "Decline",
+        displayName: "Decline"
       },{
         type: "flat",
         isDefault: false,
         name: "accepted",
-        displayName: "Accept",
+        displayName: "Accept"
       }]
     }
   },

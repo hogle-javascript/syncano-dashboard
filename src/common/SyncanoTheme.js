@@ -32,7 +32,7 @@ var SyncanoTheme = {
         textColor        : 'rgba(0, 0, 0, 0.54)'
       },
       raisedButton: {
-        primaryColor: Colors.pinkA200
+        primaryColor: Colors.blue700
       },
       floatingActionButton: {
         color: Colors.pinkA200

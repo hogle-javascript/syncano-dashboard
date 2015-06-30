@@ -36,21 +36,6 @@ module.exports = React.createClass({
     }
   },
 
-  headerBreadcrumbs: [
-    {
-      route: 'dashboard',
-      label: 'Home'
-    },
-    {
-      route: 'profile-settings',
-      label: 'Account'
-    },
-    {
-      route: 'profile-settings',
-      label: 'Profile'
-    }
-  ],
-
   headerMenuItems: [
     {
       route: 'profile-settings',

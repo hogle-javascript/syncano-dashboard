@@ -24,9 +24,12 @@ module.exports = React.createClass({
     };
   },
 
-  getStyles: function () {
+  getStyles: function() {
     var styles = {
-      fontSize: 18
+      fontSize      : 18,
+      lineHeight    : 1,
+      color         : 'inherit',
+      verticalAlign : 'middle'
     };
 
     return this.mergeStyles(styles, this.props.style);

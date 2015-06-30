@@ -8,37 +8,22 @@ module.exports = React.createClass({
 
   mixins: [HeaderMixin],
 
-  headerBreadcrumbs: [
-    {
-      route: 'dashboard',
-      label: 'Home',
-    },
-    {
-      route: 'profile-settings',
-      label: 'Account',
-    },
-    {
-      route: 'profile-billing',
-      label: 'Billing',
-    }
-  ],
-
   headerMenuItems: [
     {
       route: 'profile-settings',
-      label: 'Profile',
+      label: 'Profile'
     },
     {
       route: 'profile-authentication',
-      label: 'Authentication',
+      label: 'Authentication'
     },
     {
       route: 'profile-billing',
-      label: 'Billing',
+      label: 'Billing'
     },
     {
       route: 'profile-invitations',
-      label: 'Invitations',
+      label: 'Invitations'
     }
   ],
 

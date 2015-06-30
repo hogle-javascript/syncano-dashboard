@@ -9,6 +9,7 @@ var React                    = require('react'),
     // Stores and Actions
     AdminsActions            = require('./AdminsActions'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
+    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
     AdminsStore              = require('./AdminsStore'),
 
     // Components
@@ -16,8 +17,8 @@ var React                    = require('react'),
     Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
     SelectField               = mui.SelectField,
-    Dialog                    = mui.Dialog;
-
+    Dialog                    = mui.Dialog,
+    Loading                   = require('../../common/Loading/Loading.react.jsx');
 
 module.exports = React.createClass({
 
@@ -25,6 +26,7 @@ module.exports = React.createClass({
 
   mixins: [
     Reflux.connect(AdminsStore),
+    Reflux.connect(AdminsInvitationsStore, 'adminsInvitationsStore'),
     React.addons.LinkedStateMixin,
     DialogFormMixin,
     ValidationMixin,
@@ -63,30 +65,29 @@ module.exports = React.createClass({
     var checkedItem = this.props.store.getCheckedItem();
     if (checkedItem) {
       this.setState({
-            email : checkedItem.email,
-            role  : checkedItem.role
+        email : checkedItem.email,
+        role  : checkedItem.role
       });
     }
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     AdminsInvitationsActions.createInvitation({
       email : this.state.email,
       role  : this.state.role
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     var checkedItem = this.props.store.getCheckedItem();
     AdminsActions.updateAdmin(checkedItem.id, {
       role  : this.state.role
     });
   },
 
-  render: function () {
-    var title       = this.props.mode === 'edit' ? 'Edit': 'Invite',
-        submitLabel = this.props.mode === 'edit' ? 'Save changes': 'Confirm';
-
+  render: function() {
+    var title       = this.props.mode === 'edit' ? 'Edit' : 'Invite',
+        submitLabel = this.props.mode === 'edit' ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -118,7 +119,7 @@ module.exports = React.createClass({
               ref               = "email"
               name              = "email"
               fullWidth         = {true}
-              disabled          = {this.props.mode === 'edit' ? true: false}
+              disabled          = {this.props.mode === 'edit' ? true : false}
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
               hintText          = "Email of the administrator"
@@ -138,6 +139,11 @@ module.exports = React.createClass({
 
           </form>
         </div>
+        <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.adminsInvitationsStore.isLoading || this.state.isLoading} />
+
       </Dialog>
     );
   }

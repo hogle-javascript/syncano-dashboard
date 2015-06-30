@@ -4,17 +4,21 @@ var Reflux                   = require('reflux'),
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin           = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
     SessionActions           = require('../Session/SessionActions'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
+    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
     AdminsActions            = require('./AdminsActions');
 
 var AdminsStore = Reflux.createStore({
   listenables : AdminsActions,
   mixins      : [
+    Reflux.connect(AdminsInvitationsStore),
     CheckListStoreMixin,
     StoreFormMixin,
+    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
@@ -48,7 +52,9 @@ var AdminsStore = Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
   },
+
   refreshData: function() {
     console.debug('AdminsStore::refreshData');
     AdminsActions.fetchAdmins();
@@ -71,13 +77,12 @@ var AdminsStore = Reflux.createStore({
 
   onFetchAdmins: function() {
     console.debug('AdminsStore::onFetchAdmins');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchAdminsCompleted: function(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-    this.data.isLoading = false;
+    this.trigger(this.data);
     AdminsActions.setAdmins(items);
   },
 
@@ -93,7 +98,7 @@ var AdminsStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
+  }
 
 });
 

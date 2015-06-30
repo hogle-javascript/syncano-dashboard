@@ -21,6 +21,7 @@ var React                 = require('react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     UsersList             = require('./UsersList.react'),
@@ -106,7 +107,13 @@ module.exports = React.createClass({
               onClick : this.handleRemoveGroups}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + GroupsStore.getCheckedItems().length + ' groups?'
+          children: [
+            'Do you really want to delete ' + GroupsStore.getCheckedItems().length + ' groups?',
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.groups.isLoading} />
+          ]
         }
       },
 
@@ -121,7 +128,13 @@ module.exports = React.createClass({
             {text: 'Yes, I\'m sure', onClick: this.handleRemoveUsers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + UsersStore.getCheckedItems().length + ' users?'
+          children: [
+            'Do you really want to delete ' + UsersStore.getCheckedItems().length + ' users?',
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.users.isLoading} />
+          ]
         }
       }
     ]

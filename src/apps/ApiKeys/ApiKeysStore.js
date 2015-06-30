@@ -1,4 +1,4 @@
-var Reflux = require('reflux'),
+var Reflux            = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
@@ -6,6 +6,7 @@ var Reflux = require('reflux'),
     WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
     SessionActions           = require('../Session/SessionActions'),
     ApiKeysActions           = require('./ApiKeysActions');
 
@@ -14,7 +15,8 @@ var ApiKeysStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    StoreLoadingMixin
   ],
 
   getInitialState: function() {
@@ -32,6 +34,7 @@ var ApiKeysStore = Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.setLoadingStates();
   },
 
   refreshData: function() {
@@ -56,9 +59,7 @@ var ApiKeysStore = Reflux.createStore({
 
   onFetchApiKeysCompleted: function(items) {
     console.debug('ApiKeysStore::onFetchApiKeysCompleted');
-    this.data.isLoading = false;
     ApiKeysActions.setApiKeys(items);
-
   },
 
   onCreateApiKeyCompleted: function() {

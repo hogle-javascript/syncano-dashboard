@@ -10,13 +10,15 @@ var React            = require('react'),
     UsersActions     = require('./UsersActions'),
     UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
+    UsersStore       = require('./UsersStore'),
 
     // Components
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog;
+    Dialog           = mui.Dialog,
+    Loading          = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -25,6 +27,7 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
+    Reflux.connect(UsersStore, 'users'),
     Reflux.connect(UserDialogStore),
     ValidationMixin,
     FormMixin,
@@ -55,9 +58,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
+    var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = 'Confirm',
-
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -104,6 +106,10 @@ module.exports = React.createClass({
               floatingLabelText = 'Password' />
 
           </form>
+          <Loading
+            type     = 'linear'
+            position = 'bottom'
+            show     = {this.state.users.isLoading} />
         </div>
       </Dialog>
     );

@@ -82,7 +82,10 @@ module.exports = Radium(React.createClass({
         flexDirection   : 'column',
         justifyContent  : 'center',
         cursor          : 'pointer',
-        color           : this.state.color
+        color           : this.state.color,
+        ':hover': {
+          color : this.props.hoverColor
+        }
       },
       icon : {
         margin          : 12,
@@ -110,16 +113,6 @@ module.exports = Radium(React.createClass({
     this.props.handleNameClick(this.props.id);
   },
 
-  handleMouseOver: function () {
-    console.info('ColumnCheckIcon::handleMouseOver');
-    this.setState({'color': this.props.hoverColor});
-  },
-
-  handleMouseLeave: function () {
-    console.info('ColumnCheckIcon::handleMouseLeave');
-    this.setState({'color': this.props.color});
-  },
-
   render: function () {
     var styles = this.getStyles();
 
@@ -134,9 +127,7 @@ module.exports = Radium(React.createClass({
 
         <div
           style       = {styles.name}
-          onClick     = {this.handleNameClick}
-          onMouseOver = {this.handleMouseOver}
-          onMouseOut  = {this.handleMouseLeave}>
+          onClick     = {this.handleNameClick}>
           {this.props.children}
         </div>
       </div>

@@ -3,6 +3,7 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
@@ -13,6 +14,7 @@ var UsersStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
     CheckListStoreMixin,
+    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
@@ -31,6 +33,7 @@ var UsersStore = Reflux.createStore({
       GroupsActions.setGroups,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   refreshData: function() {
@@ -46,13 +49,11 @@ var UsersStore = Reflux.createStore({
 
   onFetchUsers: function(items) {
     console.debug('UsersStore::onFetchUsers');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchUsersCompleted: function(users) {
     console.debug('UsersStore::onFetchUsersCompleted');
-    this.data.isLoading = false;
     UsersActions.setUsers(users);
   },
 

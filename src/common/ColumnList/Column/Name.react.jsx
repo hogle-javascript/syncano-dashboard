@@ -41,8 +41,7 @@ module.exports = Radium(React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
-    hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func
+    hoverColor: React.PropTypes.string.isRequired
   },
 
   statics :{
@@ -57,13 +56,6 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  getInitialState: function () {
-    return {
-      color: this.props.color,
-      hoverColor: this.props.hoverColor
-    }
-  },
-
   getStyles: function () {
     return {
       display         : 'flex',
@@ -73,20 +65,11 @@ module.exports = Radium(React.createClass({
       paddingBottom   : 16,
       alignSelf       : 'center',
       cursor          : 'pointer',
-      color           : this.state.color
+      color           : this.state.color,
+      ':hover' : {
+        color : this.state.hoverColor
+      }
     }
-  },
-
-  handleMouseOver: function () {
-    this.setState({'color': this.props.hoverColor})
-  },
-
-  handleMouseLeave: function () {
-    this.setState({'color': this.props.color})
-  },
-
-  handleClick: function () {
-    this.props.handleClick(this.props.id);
   },
 
   render: function () {
@@ -96,8 +79,7 @@ module.exports = Radium(React.createClass({
       <div
         className   = {this.props.className}
         style       = {styles}
-        onMouseOver = {this.handleMouseOver}
-        onMouseOut  = {this.handleMouseLeave}>
+      >
         {this.props.children}
       </div>
     );

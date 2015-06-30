@@ -17,7 +17,8 @@ var React            = require('react'),
     TextField        = mui.TextField,
     DropDownMenu     = mui.DropDownMenu,
     Dialog           = mui.Dialog,
-    FlatButton       = mui.FlatButton;
+    FlatButton       = mui.FlatButton,
+    Loading          = require('../../common/Loading/Loading.react.jsx');
 
 
 module.exports = React.createClass({
@@ -137,6 +138,10 @@ module.exports = React.createClass({
 
           </form>
         </div>
+        <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
       </Dialog>
     );
   }

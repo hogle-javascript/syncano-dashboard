@@ -22,7 +22,6 @@ var React  = require('react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     Loading           = require('../../common/Loading/Loading.react'),
@@ -34,9 +33,10 @@ module.exports = React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Reflux.connect(InstancesStore, "instancesStore"),
+    HeaderMixin
   ],
 
   getInitialState: function() {
@@ -86,8 +86,8 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <Loading visible={true} />;
+    if (this.state.instancesStore.isLoading) {
+      return <Loading show={true} />;
     }
 
     var items = this.state.items.map(function (item) {
@@ -98,16 +98,24 @@ module.exports = React.createClass({
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
-    } else if (this.props.emptyItemContent) {
-      return (
-        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </EmptyListItem>
-      );
+    }
+    return <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+             {this.props.emptyItemContent}
+           </EmptyListItem>
+  },
+
+  getStyles: function() {
+    return {
+      list: {
+        padding: 0,
+        background: 'none'
+      }
     }
   },
 
   render: function () {
+    var styles = this.getStyles();
+
     return (
       <ListContainer>
         <Header>
@@ -115,7 +123,7 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
+        <List style={styles.list}>
           {this.getList()}
         </List>
       </ListContainer>

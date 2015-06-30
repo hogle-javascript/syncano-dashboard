@@ -78,5 +78,17 @@ module.exports = {
       description : 'Once a year (0 0 1 1 *)',
       crontab     : '0 0 1 1 *'
     }
+  ],
+
+  fieldTypes : [
+    'string',
+    'text',
+    'integer',
+    'number',
+    'float',
+    'boolean',
+    'datetime',
+    'file',
+    'reference'
   ]
 };
