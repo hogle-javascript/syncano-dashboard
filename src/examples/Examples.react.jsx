@@ -2,22 +2,29 @@ var React                = require('react'),
     mui                  = require('material-ui'),
     gravatar             = require('gravatar'),
 
-    ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
+    ThemeManager         = mui.Styles.ThemeManager(),
     TextField            = mui.TextField,
     DatePicker           = mui.DatePicker,
     TimePicker           = mui.TimePicker,
-    Colors               = require('material-ui/lib/styles/colors'),
-    LinearProgress       = require('material-ui/lib/linear-progress'),
-    Dialog               = require('material-ui/lib/dialog'),
-    Snackbar             = require('material-ui/lib/snackbar'),
-    FlatButton           = require('material-ui/lib/flat-button'),
+    Colors               = mui.Styles.Colors,
+    LinearProgress       = mui.LinearProgress,
+    Dialog               = mui.Dialog,
+    Snackbar             = mui.Snackbar,
+    FlatButton           = mui.FlatButton,
+    List                 = mui.List,
+    MuiListItem          = mui.ListItem,
+    ListDivider          = mui.ListDivider,
+    Avatar               = mui.Avatar,
+    Toggle               = mui.Toggle,
+    IconButton           = mui.IconButton,
+    FontIcon             = mui.FontIcon,
+    IconMenu             = mui.IconMenu,
+    Menu2                = mui.Menu,       // this menu is from lib/menu/menu
+    MenuItem2            = mui.MenuItem,   // this menu item is from lib/menu/menu-items
+    FieldSelectMUI       = mui.SelectField,
     ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-    FontIcon             = require('material-ui/lib/font-icon'),
-    IconMenu             = require('material-ui/lib/menus/icon-menu'),
     Menu                 = require('material-ui/lib/menus/menu'),
     MenuItem             = require('material-ui/lib/menus/menu-item'),
-    FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
-
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
     Icon                 = require('../common/Icon/Icon.react'),
@@ -435,21 +442,21 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>Material List items</h4>
-          <mui.List>
-            <mui.ListItem
-              leftAvatar={<mui.Avatar src={avatarUrl} />}
+          <List>
+            <MuiListItem
+              leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
               secondaryTextLines={1} 
               onClick={dummyClick} >
               Name LastName
-            </mui.ListItem>
-            <mui.ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</mui.ListItem>
-            <mui.ListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</mui.ListItem>
-            <mui.ListDivider />
-            <mui.ListItem leftAvatar={<mui.Avatar src={avatarUrl} />}>item with gravatar</mui.ListItem>
-            <mui.ListItem>item empty</mui.ListItem>
-            <mui.ListItem 
-              leftAvatar={<mui.Avatar src={avatarUrl} />}
+            </MuiListItem>
+            <MuiListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</MuiListItem>
+            <MuiListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</MuiListItem>
+            <ListDivider />
+            <MuiListItem leftAvatar={<Avatar src={avatarUrl} />}>item with gravatar</MuiListItem>
+            <MuiListItem>item empty</MuiListItem>
+            <MuiListItem
+              leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText={
                 <p>
                   <span style={{color: Colors.darkBlack}}>Brunch this weekend?</span><br/>
@@ -458,9 +465,9 @@ module.exports = React.createClass({
                 </p>
               }
               secondaryTextLines={2} >item with gravatar and text
-            </mui.ListItem>
-            <mui.ListDivider inset={true} />
-          </mui.List>
+            </MuiListItem>
+            <ListDivider inset={true} />
+          </List>
         </div>
 
         <div className="exampleBox">
@@ -663,7 +670,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Toggle (Material UI)</h2>
-          <mui.Toggle
+          <Toggle
             name="ToggleButton"
             value="ValueToggle"
             label="tempomat"
@@ -775,7 +782,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Menu</h2>
-          <Menu style   ={{
+          <Menu style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
@@ -787,7 +794,7 @@ module.exports = React.createClass({
             <MenuItem>Apps</MenuItem>
           </Menu>
 
-          <IconMenu iconButtonElement={<mui.IconButton>{icon}</mui.IconButton>} openDirection="top-right">
+          <IconMenu iconButtonElement={<IconButton>{icon}</IconButton>} openDirection="top-right">
             <MenuItem insetChildren={true} leftIcon={icon}>Refresh</MenuItem>
             <MenuItem>Send Feedback More</MenuItem>
             <MenuItem checked={true}>Settings</MenuItem>
@@ -823,6 +830,24 @@ module.exports = React.createClass({
             <MenuItem rightIcon={<ArrowDropRight />}>List options</MenuItem>
             <MenuItem secondaryText="&#8984;/">Clear formatting</MenuItem>
           </Menu>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Menu 2</h2>
+          <Menu2 style ={{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}
+                  menuItems={[
+                  {text: <MenuItem2>ASDASD</MenuItem2>},
+                  {text: <MenuItem2>ASDASD</MenuItem2>},
+                  {text: <MenuItem2>ASDASD</MenuItem2>}
+                  ]}>
+
+          </Menu2>
+
         </div>
 
       </div>
