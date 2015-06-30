@@ -17,7 +17,7 @@ var AdminsActions = Reflux.createActions({
     asyncForm: true,
     children: ['completed', 'failure']
   },
-  removeAdmin: {
+  removeAdmins: {
     asyncResult: true,
     children: ['completed', 'failure']
   }
@@ -41,7 +41,7 @@ AdminsActions.updateAdmin.listen(function(name, payload) {
     .catch(this.failure);
 });
 
-AdminsActions.removeAdmin.listen(function(names) {
+AdminsActions.removeAdmins.listen(function(names) {
   names.map(function(name) {
     console.info('AdminsActions::removeAdmins');
     Connection
