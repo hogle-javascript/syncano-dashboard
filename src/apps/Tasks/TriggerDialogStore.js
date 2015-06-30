@@ -35,14 +35,14 @@ var TriggerDialogStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      label: null,
-      signal: null,
-      'class': null,
+      label: '',
+      signal: '',
+      'class': '',
       classes: [
-        {payload: null, text: 'Loading...'}
+        {payload: '', text: 'Loading...'}
       ],
       codeboxes: [
-        {payload: null, text: 'Loading...'}
+        {payload: '', text: 'Loading...'}
       ]
     };
   },
@@ -68,11 +68,11 @@ var TriggerDialogStore = Reflux.createStore({
     };
 
     if (dropdowns.codeboxes.length === 0) {
-      dropdowns.codeboxes = [{payload: null, text: 'No codeboxes, add one first'}];
+      dropdowns.codeboxes = [{payload: '', text: 'No codeboxes, add one first'}];
     }
 
     if (dropdowns.classes.length === 0) {
-      dropdowns.classes = [{payload: null, text: 'No classes, add one first'}];
+      dropdowns.classes = [{payload: '', text: 'No classes, add one first'}];
     }
 
     this.trigger(dropdowns);

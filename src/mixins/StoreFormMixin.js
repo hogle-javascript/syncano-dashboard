@@ -51,7 +51,11 @@ var StoreFormMixin = {
     } else {
       // jscs:disable
       if (payload.non_field_errors !== undefined) {
-        state.errors.feedback = payload.non_field_errors.join();
+        state.errors.feedback = payload.non_field_errors.join(' ');
+      }
+
+      if (payload.__all__ !== undefined) {
+        state.errors.feedback = payload.__all__.join(' ');
       }
       // jscs:enable
 
