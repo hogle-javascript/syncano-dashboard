@@ -172,7 +172,7 @@ module.exports = React.createClass({
   handleMoreRows: function() {
     DataObjectsActions.subFetchDataObjects({
       className : this.state.classObj.name,
-      lastItem  : this.state.items[this.state.items.length - 1]
+      params    : this.state.nextParams
     });
   },
 

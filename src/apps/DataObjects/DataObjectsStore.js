@@ -1,4 +1,5 @@
 var Reflux              = require('reflux'),
+    URL                 = require('url'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
@@ -13,6 +14,7 @@ var Reflux              = require('reflux'),
     SessionActions      = require('../Session/SessionActions'),
     SessionStore        = require('../Session/SessionStore'),
     DataObjectsActions  = require('./DataObjectsActions');
+
 
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
@@ -86,14 +88,19 @@ var DataObjectsStore = Reflux.createStore({
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.hasNextPage = items.hasNextPage();
+    this.data.nextParams  = URL.parse(items.next() || '', true).query;
+    this.data.prevParams  = URL.parse(items.prev() || '', true).query;
 
     if (!this.data.items) {
       this.data.items = []
     }
 
+    var newItems = [];
     Object.keys(items).map(function(key) {
-      this.data.items.splice(0, 0, items[key]);
+      newItems.splice(0, 0, items[key]);
     }.bind(this));
+
+    this.data.items = this.data.items.concat(newItems);
 
     this.data.isLoading = false;
     this.trigger(this.data);
