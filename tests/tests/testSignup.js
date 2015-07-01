@@ -1,13 +1,15 @@
+/* jshint expr: true */
 module.exports = {
-	tags: ['signup'],
-    "Test signup" : function (client) {
-        client
-            .page.signupPage().goToSignupPage()
-            .page.signupPage().generateEmailAddress()
-            .page.signupPage().typeEmail()
-            .page.signupPage().typePassword()
-            .page.signupPage().clickSignInButton()
-            .page.signupPage().verifySignupSuccessful()
-            .end();
-    }
+  'Test': function (client) {
+    var signupPage = client.page.signupPage();
+    var slug = Date.now();
+    signupPage.navigate();
+    signupPage.setValue('@emailInput', 'syncano.bot+'+ slug + '@gmail.com');
+    signupPage.setValue('@passInput', slug);
+    signupPage.clickSubmitButton();
+
+    var instancesPage = client.page.instancesPage();
+    instancesPage.expect.element('@instancesTable').to.be.present.after(2000);
+    client.end();
+  }
 };
