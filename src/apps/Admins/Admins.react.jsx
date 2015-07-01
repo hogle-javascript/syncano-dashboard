@@ -146,8 +146,8 @@ module.exports = React.createClass({
   },
 
   selectAllAdminsInvitations: function() {
-    console.info('Admins::selectAll');
-    AdminsInvitationsActions.selectAll();
+    console.info('Admins::selectAllAdminsInvitations');
+    AdminsInvitationsStore.selectAllAdminsInvitations();
   },
 
   checkAdminItem: function(id, state) {
@@ -169,9 +169,10 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
-    var checkedAdmins      = AdminsStore.getNumberOfChecked(),
-        checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
+    var checkedAdmins                = AdminsStore.getNumberOfChecked(),
+        checkedInvitations           = AdminsInvitationsStore.getNumberOfChecked(),
+        isAnyAdminSelected           = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1),
+        isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
 
     return (
       <Container>
@@ -182,10 +183,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = {checkedAdmins === 1 ? "Click here to select all" : "Click here to unselect all"}
+              label         = {isAnyAdminSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {checkedAdmins === 1 ? this.selectAllAdmins : this.uncheckAll}
-              iconClassName = {checkedAdmins === 1 ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+              onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
+              iconClassName = {isAnyAdminSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Administrator"
@@ -207,10 +208,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = {checkedInvitations === 1 ? "Click here to select all" : "Click here to unselect all"}
+              label         = {isAnyAdminInvitationSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {checkedInvitations === 1 ? this.selectAllAdminsInvitations : this.uncheckAll}
-              iconClassName = {checkedInvitations === 1 ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+              onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
+              iconClassName = {isAnyAdminInvitationSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Invitation"
@@ -244,7 +245,7 @@ module.exports = React.createClass({
           name                 = "Invitations"
           mode                 = "invitations"
           emptyItemHandleClick = {this.showAdminDialog}
-          emptyItemContent     = "Invite administrators"
+          emptyItemContent     = "Invite administrator"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
           items                = {AdminsInvitationsStore.getPendingInvitations()} />
