@@ -136,13 +136,11 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>
       <Loading
         show = {this.props.isLoading}
         size = {1}>
         {this.renderItems()}
       </Loading>
-      </div>
     );
   }
 
