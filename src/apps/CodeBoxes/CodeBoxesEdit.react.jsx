@@ -19,16 +19,14 @@ var React                = require('react'),
     Header               = require('../../common/ColumnList/Header.react'),
     ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
 
-    LoadingItem          = require('../../common/ColumnList/LoadingItem.react'),
+    Loading              = require('../../common/Loading/Loading.react'),
 
     FabList              = require('../../common/Fab/FabList.react'),
     FabListItem          = require('../../common/Fab/FabListItem.react'),
     Dialog               = require('material-ui/lib/dialog'),
 
     Editor               = require('../../common/Editor/Editor.react'),
-    EditorPanel          = require('../../common/Editor/EditorPanel.react'),
-
-    AddDialog            = require('./CodeBoxesAddDialog.react');
+    EditorPanel          = require('../../common/Editor/EditorPanel.react');
 
 
 module.exports = React.createClass({
@@ -46,10 +44,9 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentWillMount: function() {
-    CodeBoxesActions.fetch().then(
-      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId)
-    );
+  componentDidMount: function() {
+    CodeBoxesActions.fetch();
+    CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
   },
 
   getStyles: function () {
@@ -95,12 +92,11 @@ module.exports = React.createClass({
     }
 
     if (!codeBox) {
-      return <LoadingItem />;
+      return <Loading show={true} />;
     }
 
     return (
       <Container style={styles.container}>
-
         <FabList position="top">
           <FabListItem
             label         = "Click here to save CodeBox"
@@ -132,7 +128,6 @@ module.exports = React.createClass({
             loading = {this.linkState('isLoading')}>
           </EditorPanel>
         </div>
-
       </Container>
     );
   }

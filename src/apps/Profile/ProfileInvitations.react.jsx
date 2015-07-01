@@ -24,7 +24,7 @@ var React                     = require('react'),
     List                      = require('../../common/Lists/List.react'),
     Item                      = require('../../common/ColumnList/Item.react'),
     Header                    = require('../../common/ColumnList/Header.react'),
-    LoadingItem               = require('../../common/ColumnList/LoadingItem.react'),
+    Loading                   = require('../../common/Loading/Loading.react'),
     ColumnDesc                = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
@@ -163,10 +163,6 @@ module.exports = React.createClass({
   },
 
   renderList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item);
     }.bind(this));
@@ -210,26 +206,32 @@ module.exports = React.createClass({
           </FabList>
         </Show>
 
-        <Show if={this.state.items.length < 1}>
-          <div style={styles.container}>
-            <FontIcon style={styles.icon} className="synicon-email-outline" />
-            <p style={styles.text}>You have no invitations</p>
-          </div>
-        </Show>
+        <Loading show={this.state.isLoading}>
+          <div>
+            <Show if={this.state.items.length < 1 && this.state.isLoading === false}>
+              <div style={styles.container}>
+                <FontIcon
+                  style     = {styles.icon}
+                  className = "synicon-email-outline" />
+                <p style={styles.text}>You have no invitations</p>
+              </div>
+            </Show>
 
-        <Show if={this.state.items.length > 0}>
-          <ListContainer>
-            <Header>
-              <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
-              <ColumnDesc.Header>From</ColumnDesc.Header>
-              <ColumnDesc.Header>Role</ColumnDesc.Header>
-              <ColumnDate.Header>Created</ColumnDate.Header>
-            </Header>
-            <List>
-              {this.renderList()}
-            </List>
-          </ListContainer>
-        </Show>
+            <Show if={this.state.items.length > 0 && this.state.isLoading === false}>
+              <ListContainer>
+                <Header>
+                  <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
+                  <ColumnDesc.Header>From</ColumnDesc.Header>
+                  <ColumnDesc.Header>Role</ColumnDesc.Header>
+                  <ColumnDate.Header>Created</ColumnDate.Header>
+                </Header>
+                <List>
+                  {this.renderList()}
+                </List>
+              </ListContainer>
+            </Show>
+          </div>
+        </Loading>
       </Container>
     );
   }
