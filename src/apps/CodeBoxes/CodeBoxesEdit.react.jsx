@@ -45,10 +45,9 @@ module.exports = React.createClass({
   ],
 
   componentDidMount: function() {
-    CodeBoxesActions.fetch().then(
-      console.log(this.getParams().codeboxId);
-      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId)
-    );
+    CodeBoxesActions.fetch().then(function () {
+      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
+    }.bind(this));
   },
 
   getStyles: function () {
