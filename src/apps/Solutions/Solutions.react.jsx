@@ -39,9 +39,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <Container id='solutions'>
-        <div className="container">
-          <SolutionsList />
-        </div>
+        <SolutionsList />
       </Container>
     );
   }

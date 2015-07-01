@@ -28,7 +28,7 @@ module.exports = React.createClass({
       },
       listItem: {
         padding: '0 20px',
-        marginBottom: 24
+        marginBottom: 40
       }
     }
   },
@@ -38,7 +38,7 @@ module.exports = React.createClass({
         listItems = this.state.items.map(function(item) {
           return (
             <li
-              className = "col-xs-11"
+              className = "col-md-11"
               style     = {styles.listItem}>
               <SolutionsListItem data={item} />
             </li>
@@ -52,7 +52,7 @@ module.exports = React.createClass({
     var styles    = this.getStyles();
 
     return (
-      <ul className="row align-center" style={styles.list}>
+      <ul className="row" style={styles.list}>
         {this.getListItems()}
       </ul>
     );

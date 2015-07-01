@@ -410,7 +410,9 @@ var Syncano = (function() {
      * @property {function} list - shortcut to {@link Syncano#listSolutions} method
      */
     this.Solutions = {
-      list: this.listSolutions.bind(this)
+      list: this.listSolutions.bind(this),
+      star: this.starSolution.bind(this),
+      unstar: this.unstarSolution.bind(this)
     };
 
     /**
@@ -953,7 +955,7 @@ var Syncano = (function() {
 
 
     /*********************
-     INSTANCES METHODS
+     SOLUTIONS METHODS
      **********************/
     /**
      * Returns all defined solutions as a list
@@ -965,9 +967,52 @@ var Syncano = (function() {
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
      */
+
     listSolutions: function(params, callbackOK, callbackError) {
       params = params || {};
       return this.request('GET', 'v1/marketplace/solutions', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Stars solution identified by specified id
+     *
+     * @method Syncano#starSolution
+     * @alias Syncano.Solutions.star
+     * @param {number|object} id - id of solution to star. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    starSolution: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      if (typeof id === 'undefined' || id.length === 0) {
+        throw new Error('Missing solution id');
+      }
+      return this.request('POST', 'v1/marketplace/solutions/' + id + '/star', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Unstars solution identified by specified id
+     *
+     * @method Syncano#unstarSolution
+     * @alias Syncano.Solutions.unstar
+     * @param {number|object} id - id of solution to unstar. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    unstarSolution: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      if (typeof id === 'undefined' || id.length === 0) {
+        throw new Error('Missing solution id');
+      }
+      return this.request('POST', 'v1/marketplace/solutions/' + id + '/unstar', {}, callbackOK, callbackError);
     },
 
 

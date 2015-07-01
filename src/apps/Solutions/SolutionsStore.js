@@ -11,6 +11,7 @@ var Reflux              = require('reflux'),
 
 var SolutionsStore = Reflux.createStore({
   listenables : SolutionsActions,
+
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
@@ -36,23 +37,6 @@ var SolutionsStore = Reflux.createStore({
   refreshData: function() {
     console.debug('SolutionsStore::refreshData');
     SolutionsActions.fetchSolutions();
-  },
-
-  // Filters
-  filterMySolutions: function(item) {
-    return item.owner.email === SessionStore.getUser().email;
-  },
-
-  filterOtherSolutions: function(item) {
-    return item.owner.email !== SessionStore.getUser().email;
-  },
-
-  getMySolutions: function() {
-    return this.data.items.filter(this.filterMySolutions);
-  },
-
-  getOtherSolutions: function() {
-    return this.data.items.filter(this.filterOtherSolutions);
   },
 
   setSolutions: function(solutions) {
@@ -81,40 +65,16 @@ var SolutionsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onCreateSolutionCompleted: function(payload) {
-    console.debug('SolutionsStore::onCreateSolutionCompleted');
-    this.data.hideDialogs = true;
+  onUnstarSolutionCompleted: function() {
+    console.debug('SolutionsStore::onUnstarSolutionCompleted');
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateSolutionCompleted: function(paylod) {
-    console.debug('SolutionsStore::onUpdateSolutionCompleted');
-    this.data.hideDialogs = true;
+  onStarSolutionCompleted: function() {
+    console.debug('SolutionsStore::onStarSolutionCompleted');
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  onRemoveSolutionsCompleted: function(payload) {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  getCheckedItemIconColor: function() {
-    var singleItem = this.getCheckedItem();
-
-    if (!singleItem) {
-      return {
-        color : null,
-        icon  : null
-      }
-    }
-
-    return {
-      color : singleItem.metadata.color,
-      icon  : singleItem.metadata.icon
-    };
   }
 
 });

@@ -7,27 +7,21 @@ var SolutionsActions = Reflux.createActions({
   uncheckAll: {},
   fetch: {},
   setSolutions: {},
+
   fetchSolutions: {
     asyncResult: true,
     children: ['completed', 'failure']
   },
 
-  createSolution: {
+  starSolution: {
     asyncResult: true,
-    asyncForm: true,
     children: ['completed', 'failure']
   },
 
-  updateSolution: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
-  },
-
-  removeSolutions: {
+  unstarSolution: {
     asyncResult: true,
     children: ['completed', 'failure']
-  },
+  }
 
 });
 
@@ -40,37 +34,22 @@ SolutionsActions.fetchSolutions.listen(function() {
     .catch(this.failure);
 });
 
-SolutionsActions.createSolution.listen(function(payload) {
-  console.info('SolutionsActions::createSolution');
+SolutionsActions.starSolution.listen(function(id) {
+  console.info('SolutionsActions::starSolutions');
   Connection
     .Solutions
-    .create({
-      name        : payload.name,
-      description : payload.description,
-      metadata    : payload.metadata
-    })
+    .star(id)
     .then(this.completed)
     .catch(this.failure);
 });
 
-SolutionsActions.updateSolution.listen(function(name, payload) {
-  console.info('SolutionsActions::updateSolution');
+SolutionsActions.unstarSolution.listen(function(id) {
+  console.info('SolutionsActions::unstarSolutions');
   Connection
     .Solutions
-    .update(name, payload)
+    .unstar(id)
     .then(this.completed)
     .catch(this.failure);
-});
-
-SolutionsActions.removeSolutions.listen(function(names) {
-  names.map(function(name) {
-    console.info('SolutionsActions::removeSolutions');
-    Connection
-      .Solutions
-      .remove(name)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
 });
 
 module.exports = SolutionsActions;

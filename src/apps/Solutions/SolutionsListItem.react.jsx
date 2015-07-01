@@ -10,7 +10,9 @@ var React                 = require('react'),
     CardActions           = mui.CardActions,
     CardText              = mui.CardText,
     CardHeader            = mui.CardHeader,
-    IconButton            = mui.IconButton;
+    IconButton            = mui.IconButton,
+
+    SolutionStar          = require('../../common/SolutionStar/SolutionStar.react');
 
 module.exports = React.createClass({
 
@@ -26,9 +28,6 @@ module.exports = React.createClass({
         position: 'absolute',
         top: 4,
         right: 4
-      },
-      star: {
-        color: 'rgba(0, 0, 0, 0.24)'
       },
       cardMedia: {
         height: 198,
@@ -83,17 +82,15 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var styles = this.getStyles(),
-        item = this.props.data,
-        itemTags = item.tags.join(', '),
+    var styles          = this.getStyles(),
+        item            = this.props.data,
+        itemTags        = item.tags.join(', '),
         itemUpdatedDate = Moment(item.updated_at).format('DD.MM.YYYY'),
-        itemImageURL = item.metadata.screenshots ? item.metadata.screenshots[0] : null;
+        itemImageURL    = item.metadata.screenshots ? item.metadata.screenshots[0] : null;
 
     if (itemImageURL) {
       styles.cardMedia.backgroundImage = 'url(' + itemImageURL + ')';
     }
-
-    console.log(styles.star);
 
     return (
       <Card>
@@ -105,10 +102,7 @@ module.exports = React.createClass({
                      subtitleStyle = {styles.cardSubtitle}
           />
           <div style={styles.starContainer}>
-            <IconButton
-              iconClassName = "synicon-star-outline"
-              iconStyle     = {styles.star}
-            />
+            <SolutionStar solution={item} />
           </div>
         </div>
         <CardText>
