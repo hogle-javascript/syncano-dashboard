@@ -58,6 +58,9 @@ var CodeBoxesStore = Reflux.createStore({
 
   fetchTraces: function() {
     console.debug('CodeBoxesStore::fetchTraces');
+    if (this.data.currentCodeBoxId === null) {
+      return;
+    }
     CodeBoxesActions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
   },
 
