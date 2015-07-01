@@ -19,10 +19,10 @@ var React                = require('react'),
     Header               = require('../../common/ColumnList/Header.react'),
     ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
 
-    LoadingItem          = require('../../common/ColumnList/LoadingItem.react'),
+    Loading              = require('../../common/Loading/Loading.react'),
 
     FabList              = require('../../common/Fab/FabList.react'),
-    FloatingActionButton = require('../../common/Fab/Fab.react'),
+    FabListItem          = require('../../common/Fab/FabListItem.react'),
     Dialog               = require('material-ui/lib/dialog'),
 
     Editor               = require('../../common/Editor/Editor.react'),
@@ -47,22 +47,17 @@ module.exports = React.createClass({
   ],
 
   componentWillMount: function() {
-    CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
-    this.setState({
-      currentCodeBoxId : this.getParams().codeboxId,
-      instanceName     : this.getParams().instanceName
-    })
+    CodeBoxesActions.fetch().then(
+      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId)
+    );
   },
 
-  getStyles() {
+  getStyles: function () {
     return {
       container: {
         margin   : '65px auto',
         width    : '80%',
         maxWidth : '1140px'
-      },
-      fabList: {
-        top: 200
       },
       tracePanel: {
         marginTop : 30,
@@ -78,8 +73,17 @@ module.exports = React.createClass({
     });
   },
 
-  render: function () {
+  handleUpdate: function() {
+    CodeBoxesActions.updateCodeBox(
+      this.state.currentCodeBoxId,
+      {
+        source : this.refs.editor.editor.getValue()
+      }
+    );
+  },
 
+  render: function () {
+    console.debug('CodeBoxesEdit::render');
     var styles     = this.getStyles(),
         source     = null,
         codeBox    = CodeBoxesStore.getCurrentCodeBox(),
@@ -91,20 +95,22 @@ module.exports = React.createClass({
     }
 
     if (!codeBox) {
-      return <LoadingItem />;
+      return <Loading show={true} />;
     }
 
     return (
       <Container style={styles.container}>
-        <FabList style={styles.fabList}>
-
-          <FloatingActionButton
-            label         = "Click here to execute CodeBox" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList position="top">
+          <FabListItem
+            label         = "Click here to save CodeBox"
+            mini          = {true}
+            onClick       = {this.handleUpdate}
+            iconClassName = "synicon-content-save" />
+          <FabListItem
+            label         = "Click here to execute CodeBox"
             mini          = {true}
             onClick       = {this.handleRun}
             iconClassName = "synicon-play" />
-
         </FabList>
 
         <div>Codebox: {codeBox.name}</div>
@@ -125,7 +131,6 @@ module.exports = React.createClass({
             loading = {this.linkState('isLoading')}>
           </EditorPanel>
         </div>
-
       </Container>
     );
   }

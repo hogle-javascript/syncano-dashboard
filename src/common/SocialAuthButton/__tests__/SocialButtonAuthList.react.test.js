@@ -1,7 +1,7 @@
-jest.dontMock("../SocialAuthButtonList.react");
+jest.dontMock('../SocialAuthButtonList.react');
 
-describe("SocialAuthButtonList.react", function() {
-  it("should render two buttons", function() {
+describe('SocialAuthButtonList.react', function() {
+  it('should render two buttons', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
@@ -18,7 +18,7 @@ describe("SocialAuthButtonList.react", function() {
     // var mockFn = jest.genMockFn();
 
     // var SocialAuthButtonList = TestUtils.renderIntoDocument(<SocialAuthButtonList>{buttons}</SocialAuthButtonList>);
-    // var node = TestUtils.findRenderedDOMComponentWithClass(SocialAuthButtonList, "social-auth-button-list");
+    // var node = TestUtils.findRenderedDOMComponentWithClass(SocialAuthButtonList, "social-auth-button-list');
 
     //expect(node.props.children.length).toEqual(2);
 

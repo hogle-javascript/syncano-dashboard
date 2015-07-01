@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
+    Router           = require('react-router'),
 
     // Utils
     HeaderMixin      = require('../Header/HeaderMixin'),
@@ -27,7 +27,7 @@ module.exports = React.createClass({
     Reflux.connect(CodeBoxesStore),
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
     //React.addons.LinkedStateMixin,
     //ValidationMixin,
   ],
@@ -37,38 +37,9 @@ module.exports = React.createClass({
     CodeBoxesActions.setCurrentCodeBoxId(codeboxId);
     this.setState({
       currentCodeBoxId: codeboxId,
-      instanceName: this.getParams().instanceName,
+      instanceName: this.getParams().instanceName
     });
     CodeBoxesStore.refreshData();
-  },
-
-  headerBreadcrumbs: function () {
-    var routeParams = {
-     codeboxId: this.state.currentCodeBoxId,
-     instanceName: this.state.instanceName
-   };
-
-  return [
-      {
-        route: 'instances',
-        label: 'Instances',
-      }, {
-        route: 'instance',
-        label: this.state.instanceName,
-        params: routeParams
-      }, {
-        route: 'codeboxes',
-        label: 'Codeboxes',
-        params: routeParams
-      }, {
-        route: 'codeboxes-edit',
-        label: this.state.currentCodeBoxId,
-        params: routeParams
-      },{
-        route: 'codeboxes-traces',
-        label: 'Config',
-        params: routeParams,
-      }]
   },
 
   headerMenuItems: function () {

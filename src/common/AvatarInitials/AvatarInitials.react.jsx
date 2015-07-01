@@ -1,9 +1,10 @@
-var React = require('react'),
+var React      = require('react'),
 
-    // Stores
-    ColorStore = require('../Color/ColorStore');
+    ColorStore = require('../Color/ColorStore'),
 
-require('./AvatarInitials.css');
+    mui        = require('material-ui'),
+    Avatar     = mui.Avatar;
+
 
 module.exports = React.createClass({
 
@@ -24,10 +25,27 @@ module.exports = React.createClass({
     return Math.abs(hash);
   },
 
+  getStyles: function() {
+    return {
+      fontWeight: 300,
+      fontSize: 16,
+      lineHeight: '1em',
+      borderRadius: '100%',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      userSelect: 'none',
+      cursor: 'default'
+    }
+  },
+
   render: function() {
-    var initials;
-    var colors = ColorStore.getOldColorPickerPalette();
-    var nameFragments = this.props.name.split(' ');
+    var styles = this.getStyles(),
+        initials,
+        colors = ColorStore.getAllColors(),
+        nameFragments = this.props.name.split(' ');
+
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();
     } else {
@@ -37,13 +55,13 @@ module.exports = React.createClass({
         return nameFragment.charAt(0).toUpperCase();
       }).join('');
     }
-    var style = {
-      backgroundColor: this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length]
-    };
+
+    styles.backgroundColor = this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length];
+
     return (
-      <div className="avatar-initials" style={style}>
-        <div className="avatar-initials-text">{initials}</div>
-      </div>
+      <Avatar style={styles} backgroundColor={styles.backgroundColor} >
+        {initials}
+      </Avatar>
     );
   }
 

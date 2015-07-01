@@ -2,136 +2,73 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  
-    //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
-    SchedulesActions    = require('./SchedulesActions');
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
+    //Stores & Actions
+    Constants           = require('../../constants/Constants'),
+    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
+    SessionActions      = require('../Session/SessionActions'),
+    SchedulesActions    = require('./SchedulesActions');
 
 var SchedulesStore = Reflux.createStore({
   listenables : SchedulesActions,
-  mixins      : [CheckListStoreMixin],
-
-  crontabItems: [
-    {
-      payload: '*/5 * * *',
-      text: 'Each 5 minutes'
-    },
-    {
-      payload: '0 * * * *',
-      text: 'Each round hour'
-    }
+  mixins      : [
+    CheckListStoreMixin,
+    WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      // Lists
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {}
+      items     : [],
+      isLoading : true
     }
   },
 
-  init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+  init: function() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      CodeBoxesActions.fetchCodeBoxes,
+      this.refreshData
+    );
   },
 
-  refreshData: function (data) {
+  getSchedules: function(empty) {
+    return this.data.items || empty || null;
+  },
+
+  setSchedules: function(items) {
+    console.debug('SchedulesStore::setSchedules');
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+    this.trigger(this.data);
+  },
+
+  refreshData: function() {
     console.debug('SchedulesStore::refreshData');
-    if (SessionStore.instance) {
-      SchedulesActions.getSchedules();
-    }
+    SchedulesActions.fetchSchedules();
   },
 
-  getCrontabDropdown: function () {
-    return this.crontabItems;
-  },
-  
-  onGetSchedules: function(items) {
+  onFetchSchedules: function() {
+    console.debug('SchedulesStore::onFetchSchedules');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onGetSchedulesCompleted: function(items) {
-    console.debug('SchedulesStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
-    });
+  onFetchSchedulesCompleted: function(items) {
+    console.debug('SchedulesStore::onFetchSchedulesCompleted');
     this.data.isLoading = false;
-    this.trigger(this.data);
+    SchedulesActions.setSchedules(items);
   },
 
-  onCreateScheduleCompleted: function(payload) {
-    console.debug('SchedulesStore::onCreateScheduleCompleted');
+  onRemoveSchedulesCompleted: function() {
+    console.debug('SchedulesStore::onRemoveSchedulesCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  onCreateScheduleFailure: function(payload) {
-    console.debug('SchedulesStore::onCreateScheduleCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
-  onUpdateScheduleCompleted: function(paylod) {
-    console.debug('SchedulesStore::onUpdateScheduleCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateScheduleFailure: function(payload) {
-    console.debug('SchedulesStore::onUpdateScheduleFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
-  onRemoveSchedulesCompleted: function(payload) {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
+  }
 
 });
 

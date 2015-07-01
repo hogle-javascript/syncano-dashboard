@@ -1,31 +1,38 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var GroupsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
-
-  getGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  fetch      : {},
+  setGroups  : {},
+  fetchGroups: {
+    asyncResult: true,
+    loading    : true,
+    children   : ['completed', 'failure']
   },
   createGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateGroup: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   removeGroups: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children: ['completed', 'failure']
   }
 });
 
-GroupsActions.createGroup.listen( function(label) {
+GroupsActions.createGroup.listen(function(label) {
   console.info('GroupsActions::createGroup');
   Connection
     .Groups
@@ -34,8 +41,8 @@ GroupsActions.createGroup.listen( function(label) {
     .catch(this.failure);
 });
 
-GroupsActions.getGroups.listen( function() {
-  console.info('GroupsActions::getGroups');
+GroupsActions.fetchGroups.listen(function() {
+  console.info('GroupsActions::fetchGroups');
   Connection
     .Groups
     .list()
@@ -43,7 +50,7 @@ GroupsActions.getGroups.listen( function() {
     .catch(this.failure);
 });
 
-GroupsActions.updateGroup.listen( function(id, payload) {
+GroupsActions.updateGroup.listen(function(id, payload) {
   console.info('GroupsActions::updateGroup');
   Connection
     .Groups
@@ -52,15 +59,15 @@ GroupsActions.updateGroup.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-GroupsActions.removeGroups.listen( function(ids) {
-  ids.map(function(id) {
-    console.info('GroupsActions::removeGroups');
-    Connection
-      .Groups
-      .remove(id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+GroupsActions.removeGroups.listen(function(ids) {
+  console.info('GroupsActions::removeGroups');
+  var promises = ids.map(function(id) {
+    return Connection.Groups.remove(id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = GroupsActions;

@@ -4,14 +4,14 @@ var Reflux         = require('reflux'),
 
     SessionActions = require('../Session/SessionActions'),
     SessionStore   = require('../Session/SessionStore'),
-    AuthActions    = require('./AuthActions');
-
+    AuthActions    = require('./AuthActions'),
+    AuthConstans   = require('./AuthConstants');
 
 var AuthStore = Reflux.createStore({
   listenables: AuthActions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       email           : null,
       password        : null,
@@ -19,61 +19,64 @@ var AuthStore = Reflux.createStore({
     };
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },
 
-  onActivate: function () {
+  onActivate: function() {
     this.trigger({
       status: 'Account activation in progress...'
     });
   },
 
-  onActivateCompleted: function () {
+  onActivateCompleted: function(payload) {
     this.trigger({
-      status: 'Account activated successfully.'
+      status: 'Account activated successfully. You\'ll now be redirected to Syncano Dashboard.'
     });
+    this.onPasswordSignInCompleted(payload);
+    setTimeout(function() {
+      SessionStore.getRouter().transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
+    }, 3000);
   },
 
-  onActivateFailure: function () {
+  onActivateFailure: function() {
     this.trigger({
       status: 'Invalid or expired activation link.'
     });
   },
 
-  onPasswordSignUpCompleted: function (payload) {
+  onPasswordSignUpCompleted: function(payload) {
     this.onPasswordSignInCompleted(payload);
   },
 
-  onPasswordSignInCompleted: function (payload) {
+  onPasswordSignInCompleted: function(payload) {
     SessionActions.login(payload);
   },
 
-  onPasswordResetCompleted: function () {
+  onPasswordResetCompleted: function() {
     this.trigger({
       email    : null,
       feedback : 'Check your inbox.'
     });
   },
 
-  onPasswordResetConfirmCompleted: function () {
-    this.data = this.getInitialState();
-    this.trigger({
-      feedback: 'Password changed successfully'
-    });
+  onPasswordResetConfirmCompleted: function(payload) {
+    this.onPasswordSignInCompleted(payload);
+    SessionStore.getRouter().transitionTo('password-update');
   },
 
-  checkSession: function (Session) {
+  checkSession: function(Session) {
     if (Session.isAuthenticated()) {
       this.trigger(this.data);
     }
   },
 
-  onSocialLoginCompleted: function (payload) {
+  onSocialLoginCompleted: function(payload) {
+    console.debug('AuthStore::onSocialLoginCompleted');
     this.onPasswordSignInCompleted(payload);
-  },
+  }
 
 });
 

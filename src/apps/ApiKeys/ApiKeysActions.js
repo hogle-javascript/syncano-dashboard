@@ -2,12 +2,44 @@ var Reflux     = require('reflux'),
 
     Connection = require('../Session/Connection').get();
 
+var ApiKeysActions = Reflux.createActions({
+  checkItem  : {},
+  uncheckAll : {},
+  fetch      : {},
+  setApiKeys : {},
+  showDialog    : {},
+  dismissDialog : {},
+  fetchApiKeys: {
+    asyncResult: true,
+    loading    : true,
+    children    : ['completed', 'failure']
+  },
+  createApiKey: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
+  updateApiKey: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
+  removeApiKeys: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
+  resetApiKey: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  }
+});
 
-var ApiKeysActions = Reflux.createActions();
-
-ApiKeysActions.getApiKeys = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-ApiKeysActions.getApiKeys.listen( function(payload) {
-  console.info('ApiKeysActions::getApiKeys');
+ApiKeysActions.fetchApiKeys.listen(function() {
+  console.info('ApiKeysActions::fetchApiKeys');
   Connection
     .ApiKeys
     .list()
@@ -15,22 +47,22 @@ ApiKeysActions.getApiKeys.listen( function(payload) {
     .catch(this.failure);
 });
 
-ApiKeysActions.createApiKey = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-ApiKeysActions.createApiKey.listen( function(payload) {
+ApiKeysActions.createApiKey.listen(function(payload) {
   console.info('ApiKeysActions::createApiKey');
   Connection
     .ApiKeys
     .create({
       description       : payload.description,
+      // jscs:disable
       allow_user_create : payload.allow_user_create,
       ignore_acl        : payload.ignore_acl
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
 });
 
-ApiKeysActions.updateApiKey = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-ApiKeysActions.updateApiKey.listen( function(name, payload) {
+ApiKeysActions.updateApiKey.listen(function(name, payload) {
   console.info('ApiKeysActions::updateApiKey');
   Connection
     .ApiKeys
@@ -39,8 +71,7 @@ ApiKeysActions.updateApiKey.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-ApiKeysActions.removeApiKeys = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-ApiKeysActions.removeApiKeys.listen( function(names) {
+ApiKeysActions.removeApiKeys.listen(function(names) {
   names.map(function(name) {
     console.info('ApiKeysActions::removeApiKeys');
     Connection
@@ -51,8 +82,7 @@ ApiKeysActions.removeApiKeys.listen( function(names) {
   }.bind(this));
 });
 
-ApiKeysActions.resetApiKey = Reflux.createAction({asyncResult: true, children: ['completed', 'failure']});
-ApiKeysActions.resetApiKey.listen( function(id) {
+ApiKeysActions.resetApiKey.listen(function(id) {
   console.info('ApiKeysActions::resetApiKey');
   Connection
     .ApiKeys
@@ -60,9 +90,5 @@ ApiKeysActions.resetApiKey.listen( function(id) {
     .then(this.completed)
     .catch(this.failure);
 });
-
-
-ApiKeysActions.checkItem = Reflux.createAction();
-ApiKeysActions.uncheckAll = Reflux.createAction();
 
 module.exports = ApiKeysActions;

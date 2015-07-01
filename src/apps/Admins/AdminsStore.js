@@ -1,141 +1,75 @@
-var Reflux              = require('reflux'),
+var Reflux                   = require('reflux'),
 
     // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  
-    //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
-    AdminsActions       = require('./AdminsActions');
+    CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
+    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
 
+    //Stores & Actions
+    SessionActions           = require('../Session/SessionActions'),
+    AdminsInvitationsActions = require('./AdminsInvitationsActions'),
+    AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
+    AdminsActions            = require('./AdminsActions');
 
 var AdminsStore = Reflux.createStore({
   listenables : AdminsActions,
-  mixins      : [CheckListStoreMixin],
-
-  roleMenuItems: [
-    {
-      payload: 'read',
-      text: 'read'
-    },
-    {
-      payload: 'write',
-      text: 'write'
-    },
-    {
-      payload: 'full',
-      text: 'full'
-    }
+  mixins      : [
+    Reflux.connect(AdminsInvitationsStore),
+    CheckListStoreMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      // Lists
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      items     : [],
+      isLoading : true
     }
   },
 
-  init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+  init: function() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.setLoadingStates();
   },
 
-  refreshData: function (data) {
+  refreshData: function() {
     console.debug('AdminsStore::refreshData');
-    if (SessionStore.instance) {
-      AdminsActions.getAdmins();
-    }
+    AdminsActions.fetchAdmins();
+    AdminsInvitationsActions.fetchInvitations();
   },
 
-  getRoles: function () {
-    return this.roleMenuItems;
-  },
-  
-  onGetAdmins: function(items) {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
+  setAdmins: function(items) {
+    console.debug('AdminsStore::setAdmins');
 
-  onGetAdminsCompleted: function(items) {
-    console.debug('AdminsStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
     });
-    this.data.isLoading = false;
+
     this.trigger(this.data);
   },
 
-  onCreateAdminCompleted: function(payload) {
-    console.debug('AdminsStore::onCreateAdminCompleted');
+  onFetchAdmins: function() {
+    console.debug('AdminsStore::onFetchAdmins');
+    this.trigger(this.data);
+  },
+
+  onFetchAdminsCompleted: function(items) {
+    console.debug('AdminsStore::onFetchAdminsCompleted');
+    this.trigger(this.data);
+    AdminsActions.setAdmins(items);
+  },
+
+  onRemoveAdminsCompleted: function() {
+    console.debug('AdminsStore::onRemoveAdminsCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  },
-
-  onCreateAdminFailure: function(payload) {
-    console.debug('AdminsStore::onCreateAdminCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-  
-  onUpdateAdminCompleted: function(paylod) {
-    console.debug('AdminsStore::onUpdateAdminCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateAdminFailure: function(payload) {
-    console.debug('AdminsStore::onUpdateAdminFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
-  onRemoveAdminsCompleted: function(payload) {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
+  }
 
 });
 

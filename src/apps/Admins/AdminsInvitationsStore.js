@@ -2,69 +2,80 @@ var Reflux                   = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
-  
+    StoreFormMixin           = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
+    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
+
     //Stores & Actions
+    SessionActions           = require('../Session/SessionActions'),
     SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions');
 
-
 var AdminsInvitationsStore = Reflux.createStore({
   listenables : AdminsInvitationsActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
+  ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      // Lists
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      items     : [],
+      isLoading : true
     }
   },
 
-  init: function () {
+  init: function() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.listenToForms();
+    this.setLoadingStates();
+  },
 
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
+  refreshData: function() {
+    console.debug('AdminsInvitationsStore::refreshData');
+    AdminsInvitationsActions.fetchInvitations();
+  },
 
-      // Dialogs
-      errors: {},
-      canSubmit: true,
+  setInvitations: function(items) {
+    console.debug('AdminsInvitationsStore::setInvitations');
+
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
+    });
+
+    this.trigger(this.data);
+  },
+
+  getPendingInvitations: function() {
+    console.debug('AdminsInvitationsStore::getPendingInvitations');
+
+    var isInvitationPending = function(element) {
+      return (element.state === 'new');
     };
 
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    var pendingInvitations = this.data.items.filter(isInvitationPending);
+
+    return pendingInvitations;
   },
 
-  refreshData: function (data) {
-    console.debug('AdminsInvitationsStore::refreshData');
-    if (SessionStore.instance) {
-      AdminsInvitationsActions.getInvitations();
-    }
-  },
-  
-  onGetInvitations: function(items) {
-    this.data.isLoading = true;
+  onFetchInvitations: function(items) {
     this.trigger(this.data);
   },
 
-  onGetInvitationsCompleted: function(items) {
+  onFetchInvitationsCompleted: function(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+      return items[item];
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
-  },
-
-  onCreateInvitationCompleted: function() {
-   this.data.hideDialogs = true;
-   this.trigger(this.data);
-   this.refreshData()
+    AdminsInvitationsActions.setInvitations(items);
   },
 
   onRemoveInvitationCompleted: function() {
@@ -74,10 +85,10 @@ var AdminsInvitationsStore = Reflux.createStore({
   },
 
   onResendInvitationCompleted: function() {
-   this.data.hideDialogs = true;
-   AdminsInvitationsActions.uncheckAll();
-  },
-
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    AdminsInvitationsActions.uncheckAll();
+  }
 
 });
 

@@ -24,16 +24,20 @@ module.exports = React.createClass({
     };
   },
 
-  getIconStyles: function() {
-    var style = {
-      fontSize: '18px'
+  getStyles: function() {
+    var styles = {
+      fontSize      : 18,
+      lineHeight    : 1,
+      color         : 'inherit',
+      verticalAlign : 'middle'
     };
-    return this.mergeStyles(style, this.props.style);
+
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function() {
 
-    var iconStyles = this.getIconStyles();
+    var styles = this.getStyles();
 
     var cssClasses  = classNames({
       'notification'          : true,
@@ -52,7 +56,9 @@ module.exports = React.createClass({
       <div className={cssClasses}>
         <div className="notification__content">
           <div className="notification__content__icon">
-            <FontIcon style={iconStyles} className={"synicon-" + iconClass} />
+            <FontIcon
+              style     = {styles}
+              className = {"synicon-" + iconClass} />
           </div>
           <div>{this.props.children}</div>
         </div>

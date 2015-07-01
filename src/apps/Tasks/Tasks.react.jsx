@@ -1,36 +1,35 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
-
-    SchedulesActions         = require('./SchedulesActions'),
-    SchedulesStore           = require('./SchedulesStore'),
-    TriggersActions          = require('./TriggersActions'),
-    TriggersStore            = require('./TriggersStore'),
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    SchedulesActions      = require('./SchedulesActions'),
+    SchedulesStore        = require('./SchedulesStore'),
+    TriggersActions       = require('./TriggersActions'),
+    TriggersStore         = require('./TriggersStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    FloatingActionButton     = mui.FloatingActionButton,
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
     // Local components
-    SchedulesList            = require('./SchedulesList.react'),
-    TriggersList             = require('./TriggersList.react'),
-    SchedulesAddDialog       = require('./SchedulesAddDialog.react'),
-    TriggersAddDialog        = require('./TriggersAddDialog.react');
-
+    SchedulesList         = require('./SchedulesList.react'),
+    TriggersList          = require('./TriggersList.react'),
+    ScheduleDialog        = require('./ScheduleDialog.react'),
+    TriggerDialog         = require('./TriggerDialog.react');
 
 module.exports = React.createClass({
 
@@ -41,198 +40,164 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(SchedulesStore),
-    Reflux.connect(TriggersStore, 'invitations'),
+    Reflux.connect(TriggersStore, 'triggers'),
     HeaderMixin,
     DialogsMixin,
     InstanceTabsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
-    console.info('Schedules::componentWillUpdate');
+    console.info('Tasks::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.invitations.hideDialogs);
+    this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Schedules::componentWillMount');
-    SchedulesStore.refreshData();
-    TriggersStore.refreshData();
+  componentDidMount: function() {
+    console.info('Tasks::componentDidMount');
+    SchedulesStore.fetch();
+    TriggersStore.fetch();
   },
 
-  getStyles: function() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
 
     return [
-      // Triggers
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : "addTriggerDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: TriggersAddDialog,
-        params: {
-          ref  : "editTriggerDialog",
-          mode : "edit"
-        }
-      },
       {
         dialog: Dialog,
         params: {
-          ref:    "removeTriggerDialog",
-          title:  "Delete Trigger",
+          ref:    'removeTriggerDialog',
+          title:  'Delete Trigger',
           actions: [
             {
               text    : 'Cancel',
               onClick : this.handleCancel},
             {
-              text    : "Yes, I'm sure",
+              text    : 'Yes, I\'m sure',
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length +' triggers?'
-        }
-      },
-
-      // Schedules
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : "addScheduleDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: SchedulesAddDialog,
-        params: {
-          ref  : "editScheduleDialog",
-          mode : "edit"
+          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
         }
       },
       {
         dialog: Dialog,
         params: {
-          ref:    "removeScheduleDialog",
-          title:  "Delete Schedule",
+          ref:    'removeScheduleDialog',
+          title:  'Delete Schedule',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveSchedules}
+            {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length +' schedule?'
+          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length + ' schedule?'
         }
       }
     ]
   },
 
   handleRemoveTriggers: function() {
-    console.info('Schedules::handleDelete');
+    console.info('Tasks::handleDelete');
     TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
   },
 
   handleRemoveSchedules: function() {
-    console.info('Schedules::handleRemoveSchedules');
+    console.info('Tasks::handleRemoveSchedules');
     SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   uncheckAll: function() {
-    console.info('Schedules::uncheckAll');
+    console.info('Tasks::uncheckAll');
     SchedulesActions.uncheckAll();
     TriggersActions.uncheckAll();
   },
 
+  showScheduleDialog: function () {
+    SchedulesActions.showDialog();
+  },
+
+  showScheduleEditDialog: function () {
+    SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
+  },
+
+  showTriggerDialog: function () {
+    TriggersActions.showDialog();
+  },
+
+  showTriggerEditDialog: function () {
+    TriggersActions.showDialog(TriggersStore.getCheckedItem());
+  },
+
   render: function () {
-
-    var styles = this.getStyles();
-
-    var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
-        checkedTriggers       = TriggersStore.getNumberOfChecked();
+    var checkedSchedules = SchedulesStore.getNumberOfChecked(),
+        checkedTriggers  = TriggersStore.getNumberOfChecked();
 
     return (
       <Container>
+        <TriggerDialog />
+        <ScheduleDialog />
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedSchedules ? 'block': 'none'}}>
+        <Show if={checkedSchedules > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Schedules" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeScheduleDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Schedules"
+              mini          = {true}
+              onClick       = {this.showDialog('removeScheduleDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Schedule" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedSchedules > 1}
-            onClick       = {this.showDialog('editScheduleDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Schedule"
+              mini          = {true}
+              disabled      = {checkedSchedules > 1}
+              onClick       = {this.showScheduleEditDialog}
+              iconClassName = "synicon-pencil" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={{top: 200, display: checkedTriggers ? 'block': 'none'}}>
+        <Show if={checkedTriggers > 0}>
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to delete Schedules" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeTriggerDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Trigger" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedSchedules > 1}
-            onClick       = {this.showDialog('editTriggerDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to delete Schedules"
+              mini          = {true}
+              onClick       = {this.showDialog('removeTriggerDialog')}
+              iconClassName = "synicon-delete" />
 
-        </FabList>
+            <FabListItem
+              label         = "Click here to edit Trigger"
+              mini          = {true}
+              disabled      = {checkedSchedules > 1}
+              onClick       = {this.showTriggerEditDialog}
+              iconClassName = "synicon-pencil" />
 
-        <FabList style={styles.fabListBottom}>
-          <FloatingActionButton
-            label         = "Click here to create schedule" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addScheduleDialog')}
+          </FabList>
+        </Show>
+
+        <FabList>
+
+          <FabListItem
+            label         = "Click here to create schedule"
+            onClick       = {this.showScheduleDialog}
             iconClassName = "synicon-camera-timer" />
-          <FloatingActionButton
-            label         = "Click here to create Trigger" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addTriggerDialog')}
+
+          <FabListItem
+            label         = "Click here to create Trigger"
+            onClick       = {this.showTriggerDialog}
             iconClassName = "synicon-arrow-up-bold" />
 
         </FabList>
@@ -240,17 +205,17 @@ module.exports = React.createClass({
         <SchedulesList
           name                 = "Schedules"
           checkItem            = {SchedulesActions.checkItem}
-          isLoading            = {SchedulesActions.isLoading}
+          isLoading            = {this.state.isLoading}
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addScheduleDialog')}
+          emptyItemHandleClick = {this.showScheduleDialog}
           emptyItemContent     = "Create a Schedule" />
 
         <TriggersList
           name                 = "Triggers"
           checkItem            = {TriggersActions.checkItem}
-          isLoading            = {TriggersActions.isLoading}
-          items                = {this.state.invitations.items}
-          emptyItemHandleClick = {this.showDialog('addTriggerDialog')}
+          isLoading            = {this.state.triggers.isLoading}
+          items                = {this.state.triggers.items}
+          emptyItemHandleClick = {this.showTriggerDialog}
           emptyItemContent     = "Create a Trigger" />
 
       </Container>

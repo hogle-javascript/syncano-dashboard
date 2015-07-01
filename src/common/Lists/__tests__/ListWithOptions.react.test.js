@@ -1,7 +1,7 @@
-jest.dontMock("../ListWithOptions.react");
+jest.dontMock('../ListWithOptions.react');
 
-describe("ListWithOptions.react", function() {
-  it("testing component", function() {
+describe('ListWithOptions.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

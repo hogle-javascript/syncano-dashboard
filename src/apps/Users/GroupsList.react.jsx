@@ -23,7 +23,7 @@ var React             = require('react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -41,14 +41,14 @@ module.exports = React.createClass({
     Router.Navigation,
   ],
 
-  getInitialState() {
+  getInitialState: function () {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading,
+      isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function (nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
@@ -63,8 +63,11 @@ module.exports = React.createClass({
   renderItem: function (item) {
 
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
+          className       = "col-xs-30"
           id              = {item.id.toString()}
           icon            = 'account-multiple'
           background      = {Colors.blue200}
@@ -72,18 +75,12 @@ module.exports = React.createClass({
           handleIconClick = {this.handleItemIconClick} >
           {item.label}
         </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>
-        </ColumnDesc>
+        <ColumnID className="col-flex-1">{item.id}</ColumnID>
       </Item>
     )
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -104,12 +101,13 @@ module.exports = React.createClass({
     return (
       <ListContainer style={{width: '100%'}}>
         <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header></ColumnDesc.Header>
+          <ColumnCheckIcon.Header className="col-xs-30">{this.props.name}</ColumnCheckIcon.Header>
+          <ColumnID.Header className="col-flex-1">ID</ColumnID.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

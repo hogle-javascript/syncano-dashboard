@@ -1,28 +1,36 @@
 var Reflux     = require('reflux'),
 
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = require('../Session/Connection').get(),
+    D          = Syncano.D;
 
 var AdminsActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
-
-  'getAdmins': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  fetch      : {},
+  setAdmins  : {},
+  showDialog    : {},
+  dismissDialog : {},
+  fetchAdmins: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
-  'updateAdmin': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  updateAdmin: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
-  'removeAdmin': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  removeAdmins: {
+    asyncResult: true,
+    loading    : true,
+    children   : ['completed', 'failure']
   }
 });
 
-AdminsActions.getAdmins.listen( function(payload) {
-  console.info('AdminsActions::getAdmins');
+AdminsActions.fetchAdmins.listen(function() {
+  console.info('AdminsActions::fetchAdmins');
   Connection
     .Admins
     .list()
@@ -30,7 +38,7 @@ AdminsActions.getAdmins.listen( function(payload) {
     .catch(this.failure);
 });
 
-AdminsActions.updateAdmin.listen( function(name, payload) {
+AdminsActions.updateAdmin.listen(function(name, payload) {
   console.info('AdminsActions::updateAdmin');
   Connection
     .Admins
@@ -39,15 +47,15 @@ AdminsActions.updateAdmin.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-AdminsActions.removeAdmin.listen( function(names) {
-  names.map(function(name) {
-    console.info('AdminsActions::removeAdmins');
-    Connection
-      .Admins
-      .remove(name)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+AdminsActions.removeAdmins.listen(function(admins) {
+  console.info('AdminsActions::removeAdmins');
+  var promises = admins.map(function(admin) {
+    Connection.Admins.remove(admin)
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = AdminsActions;

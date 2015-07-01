@@ -43,31 +43,18 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
-      {test: /\.jsx$/, loader: 'jsx-loader?harmony'},
+      {test: /\.js(|x)$/, exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
       {
         test: /\.sass$/,
-        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8&" +
+        loader: "style!css!sass?sourceMap&indentedSyntax&outputStyle=expanded&precision=8&" +
           "includePaths[]=" + compass + "&" +
           "includePaths[]=" +
           (path.resolve(__dirname, "./src/assets/sass")) + "&" +
           "includePaths[]=" +
           (path.resolve(__dirname, "./node_modules"))
       }
-      //{test: /\.sass$/, loader: "style!css!sass?indentedSyntax&precision=6"}
-      // // required to write "require('./style.css')"
-      // { test: /\.css$/,    loader: "style-loader!css-loader" },
-
-      // // required for bootstrap icons
-      // { test: /\.woff$/,   loader: "url-loader?prefix=font/&limit=5000&mimetype=application/font-woff" },
-      // { test: /\.ttf$/,    loader: "file-loader?prefix=font/" },
-      // { test: /\.eot$/,    loader: "file-loader?prefix=font/" },
-      // { test: /\.svg$/,    loader: "file-loader?prefix=font/" },
-
-      // // required for react jsx
-      // { test: /\.js$/,    loader: "jsx-loader" },
-      // { test: /\.jsx$/,   loader: "jsx-loader?insertPragma=React.DOM" },
     ]
   },
   resolve: {

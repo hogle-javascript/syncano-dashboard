@@ -13,16 +13,17 @@ require('normalize.css');
 require('./app.sass');
 
 Router.run(routes, function (Root, state) {
-  var pathname = decodeURIComponent(state.pathname).replace('//', '/');
+  if (!window.opener) {
+    var pathname = decodeURIComponent(state.pathname).replace('//', '/');
 
-  // Remove trailing slash
-  if (pathname.match('/$') !== null) {
-    pathname = pathname.slice(0, -1);
+    // Remove trailing slash
+    if (pathname.match('/$') !== null) {
+      pathname = pathname.slice(0, -1);
+    }
+
+    if (pathname !== state.pathname) {
+      location.hash = pathname;
+    }
   }
-
-  if (pathname !== state.pathname) {
-    location.hash = pathname;
-  }
-
   React.render(<Root/>, container);
 });

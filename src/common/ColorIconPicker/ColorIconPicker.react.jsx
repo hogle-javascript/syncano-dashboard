@@ -71,14 +71,14 @@ module.exports = Radium(React.createClass({
   },
 
   genIconItem: function(icon) {
-    var style     = this.getStyles().item,
+    var styles    = this.getStyles().item,
         zDepth    = 0,
         iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
-      zDepth           = 3;
-      style.background = ColorStore.getColorByName(this.state.selectedColor);
-      iconColor        = '#fff';
+      zDepth            = 3;
+      styles.background = ColorStore.getColorByName(this.state.selectedColor);
+      iconColor         = '#fff';
     }
 
     return (
@@ -86,22 +86,24 @@ module.exports = Radium(React.createClass({
         zDepth = {zDepth}
         key    = {icon}
         circle = {true}
-        style  = {style}>
+        style  = {styles}>
+
           <FontIcon
             id        = {icon}
             className = {"synicon-" + icon}
             style     = {{color: iconColor}}
             onClick   = {this.handleSetIcon} />
+
       </Paper>
     )
   },
 
   genColorItem: function(color) {
     var icon,
-        style  = this.getStyles().item,
+        styles = this.getStyles().item,
         zDepth = 0;
 
-    style.background = ColorStore.getColorByName(color);
+    styles.background = ColorStore.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
@@ -115,7 +117,7 @@ module.exports = Radium(React.createClass({
         zDepth  = {zDepth}
         key     = {color}
         circle  = {true}
-        style   = {style}
+        style   = {styles}
         onClick = {this.handleSetColor}>
           {icon}
       </Paper>

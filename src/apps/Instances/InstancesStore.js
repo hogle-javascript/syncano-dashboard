@@ -1,47 +1,45 @@
-var Reflux = require('reflux'),
+var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
-    SessionStore     = require('../Session/SessionStore'),
-    InstancesActions = require('./InstancesActions');
-
+    // Stores & Actions
+    SessionActions      = require('../Session/SessionActions'),
+    SessionStore        = require('../Session/SessionStore'),
+    InstancesActions    = require('./InstancesActions');
 
 var InstancesStore = Reflux.createStore({
   listenables : InstancesActions,
-  mixins      : [CheckListStoreMixin],
+  mixins      : [
+    CheckListStoreMixin,
+    StoreFormMixin,
+    StoreLoadingMixin,
+    WaitForStoreMixin
+  ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      // Lists
-      //items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
+      items     : [],
+      isLoading : true
     }
   },
 
-  init: function () {
-
-    this.data = {
-      // List
-      items: [],
-      isLoading: false,
-
-      // Dialogs
-      errors: {},
-      canSubmit: true,
-    };
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+  init: function() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      this.refreshData
+    );
+    this.listenToForms();
+    this.setLoadingStates();
   },
 
-  refreshData: function () {
+  refreshData: function() {
     console.debug('InstancesStore::refreshData');
-    InstancesActions.getInstances();
+    InstancesActions.fetchInstances();
   },
 
   // Filters
@@ -53,89 +51,39 @@ var InstancesStore = Reflux.createStore({
     return item.owner.email !== SessionStore.getUser().email;
   },
 
-  getMyInstances: function(){
+  getMyInstances: function() {
     return this.data.items.filter(this.filterMyInstances);
   },
 
-  getOtherInstances: function(){
+  getOtherInstances: function() {
     return this.data.items.filter(this.filterOtherInstances);
   },
 
-  onGetInstances: function(instances) {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
-  onGetInstancesCompleted: function(items) {
-    console.debug('InstancesStore::onGetInstanesCompleted');
-
-    var data = this.data;
-    data.items = [];
-    Object.keys(items).map(function(item) {
-        data.items.push(items[item]);
+  setInstances: function(instances) {
+    console.debug('InstancesStore::setInstances');
+    this.data.items = Object.keys(instances).map(function(key) {
+      return instances[key];
     });
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onGetInstancesFailure: function () {
-    this.data.isLoading = false;
+  onFetchInstances: function(instances) {
+    console.debug('InstancesStore::onFetchInstances');
     this.trigger(this.data);
   },
 
-  onCreateInstanceCompleted: function(payload) {
-    console.debug('InstancesStore::onCreateInstanceCompleted');
+  onFetchInstancesCompleted: function(items) {
+    console.debug('InstancesStore::onFetchInstancesCompleted');
+    InstancesActions.setInstances(items);
+  },
+
+  onFetchInstancesFailure: function() {
+    console.debug('InstancesStore::onFetchInstancesFailure');
+    this.trigger(this.data);
+  },
+
+  onRemoveInstancesCompleted: function() {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onCreateInstanceFailure: function(payload) {
-    console.debug('InstancesStore::onCreateInstanceCompleted');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
-  onUpdateInstanceCompleted: function(paylod) {
-    console.debug('InstancesStore::onUpdateInstanceCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateInstanceFailure: function(payload) {
-    console.debug('InstancesStore::onUpdateInstanceFailure');
-
-    // TODO: create a mixin for that
-    if (typeof payload === 'string') {
-      this.data.errors.feedback = payload;
-    } else {
-      if (payload.non_field_errors !== undefined) {
-        this.data.errors.feedback = payload.non_field_errors.join();
-      }
-
-      for (var field in payload) {
-        this.data.errors[field] = payload[field];
-      }
-    }
-    this.trigger(this.data);
-  },
-
-  onRemoveInstancesCompleted: function(payload) {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

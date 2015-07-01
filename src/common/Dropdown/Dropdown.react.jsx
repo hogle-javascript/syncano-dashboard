@@ -1,6 +1,6 @@
 var React               = require('react'),
     classNames          = require('classnames'),
-    OutsideClickHandler = require('react-outsideclickhandler');
+    OutsideClickHandler = require('react-outsideclickhandler'),
 
     Constants           = require('../../constants/Constants'),
 
@@ -10,9 +10,8 @@ var React               = require('react'),
 
     DropdownMenuItem    = require('./DropdownMenuItem.react');
 
-    
 
-require('./Dropdown.css');
+
 
 
 module.exports = React.createClass({
@@ -43,9 +42,9 @@ module.exports = React.createClass({
     return {
       iconStyle: {
         width  : "18px",
-        height : "18px", 
+        height : "18px",
         fill   : "#FFF",
-      }        
+      }
     };
   },
 
@@ -95,8 +94,8 @@ module.exports = React.createClass({
       <OutsideClickHandler onOutsideClick={this.close} >
         <div className="dropdown">
           <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
-            <FontIcon 
-              className = {"synicon-" + this.state.icon} 
+            <FontIcon
+              className = {"synicon-" + this.state.icon}
               style     = {this.props.iconStyle} />
           </div>
           <div className={cssClasses}>

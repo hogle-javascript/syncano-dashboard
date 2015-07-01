@@ -6,6 +6,7 @@ var React  = require('react'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
     HeaderMixin       = require('../Header/HeaderMixin'),
+    Show              = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionStore     = require('../Session/SessionStore'),
@@ -15,9 +16,10 @@ var React  = require('react'),
     // Components
     mui                  = require('material-ui'),
     Dialog               = mui.Dialog,
+    Loading              = require('../../common/Loading/Loading.react.jsx'),
     Container            = require('../../common/Container/Container.react'),
-    FloatingActionButton = require('../../common/Fab/Fab.react'),
     FabList              = require('../../common/Fab/FabList.react'),
+    FabListItem          = require('../../common/Fab/FabListItem.react'),
 
     // Local components
     CodeBoxesList        = require('./CodeBoxesList.react'),
@@ -39,7 +41,7 @@ module.exports = React.createClass({
   ],
 
   componentWillMount: function() {
-    CodeBoxesStore.refreshData();
+    CodeBoxesActions.fetch();
   },
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -62,13 +64,13 @@ module.exports = React.createClass({
       params: {
         ref  : "addCodeBoxDialog",
         mode : "add"
-      },
+      }
     },{
       dialog: AddDialog,
       params: {
         ref  : "editCodeBoxDialog",
         mode : "edit"
-      },
+      }
     },{
       dialog: Dialog,
       params: {
@@ -79,7 +81,13 @@ module.exports = React.createClass({
           {text: "Yes, I'm sure", onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?',
+        children: [
+          'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },
@@ -102,38 +110,34 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedItems ? 'block': 'none'}}>
+        <Show if={checkedItems > 0}>
 
-          <FloatingActionButton
-            label         = "Click here to unselect Api Keys" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {CodeBoxesActions.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+          <FabList position="top">
+            <FabListItem
+              label         = "Click here to unselect Api Keys"
+              mini          = {true}
+              onClick       = {CodeBoxesActions.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete CodeBoxes" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteCodeBoxDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete CodeBoxes"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteCodeBoxDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit CodeBox" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedItems > 1}
-            onClick       = {this.showDialog('editCodeBoxDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit CodeBox"
+              mini          = {true}
+              disabled      = {checkedItems > 1}
+              onClick       = {this.showDialog('editCodeBoxDialog')}
+              iconClassName = "synicon-pencil" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={{bottom: 100}}>
-          <FloatingActionButton
-            label         = "Click here to add CodeBox" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList>
+          <FabListItem
+            label         = "Click here to add CodeBox"
             onClick       = {this.showDialog('addCodeBoxDialog')}
             iconClassName = "synicon-plus" />
         </FabList>

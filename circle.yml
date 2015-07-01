@@ -8,9 +8,19 @@ general:
     - "coverage/"
     - "reports/"
 
+dependencies:
+   post:
+      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      - sudo dpkg -i google-chrome*.deb
+      - npm run-script nightwatch-setup
+      - npm start:
+            background: true
+
 test:
   override:
+    - npm run-script jscs
     - npm test
+    - npm run-script codeclimate
     - npm run-script nightwatch
 
 deployment:
@@ -20,11 +30,3 @@ deployment:
       - npm install
       - NODE_ENV=staging npm run-script publish
       - npm run-script clean
-
-dependencies:
-   post:
-      - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      - sudo dpkg -i google-chrome*.deb
-      - npm run-script nightwatch-setup
-      - npm start:
-            background: true

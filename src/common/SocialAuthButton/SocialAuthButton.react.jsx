@@ -4,7 +4,9 @@ var React           = require('react'),
     mui             = require('material-ui'),
     StylePropable   = mui.Mixins.StylePropable,
     FlatButton      = mui.FlatButton,
-    FontIcon        = mui.FontIcon;
+    FontIcon        = mui.FontIcon,
+
+    Colors          = mui.Styles.Colors;
 
 
 module.exports = Radium(React.createClass({
@@ -19,41 +21,46 @@ module.exports = Radium(React.createClass({
     handleClick: React.PropTypes.func.isRequired
   },
 
-  getButtonStyles: function () {
-    var style = {
-      width: '100%',
-      borderRadius: '0',
-      textTransform: 'none',
-      color: '#1e88e5',
-      fontWeight: 400
-    };
-    return this.mergeStyles(style, this.props.style);
-  },
-
-  getIconStyles: function () {
-    var style = {
-      display: 'flex',
-      fontSize: '18px',
-      lineHeight: '1',
-      padding: '14px 16px'
-    };
-    return this.mergeStyles(style, this.props.style);
+  getStyles: function () {
+    return {
+      button: {
+        width: '100%',
+        borderRadius: '0',
+        textTransform: 'none',
+        color: '#1e88e5',
+        fontWeight: 400,
+        ':hover': {
+          color: '#fff'
+        }
+      },
+      icon: {
+        display: 'flex',
+        fontSize: '18px',
+        lineHeight: '1',
+        padding: '14px 16px',
+        color: 'inherit',
+        transition: 'none'
+      }
+    }
   },
 
   render: function () {
-
-    var buttonStyles = this.getButtonStyles();
-    var iconStyles = this.getIconStyles();
+    var styles = this.getStyles();
 
     return (
       <FlatButton
-        className="social-auth-button"
-        hoverColor="#1e88e5"
-        style={buttonStyles}
-        linkButton={true}
-        onClick={this.props.handleClick}
-        label={this.props.label}>
-        <FontIcon style={iconStyles} className={this.props.icon} />
+        key = {0}
+        className  = "social-auth-button"
+        hoverColor = "#1e88e5"
+        style      = {styles.button}
+        linkButton = {true}
+        onClick    = {this.props.handleClick}
+        label      = {this.props.label}>
+
+        <FontIcon
+          key = {1}
+          style     = {styles.icon}
+          className = {this.props.icon} />
       </FlatButton>
     )
   }

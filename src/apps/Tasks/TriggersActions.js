@@ -1,31 +1,37 @@
 var Reflux     = require('reflux'),
 
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var TriggersActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-
-  'createTrigger': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setTriggers   : {},
+  showDialog    : {},
+  dismissDialog : {},
+  createTrigger: {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  'getTriggers': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  fetchTriggers: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  'updateTrigger': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  updateTrigger: {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  'removeTriggers': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  removeTriggers: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   }
 });
 
-TriggersActions.createTrigger.listen( function(payload) {
+TriggersActions.createTrigger.listen(function(payload) {
   console.info('TriggersActions::createTrigger');
   Connection
     .Triggers
@@ -34,8 +40,8 @@ TriggersActions.createTrigger.listen( function(payload) {
     .catch(this.failure);
 });
 
-TriggersActions.getTriggers.listen( function(payload) {
-  console.info('TriggersActions::getTriggers');
+TriggersActions.fetchTriggers.listen(function() {
+  console.info('TriggersActions::fetchTriggers');
   Connection
     .Triggers
     .list()
@@ -43,7 +49,7 @@ TriggersActions.getTriggers.listen( function(payload) {
     .catch(this.failure);
 });
 
-TriggersActions.updateTrigger.listen( function(id, payload) {
+TriggersActions.updateTrigger.listen(function(id, payload) {
   console.info('TriggersActions::updateTrigger');
   Connection
     .Triggers
@@ -52,15 +58,15 @@ TriggersActions.updateTrigger.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-TriggersActions.removeTriggers.listen( function(ids) {
-  ids.map(function(id) {
-    console.info('TriggersActions::removeTriggers');
-    Connection
-      .Triggers
-      .remove(id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+TriggersActions.removeTriggers.listen(function(ids) {
+  console.info('TriggersActions::removeTriggers');
+  var promises = ids.map(function(id) {
+    return Connection.Triggers.remove(id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = TriggersActions;

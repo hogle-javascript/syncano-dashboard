@@ -21,8 +21,7 @@ var React  = require('react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
@@ -33,9 +32,10 @@ module.exports = React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Reflux.connect(InstancesStore, "instancesStore"),
+    HeaderMixin
   ],
 
   getInitialState: function() {
@@ -43,9 +43,6 @@ module.exports = React.createClass({
       listType: this.props.listType,
       items: this.props.items
     }
-  },
-
-  componentWillMount: function() {
   },
 
   componentWillReceiveProps: function(nextProps, nextState) {
@@ -60,13 +57,15 @@ module.exports = React.createClass({
 
   handleItemClick: function(instanceName) {
     // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
+    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
   renderItem: function (item) {
     return (
-      <Item key={item.name}>
+      <Item
+        checked = {item.checked}
+        key     = {item.name}>
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}
@@ -83,10 +82,6 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -95,16 +90,24 @@ module.exports = React.createClass({
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
-    } else if (this.props.emptyItemContent) {
-      return (
-        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </EmptyListItem>
-      );
+    }
+    return <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+             {this.props.emptyItemContent}
+           </EmptyListItem>
+  },
+
+  getStyles: function() {
+    return {
+      list: {
+        padding: 0,
+        background: 'none'
+      }
     }
   },
 
   render: function () {
+    var styles = this.getStyles();
+
     return (
       <ListContainer>
         <Header>
@@ -112,8 +115,10 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List viewMode={this.props.viewMode}>
-          {this.getList()}
+        <List style={styles.list}>
+          <Loading show={this.state.instancesStore.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

@@ -2,30 +2,43 @@ var React                = require('react'),
     mui                  = require('material-ui'),
     gravatar             = require('gravatar'),
 
-    ThemeManager         = require('material-ui/lib/styles/theme-manager')(),
-    Colors               = require('material-ui/lib/styles/colors'),
-    LinearProgress       = require('material-ui/lib/linear-progress'),
-    Dialog               = require('material-ui/lib/dialog'),
-    Snackbar             = require('material-ui/lib/snackbar'),
-    FlatButton           = require('material-ui/lib/flat-button'),
+    ThemeManager         = new mui.Styles.ThemeManager(),
+    TextField            = mui.TextField,
+    DatePicker           = mui.DatePicker,
+    TimePicker           = mui.TimePicker,
+    Colors               = mui.Styles.Colors,
+    LinearProgress       = mui.LinearProgress,
+    Dialog               = mui.Dialog,
+    Snackbar             = mui.Snackbar,
+    FlatButton           = mui.FlatButton,
+    List                 = mui.List,
+    ListItem             = mui.ListItem,
+    ListDivider          = mui.ListDivider,
+    Avatar               = mui.Avatar,
+    Toggle               = mui.Toggle,
+    IconButton           = mui.IconButton,
+    FontIcon             = mui.FontIcon,
+    IconMenu             = mui.IconMenu,
+    Menu                 = mui.Menu,       // this menu is from lib/menu/menu
+    MenuItem             = mui.MenuItem,   // this menu item is from lib/menu/menu-items
+    SelectField          = mui.SelectField,
+    ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
+    MenuNew              = require('material-ui/lib/menus/menu'),
+    MenuItemNew          = require('material-ui/lib/menus/menu-item'),
 
     Dropdown             = require('../common/Dropdown/Dropdown.react'),
     MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
-    Icon                 = require('../common/Icon/Icon.react'),
     CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
     ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
     Label                = require('../common/Label/Label.react'),
     ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
     Editor               = require('../common/Editor/Editor.react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
-    Fab                  = require('../common/Fab/Fab.react'),
     FabList              = require('../common/Fab/FabList.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     FieldPassword        = require('../common/Field/FieldPassword.react'),
     FieldReadonly        = require('../common/Field/FieldReadonly.react'),
-    TextField            = mui.TextField,
-    FieldSelectMUI       = require('material-ui/lib/drop-down-menu'),
     FieldDatetime        = require('../common/Field/FieldDatetime.react'),
     FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
     FieldSelect          = require('../common/Field/FieldSelect.react'),
@@ -35,12 +48,10 @@ var React                = require('react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
     SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Icon                 = require('../common/Icon/Icon.react'),
-    ListItem             = require('../common/Lists/ListItem.react'),
     List                 = require('../common/Lists/List.react'),
-    MaterialIcon         = require('../common/Icon/MaterialIcon.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
+    Loading              = require('../common/Loading/Loading.react'),
 
     ColumnListItem       = require('../common/ColumnList/Item.react'),
     ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
@@ -105,7 +116,41 @@ module.exports = React.createClass({
     }
   },
 
+  getDateNow: function() {
+    var date = new Date();
+    return date;
+  },
+
+  getDateFormat: function(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return d + '-' + m + '-' + y;
+  },
+
+  logDate: function() {
+    console.debug(this.refs.modifiedDatePicker.getDate())
+  },
+
+  logTime: function() {
+    console.debug(this.refs.modifiedTimePicker.getTime());
+  },
+
+  getMinDate: function(minYear) {
+    var date = new Date();
+    date.setFullYear(minYear);
+    return date;
+  },
+
+  getMaxDate: function(maxYear) {
+    var date = new Date;
+    date.setFullYear(maxYear);
+    return date;
+  },
+
   render: function () {
+
+
     var dummyClick = function (action) {
       console.log('Click!', action);
     };
@@ -141,12 +186,6 @@ module.exports = React.createClass({
       name: 'switchToCardView',
       iconType: 'view-module'
     }];
-
-    var dummyClick = function (action) {
-      console.log('Click!', action);
-    };
-
-    console.log(Icon.propTypes);
 
     var text = "Dummy text";
 
@@ -322,6 +361,41 @@ module.exports = React.createClass({
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
+    var notifications = [{
+      type     : "normal-link",
+      leftIcon : {
+        name   : "synicon-alert",
+        style  : {
+          color: "#ff9800"
+        }
+      },
+      content: {
+        text          : "You email address is not yet verified.",
+        secondaryText : "Resend activation email",
+        style         : {}
+      },
+      name            : "activation",
+      handleLinkClick : dummyClick
+    }, {
+      type     : "invitation",
+      leftIcon : {
+        name   : "synicon-share-variant",
+        style  : {
+          color: "#8bc34a"
+        }
+      },
+      content  : {
+        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
+        style  : {}
+      },
+      buttonsText   : ["Accept", "Decline"],
+      name          : "billing",
+      handleAccept  : dummyClick.bind(this, [item]),
+      handleDecline : dummyClick.bind(this, [item])
+    }];
+
+    var icon = <FontIcon className = "synicon-delete" />;
+
     return (
 
       <div className="examplesContainer">
@@ -336,28 +410,50 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Material dropdown</h2>
+          <div style={{
+                 display        : 'flex',
+                 float          : 'none',
+                 alignItems     : 'center',
+                 justifyContent : 'center'
+               }}>
           <MaterialDropdown
-              items={dropdownItems}
-              headerContent={dropdownHeader} />
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {notifications}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {true} />
+            </div>
         </div>
 
         <div className="exampleBox">
           <h4>Material List items</h4>
-          <mui.List>
-            <mui.ListItem
-              leftAvatar={<mui.Avatar src={avatarUrl} />}
+          <List>
+            <ListItem
+              leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
               secondaryTextLines={1} 
               onClick={dummyClick} >
               Name LastName
-            </mui.ListItem>
-            <mui.ListItem leftIcon={<MaterialIcon name="favorite" />}>Item with left icon</mui.ListItem>
-            <mui.ListItem rightIcon={<MaterialIcon name="favorite" />}>item with right icon</mui.ListItem>
-            <mui.ListDivider />
-            <mui.ListItem leftAvatar={<mui.Avatar src={avatarUrl} />}>item with gravatar</mui.ListItem>
-            <mui.ListItem>item empty</mui.ListItem>
-            <mui.ListItem 
-              leftAvatar={<mui.Avatar src={avatarUrl} />}
+            </ListItem>
+            <ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</ListItem>
+            <ListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</ListItem>
+            <ListDivider />
+            <ListItem leftAvatar={<Avatar src={avatarUrl} />}>item with gravatar</ListItem>
+            <ListItem>item empty</ListItem>
+            <ListItem
+              leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText={
                 <p>
                   <span style={{color: Colors.darkBlack}}>Brunch this weekend?</span><br/>
@@ -366,14 +462,17 @@ module.exports = React.createClass({
                 </p>
               }
               secondaryTextLines={2} >item with gravatar and text
-            </mui.ListItem>
-            <mui.ListDivider inset={true} />
-          </mui.List>
+            </ListItem>
+            <ListDivider inset={true} />
+          </List>
         </div>
 
         <div className="exampleBox">
-          <h4>Icon</h4>
-          <Icon icon="notifications" style={{width: '40px'}}/>
+          <h4>Icon 1</h4>
+          <FontIcon
+            className  = "synicon-bell"
+            color      = "#0091EA"
+            hoverColor = "#1a237e"  />
         </div>
 
         <div className="exampleBox">
@@ -389,28 +488,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h4>Label</h4>
           <Label text={text}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItem (card)</h4>
-          <ListItem
-            handleClick={dummyClick}
-            item={item}
-            style={"cards"}
-            dropdownVisible={false}
-            avatarStyle={"icon"}
-            actions={dropdownItems} />
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItem (stream)</h4>
-          <ListItem
-            handleClick={dummyClick}
-            item={item}
-            style={"stream"}
-            dropdownVisible={false}
-            avatarStyle={"icon"}
-            actions={dropdownItems}/>
         </div>
 
         <div className="exampleBox">
@@ -463,11 +540,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>EditorPanel</h2>
           <EditorPanel trace={source} payload={payload}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>Fab</h4>
-          <Fab handleClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
@@ -524,8 +596,8 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>FieldSelect (Drop Down from material UI)</h2>
-          <FieldSelectMUI
+          <h2>SelectField (Drop Down from material UI)</h2>
+          <SelectField
             menuItems={fieldSelectMUI} />
         </div>
 
@@ -576,7 +648,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Toggle (Material UI)</h2>
-          <mui.Toggle
+          <Toggle
             name="ToggleButton"
             value="ValueToggle"
             label="tempomat"
@@ -630,27 +702,123 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>Icon</h2>
-          <Icon
-            icon="warning"
-            handleClick={dummyClick.bind(this, "Icon")}
-            style={{fill: "#0091EA"}}
-            glowing={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>MaterialIcon - from google font</h2>
-          <MaterialIcon name="favorite" />
-        </div>
-
-        <div className="exampleBox">
           <h2>Trace</h2>
           <Trace result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">
           <h2>TraceResultWithMeta</h2>
-          <TraceResultWithMeta meta={{'test': 'Some meta'}} args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  result={"Some not very long result: " + source} />
+          <TraceResultWithMeta 
+            meta={{'test': 'Some meta'}} 
+            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  
+            result={"Some not very long result: " + source} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>Loading</h2>
+          <Loading 
+            type    = "linear"
+            show    = {true} />
+          <Loading show={true}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>DatePicker</h2>
+          <DatePicker hintText="Portrait Dialog" />
+          <DatePicker
+            hintText = "Landscape Dialog"
+            mode     = "landscape" />
+          <DatePicker
+            maxDate          = {this.getMaxDate(2020)}
+            minDate          = {this.getMinDate(1990)}
+            formatDate       = {this.getDateFormat}
+            defaultDate      = {this.getDateNow()}
+            ref              = "modifiedDatePicker"
+            hintText         = "Ranged Date Picker"
+            showYearSelector = {true}
+            onChange         = {this.logDate} />
+        </div>
+
+        <div className="exampleBox">
+          <h2>TimePicker</h2>
+          <TimePicker
+            format="ampm" />
+          <TimePicker
+            ref      = "modifiedTimePicker"
+            format   = "24hr"
+            onChange = {this.logTime}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Menu (component build in progress)</h2>
+          <MenuNew style ={{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}>
+            <MenuItemNew>Maps</MenuItemNew>
+            <MenuItemNew>Books</MenuItemNew>
+            <MenuItemNew>Flights</MenuItemNew>
+            <MenuItemNew>Apps</MenuItemNew>
+          </MenuNew>
+
+          <IconMenu iconButtonElement={<IconButton>{icon}</IconButton>} openDirection="top-right">
+            <MenuItemNew
+              insetChildren = {true}
+              leftIcon      = {icon}>Refresh</MenuItemNew>
+            <MenuItemNew>Send Feedback More</MenuItemNew>
+            <MenuItemNew checked={true}>Settings</MenuItemNew>
+            <MenuItemNew checked={true}>Help</MenuItemNew>
+            <MenuItemNew>Sign out</MenuItemNew>
+          </IconMenu>
+
+
+          <MenuNew
+            desktop = {true}
+            width   = {320}
+            style   = {{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}>
+            <MenuItemNew>Refresh</MenuItemNew>
+            <MenuItemNew >Send Feedback More</MenuItemNew>
+            <MenuItemNew checked={true}>Settings</MenuItemNew>
+            <MenuItemNew checked={true}>Help</MenuItemNew>
+            <MenuItemNew>Sign out</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;B">Bold</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;I">Italic</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;U">Underline</MenuItemNew>
+            <MenuItemNew secondaryText="Alt+Shift+5">Strikethrough</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;.">Superscript</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;,">Subscript</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Paragraph styles</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Align</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Line spacing</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>Numbered list</MenuItemNew>
+            <MenuItemNew rightIcon={<ArrowDropRight />}>List options</MenuItemNew>
+            <MenuItemNew secondaryText="&#8984;/">Clear formatting</MenuItemNew>
+          </MenuNew>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Menu</h2>
+          <Menu style ={{
+                  marginRight: 32,
+                  marginBottom: 32,
+                  float: 'left',
+                  position: 'relative',
+                  zIndex: 0}}
+                  menuItems={[
+                  {text: <MenuItem>ASDASD</MenuItem>},
+                  {text: <MenuItem>ASDASD</MenuItem>},
+                  {text: <MenuItem>ASDASD</MenuItem>}
+                  ]}>
+
+          </Menu>
+
         </div>
 
       </div>

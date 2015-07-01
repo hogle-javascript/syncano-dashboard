@@ -1,8 +1,7 @@
 var SessionStore = require('./SessionStore');
 
-
 var SessionMixin = {
-  _onSessionStatusChange: function (Session) {
+  _onSessionStatusChange: function(Session) {
     if (Session.isReady()) {
       this.onSessionIsReady(Session);
       this._unsubscribeSessionStore();

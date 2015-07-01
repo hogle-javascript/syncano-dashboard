@@ -1,32 +1,41 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var UsersActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-
-  getUsers: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setUsers      : {},
+  showDialog    : {},
+  dismissDialog : {},
+  fetchUsers: {
+    asyncResult: true,
+    loading    : true,
+    children   : ['completed', 'failure']
   },
   createUser: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   updateUser: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
   removeUsers: {
-      asyncResult: true,
-      children: ['completed', 'failure']
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   }
 });
 
-UsersActions.getUsers.listen( function() {
-  console.info('UsersActions::getUsers');
+UsersActions.fetchUsers.listen(function() {
+  console.info('UsersActions::fetchUsers');
   Connection
     .Users
     .list()
@@ -34,7 +43,7 @@ UsersActions.getUsers.listen( function() {
     .catch(this.failure);
 });
 
-UsersActions.createUser.listen( function(payload) {
+UsersActions.createUser.listen(function(payload) {
   console.info('UsersActions::createUser', payload);
   Connection
     .Users
@@ -43,8 +52,7 @@ UsersActions.createUser.listen( function(payload) {
     .catch(this.failure);
 });
 
-
-UsersActions.updateUser.listen( function(id, payload) {
+UsersActions.updateUser.listen(function(id, payload) {
   console.info('UsersActions::updateUser');
   Connection
     .Users
@@ -53,15 +61,15 @@ UsersActions.updateUser.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-UsersActions.removeUsers.listen( function(schedules) {
-  schedules.map(function(schedule) {
-    console.info('UsersActions::removeUsers');
-    Connection
-      .Users
-      .remove(schedule.id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+UsersActions.removeUsers.listen(function(users) {
+  console.info('UsersActions::removeUsers');
+  var promises = users.map(function(user) {
+    return Connection.Users.remove(user.id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = UsersActions;

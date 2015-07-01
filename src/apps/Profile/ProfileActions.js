@@ -1,69 +1,44 @@
 var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
-
+    Connection = require('../Session/Connection').get();
 
 var ProfileActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-
-  'updateSettings': {
-      asyncResult: true,
-      children: ['completed', 'failure'],
+  updateSettings: {
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure']
   },
-  'getInvitations': {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-  },
-  'declineInvitations': {
-      asyncResult: true,
-      children: ['completed', 'failure'],
-  },
-  'acceptInvitations': {
-      asyncResult: true,
-      children: ['completed', 'failure'],
+  changePassword: {
+    asyncResult: true,
+    children: ['completed', 'failure']
   }
 });
 
-
-ProfileActions.updateSettings.listen(function (payload) {
+ProfileActions.updateSettings.listen(function(payload) {
+  console.info('ProfileActions::updateSettings');
   Connection
     .Accounts
     .update({
-      first_name: payload.firstName,
-      last_name: payload.lastName
+      // jscs:disable
+      first_name : payload.firstName,
+      last_name  : payload.lastName
+      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
 });
 
-ProfileActions.getInvitations.listen(function () {
+ProfileActions.changePassword.listen(function(payload) {
+  console.info('ProfileActions::changePassword');
   Connection
-    .AccountInvitations
-    .list()
+    .Accounts
+    .changePassword({
+      // jscs:disable
+      current_password : payload.currentPassword,
+      new_password     : payload.newPassword
+      // jscs:enable
+    })
     .then(this.completed)
     .catch(this.failure);
-});
-
-ProfileActions.acceptInvitations.listen(function (items) {
-  var promises = items.map(function (item) {
-    return Connection.AccountInvitations.accept(item.key);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-ProfileActions.declineInvitations.listen(function (items) {
-  var promises = items.map(function (item) {
-    return Connection.AccountInvitations.remove(item.id);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
 });
 
 module.exports = ProfileActions;

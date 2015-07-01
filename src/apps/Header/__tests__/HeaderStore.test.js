@@ -1,8 +1,8 @@
-jest.dontMock("../HeaderStore");
-jest.dontMock("../../Session/SessionStore");
+jest.dontMock('../HeaderStore');
+jest.dontMock('../../Session/SessionStore');
 
-describe("HeaderStore", function() {
-  it("testing component", function() {
+describe('HeaderStore', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

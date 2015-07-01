@@ -1,24 +1,25 @@
 var Reflux     = require('reflux'),
     Connection = require('./Connection').get();
 
-
 var SessionActions = Reflux.createActions({
-  'login': {},
-  'fetchUser': {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  login       : {},
+  logout      : {},
+  setToken    : {},
+  setRouter   : {},
+  setUser     : {},
+  setTheme    : {},
+  setInstance : {},
+  fetchUser: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  'logout': {},
-  'registerRouter': {},
-  'registerUser': {},
-  'registerTheme': {},
-  'setInstance': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  fetchInstance: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   }
 });
 
-SessionActions.fetchUser.listen(function (token) {
+SessionActions.fetchUser.listen(function(token) {
   console.info('SessionActions::fetchUser');
 
   Connection
@@ -29,8 +30,8 @@ SessionActions.fetchUser.listen(function (token) {
     .catch(this.failure)
 });
 
-SessionActions.setInstance.listen(function (name) {
-  console.info('SessionActions::setInstance');
+SessionActions.fetchInstance.listen(function(name) {
+  console.info('SessionActions::fetchInstance');
   Connection
     .setInstance(name)
     .then(this.completed)

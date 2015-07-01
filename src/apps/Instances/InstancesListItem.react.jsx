@@ -1,9 +1,10 @@
-var React = require('react');
-var Moment = require('moment');
-var classNames = require('classnames');
+var React      = require('react'),
+    Moment     = require('moment'),
+    classNames = require('classnames'),
+    mui        = require('material-ui'),
 
-var Icon = require('../../common/Icon/Icon.react');
-var Dropdown = require('../../common/Dropdown/Dropdown.react');
+    FontIcon   = mui.FontIcon,
+    Dropdown   = require('../../common/Dropdown/Dropdown.react');
 
 
 require('../../common/Lists/Card.css');
@@ -99,25 +100,33 @@ module.exports = React.createClass({
 
     if (this.props.style === "cards") {
 
-      var style = {
+      var styles = {
         backgroundColor: color
       };
 
       return (
-        <div className={cssClasses} style={style} onClick={this.handleCardClick}>
+        <div
+          className = {cssClasses}
+          style     = {styles}
+          onClick   = {this.handleCardClick}>
+
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
-                <Icon icon={icon}/>
+                <FontIcon className={icon}/>
               </div>
               <div className="list-item-text card-text">
                 <div className="list-item-title card-title"><span>{this.props.item.name}</span></div>
                 <div className="list-item-description card-description">{this.props.item.description}</div>
               </div>
             </div>
-            <div className="ink" style={inkStyle}></div>
+            <div
+              className = "ink"
+              style     = {inkStyle}></div>
             <div className="list-item-extras card-extras">
-              <Dropdown actions={this.props.actions} handleItemClick={this.handleItemMenuClick}/>
+              <Dropdown
+                actions         = {this.props.actions}
+                handleItemClick = {this.handleItemMenuClick}/>
             </div>
           </div>
         </div>
@@ -135,9 +144,9 @@ module.exports = React.createClass({
 
       //var trac  eResult = this.props.expanded ? <TraceResult result={this.props.item.data.result}/> : null;
 
-      var dropdown = <Dropdown actions={this.props.actions}
-                               visible={this.props.dropdownVisible}
-                               handleItemClick={this.handleItemMenuClick}/>;
+      var dropdown = <Dropdown actions         = {this.props.actions}
+                               visible         = {this.props.dropdownVisible}
+                               handleItemClick = {this.handleItemMenuClick}/>;
 
       //toggleDropdownMenu={this.toggleDropdownMenu}
 
@@ -148,7 +157,9 @@ module.exports = React.createClass({
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
-        avatar = <Icon icon={icon} style={iconStyle}/>;
+        avatar = <FontIcon
+                   className = {icon}
+                   style     = {iconStyle}/>;
       }
 
       console.log('avatarStyle', this.props.avatarStyle);
@@ -165,7 +176,9 @@ module.exports = React.createClass({
 
       return (
         <div className={cssClasses}>
-          <div className="list-item-header card-header" onClick={this.handleItemHeaderClick}>
+          <div
+            className = "list-item-header card-header"
+            onClick   = {this.handleItemHeaderClick}>
             <div className="list-item-details card-details-other">
               <div className="list-item-icon card-icon">
                 {avatar}

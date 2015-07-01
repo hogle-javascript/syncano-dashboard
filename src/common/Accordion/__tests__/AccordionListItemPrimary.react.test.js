@@ -1,7 +1,7 @@
-jest.dontMock("../AccordionListItemPrimary.react");
+jest.dontMock('../AccordionListItemPrimary.react');
 
-describe("AccordionListItemPrimary.react", function() {
-  it("testing component", function() {
+describe('AccordionListItemPrimary.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

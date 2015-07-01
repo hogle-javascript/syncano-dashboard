@@ -1,37 +1,39 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
-    Radium           = require('radium'),
-    classNames       = require('classnames'),
-    Router           = require('react-router'),
-    Link             = Router.Link,
-    mui              = require('material-ui'),
+var React                       = require('react'),
+    Reflux                      = require('reflux'),
+    Radium                      = require('radium'),
+    Router                      = require('react-router'),
+    Link                        = Router.Link,
+    mui                         = require('material-ui'),
 
     // Utils & Mixins
-    StylePropable    = mui.Mixins.StylePropable,
+    StylePropable               = mui.Mixins.StylePropable,
 
     // Stores & Actions
-    HeaderActions    = require('./HeaderActions'),
-    HeaderStore      = require('./HeaderStore'),
-    SessionActions   = require('../Session/SessionActions'),
-    SessionStore     = require('../Session/SessionStore'),
-    InstancesActions = require('../Instances/InstancesActions'),
-    InstancesStore   = require('../Instances/InstancesStore'),
-    ColorStore       = require('../../common/Color/ColorStore'),
+    HeaderActions               = require('./HeaderActions'),
+    HeaderStore                 = require('./HeaderStore'),
+    SessionActions              = require('../Session/SessionActions'),
+    SessionStore                = require('../Session/SessionStore'),
+    InstancesActions            = require('../Instances/InstancesActions'),
+    InstancesStore              = require('../Instances/InstancesStore'),
+    ColorStore                  = require('../../common/Color/ColorStore'),
 
     // Components
-    Colors           = mui.Styles.Colors,
-    Tabs             = mui.Tabs,
-    Tab              = mui.Tab,
-    Toolbar          = mui.Toolbar,
-    ToolbarGroup     = mui.ToolbarGroup,
-    FontIcon         = mui.FontIcon,
-    Paper            = mui.Paper,
-    DropDownMenu     = mui.DropDownMenu,
+    Colors                      = mui.Styles.Colors,
+    Tabs                        = mui.Tabs,
+    Tab                         = mui.Tab,
+    Toolbar                     = mui.Toolbar,
+    ToolbarGroup                = mui.ToolbarGroup,
+    Paper                       = mui.Paper,
+    IconButton                  = mui.IconButton,
+    MoreVertIcon                = mui.Icons.NavigationMenu,
 
-    MaterialDropdown = require('../../common/Dropdown/MaterialDropdown.react'),
-    MaterialIcon     = require('../../common/Icon/MaterialIcon.react'),
-    RoundIcon        = require('../../common/Icon/RoundIcon.react'),
-    HeaderMenu       = require('./HeaderMenu.react');
+    MaterialDropdown            = require('../../common/Dropdown/MaterialDropdown.react'),
+    RoundIcon                   = require('../../common/Icon/RoundIcon.react'),
+    HeaderMenu                  = require('./HeaderMenu.react'),
+    HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react.jsx'),
+    HeaderNotificationsDropdown = require('./HeaderNotificationsDropdown.react'),
+    Logo                        = require('../../common/Logo/Logo.react'),
+    Show                        = require('../../common/Show/Show.react');
 
 
 require('./Header.sass');
@@ -50,56 +52,37 @@ module.exports = Radium(React.createClass({
   ],
 
   contextTypes: {
-      router   : React.PropTypes.func.isRequired,
-      muiTheme : React.PropTypes.object
+    router   : React.PropTypes.func.isRequired,
+    muiTheme : React.PropTypes.object
   },
 
-  handleLogout: function() {
+  componentWillMount: function () {
+    SessionStore.getInstance();
+  },
+
+  handleTabActive: function (tab) {
+    this.context.router.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick: function (event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout: function () {
     SessionActions.logout();
   },
 
-  renderBreadcrumbs: function () {
-    if (this.state.breadcrumbs.length === 0) {
-      return;
-    }
-
-    return (
-      <ul className="toolbar-list">
-        {this.state.breadcrumbs.map(this.renderBreadcrumbItem)}
-      </ul>
-    );
-  },
-
-  renderBreadcrumbItem: function (breadcrumb, index, breadcrumbs) {
-    var chevron = null;
-
-    if (breadcrumbs.length > 1 && breadcrumbs.length !== (index + 1)) {
-      chevron = <FontIcon
-                  className = "synicon-chevron-right"
-                  style     = {{marginLeft: 8}} />
-    }
-
-    breadcrumb.params = breadcrumb.params || {};
-    breadcrumb.query  = breadcrumb.query  || {};
-
-    return (
-      <li key={'breadcrumb-' + breadcrumb.route +  '-' + index}>
-        <Link
-          to     = {breadcrumb.route}
-          params = {breadcrumb.params}
-          query  = {breadcrumb.query}>
-          {breadcrumb.label}
-        </Link>
-        {chevron}
-      </li>
-    )
+  handleBillingClick: function (event) {
+    this.transitionTo('profile-billing');
+    event.stopPropagation();
   },
 
   getStyles: function() {
     return {
       topToolbar: {
         background : this.context.muiTheme.palette.primary1Color,
-        height     : 68,
+        height     : 64,
         padding    : '0 32px'
       },
       logotypeContainer: {
@@ -107,10 +90,8 @@ module.exports = Radium(React.createClass({
         display    : 'flex',
         alignItems : 'center'
       },
-      logotype: {
-        color      : '#fff',
-        fontSize   : 25,
-        cursor     : 'pointer'
+      logo: {
+        width: 120
       },
       toolbarList: {
         display: 'flex'
@@ -123,7 +104,7 @@ module.exports = Radium(React.createClass({
         display     : 'flex',
         fontSize    : 17,
         fontWeight  : 500,
-        height      : 60,
+        height      : 56,
         background  : this.context.muiTheme.palette.primary2Color,
         padding     : '0 32px'
       },
@@ -133,149 +114,65 @@ module.exports = Radium(React.createClass({
         alignItems     : 'center',
         justifyContent : 'center'
       },
-      instanceToolbarGroup: {
-        display        : 'flex',
-        float          : 'none',
-        alignItems     : 'center',
-        justifyContent : 'center',
-        maxWidth       : 320,
-        width          : '100%',
-        marginLeft     : '-32px'
-      },
       bottomToolbarGroupIcon: {
-        padding        : '0 4px'
-      },
-      dropdownLabelContainer: {
-        display        : '-webkit-box; display: flex',
-        alignItems     : 'center'
-      },
-      dropdownLabel: {
-        WebkitBoxFlex  : '1',
-        flex           : '1',
-        whiteSpace     : 'nowrap',
-        textOverflow   : 'ellipsis',
-        overflow       : 'hidden',
-        paddingRight   : 40
-      },
-      dropdownInstanceIcon: {
-        width          : 24,
-        height         : 24,
-        fontSize       : 12,
-        lineHeight     : '20px',
-        display        : '-webkit-inline-flex; display: inline-flex',
-        alignItems     : 'center',
-        justifyContent : 'center',
-        borderRadius   : '50%',
-        color          : '#fff',
-        backgroundColor: 'green',
-        margin         : '8px 16px 8px 0'
-      },
-      dropdownMenuItem: {
-        height      : 40,
-        lineHeight  : '40px',
-        paddingLeft : 32
+        color          : '#fff'
       }
     }
   },
 
-  handleAccountClick: function(e) {
-    this.transitionTo("profile-settings");
-    e.stopPropagation();
+  getDropdownItems: function () {
+    return [{
+      leftIcon: {
+        name  : "synicon-credit-card",
+        style : {}
+      },
+      content: {
+        text  : "Billing",
+        style : {}
+      },
+      name: "billing",
+      handleItemClick: this.handleBillingClick
+    }, {
+      leftIcon: {
+        name  : "synicon-power",
+        style : {
+          color: "#f50057"
+        }
+      },
+      content: {
+        text  : "Logout",
+        style : {
+          color: "#f50057"
+        }
+      },
+      name: "logout",
+      handleItemClick: this.handleLogout
+
+    }]
   },
 
-  handleDropdownItemClick: function(e, selectedIndex, menuItem) {
-    var instanceName = menuItem.text._store.props.children[1]._store.props.children;
-
-    // Redirect to main instance screen
-    SessionActions.setInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
-  },
-
-  handleInstanceActive: function() {
-    var currentInstance     = SessionStore.instance,
-        instancesList       = InstancesStore.data.items,
-        instanceActiveIndex = null;
-
-    instancesList.some(function(e, index){
-       if(e.name === currentInstance.name) {
-         instanceActiveIndex = index;
-         return true;
-       }
-    });
-
-    return instanceActiveIndex;
-  },
-
-  renderInstance: function() {
-    var styles        = this.getStyles(),
-        instance      = SessionStore.instance,
-        instancesList = InstancesStore.data.items;
-
-    if (!instance || !instancesList.length > 0) {
-      return;
-    } else if (instancesList.length > 0) {
-      instancesList = instancesList.reverse();
+  getDropdownHeaderItems: function () {
+    return {
+      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail       : this.state.user.email,
+      clickable       : true,
+      handleItemClick : this.handleAccountClick
     }
-
-    var dropDownMenuItems = InstancesStore.data.items.map(function(item, index) {
-      var iconBackground = {
-            backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark')
-          },
-          iconClassName  = item.metadata.icon ? 'synicon-' + item.metadata.icon : 'synicon-folder',
-          text           = <div style={styles.dropdownLabelContainer}>
-                             <FontIcon
-                               className = {iconClassName}
-                               style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
-
-                             <div style={styles.dropdownLabel}>{item.name}</div>
-                           </div>;
-
-      return {
-        payload: index + '',
-        text: text
-      }
-    });
-
-    return (
-      <ToolbarGroup
-        key={0}
-        style={styles.instanceToolbarGroup}>
-        <DropDownMenu
-          className     = "instances-dropdown"
-          menuItemStyle = {styles.dropdownMenuItem}
-          menuItems     = {dropDownMenuItems}
-          onChange      = {this.handleDropdownItemClick}
-          selectedIndex = {this.handleInstanceActive()} />
-      </ToolbarGroup>)
-  },
-
-  handleLogoClick: function (){
-    this.transitionTo('app');
   },
 
   render: function () {
     var styles = this.getStyles();
 
-    var dropdownItems = [{
-      content         : "Logout",
-      name            : "logout",
-      handleItemClick : this.handleLogout
-    }];
-
-    var dropdownHeader = {
-      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
-      userEmail       : this.state.user.email,
-      clickable       : true,
-      handleItemClick : this.handleAccountClick
-    };
-
     return (
       <div>
         <Toolbar style={styles.topToolbar}>
-          <ToolbarGroup style = {styles.logotypeContainer}>
-            <div
-              style   = {styles.logotype}
-              onClick = {this.handleLogoClick}>Syncano</div>
+          <ToolbarGroup style={styles.logotypeContainer}>
+            <Link to="app">
+              <Logo
+                style={styles.logo}
+                className="logo-white"
+              />
+            </Link>
           </ToolbarGroup>
           <ToolbarGroup
             float = "right"
@@ -293,13 +190,22 @@ module.exports = Radium(React.createClass({
               <li style={styles.toolbarListItem}>
                 <a href="mailto:support@syncano.com">Support</a>
               </li>
+              <li>
+                <MaterialDropdown
+                  items         = {this.getDropdownItems()}
+                  headerContent = {this.getDropdownHeaderItems()}
+                  iconStyle     = {styles.bottomToolbarGroupIcon}>
+                  Account
+                </MaterialDropdown>
+              </li>
             </ul>
           </ToolbarGroup>
         </Toolbar>
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
-
-            {this.renderInstance()}
+            <Show if={SessionStore.getInstance() !== null}>
+              <HeaderInstancesDropdown />
+            </Show>
 
             <ToolbarGroup
               className = "col-flex-1"
@@ -307,16 +213,11 @@ module.exports = Radium(React.createClass({
               <HeaderMenu />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
-              <FontIcon
-                className = "synicon-magnify"
-                style     = {styles.bottomToolbarGroupIcon} />
-              <FontIcon
-                className = "synicon-bell-outline"
-                style     = {styles.bottomToolbarGroupIcon} />
-              <MaterialDropdown
-                  items         = {dropdownItems}
-                  headerContent = {dropdownHeader}
-                  style         = {styles.bottomToolbarGroupIcon} />
+              <IconButton
+                iconClassName = "synicon-magnify"
+                iconStyle = {styles.bottomToolbarGroupIcon}
+              />
+              <HeaderNotificationsDropdown />
             </ToolbarGroup>
           </Toolbar>
         </Paper>

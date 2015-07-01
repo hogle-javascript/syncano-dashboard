@@ -1,16 +1,19 @@
-var React = require('react');
+var React    = require('react'),
+    mui      = require('material-ui'),
 
-var Icon = require('../Icon/Icon.react');
+    FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
   displayName: 'ButtonExpandToggle',
 
   render: function () {
-    var icon = this.props.parentExpanded ? "unfold-less" : "unfold-more";
+    var icon = this.props.parentExpanded ? "synicon-unfold-less" : "synicon-unfold-more";
     return (
-      <div className="button-expand-toggle" onClick={this.props.handleClick}>
-        <Icon icon={icon}/>
+      <div
+        className = "button-expand-toggle"
+        onClick   = {this.props.handleClick}>
+        <FontIcon className={icon}/>
       </div>
     );
   }

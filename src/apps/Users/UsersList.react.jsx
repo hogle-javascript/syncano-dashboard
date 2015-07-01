@@ -23,7 +23,7 @@ var React             = require('react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -41,14 +41,14 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState() {
+  getInitialState: function() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
@@ -62,7 +62,9 @@ module.exports = React.createClass({
 
   renderItem: function (item) {
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
@@ -79,12 +81,8 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
-    var items = this.state.items.map(function (item) {
+  getList: function() {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item)
     }.bind(this));
 
@@ -111,7 +109,9 @@ module.exports = React.createClass({
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

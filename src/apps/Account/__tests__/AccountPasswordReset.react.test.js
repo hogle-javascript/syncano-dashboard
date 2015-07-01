@@ -1,7 +1,7 @@
-jest.dontMock("../AccountPasswordReset.react");
+jest.dontMock('../AccountPasswordReset.react');
 
-describe("AccountPasswordReset.react", function () {
-  it("testing component", function () {
+describe('AccountPasswordReset.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;

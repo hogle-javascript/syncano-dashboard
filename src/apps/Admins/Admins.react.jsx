@@ -7,6 +7,7 @@ var React                    = require('react'),
     ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
     DialogsMixin             = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
+    Show                     = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions           = require('../Session/SessionActions'),
@@ -16,19 +17,18 @@ var React                    = require('react'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
     AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
 
-
     // Components
     mui                      = require('material-ui'),
-    FloatingActionButton     = mui.FloatingActionButton,
     Dialog                   = mui.Dialog,
     Container                = require('../../common/Container/Container.react'),
     FabList                  = require('../../common/Fab/FabList.react'),
+    FabListItem              = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading                  = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
-    AddDialog                = require('./AdminsAddDialog.react');
-
+    AdminDialog              = require('./AdminDialog.react');
 
 module.exports = React.createClass({
 
@@ -53,66 +53,68 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('Admins::componentWillMount');
-    AdminsStore.refreshData();
-    AdminsInvitationsStore.refreshData();
+    AdminsActions.fetch();
   },
-    // Dialogs config
-  initDialogs: function () {
+
+  // Dialogs config
+  initDialogs: function() {
 
     return [
-      {
-        dialog: AddDialog,
-        params: {
-          ref   : "addAdminDialog",
-          mode  : "add",
-          store : AdminsStore
-        }
-      },
-      {
-        dialog: AddDialog,
-        params: {
-          ref   : "editAdminDialog",
-          mode  : "edit",
-          store : AdminsStore
-        }
-      },
       {
         dialog: Dialog,
         params: {
           ref:    "deleteAdminDialog",
-          title:  "Delete API key",
+          title:  "Remove an Administrator",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleDeleteAdmin}
+            {text: "Confirm", onClick: this.handleDeleteAdmin}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Admins?',
+          children: [
+            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.admins.isLoading} />
+          ]
         }
       },
       {
         dialog: Dialog,
         params: {
-          title:  "Resend Invitation",
+          title:  "Resend an Invitation",
           ref  : "resendInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleResendInvitation}
+            {text: "Confirm", onClick: this.handleResendInvitation}
           ],
           modal: true,
-          children: 'Do you really want to resend this Invitation?'
+          children: [
+            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       },
       {
         dialog: Dialog,
         params: {
-          title:  "Delete Invitation",
+          title:  "Delete an Invitation",
           ref  : "removeInvitationDialog",
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleRemoveInvitation}
+            {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: 'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitations?',
+           children: [
+             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
+             <Loading
+               type     = "linear"
+               position = "bottom"
+               show     = {this.state.invitations.isLoading} />
+           ]
         }
       }
     ]
@@ -138,99 +140,103 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
-  checkAdminItem: function(id, state){
+  checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
   },
 
-  checkInvitationItem: function(id, state){
+  checkInvitationItem: function(id, state) {
     AdminsActions.uncheckAll();
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  render: function () {
+  showAdminDialog: function () {
+    AdminsActions.showDialog();
+  },
+
+  showAdminEditDialog: function () {
+    AdminsActions.showDialog(AdminsStore.getCheckedItem());
+  },
+
+  render: function() {
 
     var checkedAdmins      = AdminsStore.getNumberOfChecked(),
         checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
 
     return (
       <Container>
+        <AdminDialog />
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedAdmins ? 'block': 'none'}}>
+        <Show if={checkedAdmins > 0}>
+          <FabList position="top">
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to delete Administrator"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteAdminDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Administrator" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteAdminDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to edit Admin"
+              mini          = {true}
+              disabled      = {checkedAdmins > 1}
+              onClick       = {this.showAdminEditDialog}
+              iconClassName = "synicon-pencil" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Admin" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedAdmins > 1}
-            onClick       = {this.showDialog('editAdminDialog')}
-            iconClassName = "synicon-pencil" />
+          </FabList>
+        </Show>
 
-        </FabList>
+        <Show if={checkedInvitations > 0}>
+          <FabList position="top">
 
-        <FabList
-          style={{top: 200, display: checkedInvitations ? 'block': 'none'}}>
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to delete Invitation"
+              mini          = {true}
+              onClick       = {this.showDialog('removeInvitationDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Invitation" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeInvitationDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to resend invitation"
+              mini          = {true}
+              onClick       = {this.showDialog('resendInvitationDialog')}
+              iconClassName = "synicon-backup-restore" />
 
-          <FloatingActionButton
-            label         = "Click here to resend invitation" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('resendInvitationDialog')}
-            iconClassName = "synicon-backup-restore" />
+          </FabList>
+        </Show>
 
-        </FabList>
-
-        <FabList
-          style={{bottom: 100}}>
-          <FloatingActionButton
-            label         = "Click here to invite Admin" // TODO: extend component
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addAdminDialog')}
+        <FabList>
+          <FabListItem
+            label         = "Click here to invite Admin"
+            onClick       = {this.showAdminDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <AdminsList
           name       = "Administrators"
           checkItem  = {this.checkAdminItem}
-          isLoading  = {AdminsActions.isLoading}
+          isLoading  = {this.state.admins.isLoading}
           items      = {this.state.admins.items}/>
 
         <AdminsList
-          name      = "Invitations"
-          mode      = "invitations"
-          checkItem = {this.checkInvitationItem}
-          isLoading = {AdminsInvitationsActions.isLoading}
-          items     = {this.state.invitations.items} />
+          name                 = "Invitations"
+          mode                 = "invitations"
+          emptyItemHandleClick = {this.showAdminDialog}
+          emptyItemContent     = "Invite administrators"
+          checkItem            = {this.checkInvitationItem}
+          isLoading            = {this.state.invitations.isLoading}
+          items                = {AdminsInvitationsStore.getPendingInvitations()} />
 
       </Container>
     );

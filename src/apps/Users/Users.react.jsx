@@ -1,35 +1,33 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
-    Router                   = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin              = require('../Header/HeaderMixin'),
-    ButtonActionMixin        = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin             = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin        = require('../../mixins/InstanceTabsMixin'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
-    // Stores and Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
-
-    UsersActions             = require('./UsersActions'),
-    UsersStore               = require('./UsersStore'),
-    GroupsActions            = require('./GroupsActions'),
-    GroupsStore              = require('./GroupsStore'),
+    UsersActions          = require('./UsersActions'),
+    UsersStore            = require('./UsersStore'),
+    GroupsActions         = require('./GroupsActions'),
+    GroupsStore           = require('./GroupsStore'),
 
     // Components
-    mui                      = require('material-ui'),
-    FloatingActionButton     = mui.FloatingActionButton,
-    Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
-    UsersList                = require('./UsersList.react'),
-    GroupsList               = require('./GroupsList.react'),
-    UserAddDialog            = require('./UserAddDialog.react'),
-    GroupAddDialog           = require('./GroupAddDialog.react');
+    UsersList             = require('./UsersList.react'),
+    GroupsList            = require('./GroupsList.react'),
+    UserDialog            = require('./UserDialog.react'),
+    GroupDialog           = require('./GroupDialog.react');
 
 
 module.exports = React.createClass({
@@ -40,104 +38,22 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(UsersStore),
+    Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    DialogsMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Users::componentWillUpdate');
-    // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.groups.hideDialogs);
+    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Users::componentWillMount');
-    UsersStore.refreshData();
-    GroupsStore.refreshData();
-  },
-
-  getStyles: function() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
-  // Dialogs config
-  initDialogs: function () {
-
-    return [
-      // Groups
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "addGroupDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: GroupAddDialog,
-        params: {
-          ref  : "editGroupDialog",
-          mode : "edit"
-        }
-      },
-      {
-        dialog: Dialog,
-        params: {
-          ref:    "removeGroupDialog",
-          title:  "Delete Group",
-          actions: [
-            {
-              text    : 'Cancel',
-              onClick : this.handleCancel},
-            {
-              text    : "Yes, I'm sure",
-              onClick : this.handleRemoveGroups}
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + GroupsStore.getCheckedItems().length +' groups?'
-        }
-      },
-
-      // Users
-      {
-        dialog: UserAddDialog,
-        params: {
-          ref  : "addUserDialog",
-          mode : "add"
-        }
-      },
-      {
-        dialog: UserAddDialog,
-        params: {
-          ref  : "editUserDialog",
-          mode : "edit"
-        }
-      },
-      {
-        dialog: Dialog,
-        params: {
-          ref:    "removeUserDialog",
-          title:  "Delete User",
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure", onClick: this.handleRemoveUsers}
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + UsersStore.getCheckedItems().length +' users?'
-        }
-      }
-    ]
+  componentDidMount: function() {
+    console.info('Users::componentDidMount');
+    UsersActions.fetch();
+    GroupsActions.fetch();
   },
 
   handleRemoveGroups: function() {
@@ -156,84 +72,144 @@ module.exports = React.createClass({
     GroupsActions.uncheckAll();
   },
 
-  render: function () {
-    console.log(this.state);
+  showUserDialog: function() {
+    UsersActions.showDialog();
+  },
 
-    var styles = this.getStyles();
+  showUserEditDialog: function() {
+    UsersActions.showDialog(UsersStore.getCheckedItem());
+  },
 
-    var checkedUsers      = UsersStore.getNumberOfChecked(),
-        checkedGroups       = GroupsStore.getNumberOfChecked();
+  showGroupDialog: function() {
+    GroupsActions.showDialog();
+  },
+
+  showGroupEditDialog: function() {
+    GroupsActions.showDialog(GroupsStore.getCheckedItem());
+  },
+
+  initDialogs: function() {
+
+    return [
+      // Groups
+      {
+        dialog: Dialog,
+        params: {
+          ref:    'removeGroupDialog',
+          title:  'Delete Group',
+          actions: [
+            {
+              text    : 'Cancel',
+              onClick : this.handleCancel
+            },
+            {
+              text    : 'Yes, I\'m sure',
+              onClick : this.handleRemoveGroups}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + GroupsStore.getCheckedItems().length + ' groups?',
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.groups.isLoading} />
+          ]
+        }
+      },
+
+      // Users
+      {
+        dialog: Dialog,
+        params: {
+          ref:    'removeUserDialog',
+          title:  'Delete User',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Yes, I\'m sure', onClick: this.handleRemoveUsers}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + UsersStore.getCheckedItems().length + ' users?',
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.users.isLoading} />
+          ]
+        }
+      }
+    ]
+  },
+
+  render: function() {
+    var checkedUsers  = UsersStore.getNumberOfChecked(),
+        checkedGroups = GroupsStore.getNumberOfChecked();
 
     return (
       <Container>
         {this.getDialogs()}
+        <UserDialog />
+        <GroupDialog />
 
-        <FabList
-          style={{top: 200, display: checkedUsers ? 'block': 'none'}}>
+        <Show if={checkedUsers > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Users" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeUserDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Users"
+              mini          = {true}
+              onClick       = {this.showDialog('removeUserDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit User" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedUsers > 1}
-            onClick       = {this.showDialog('editUserDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit User"
+              mini          = {true}
+              disabled      = {checkedUsers > 1}
+              onClick       = {this.showUserEditDialog}
+              iconClassName = "synicon-pencil" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={{top: 200, display: checkedGroups ? 'block': 'none'}}>
+        <Show if={checkedGroups > 0}>
+          <FabList position="top">
 
-          <FloatingActionButton
-            label         = "Click here to unselect all" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+            <FabListItem
+              label         = "Click here to unselect all"
+              mini          = {true}
+              onClick       = {this.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete Users" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('removeGroupDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete Users"
+              mini          = {true}
+              onClick       = {this.showDialog('removeGroupDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit Group" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedUsers > 1}
-            onClick       = {this.showDialog('editGroupDialog')}
-            iconClassName = "synicon-pencil" />
+            <FabListItem
+              label         = "Click here to edit Group"
+              mini          = {true}
+              disabled      = {checkedUsers > 1}
+              onClick       = {this.showGroupEditDialog}
+              iconClassName = "synicon-pencil" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList style={styles.fabListBottom}>
-          <FloatingActionButton
-            label         = "Click here to create User account" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addUserDialog')}
+        <FabList>
+
+          <FabListItem
+            label         = "Click here to create User account"
+            onClick       = {this.showUserDialog}
             iconClassName = "synicon-account-plus" />
-          <FloatingActionButton
-            label         = "Click here to create Group" // TODO: extend component
-            style         = {styles.fabListButton}
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addGroupDialog')}
+
+          <FabListItem
+            label         = "Click here to create Group"
+            onClick       = {this.showGroupDialog}
             iconClassName = "synicon-account-multiple-plus" />
 
         </FabList>
@@ -244,9 +220,9 @@ module.exports = React.createClass({
             <GroupsList
               name                 = "Groups"
               checkItem            = {GroupsActions.checkItem}
-              isLoading            = {GroupsActions.isLoading}
+              isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
-              emptyItemHandleClick = {this.showDialog('addGroupDialog')}
+              emptyItemHandleClick = {this.showGroupDialog}
               emptyItemContent     = "Create a Group" />
 
           </div>
@@ -255,9 +231,9 @@ module.exports = React.createClass({
             <UsersList
               name                 = "Users"
               checkItem            = {UsersActions.checkItem}
-              isLoading            = {UsersActions.isLoading}
-              items                = {this.state.items}
-              emptyItemHandleClick = {this.showDialog('addUserDialog')}
+              isLoading            = {this.state.users.isLoading}
+              items                = {this.state.users.items}
+              emptyItemHandleClick = {this.showUserDialog}
               emptyItemContent     = "Create a User" />
           </div>
 

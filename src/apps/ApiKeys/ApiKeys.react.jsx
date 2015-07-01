@@ -7,6 +7,7 @@ var React                 = require('react'),
     ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
     DialogsMixin          = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     SessionActions        = require('../Session/SessionActions'),
@@ -16,16 +17,16 @@ var React                 = require('react'),
 
     // Components
     mui                   = require('material-ui'),
-    FloatingActionButton  = mui.FloatingActionButton,
     Dialog                = mui.Dialog,
     Container             = require('../../common/Container/Container.react'),
-    Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react.jsx'),
 
     // Local components
     ApiKeysList           = require('./ApiKeysList.react'),
-    AddDialog             = require('./ApiKeysAddDialog.react');
+    ApiKeyDialog          = require('./ApiKeyDialog.react');
 
 
 module.exports = React.createClass({
@@ -49,21 +50,15 @@ module.exports = React.createClass({
 
   componentWillMount: function() {
     console.info('ApiKeys::componentWillMount');
-    ApiKeysStore.refreshData();
+    ApiKeysActions.fetch();
   },
     // Dialogs config
   initDialogs: function () {
 
     return [{
-      dialog: AddDialog,
-      params: {
-        ref  : "addApiKeyDialog",
-        mode : "add"
-      },
-    },{
       dialog: Dialog,
       params: {
-        title:  "Reset API Key",
+        title:  "Reset an API Key",
         ref  : "resetApiKeyDialog",
         actions: [
           {
@@ -71,30 +66,42 @@ module.exports = React.createClass({
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : "Confirm",
             onClick : this.handleReset
           }
         ],
         modal: true,
-        children: 'Do you really want to reset this API key?'
-      },
+        children: [
+          'Do you really want to reset this API key?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
+      }
     }, {
       dialog: Dialog,
       params: {
         ref: "deleteApiKeyDialog",
-        title: "Delete API key",
+        title: "Delete an API key",
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : "Confirm",
             onClick : this.handleDelete
           }
         ],
         modal: true,
-        children: 'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
+        children: [
+          'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },
@@ -109,53 +116,56 @@ module.exports = React.createClass({
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
   },
 
-  render: function () {
+  showApiKeyDialog: function() {
+    ApiKeysActions.showDialog();
+  },
+
+  render: function() {
 
     var checkedApiKeys = ApiKeysStore.getNumberOfChecked();
 
     return (
       <Container>
+        <ApiKeyDialog />
         {this.getDialogs()}
 
-        <FabList
-          style={{top: 200, display: checkedApiKeys ? 'block': 'none'}}>
+        <Show if={checkedApiKeys > 0}>
 
-          <FloatingActionButton
-            label         = "Click here to unselect Api Keys" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {ApiKeysActions.uncheckAll}
-            iconClassName = "synicon-checkbox-multiple-marked-outline" />
+          <FabList position="top">
+            <FabListItem
+              label         = "Click here to unselect API Keys"
+              mini          = {true}
+              onClick       = {ApiKeysActions.uncheckAll}
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
-          <FloatingActionButton
-            label         = "Click here to delete ApiKeys" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            onClick       = {this.showDialog('deleteApiKeyDialog')}
-            iconClassName = "synicon-delete" />
+            <FabListItem
+              label         = "Click here to delete API Keys"
+              mini          = {true}
+              onClick       = {this.showDialog('deleteApiKeyDialog')}
+              iconClassName = "synicon-delete" />
 
-          <FloatingActionButton
-            label         = "Click here to edit ApiKey" // TODO: extend component
-            color         = "" // TODO: extend component
-            mini          = {true}
-            disabled      = {checkedApiKeys > 1}
-            onClick       = {this.showDialog('resetApiKeyDialog')}
-            iconClassName = "synicon-backup-restore" />
+            <FabListItem
+              label         = "Click here to edit an API Key"
+              mini          = {true}
+              disabled      = {checkedApiKeys > 1}
+              onClick       = {this.showDialog('resetApiKeyDialog')}
+              iconClassName = "synicon-backup-restore" />
 
-        </FabList>
+          </FabList>
+        </Show>
 
-        <FabList
-          style={{bottom: 100}}>
-          <FloatingActionButton
-            label         = "Click here to add ApiKey" // TODO: extend component
-            color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addApiKeyDialog')}
+        <FabList>
+          <FabListItem
+            label         = "Click here to add an API Key"
+            onClick       = {this.showApiKeyDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <ApiKeysList
-          name   = "API Keys"
-          items  = {this.state.items} />
+          name                 = "API Keys"
+          items                = {this.state.items}
+          emptyItemHandleClick = {this.showApiKeyDialog}
+          emptyItemContent     = "Generate an API Key" />
 
       </Container>
     );

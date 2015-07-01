@@ -118,6 +118,12 @@ var Syncano = (function() {
       params.url += (params.url.indexOf('?') === -1 ? '?' : '&') + prepareAjaxParams(params.data);
     }
     request.open(mtype, params.url, true);
+    request.setRequestHeader('Accept', 'application/json;charset=UTF-8');
+
+    if (apiKey !== null) {
+      request.setRequestHeader('Authorization', 'Token ' + apiKey);
+    }
+
     if (mtype !== 'GET') {
       request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     }
@@ -175,13 +181,17 @@ var Syncano = (function() {
       url: params.url,
       method: params.type,
       strictSSL: false,
-      body: buildUrlParams(params.data)
+      body: buildUrlParams(params.data),
+      headers: {'Accept': 'application/json;charset=UTF-8'}
     };
+
+    if (apiKey !== null) {
+      opt.headers['Authorization'] = 'Token ' + apiKey;
+    }
+
     if (params.type !== 'GET') {
-      opt.headers = {
-        'content-type': 'application/x-www-form-urlencoded',
-        'user-agent': 'syncano-nodejs-4.0'
-      };
+      opt.headers['content-type'] = 'application/json;charset=UTF-8';
+      opt.headers['user-agent']   = 'syncano-nodejs-4.0';
     }
 
     if (params.headers !== undefined) {
@@ -348,6 +358,7 @@ var Syncano = (function() {
       create: this.createAccount.bind(this),
       get: this.getAccount.bind(this),
       update: this.updateAccount.bind(this),
+      changePassword: this.changeAccountPassword.bind(this),
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
@@ -382,10 +393,12 @@ var Syncano = (function() {
      * @type {object}
      * @property {function} list - shortcut to {@link Syncano#listAdmins} method
      * @property {function} update - shortcut to {@link Syncano#updateAdmin} method
+     * @property {function} remove - shortcut to {@link Syncano#removeAdmin} method
      */
     this.Admins = {
       list: this.listAdmins.bind(this),
-      update: this.updateAdmin.bind(this)
+      update: this.updateAdmin.bind(this),
+      remove: this.removeAdmin.bind(this)
     };
 
     /**
@@ -695,7 +708,7 @@ var Syncano = (function() {
         {},
         callbackOK,
         callbackError,
-        {'Authorization': 'token ' + token}
+        {'Authorization': 'Token ' + token}
       );
     },
 
@@ -932,7 +945,7 @@ var Syncano = (function() {
     /**
      * Updates admin identified by id
      *
-     * @method Syncano#updateAdmins
+     * @method Syncano#updateAdmin
      * @alias Syncano.Admins.update
      * @param  {object} [params]
      * @param {function} [callbackOK] - optional method to call on success
@@ -943,6 +956,24 @@ var Syncano = (function() {
     updateAdmin: function(id, params, callbackOK, callbackError) {
       params = params || {};
       return this.request('PUT', linksObject.instance_admins + id, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Remove admin identified by id
+     *
+     * @method Syncano#removeAdmin
+     * @alias Syncano.Admins.remove
+     * @param {Number|object} id - id of admin to delete. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeAdmin: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      return this.request('DELETE', linksObject.instance_admins + id, {}, callbackOK, callbackError);
     },
 
 
@@ -1050,9 +1081,9 @@ var Syncano = (function() {
       if (typeof name === 'undefined' || name.length === 0) {
         throw new Error('Missing class name');
       }
-      if (typeof params.schema !== 'string') {
-        params.schema = params.schema.toString();
-      }
+      //if (typeof params.schema !== 'string') {
+      //  params.schema = params.schema.toString();
+      //}
       return this.request('PATCH', linksObject.instance_classes + name, params, callbackOK, callbackError);
     },
 
@@ -1106,6 +1137,22 @@ var Syncano = (function() {
      */
     updateAccount: function(params, callbackOK, callbackError) {
       return this.request('PUT', 'v1/account/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates account of the currently logged user
+     *
+     * @method Syncano#changeAccountPassword
+     * @alias Syncano.Accounts.changePassword
+     * @param {Object} params - old and new password
+     * @param {string} params.current_password - current password
+     * @param {string} params.new_password - current password
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    changeAccountPassword: function(params, callbackOK, callbackError) {
+      return this.request('POST', 'v1/account/password/', params, callbackOK, callbackError);
     },
 
     /**
@@ -1622,10 +1669,10 @@ var Syncano = (function() {
      * @method Syncano#createCodeBox
      * @alias Syncano.CodeBoxes.create
      * @param {object} params
-     * @param {string} params.runtime_name - python / nodejs / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - name of the codebox
      * @param {string} params.description - name of the codebox
-     * @param {string} params.source - source code (will be automatically URL-encoded)
+     * @param {string} params.source - source code in Node.js / Python / Ruby
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise
@@ -1639,9 +1686,6 @@ var Syncano = (function() {
       }
       if (typeof params.runtime_name === 'undefined') {
         params.runtime_name = 'nodejs';
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('POST', linksObject.instance_codeboxes, params, callbackOK, callbackError);
     },
@@ -1697,7 +1741,7 @@ var Syncano = (function() {
      * @param {Number} id - codebox id
      * @param {Object} params - new values of the codebox parameters
      * @param {string} params.config -
-     * @param {string} params.runtime_name - nodejs / python / ruby
+     * @param {string} params.runtime_name - Node.js / Python / Ruby
      * @param {string} params.name - new codebox name
      * @param {string} params.description -
      * @param {string} params.source - source code in Node.js / Python / Ruby
@@ -1716,9 +1760,6 @@ var Syncano = (function() {
       }
       if (typeof linksObject.instance_codeboxes === 'undefined') {
         throw new Error('Not connected to any instance');
-      }
-      if (typeof params.source !== 'undefined') {
-        params.source = encodeURIComponent(params.source);
       }
       return this.request('PATCH', linksObject.instance_codeboxes + id, params, callbackOK, callbackError);
     },
@@ -2514,9 +2555,6 @@ var Syncano = (function() {
         throw new Error('Missing channel name');
       }
       var url = normalizeUrl(baseURL + linksObject.instance_channels + name + '/poll/');
-      if (apiKey !== null) {
-        url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey + '&format=json';
-      }
       (function poll() {
         $.ajax({
           url: url,
@@ -2528,8 +2566,7 @@ var Syncano = (function() {
             if (xhr.responseJSON && xhr.responseJSON.id) {
               url = [
                 normalizeUrl(baseURL + linksObject.instance_channels),
-                name + '/poll/?last_id=' + xhr.responseJSON.id,
-                '&api_key=' + apiKey + '&format=json'
+                name + '/poll/?last_id=' + xhr.responseJSON.id
               ].join('');
             }
             poll();
@@ -2661,9 +2698,6 @@ var Syncano = (function() {
       } else {
         params = params || {};
         var url = normalizeUrl(baseURL + method);
-        if (apiKey !== null) {
-          url += (url.indexOf('?') === -1 ? '?' : '&') + 'api_key=' + apiKey + '&format=json';
-        }
         var ajaxParams = {
           type: requestType,
           url: url,

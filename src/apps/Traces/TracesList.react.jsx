@@ -24,10 +24,9 @@ var React             = require('react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnIconName    = require('../../common/ColumnList/Column/IconName.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnName        = require('../../common/ColumnList/Column/Name.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react');
 
@@ -83,7 +82,7 @@ module.exports = Radium(React.createClass({
   renderItem: function (item) {
 
     var styles = this.getStyles(),
-        background = item.status.success ? 'red': 'green';
+        background = item.status === 'success' ? 'green': 'red';
 
     if (item.id == this.state.visibleTraceId) {
       styles.item = {
@@ -102,29 +101,27 @@ module.exports = Radium(React.createClass({
 
     return (
       <div key={item.id}>
-      <Item style={styles.item}>
-       <ColumnIconName
-         id              = {item.id}
-         background      = {background}
-         handleNameClick = {this.toggleTrace}>
-           {item.status}
-        </ColumnIconName>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{item.duration}ms</ColumnDesc>
-        <ColumnDate>{item.executed_at}</ColumnDate>
-      </Item>
+        <Item
+          checked = {item.checked}
+          style   = {styles.item}>
+          <ColumnIconName
+            id              = {item.id}
+            background      = {background}
+            handleNameClick = {this.toggleTrace}>
+            {item.status}
+          </ColumnIconName>
+          <ColumnID>{item.id}</ColumnID>
+          <ColumnDesc>{item.duration}ms</ColumnDesc>
+          <ColumnDate>{item.executed_at}</ColumnDate>
+        </Item>
         <Paper zDepth={1} style={styles.trace}>
-            <Trace result={item.result}/>
+          <Trace result={item.result}/>
         </Paper>
       </div>
     )
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.traces.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -147,7 +144,9 @@ module.exports = Radium(React.createClass({
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

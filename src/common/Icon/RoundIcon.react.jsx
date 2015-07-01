@@ -2,9 +2,7 @@ var React         = require('react'),
     Radium        = require('radium'),
 
     mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable,
-
-    MaterialIcon  = require('../Icon/MaterialIcon.react');
+    StylePropable = mui.Mixins.StylePropable;
 
 
 module.exports = Radium(React.createClass({
@@ -27,7 +25,7 @@ module.exports = Radium(React.createClass({
   },
 
   getStyles: function() {
-    var style = {
+    var styles = {
         width: 40,
         height: 40,
         borderRadius: '50%',
@@ -38,7 +36,7 @@ module.exports = Radium(React.createClass({
         alignItems: 'center'
     };
 
-    return this.mergeStyles(style, this.props.style);
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function () {
@@ -46,8 +44,8 @@ module.exports = Radium(React.createClass({
 
     return (
       <div
-        style={styles}
-        onClick={this.handleClick}>
+        style   = {styles}
+        onClick = {this.handleClick}>
         {this.props.children}
       </div>
     )

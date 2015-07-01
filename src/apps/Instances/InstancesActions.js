@@ -1,38 +1,44 @@
 var Reflux     = require('reflux'),
-
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var InstancesActions = Reflux.createActions({
-    checkItem  : {},
-    uncheckAll : {},
+  checkItem     : {},
+  uncheckAll    : {},
+  fetch         : {},
+  setInstances  : {},
+  showDialog    : {},
+  dismissDialog : {},
+  fetchInstances: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-    getInstances: {
-       asyncResult: true,
-       children: ['completed', 'failure']
-    },
+  createInstance: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-    createInstance: {
-       asyncResult: true,
-       children: ['completed', 'failure']
-    },
+  updateInstance: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  },
 
-    updateInstance: {
-       asyncResult: true,
-       children: ['completed', 'failure']
-    },
-
-     removeInstances: {
-       asyncResult: true,
-       children: ['completed', 'failure']
-    },
-
+  removeInstances: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  }
 });
 
-
-
-InstancesActions.getInstances.listen( function(payload) {
-  console.info('InstancesActions::getInstances');
+InstancesActions.fetchInstances.listen(function() {
+  console.info('InstancesActions::fetchInstances');
   Connection
     .Instances
     .list()
@@ -40,7 +46,7 @@ InstancesActions.getInstances.listen( function(payload) {
     .catch(this.failure);
 });
 
-InstancesActions.createInstance.listen( function(payload) {
+InstancesActions.createInstance.listen(function(payload) {
   console.info('InstancesActions::createInstance');
   Connection
     .Instances
@@ -53,7 +59,7 @@ InstancesActions.createInstance.listen( function(payload) {
     .catch(this.failure);
 });
 
-InstancesActions.updateInstance.listen( function(name, payload) {
+InstancesActions.updateInstance.listen(function(name, payload) {
   console.info('InstancesActions::updateInstance');
   Connection
     .Instances
@@ -62,15 +68,15 @@ InstancesActions.updateInstance.listen( function(name, payload) {
     .catch(this.failure);
 });
 
-InstancesActions.removeInstances.listen( function(names) {
-  names.map(function(name) {
-    console.info('InstancesActions::removeInstances');
-    Connection
-      .Instances
-      .remove(name)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+InstancesActions.removeInstances.listen(function(names) {
+  console.info('InstancesActions::removeInstances');
+  var promises = names.map(function(name) {
+    return Connection.Instances.remove(name);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = InstancesActions;

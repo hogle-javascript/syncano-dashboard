@@ -15,6 +15,7 @@ var React                       = require('react'),
     AccountLogin                = require('./apps/Account/AccountLogin.react'),
     AccountSignup               = require('./apps/Account/AccountSignup.react'),
     AccountActivate             = require('./apps/Account/AccountActivate.react'),
+    AccountPasswordUpdate       = require('./apps/Account/AccountPasswordUpdate.react'),
     AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
     AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
 
@@ -35,7 +36,6 @@ var React                       = require('react'),
     Traces                      = require('./apps/Traces/Traces.react'),
     CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
-    Schedules                   = require('./apps/Schedules/Schedules.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
     Users                       = require('./apps/Users/Users.react'),
     Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
@@ -50,22 +50,23 @@ module.exports = (
     <Route name="login" handler={AccountLogin} />
     <Route name="signup" handler={AccountSignup} />
     <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
+    <Route name="password-update" handler={AccountPasswordUpdate} path="/password/update" />
     <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
     <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
-        <Redirect name="instance" from="instance" to="codeboxes" path=":instanceName" />
+        <Redirect name="instance" from="instance" to="classes" path=":instanceName" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
+        <Route name="classes-data-objects" handler={DataObjects} path=":instanceName/classes/:className/objects" />
         <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
         <Route name="codeboxes-traces" handler={Traces} path=":instanceName/codeboxes/:codeboxId/traces" />
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
         <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
-        <Route name="schedules" handler={Schedules} path=":instanceName/schedules" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="users" handler={Users} path=":instanceName/users" />
         <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />

@@ -1,25 +1,28 @@
 var React              = require('react'),
     Radium             = require('radium'),
-    Moment             = require('moment'),
-    classNames         = require('classnames'),
     ReactZeroClipboard = require('react-zeroclipboard'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
     mui                = require('material-ui'),
     Colors             = mui.Styles.Colors,
     Snackbar           = mui.Snackbar,
     Paper              = mui.Paper,
-    FontIcon           = mui.FontIcon;
+    FlatButton         = mui.FlatButton;
 
-
-// Same classes for column and it's header
-var cssClasses = classNames('col-flex-1');
 
 var Header = React.createClass({
+
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
+    }
+  },
+
   render: function () {
     return (
-        <div className={cssClasses}>
-          {this.props.children}
-        </div>
+      <div className={this.props.className}>
+        {this.props.children}
+      </div>
     )
   }
 });
@@ -30,7 +33,6 @@ module.exports = Radium(React.createClass({
 
   propTypes: {
     id          : React.PropTypes.string,
-    color       : React.PropTypes.string.isRequired,
     handleClick : React.PropTypes.func
   },
 
@@ -40,16 +42,8 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
-  },
-
-  getInitialState: function () {
-    return {
-      color      : this.props.color,
-      hoverColor : this.props.hoverColor
-    }
   },
 
   getStyles: function() {
@@ -62,49 +56,38 @@ module.exports = Radium(React.createClass({
         lineHeight    : '16px',
         paddingTop    : 16,
         paddingBottom : 16
-      },
-      icon: {
-        color: this.state.color
       }
     }
   },
 
-  handleMouseOver: function (e) {
-    this.setState({'color': this.props.hoverColor})
-  },
-
-  handleMouseLeave: function (e) {
-    this.setState({'color': this.props.color})
-  },
-
   handleClick: function (event) {
-    this.setState({'color': this.props.color});
     this.refs.snackbar.show();
   },
 
   render: function () {
+    var styles = this.getStyles();
 
     return (
 
       <div
-        className   = {cssClasses}
-        style       = {this.getStyles().key}>
+        className   = {this.props.className}
+        style       = {styles.key}>
           <div
-            ref       = "key"
-            className = "col-xs-28">
+            ref = "key"
+            className = "col-xs-25">
             {this.props.children}
           </div>
 
         <ReactZeroClipboard text={this.props.children}>
-          <FontIcon
-            onClick     = {this.handleClick}
-            onMouseOver = {this.handleMouseOver}
-            onMouseOut  = {this.handleMouseLeave}
-            style       = {this.getStyles().icon}
-            className   = "synicon-content-copy col-xs-4" />
+            <FlatButton
+              label       = "COPY"
+              primary     = {true}
+              onClick     = {this.handleClick} />
         </ReactZeroClipboard>
 
-        <Snackbar ref="snackbar" message="API key copied to the clipboard" />
+        <Snackbar
+          ref="snackbar"
+          message="API key copied to the clipboard" />
       </div>
 
     );

@@ -23,7 +23,7 @@ var React             = require('react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -66,7 +66,9 @@ module.exports = React.createClass({
         codeBoxLabel = codeBox ? codeBox.label: '';
 
     return (
-      <Item key={item.id}>
+      <Item
+        checked = {item.checked}
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'camera-timer'
@@ -76,7 +78,7 @@ module.exports = React.createClass({
           {item.label}
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{codeBoxLabel}</ColumnDesc>
+        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.crontab}</ColumnDesc>
         <ColumnDate>{item.scheduled_next}</ColumnDate>
         <ColumnDate>{item.created_at}</ColumnDate>
@@ -85,10 +87,6 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -111,13 +109,15 @@ module.exports = React.createClass({
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>CodeBox</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
           <ColumnDesc.Header>Crontab</ColumnDesc.Header>
           <ColumnDate.Header>Next run</ColumnDate.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

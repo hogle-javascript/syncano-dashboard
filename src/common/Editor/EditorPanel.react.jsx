@@ -3,12 +3,11 @@ var React          = require('react'),
     classNames     = require('classnames'),
 
     mui            = require('material-ui'),
+    FontIcon       = mui.FontIcon,
     TextField      = mui.TextField,
     Paper          = mui.Paper,
     FontIcon       = mui.FontIcon,
-    LinearProgress = mui.LinearProgress,
-
-    Icon           = require('../Icon/Icon.react');
+    LinearProgress = mui.LinearProgress;
 
 require('./Editor.css');
 
@@ -82,7 +81,7 @@ module.exports = Radium(React.createClass({
           backgroundColor : '#F1F1F1'
         },
         progressBar = this.getProgressBar(),
-        unfoldIcon  = this.state.panelCollapsed ? "unfold-more" : "unfold-less",
+        unfoldIcon  = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
         trace;
 
     if (this.state.panelCollapsed) {
@@ -117,7 +116,7 @@ module.exports = Radium(React.createClass({
             <div
               className="editor-toolbar-unfold-button"
               onClick={this.handleToggleClick}>
-              <Icon icon={unfoldIcon}/>
+              <FontIcon clasSName={unfoldIcon}/>
             </div>
         </Paper>
         {progressBar}

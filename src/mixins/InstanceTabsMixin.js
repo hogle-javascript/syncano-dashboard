@@ -6,8 +6,8 @@ var InstanceTabsMixin = {
 
     return [
       {
-        label: 'Data Browser',
-        route: 'data-objects',
+        label: 'Classes',
+        route: 'classes',
         params: params
       },
       {

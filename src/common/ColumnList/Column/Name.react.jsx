@@ -1,24 +1,33 @@
-var React       = require('react'),
-    Radium      = require('radium'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
+var React              = require('react'),
+    Radium             = require('radium'),
+    ColumnListConstans = require('../ColumnListConstans'),
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+    mui                = require('material-ui'),
+    Paper              = mui.Paper,
+    Colors             = mui.Styles.Colors;
 
-
-var cssClasses = classNames('col-xs-8');
 
 var Header = React.createClass({
-  render: function () {
-    var styles = {
+  getDefaultProps: function () {
+    return {
+      className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
+    }
+  },
+
+  getStyles: function () {
+    return {
       fontSize    : 20,
       fontWeight  : 500
-    };
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
-      <div style={styles} className={cssClasses}>
+      <div
+        className = {this.props.className}
+        style     = {styles}>
         {this.props.children}
       </div>
     )
@@ -32,8 +41,7 @@ module.exports = Radium(React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
-    hoverColor: React.PropTypes.string.isRequired,
-    handleClick: React.PropTypes.func
+    hoverColor: React.PropTypes.string.isRequired
   },
 
   statics :{
@@ -43,31 +51,13 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600
+      hoverColor : Colors.blue600,
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     };
   },
 
-  getInitialState: function () {
+  getStyles: function () {
     return {
-      color: this.props.color,
-      hoverColor: this.props.hoverColor
-    }
-  },
-
-  handleMouseOver: function () {
-    this.setState({'color': this.props.hoverColor})
-  },
-
-  handleMouseLeave: function () {
-    this.setState({'color': this.props.color})
-  },
-
-  handleClick: function () {
-    this.props.handleClick(this.props.id);
-  },
-
-  render: function () {
-    var style = {
       display         : 'flex',
       flexDirection   : 'row',
       fontSize        : 12,
@@ -75,15 +65,21 @@ module.exports = Radium(React.createClass({
       paddingBottom   : 16,
       alignSelf       : 'center',
       cursor          : 'pointer',
-      color           : this.state.color
-    };
+      color           : this.state.color,
+      ':hover' : {
+        color : this.state.hoverColor
+      }
+    }
+  },
+
+  render: function () {
+    var styles = this.getStyles();
 
     return (
       <div
-        className   = {cssClasses}
-        style       = {style}
-        onMouseOver = {this.handleMouseOver}
-        onMouseOut  = {this.handleMouseLeave}>
+        className   = {this.props.className}
+        style       = {styles}
+      >
         {this.props.children}
       </div>
     );

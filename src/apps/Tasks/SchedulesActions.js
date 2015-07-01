@@ -1,33 +1,38 @@
 var Reflux     = require('reflux'),
 
-    Connection = require('../Session/Connection').get();
-
+    Syncano    = require('../Session/Connection'),
+    Connection = Syncano.get(),
+    D          = Syncano.D;
 
 var SchedulesActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-
-  'createSchedule': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  checkItem    : {},
+  uncheckAll   : {},
+  fetch        : {},
+  setSchedules : {},
+  showDialog   : {},
+  dismissDialog: {},
+  fetchSchedules: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  'getSchedules': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  createSchedule: {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  'updateSchedule': {
-      asyncResult: true,
-      children: ['completed', 'failure']
+  updateSchedule: {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  'removeSchedules': {
-      asyncResult: true,
-      children: ['completed', 'failure']
-  },
-
+  removeSchedules: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
+  }
 
 });
 
-SchedulesActions.createSchedule.listen( function(payload) {
+SchedulesActions.createSchedule.listen(function(payload) {
   console.info('SchedulesActions::createSchedule', payload);
   Connection
     .Schedules
@@ -36,8 +41,8 @@ SchedulesActions.createSchedule.listen( function(payload) {
     .catch(this.failure);
 });
 
-SchedulesActions.getSchedules.listen( function(payload) {
-  console.info('SchedulesActions::getSchedules');
+SchedulesActions.fetchSchedules.listen(function() {
+  console.info('SchedulesActions::fetchSchedules');
   Connection
     .Schedules
     .list()
@@ -45,7 +50,7 @@ SchedulesActions.getSchedules.listen( function(payload) {
     .catch(this.failure);
 });
 
-SchedulesActions.updateSchedule.listen( function(id, payload) {
+SchedulesActions.updateSchedule.listen(function(id, payload) {
   console.info('SchedulesActions::updateSchedule');
   Connection
     .Schedules
@@ -54,15 +59,15 @@ SchedulesActions.updateSchedule.listen( function(id, payload) {
     .catch(this.failure);
 });
 
-SchedulesActions.removeSchedules.listen( function(schedules) {
-  schedules.map(function(schedule) {
-    console.info('SchedulesActions::removeSchedules');
-    Connection
-      .Schedules
-      .remove(schedule.id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
+SchedulesActions.removeSchedules.listen(function(schedules) {
+  console.info('SchedulesActions::removeSchedules');
+  var promises = schedules.map(function(schedule) {
+    return Connection.Schedules.remove(schedule.id);
+  });
+
+  D.all(promises)
+    .success(this.completed)
+    .error(this.failure);
 });
 
 module.exports = SchedulesActions;

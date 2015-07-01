@@ -2,69 +2,64 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
 
     //Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
+    SessionActions      = require('../Session/SessionActions'),
     GroupsActions       = require('./GroupsActions');
-
 
 var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin
+    StoreLoadingMixin,
+    WaitForStoreMixin
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items: [],
-      isLoading: false
+      isLoading: true
     }
   },
 
-  init: function () {
+  init: function() {
     this.data = this.getInitialState();
-
-    // We want to know when we are ready to download data for this store,
-    // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.waitFor(
+      SessionActions.setUser,
+      SessionActions.setInstance,
+      this.refreshData
+    );
+    this.setLoadingStates();
   },
 
-  refreshData: function (data) {
-    console.debug('GroupsStore::refreshData');
-    if (SessionStore.instance) {
-      GroupsActions.getGroups();
-    }
-  },
+  setGroups: function(groups) {
+    console.debug('GroupsStore::setGroups');
 
-  onGetGroups: function(items) {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
-  onGetGroupsCompleted: function(items) {
-    console.debug('GroupsStore::onGetInstanesCompleted');
-
-    this.data.items = Object.keys(items).map(function(item) {
-        return items[item];
+    this.data.items = Object.keys(groups).map(function(key) {
+      return groups[key];
     });
-    this.data.isLoading = false;
+
     this.trigger(this.data);
   },
 
-  onCreateGroupCompleted: function(payload) {
-    console.debug('GroupsStore::onCreateGroupCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
+  getGroups: function(empty) {
+    return this.data.items || empty || null;
   },
 
-  onUpdateGroupCompleted: function(paylod) {
-    console.debug('GroupsStore::onUpdateGroupCompleted');
-    this.data.hideDialogs = true;
+  refreshData: function() {
+    GroupsActions.fetchGroups();
+  },
+
+  onFetchGroups: function(items) {
+    console.debug('GroupsStore::onFetchGroups');
     this.trigger(this.data);
-    this.refreshData();
+  },
+
+  onFetchGroupsCompleted: function(items) {
+    console.debug('GroupsStore::onFetchGroupsCompleted');
+    GroupsActions.setGroups(items);
   },
 
   onRemoveGroupsCompleted: function(payload) {

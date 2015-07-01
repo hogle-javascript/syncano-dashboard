@@ -1,7 +1,7 @@
-jest.dontMock("../app.react");
+jest.dontMock('../app.react');
 
-describe("app.react", function() {
-  it("testing component", function() {
+describe('app.react', function() {
+  it('testing component', function() {
 
     var React = require('react/addons');
     var TestUtils = React.addons.TestUtils;
