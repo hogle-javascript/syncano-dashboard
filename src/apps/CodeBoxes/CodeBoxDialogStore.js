@@ -32,9 +32,9 @@ var CodeBoxDialogStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  setCodeBoxRuntimes: function(runtimes) {
-    var runtimes = Object.keys(runtimes).map(function(runtime) {
-      return {payload: runtime, text: runtime}
+  setCodeBoxRuntimes: function(payload) {
+    var runtimes = Object.keys(payload).map(function(runtime) {
+      return {payload: runtime, text: runtime};
     });
     this.trigger({runtimes: runtimes});
   },
