@@ -26,7 +26,7 @@ var React                 = require('react'),
 
     // Local components
     ClassesList           = require('./ClassesList.react'),
-    AddDialog             = require('./ClassesAddDialog.react');
+    ClassDialog           = require('./ClassDialog.react');
 
 
 module.exports = React.createClass({
@@ -48,26 +48,14 @@ module.exports = React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentWillMount: function() {
-    console.info('Classes::componentWillMount');
+  componentDidMount: function() {
+    console.info('Classes::componentDidMount');
     ClassesActions.fetch();
   },
     // Dialogs config
   initDialogs: function () {
     var checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
     return [{
-      dialog: AddDialog,
-      params: {
-        ref  : "addClassDialog",
-        mode : "add"
-      }
-    },{
-      dialog: AddDialog,
-      params: {
-        ref  : "editClassDialog",
-        mode : "edit"
-      }
-    },{
       dialog: ColorIconPickerDialog,
       params: {
         ref          : "pickColorIconDialog",
@@ -96,7 +84,7 @@ module.exports = React.createClass({
       }
     }]
   },
-  
+
   handleChangePalette: function (color, icon) {
     console.info('Classes::handleChangePalette', color, icon);
 
@@ -135,6 +123,14 @@ module.exports = React.createClass({
     }
   },
 
+  showClassDialog: function() {
+    ClassesActions.showDialog();
+  },
+
+  showClassEditDialog: function() {
+    ClassesActions.showDialog(ClassesStore.getCheckedItem());
+  },
+
   render: function () {
 
     var checkedClasses = ClassesStore.getNumberOfChecked(),
@@ -142,6 +138,7 @@ module.exports = React.createClass({
 
     return (
       <Container>
+        <ClassDialog />
         {this.getDialogs()}
 
         <Show if={checkedClasses > 0}>
@@ -166,7 +163,7 @@ module.exports = React.createClass({
               color         = "" // TODO: extend component
               mini          = {true}
               disabled      = {checkedClasses > 1}
-              onClick       = {this.showDialog('editClassDialog')}
+              onClick       = {this.showClassEditDialog}
               iconClassName = "synicon-pencil" />
 
             <FabListItem
@@ -187,14 +184,14 @@ module.exports = React.createClass({
           <FloatingActionButton
             label         = "Click here to add Class" // TODO: extend component
             color         = "" // TODO: extend component
-            onClick       = {this.showDialog('addClassDialog')}
+            onClick       = {this.showClassDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <ClassesList
           name                 = "Classes"
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addClassDialog')}
+          emptyItemHandleClick = {this.showClassDialog}
           emptyItemContent     = "Create a Class" />
 
       </Container>
