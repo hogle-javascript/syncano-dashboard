@@ -75,21 +75,6 @@ module.exports = React.createClass({
   //Dialogs config
   initDialogs: function() {
     return [{
-      //  dialog: AddDialog,
-      //  params: {
-      //    key  : "addDataObjectDialog",
-      //    ref  : "addDataObjectDialog",
-      //    mode : "add"
-      //  }
-      //}, {
-      //  dialog: AddDialog,
-      //  params: {
-      //    key  : "editDataObjectDialog",
-      //    ref  : "editDataObjectDialog",
-      //    mode : "edit"
-      //  }
-      //},
-
       dialog: Dialog,
       params: {
         key:    'deleteDataObjectDialog',
@@ -172,7 +157,7 @@ module.exports = React.createClass({
   handleMoreRows: function() {
     DataObjectsActions.subFetchDataObjects({
       className : this.state.classObj.name,
-      lastItem  : this.state.items[this.state.items.length - 1]
+      params    : this.state.nextParams
     });
   },
 
@@ -210,7 +195,7 @@ module.exports = React.createClass({
         <div className="col-flex-1" style={{padding: 0}}>
 
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
-          
+
             <ToolbarGroup float="left" style={{padding: '0px'}}>
 
               <FontIcon

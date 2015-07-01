@@ -116,7 +116,7 @@ module.exports = Radium(React.createClass({
             <div
               className="editor-toolbar-unfold-button"
               onClick={this.handleToggleClick}>
-              <FontIcon clasSName={unfoldIcon}/>
+              <FontIcon className={unfoldIcon}/>
             </div>
         </Paper>
         {progressBar}

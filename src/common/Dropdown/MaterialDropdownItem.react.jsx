@@ -4,9 +4,9 @@ var React               = require('react'),
 
     mui                 = require('material-ui'),
     List                = mui.List,
-    ListItem            = mui.ListItem, 
+    ListItem            = mui.ListItem,
     ListDivider         = mui.ListDivider,
-    Avatar              = mui.Avatar, 
+    Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon;
 
 
@@ -17,24 +17,24 @@ module.exports = React.createClass({
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
       leftIcon           : React.PropTypes.shape({
-        name  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired
+        name  : React.PropTypes.string,
+        style : React.PropTypes.object
       }),
       subheader          : React.PropTypes.string,
       subheaderStyle     : React.PropTypes.object,
       content            : React.PropTypes.shape({
-        text  : React.PropTypes.string.isRequired,
-        style : React.PropTypes.object.isRequired 
-      }), 
+        text  : React.PropTypes.string,
+        style : React.PropTypes.object
+      }),
       secondaryText      : React.PropTypes.string,
       secondaryTextLines : React.PropTypes.number,                // Content to view as item can be any object too
-      name               : React.PropTypes.string.isRequired,     // name for DropdownMenuItems kys
-      handleItemClick    : React.PropTypes.func.isRequired        // function to call after DropdownMenuItem click
-    })).isRequired,
+      name               : React.PropTypes.string,     // name for DropdownMenuItems kys
+      handleItemClick    : React.PropTypes.func        // function to call after DropdownMenuItem click
+    })),
     headerContent: React.PropTypes.shape({
-      userFullName       : React.PropTypes.string.isRequired,
-      userEmail          : React.PropTypes.string.isRequired,
-      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or 
+      userFullName       : React.PropTypes.string,
+      userEmail          : React.PropTypes.string,
+      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or
       clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
     })
   },
@@ -46,9 +46,9 @@ module.exports = React.createClass({
       var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true),
           avatar = <Avatar src={gravatarUrl} />;
       headerContent = <List>
-                        <ListItem 
+                        <ListItem
                           leftAvatar      = {avatar}
-                          secondaryText   = {this.props.headerContent.userEmail} 
+                          secondaryText   = {this.props.headerContent.userEmail}
                           disableTouchTap = {!this.props.headerContent.clickable}
                           onClick         = {this.props.headerContent.handleItemClick}>
                           {this.props.headerContent.userFullName}
@@ -61,8 +61,8 @@ module.exports = React.createClass({
 
   renderItems: function () {
     var items = this.props.items.map(function (item, i) {
-      var icon = <FontIcon 
-                   className = {item.leftIcon.name || null} 
+      var icon = <FontIcon
+                   className = {item.leftIcon.name || null}
                    style     = {item.leftIcon.style} />;
       return (
         <List
