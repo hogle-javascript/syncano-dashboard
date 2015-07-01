@@ -20,7 +20,7 @@ var GroupsStore = Reflux.createStore({
   getInitialState: function() {
     return {
       items: [],
-      isLoading: false
+      isLoading: true
     }
   },
 

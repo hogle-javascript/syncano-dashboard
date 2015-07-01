@@ -31,17 +31,18 @@ var CodeBoxesStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      items: [],
+      items               : [],
 
-      currentCodeBoxId: null,
+      currentCodeBoxId    : null,
 
-      AddDialogVisible: true,
-      availableRuntimes: null,
-      label: '',
-      payload: '{"112":111}',
-      description: '',
+      AddDialogVisible    : true,
+      availableRuntimes   : null,
+      label               : '',
+      payload             : '{"112":111}',
+      description         : '',
       selectedRuntimeIndex: 0,
-      traces: []
+      traces              : [],
+      isLoading           : true
     }
   },
 

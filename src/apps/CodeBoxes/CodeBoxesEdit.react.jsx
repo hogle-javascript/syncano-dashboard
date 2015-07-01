@@ -19,7 +19,7 @@ var React                = require('react'),
     Header               = require('../../common/ColumnList/Header.react'),
     ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
 
-    LoadingItem          = require('../../common/ColumnList/LoadingItem.react'),
+    Loading              = require('../../common/Loading/Loading.react'),
 
     FabList              = require('../../common/Fab/FabList.react'),
     FabListItem          = require('../../common/Fab/FabListItem.react'),
@@ -92,12 +92,11 @@ module.exports = React.createClass({
     }
 
     if (!codeBox) {
-      return <LoadingItem />;
+      return <Loading show={true} />;
     }
 
     return (
       <Container style={styles.container}>
-
         <FabList position="top">
           <FabListItem
             label         = "Click here to save CodeBox"
@@ -129,7 +128,6 @@ module.exports = React.createClass({
             loading = {this.linkState('isLoading')}>
           </EditorPanel>
         </div>
-
       </Container>
     );
   }

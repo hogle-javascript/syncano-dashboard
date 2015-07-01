@@ -9,8 +9,7 @@ var React               = require('react'),
     Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon,
 
-    Loading             = require('../../common/Loading/Loading.react.jsx'),
-    LoadingItem         = require('../../common/ColumnList/LoadingItem.react');
+    Loading             = require('../../common/Loading/Loading.react');
 
 
 module.exports = React.createClass({
@@ -137,12 +136,11 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div>
       <Loading
         show = {this.props.isLoading}
-        size = {1} />
-      {this.renderItems()}
-      </div>
+        size = {1}>
+        {this.renderItems()}
+      </Loading>
     );
   }
 

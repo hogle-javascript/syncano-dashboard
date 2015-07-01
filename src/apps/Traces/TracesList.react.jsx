@@ -24,7 +24,7 @@ var React             = require('react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     Header            = require('../../common/ColumnList/Header.react'),
-    LoadingItem       = require('../../common/ColumnList/LoadingItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
     ColumnIconName    = require('../../common/ColumnList/Column/IconName.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -122,10 +122,6 @@ module.exports = Radium(React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.traces.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -148,7 +144,9 @@ module.exports = Radium(React.createClass({
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );
