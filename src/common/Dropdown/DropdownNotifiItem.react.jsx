@@ -4,7 +4,7 @@ var React               = require('react'),
 
     mui                 = require('material-ui'),
     List                = mui.List,
-    ListItem            = mui.ListItem, 
+    ListItem            = mui.ListItem,
     ListDivider         = mui.ListDivider,
     Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon,
@@ -22,13 +22,13 @@ module.exports = React.createClass({
     headerContent: React.PropTypes.shape({
       userFullName       : React.PropTypes.string.isRequired,
       userEmail          : React.PropTypes.string.isRequired,
-      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or 
+      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or
       clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
     })
   },
 
   renderItems: function () {
-    
+
     if (this.props.items.length === 0) {
       return this.renderEmptyNotification()
     }
@@ -77,7 +77,7 @@ module.exports = React.createClass({
     var invitationItems = this.props.items.filter(function (item, index) {
       return item.type === "invitation";
     });
-    var items = invitationItems.map(function (item) {
+    var items = invitationItems.map(function (item, index) {
       var icon = <FontIcon
                    className = {item.leftIcon.name || null}
                    style     = {item.leftIcon.style} />
@@ -89,10 +89,10 @@ module.exports = React.createClass({
                       {item.buttonsText[1]}
                       </span>
                     </div>
-      return <List 
+      return <List
                subheader      = {item.subheader || null}
                subheaderStyle = {item.subheaderStyle}>
-               <ListItem 
+               <ListItem
                  leftIcon        = {icon}
                  disableTouchTap = {true} >
                  {item.content.text}
@@ -102,7 +102,7 @@ module.exports = React.createClass({
                </ListItem>
                <ListDivider />
              </List>;
-    })
+    });
     return items
   },
 
@@ -111,16 +111,16 @@ module.exports = React.createClass({
       return item.type === "normal-link"
     });
     var items = linkItems.map(function (item, i) {
-      var icon = <FontIcon 
-                   className = {item.leftIcon.name || null} 
+      var icon = <FontIcon
+                   className = {item.leftIcon.name || null}
                    style     = {item.leftIcon.style} />
       var link = <p onClick={item.handleLinkClick} className="cursor-pointer">{item.content.secondaryText}</p>
       return (
-        <List 
+        <List
           subheader      = {item.subheader || null}
           subheaderStyle = {item.subheaderStyle}>
-          <ListItem 
-            key                = {item.name + i} 
+          <ListItem
+            key                = {item.name + i}
             disableTouchTap    = {true}
             leftIcon           = {icon}
             secondaryText      = {item.content.secondaryText ? link : null}
