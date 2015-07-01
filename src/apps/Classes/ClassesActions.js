@@ -11,6 +11,9 @@ var ClassesActions = Reflux.createActions({
   fetch          : {},
   getClassByName : {},
 
+  showDialog     : {},
+  dismissDialog  : {},
+
   fetchClasses: {
     asyncResult : true,
     children    : ['completed', 'failure']

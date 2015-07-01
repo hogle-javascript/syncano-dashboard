@@ -14,7 +14,7 @@ module.exports = Radium(React.createClass({
   mixins: [StylePropable],
 
   propTypes: {
-    handleClick: React.PropTypes.func.isRequired
+    handleClick: React.PropTypes.func
   },
 
   getStyles: function() {

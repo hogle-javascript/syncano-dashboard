@@ -1,6 +1,6 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
 
     // Utils
     DialogsMixin      = require('../../mixins/DialogsMixin'),
@@ -14,16 +14,16 @@ var React  = require('react'),
     CodeBoxesStore   = require('./CodeBoxesStore'),
 
     // Components
-    mui                  = require('material-ui'),
-    Dialog               = mui.Dialog,
-    Loading              = require('../../common/Loading/Loading.react.jsx'),
-    Container            = require('../../common/Container/Container.react'),
-    FabList              = require('../../common/Fab/FabList.react'),
-    FabListItem          = require('../../common/Fab/FabListItem.react'),
+    mui              = require('material-ui'),
+    Dialog           = mui.Dialog,
+    Loading          = require('../../common/Loading/Loading.react.jsx'),
+    Container        = require('../../common/Container/Container.react'),
+    FabList          = require('../../common/Fab/FabList.react'),
+    FabListItem      = require('../../common/Fab/FabListItem.react'),
 
     // Local components
-    CodeBoxesList        = require('./CodeBoxesList.react'),
-    AddDialog            = require('./CodeBoxesAddDialog.react');
+    CodeBoxesList    = require('./CodeBoxesList.react'),
+    CodeBoxDialog    = require('./CodeBoxDialog.react');
 
 
 module.exports = React.createClass({
@@ -52,7 +52,7 @@ module.exports = React.createClass({
   componentDidMount: function() {
     if (this.getParams().action == 'add'){
       // Show Add modal
-      this.refs.addCodeBoxDialog.show();
+      this.showCodeBoxDialog();
     }
   },
 
@@ -60,18 +60,6 @@ module.exports = React.createClass({
   initDialogs: function () {
 
     return [{
-      dialog: AddDialog,
-      params: {
-        ref  : "addCodeBoxDialog",
-        mode : "add"
-      }
-    },{
-      dialog: AddDialog,
-      params: {
-        ref  : "editCodeBoxDialog",
-        mode : "edit"
-      }
-    },{
       dialog: Dialog,
       params: {
         ref:    "deleteCodeBoxDialog",
@@ -102,12 +90,21 @@ module.exports = React.createClass({
     this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
   },
 
+  showCodeBoxDialog: function() {
+    CodeBoxesActions.showDialog();
+  },
+
+  showCodeBoxEditDialog: function() {
+    CodeBoxesActions.showDialog(CodeBoxesStore.getCheckedItem());
+  },
+
   render: function () {
 
     var checkedItems = CodeBoxesStore.getNumberOfChecked();
 
     return (
       <Container>
+        <CodeBoxDialog />
         {this.getDialogs()}
 
         <Show if={checkedItems > 0}>
@@ -129,7 +126,7 @@ module.exports = React.createClass({
               label         = "Click here to edit CodeBox"
               mini          = {true}
               disabled      = {checkedItems > 1}
-              onClick       = {this.showDialog('editCodeBoxDialog')}
+              onClick       = {this.showCodeBoxEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -138,14 +135,14 @@ module.exports = React.createClass({
         <FabList>
           <FabListItem
             label         = "Click here to add CodeBox"
-            onClick       = {this.showDialog('addCodeBoxDialog')}
+            onClick       = {this.showCodeBoxDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
         <CodeBoxesList
           name                 = "CodeBoxes"
           items                = {this.state.items}
-          emptyItemHandleClick = {this.showDialog('addCodeBoxDialog')}
+          emptyItemHandleClick = {this.showCodeBoxDialog}
           emptyItemContent     = "Create a CodeBox" />
       </Container>
     );

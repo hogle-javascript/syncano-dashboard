@@ -26,9 +26,7 @@ var React                = require('react'),
     Dialog               = require('material-ui/lib/dialog'),
 
     Editor               = require('../../common/Editor/Editor.react'),
-    EditorPanel          = require('../../common/Editor/EditorPanel.react'),
-
-    AddDialog            = require('./CodeBoxesAddDialog.react');
+    EditorPanel          = require('../../common/Editor/EditorPanel.react');
 
 
 module.exports = React.createClass({
@@ -46,10 +44,9 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentWillMount: function() {
-    CodeBoxesActions.fetch().then(
-      CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId)
-    );
+  componentDidMount: function() {
+    CodeBoxesActions.fetch();
+    CodeBoxesActions.setCurrentCodeBoxId(this.getParams().codeboxId);
   },
 
   getStyles: function () {

@@ -9,6 +9,7 @@ var React      = require('react'),
 tapPlugin();
 
 require('./raven');
+require('./segment');
 require('normalize.css');
 require('./app.sass');
 
