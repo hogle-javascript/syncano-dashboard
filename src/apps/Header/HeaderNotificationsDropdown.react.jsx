@@ -75,9 +75,7 @@ module.exports = Radium(React.createClass({
         type: "invitation",
         leftIcon: {
           name  : "synicon-share-variant",
-          style : {
-            color: "#8bc34a"
-          }
+          color: "#8bc34a"
         },
         content: {
           text   : <div><b>{item.inviter}</b><span> invited you to his instance </span><b>{item.instance}</b></div>,
@@ -96,9 +94,7 @@ module.exports = Radium(React.createClass({
           type: "normal-link",
           leftIcon: {
             name   : "synicon-alert",
-            style  : {
-              color: "#ff9800"
-            }
+            color: "#ff9800"
           },
           content: {
             text          : "You email address is not yet verified.",
