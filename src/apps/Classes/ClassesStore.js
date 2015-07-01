@@ -2,7 +2,6 @@ var Reflux              = require('reflux'),
 
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     //Stores & Actions
@@ -14,14 +13,13 @@ var ClassesStore = Reflux.createStore({
   listenables : ClassesActions,
   mixins      : [
     CheckListStoreMixin,
-    StoreFormMixin,
     WaitForStoreMixin
   ],
 
   getInitialState: function() {
     return {
       items: [],
-      isLoading: false
+      isLoading: true
     }
   },
 
@@ -32,7 +30,6 @@ var ClassesStore = Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.listenToForms();
   },
 
   refreshData: function() {
@@ -80,8 +77,8 @@ var ClassesStore = Reflux.createStore({
   },
 
   setClasses: function(items) {
-    this.data.items = Object.keys(items).map(function(item) {
-      return items[item];
+    this.data.items = Object.keys(items).map(function(key) {
+      return items[key];
     });
     this.trigger(this.data);
   },
@@ -95,20 +92,6 @@ var ClassesStore = Reflux.createStore({
     console.debug('ClassesStore::onFetchClassesCompleted');
     this.data.isLoading = false;
     ClassesActions.setClasses(items);
-  },
-
-  onCreateClassCompleted: function() {
-    console.debug('ClassesStore::onCreateClassCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
-  },
-
-  onUpdateClassCompleted: function() {
-    console.debug('ClassesStore::onUpdateClassCompleted');
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
-    this.refreshData();
   },
 
   onRemoveClassesCompleted: function() {

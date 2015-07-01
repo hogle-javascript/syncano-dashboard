@@ -2,7 +2,7 @@ var ENV        = process.env.NODE_ENV || 'development',
     path       = require('path'),
     webpack    = require('webpack'),
     compass    = require('node-libcompass').includePaths,
-    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN'],
+    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN', 'ANALYTICS_WRITE_KEY'],
     plugin     = {ENV: JSON.stringify(ENV)};
 
 
@@ -15,7 +15,7 @@ for (i = 0; i < pluginVars.length; i++) {
 
 var plugins = [
   new webpack.DefinePlugin(plugin),
-  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
+  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
 ];
 
 var appEntry = [
@@ -48,7 +48,7 @@ module.exports = {
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
       {
         test: /\.sass$/,
-        loader: "style!css!sass?indentedSyntax&outputStyle=expanded&precision=8&" +
+        loader: "style!css!sass?sourceMap&indentedSyntax&outputStyle=expanded&precision=8&" +
           "includePaths[]=" + compass + "&" +
           "includePaths[]=" +
           (path.resolve(__dirname, "./src/assets/sass")) + "&" +
@@ -60,5 +60,8 @@ module.exports = {
   resolve: {
     modulesDirectories: ['node_modules'],
     extensions: ['', '.js', '.json', '.jsx', '.css', '.scss', '.sass', '.svg', '.styl']
+  },
+  externals: {
+    'analytics': 'analytics'
   }
 };

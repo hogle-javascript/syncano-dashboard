@@ -38,11 +38,12 @@ module.exports = Radium(React.createClass({
         bottom: 0
       }
     };
-
-    return [styles.base,
-            this.props.position === "top" && styles.top,
-            this.props.position === "bottom" && styles.bottom,
-            this.props.style];
+    if (this.props.show) {
+      return [styles.base,
+        this.props.position === "top" && styles.top,
+        this.props.position === "bottom" && styles.bottom,
+        this.props.style];
+    }
   },
 
   renderItem: function(type) {
@@ -54,6 +55,7 @@ module.exports = Radium(React.createClass({
                mode = 'indeterminate'
                size = {this.props.size} />
     }
+    return this.props.children;
   },
 
   render: function() {
