@@ -4,7 +4,7 @@ var React  = require('react'),
 
 var DataObjectsRenderer = {
 
-  builtInColumnsConfig: function () {
+  builtInColumnsConfig: function() {
     return {
       id: {
         width: 20
@@ -15,20 +15,19 @@ var DataObjectsRenderer = {
       group: {
         width : 30
       },
-      created_at : {
+      'created_at' : {
         width    : 100,
         renderer : this.renderColumnDate
       }
     }
   },
 
-
   // Columns renderers
   renderColumnDate: function(value) {
     if (!value) {
       return '';
     }
-    return  (
+    return (
       <div>
         <div>{Moment(value).format('DD/MM/YYYY')}</div>
         <div>{Moment(value).format('LTS')}</div>
@@ -37,11 +36,10 @@ var DataObjectsRenderer = {
   },
 
   renderReference: function(obj) {
-    return  (
+    return (
         <div>{obj.target + ': ' + obj.value}</div>
     )
   },
-
 
   // Header
   renderTableHeader: function (classObj) {
@@ -86,15 +84,15 @@ var DataObjectsRenderer = {
   },
 
   // Table Body
-  renderTableData: function (items) {
+  renderTableData: function(items) {
 
     var tableItems           = [],
         builtInColumnsConfig = this.builtInColumnsConfig();
 
-    items.map(function (item) {
+    items.map(function(item) {
       var row = {};
 
-      Object.keys(item).map(function (key) {
+      Object.keys(item).map(function(key) {
 
         var value  = item[key] ? item[key] : '',
             config = builtInColumnsConfig[key];
@@ -109,7 +107,7 @@ var DataObjectsRenderer = {
 
           // Simple string or renderer
           if (config && config.renderer) {
-              value = config.renderer(item[key])
+            value = config.renderer(item[key])
           }
         }
 
@@ -117,7 +115,7 @@ var DataObjectsRenderer = {
         row[key] = {
           content: value,
           style: {
-            width: config ? config['width'] : null
+            width: config ? config.width : null
           }
         }
 
