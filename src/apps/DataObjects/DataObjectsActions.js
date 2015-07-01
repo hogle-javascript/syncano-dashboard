@@ -31,10 +31,12 @@ var DataObjectsActions = Reflux.createActions({
     children    : ['completed', 'failure']
   },
   createDataObject: {
+    asyncForm   : true,
     asyncResult : true,
     children    : ['completed', 'failure']
   },
   updateDataObject: {
+    asyncForm   : true,
     asyncResult : true,
     children    : ['completed', 'failure']
   },
@@ -84,11 +86,11 @@ DataObjectsActions.createDataObject.listen(function(payload) {
     .catch(this.failure);
 });
 
-DataObjectsActions.updateDataObject.listen(function(id, payload) {
+DataObjectsActions.updateDataObject.listen(function(className, payload) {
   console.info('DataObjectsActions::updateDataObject');
   Connection
     .DataObjects
-    .update(id, payload)
+    .update(className, payload)
     .then(this.completed)
     .catch(this.failure);
 });

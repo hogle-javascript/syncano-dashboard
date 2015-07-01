@@ -94,6 +94,10 @@ module.exports = React.createClass({
     DataObjectsActions.showDialog();
   },
 
+  showDataObjectEditDialog: function(cellNumber) {
+    DataObjectsActions.showDialog(DataObjectsStore.getSelectedRowObj(cellNumber));
+  },
+
   handleDelete: function() {
     console.info('DataObjects::handleDelete');
     DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
@@ -120,6 +124,13 @@ module.exports = React.createClass({
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
+  handleCellClick: function(cellNumber, cellName) {
+    console.info('DataObjects::handleCellClick', arguments);
+    if (cellName != undefined) {
+      this.showDataObjectEditDialog(cellNumber);
+    }
+  },
+
   renderTable: function() {
     console.info('DataObjects::renderTable');
     var tableData   = DataObjectsStore.renderTableData(),
@@ -134,12 +145,15 @@ module.exports = React.createClass({
           columnOrder     = {colOrder}
           rowData         = {tableData}
           multiSelectable = {true}
-          onRowSelection  = {this.handleRowSelection} />
+          showRowHover    = {true}
+          onCellClick     = {this.handleCellClick}
+          onRowSelection  = {this.handleRowSelection}
+          />
 
         <div
           className = "row align-center"
           style     = {{margin: 50}} >
-          <div>Loaded {tableData.length} data objects</div>
+          <div>Loaded {tableData.length} Data Objects</div>
         </div>
         <Show if={this.state.hasNextPage}>
           <div
