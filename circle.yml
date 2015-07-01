@@ -15,14 +15,13 @@ dependencies:
       - npm run-script nightwatch-setup
       - npm start:
             background: true
-      - sleep 15
 
 test:
   override:
     - npm run-script jscs
-    - npm run-script nightwatch
     - npm test
     - npm run-script codeclimate
+    - npm run-script nightwatch
 
 deployment:
   staging:
