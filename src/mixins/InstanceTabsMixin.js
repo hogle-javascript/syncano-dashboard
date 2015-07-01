@@ -6,6 +6,11 @@ var InstanceTabsMixin = {
 
     return [
       {
+        label: 'Data',
+        route: 'data',
+        params: params
+      },
+      {
         label: 'Classes',
         route: 'classes',
         params: params

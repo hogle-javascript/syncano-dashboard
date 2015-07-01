@@ -64,6 +64,17 @@ var ClassesStore = Reflux.createStore({
     return classObj;
   },
 
+  getClassFields: function(className) {
+    var classObj = null;
+    this.data.items.some(function(item) {
+      if (item.name == className) {
+        classObj = item;
+        return true;
+      }
+    });
+    return classObj.schema;
+  },
+
   getCheckedItemIconColor: function() {
     var singleItem = this.getCheckedItem();
 
