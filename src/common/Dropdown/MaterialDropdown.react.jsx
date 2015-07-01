@@ -6,7 +6,7 @@ var React                = require("react"),
 
     ProfileActions       = require("../../apps/Profile/ProfileActions"),
     List                 = mui.List,
-    ListItem             = mui.ListItem, 
+    ListItem             = mui.ListItem,
     ListDivider          = mui.ListDivider,
     Avatar               = mui.Avatar,
     FontIcon             = mui.FontIcon,
@@ -22,13 +22,13 @@ module.exports = React.createClass({
   displayName: "MaterialDropdown",
 
   propTypes: {
-    type : React.PropTypes.string, 
+    type : React.PropTypes.string,
     icon : React.PropTypes.string,
-    items: React.PropTypes.array.isRequired,
+    items: React.PropTypes.array,
     headerContent: React.PropTypes.shape({
-      userFullName       : React.PropTypes.string.isRequired,
-      userEmail          : React.PropTypes.string.isRequired,
-      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or 
+      userFullName       : React.PropTypes.string,
+      userEmail          : React.PropTypes.string,
+      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or
       clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
     }),
     iconStyle: React.PropTypes.object,
@@ -40,7 +40,7 @@ module.exports = React.createClass({
       icon: "dots-vertical",
       iconStyle: {
         width  : "18px",
-        height : "18px", 
+        height : "18px",
         fill   : "#FFF"
       },
       type      : "normal-link",
