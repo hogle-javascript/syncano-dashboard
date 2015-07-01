@@ -29,13 +29,13 @@ var ClassDialogStore = Reflux.createStore({
   onCreateClassCompleted: function() {
     console.debug('ClassDialogStore::onCreateClassCompleted');
     this.dismissDialog();
-    ClassesActions.fetchClasss();
+    ClassesActions.fetchClasses();
   },
 
   onUpdateClassCompleted: function() {
     console.debug('ClassDialogStore::onUpdateClassCompleted');
     this.dismissDialog();
-    ClassesActions.fetchClasss();
+    ClassesActions.fetchClasses();
   }
 
 });

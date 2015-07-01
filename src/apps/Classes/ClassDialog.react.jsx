@@ -211,7 +211,7 @@ module.exports = React.createClass({
                     floatingLabelText = 'Type'
                     style             = {{width:'100%'}}
                     valueLink         = {this.linkState('fieldType')}
-                    errorText         = {this.getValidationMessages('fieldType').join()}
+                    errorText         = {this.getValidationMessages('fieldType').join(' ')}
                     valueMember       = 'payload'
                     displayMember     = 'text'
                     menuItems         = {this.getFieldTypes()} />
@@ -224,7 +224,7 @@ module.exports = React.createClass({
                     floatingLabelText = 'Target Class'
                     fullWidth         = {true}
                     valueLink         = {this.linkState('fieldTarget')}
-                    errorText         = {this.getValidationMessages('fieldTarget').join()}
+                    errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
                     valueMember       = 'payload'
                     displayMember     = 'text'
                     menuItems         = {ClassesStore.getClassesDropdown()} />
@@ -241,6 +241,7 @@ module.exports = React.createClass({
             className = 'col-xs-12'
             style     = {{paddingLeft: 15}}>
             <div>Schema</div>
+            {this.getValidationMessages('schema').join(' ')}
             <div>{this.renderSchemaFields()}</div>
           </div>
 
