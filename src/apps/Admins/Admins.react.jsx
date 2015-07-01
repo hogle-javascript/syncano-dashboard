@@ -145,7 +145,7 @@ module.exports = React.createClass({
     AdminsActions.selectAllAdmins();
   },
 
-  selectAll: function() {
+  selectAllAdminsInvitations: function() {
     console.info('Admins::selectAll');
     AdminsInvitationsActions.selectAll();
   },
@@ -209,7 +209,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = {checkedInvitations === 1 ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {checkedInvitations === 1 ? this.selectAll : this.uncheckAll}
+              onClick       = {checkedInvitations === 1 ? this.selectAllAdminsInvitations : this.uncheckAll}
               iconClassName = {checkedInvitations === 1 ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
