@@ -6,9 +6,7 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors,
 
-    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react'),
-    NoCheckIcon        = require('../../../common/CheckIcon/NoCheckIcon.react');
-
+    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
 
 var Header = React.createClass({
 
@@ -47,6 +45,7 @@ module.exports = Radium(React.createClass({
     id              : React.PropTypes.string,
     color           : React.PropTypes.string,
     hoverColor      : React.PropTypes.string,
+    checkable       : React.PropTypes.bool,
     handleIconClick : React.PropTypes.func,
     handleNameClick : React.PropTypes.func
   },
@@ -115,21 +114,6 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getIcon: function() {
-    if (this.props.checkable === true) {
-      return <CheckIcon
-               id          = {this.props.id}
-               icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-               background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-               checked     = {this.state.checked}
-               handleClick = {this.handleIconClick} />
-    }
-    return <NoCheckIcon
-             id          = {this.props.id}
-             icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-             background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND} />
-  },
-
   render: function () {
     var styles = this.getStyles();
 
@@ -137,7 +121,13 @@ module.exports = Radium(React.createClass({
       <div
         className = {this.props.className}
         style     = {styles.container}>
-        {this.getIcon()}
+        <CheckIcon
+            id          = {this.props.id}
+            icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+            background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
+            checked     = {this.state.checked}
+            handleClick = {this.handleIconClick}
+            checkable   = {this.props.checkable} />
         <div
           style       = {[styles.name, this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}

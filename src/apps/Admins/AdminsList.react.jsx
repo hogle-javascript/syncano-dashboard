@@ -27,7 +27,6 @@ var React             = require('react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    NoCheckIcon       = require('../../common/CheckIcon/NoCheckIcon.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 module.exports = React.createClass({
@@ -60,6 +59,7 @@ module.exports = React.createClass({
   },
 
   renderItem: function(item) {
+    var isOwner = item.id === this.state.session.instance.owner.id;
     return (
       <Item
         checked = {item.checked}
@@ -70,35 +70,18 @@ module.exports = React.createClass({
           icon            = 'account'
           background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
-          {item.email}
+          handleIconClick = {this.handleItemIconClick}
+          checkable       = {!isOwner}>
+          <div>
+            {item.email}
+            <div>
+              {isOwner ? "Instance owner (cannot be edited)" : null}
+            </div>
+          </div>
         </ColumnCheckIcon>
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
-    )
-  },
-
-  renderOwnerItem: function(item) {
-    return (
-        <Item
-            key     = {item.id}>
-          <ColumnCheckIcon
-              className  = "col-xs-25 col-md-20"
-              id         = {item.id.toString()}
-              icon       = 'account'
-              background = {Colors.blue500}
-              checkable  = {false}>
-            <div>
-              {item.email}
-              <div>
-                Instance owner (cannot be edited)
-              </div>
-            </div>
-          </ColumnCheckIcon>
-          <ColumnDesc>{item.role}</ColumnDesc>
-          <ColumnDate>{item.created_at}</ColumnDate>
-        </Item>
     )
   },
 
@@ -111,11 +94,7 @@ module.exports = React.createClass({
 
     if (items.length > 0) {
       items = this.state.items.map(function(item) {
-        if (item.id !== this.state.session.instance.owner.id) {
-          return this.renderItem(item)
-        }
-        return this.renderOwnerItem(item);
-        //console.error("ASDASDA", this.state.session.instance.owner, item)
+        return this.renderItem(item)
       }.bind(this));
 
       // TODO: Fix this dirty hack, that should be done in store by sorting!
