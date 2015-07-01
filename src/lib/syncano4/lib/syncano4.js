@@ -282,6 +282,22 @@ var Syncano = (function() {
       enumerable: false,
       configurable: false
     });
+    Object.defineProperty(List, 'next', {
+      value: function() {
+        return data.next;
+      },
+      writable: false,
+      enumerable: false,
+      configurable: false
+    });
+    Object.defineProperty(List, 'prev', {
+      value: function() {
+        return data.prev;
+      },
+      writable: false,
+      enumerable: false,
+      configurable: false
+    });
     Object.defineProperty(List, 'hasPrevPage', {
       value: function() {
         return data.prev !== null;
