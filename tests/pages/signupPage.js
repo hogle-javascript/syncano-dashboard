@@ -5,6 +5,11 @@ var signupCommands = {
       .click('@submitButton')
       .waitForElementNotPresent('@submitButton', 5000);
   },
+    clickTermsOfUseLink: function() {
+    this.api.pause(1000);
+    return this.waitForElementVisible('@termsOfUseLink', 1000)
+      .click('@termsOfUseLink');
+  }
 };
 
 
@@ -20,6 +25,9 @@ module.exports = {
     },
     submitButton: {
         selector: 'button[type=submit]'
+    },
+    termsOfUseLink: {
+        selector: 'p.vm-0-b.text--center a'
     }
   }
 };
