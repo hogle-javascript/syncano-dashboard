@@ -106,6 +106,6 @@
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
     "jscs": "jscs --esprima=esprima-fb src",
-    "codeclimate": "codeclimate < coverage/lcov.info"
+    "codeclimate": "codeclimate-test-reporter < lcov.info"
   }
 }
