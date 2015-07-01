@@ -140,6 +140,16 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
+  selectAllAdmins: function() {
+    console.info('Admins::selectAllAdmins');
+    AdminsActions.selectAllAdmins();
+  },
+
+  selectAll: function() {
+    console.info('Admins::selectAll');
+    AdminsInvitationsActions.selectAll();
+  },
+
   checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
@@ -170,11 +180,12 @@ module.exports = React.createClass({
 
         <Show if={checkedAdmins > 0}>
           <FabList position="top">
+
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {checkedAdmins === 1 ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {checkedAdmins === 1 ? this.selectAllAdmins : this.uncheckAll}
+              iconClassName = {checkedAdmins === 1 ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Administrator"
@@ -196,10 +207,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {checkedInvitations === 1 ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {checkedInvitations === 1 ? this.selectAll : this.uncheckAll}
+              iconClassName = {checkedInvitations === 1 ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Invitation"

@@ -7,6 +7,7 @@ var Reflux     = require('reflux'),
 var AdminsInvitationsActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
+  selectAll      : {},
   fetch          : {},
   setInvitations : {},
 

@@ -7,6 +7,7 @@ var Reflux                   = require('reflux'),
 
     //Stores & Actions
     SessionActions           = require('../Session/SessionActions'),
+    SessionStore             = require('../Session/SessionStore'),
     AdminsInvitationsActions = require('./AdminsInvitationsActions'),
     AdminsInvitationsStore   = require('./AdminsInvitationsStore'),
     AdminsActions            = require('./AdminsActions');
@@ -51,6 +52,17 @@ var AdminsStore = Reflux.createStore({
     });
 
     this.trigger(this.data);
+  },
+
+  onSelectAllAdmins: function() {
+    console.debug('AdminsStore::onSelectAllAdmins');
+    this.data.items.forEach(function(item) {
+      var instanceOwnerId = SessionStore.getInstance().owner.id;
+      if (item.id !== instanceOwnerId) {
+        item.checked = true;
+      }
+      this.trigger(this.data);
+    }.bind(this));
   },
 
   onFetchAdmins: function() {
