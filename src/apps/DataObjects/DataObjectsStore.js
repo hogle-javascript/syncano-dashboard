@@ -27,7 +27,43 @@ var DataObjectsStore = Reflux.createStore({
     return {
       items        : null,
       isLoading    : false,
-      selectedRows : null
+      selectedRows : null,
+      columns      : [
+        {
+          id      : 'id',
+          name    : 'Id',
+          width   : 20,
+          tooltip : 'Built-in property: ID',
+          checked : true
+        },
+        {
+          id      : 'owner',
+          name    : 'Owner',
+          width   : 20,
+          checked : false
+        },
+        {
+          id      : 'revision',
+          name    : 'Rev',
+          width   : 20,
+          tooltip : 'Built-in property: Revision',
+          checked : true
+        },
+        {
+          id      : 'group',
+          name    : 'Group',
+          width   : 30,
+          tooltip : 'Built-in property: Group',
+          checked : false
+        },
+        {
+          id      : 'created_at',
+          name    : 'Created',
+          width   : 200,
+          tooltip : 'Built-in property: Created At',
+          checked : true
+        }
+      ]
     };
   },
 
@@ -75,12 +111,36 @@ var DataObjectsStore = Reflux.createStore({
   setCurrentClassObj: function(classObj) {
     console.debug('DataObjectsStore::onSetCurrentClassObj');
     this.data.classObj = classObj;
+
+    // Update columns from Class
+    this.data.classObj.schema.map(function(item) {
+      this.data.columns.push({
+        id      : item.name,
+        name    : item.name,
+        tooltip : 'Custom property: ' + item.name + ' (type: ' + item.type + ')',
+        checked : true
+      })
+    }.bind(this));
+
+    // Do we have any settings in localStorage?
+    this.updateFromLocalStorage()
   },
 
   setSelectedRows: function(selectedRows) {
     console.debug('DataObjectsStore::setSelectedRows');
     this.data.selectedRows = selectedRows;
     this.trigger(this.data);
+  },
+
+  getColumn: function(columnId) {
+    var column = null;
+    this.data.columns.some(function(columnObj) {
+      if (column.id = columnId) {
+        column = columnObj;
+        return true;
+      }
+    });
+    return column;
   },
 
   setDataObjects: function(items) {
@@ -112,28 +172,63 @@ var DataObjectsStore = Reflux.createStore({
 
   // Table stuff
   renderTableData: function() {
-    return DataObjectsRenderer.renderTableData(this.data.items);
+    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns);
   },
 
   renderTableHeader: function() {
-    return DataObjectsRenderer.renderTableHeader(this.data.classObj);
+    return DataObjectsRenderer.renderTableHeader(this.data.classObj, this.data.columns);
+  },
+
+  updateFromLocalStorage: function() {
+    console.debug('DataObjectsStore::updateFromLocalStorage');
+    var className = this.getCurrentClassName(),
+        settings  = localStorage.getItem('dataobjects_checkedcolumns_' + className);
+
+    if (!settings) {
+      return;
+    }
+
+    var checkedColumns = JSON.parse(settings);
+
+    this.data.columns.map(function(column) {
+      if (checkedColumns.indexOf(column.id) != -1) {
+        column.checked = true;
+      } else {
+        column.checked = false;
+      }
+    });
+
+    this.trigger(this.data);
+  },
+
+  updateLocalStorage: function() {
+    var className = this.getCurrentClassName();
+    localStorage.setItem('dataobjects_checkedcolumns_' + className, JSON.stringify(this.getCheckedColumnsIDs()));
+  },
+
+  checkToggleColumn: function(columnId) {
+    console.debug('DataObjectsStore::checkToggleColumn', columnId);
+    this.data.columns.map(function(item) {
+      if (columnId === item.id) {
+        item.checked = !item.checked
+      }
+    });
+    this.updateLocalStorage();
+    this.trigger(this.data);
   },
 
   getTableColumns: function() {
-    return [
-      {
-        name    : 'Id',
-        checked : true
-      },
-      {
-        name    : 'User',
-        checked : true
-      },
-      {
-        name    : 'Group',
-        checked : true
+    return this.data.columns;
+  },
+
+  getCheckedColumnsIDs: function() {
+    var columns = [];
+    this.data.columns.map(function(column) {
+      if (column.checked) {
+        columns.push(column.id);
       }
-    ]
+    });
+    return columns;
   },
 
   onFetchCurrentClassObjCompleted: function(classObj) {

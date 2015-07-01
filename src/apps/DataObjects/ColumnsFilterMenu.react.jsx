@@ -4,13 +4,13 @@ var React       = require('react'),
     mui         = require('material-ui'),
     Avatar      = mui.Avatar,
     Paper       = mui.Paper,
+    FontIcon    = mui.FontIcon,
     IconButton  = mui.IconButton,
     IconMenu    = mui.IconMenu,
     Menu        = require('material-ui/lib/menus/menu'),
     MenuItem    = require('material-ui/lib/menus/menu-item'),
 
     Colors      = mui.Styles.Colors;
-
 
 module.exports = React.createClass({
 
@@ -21,54 +21,56 @@ module.exports = React.createClass({
     columns  : React.PropTypes.object
   },
 
-  getDefaultProps: function () {
-  },
-
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       disabled: this.props.disabled,
       columns: this.props.columns
     }
   },
 
-  getStyles: function() {
-    return {
-      icon: {
-        margin: 0,
-        padding: 0
-      }
-    };
-  },
-
   componentWillReceiveProps: function(newProps) {
-    this.setState({checked: newProps.checked});
+    this.setState({columns: newProps.columns});
   },
 
-  handleMenuClick: function (event) {
+  handleMenuClick: function() {
     console.info('ColumnAvatarCheck:handleClick');
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },
 
-  renderMenuItems: function() {
-    var styles = this.getStyles();
-    return this.state.columns.map(function(column) {
-      return (
-        <MenuItem checked={true}>{column.name}</MenuItem>
-      )
-    })
+  handleClick: function(event) {
+    this.props.checkToggleColumn(event.target.id);
   },
 
-  render: function () {
-    var styles = this.getStyles();
+  renderMenuItems: function() {
+    return this.state.columns.map(function(column) {
+      var iconClass = 'synicon-checkbox-blank-outline';
+      if (column.checked) {
+        iconClass = 'synicon-checkbox-marked';
+      }
+      return (
+        <MenuItem
+          id      = {column.id}
+          onClick = {this.handleClick}>
+          <FontIcon
+            id        = {column.id}
+            className = {iconClass} />
+          {column.name}
+        </MenuItem>
+      )
+    }.bind(this))
+  },
 
+  render: function() {
     var mainIcon = <IconButton iconClassName="synicon-view-column" />;
 
     return (
-      <IconMenu iconButtonElement={mainIcon} openDirection="bottom-left" desktop={true}>
+      <IconMenu
+        closeAfterTap     = {false}
+        iconButtonElement = {mainIcon}
+        openDirection     = "bottom-left"
+        desktop           = {true}>
         {this.renderMenuItems()}
       </IconMenu>
     )
   }
 });
-
-
