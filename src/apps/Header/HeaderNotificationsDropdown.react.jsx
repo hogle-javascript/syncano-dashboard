@@ -30,7 +30,7 @@ module.exports = Radium(React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func.isRequired,
+    router   : React.PropTypes.func,
     muiTheme : React.PropTypes.object
   },
 
@@ -140,8 +140,7 @@ module.exports = Radium(React.createClass({
     return(
       <DropdownNotifiItem
         items={items}
-        isLoading={this.props.isLoading}
-      />
+        isLoading={this.props.isLoading} />
     )
   },
 

@@ -4,7 +4,7 @@ var React               = require('react'),
 
     mui                 = require('material-ui'),
     List                = mui.List,
-    ListItem            = mui.ListItem, 
+    ListItem            = mui.ListItem,
     ListDivider         = mui.ListDivider,
     Avatar              = mui.Avatar,
     FontIcon            = mui.FontIcon,
