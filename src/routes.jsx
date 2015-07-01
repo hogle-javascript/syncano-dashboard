@@ -26,6 +26,7 @@ var React                       = require('react'),
 
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
+    Solutions                   = require('./apps/Solutions/Solutions.react'),
 
     // Instance Apps
     Admins                      = require('./apps/Admins/Admins.react'),
@@ -73,12 +74,14 @@ module.exports = (
         <DefaultRoute handler={Instances} />
       </Route>
 
+      <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
       <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
       <DefaultRoute handler={Instances} />
     </Route>
+
 
     <Route name="examples" handler={Examples}/>
     <Route name="listsexamples" handler={ListExamples}/>

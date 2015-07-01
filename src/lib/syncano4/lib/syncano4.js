@@ -387,7 +387,18 @@ var Syncano = (function() {
     };
 
     /**
-     * Object with methods to handle Instances
+     * Object with methods to handle Solutions
+     *
+     * @alias Syncano#Instances
+     * @type {object}
+     * @property {function} list - shortcut to {@link Syncano#listSolutions} method
+     */
+    this.Solutions = {
+      list: this.listSolutions.bind(this)
+    };
+
+    /**
+     * Object with methods to handle Admins
      *
      * @alias Syncano#Admins
      * @type {object}
@@ -923,6 +934,26 @@ var Syncano = (function() {
       }
       return this.request('GET', 'v1/instances/' + name + '/admins/', params, callbackOK, callbackError);
     },
+
+
+    /*********************
+     INSTANCES METHODS
+     **********************/
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#listSolutions
+     * @alias Syncano.Solutions.list
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    listSolutions: function(params, callbackOK, callbackError) {
+      params = params || {};
+      return this.request('GET', 'v1/marketplace/solutions', params, callbackOK, callbackError);
+    },
+
 
     /*********************
        ADMIN METHODS
