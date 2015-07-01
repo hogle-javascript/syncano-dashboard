@@ -12,7 +12,6 @@ var React       = require('react'),
 
     Colors      = mui.Styles.Colors;
 
-
 module.exports = React.createClass({
 
   displayName: 'ColumnsFilterMenu',
@@ -29,20 +28,11 @@ module.exports = React.createClass({
     }
   },
 
-  getStyles: function() {
-    return {
-      icon: {
-        margin: 0,
-        padding: 0
-      }
-    };
-  },
-
   componentWillReceiveProps: function(newProps) {
     this.setState({columns: newProps.columns});
   },
 
-  handleMenuClick: function(event) {
+  handleMenuClick: function() {
     console.info('ColumnAvatarCheck:handleClick');
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },
@@ -71,12 +61,14 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var styles = this.getStyles();
-
     var mainIcon = <IconButton iconClassName="synicon-view-column" />;
 
     return (
-      <IconMenu closeAfterTap={false} iconButtonElement={mainIcon} openDirection="bottom-left" desktop={true}>
+      <IconMenu
+        closeAfterTap     = {false}
+        iconButtonElement = {mainIcon}
+        openDirection     = "bottom-left"
+        desktop           = {true}>
         {this.renderMenuItems()}
       </IconMenu>
     )
