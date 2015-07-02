@@ -17,7 +17,7 @@ var ApiKeyDialogStore = Reflux.createStore({
   getInitialState: function() {
     // jscs:disable
     return {
-      description       : '',
+      description       : null,
       ignore_acl        : false,
       allow_user_create : false
     };

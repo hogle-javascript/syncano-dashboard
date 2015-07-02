@@ -16,7 +16,7 @@ var GroupDialogStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      label : ''
+      label : null
     };
   },
 

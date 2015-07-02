@@ -2,7 +2,6 @@ var React            = require('react'),
     Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin  = require('../../mixins/ValidationMixin'),
     DialogMixin      = require('../../mixins/DialogMixin'),
     FormMixin        = require('../../mixins/FormMixin'),
 
@@ -29,7 +28,6 @@ module.exports = React.createClass({
     Reflux.connect(GroupDialogStore),
     React.addons.LinkedStateMixin,
     DialogMixin,
-    ValidationMixin,
     FormMixin
   ],
 
@@ -71,7 +69,7 @@ module.exports = React.createClass({
         title           = {title + " Group"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form

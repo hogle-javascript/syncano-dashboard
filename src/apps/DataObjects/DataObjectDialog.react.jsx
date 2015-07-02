@@ -2,7 +2,6 @@ var React                 = require('react'),
     Reflux                = require('reflux'),
 
     // Utils
-    ValidationMixin       = require('../../mixins/ValidationMixin'),
     FormMixin             = require('../../mixins/FormMixin'),
     DialogMixin           = require('../../mixins/DialogMixin'),
     Show                  = require('../../common/Show/Show.react'),
@@ -27,11 +26,9 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    ValidationMixin,
+    Reflux.connect(DataObjectDialogStore),
     FormMixin,
-    DialogMixin,
-
-    Reflux.connect(DataObjectDialogStore)
+    DialogMixin
   ],
 
   validatorConstraints: function() {
@@ -234,10 +231,10 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref     = "dialog"
-        title   = {title}
-        actions = {dialogStandardActions}
-        modal   = {true}>
+        ref       = 'dialog'
+        title     = {title}
+        actions   = {dialogStandardActions}
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <div className="row">

@@ -8,17 +8,17 @@ var DialogStoreMixin = {
 
   getInitialDialogState: function() {
     return {
-      mode    : 'add',
-      visible : false
+      _dialogMode    : 'add',
+      _dialogVisible : false
     }
   },
 
   showDialog: function(instance) {
     console.debug('DialogStoreMixin::showDialog');
 
-    var state = {visible: true};
+    var state = {_dialogVisible: true};
     if (instance !== undefined) {
-      state = objectAssign(state, instance, {mode: 'edit'});
+      state = objectAssign(state, instance, {_dialogMode: 'edit'});
     }
 
     this.trigger(state);

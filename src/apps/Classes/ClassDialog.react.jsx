@@ -2,7 +2,6 @@ var React            = require('react'),
     Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin  = require('../../mixins/ValidationMixin'),
     DialogMixin      = require('../../mixins/DialogMixin'),
     FormMixin        = require('../../mixins/FormMixin'),
     Show             = require('../../common/Show/Show.react'),
@@ -30,7 +29,6 @@ module.exports = React.createClass({
     React.addons.LinkedStateMixin,
     Reflux.connect(ClassDialogStore),
     DialogMixin,
-    ValidationMixin,
     FormMixin
   ],
 
@@ -170,7 +168,7 @@ module.exports = React.createClass({
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div className='row'>
         {this.renderFormNotifications()}
 

@@ -106,7 +106,7 @@
     "clean": "gulp clean",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
-    "jscs": "jscs --esprima=esprima-fb src",
+    "jscs": "jscs --esprima=esprima-fb src tests",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
   }
 }

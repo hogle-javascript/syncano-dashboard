@@ -3,7 +3,6 @@ var React                      = require('react'),
 
     HeaderMixin                = require('../Header/HeaderMixin'),
     FormMixin                  = require('../../mixins/FormMixin'),
-    ValidationMixin            = require('../../mixins/ValidationMixin'),
 
     ProfileActions             = require('./ProfileActions'),
     ProfileAuthenticationStore = require('./ProfileAuthenticationStore'),
@@ -21,9 +20,7 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ProfileAuthenticationStore),
     React.addons.LinkedStateMixin,
-
     HeaderMixin,
-    ValidationMixin,
     FormMixin
   ],
 
