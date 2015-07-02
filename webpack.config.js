@@ -15,7 +15,7 @@ for (i = 0; i < pluginVars.length; i++) {
 
 var plugins = [
   new webpack.DefinePlugin(plugin)
-  // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
 ];
 
 var appEntry = [

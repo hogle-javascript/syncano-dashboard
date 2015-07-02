@@ -19,8 +19,8 @@ general:
 test:
   override:
     - npm run-script jscs
-    - npm test
-    - npm run-script codeclimate
+    # - npm test
+    # - npm run-script codeclimate
     # - npm run-script nightwatch
 
 deployment:
