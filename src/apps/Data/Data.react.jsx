@@ -208,7 +208,7 @@ module.exports = React.createClass({
         </FabList>
 
         <DataViewsList
-          name                 = "DataViews"
+          name                 = "Data Endpoints"
           checkItem            = {DataViewsActions.checkItem}
           isLoading            = {this.state.isLoading}
           items                = {this.state.items}
@@ -216,7 +216,7 @@ module.exports = React.createClass({
           emptyItemContent     = "Create a DataView" />
 
         <WebhooksList
-          name                 = "Webhooks"
+          name                 = "CodeBox Endpoints"
           checkItem            = {WebhooksActions.checkItem}
           isLoading            = {this.state.webhooks.isLoading}
           items                = {this.state.webhooks.items}
