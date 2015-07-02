@@ -14,7 +14,6 @@ var React            = require('react'),
 
     // Components
     mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     FlatButton       = mui.FlatButton,
     DropDownMenu     = mui.DropDownMenu,
