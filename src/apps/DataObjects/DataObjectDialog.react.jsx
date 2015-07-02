@@ -190,7 +190,7 @@ module.exports = React.createClass({
               displayMember     = "text"
               floatingLabelText = {'Value of ' + item.name}
               errorText         = {this.getValidationMessages(item.name).join(' ')}
-              menuItems         = {[{text: True, payload: true}, {text: 'False', payload: false}]} />
+              menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
           )
         }
 

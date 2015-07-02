@@ -4,6 +4,7 @@ var React               = require('react'),
     // Utils
     DialogMixin         = require('../../mixins/DialogMixin'),
     FormMixin           = require('../../mixins/FormMixin'),
+    Show                = require('../../common/Show/Show.react'),
 
     // Stores and Actions
     DataViewsActions    = require('./DataViewsActions'),
@@ -16,7 +17,6 @@ var React               = require('react'),
     Toggle              = mui.Toggle,
     TextField           = mui.TextField,
     SelectField         = mui.SelectField,
-    Toggle              = mui.Toggle,
     Dialog              = mui.Dialog;
 
 module.exports = React.createClass({
@@ -36,7 +36,7 @@ module.exports = React.createClass({
     },
     class: {
       presence: true
-    },
+    }
   },
 
   handleDialogShow: function() {
@@ -56,17 +56,16 @@ module.exports = React.createClass({
     DataViewsActions.updateDataView(
       this.state.id, {
         name    : this.state.name,
-        crontab  : this.state.crontab,
-        codebox  : this.state.codebox
+        crontab : this.state.crontab,
+        codebox : this.state.codebox
       }
     );
   },
 
   renderFields: function() {
-    console.info('DataViewDialog::renderFields');
+    console.info('DataViewDialog::renderFields', this.state.class);
 
-    var fields = [<div>Filds available in this view:</div>];
-
+    var fields = [<div style={{marginBottom: 20}}>Fields</div>];
     if (this.state.class) {
       return fields.concat(ClassesStore.getClassFields(this.state.class).map(function(field) {
         return (
@@ -79,51 +78,34 @@ module.exports = React.createClass({
         )
       }))
     }
+    return fields;
   },
 
-  //renderOrderBy: function() {
-  //  if (this.state.class) {
-  //    return (
-  //      <SelectField
-  //        ref="orderby"
-  //        name="orderby"
-  //        floatingLabelText="Order by"
-  //        fullWidth={true}
-  //        valueLink={this.linkState('orderby')}
-  //        errorText={this.getValidationMessages('class').join(' ')}
-  //        valueMember="payload"
-  //        displayMember="text"
-  //        menuItems={[{text: 'name', payload: 'name'},{text: 'name2', payload: 'text2'}]}/>
-  //    )
-  //  }
-  //},
+  renderOptions: function() {
+    console.info('DataViewDialog::renderOrderBy', this.state.class);
 
-  renderOrderBy: function() {
-    if (this.state.class) {
-      return [
+    return [
+      <div>Options view options</div>,
+      <SelectField
+        ref               = "orderby"
+        name              = "orderby"
+        floatingLabelText = "Order by"
+        fullWidth         = {true}
+        valueLink         = {this.linkState('orderby')}
+        errorText         = {this.getValidationMessages('class').join(' ')}
+        valueMember       = "payload"
+        displayMember     = "text"
+        menuItems         = {[{text: 'name (ascending)', payload: 'name'},{text: 'name (decending)', payload: 'text2'}]}/>,
 
-        <SelectField
-          ref="orderby"
-          name="orderby"
-          floatingLabelText="Order by"
-          fullWidth={true}
-          valueLink={this.linkState('orderby')}
-          errorText={this.getValidationMessages('class').join(' ')}
-          valueMember="payload"
-          displayMember="text"
-          menuItems={[{text: 'name (ascending)', payload: 'name'},{text: 'name (decending)', payload: 'text2'}]}/>,
-
-        <TextField
-            ref               = 'page_size'
-            name              = 'page_size'
-            fullWidth         = {true}
-            valueLink         = {this.linkState('page_size')}
-            errorText         = {this.getValidationMessages('page_size').join(' ')}
-            hintText          = 'Number'
-            floatingLabelText = 'Number of records in data set' />
-
-      ]
-    }
+      <TextField
+          ref               = 'page_size'
+          name              = 'page_size'
+          fullWidth         = {true}
+          valueLink         = {this.linkState('page_size')}
+          errorText         = {this.getValidationMessages('page_size').join(' ')}
+          hintText          = 'Number'
+          floatingLabelText = 'Number of records in data set' />
+    ]
   },
 
   render: function() {
@@ -142,10 +124,18 @@ module.exports = React.createClass({
           }
         ];
 
+    var fields  = null,
+        options = null;
+
+    if (this.state.class) {
+      fields = this.renderFields();
+      options = this.renderOptions();
+    }
+
     return (
       <Dialog
         ref             = 'dialog'
-        title           = {title + ' DataView'}
+        title           = {title + ' Data Endpoint'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
@@ -153,41 +143,50 @@ module.exports = React.createClass({
         <div>
           {this.renderFormNotifications()}
 
-          <TextField
-            ref               = 'name'
-            name              = 'name'
-            fullWidth         = {true}
-            valueLink         = {this.linkState('name')}
-            errorText         = {this.getValidationMessages('name').join(' ')}
-            hintText          = 'Name of the endpoint'
-            floatingLabelText = 'Endpoint' />
+          <div>Main settings</div>
+          <div className="row">
+            <TextField
+                ref               = 'description'
+                name              = 'description'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('description')}
+                errorText         = {this.getValidationMessages('description').join(' ')}
+                hintText          = 'Description of the endpoint'
+                floatingLabelText = 'Description' />
 
-          <TextField
-            ref               = 'description'
-            name              = 'description'
-            fullWidth         = {true}
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = 'Description of the endpoint'
-            floatingLabelText = 'Description' />
-
-          <SelectField
-            ref               = "class"
-            name              = "class"
-            floatingLabelText = "Class"
-            valueLink         = {this.linkState('class')}
-            errorText         = {this.getValidationMessages('class').join(' ')}
-            valueMember       = "payload"
-            displayMember     = "text"
-            menuItems         = {this.state.classes} />
-
-          <div className="row" style={{marginTop: 20}}>
             <div className="col-xs-14">
-              {this.renderFields()}
+              <TextField
+                ref               = 'name'
+                name              = 'name'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('name')}
+                errorText         = {this.getValidationMessages('name').join(' ')}
+                hintText          = 'Name of the endpoint'
+                floatingLabelText = 'Endpoint' />
+
+            </div>
+            <div className="col-xs-18" style={{marginLeft: 40}}>
+              <SelectField
+                ref               = "class"
+                name              = "class"
+                fullWidth         = {true}
+                floatingLabelText = "Class"
+                valueLink         = {this.linkState('class')}
+                errorText         = {this.getValidationMessages('class').join(' ')}
+                valueMember       = "payload"
+                displayMember     = "text"
+                menuItems         = {this.state.classes} />
+            </div>
+          </div>
+
+          <div className="row" style={{marginTop: 50}}>
+
+            <div className="col-xs-14">
+              {options}
             </div>
 
-            <div className="col-xs-14">
-              {this.renderOrderBy()}
+            <div className="col-xs-18" style={{marginLeft: 40}}>
+              {fields}
             </div>
 
           </div>

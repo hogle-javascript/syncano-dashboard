@@ -48,6 +48,7 @@ module.exports = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   componentDidMount: function() {
@@ -63,8 +64,8 @@ module.exports = React.createClass({
       {
         dialog: Dialog,
         params: {
-          ref:    'removeWebhookDialog',
-          title:  'Delete Webhook',
+          ref   : 'removeWebhookDialog',
+          title : 'Delete Webhook',
           actions: [
             {
               text    : 'Cancel',
@@ -73,8 +74,8 @@ module.exports = React.createClass({
               text    : 'Yes, I\'m sure',
               onClick : this.handleRemoveWebhooks}
           ],
-          modal: true,
-          children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' webhooks?'
+          modal    : true,
+          children : 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' webhooks?'
         }
       },
       {
@@ -83,11 +84,17 @@ module.exports = React.createClass({
           ref:    'removeDataViewDialog',
           title:  'Delete DataView',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Yes, I\'m sure', onClick: this.handleRemoveDataViews}
+            {
+              text    : 'Cancel',
+              onClick : this.handleCancel
+            },
+            {
+              text    : 'Yes, I\'m sure',
+              onClick : this.handleRemoveDataViews
+            }
           ],
-          modal: true,
-          children: 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' schedule?'
+          modal    : true,
+          children : 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' schedule?'
         }
       }
     ]
