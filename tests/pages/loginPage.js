@@ -24,14 +24,12 @@ module.exports = function(client) {
     typePassword: function() {
       return client
         .waitForElementVisible(LOCATORS.passInput, 1000)
-        .setValue(LOCATORS.passInput, LOCATORS.pass)
-        .pause(3000);
+        .setValue(LOCATORS.passInput, LOCATORS.pass);
     },
     clickSignInButton: function() {
       return client
         .waitForElementVisible(LOCATORS.loginButton, 1000)
-        .click(LOCATORS.loginButton)
-        .pause(5000);
+        .click(LOCATORS.loginButton);
     },
     verifyLoginSuccessful: function() {
       return client
@@ -40,3 +38,4 @@ module.exports = function(client) {
     }
   };
 };
+
