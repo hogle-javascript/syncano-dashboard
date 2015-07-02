@@ -45,7 +45,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     UsersActions.updateUser(this.state.id, {
       username : this.state.username,
       password : this.state.password
@@ -70,7 +70,7 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref       = "dialog"
+        ref       = 'dialog'
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}>

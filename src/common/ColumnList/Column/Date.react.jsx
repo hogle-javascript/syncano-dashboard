@@ -7,7 +7,6 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors;
 
-
 var Header = React.createClass({
 
   getDefaultProps: function() {
@@ -61,8 +60,7 @@ module.exports = Radium(React.createClass({
       justifyContent : 'center',
       fontSize       : '12px',
       lineHeight     : '16px',
-      paddingTop     : 16,
-      paddingBottom  : 16,
+      padding        : '16px 8px',
       color          : this.props.color
     };
   },

@@ -18,8 +18,8 @@ var CodeBoxDialogStore = Reflux.createStore({
   getInitialState: function() {
     // jscs:disable
     return {
-      label                : '',
-      description          : '',
+      label                : null,
+      description          : null,
       runtime_name         : '',
       runtimes             : [
         {payload: '', text: 'Loading...'}

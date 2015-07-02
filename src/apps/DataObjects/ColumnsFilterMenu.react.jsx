@@ -51,10 +51,16 @@ module.exports = React.createClass({
         <MenuItem
           id      = {column.id}
           onClick = {this.handleClick}>
+          <div>
           <FontIcon
             id        = {column.id}
             className = {iconClass} />
-          {column.name}
+          </div>
+          <div>
+            <div>{column.name}</div>
+            <div>{column.tooltip}</div>
+          </div>
+
         </MenuItem>
       )
     }.bind(this))

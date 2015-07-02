@@ -8,7 +8,6 @@ var React      = require('react'),
     FontIcon   = mui.FontIcon,
     Paper      = mui.Paper;
 
-
 module.exports = Radium(React.createClass({
 
   displayName: 'CheckIcon',
@@ -27,7 +26,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       hovered    : false,
       checked    : this.props.checked,
@@ -39,7 +38,7 @@ module.exports = Radium(React.createClass({
     this.setState({checked: newProps.checked})
   },
 
-  handleClick: function (event) {
+  handleClick: function(event) {
     event.stopPropagation();
     if (this.props.handleClick) {
       this.props.handleClick(this.props.id, !this.state.checked);
@@ -50,18 +49,18 @@ module.exports = Radium(React.createClass({
     });
   },
 
-  handleMouseOver: function () {
+  handleMouseOver: function() {
     this.setState({
       hovered: true
     });
   },
-  handleMouseLeave: function () {
+  handleMouseLeave: function() {
     this.setState({
       hovered: false
     });
   },
 
-  getIconState: function () {
+  getIconState: function() {
 
     var GREY = 'rgba(0,0,0,0.2)';
 
@@ -74,7 +73,7 @@ module.exports = Radium(React.createClass({
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
-    if (this.state.hovered ) {
+    if (this.state.hovered) {
       return {
         icon  : 'checkbox-blank-outline',
         color : GREY
@@ -82,7 +81,10 @@ module.exports = Radium(React.createClass({
     }
 
     // Otherwise we have original colorful icon
-    return {icon: this.props.icon, color: this.props.background};
+    return {
+      icon  : this.props.icon,
+      color : this.props.background
+    };
   },
 
   getStyles: function() {
@@ -101,44 +103,36 @@ module.exports = Radium(React.createClass({
         justifyContent : 'center',
         alignItems     : 'center'
       },
-      cursor : {
+      checkable : {
         cursor: 'pointer'
       }
     }
   },
 
-  renderIcon: function() {
-    // Styles for icon and it's background
+  render: function() {
     var styles          = this.getStyles(),
-        backgroundStyle = styles.background,
-        iconStyle       = styles.icon;
+        iconState       = this.getIconState(),
+        iconStyle       = styles.icon,
+        iconClass       = iconState.icon,
+        backgroundStyle = styles.background;
 
-    // State
-    var iconState = this.getIconState();
     // Background color based on current state
     backgroundStyle.backgroundColor = iconState.color;
 
-    // Which icon to show?
-    var iconClass = iconState.icon;
-
     return (
-        <Paper
-            zDepth       = {0}
-            circle       = {true}
-            style        = {[backgroundStyle, this.props.checkable && styles.cursor]}
-            onMouseOver  = {this.props.checkable ? this.handleMouseOver : null}
-            onMouseLeave = {this.props.checkable ? this.handleMouseLeave : null}
-            onClick      = {this.props.checkable ? this.handleClick : null}>
-          <FontIcon className={"synicon-" + iconClass} style={iconStyle} />
-        </Paper>
-    )
-  },
-
-  render: function () {
-    return (
-      <div>
-        {this.renderIcon()}
-      </div>
+      <Paper
+        zDepth       = {0}
+        circle       = {true}
+        style        = {[styles.background, this.props.checkable && styles.checkable]}
+        onMouseOver  = {this.props.checkable ? this.handleMouseOver : null}
+        onMouseLeave = {this.props.checkable ? this.handleMouseLeave : null}
+        onClick      = {this.props.checkable ? this.handleClick : null}
+      >
+        <FontIcon
+          className = {"synicon-" + iconClass}
+          style     = {iconStyle}
+        />
+      </Paper>
     )
   }
 }));

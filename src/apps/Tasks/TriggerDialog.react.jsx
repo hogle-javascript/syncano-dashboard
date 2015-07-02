@@ -92,7 +92,7 @@ module.exports = React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form

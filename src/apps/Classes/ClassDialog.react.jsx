@@ -168,7 +168,7 @@ module.exports = React.createClass({
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div className='row'>
         {this.renderFormNotifications()}
 

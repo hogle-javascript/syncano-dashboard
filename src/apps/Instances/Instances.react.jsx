@@ -194,7 +194,7 @@ module.exports = Radium(React.createClass({
           items                = {InstancesStore.getMyInstances()}
           listType             = "myInstances"
           viewMode             = "stream"
-          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
+          emptyItemHandleClick = {this.showInstanceDialog}
           emptyItemContent     = "Create an instance" />
 
         <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>

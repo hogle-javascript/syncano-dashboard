@@ -8,5 +8,6 @@
   "disallowSpaceAfterObjectKeys": null,
   "disallowQuotedKeysInObjects": null,
   "disallowTrailingComma": null,
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
   "excludeFiles": ["src/lib", "src/apps/Account/Hello.js"]
 }
