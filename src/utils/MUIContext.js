@@ -1,9 +1,7 @@
 var React        = require('react'),
-    ThemeManager = require('material-ui/lib/styles/theme-manager'),
-    Colors       = require('material-ui/lib/styles/colors');
+    mui          = require('material-ui'),
+    ThemeManager = new mui.Styles.ThemeManager();
 
-// More info
-// https://github.com/rackt/react-router/blob/master/docs/guides/testing.md
 
 var MUIContext = function MUIContext(Component, props) {
   return React.createClass({
