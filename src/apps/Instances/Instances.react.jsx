@@ -141,7 +141,8 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var checkedInstances = InstancesStore.getNumberOfChecked();
+    var checkedInstances      = InstancesStore.getNumberOfChecked(),
+        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length);
 
     return (
       <Container id="instances">
@@ -152,10 +153,10 @@ module.exports = Radium(React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect Instances"
+              label         = {isAnyInstanceSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {InstancesActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyInstanceSelected ? InstancesActions.selectAll : InstancesActions.uncheckAll}
+              iconClassName = {isAnyInstanceSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Instances"

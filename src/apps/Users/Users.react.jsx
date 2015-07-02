@@ -66,10 +66,36 @@ module.exports = React.createClass({
     UsersActions.removeUsers(UsersStore.getCheckedItems());
   },
 
-  uncheckAll: function() {
-    console.info('Users::uncheckAll');
+  uncheckAllUsers: function() {
+    console.info('Users::uncheckAllUsers');
     UsersActions.uncheckAll();
+  },
+
+  uncheckAllGroups: function() {
+    console.info('Users::uncheckAllGroups');
     GroupsActions.uncheckAll();
+  },
+
+  selectAllUsers: function() {
+    console.info('Users::selectAllUsers');
+    UsersActions.selectAll();
+  },
+
+  selectAllGroups: function() {
+    console.info('Users::selectAllGroups');
+    GroupsActions.selectAll();
+  },
+
+  checkUser: function(id, state) {
+    console.info('User::checkUser');
+    GroupsActions.uncheckAll();
+    UsersActions.checkItem(id, state);
+  },
+
+  checkGroup: function(id, state) {
+    console.info('User::checkGroup');
+    UsersActions.uncheckAll();
+    GroupsActions.checkItem(id, state);
   },
 
   showUserDialog: function() {
@@ -141,8 +167,11 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var checkedUsers  = UsersStore.getNumberOfChecked(),
-        checkedGroups = GroupsStore.getNumberOfChecked();
+    var checkedUsers       = UsersStore.getNumberOfChecked(),
+        checkedGroups      = GroupsStore.getNumberOfChecked(),
+        isAnyUserSelected  = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
+        isAnyGroupSelected = checkedGroups >= 1 && checkedGroups < (this.state.groups.items.length);
+
 
     return (
       <Container>
@@ -154,10 +183,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
+              iconClassName = {isAnyUserSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Users"
@@ -179,10 +208,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyGroupSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyGroupSelected ? this.selectAllGroups : this.uncheckAllGroups}
+              iconClassName = {isAnyGroupSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Users"
@@ -219,7 +248,7 @@ module.exports = React.createClass({
           <div className="col-lg-8">
             <GroupsList
               name                 = "Groups"
-              checkItem            = {GroupsActions.checkItem}
+              checkItem            = {this.checkGroup}
               isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
               emptyItemHandleClick = {this.showGroupDialog}
@@ -230,7 +259,7 @@ module.exports = React.createClass({
           <div className="col-flex-1">
             <UsersList
               name                 = "Users"
-              checkItem            = {UsersActions.checkItem}
+              checkItem            = {this.checkUser}
               isLoading            = {this.state.users.isLoading}
               items                = {this.state.users.items}
               emptyItemHandleClick = {this.showUserDialog}

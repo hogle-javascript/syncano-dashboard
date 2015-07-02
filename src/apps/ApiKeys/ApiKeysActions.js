@@ -5,6 +5,7 @@ var Reflux     = require('reflux'),
 var ApiKeysActions = Reflux.createActions({
   checkItem  : {},
   uncheckAll : {},
+  selectAll  : {},
   fetch      : {},
   setApiKeys : {},
   showDialog    : {},

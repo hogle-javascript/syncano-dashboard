@@ -1,7 +1,8 @@
-import React from 'react/addons';
-let { TestUtils } = React.addons;
+var analytics = require('analytics');
 
-describe('segment', function() {
-  it('should render', function() {
-  });
-});
+if (ANALYTICS_WRITE_KEY !== undefined && ANALYTICS_WRITE_KEY.length > 0) {
+  analytics.load(ANALYTICS_WRITE_KEY);
+  analytics.page();
+};
+
+module.exports = analytics;
