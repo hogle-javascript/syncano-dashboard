@@ -2,7 +2,6 @@ var React        = require('react'),
     mui          = require('material-ui'),
     ThemeManager = new mui.Styles.ThemeManager();
 
-
 var MUIContext = function MUIContext(Component, props) {
   return React.createClass({
 

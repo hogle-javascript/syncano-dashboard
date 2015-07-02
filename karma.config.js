@@ -47,4 +47,4 @@ module.exports = function(config) {
       'karma-phantomjs-launcher'
     ],
   });
-}
+};
