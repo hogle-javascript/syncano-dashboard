@@ -21,7 +21,7 @@ var UsersStore = Reflux.createStore({
   getInitialState: function() {
     return {
       items: [],
-      isLoading: false
+      isLoading: true
     }
   },
 

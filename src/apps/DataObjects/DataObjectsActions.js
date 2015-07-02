@@ -9,10 +9,9 @@ var Reflux         = require('reflux'),
 var DataObjectsActions = Reflux.createActions({
   checkItem             : {},
   uncheckAll            : {},
-
+  checkToggleColumn     : {},
   showDialog            : {},
   dismissDialog         : {},
-
   fetch                 : {},
   setDataObjects        : {},
   setCurrentClassObj    : {},
@@ -32,10 +31,12 @@ var DataObjectsActions = Reflux.createActions({
     children    : ['completed', 'failure']
   },
   createDataObject: {
+    asyncForm   : true,
     asyncResult : true,
     children    : ['completed', 'failure']
   },
   updateDataObject: {
+    asyncForm   : true,
     asyncResult : true,
     children    : ['completed', 'failure']
   },
@@ -55,12 +56,12 @@ DataObjectsActions.fetchCurrentClassObj.listen(function(className) {
 });
 
 DataObjectsActions.fetchDataObjects.listen(function(className) {
-  console.info('DataObjectsActions::fetchDataObjects', className);
+  console.info('DataObjectsActions::fetchDataObjects');
   Connection
     .DataObjects
     .list(className, {
       'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
-      'order_by'  : '-created_at',
+      'order_by'  : '-created_at'
     })
     .then(this.completed)
     .catch(this.failure);
@@ -71,11 +72,7 @@ DataObjectsActions.subFetchDataObjects.listen(function(payload) {
 
   Connection
     .DataObjects
-    .list(payload.className, {
-      'last_pk'   : payload.lastItem.id,
-      'page_size' : Constants.DATAOBJECTS_PAGE_SIZE,
-      'order_by'  : '-created_at'
-    })
+    .list(payload.className, payload.params)
     .then(this.completed)
     .catch(this.failure);
 });
@@ -89,11 +86,11 @@ DataObjectsActions.createDataObject.listen(function(payload) {
     .catch(this.failure);
 });
 
-DataObjectsActions.updateDataObject.listen(function(id, payload) {
+DataObjectsActions.updateDataObject.listen(function(className, payload) {
   console.info('DataObjectsActions::updateDataObject');
   Connection
     .DataObjects
-    .update(id, payload)
+    .update(className, payload)
     .then(this.completed)
     .catch(this.failure);
 });

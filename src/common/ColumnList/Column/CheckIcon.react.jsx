@@ -8,12 +8,11 @@ var React              = require('react'),
 
     CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
 
-
 var Header = React.createClass({
 
   getDefaultProps: function () {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
     }
   },
 
@@ -46,6 +45,7 @@ module.exports = Radium(React.createClass({
     id              : React.PropTypes.string,
     color           : React.PropTypes.string,
     hoverColor      : React.PropTypes.string,
+    checkable       : React.PropTypes.bool,
     handleIconClick : React.PropTypes.func,
     handleNameClick : React.PropTypes.func
   },
@@ -58,7 +58,8 @@ module.exports = Radium(React.createClass({
     return {
       color      : 'black',
       hoverColor : Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
+      checkable  : true,
     }
   },
 
@@ -121,15 +122,14 @@ module.exports = Radium(React.createClass({
         className = {this.props.className}
         style     = {styles.container}>
         <CheckIcon
-          id          = {this.props.id}
-          icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-          background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-          checked     = {this.state.checked}
-          handleClick = {this.handleIconClick} />
-
+            id          = {this.props.id}
+            icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
+            background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
+            checked     = {this.state.checked}
+            handleClick = {this.handleIconClick}
+            checkable   = {this.props.checkable} />
         <div
-          style       = {[styles.name,
-                          this.props.handleNameClick && styles.link]}
+          style       = {[styles.name, this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>

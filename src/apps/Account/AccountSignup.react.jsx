@@ -5,7 +5,6 @@ var React                = require('react'),
 
     // Utils
     FormMixin            = require('../../mixins/FormMixin'),
-    ValidationMixin      = require('../../mixins/ValidationMixin'),
 
     // Stores and Actions
     SessionStore         = require('../Session/SessionStore'),
@@ -34,8 +33,6 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(AuthStore),
     React.addons.LinkedStateMixin,
-
-    ValidationMixin,
     FormMixin
   ],
 

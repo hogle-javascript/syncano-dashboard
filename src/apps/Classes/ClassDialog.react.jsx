@@ -1,74 +1,40 @@
-var React           = require('react'),
-    Reflux          = require('reflux'),
+var React            = require('react'),
+    Reflux           = require('reflux'),
 
     // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-    DialogFormMixin = require('../../mixins/DialogFormMixin'),
-    FormMixin       = require('../../mixins/FormMixin'),
-    Show            = require('../../common/Show/Show.react'),
-    Constants       = require('../../constants/Constants'),
+    DialogMixin      = require('../../mixins/DialogMixin'),
+    FormMixin        = require('../../mixins/FormMixin'),
+    Show             = require('../../common/Show/Show.react'),
+    Constants        = require('../../constants/Constants'),
 
     // Stores and Actions
-    ClassesActions  = require('./ClassesActions'),
-    ClassesStore    = require('./ClassesStore'),
+    ClassesActions   = require('./ClassesActions'),
+    ClassDialogStore = require('./ClassDialogStore'),
+    ClassesStore     = require('./ClassesStore'),
 
     // Components
-    mui             = require('material-ui'),
-    Toggle          = mui.Toggle,
-    TextField       = mui.TextField,
-    FlatButton      = mui.FlatButton,
-    DropDownMenu    = mui.DropDownMenu,
-    SelectField     = mui.SelectField,
-    Dialog          = mui.Dialog;
+    mui              = require('material-ui'),
+    Toggle           = mui.Toggle,
+    TextField        = mui.TextField,
+    FlatButton       = mui.FlatButton,
+    DropDownMenu     = mui.DropDownMenu,
+    SelectField      = mui.SelectField,
+    Dialog           = mui.Dialog;
 
 module.exports = React.createClass({
 
-  displayName: 'ClassesAddDialog',
+  displayName: 'ClassDialog',
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(ClassesStore),
-    DialogFormMixin,
-    ValidationMixin,
+    Reflux.connect(ClassDialogStore),
+    DialogMixin,
     FormMixin
   ],
 
   validatorConstraints: {
     name: {
       presence: true
-    },
-    description: {
-    }
-  },
-
-  getInitialState: function() {
-    return {
-      description       : '',
-      name              : '',
-      fields            : []
-    }
-  },
-
-  clearData: function() {
-    this.setState({
-      description : '',
-      name        : '',
-      fields      : [],
-      errors      : {}
-    })
-  },
-  componentWillUpdate: function() {
-    console.log('ClassesAddDialog::componentWillUpdate', this.state.errors);
-  },
-
-  editShow: function() {
-    var checkedItem = ClassesStore.getCheckedItem();
-    if (checkedItem) {
-      this.setState({
-        name        : checkedItem.name,
-        description : checkedItem.description,
-        fields      : this.setFields(checkedItem.schema),
-      });
     }
   },
 
@@ -82,8 +48,6 @@ module.exports = React.createClass({
   },
 
   setFields: function(schema) {
-    console.log(schema);
-    //var schema = JSON.parse(schema);
     var fields = this.state.fields;
 
     schema.map(function(item) {
@@ -167,13 +131,13 @@ module.exports = React.createClass({
     return this.state.fields.map(function(item) {
 
       return (
-        <div key={item.fieldName} className="row">
-          <span className="col-xs-8">{item.fieldName}</span>
-          <span className="col-xs-8">{item.fieldType}</span>
-          <span className="col-xs-8">{item.fieldTarget}</span>
-          <span className="col-xs-8">
+        <div key={item.fieldName} className='row'>
+          <span className='col-xs-8'>{item.fieldName}</span>
+          <span className='col-xs-8'>{item.fieldType}</span>
+          <span className='col-xs-8'>{item.fieldTarget}</span>
+          <span className='col-xs-8'>
             <FlatButton
-              label     = "Remove"
+              label     = 'Remove'
               secondary = {true}
               onClick   = {function() {this.handleRemoveField(item)}.bind(this)} />
           </span>
@@ -183,99 +147,99 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var title = this.props.mode === 'edit' ? 'Edit' : 'Add';
-    var submitLabel = 'Confirm';
-
-    var dialogStandardActions = [
-      {
-        ref      : 'cancel',
-        text     : 'Cancel',
-        onClick  : this.handleCancel
-      },
-      {
-        ref     : 'submit',
-        text    : {submitLabel},
-        onClick : this.handleFormValidation
-      }
-    ];
+    var title                 = this.hasEditMode() ? 'Edit' : 'Add',
+        submitLabel           = 'Confirm',
+        dialogStandardActions = [
+          {
+            ref      : 'cancel',
+            text     : 'Cancel',
+            onClick  : this.handleCancel
+          },
+          {
+            ref     : 'submit',
+            text    : {submitLabel},
+            onClick : this.handleFormValidation
+          }
+        ];
 
     return (
       <Dialog
-        ref             = "dialogRef"
+        ref             = 'dialog'
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        modal           = {true}>
-        <div className="row">
+        onDismiss       = {this.resetDialogState}>
+        <div className='row'>
         {this.renderFormNotifications()}
 
-          <div className="col-xs-22">
+          <div className='col-xs-22'>
             <TextField
-              ref               = "name"
-              name              = "name"
+              ref               = 'name'
+              name              = 'name'
               style             = {{width:'100%'}}
               valueLink         = {this.linkState('name')}
               errorText         = {this.getValidationMessages('name').join(' ')}
-              hintText          = "Name of the Class"
-              floatingLabelText = "Name" />
+              hintText          = 'Name of the Class'
+              floatingLabelText = 'Name' />
 
             <TextField
-              ref               = "description"
-              name              = "description"
+              ref               = 'description'
+              name              = 'description'
               style             = {{width:'100%'}}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}
-              hintText          = "Description of the Class"
-              floatingLabelText = "Description" />
+              hintText          = 'Description of the Class'
+              floatingLabelText = 'Description' />
 
-            <div className="row">
-              <div className="col-xs-12">
+            <div className='row'>
+              <div className='col-xs-12'>
                  <TextField
-                  ref               = "fieldName"
-                  name              = "fieldName"
+                  ref               = 'fieldName'
+                  name              = 'fieldName'
                   style             = {{width:'100%'}}
                   valueLink         = {this.linkState('fieldName')}
                   errorText         = {this.getValidationMessages('fieldName').join(' ')}
-                  hintText          = "Name of the Field"
-                  floatingLabelText = "Name" />
+                  hintText          = 'Name of the Field'
+                  floatingLabelText = 'Name' />
               </div>
-              <div className="col-xs-12" style={{paddingLeft: 15}}>
+              <div className='col-xs-12' style={{paddingLeft: 15}}>
                 <SelectField
-                    ref               = "fieldType"
-                    name              = "fieldType"
-                    floatingLabelText = "Type"
+                    ref               = 'fieldType'
+                    name              = 'fieldType'
+                    floatingLabelText = 'Type'
                     style             = {{width:'100%'}}
                     valueLink         = {this.linkState('fieldType')}
-                    errorText         = {this.getValidationMessages('fieldType').join()}
-                    valueMember       = "payload"
-                    displayMember     = "text"
+                    errorText         = {this.getValidationMessages('fieldType').join(' ')}
+                    valueMember       = 'payload'
+                    displayMember     = 'text'
                     menuItems         = {this.getFieldTypes()} />
               </div>
-              <div className="col-xs-11" style={{paddingLeft: 15}}>
+              <div className='col-xs-11' style={{paddingLeft: 15}}>
                 <Show if={this.state.fieldType === 'reference'}>
                   <SelectField
-                    ref               = "fieldTarget"
-                    name              = "fieldTarget"
-                    floatingLabelText = "Target Class"
+                    ref               = 'fieldTarget'
+                    name              = 'fieldTarget'
+                    floatingLabelText = 'Target Class'
                     fullWidth         = {true}
                     valueLink         = {this.linkState('fieldTarget')}
-                    errorText         = {this.getValidationMessages('fieldTarget').join()}
-                    valueMember       = "payload"
-                    displayMember     = "text"
+                    errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
+                    valueMember       = 'payload'
+                    displayMember     = 'text'
                     menuItems         = {ClassesStore.getClassesDropdown()} />
                 </Show>
               </div>
             </div>
             <FlatButton
-              label     = "Add field"
+              label     = 'Add field'
               secondary = {true}
               onClick   = {this.handleFieldAdd} />
           </div>
 
           <div
-            className = "col-xs-12"
+            className = 'col-xs-12'
             style     = {{paddingLeft: 15}}>
             <div>Schema</div>
+            {this.getValidationMessages('schema').join(' ')}
             <div>{this.renderSchemaFields()}</div>
           </div>
 

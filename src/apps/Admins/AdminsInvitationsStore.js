@@ -43,6 +43,13 @@ var AdminsInvitationsStore = Reflux.createStore({
     AdminsInvitationsActions.fetchInvitations();
   },
 
+  selectAllAdminsInvitations: function() {
+    this.getPendingInvitations().forEach(function(item) {
+      item.checked = true;
+    });
+    this.trigger(this.data);
+  },
+
   setInvitations: function(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
 

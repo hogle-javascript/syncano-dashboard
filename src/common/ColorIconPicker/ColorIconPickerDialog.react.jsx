@@ -1,9 +1,6 @@
 var React  = require('react'),
     Reflux = require('reflux'),
 
-    // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-
     // Components
     mui    = require('material-ui'),
     Dialog = mui.Dialog,
@@ -77,9 +74,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-
-    var modalState = true;
-
     var dialogStandardActions = [
       {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
       {text: 'Confirm', onClick: this.handleSubmit, ref: 'submit'}
@@ -89,8 +83,7 @@ module.exports = React.createClass({
       <Dialog
         ref="dialog"
         contentInnerStyle={{paddingBottom: 24, padding: '0px'}}
-        actions={dialogStandardActions}
-        modal={modalState}>
+        actions={dialogStandardActions}>
         <Tabs>
 
           <Tab label="Colors">

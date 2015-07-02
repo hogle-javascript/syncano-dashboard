@@ -22,7 +22,7 @@ var React             = require('react'),
     Item             = require('../../common/ColumnList/Item.react'),
     EmptyListItem    = require('../../common/ColumnList/EmptyListItem.react'),
     Header           = require('../../common/ColumnList/Header.react'),
-    LoadingItem      = require('../../common/ColumnList/LoadingItem.react'),
+    Loading          = require('../../common/Loading/Loading.react'),
     ColumnDate       = require('../../common/ColumnList/Column/Date.react'),
     ColumnID         = require('../../common/ColumnList/Column/ID.react'),
     ColumnText       = require('../../common/ColumnList/Column/Text.react'),
@@ -81,10 +81,6 @@ module.exports = React.createClass({
   },
 
   getList: function () {
-    if (this.state.isLoading) {
-      return <LoadingItem />;
-    }
-
     var items = this.state.items.map(function (item) {
       return this.renderItem(item)
     }.bind(this));
@@ -113,7 +109,9 @@ module.exports = React.createClass({
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>
-          {this.getList()}
+          <Loading show={this.state.isLoading}>
+            {this.getList()}
+          </Loading>
         </List>
       </ListContainer>
     );

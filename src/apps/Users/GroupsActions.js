@@ -8,6 +8,8 @@ var GroupsActions = Reflux.createActions({
   uncheckAll : {},
   fetch      : {},
   setGroups  : {},
+  showDialog    : {},
+  dismissDialog : {},
   fetchGroups: {
     asyncResult: true,
     loading    : true,

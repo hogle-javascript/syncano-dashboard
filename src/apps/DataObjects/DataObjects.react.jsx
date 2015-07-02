@@ -75,21 +75,6 @@ module.exports = React.createClass({
   //Dialogs config
   initDialogs: function() {
     return [{
-      //  dialog: AddDialog,
-      //  params: {
-      //    key  : "addDataObjectDialog",
-      //    ref  : "addDataObjectDialog",
-      //    mode : "add"
-      //  }
-      //}, {
-      //  dialog: AddDialog,
-      //  params: {
-      //    key  : "editDataObjectDialog",
-      //    ref  : "editDataObjectDialog",
-      //    mode : "edit"
-      //  }
-      //},
-
       dialog: Dialog,
       params: {
         key:    'deleteDataObjectDialog',
@@ -107,6 +92,10 @@ module.exports = React.createClass({
 
   showDataObjectDialog: function() {
     DataObjectsActions.showDialog();
+  },
+
+  showDataObjectEditDialog: function(cellNumber) {
+    DataObjectsActions.showDialog(DataObjectsStore.getSelectedRowObj(cellNumber));
   },
 
   handleDelete: function() {
@@ -135,26 +124,37 @@ module.exports = React.createClass({
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
+  handleCellClick: function(cellNumber, cellName) {
+    console.info('DataObjects::handleCellClick', arguments);
+    if (cellName != undefined) {
+      this.showDataObjectEditDialog(cellNumber);
+    }
+  },
+
   renderTable: function() {
+    console.info('DataObjects::renderTable');
     var tableData   = DataObjectsStore.renderTableData(),
         tableHeader = DataObjectsStore.renderTableHeader(),
-        colOrder    = Object.keys(tableHeader);
+        colOrder    = DataObjectsStore.getCheckedColumnsIDs();
 
     return (
       <div>
         <Table
-          ref             = "table"
-          headerColumns   = {tableHeader}
-          columnOrder     = {colOrder}
-          rowData         = {tableData}
-          multiSelectable = {true}
-          //onCellClick  = {this.handleCellClick}
-          onRowSelection  = {this.handleRowSelection} />
+          ref                 = "table"
+          headerColumns       = {tableHeader}
+          columnOrder         = {colOrder}
+          rowData             = {tableData}
+          multiSelectable     = {true}
+          deselectOnClickAway = {false}
+          showRowHover        = {true}
+          onCellClick         = {this.handleCellClick}
+          onRowSelection      = {this.handleRowSelection}
+          />
 
         <div
           className = "row align-center"
           style     = {{margin: 50}} >
-          <div>Loaded {tableData.length} data objects</div>
+          <div>Loaded {tableData.length} Data Objects</div>
         </div>
         <Show if={this.state.hasNextPage}>
           <div
@@ -172,7 +172,7 @@ module.exports = React.createClass({
   handleMoreRows: function() {
     DataObjectsActions.subFetchDataObjects({
       className : this.state.classObj.name,
-      lastItem  : this.state.items[this.state.items.length - 1]
+      params    : this.state.nextParams
     });
   },
 
@@ -210,7 +210,7 @@ module.exports = React.createClass({
         <div className="col-flex-1" style={{padding: 0}}>
 
           <Toolbar style={{background: 'transparent', padding: '0px'}}>
-          
+
             <ToolbarGroup float="left" style={{padding: '0px'}}>
 
               <FontIcon
@@ -237,7 +237,9 @@ module.exports = React.createClass({
                 disabled  = {!(this.state.selectedRows)}
                 onClick   = {this.showDialog('deleteDataObjectDialog')} />
 
-              <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
+              <ColumnsFilterMenu
+                columns           = {DataObjectsStore.getTableColumns()}
+                checkToggleColumn = {DataObjectsActions.checkToggleColumn} />
 
             </ToolbarGroup>
 

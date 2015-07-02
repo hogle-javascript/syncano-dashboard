@@ -17,7 +17,14 @@ module.exports = Radium(React.createClass({
     id          : React.PropTypes.string,
     icon        : React.PropTypes.string,
     checked     : React.PropTypes.bool,
+    checkable   : React.PropTypes.bool,
     handleClick : React.PropTypes.func
+  },
+
+  getDefaultProps: function() {
+    return {
+      checkable: true
+    }
   },
 
   getInitialState: function () {
@@ -92,22 +99,22 @@ module.exports = Radium(React.createClass({
         minWidth       : 40,
         display        : 'flex',
         justifyContent : 'center',
-        alignItems     : 'center',
-        cursor         : 'pointer'
+        alignItems     : 'center'
+      },
+      cursor : {
+        cursor: 'pointer'
       }
     }
   },
 
-  render: function () {
-
+  renderIcon: function() {
     // Styles for icon and it's background
     var styles          = this.getStyles(),
-        backgroundStyle = this.getStyles().background,
-        iconStyle       = this.getStyles().icon;
+        backgroundStyle = styles.background,
+        iconStyle       = styles.icon;
 
     // State
     var iconState = this.getIconState();
-
     // Background color based on current state
     backgroundStyle.backgroundColor = iconState.color;
 
@@ -115,15 +122,23 @@ module.exports = Radium(React.createClass({
     var iconClass = iconState.icon;
 
     return (
-      <Paper
-        zDepth       = {0}
-        circle       = {true}
-        style        = {backgroundStyle}
-        onMouseOver  = {this.handleMouseOver}
-        onMouseLeave = {this.handleMouseLeave}
-        onClick      = {this.handleClick}>
+        <Paper
+            zDepth       = {0}
+            circle       = {true}
+            style        = {[backgroundStyle, this.props.checkable && styles.cursor]}
+            onMouseOver  = {this.props.checkable ? this.handleMouseOver : null}
+            onMouseLeave = {this.props.checkable ? this.handleMouseLeave : null}
+            onClick      = {this.props.checkable ? this.handleClick : null}>
           <FontIcon className={"synicon-" + iconClass} style={iconStyle} />
-      </Paper>
+        </Paper>
+    )
+  },
+
+  render: function () {
+    return (
+      <div>
+        {this.renderIcon()}
+      </div>
     )
   }
 }));
