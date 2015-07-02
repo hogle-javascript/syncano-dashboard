@@ -28,8 +28,6 @@ module.exports = React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation
-    //React.addons.LinkedStateMixin,
-    //ValidationMixin,
   ],
 
   componentWillMount: function() {
