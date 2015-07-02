@@ -27,11 +27,11 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(DataObjectDialogStore),
-    Reflux.connect(DataObjectsStore, 'dataobjects'),
     ValidationMixin,
     FormMixin,
-    DialogMixin
+    DialogMixin,
+
+    Reflux.connect(DataObjectDialogStore)
   ],
 
   validatorConstraints: function() {
@@ -213,7 +213,10 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
+
+    var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
+        addTitle    = 'Add Data Object',
+        title       = this.hasEditMode() ? editTitle : addTitle,
         submitLabel = 'Confirm',
 
         dialogStandardActions = [
@@ -232,7 +235,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref     = "dialog"
-        title   = {title + ' Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')'}
+        title   = {title}
         actions = {dialogStandardActions}
         modal   = {true}>
         <div>
