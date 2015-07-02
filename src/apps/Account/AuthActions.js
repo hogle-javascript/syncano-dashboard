@@ -96,7 +96,7 @@ AuthActions.socialLogin.listen(function(network) {
         .then(function (payload) {
           payload.network = network;
           return payload;
-        }.bind(this))
+        })
         .then(this.completed)
         .catch(this.failure);
     }.bind(this), this.failure);
