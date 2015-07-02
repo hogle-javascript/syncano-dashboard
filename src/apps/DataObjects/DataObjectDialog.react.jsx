@@ -16,9 +16,9 @@ var React                 = require('react'),
     mui                   = require('material-ui'),
     Toggle                = mui.Toggle,
     TextField             = mui.TextField,
+    SelectField           = mui.SelectField,
     DropDownMenu          = mui.DropDownMenu,
     Dialog                = mui.Dialog;
-
 
 module.exports = React.createClass({
 
@@ -27,7 +27,6 @@ module.exports = React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
-    Reflux.connect(DataObjectsStore, 'dataobjects'),
     FormMixin,
     DialogMixin
   ],
@@ -44,9 +43,33 @@ module.exports = React.createClass({
     return validateObj;
   },
 
+  getParams: function() {
+    var params = {
+      id                : this.state.id,
+      owner             : this.state.owner,
+      group             : this.state.group,
+      channel           : this.state.channel,
+      channel_room      : this.state.channel_room,
+      owner_permissions : this.state.owner_permissions,
+      group_permissions : this.state.group_permissions,
+      other_permissions : this.state.other_permissions
+    };
+
+    // All "dynamic" fields
+    DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
+      var fieldValue = this.refs['field-' + item.name].getValue();
+      if (fieldValue) {
+        params[item.name] = fieldValue;
+      }
+    }.bind(this));
+
+    return params;
+  },
+
   handleAddSubmit: function() {
-    var className = DataObjectsStore.getCurrentClassName();
-    var payload = {};
+    var className = DataObjectsStore.getCurrentClassName(),
+        payload = {};
+
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       payload[item.name] = this.state[item.name];
     }.bind(this));
@@ -55,10 +78,102 @@ module.exports = React.createClass({
   },
 
   handleEditSubmit: function() {
-    DataObjectsActions.updateDataObject(this.state.instance.id, {
-      username : this.state.username,
-      password : this.state.password
-    });
+    DataObjectsActions.updateDataObject(DataObjectsStore.getCurrentClassName(), this.getParams());
+  },
+
+  renderBuiltinFields: function() {
+    var permissions = [
+      {
+        text    : 'none',
+        payload : 'none'
+      },
+      {
+        text    : 'read',
+        payload : 'read'
+      },
+      {
+        text    : 'write',
+        payload : 'write'
+      },
+      {
+        text    : 'full',
+        payload : 'full'
+      }
+    ];
+
+    return [
+      <TextField
+        ref               = {'field-owner'}
+        name              = 'owner'
+        fullWidth         = {true}
+        valueLink         = {this.linkState('owner')}
+        errorText         = {this.getValidationMessages('owner').join(' ')}
+        hintText          = {'Owner of the Data Object (User ID)'}
+        floatingLabelText = {'Owner'} />,
+
+      <TextField
+        ref               = {'field-group'}
+        name              = 'owner'
+        fullWidth         = {true}
+        valueLink         = {this.linkState('group')}
+        errorText         = {this.getValidationMessages('group').join(' ')}
+        hintText          = {'Group of the Data Object (Group ID)'}
+        floatingLabelText = {'Group'} />,
+
+      <SelectField
+        ref               = {'field-channel'}
+        name              = {'field-channel'}
+        fullWidth         = {true}
+        valueMember       = "payload"
+        displayMember     = "text"
+        floatingLabelText = {'Channel'}
+        errorText         = {this.getValidationMessages('channel').join(' ')}
+        menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />,
+
+      <TextField
+        ref               = {'field-channel_room'}
+        name              = 'field-channel_room'
+        fullWidth         = {true}
+        valueLink         = {this.linkState('channel_room')}
+        errorText         = {this.getValidationMessages('channel_room').join(' ')}
+        hintText          = {'Channel Room'}
+        floatingLabelText = {'Channel Room'} />,
+
+      <div style={{marginTop: 30}}>Permissions</div>,
+
+      <SelectField
+        ref               = {'field-owner_permissions'}
+        name              = {'field-owner_permissions'}
+        fullWidth         = {true}
+        valueMember       = "payload"
+        displayMember     = "text"
+        valueLink         = {this.linkState('owner_permissions')}
+        floatingLabelText = {'Owner Permissions'}
+        errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
+        menuItems         = {permissions} />,
+
+      <SelectField
+        ref               = {'field-group_permissions'}
+        name              = {'field-group_permissions'}
+        fullWidth         = {true}
+        valueMember       = "payload"
+        displayMember     = "text"
+        valueLink         = {this.linkState('group_permissions')}
+        floatingLabelText = {'Group Permissions'}
+        errorText         = {this.getValidationMessages('group_permissions').join(' ')}
+        menuItems         = {permissions} />,
+
+      <SelectField
+        ref               = {'field-other_permissions'}
+        name              = {'field-other_permissions'}
+        fullWidth         = {true}
+        valueMember       = "payload"
+        displayMember     = "text"
+        valueLink         = {this.linkState('other_permissions')}
+        floatingLabelText = {'Other Permissions'}
+        errorText         = {this.getValidationMessages('other_permissions').join(' ')}
+        menuItems         = {permissions} />
+      ]
   },
 
   renderCustomFields: function() {
@@ -71,7 +186,7 @@ module.exports = React.createClass({
             <SelectField
               ref               = {item.name}
               name              = {item.name}
-              autoWidth         = {true}
+              fullWidth         = {true}
               valueMember       = "payload"
               displayMember     = "text"
               floatingLabelText = {'Value of ' + item.name}
@@ -84,17 +199,21 @@ module.exports = React.createClass({
           <TextField
               ref               = {'field-' + item.name}
               name              = {item.name}
+              fullWidth         = {true}
               valueLink         = {this.linkState(item.name)}
               errorText         = {this.getValidationMessages(item.name).join(' ')}
-              hintText          = {'Field ' + item.name + ' (' + item.type + ')'}
-              floatingLabelText = {item.name} />
+              hintText          = {'Field ' + item.name}
+              floatingLabelText = {item.name + ' (' + item.type + ')'} />
         )
       }.bind(this))
     }
   },
 
   render: function() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
+
+    var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
+        addTitle    = 'Add Data Object',
+        title       = this.hasEditMode() ? editTitle : addTitle,
         submitLabel = 'Confirm',
 
         dialogStandardActions = [
@@ -112,13 +231,23 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref     = "dialog"
-        title   = {title + ' Data Object (' + DataObjectsStore.getCurrentClassName() + ')'}
-        actions = {dialogStandardActions}
-        modal   = {true}>
+        ref       = 'dialog'
+        title     = {title}
+        actions   = {dialogStandardActions}
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
-          {this.renderCustomFields()}
+          <div className="row">
+            <div className="col-xs-14">
+              <div>Built-in fields</div>
+              {this.renderBuiltinFields()}
+            </div>
+
+            <div className="col-xs-14" style={{paddingLeft: 20}}>
+              <div>Custom fields</div>
+              {this.renderCustomFields()}
+            </div>
+          </div>
         </div>
       </Dialog>
     );

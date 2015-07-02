@@ -29,9 +29,9 @@ var ScheduleDialogStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      label     : '',
-      crontab   : '',
-      codebox   : '',
+      label     : null,
+      crontab   : null,
+      codebox   : null,
       codeboxes : [
         {payload: '', text: 'Loading...'}
       ]

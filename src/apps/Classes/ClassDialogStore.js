@@ -16,8 +16,8 @@ var ClassDialogStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      description : '',
-      name        : '',
+      description : null,
+      name        : null,
       fields      : []
     };
   },

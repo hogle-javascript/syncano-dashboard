@@ -76,7 +76,7 @@ module.exports = React.createClass({
         title           = {title + ' an Administrator'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
