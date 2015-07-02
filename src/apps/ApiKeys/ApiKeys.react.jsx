@@ -122,9 +122,9 @@ module.exports = React.createClass({
 
   render: function() {
 
-    var checkedApiKeys = ApiKeysStore.getNumberOfChecked(),
+    var checkedApiKeys      = ApiKeysStore.getNumberOfChecked(),
         isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
-    console.error("APIKEYS: ", this.state.items)
+
     return (
       <Container>
         <ApiKeyDialog />

@@ -100,7 +100,7 @@ module.exports = React.createClass({
 
   render: function () {
 
-    var checkedItems = CodeBoxesStore.getNumberOfChecked(),
+    var checkedItems         = CodeBoxesStore.getNumberOfChecked(),
         isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
 
 

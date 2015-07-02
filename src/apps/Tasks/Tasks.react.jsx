@@ -111,6 +111,18 @@ module.exports = React.createClass({
     TriggersActions.uncheckAll();
   },
 
+  checkSchedule: function(id, state) {
+    console.info('Tasks::checkSchedule');
+    SchedulesActions.checkItem(id, state);
+    TriggersActions.uncheckAll();
+  },
+
+  checkTrigger: function(id, state) {
+    console.info('Tasks::checkSchedule');
+    TriggersActions.checkItem(id, state);
+    SchedulesActions.uncheckAll();
+  },
+
   showScheduleDialog: function () {
     SchedulesActions.showDialog();
   },
@@ -128,8 +140,10 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var checkedSchedules = SchedulesStore.getNumberOfChecked(),
-        checkedTriggers  = TriggersStore.getNumberOfChecked();
+    var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
+        checkedTriggers       = TriggersStore.getNumberOfChecked(),
+        isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.items.length),
+        isAnyTriggerSelected  = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length);
 
     return (
       <Container>
@@ -141,10 +155,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyScheduleSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
+              iconClassName = {isAnyScheduleSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Schedules"
@@ -167,10 +181,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyTriggerSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
+              iconClassName = {isAnyTriggerSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Schedules"
@@ -204,7 +218,7 @@ module.exports = React.createClass({
 
         <SchedulesList
           name                 = "Schedules"
-          checkItem            = {SchedulesActions.checkItem}
+          checkItem            = {this.checkSchedule}
           isLoading            = {this.state.isLoading}
           items                = {this.state.items}
           emptyItemHandleClick = {this.showScheduleDialog}
@@ -212,7 +226,7 @@ module.exports = React.createClass({
 
         <TriggersList
           name                 = "Triggers"
-          checkItem            = {TriggersActions.checkItem}
+          checkItem            = {this.checkTrigger}
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
           emptyItemHandleClick = {this.showTriggerDialog}
