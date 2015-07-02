@@ -140,14 +140,15 @@ module.exports = React.createClass({
     return (
       <div>
         <Table
-          ref             = "table"
-          headerColumns   = {tableHeader}
-          columnOrder     = {colOrder}
-          rowData         = {tableData}
-          multiSelectable = {true}
-          showRowHover    = {true}
-          onCellClick     = {this.handleCellClick}
-          onRowSelection  = {this.handleRowSelection}
+          ref                 = "table"
+          headerColumns       = {tableHeader}
+          columnOrder         = {colOrder}
+          rowData             = {tableData}
+          multiSelectable     = {true}
+          deselectOnClickAway = {false}
+          showRowHover        = {true}
+          onCellClick         = {this.handleCellClick}
+          onRowSelection      = {this.handleRowSelection}
           />
 
         <div
