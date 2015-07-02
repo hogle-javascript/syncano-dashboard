@@ -30,13 +30,7 @@ module.exports = React.createClass({
   ],
 
   validatorConstraints: {
-    label: {
-      presence: true
-    },
-    signal: {
-      presence: true
-    },
-    doClass: {
+    name: {
       presence: true
     },
     codebox: {
@@ -47,29 +41,34 @@ module.exports = React.createClass({
   handleDialogShow: function() {
     console.info('WebhookDialog::handleDialogShow');
     CodeBoxesActions.fetch();
-    ClassesActions.fetch();
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     WebhooksActions.createWebhook({
-      label   : this.state.label,
-      codebox : this.state.codebox,
-      'class' : this.state.class,
-      signal  : this.state.signal
+      name        : this.state.name,
+      codebox     : this.state.codebox,
+      description : this.state.description,
+      'public'    : this.state.public
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     WebhooksActions.updateWebhook(
       this.state.id, {
-        label   : this.state.label,
+        name   : this.state.name,
         codebox : this.state.codebox,
         'class' : this.state.class,
         signal  : this.state.signal
       });
   },
 
-  render: function () {
+  handleToogle: function(event, status) {
+    var state = {};
+    state[event.target.name] = status;
+    this.setState(state);
+  },
+
+  render: function() {
     var title       = this.hasEditMode() ? 'Edit': 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
         dialogStandardActions = [
@@ -87,62 +86,51 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref             = "dialog"
-        title           = {title + " Webhook"}
+        ref             = 'dialog'
+        title           = {title + ' Webhook'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
         modal           = {true}>
         <div>
           {this.renderFormNotifications()}
-          <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
 
-            <TextField
-              ref               = "label"
-              name              = "label"
-              fullWidth         = {true}
-              valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = "Label of the trigger"
-              floatingLabelText = "Label" />
+          <TextField
+            ref               = "name"
+            name              = "name"
+            fullWidth         = {true}
+            valueLink         = {this.linkState('name')}
+            errorText         = {this.getValidationMessages('name').join(' ')}
+            hintText          = "Name of the WebHook"
+            floatingLabelText = "Name" />
 
-            <SelectField
-              ref               = "signal"
-              name              = "signal"
-              floatingLabelText = "Signal"
-              fullWidth         = {true}
-              valueLink         = {this.linkState('signal')}
-              errorText         = {this.getValidationMessages('signal').join(' ')}
-              valueMember       = "payload"
-              displayMember     = "text"
-              menuItems         = {WebhookDialogStore.getSignalsDropdown()} />
+          <TextField
+            ref               = "description"
+            name              = "description"
+            fullWidth         = {true}
+            valueLink         = {this.linkState('description')}
+            errorText         = {this.getValidationMessages('description').join(' ')}
+            hintText          = "Description of the WebHook"
+            floatingLabelText = "Description" />
 
-            <SelectField
-              ref               = "doClass"
-              name              = "doClass"
-              floatingLabelText = "Class"
-              fullWidth         = {true}
-              valueLink         = {this.linkState('class')}
-              errorText         = {this.getValidationMessages('class').join(' ')}
-              valueMember       = "payload"
-              displayMember     = "text"
-              menuItems         = {this.state.classes} />
+          <SelectField
+            ref               = "codebox"
+            name              = "codebox"
+            floatingLabelText = "CodeBox"
+            valueLink         = {this.linkState('codebox')}
+            errorText         = {this.getValidationMessages('codebox').join(' ')}
+            valueMember       = "payload"
+            displayMember     = "text"
+            fullWidth         = {true}
+            menuItems         = {this.state.codeboxes} />
 
-            <SelectField
-              ref               = "codebox"
-              name              = "codebox"
-              floatingLabelText = "CodeBox"
-              valueLink         = {this.linkState('codebox')}
-              errorText         = {this.getValidationMessages('codebox').join(' ')}
-              valueMember       = "payload"
-              displayMember     = "text"
-              fullWidth         = {true}
-              menuItems         = {this.state.codeboxes} />
+          <Toggle
+            ref      = 'public'
+            name     = 'public'
+            onToggle = {this.handleToogle}
+            style    = {{marginTop: 20}}
+            label    = 'Make this WebHook public?' />
 
-          </form>
         </div>
       </Dialog>
     );

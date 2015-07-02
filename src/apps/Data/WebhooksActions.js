@@ -34,16 +34,16 @@ var WebhooksActions = Reflux.createActions({
 WebhooksActions.createWebhook.listen(function(payload) {
   console.info('WebhooksActions::createWebhook');
   Connection
-    .Webhooks
+    .WebHooks
     .create(payload)
     .then(this.completed)
     .catch(this.failure);
 });
 
 WebhooksActions.fetchWebhooks.listen(function() {
-  console.info('WebhooksActions::fetchWebhooks');
+  console.info('WebhooksActions::fetchWebhooks',   Connection);
   Connection
-    .Webhooks
+    .WebHooks
     .list()
     .then(this.completed)
     .catch(this.failure);
@@ -52,7 +52,7 @@ WebhooksActions.fetchWebhooks.listen(function() {
 WebhooksActions.updateWebhook.listen(function(id, payload) {
   console.info('WebhooksActions::updateWebhook');
   Connection
-    .Webhooks
+    .WebHooks
     .update(id, payload)
     .then(this.completed)
     .catch(this.failure);
@@ -61,7 +61,7 @@ WebhooksActions.updateWebhook.listen(function(id, payload) {
 WebhooksActions.removeWebhooks.listen(function(ids) {
   console.info('WebhooksActions::removeWebhooks');
   var promises = ids.map(function(id) {
-    return Connection.Webhooks.remove(id);
+    return Connection.WebHooks.remove(id);
   });
 
   D.all(promises)

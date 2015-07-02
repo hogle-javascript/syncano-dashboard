@@ -20,7 +20,7 @@ var WebhooksStore = Reflux.createStore({
   getInitialState: function() {
     return {
       items     : [],
-      isLoading : false
+      isLoading : true
     }
   },
 
@@ -29,8 +29,6 @@ var WebhooksStore = Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
-      ClassesActions.fetchClasses,
-      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
   },

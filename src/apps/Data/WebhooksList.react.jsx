@@ -44,7 +44,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       items     : this.props.items,
-      isLoading : this.props.isLoading,
+      isLoading : this.props.isLoading
     }
   },
 
@@ -60,27 +60,24 @@ module.exports = React.createClass({
     this.props.checkItem(id, state);
   },
 
-  renderItem: function (item) {
+  renderItem: function(item) {
 
     // TODO: move to store
-    var codeBox      = CodeBoxesStore.getCodeBoxById(item.codebox),
-        codeBoxLabel = codeBox ? codeBox.label: '';
-
     return (
       <Item
         checked = {item.checked}
-        key     = {item.id}>
+        key     = {item.name}>
         <ColumnCheckIcon
-          id              = {item.id.toString()}
+          id              = {item.name.toString()}
           icon            = 'arrow-up-bold'
           background      = {Colors.blue500}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick} >
-          {item.label}
+          {item.name}
         </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
-        <ColumnDesc>{item.signal}</ColumnDesc>
+        <ColumnDesc className="col-xs-8">{item.description}</ColumnDesc>
+        <ColumnDesc className="col-xs-8">{item.codebox}</ColumnDesc>
+        <ColumnDesc>{item.public.toString()}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -88,7 +85,7 @@ module.exports = React.createClass({
 
   getList: function() {
 
-    var items = this.state.items.map(function (item) {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item)
     }.bind(this));
 
@@ -109,9 +106,9 @@ module.exports = React.createClass({
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
+          <ColumnDesc.Header className="col-xs-8">Description</ColumnDesc.Header>
           <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
-          <ColumnDesc.Header>Signal</ColumnDesc.Header>
+          <ColumnDesc.Header>Public</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
         <List>

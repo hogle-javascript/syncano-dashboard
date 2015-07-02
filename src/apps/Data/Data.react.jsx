@@ -40,7 +40,7 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(DataViewsStore),
-    //Reflux.connect(WebhooksStore, 'webhooks'),
+    Reflux.connect(WebhooksStore, 'webhooks'),
     HeaderMixin,
     DialogsMixin,
     InstanceTabsMixin
@@ -48,14 +48,12 @@ module.exports = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
-    // Merging "hideDialogs
-    //this.hideDialogs(nextState.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   componentDidMount: function() {
     console.info('Data::componentDidMount');
     DataViewsActions.fetch();
-    //DataViewsActions.fetch();
+    WebhooksActions.fetch();
   },
 
   // Dialogs config
@@ -210,18 +208,16 @@ module.exports = React.createClass({
           emptyItemHandleClick = {this.showDataViewDialog}
           emptyItemContent     = "Create a DataView" />
 
-
+        <WebhooksList
+          name                 = "Webhooks"
+          checkItem            = {WebhooksActions.checkItem}
+          isLoading            = {this.state.webhooks.isLoading}
+          items                = {this.state.webhooks.items}
+          emptyItemHandleClick = {this.showWebhookDialog}
+          emptyItemContent     = "Create a Webhook" />
 
       </Container>
     );
   }
 
 });
-
-        //<WebhooksList
-        //  name                 = "Webhooks"
-        //  checkItem            = {WebhooksActions.checkItem}
-        //  isLoading            = {this.state.webhooks.isLoading}
-        //  items                = {this.state.webhooks.items}
-        //  emptyItemHandleClick = {this.showWebhookDialog}
-        //  emptyItemContent     = "Create a Webhook" />

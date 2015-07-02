@@ -7,9 +7,7 @@ var Reflux            = require('reflux'),
     //Stores & Actions
     WebhooksActions   = require('./WebhooksActions'),
     CodeBoxesActions  = require('../CodeBoxes/CodeBoxesActions'),
-    ClassesActions    = require('../Classes/ClassesActions'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
-    ClassesStore      = require('../Classes/ClassesStore');
+    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore');
 
 var WebhookDialogStore = Reflux.createStore({
   listenables : WebhooksActions,
@@ -18,64 +16,33 @@ var WebhookDialogStore = Reflux.createStore({
     DialogStoreMixin
   ],
 
-  signalMenuItems: [
-    {
-      payload : 'post_create',
-      text    : 'create'
-    },
-    {
-      payload : 'post_update',
-      text    : 'update'
-    },
-    {
-      payload : 'post_delete',
-      text    : 'delete'
-    }
-  ],
-
   getInitialState: function() {
     return {
-      label: '',
-      signal: '',
-      'class': '',
-      classes: [
-        {payload: '', text: 'Loading...'}
-      ],
-      codeboxes: [
-        {payload: '', text: 'Loading...'}
+      label     : '',
+      signal    : '',
+      'class'   : '',
+      codeboxes : [
+        {
+          payload : '',
+          text    : 'Loading...'
+        }
       ]
     };
   },
 
   init: function() {
     this.listenToForms();
-    this.joinTrailing(
-      CodeBoxesActions.setCodeBoxes,
-      ClassesActions.setClasses,
-      this.getDropdowns
-    );
+    this.listenTo(CodeBoxesActions.setCodeBoxes, this.getCodeBoxDropdown);
   },
 
-  getSignalsDropdown: function() {
-    return this.signalMenuItems;
-  },
+  getCodeBoxDropdown: function() {
+    console.debug('DataViewDialogStore::getCodeBoxDropdown');
+    var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
 
-  getDropdowns: function() {
-    console.debug('WebhookDialogStore::getDropdowns');
-    var dropdowns = {
-      codeboxes: CodeBoxesStore.getCodeBoxesDropdown(),
-      classes: ClassesStore.getClassesDropdown()
-    };
-
-    if (dropdowns.codeboxes.length === 0) {
-      dropdowns.codeboxes = [{payload: '', text: 'No codeboxes, add one first'}];
+    if (codeboxes.length === 0) {
+      codeboxes = [{payload: '', text: 'No classes, add one first'}];
     }
-
-    if (dropdowns.classes.length === 0) {
-      dropdowns.classes = [{payload: '', text: 'No classes, add one first'}];
-    }
-
-    this.trigger(dropdowns);
+    this.trigger({codeboxes: codeboxes});
   },
 
   onCreateWebhookCompleted: function() {
