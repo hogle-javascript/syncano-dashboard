@@ -112,10 +112,10 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref     = "dialog"
-        title   = {title + ' Data Object (' + DataObjectsStore.getCurrentClassName() + ')'}
-        actions = {dialogStandardActions}
-        modal   = {true}>
+        ref       = 'dialog'
+        title     = {title + ' Data Object (' + DataObjectsStore.getCurrentClassName() + ')'}
+        actions   = {dialogStandardActions}
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           {this.renderCustomFields()}
