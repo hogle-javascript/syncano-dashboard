@@ -9,16 +9,15 @@ var React              = require('react'),
     Paper              = mui.Paper,
     FlatButton         = mui.FlatButton;
 
-
 var Header = React.createClass({
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     }
   },
 
-  render: function () {
+  render: function() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -54,17 +53,16 @@ module.exports = Radium(React.createClass({
         alignItems    : 'center',
         fontSize      : 14,
         lineHeight    : '16px',
-        paddingTop    : 16,
-        paddingBottom : 16
+        padding       : '16px 8px'
       }
     }
   },
 
-  handleClick: function (event) {
+  handleClick: function() {
     this.refs.snackbar.show();
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
