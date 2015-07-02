@@ -7,8 +7,7 @@ var StoreFormMixin = {
     return {
       errors    : {},
       feedback  : null,
-      canSubmit : true,
-      hideDialogs: false // Non related field HACK!
+      canSubmit : true
     }
   },
 
@@ -34,6 +33,7 @@ var StoreFormMixin = {
   },
 
   handleForm: function() {
+    console.log('StoreFormMixin::handleForm');
     this.trigger({canSubmit: false});
   },
 

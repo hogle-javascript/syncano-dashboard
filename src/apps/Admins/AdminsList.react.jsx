@@ -8,6 +8,7 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
+    SessionStore      = require('../Session/SessionStore'),
     AdminsActions     = require('./AdminsActions'),
     AdminsStore       = require('./AdminsStore'),
 
@@ -33,6 +34,7 @@ module.exports = React.createClass({
   displayName: 'AdminsList',
 
   mixins: [
+    Reflux.connect(SessionStore, 'session'),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -57,6 +59,7 @@ module.exports = React.createClass({
   },
 
   renderItem: function(item) {
+    var isOwner = item.id === this.state.session.instance.owner.id;
     return (
       <Item
         checked = {item.checked}
@@ -67,8 +70,14 @@ module.exports = React.createClass({
           icon            = 'account'
           background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
-          {item.email}
+          handleIconClick = {this.handleItemIconClick}
+          checkable       = {!isOwner}>
+          <div>
+            {item.email}
+            <div>
+              {isOwner ? "Instance owner (cannot be edited)" : null}
+            </div>
+          </div>
         </ColumnCheckIcon>
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>

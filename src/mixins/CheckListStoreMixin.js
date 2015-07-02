@@ -31,6 +31,13 @@ var CheckListStoreMixin = {
     this.trigger(this.data);
   },
 
+  onSelectAll: function() {
+    this.data.items.forEach(function(item) {
+      item.checked = true;
+    });
+    this.trigger(this.data);
+  },
+
   getCheckedItem: function() {
 
     // Looking for the first 'checked' item

@@ -2,7 +2,6 @@ var React                 = require('react'),
     Reflux                = require('reflux'),
 
     // Utils
-    ValidationMixin       = require('../../mixins/ValidationMixin'),
     FormMixin             = require('../../mixins/FormMixin'),
     DialogMixin           = require('../../mixins/DialogMixin'),
     Show                  = require('../../common/Show/Show.react'),
@@ -29,7 +28,6 @@ module.exports = React.createClass({
     React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
     Reflux.connect(DataObjectsStore, 'dataobjects'),
-    ValidationMixin,
     FormMixin,
     DialogMixin
   ],
