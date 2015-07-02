@@ -2,7 +2,6 @@ var React               = require('react'),
     Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin     = require('../../mixins/ValidationMixin'),
     DialogMixin         = require('../../mixins/DialogMixin'),
     FormMixin           = require('../../mixins/FormMixin'),
 
@@ -28,7 +27,6 @@ module.exports = React.createClass({
 
     Reflux.connect(CodeBoxDialogStore),
     DialogMixin,
-    ValidationMixin,
     FormMixin
   ],
 
