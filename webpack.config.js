@@ -14,8 +14,8 @@ for (i = 0; i < pluginVars.length; i++) {
 }
 
 var plugins = [
-  new webpack.DefinePlugin(plugin),
-  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+  new webpack.DefinePlugin(plugin)
+  // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
 ];
 
 var appEntry = [
@@ -55,7 +55,12 @@ module.exports = {
           "includePaths[]=" +
           (path.resolve(__dirname, "./node_modules"))
       }
-    ]
+    ],
+    postLoaders: [{
+      test: /\.js(|x)?$/,
+      exclude: /(test|node_modules)\//,
+      loader: 'istanbul-instrumenter'
+    }]
   },
   resolve: {
     modulesDirectories: ['node_modules'],
