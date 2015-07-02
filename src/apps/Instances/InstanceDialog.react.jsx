@@ -101,7 +101,6 @@ module.exports = React.createClass({
             <TextField
               ref               = "description"
               name              = "description"
-              multiLine         = {true}
               fullWidth         = {true}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}
