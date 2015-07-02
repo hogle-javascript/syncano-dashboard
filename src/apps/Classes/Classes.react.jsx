@@ -133,8 +133,10 @@ module.exports = React.createClass({
 
   render: function () {
 
-    var checkedClasses = ClassesStore.getNumberOfChecked(),
-        styles         = this.getStyles();
+    var checkedClasses     = ClassesStore.getNumberOfChecked(),
+        styles             = this.getStyles(),
+        isAnyClassSelected = checkedClasses >= 1 && checkedClasses < (this.state.items.length);
+
 
     return (
       <Container>
@@ -145,11 +147,11 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect Api Keys" // TODO: extend component
+              label         = {isAnyClassSelected ? "Click here to select all" : "Click here to unselect all"} // TODO: extend component
               color         = "" // TODO: extend component
               mini          = {true}
-              onClick       = {ClassesActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
+              iconClassName = {isAnyClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Classes" // TODO: extend component
@@ -168,7 +170,7 @@ module.exports = React.createClass({
 
             <FabListItem
               style         = {styles.fabListTopButton}
-              label         = "Click here to customize Instances" // TODO: extend component
+              label         = "Click here to customize Class" // TODO: extend component
               color         = "" // TODO: extend component
               secondary     = {true}
               mini          = {true}
