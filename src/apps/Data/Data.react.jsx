@@ -152,13 +152,13 @@ module.exports = React.createClass({
               iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
             <FabListItem
-              label         = "Click here to delete DataViews"
+              label         = "Click here to delete Data Endpoint"
               mini          = {true}
               onClick       = {this.showDialog('removeDataViewDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
-              label         = "Click here to edit DataView"
+              label         = "Click here to edit Data Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showDataViewEditDialog}
@@ -178,13 +178,13 @@ module.exports = React.createClass({
               iconClassName = "synicon-checkbox-multiple-marked-outline" />
 
             <FabListItem
-              label         = "Click here to delete DataViews"
+              label         = "Click here to delete CodeBox Endpoint"
               mini          = {true}
               onClick       = {this.showDialog('removeWebhookDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
-              label         = "Click here to edit Webhook"
+              label         = "Click here to edit CodeBox Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showWebhookEditDialog}
@@ -196,12 +196,12 @@ module.exports = React.createClass({
         <FabList>
 
           <FabListItem
-            label         = "Click here to create Data View"
+            label         = "Click here to create Data Endpoint"
             onClick       = {this.showDataViewDialog}
             iconClassName = "synicon-table" />
 
           <FabListItem
-            label         = "Click here to create Webhook"
+            label         = "Click here to create CodeBox Endpoint"
             onClick       = {this.showWebhookDialog}
             iconClassName = "synicon-arrow-up-bold" />
 

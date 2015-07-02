@@ -69,8 +69,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+    var title       = this.hasEditMode() ? 'Edit' : 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -87,7 +87,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref             = 'dialog'
-        title           = {title + ' Webhook'}
+        title           = {title + ' CodeBox Endpoint'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
