@@ -51,7 +51,7 @@ module.exports = React.createClass({
   },
 
   handleEditSubmit: function() {
-    UsersActions.updateUser(this.state.instance.id, {
+    UsersActions.updateUser(this.state.id, {
       username : this.state.username,
       password : this.state.password
     });

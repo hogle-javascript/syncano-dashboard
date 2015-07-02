@@ -46,7 +46,7 @@ module.exports = React.createClass({
     return validateObj;
   },
 
-  getUpdateParams: function() {
+  getParams: function() {
     var params = {
       id                : this.state.id,
       owner             : this.state.owner,
@@ -58,6 +58,7 @@ module.exports = React.createClass({
       other_permissions : this.state.other_permissions
     };
 
+    // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       var fieldValue = this.refs['field-' + item.name].getValue();
       if (fieldValue) {
@@ -69,8 +70,9 @@ module.exports = React.createClass({
   },
 
   handleAddSubmit: function() {
-    var className = DataObjectsStore.getCurrentClassName();
-    var payload = {};
+    var className = DataObjectsStore.getCurrentClassName(),
+        payload = {};
+
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       payload[item.name] = this.state[item.name];
     }.bind(this));
@@ -79,7 +81,7 @@ module.exports = React.createClass({
   },
 
   handleEditSubmit: function() {
-    DataObjectsActions.updateDataObject(DataObjectsStore.getCurrentClassName(), this.getUpdateParams());
+    DataObjectsActions.updateDataObject(DataObjectsStore.getCurrentClassName(), this.getParams());
   },
 
   renderBuiltinFields: function() {
