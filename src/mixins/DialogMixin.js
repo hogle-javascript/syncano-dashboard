@@ -3,15 +3,15 @@ var DialogMixin = {
   componentWillUpdate: function(nextProps, nextState) {
     console.debug('DialogMixin::componentWillUpdate');
 
-    if (this.state.visible === nextState.visible) {
+    if (this.state._dialogVisible === nextState._dialogVisible) {
       return;
     }
 
-    if (nextState.visible === false) {
+    if (nextState._dialogVisible === false) {
       return this.refs.dialog.dismiss();
     }
 
-    if (nextState.visible === true) {
+    if (nextState._dialogVisible === true) {
       return this.refs.dialog.show();
     }
   },
@@ -36,14 +36,16 @@ var DialogMixin = {
     } else if (typeof this.handleAddSubmit === 'function') {
       this.handleAddSubmit();
     }
+
+    this.replaceState(this.getInitialState());
   },
 
   hasEditMode: function() {
-    return this.state.mode === 'edit';
+    return this.state._dialogMode === 'edit';
   },
 
   hasAddMode: function() {
-    return this.state.mode === 'add';
+    return this.state._dialogMode === 'add';
   }
 };
 
