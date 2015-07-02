@@ -4,11 +4,11 @@ var React        = require('react'),
 
 var FormMixin = {
 
-  getInitialState: function () {
+  getInitialState: function() {
     return this.getInitialFormState();
   },
 
-  getInitialFormState: function () {
+  getInitialFormState: function() {
     return {
       errors    : {},
       feedback  : null,
@@ -16,7 +16,7 @@ var FormMixin = {
     }
   },
 
-  renderFormErrorFeedback: function () {
+  renderFormErrorFeedback: function() {
     if (!this.state.errors || this.state.errors.feedback === undefined) {
       return;
     }
@@ -24,7 +24,7 @@ var FormMixin = {
     return <Notification type='error'>{this.state.errors.feedback}</Notification>;
   },
 
-  renderFormFeedback: function () {
+  renderFormFeedback: function() {
     if (!this.state.feedback || this.state.feedback === undefined) {
       return
     }
@@ -32,11 +32,11 @@ var FormMixin = {
     return <Notification>{this.state.feedback}</Notification>;
   },
 
-  renderFormNotifications: function () {
+  renderFormNotifications: function() {
     return this.renderFormErrorFeedback() || this.renderFormFeedback()
   },
 
-  resetForm: function () {
+  resetForm: function() {
     this.setState(this.getInitialFormState());
   }
 

@@ -16,13 +16,18 @@ var DialogMixin = {
     }
   },
 
+  resetDialogState: function() {
+    if (typeof this.getInitialState === 'function') {
+      this.replaceState(this.getInitialState());
+    }
+  },
+
   handleCancel: function() {
     console.debug('DialogMixin::handleCancel');
 
     this.refs.dialog.dismiss();
-
-    if (typeof this.getInitialState === 'function') {
-      this.replaceState(this.getInitialState());
+    if (typeof this.refs.dialog.props.onDismiss !== 'function') {
+      this.resetDialogState();
     }
   },
 
@@ -37,7 +42,6 @@ var DialogMixin = {
       this.handleAddSubmit();
     }
 
-    this.replaceState(this.getInitialState());
   },
 
   hasEditMode: function() {

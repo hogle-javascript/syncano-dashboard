@@ -10,15 +10,13 @@ var React            = require('react'),
     UsersActions     = require('./UsersActions'),
     UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
-    UsersStore       = require('./UsersStore'),
 
     // Components
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog,
-    Loading          = require('../../common/Loading/Loading.react.jsx');
+    Dialog           = mui.Dialog;
 
 
 module.exports = React.createClass({
@@ -27,7 +25,6 @@ module.exports = React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(UsersStore, 'users'),
     Reflux.connect(UserDialogStore),
     ValidationMixin,
     FormMixin,
@@ -78,7 +75,7 @@ module.exports = React.createClass({
         ref       = "dialog"
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
-        modal     = {true}>
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
@@ -106,10 +103,6 @@ module.exports = React.createClass({
               floatingLabelText = 'Password' />
 
           </form>
-          <Loading
-            type     = 'linear'
-            position = 'bottom'
-            show     = {this.state.users.isLoading} />
         </div>
       </Dialog>
     );
