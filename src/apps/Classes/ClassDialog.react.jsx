@@ -16,6 +16,7 @@ var React            = require('react'),
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
+    Checkbox         = mui.Checkbox,
     FlatButton       = mui.FlatButton,
     DropDownMenu     = mui.DropDownMenu,
     SelectField      = mui.SelectField,
@@ -132,11 +133,22 @@ module.exports = React.createClass({
 
       return (
         <div key={item.fieldName} className='row'>
-          <span className='col-xs-8'>{item.fieldName}</span>
-          <span className='col-xs-8'>{item.fieldType}</span>
-          <span className='col-xs-8'>{item.fieldTarget}</span>
-          <span className='col-xs-8'>
+          <span className='col-xs-8' style={{marginTop: 5}}>{item.fieldName}</span>
+          <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldType}</span>
+          <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldTarget}</span>
+          <span className='col-xs-3' style={{paddingLeft: 15}}>
+            <Checkbox
+              style = {{marginTop: 5}}
+              name  = "filter" />
+          </span>
+          <span className='col-xs-3' style={{paddingLeft: 15}}>
+            <Checkbox
+              style = {{marginTop: 5}}
+              name  = "order" />
+          </span>
+          <span className='col-xs-5' style={{paddingLeft: 15}}>
             <FlatButton
+              style     = {{marginTop: 5}}
               label     = 'Remove'
               secondary = {true}
               onClick   = {function() {this.handleRemoveField(item)}.bind(this)} />
@@ -169,10 +181,9 @@ module.exports = React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onDismiss       = {this.resetDialogState}>
-        <div className='row'>
+
         {this.renderFormNotifications()}
 
-          <div className='col-xs-22'>
             <TextField
               ref               = 'name'
               name              = 'name'
@@ -191,59 +202,87 @@ module.exports = React.createClass({
               hintText          = 'Description of the Class'
               floatingLabelText = 'Description' />
 
-            <div className='row'>
-              <div className='col-xs-12'>
-                 <TextField
-                  ref               = 'fieldName'
-                  name              = 'fieldName'
-                  style             = {{width:'100%'}}
-                  valueLink         = {this.linkState('fieldName')}
-                  errorText         = {this.getValidationMessages('fieldName').join(' ')}
-                  hintText          = 'Name of the Field'
-                  floatingLabelText = 'Name' />
-              </div>
-              <div className='col-xs-12' style={{paddingLeft: 15}}>
-                <SelectField
-                    ref               = 'fieldType'
-                    name              = 'fieldType'
-                    floatingLabelText = 'Type'
-                    style             = {{width:'100%'}}
-                    valueLink         = {this.linkState('fieldType')}
-                    errorText         = {this.getValidationMessages('fieldType').join(' ')}
-                    valueMember       = 'payload'
-                    displayMember     = 'text'
-                    menuItems         = {this.getFieldTypes()} />
-              </div>
-              <div className='col-xs-11' style={{paddingLeft: 15}}>
-                <Show if={this.state.fieldType === 'reference'}>
-                  <SelectField
-                    ref               = 'fieldTarget'
-                    name              = 'fieldTarget'
-                    floatingLabelText = 'Target Class'
-                    fullWidth         = {true}
-                    valueLink         = {this.linkState('fieldTarget')}
-                    errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
-                    valueMember       = 'payload'
-                    displayMember     = 'text'
-                    menuItems         = {ClassesStore.getClassesDropdown()} />
-                </Show>
-              </div>
-            </div>
-            <FlatButton
-              label     = 'Add field'
-              secondary = {true}
-              onClick   = {this.handleFieldAdd} />
-          </div>
+            <div style={{marginTop: 30}}>Schema</div>
 
-          <div
-            className = 'col-xs-12'
-            style     = {{paddingLeft: 15}}>
-            <div>Schema</div>
             {this.getValidationMessages('schema').join(' ')}
-            <div>{this.renderSchemaFields()}</div>
-          </div>
 
-        </div>
+              <div className='row'>
+                <div className='col-xs-8'>
+                </div>
+                <div className='col-xs-8' style={{paddingLeft: 15}}>
+                </div>
+                <div className='col-xs-8' style={{paddingLeft: 15}}>
+                </div>
+                <div className='col-xs-3' style={{paddingLeft: 15}}>
+                  Order
+                </div>
+                <div className='col-xs-3' style={{paddingLeft: 15}}>
+                  Filter
+                </div>
+                <div className='col-xs-5' style={{paddingLeft: 15}}>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-xs-8'>
+                   <TextField
+                    ref               = 'fieldName'
+                    name              = 'fieldName'
+                    style             = {{width:'100%'}}
+                    valueLink         = {this.linkState('fieldName')}
+                    errorText         = {this.getValidationMessages('fieldName').join(' ')}
+                    hintText          = 'Name of the Field'
+                    floatingLabelText = 'Name' />
+                </div>
+                <div className='col-xs-8' style={{paddingLeft: 15}}>
+                  <SelectField
+                      ref               = 'fieldType'
+                      name              = 'fieldType'
+                      floatingLabelText = 'Type'
+                      style             = {{width:'100%'}}
+                      valueLink         = {this.linkState('fieldType')}
+                      errorText         = {this.getValidationMessages('fieldType').join(' ')}
+                      valueMember       = 'payload'
+                      displayMember     = 'text'
+                      menuItems         = {this.getFieldTypes()} />
+                </div>
+                <div className='col-xs-8' style={{paddingLeft: 15}}>
+                  <Show if={this.state.fieldType === 'reference'}>
+                    <SelectField
+                      ref               = 'fieldTarget'
+                      name              = 'fieldTarget'
+                      floatingLabelText = 'Target Class'
+                      fullWidth         = {true}
+                      valueLink         = {this.linkState('fieldTarget')}
+                      errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
+                      valueMember       = 'payload'
+                      displayMember     = 'text'
+                      menuItems         = {ClassesStore.getClassesDropdown()} />
+                  </Show>
+                </div>
+                <div className='col-xs-3' style={{paddingLeft: 15}}>
+                  <Checkbox
+                    style = {{marginTop: 35}}
+                    ref   = "filter"
+                    name  = "filter"/>
+                </div>
+                <div className='col-xs-3' style={{paddingLeft: 15}}>
+                  <Checkbox
+                    style = {{marginTop: 35}}
+                    ref   = "order"
+                    name  = "order"/>
+                </div>
+                <div className='col-xs-5' style={{paddingLeft: 15}}>
+                  <FlatButton
+                    style     = {{marginTop: 35}}
+                    label     = 'Add'
+                    secondary = {true}
+                    onClick   = {this.handleFieldAdd} />
+                </div>
+              </div>
+
+              <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
+
       </Dialog>
     );
   }
