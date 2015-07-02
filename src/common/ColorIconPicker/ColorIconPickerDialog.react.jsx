@@ -1,9 +1,6 @@
 var React  = require('react'),
     Reflux = require('reflux'),
 
-    // Utils
-    ValidationMixin = require('../../mixins/ValidationMixin'),
-
     // Components
     mui    = require('material-ui'),
     Dialog = mui.Dialog,
