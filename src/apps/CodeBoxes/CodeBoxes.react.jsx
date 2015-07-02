@@ -100,7 +100,9 @@ module.exports = React.createClass({
 
   render: function () {
 
-    var checkedItems = CodeBoxesStore.getNumberOfChecked();
+    var checkedItems = CodeBoxesStore.getNumberOfChecked(),
+        isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+
 
     return (
       <Container>
@@ -110,11 +112,12 @@ module.exports = React.createClass({
         <Show if={checkedItems > 0}>
 
           <FabList position="top">
+
             <FabListItem
-              label         = "Click here to unselect Api Keys"
+              label         = {isAnyCodeboxSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {CodeBoxesActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyCodeboxSelected ? CodeBoxesActions.selectAll : CodeBoxesActions.uncheckAll}
+              iconClassName = {isAnyCodeboxSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete CodeBoxes"

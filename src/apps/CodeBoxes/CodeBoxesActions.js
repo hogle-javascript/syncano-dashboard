@@ -6,6 +6,7 @@ var Reflux     = require('reflux'),
 var CodeBoxesActions = Reflux.createActions({
   checkItem           : {},
   uncheckAll          : {},
+  selectAll           : {},
 
   fetch               : {},
   setCodeBoxes        : {},
