@@ -70,7 +70,7 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref       = "dialog"
+        ref       = 'dialog'
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}>

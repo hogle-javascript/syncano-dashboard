@@ -35,7 +35,7 @@ var AdminDialogStore = Reflux.createStore({
 
   getInitialState: function() {
     return {
-      email : '',
+      email : null,
       role  : ''
     };
   },
