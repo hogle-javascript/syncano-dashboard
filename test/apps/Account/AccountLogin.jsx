@@ -1,9 +1,9 @@
 import React from "react/addons";
 let { TestUtils } = React.addons;
 
-import ReactRouterContext from "../src/utils/ReactRouterContext";
-import MUIContext from "../src/utils/MUIContext";
-import AccountLogin from "../src/apps/Account/AccountLogin.react";
+import ReactRouterContext from "../../../src/utils/ReactRouterContext";
+import MUIContext from "../../../src/utils/MUIContext";
+import AccountLogin from "../../../src/apps/Account/AccountLogin.react";
 
 
 describe("AccountLogin Component", function() {
