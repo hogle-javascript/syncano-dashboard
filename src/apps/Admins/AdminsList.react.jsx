@@ -34,7 +34,6 @@ module.exports = React.createClass({
   displayName: 'AdminsList',
 
   mixins: [
-    Reflux.connect(SessionStore, 'session'),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -58,8 +57,20 @@ module.exports = React.createClass({
     this.props.checkItem(id, state);
   },
 
+  getStyles: function() {
+    return {
+      ownerLabel: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 14,
+        marginTop: 4
+      }
+    }
+  },
+
   renderItem: function(item) {
-    var isOwner = item.id === this.state.session.instance.owner.id;
+    var styles  = this.getStyles(),
+        isOwner = item.id === SessionStore.getInstance().owner.id;
+
     return (
       <Item
         checked = {item.checked}
@@ -73,9 +84,11 @@ module.exports = React.createClass({
           handleIconClick = {this.handleItemIconClick}
           checkable       = {!isOwner}>
           <div>
-            {item.email}
             <div>
-              {isOwner ? "Instance owner (cannot be edited)" : null}
+              {item.email}
+            </div>
+            <div style={styles.ownerLabel}>
+              {isOwner ? "Owner (cannot be edited)" : null}
             </div>
           </div>
         </ColumnCheckIcon>
