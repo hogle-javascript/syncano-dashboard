@@ -57,6 +57,27 @@ var DataObjectsStore = Reflux.createStore({
           checked : false
         },
         {
+          id      : 'owner_permissions',
+          name    : 'Owner p',
+          width   : 60,
+          tooltip : 'Built-in property: Owner Permissions',
+          checked : false
+        },
+        {
+          id      : 'group_permissions',
+          name    : 'Group p',
+          width   : 60,
+          tooltip : 'Built-in property: Group Permissions',
+          checked : false
+        },
+        {
+          id      : 'other_permissions',
+          name    : 'Other p',
+          width   : 60,
+          tooltip : 'Built-in property: Other Permissions',
+          checked : false
+        },
+        {
           id      : 'created_at',
           name    : 'Created',
           width   : 200,
@@ -106,6 +127,9 @@ var DataObjectsStore = Reflux.createStore({
       return this.data.selectedRows.length;
     }
     return null;
+  },
+  getSelectedRowObj: function(cellNumber) {
+    return this.data.items[cellNumber];
   },
 
   setCurrentClassObj: function(classObj) {
