@@ -1,7 +1,6 @@
 var Reflux         = require('reflux'),
-
+    analytics      = require('../../segment'),
     StoreFormMixin = require('../../mixins/StoreFormMixin'),
-
     SessionActions = require('../Session/SessionActions'),
     SessionStore   = require('../Session/SessionStore'),
     AuthActions    = require('./AuthActions'),
@@ -48,6 +47,9 @@ var AuthStore = Reflux.createStore({
   },
 
   onPasswordSignUpCompleted: function(payload) {
+    analytics.track('Sign up Dashboard', {
+      authBackend: 'password'
+    });
     this.onPasswordSignInCompleted(payload);
   },
 
@@ -74,7 +76,10 @@ var AuthStore = Reflux.createStore({
   },
 
   onSocialLoginCompleted: function(payload) {
-    console.debug('AuthStore::onSocialLoginCompleted');
+    console.debug('AuthStore::onSocialLoginCompleted', payload);
+    analytics.track('Sign up Dashboard', {
+      authBackend: payload.network
+    });
     this.onPasswordSignInCompleted(payload);
   }
 
