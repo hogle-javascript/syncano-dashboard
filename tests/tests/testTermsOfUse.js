@@ -1,11 +1,11 @@
 /* jshint expr: true */
 module.exports = {
-  'Test': function (client) {
+  'Test': function(client) {
     var signupPage = client.page.signupPage();
     signupPage.navigate();
     signupPage.clickTermsOfUseLink();
 
-    client.window_handles(function(result) {
+    client.windowHandles(function(result) {
       var handle = result.value[1];
       client.switchWindow(handle);
     });

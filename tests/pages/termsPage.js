@@ -3,7 +3,7 @@ module.exports = {
   commands: [],
   elements: {
     termsOfUseContainer: {
-        selector: 'div.terms'
+      selector: 'div.terms'
     }
   }
 };
