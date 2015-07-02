@@ -55,12 +55,7 @@ module.exports = {
           "includePaths[]=" +
           (path.resolve(__dirname, "./node_modules"))
       }
-    ],
-    postLoaders: [{
-      test: /\.js(|x)?$/,
-      exclude: /(test|node_modules)\//,
-      loader: 'istanbul-instrumenter'
-    }]
+    ]
   },
   resolve: {
     modulesDirectories: ['node_modules'],

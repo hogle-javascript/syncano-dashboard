@@ -1,5 +1,10 @@
 var webpackConfig = require('./webpack.config');
 
+// webpackConfig.module.postLoaders = [{
+//   test: /\.js(|x)?$/,
+//   exclude: /(test|node_modules)\//,
+//   loader: 'istanbul-instrumenter'
+// }];
 
 module.exports = function(config) {
   config.set({
