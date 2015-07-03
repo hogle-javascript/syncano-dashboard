@@ -1,17 +1,20 @@
-var React           = require('react'),
-    Router          = require('react-router'),
-    RouteHandler    = Router.RouteHandler,
+var React              = require('react'),
+    Router             = require('react-router'),
+    RouteHandler       = Router.RouteHandler,
 
-    SessionActions  = require('../apps/Session/SessionActions'),
+    SessionActions     = require('../apps/Session/SessionActions'),
+    SessionStore       = require('../apps/Session/SessionStore'),
 
-    mui             = require('material-ui'),
-    ThemeManager    = new mui.Styles.ThemeManager(),
-    SyncanoTheme    = require('./../common/SyncanoTheme');
+    mui                = require('material-ui'),
+    ThemeManager       = new mui.Styles.ThemeManager(),
+    SyncanoTheme       = require('./../common/SyncanoTheme');
 
 
 module.exports = React.createClass({
 
   displayName: 'App',
+
+  mixins: [Router.State],
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -21,19 +24,29 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  getChildContext: function() {
+  getChildContext: function(){
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function () {
+  componentWillUpdate: function () {
+    var routes = this.getRoutes();
+    var isInInstancesScope = routes.some(function (route) {
+      return route.name === "instances";
+    });
+    if (!isInInstancesScope) {
+      SessionStore.removeInstance();
+    }
+  },
+
+  componentWillMount: function(){
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 
-  render: function () {
+  render: function(){
     return <RouteHandler/>
   }
 

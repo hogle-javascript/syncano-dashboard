@@ -33,10 +33,6 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount: function() {
-    SessionStore.removeInstance();
-  },
-
   headerMenuItems: [
     {
       route: 'profile-settings',
