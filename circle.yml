@@ -18,7 +18,8 @@ dependencies:
     - mv ./dist ./dist_e2e
     - npm run-script nightwatch-setup
     - npm run-script nightwatch-http-server:
-      background: true
+        background: true
+
   cache_directories:
     - "./bin/"
 
