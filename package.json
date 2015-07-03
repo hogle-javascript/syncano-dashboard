@@ -52,6 +52,7 @@
     "gulp-strip-debug": "^1.0.2",
     "gulp-unzip": "^0.1.3",
     "gulp-util": "^3.0.6",
+    "http-server": "^0.8.0",
     "istanbul": "^0.3.17",
     "istanbul-instrumenter-loader": "^0.1.3",
     "jscs": "latest",
@@ -82,9 +83,10 @@
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
+    "jscs": "jscs --esprima=esprima-fb src tests",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
-    "jscs": "jscs --esprima=esprima-fb src tests",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "nightwatch-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key"
   }
 }
