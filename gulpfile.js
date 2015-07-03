@@ -1,4 +1,5 @@
 var gulp             = require('gulp'),
+    fs               = require('fs'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
@@ -25,7 +26,7 @@ var paths = {
 };
 
 gulp.task('clean', function(cb) {
-  del(['./dist/**/*', paths.dist], cb);
+  del(['./dist/**/*', './dist', './dist_e2e/**/*', './dist_e2e'], cb);
 });
 
 gulp.task('copy-index', ['clean'], function() {
@@ -150,6 +151,10 @@ var chromedriverTypes = [
 
 chromedriverTypes.map(function(type) {
   gulp.task('nightwatch-setup:' + type, function(cb) {
+    if (fs.existsSync(paths.bin)) {
+      gutil.log('[nightwatch-setup]', '"' + paths.bin + '" already exists.')
+      return cb();
+    }
     var zipFiles = paths.bin + '/**/*.zip',
         urls     = [
           'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',

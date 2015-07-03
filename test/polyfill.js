@@ -21,3 +21,24 @@ if (typeof Function.prototype.bind != 'function') {
 }
 
 var analytics = {};
+analytics.methods = [
+  "trackSubmit",
+  "trackClick",
+  "trackLink",
+  "trackForm",
+  "pageview",
+  "identify",
+  "group",
+  "track",
+  "ready",
+  "alias",
+  "page",
+  "once",
+  "off",
+  "on",
+  "load"
+];
+
+analytics.methods.forEach(function(method) {
+  analytics[method] = function() {};
+});

@@ -2,30 +2,37 @@ machine:
   node:
     version:
       0.10.32
+  environment:
+    NODE_ENV: staging
 
 general:
   artifacts:
     - "coverage/"
     - "reports/"
 
-# dependencies:
-#    post:
-#       - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-#       - sudo dpkg -i google-chrome*.deb
-#       - npm run-script nightwatch-setup
-#       - npm start:
-#             background: true
+dependencies:
+  post:
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - sudo dpkg -i google-chrome*.deb
+    - npm run-script build
+    - mv ./dist ./dist_e2e
+    - npm run-script nightwatch-setup
+    - npm run-script nightwatch-http-server:
+        background: true
+
+  cache_directories:
+    - "./bin/"
 
 test:
   override:
     - npm run-script jscs
     - npm test
     - npm run-script codeclimate
-    # - npm run-script nightwatch
+    - npm run-script nightwatch
 
 deployment:
   staging:
     branch: devel
     commands:
-      - NODE_ENV=staging npm run-script publish
-      - NODE_ENV=staging npm run-script clean
+      - npm run-script publish
+      - npm run-script clean
