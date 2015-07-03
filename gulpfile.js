@@ -10,7 +10,7 @@ var gulp             = require('gulp'),
     chmod            = require('gulp-chmod'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
-    webpackConfig    = require('./webpack.config.js'),
+    webpackConfig    = require('./webpack.config'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
@@ -60,49 +60,17 @@ gulp.task('iconfont', ['clean'], function(cb) {
 });
 
 gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
-  var config     = Object.create(webpackConfig);
-  config.devtool = 'sourcemap';
-  config.debug   = true;
-
-  if (ENV === 'production') {
-    config.progress = false;
-    config.debug    = false;
-    config.plugins  = config.plugins.concat(
-          new webpack.DefinePlugin({
-            'process.env': {
-              // This has effect on the react lib size
-              'NODE_ENV': JSON.stringify('production')
-            }
-          }),
-          new webpack.optimize.DedupePlugin(),
-          new webpack.optimize.UglifyJsPlugin()
-      );
-  }
-
-  // run webpack
-  webpack(config).run(callback);
+  webpack(webpackConfig).run(callback);
 });
 
 gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
-  var config = Object.create(webpackConfig);
-  config.devtool = 'eval';
-  config.debug = true;
-
-  // Start a webpack-dev-server
-  new WebpackDevServer(webpack(config), {
-    publicPath: '/js/',
-    contentBase: paths.dist,
-    https: true,
-    hot: true,
-    stats: {
-      colors: true
-    }
-  }).listen(8080, 'localhost', function(err) {
-    if (err) {
-      throw new gutil.PluginError('webpack-dev-server', err);
-    }
-    gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
-  });
+  new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
+    .listen(8080, 'localhost', function(err) {
+      if (err) {
+        throw new gutil.PluginError('webpack-dev-server', err);
+      }
+      gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
+    });
 });
 
 gulp.task('stripDebug', ['clean', 'webpack:build'], function() {

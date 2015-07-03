@@ -12,10 +12,8 @@
     "classnames": "^2.1.2",
     "gravatar": "^1.1.1",
     "hellojs": "^1.6.0",
-    "keymaster": "~1.6.2",
     "material-ui": "Syncano/material-ui#build",
     "moment": "^2.10.3",
-    "node-uuid": "^1.4.3",
     "normalize.css": "^3.0.3",
     "object-assign": "^3.0.0",
     "raven-js": "^1.1.19",
@@ -27,7 +25,6 @@
     "react-tap-event-plugin": "^0.1.7",
     "react-zeroclipboard": "^2.0.1",
     "reflux": "latest",
-    "request": "^2.58.0",
     "superagent": "^1.2.0",
     "url": "^0.10.3",
     "validate.js": "^0.7.1"
