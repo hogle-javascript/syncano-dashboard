@@ -6,12 +6,12 @@ var React                = require('react'),
 
     ProfileActions       = require('./ProfileActions'),
     ProfileSettingsStore = require('./ProfileSettingsStore'),
+    SessionStore         = require('../Session/SessionStore'),
 
     mui                  = require('material-ui'),
     TextField            = mui.TextField,
     RaisedButton         = mui.RaisedButton,
     Paper                = mui.Paper;
-
 
 module.exports = React.createClass({
 
@@ -31,6 +31,10 @@ module.exports = React.createClass({
     lastName: {
       presence: true
     }
+  },
+
+  componentWillMount: function() {
+    SessionStore.removeInstance();
   },
 
   headerMenuItems: [
