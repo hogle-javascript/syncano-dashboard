@@ -116,7 +116,7 @@ gulp.task('revision:index', ['clean', 'iconfont', 'clean:unrevisioned', 'revrepl
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(cb) {
+gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function() {
 
   var aws = {
     region: 'eu-west-1',
@@ -136,16 +136,11 @@ gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(
         'Cache-Control': 'max-age=315360000, no-transform, public'
       };
 
-  gulp.src(src)
+  return gulp.src(src)
     .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers))
-    .pipe(publisher.sync())
     .pipe(awspublish.reporter())
-    .on('finish', function() {
-      gulp.src(src)
-        .pipe(cloudfront(aws))
-        .on('finish', cb);
-    });
+    .pipe(cloudfront(aws));
 });
 
 var chromedriverTypes = [
