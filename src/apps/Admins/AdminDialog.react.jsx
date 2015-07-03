@@ -12,7 +12,6 @@ var React                    = require('react'),
 
     // Components
     mui                       = require('material-ui'),
-    Toggle                    = mui.Toggle,
     TextField                 = mui.TextField,
     SelectField               = mui.SelectField,
     Dialog                    = mui.Dialog,

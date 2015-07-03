@@ -8,7 +8,6 @@ var React           = require('react'),
     ThemeManager    = new mui.Styles.ThemeManager(),
     SyncanoTheme    = require('./../common/SyncanoTheme');
 
-
 module.exports = React.createClass({
 
   displayName: 'App',
@@ -27,17 +26,14 @@ module.exports = React.createClass({
     };
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 
-  render: function () {
+  render: function() {
     return <RouteHandler/>
   }
 
 });
-
-
-

@@ -28,7 +28,6 @@ var React                 = require('react'),
     ClassesList           = require('./ClassesList.react'),
     ClassDialog           = require('./ClassDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'Classes',
@@ -52,40 +51,42 @@ module.exports = React.createClass({
     console.info('Classes::componentDidMount');
     ClassesActions.fetch();
   },
-    // Dialogs config
-  initDialogs: function () {
+
+  // Dialogs config
+  initDialogs: function() {
     var checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
     return [{
       dialog: ColorIconPickerDialog,
       params: {
-        ref          : "pickColorIconDialog",
-        mode         : "add",
+        ref          : 'pickColorIconDialog',
+        mode         : 'add',
         initialColor : checkedItemIconColor.color,
         initialIcon  : checkedItemIconColor.icon,
         handleClick  : this.handleChangePalette
       }
-    },{
+    },
+    {
       dialog: Dialog,
       params: {
-        ref: "deleteClassDialog",
-        title: "Delete API key",
+        ref   : 'deleteClassDialog',
+        title : 'Delete API key',
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : "Yes, I'm sure.",
+            text    : 'Yes, I\'m sure',
             onClick : this.handleDelete
           }
         ],
         modal: true,
-        children: 'Do you really want to delete ' + ClassesStore.getCheckedItems().length +' Class(es)?',
+        children: 'Do you really want to delete ' + ClassesStore.getCheckedItems().length + ' Class(es)?',
       }
     }]
   },
 
-  handleChangePalette: function (color, icon) {
+  handleChangePalette: function(color, icon) {
     console.info('Classes::handleChangePalette', color, icon);
 
     ClassesActions.updateClass(
@@ -131,7 +132,7 @@ module.exports = React.createClass({
     ClassesActions.showDialog(ClassesStore.getCheckedItem());
   },
 
-  render: function () {
+  render: function() {
 
     var checkedClasses     = ClassesStore.getNumberOfChecked(),
         styles             = this.getStyles(),
