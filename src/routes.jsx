@@ -40,7 +40,7 @@ var React                       = require('react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
     Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
-    Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
+    Channels                    = require('./apps/Channels/Channels.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
@@ -70,8 +70,8 @@ module.exports = (
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
+        <Route name="channels" handler={Channels} path=":instanceName/channels" />
         <Route name="users" handler={Users} path=":instanceName/users" />
-        <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
       </Route>
 

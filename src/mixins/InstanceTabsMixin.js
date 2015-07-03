@@ -26,8 +26,8 @@ var InstanceTabsMixin = {
         params: params
       },
       {
-        label: 'Webhooks',
-        route: 'webhooks',
+        label: 'Channels',
+        route: 'channels',
         params: params
       },
       {

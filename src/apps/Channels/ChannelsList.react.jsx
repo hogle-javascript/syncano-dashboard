@@ -1,22 +1,22 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
-    Router = require('react-router'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
 
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
     ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
 
     // Stores and Actions
-    ColorStore       = require('../../common/Color/ColorStore'),
-    SessionActions   = require('../Session/SessionActions'),
-    InstancesActions = require('./InstancesActions'),
-    InstancesStore   = require('./InstancesStore'),
+    SessionActions    = require('../Session/SessionActions'),
+    ChannelsActions  = require('./ChannelsActions'),
+    ChannelsStore    = require('./ChannelsStore'),
 
     // Components
     mui               = require('material-ui'),
-    List              = mui.List,
+    Colors            = mui.Styles.Colors,
 
     // List
+    List              = require('../../common/Lists/List.react'),
     ListContainer     = require('../../common/Lists/ListContainer.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
@@ -26,23 +26,18 @@ var React  = require('react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
+
 module.exports = React.createClass({
 
-  displayName: 'InstancesList',
+  displayName: 'ChannelsList',
 
   mixins: [
     Router.State,
     Router.Navigation,
-    Reflux.connect(InstancesStore, 'instancesStore'),
+
+    Reflux.connect(ChannelsStore),
     HeaderMixin
   ],
-
-  getInitialState: function() {
-    return {
-      listType: this.props.listType,
-      items: this.props.items
-    }
-  },
 
   componentWillReceiveProps: function(nextProps) {
     this.setState({items : nextProps.items})
@@ -50,31 +45,35 @@ module.exports = React.createClass({
 
   // List
   handleItemIconClick: function(id, state) {
-    console.info('InstancesList::handleItemIconClick', id, state);
-    InstancesActions.checkItem(id, state);
+    ChannelsActions.checkItem(id, state);
   },
 
-  handleItemClick: function(instanceName) {
-    // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+  handleItemClick: function(itemId) {
   },
 
-  renderItem: function (item) {
+  renderItem: function(item) {
     return (
       <Item
         checked = {item.checked}
-        key     = {item.name}>
+        key     = {item.id}>
         <ColumnCheckIcon
           id              = {item.name}
-          icon            = {item.metadata.icon}
-          background      = {ColorStore.getColorByName(item.metadata.color)}
+          icon            = {'bullhorn'}
+          background      = {Colors.lightBlueA100}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick}>
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
+        <ColumnDesc className="col-xs-5 col-md-5">
+          <div>
+            <div>group: {item.group_permissions}</div>
+            <div>other: {item.other_permissions}</div>
+          </div>
+        </ColumnDesc>
+        <ColumnDesc className="col-xs-5 col-md-5">{item.type}</ColumnDesc>
+        <ColumnDesc className="col-xs-5 col-md-5">{item.custom_publish ? 'Yes' : 'No'}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
     )
@@ -90,32 +89,26 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
-             {this.props.emptyItemContent}
-           </EmptyListItem>
+    return (
+      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </EmptyListItem>
+    );
   },
 
-  getStyles: function() {
-    return {
-      list: {
-        padding: 0,
-        background: 'none'
-      }
-    }
-  },
-
-  render: function () {
-    var styles = this.getStyles();
-
+  render: function() {
     return (
       <ListContainer>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-5 col-md-5">Permissions</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-5 col-md-5">Type</ColumnDesc.Header>
+          <ColumnDesc.Header className="col-xs-5 col-md-5">Custom publish</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List style={styles.list}>
-          <Loading show={this.state.instancesStore.isLoading}>
+        <List>
+          <Loading show={this.state.isLoading}>
             {this.getList()}
           </Loading>
         </List>
