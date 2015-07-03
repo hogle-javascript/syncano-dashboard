@@ -1,6 +1,7 @@
 {
   "name": "syncano-dashboard",
   "version": "0.0.1",
+  "license": "",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
   "repository": {
