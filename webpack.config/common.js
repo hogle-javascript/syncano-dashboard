@@ -8,13 +8,14 @@ var ENV         = process.env.NODE_ENV || 'development',
 
 
 // We want to check env variables like this: DEVELOPMENT_FACEBOOK_ID or FACEBOOK_ID or null
-for (i = 0; i < envVars.length; i++) {
+for (var i = 0; i < envVars.length; i++) {
     var name    = envVars[i],
         envName = ENV.toUpperCase() + '_' + name;
     plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || '');
 }
 
 module.exports = {
+  target: 'web',
   entry: {
       app: [path.resolve(__dirname, '../src/app.jsx')],
       vendor: Object.keys(packageJson.dependencies)
