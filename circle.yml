@@ -2,6 +2,8 @@ machine:
   node:
     version:
       0.10.32
+  environment:
+    NODE_ENV: staging
 
 general:
   artifacts:
@@ -29,5 +31,5 @@ deployment:
   staging:
     branch: devel
     commands:
-      - NODE_ENV=staging npm run-script publish
-      - NODE_ENV=staging npm run-script clean
+      - npm run-script publish
+      - npm run-script clean
