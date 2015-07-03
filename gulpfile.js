@@ -116,7 +116,7 @@ gulp.task('revision:index', ['clean', 'iconfont', 'clean:unrevisioned', 'revrepl
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function() {
+gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(cb) {
 
   var aws = {
     region: 'eu-west-1',
@@ -130,16 +130,22 @@ gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(
     aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
-  var publisher = awspublish.create(aws);
+  var src       = ['./dist/**/*', '!./dist/rev-manifest.json'],
+      publisher = awspublish.create(aws),
+      headers   = {
+        'Cache-Control': 'max-age=315360000, no-transform, public'
+      };
 
-  return gulp.src([
-      './dist/**/*',
-      '!./dist/rev-manifest.json'
-    ])
+  gulp.src(src)
     .pipe(awspublish.gzip())
-    .pipe(publisher.publish())
+    .pipe(publisher.publish(headers))
+    .pipe(publisher.sync())
     .pipe(awspublish.reporter())
-    .pipe(cloudfront(aws));
+    .on('finish', function() {
+      gulp.src(src)
+        .pipe(cloudfront(aws))
+        .on('finish', cb);
+    });
 });
 
 var chromedriverTypes = [
