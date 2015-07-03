@@ -1,5 +1,5 @@
 var webpack = require('webpack'),
-    config  = Object.create(require('./common'));
+    config  = require('./common');
 
 config.module.postLoaders = [{
   test: /\.js(|x)?$/,
