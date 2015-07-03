@@ -10,6 +10,13 @@ config.entry.app.unshift(
   'webpack/hot/only-dev-server'
 );
 
+config.module.loaders[1].loaders = [
+  'react-hot',
+  config.module.loaders[1].loader
+]
+
+delete config.module.loaders[1].loader
+
 config.plugins.unshift(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin()
