@@ -35,7 +35,8 @@ analytics.methods = [
   "page",
   "once",
   "off",
-  "on"
+  "on",
+  "load"
 ];
 
 analytics.methods.forEach(function(method) {
