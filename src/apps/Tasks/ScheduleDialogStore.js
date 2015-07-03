@@ -18,7 +18,7 @@ var ScheduleDialogStore = Reflux.createStore({
 
   crontabItems: [
       {
-        payload: '*/5 * * *',
+        payload: '*/5 * * * *',
         text: 'Run every 5 minutes'
       },
       {
