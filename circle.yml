@@ -8,13 +8,15 @@ general:
     - "coverage/"
     - "reports/"
 
-# dependencies:
-#    post:
-#       - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-#       - sudo dpkg -i google-chrome*.deb
-#       - npm run-script nightwatch-setup
-#       - npm start:
-#             background: true
+dependencies:
+  post:
+    # - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    # - sudo dpkg -i google-chrome*.deb
+    - npm run-script nightwatch-setup
+    # - npm start:
+      # background: true
+  cache_directories:
+    - "./bin/"
 
 test:
   override:
