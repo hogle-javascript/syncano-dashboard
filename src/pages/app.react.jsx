@@ -9,7 +9,6 @@ var React              = require('react'),
     ThemeManager       = new mui.Styles.ThemeManager(),
     SyncanoTheme       = require('./../common/SyncanoTheme');
 
-
 module.exports = React.createClass({
 
   displayName: 'App',
@@ -30,7 +29,7 @@ module.exports = React.createClass({
     };
   },
 
-  componentWillUpdate: function () {
+  componentWillUpdate: function() {
     var routes = this.getRoutes();
     var isInInstancesScope = routes.some(function (route) {
       return route.name === "instances";
@@ -40,7 +39,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount: function(){
+  componentWillMount: function() {
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
@@ -51,6 +50,3 @@ module.exports = React.createClass({
   }
 
 });
-
-
-

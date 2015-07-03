@@ -6,7 +6,6 @@ var React           = require('react'),
     Colors          = mui.Styles.Colors,
     Paper           = mui.Paper;
 
-
 module.exports = Radium(React.createClass({
 
   displayName: 'Item',

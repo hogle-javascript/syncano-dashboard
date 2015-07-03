@@ -9,7 +9,6 @@ var React         = require('react'),
     // Components
     Header        = require('../apps/Header/Header.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'Dashboard',
@@ -24,14 +23,14 @@ module.exports = React.createClass({
   },
 
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo: function(transition) {
       if (!SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_URL, {}, {'next' : transition.path});
       }
-    },
+    }
   },
 
-  render: function () {
+  render: function() {
     return (
       <div>
         <Header />
@@ -41,6 +40,3 @@ module.exports = React.createClass({
   }
 
 });
-
-
-
