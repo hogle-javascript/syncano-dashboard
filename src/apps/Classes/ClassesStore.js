@@ -89,7 +89,7 @@ var ClassesStore = Reflux.createStore({
   },
 
   setProtectedClasses: function(item) {
-    if(Constans.PROTECTED_CLASS_NAMES.indexOf(item.name) > -1) {
+    if (Constans.PROTECTED_CLASS_NAMES.indexOf(item.name) > -1) {
       item.protected = true;
     }
     return item;
