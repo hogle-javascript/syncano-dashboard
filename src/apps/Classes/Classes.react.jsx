@@ -72,14 +72,14 @@ module.exports = React.createClass({
       dialog: Dialog,
       params: {
         ref   : 'deleteClassDialog',
-        title : 'Delete API key',
+        title : 'Delete an API Key',
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : 'Yes, I\'m sure',
+            text    : 'Confirm',
             onClick : this.handleDelete
           }
         ],
