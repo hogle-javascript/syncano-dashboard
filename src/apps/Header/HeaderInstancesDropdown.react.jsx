@@ -66,7 +66,7 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       instanceToolbarGroup: {
-        display        : 'flex',
+        display        : '-webkit-box; display: flex',
         float          : 'none',
         alignItems     : 'center',
         justifyContent : 'center',
