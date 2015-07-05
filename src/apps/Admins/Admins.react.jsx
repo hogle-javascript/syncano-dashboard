@@ -58,6 +58,8 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function() {
+    var checkedAdmins            = AdminsStore.getCheckedItems(),
+        checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
 
     return [
       {
@@ -71,7 +73,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            this.getDialogList(checkedAdmins),
             <Loading
               type     = "linear"
               position = "bottom"
@@ -90,7 +93,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations),
             <Loading
               type     = "linear"
               position = "bottom"
@@ -108,13 +112,14 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: [
-             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
-             <Loading
-               type     = "linear"
-               position = "bottom"
-               show     = {this.state.invitations.isLoading} />
-           ]
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations),
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       }
     ]
@@ -160,11 +165,11 @@ module.exports = React.createClass({
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  showAdminDialog: function () {
+  showAdminDialog: function() {
     AdminsActions.showDialog();
   },
 
-  showAdminEditDialog: function () {
+  showAdminEditDialog: function() {
     AdminsActions.showDialog(AdminsStore.getCheckedItem());
   },
 

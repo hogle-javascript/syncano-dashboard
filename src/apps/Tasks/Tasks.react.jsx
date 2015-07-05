@@ -24,6 +24,7 @@ var React                 = require('react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
 
     // Local components
     SchedulesList         = require('./SchedulesList.react'),
@@ -61,6 +62,9 @@ module.exports = React.createClass({
   // Dialogs config
   initDialogs: function() {
 
+    var checkedTriggers  = TriggersStore.getCheckedItems(),
+        checkedSchedules = SchedulesStore.getCheckedItems();
+
     return [
       {
         dialog: Dialog,
@@ -76,7 +80,14 @@ module.exports = React.createClass({
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
+            this.getDialogList(checkedTriggers),
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.triggers.isLoading} />
+          ]
         }
       },
       {
@@ -89,7 +100,14 @@ module.exports = React.createClass({
             {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length + ' schedule?'
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
+            this.getDialogList(checkedSchedules),
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.items.isLoading} />
+          ]
         }
       }
     ]
@@ -123,23 +141,23 @@ module.exports = React.createClass({
     SchedulesActions.uncheckAll();
   },
 
-  showScheduleDialog: function () {
+  showScheduleDialog: function() {
     SchedulesActions.showDialog();
   },
 
-  showScheduleEditDialog: function () {
+  showScheduleEditDialog: function() {
     SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
   },
 
-  showTriggerDialog: function () {
+  showTriggerDialog: function() {
     TriggersActions.showDialog();
   },
 
-  showTriggerEditDialog: function () {
+  showTriggerEditDialog: function() {
     TriggersActions.showDialog(TriggersStore.getCheckedItem());
   },
 
-  render: function () {
+  render: function() {
     var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
         checkedTriggers       = TriggersStore.getNumberOfChecked(),
         isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.items.length),

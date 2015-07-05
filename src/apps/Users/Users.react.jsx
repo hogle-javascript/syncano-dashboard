@@ -29,7 +29,6 @@ var React                 = require('react'),
     UserDialog            = require('./UserDialog.react'),
     GroupDialog           = require('./GroupDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'Users',
@@ -115,6 +114,8 @@ module.exports = React.createClass({
   },
 
   initDialogs: function() {
+    var checkedGroups = GroupsStore.getCheckedItems(),
+        checkedUsers  = UsersStore.getCheckedItems();
 
     return [
       // Groups
@@ -134,7 +135,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + GroupsStore.getCheckedItems().length + ' groups?',
+            'Do you really want to delete ' + this.getDialogListLength(checkedGroups)  + ' Group(s)?',
+            this.getDialogList(checkedGroups, 'label'),
             <Loading
               type     = 'linear'
               position = 'bottom'
@@ -155,7 +157,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + UsersStore.getCheckedItems().length + ' users?',
+            'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
+            this.getDialogList(checkedUsers, 'username'),
             <Loading
               type     = 'linear'
               position = 'bottom'
@@ -171,7 +174,6 @@ module.exports = React.createClass({
         checkedGroups      = GroupsStore.getNumberOfChecked(),
         isAnyUserSelected  = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
         isAnyGroupSelected = checkedGroups >= 1 && checkedGroups < (this.state.groups.items.length);
-
 
     return (
       <Container>

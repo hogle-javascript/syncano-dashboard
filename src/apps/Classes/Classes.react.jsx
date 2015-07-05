@@ -22,6 +22,7 @@ var React                 = require('react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
     Show                  = require('../../common/Show/Show.react'),
 
     // Local components
@@ -54,7 +55,9 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function() {
-    var checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
+    var checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
+        checkedClasses       = ClassesStore.getCheckedItems();
+
     return [{
       dialog: ColorIconPickerDialog,
       params: {
@@ -81,7 +84,14 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: 'Do you really want to delete ' + ClassesStore.getCheckedItems().length + ' Class(es)?',
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },
@@ -137,7 +147,6 @@ module.exports = React.createClass({
     var checkedClasses     = ClassesStore.getNumberOfChecked(),
         styles             = this.getStyles(),
         isAnyClassSelected = checkedClasses >= 1 && checkedClasses < (this.state.items.length);
-
 
     return (
       <Container>
