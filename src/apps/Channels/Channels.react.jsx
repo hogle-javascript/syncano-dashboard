@@ -57,6 +57,7 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function() {
+    var checkedChannels = ChannelsStore.getCheckedItems();
 
     return [{
       dialog: Dialog,
@@ -75,7 +76,8 @@ module.exports = React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to delete ' + ChannelsStore.getCheckedItems().length + ' Channel(s)?',
+          'Do you really want to delete ' + this.getDialogListLength(checkedChannels) + ' Channel(s)?',
+          this.getDialogList(checkedChannels),
           <Loading
             type     = "linear"
             position = "bottom"

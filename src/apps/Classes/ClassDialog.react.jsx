@@ -37,6 +37,15 @@ module.exports = React.createClass({
     }
   },
 
+  componentDidUpdate: function() {
+    if (!this.state.schemaInitialized && this.state.schema) {
+      this.setFields(this.state.schema);
+      this.setState({
+        schemaInitialized: true
+      });
+    }
+  },
+
   getFieldTypes: function() {
     return Constants.fieldTypes.map(function(item) {
       return {

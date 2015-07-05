@@ -28,7 +28,6 @@ var React                 = require('react'),
     ApiKeysList           = require('./ApiKeysList.react'),
     ApiKeyDialog          = require('./ApiKeyDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'ApiKeys',
@@ -52,8 +51,9 @@ module.exports = React.createClass({
     console.info('ApiKeys::componentWillMount');
     ApiKeysActions.fetch();
   },
-    // Dialogs config
-  initDialogs: function () {
+  // Dialogs config
+  initDialogs: function() {
+    var checkedApiKeys = ApiKeysStore.getCheckedItems();
 
     return [{
       dialog: Dialog,
@@ -96,7 +96,8 @@ module.exports = React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
+          'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
+          this.getDialogList(checkedApiKeys),
           <Loading
             type     = "linear"
             position = "bottom"

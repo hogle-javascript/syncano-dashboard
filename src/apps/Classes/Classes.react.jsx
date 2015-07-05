@@ -22,6 +22,7 @@ var React                 = require('react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
     Show                  = require('../../common/Show/Show.react'),
 
     // Local components
@@ -54,7 +55,9 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function() {
-    var checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
+    var checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
+        checkedClasses       = ClassesStore.getCheckedItems();
+
     return [{
       dialog: ColorIconPickerDialog,
       params: {
@@ -69,19 +72,26 @@ module.exports = React.createClass({
       dialog: Dialog,
       params: {
         ref   : 'deleteClassDialog',
-        title : 'Delete API key',
+        title : 'Delete an API Key',
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : 'Yes, I\'m sure',
+            text    : 'Confirm',
             onClick : this.handleDelete
           }
         ],
         modal: true,
-        children: 'Do you really want to delete ' + ClassesStore.getCheckedItems().length + ' Class(es)?',
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading} />
+        ]
       }
     }]
   },
@@ -142,8 +152,6 @@ module.exports = React.createClass({
         checkedClassesCount            = ClassesStore.getNumberOfChecked(),
         isAnyAndNotAllClassSelected    = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length),
         someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
-
-    console.error(someClassIsProtectedFromDelete);
 
     return (
       <Container>

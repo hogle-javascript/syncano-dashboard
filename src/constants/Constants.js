@@ -84,7 +84,6 @@ module.exports = {
     'string',
     'text',
     'integer',
-    'number',
     'float',
     'boolean',
     'datetime',
