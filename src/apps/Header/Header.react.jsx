@@ -30,14 +30,13 @@ var React                       = require('react'),
     MaterialDropdown            = require('../../common/Dropdown/MaterialDropdown.react'),
     RoundIcon                   = require('../../common/Icon/RoundIcon.react'),
     HeaderMenu                  = require('./HeaderMenu.react'),
-    HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react.jsx'),
+    HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react'),
     HeaderNotificationsDropdown = require('./HeaderNotificationsDropdown.react'),
+    HeaderInstanceMenu          = require('./HeaderInstanceMenu.react'),
     Logo                        = require('../../common/Logo/Logo.react'),
     Show                        = require('../../common/Show/Show.react');
 
-
 require('./Header.sass');
-
 
 module.exports = Radium(React.createClass({
 
@@ -56,24 +55,24 @@ module.exports = Radium(React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     SessionStore.getInstance();
   },
 
-  handleTabActive: function (tab) {
+  handleTabActive: function(tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
-  handleAccountClick: function (event) {
+  handleAccountClick: function(event) {
     this.transitionTo('profile-settings');
     event.stopPropagation();
   },
 
-  handleLogout: function () {
+  handleLogout: function() {
     SessionActions.logout();
   },
 
-  handleBillingClick: function (event) {
+  handleBillingClick: function(event) {
     this.transitionTo('profile-billing');
     event.stopPropagation();
   },
@@ -120,7 +119,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getDropdownItems: function () {
+  getDropdownItems: function() {
     return [{
       leftIcon: {
         name  : "synicon-credit-card",
@@ -151,7 +150,7 @@ module.exports = Radium(React.createClass({
     }]
   },
 
-  getDropdownHeaderItems: function () {
+  getDropdownHeaderItems: function() {
     return {
       userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
       userEmail       : this.state.user.email,
@@ -160,8 +159,9 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function () {
-    var styles = this.getStyles();
+  render: function() {
+    var styles              = this.getStyles(),
+        currentInstance     = SessionStore.getInstance();
 
     return (
       <div>
@@ -203,7 +203,7 @@ module.exports = Radium(React.createClass({
         </Toolbar>
         <Paper>
           <Toolbar style={styles.bottomToolbar}>
-            <Show if={SessionStore.getInstance() !== null}>
+            <Show if={currentInstance !== null}>
               <HeaderInstancesDropdown />
             </Show>
 
@@ -218,6 +218,9 @@ module.exports = Radium(React.createClass({
                 iconStyle = {styles.bottomToolbarGroupIcon}
               />
               <HeaderNotificationsDropdown />
+              <Show if={currentInstance !== null}>
+                <HeaderInstanceMenu />
+              </Show>
             </ToolbarGroup>
           </Toolbar>
         </Paper>
