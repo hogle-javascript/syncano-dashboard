@@ -1,6 +1,7 @@
 var Reflux              = require('reflux'),
 
     // Utils & Mixins
+    Constans            = require('../../constants/Constants'),
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
@@ -87,10 +88,18 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
+  setProtectedClasses: function(item) {
+    if(Constans.PROTECTED_CLASS_NAMES.indexOf(item.name) > -1) {
+      item.protected = true;
+    }
+    return item;
+  },
+
   setClasses: function(items) {
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
     });
+    this.data.items = this.data.items.map(this.setProtectedClasses);
     this.trigger(this.data);
   },
 

@@ -90,5 +90,9 @@ module.exports = {
     'datetime',
     'file',
     'reference'
+  ],
+
+  PROTECTED_CLASS_NAMES: [
+    'user_profile'
   ]
 };

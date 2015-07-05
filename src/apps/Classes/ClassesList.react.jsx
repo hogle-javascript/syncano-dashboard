@@ -68,7 +68,8 @@ module.exports = React.createClass({
           icon            = {item.metadata.icon}
           background      = {item.metadata.color}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}
+          checkable       = {!item.protected}>
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
