@@ -41,7 +41,7 @@ var FormMixin = {
   },
 
   resetForm: function() {
-    this.setState(this.getInitialFormState());
+    this.replaceState(this.getInitialFormState());
   },
 
   validate: function(key, callback) {
@@ -132,6 +132,14 @@ var FormMixin = {
     this.setState({
       errors: {}
     });
+  },
+
+  isInputDisabled: function(inputName) {
+    var hasProtectedFromEditProperty = this.state.protectedFromEdit;
+    if (hasProtectedFromEditProperty && hasProtectedFromEditProperty.fields) {
+      return hasProtectedFromEditProperty.fields.indexOf(inputName) > -1;
+    }
+    return false;
   },
 
   isValid: function(key) {

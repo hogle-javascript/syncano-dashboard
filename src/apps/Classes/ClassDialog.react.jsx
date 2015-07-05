@@ -175,7 +175,8 @@ module.exports = React.createClass({
             <TextField
               ref               = 'name'
               name              = 'name'
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
+              disabled          = {this.isInputDisabled('name')}
               valueLink         = {this.linkState('name')}
               errorText         = {this.getValidationMessages('name').join(' ')}
               hintText          = 'Name of the Class'
@@ -184,7 +185,8 @@ module.exports = React.createClass({
             <TextField
               ref               = 'description'
               name              = 'description'
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
+              disabled          = {this.isInputDisabled('description')}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}
               hintText          = 'Description of the Class'
@@ -195,7 +197,7 @@ module.exports = React.createClass({
                  <TextField
                   ref               = 'fieldName'
                   name              = 'fieldName'
-                  style             = {{width:'100%'}}
+                  fullWidth         = {true}
                   valueLink         = {this.linkState('fieldName')}
                   errorText         = {this.getValidationMessages('fieldName').join(' ')}
                   hintText          = 'Name of the Field'
@@ -206,7 +208,7 @@ module.exports = React.createClass({
                     ref               = 'fieldType'
                     name              = 'fieldType'
                     floatingLabelText = 'Type'
-                    style             = {{width:'100%'}}
+                    fullWidth         = {true}
                     valueLink         = {this.linkState('fieldType')}
                     errorText         = {this.getValidationMessages('fieldType').join(' ')}
                     valueMember       = 'payload'

@@ -1,4 +1,5 @@
 var Reflux              = require('reflux'),
+    _                   = require('lodash'),
 
     // Utils & Mixins
     Constans            = require('../../constants/Constants'),
@@ -88,9 +89,19 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
-  setProtectedClasses: function(item) {
-    if (Constans.PROTECTED_CLASS_NAMES.indexOf(item.name) > -1) {
-      item.protected = true;
+  setProtectedFromEditClasses: function(item) {
+    var indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
+
+    if (indexInProtectedFromEditArray > -1) {
+      item.protectedFromEdit = Constans.PROTECTED_FROM_EDIT_CLASS_NAMES[indexInProtectedFromEditArray];
+    }
+
+    return item;
+  },
+
+  setProtectedFromDeleteClasses: function(item) {
+    if (Constans.PROTECTED_FROM_DELETE_CLASS_NAMES.indexOf(item.name) > -1) {
+      item.protectedFromDelete = true;
     }
     return item;
   },
@@ -99,7 +110,12 @@ var ClassesStore = Reflux.createStore({
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
     });
-    this.data.items = this.data.items.map(this.setProtectedClasses);
+
+    if (this.data.items.length > 0) {
+      this.data.items = this.data.items.map(this.setProtectedFromDeleteClasses);
+      this.data.items = this.data.items.map(this.setProtectedFromEditClasses);
+    }
+
     this.trigger(this.data);
   },
 

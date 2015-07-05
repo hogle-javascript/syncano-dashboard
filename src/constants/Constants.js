@@ -92,7 +92,14 @@ module.exports = {
     'reference'
   ],
 
-  PROTECTED_CLASS_NAMES: [
+  PROTECTED_FROM_EDIT_CLASS_NAMES: [
+    {
+      name: 'user_profile',
+      fields: ['name']
+    }
+  ],
+
+  PROTECTED_FROM_DELETE_CLASS_NAMES: [
     'user_profile'
   ]
 };
