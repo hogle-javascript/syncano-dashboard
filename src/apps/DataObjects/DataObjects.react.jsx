@@ -79,13 +79,13 @@ module.exports = React.createClass({
       params: {
         key:    'deleteDataObjectDialog',
         ref:    'deleteDataObjectDialog',
-        title:  'Delete an DataObject',
+        title:  'Delete a Data Object',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
+        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }]
   },
