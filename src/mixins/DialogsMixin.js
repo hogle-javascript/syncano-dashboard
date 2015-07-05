@@ -19,7 +19,7 @@ var DialogsMixin = {
   },
 
   getDialogList: function(items, paramName) {
-    var paramName = paramName || "name",
+    var paramName = paramName || 'name',
       listItems = items.map(function(item) {
         return <li>{item[paramName]}</li>;
       });
