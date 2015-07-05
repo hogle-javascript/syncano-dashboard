@@ -14,6 +14,19 @@ var DialogsMixin = {
     }.bind(this);
   },
 
+  getDialogListLength: function(items) {
+    return items.length
+  },
+
+  getDialogList: function(items, paramName) {
+    var paramName = paramName || 'name',
+      listItems = items.map(function(item) {
+        return <li>{item[paramName]}</li>;
+      });
+
+    return <ul>{listItems}</ul>;
+  },
+
   hideDialogs: function(hideDialogsFlag) {
     if (hideDialogsFlag) {
       return this.initDialogs().map(function(dialogConf) {
