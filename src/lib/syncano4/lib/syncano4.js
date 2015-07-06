@@ -379,6 +379,11 @@ var Syncano = (function() {
       activate: this.activateAccount.bind(this),
     };
 
+    this.Billing = {
+      getProfile: this.getBillingProfile.bind(this),
+      updateProfile: this.updateBillingProfile.bind(this)
+    };
+
     /**
      * Object with methods to handle Instances
      *
@@ -1245,6 +1250,18 @@ var Syncano = (function() {
      */
     activateAccount: function(params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
+    },
+
+    /***********************
+       BILLING METHODS
+    ************************/
+
+    getBillingProfile: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/profile/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingProfile: function(params, callbackOK, callbackError) {
+      return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
     },
 
     /***********************

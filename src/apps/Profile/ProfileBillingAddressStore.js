@@ -1,5 +1,7 @@
 var Reflux         = require('reflux'),
+
     StoreFormMixin = require('../../mixins/StoreFormMixin'),
+
     ProfileActions = require('./ProfileActions');
 
 var ProfileAuthenticationStore = Reflux.createStore({
@@ -10,13 +12,12 @@ var ProfileAuthenticationStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  onChangePasswordCompleted: function(payload) {
-    this.trigger({
-      feedback: 'Password changed successfully.',
-      currentPassword: null,
-      newPassword: null,
-      confirmNewPassword: null
-    });
+  onFetchBillingProfileCompleted: function(payload) {
+    this.trigger(payload);
+  },
+
+  onUpdateBillingProfileCompleted: function() {
+    this.trigger({feedback: 'Billing address changed successfully.'});
   }
 
 });

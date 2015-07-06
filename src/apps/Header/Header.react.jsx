@@ -60,7 +60,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleTabActive: function(tab) {
-    this.context.router.transitionTo(tab.props.route, tab.props.params);
+    this.transitionTo(tab.props.route, tab.props.params);
   },
 
   handleAccountClick: function(event) {

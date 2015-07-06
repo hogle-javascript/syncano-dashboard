@@ -73,8 +73,9 @@ module.exports = React.createClass({
 
     return (
       <Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked   = {item.checked}
+        key       = {item.id}
+        hoverable = {!isOwner}>
         <ColumnCheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
