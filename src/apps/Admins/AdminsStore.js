@@ -51,7 +51,6 @@ var AdminsStore = Reflux.createStore({
       return items[key];
     });
 
-    this.data.items.reverse();
     this.trigger(this.data);
   },
 

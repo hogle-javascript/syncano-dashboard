@@ -106,8 +106,6 @@ module.exports = React.createClass({
         return this.renderItem(item)
       }.bind(this));
 
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
       return items;
     }
     return (
