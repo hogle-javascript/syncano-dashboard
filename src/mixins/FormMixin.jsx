@@ -41,7 +41,7 @@ var FormMixin = {
   },
 
   resetForm: function() {
-    this.replaceState(this.getInitialFormState());
+    this.setState(this.getInitialFormState());
   },
 
   validate: function(key, callback) {
