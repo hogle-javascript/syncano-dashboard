@@ -142,31 +142,37 @@ module.exports = React.createClass({
     ClassesActions.showDialog(ClassesStore.getCheckedItem());
   },
 
-  render: function() {
+  isProtectedFromDelete: function(item) {
+    return item.protectedFromDelete;
+  },
 
-    var checkedClasses     = ClassesStore.getNumberOfChecked(),
-        styles             = this.getStyles(),
-        isAnyClassSelected = checkedClasses >= 1 && checkedClasses < (this.state.items.length);
+  render: function() {
+    var styles                         = this.getStyles(),
+        checkedClasses                 = ClassesStore.getCheckedItems(),
+        checkedClassesCount            = ClassesStore.getNumberOfChecked(),
+        isAnyAndNotAllClassSelected    = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length),
+        someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
 
     return (
       <Container>
         <ClassDialog />
         {this.getDialogs()}
 
-        <Show if={checkedClasses > 0}>
+        <Show if={checkedClassesCount > 0}>
           <FabList position="top">
 
             <FabListItem
-              label         = {isAnyClassSelected ? "Click here to select all" : "Click here to unselect all"} // TODO: extend component
+              label         = {isAnyAndNotAllClassSelected ? "Click here to select all" : "Click here to unselect all"} // TODO: extend component
               color         = "" // TODO: extend component
               mini          = {true}
-              onClick       = {isAnyClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
-              iconClassName = {isAnyClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+              onClick       = {isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
+              iconClassName = {isAnyAndNotAllClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Classes" // TODO: extend component
               color         = "" // TODO: extend component
               mini          = {true}
+              disabled      = {someClassIsProtectedFromDelete}
               onClick       = {this.showDialog('deleteClassDialog')}
               iconClassName = "synicon-delete" />
 
@@ -174,7 +180,7 @@ module.exports = React.createClass({
               label         = "Click here to edit Class" // TODO: extend component
               color         = "" // TODO: extend component
               mini          = {true}
-              disabled      = {checkedClasses > 1}
+              disabled      = {checkedClassesCount > 1}
               onClick       = {this.showClassEditDialog}
               iconClassName = "synicon-pencil" />
 
@@ -184,7 +190,7 @@ module.exports = React.createClass({
               color         = "" // TODO: extend component
               secondary     = {true}
               mini          = {true}
-              disabled      = {checkedClasses > 1}
+              disabled      = {checkedClassesCount > 1}
               onClick       = {this.showDialog('pickColorIconDialog')}
               iconClassName = "synicon-palette" />
 
