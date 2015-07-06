@@ -23,13 +23,15 @@ module.exports = Radium(React.createClass({
       base: {
         display         : 'flex',
         marginBottom    : 0,
-        justifyContent  : 'center',
-        ':hover' : {
-          backgroundColor : '#F5F5F5'
-        }
+        justifyContent  : 'center'
       },
       checked: {
         backgroundColor : Colors.lightBlue50
+      },
+      enableHover: {
+        ':hover': {
+          backgroundColor: Colors.grey100
+        }
       }
     };
   },
@@ -47,7 +49,8 @@ module.exports = Radium(React.createClass({
         zDepth    = {1}
         className = {'row'}
         style     = {[styles.base,
-                    this.props.checked && styles.checked]}
+                    this.props.checked && styles.checked,
+                    this.props.enableHover && styles.enableHover]}
         rounded   = {false}>
         {this.props.children}
       </Paper>
