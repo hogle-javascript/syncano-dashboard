@@ -106,8 +106,13 @@ module.exports = React.createClass({
     fields.push({
       fieldName   : this.state.fieldName,
       fieldType   : this.state.fieldType,
-      fieldTarget : this.state.fieldTarget
+      fieldTarget : this.state.fieldTarget,
+      fieldOrder  : this.refs.fieldOrder.isChecked(),
+      fieldFilter : this.refs.fieldFilter.isChecked()
     });
+
+    this.refs.fieldOrder.setChecked();
+    this.refs.fieldFilter.setChecked();
 
     this.setState({
       fields    : fields,
@@ -131,6 +136,7 @@ module.exports = React.createClass({
   renderSchemaFields: function() {
     return this.state.fields.map(function(item) {
 
+      console.log(item)
       return (
         <div key={item.fieldName} className='row'>
           <span className='col-xs-8' style={{marginTop: 5}}>{item.fieldName}</span>
@@ -138,13 +144,15 @@ module.exports = React.createClass({
           <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldTarget}</span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
             <Checkbox
-              style = {{marginTop: 5}}
-              name  = "filter" />
+              style          = {{marginTop: 5}}
+              name           = "filter"
+              defaultChecked = {item.fieldFilter} />
           </span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
             <Checkbox
-              style = {{marginTop: 5}}
-              name  = "order" />
+              style           = {{marginTop: 5}}
+              name            = "order"
+              defaultChecked  = {item.fieldOrder} />
           </span>
           <span className='col-xs-5' style={{paddingLeft: 15}}>
             <FlatButton
@@ -184,23 +192,31 @@ module.exports = React.createClass({
 
         {this.renderFormNotifications()}
 
-            <TextField
-              ref               = 'name'
-              name              = 'name'
-              style             = {{width:'100%'}}
-              valueLink         = {this.linkState('name')}
-              errorText         = {this.getValidationMessages('name').join(' ')}
-              hintText          = 'Name of the Class'
-              floatingLabelText = 'Name' />
+            <div className='row'>
 
-            <TextField
-              ref               = 'description'
-              name              = 'description'
-              style             = {{width:'100%'}}
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              hintText          = 'Description of the Class'
-              floatingLabelText = 'Description' />
+              <div className='col-xs-8'>
+                <TextField
+                  ref               = 'name'
+                  name              = 'name'
+                  style             = {{width:'100%'}}
+                  valueLink         = {this.linkState('name')}
+                  errorText         = {this.getValidationMessages('name').join(' ')}
+                  hintText          = 'Name of the Class'
+                  floatingLabelText = 'Name' />
+              </div>
+
+              <div className='col-xs-26' style={{paddingLeft: 15}}>
+                <TextField
+                  ref               = 'description'
+                  name              = 'description'
+                  style             = {{width:'100%'}}
+                  valueLink         = {this.linkState('description')}
+                  errorText         = {this.getValidationMessages('description').join(' ')}
+                  hintText          = 'Description of the Class'
+                  floatingLabelText = 'Description' />
+              </div>
+
+            </div>
 
             <div style={{marginTop: 30}}>Schema</div>
 
@@ -263,13 +279,13 @@ module.exports = React.createClass({
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
                   <Checkbox
                     style = {{marginTop: 35}}
-                    ref   = "filter"
+                    ref   = "fieldFilter"
                     name  = "filter"/>
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
                   <Checkbox
                     style = {{marginTop: 35}}
-                    ref   = "order"
+                    ref   = "fieldOrder"
                     name  = "order"/>
                 </div>
                 <div className='col-xs-5' style={{paddingLeft: 15}}>
