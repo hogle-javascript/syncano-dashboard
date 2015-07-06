@@ -10,6 +10,15 @@ var ProfileActions = Reflux.createActions({
   changePassword: {
     asyncResult: true,
     children: ['completed', 'failure']
+  },
+  fetchBillingProfile: {
+    asyncResult: true,
+    children: ['completed', 'failure']
+  },
+  updateBillingProfile: {
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure']
   }
 });
 
@@ -37,6 +46,24 @@ ProfileActions.changePassword.listen(function(payload) {
       new_password     : payload.newPassword
       // jscs:enable
     })
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+ProfileActions.fetchBillingProfile.listen(function() {
+  console.info('ProfileActions::fetchBillingProfile');
+  Connection
+    .Billing
+    .getProfile()
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+ProfileActions.updateBillingProfile.listen(function(payload) {
+  console.info('ProfileActions::updateBillingProfile');
+  Connection
+    .Billing
+    .updateProfile(payload)
     .then(this.completed)
     .catch(this.failure);
 });

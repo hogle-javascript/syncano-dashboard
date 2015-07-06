@@ -9,6 +9,7 @@ var React                       = require('react'),
     App                         = require('./pages/app.react'),
     Dashboard                   = require('./pages/dashboard.react'),
     Instance                    = require('./pages/instance.react'),
+    Billing                     = require('./pages/billing.react'),
     NotFound                    = require('./pages/notfound.react'),
 
     // Anonymouns Apps
@@ -21,7 +22,7 @@ var React                       = require('react'),
 
     ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
     ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBilling              = require('./apps/Profile/ProfileBilling.react'),
+    ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
     ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
 
     // Apps for authenticated users
@@ -75,9 +76,12 @@ module.exports = (
         <DefaultRoute handler={Instances} />
       </Route>
 
+      <Route name="profile-billing" handler={Billing} path="/account/billing">
+        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
+        <DefaultRoute handler={ProfileBillingAddress} />
+      </Route>
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
-      <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
       <DefaultRoute handler={Instances} />
     </Route>

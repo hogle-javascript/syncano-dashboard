@@ -27,7 +27,7 @@ config.devServer = {
   contentBase: './dist',
   https: true,
   hot: true,
-  noInfo: true,
+  noInfo: false,
   stats: {
     colors: true
   }
