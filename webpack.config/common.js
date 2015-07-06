@@ -1,45 +1,34 @@
-var ENV        = process.env.NODE_ENV || 'development',
-    path       = require('path'),
-    webpack    = require('webpack'),
-    compass    = require('node-libcompass').includePaths,
-    pluginVars = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN', 'ANALYTICS_WRITE_KEY'],
-    plugin     = {ENV: JSON.stringify(ENV)};
+var ENV         = process.env.NODE_ENV || 'development',
+    path        = require('path'),
+    webpack     = require('webpack'),
+    compass     = require('node-libcompass').includePaths,
+    envVars     = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN', 'ANALYTICS_WRITE_KEY'],
+    plugin      = {ENV: JSON.stringify(ENV)},
+    packageJson = require('../package.json');
 
 
 // We want to check env variables like this: DEVELOPMENT_FACEBOOK_ID or FACEBOOK_ID or null
-for (i = 0; i < pluginVars.length; i++) {
-    var name    = pluginVars[i],
+for (var i = 0; i < envVars.length; i++) {
+    var name    = envVars[i],
         envName = ENV.toUpperCase() + '_' + name;
     plugin[name] = JSON.stringify(process.env[envName] || process.env[name] || '');
 }
 
-var plugins = [
-  new webpack.DefinePlugin(plugin)
-  // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
-];
-
-var appEntry = [
-  path.join(__dirname, 'src', 'app.jsx')
-];
-
-if (ENV === 'development') {
-  plugins.push(new webpack.HotModuleReplacementPlugin());
-  appEntry.push('webpack/hot/dev-server')
-}
-
 module.exports = {
-  // cache: true,
+  target: 'web',
   entry: {
-      app: appEntry,
-      vendor: ['brace', 'react', 'moment', 'raven-js', 'material-ui']
+      app: [path.resolve(__dirname, '../src/app.jsx')],
+      vendor: Object.keys(packageJson.dependencies)
   },
   output: {
-    path: path.join(__dirname, 'dist', 'js'),
+    path: path.resolve(__dirname, '../dist/js'),
     filename: '[name].js',
     chunkFilename: '[name].[chunkhash].js',
     publicPath: 'js/',
   },
-  plugins: plugins,
+  plugins: [
+    new webpack.DefinePlugin(plugin)
+  ],
   module: {
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
@@ -51,9 +40,9 @@ module.exports = {
         loader: "style!css!sass?sourceMap&indentedSyntax&outputStyle=expanded&precision=8&" +
           "includePaths[]=" + compass + "&" +
           "includePaths[]=" +
-          (path.resolve(__dirname, "./src/assets/sass")) + "&" +
+          (path.resolve(__dirname, "../src/assets/sass")) + "&" +
           "includePaths[]=" +
-          (path.resolve(__dirname, "./node_modules"))
+          (path.resolve(__dirname, "../node_modules"))
       }
     ]
   },

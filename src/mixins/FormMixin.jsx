@@ -134,6 +134,14 @@ var FormMixin = {
     });
   },
 
+  isInputDisabled: function(inputName) {
+    var hasProtectedFromEditProperty = this.state.protectedFromEdit;
+    if (hasProtectedFromEditProperty && hasProtectedFromEditProperty.fields) {
+      return hasProtectedFromEditProperty.fields.indexOf(inputName) > -1;
+    }
+    return false;
+  },
+
   isValid: function(key) {
     return this.state.errors[key] === undefined || this.state.errors[key] === null;
   },

@@ -14,7 +14,6 @@ var React            = require('react'),
 
     // Components
     mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
     TextField        = mui.TextField,
     Checkbox         = mui.Checkbox,
     FlatButton       = mui.FlatButton,
@@ -36,6 +35,15 @@ module.exports = React.createClass({
   validatorConstraints: {
     name: {
       presence: true
+    }
+  },
+
+  componentDidUpdate: function() {
+    if (!this.state.schemaInitialized && this.state.schema) {
+      this.setFields(this.state.schema);
+      this.setState({
+        schemaInitialized: true
+      });
     }
   },
 
@@ -136,7 +144,6 @@ module.exports = React.createClass({
   renderSchemaFields: function() {
     return this.state.fields.map(function(item) {
 
-      console.log(item)
       return (
         <div key={item.fieldName} className='row'>
           <span className='col-xs-8' style={{marginTop: 5}}>{item.fieldName}</span>

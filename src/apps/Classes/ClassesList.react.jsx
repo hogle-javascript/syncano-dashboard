@@ -31,7 +31,6 @@ var React             = require('react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'ClassesList',
@@ -44,11 +43,11 @@ module.exports = React.createClass({
   ],
 
   // List
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick: function(id, state) {
     ClassesActions.checkItem(id, state);
   },
 
-  handleItemClick: function (className) {
+  handleItemClick: function(className) {
     SessionStore.getRouter().transitionTo(
       'classes-data-objects',
       {
@@ -59,7 +58,7 @@ module.exports = React.createClass({
     console.info('ClassesList::handleItemClick');
   },
 
-  renderItem: function (item) {
+  renderItem: function(item) {
 
     return (
       <Item key={item.name} id={item.name} handleClick={this.handleItemClick}>
@@ -68,7 +67,7 @@ module.exports = React.createClass({
           icon            = {item.metadata.icon}
           background      = {item.metadata.color}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}>
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
@@ -80,8 +79,8 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function () {
-    var items = this.state.items.map(function (item) {
+  getList: function() {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item)
     }.bind(this));
 
@@ -90,14 +89,14 @@ module.exports = React.createClass({
       items.reverse();
       return items;
     }
-    return  (
+    return (
       <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
       </EmptyListItem>
     )
   },
 
-  render: function () {
+  render: function() {
     return (
       <ListContainer>
         <Header>

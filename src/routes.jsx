@@ -36,14 +36,15 @@ var React                       = require('react'),
     CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     Traces                      = require('./apps/Traces/Traces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
+    Data                        = require('./apps/Data/Data.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
+    Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
-    Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
+    Channels                    = require('./apps/Channels/Channels.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
     ListExamples                = require('./examples/ListExamples.react');
-
 
 module.exports = (
   <Route name="app" handler={App} path="/" >
@@ -56,7 +57,8 @@ module.exports = (
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
-        <Redirect name="instance" from="instance" to="classes" path=":instanceName" />
+        <Redirect name="instance" from="instance" to="data" path=":instanceName" />
+        <Route name="data" handler={Data} path=":instanceName/data" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
@@ -68,8 +70,8 @@ module.exports = (
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
+        <Route name="channels" handler={Channels} path=":instanceName/channels" />
         <Route name="users" handler={Users} path=":instanceName/users" />
-        <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
       </Route>
 

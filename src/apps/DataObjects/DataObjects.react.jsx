@@ -79,13 +79,13 @@ module.exports = React.createClass({
       params: {
         key:    'deleteDataObjectDialog',
         ref:    'deleteDataObjectDialog',
-        title:  'Delete an DataObject',
+        title:  'Delete a Data Object',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
+        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }]
   },
@@ -225,17 +225,17 @@ module.exports = React.createClass({
             <ToolbarGroup float="right">
 
               <IconButton
-                style     = {{fontSize: 25, marginTop: 5}}
-                className = "synicon-plus"
-                tooltip   = "Add Data Objects"
-                onClick   = {this.showDataObjectDialog} />
+                style         = {{fontSize: 25, marginTop: 5}}
+                iconClassName = "synicon-plus"
+                tooltip       = "Add Data Objects"
+                onClick       = {this.showDataObjectDialog} />
 
               <IconButton
-                style     = {{fontSize: 25, marginTop: 5}}
-                className = "synicon-delete"
-                tooltip   = "Delete Data Objects"
-                disabled  = {!(this.state.selectedRows)}
-                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+                style         = {{fontSize: 25, marginTop: 5}}
+                iconClassName = "synicon-delete"
+                tooltip       = "Delete Data Objects"
+                disabled      = {!(this.state.selectedRows)}
+                onClick       = {this.showDialog('deleteDataObjectDialog')} />
 
               <ColumnsFilterMenu
                 columns           = {DataObjectsStore.getTableColumns()}
