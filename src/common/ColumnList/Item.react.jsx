@@ -23,7 +23,10 @@ module.exports = Radium(React.createClass({
       base: {
         display         : 'flex',
         marginBottom    : 0,
-        justifyContent  : 'center'
+        justifyContent  : 'center',
+        ':hover' : {
+          backgroundColor : '#F5F5F5'
+        }
       },
       checked: {
         backgroundColor : Colors.lightBlue50
