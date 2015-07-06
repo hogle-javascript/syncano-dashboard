@@ -62,10 +62,9 @@ module.exports = React.createClass({
 
     return (
       <Item
-        key         = {item.name}
-        id          = {item.name}
-        enableHover = {true}
-        handleClick = {this.handleItemClick}>
+        key          = {item.name}
+        id           = {item.name}
+        handleClick  = {this.handleItemClick}>
         <ColumnCheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata.icon}

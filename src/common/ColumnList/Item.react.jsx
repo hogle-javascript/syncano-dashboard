@@ -14,7 +14,8 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      handleClick: function() {}
+      handleClick : function() {},
+      hoverable   : true
     }
   },
 
@@ -28,7 +29,7 @@ module.exports = Radium(React.createClass({
       checked: {
         backgroundColor : Colors.lightBlue50
       },
-      enableHover: {
+      hoverable: {
         ':hover': {
           backgroundColor: Colors.grey100
         }
@@ -50,7 +51,7 @@ module.exports = Radium(React.createClass({
         className = {'row'}
         style     = {[styles.base,
                     this.props.checked && styles.checked,
-                    this.props.enableHover && styles.enableHover]}
+                    this.props.hoverable && styles.hoverable]}
         rounded   = {false}>
         {this.props.children}
       </Paper>
