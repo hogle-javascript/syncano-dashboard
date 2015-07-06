@@ -6,6 +6,7 @@ var Reflux     = require('reflux'),
 var ClassesActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
+  selectAll      : {},
 
   setClasses     : {},
   fetch          : {},

@@ -25,7 +25,6 @@ var React             = require('react'),
     CodeBoxesList    = require('./CodeBoxesList.react'),
     CodeBoxDialog    = require('./CodeBoxDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'CodeBoxes',
@@ -50,14 +49,15 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    if (this.getParams().action == 'add'){
+    if (this.getParams().action == 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
     }
   },
 
   // Dialogs config
-  initDialogs: function () {
+  initDialogs: function() {
+    var checkedCodeboxes = CodeBoxesStore.getCheckedItems();
 
     return [{
       dialog: Dialog,
@@ -70,7 +70,8 @@ module.exports = React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to delete ' + CodeBoxesStore.getCheckedItems().length +' CodeBox(es)?',
+          'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
+          this.getDialogList(checkedCodeboxes),
           <Loading
             type     = "linear"
             position = "bottom"
@@ -98,9 +99,10 @@ module.exports = React.createClass({
     CodeBoxesActions.showDialog(CodeBoxesStore.getCheckedItem());
   },
 
-  render: function () {
+  render: function() {
 
-    var checkedItems = CodeBoxesStore.getNumberOfChecked();
+    var checkedItems         = CodeBoxesStore.getNumberOfChecked(),
+        isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
 
     return (
       <Container>
@@ -110,11 +112,12 @@ module.exports = React.createClass({
         <Show if={checkedItems > 0}>
 
           <FabList position="top">
+
             <FabListItem
-              label         = "Click here to unselect Api Keys"
+              label         = {isAnyCodeboxSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {CodeBoxesActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyCodeboxSelected ? CodeBoxesActions.selectAll : CodeBoxesActions.uncheckAll}
+              iconClassName = {isAnyCodeboxSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete CodeBoxes"

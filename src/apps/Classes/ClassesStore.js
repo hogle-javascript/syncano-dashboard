@@ -1,6 +1,8 @@
 var Reflux              = require('reflux'),
+    _                   = require('lodash'),
 
     // Utils & Mixins
+    Constans            = require('../../constants/Constants'),
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
@@ -61,6 +63,17 @@ var ClassesStore = Reflux.createStore({
     return classObj;
   },
 
+  getClassFields: function(className) {
+    var classObj = null;
+    this.data.items.some(function(item) {
+      if (item.name == className) {
+        classObj = item;
+        return true;
+      }
+    });
+    return classObj.schema;
+  },
+
   getCheckedItemIconColor: function() {
     var singleItem = this.getCheckedItem();
 
@@ -76,10 +89,33 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
+  setProtectedFromEditClasses: function(item) {
+    var indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
+
+    if (indexInProtectedFromEditArray > -1) {
+      item.protectedFromEdit = Constans.PROTECTED_FROM_EDIT_CLASS_NAMES[indexInProtectedFromEditArray];
+    }
+
+    return item;
+  },
+
+  setProtectedFromDeleteClasses: function(item) {
+    if (Constans.PROTECTED_FROM_DELETE_CLASS_NAMES.indexOf(item.name) > -1) {
+      item.protectedFromDelete = true;
+    }
+    return item;
+  },
+
   setClasses: function(items) {
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
     });
+
+    if (this.data.items.length > 0) {
+      this.data.items = this.data.items.map(this.setProtectedFromDeleteClasses);
+      this.data.items = this.data.items.map(this.setProtectedFromEditClasses);
+    }
+
     this.trigger(this.data);
   },
 

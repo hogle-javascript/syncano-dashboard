@@ -9,6 +9,7 @@ var React                       = require('react'),
     App                         = require('./pages/app.react'),
     Dashboard                   = require('./pages/dashboard.react'),
     Instance                    = require('./pages/instance.react'),
+    Billing                     = require('./pages/billing.react'),
     NotFound                    = require('./pages/notfound.react'),
 
     // Anonymouns Apps
@@ -21,7 +22,7 @@ var React                       = require('react'),
 
     ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
     ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBilling              = require('./apps/Profile/ProfileBilling.react'),
+    ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
     ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
 
     // Apps for authenticated users
@@ -37,14 +38,15 @@ var React                       = require('react'),
     CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
     Traces                      = require('./apps/Traces/Traces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
+    Data                        = require('./apps/Data/Data.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
+    Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
-    Webhooks                    = require('./apps/Webhooks/Webhooks.react'),
+    Channels                    = require('./apps/Channels/Channels.react'),
 
     // Examples
     Examples                    = require('./examples/Examples.react'),
     ListExamples                = require('./examples/ListExamples.react');
-
 
 module.exports = (
   <Route name="app" handler={App} path="/" >
@@ -57,7 +59,8 @@ module.exports = (
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
-        <Redirect name="instance" from="instance" to="classes" path=":instanceName" />
+        <Redirect name="instance" from="instance" to="data" path=":instanceName" />
+        <Route name="data" handler={Data} path=":instanceName/data" />
         <Route name="admins" handler={Admins} path=":instanceName/admins" />
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
@@ -69,15 +72,18 @@ module.exports = (
         <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
+        <Route name="channels" handler={Channels} path=":instanceName/channels" />
         <Route name="users" handler={Users} path=":instanceName/users" />
-        <Route name="webhooks" handler={Webhooks} path=":instanceName/webhooks" />
         <DefaultRoute handler={Instances} />
       </Route>
 
       <Route name="solutions" handler={Solutions} path="/solutions" />
+      <Route name="profile-billing" handler={Billing} path="/account/billing">
+        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
+        <DefaultRoute handler={ProfileBillingAddress} />
+      </Route>
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
-      <Route name="profile-billing" handler={ProfileBilling} path="/account/billing" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
       <DefaultRoute handler={Instances} />
     </Route>

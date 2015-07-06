@@ -1,4 +1,5 @@
 var gulp             = require('gulp'),
+    fs               = require('fs'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
@@ -10,7 +11,7 @@ var gulp             = require('gulp'),
     chmod            = require('gulp-chmod'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
-    webpackConfig    = require('./webpack.config.js'),
+    webpackConfig    = require('./webpack.config'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
@@ -25,7 +26,7 @@ var paths = {
 };
 
 gulp.task('clean', function(cb) {
-  del(['./dist/**/*', paths.dist], cb);
+  del(['./dist/**/*', './dist', './dist_e2e/**/*', './dist_e2e'], cb);
 });
 
 gulp.task('copy-index', ['clean'], function() {
@@ -60,49 +61,17 @@ gulp.task('iconfont', ['clean'], function(cb) {
 });
 
 gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
-  var config     = Object.create(webpackConfig);
-  config.devtool = 'sourcemap';
-  config.debug   = true;
-
-  if (ENV === 'production') {
-    config.progress = false;
-    config.debug    = false;
-    config.plugins  = config.plugins.concat(
-          new webpack.DefinePlugin({
-            'process.env': {
-              // This has effect on the react lib size
-              'NODE_ENV': JSON.stringify('production')
-            }
-          }),
-          new webpack.optimize.DedupePlugin(),
-          new webpack.optimize.UglifyJsPlugin()
-      );
-  }
-
-  // run webpack
-  webpack(config).run(callback);
+  webpack(webpackConfig).run(callback);
 });
 
 gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
-  var config = Object.create(webpackConfig);
-  config.devtool = 'eval';
-  config.debug = true;
-
-  // Start a webpack-dev-server
-  new WebpackDevServer(webpack(config), {
-    publicPath: '/js/',
-    contentBase: paths.dist,
-    https: true,
-    hot: true,
-    stats: {
-      colors: true
-    }
-  }).listen(8080, 'localhost', function(err) {
-    if (err) {
-      throw new gutil.PluginError('webpack-dev-server', err);
-    }
-    gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
-  });
+  new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
+    .listen(8080, 'localhost', function(err) {
+      if (err) {
+        throw new gutil.PluginError('webpack-dev-server', err);
+      }
+      gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
+    });
 });
 
 gulp.task('stripDebug', ['clean', 'webpack:build'], function() {
@@ -161,14 +130,15 @@ gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function(
     aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
-  var publisher = awspublish.create(aws);
+  var src       = ['./dist/**/*', '!./dist/rev-manifest.json'],
+      publisher = awspublish.create(aws),
+      headers   = {
+        'Cache-Control': 'max-age=315360000, no-transform, public'
+      };
 
-  return gulp.src([
-      './dist/**/*',
-      '!./dist/rev-manifest.json'
-    ])
+  return gulp.src(src)
     .pipe(awspublish.gzip())
-    .pipe(publisher.publish())
+    .pipe(publisher.publish(headers))
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
 });
@@ -182,6 +152,10 @@ var chromedriverTypes = [
 
 chromedriverTypes.map(function(type) {
   gulp.task('nightwatch-setup:' + type, function(cb) {
+    if (fs.existsSync(paths.bin)) {
+      gutil.log('[nightwatch-setup]', '"' + paths.bin + '" already exists.')
+      return cb();
+    }
     var zipFiles = paths.bin + '/**/*.zip',
         urls     = [
           'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',

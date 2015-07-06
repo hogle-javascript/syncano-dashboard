@@ -1,6 +1,7 @@
 {
   "name": "syncano-dashboard",
   "version": "0.0.1",
+  "license": "",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
   "repository": {
@@ -12,14 +13,13 @@
     "classnames": "^2.1.2",
     "gravatar": "^1.1.1",
     "hellojs": "^1.6.0",
-    "keymaster": "~1.6.2",
+    "lodash": "^3.10.0",
     "material-ui": "Syncano/material-ui#build",
     "moment": "^2.10.3",
-    "node-uuid": "^1.4.3",
     "normalize.css": "^3.0.3",
     "object-assign": "^3.0.0",
-    "raven-js": "^1.1.19",
     "radium": "0.13.0",
+    "raven-js": "^1.1.19",
     "react": "0.13.3",
     "react-onclickoutside": "^0.2.4",
     "react-outsideclickhandler": "latest",
@@ -27,7 +27,6 @@
     "react-tap-event-plugin": "^0.1.7",
     "react-zeroclipboard": "^2.0.1",
     "reflux": "latest",
-    "request": "^2.58.0",
     "superagent": "^1.2.0",
     "url": "^0.10.3",
     "validate.js": "^0.7.1"
@@ -54,13 +53,24 @@
     "gulp-strip-debug": "^1.0.2",
     "gulp-unzip": "^0.1.3",
     "gulp-util": "^3.0.6",
-    "jest-cli": "^0.4.14",
+    "http-server": "^0.8.0",
+    "istanbul": "^0.3.17",
+    "istanbul-instrumenter-loader": "^0.1.3",
     "jscs": "latest",
+    "karma": "^0.12.37",
+    "karma-coverage": "^0.4.2",
+    "karma-mocha": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-sinon-chai": "^1.0.0",
+    "karma-webpack": "^1.5.1",
+    "mocha": "^2.2.5",
     "nightwatch": "^0.7.5",
     "node-libcompass": "git://github.com/patrykkopycinski/node-libcompass.git",
+    "node-libs-browser": ">= 0.4.0 <=0.6.0",
     "node-sass": "~3.2.0",
-    "q": "^1.4.1",
+    "phantomjs": "^1.9.17",
     "raw-loader": "^0.5.1",
+    "react-hot-loader": "^1.2.7",
     "react-inlinesvg": "patrykkopycinski/react-inlinesvg#build",
     "sass-loader": "~1.0.2",
     "style-loader": "^0.12.3",
@@ -68,45 +78,16 @@
     "webpack": "^1.10.0",
     "webpack-dev-server": "^1.10.1"
   },
-  "jest": {
-    "rootDir": ".",
-    "testPathDirs": [
-      "src/common",
-      "src/apps"
-    ],
-    "testPathIgnorePatterns": [
-      "/__tests__/[^/]*/.+"
-    ],
-    "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "collectCoverage": "true",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "css",
-      "svg"
-    ],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/classnames",
-      "<rootDir>/src/utils/utils",
-      "<rootDir>/src/utils/ReactRouterContext",
-      "<rootDir>/src/utils/StorageMock",
-      "<rootDir>/node_modules/superagent",
-      "<rootDir>/node_modules/object-assign",
-      "<rootDir>/node_modules/classnames",
-      "<rootDir>material-ui",
-      "<rootDir>/node_modules/hellojs"
-    ]
-  },
   "scripts": {
-    "test": "jest -w 3",
+    "test": "karma start karma.config.js",
     "start": "gulp webpack-dev-server",
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
+    "jscs": "jscs --esprima=esprima-fb src tests",
+    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
-    "jscs": "jscs --esprima=esprima-fb src tests",
-    "codeclimate": "codeclimate-test-reporter < coverage/lcov.info"
+    "nightwatch-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key"
   }
 }

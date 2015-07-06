@@ -130,9 +130,10 @@ module.exports = Radium(React.createClass({
     }
 
     return(
-      <IconButton iconStyle={styles.icon} iconClassName={iconClassName}>
+      <div>
         {notificationCountIcon}
-      </IconButton>
+        <IconButton iconStyle={styles.icon} iconClassName={iconClassName} />
+      </div>
     )
   },
 

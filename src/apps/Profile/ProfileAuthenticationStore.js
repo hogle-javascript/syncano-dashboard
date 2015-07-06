@@ -1,9 +1,5 @@
 var Reflux         = require('reflux'),
-
     StoreFormMixin = require('../../mixins/StoreFormMixin'),
-
-    SessionStore   = require('../Session/SessionStore'),
-    SessionActions = require('../Session/SessionActions'),
     ProfileActions = require('./ProfileActions');
 
 var ProfileAuthenticationStore = Reflux.createStore({
@@ -21,7 +17,7 @@ var ProfileAuthenticationStore = Reflux.createStore({
       newPassword: null,
       confirmNewPassword: null
     });
-  },
+  }
 
 });
 
