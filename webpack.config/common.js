@@ -2,10 +2,19 @@ var ENV         = process.env.NODE_ENV || 'development',
     path        = require('path'),
     webpack     = require('webpack'),
     compass     = require('node-libcompass').includePaths,
-    envVars     = ['FACEBOOK_ID', 'GOOGLE_ID', 'GITHUB_ID', 'OAUTH_PROXY_URL', 'SENTRY_DSN', 'ANALYTICS_WRITE_KEY'],
+    envVars     = null,
     plugin      = {ENV: JSON.stringify(ENV)},
     packageJson = require('../package.json');
 
+envVars = [
+  'FACEBOOK_ID',
+  'GOOGLE_ID',
+  'GITHUB_ID',
+  'OAUTH_PROXY_URL',
+  'SENTRY_DSN',
+  'ANALYTICS_WRITE_KEY',
+  'STRIPE_PUBLISHABLE_KEY'
+];
 
 // We want to check env variables like this: DEVELOPMENT_FACEBOOK_ID or FACEBOOK_ID or null
 for (var i = 0; i < envVars.length; i++) {
@@ -51,6 +60,7 @@ module.exports = {
     extensions: ['', '.js', '.json', '.jsx', '.css', '.scss', '.sass', '.svg', '.styl']
   },
   externals: {
-    'analytics': 'analytics'
+    'analytics': 'analytics',
+    'stripejs': 'Stripe'
   }
 };
