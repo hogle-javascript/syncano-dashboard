@@ -23,6 +23,7 @@ var React                       = require('react'),
     ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
     ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
     ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
+    ProfileBillingPayment       = require('./apps/Profile/ProfileBillingPayment.react'),
     ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
 
     // Apps for authenticated users
@@ -78,6 +79,7 @@ module.exports = (
 
       <Route name="profile-billing" handler={Billing} path="/account/billing">
         <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
+        <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
