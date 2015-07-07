@@ -376,7 +376,7 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this),
+      activate: this.activateAccount.bind(this)
     };
 
     this.Billing = {
