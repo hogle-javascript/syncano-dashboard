@@ -120,6 +120,10 @@ module.exports = React.createClass({
     ClassesActions.resetClass(ClassesStore.getCheckedItem().id);
   },
 
+  checkClassItem: function(id, state) {
+    ClassesActions.checkItem(id, state);
+  },
+
   getStyles: function() {
     return {
       fabListTop: {
@@ -209,6 +213,7 @@ module.exports = React.createClass({
         <ClassesList
           name                 = "Classes"
           items                = {this.state.items}
+          checkItem            = {this.checkClassItem}
           emptyItemHandleClick = {this.showClassDialog}
           emptyItemContent     = "Create a Class" />
 
