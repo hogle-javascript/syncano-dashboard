@@ -14,8 +14,7 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      handleClick : function() {},
-      hoverable   : true
+      hoverable   : false
     }
   },
 
@@ -31,7 +30,8 @@ module.exports = Radium(React.createClass({
       },
       hoverable: {
         ':hover': {
-          backgroundColor: Colors.grey100
+          backgroundColor: Colors.grey100,
+          cursor         : 'pointer'
         }
       }
     };
@@ -42,16 +42,17 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var styles = this.getStyles();
+    var styles = this.getStyles(),
+    hoverable  = this.props.hoverable || this.props.handleClick;
 
     return (
       <Paper
-        onClick   = {this.handleClick}
+        onClick   = {this.props.handleClick ? this.handleClick : null}
         zDepth    = {1}
         className = {'row'}
         style     = {[styles.base,
                     this.props.checked && styles.checked,
-                    this.props.hoverable && styles.hoverable]}
+                    hoverable && styles.hoverable]}
         rounded   = {false}>
         {this.props.children}
       </Paper>

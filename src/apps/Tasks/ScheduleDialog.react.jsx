@@ -64,8 +64,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+    var title       = this.hasEditMode() ? 'Edit': 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -74,7 +73,7 @@ module.exports = React.createClass({
           },
           {
             ref     : 'submit',
-            text    : {submitLabel},
+            text    : 'Confirm',
             onClick : this.handleFormValidation
           }
         ];
@@ -82,7 +81,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref             = 'dialog'
-        title           = {title + ' Schedule'}
+        title           = {title + ' a Schedule'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}

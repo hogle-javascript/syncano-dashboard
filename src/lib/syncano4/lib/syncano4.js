@@ -376,12 +376,15 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this),
+      activate: this.activateAccount.bind(this)
     };
 
     this.Billing = {
       getProfile: this.getBillingProfile.bind(this),
-      updateProfile: this.updateBillingProfile.bind(this)
+      updateProfile: this.updateBillingProfile.bind(this),
+      getCard: this.getBillingCard.bind(this),
+      updateCard: this.updateBillingCard.bind(this),
+      getInvoices: this.getBillingInvoices.bind(this)
     };
 
     /**
@@ -739,18 +742,11 @@ var Syncano = (function() {
       return promise;
     },
 
-    socialConnect: function(network, token, callbackOK, callbackError) {
+    socialConnect: function(network, access_token, callbackOK, callbackError) {
       if (network === 'google') {
         network = 'google-oauth2';
       }
-      return this.request(
-        'POST',
-        'v1/account/auth/' + network + '/',
-        {},
-        callbackOK,
-        callbackError,
-        {'Authorization': 'Token ' + token}
-      );
+      return this.request('POST', 'v1/account/auth/' + network + '/', {access_token: access_token}, callbackOK, callbackError);
     },
 
     /**
@@ -1264,6 +1260,17 @@ var Syncano = (function() {
       return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
     },
 
+    getBillingCard: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/card/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingCard: function(token, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
+    },
+
+    getBillingInvoices: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
+    },
     /***********************
        DATA OBJECT METHODS
     ************************/

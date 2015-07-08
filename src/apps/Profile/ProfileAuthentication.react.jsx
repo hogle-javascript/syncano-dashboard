@@ -1,5 +1,6 @@
 var React                      = require('react'),
     Reflux                     = require('reflux'),
+    ZeroClipboard              = require('react-zeroclipboard'),
 
     HeaderMixin                = require('../Header/HeaderMixin'),
     FormMixin                  = require('../../mixins/FormMixin'),
@@ -10,7 +11,10 @@ var React                      = require('react'),
     mui                        = require('material-ui'),
     TextField                  = mui.TextField,
     RaisedButton               = mui.RaisedButton,
-    Paper                      = mui.Paper;
+    FlatButton                 = mui.FlatButton,
+    Snackbar                   = mui.Snackbar,
+    Paper                      = mui.Paper,
+    Loading                    = require('../../common/Loading/Loading.react');
 
 
 module.exports = React.createClass({
@@ -89,6 +93,14 @@ module.exports = React.createClass({
     }
   },
 
+  handleCopyClick: function() {
+    this.refs.snackbar.show();
+  },
+
+  handleResetClick: function() {
+    ProfileActions.resetKey();
+  },
+
   handleSuccessfullValidation: function () {
     ProfileActions.changePassword(this.state);
   },
@@ -108,55 +120,76 @@ module.exports = React.createClass({
             <div style={styles.header}>
               Authentication
             </div>
-            <div style={styles.content}>
-              {this.renderFormNotifications()}
-              <form
-                style         = {styles.form}
-                onSubmit      = {this.handleFormValidation}
-                acceptCharset = "UTF-8"
-                method        = "post">
-                <TextField
-                  ref               = "currentPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('currentPassword')}
-                  errorText         = {this.getValidationMessages('currentPassword').join(' ')}
-                  name              = "currentPassword"
-                  floatingLabelText = "Current password"
-                  className         = "text-field"
-                  autoComplete      = "currentPassword"
-                  hintText          = "Current password"
-                  fullWidth         = {true} />
-                <TextField
-                  ref               = "newPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('newPassword')}
-                  errorText         = {this.getValidationMessages('newPassword').join(' ')}
-                  name              = "newPassword"
-                  floatingLabelText = "New password"
-                  className         = "text-field"
-                  autoComplete      = "newPassword"
-                  hintText          = "New password"
-                  fullWidth         = {true} />
-                <TextField
-                  ref               = "confirmNewPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('confirmNewPassword')}
-                  errorText         = {this.getValidationMessages('confirmNewPassword').join(' ')}
-                  name              = "confirmNewPassword"
-                  floatingLabelText = "Confirm new password"
-                  className         = "text-field vm-6-b"
-                  autoComplete      = "confirmNewPassword"
-                  hintText          = "Confirm new password"
-                  fullWidth         = {true} />
-                <RaisedButton
-                  type       = "submit"
-                  label      = "Update"
-                  style      = {styles.updateButton}
-                  labelStyle = {styles.updateButtonLabel}
-                  className  = "raised-button"
-                  secondary  = {true} />
-              </form>
-            </div>
+
+            <Loading show={this.state.isLoading}>
+              <div style={styles.content}>
+                <h6>Account key</h6>
+                <p>{this.state.account_key}</p>
+                <ZeroClipboard text={this.state.account_key}>
+                  <FlatButton
+                    label       = "COPY"
+                    primary     = {true}
+                    onClick     = {this.handleCopyClick} />
+                </ZeroClipboard>
+                <FlatButton
+                  label       = "RESET"
+                  primary     = {true}
+                  onClick     = {this.handleResetClick} />
+                <Snackbar
+                  ref="snackbar"
+                  message="API key copied to the clipboard" />
+              </div>
+              <div style={styles.content}>
+                <h6>Password</h6>
+                {this.renderFormNotifications()}
+                <form
+                  style         = {styles.form}
+                  onSubmit      = {this.handleFormValidation}
+                  acceptCharset = "UTF-8"
+                  method        = "post">
+                  <TextField
+                    ref               = "currentPassword"
+                    type              = "password"
+                    valueLink         = {this.linkState('currentPassword')}
+                    errorText         = {this.getValidationMessages('currentPassword').join(' ')}
+                    name              = "currentPassword"
+                    floatingLabelText = "Current password"
+                    className         = "text-field"
+                    autoComplete      = "currentPassword"
+                    hintText          = "Current password"
+                    fullWidth         = {true} />
+                  <TextField
+                    ref               = "newPassword"
+                    type              = "password"
+                    valueLink         = {this.linkState('newPassword')}
+                    errorText         = {this.getValidationMessages('newPassword').join(' ')}
+                    name              = "newPassword"
+                    floatingLabelText = "New password"
+                    className         = "text-field"
+                    autoComplete      = "newPassword"
+                    hintText          = "New password"
+                    fullWidth         = {true} />
+                  <TextField
+                    ref               = "confirmNewPassword"
+                    type              = "password"
+                    valueLink         = {this.linkState('confirmNewPassword')}
+                    errorText         = {this.getValidationMessages('confirmNewPassword').join(' ')}
+                    name              = "confirmNewPassword"
+                    floatingLabelText = "Confirm new password"
+                    className         = "text-field vm-6-b"
+                    autoComplete      = "confirmNewPassword"
+                    hintText          = "Confirm new password"
+                    fullWidth         = {true} />
+                  <RaisedButton
+                    type       = "submit"
+                    label      = "Update"
+                    style      = {styles.updateButton}
+                    labelStyle = {styles.updateButtonLabel}
+                    className  = "raised-button"
+                    secondary  = {true} />
+                </form>
+              </div>
+            </Loading>
           </Paper>
         </div>
       </div>

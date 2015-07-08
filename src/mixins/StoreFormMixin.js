@@ -57,6 +57,10 @@ var StoreFormMixin = {
       if (payload.__all__ !== undefined) {
         state.errors.feedback = payload.__all__.join(' ');
       }
+
+      if (payload.message !== undefined) {
+        state.errors.feedback = payload.message;
+      }
       // jscs:enable
 
       for (var field in payload) {

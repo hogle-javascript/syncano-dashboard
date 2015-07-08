@@ -74,8 +74,7 @@ module.exports = React.createClass({
     return (
       <Item
         checked   = {item.checked}
-        key       = {item.id}
-        hoverable = {!isOwner}>
+        key       = {item.id}>
         <ColumnCheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
@@ -107,8 +106,6 @@ module.exports = React.createClass({
         return this.renderItem(item)
       }.bind(this));
 
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
       return items;
     }
     return (

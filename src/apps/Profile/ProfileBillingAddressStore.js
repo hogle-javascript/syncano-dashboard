@@ -4,7 +4,7 @@ var Reflux         = require('reflux'),
 
     ProfileActions = require('./ProfileActions');
 
-var ProfileAuthenticationStore = Reflux.createStore({
+var ProfileBillingAddressStore = Reflux.createStore({
   listenables: ProfileActions,
   mixins: [StoreFormMixin],
 
@@ -22,4 +22,4 @@ var ProfileAuthenticationStore = Reflux.createStore({
 
 });
 
-module.exports = ProfileAuthenticationStore;
+module.exports = ProfileBillingAddressStore;
