@@ -21,6 +21,10 @@ var ProfileActions = Reflux.createActions({
     asyncForm: true,
     children: ['completed', 'failure']
   },
+  resetKey: {
+    asyncResult: true,
+    children: ['completed', 'failure']
+  },
   fetchBillingCard: {
     asyncResult: true,
     children: ['completed', 'failure']
@@ -74,6 +78,15 @@ ProfileActions.updateBillingProfile.listen(function(payload) {
   Connection
     .Billing
     .updateProfile(payload)
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+ProfileActions.resetKey.listen(function() {
+  console.info('ProfileActions::resetKey');
+  Connection
+    .Accounts
+    .resetKey()
     .then(this.completed)
     .catch(this.failure);
 });

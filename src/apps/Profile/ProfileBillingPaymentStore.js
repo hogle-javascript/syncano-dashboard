@@ -8,7 +8,7 @@ var ProfileBillingPaymentStore = Reflux.createStore({
   listenables: ProfileActions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       showForm: false,
       show_form: false,
