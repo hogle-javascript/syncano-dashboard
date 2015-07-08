@@ -5,7 +5,6 @@ var React                       = require('react'),
     ProfileActions              = require('./ProfileActions'),
     ProfileBillingInvoicesStore = require('./ProfileBillingInvoicesStore'),
 
-    mui                         = require('material-ui'),
     Loading                     = require('../../common/Loading/Loading.react'),
     Show                        = require('../../common/Show/Show.react'),
 
