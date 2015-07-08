@@ -33,6 +33,10 @@ var ProfileActions = Reflux.createActions({
     asyncResult: true,
     asyncForm: true,
     children: ['completed', 'failure']
+  },
+  fetchInvoices: {
+    asyncResult: true,
+    children: ['completed', 'failure']
   }
 });
 
@@ -113,6 +117,15 @@ ProfileActions.updateBillingCard.listen(function(payload) {
       .then(this.completed)
       .catch(this.failure);
   }.bind(this));
+});
+
+ProfileActions.fetchInvoices.listen(function() {
+  console.info('ProfileActions::fetchInvoices');
+  Connection
+    .Billing
+    .getInvoices()
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 module.exports = ProfileActions;
