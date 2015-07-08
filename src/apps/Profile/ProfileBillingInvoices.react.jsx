@@ -42,12 +42,6 @@ module.exports = React.createClass({
     );
   },
 
-  renderList: function() {
-    return this.state.invoices.map(function (invoice) {
-      return this.renderListItem(invoice);
-    }.bind(this));
-  },
-
   render: function () {
     console.log(this.state);
     return (
@@ -68,7 +62,7 @@ module.exports = React.createClass({
               <ColumnDesc.Header>Action</ColumnDesc.Header>
             </Header>
             <List>
-              {this.renderList()}
+              {this.state.invoices.map(this.renderListItem)}
             </List>
           </ListContainer>
         </Show>
