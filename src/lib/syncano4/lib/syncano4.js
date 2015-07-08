@@ -381,7 +381,9 @@ var Syncano = (function() {
 
     this.Billing = {
       getProfile: this.getBillingProfile.bind(this),
-      updateProfile: this.updateBillingProfile.bind(this)
+      updateProfile: this.updateBillingProfile.bind(this),
+      getCard: this.getBillingCard.bind(this),
+      updateCard: this.updateBillingCard.bind(this)
     };
 
     /**
@@ -1262,6 +1264,14 @@ var Syncano = (function() {
 
     updateBillingProfile: function(params, callbackOK, callbackError) {
       return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
+    },
+
+    getBillingCard: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/card/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingCard: function(token, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
     },
 
     /***********************
