@@ -741,18 +741,11 @@ var Syncano = (function() {
       return promise;
     },
 
-    socialConnect: function(network, token, callbackOK, callbackError) {
+    socialConnect: function(network, access_token, callbackOK, callbackError) {
       if (network === 'google') {
         network = 'google-oauth2';
       }
-      return this.request(
-        'POST',
-        'v1/account/auth/' + network + '/',
-        {},
-        callbackOK,
-        callbackError,
-        {'Authorization': 'Token ' + token}
-      );
+      return this.request('POST', 'v1/account/auth/' + network + '/', {access_token: access_token}, callbackOK, callbackError);
     },
 
     /**
