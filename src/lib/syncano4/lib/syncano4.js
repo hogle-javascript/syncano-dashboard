@@ -383,7 +383,8 @@ var Syncano = (function() {
       getProfile: this.getBillingProfile.bind(this),
       updateProfile: this.updateBillingProfile.bind(this),
       getCard: this.getBillingCard.bind(this),
-      updateCard: this.updateBillingCard.bind(this)
+      updateCard: this.updateBillingCard.bind(this),
+      getInvoices: this.getBillingInvoices.bind(this)
     };
 
     /**
@@ -1274,6 +1275,9 @@ var Syncano = (function() {
       return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
     },
 
+    getBillingInvoices: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
+    },
     /***********************
        DATA OBJECT METHODS
     ************************/

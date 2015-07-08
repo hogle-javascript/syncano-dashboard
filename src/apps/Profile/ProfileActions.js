@@ -3,36 +3,40 @@ var Reflux     = require('reflux'),
     Stripe     = require('../../stripe');
 
 var ProfileActions = Reflux.createActions({
-  updateSettings: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+  updateSettings       : {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  changePassword: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  changePassword       : {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  fetchBillingProfile: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchBillingProfile  : {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  updateBillingProfile: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+  updateBillingProfile : {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
-  resetKey: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  resetKey             : {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  fetchBillingCard: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchBillingCard     : {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
-  updateBillingCard: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+  updateBillingCard    : {
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
+  },
+  fetchInvoices        : {
+    asyncResult : true,
+    children    : ['completed', 'failure']
   }
 });
 
@@ -41,10 +45,8 @@ ProfileActions.updateSettings.listen(function(payload) {
   Connection
     .Accounts
     .update({
-      // jscs:disable
       first_name : payload.firstName,
       last_name  : payload.lastName
-      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
@@ -55,10 +57,8 @@ ProfileActions.changePassword.listen(function(payload) {
   Connection
     .Accounts
     .changePassword({
-      // jscs:disable
       current_password : payload.currentPassword,
       new_password     : payload.newPassword
-      // jscs:enable
     })
     .then(this.completed)
     .catch(this.failure);
@@ -113,6 +113,15 @@ ProfileActions.updateBillingCard.listen(function(payload) {
       .then(this.completed)
       .catch(this.failure);
   }.bind(this));
+});
+
+ProfileActions.fetchInvoices.listen(function() {
+  console.info('ProfileActions::fetchInvoices');
+  Connection
+    .Billing
+    .getInvoices()
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 module.exports = ProfileActions;
