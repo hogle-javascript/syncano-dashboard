@@ -22,26 +22,46 @@ var paths = {
   bin: './bin',
   assets: './src/assets',
   index: './src/assets/index.html',
-  images: './src/assets/img/**/*'
+  images: './src/assets/img/**/*',
+  css: './src/assets/css/**/*',
+  fonts: './src/assets/fonts/**/*'
 };
 
 gulp.task('clean', function(cb) {
   del(['./dist/**/*', './dist', './dist_e2e/**/*', './dist_e2e'], cb);
 });
 
-gulp.task('copy-index', ['clean'], function() {
+gulp.task('clean:iconfont', function(cb) {
+  del([
+    paths.assets + '/fonts/icons/**/*',
+    paths.assets + '/fonts/icons/',
+    paths.assets + '/css/synicons.css'
+  ], cb);
+});
+
+gulp.task('copy:index', ['clean'], function() {
   return gulp.src(paths.index)
   .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('copy-images', ['clean'], function() {
+gulp.task('copy:images', ['clean'], function() {
   return gulp.src(paths.images)
   .pipe(gulp.dest('dist/img'));
 });
 
+gulp.task('copy:css', ['clean'], function() {
+  return gulp.src(paths.css)
+  .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('copy:fonts', ['clean'], function() {
+  return gulp.src(paths.fonts)
+  .pipe(gulp.dest('dist/fonts'));
+});
+
 var fontName = 'Syncano Icons';
 
-gulp.task('iconfont', ['clean'], function(cb) {
+gulp.task('iconfont', ['clean:iconfont'], function(cb) {
   gulp.src([paths.assets + '/icons/*.svg'])
     .pipe(iconfontCss({
       fontName: fontName,
@@ -54,17 +74,17 @@ gulp.task('iconfont', ['clean'], function(cb) {
       normalize: true,
       fontHeight: 1001
     }))
-    .pipe(gulp.dest(paths.dist + '/fonts/icons/'))
+    .pipe(gulp.dest(paths.assets + '/fonts/icons/'))
     .on('finish', function() {
       cb();
     });
 });
 
-gulp.task('webpack:build', ['clean', 'copy', 'iconfont'], function(callback) {
+gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
   webpack(webpackConfig).run(callback);
 });
 
-gulp.task('webpack-dev-server', ['clean', 'copy', 'iconfont'], function() {
+gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
   new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
     .listen(8080, 'localhost', function(err) {
       if (err) {
@@ -80,7 +100,7 @@ gulp.task('stripDebug', ['clean', 'webpack:build'], function() {
     .pipe(gulp.dest('./dist/js'));
 });
 
-gulp.task('revision', ['clean', 'iconfont', 'webpack:build', 'stripDebug'], function() {
+gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
   return gulp.src([
       './dist/**/*',
       '!./dist/index.html'
@@ -108,7 +128,7 @@ gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function
   del(delPaths, cb);
 });
 
-gulp.task('revision:index', ['clean', 'iconfont', 'clean:unrevisioned', 'revreplace'], function() {
+gulp.task('revision:index', ['clean', 'clean:unrevisioned', 'revreplace'], function() {
   return gulp.src('./dist/index.html')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
@@ -116,7 +136,7 @@ gulp.task('revision:index', ['clean', 'iconfont', 'clean:unrevisioned', 'revrepl
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('publish', ['clean', 'iconfont', 'build', 'revision:index'], function() {
+gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
 
   var aws = {
     region: 'eu-west-1',
@@ -184,7 +204,7 @@ chromedriverTypes.map(function(type) {
   });
 });
 
-gulp.task('copy', ['copy-index', 'copy-images']);
+gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts']);
 gulp.task('serve', ['webpack-dev-server']);
-gulp.task('build', ['webpack:build', 'iconfont', 'revreplace']);
+gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
