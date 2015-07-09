@@ -4,27 +4,18 @@ var React                = require('react'),
 
     // Utils
     HeaderMixin          = require('../Header/HeaderMixin'),
-    ButtonActionMixin    = require('../../mixins/ButtonActionMixin'),
     InstanceTabsMixin    = require('../../mixins/InstanceTabsMixin'),
 
     // Stores and Actions
     CodeBoxesActions     = require('./CodeBoxesActions'),
     CodeBoxesStore       = require('./CodeBoxesStore'),
-    AuthStore            = require('../Account/AuthStore'),
 
     // Components
     Container            = require('../../common/Container/Container.react'),
-    Item                 = require('../../common/ColumnList/Item.react'),
-    Column               = require('../../common/ColumnList/ItemColumn.react'),
     Header               = require('../../common/ColumnList/Header.react'),
-    ColNameDesc          = require('../../common/ColumnList/ColNameDesc.react'),
-
     Loading              = require('../../common/Loading/Loading.react'),
-
     FabList              = require('../../common/Fab/FabList.react'),
     FabListItem          = require('../../common/Fab/FabListItem.react'),
-    Dialog               = require('material-ui/lib/dialog'),
-
     Editor               = require('../../common/Editor/Editor.react'),
     EditorPanel          = require('../../common/Editor/EditorPanel.react');
 
@@ -40,7 +31,6 @@ module.exports = React.createClass({
 
     Reflux.connect(CodeBoxesStore),
     HeaderMixin,
-    ButtonActionMixin,
     InstanceTabsMixin
   ],
 
@@ -52,8 +42,8 @@ module.exports = React.createClass({
   getStyles: function () {
     return {
       container: {
-        margin   : '65px auto',
-        width    : '80%',
+        margin   : '25px auto',
+        width    : '100%',
         maxWidth : '1140px'
       },
       tracePanel: {
@@ -71,63 +61,73 @@ module.exports = React.createClass({
   },
 
   handleUpdate: function() {
-    CodeBoxesActions.updateCodeBox(
-      this.state.currentCodeBoxId,
-      {
-        source : this.refs.editor.editor.getValue()
-      }
-    );
+    var params = {};
+    if (this.getRoutes()[this.getRoutes().length - 1].name === "codeboxes-edit") {
+      params.source = this.refs.editor.editor.getValue();
+    } else {
+      params.config = this.refs.editor.editor.getValue()
+    }
+    CodeBoxesActions.updateCodeBox(this.state.currentCodeBoxId, params);
+  },
+
+  renderEditor: function() {
+    var styles     = this.getStyles(),
+        source     = null,
+        config     = null,
+        codeBox    = CodeBoxesStore.getCurrentCodeBox(),
+        codeBoxName = "",
+        editorMode = 'python',
+        activeRouteName = this.getRoutes()[this.getRoutes().length - 1].name,
+        isEditRouteActive = activeRouteName === "codeboxes-edit";
+
+    if (codeBox) {
+      source      = codeBox.source;
+      config      = JSON.stringify(codeBox.config, null, 2);
+      editorMode  = isEditRouteActive ? CodeBoxesStore.getEditorMode(codeBox) : "javascript";
+      codeBoxName = codeBox.label;
+
+      return (
+          <div>
+            <div>Codebox: {codeBoxName}</div>
+            <Editor
+                ref   = "editor"
+                //name  = {editorName}
+                mode  = {editorMode}
+                theme = "github"
+                value = {isEditRouteActive ? source : config} />
+
+            <div style={styles.tracePanel}>
+              <EditorPanel
+                  ref     = "tracePanel"
+                  trace   = {this.state.lastTraceResult}
+                  payload = {this.linkState('payload')}
+                  loading = {this.linkState('isLoading')}>
+              </EditorPanel>
+            </div>
+          </div>
+      )
+    }
   },
 
   render: function () {
     console.debug('CodeBoxesEdit::render');
-    var styles     = this.getStyles(),
-        source     = null,
-        codeBox    = CodeBoxesStore.getCurrentCodeBox(),
-        editorMode = 'python';
-
-    if (codeBox) {
-      source     = codeBox.source;
-      editorMode = CodeBoxesStore.getEditorMode(codeBox);
-    }
-
-    if (!codeBox) {
-      return <Loading show={true} />;
-    }
+    var styles     = this.getStyles();
 
     return (
       <Container style={styles.container}>
         <FabList position="top">
           <FabListItem
-            label         = "Click here to save CodeBox"
-            mini          = {true}
-            onClick       = {this.handleUpdate}
-            iconClassName = "synicon-content-save" />
+              label         = "Click here to save CodeBox"
+              mini          = {true}
+              onClick       = {this.handleUpdate}
+              iconClassName = "synicon-content-save" />
           <FabListItem
-            label         = "Click here to execute CodeBox"
-            mini          = {true}
-            onClick       = {this.handleRun}
-            iconClassName = "synicon-play" />
+              label         = "Click here to execute CodeBox"
+              mini          = {true}
+              onClick       = {this.handleRun}
+              iconClassName = "synicon-play" />
         </FabList>
-
-        <div>Codebox: {codeBox.name}</div>
-
-        <Editor
-          ref      = "editor"
-          mode     = {editorMode}
-          theme    = "github"
-          onChange = {this.handleSourceUpdate}
-          //name="UNIQUE_ID_OF_DIV"
-          value    = {source} />
-
-        <div style={styles.tracePanel}>
-          <EditorPanel
-            ref     = "tracePanel"
-            trace   = {this.state.lastTraceResult}
-            payload = {this.linkState('payload')}
-            loading = {this.linkState('isLoading')}>
-          </EditorPanel>
-        </div>
+        {this.renderEditor()}
       </Container>
     );
   }

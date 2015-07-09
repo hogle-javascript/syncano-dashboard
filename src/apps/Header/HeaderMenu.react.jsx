@@ -25,10 +25,15 @@ module.exports = React.createClass({
       muiTheme : React.PropTypes.object
   },
 
-  getActiveMenuItemIndex: function () {
-    var index = 0;
-    this.state.menuItems.some(function (item, i) {
+  getActiveMenuItemIndex: function() {
+    var index = 0,
+        activeRouteName = this.getRoutes()[this.getRoutes().length - 1].name;
+
+    this.state.menuItems.some(function(item, i) {
+
       if (this.isActive(item.route, item.params, item.query)) {
+        index = i;
+      } else if (activeRouteName && activeRouteName.includes(item.route)){
         index = i;
       }
     }.bind(this));
@@ -36,7 +41,7 @@ module.exports = React.createClass({
     return index;
   },
 
-  handleTabActive: function (tab) {
+  handleTabActive: function(tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
@@ -74,7 +79,7 @@ module.exports = React.createClass({
     )
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     if (this.state.menuItems.length === 0) {

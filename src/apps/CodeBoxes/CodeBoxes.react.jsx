@@ -86,11 +86,6 @@ module.exports = React.createClass({
     CodeBoxesActions.removeCodeBoxes(CodeBoxesStore.getCheckedItems());
   },
 
-  handleItemClick: function(itemId) {
-    // Redirect to edit screen
-    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
-  },
-
   showCodeBoxDialog: function() {
     CodeBoxesActions.showDialog();
   },
