@@ -6,12 +6,6 @@ var HeaderMixin = {
     router: React.PropTypes.func
   },
 
-  statics: {
-    willTransitionTo: function() {
-      HeaderActions.clear();
-    }
-  },
-
   componentDidMount: function() {
     var menuItems   = this.headerMenuItems || [];
 

@@ -71,40 +71,39 @@ module.exports = React.createClass({
   },
 
   renderEditor: function() {
-    var styles     = this.getStyles(),
-        source     = null,
-        config     = null,
-        codeBox    = CodeBoxesStore.getCurrentCodeBox(),
-        codeBoxName = "",
-        editorMode = 'python',
-        activeRouteName = this.getRoutes()[this.getRoutes().length - 1].name,
+    var styles            = this.getStyles(),
+        source            = null,
+        config            = null,
+        codeBox           = CodeBoxesStore.getCurrentCodeBox(),
+        codeBoxName       = "",
+        editorMode        = 'python',
+        activeRouteName   = this.getRoutes()[this.getRoutes().length - 1].name,
         isEditRouteActive = activeRouteName === "codeboxes-edit";
 
     if (codeBox) {
       source      = codeBox.source;
       config      = JSON.stringify(codeBox.config, null, 2);
       editorMode  = isEditRouteActive ? CodeBoxesStore.getEditorMode(codeBox) : "javascript";
-      codeBoxName = codeBox.label;
 
       return (
-          <div>
-            <div>Codebox: {codeBoxName}</div>
-            <Editor
-                ref   = "editor"
-                //name  = {editorName}
-                mode  = {editorMode}
-                theme = "github"
-                value = {isEditRouteActive ? source : config} />
+        <div>
 
-            <div style={styles.tracePanel}>
-              <EditorPanel
-                  ref     = "tracePanel"
-                  trace   = {this.state.lastTraceResult}
-                  payload = {this.linkState('payload')}
-                  loading = {this.linkState('isLoading')}>
-              </EditorPanel>
-            </div>
+          <Editor
+            ref   = "editor"
+            //name  = {editorName}
+            mode  = {editorMode}
+            theme = "github"
+            value = {isEditRouteActive ? source : config} />
+
+          <div style={styles.tracePanel}>
+            <EditorPanel
+              ref     = "tracePanel"
+              trace   = {this.state.lastTraceResult}
+              payload = {this.linkState('payload')}
+              loading = {this.linkState('isLoading')}>
+            </EditorPanel>
           </div>
+        </div>
       )
     }
   },

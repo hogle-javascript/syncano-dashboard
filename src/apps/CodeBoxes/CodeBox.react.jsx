@@ -10,6 +10,7 @@ var React             = require('react'),
 
     Loading           = require('../../common/Loading/Loading.react'),
     mui               = require('material-ui'),
+    Colors            = mui.Styles.Colors,
     Tabs              = mui.Tabs,
     Tab               = mui.Tab;
 
@@ -46,6 +47,30 @@ module.exports = React.createClass({
       });
   },
 
+  getStyles: function() {
+    return {
+      subTabsHeader: {
+        backgroundColor : "transparent"
+      },
+      tab: {
+        color: "#444"
+      },
+      subTabsContainer: {
+        display: "flex",
+        justifyContent: "center",
+        marginTop: 30
+      },
+      title: {
+        color: "#777",
+        fontSize: 20,
+        position: "absolute",
+        left: 100,
+        marginTop: 15,
+        width: "250px"
+      }
+    }
+  },
+
   getTabsData: function() {
     return [
       {
@@ -62,9 +87,11 @@ module.exports = React.createClass({
   },
 
   renderTabs: function() {
-    var tabs = this.getTabsData().map(function(item) {
+    var styles = this.getStyles(),
+        tabs   = this.getTabsData().map(function(item) {
       return (
       <Tab
+        style    = {styles.tab}
         label    = {item.label}
         route    = {item.route}
         onActive = {this.handleTabActive} />
@@ -74,17 +101,25 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    return (
-        <div className="container">
-          <h4>CodeBox</h4>
+    var styles = this.getStyles(),
+        codeBoxName = CodeBoxesStore.getCodeBoxById(this.state.currentCodeBoxId) !== null ? CodeBoxesStore.getCodeBoxById(this.state.currentCodeBoxId).label : "";
 
-          <Loading show={this.state.isLoading}>
-          <Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
+    return (
+      <div className="container">
+
+        <div style={styles.subTabsContainer}>
+        <Loading show={this.state.isLoading}>
+          <div style={styles.title}>Codebox: {codeBoxName}</div>
+          <Tabs
+            initialSelectedIndex  = {this.getActiveSubTabIndex()}
+            tabItemContainerStyle = {styles.subTabsHeader}
+            tabWidth              = {100}  >
             {this.renderTabs()}
           </Tabs>
-          </Loading>
-          <RouteHandler />
+        </Loading>
         </div>
+        <RouteHandler />
+      </div>
     );
   }
 
