@@ -63,7 +63,9 @@ module.exports = React.createClass({
       fields.push({
         fieldName   : item.name,
         fieldType   : item.type,
-        fieldTarget : item.target
+        fieldTarget : item.target,
+        fieldOrder  : item.order_index,
+        fieldFilter : item.filter_index
       });
     });
 
@@ -72,11 +74,20 @@ module.exports = React.createClass({
 
   getSchema: function() {
     return JSON.stringify(this.state.fields.map(function(item) {
-      return {
-        name   : item.fieldName,
-        type   : item.fieldType,
-        target : item.fieldTarget
+      var schema =  {
+        name         : item.fieldName,
+        type         : item.fieldType,
+        target       : item.fieldTarget
+      };
+
+      if (item.fieldOrder) {
+        schema.order_index = item.fieldOrder;
       }
+
+      if (item.fieldFilter) {
+        schema.filter_index = item.fieldFilter;
+      }
+      return schema;
     }));
   },
 
@@ -115,12 +126,12 @@ module.exports = React.createClass({
       fieldName   : this.state.fieldName,
       fieldType   : this.state.fieldType,
       fieldTarget : this.state.fieldTarget,
-      fieldOrder  : this.refs.fieldOrder.isChecked(),
-      fieldFilter : this.refs.fieldFilter.isChecked()
+      fieldOrder  : this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
+      fieldFilter : this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
     });
 
-    this.refs.fieldOrder.setChecked();
-    this.refs.fieldFilter.setChecked();
+    this.refs.fieldOrder ? this.refs.fieldOrder.setChecked() : null;
+    this.refs.fieldFilter ? this.refs.fieldFilter.setChecked() : null;
 
     this.setState({
       fields    : fields,
@@ -141,6 +152,19 @@ module.exports = React.createClass({
     this.setState({fields: fields});
   },
 
+  handleOnCheck: function(item, event) {
+    var newFields = this.state.fields.map(function(field) {
+      if (field.fieldName === item.fieldName) {
+        if (event.target.name === 'order') {
+          field.fieldOrder = event.target.checked;
+        } else if (event.target.name === 'filter')
+          field.fieldFilter = event.target.checked;
+      }
+      return field;
+    });
+    this.setState({fields: newFields});
+  },
+
   renderSchemaFields: function() {
     return this.state.fields.map(function(item) {
 
@@ -150,27 +174,45 @@ module.exports = React.createClass({
           <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldType}</span>
           <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldTarget}</span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
-            <Checkbox
-              style          = {{marginTop: 5}}
-              name           = "filter"
-              defaultChecked = {item.fieldFilter} />
+            <Show if={this.hasFilter(item.fieldType)}>
+              <Checkbox
+                style          = {{marginTop: 5}}
+                name           = "filter"
+                defaultChecked = {item.fieldFilter}
+                onCheck         = {this.handleOnCheck.bind(this, item)}
+              />
+            </Show>
           </span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
-            <Checkbox
-              style           = {{marginTop: 5}}
-              name            = "order"
-              defaultChecked  = {item.fieldOrder} />
+            <Show if={this.hasOrder(item.fieldType)}>
+              <Checkbox
+                style           = {{marginTop: 5}}
+                name            = "order"
+                defaultChecked  = {item.fieldOrder}
+                onCheck         = {this.handleOnCheck.bind(this, item)}
+              />
+            </Show>
           </span>
           <span className='col-xs-5' style={{paddingLeft: 15}}>
             <FlatButton
               style     = {{marginTop: 5}}
               label     = 'Remove'
               secondary = {true}
-              onClick   = {function() {this.handleRemoveField(item)}.bind(this)} />
+              onClick   = {this.handleRemoveField.bind(this, item)} />
           </span>
         </div>
       )
     }.bind(this));
+  },
+
+  hasFilter: function(fieldType) {
+    var noFilterFields = ['file', 'text'];
+    return noFilterFields.indexOf(fieldType) < 0 ? true : false;
+  },
+
+  hasOrder: function(fieldType) {
+    var noOrderFields = ['file', 'text'];
+    return noOrderFields.indexOf(fieldType) < 0 ? true : false;
   },
 
   render: function() {
@@ -284,16 +326,20 @@ module.exports = React.createClass({
                   </Show>
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  <Checkbox
-                    style = {{marginTop: 35}}
-                    ref   = "fieldFilter"
-                    name  = "filter"/>
+                  <Show if={this.hasFilter(this.state.fieldType)}>
+                    <Checkbox
+                      style = {{marginTop: 35}}
+                      ref   = "fieldFilter"
+                      name  = "filter"/>
+                  </Show>
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  <Checkbox
-                    style = {{marginTop: 35}}
-                    ref   = "fieldOrder"
-                    name  = "order"/>
+                  <Show if={this.hasOrder(this.state.fieldType)}>
+                    <Checkbox
+                      style = {{marginTop: 35}}
+                      ref   = "fieldOrder"
+                      name  = "order"/>
+                  </Show>
                 </div>
                 <div className='col-xs-5' style={{paddingLeft: 15}}>
                   <FlatButton
