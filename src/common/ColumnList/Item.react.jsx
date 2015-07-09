@@ -43,7 +43,7 @@ module.exports = Radium(React.createClass({
 
   render: function () {
     var styles = this.getStyles(),
-    hoverable  = this.props.hoverable || this.props.handleClick;
+    hoverable  = (this.props.hoverable || this.props.handleClick) && !this.props.checked;
 
     return (
       <Paper
