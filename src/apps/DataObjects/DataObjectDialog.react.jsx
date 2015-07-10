@@ -1,5 +1,6 @@
 var React                 = require('react'),
     Reflux                = require('reflux'),
+    Dropzone              = require('react-dropzone'),
 
     // Utils
     FormMixin             = require('../../mixins/FormMixin'),
@@ -56,28 +57,51 @@ module.exports = React.createClass({
 
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
-      var fieldValue = this.refs['field-' + item.name].getValue();
-      if (fieldValue) {
-        params[item.name] = fieldValue;
+      if (item.type !== 'file') {
+        var fieldValue = this.refs['field-' + item.name].getValue();
+        if (fieldValue) {
+          params[item.name] = fieldValue;
+        }
       }
     }.bind(this));
 
     return params;
   },
 
-  handleAddSubmit: function() {
-    var className = DataObjectsStore.getCurrentClassName(),
-        payload = {};
+  getFileFields: function() {
+    var fileFields = [];
 
+    // Searching for files
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
-      payload[item.name] = this.state[item.name];
+      if (item.type === 'file') {
+        var file = this.state['file-' + item.name];
+        if (file) {
+          fileFields.push({
+            name: item.name,
+            file: file
+          })
+        }
+      }
     }.bind(this));
+    return fileFields;
+  },
 
-    DataObjectsActions.createDataObject({className: className, payload: payload});
+  handleAddSubmit: function() {
+    var className  = DataObjectsStore.getCurrentClassName();
+
+    DataObjectsActions.createDataObject({
+      className  : className,
+      params     : this.getParams(),
+      fileFields : this.getFileFields()
+    })
   },
 
   handleEditSubmit: function() {
-    DataObjectsActions.updateDataObject(DataObjectsStore.getCurrentClassName(), this.getParams());
+    DataObjectsActions.updateDataObject({
+      className  : className,
+      params     : this.getParams(),
+      fileFields : this.getFileFields()
+    })
   },
 
   renderBuiltinFields: function() {
@@ -175,6 +199,12 @@ module.exports = React.createClass({
       ]
   },
 
+  onDrop: function(fieldName, files, event) {
+    var state = {};
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
   renderCustomFields: function() {
 
     if (DataObjectsStore.getCurrentClassObj()) {
@@ -191,6 +221,17 @@ module.exports = React.createClass({
               floatingLabelText = {'Value of ' + item.name}
               errorText         = {this.getValidationMessages(item.name).join(' ')}
               menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
+          )
+        }
+
+        if (item.type  === 'file') {
+          return (
+            <Dropzone
+              ref    = {'file-' + item.name}
+              onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
+              size={150} >
+              <div>Click to select files to upload or drop file here.</div>
+            </Dropzone>
           )
         }
 
