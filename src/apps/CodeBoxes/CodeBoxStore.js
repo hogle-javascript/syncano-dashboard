@@ -41,18 +41,18 @@ var CodeBoxStore = Reflux.createStore({
   },
 
   refreshData: function() {
-    console.debug('CodeBoxStore::refreshData', this.data.currentCodeBox);
+    console.debug('CodeBoxStore::refreshData');
     CodeBoxActions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId);
     CodeBoxActions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
   getCurrentCodeBox: function() {
-    console.debug("CodeBoxStore::getCurrentCodeBox");
+    console.debug('CodeBoxStore::getCurrentCodeBox');
     return this.data.currentCodeBox;
   },
 
   onFetchCodeBoxCompleted: function(codeBox) {
-    console.debug("CodeBoxStore::onFetchCodeBoxCompleted")
+    console.debug('CodeBoxStore::onFetchCodeBoxCompleted')
     this.data.currentCodeBox = codeBox;
   },
 
@@ -86,12 +86,12 @@ var CodeBoxStore = Reflux.createStore({
     console.debug('CodeBoxStore::getCodeBoxLastTraceResult');
     if (this.data.traces.length > 0) {
       var lastTrace = this.data.traces[this.data.traces.length - 1];
-      if (lastTrace.status === "pending") {
+      if (lastTrace.status === 'pending') {
         setTimeout(function() {
           this.fetchTraces()
         }.bind(this), 300);
       } else {
-        if (lastTrace.result.stderr !== "") {
+        if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
         } else {
           this.data.lastTraceResult = lastTrace.result.stdout;

@@ -94,7 +94,7 @@ module.exports = React.createClass({
 
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
+    this.transitionTo('codebox-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
   },
 
   showChannelDialog: function() {
