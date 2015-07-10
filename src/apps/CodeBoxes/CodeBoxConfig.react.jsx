@@ -1,6 +1,7 @@
 var React                = require('react'),
     Reflux               = require('reflux'),
     Router               = require('react-router'),
+    Radium               = require('radium'),
 
     // Utils
     HeaderMixin          = require('../Header/HeaderMixin'),
@@ -15,12 +16,11 @@ var React                = require('react'),
     FabList              = require('../../common/Fab/FabList.react'),
     FabListItem          = require('../../common/Fab/FabListItem.react'),
     Loading              = require('../../common/Loading/Loading.react'),
-    Editor               = require('../../common/Editor/Editor.react'),
-    EditorPanel          = require('../../common/Editor/EditorPanel.react');
+    Editor               = require('../../common/Editor/Editor.react');
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
-  displayName: 'CodeBoxesEdit',
+  displayName: 'CodeBoxConfig',
 
   mixins: [
     Router.State,
@@ -42,61 +42,38 @@ module.exports = React.createClass({
         margin   : '25px auto',
         width    : '100%',
         maxWidth : '1140px'
-      },
-      tracePanel: {
-        marginTop : 30,
-        height    : 300
       }
     }
   },
 
-  handleRun: function() {
-    CodeBoxActions.runCodeBox({
-      id      : this.state.currentCodeBox.id,
-      payload : this.state.payload
-    });
-  },
-
   handleUpdate: function() {
-    var source = this.refs.editorSource.editor.getValue();
-    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    var config = this.refs.editorConfig.editor.getValue();
+    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {config: config});
   },
 
   renderEditor: function() {
-    var styles     = this.getStyles(),
-        source     = null,
-        codeBox    = this.state.currentCodeBox,
-        editorMode = 'python';
+    var config  = null,
+        codeBox = this.state.currentCodeBox;
 
     if (codeBox) {
-      source     = codeBox.source;
-      editorMode = CodeBoxStore.getEditorMode();
+      config      = JSON.stringify(codeBox.config, null, 2);
 
       return (
         <div>
-
           <Editor
-            ref   = "editorSource"
-            mode  = {editorMode}
-            theme = "github"
-            value = {source} />
-
-          <div style={styles.tracePanel}>
-            <EditorPanel
-              ref     = "tracePanel"
-              trace   = {this.state.lastTraceResult}
-              payload = {this.linkState('payload')}
-              loading = {this.linkState('isLoading')}>
-            </EditorPanel>
-          </div>
+            ref    = "editorConfig"
+            height = {300}
+            mode   = "javascript"
+            theme  = "github"
+            value  = {config} />
         </div>
       )
     }
   },
 
   render: function () {
-    console.debug('CodeBoxesEdit::render', this.state);
-    var styles     = this.getStyles();
+    console.debug('CodeBoxConfig::render');
+    var styles = this.getStyles();
 
     return (
       <Container style={styles.container}>
@@ -106,11 +83,6 @@ module.exports = React.createClass({
             mini          = {true}
             onClick       = {this.handleUpdate}
             iconClassName = "synicon-content-save" />
-          <FabListItem
-            label         = "Click here to execute CodeBox"
-            mini          = {true}
-            onClick       = {this.handleRun}
-            iconClassName = "synicon-play" />
         </FabList>
         <Loading show={this.state.isLoading}>
           {this.renderEditor()}
@@ -119,4 +91,4 @@ module.exports = React.createClass({
     );
   }
 
-});
+}));

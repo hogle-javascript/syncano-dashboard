@@ -21,12 +21,18 @@ var StoreLoadingMixin = {
   },
 
   setToLoading: function() {
+    if (this.data.isLoading === true) {
+      return true;
+    }
     console.debug('StoreLoadingMixin::setToLoading')
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   setToNotLoading: function() {
+    if (this.data.isLoading === false) {
+      return true;
+    }
     console.debug('StoreLoadingMixin::setToNotLoading');
     this.data.isLoading = false;
     this.data.hideDialogs = true;

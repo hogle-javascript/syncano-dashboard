@@ -6,7 +6,8 @@ var React             = require('react'),
     HeaderMixin       = require('../Header/HeaderMixin'),
     InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
 
-    CodeBoxesStore    = require('./CodeBoxesStore'),
+    CodeBoxStore      = require('./CodeBoxStore'),
+    CodeBoxActions    = require('./CodeBoxActions'),
 
     Loading           = require('../../common/Loading/Loading.react'),
     mui               = require('material-ui'),
@@ -23,7 +24,7 @@ module.exports = React.createClass({
     Router.Navigation,
     React.addons.LinkedStateMixin,
 
-    Reflux.connect(CodeBoxesStore),
+    Reflux.connect(CodeBoxStore),
     HeaderMixin,
     InstanceTabsMixin
   ],
@@ -42,7 +43,7 @@ module.exports = React.createClass({
   handleTabActive: function(tab) {
     this.transitionTo(tab.props.route,
       {
-        codeboxId    : this.state.currentCodeBoxId,
+        codeboxId    : this.state.currentCodeBox.id,
         instanceName : this.getParams().instanceName
       });
   },
@@ -50,23 +51,23 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       subTabsHeader: {
-        backgroundColor : "transparent"
+        backgroundColor: "transparent"
       },
       tab: {
         color: "#444"
       },
       subTabsContainer: {
-        display: "flex",
-        justifyContent: "center",
-        marginTop: 30
+        display        : "flex",
+        justifyContent : "center",
+        marginTop      : 30
       },
       title: {
-        color: "#777",
-        fontSize: 20,
-        position: "absolute",
-        left: 100,
-        marginTop: 15,
-        width: "250px"
+        color     : "#777",
+        fontSize  : 20,
+        position  : "absolute",
+        left      : 100,
+        marginTop : 15,
+        width     : "250px"
       }
     }
   },
@@ -75,50 +76,59 @@ module.exports = React.createClass({
     return [
       {
         label : "Edit",
-        route : "codeboxes-edit"
+        route : "codebox-edit"
       }, {
         label : "Config",
-        route : "codeboxes-config"
+        route : "codebox-config"
       }, {
         label : "Traces",
-        route : "codeboxes-traces"
+        route : "codebox-traces"
       }
     ];
   },
 
   renderTabs: function() {
     var styles = this.getStyles(),
-        tabs   = this.getTabsData().map(function(item) {
+        codeBox = this.state.currentCodeBox;
+    if (codeBox !== null) {
       return (
-      <Tab
-        style    = {styles.tab}
-        label    = {item.label}
-        route    = {item.route}
-        onActive = {this.handleTabActive} />
-      )
-    }.bind(this));
-    return tabs;
-  },
-
-  render: function() {
-    var styles = this.getStyles(),
-        codeBoxName = CodeBoxesStore.getCodeBoxById(this.state.currentCodeBoxId) !== null ? CodeBoxesStore.getCodeBoxById(this.state.currentCodeBoxId).label : "";
-
-    return (
-      <div className="container">
-
         <div style={styles.subTabsContainer}>
-        <Loading show={this.state.isLoading}>
-          <div style={styles.title}>Codebox: {codeBoxName}</div>
+
+          <div style={styles.title}>Codebox: {codeBox.label}</div>
           <Tabs
             initialSelectedIndex  = {this.getActiveSubTabIndex()}
             tabItemContainerStyle = {styles.subTabsHeader}
-            tabWidth              = {100}  >
-            {this.renderTabs()}
+            tabWidth              = {100}>
+            <Tab
+              style    = {styles.tab}
+              label    = "Edit"
+              route    = "codebox-edit"
+              onActive = {this.handleTabActive}>
+              </Tab>
+            <Tab
+              style    = {styles.tab}
+              label    = "Config"
+              route    = "codebox-config"
+              onActive = {this.handleTabActive}>
+            </Tab>
+            <Tab
+              style    = {styles.tab}
+              label    = "Traces"
+              route    = "codebox-traces"
+              onActive = {this.handleTabActive}>
+            </Tab>
           </Tabs>
-        </Loading>
         </div>
-        <RouteHandler />
+      );
+    }
+  },
+
+  render: function() {
+    console.error("XXX", this.state)
+    return (
+      <div className="container">
+        {this.renderTabs()}
+        <RouteHandler/>
       </div>
     );
   }
