@@ -214,6 +214,15 @@ module.exports = React.createClass({
 
   renderCustomFields: function() {
 
+    var dropZoneStyle = {
+      height      : 80,
+      width       : 250,
+      borderStyle : 'dashed',
+      borderWidth : 1,
+      borderColor : 'grey',
+      color       : 'grey'
+    }
+
     if (DataObjectsStore.getCurrentClassObj()) {
 
       return DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
@@ -232,13 +241,25 @@ module.exports = React.createClass({
         }
 
         if (item.type  === 'file') {
+          var file = this.state['file-' + item.name];
+          var description = file ? file.name : null;
+
+          if (description) {
+            description = description + ' (' + file.size + ' bytes)'
+          }
+
           return (
-            <Dropzone
-              ref    = {'file-' + item.name}
-              onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
-              size={150} >
-              <div>Click to select files to upload or drop file here.</div>
-            </Dropzone>
+            <div style={{marginTop: 25}}>
+              <div style={{marginBottom: 10, color: 'grey'}}>{item.name}</div>
+              <Dropzone
+                ref    = {'file-' + item.name}
+                onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
+                style  = {dropZoneStyle} >
+                <div style={{padding: 15}}>
+                  {description || 'Click to select files to upload or drop file here.'}
+                </div>
+              </Dropzone>
+            </div>
           )
         }
 
