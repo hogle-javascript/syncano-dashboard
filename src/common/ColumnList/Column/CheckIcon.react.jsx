@@ -129,8 +129,7 @@ module.exports = Radium(React.createClass({
           handleClick = {this.handleIconClick}
           checkable   = {this.props.checkable} />
         <div
-          style       = {[styles.name, this.props.handleNameClick && styles.link]}
-          onClick     = {this.handleNameClick}
+          style       = {styles.name}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>
           {this.props.children}

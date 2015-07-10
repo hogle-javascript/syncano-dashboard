@@ -33,6 +33,9 @@ module.exports = Radium(React.createClass({
           backgroundColor: Colors.grey100,
           cursor         : 'pointer'
         }
+      },
+      cursor: {
+        cursor: 'pointer'
       }
     };
   },
@@ -42,8 +45,10 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var styles = this.getStyles(),
-    hoverable  = (this.props.hoverable || this.props.handleClick) && !this.props.checked;
+    var styles  = this.getStyles(),
+      cursor    = (this.props.hoverable || this.props.handleClick),
+      hoverable = cursor && !this.props.checked;
+
 
     return (
       <Paper
@@ -52,7 +57,8 @@ module.exports = Radium(React.createClass({
         className = {'row'}
         style     = {[styles.base,
                     this.props.checked && styles.checked,
-                    hoverable && styles.hoverable]}
+                    hoverable && styles.hoverable,
+                    cursor && styles.cursor]}
         rounded   = {false}>
         {this.props.children}
       </Paper>
