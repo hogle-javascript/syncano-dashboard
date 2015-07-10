@@ -95,7 +95,6 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    console.debug('CodeBoxesEdit::render', this.state);
     var styles     = this.getStyles();
 
     return (

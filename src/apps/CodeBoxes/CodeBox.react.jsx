@@ -124,7 +124,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    console.error("XXX", this.state)
     return (
       <div className="container">
         {this.renderTabs()}
