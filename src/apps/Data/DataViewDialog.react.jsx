@@ -45,28 +45,7 @@ module.exports = React.createClass({
     ClassesActions.fetch();
   },
 
-  formatFields: function() {
-    var showFieldsString   = '',
-        expandFieldsString = '';
-
-    Object.keys(this.state.showFields).map(function(field) {
-      if (this.state.showFields[field]) {
-        showFieldsString = showFieldsString + field + ',';
-        if (this.state.expandFields[field]) {
-          expandFieldsString = expandFieldsString + field + ',';
-        }
-      }
-    }.bind(this));
-    return {
-      showFieldsString   : showFieldsString,
-      expandFieldsString : expandFieldsString
-    }
-  },
-
   handleAddSubmit: function() {
-    var fields             = this.formatFields(),
-        showFieldsString   = fields.showFieldsString,
-        expandFieldsString = fields.expandFieldsString;
 
     DataViewsActions.createDataView({
       name        : this.state.name,
@@ -74,31 +53,55 @@ module.exports = React.createClass({
       description : this.state.description,
       order_by    : this.state.order_by,
       page_size   : this.state.page_size,
-      fields      : showFieldsString,
-      expand      : expandFieldsString
+      fields      : this.state.fields,
+      expand      : this.state.expand
     });
   },
 
   handleEditSubmit: function() {
     DataViewsActions.updateDataView(
-      this.state.id, {
-        name    : this.state.name,
-        crontab : this.state.crontab,
-        codebox : this.state.codebox
+      this.state.name, {
+        'class'     : this.state.class,
+        description : this.state.description,
+        order_by    : this.state.order_by,
+        page_size   : this.state.page_size,
+        fields      : this.state.fields,
+        expand      : this.state.expand
       }
     );
   },
 
   handleToggle: function(fieldsType, fieldName, event, value) {
-    console.info('DataViewDialog::handleToggle');
+    console.info('DataViewDialog::handleToggle', arguments);
 
-    var fields   = this.state[fieldsType],
-        newState = {};
+    var genList = function(list, fieldName, value) {
+      var arr = list.replace(/ /g, '').split(',').filter(function(n) { return n });
 
-    fields[fieldName] = value;
-    newState[fieldsType] = fields;
+      if (value) {
+        arr.push(fieldName);
+      } else {
+        arr = arr.filter(function(n) { return n != fieldName });
+      }
 
-    this.setState(newState);
+      return arr.join(',');
+    };
+
+    var fields = '';
+    if (fieldsType === 'showFields') {
+      fields = genList(this.state.fields, fieldName, value);
+      this.setState({fields: fields});
+    }
+    if (fieldsType === 'expandFields') {
+      fields = genList(this.state.expand, fieldName, value);
+      this.setState({expand: fields});
+    }
+  },
+
+  isEnabled: function(list, field) {
+    if (!list) {
+      return;
+    }
+    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
   renderFields: function() {
@@ -121,17 +124,17 @@ module.exports = React.createClass({
                 name           = {field.name}
                 value          = {field.name}
                 label          = {field.name}
-                defaultToggled = {this.state.showFields[field.name]}
-                onToggle       = {_this.handleToggle.bind(this, 'showFields', field.name)}
+                defaultToggled = {_this.isEnabled(_this.state.fields, field.name)}
+                onToggle       = {_this.handleToggle.bind(_this, 'showFields', field.name)}
               />
             </div>
             <div className='col-xs-8'>
               <Show if={field.type === 'reference'}>
                 <Checkbox
                   name           = "expand"
-                  defaultChecked = {0}
-                  disabled       = {!this.state.showFields[field.name]}
-                  onCheck        = {_this.handleToggle.bind(this, 'expandFields', field.name)}
+                  defaultChecked = {_this.isEnabled(_this.state.expand, field.name)}
+                  disabled       = {!_this.isEnabled(_this.state.fields, field.name)}
+                  onCheck        = {_this.handleToggle.bind(_this, 'expandFields', field.name)}
                 />
               </Show>
             </div>
@@ -170,7 +173,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    console.log('XXX', this.state);
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
@@ -213,6 +215,7 @@ module.exports = React.createClass({
                   ref               = 'name'
                   name              = 'name'
                   fullWidth         = {true}
+                  disabled          = {this.hasEditMode()}
                   valueLink         = {this.linkState('name')}
                   errorText         = {this.getValidationMessages('name').join(' ')}
                   hintText          = 'Name of the endpoint'

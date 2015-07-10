@@ -39,7 +39,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(DataViewsStore),
+    Reflux.connect(DataViewsStore, 'dataviews'),
     Reflux.connect(WebhooksStore, 'webhooks'),
     HeaderMixin,
     DialogsMixin,
@@ -94,7 +94,7 @@ module.exports = React.createClass({
             }
           ],
           modal    : true,
-          children : 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' schedule?'
+          children : 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' Data endpoints?'
         }
       }
     ]
@@ -210,8 +210,8 @@ module.exports = React.createClass({
         <DataViewsList
           name                 = "Data Endpoints"
           checkItem            = {DataViewsActions.checkItem}
-          isLoading            = {this.state.isLoading}
-          items                = {this.state.items}
+          isLoading            = {this.state.dataviews.isLoading}
+          items                = {this.state.dataviews.items}
           emptyItemHandleClick = {this.showDataViewDialog}
           emptyItemContent     = "Create a DataView" />
 

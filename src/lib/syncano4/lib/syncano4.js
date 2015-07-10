@@ -644,9 +644,9 @@ var Syncano = (function() {
      */
     this.DataViews = {
       create: this.createDataView.bind(this),
-      list: this.listDataViews.bind(this)
+      list: this.listDataViews.bind(this),
       //get: this.getWebHook.bind(this),
-      //update: this.updateWebHook.bind(this),
+      update: this.updateDataView.bind(this),
       //remove: this.removeWebHook.bind(this),
       //run: this.runWebHook.bind(this),
       //traces: this.listWebHookTraces.bind(this),
@@ -2285,33 +2285,28 @@ var Syncano = (function() {
     //removeWebHook: function(id, callbackOK, callbackError) {
     //  return this.genericRemove(id, 'instance_webhooks', callbackOK, callbackError);
     //},
-    //
-    ///**
-    // * Updates webhook identified by specified id
-    // *
-    // * @method Syncano#updateWebHook
-    // * @alias Syncano.WebHooks.update
-    // * @param {Number} id - webhook id
-    // * @param {Object} params - new values of the webhook parameters
-    // * @param {string} params.slug -
-    // * @param {Number} params.codebox -
-    // * @param {function} [callbackOK] - optional method to call on success
-    // * @param {function} [callbackError] - optional method to call when request fails
-    // * @returns {Object} promise
-    // */
-    //updateWebHook: function(id, params, callbackOK, callbackError) {
-    //  if (typeof id === 'object') {
-    //    id = id.slug;
-    //  }
-    //  if (typeof id === 'undefined') {
-    //    throw new Error('Missing webhook slug');
-    //  }
-    //  if (typeof linksObject.instance_webhooks === 'undefined') {
-    //    throw new Error('Not connected to any instance');
-    //  }
-    //  return this.request('PATCH', linksObject.instance_webhooks + id, params, callbackOK, callbackError);
-    //},
-    //
+
+    /**
+     * Updates webhook identified by specified id
+     *
+     * @method Syncano#updateDataView
+     * @alias Syncano.DataView.update
+     * @param {Number} id - dataview id
+     * @param {Object} params - new values of the dataview parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    updateDataView: function(id, params, callbackOK, callbackError) {
+      if (typeof id === 'undefined') {
+        throw new Error('Missing DataView slug');
+      }
+      if (typeof linksObject.instance_webhooks === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_self + 'api/objects/' + id + '/', params, callbackOK, callbackError);
+    },
+
     ///**
     // * Runs defined webhook.
     // *

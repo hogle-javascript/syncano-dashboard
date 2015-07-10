@@ -101,7 +101,7 @@ module.exports = React.createClass({
     ClassesActions.createClass({
       name        : this.state.name,
       description : this.state.description,
-      schema      : this.getSchema()
+      schema      : schema
     });
   },
 
@@ -247,6 +247,7 @@ module.exports = React.createClass({
                 <TextField
                   ref               = 'name'
                   name              = 'name'
+                  disabled          = {this.hasEditMode()}
                   style             = {{width:'100%'}}
                   valueLink         = {this.linkState('name')}
                   errorText         = {this.getValidationMessages('name').join(' ')}
