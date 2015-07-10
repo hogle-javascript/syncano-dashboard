@@ -279,10 +279,10 @@ module.exports = React.createClass({
                 <div className='col-xs-8' style={{paddingLeft: 15}}>
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Order
+                  Filter
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Filter
+                  Order
                 </div>
                 <div className='col-xs-5' style={{paddingLeft: 15}}>
                 </div>

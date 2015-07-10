@@ -21,9 +21,12 @@ var DataViewDialogStore = Reflux.createStore({
       label     : '',
       crontab   : '',
       codebox   : '',
+      page_size : 50,
       classes : [
         {payload: '', text: 'Loading...'}
-      ]
+      ],
+      expandFields : {},
+      showFields   : {}
     };
   },
 
