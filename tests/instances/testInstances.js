@@ -17,16 +17,16 @@ module.exports = {
     instancesPage.clickFAB();
     instancesPage.fillInstanceName();
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
-    instancesPage.clickConfirmButton();
+    instancesPage.clickButton('@confirmButton');
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance');
   },
   'Test Edit Instance' : function(client) {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickSelectInstance();
-    instancesPage.clickEditButton();
+    instancesPage.clickButton('@editButton');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
-    instancesPage.clickConfirmButton();
+    instancesPage.clickButton('@confirmButton');
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRowDescription')
@@ -35,7 +35,7 @@ module.exports = {
   'Test Delete Instance' : function(client) {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickSelectInstance();
-    instancesPage.clickDeleteButton();
+    instancesPage.clickButton('@deleteButton');
     instancesPage.clickButton('@confirmDeleteButton');
 
     instancesPage.wasInstanceDeleted();

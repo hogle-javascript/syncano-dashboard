@@ -13,22 +13,9 @@ var instancesCommands = {
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
-  clickConfirmButton: function() {
-    return this.waitForElementVisible('@confirmButton', 5000)
-      .click('@confirmButton')
-      .waitForElementNotVisible('@confirmButton', 5000)
-  },
   clickSelectInstance: function() {
     return this.waitForElementVisible('@selectInstance', 5000)
       .click('@selectInstance')
-  },
-  clickEditButton: function() {
-    return this.waitForElementVisible('@editButton', 5000)
-      .click('@editButton')
-  },
-  clickDeleteButton: function() {
-    return this.waitForElementVisible('@deleteButton', 5000)
-      .click('@deleteButton')
   },
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
