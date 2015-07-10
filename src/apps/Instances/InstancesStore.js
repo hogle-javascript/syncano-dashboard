@@ -43,7 +43,9 @@ var InstancesStore = Reflux.createStore({
   },
 
   amIOwner: function(item) {
-    return item.owner.email === SessionStore.getUser().email;
+    if (item) {
+      return item.owner.email === SessionStore.getUser().email;
+    }
   },
 
   onCheckItem: function(checkId, state) {
@@ -87,13 +89,20 @@ var InstancesStore = Reflux.createStore({
     return instance;
   },
 
+  isCheckedInstanceShared: function() {
+    var checkedItems = this.getCheckedItems();
+    if (checkedItems) {
+      return !this.amIOwner(checkedItems[0]);
+    }
+  },
+
   // Filters
   filterMyInstances: function(item) {
-    return amIOwner(item);
+    return this.amIOwner(item);
   },
 
   filterOtherInstances: function(item) {
-    return !amIOwner(item);
+    return !this.amIOwner(item);
   },
 
   getMyInstances: function() {
