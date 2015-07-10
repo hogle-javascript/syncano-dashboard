@@ -18,8 +18,8 @@ module.exports = {
     instancesPage.fillInstanceDescription();
     instancesPage.clickConfirmButton();
 
-    instancesPage.expect.element('@instancesTableFirstInstanceName').to.be.present.after(5000);
-    instancesPage.expect.element('@instancesTableFirstInstanceName').to.contain.text('nightwatch_test_instance');
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance');
   },
 
 };

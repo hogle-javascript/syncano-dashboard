@@ -38,8 +38,8 @@ module.exports = {
     confirmButton: {
       selector: 'button span[data-reactid*="$confirm"]'
     },
-    instancesTableFirstInstanceName: {
-      selector: '.row .col-xs-10 div'
+    instancesTableRow: {
+      selector: '.row .col-xs-10'
     }
   }
 };
