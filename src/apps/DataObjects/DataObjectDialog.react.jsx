@@ -11,6 +11,7 @@ var React                 = require('react'),
     DataObjectsActions    = require('./DataObjectsActions'),
     DataObjectDialogStore = require('./DataObjectDialogStore'),
     DataObjectsStore      = require('./DataObjectsStore'),
+    ChannelsActions       = require('../Channels/ChannelsActions'),
     CodeBoxesStore        = require('../CodeBoxes/CodeBoxesStore'),
 
     // Components
@@ -30,6 +31,11 @@ module.exports = React.createClass({
     FormMixin,
     DialogMixin
   ],
+
+  handleDialogShow: function() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
 
   validatorConstraints: function() {
     var validateObj = {};
@@ -150,8 +156,9 @@ module.exports = React.createClass({
         valueMember       = "payload"
         displayMember     = "text"
         floatingLabelText = {'Channel'}
+        valueLink         = {this.linkState('channel')}
         errorText         = {this.getValidationMessages('channel').join(' ')}
-        menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />,
+        menuItems         = {this.state.channels} />,
 
       <TextField
         ref               = {'field-channel_room'}
@@ -273,6 +280,7 @@ module.exports = React.createClass({
       <Dialog
         ref       = 'dialog'
         title     = {title}
+        onShow    = {this.handleDialogShow}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}>
         <div>

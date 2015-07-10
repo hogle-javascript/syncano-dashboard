@@ -65,7 +65,7 @@ var ChannelsStore = Reflux.createStore({
     return this.data.items.map(function(item) {
       return {
         payload : item.id,
-        text    : item.label
+        text    : item.name
       }
     });
   },
