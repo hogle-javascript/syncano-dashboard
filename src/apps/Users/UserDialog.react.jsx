@@ -1,5 +1,6 @@
 var React            = require('react'),
     Reflux           = require('reflux'),
+    Select           = require('react-select'),
 
     // Utils
     FormMixin        = require('../../mixins/FormMixin'),
@@ -9,14 +10,17 @@ var React            = require('react'),
     UsersActions     = require('./UsersActions'),
     UserDialogStore  = require('./UserDialogStore'),
     CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
+    GroupsStore      = require('./GroupsStore'),
 
     // Components
     mui              = require('material-ui'),
     Toggle           = mui.Toggle,
     TextField        = mui.TextField,
+    SelectField      = mui.SelectField,
     DropDownMenu     = mui.DropDownMenu,
     Dialog           = mui.Dialog;
 
+require('react-select/dist/default.css');
 
 module.exports = React.createClass({
 
@@ -32,29 +36,53 @@ module.exports = React.createClass({
   validatorConstraints: {
     username: {
       presence: true
-    },
-    password: {
-      presence: true
     }
   },
 
   handleAddSubmit: function() {
-    UsersActions.createUser({
-      username : this.state.username,
-      password : this.state.password
-    });
+    var activeGroup = GroupsStore.getActiveGroup(),
+        userGroups = this.state.newUserGroups || [activeGroup];
+
+    UsersActions.createUser(
+      {
+        username : this.state.username,
+        password : this.state.password
+      },
+      {
+        newGroups: userGroups
+      }
+    );
   },
 
   handleEditSubmit: function() {
-    UsersActions.updateUser(this.state.id, {
-      username : this.state.username,
-      password : this.state.password
-    });
+    UsersActions.updateUser(
+      this.state.id,
+      {
+        username: this.state.username,
+        password: this.state.password
+      },
+      {
+        groups    : this.state.groups,
+        newGroups : this.state.newUserGroups
+      }
+    );
+  },
+
+  handleSelectFieldChange: function(newValue, selectedGroups) {
+    this.setState({
+      newUserGroups: selectedGroups
+    })
   },
 
   render: function() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = 'Confirm',
+        selectValue = '',
+        activeGroup = GroupsStore.getActiveGroup(),
+        allGroups   = GroupsStore.getGroups().map(function(group) {
+          group.value = group.id + '';
+          return group;
+        }),
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -68,12 +96,21 @@ module.exports = React.createClass({
           }
         ];
 
+    if (this.state.newUserGroups) {
+      selectValue = this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      selectValue = this.linkState('groups');
+    } else if (activeGroup) {
+      selectValue = activeGroup
+    }
+
     return (
       <Dialog
-        ref       = 'dialog'
-        title     = {title + ' User'}
-        actions   = {dialogStandardActions}
-        onDismiss = {this.resetDialogState}>
+        ref                   = 'dialog'
+        title                 = {title + ' User'}
+        actions               = {dialogStandardActions}
+        onDismiss             = {this.resetDialogState}
+        autoScrollBodyContent = {true} >
         <div>
           {this.renderFormNotifications()}
           <form
@@ -84,7 +121,7 @@ module.exports = React.createClass({
             <TextField
               ref               = 'username'
               name              = 'username'
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
               valueLink         = {this.linkState('username')}
               errorText         = {this.getValidationMessages('username').join(' ')}
               hintText          = 'Username'
@@ -94,11 +131,19 @@ module.exports = React.createClass({
               ref               = 'password'
               name              = 'password'
               type              = 'password'
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
               valueLink         = {this.linkState('password')}
               errorText         = {this.getValidationMessages('password').join(' ')}
               hintText          = 'User password'
               floatingLabelText = 'Password' />
+
+            <Select
+              name     = 'group'
+              multi    = {true}
+              value    = {selectValue.value || null}
+              placeholder = 'User groups'
+              options  = {allGroups}
+              onChange = {this.handleSelectFieldChange} />
 
           </form>
         </div>

@@ -130,7 +130,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Channels"
               mini          = {true}
-              onClick       = {this.showDialog('deleteChannelDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteChannelDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem

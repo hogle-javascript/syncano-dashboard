@@ -496,7 +496,10 @@ var Syncano = (function() {
       list: this.listUsers.bind(this),
       get: this.getUser.bind(this),
       update: this.updateUser.bind(this),
-      remove: this.removeUser.bind(this)
+      remove: this.removeUser.bind(this),
+      getUserGroups: this.getUserGroups.bind(this),
+      addToGroup: this.addToGroup.bind(this),
+      removeFromGroup: this.removeFromGroup.bind(this)
     };
 
     /**
@@ -516,7 +519,8 @@ var Syncano = (function() {
       list: this.listGroups.bind(this),
       get: this.getGroup.bind(this),
       remove: this.removeGroup.bind(this),
-      addUser: this.addUserToGroup.bind(this)
+      addUser: this.addUserToGroup.bind(this),
+      getUsers: this.getGroupUsers.bind(this)
     };
 
     /**
@@ -1615,6 +1619,36 @@ var Syncano = (function() {
       return this.genericRemove(id, 'instance_users', callbackOK, callbackError);
     },
 
+    getUserGroups: function(id, callbackOK, callbackError) {
+      return this.request('GET', linksObject.instance_users + id + '/groups/', callbackOK, callbackError);
+    },
+
+    addToGroup: function(id, params, callbackOK, callbackError) {
+      var groupId = params.id;
+
+      if (typeof groupId === 'undefined') {
+        throw new Error('Missing group id');
+      }
+      if (typeof id === 'undefined') {
+        throw new Error('Missing user id');
+      }
+
+      return this.request('POST', linksObject.instance_users + id + '/groups/', {group: groupId}, callbackOK, callbackError);
+    },
+
+    removeFromGroup: function(id, params, callbackOK, callbackError) {
+      var groupId = params.id;
+
+      if (typeof groupId === 'undefined') {
+        throw new Error('Missing group id');
+      }
+      if (typeof id === 'undefined') {
+        throw new Error('Missing user id');
+      }
+
+      return this.request('DELETE', linksObject.instance_users + id + '/groups/' + groupId, callbackOK, callbackError);
+    },
+
     /*********************
        GROUPS METHODS
     **********************/
@@ -1698,6 +1732,10 @@ var Syncano = (function() {
      */
     removeGroup: function(id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_groups', callbackOK, callbackError);
+    },
+
+    getGroupUsers: function(id, callbackOK, callbackError) {
+      return this.request('GET', linksObject.instance_groups + id + '/users/', callbackOK, callbackError);
     },
 
     addUserToGroup: function(params, callbackOK, callbackError) {

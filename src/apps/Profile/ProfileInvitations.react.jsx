@@ -194,13 +194,13 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to accept Invitations"
               mini          = {true}
-              onClick       = {this.showDialog('acceptInvitationsDialog')}
+              onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
               iconClassName = "synicon-check" />
 
             <FabListItem
               label         = "Click here to decline Invitations"
               mini          = {true}
-              onClick       = {this.showDialog('declineInvitationsDialog')}
+              onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
               iconClassName = "synicon-delete" />
 
           </FabList>

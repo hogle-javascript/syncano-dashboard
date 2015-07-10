@@ -181,7 +181,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Schedules"
               mini          = {true}
-              onClick       = {this.showDialog('removeScheduleDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeScheduleDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -207,7 +207,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Schedules"
               mini          = {true}
-              onClick       = {this.showDialog('removeTriggerDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeTriggerDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
