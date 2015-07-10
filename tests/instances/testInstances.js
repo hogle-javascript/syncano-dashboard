@@ -7,6 +7,7 @@ module.exports = {
     loginPage.typePassword();
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
+
   },
   after: function(client) {
     client.end();
@@ -15,11 +16,28 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickFAB();
     instancesPage.fillInstanceName();
-    instancesPage.fillInstanceDescription();
+    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.clickConfirmButton();
-
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance');
   },
+  'Test Edit Instance' : function(client) {
+    var instancesPage = client.page.instancesPage();
+    instancesPage.clickSelectInstance();
+    instancesPage.clickEditButton();
+    instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
+    instancesPage.clickConfirmButton();
 
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRowDescription')
+    .to.contain.text('nightwatch_test_instance_new_description');
+  },
+  'Test Delete Instance' : function(client) {
+    var instancesPage = client.page.instancesPage();
+    instancesPage.clickSelectInstance();
+    instancesPage.clickDeleteButton();
+    instancesPage.clickButton('@confirmDeleteButton');
+
+    instancesPage.wasInstanceDeleted();
+  }
 };

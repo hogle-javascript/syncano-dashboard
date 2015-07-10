@@ -8,14 +8,34 @@ var instancesCommands = {
     return this.waitForElementVisible('@createModalNameInput', 1000)
       .setValue('@createModalNameInput', 'nightwatch_test_instance');
   },
-  fillInstanceDescription: function() {
+  fillInstanceDescription: function(description) {
     return this.waitForElementVisible('@createModalDescriptionInput', 1000)
-      .setValue('@createModalDescriptionInput', 'nightwatch_test_instance_description');
+      .clearValue('@createModalDescriptionInput')
+      .setValue('@createModalDescriptionInput', description);
   },
   clickConfirmButton: function() {
-    return this.waitForElementVisible('@confirmButton', 1000)
+    return this.waitForElementVisible('@confirmButton', 5000)
       .click('@confirmButton')
       .waitForElementNotVisible('@confirmButton', 5000)
+  },
+  clickSelectInstance: function() {
+    return this.waitForElementVisible('@selectInstance', 5000)
+      .click('@selectInstance')
+  },
+  clickEditButton: function() {
+    return this.waitForElementVisible('@editButton', 5000)
+      .click('@editButton')
+  },
+  clickDeleteButton: function() {
+    return this.waitForElementVisible('@deleteButton', 5000)
+      .click('@deleteButton')
+  },
+  clickButton: function(button) {
+    return this.waitForElementVisible(button, 5000)
+      .click(button)
+  },
+  wasInstanceDeleted: function() {
+    return this. waitForElementNotPresent('@instancesTableRow', 5000)
   }
 };
 
@@ -38,8 +58,23 @@ module.exports = {
     confirmButton: {
       selector: 'button span[data-reactid*="$confirm"]'
     },
+    confirmDeleteButton: {
+      selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
+    },
     instancesTableRow: {
       selector: '.row .col-xs-10'
+    },
+    selectInstance: {
+      selector: '.col-xs-10 span'
+    },
+    editButton: {
+      selector: '.synicon-pencil'
+    },
+    deleteButton: {
+      selector: '.synicon-delete'
+    },
+    instancesTableRowDescription: {
+      selector: '.row .col-flex-1'
     }
   }
 };
