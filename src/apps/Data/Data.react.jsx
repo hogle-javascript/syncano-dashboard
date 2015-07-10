@@ -48,7 +48,7 @@ module.exports = React.createClass({
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs || nextState.webhooks.hideDialogs);
+    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   componentDidMount: function() {

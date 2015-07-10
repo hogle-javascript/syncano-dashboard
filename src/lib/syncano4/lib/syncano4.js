@@ -647,7 +647,7 @@ var Syncano = (function() {
       list: this.listDataViews.bind(this),
       //get: this.getWebHook.bind(this),
       update: this.updateDataView.bind(this),
-      //remove: this.removeWebHook.bind(this),
+      remove: this.removeDataView.bind(this),
       //run: this.runWebHook.bind(this),
       //traces: this.listWebHookTraces.bind(this),
       //trace: this.getWebHookTrace.bind(this)
@@ -2270,21 +2270,20 @@ var Syncano = (function() {
     //getWebHook: function(id, callbackOK, callbackError) {
     //  return this.genericGet(id, 'instance_webhooks', callbackOK, callbackError);
     //},
-    //
-    ///**
-    // * Removes Webhook identified by specified id
-    // *
-    // * @method Syncano#removeWebHook
-    // * @alias Syncano.WebHooks.remove
-    // * @param {Number|object} id - identifier of the webhook to remove
-    // * @param {Number} id.id - when passed parameter is an object, we use its id property
-    // * @param {function} [callbackOK] - optional method to call on success
-    // * @param {function} [callbackError] - optional method to call when request fails
-    // * @returns {object} promise
-    // */
-    //removeWebHook: function(id, callbackOK, callbackError) {
-    //  return this.genericRemove(id, 'instance_webhooks', callbackOK, callbackError);
-    //},
+
+    /**
+     * Removes DataView identified by specified id
+     *
+     * @method Syncano#DataView
+     * @alias Syncano.DataView.remove
+     * @param {Number} id - identifier of the DataView to remove
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeDataView: function(id, callbackOK, callbackError) {
+      return this.request('DELETE', linksObject.instance_self + 'api/objects/' + id + '/', callbackOK, callbackError);
+    },
 
     /**
      * Updates webhook identified by specified id
