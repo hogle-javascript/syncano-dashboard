@@ -42,13 +42,58 @@ var InstancesStore = Reflux.createStore({
     InstancesActions.fetchInstances();
   },
 
-  // Filters
-  filterMyInstances: function(item) {
+  amIOwner: function(item) {
     return item.owner.email === SessionStore.getUser().email;
   },
 
+  onCheckItem: function(checkId, state) {
+    console.debug('InstancesStore::onCheckItem');
+
+    var item         = this.getInstanceById(checkId);
+    var checkedItems = this.getCheckedItems();
+
+    // Unchecking or no items checked
+    if (!state || checkedItems.length === 0) {
+      item.checked = state;
+      this.trigger(this.data);
+      return;
+    }
+
+    // Checking if the item is from the same list as other checked
+    var newItemFromMyList   = this.amIOwner(item),
+        otherItemFromMyList = this.amIOwner(checkedItems[0]);
+
+    item.checked = state;
+    if (!(newItemFromMyList && otherItemFromMyList)) {
+      this.data.items.forEach(function(existingItem) {
+        // Uncheck all other then new one
+        if (item.name !== existingItem.name) {
+          existingItem.checked = false;
+        }
+      });
+    }
+
+    this.trigger(this.data);
+  },
+
+  getInstanceById: function(name) {
+    var instance = null;
+    this.data.items.some(function(item) {
+      if (item.name.toString() === name.toString()) {
+        instance = item;
+        return true;
+      }
+    }.bind(this));
+    return instance;
+  },
+
+  // Filters
+  filterMyInstances: function(item) {
+    return amIOwner(item);
+  },
+
   filterOtherInstances: function(item) {
-    return item.owner.email !== SessionStore.getUser().email;
+    return !amIOwner(item);
   },
 
   getMyInstances: function() {
