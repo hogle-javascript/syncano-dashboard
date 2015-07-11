@@ -43,7 +43,7 @@ module.exports = {
     instancesPage.clickButton('@confirmDeleteButton');
 
     client.pause(2000);
-    
+
     instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
     instancesPage.expect.element('@instancesTableRowDescription')
     .to.not.contain.text('nightwatch_test_instance_description');
