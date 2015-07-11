@@ -75,9 +75,9 @@ module.exports = React.createClass({
   getSchema: function() {
     return JSON.stringify(this.state.fields.map(function(item) {
       var schema =  {
-        name         : item.fieldName,
-        type         : item.fieldType,
-        target       : item.fieldTarget
+        name   : item.fieldName,
+        type   : item.fieldType,
+        target : item.fieldTarget
       };
 
       if (item.fieldOrder) {

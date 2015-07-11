@@ -20,7 +20,6 @@ var DataObjectDialogStore = Reflux.createStore({
     return {
       username : null,
       password : null,
-      channel  : null,
       channels : [
         {payload: '', text: 'Loading...'}
       ]

@@ -16,6 +16,8 @@ var React                 = require('react'),
 
     // Components
     mui                   = require('material-ui'),
+    FlatButton            = mui.FlatButton,
+    IconButton            = mui.IconButton,
     TextField             = mui.TextField,
     SelectField           = mui.SelectField,
     DropDownMenu          = mui.DropDownMenu,
@@ -54,7 +56,7 @@ module.exports = React.createClass({
       id                : this.state.id,
       owner             : this.state.owner,
       group             : this.state.group,
-      channel           : this.state.channel,
+      channel           : this.state.channel !== 'no channel' ? this.state.channel : null,
       channel_room      : this.state.channel_room,
       owner_permissions : this.state.owner_permissions,
       group_permissions : this.state.group_permissions,
@@ -93,10 +95,9 @@ module.exports = React.createClass({
   },
 
   handleAddSubmit: function() {
-    var className  = DataObjectsStore.getCurrentClassName();
 
     DataObjectsActions.createDataObject({
-      className  : className,
+      className  : DataObjectsStore.getCurrentClassName(),
       params     : this.getParams(),
       fileFields : this.getFileFields()
     })
@@ -104,7 +105,7 @@ module.exports = React.createClass({
 
   handleEditSubmit: function() {
     DataObjectsActions.updateDataObject({
-      className  : className,
+      className  : DataObjectsStore.getCurrentClassName(),
       params     : this.getParams(),
       fileFields : this.getFileFields()
     })
@@ -206,13 +207,24 @@ module.exports = React.createClass({
       ]
   },
 
-  onDrop: function(fieldName, files, event) {
+  onDrop: function(fieldName, files) {
     var state = {};
     state[fieldName] = files[0];
     this.setState(state);
   },
 
-  renderCustomFields: function() {
+  handleFileOnClick: function(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile: function(name) {
+    var state = {};
+    state[name] = null;
+    this.setState(state);
+  },
+
+  renderDropZone: function(item) {
 
     var dropZoneStyle = {
       height      : 80,
@@ -221,7 +233,30 @@ module.exports = React.createClass({
       borderWidth : 1,
       borderColor : 'grey',
       color       : 'grey'
+    };
+
+    var file = this.state['file-' + item.name];
+    var description = file ? file.name : null;
+
+    if (description) {
+      description = description + ' (' + file.size + ' bytes)'
     }
+    return (
+      <div style={{marginTop: 25}}>
+        <div style={{marginBottom: 10, color: 'grey'}}>{item.name + ' (file)'}</div>
+        <Dropzone
+          ref    = {'file-' + item.name}
+          onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
+          style  = {dropZoneStyle} >
+          <div style={{padding: 15}}>
+            {description || 'Click to select files to upload or drop file here.'}
+          </div>
+        </Dropzone>
+      </div>
+    )
+  },
+
+  renderCustomFields: function() {
 
     if (DataObjectsStore.getCurrentClassObj()) {
 
@@ -241,26 +276,35 @@ module.exports = React.createClass({
         }
 
         if (item.type  === 'file') {
-          var file = this.state['file-' + item.name];
-          var description = file ? file.name : null;
 
-          if (description) {
-            description = description + ' (' + file.size + ' bytes)'
-          }
+          if (this.hasEditMode()) {
+            if (this.state[item.name]) {
+              var url = this.state[item.name].value;
+              return [
+                <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>,
+                <div className='row' style={{marginTop: 15}}>
 
-          return (
-            <div style={{marginTop: 25}}>
-              <div style={{marginBottom: 10, color: 'grey'}}>{item.name}</div>
-              <Dropzone
-                ref    = {'file-' + item.name}
-                onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
-                style  = {dropZoneStyle} >
-                <div style={{padding: 15}}>
-                  {description || 'Click to select files to upload or drop file here.'}
+
+                  <div className='col-xs-8'>
+                    <IconButton
+                     iconClassName = "synicon-download"
+                     onClick       = {this.handleFileOnClick.bind(this, url)}
+                     tooltip       = {url} />
+                  </div>
+
+                  <div className='col-flex-1'>
+                    <FlatButton
+                      style     = {{marginTop: 5}}
+                      label     = 'Remove'
+                      secondary = {true}
+                      onClick   = {this.handleRemoveFile.bind(this, item.name)} />
+                  </div>
+
                 </div>
-              </Dropzone>
-            </div>
-          )
+              ]
+            }
+          }
+          return this.renderDropZone(item);
         }
 
         return (
