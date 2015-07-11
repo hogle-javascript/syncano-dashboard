@@ -62,12 +62,16 @@ var ChannelsStore = Reflux.createStore({
   },
 
   getChannelsDropdown: function() {
-    return this.data.items.map(function(item) {
+    var dropdown = [{
+      payload : 'no channel',
+      text    : 'no channel'
+    }];
+    return dropdown.concat(this.data.items.map(function(item) {
       return {
-        payload : item.id,
-        text    : item.label
+        payload : item.name,
+        text    : item.name
       }
-    });
+    }));
   },
 
   getChannelTypesDropdown: function() {

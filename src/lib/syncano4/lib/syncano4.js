@@ -458,7 +458,8 @@ var Syncano = (function() {
       list: this.listDataObjects.bind(this),
       remove: this.removeDataObject.bind(this),
       get: this.getDataObject.bind(this),
-      update: this.updateDataObject.bind(this)
+      update: this.updateDataObject.bind(this),
+      uploadFile: this.uploadFileDataObject.bind(this)
     };
 
     /**
@@ -1428,6 +1429,33 @@ var Syncano = (function() {
       params = prepareObjectToBeUpdated(params);
       var methodName = linksObject.instance_classes + className + '/objects/' + id;
       return this.request('PATCH', methodName, params, callbackOK, callbackError);
+    },
+
+    uploadFileDataObject: function(className, params, field, callbackOK, callbackError) {
+
+      if (typeof className === 'undefined') {
+        throw new Error('Missing name of the class');
+      }
+      if (typeof linksObject.instance_classes === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      var deferred = Deferred(),
+          formData = new FormData(),
+          url      = normalizeUrl(baseURL + linksObject.instance_classes + className + '/objects/' + params.id + '/'),
+          xhr      = new XMLHttpRequest();
+
+      formData.append(field.name, field.file);
+
+      xhr.onload = function() {
+        deferred.resolve();
+      };
+
+      xhr.open('PATCH', url, true);
+      xhr.setRequestHeader('Authorization', 'Token ' + apiKey);
+      xhr.send(formData);
+
+      return deferred.promise;
     },
 
     /********************
