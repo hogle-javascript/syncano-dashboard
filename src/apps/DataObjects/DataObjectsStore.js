@@ -27,7 +27,7 @@ var DataObjectsStore = Reflux.createStore({
     return {
       items        : null,
       isLoading    : false,
-      selectedRows : null,
+      selectedRows : [],
       columns      : [
         {
           id      : 'id',
