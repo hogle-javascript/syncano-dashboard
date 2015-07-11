@@ -162,7 +162,7 @@ module.exports = React.createClass({
             floatingLabelText = {'Channel'}
             valueLink         = {this.linkState('channel')}
             errorText         = {this.getValidationMessages('channel').join(' ')}
-            menuItems         = {this.state.channels} />,
+            menuItems         = {this.state.channels} />
 
           <TextField
             ref               = {'field-channel_room'}
