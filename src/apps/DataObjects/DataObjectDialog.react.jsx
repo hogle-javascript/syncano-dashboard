@@ -235,8 +235,8 @@ module.exports = React.createClass({
       color       : 'grey'
     };
 
-    var file = this.state['file-' + item.name];
-    var description = file ? file.name : null;
+    var file        = this.state['file-' + item.name],
+        description = file ? file.name : null;
 
     if (description) {
       description = description + ' (' + file.size + ' bytes)'
@@ -283,7 +283,6 @@ module.exports = React.createClass({
               return [
                 <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>,
                 <div className='row' style={{marginTop: 15}}>
-
 
                   <div className='col-xs-8'>
                     <IconButton
