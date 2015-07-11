@@ -15,15 +15,15 @@ var instancesCommands = {
   },
   clickSelectInstance: function() {
     return this.waitForElementVisible('@selectInstance', 5000)
-      .click('@selectInstance')
+      .click('@selectInstance');
   },
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
-      .click(button)
+      .click(button);
   },
-  wasInstanceDeleted: function() {
-    return this. waitForElementNotPresent('@instancesTableRow', 5000)
-  }
+  isModalClosed: function() {
+    return this.waitForElementNotPresent('@confirmButton', 5000);
+  },
 };
 
 module.exports = {
@@ -49,7 +49,7 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: '.row .col-xs-10'
+      selector: 'div#instances div.row div.col-flex-1'
     },
     selectInstance: {
       selector: '.col-xs-10 span'

@@ -18,8 +18,11 @@ module.exports = {
     instancesPage.fillInstanceName();
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.clickButton('@confirmButton');
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance');
+    instancesPage.isModalClosed();
+
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
+
   },
   'Test Edit Instance' : function(client) {
     var instancesPage = client.page.instancesPage();
@@ -27,8 +30,9 @@ module.exports = {
     instancesPage.clickButton('@editButton');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
+    instancesPage.isModalClosed();
 
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
     instancesPage.expect.element('@instancesTableRowDescription')
     .to.contain.text('nightwatch_test_instance_new_description');
   },
@@ -38,6 +42,10 @@ module.exports = {
     instancesPage.clickButton('@deleteButton');
     instancesPage.clickButton('@confirmDeleteButton');
 
-    instancesPage.wasInstanceDeleted();
+    client.pause(2000);
+    
+    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRowDescription')
+    .to.not.contain.text('nightwatch_test_instance_description');
   }
 };
