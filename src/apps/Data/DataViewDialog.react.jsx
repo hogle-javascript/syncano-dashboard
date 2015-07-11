@@ -15,6 +15,7 @@ var React               = require('react'),
     // Components
     mui                 = require('material-ui'),
     Toggle              = mui.Toggle,
+    Checkbox            = mui.Checkbox,
     TextField           = mui.TextField,
     SelectField         = mui.SelectField,
     Dialog              = mui.Dialog;
@@ -45,57 +46,120 @@ module.exports = React.createClass({
   },
 
   handleAddSubmit: function() {
+
     DataViewsActions.createDataView({
       name        : this.state.name,
       'class'     : this.state.class,
-      description : this.state.description
+      description : this.state.description,
+      order_by    : this.state.order_by,
+      page_size   : this.state.page_size,
+      fields      : this.state.fields,
+      expand      : this.state.expand
     });
   },
 
   handleEditSubmit: function() {
     DataViewsActions.updateDataView(
-      this.state.id, {
-        name    : this.state.name,
-        crontab : this.state.crontab,
-        codebox : this.state.codebox
+      this.state.name, {
+        'class'     : this.state.class,
+        description : this.state.description,
+        order_by    : this.state.order_by,
+        page_size   : this.state.page_size,
+        fields      : this.state.fields,
+        expand      : this.state.expand
       }
     );
+  },
+
+  handleToggle: function(fieldsType, fieldName, event, value) {
+    console.info('DataViewDialog::handleToggle', arguments);
+
+    var genList = function(list, fieldName, value) {
+      var arr = list.replace(/ /g, '').split(',').filter(function(n) { return n });
+
+      if (value) {
+        arr.push(fieldName);
+      } else {
+        arr = arr.filter(function(n) { return n != fieldName });
+      }
+
+      return arr.join(',');
+    };
+
+    var fields = '';
+    if (fieldsType === 'showFields') {
+      fields = genList(this.state.fields, fieldName, value);
+      this.setState({fields: fields});
+    }
+    if (fieldsType === 'expandFields') {
+      fields = genList(this.state.expand, fieldName, value);
+      this.setState({expand: fields});
+    }
+  },
+
+  isEnabled: function(list, field) {
+    if (!list) {
+      return;
+    }
+    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
   renderFields: function() {
     console.info('DataViewDialog::renderFields', this.state.class);
 
-    var fields = [<div style={{marginBottom: 20}}>Fields</div>];
+    var fields = [
+      <div className='row' style={{marginBottom: 20}}>
+        <div className='col-flex-1'>Class Fields</div>
+        <div className='col-xs-8'>Expand</div>
+      </div>],
+        _this  = this;
+
     if (this.state.class) {
       return fields.concat(ClassesStore.getClassFields(this.state.class).map(function(field) {
         return (
-          <Toggle
-            key={field.name}
-            name={field.name}
-            value={field.name}
-            label={field.name}
-          />
+          <div className='row'>
+            <div className='col-flex-1'>
+              <Toggle
+                key            = {field.name}
+                name           = {field.name}
+                value          = {field.name}
+                label          = {field.name}
+                defaultToggled = {_this.isEnabled(_this.state.fields, field.name)}
+                onToggle       = {_this.handleToggle.bind(_this, 'showFields', field.name)}
+              />
+            </div>
+            <div className='col-xs-8'>
+              <Show if={field.type === 'reference'}>
+                <Checkbox
+                  name           = "expand"
+                  defaultChecked = {_this.isEnabled(_this.state.expand, field.name)}
+                  disabled       = {!_this.isEnabled(_this.state.fields, field.name)}
+                  onCheck        = {_this.handleToggle.bind(_this, 'expandFields', field.name)}
+                />
+              </Show>
+            </div>
+
+          </div>
         )
-      }))
+      }.bind(this)))
     }
-    return fields;
   },
 
   renderOptions: function() {
     console.info('DataViewDialog::renderOrderBy', this.state.class);
 
     return [
-      <div>Options view options</div>,
+      <div>Response options</div>,
       <SelectField
-        ref               = "orderby"
-        name              = "orderby"
+        ref               = "order_by"
+        name              = "order_by"
         floatingLabelText = "Order by"
         fullWidth         = {true}
-        valueLink         = {this.linkState('orderby')}
+        valueLink         = {this.linkState('order_by')}
         errorText         = {this.getValidationMessages('class').join(' ')}
         valueMember       = "payload"
         displayMember     = "text"
-        menuItems         = {[{text: 'name (ascending)', payload: 'name'},{text: 'name (decending)', payload: 'text2'}]}/>,
+        menuItems         = {ClassesStore.getClassOrderFieldsPayload(this.state.class)} />,
 
       <TextField
           ref               = 'page_size'
@@ -124,12 +188,12 @@ module.exports = React.createClass({
           }
         ];
 
-    var fields  = null,
-        options = null;
+    var fields    = null,
+        options   = null;
 
     if (this.state.class) {
-      fields = this.renderFields();
-      options = this.renderOptions();
+      fields    = this.renderFields();
+      options   = this.renderOptions();
     }
 
     return (
@@ -144,49 +208,54 @@ module.exports = React.createClass({
           {this.renderFormNotifications()}
 
           <div>Main settings</div>
-          <div className="row">
-            <TextField
-                ref               = 'description'
-                name              = 'description'
-                fullWidth         = {true}
-                valueLink         = {this.linkState('description')}
-                errorText         = {this.getValidationMessages('description').join(' ')}
-                hintText          = 'Description of the endpoint'
-                floatingLabelText = 'Description' />
+           <div className='row'>
 
-            <div className="col-xs-14">
-              <TextField
-                ref               = 'name'
-                name              = 'name'
-                fullWidth         = {true}
-                valueLink         = {this.linkState('name')}
-                errorText         = {this.getValidationMessages('name').join(' ')}
-                hintText          = 'Name of the endpoint'
-                floatingLabelText = 'Endpoint' />
+              <div className='col-xs-8'>
+                <TextField
+                  ref               = 'name'
+                  name              = 'name'
+                  fullWidth         = {true}
+                  disabled          = {this.hasEditMode()}
+                  valueLink         = {this.linkState('name')}
+                  errorText         = {this.getValidationMessages('name').join(' ')}
+                  hintText          = 'Name of the endpoint'
+                  floatingLabelText = 'Endpoint' />
+              </div>
+
+              <div className='col-flex-1' style={{paddingLeft: 15}}>
+                <TextField
+                    ref               = 'description'
+                    name              = 'description'
+                    fullWidth         = {true}
+                    valueLink         = {this.linkState('description')}
+                    errorText         = {this.getValidationMessages('description').join(' ')}
+                    hintText          = 'Description of the endpoint'
+                    floatingLabelText = 'Description' />
+              </div>
 
             </div>
-            <div className="col-xs-18" style={{marginLeft: 40}}>
-              <SelectField
-                ref               = "class"
-                name              = "class"
-                fullWidth         = {true}
-                floatingLabelText = "Class"
-                valueLink         = {this.linkState('class')}
-                errorText         = {this.getValidationMessages('class').join(' ')}
-                valueMember       = "payload"
-                displayMember     = "text"
-                menuItems         = {this.state.classes} />
-            </div>
-          </div>
-
-          <div className="row" style={{marginTop: 50}}>
-
-            <div className="col-xs-14">
-              {options}
+            <div className='row'>
+              <div className='col-flex-1'>
+                <SelectField
+                    ref               = "class"
+                    name              = "class"
+                    fullWidth         = {true}
+                    floatingLabelText = "Class"
+                    valueLink         = {this.linkState('class')}
+                    errorText         = {this.getValidationMessages('class').join(' ')}
+                    valueMember       = "payload"
+                    displayMember     = "text"
+                    menuItems         = {this.state.classes} />
+                </div>
             </div>
 
-            <div className="col-xs-18" style={{marginLeft: 40}}>
+          <div className="row" style={{marginTop: 30}}>
+
+            <div className="col-flex-1">
               {fields}
+            </div>
+            <div className="col-flex-1" style={{paddingLeft: 40}}>
+              {options}
             </div>
 
           </div>

@@ -75,9 +75,9 @@ module.exports = React.createClass({
   getSchema: function() {
     return JSON.stringify(this.state.fields.map(function(item) {
       var schema =  {
-        name         : item.fieldName,
-        type         : item.fieldType,
-        target       : item.fieldTarget
+        name   : item.fieldName,
+        type   : item.fieldType,
+        target : item.fieldTarget
       };
 
       if (item.fieldOrder) {
@@ -101,7 +101,7 @@ module.exports = React.createClass({
     ClassesActions.createClass({
       name        : this.state.name,
       description : this.state.description,
-      schema      : this.getSchema()
+      schema      : schema
     });
   },
 
@@ -247,6 +247,7 @@ module.exports = React.createClass({
                 <TextField
                   ref               = 'name'
                   name              = 'name'
+                  disabled          = {this.hasEditMode()}
                   style             = {{width:'100%'}}
                   valueLink         = {this.linkState('name')}
                   errorText         = {this.getValidationMessages('name').join(' ')}
@@ -279,10 +280,10 @@ module.exports = React.createClass({
                 <div className='col-xs-8' style={{paddingLeft: 15}}>
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Order
+                  Filter
                 </div>
                 <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Filter
+                  Order
                 </div>
                 <div className='col-xs-5' style={{paddingLeft: 15}}>
                 </div>

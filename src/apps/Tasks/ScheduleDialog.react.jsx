@@ -99,13 +99,12 @@ module.exports = React.createClass({
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Label of the schedule'
-              floatingLabelText = 'Label' />
+              hintText          = 'Label of the schedule' />
 
             <SelectField
               ref               = 'codebox'
               name              = 'codebox'
-              floatingLabelText = 'CodeBox'
+              hintText          = 'CodeBox'
               valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join(' ')}
               valueMember       = 'payload'
@@ -116,7 +115,7 @@ module.exports = React.createClass({
             <SelectField
               ref               = 'crontab'
               name              = 'crontab'
-              floatingLabelText = 'CronTab'
+              hintText          = 'CronTab'
               valueLink         = {this.linkState('crontab')}
               errorText         = {this.getValidationMessages('crontab').join(' ')}
               valueMember       = 'payload'
