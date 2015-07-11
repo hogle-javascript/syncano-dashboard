@@ -61,6 +61,7 @@ module.exports = React.createClass({
     return [{
       dialog: ColorIconPickerDialog,
       params: {
+        key          : 'pickColorIconDialog',
         ref          : 'pickColorIconDialog',
         mode         : 'add',
         initialColor : checkedItemIconColor.color,
@@ -71,6 +72,7 @@ module.exports = React.createClass({
     {
       dialog: Dialog,
       params: {
+        key   : 'deleteClassDialog',
         ref   : 'deleteClassDialog',
         title : 'Delete an API Key',
         actions: [
