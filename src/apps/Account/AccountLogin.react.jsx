@@ -114,11 +114,7 @@ module.exports = React.createClass({
           ounded    = {false}
         >
           <div className="account-container__content__header vm-3-b">
-            <p className="vm-2-b">Start Building Now</p>
-            <small>
-              Simply enter your email, create a password and you're in!<br />
-              No credit card required.
-            </small>
+            <p className="vm-2-b">Access your dashboard</p>
           </div>
           {this.renderFormNotifications()}
           <form
@@ -162,7 +158,7 @@ module.exports = React.createClass({
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">
               <li><p><Link to="password-reset">Forgot password?</Link></p></li>
-              <li><p>Don't have an account?<Link to="signup"> Sign up here</Link>.</p></li>
+              <li><p>Don't have an account?<Link to="signup"> Sign up here</Link></p></li>
             </ul>
           </div>
         </Paper>
