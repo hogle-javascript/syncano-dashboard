@@ -74,6 +74,38 @@ var ClassesStore = Reflux.createStore({
     return classObj.schema;
   },
 
+  getClassRelationFields: function(className) {
+    var allFields      = this.getClassFields(className),
+        relationFields = [];
+
+    allFields.map(function(item) {
+      if (item.type === 'reference') {
+        relationFields.push(item);
+      }
+    });
+    return relationFields;
+  },
+
+  getClassOrderFieldsPayload: function(className) {
+    var allFields      = this.getClassFields(className),
+        orderPayload = [];
+
+    allFields.map(function(item) {
+      console.log(item)
+      if (item.order_index) {
+        orderPayload.push({
+          text    : item.name + ' (ascending)',
+          payload : item.name
+        });
+        orderPayload.push({
+          text    : item.name + ' (descending)',
+          payload : '-' + item.name
+        });
+      }
+    });
+    return orderPayload;
+  },
+
   getCheckedItemIconColor: function() {
     var singleItem = this.getCheckedItem();
 
