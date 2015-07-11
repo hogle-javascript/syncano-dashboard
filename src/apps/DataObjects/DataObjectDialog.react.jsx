@@ -101,77 +101,84 @@ module.exports = React.createClass({
     ];
 
     return [
-      <TextField
-        ref               = {'field-owner'}
-        name              = 'owner'
-        fullWidth         = {true}
-        valueLink         = {this.linkState('owner')}
-        errorText         = {this.getValidationMessages('owner').join(' ')}
-        hintText          = {'Owner of the Data Object (User ID)'}
-        floatingLabelText = {'Owner'} />,
+      <div className='row' style={{padding: 0, margin: 0}}>
+        <div className='col-flex-1'>
+          <div>Built-in fields</div>
+          <TextField
+            ref               = {'field-owner'}
+            name              = 'owner'
+            fullWidth         = {true}
+            valueLink         = {this.linkState('owner')}
+            errorText         = {this.getValidationMessages('owner').join(' ')}
+            hintText          = {'User ID'}
+            floatingLabelText = {'Owner'} />
 
-      <TextField
-        ref               = {'field-group'}
-        name              = 'owner'
-        fullWidth         = {true}
-        valueLink         = {this.linkState('group')}
-        errorText         = {this.getValidationMessages('group').join(' ')}
-        hintText          = {'Group of the Data Object (Group ID)'}
-        floatingLabelText = {'Group'} />,
+          <TextField
+            ref               = {'field-group'}
+            name              = 'owner'
+            fullWidth         = {true}
+            valueLink         = {this.linkState('group')}
+            errorText         = {this.getValidationMessages('group').join(' ')}
+            hintText          = {'Group ID'}
+            floatingLabelText = {'Group'} />
 
-      <SelectField
-        ref               = {'field-channel'}
-        name              = {'field-channel'}
-        fullWidth         = {true}
-        valueMember       = "payload"
-        displayMember     = "text"
-        floatingLabelText = {'Channel'}
-        errorText         = {this.getValidationMessages('channel').join(' ')}
-        menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />,
+          <SelectField
+            ref               = {'field-channel'}
+            name              = {'field-channel'}
+            fullWidth         = {true}
+            valueMember       = "payload"
+            displayMember     = "text"
+            floatingLabelText = {'Channel'}
+            errorText         = {this.getValidationMessages('channel').join(' ')}
+            menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
 
-      <TextField
-        ref               = {'field-channel_room'}
-        name              = 'field-channel_room'
-        fullWidth         = {true}
-        valueLink         = {this.linkState('channel_room')}
-        errorText         = {this.getValidationMessages('channel_room').join(' ')}
-        hintText          = {'Channel Room'}
-        floatingLabelText = {'Channel Room'} />,
+          <TextField
+            ref               = {'field-channel_room'}
+            name              = 'field-channel_room'
+            fullWidth         = {true}
+            valueLink         = {this.linkState('channel_room')}
+            errorText         = {this.getValidationMessages('channel_room').join(' ')}
+            hintText          = {'Channel Room'}
+            floatingLabelText = {'Channel Room'} />
+        </div>
 
-      <div style={{marginTop: 30}}>Permissions</div>,
+      <div className='col-flex-1' style={{paddingLeft: 15}}>
+        <div>Permissions</div>
 
-      <SelectField
-        ref               = {'field-owner_permissions'}
-        name              = {'field-owner_permissions'}
-        fullWidth         = {true}
-        valueMember       = "payload"
-        displayMember     = "text"
-        valueLink         = {this.linkState('owner_permissions')}
-        floatingLabelText = {'Owner Permissions'}
-        errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
-        menuItems         = {permissions} />,
+        <SelectField
+          ref               = {'field-owner_permissions'}
+          name              = {'field-owner_permissions'}
+          fullWidth         = {true}
+          valueMember       = "payload"
+          displayMember     = "text"
+          valueLink         = {this.linkState('owner_permissions')}
+          floatingLabelText = {'Owner Permissions'}
+          errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
+          menuItems         = {permissions} />
 
-      <SelectField
-        ref               = {'field-group_permissions'}
-        name              = {'field-group_permissions'}
-        fullWidth         = {true}
-        valueMember       = "payload"
-        displayMember     = "text"
-        valueLink         = {this.linkState('group_permissions')}
-        floatingLabelText = {'Group Permissions'}
-        errorText         = {this.getValidationMessages('group_permissions').join(' ')}
-        menuItems         = {permissions} />,
+          <SelectField
+            ref               = {'field-group_permissions'}
+            name              = {'field-group_permissions'}
+            fullWidth         = {true}
+            valueMember       = "payload"
+            displayMember     = "text"
+            valueLink         = {this.linkState('group_permissions')}
+            floatingLabelText = {'Group Permissions'}
+            errorText         = {this.getValidationMessages('group_permissions').join(' ')}
+            menuItems         = {permissions} />
 
-      <SelectField
-        ref               = {'field-other_permissions'}
-        name              = {'field-other_permissions'}
-        fullWidth         = {true}
-        valueMember       = "payload"
-        displayMember     = "text"
-        valueLink         = {this.linkState('other_permissions')}
-        floatingLabelText = {'Other Permissions'}
-        errorText         = {this.getValidationMessages('other_permissions').join(' ')}
-        menuItems         = {permissions} />
+          <SelectField
+            ref               = {'field-other_permissions'}
+            name              = {'field-other_permissions'}
+            fullWidth         = {true}
+            valueMember       = "payload"
+            displayMember     = "text"
+            valueLink         = {this.linkState('other_permissions')}
+            floatingLabelText = {'Other Permissions'}
+            errorText         = {this.getValidationMessages('other_permissions').join(' ')}
+            menuItems         = {permissions} />
+        </div>
+      </div>
       ]
   },
 
@@ -193,7 +200,6 @@ module.exports = React.createClass({
               menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
           )
         }
-
         return (
           <TextField
               ref               = {'field-' + item.name}
@@ -237,13 +243,12 @@ module.exports = React.createClass({
         <div>
           {this.renderFormNotifications()}
           <div className="row">
-            <div className="col-xs-14">
-              <div>Built-in fields</div>
+            <div className="col-xs-20">
               {this.renderBuiltinFields()}
             </div>
 
-            <div className="col-xs-14" style={{paddingLeft: 20}}>
-              <div>Custom fields</div>
+            <div className="col-xs-15" style={{paddingLeft: 15}}>
+              <div>Class fields</div>
               {this.renderCustomFields()}
             </div>
           </div>
