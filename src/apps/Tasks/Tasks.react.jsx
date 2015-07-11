@@ -42,7 +42,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(SchedulesStore),
+    Reflux.connect(SchedulesStore, 'schedules'),
     Reflux.connect(TriggersStore, 'triggers'),
     HeaderMixin,
     DialogsMixin,
@@ -86,7 +86,7 @@ module.exports = React.createClass({
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
-            this.getDialogList(checkedTriggers),
+            this.getDialogList(checkedTriggers, 'label'),
             <Loading
               type     = 'linear'
               position = 'bottom'
@@ -106,11 +106,11 @@ module.exports = React.createClass({
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
-            this.getDialogList(checkedSchedules),
+            this.getDialogList(checkedSchedules, 'label'),
             <Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.items.isLoading} />
+              show     = {this.state.schedules.items.isLoading} />
           ]
         }
       }
@@ -164,7 +164,7 @@ module.exports = React.createClass({
   render: function() {
     var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
         checkedTriggers       = TriggersStore.getNumberOfChecked(),
-        isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.items.length),
+        isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
         isAnyTriggerSelected  = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
         markedIcon           = 'synicon-checkbox-multiple-marked-outline',
         blankIcon            = 'synicon-checkbox-multiple-blank-outline';
@@ -243,8 +243,8 @@ module.exports = React.createClass({
         <SchedulesList
           name                 = "Schedules"
           checkItem            = {this.checkSchedule}
-          isLoading            = {this.state.isLoading}
-          items                = {this.state.items}
+          isLoading            = {this.state.schedules.isLoading}
+          items                = {this.state.schedules.items}
           emptyItemHandleClick = {this.showScheduleDialog}
           emptyItemContent     = "Create a Schedule" />
 
