@@ -145,7 +145,8 @@ module.exports = Radium(React.createClass({
 
   render: function() {
     var checkedInstances      = InstancesStore.getNumberOfChecked(),
-        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length);
+        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isCheckedInstanceShared   = InstancesStore.isCheckedInstanceShared();
 
     return (
       <Container id="instances">
@@ -164,6 +165,7 @@ module.exports = Radium(React.createClass({
             <FabListItem
               label         = "Click here to delete Instances"
               mini          = {true}
+              disabled      = {isCheckedInstanceShared}
               onClick       = {this.showDialog('deleteInstanceDialog')}
               iconClassName = "synicon-delete" />
 

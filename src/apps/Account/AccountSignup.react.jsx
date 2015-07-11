@@ -115,10 +115,10 @@ module.exports = React.createClass({
           rounded   = {false}
         >
           <div className="account-container__content__header vm-3-b">
-            <p className="vm-2-b">Try it now and start creating your apps</p>
+            <p className="vm-2-b">Start Building Now</p>
             <small>
-              Your 30 day trial includes unlimited use of the Syncano platform without
-               inputting any credit card information.
+              Simply enter your email, create a password and you're in!<br />
+              No credit card required.
             </small>
           </div>
           {this.renderFormNotifications()}
@@ -135,7 +135,7 @@ module.exports = React.createClass({
               name         = "email"
               className    = "text-field"
               autoComplete = "email"
-              hintText     = "Your email"
+              hintText     = "Email"
               fullWidth    = {true}
             />
 
@@ -147,13 +147,13 @@ module.exports = React.createClass({
               name         = "password"
               className    = "text-field vm-4-b"
               autoComplete = "password"
-              hintText     = "Password"
+              hintText     = "My password"
               fullWidth    = {true}
             />
 
             <RaisedButton
               type       = "submit"
-              label      = "Sign up for free"
+              label      = "Create my account"
               labelStyle = {{fontSize: '16px'}}
               style      = {{width: '100%', boxShadow: 'none'}}
               primary    = {true}

@@ -39,7 +39,6 @@ var CheckListStoreMixin = {
   },
 
   getCheckedItem: function() {
-
     // Looking for the first 'checked' item
     var checkedItem = null;
     this.data.items.some(function(item) {
