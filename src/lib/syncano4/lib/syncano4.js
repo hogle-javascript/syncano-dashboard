@@ -1190,7 +1190,7 @@ var Syncano = (function() {
     /**
      * Creates new class based on passed parameters
      *
-     * @method Syncano#solutClass
+     * @method Syncano#createClass
      * @alias Syncano.Classes.create
      * @param {Object} params - values of the class parameters
      * @param {string} params.name - name of the class
