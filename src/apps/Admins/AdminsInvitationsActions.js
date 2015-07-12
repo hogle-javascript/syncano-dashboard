@@ -7,6 +7,7 @@ var Reflux     = require('reflux'),
 var AdminsInvitationsActions = Reflux.createActions({
   checkItem      : {},
   uncheckAll     : {},
+  selectAll      : {},
   fetch          : {},
   setInvitations : {},
 
@@ -64,7 +65,7 @@ AdminsInvitationsActions.removeInvitation.listen(function(items) {
 });
 
 AdminsInvitationsActions.resendInvitation.listen(function(items) {
-  console.error('AdminsInvitationsActions::resendInvitation');
+  console.info('AdminsInvitationsActions::resendInvitation');
   var promises = items.map(function(item) {
     Connection.Invitations.resend(item.id);
   });

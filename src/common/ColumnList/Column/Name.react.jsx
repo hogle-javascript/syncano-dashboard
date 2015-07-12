@@ -6,22 +6,21 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors;
 
-
 var Header = React.createClass({
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     }
   },
 
-  getStyles: function () {
+  getStyles: function() {
     return {
       fontSize    : 20,
       fontWeight  : 500
     }
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
@@ -56,13 +55,12 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  getStyles: function () {
+  getStyles: function() {
     return {
       display         : 'flex',
       flexDirection   : 'row',
       fontSize        : 12,
-      paddingTop      : 16,
-      paddingBottom   : 16,
+      padding         : '16px 8px',
       alignSelf       : 'center',
       cursor          : 'pointer',
       color           : this.state.color,
@@ -72,7 +70,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (

@@ -8,12 +8,11 @@ var React              = require('react'),
 
     CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
 
-
 var Header = React.createClass({
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
     }
   },
 
@@ -25,7 +24,7 @@ var Header = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
@@ -46,6 +45,7 @@ module.exports = Radium(React.createClass({
     id              : React.PropTypes.string,
     color           : React.PropTypes.string,
     hoverColor      : React.PropTypes.string,
+    checkable       : React.PropTypes.bool,
     handleIconClick : React.PropTypes.func,
     handleNameClick : React.PropTypes.func
   },
@@ -54,15 +54,16 @@ module.exports = Radium(React.createClass({
     Header: Header
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       color      : 'black',
       hoverColor : Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
+      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
+      checkable  : true
     }
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       checked    : this.props.checked
     }
@@ -101,7 +102,7 @@ module.exports = Radium(React.createClass({
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick: function (id, state) {
+  handleIconClick: function(id, state) {
     console.info('ColumnCheckIcon:handleClick');
     this.props.handleIconClick(id, state);
   },
@@ -113,7 +114,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
@@ -125,11 +126,10 @@ module.exports = Radium(React.createClass({
           icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
           background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
           checked     = {this.state.checked}
-          handleClick = {this.handleIconClick} />
-
+          handleClick = {this.handleIconClick}
+          checkable   = {this.props.checkable} />
         <div
-          style       = {[styles.name,
-                          this.props.handleNameClick && styles.link]}
+          style       = {[styles.name, this.props.handleNameClick && styles.link]}
           onClick     = {this.handleNameClick}
           onMouseOver = {this.handleMouseOver}
           onMouseOut  = {this.handleMouseLeave}>

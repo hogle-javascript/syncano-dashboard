@@ -2,7 +2,6 @@ var React               = require('react'),
     Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin     = require('../../mixins/ValidationMixin'),
     DialogMixin         = require('../../mixins/DialogMixin'),
     FormMixin           = require('../../mixins/FormMixin'),
 
@@ -28,7 +27,6 @@ module.exports = React.createClass({
 
     Reflux.connect(CodeBoxDialogStore),
     DialogMixin,
-    ValidationMixin,
     FormMixin
   ],
 
@@ -83,7 +81,7 @@ module.exports = React.createClass({
           ref          = 'dialog'
           title        = {title + ' CodeBox'}
           actions      = {dialogStandardActions}
-          modal        = {true}
+          onDismiss    = {this.resetDialogState}
           onShow       = {this.handleDialogShow}
           contentStyle = {{padding: '8px 0 0 0'}}  >
           <div>

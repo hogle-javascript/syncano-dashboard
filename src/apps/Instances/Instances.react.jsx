@@ -28,9 +28,7 @@ var React                 = require('react'),
     InstancesList         = require('./InstancesList.react'),
     InstanceDialog        = require('./InstanceDialog.react');
 
-
 require('./Instances.sass');
-
 
 module.exports = Radium(React.createClass({
 
@@ -45,11 +43,10 @@ module.exports = Radium(React.createClass({
     DialogsMixin
   ],
 
-
   // Dialogs config
-  initDialogs: function () {
-
-    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor();
+  initDialogs: function() {
+    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor(),
+        checkedInstances = InstancesStore.getCheckedItems();
 
     return [{
       dialog: ColorIconPickerDialog,
@@ -61,7 +58,7 @@ module.exports = Radium(React.createClass({
         initialIcon  : checkedItemIconColor.icon,
         handleClick  : this.handleChangePalette
       }
-    },{
+    }, {
       dialog: Dialog,
       params: {
         key:    "deleteInstanceDialog",
@@ -72,20 +69,26 @@ module.exports = Radium(React.createClass({
           {text: "Confirm", onClick: this.handleDelete}
         ],
         modal: true,
-        children: ['Do you really want to delete ' + InstancesStore.getCheckedItems().length +' Instance(s)?', <Loading type="linear" position="bottom" show={this.state.isLoading} /> ]
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+          this.getDialogList(checkedInstances),
+          <Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        ]
       }
-     }]
+    }]
   },
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
-    SessionStore.removeInstance();
     InstancesStore.fetch();
   },
 
   componentDidMount: function() {
     console.info('Instances::componentDidMount');
-    if (this.getParams().action == 'add'){
+    if (this.getParams().action == 'add') {
       // Show Add modal
       this.showDialog('addInstanceDialog');
     }
@@ -96,7 +99,7 @@ module.exports = Radium(React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  headerMenuItems: function () {
+  headerMenuItems: function() {
     return [
       {
         label  : 'Instances',
@@ -107,7 +110,7 @@ module.exports = Radium(React.createClass({
       }];
   },
 
-  handleChangePalette: function (color, icon) {
+  handleChangePalette: function(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
 
     InstancesActions.updateInstance(
@@ -132,16 +135,18 @@ module.exports = Radium(React.createClass({
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  showInstanceDialog: function () {
+  showInstanceDialog: function() {
     InstancesActions.showDialog();
   },
 
-  showInstanceEditDialog: function () {
+  showInstanceEditDialog: function() {
     InstancesActions.showDialog(InstancesStore.getCheckedItem());
   },
 
-  render: function () {
-    var checkedInstances = InstancesStore.getNumberOfChecked();
+  render: function() {
+    var checkedInstances      = InstancesStore.getNumberOfChecked(),
+        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isCheckedInstanceShared   = InstancesStore.isCheckedInstanceShared();
 
     return (
       <Container id="instances">
@@ -152,14 +157,15 @@ module.exports = Radium(React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect Instances"
+              label         = {isAnyInstanceSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {InstancesActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyInstanceSelected ? InstancesActions.selectAll : InstancesActions.uncheckAll}
+              iconClassName = {isAnyInstanceSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Instances"
               mini          = {true}
+              disabled      = {isCheckedInstanceShared}
               onClick       = {this.showDialog('deleteInstanceDialog')}
               iconClassName = "synicon-delete" />
 
@@ -193,7 +199,7 @@ module.exports = Radium(React.createClass({
           items                = {InstancesStore.getMyInstances()}
           listType             = "myInstances"
           viewMode             = "stream"
-          emptyItemHandleClick = {this.showDialog('addInstanceDialog')}
+          emptyItemHandleClick = {this.showInstanceDialog}
           emptyItemContent     = "Create an instance" />
 
         <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>

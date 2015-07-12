@@ -1,25 +1,20 @@
-var React  = require('react'),
-    Moment = require('moment');
+var React      = require('react'),
+    Moment = require('moment'),
 
+    mui        = require('material-ui'),
+    IconButton = mui.IconButton,
+    FlatButton = mui.FlatButton;
 
 var DataObjectsRenderer = {
 
-  builtInColumnsConfig: function() {
+  columnsRenderers: function() {
     return {
-      id: {
-        width: 20
-      },
-      revision : {
-        width: 20
-      },
-      group: {
-        width : 30
-      },
-      'created_at' : {
-        width    : 100,
-        renderer : this.renderColumnDate
-      }
+      'created_at' : this.renderColumnDate
     }
+  },
+
+  getColumnRenderer: function(column) {
+    return this.columnsRenderers()[column];
   },
 
   // Columns renderers
@@ -41,86 +36,75 @@ var DataObjectsRenderer = {
     )
   },
 
+  handleFileOnClick: function(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  renderFile: function(obj) {
+    return (
+        <IconButton
+          iconClassName = "synicon-download"
+          onClick       = {this.handleFileOnClick.bind(this, obj.value)} />
+    )
+  },
+
   // Header
-  renderTableHeader: function (classObj) {
+  renderTableHeader: function(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
-    //// TODO: default columns, it should be controled somehow
 
-    var builtInColumnsConfig = this.builtInColumnsConfig();
-    var header = {
-      id: {
-        content : 'ID',
-        tooltip : 'Built-in property: ID'
-      },
-      revision: {
-        content : 'Rev',
-        tooltip : 'Built-in property: Revision'
-      },
-      group: {
-        content : 'Group',
-        tooltip : 'Built-in property: Group'
-      },
-      created_at: {
-        content : 'Created',
-        tooltip : 'Built-in property: Created At'
-      }
-    };
+    var header = {};
 
-    classObj.schema.map(function (item) {
-      if (!header[item.name]) {
-        header[item.name] = {
-          content: item.name,
-          tooltip: 'Custom property: ' + item.name + ' (type: ' + item.type + ')'
-        }
+    // Initial columns
+    columns.map(function(item) {
+      header[item.id] = {
+        content : item.name,
+        tooltip : item.tooltip,
+        style   : {width: item.width ? item.width : null}
       }
     });
-
-    Object.keys(header).map(function(key){
-      var config = builtInColumnsConfig[key];
-      header[key].style = {width: config ? config.width : null}
-    }.bind(this));
 
     return header;
   },
 
   // Table Body
-  renderTableData: function(items) {
+  renderTableData: function(items, columns) {
 
-    var tableItems           = [],
-        builtInColumnsConfig = this.builtInColumnsConfig();
+    var tableItems = [];
 
     items.map(function(item) {
       var row = {};
 
-      Object.keys(item).map(function(key) {
+      columns.map(function(column) {
 
-        var value  = item[key] ? item[key] : '',
-            config = builtInColumnsConfig[key];
+        var value    = item[column.id] ? item[column.id] : '',
+            renderer = this.getColumnRenderer(column.id);
 
         if (typeof value === 'object') {
 
           if (value.type === 'reference') {
-            value = this.renderReference(item[key]);
-
+            value = this.renderReference(item[column.id]);
           }
-        } else if (typeof value === 'string' || typeof item[key] === 'number') {
+          if (value.type === 'file') {
+            value = this.renderFile(item[column.id]);
+          }
+
+        } else if (typeof value === 'string' || typeof item[column.id] === 'number') {
 
           // Simple string or renderer
-          if (config && config.renderer) {
-            value = config.renderer(item[key])
+          if (renderer) {
+            value = renderer(item[column.id])
           }
         }
 
-        // Actual value of the cell and it's properties
-        row[key] = {
+        row[column.id] = {
           content: value,
-          style: {
-            width: config ? config.width : null
-          }
+          style: { width: column.width }
         }
-
       }.bind(this));
+
       tableItems.push(row);
+
     }.bind(this));
 
     return tableItems;

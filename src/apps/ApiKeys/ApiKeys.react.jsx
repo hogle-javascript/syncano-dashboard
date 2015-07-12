@@ -28,7 +28,6 @@ var React                 = require('react'),
     ApiKeysList           = require('./ApiKeysList.react'),
     ApiKeyDialog          = require('./ApiKeyDialog.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'ApiKeys',
@@ -52,8 +51,9 @@ module.exports = React.createClass({
     console.info('ApiKeys::componentWillMount');
     ApiKeysActions.fetch();
   },
-    // Dialogs config
-  initDialogs: function () {
+  // Dialogs config
+  initDialogs: function() {
+    var checkedApiKeys = ApiKeysStore.getCheckedItems();
 
     return [{
       dialog: Dialog,
@@ -96,7 +96,8 @@ module.exports = React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to delete ' + ApiKeysStore.getCheckedItems().length +' API key(s)?',
+          'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
+          this.getDialogList(checkedApiKeys),
           <Loading
             type     = "linear"
             position = "bottom"
@@ -122,7 +123,8 @@ module.exports = React.createClass({
 
   render: function() {
 
-    var checkedApiKeys = ApiKeysStore.getNumberOfChecked();
+    var checkedApiKeys      = ApiKeysStore.getNumberOfChecked(),
+        isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
 
     return (
       <Container>
@@ -132,11 +134,12 @@ module.exports = React.createClass({
         <Show if={checkedApiKeys > 0}>
 
           <FabList position="top">
+
             <FabListItem
-              label         = "Click here to unselect API Keys"
+              label         = {isAnyApiKeySelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {ApiKeysActions.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyApiKeySelected ? ApiKeysActions.selectAll : ApiKeysActions.uncheckAll}
+              iconClassName = {isAnyApiKeySelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete API Keys"

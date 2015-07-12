@@ -93,6 +93,10 @@ AuthActions.socialLogin.listen(function(network) {
           auth.authResponse.access_token
           // jscs:enable
         )
+        .then(function(payload) {
+          payload.network = network;
+          return payload;
+        })
         .then(this.completed)
         .catch(this.failure);
     }.bind(this), this.failure);

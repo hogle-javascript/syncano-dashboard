@@ -16,6 +16,8 @@ var React                 = require('react'),
     SchedulesStore        = require('./SchedulesStore'),
     TriggersActions       = require('./TriggersActions'),
     TriggersStore         = require('./TriggersStore'),
+    CodeBoxesActions      = require('../CodeBoxes/CodeBoxesActions'),
+    ClassesActions        = require('../Classes/ClassesActions'),
 
     // Components
     mui                   = require('material-ui'),
@@ -24,6 +26,7 @@ var React                 = require('react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
 
     // Local components
     SchedulesList         = require('./SchedulesList.react'),
@@ -39,7 +42,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(SchedulesStore),
+    Reflux.connect(SchedulesStore, 'schedules'),
     Reflux.connect(TriggersStore, 'triggers'),
     HeaderMixin,
     DialogsMixin,
@@ -54,12 +57,17 @@ module.exports = React.createClass({
 
   componentDidMount: function() {
     console.info('Tasks::componentDidMount');
-    SchedulesStore.fetch();
-    TriggersStore.fetch();
+    ClassesActions.fetch();
+    CodeBoxesActions.fetch();
+    SchedulesActions.fetch();
+    TriggersActions.fetch();
   },
 
   // Dialogs config
   initDialogs: function() {
+
+    var checkedTriggers  = TriggersStore.getCheckedItems(),
+        checkedSchedules = SchedulesStore.getCheckedItems();
 
     return [
       {
@@ -76,7 +84,14 @@ module.exports = React.createClass({
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + TriggersStore.getCheckedItems().length + ' triggers?'
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
+            this.getDialogList(checkedTriggers, 'label'),
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.triggers.isLoading} />
+          ]
         }
       },
       {
@@ -89,7 +104,14 @@ module.exports = React.createClass({
             {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
-          children: 'Do you really want to delete ' + SchedulesStore.getCheckedItems().length + ' schedule?'
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
+            this.getDialogList(checkedSchedules, 'label'),
+            <Loading
+              type     = 'linear'
+              position = 'bottom'
+              show     = {this.state.schedules.items.isLoading} />
+          ]
         }
       }
     ]
@@ -111,25 +133,41 @@ module.exports = React.createClass({
     TriggersActions.uncheckAll();
   },
 
-  showScheduleDialog: function () {
+  checkSchedule: function(id, state) {
+    console.info('Tasks::checkSchedule');
+    SchedulesActions.checkItem(id, state);
+    TriggersActions.uncheckAll();
+  },
+
+  checkTrigger: function(id, state) {
+    console.info('Tasks::checkSchedule');
+    TriggersActions.checkItem(id, state);
+    SchedulesActions.uncheckAll();
+  },
+
+  showScheduleDialog: function() {
     SchedulesActions.showDialog();
   },
 
-  showScheduleEditDialog: function () {
+  showScheduleEditDialog: function() {
     SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
   },
 
-  showTriggerDialog: function () {
+  showTriggerDialog: function() {
     TriggersActions.showDialog();
   },
 
-  showTriggerEditDialog: function () {
+  showTriggerEditDialog: function() {
     TriggersActions.showDialog(TriggersStore.getCheckedItem());
   },
 
-  render: function () {
-    var checkedSchedules = SchedulesStore.getNumberOfChecked(),
-        checkedTriggers  = TriggersStore.getNumberOfChecked();
+  render: function() {
+    var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
+        checkedTriggers       = TriggersStore.getNumberOfChecked(),
+        isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
+        isAnyTriggerSelected  = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
+        markedIcon           = 'synicon-checkbox-multiple-marked-outline',
+        blankIcon            = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -141,10 +179,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
+              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon} />
 
             <FabListItem
               label         = "Click here to delete Schedules"
@@ -167,10 +205,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
+              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon} />
 
             <FabListItem
               label         = "Click here to delete Schedules"
@@ -204,15 +242,15 @@ module.exports = React.createClass({
 
         <SchedulesList
           name                 = "Schedules"
-          checkItem            = {SchedulesActions.checkItem}
-          isLoading            = {this.state.isLoading}
-          items                = {this.state.items}
+          checkItem            = {this.checkSchedule}
+          isLoading            = {this.state.schedules.isLoading}
+          items                = {this.state.schedules.items}
           emptyItemHandleClick = {this.showScheduleDialog}
           emptyItemContent     = "Create a Schedule" />
 
         <TriggersList
           name                 = "Triggers"
-          checkItem            = {TriggersActions.checkItem}
+          checkItem            = {this.checkTrigger}
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
           emptyItemHandleClick = {this.showTriggerDialog}

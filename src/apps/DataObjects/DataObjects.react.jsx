@@ -79,19 +79,23 @@ module.exports = React.createClass({
       params: {
         key:    'deleteDataObjectDialog',
         ref:    'deleteDataObjectDialog',
-        title:  'Delete an DataObject',
+        title:  'Delete a Data Object',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' DataObject(s)?'
+        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }]
   },
 
   showDataObjectDialog: function() {
     DataObjectsActions.showDialog();
+  },
+
+  showDataObjectEditDialog: function(cellNumber) {
+    DataObjectsActions.showDialog(DataObjectsStore.getSelectedRowObj(cellNumber));
   },
 
   handleDelete: function() {
@@ -114,32 +118,45 @@ module.exports = React.createClass({
         start = selectedRow[1].end;
       }
       rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
+    } else if (selectedRow.length === 0) {
+      rowsSelection = [];
     }
 
     // Writing to the store
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
+  handleCellClick: function(cellNumber, cellName) {
+    console.info('DataObjects::handleCellClick', arguments);
+    if (cellName != undefined) {
+      this.showDataObjectEditDialog(cellNumber);
+    }
+  },
+
   renderTable: function() {
+    console.info('DataObjects::renderTable');
     var tableData   = DataObjectsStore.renderTableData(),
         tableHeader = DataObjectsStore.renderTableHeader(),
-        colOrder    = Object.keys(tableHeader);
+        colOrder    = DataObjectsStore.getCheckedColumnsIDs();
 
     return (
       <div>
         <Table
-          ref             = "table"
-          headerColumns   = {tableHeader}
-          columnOrder     = {colOrder}
-          rowData         = {tableData}
-          multiSelectable = {true}
-          //onCellClick  = {this.handleCellClick}
-          onRowSelection  = {this.handleRowSelection} />
+          ref                 = "table"
+          headerColumns       = {tableHeader}
+          columnOrder         = {colOrder}
+          rowData             = {tableData}
+          multiSelectable     = {true}
+          deselectOnClickaway = {false}
+          showRowHover        = {true}
+          onCellClick         = {this.handleCellClick}
+          onRowSelection      = {this.handleRowSelection}
+          />
 
         <div
           className = "row align-center"
           style     = {{margin: 50}} >
-          <div>Loaded {tableData.length} data objects</div>
+          <div>Loaded {tableData.length} Data Objects</div>
         </div>
         <Show if={this.state.hasNextPage}>
           <div
@@ -181,7 +198,7 @@ module.exports = React.createClass({
 
     var selecteMessageText = null;
 
-    if (this.state.selectedRows) {
+    if (this.state.selectedRows && this.state.selectedRows.length > 0) {
       selecteMessageText = 'selected: ' + this.state.selectedRows.length;
     }
 
@@ -210,18 +227,21 @@ module.exports = React.createClass({
             <ToolbarGroup float="right">
 
               <IconButton
-                style     = {{fontSize: 25, marginTop: 5}}
-                className = "synicon-plus"
-                tooltip   = "Add Data Objects"
-                onClick   = {this.showDataObjectDialog} />
+                style         = {{fontSize: 25, marginTop: 5}}
+                iconClassName = "synicon-plus"
+                tooltip       = "Add Data Objects"
+                onClick       = {this.showDataObjectDialog} />
 
               <IconButton
-                style     = {{fontSize: 25, marginTop: 5}}
-                className = "synicon-delete"
-                tooltip   = "Delete Data Objects"
-                onClick   = {this.showDialog('deleteDataObjectDialog')} />
+                style         = {{fontSize: 25, marginTop: 5}}
+                iconClassName = "synicon-delete"
+                tooltip       = "Delete Data Objects"
+                disabled      = {!(this.state.selectedRows)}
+                onClick       = {this.showDialog('deleteDataObjectDialog')} />
 
-              <ColumnsFilterMenu columns={DataObjectsStore.getTableColumns()}/>
+              <ColumnsFilterMenu
+                columns           = {DataObjectsStore.getTableColumns()}
+                checkToggleColumn = {DataObjectsActions.checkToggleColumn} />
 
             </ToolbarGroup>
 

@@ -5,12 +5,13 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var AdminsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
-  setAdmins  : {},
-  showDialog    : {},
-  dismissDialog : {},
+  checkItem       : {},
+  uncheckAll      : {},
+  selectAllAdmins : {},
+  fetch           : {},
+  setAdmins       : {},
+  showDialog      : {},
+  dismissDialog   : {},
   fetchAdmins: {
     asyncResult : true,
     loading     : true,

@@ -2,7 +2,6 @@ var React               = require('react'),
     Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin     = require('../../mixins/ValidationMixin'),
     DialogMixin         = require('../../mixins/DialogMixin'),
     FormMixin           = require('../../mixins/FormMixin'),
 
@@ -26,7 +25,6 @@ module.exports = React.createClass({
     Reflux.connect(ScheduleDialogStore),
     React.addons.LinkedStateMixin,
     DialogMixin,
-    ValidationMixin,
     FormMixin
   ],
 
@@ -66,8 +64,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+    var title       = this.hasEditMode() ? 'Edit': 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -76,7 +73,7 @@ module.exports = React.createClass({
           },
           {
             ref     : 'submit',
-            text    : {submitLabel},
+            text    : 'Confirm',
             onClick : this.handleFormValidation
           }
         ];
@@ -84,11 +81,11 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref             = 'dialog'
-        title           = {title + ' Schedule'}
+        title           = {title + ' a Schedule'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
@@ -102,13 +99,12 @@ module.exports = React.createClass({
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Label of the schedule'
-              floatingLabelText = 'Label' />
+              hintText          = 'Label of the schedule' />
 
             <SelectField
               ref               = 'codebox'
               name              = 'codebox'
-              floatingLabelText = 'CodeBox'
+              hintText          = 'CodeBox'
               valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join(' ')}
               valueMember       = 'payload'
@@ -119,7 +115,7 @@ module.exports = React.createClass({
             <SelectField
               ref               = 'crontab'
               name              = 'crontab'
-              floatingLabelText = 'CronTab'
+              hintText          = 'CronTab'
               valueLink         = {this.linkState('crontab')}
               errorText         = {this.getValidationMessages('crontab').join(' ')}
               valueMember       = 'payload'

@@ -6,16 +6,15 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors;
 
-
 var Header = React.createClass({
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     }
   },
 
-  getStyles: function () {
+  getStyles: function() {
     return {
       fontSize    : 20,
       fontWeight  : 500,
@@ -23,7 +22,7 @@ var Header = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
@@ -52,7 +51,7 @@ module.exports = Radium(React.createClass({
     Header: Header
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       color      : 'black',
       hoverColor : Colors.blue600,
@@ -60,7 +59,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       checked    : this.props.checked
     }
@@ -103,7 +102,7 @@ module.exports = Radium(React.createClass({
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick: function (id, state) {
+  handleIconClick: function(id, state) {
     console.info('ColumnCheckIcon:handleClick');
     this.props.handleIconClick(id, state);
   },
@@ -113,7 +112,7 @@ module.exports = Radium(React.createClass({
     this.props.handleNameClick(this.props.id);
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (

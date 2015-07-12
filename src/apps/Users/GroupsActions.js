@@ -4,10 +4,13 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var GroupsActions = Reflux.createActions({
-  checkItem  : {},
-  uncheckAll : {},
-  fetch      : {},
-  setGroups  : {},
+  checkItem     : {},
+  uncheckAll    : {},
+  selectAll     : {},
+  fetch         : {},
+  setGroups     : {},
+  showDialog    : {},
+  dismissDialog : {},
   fetchGroups: {
     asyncResult: true,
     loading    : true,

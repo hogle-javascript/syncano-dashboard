@@ -57,8 +57,10 @@ module.exports = React.createClass({
     var runtime = CodeBoxesStore.getRuntimeColorIcon(item.runtime_name);
     return (
       <Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked     = {item.checked}
+        key         = {item.id}
+        id          = {item.id}
+        handleClick = {this.handleItemClick} >
         <ColumnCheckIcon
           id              = {item.id}
           icon            = {runtime.icon}

@@ -3,12 +3,21 @@ var Reflux     = require('reflux'),
     Connection = require('../Session/Connection').get();
 
 var SolutionsActions = Reflux.createActions({
-  checkItem: {},
-  uncheckAll: {},
+  //checkItem: {},
+  //uncheckAll: {},
+
+  showDialog    : {},
+  dismissDialog : {},
+
   fetch: {},
   setSolutions: {},
 
   fetchSolutions: {
+    asyncResult: true,
+    children: ['completed', 'failure']
+  },
+
+  createSolution: {
     asyncResult: true,
     children: ['completed', 'failure']
   },
@@ -34,11 +43,11 @@ SolutionsActions.fetchSolutions.listen(function() {
     .catch(this.failure);
 });
 
-SolutionsActions.starSolution.listen(function(id) {
-  console.info('SolutionsActions::starSolutions');
+SolutionsActions.createSolution.listen(function(payload) {
+  console.info('SolutionsActions::createSolution');
   Connection
     .Solutions
-    .star(id)
+    .create(payload)
     .then(this.completed)
     .catch(this.failure);
 });

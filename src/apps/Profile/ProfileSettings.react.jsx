@@ -3,16 +3,15 @@ var React                = require('react'),
 
     HeaderMixin          = require('../Header/HeaderMixin'),
     FormMixin            = require('../../mixins/FormMixin'),
-    ValidationMixin      = require('../../mixins/ValidationMixin'),
 
     ProfileActions       = require('./ProfileActions'),
     ProfileSettingsStore = require('./ProfileSettingsStore'),
+    SessionStore         = require('../Session/SessionStore'),
 
     mui                  = require('material-ui'),
     TextField            = mui.TextField,
     RaisedButton         = mui.RaisedButton,
     Paper                = mui.Paper;
-
 
 module.exports = React.createClass({
 
@@ -21,9 +20,7 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ProfileSettingsStore),
     React.addons.LinkedStateMixin,
-
     HeaderMixin,
-    ValidationMixin,
     FormMixin
   ],
 

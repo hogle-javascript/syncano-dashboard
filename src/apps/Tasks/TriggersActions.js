@@ -7,6 +7,7 @@ var Reflux     = require('reflux'),
 var TriggersActions = Reflux.createActions({
   checkItem     : {},
   uncheckAll    : {},
+  selectAll     : {},
   fetch         : {},
   setTriggers   : {},
   showDialog    : {},

@@ -17,31 +17,32 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       type : 'circular',
-      size : 1
+      size : 1,
+      show : false
     }
   },
 
   getStyles: function() {
     var styles = {
       base: {
-        display: 'flex',
-        justifyContent: 'center',
-        width: "100%",
-        left: 0
+        display        : 'flex',
+        justifyContent : 'center',
+        width          : '100%',
+        left           : 0
       },
       top: {
-        position: "absolute",
-        top: 0
+        position : 'absolute',
+        top      : 0
       },
       bottom: {
-        position: "absolute",
-        bottom: 0
+        position : 'absolute',
+        bottom   : 0
       }
     };
     if (this.props.show) {
       return [styles.base,
-        this.props.position === "top" && styles.top,
-        this.props.position === "bottom" && styles.bottom,
+        this.props.position === 'top' && styles.top,
+        this.props.position === 'bottom' && styles.bottom,
         this.props.style];
     }
   },
@@ -62,7 +63,7 @@ module.exports = Radium(React.createClass({
     var styles = this.getStyles();
 
     return (
-      <div style={styles} >
+      <div style={styles}>
         {this.renderItem(this.props.type)}
       </div>
     )

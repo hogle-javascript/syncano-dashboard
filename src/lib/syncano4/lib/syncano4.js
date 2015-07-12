@@ -59,7 +59,6 @@ var Syncano = (function() {
 
   var tempInstance = null;
 
-
   /********************
     PRIVATE METHODS
   *********************/
@@ -128,7 +127,7 @@ var Syncano = (function() {
       request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     }
 
-    if (params.headers !== undefined){
+    if (params.headers !== undefined) {
       for (var headerName in params.headers) {
         request.setRequestHeader(headerName, params.headers[headerName]);
       }
@@ -338,7 +337,6 @@ var Syncano = (function() {
 
   var deferIsAlwaysAsync = true;
 
-
   /**
    * Creates Syncano object
    *
@@ -353,7 +351,7 @@ var Syncano = (function() {
       tempInstance = param.instance;
     }
 
-    this.setApiKey = function (api_key) {
+    this.setApiKey = function(api_key) {
       setApiKey(api_key);
       return this;
     };
@@ -378,7 +376,15 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this),
+      activate: this.activateAccount.bind(this)
+    };
+
+    this.Billing = {
+      getProfile: this.getBillingProfile.bind(this),
+      updateProfile: this.updateBillingProfile.bind(this),
+      getCard: this.getBillingCard.bind(this),
+      updateCard: this.updateBillingCard.bind(this),
+      getInvoices: this.getBillingInvoices.bind(this)
     };
 
     /**
@@ -465,7 +471,8 @@ var Syncano = (function() {
       list: this.listDataObjects.bind(this),
       remove: this.removeDataObject.bind(this),
       get: this.getDataObject.bind(this),
-      update: this.updateDataObject.bind(this)
+      update: this.updateDataObject.bind(this),
+      uploadFile: this.uploadFileDataObject.bind(this)
     };
 
     /**
@@ -638,6 +645,29 @@ var Syncano = (function() {
     };
 
     /**
+     * Object with methods to handle DataViews
+     *
+     * @alias Syncano#DataViews
+     * @type {object}
+     * @property {function} create - shortcut to {@link Syncano#createDataView} method
+     * @property {function} list - shortcut to {@link Syncano#listDataViews} method
+     * @property {function} get - shortcut to {@link Syncano#getWebHook} method
+     * @property {function} remove - shortcut to {@link Syncano#removeWebHook} method
+     * @property {function} update - shortcut to {@link Syncano#updateWebHook} method
+     * @property {function} run - shortcut to {@link Syncano#runWebHook} method
+     */
+    this.DataViews = {
+      create: this.createDataView.bind(this),
+      list: this.listDataViews.bind(this),
+      //get: this.getWebHook.bind(this),
+      update: this.updateDataView.bind(this),
+      remove: this.removeDataView.bind(this),
+      //run: this.runWebHook.bind(this),
+      //traces: this.listWebHookTraces.bind(this),
+      //trace: this.getWebHookTrace.bind(this)
+    };
+
+    /**
      * Object with methods to handle Triggers
      *
      * @alias Syncano#Triggers
@@ -680,7 +710,6 @@ var Syncano = (function() {
       trace: this.getScheduleTrace.bind(this)
     };
   }
-
 
   Syncano.prototype = {
 
@@ -727,18 +756,11 @@ var Syncano = (function() {
       return promise;
     },
 
-    socialConnect: function (network, token, callbackOK, callbackError) {
+    socialConnect: function(network, access_token, callbackOK, callbackError) {
       if (network === 'google') {
         network = 'google-oauth2';
       }
-      return this.request(
-        'POST',
-        'v1/account/auth/' + network + '/',
-        {},
-        callbackOK,
-        callbackError,
-        {'Authorization': 'Token ' + token}
-      );
+      return this.request('POST', 'v1/account/auth/' + network + '/', {access_token: access_token}, callbackOK, callbackError);
     },
 
     /**
@@ -796,7 +818,6 @@ var Syncano = (function() {
       return deferred.promise;
     },
 
-
     /**
      * Checks if instance exists and stores its information in private instanceObject
      *
@@ -827,7 +848,6 @@ var Syncano = (function() {
         links: linksObject
       }
     },
-
 
     /*********************
        INSTANCES METHODS
@@ -1068,7 +1088,6 @@ var Syncano = (function() {
       return this.request('DELETE', linksObject.instance_admins + id, {}, callbackOK, callbackError);
     },
 
-
     /*****************
        CLASS METHODS
     ******************/
@@ -1178,7 +1197,6 @@ var Syncano = (function() {
       //}
       return this.request('PATCH', linksObject.instance_classes + name, params, callbackOK, callbackError);
     },
-
 
     /*******************
        ACCOUNT METHODS
@@ -1307,6 +1325,29 @@ var Syncano = (function() {
       return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
     },
 
+    /***********************
+       BILLING METHODS
+    ************************/
+
+    getBillingProfile: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/profile/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingProfile: function(params, callbackOK, callbackError) {
+      return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
+    },
+
+    getBillingCard: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/card/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingCard: function(token, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
+    },
+
+    getBillingInvoices: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
+    },
     /***********************
        DATA OBJECT METHODS
     ************************/
@@ -1464,6 +1505,33 @@ var Syncano = (function() {
       params = prepareObjectToBeUpdated(params);
       var methodName = linksObject.instance_classes + className + '/objects/' + id;
       return this.request('PATCH', methodName, params, callbackOK, callbackError);
+    },
+
+    uploadFileDataObject: function(className, params, field, callbackOK, callbackError) {
+
+      if (typeof className === 'undefined') {
+        throw new Error('Missing name of the class');
+      }
+      if (typeof linksObject.instance_classes === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      var deferred = Deferred(),
+          formData = new FormData(),
+          url      = normalizeUrl(baseURL + linksObject.instance_classes + className + '/objects/' + params.id + '/'),
+          xhr      = new XMLHttpRequest();
+
+      formData.append(field.name, field.file);
+
+      xhr.onload = function() {
+        deferred.resolve();
+      };
+
+      xhr.open('PATCH', url, true);
+      xhr.setRequestHeader('Authorization', 'Token ' + apiKey);
+      xhr.send(formData);
+
+      return deferred.promise;
     },
 
     /********************
@@ -1650,7 +1718,6 @@ var Syncano = (function() {
     removeUser: function(id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_users', callbackOK, callbackError);
     },
-
 
     /*********************
        GROUPS METHODS
@@ -1931,7 +1998,6 @@ var Syncano = (function() {
       }
       return this.request('GET', linksObject.instance_codeboxes + traceId + '/traces/' + codeboxId + '/', params, callbackOK, callbackError);
     },
-
 
     /***********************
        INVITATIONS METHODS
@@ -2253,6 +2319,161 @@ var Syncano = (function() {
     },
 
     /********************
+       DATAVIEWS METHODS
+    *********************/
+    /**
+     * Creates new DataView.
+     *
+     * @method Syncano#createDataView
+     * @alias Syncano.DataViews.create
+     * @param {object} params
+     * @param {string} params.slug
+     * @param {Number} params.codebox
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    createDataView: function(params, callbackOK, callbackError) {
+      if (typeof params !== 'object') {
+        throw new Error('Missing parameters object');
+      }
+      //if (typeof params.codebox === 'object') {
+      //  params.codebox = params.codebox.id || params.codebox.pk;
+      //}
+      //if (typeof linksObject.instance_webhooks === 'undefined') {
+      //  throw new Error('Not connected to any instance');
+      //}
+      return this.request('POST', linksObject.instance_self + 'api/objects', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns all defined webhooks as a list
+     *
+     * @method Syncano#listDataViews
+     * @alias Syncano.DataViews.list
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    listDataViews: function(params, callbackOK, callbackError) {
+      return this.request('GET', linksObject.instance_self + 'api/objects', params, callbackOK, callbackError);
+    },
+    //
+    ///**
+    // * Returns the webhook with specified id
+    // *
+    // * @method Syncano#getWebHook
+    // * @alias Syncano.WebHooks.get
+    // * @param {Number|object} id
+    // * @param {Number} id.id - when passed parameter is an object, we use its id property
+    // * @param {function} [callbackOK] - optional method to call on success
+    // * @param {function} [callbackError] - optional method to call when request fails
+    // * @returns {object} promise
+    // */
+    //getWebHook: function(id, callbackOK, callbackError) {
+    //  return this.genericGet(id, 'instance_webhooks', callbackOK, callbackError);
+    //},
+
+    /**
+     * Removes DataView identified by specified id
+     *
+     * @method Syncano#DataView
+     * @alias Syncano.DataView.remove
+     * @param {Number} id - identifier of the DataView to remove
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeDataView: function(id, callbackOK, callbackError) {
+      return this.request('DELETE', linksObject.instance_self + 'api/objects/' + id + '/', callbackOK, callbackError);
+    },
+
+    /**
+     * Updates webhook identified by specified id
+     *
+     * @method Syncano#updateDataView
+     * @alias Syncano.DataView.update
+     * @param {Number} id - dataview id
+     * @param {Object} params - new values of the dataview parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    updateDataView: function(id, params, callbackOK, callbackError) {
+      if (typeof id === 'undefined') {
+        throw new Error('Missing DataView slug');
+      }
+      if (typeof linksObject.instance_webhooks === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_self + 'api/objects/' + id + '/', params, callbackOK, callbackError);
+    },
+
+    ///**
+    // * Runs defined webhook.
+    // *
+    // * @method Syncano#runWebHook
+    // * @alias Syncano.WebHooks.run
+    // * @param  {Number} id - identifier of the webhook
+    // * @param {function} [callbackOK] - optional method to call on success
+    // * @param {function} [callbackError] - optional method to call when request fails
+    // * @returns {object} promise
+    // */
+    //runWebHook: function(id, callbackOK, callbackError) {
+    //  if (typeof id === 'object') {
+    //    id = id.slug;
+    //  }
+    //  if (typeof id === 'undefined') {
+    //    throw new Error('Missing webhook slug');
+    //  }
+    //  if (typeof linksObject.instance_webhooks === 'undefined') {
+    //    throw new Error('Not connected to any instance');
+    //  }
+    //  return this.request('GET', linksObject.instance_webhooks + id + '/run', {}, callbackOK, callbackError);
+    //},
+    //
+    ///**
+    // * List all traces for single webhook
+    // *
+    // * @method Syncano#listWebHookTraces
+    // * @alias Syncano.WebHooks.traces
+    // * @param {Number|object} webhookId
+    // * @param {object} [params]
+    // * @param {function} [callbackOK] - optional method to call on success
+    // * @param {function} [callbackError] - optional method to call when request fails
+    // * @returns {object} promise
+    // */
+    //listWebHookTraces: function(webhookId, params, callbackOK, callbackError) {
+    //  if (typeof webhookId === 'object') {
+    //    webhookId = webhookId.id;
+    //  }
+    //  return this.request('GET', linksObject.instance_webhooks + webhookId + '/traces/', params, callbackOK, callbackError);
+    //},
+    //
+    ///**
+    // * Get single trace for single webhook
+    // *
+    // * @method Syncano#getWebHookTrace
+    // * @alias Syncano.WebHooks.trace
+    // * @param {Number|object} webhookId
+    // * @param {Number|object} traceId
+    // * @param {object} [params]
+    // * @param {function} [callbackOK] - optional method to call on success
+    // * @param {function} [callbackError] - optional method to call when request fails
+    // * @returns {object} promise
+    // */
+    //getWebHookTrace: function(webhookId, traceId, params, callbackOK, callbackError) {
+    //  if (typeof webhookId === 'object') {
+    //    webhookId = webhookId.id;
+    //  }
+    //  if (typeof traceId === 'object') {
+    //    traceId = traceId.id;
+    //  }
+    //  return this.request('GET', linksObject.instance_webhooks + webhookId + '/traces/' + traceId + '/', params, callbackOK, callbackError);
+    //},
+
+    /********************
        TRIGGERS METHODS
     *********************/
     /**
@@ -2453,7 +2674,6 @@ var Syncano = (function() {
       }
       return this.request('PATCH', linksObject.instance_schedules + id, params, callbackOK, callbackError);
     },
-
 
     /**
      * Returns all defined schedules as a list
@@ -2718,7 +2938,6 @@ var Syncano = (function() {
       return this.request('GET', url, params, callbackOK, callbackError);
     },
 
-
     /********************
        GENERIC METHODS
     *********************/
@@ -2924,7 +3143,6 @@ var Syncano = (function() {
         return [].slice.call(a, offset);
       }
 
-
     var nextTick = function(cb) {
       setTimeout(cb, 0);
     };
@@ -3039,7 +3257,6 @@ var Syncano = (function() {
       _promise.toSource = _promise.toString = _promise.valueOf = function() {
         return value === undef ? this : value;
       };
-
 
       function execCallbacks() {
         if (status === 0) {

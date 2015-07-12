@@ -10,13 +10,23 @@ module.exports = React.createClass({
 
   displayName: 'SolutionsList',
 
-  mixins: [
-    Reflux.connect(SolutionsStore)
-  ],
+  //mixins: [
+  //  Reflux.connect(SolutionsStore)
+  //],
 
-  componentWillMount: function() {
-    console.info('SolutionsList::componentWillMount');
-    SolutionsStore.fetch();
+  //componentWillMount: function() {
+  //  console.info('SolutionsList::componentWillMount');
+  //  SolutionsStore.fetch();
+  //},
+
+  getInitialState() {
+    return {
+      items: this.props.items
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps)
   },
 
   getStyles: function() {

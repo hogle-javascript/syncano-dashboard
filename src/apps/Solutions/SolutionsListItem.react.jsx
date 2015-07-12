@@ -1,9 +1,11 @@
 var React                 = require('react'),
     Moment                = require('moment'),
     Radium                = require('radium'),
+    Router                = require('react-router'),
 
     mui                   = require('material-ui'),
     FlatButton            = mui.FlatButton,
+    Avatar                = mui.Avatar,
     Card                  = mui.Card,
     CardMedia             = mui.CardMedia,
     CardTitle             = mui.CardTitle,
@@ -17,6 +19,11 @@ var React                 = require('react'),
 module.exports = React.createClass({
 
   displayName: 'SolutionsListItem',
+
+  mixins: [
+    Router.State,
+    Router.Navigation,
+  ],
 
   getStyles: function() {
     return {
@@ -81,6 +88,10 @@ module.exports = React.createClass({
     }
   },
 
+  handleSeeMoreClick: function() {
+    this.transitionTo('solutions-edit', {solutionId: this.props.data.id});
+  },
+
   render: function() {
     var styles          = this.getStyles(),
         item            = this.props.data,
@@ -106,21 +117,30 @@ module.exports = React.createClass({
           </div>
         </div>
         <CardText>
-          <ul style={styles.cardTextList}>
-            <li>Version: 4.1</li>
-            <li>Updated: {itemUpdatedDate}</li>
-            <li>Tags: {itemTags}</li>
-          </ul>
+          <div className="row">
+            <div className="col-flex-1" style={{padding: 0}}>
+              <ul style={styles.cardTextList}>
+                <li>Last Version: 4.1</li>
+                <li>Updated: {itemUpdatedDate}</li>
+                <li>Tags: {itemTags}</li>
+              </ul>
+            </div>
+            <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'row-reverse'}}>
+              <Avatar>A</Avatar>
+            </div>
+          </div>
         </CardText>
         <div style={styles.cardFooter}>
-          <div style={styles.activationsCount}>
-            <strong>245 </strong> activations
-          </div>
           <CardActions>
-            <FlatButton label="SEE MORE"/>
+            <FlatButton label="SEE MORE" onClick={this.handleSeeMoreClick} />
           </CardActions>
         </div>
       </Card>
     )
   }
 });
+
+
+          //<div style={styles.activationsCount}>
+          //  <strong>245 </strong> activations
+          //</div>

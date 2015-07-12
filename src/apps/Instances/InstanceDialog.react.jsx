@@ -2,7 +2,6 @@ var React               = require('react'),
     Reflux              = require('reflux'),
 
     // Utils
-    ValidationMixin     = require('../../mixins/ValidationMixin'),
     FormMixin           = require('../../mixins/FormMixin'),
     DialogMixin         = require('../../mixins/DialogMixin'),
 
@@ -26,7 +25,6 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(InstanceDialogStore),
     React.addons.LinkedStateMixin,
-    ValidationMixin,
     FormMixin,
     DialogMixin
   ],
@@ -82,7 +80,7 @@ module.exports = React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        modal           = {true}>
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
@@ -103,7 +101,6 @@ module.exports = React.createClass({
             <TextField
               ref               = "description"
               name              = "description"
-              multiLine         = {true}
               fullWidth         = {true}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}

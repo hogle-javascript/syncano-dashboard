@@ -18,20 +18,36 @@ var ScheduleDialogStore = Reflux.createStore({
 
   crontabItems: [
     {
-      payload: '*/5 * * *',
-      text: 'Each 5 minutes'
+      payload: '*/5 * * * *',
+      text: 'Run every 5 minutes'
     },
     {
       payload: '0 * * * *',
-      text: 'Each round hour'
+      text: 'Run once an hour'
+    },
+    {
+      payload: '0 0 * * *',
+      text: 'Run once a day on midnight'
+    },
+    {
+      payload: '0 0 * * 0',
+      text: 'Run once a week on midnight'
+    },
+    {
+      payload: '0 0 1 * *',
+      text: 'Run once a month on midnight'
+    },
+    {
+      payload: '0 0 1 1 *',
+      text: 'Run once a year on midnight'
     }
   ],
 
   getInitialState: function() {
     return {
-      label     : '',
-      crontab   : '',
-      codebox   : '',
+      label     : null,
+      crontab   : null,
+      codebox   : null,
       codeboxes : [
         {payload: '', text: 'Loading...'}
       ]

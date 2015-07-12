@@ -58,6 +58,8 @@ module.exports = React.createClass({
 
   // Dialogs config
   initDialogs: function() {
+    var checkedAdmins            = AdminsStore.getCheckedItems(),
+        checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
 
     return [
       {
@@ -71,7 +73,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + AdminsStore.getCheckedItems().length +' Administrator(s)?',
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            this.getDialogList(checkedAdmins),
             <Loading
               type     = "linear"
               position = "bottom"
@@ -90,7 +93,8 @@ module.exports = React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to resend ' + AdminsInvitationsStore.getCheckedItems().length + ' Invitation(s)?',
+            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations),
             <Loading
               type     = "linear"
               position = "bottom"
@@ -108,13 +112,14 @@ module.exports = React.createClass({
             {text: "Confirm", onClick: this.handleRemoveInvitation}
           ],
           modal: true,
-           children: [
-             'Do you really want to delete ' + AdminsInvitationsStore.getCheckedItems().length +' Invitation(s)?',
-             <Loading
-               type     = "linear"
-               position = "bottom"
-               show     = {this.state.invitations.isLoading} />
-           ]
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations),
+            <Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.invitations.isLoading} />
+          ]
         }
       }
     ]
@@ -140,6 +145,16 @@ module.exports = React.createClass({
     AdminsInvitationsActions.uncheckAll();
   },
 
+  selectAllAdmins: function() {
+    console.info('Admins::selectAllAdmins');
+    AdminsActions.selectAllAdmins();
+  },
+
+  selectAllAdminsInvitations: function() {
+    console.info('Admins::selectAllAdminsInvitations');
+    AdminsInvitationsStore.selectAllAdminsInvitations();
+  },
+
   checkAdminItem: function(id, state) {
     AdminsInvitationsActions.uncheckAll();
     AdminsActions.checkItem(id, state);
@@ -150,18 +165,19 @@ module.exports = React.createClass({
     AdminsInvitationsActions.checkItem(id, state);
   },
 
-  showAdminDialog: function () {
+  showAdminDialog: function() {
     AdminsActions.showDialog();
   },
 
-  showAdminEditDialog: function () {
+  showAdminEditDialog: function() {
     AdminsActions.showDialog(AdminsStore.getCheckedItem());
   },
 
   render: function() {
-
-    var checkedAdmins      = AdminsStore.getNumberOfChecked(),
-        checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
+    var checkedAdmins                = AdminsStore.getNumberOfChecked(),
+        checkedInvitations           = AdminsInvitationsStore.getNumberOfChecked(),
+        isAnyAdminSelected           = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1),
+        isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
 
     return (
       <Container>
@@ -170,11 +186,12 @@ module.exports = React.createClass({
 
         <Show if={checkedAdmins > 0}>
           <FabList position="top">
+
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyAdminSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
+              iconClassName = {isAnyAdminSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Administrator"
@@ -196,10 +213,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = "Click here to unselect all"
+              label         = {isAnyAdminInvitationSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
+              iconClassName = {isAnyAdminInvitationSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
               label         = "Click here to delete Invitation"
@@ -233,7 +250,7 @@ module.exports = React.createClass({
           name                 = "Invitations"
           mode                 = "invitations"
           emptyItemHandleClick = {this.showAdminDialog}
-          emptyItemContent     = "Invite administrators"
+          emptyItemContent     = "Invite administrator"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
           items                = {AdminsInvitationsStore.getPendingInvitations()} />

@@ -1,5 +1,6 @@
 var Reflux         = require('reflux'),
     Raven          = require('../../raven'),
+    analytics      = require('../../segment'),
     Connection     = require('./Connection'),
     SessionActions = require('./SessionActions'),
 
@@ -64,14 +65,21 @@ var SessionStore = Reflux.createStore({
     }
 
     this.user             = user;
-    // jscs:disable
-    this.user.account_key = this.token;
-    // jscs:enable
+
+    if (this.user.account_key === undefined) {
+      this.user.account_key = this.token;
+    } else {
+      this.token = user.account_key;
+      this.connection.setApiKey(this.token);
+      sessionStorage.setItem('token', this.token);
+    }
 
     Raven.setUserContext({
       email: user.email,
       id: user.id
     });
+
+    analytics.identify(user.email);
 
     this.trigger(this);
   },
@@ -138,15 +146,12 @@ var SessionStore = Reflux.createStore({
 
   onLogin: function(payload) {
     console.info('SessionStore::onLogin');
-    // jscs:disable
+
     if (payload === undefined || payload.account_key === undefined) {
-      // jscs:enable
       return;
     }
 
-    // jscs:disable
     this.token = payload.account_key;
-    // jscs:enable
     this.connection.setApiKey(this.token);
     sessionStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
@@ -161,7 +166,9 @@ var SessionStore = Reflux.createStore({
     this.removeInstance();
     this.router.transitionTo('login');
     this.trigger(this);
+
     Raven.setUserContext();
+    analytics.identify();
   },
 
   isAuthenticated: function() {

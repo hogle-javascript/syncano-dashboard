@@ -6,7 +6,6 @@ var React           = require('react'),
     Colors          = mui.Styles.Colors,
     Paper           = mui.Paper;
 
-
 module.exports = Radium(React.createClass({
 
   displayName: 'Item',
@@ -15,7 +14,7 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      handleClick: function() {}
+      hoverable   : false
     }
   },
 
@@ -28,6 +27,12 @@ module.exports = Radium(React.createClass({
       },
       checked: {
         backgroundColor : Colors.lightBlue50
+      },
+      hoverable: {
+        ':hover': {
+          backgroundColor: Colors.grey100,
+          cursor         : 'pointer'
+        }
       }
     };
   },
@@ -37,15 +42,17 @@ module.exports = Radium(React.createClass({
   },
 
   render: function () {
-    var styles = this.getStyles();
+    var styles = this.getStyles(),
+    hoverable  = this.props.hoverable || this.props.handleClick;
 
     return (
       <Paper
-        onClick   = {this.handleClick}
+        onClick   = {this.props.handleClick ? this.handleClick : null}
         zDepth    = {1}
         className = {'row'}
         style     = {[styles.base,
-                    this.props.checked && styles.checked]}
+                    this.props.checked && styles.checked,
+                    hoverable && styles.hoverable]}
         rounded   = {false}>
         {this.props.children}
       </Paper>

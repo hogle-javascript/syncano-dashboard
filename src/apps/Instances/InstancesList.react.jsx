@@ -26,7 +26,6 @@ var React  = require('react'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'InstancesList',
@@ -34,7 +33,7 @@ module.exports = React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    Reflux.connect(InstancesStore, "instancesStore"),
+    Reflux.connect(InstancesStore, 'instancesStore'),
     HeaderMixin
   ],
 
@@ -45,12 +44,12 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillReceiveProps: function(nextProps, nextState) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState({items : nextProps.items})
   },
 
   // List
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick: function(id, state) {
     console.info('InstancesList::handleItemIconClick', id, state);
     InstancesActions.checkItem(id, state);
   },
@@ -64,8 +63,10 @@ module.exports = React.createClass({
   renderItem: function (item) {
     return (
       <Item
-        checked = {item.checked}
-        key     = {item.name}>
+        checked     = {item.checked}
+        id          = {item.name}
+        key         = {item.name}
+        handleClick = {this.handleItemClick}>
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}
@@ -81,8 +82,8 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function () {
-    var items = this.state.items.map(function (item) {
+  getList: function() {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item)
     }.bind(this));
 

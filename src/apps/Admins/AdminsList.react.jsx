@@ -8,6 +8,7 @@ var React             = require('react'),
 
     // Stores and Actions
     SessionActions    = require('../Session/SessionActions'),
+    SessionStore      = require('../Session/SessionStore'),
     AdminsActions     = require('./AdminsActions'),
     AdminsStore       = require('./AdminsStore'),
 
@@ -56,19 +57,40 @@ module.exports = React.createClass({
     this.props.checkItem(id, state);
   },
 
+  getStyles: function() {
+    return {
+      ownerLabel: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 14,
+        marginTop: 4
+      }
+    }
+  },
+
   renderItem: function(item) {
+    var styles  = this.getStyles(),
+        isOwner = item.id === SessionStore.getInstance().owner.id;
+
     return (
       <Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked   = {item.checked}
+        key       = {item.id}>
         <ColumnCheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
-          {item.email}
+          handleIconClick = {this.handleItemIconClick}
+          checkable       = {!isOwner}>
+          <div>
+            <div>
+              {item.email}
+            </div>
+            <div style={styles.ownerLabel}>
+              {isOwner ? "Owner (cannot be edited)" : null}
+            </div>
+          </div>
         </ColumnCheckIcon>
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
@@ -84,8 +106,6 @@ module.exports = React.createClass({
         return this.renderItem(item)
       }.bind(this));
 
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
       return items;
     }
     return (

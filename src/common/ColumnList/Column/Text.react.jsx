@@ -6,15 +6,14 @@ var React              = require('react'),
     Paper              = mui.Paper,
     Colors             = mui.Styles.Colors;
 
-
 var Header = React.createClass({
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.TEXT
     }
   },
 
-  render: function () {
+  render: function() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -45,7 +44,7 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       color      : this.props.color,
       hoverColor : this.props.hoverColor
@@ -59,17 +58,16 @@ module.exports = Radium(React.createClass({
       justifyContent : 'center',
       fontSize       : '12px',
       lineHeight     : '16px',
-      paddingTop     : 16,
-      paddingBottom  : 16,
+      padding        : '16px 8px',
       color          : this.props.color
     };
   },
 
-  handleClick: function () {
+  handleClick: function() {
     this.props.handleClick(this.props.id);
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
