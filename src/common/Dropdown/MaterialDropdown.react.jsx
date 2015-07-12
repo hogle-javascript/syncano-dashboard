@@ -1,6 +1,5 @@
 var React                = require("react"),
     classNames           = require("classnames"),
-    gravatar             = require("gravatar"),
     OutsideClickHandler  = require("react-outsideclickhandler"),
     mui                  = require("material-ui"),
 

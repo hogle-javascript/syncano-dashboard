@@ -59,19 +59,25 @@ module.exports = Radium(React.createClass({
   render: function() {
     var styles        = this.getStyles(),
         iconStyle     = styles.root,
-        iconClassName = "synicon-star-outline";
+        iconClassName = 'synicon-star-outline';
 
     if (this.isStarred()) {
-      iconClassName = "synicon-star";
+      iconClassName = 'synicon-star';
       iconStyle     = styles.starred;
     }
 
-    return(
-      <IconButton
-        onClick       = {this.handleIconClick}
-        iconClassName = {iconClassName}
-        iconStyle     = {iconStyle}
-      />
+    return (
+      <div className='row' style={{width: 120}}>
+        <div className='col-flex-1' style={{marginTop: 17, textAlign: 'right'}}>
+          {this.props.solution.stars_count.toString()}
+        </div>
+        <div className='col-xs-15' style={{paddingRight: 0}}>
+        <IconButton
+          onClick       = {this.handleIconClick}
+          iconClassName = {iconClassName}
+          iconStyle     = {iconStyle} />
+        </div>
+      </div>
     )
   }
 }));

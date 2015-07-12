@@ -1,6 +1,5 @@
 var React               = require('react'),
     classNames          = require('classnames'),
-    gravatar            = require('gravatar'),
 
     mui                 = require('material-ui'),
     List                = mui.List,

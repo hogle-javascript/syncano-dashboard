@@ -113,6 +113,15 @@ var InstancesStore = Reflux.createStore({
     return this.data.items.filter(this.filterOtherInstances);
   },
 
+  getInstancesDropdown: function() {
+    return this.data.items.map(function(item) {
+      return {
+        payload : item.name,
+        text    : item.name
+      }
+    });
+  },
+
   setInstances: function(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map(function(key) {
