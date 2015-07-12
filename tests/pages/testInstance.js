@@ -15,12 +15,12 @@ module.exports = {
   'Test Go to Instance View' : function(client) {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
-    
+
     var instancePage = client.page.instancePage();
 
     client.pause(2000);
-    instancePage.expect.element('@instanceDropdown').to.be.present.after(5000);
-    instancePage.expect.element('@instanceDropdown').to.contain.text('enter_this_instance_now');
+    instancePage.expect.element('@instancesDropdown').to.be.present.after(5000);
+    instancePage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
 
   }
 };

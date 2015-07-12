@@ -1,11 +1,18 @@
-var instancesCommands = {
+var instanceCommands = {
+  clickButton: function(button) {
+    return this.waitForElementVisible(button, 5000)
+      .click(button);
+  },
 };
 
 module.exports = {
-  commands: [instancesCommands],
+  commands: [instanceCommands],
   elements: {
-    instanceDropdown: {
-      selector: ".instances-dropdown"
+    instancesDropdown: {
+      selector: '.instances-dropdown'
+    },
+    cogIcon: {
+      selector: '.synicon-cog'
     }
   }
 };
