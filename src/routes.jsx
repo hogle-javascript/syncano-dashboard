@@ -79,6 +79,7 @@ module.exports = (
         <DefaultRoute handler={Instances} />
       </Route>
 
+      <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route name="profile-billing" handler={Billing} path="/account/billing">
         <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
         <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
