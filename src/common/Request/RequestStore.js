@@ -9,9 +9,7 @@ let RequestStore = Reflux.createStore({
   },
 
   onError(event, method, url) {
-    if (500 <= event.target.status <= 599) {
-      this.showErrorSnackbar(event);
-    }
+    this.showErrorSnackbar(event);
   },
 
   showErrorSnackbar(event) {
