@@ -44,7 +44,7 @@ module.exports = {
       selector: '.synicon-delete'
     },
     confirmDeleteButton: {
-      selector: '//h3/following-sibling::div[2]/button[2]',
+      selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
   }

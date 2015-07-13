@@ -38,13 +38,9 @@ module.exports = {
 
     apiKeysPage.clickButton('@selectApiKey');
     apiKeysPage.clickButton('@deleteButton');
-
     client.pause(1000);
-    client.useXpath();
     apiKeysPage.clickButton('@confirmDeleteButton');
-    client.useCss();
     client.pause(1000);
-
     apiKeysPage.expect.element('@apiKeysTableRow').to.be.not.present.after(5000);
   }
 };
