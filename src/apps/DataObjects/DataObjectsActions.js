@@ -81,18 +81,36 @@ DataObjectsActions.createDataObject.listen(function(payload) {
   console.info('DataObjectsActions::createDataObject', payload);
   Connection
     .DataObjects
-    .create(payload.className, payload.payload)
-    .then(this.completed)
-    .catch(this.failure);
+    .create(payload.className, payload.params)
+    .then(function(createdItem) {
+
+      var promises = payload.fileFields.map(function(file) {
+        return Connection.DataObjects.uploadFile(payload.className, createdItem, file)
+      });
+
+      D.all(promises)
+        .success(this.completed)
+        .error(this.failure);
+
+    }.bind(this));
 });
 
-DataObjectsActions.updateDataObject.listen(function(className, payload) {
+DataObjectsActions.updateDataObject.listen(function(payload) {
   console.info('DataObjectsActions::updateDataObject');
   Connection
     .DataObjects
-    .update(className, payload)
-    .then(this.completed)
-    .catch(this.failure);
+    .update(payload.className, payload.params)
+    .then(function(updatedItem) {
+
+      var promises = payload.fileFields.map(function(file) {
+        return Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
+      });
+
+      D.all(promises)
+        .success(this.completed)
+        .error(this.failure);
+
+    }.bind(this));
 });
 
 DataObjectsActions.removeDataObjects.listen(function(className, dataobjects) {
