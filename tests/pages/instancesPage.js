@@ -18,7 +18,7 @@ var instancesCommands = {
       .click('@selectInstance');
   },
   clickButton: function(button) {
-    return this.waitForElementVisible(button, 5000)
+    return this.waitForElementVisible(button)
       .click(button);
   },
   isModalClosed: function(element) {
