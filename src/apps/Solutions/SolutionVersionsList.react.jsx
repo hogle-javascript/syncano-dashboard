@@ -90,7 +90,6 @@ module.exports = React.createClass({
   },
 
   getList: function() {
-    console.log(this.state)
     if (this.state.versions === null) {
       return;
     }
