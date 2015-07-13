@@ -17,8 +17,9 @@ module.exports = {
     instancesPage.clickFAB();
     instancesPage.fillInstanceName();
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
+    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(5000);
     instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed();
+    instancesPage.isModalClosed('@addInstanceModalTitle');
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
@@ -30,7 +31,7 @@ module.exports = {
     instancesPage.clickButton('@editButton');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed();
+    instancesPage.isModalClosed('@editInstanceModalTitle');
 
     instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
     instancesPage.expect.element('@instancesTableRowDescription')
@@ -41,8 +42,7 @@ module.exports = {
     instancesPage.clickSelectInstance();
     instancesPage.clickButton('@deleteButton');
     instancesPage.clickButton('@confirmDeleteButton');
-
-    client.pause(2000);
+    instancesPage.isModalClosed('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
     instancesPage.expect.element('@instancesTableRowDescription')

@@ -21,8 +21,8 @@ var instancesCommands = {
     return this.waitForElementVisible(button, 5000)
       .click(button);
   },
-  isModalClosed: function() {
-    return this.waitForElementNotPresent('@confirmButton', 5000);
+  isModalClosed: function(element) {
+    return this.waitForElementNotVisible(element, 5000);
   },
 };
 
@@ -62,6 +62,18 @@ module.exports = {
     },
     instancesTableRowDescription: {
       selector: '.row .col-flex-1'
+    },
+    addInstanceModalTitle: {
+      selector: '//h3[text()="Create an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    editInstanceModalTitle: {
+      selector: '//h3[text()="Update an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    deleteInstanceModalTitle: {
+      selector: '//h3[text()="Delete an Instance"]',
+      locateStrategy: 'xpath'
     }
   }
 };
