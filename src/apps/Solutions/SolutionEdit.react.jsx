@@ -1,38 +1,48 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
-    Router           = require('react-router'),
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
 
     // Utils
-    HeaderMixin      = require('../Header/HeaderMixin'),
-    DialogsMixin     = require('../../mixins/DialogsMixin'),
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
 
     // Stores and Actions
-    SessionActions      = require('../Session/SessionActions'),
-    InstancesActions    = require('../Instances/InstancesActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    SolutionsActions    = require('./SolutionsActions'),
+    SessionActions        = require('../Session/SessionActions'),
+    InstancesActions      = require('../Instances/InstancesActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    SolutionsActions      = require('./SolutionsActions'),
 
-    SolutionEditActions = require('./SolutionEditActions'),
-    SolutionEditStore   = require('./SolutionEditStore'),
+    SolutionEditActions   = require('./SolutionEditActions'),
+    SolutionEditStore     = require('./SolutionEditStore'),
+
+    SolutionInstallDialogStore     = require('./SolutionInstallDialogStore'),
+    SolutionInstallDialogActions     = require('./SolutionInstallDialogActions'),
+
+    SolutionVersionDialogStore     = require('./SolutionVersionDialogStore'),
+    SolutionVersionDialogActions     = require('./SolutionVersionDialogActions'),
 
     // Components
-    mui              = require('material-ui'),
-    Avatar           = mui.Avatar,
-    Toolbar          = mui.Toolbar,
-    ToolbarGroup     = mui.ToolbarGroup,
-    ToolbarTitle     = mui.ToolbarTitle,
-    IconButton       = mui.IconButton,
-    FontIcon         = mui.FontIcon,
-    Tabs             = mui.Tabs,
-    Dialog           = mui.Dialog,
-    Tab              = mui.Tab,
-    Container        = require('../../common/Container/Container.react'),
-    FabList          = require('../../common/Fab/FabList.react'),
-    FabListItem      = require('../../common/Fab/FabListItem.react'),
+    mui                   = require('material-ui'),
+    Avatar                = mui.Avatar,
+    Toolbar               = mui.Toolbar,
+    ToolbarGroup          = mui.ToolbarGroup,
+    ToolbarTitle          = mui.ToolbarTitle,
+    IconButton            = mui.IconButton,
+    FontIcon              = mui.FontIcon,
+    Tabs                  = mui.Tabs,
+    Dialog                = mui.Dialog,
+    RaisedButton          = mui.RaisedButton,
 
-    SolutionVersionsList   = require('./SolutionVersionsList.react'),
-    SolutionDialog         = require('./SolutionDialog.react'),
+    Tab                   = mui.Tab,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+
+    SolutionVersionsList  = require('./SolutionVersionsList.react'),
+    SolutionDialog        = require('./SolutionDialog.react'),
+
     SolutionVersionDialog = require('./SolutionVersionDialog.react'),
+    SolutionInstallDialog = require('./SolutionInstallDialog.react'),
 
     SolutionStar          = require('../../common/SolutionStar/SolutionStar.react');
 
@@ -61,15 +71,21 @@ module.exports = React.createClass({
     return [{
       dialog: Dialog,
       params: {
-        key:    'deleteSolutionDialog',
-        ref:    'deleteSolutionDialog',
-        title:  'Delete a Solution',
-        actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
-          {text: 'Confirm', onClick: this.handleDelete}
+        key     : 'deleteSolutionDialog',
+        ref     : 'deleteSolutionDialog',
+        title   : 'Delete a Solution',
+        actions : [
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : 'Confirm',
+            onClick : this.handleDelete
+          }
         ],
-        modal: true,
-        children: 'Do you really want to delete this Solution?'
+        modal    : true,
+        children : 'Do you really want to delete this Solution?'
       }
     }]
   },
@@ -77,8 +93,12 @@ module.exports = React.createClass({
   handleDelete: function() {
     console.info('SolutionEdit::handleDelete');
     SolutionEditActions.removeSolution(this.state.item.id).then(
-      SessionStore.getRouter().transitionTo('solutions-my')
+      SessionStore.getRouter().transitionTo('solutions')
     );
+  },
+
+  handleInstallSolution: function() {
+    SolutionInstallDialogActions.showDialog();
   },
 
   showSolutionDialog: function() {
@@ -107,10 +127,11 @@ module.exports = React.createClass({
   },
 
   handleBackClick: function() {
+    SessionStore.getRouter().transitionTo('solutions');
   },
 
   showAddSolutionVersionDialog: function() {
-    SolutionEditActions.showDialog();
+    SolutionVersionDialogActions.showDialog();
   },
 
   render: function() {
@@ -118,12 +139,13 @@ module.exports = React.createClass({
       <Container id='solutions'>
         {this.getDialogs()}
 
+        <SolutionInstallDialog />
         <SolutionVersionDialog />
 
         <FabList>
           <FabListItem
             label         = "Click here to create Solution"
-            onClick       = {this.showSolutionDialog}
+            onClick       = {this.showAddSolutionVersionDialog}
             iconClassName = "synicon-plus" />
         </FabList>
 
@@ -159,6 +181,11 @@ module.exports = React.createClass({
               <h5>{this.state.item.label}</h5>
               <div>{this.state.item.description}</div>
                <SolutionStar solution={this.state.item} />
+              <RaisedButton
+                primary = {true}
+                label   = 'Install solution'
+                onClick = {this.handleInstallSolution}
+              />
             </div>
             <div className="col-flex-1">
               <div className="row">
