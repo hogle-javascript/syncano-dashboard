@@ -4,21 +4,22 @@ import RequestActions from './RequestActions';
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,
 
-  onProgress(event, method, url) {
-    console.debug('RequestStore::onProgress', method, url);
-  },
-
   onCompleted(event, method, url) {
-    console.debug('RequestStore::onCompleted', method, url);
+    this.showErrorSnackbar(event);
   },
 
   onError(event, method, url) {
-    console.debug('RequestStore::onError', method, url);
+    if (500 <= event.target.status <= 599) {
+      this.showErrorSnackbar(event);
+    }
   },
 
-  onAbort(event, method, url) {
-    console.debug('RequestStore::onAbort', method, url);
+  showErrorSnackbar(event) {
+    if (event.target.status >= 500 && event.target.status <= 599) {
+      this.trigger({showErrorSnackbar: true});
+    }
   }
+
 });
 
 export default RequestStore;
