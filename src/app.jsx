@@ -13,6 +13,8 @@ require('./raven');
 require('./stripe');
 require('normalize.css');
 require('./app.sass');
+require('./common/Request/RequestActions');
+require('./common/Request/RequestStore');
 
 Router.run(routes, function (Root, state) {
   if (!window.opener) {

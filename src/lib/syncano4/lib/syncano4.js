@@ -113,7 +113,7 @@ var Syncano = (function() {
     var xhr = {};
     var request = new XMLHttpRequest();
     var mtype = params.type.toUpperCase();
-    if (mtype === 'GET') {
+    if (mtype === 'GET' && Object.keys(params.data).length > 0) {
       params.url += (params.url.indexOf('?') === -1 ? '?' : '&') + prepareAjaxParams(params.data);
     }
     request.open(mtype, params.url, true);

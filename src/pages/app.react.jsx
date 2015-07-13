@@ -7,6 +7,7 @@ var React              = require('react'),
 
     mui                = require('material-ui'),
     ThemeManager       = new mui.Styles.ThemeManager(),
+    Snackbar           = mui.Snackbar,
     SyncanoTheme       = require('./../common/SyncanoTheme');
 
 module.exports = React.createClass({
@@ -46,7 +47,16 @@ module.exports = React.createClass({
   },
 
   render: function(){
-    return <RouteHandler/>
+    return (
+      <div>
+        <RouteHandler/>
+        <Snackbar
+          ref              = "errorSnackbar"
+          message          = "Something went wrong"
+          action           = "refresh"
+          onActionTouchTap = "" />
+      </div>
+    );
   }
 
 });
