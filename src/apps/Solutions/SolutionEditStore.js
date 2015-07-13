@@ -10,7 +10,7 @@ var Reflux              = require('reflux'),
     SessionStore        = require('../Session/SessionStore'),
     SolutionEditActions = require('./SolutionEditActions');
 
-var SolutionsMyStore = Reflux.createStore({
+var SolutionsEditStore = Reflux.createStore({
   listenables : SolutionEditActions,
 
   mixins      : [
@@ -39,7 +39,7 @@ var SolutionsMyStore = Reflux.createStore({
   },
 
   refreshData: function() {
-    console.debug('SolutionsMyStore::refreshData');
+    console.debug('SolutionsEditStore::refreshData');
     var solutionId = SessionStore.router.getCurrentParams().solutionId;
     SolutionEditActions.fetchSolution(solutionId);
     SolutionEditActions.fetchSolutionVersions(solutionId);
@@ -50,13 +50,13 @@ var SolutionsMyStore = Reflux.createStore({
   },
 
   setSolution: function(solution) {
-    console.debug('SolutionsMyStore::setSolutions');
+    console.debug('SolutionsEditStore::setSolutions');
     this.data.item = solution;
     this.trigger(this.data);
   },
 
   setSolutionVersions: function(versions) {
-    console.debug('SolutionsMyStore::setSolutions');
+    console.debug('SolutionsEditStore::setSolutions');
 
     this.data.hasNextPage = versions.hasNextPage();
     this.data.nextParams  = URL.parse(versions.next() || '', true).query;
@@ -78,58 +78,58 @@ var SolutionsMyStore = Reflux.createStore({
   },
 
   onFetchSolution: function(solution) {
-    console.debug('SolutionsMyStore::onFetchSolutions');
+    console.debug('SolutionsEditStore::onFetchSolutions');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchSolutionCompleted: function(solution) {
-    console.debug('SolutionsMyStore::onFetchSolutionsCompleted');
+    console.debug('SolutionsEditStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
     SolutionEditActions.setSolution(solution);
   },
 
   onFetchSolutionFailure: function() {
-    console.debug('SolutionsMyStore::onFetchSolutionsFailure');
+    console.debug('SolutionsEditStore::onFetchSolutionsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   onFetchSolutionVersions: function() {
-    console.debug('SolutionsMyStore::onFetchSolutionVersions');
+    console.debug('SolutionsEditStore::onFetchSolutionVersions');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchSolutionVersionsCompleted: function(versions) {
-    console.debug('SolutionsMyStore::onFetchSolutionVersionsCompleted');
+    console.debug('SolutionsEditStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
     SolutionEditActions.setSolutionVersions(versions);
   },
 
   onFetchSolutionVersionsFailure: function() {
-    console.debug('SolutionsMyStore::onFetchSolutionVersionsFailure');
+    console.debug('SolutionsEditStore::onFetchSolutionVersionsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   onRemoveSolution: function() {
-    console.debug('SolutionsMyStore::onRemoveSolution');
+    console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onRemoveSolutionCompleted: function() {
-    console.debug('SolutionsMyStore::onRemoveSolution');
+    console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = false;
   },
 
   onRemoveSolutionFailure: function() {
-    console.debug('SolutionsMyStore::onRemoveSolutionFailure');
+    console.debug('SolutionsEditStore::onRemoveSolutionFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
 });
 
-module.exports = SolutionsMyStore;
+module.exports = SolutionsEditStore;

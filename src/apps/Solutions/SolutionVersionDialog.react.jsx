@@ -1,44 +1,43 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+var React                      = require('react'),
+    Reflux                     = require('reflux'),
 
     // Utils
-    FormMixin           = require('../../mixins/FormMixin'),
-    DialogMixin         = require('../../mixins/DialogMixin'),
+    FormMixin                  = require('../../mixins/FormMixin'),
+    DialogMixin                = require('../../mixins/DialogMixin'),
 
     // Stores and Actions
-    SessionActions      = require('../Session/SessionActions'),
-    SolutionsActions    = require('./SolutionsActions'),
-    SolutionEditActions    = require('./SolutionEditActions'),
-    SolutionEditStore    = require('./SolutionEditStore'),
+    SessionActions             = require('../Session/SessionActions'),
+    SolutionsActions           = require('./SolutionsActions'),
+    SolutionEditActions        = require('./SolutionEditActions'),
+    SolutionEditStore          = require('./SolutionEditStore'),
     SolutionVersionDialogStore = require('./SolutionVersionDialogStore'),
-    InstancesStore      = require('../Instances/InstancesStore'),
-    ColorStore          = require('../../common/Color/ColorStore'),
-    IconStore           = require('../../common/Icon/IconStore'),
+    InstancesStore             = require('../Instances/InstancesStore'),
+    ColorStore                 = require('../../common/Color/ColorStore'),
+    IconStore                  = require('../../common/Icon/IconStore'),
 
-    WebhooksStore       = require('../Data/WebhooksStore'),
-    CodeBoxesStore      = require('../CodeBoxes/CodeBoxesStore'),
-    ClassesStore        = require('../Classes/ClassesStore'),
-    DataViewsStore      = require('../Data/DataViewsStore'),
-    DataViewsActions    = require('../Data/DataViewsActions'),
+    WebhooksStore              = require('../Data/WebhooksStore'),
+    CodeBoxesStore             = require('../CodeBoxes/CodeBoxesStore'),
+    ClassesStore               = require('../Classes/ClassesStore'),
+    DataViewsStore             = require('../Data/DataViewsStore'),
+    DataViewsActions           = require('../Data/DataViewsActions'),
 
-    ChannelsStore       = require('../Channels/ChannelsStore'),
-    TriggersStore       = require('../Tasks/TriggersStore'),
-    SchedulesStore      = require('../Tasks/SchedulesStore'),
+    ChannelsStore              = require('../Channels/ChannelsStore'),
+    TriggersStore              = require('../Tasks/TriggersStore'),
+    SchedulesStore             = require('../Tasks/SchedulesStore'),
 
     // Components
-    mui                 = require('material-ui'),
-    Toggle              = mui.Toggle,
-    Checkbox            = mui.Checkbox,
-    SelectField         = mui.SelectField,
-    Tabs                = mui.Tabs,
-    Tab                 = mui.Tab,
-    Toggle              = mui.Toggle,
-    TextField           = mui.TextField,
-    DropDownMenu        = mui.DropDownMenu,
-    Dialog              = mui.Dialog,
-    FlatButton          = mui.FlatButton,
+    mui                        = require('material-ui'),
+    Toggle                     = mui.Toggle,
+    Checkbox                   = mui.Checkbox,
+    SelectField                = mui.SelectField,
+    Tabs                       = mui.Tabs,
+    Tab                        = mui.Tab,
+    TextField                  = mui.TextField,
+    DropDownMenu               = mui.DropDownMenu,
+    Dialog                     = mui.Dialog,
+    FlatButton                 = mui.FlatButton,
 
-    Show                = require('../../common/Show/Show.react');
+    Show                       = require('../../common/Show/Show.react');
 
 module.exports = React.createClass({
 
@@ -97,11 +96,14 @@ module.exports = React.createClass({
       Object.keys(spec[section]).map(function(item) {
         if (spec[section][item] === true) {
           var obj = {};
+          if (pkName === 'id') {
+            item = parseInt(item);
+          }
           obj[pkName] = item;
           formatedSpec[section].push(obj);
         }
       })
-    }.bind(this))
+    }.bind(this));
 
     return formatedSpec;
   },
@@ -127,7 +129,7 @@ module.exports = React.createClass({
   },
 
   renderData: function() {
-    return
+    return // For now - waiting for support
     return (DataViewsStore.getDataViews() || []).map(function(item) {
       return (
         <Toggle
@@ -161,7 +163,7 @@ module.exports = React.createClass({
           name           = {item.label}
           value          = {item.id}
           label          = {item.label}
-          onToggle       = {this.handleToogle.bind(this, item.name, 'codeboxes')} />
+          onToggle       = {this.handleToogle.bind(this, item.id, 'codeboxes')} />
       )
     }.bind(this))
   },
@@ -174,7 +176,7 @@ module.exports = React.createClass({
           name           = {item.label}
           value          = {item.id}
           label          = {item.label}
-          onToggle       = {this.handleToogle.bind(this, item.name, 'schedules')}/>
+          onToggle       = {this.handleToogle.bind(this, item.id, 'schedules')}/>
       )
     }.bind(this))
   },
@@ -187,7 +189,7 @@ module.exports = React.createClass({
           name           = {item.label}
           value          = {item.id}
           label          = {item.label}
-          onToggle       = {this.handleToogle.bind(this, item.name, 'triggers')}/>
+          onToggle       = {this.handleToogle.bind(this, item.id, 'triggers')}/>
       )
     }.bind(this))
   },
@@ -217,20 +219,21 @@ module.exports = React.createClass({
 
     var dialogCustomActions = [
       <FlatButton
-        key        = "cancel"
-        label      = "Cancel"
+        ref        = 'cancel'
+        key        = 'cancel'
+        label      = 'Cancel'
         onTouchTap = {this.handleCancel}
-        ref        = "cancel" />,
+      />,
 
       <FlatButton
-        key        = "confirm"
-        label      = "Confirm"
+        ref        = 'submit'
+        key        = 'confirm'
+        label      = 'Confirm'
         primary    = {true}
         onTouchTap = {this.handleFormValidation}
-        ref        = "submit" />
+      />
     ];
 
-    console.log("XXX", this.state.exportSpec)
     return (
       <Dialog
         ref             = "dialog"
@@ -271,65 +274,65 @@ module.exports = React.createClass({
 
 
           <Show if={this.state.instance}>
-          <Tabs>
-          <Tab
-            label="Data Endpoints"
-            route="solutions-market"
-            onActive={this.handleTabActive}>
+            <Tabs>
+              <Tab
+                label="Data Endpoints"
+                route="solutions-market"
+                onActive={this.handleTabActive}>
 
-            {this.renderData()}
+                {this.renderData()}
 
-          </Tab>
+              </Tab>
 
-          <Tab
-            label="Classes"
-            onActive={this.handleTabActive}>
+              <Tab
+                label="Classes"
+                onActive={this.handleTabActive}>
 
-            {this.renderClasses()}
+                {this.renderClasses()}
 
-          </Tab>
+              </Tab>
 
-          <Tab
-            label="CodeBox"
-            onActive={this.handleTabActive}>
+              <Tab
+                label="CodeBox"
+                onActive={this.handleTabActive}>
 
-            <div style = {{height: 300}}>
-              {this.renderCodeBoxes()}
-            </div>
+                <div style = {{height: 300}}>
+                  {this.renderCodeBoxes()}
+                </div>
 
-          </Tab>
+              </Tab>
 
-          <Tab
-            label="Tasks"
-            route="solutions-my"
-            onActive={this.handleTabActive}>
+              <Tab
+                label="Tasks"
+                route="solutions-my"
+                onActive={this.handleTabActive}>
 
-            <div className='row'>
+                <div className='row'>
 
-              <div className='col-flex-1'>
-                <div>Triggers</div>
-                {this.renderTriggers()}
+                  <div className='col-flex-1'>
+                    <div>Triggers</div>
+                    {this.renderTriggers()}
 
-              </div>
+                  </div>
 
-              <div className='col-flex-1' style={{paddingLeft: 15}}>
-                <div>Schedules</div>
-                {this.renderSchedules()}
-              </div>
+                  <div className='col-flex-1' style={{paddingLeft: 15}}>
+                    <div>Schedules</div>
+                    {this.renderSchedules()}
+                  </div>
 
-            </div>
-          </Tab>
+                </div>
+              </Tab>
 
-          <Tab
-            label="Channels"
-            onActive={this.handleTabActive}>
+              <Tab
+                label="Channels"
+                onActive={this.handleTabActive}>
 
-            {this.renderChannels()}
+                {this.renderChannels()}
 
-          </Tab>
+              </Tab>
 
-        </Tabs>
-        </Show>
+          </Tabs>
+          </Show>
 
         </div>
       </Dialog>
@@ -337,4 +340,3 @@ module.exports = React.createClass({
   }
 
 });
-

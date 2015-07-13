@@ -30,9 +30,6 @@ var React                       = require('react'),
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
     Solutions                   = require('./apps/Solutions/Solutions.react'),
-    SolutionsMarket             = require('./apps/Solutions/SolutionsMarket.react'),
-    SolutionsFavorite           = require('./apps/Solutions/SolutionsFavorite.react'),
-    SolutionsMy                 = require('./apps/Solutions/SolutionsMy.react'),
     SolutionEdit                = require('./apps/Solutions/SolutionEdit.react'),
 
     // Instance Apps
@@ -81,19 +78,13 @@ module.exports = (
         <Route name="users" handler={Users} path=":instanceName/users" />
         <DefaultRoute handler={Instances} />
       </Route>
-
-      <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route name="profile-billing" handler={Billing} path="/account/billing">
         <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
         <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
         <Route name="profile-billing-invoices" handler={ProfileBillingInvoices} path="invoices" />
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
-      <Route name="solutions" handler={Solutions} path="/solutions">
-        <Route name="solutions-market" handler={SolutionsMarket} path="market" />
-        <Route name="solutions-favorite" handler={SolutionsFavorite} path="favorite" />
-        <Route name="solutions-my" handler={SolutionsMy} path="my" />
-      </Route>
+      <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route name="solutions-edit" handler={SolutionEdit} path="/solutions/:solutionId/edit" />
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />

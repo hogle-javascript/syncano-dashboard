@@ -9,6 +9,7 @@ var React            = require('react'),
     // Stores and Actions
     SessionActions   = require('../Session/SessionActions'),
     SessionStore     = require('../Session/SessionStore'),
+    SolutionsStore   = require('./SolutionsStore'),
     SolutionsActions = require('./SolutionsActions'),
 
     // Components
@@ -30,11 +31,17 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    HeaderMixin
+    HeaderMixin,
+    Reflux.connect(SolutionsStore)
   ],
 
   showSolutionDialog: function() {
     SolutionsActions.showDialog();
+  },
+
+  componentWillMount: function() {
+    console.info('Solutions::componentWillMount');
+    SolutionsActions.fetch();
   },
 
   headerMenuItems: function() {
@@ -64,25 +71,8 @@ module.exports = React.createClass({
             iconClassName = "synicon-plus" />
         </FabList>
 
-        <Tabs>
-          <Tab
-            label="Market"
-            route="solutions-market"
-            onActive={this.handleTabActive} />
 
-          <Tab
-            label="Favorite"
-            route="solutions-favorite"
-            onActive={this.handleTabActive} />
-
-          <Tab
-            label="My solutions"
-            route="solutions-my"
-            onActive={this.handleTabActive} />
-
-        </Tabs>
-
-        <RouteHandler />
+        <SolutionsList items={this.state.items}/>
 
       </div>
     );

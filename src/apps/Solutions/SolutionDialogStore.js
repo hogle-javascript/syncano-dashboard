@@ -6,8 +6,7 @@ var Reflux           = require('reflux'),
 
     //Stores & Actions
     SessionStore       = require('../Session/SessionStore'),
-    SolutionsActions   = require('./SolutionsActions'),
-    SolutionsMyActions = require('./SolutionsMyActions');
+    SolutionsActions   = require('./SolutionsActions');
 
 var SolutionDialogStore = Reflux.createStore({
   listenables : SolutionsActions,
@@ -30,7 +29,7 @@ var SolutionDialogStore = Reflux.createStore({
   onCreateSolutionCompleted: function(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
     this.dismissDialog();
-    SolutionsMyActions.fetchSolutions();
+    SolutionsActions.fetchSolutions();
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       {
