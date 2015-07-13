@@ -1,5 +1,9 @@
-var React  = require('react'),
-    Moment = require('moment');
+var React      = require('react'),
+    Moment = require('moment'),
+
+    mui        = require('material-ui'),
+    IconButton = mui.IconButton,
+    FlatButton = mui.FlatButton;
 
 var DataObjectsRenderer = {
 
@@ -29,6 +33,19 @@ var DataObjectsRenderer = {
   renderReference: function(obj) {
     return (
         <div>{obj.target + ': ' + obj.value}</div>
+    )
+  },
+
+  handleFileOnClick: function(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  renderFile: function(obj) {
+    return (
+        <IconButton
+          iconClassName = "synicon-download"
+          onClick       = {this.handleFileOnClick.bind(this, obj.value)} />
     )
   },
 
@@ -67,8 +84,11 @@ var DataObjectsRenderer = {
 
           if (value.type === 'reference') {
             value = this.renderReference(item[column.id]);
-
           }
+          if (value.type === 'file') {
+            value = this.renderFile(item[column.id]);
+          }
+
         } else if (typeof value === 'string' || typeof item[column.id] === 'number') {
 
           // Simple string or renderer

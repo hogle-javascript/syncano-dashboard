@@ -37,7 +37,7 @@ var StoreFormMixin = {
     this.trigger({canSubmit: false});
   },
 
-  handleFormCompleted: function(payload) {
+  handleFormCompleted: function() {
     console.log('StoreFormMixin::handleFormCompleted');
     this.trigger(this.getInitialFormState());
   },

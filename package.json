@@ -21,6 +21,7 @@
     "radium": "0.13.0",
     "raven-js": "^1.1.19",
     "react": "0.13.3",
+    "react-dropzone": "^1.2.2",
     "react-onclickoutside": "^0.2.4",
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
@@ -88,6 +89,7 @@
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
-    "nightwatch-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key"
+    "nightwatch-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key",
+    "iconfont": "gulp iconfont"
   }
 }
