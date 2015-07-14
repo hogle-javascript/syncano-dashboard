@@ -177,7 +177,7 @@ module.exports = React.createClass({
               label         = "Click here to delete Classes"
               mini          = {true}
               disabled      = {someClassIsProtectedFromDelete}
-              onClick       = {this.showDialog('deleteClassDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName = "synicon-delete"
             />
 
@@ -195,7 +195,7 @@ module.exports = React.createClass({
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedClassesCount > 1}
-              onClick       = {this.showDialog('pickColorIconDialog')}
+              onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
               iconClassName = "synicon-palette"
             />
 

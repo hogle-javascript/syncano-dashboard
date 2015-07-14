@@ -154,7 +154,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Data Endpoint"
               mini          = {true}
-              onClick       = {this.showDialog('removeDataViewDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeDataViewDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -180,7 +180,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete CodeBox Endpoint"
               mini          = {true}
-              onClick       = {this.showDialog('removeWebhookDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeWebhookDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem

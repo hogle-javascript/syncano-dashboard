@@ -8,10 +8,11 @@ var Reflux              = require('reflux'),
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
     UsersActions        = require('./UsersActions'),
-    GroupsActions       = require('./GroupsActions');
+    GroupsActions       = require('./GroupsActions'),
+    GroupsStore         = require('./GroupsStore');
 
 var UsersStore = Reflux.createStore({
-  listenables : UsersActions,
+  listenables : [UsersActions, GroupsActions],
   mixins      : [
     CheckListStoreMixin,
     StoreLoadingMixin,
@@ -37,11 +38,22 @@ var UsersStore = Reflux.createStore({
   },
 
   refreshData: function() {
-    UsersActions.fetchUsers();
+    var activeGroup = GroupsStore.getActiveGroup();
+
+    if (activeGroup) {
+      GroupsActions.fetchGroupUsers(activeGroup.id).then(function(payload) {
+        UsersStore.setUsers(payload);
+      });
+    } else {
+      UsersActions.fetchUsers();
+    }
   },
 
   setUsers: function(users) {
     this.data.items = Object.keys(users).map(function(key) {
+      if (users[key].user) {
+        return users[key].user;
+      }
       return users[key];
     });
     this.trigger(this.data);
@@ -62,8 +74,26 @@ var UsersStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
-  }
+  },
 
+  onUpdateUserCompleted: function() {
+    console.debug('UsersStore::onUpdateUserCompleted');
+  },
+
+  onUpdateGroupCompleted: function() {
+    console.debug('UsersStore::onUpdateGroupCompleted');
+    this.refreshData();
+  },
+
+  onRemoveGroupsCompleted: function() {
+    console.debug('UsersStore::onRemoveGroupsCompleted');
+    this.refreshData();
+  },
+
+  onSetActiveGroup: function() {
+    console.debug('UsersStore::onSetActiveGroup');
+    this.refreshData();
+  }
 });
 
 module.exports = UsersStore;

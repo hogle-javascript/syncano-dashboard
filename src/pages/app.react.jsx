@@ -12,6 +12,7 @@ var React              = require('react'),
     Snackbar           = mui.Snackbar,
     SyncanoTheme       = require('./../common/SyncanoTheme');
 
+
 module.exports = React.createClass({
 
   displayName: 'App',

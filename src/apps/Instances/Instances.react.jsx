@@ -165,8 +165,7 @@ module.exports = Radium(React.createClass({
             <FabListItem
               label         = "Click here to delete Instances"
               mini          = {true}
-              disabled      = {isCheckedInstanceShared}
-              onClick       = {this.showDialog('deleteInstanceDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteInstanceDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -181,7 +180,7 @@ module.exports = Radium(React.createClass({
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedInstances > 1}
-              onClick       = {this.showDialog('pickColorIconDialog')}
+              onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
               iconClassName = "synicon-palette" />
 
           </FabList>

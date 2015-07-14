@@ -6,7 +6,6 @@ var React      = require('react'),
     analytics  = require('./segment'),
     container  = document.getElementById('app');
 
-
 tapPlugin();
 
 require('./raven');

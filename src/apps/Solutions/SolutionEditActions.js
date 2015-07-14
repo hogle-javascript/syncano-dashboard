@@ -28,6 +28,11 @@ var SolutionEditActions = Reflux.createActions({
     children: ['completed', 'failure']
   },
 
+  installSolution: {
+    asyncResult: true,
+    children: ['completed', 'failure']
+  },
+
   removeSolution: {
     asyncResult: true,
     children: ['completed', 'failure']
@@ -68,6 +73,19 @@ SolutionEditActions.createVersion.listen(function(solutionId, payload) {
   Connection
     .Solutions
     .createVersion(solutionId, payload)
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+SolutionEditActions.installSolution.listen(function(payload) {
+  console.info('SolutionsActions::installSolution');
+  Connection
+    .Solutions
+    .install(
+      payload.solutionId,
+      payload.versionId,
+      payload.instanceName
+    )
     .then(this.completed)
     .catch(this.failure);
 });

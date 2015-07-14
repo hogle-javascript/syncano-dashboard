@@ -7,7 +7,9 @@ var Reflux              = require('reflux'),
 
     //Stores & Actions
     SessionActions      = require('../Session/SessionActions'),
-    GroupsActions       = require('./GroupsActions');
+    GroupsActions       = require('./GroupsActions'),
+    UsersActions        = require('./UsersActions'),
+    UsersStore          = require('./UsersStore');
 
 var GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
@@ -20,6 +22,7 @@ var GroupsStore = Reflux.createStore({
   getInitialState: function() {
     return {
       items: [],
+      activeGroup: null,
       isLoading: true
     }
   },
@@ -48,8 +51,20 @@ var GroupsStore = Reflux.createStore({
     return this.data.items || empty || null;
   },
 
+  getActiveGroup: function(empty) {
+    return this.data.activeGroup || empty || null;
+  },
+
   refreshData: function() {
     GroupsActions.fetchGroups();
+  },
+
+  onSetActiveGroup: function(group) {
+    console.debug('GroupsStore::onSetActiveGroup');
+
+    var isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
+    this.data.activeGroup = isCurrentActiveGroup ? null : group;
+    this.trigger(this.data);
   },
 
   onFetchGroups: function(items) {
@@ -66,6 +81,11 @@ var GroupsStore = Reflux.createStore({
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
+  },
+
+  onFetchGroupUsers: function() {
+    this.data.isLoading = false;
+    this.trigger(this.data);
   }
 
 });

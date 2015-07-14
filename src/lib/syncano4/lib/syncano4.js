@@ -416,6 +416,7 @@ var Syncano = (function() {
      * @property {function} list - shortcut to {@link Syncano#listSolutions} method
      */
     this.Solutions = {
+      install: this.installSolution.bind(this),
       get: this.getSolution.bind(this),
       list: this.listSolutions.bind(this),
       listVersions: this.listSolutionVersions.bind(this),
@@ -516,7 +517,10 @@ var Syncano = (function() {
       list: this.listUsers.bind(this),
       get: this.getUser.bind(this),
       update: this.updateUser.bind(this),
-      remove: this.removeUser.bind(this)
+      remove: this.removeUser.bind(this),
+      getUserGroups: this.getUserGroups.bind(this),
+      addToGroup: this.addToGroup.bind(this),
+      removeFromGroup: this.removeFromGroup.bind(this)
     };
 
     /**
@@ -536,7 +540,8 @@ var Syncano = (function() {
       list: this.listGroups.bind(this),
       get: this.getGroup.bind(this),
       remove: this.removeGroup.bind(this),
-      addUser: this.addUserToGroup.bind(this)
+      addUser: this.addUserToGroup.bind(this),
+      getUsers: this.getGroupUsers.bind(this)
     };
 
     /**
@@ -982,6 +987,25 @@ var Syncano = (function() {
     /*********************
      SOLUTIONS METHODS
      **********************/
+
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#installSolution
+     * @alias Syncano.Solutions.install
+     * @param  {string} [solutionId]
+     * @param  {string} [versionId]
+     * @param  {string} [instanceName]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    installSolution: function(solutionId, versionId, instanceName, callbackOK, callbackError) {
+      var url = 'v1/marketplace/solutions/' + solutionId + '/versions/' + versionId + '/install/';
+      return this.request('POST', url, {instance : instanceName}, callbackOK, callbackError);
+    },
+
     /**
      * Returns all defined solutions as a list
      *
@@ -1815,6 +1839,69 @@ var Syncano = (function() {
       return this.genericRemove(id, 'instance_users', callbackOK, callbackError);
     },
 
+    /**
+     * Returns Groups of User identified by specified id
+     *
+     * @method Syncano#getUserGroups
+     * @alias Syncano.Users.getUserGroups
+     * @param {Number} id - identifier of the user
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    getUserGroups: function(id, callbackOK, callbackError) {
+      return this.request('GET', linksObject.instance_users + id + '/groups/', callbackOK, callbackError);
+    },
+
+    /**
+     * Adds User to Group identified by specified id
+     *
+     * @method Syncano#addToGroup
+     * @alias Syncano.Users.addToGroup
+     * @param {Number} id - identifier of the user
+     * @param {Number} groupId - identifier of the group
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    addToGroup: function(id, groupId, callbackOK, callbackError) {
+
+      if (typeof groupId === 'undefined') {
+        throw new Error('Missing group id');
+      }
+      if (typeof id === 'undefined') {
+        throw new Error('Missing user id');
+      }
+
+      return this.request('POST', linksObject.instance_users + id + '/groups/', {group: groupId}, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes connection between User and Group, both identified by specified id
+     *
+     * @method Syncano#removeFromGroup
+     * @alias Syncano.Users.removeFromGroup
+     * @param {Number} id - identifier of the user
+     * @param {Number} groupId - identifier of the group
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeFromGroup: function(id, groupId, callbackOK, callbackError) {
+
+      if (typeof groupId === 'undefined') {
+        throw new Error('Missing group id');
+      }
+      if (typeof id === 'undefined') {
+        throw new Error('Missing user id');
+      }
+
+      return this.request('DELETE', linksObject.instance_users + id + '/groups/' + groupId, callbackOK, callbackError);
+    },
+
     /*********************
        GROUPS METHODS
     **********************/
@@ -1899,6 +1986,32 @@ var Syncano = (function() {
     removeGroup: function(id, callbackOK, callbackError) {
       return this.genericRemove(id, 'instance_groups', callbackOK, callbackError);
     },
+
+    /**
+     * Returns Users of Group identified by specified id
+     *
+     * @method Syncano#getGroupUsers
+     * @alias Syncano.Groups.getUsers
+     * @param {Number} id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    getGroupUsers: function(id, callbackOK, callbackError) {
+      return this.request('GET', linksObject.instance_groups + id + '/users/', callbackOK, callbackError);
+    },
+
+    /**
+     * Adds Group to User identified by specified id
+     *
+     * @method Syncano#addToGroup
+     * @alias Syncano.Users.addToGroup
+     * @param {Object} params - object containing group and user objects
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
 
     addUserToGroup: function(params, callbackOK, callbackError) {
       var groupId = params.group;

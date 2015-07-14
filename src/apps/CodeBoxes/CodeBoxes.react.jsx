@@ -130,7 +130,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete CodeBoxes"
               mini          = {true}
-              onClick       = {this.showDialog('deleteCodeBoxDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteCodeBoxDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem

@@ -9,9 +9,7 @@ var DialogsMixin = {
   },
 
   showDialog: function(ref) {
-    return function() {
-      this.refs[ref].show();
-    }.bind(this);
+    this.refs[ref].show();
   },
 
   getDialogListLength: function(items) {
