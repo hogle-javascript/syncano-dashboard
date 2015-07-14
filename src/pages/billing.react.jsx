@@ -47,22 +47,22 @@ module.exports = React.createClass({
         <Tabs>
           <Tab
             label="Current usage"
-            route="profile-billing-usage"
+            route="profile-billing_usage"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Payment methods"
-            route="profile-billing-payment"
+            route="profile-billing_payment"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Invoices"
-            route="profile-billing-invoices"
+            route="profile-billing_invoices"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Billing address"
-            route="profile-billing-address"
+            route="profile-billing_address"
             onActive={this.handleTabActive} />
 
         </Tabs>

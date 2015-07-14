@@ -20,7 +20,7 @@ var React                = require('react'),
 
 module.exports = React.createClass({
 
-  displayName: 'CodeBoxesEdit',
+  displayName: 'CodeBoxEdit',
 
   mixins: [
     Router.State,

@@ -34,6 +34,7 @@ module.exports = React.createClass({
     this.getTabsData().some(function (item, i) {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
+        return true;
       }
     }.bind(this));
 
@@ -76,13 +77,13 @@ module.exports = React.createClass({
     return [
       {
         label : "Edit",
-        route : "codebox-edit"
+        route : "codebox_edit"
       }, {
         label : "Config",
-        route : "codebox-config"
+        route : "codebox_config"
       }, {
         label : "Traces",
-        route : "codebox-traces"
+        route : "codebox_traces"
       }
     ];
   },
@@ -102,19 +103,19 @@ module.exports = React.createClass({
             <Tab
               style    = {styles.tab}
               label    = "Edit"
-              route    = "codebox-edit"
+              route    = "codebox_edit"
               onActive = {this.handleTabActive}>
               </Tab>
             <Tab
               style    = {styles.tab}
               label    = "Config"
-              route    = "codebox-config"
+              route    = "codebox_config"
               onActive = {this.handleTabActive}>
             </Tab>
             <Tab
               style    = {styles.tab}
               label    = "Traces"
-              route    = "codebox-traces"
+              route    = "codebox_traces"
               onActive = {this.handleTabActive}>
             </Tab>
           </Tabs>

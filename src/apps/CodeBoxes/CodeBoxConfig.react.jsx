@@ -1,22 +1,22 @@
-var React                = require('react'),
-    Reflux               = require('reflux'),
-    Router               = require('react-router'),
-    Radium               = require('radium'),
+var React             = require('react'),
+    Reflux            = require('reflux'),
+    Router            = require('react-router'),
+    Radium            = require('radium'),
 
     // Utils
-    HeaderMixin          = require('../Header/HeaderMixin'),
-    InstanceTabsMixin    = require('../../mixins/InstanceTabsMixin'),
+    HeaderMixin       = require('../Header/HeaderMixin'),
+    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
 
     // Stores and Actions
-    CodeBoxActions       = require('./CodeBoxActions'),
-    CodeBoxStore         = require('./CodeBoxStore'),
+    CodeBoxActions    = require('./CodeBoxActions'),
+    CodeBoxStore      = require('./CodeBoxStore'),
 
     // Components
-    Container            = require('../../common/Container/Container.react'),
-    FabList              = require('../../common/Fab/FabList.react'),
-    FabListItem          = require('../../common/Fab/FabListItem.react'),
-    Loading              = require('../../common/Loading/Loading.react'),
-    Editor               = require('../../common/Editor/Editor.react');
+    Container         = require('../../common/Container/Container.react'),
+    FabList           = require('../../common/Fab/FabList.react'),
+    FabListItem       = require('../../common/Fab/FabListItem.react'),
+    Loading           = require('../../common/Loading/Loading.react'),
+    Editor            = require('../../common/Editor/Editor.react');
 
 module.exports = Radium(React.createClass({
 
@@ -56,7 +56,7 @@ module.exports = Radium(React.createClass({
         codeBox = this.state.currentCodeBox;
 
     if (codeBox) {
-      config      = JSON.stringify(codeBox.config, null, 2);
+      config = JSON.stringify(codeBox.config, null, 2);
 
       return (
         <div>

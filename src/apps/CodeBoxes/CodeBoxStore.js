@@ -54,6 +54,7 @@ var CodeBoxStore = Reflux.createStore({
   onFetchCodeBoxCompleted: function(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted')
     this.data.currentCodeBox = codeBox;
+    this.trigger(this.data);
   },
 
   getEditorMode: function() {
@@ -96,9 +97,9 @@ var CodeBoxStore = Reflux.createStore({
         } else {
           this.data.lastTraceResult = lastTrace.result.stdout;
         }
-        this.trigger(this.data);
       }
     }
+    this.trigger(this.data);
   }
 
 });

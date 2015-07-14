@@ -34,7 +34,7 @@ var React                       = require('react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
-    CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
+    CodeBoxEdit                 = require('./apps/CodeBoxes/CodeBoxEdit.react.jsx'),
     CodeBoxConfig               = require('./apps/CodeBoxes/CodeBoxConfig.react.jsx'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
@@ -67,10 +67,10 @@ module.exports = (
         <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
         <Route name="codebox" handler={CodeBox} path=":instanceName/codeboxes/:codeboxId">
-          <Route name="codebox-traces" handler={Traces} path="traces" />
-          <Route name="codebox-edit" handler={CodeBoxesEdit} path="edit" />
-          <Route name="codebox-config" handler={CodeBoxConfig} path="config" />
-          <DefaultRoute handler={CodeBoxesEdit} />
+          <Route name="codebox_traces" handler={Traces} path="traces" />
+          <Route name="codebox_edit" handler={CodeBoxEdit} path="edit" />
+          <Route name="codebox_config" handler={CodeBoxConfig} path="config" />
+          <DefaultRoute handler={CodeBoxEdit} />
         </Route>
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
@@ -80,7 +80,7 @@ module.exports = (
       </Route>
 
       <Route name="profile-billing" handler={Billing} path="/account/billing">
-        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
+        <Route name="profile-billing_address" handler={ProfileBillingAddress} path="address" />
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />

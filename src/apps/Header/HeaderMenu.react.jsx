@@ -33,7 +33,7 @@ module.exports = React.createClass({
 
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
-      } else if (activeRouteName && activeRouteName.includes(item.route)){
+      } else if (activeRouteName && item.route.includes(activeRouteName.slice(0, activeRouteName.indexOf("_")))){
         index = i;
       }
     }.bind(this));
