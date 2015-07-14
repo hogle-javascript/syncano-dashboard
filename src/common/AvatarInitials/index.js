@@ -1,3 +1,1 @@
-import AvatarInitials from './AvatarInitials.react';
-
-export default AvatarInitials;
+export {AvatarInitials} from './AvatarInitials.react';
