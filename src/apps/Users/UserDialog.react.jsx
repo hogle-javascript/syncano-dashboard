@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
   handleAddSubmit: function() {
     var activeGroup = GroupsStore.getActiveGroup(),
-        userGroups = this.state.newUserGroups || [activeGroup];
+        userGroups  = this.state.newUserGroups || [this.state.secondInstance] || [activeGroup];
 
     UsersActions.createUser(
       {
@@ -74,15 +74,31 @@ module.exports = React.createClass({
     })
   },
 
+  getSelectValueSource: function() {
+    var activeGroup = GroupsStore.getActiveGroup();
+
+    if (this.state.newUserGroups) {
+      return this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      return this.linkState('groups');
+    } else if (this.state.secondInstance) {
+      return this.state.secondInstance;
+    } else if (activeGroup) {
+      return activeGroup;
+    } else {
+      return null
+    }
+  },
+
   render: function() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = 'Confirm',
-        selectValue = '',
-        activeGroup = GroupsStore.getActiveGroup(),
-        allGroups   = GroupsStore.getGroups().map(function(group) {
-          group.value = group.id + '';
-          return group;
-        }),
+    var title             = this.hasEditMode() ? 'Edit' : 'Add',
+        submitLabel       = 'Confirm',
+        selectValueSource = this.getSelectValueSource(),
+        selectValue       = selectValueSource ? selectValueSource.value : null,
+        allGroups         = GroupsStore.getGroups().map(function(group) {
+                              group.value = group.id + '';
+                              return group;
+                            }),
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -95,14 +111,6 @@ module.exports = React.createClass({
             onClick : this.handleFormValidation
           }
         ];
-
-    if (this.state.newUserGroups) {
-      selectValue = this.linkState('newUserGroups');
-    } else if (this.state.groups) {
-      selectValue = this.linkState('groups');
-    } else if (activeGroup) {
-      selectValue = activeGroup
-    }
 
     return (
       <Dialog
@@ -125,7 +133,8 @@ module.exports = React.createClass({
               valueLink         = {this.linkState('username')}
               errorText         = {this.getValidationMessages('username').join(' ')}
               hintText          = 'Username'
-              floatingLabelText = 'Username' />
+              floatingLabelText = 'Username'
+            />
 
             <TextField
               ref               = 'password'
@@ -135,15 +144,17 @@ module.exports = React.createClass({
               valueLink         = {this.linkState('password')}
               errorText         = {this.getValidationMessages('password').join(' ')}
               hintText          = 'User password'
-              floatingLabelText = 'Password' />
+              floatingLabelText = 'Password'
+            />
 
             <Select
-              name     = 'group'
-              multi    = {true}
-              value    = {selectValue.value || null}
+              name        = 'group'
+              multi       = {true}
+              value       = {selectValue}
               placeholder = 'User groups'
-              options  = {allGroups}
-              onChange = {this.handleSelectFieldChange} />
+              options     = {allGroups}
+              onChange    = {this.handleSelectFieldChange}
+            />
 
           </form>
         </div>

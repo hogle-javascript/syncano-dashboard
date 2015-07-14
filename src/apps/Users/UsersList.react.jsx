@@ -108,8 +108,8 @@ module.exports = React.createClass({
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
         <ColumnDesc>{this.renderItemGroups(item.groups)}</ColumnDesc>
-        <ColumnDate>{item.updated_at}</ColumnDate>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.profile.updated_at} />
+        <ColumnDate date={item.profile.created_at} />
       </Item>
     )
   },

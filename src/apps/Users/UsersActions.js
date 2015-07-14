@@ -97,7 +97,7 @@ UsersActions.updateUser.listen(function(id, payload, groups) {
         return UsersActions.addToGroup(id, group);
       });
 
-  var asd = UsersActions.getUserGroups(id).then(function(groups) {
+  UsersActions.getUserGroups(id).then(function(groups) {
     console.error('userGroupsData', groups);
     var userGroups = Object.keys(groups).map(function(key) {
       return groups[key];
@@ -111,13 +111,10 @@ UsersActions.updateUser.listen(function(id, payload, groups) {
       return UsersActions.removeFromGroup(id, userGroups[userGroupId]);
     });
 
-    D.all(removeUserFromGroups);
-  });
-
-  D.all(addUserToGroups, asd)
-    .success(this.completed)
-    .error(this.failure);
-
+    D.all(removeUserFromGroups, addUserToGroups)
+      .success(this.completed)
+      .error(this.failure);
+  }.bind(this));
 });
 
 UsersActions.removeUsers.listen(function(users) {

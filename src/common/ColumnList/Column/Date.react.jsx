@@ -29,9 +29,8 @@ module.exports = Radium(React.createClass({
   displayName: 'ColumnDate',
 
   propTypes: {
-    id          : React.PropTypes.string,
-    color       : React.PropTypes.string.isRequired,
-    handleClick : React.PropTypes.func
+    color : React.PropTypes.string,
+    date  : React.PropTypes.string
   },
 
   statics :{
@@ -41,16 +40,8 @@ module.exports = Radium(React.createClass({
   getDefaultProps: function() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.DATE
     };
-  },
-
-  getInitialState: function() {
-    return {
-      color      : this.props.color,
-      hoverColor : this.props.hoverColor
-    }
   },
 
   getStyles: function() {
@@ -65,10 +56,6 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  handleClick: function() {
-    this.props.handleClick(this.props.id);
-  },
-
   render: function() {
     var styles = this.getStyles();
 
@@ -76,8 +63,8 @@ module.exports = Radium(React.createClass({
       <div
         className = {this.props.className}
         style     = {styles}>
-        <span>{Moment(this.props.children).format('DD/MM/YYYY')}</span>
-        <span>{Moment(this.props.children).format('LTS')}</span>
+        <span>{Moment(this.props.date).format('DD/MM/YYYY')}</span>
+        <span>{Moment(this.props.date).format('LTS')}</span>
       </div>
     );
 

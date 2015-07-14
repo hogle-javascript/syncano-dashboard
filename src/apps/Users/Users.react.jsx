@@ -1,6 +1,7 @@
 var React                 = require('react'),
     Reflux                = require('reflux'),
     Router                = require('react-router'),
+    Moment                = require('moment'),
 
     // Utils
     HeaderMixin           = require('../Header/HeaderMixin'),
@@ -88,7 +89,6 @@ module.exports = React.createClass({
 
   checkUser: function(id, state) {
     console.info('User::checkUser');
-    GroupsActions.uncheckAll();
     UsersActions.checkItem(id, state);
   },
 
@@ -98,8 +98,8 @@ module.exports = React.createClass({
     GroupsActions.checkItem(id, state);
   },
 
-  showUserDialog: function() {
-    UsersActions.showDialog();
+  showUserDialog: function(group) {
+    UsersActions.showDialog(undefined, group);
   },
 
   showUserEditDialog: function() {
@@ -184,9 +184,9 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var checkedUsers       = UsersStore.getNumberOfChecked(),
-        isAnyUserSelected  = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
-        activeGroup        = GroupsStore.getActiveGroup();
+    var checkedUsers      = UsersStore.getNumberOfChecked(),
+        isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
+        activeGroup       = GroupsStore.getActiveGroup();
 
 
     return (
@@ -251,7 +251,7 @@ module.exports = React.createClass({
               emptyItemContent     = "Create a Group" />
           </div>
 
-          <div className="col-flex-1">
+          <div className="col-lg-27">
             <UsersList
               name                 = "Users"
               checkItem            = {this.checkUser}

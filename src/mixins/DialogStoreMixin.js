@@ -13,12 +13,14 @@ var DialogStoreMixin = {
     }
   },
 
-  showDialog: function(instance) {
+  showDialog: function(instance, secondInstance) {
     console.debug('DialogStoreMixin::showDialog');
-
     var state = {_dialogVisible: true};
+
     if (instance !== undefined) {
       state = objectAssign(state, instance, {_dialogMode: 'edit'});
+    } else if (secondInstance !== undefined && secondInstance.value) {
+      state = objectAssign(state, {secondInstance: secondInstance});
     }
 
     this.trigger(state);
