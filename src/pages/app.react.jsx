@@ -12,8 +12,6 @@ var React              = require('react'),
     Snackbar           = mui.Snackbar,
     SyncanoTheme       = require('./../common/SyncanoTheme');
 
-import * as common from '../common';
-
 
 module.exports = React.createClass({
 
