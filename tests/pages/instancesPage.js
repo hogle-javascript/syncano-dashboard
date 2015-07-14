@@ -49,10 +49,10 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: 'div#instances div.row div.col-flex-1'
+      selector: 'div.row'
     },
     selectInstance: {
-      selector: '.col-xs-10 span'
+      selector: 'div.row span'
     },
     editButton: {
       selector: '.synicon-pencil'
@@ -61,7 +61,8 @@ module.exports = {
       selector: '.synicon-delete'
     },
     instancesTableRowDescription: {
-      selector: '.row .col-flex-1'
+      selector: '//div[@class="row"]/div[2]',
+      locateStrategy: 'xpath'
     },
     addInstanceModalTitle: {
       selector: '//h3[text()="Create an Instance"]',
