@@ -18,7 +18,6 @@ var React             = require('react'),
     FontIcon          = mui.FontIcon,
 
     // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
     List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
@@ -29,7 +28,6 @@ var React             = require('react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
 
 module.exports = React.createClass({
 
@@ -56,11 +54,46 @@ module.exports = React.createClass({
   },
 
   // List
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick: function(id, state) {
     this.props.checkItem(id, state);
   },
 
-  renderItem: function (item) {
+  getStyles: function() {
+    return {
+      groupsList: {
+        margin: '0 -4px',
+        padding: 0,
+        listStyle: 'none'
+      },
+      groupsListItem: {
+        display: 'inline-block',
+        lineHeight: '24px',
+        border: '1px solid #ddd',
+        borderRadius: 2,
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 12,
+        padding: '0 4px',
+        margin: 4,
+        background: '#fff'
+      }
+    }
+  },
+
+  renderItemGroups: function(groups) {
+    var styles = this.getStyles();
+
+    var itemGroups = groups.map(function(group) {
+      return (
+        <li style={styles.groupsListItem}>{group.label}</li>
+      )
+    });
+
+    return (
+      <ul style={styles.groupsList}>{itemGroups}</ul>
+    )
+  },
+
+  renderItem: function(item) {
     return (
       <Item
         checked = {item.checked}
@@ -74,9 +107,9 @@ module.exports = React.createClass({
           {item.username}
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc />
-        <ColumnDate>{item.updated_at}</ColumnDate>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDesc>{this.renderItemGroups(item.groups)}</ColumnDesc>
+        <ColumnDate date={item.profile.updated_at} />
+        <ColumnDate date={item.profile.created_at} />
       </Item>
     )
   },
@@ -87,10 +120,9 @@ module.exports = React.createClass({
     }.bind(this));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
       return items;
     }
+
     return (
       <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
@@ -98,13 +130,13 @@ module.exports = React.createClass({
     )
   },
 
-  render: function () {
+  render: function() {
     return (
-      <ListContainer style={{width: '100%'}}>
+      <div>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header></ColumnDesc.Header>
+          <ColumnDesc.Header>Groups</ColumnDesc.Header>
           <ColumnDate.Header>Updated</ColumnDate.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
@@ -113,7 +145,7 @@ module.exports = React.createClass({
             {this.getList()}
           </Loading>
         </List>
-      </ListContainer>
+      </div>
     );
   }
 });

@@ -17,7 +17,8 @@ var UserDialogStore = Reflux.createStore({
   getInitialState: function() {
     return {
       username : null,
-      password : null
+      password : null,
+      groups   : null
     };
   },
 

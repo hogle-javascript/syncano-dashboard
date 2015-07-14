@@ -196,7 +196,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Administrator"
               mini          = {true}
-              onClick       = {this.showDialog('deleteAdminDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -221,13 +221,13 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Invitation"
               mini          = {true}
-              onClick       = {this.showDialog('removeInvitationDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeInvitationDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
               label         = "Click here to resend invitation"
               mini          = {true}
-              onClick       = {this.showDialog('resendInvitationDialog')}
+              onClick       = {this.showDialog.bind(null, 'resendInvitationDialog')}
               iconClassName = "synicon-backup-restore" />
 
           </FabList>

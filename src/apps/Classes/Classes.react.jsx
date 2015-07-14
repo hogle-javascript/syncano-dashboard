@@ -179,7 +179,7 @@ module.exports = React.createClass({
               color         = "" // TODO: extend component
               mini          = {true}
               disabled      = {someClassIsProtectedFromDelete}
-              onClick       = {this.showDialog('deleteClassDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -197,7 +197,7 @@ module.exports = React.createClass({
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedClassesCount > 1}
-              onClick       = {this.showDialog('pickColorIconDialog')}
+              onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
               iconClassName = "synicon-palette" />
 
           </FabList>

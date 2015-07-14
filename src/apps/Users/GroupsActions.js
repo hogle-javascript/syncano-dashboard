@@ -4,13 +4,14 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var GroupsActions = Reflux.createActions({
-  checkItem     : {},
-  uncheckAll    : {},
-  selectAll     : {},
-  fetch         : {},
-  setGroups     : {},
-  showDialog    : {},
-  dismissDialog : {},
+  checkItem      : {},
+  uncheckAll     : {},
+  selectAll      : {},
+  fetch          : {},
+  setGroups      : {},
+  showDialog     : {},
+  dismissDialog  : {},
+  setActiveGroup : {},
   fetchGroups: {
     asyncResult: true,
     loading    : true,
@@ -32,6 +33,11 @@ var GroupsActions = Reflux.createActions({
     asyncResult : true,
     loading     : true,
     children: ['completed', 'failure']
+  },
+  fetchGroupUsers: {
+    asyncResult: true,
+    loading    : true,
+    children   : ['completed', 'failure']
   }
 });
 
@@ -71,6 +77,15 @@ GroupsActions.removeGroups.listen(function(ids) {
   D.all(promises)
     .success(this.completed)
     .error(this.failure);
+});
+
+GroupsActions.fetchGroupUsers.listen(function(groupId) {
+  console.info('GroupsActions::fetchUsers');
+  Connection
+    .Groups
+    .getUsers(groupId)
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 module.exports = GroupsActions;

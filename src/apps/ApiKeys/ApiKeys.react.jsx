@@ -144,14 +144,14 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete API Keys"
               mini          = {true}
-              onClick       = {this.showDialog('deleteApiKeyDialog')}
+              onClick       = {this.showDialog.bind(null, 'deleteApiKeyDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
               label         = "Click here to edit an API Key"
               mini          = {true}
               disabled      = {checkedApiKeys > 1}
-              onClick       = {this.showDialog('resetApiKeyDialog')}
+              onClick       = {this.showDialog.bind(null, 'resetApiKeyDialog')}
               iconClassName = "synicon-backup-restore" />
 
           </FabList>

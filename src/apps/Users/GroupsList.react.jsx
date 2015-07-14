@@ -1,6 +1,8 @@
 var React             = require('react'),
     Reflux            = require('reflux'),
     Router            = require('react-router'),
+    _                 = require('lodash'),
+    Radium            = require('radium'),
 
     // Utils
     HeaderMixin       = require('../Header/HeaderMixin'),
@@ -13,13 +15,17 @@ var React             = require('react'),
 
     // Components
     mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
+    Colors            = mui.Styles.Colors,
     FontIcon          = mui.FontIcon,
     DropDownIcon      = mui.DropDownIcon,
+    IconMenu          = mui.IconMenu,
+    IconButton        = mui.IconButton,
+    MenuItem          = require('material-ui/lib/menus/menu-item'),
+    List              = mui.List,
+    ListItem          = mui.ListItem,
+    ListDivider       = mui.ListDivider,
 
     // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
     Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
@@ -30,66 +36,102 @@ var React             = require('react'),
     ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
-
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'GroupsList',
 
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  // List
-  handleItemIconClick: function (id, state) {
-    this.props.checkItem(id, state);
+  handleIconMenuButtonClick: function(event) {
+    event.stopPropagation();
   },
 
-  renderItem: function (item) {
+  getStyles: function() {
+    return {
+      list: {
+        paddingTop    : 0,
+        paddingBottom : 0
+      },
+      listItemChecked: {
+        background: Colors.lightBlue50
+      }
+    }
+  },
+
+  renderItem: function(item) {
+    var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
+    var styles            = this.getStyles();
+    var itemStyles        = itemActive ? styles.listItemChecked : {};
+    var iconButtonElement = <IconButton
+                                touch           = {true}
+                                tooltipPosition = 'bottom-left'
+                                iconClassName   = 'synicon-dots-vertical'
+                            />;
+
+    var rightIconMenu = (
+      <IconMenu iconButtonElement={iconButtonElement}>
+        <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
+        <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
+        <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
+      </IconMenu>
+    );
 
     return (
-      <Item
-        checked = {item.checked}
-        key     = {item.id}>
-        <ColumnCheckIcon
-          className       = "col-xs-30"
-          id              = {item.id.toString()}
-          icon            = 'account-multiple'
-          background      = {Colors.blue200}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
-          {item.label}
-        </ColumnCheckIcon>
-        <ColumnID className="col-flex-1">{item.id}</ColumnID>
-      </Item>
+      <ListItem
+        key             = {item.id}
+        innerDivStyle   = {itemStyles}
+        onMouseDown     = {this.props.handleItemClick.bind(null, item)}
+        rightIconButton = {rightIconMenu}
+      >
+        {item.label}
+      </ListItem>
     )
   },
 
-  getList: function () {
-    var items = this.state.items.map(function (item) {
-      return this.renderItem(item)
-    }.bind(this));
+  getList: function() {
+    var styles          = this.getStyles(),
+        items           = this.state.items,
+        itemsCount      = items.length,
+        indexOfListItem = itemsCount - 1,
+        listItems       = this.state.items.map(function(item, index) {
+          if (index < indexOfListItem) {
+            return [
+              this.renderItem(item),
+              <ListDivider />
+            ];
+          }
+          return this.renderItem(item);
+        }.bind(this));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
-      return items;
+      return (
+        <List
+          style  = {styles.list}
+          zDepth = {1}
+        >
+          {listItems}
+        </List>
+      );
     }
+
     return (
       <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
@@ -97,20 +139,17 @@ module.exports = React.createClass({
     )
   },
 
-  render: function () {
+  render: function() {
     return (
-      <ListContainer style={{width: '100%'}}>
+      <div>
         <Header>
-          <ColumnCheckIcon.Header className="col-xs-30">{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header className="col-flex-1">ID</ColumnID.Header>
+          <ColumnCheckIcon.Header className="col-flex-1">{this.props.name}</ColumnCheckIcon.Header>
         </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
-            {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+        <Loading show={this.state.isLoading}>
+          {this.getList()}
+        </Loading>
+      </div>
     );
   }
-});
+}));
 

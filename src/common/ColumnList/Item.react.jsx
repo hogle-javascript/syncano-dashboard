@@ -54,7 +54,6 @@ module.exports = Radium(React.createClass({
       <Paper
         onClick   = {this.props.handleClick ? this.handleClick : null}
         zDepth    = {1}
-        className = {'row'}
         style     = {[styles.base,
                     this.props.checked && styles.checked,
                     hoverable && styles.hoverable,

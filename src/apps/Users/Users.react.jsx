@@ -1,6 +1,7 @@
 var React                 = require('react'),
     Reflux                = require('reflux'),
     Router                = require('react-router'),
+    Moment                = require('moment'),
 
     // Utils
     HeaderMixin           = require('../Header/HeaderMixin'),
@@ -17,6 +18,7 @@ var React                 = require('react'),
     // Components
     mui                   = require('material-ui'),
     Dialog                = mui.Dialog,
+    ListContainer         = require('../../common/Lists/ListContainer.react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
     FabListItem           = require('../../common/Fab/FabListItem.react'),
@@ -56,7 +58,7 @@ module.exports = React.createClass({
   },
 
   handleRemoveGroups: function() {
-    console.info('Users::handleDelete');
+    console.info('Users::handleDeleteGroups');
     GroupsActions.removeGroups(GroupsStore.getCheckedItems());
   },
 
@@ -87,7 +89,6 @@ module.exports = React.createClass({
 
   checkUser: function(id, state) {
     console.info('User::checkUser');
-    GroupsActions.uncheckAll();
     UsersActions.checkItem(id, state);
   },
 
@@ -97,8 +98,8 @@ module.exports = React.createClass({
     GroupsActions.checkItem(id, state);
   },
 
-  showUserDialog: function() {
-    UsersActions.showDialog();
+  showUserDialog: function(group) {
+    UsersActions.showDialog(undefined, group);
   },
 
   showUserEditDialog: function() {
@@ -109,13 +110,26 @@ module.exports = React.createClass({
     GroupsActions.showDialog();
   },
 
-  showGroupEditDialog: function() {
-    GroupsActions.showDialog(GroupsStore.getCheckedItem());
+  showGroupEditDialog: function(group) {
+    GroupsActions.showDialog(group || GroupsStore.getCheckedItem());
+  },
+
+  showGroupDeleteDialog: function(group) {
+    group.checked = true;
+    this.showDialog('removeGroupDialog');
+  },
+
+  handleGroupClick: function(group) {
+    GroupsActions.setActiveGroup(group);
+  },
+
+  handleCancelGroupsDialog: function() {
+    this.uncheckAllGroups();
+    this.refs.removeGroupDialog.dismiss();
   },
 
   initDialogs: function() {
-    var checkedGroups = GroupsStore.getCheckedItems(),
-        checkedUsers  = UsersStore.getCheckedItems();
+    var checkedUsers  = UsersStore.getCheckedItems();
 
     return [
       // Groups
@@ -127,16 +141,16 @@ module.exports = React.createClass({
           actions: [
             {
               text    : 'Cancel',
-              onClick : this.handleCancel
+              onClick : this.handleCancelGroupsDialog
             },
             {
               text    : 'Yes, I\'m sure',
-              onClick : this.handleRemoveGroups}
+              onClick : this.handleRemoveGroups
+            }
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedGroups)  + ' Group(s)?',
-            this.getDialogList(checkedGroups, 'label'),
+            'Do you really want to delete this Group?',
             <Loading
               type     = 'linear'
               position = 'bottom'
@@ -170,10 +184,10 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var checkedUsers       = UsersStore.getNumberOfChecked(),
-        checkedGroups      = GroupsStore.getNumberOfChecked(),
-        isAnyUserSelected  = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
-        isAnyGroupSelected = checkedGroups >= 1 && checkedGroups < (this.state.groups.items.length);
+    var checkedUsers      = UsersStore.getNumberOfChecked(),
+        isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
+        activeGroup       = GroupsStore.getActiveGroup();
+
 
     return (
       <Container>
@@ -193,7 +207,7 @@ module.exports = React.createClass({
             <FabListItem
               label         = "Click here to delete Users"
               mini          = {true}
-              onClick       = {this.showDialog('removeUserDialog')}
+              onClick       = {this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName = "synicon-delete" />
 
             <FabListItem
@@ -201,31 +215,6 @@ module.exports = React.createClass({
               mini          = {true}
               disabled      = {checkedUsers > 1}
               onClick       = {this.showUserEditDialog}
-              iconClassName = "synicon-pencil" />
-
-          </FabList>
-        </Show>
-
-        <Show if={checkedGroups > 0}>
-          <FabList position="top">
-
-            <FabListItem
-              label         = {isAnyGroupSelected ? "Click here to select all" : "Click here to unselect all"}
-              mini          = {true}
-              onClick       = {isAnyGroupSelected ? this.selectAllGroups : this.uncheckAllGroups}
-              iconClassName = {isAnyGroupSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
-
-            <FabListItem
-              label         = "Click here to delete Users"
-              mini          = {true}
-              onClick       = {this.showDialog('removeGroupDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
-              label         = "Click here to edit Group"
-              mini          = {true}
-              disabled      = {checkedUsers > 1}
-              onClick       = {this.showGroupEditDialog}
               iconClassName = "synicon-pencil" />
 
           </FabList>
@@ -245,20 +234,24 @@ module.exports = React.createClass({
 
         </FabList>
 
-        <div className="row">
+        <ListContainer className="row">
 
           <div className="col-lg-8">
             <GroupsList
+              activeGroup          = {activeGroup}
+              handleItemClick      = {this.handleGroupClick}
+              handleGroupAddUser   = {this.showUserDialog}
+              handleGroupEdit      = {this.showGroupEditDialog}
+              handleGroupDelete    = {this.showGroupDeleteDialog}
               name                 = "Groups"
               checkItem            = {this.checkGroup}
               isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
               emptyItemHandleClick = {this.showGroupDialog}
               emptyItemContent     = "Create a Group" />
-
           </div>
 
-          <div className="col-flex-1">
+          <div className="col-lg-27">
             <UsersList
               name                 = "Users"
               checkItem            = {this.checkUser}
@@ -268,7 +261,7 @@ module.exports = React.createClass({
               emptyItemContent     = "Create a User" />
           </div>
 
-        </div>
+        </ListContainer>
 
       </Container>
     );
