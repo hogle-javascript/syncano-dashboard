@@ -1,16 +1,10 @@
 var React       = require('react'),
-    classNames  = require('classnames'),
 
     mui         = require('material-ui'),
-    Avatar      = mui.Avatar,
-    Paper       = mui.Paper,
-    FontIcon    = mui.FontIcon,
     IconButton  = mui.IconButton,
     IconMenu    = mui.IconMenu,
-    Menu        = require('material-ui/lib/menus/menu'),
-    MenuItem    = require('material-ui/lib/menus/menu-item'),
-
-    Colors      = mui.Styles.Colors;
+    Checkbox    = mui.Checkbox,
+    ListItem    = mui.ListItem;
 
 module.exports = React.createClass({
 
@@ -37,31 +31,22 @@ module.exports = React.createClass({
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },
 
-  handleClick: function(event) {
-    this.props.checkToggleColumn(event.target.id);
+  handleClick: function(columnId) {
+    this.props.checkToggleColumn(columnId);
   },
 
   renderMenuItems: function() {
     return this.state.columns.map(function(column) {
-      var iconClass = 'synicon-checkbox-blank-outline';
-      if (column.checked) {
-        iconClass = 'synicon-checkbox-marked';
-      }
       return (
-        <MenuItem
-          id      = {column.id}
-          onClick = {this.handleClick}>
-          <div>
-          <FontIcon
-            id        = {column.id}
-            className = {iconClass} />
-          </div>
-          <div>
-            <div>{column.name}</div>
-            <div>{column.tooltip}</div>
-          </div>
-
-        </MenuItem>
+        <ListItem
+          id            = {column.id}
+          primaryText   = {column.name}
+          secondaryText = {column.tooltip}
+          leftCheckbox  = {<Checkbox
+                             checked = {column.checked}
+                             onCheck = {this.handleClick.bind(null, column.id)}
+                           />}
+        />
       )
     }.bind(this))
   },
@@ -71,10 +56,9 @@ module.exports = React.createClass({
 
     return (
       <IconMenu
-        closeAfterTap     = {false}
-        iconButtonElement = {mainIcon}
-        openDirection     = "bottom-left"
-        desktop           = {true}>
+        closeOnItemTouchTap = {false}
+        iconButtonElement   = {mainIcon}
+        openDirection       = "bottom-left">
         {this.renderMenuItems()}
       </IconMenu>
     )
