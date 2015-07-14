@@ -41,7 +41,7 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
-      {test: /\.js(|x)$/, exclude: /node_modules/, loader: 'babel-loader'},
+      {test: /\.js(|x)$/, exclude: /node_modules/, loader: 'babel'},
       {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 version'},
       {test: /\.styl/, loader: 'style-loader!stylus-loader!autoprefixer-loader?browsers=last 2 version'},
       {

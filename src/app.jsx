@@ -1,17 +1,17 @@
-var React      = require('react'),
-    classNames = require('classnames'),
-    Router     = require('react-router'),
-    routes     = require('./routes'),
-    tapPlugin  = require('react-tap-event-plugin'),
-    analytics  = require('./segment'),
-    container  = document.getElementById('app');
+import 'babel-core/polyfill';
+import 'normalize.css';
+import './raven';
+import './stripe';
+import './app.sass';
 
+import React from 'react';
+import Router from 'react-router';
+import routes from './routes';
+import tapPlugin from 'react-tap-event-plugin';
+import analytics from './segment';
+
+let container  = document.getElementById('app');
 tapPlugin();
-
-require('./raven');
-require('./stripe');
-require('normalize.css');
-require('./app.sass');
 
 Router.run(routes, function (Root, state) {
   if (!window.opener) {
