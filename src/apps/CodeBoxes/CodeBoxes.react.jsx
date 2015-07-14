@@ -62,11 +62,17 @@ module.exports = React.createClass({
     return [{
       dialog: Dialog,
       params: {
-        ref:    "deleteCodeBoxDialog",
-        title:  "Delete CodeBox key",
-        actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Yes, I'm sure", onClick: this.handleDelete}
+        ref     : 'deleteCodeBoxDialog',
+        title   : 'Delete CodeBox',
+        actions : [
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : 'Confirm',
+            onClick : this.handleDelete
+          }
         ],
         modal: true,
         children: [
@@ -102,7 +108,9 @@ module.exports = React.createClass({
   render: function() {
 
     var checkedItems         = CodeBoxesStore.getNumberOfChecked(),
-        isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+        isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
+        markedIcon           = 'synicon-checkbox-multiple-marked-outline',
+        blankIcon            = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -114,10 +122,10 @@ module.exports = React.createClass({
           <FabList position="top">
 
             <FabListItem
-              label         = {isAnyCodeboxSelected ? "Click here to select all" : "Click here to unselect all"}
+              label         = {isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyCodeboxSelected ? CodeBoxesActions.selectAll : CodeBoxesActions.uncheckAll}
-              iconClassName = {isAnyCodeboxSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon} />
 
             <FabListItem
               label         = "Click here to delete CodeBoxes"

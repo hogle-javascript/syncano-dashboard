@@ -59,10 +59,10 @@ DataViewsActions.updateDataView.listen(function(id, payload) {
     .catch(this.failure);
 });
 
-DataViewsActions.removeDataViews.listen(function(schedules) {
+DataViewsActions.removeDataViews.listen(function(dataviews) {
   console.info('DataViewsActions::removeDataViews');
-  var promises = schedules.map(function(schedule) {
-    return Connection.DataViews.remove(schedule.id);
+  var promises = dataviews.map(function(dataview) {
+    return Connection.DataViews.remove(dataview.name);
   });
 
   D.all(promises)

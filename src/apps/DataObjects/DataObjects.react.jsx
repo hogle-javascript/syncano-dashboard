@@ -118,6 +118,8 @@ module.exports = React.createClass({
         start = selectedRow[1].end;
       }
       rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
+    } else if (selectedRow.length === 0) {
+      rowsSelection = [];
     }
 
     // Writing to the store
@@ -145,7 +147,7 @@ module.exports = React.createClass({
           columnOrder         = {colOrder}
           rowData             = {tableData}
           multiSelectable     = {true}
-          deselectOnClickAway = {false}
+          deselectOnClickaway = {false}
           showRowHover        = {true}
           onCellClick         = {this.handleCellClick}
           onRowSelection      = {this.handleRowSelection}
@@ -196,7 +198,7 @@ module.exports = React.createClass({
 
     var selecteMessageText = null;
 
-    if (this.state.selectedRows) {
+    if (this.state.selectedRows && this.state.selectedRows.length > 0) {
       selecteMessageText = 'selected: ' + this.state.selectedRows.length;
     }
 

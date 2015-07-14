@@ -59,7 +59,7 @@ module.exports = Radium(React.createClass({
       color      : 'black',
       hoverColor : Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
-      checkable  : true,
+      checkable  : true
     }
   },
 

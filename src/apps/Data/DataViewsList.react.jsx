@@ -56,7 +56,7 @@ module.exports = React.createClass({
   },
 
   // List
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick: function(id, state) {
     this.props.checkItem(id, state);
   },
 
@@ -67,7 +67,7 @@ module.exports = React.createClass({
         checked = {item.checked}
         key     = {item.id}>
         <ColumnCheckIcon
-          id              = {item.name.toString()}
+          id              = {item.id.toString()}
           icon            = 'table'
           background      = {Colors.blue500}
           checked         = {item.checked}

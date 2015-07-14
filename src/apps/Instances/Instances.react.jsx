@@ -145,7 +145,8 @@ module.exports = Radium(React.createClass({
 
   render: function() {
     var checkedInstances      = InstancesStore.getNumberOfChecked(),
-        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length);
+        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isCheckedInstanceShared   = InstancesStore.isCheckedInstanceShared();
 
     return (
       <Container id="instances">
