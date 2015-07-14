@@ -69,7 +69,7 @@ UsersActions.createUser.listen(function(payload, groups) {
       .create(payload)
       .then(function(user) {
         var addUserToGroups = groups.newGroups.map(function(group) {
-          return UsersActions.addToGroup(user.id, group);
+          return UsersActions.addToGroup(user.id, group.id);
         });
 
         D.all(addUserToGroups)
@@ -108,7 +108,7 @@ UsersActions.updateUser.listen(function(id, payload, groups) {
         return userGroup.group.id === group.id
       });
 
-      return UsersActions.removeFromGroup(id, userGroups[userGroupId]);
+      return UsersActions.removeFromGroup(id, userGroups[userGroupId].id);
     });
 
     D.all(removeUserFromGroups, addUserToGroups)

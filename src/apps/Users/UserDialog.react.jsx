@@ -81,7 +81,7 @@ module.exports = React.createClass({
       return this.linkState('newUserGroups');
     } else if (this.state.groups) {
       return this.linkState('groups');
-    } else if (this.state.secondInstance) {
+    } else if (this.state.secondInstance && this.state.secondInstance.value) {
       return this.state.secondInstance;
     } else if (activeGroup) {
       return activeGroup;
@@ -145,6 +145,7 @@ module.exports = React.createClass({
               errorText         = {this.getValidationMessages('password').join(' ')}
               hintText          = 'User password'
               floatingLabelText = 'Password'
+              className         = 'vm-4-b'
             />
 
             <Select

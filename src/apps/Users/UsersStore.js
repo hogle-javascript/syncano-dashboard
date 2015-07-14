@@ -41,7 +41,7 @@ var UsersStore = Reflux.createStore({
     var activeGroup = GroupsStore.getActiveGroup();
 
     if (activeGroup) {
-      GroupsActions.fetchGroupUsers(activeGroup.id).then(function (payload) {
+      GroupsActions.fetchGroupUsers(activeGroup.id).then(function(payload) {
         UsersStore.setUsers(payload);
       });
     } else {

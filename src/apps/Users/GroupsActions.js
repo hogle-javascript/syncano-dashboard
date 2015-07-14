@@ -79,11 +79,11 @@ GroupsActions.removeGroups.listen(function(ids) {
     .error(this.failure);
 });
 
-GroupsActions.fetchGroupUsers.listen(function(id) {
+GroupsActions.fetchGroupUsers.listen(function(groupId) {
   console.info('GroupsActions::fetchUsers');
   Connection
     .Groups
-    .getUsers(id)
+    .getUsers(groupId)
     .then(this.completed)
     .catch(this.failure);
 });

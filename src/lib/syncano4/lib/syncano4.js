@@ -1647,12 +1647,34 @@ var Syncano = (function() {
       return this.genericRemove(id, 'instance_users', callbackOK, callbackError);
     },
 
+    /**
+     * Returns Groups of User identified by specified id
+     *
+     * @method Syncano#getUserGroups
+     * @alias Syncano.Users.getUserGroups
+     * @param {Number} id - identifier of the user
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
     getUserGroups: function(id, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_users + id + '/groups/', callbackOK, callbackError);
     },
 
-    addToGroup: function(id, params, callbackOK, callbackError) {
-      var groupId = params.id;
+    /**
+     * Adds User to Group identified by specified id
+     *
+     * @method Syncano#addToGroup
+     * @alias Syncano.Users.addToGroup
+     * @param {Number} id - identifier of the user
+     * @param {Number} groupId - identifier of the group
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    addToGroup: function(id, groupId, callbackOK, callbackError) {
 
       if (typeof groupId === 'undefined') {
         throw new Error('Missing group id');
@@ -1664,8 +1686,19 @@ var Syncano = (function() {
       return this.request('POST', linksObject.instance_users + id + '/groups/', {group: groupId}, callbackOK, callbackError);
     },
 
-    removeFromGroup: function(id, params, callbackOK, callbackError) {
-      var groupId = params.id;
+    /**
+     * Removes connection between User and Group, both identified by specified id
+     *
+     * @method Syncano#removeFromGroup
+     * @alias Syncano.Users.removeFromGroup
+     * @param {Number} id - identifier of the user
+     * @param {Number} groupId - identifier of the group
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    removeFromGroup: function(id, groupId, callbackOK, callbackError) {
 
       if (typeof groupId === 'undefined') {
         throw new Error('Missing group id');
@@ -1762,9 +1795,31 @@ var Syncano = (function() {
       return this.genericRemove(id, 'instance_groups', callbackOK, callbackError);
     },
 
+    /**
+     * Returns Users of Group identified by specified id
+     *
+     * @method Syncano#getGroupUsers
+     * @alias Syncano.Groups.getUsers
+     * @param {Number} id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
     getGroupUsers: function(id, callbackOK, callbackError) {
       return this.request('GET', linksObject.instance_groups + id + '/users/', callbackOK, callbackError);
     },
+
+    /**
+     * Adds Group to User identified by specified id
+     *
+     * @method Syncano#addToGroup
+     * @alias Syncano.Users.addToGroup
+     * @param {Object} params - object containing group and user objects
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
 
     addUserToGroup: function(params, callbackOK, callbackError) {
       var groupId = params.group;

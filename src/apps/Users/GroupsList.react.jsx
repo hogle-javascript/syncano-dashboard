@@ -77,17 +77,14 @@ module.exports = Radium(React.createClass({
   },
 
   renderItem: function(item) {
-    var itemActive = this.props.activeGroup && this.props.activeGroup.id === item.id;
-    var styles = this.getStyles();
-    var itemStyles = {};
-    var iconButtonElement = (
-      <IconButton
-        touch           = {true}
-        tooltipPosition = 'bottom-left'
-        iconClassName   = 'synicon-dots-vertical'
-        >
-      </IconButton>
-    );
+    var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
+    var styles            = this.getStyles();
+    var itemStyles        = itemActive ? styles.listItemChecked : {};
+    var iconButtonElement = <IconButton
+                                touch           = {true}
+                                tooltipPosition = 'bottom-left'
+                                iconClassName   = 'synicon-dots-vertical'
+                            />;
 
     var rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
@@ -97,36 +94,30 @@ module.exports = Radium(React.createClass({
       </IconMenu>
     );
 
-    if (itemActive) {
-      itemStyles = styles.listItemChecked
-    }
-
     return (
       <ListItem
         key             = {item.id}
         innerDivStyle   = {itemStyles}
         onMouseDown     = {this.props.handleItemClick.bind(null, item)}
         rightIconButton = {rightIconMenu}
-        >
+      >
         {item.label}
       </ListItem>
     )
   },
 
   getList: function() {
-    var styles     = this.getStyles(),
-        items      = this.state.items,
-        itemsCount = items.length,
+    var styles          = this.getStyles(),
+        items           = this.state.items,
+        itemsCount      = items.length,
         indexOfListItem = itemsCount - 1,
-        listItems  = this.state.items.map(function(item, index) {
-
+        listItems       = this.state.items.map(function(item, index) {
           if (index < indexOfListItem) {
             return [
               this.renderItem(item),
               <ListDivider />
             ];
           }
-
           return this.renderItem(item);
         }.bind(this));
 
