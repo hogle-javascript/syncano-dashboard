@@ -2,8 +2,6 @@ var React                      = require('react'),
     classNames                 = require('classnames'),
     mui                        = require('material-ui'),
 
-//var ViewActions = require('../actions/ViewActions');
-
     FontIcon                   = mui.FontIcon,
     AccordionListItemSecondary = require('./AccordionListItemSecondary.react');
 
