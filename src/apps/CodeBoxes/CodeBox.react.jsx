@@ -77,13 +77,13 @@ module.exports = React.createClass({
     return [
       {
         label : "Edit",
-        route : "codebox_edit"
+        route : "codebox-edit"
       }, {
         label : "Config",
-        route : "codebox_config"
+        route : "codebox-config"
       }, {
         label : "Traces",
-        route : "codebox_traces"
+        route : "codebox-traces"
       }
     ];
   },
@@ -103,19 +103,19 @@ module.exports = React.createClass({
             <Tab
               style    = {styles.tab}
               label    = "Edit"
-              route    = "codebox_edit"
+              route    = "codebox-edit"
               onActive = {this.handleTabActive}>
               </Tab>
             <Tab
               style    = {styles.tab}
               label    = "Config"
-              route    = "codebox_config"
+              route    = "codebox-config"
               onActive = {this.handleTabActive}>
             </Tab>
             <Tab
               style    = {styles.tab}
               label    = "Traces"
-              route    = "codebox_traces"
+              route    = "codebox-traces"
               onActive = {this.handleTabActive}>
             </Tab>
           </Tabs>

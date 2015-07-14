@@ -10,6 +10,7 @@ var React                       = require('react'),
     Dashboard                   = require('./pages/dashboard.react'),
     Instance                    = require('./pages/instance.react'),
     Billing                     = require('./pages/billing.react'),
+    CodeBoxesPage               = require('./pages/codeBoxes.react'),
     NotFound                    = require('./pages/notfound.react'),
 
     // Anonymouns Apps
@@ -34,8 +35,8 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
+    CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
     CodeBoxEdit                 = require('./apps/CodeBoxes/CodeBoxEdit.react.jsx'),
     CodeBoxConfig               = require('./apps/CodeBoxes/CodeBoxConfig.react.jsx'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
@@ -66,14 +67,16 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="classes-data-objects" handler={DataObjects} path=":instanceName/classes/:className/objects" />
-        <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
-        <Route name="codebox" handler={CodeBox} path=":instanceName/codeboxes/:codeboxId">
-          <Route name="codebox_traces" handler={Traces} path="traces" />
-          <Route name="codebox_edit" handler={CodeBoxEdit} path="edit" />
-          <Route name="codebox_config" handler={CodeBoxConfig} path="config" />
-          <DefaultRoute handler={CodeBoxEdit} />
+        <Route name="codeboxes" handler={CodeBoxesPage} path=":instanceName/codeboxes">
+          <Route name="codebox" handler={CodeBox} path=":codeboxId">
+            <Route name="codebox-traces" handler={Traces} path="traces" />
+            <Route name="codebox-edit" handler={CodeBoxEdit} path="edit" />
+            <Route name="codebox-config" handler={CodeBoxConfig} path="config" />
+            <DefaultRoute handler={CodeBoxEdit} />
+          </Route>
+          <DefaultRoute handler={CodeBoxes} />
         </Route>
+        <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="channels" handler={Channels} path=":instanceName/channels" />
@@ -82,9 +85,9 @@ module.exports = (
       </Route>
 
       <Route name="profile-billing" handler={Billing} path="/account/billing">
-        <Route name="profile-billing_address" handler={ProfileBillingAddress} path="address" />
-        <Route name="profile-billing_payment" handler={ProfileBillingPayment} path="payment-methods" />
-        <Route name="profile-billing_invoices" handler={ProfileBillingInvoices} path="invoices" />
+        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
+        <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
+        <Route name="profile-billing-invoices" handler={ProfileBillingInvoices} path="invoices" />
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />

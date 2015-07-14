@@ -14,6 +14,7 @@ module.exports = React.createClass({
 
   mixins: [
     Router.Navigation,
+    Router.State,
     HeaderMixin
   ],
 
@@ -36,6 +37,37 @@ module.exports = React.createClass({
     }
   ],
 
+  subTabsItems: [
+    {
+      label: "Current usage",
+      route: "profile-billing-usage"
+    },
+    {
+      label: "Payment methods",
+      route: "profile-billing-payment"
+    },
+    {
+      label: "Invoices",
+      route: "profile-billing-invoices"
+    },
+    {
+      label: "Billing address",
+      route: "profile-billing-address"
+    }
+  ],
+
+  getActiveSubTabIndex: function() {
+    var index = 0;
+    this.subTabsItems.some(function (item, i) {
+      if (this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    }.bind(this));
+
+    return index;
+  },
+
   handleTabActive: function(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
   },
@@ -44,25 +76,25 @@ module.exports = React.createClass({
     return (
       <div className="container">
         <h4>Billing</h4>
-        <Tabs>
+        <Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
           <Tab
             label="Current usage"
-            route="profile-billing_usage"
+            route="profile-billing-usage"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Payment methods"
-            route="profile-billing_payment"
+            route="profile-billing-payment"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Invoices"
-            route="profile-billing_invoices"
+            route="profile-billing-invoices"
             onActive={this.handleTabActive} />
 
           <Tab
             label="Billing address"
-            route="profile-billing_address"
+            route="profile-billing-address"
             onActive={this.handleTabActive} />
 
         </Tabs>

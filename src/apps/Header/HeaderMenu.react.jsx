@@ -26,18 +26,16 @@ module.exports = React.createClass({
   },
 
   getActiveMenuItemIndex: function() {
-    var index = 0,
-        activeRouteName = this.getRoutes()[this.getRoutes().length - 1].name;
+    var index = 0;
 
     this.state.menuItems.some(function(item, i) {
 
       if (this.isActive(item.route, item.params, item.query)) {
+        console.error("EEE", item.route)
         index = i;
-      } else if (activeRouteName && item.route.includes(activeRouteName.slice(0, activeRouteName.indexOf("_")))){
-        index = i;
+        return true;
       }
     }.bind(this));
-
     return index;
   },
 

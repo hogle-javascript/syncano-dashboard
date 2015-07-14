@@ -49,7 +49,7 @@ module.exports = React.createClass({
 
   handleItemClick: function(itemId) {
     // Redirect to edit screen
-    this.transitionTo('codebox_edit', {instanceName: this.getParams().instanceName, codeboxId: itemId});
+    this.transitionTo('codebox-edit', {instanceName: this.getParams().instanceName, codeboxId: itemId});
   },
 
   renderItem: function (item) {
