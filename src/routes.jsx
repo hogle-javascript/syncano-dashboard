@@ -85,7 +85,16 @@ module.exports = (
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
       <Route name="solutions" handler={Solutions} path="/solutions" />
-      <Route name="solutions-edit" handler={SolutionEdit} path="/solutions/:solutionId/edit" />
+      <Route
+        name    = "solutions-install"
+        handler = {SolutionEdit}
+        path    = "/solutions/:solutionId/:action"
+      />
+      <Route
+        name    = "solutions-edit"
+        handler = {SolutionEdit}
+        path    = "/solutions/:solutionId/edit"
+      />
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
