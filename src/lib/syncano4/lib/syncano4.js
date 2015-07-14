@@ -113,7 +113,7 @@ var Syncano = (function() {
     var xhr = {};
     var request = new XMLHttpRequest();
     var mtype = params.type.toUpperCase();
-    if (mtype === 'GET') {
+    if (mtype === 'GET' && Object.keys(params.data).length > 0) {
       params.url += (params.url.indexOf('?') === -1 ? '?' : '&') + prepareAjaxParams(params.data);
     }
     request.open(mtype, params.url, true);
@@ -376,12 +376,15 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this),
+      activate: this.activateAccount.bind(this)
     };
 
     this.Billing = {
       getProfile: this.getBillingProfile.bind(this),
-      updateProfile: this.updateBillingProfile.bind(this)
+      updateProfile: this.updateBillingProfile.bind(this),
+      getCard: this.getBillingCard.bind(this),
+      updateCard: this.updateBillingCard.bind(this),
+      getInvoices: this.getBillingInvoices.bind(this)
     };
 
     /**
@@ -455,7 +458,8 @@ var Syncano = (function() {
       list: this.listDataObjects.bind(this),
       remove: this.removeDataObject.bind(this),
       get: this.getDataObject.bind(this),
-      update: this.updateDataObject.bind(this)
+      update: this.updateDataObject.bind(this),
+      uploadFile: this.uploadFileDataObject.bind(this)
     };
 
     /**
@@ -641,10 +645,10 @@ var Syncano = (function() {
      */
     this.DataViews = {
       create: this.createDataView.bind(this),
-      list: this.listDataViews.bind(this)
+      list: this.listDataViews.bind(this),
       //get: this.getWebHook.bind(this),
-      //update: this.updateWebHook.bind(this),
-      //remove: this.removeWebHook.bind(this),
+      update: this.updateDataView.bind(this),
+      remove: this.removeDataView.bind(this),
       //run: this.runWebHook.bind(this),
       //traces: this.listWebHookTraces.bind(this),
       //trace: this.getWebHookTrace.bind(this)
@@ -739,18 +743,11 @@ var Syncano = (function() {
       return promise;
     },
 
-    socialConnect: function(network, token, callbackOK, callbackError) {
+    socialConnect: function(network, access_token, callbackOK, callbackError) {
       if (network === 'google') {
         network = 'google-oauth2';
       }
-      return this.request(
-        'POST',
-        'v1/account/auth/' + network + '/',
-        {},
-        callbackOK,
-        callbackError,
-        {'Authorization': 'Token ' + token}
-      );
+      return this.request('POST', 'v1/account/auth/' + network + '/', {access_token: access_token}, callbackOK, callbackError);
     },
 
     /**
@@ -1264,6 +1261,17 @@ var Syncano = (function() {
       return this.request('PUT', 'v1/billing/profile/', params, callbackOK, callbackError);
     },
 
+    getBillingCard: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/card/', {}, callbackOK, callbackError);
+    },
+
+    updateBillingCard: function(token, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/card/', {token: token}, callbackOK, callbackError);
+    },
+
+    getBillingInvoices: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
+    },
     /***********************
        DATA OBJECT METHODS
     ************************/
@@ -1421,6 +1429,33 @@ var Syncano = (function() {
       params = prepareObjectToBeUpdated(params);
       var methodName = linksObject.instance_classes + className + '/objects/' + id;
       return this.request('PATCH', methodName, params, callbackOK, callbackError);
+    },
+
+    uploadFileDataObject: function(className, params, field, callbackOK, callbackError) {
+
+      if (typeof className === 'undefined') {
+        throw new Error('Missing name of the class');
+      }
+      if (typeof linksObject.instance_classes === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+
+      var deferred = Deferred(),
+          formData = new FormData(),
+          url      = normalizeUrl(baseURL + linksObject.instance_classes + className + '/objects/' + params.id + '/'),
+          xhr      = new XMLHttpRequest();
+
+      formData.append(field.name, field.file);
+
+      xhr.onload = function() {
+        deferred.resolve();
+      };
+
+      xhr.open('PATCH', url, true);
+      xhr.setRequestHeader('Authorization', 'Token ' + apiKey);
+      xhr.send(formData);
+
+      return deferred.promise;
     },
 
     /********************
@@ -2263,48 +2298,42 @@ var Syncano = (function() {
     //getWebHook: function(id, callbackOK, callbackError) {
     //  return this.genericGet(id, 'instance_webhooks', callbackOK, callbackError);
     //},
-    //
-    ///**
-    // * Removes Webhook identified by specified id
-    // *
-    // * @method Syncano#removeWebHook
-    // * @alias Syncano.WebHooks.remove
-    // * @param {Number|object} id - identifier of the webhook to remove
-    // * @param {Number} id.id - when passed parameter is an object, we use its id property
-    // * @param {function} [callbackOK] - optional method to call on success
-    // * @param {function} [callbackError] - optional method to call when request fails
-    // * @returns {object} promise
-    // */
-    //removeWebHook: function(id, callbackOK, callbackError) {
-    //  return this.genericRemove(id, 'instance_webhooks', callbackOK, callbackError);
-    //},
-    //
-    ///**
-    // * Updates webhook identified by specified id
-    // *
-    // * @method Syncano#updateWebHook
-    // * @alias Syncano.WebHooks.update
-    // * @param {Number} id - webhook id
-    // * @param {Object} params - new values of the webhook parameters
-    // * @param {string} params.slug -
-    // * @param {Number} params.codebox -
-    // * @param {function} [callbackOK] - optional method to call on success
-    // * @param {function} [callbackError] - optional method to call when request fails
-    // * @returns {Object} promise
-    // */
-    //updateWebHook: function(id, params, callbackOK, callbackError) {
-    //  if (typeof id === 'object') {
-    //    id = id.slug;
-    //  }
-    //  if (typeof id === 'undefined') {
-    //    throw new Error('Missing webhook slug');
-    //  }
-    //  if (typeof linksObject.instance_webhooks === 'undefined') {
-    //    throw new Error('Not connected to any instance');
-    //  }
-    //  return this.request('PATCH', linksObject.instance_webhooks + id, params, callbackOK, callbackError);
-    //},
-    //
+
+    /**
+     * Removes DataView identified by specified id
+     *
+     * @method Syncano#DataView
+     * @alias Syncano.DataView.remove
+     * @param {Number} id - identifier of the DataView to remove
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeDataView: function(id, callbackOK, callbackError) {
+      return this.request('DELETE', linksObject.instance_self + 'api/objects/' + id + '/', callbackOK, callbackError);
+    },
+
+    /**
+     * Updates webhook identified by specified id
+     *
+     * @method Syncano#updateDataView
+     * @alias Syncano.DataView.update
+     * @param {Number} id - dataview id
+     * @param {Object} params - new values of the dataview parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    updateDataView: function(id, params, callbackOK, callbackError) {
+      if (typeof id === 'undefined') {
+        throw new Error('Missing DataView slug');
+      }
+      if (typeof linksObject.instance_webhooks === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_self + 'api/objects/' + id + '/', params, callbackOK, callbackError);
+    },
+
     ///**
     // * Runs defined webhook.
     // *

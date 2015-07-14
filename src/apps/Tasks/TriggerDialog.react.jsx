@@ -36,7 +36,7 @@ module.exports = React.createClass({
     signal: {
       presence: true
     },
-    doClass: {
+    class: {
       presence: true
     },
     codebox: {
@@ -50,28 +50,27 @@ module.exports = React.createClass({
     ClassesActions.fetch();
   },
 
-  handleAddSubmit: function () {
+  handleAddSubmit: function() {
     TriggersActions.createTrigger({
       label   : this.state.label,
       codebox : this.state.codebox,
-      'class' : this.state.class,
+      class   : this.state.class,
       signal  : this.state.signal
     });
   },
 
-  handleEditSubmit: function () {
+  handleEditSubmit: function() {
     TriggersActions.updateTrigger(
       this.state.id, {
         label   : this.state.label,
         codebox : this.state.codebox,
-        'class' : this.state.class,
+        class   : this.state.class,
         signal  : this.state.signal
       });
   },
 
-  render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+  render: function() {
+    var title       = this.hasEditMode() ? 'Update' : 'Create',
         dialogStandardActions = [
           {
             ref     : 'cancel',
@@ -80,7 +79,7 @@ module.exports = React.createClass({
           },
           {
             ref     : 'submit',
-            text    : {submitLabel},
+            text    : 'Confirm',
             onClick : this.handleFormValidation
           }
         ];
@@ -88,7 +87,7 @@ module.exports = React.createClass({
     return (
       <Dialog
         ref             = "dialog"
-        title           = {title + " Trigger"}
+        title           = {title + ' a Trigger'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
@@ -112,7 +111,7 @@ module.exports = React.createClass({
             <SelectField
               ref               = "signal"
               name              = "signal"
-              floatingLabelText = "Signal"
+              hintText          = "Signal"
               fullWidth         = {true}
               valueLink         = {this.linkState('signal')}
               errorText         = {this.getValidationMessages('signal').join(' ')}
@@ -121,9 +120,9 @@ module.exports = React.createClass({
               menuItems         = {TriggerDialogStore.getSignalsDropdown()} />
 
             <SelectField
-              ref               = "doClass"
-              name              = "doClass"
-              floatingLabelText = "Class"
+              ref               = "class"
+              name              = "class"
+              hintText          = "Class"
               fullWidth         = {true}
               valueLink         = {this.linkState('class')}
               errorText         = {this.getValidationMessages('class').join(' ')}
@@ -134,7 +133,7 @@ module.exports = React.createClass({
             <SelectField
               ref               = "codebox"
               name              = "codebox"
-              floatingLabelText = "CodeBox"
+              hintText          = "CodeBox"
               valueLink         = {this.linkState('codebox')}
               errorText         = {this.getValidationMessages('codebox').join(' ')}
               valueMember       = "payload"

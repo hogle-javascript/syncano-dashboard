@@ -27,7 +27,7 @@ var DataObjectsStore = Reflux.createStore({
     return {
       items        : null,
       isLoading    : false,
-      selectedRows : null,
+      selectedRows : [],
       columns      : [
         {
           id      : 'id',
@@ -137,6 +137,7 @@ var DataObjectsStore = Reflux.createStore({
     this.data.classObj = classObj;
 
     // Update columns from Class
+    this.data.columns = this.getInitialState().columns;
     this.data.classObj.schema.map(function(item) {
       this.data.columns.push({
         id      : item.name,

@@ -159,7 +159,7 @@ module.exports = React.createClass({
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
       </Item>
-    )
+    );
   },
 
   renderList: function () {

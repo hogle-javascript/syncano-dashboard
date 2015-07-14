@@ -1,9 +1,9 @@
 var LOCATORS = {
   url          : 'https://localhost:8080/',
   emailInput   : 'input[name=email]',
-  email        : 'adam.wardecki+chan@syncano.com',
+  email        : 'syncano.bot+nightwatch@gmail.com',
   passInput    : 'input[name=password]',
-  pass         : 'chan2015',
+  pass         : 'HBGxgnmnc6JDivUcfhseZKfj8QxZ',
   loginButton  : 'button[type=submit]',
   mainDiv      : 'div[id=app]',
   instancesDiv : 'div[id=instances]'

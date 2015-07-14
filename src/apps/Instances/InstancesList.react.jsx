@@ -63,8 +63,10 @@ module.exports = React.createClass({
   renderItem: function (item) {
     return (
       <Item
-        checked = {item.checked}
-        key     = {item.name}>
+        checked     = {item.checked}
+        id          = {item.name}
+        key         = {item.name}
+        handleClick = {this.handleItemClick}>
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}

@@ -61,6 +61,7 @@ module.exports = React.createClass({
     return [{
       dialog: ColorIconPickerDialog,
       params: {
+        key          : 'pickColorIconDialog',
         ref          : 'pickColorIconDialog',
         mode         : 'add',
         initialColor : checkedItemIconColor.color,
@@ -71,6 +72,7 @@ module.exports = React.createClass({
     {
       dialog: Dialog,
       params: {
+        key   : 'deleteClassDialog',
         ref   : 'deleteClassDialog',
         title : 'Delete an API Key',
         actions: [
@@ -118,6 +120,10 @@ module.exports = React.createClass({
   handleReset: function() {
     console.info('Classes::handleReset');
     ClassesActions.resetClass(ClassesStore.getCheckedItem().id);
+  },
+
+  checkClassItem: function(id, state) {
+    ClassesActions.checkItem(id, state);
   },
 
   getStyles: function() {
@@ -209,6 +215,7 @@ module.exports = React.createClass({
         <ClassesList
           name                 = "Classes"
           items                = {this.state.items}
+          checkItem            = {this.checkClassItem}
           emptyItemHandleClick = {this.showClassDialog}
           emptyItemContent     = "Create a Class" />
 

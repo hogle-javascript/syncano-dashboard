@@ -54,7 +54,12 @@ or if you are using `fish` shell:
 
 # Icons
 
-We are using set of [Material Design Icons](http://materialdesignicons.com/)
+We are using set of [Material Design Icons](http://materialdesignicons.com/).
+Icons are attached as font in static assets `src/assets` so if you want to rebuild whole font just use npm command:
+
+    $ npm run-script iconfont
+
+and commit your changes.
 
 
 # E2E Testing

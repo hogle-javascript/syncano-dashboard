@@ -42,3 +42,10 @@ analytics.methods = [
 analytics.methods.forEach(function(method) {
   analytics[method] = function() {};
 });
+
+var Stripe = {
+  setPublishableKey: function () {},
+  card: {
+    createToken: function () {}
+  }
+};
