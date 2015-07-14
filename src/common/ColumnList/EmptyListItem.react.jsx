@@ -8,7 +8,6 @@ var React           = require('react'),
     Avatar          = mui.Avatar,
     FontIcon        = mui.FontIcon;
 
-
 module.exports = Radium(React.createClass({
 
   displayName: 'Item',
@@ -18,7 +17,7 @@ module.exports = Radium(React.createClass({
   getStyles: function() {
     var styles = {
       listItem: {
-        display         : 'flex',
+        display         : '-webkit-flex; display: flex',
         marginBottom    : 0,
         border          : '1px dashed #ddd',
         backgroundColor : '#fff',
@@ -28,24 +27,30 @@ module.exports = Radium(React.createClass({
         fontSize        : 14
       },
       icon: {
-        margin: 0
+        margin          : 0,
+        height          : 40,
+        display         : '-webkit-flex; display: flex',
+        alignItems      : 'center',
+        justifyContent  : 'center'
       },
       leftAvatar: {
-        top: '50%',
-        transform: 'translateY(-50%)'
+        top             : '50%',
+        transform       : 'translateY(-50%)'
       }
     };
     return this.mergeStyles(styles, this.props.style);
   },
 
-  render: function () {
+  render: function() {
     var styles     = this.getStyles(),
         icon       = <FontIcon
                        className = "synicon-plus"
-                       style     = {styles.icon} />,
+                       style     = {styles.icon}
+                     />,
         leftAvatar = <Avatar
                        icon  = {icon}
-                       style = {styles.leftAvatar} />;
+                       style = {styles.leftAvatar}
+                     />;
 
     return (
       <ListItem
