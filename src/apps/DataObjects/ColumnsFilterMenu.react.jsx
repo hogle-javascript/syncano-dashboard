@@ -71,10 +71,10 @@ module.exports = React.createClass({
 
     return (
       <IconMenu
-        closeAfterTap     = {false}
-        iconButtonElement = {mainIcon}
-        openDirection     = "bottom-left"
-        desktop           = {true}>
+        closeOnItemTouchTap = {false}
+        iconButtonElement   = {mainIcon}
+        openDirection       = "bottom-left"
+        desktop             = {true}>
         {this.renderMenuItems()}
       </IconMenu>
     )
