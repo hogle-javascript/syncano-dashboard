@@ -1,7 +1,17 @@
-export {CheckIcon} from './CheckIcon.react';
-export {Date} from './Date.react';
-export {Desc} from './Desc.react';
-export {IconName} from './IconName.react';
-export {Key} from './Key.react';
-export {Name} from './Name.react';
-export {Text} from './Text.react';
+import CheckIcon from './CheckIcon.react';
+import Date from './Date.react';
+import Desc from './Desc.react';
+import IconName from './IconName.react';
+import Key from './Key.react';
+import Name from './Name.react';
+import Text from './Text.react';
+
+export default {
+  CheckIcon,
+  Date,
+  Desc,
+  IconName,
+  Key,
+  Name,
+  Text
+};

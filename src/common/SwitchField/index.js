@@ -1,3 +1,8 @@
-export {SwitchField} from './SwitchField.react';
-export {SwitchFieldList} from './SwitchFieldList.react';
-export {SwitchInput} from './SwitchInput.react';
+import SwitchField from './SwitchField.react';
+import SwitchFieldList from './SwitchFieldList.react';
+import SwitchInput from './SwitchInput.react';
+
+SwitchField.List  = SwitchFieldList;
+SwitchField.Input = SwitchInput;
+
+export default SwitchField;

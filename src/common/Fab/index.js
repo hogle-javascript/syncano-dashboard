@@ -1,2 +1,6 @@
-export {FabList} from './FabList.react';
-export {FabListItem} from './FabListItem.react';
+import FabList from './FabList.react';
+import FabListItem from './FabListItem.react';
+
+FabList.Item = FabListItem;
+
+export default FabList;

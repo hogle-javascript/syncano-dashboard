@@ -1,1 +1,3 @@
-export {Tabs} from './Tabs.react';
+import Tabs from './Tabs.react';
+
+export default Tabs;

@@ -1,2 +1,6 @@
-export {Editor} from './Editor.react';
-export {EditorPanel} from './EditorPanel.react';
+import Editor from './Editor.react';
+import EditorPanel from './EditorPanel.react';
+
+Editor.Panel = EditorPanel;
+
+export default Editor;

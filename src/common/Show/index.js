@@ -1,1 +1,3 @@
-export {Show} from './Show.react';
+import Show from './Show.react';
+
+export default Show;

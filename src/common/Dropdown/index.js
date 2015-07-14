@@ -1,9 +1,20 @@
-export {Dropdown} from './Dropdown.react';
-export {DropdownMenuButton} from './DropdownMenuButton.react';
-export {DropdownMenuItem} from './DropdownMenuItem.react';
-export {DropdownMenuItemToggle} from './DropdownMenuItemToggle.react';
-export {DropdownMenuSection} from './DropdownMenuSection.react';
-export {DropdownNotifiItem} from './DropdownNotifiItem.react';
-export {DropdownWithButtons} from './DropdownWithButtons.react';
-export {MaterialDropdown} from './MaterialDropdown.react';
-export {MaterialDropdownItem} from './MaterialDropdownItem.react';
+import Dropdown from './Dropdown.react';
+import DropdownMenuButton from './DropdownMenuButton.react';
+import DropdownMenuItem from './DropdownMenuItem.react';
+import DropdownMenuItemToggle from './DropdownMenuItemToggle.react';
+import DropdownMenuSection from './DropdownMenuSection.react';
+import DropdownNotifiItem from './DropdownNotifiItem.react';
+import DropdownWithButtons from './DropdownWithButtons.react';
+import MaterialDropdown from './MaterialDropdown.react';
+import MaterialDropdownItem from './MaterialDropdownItem.react';
+
+Dropdown.MenuButton     = DropdownMenuButton;
+Dropdown.MenuItem       = DropdownMenuItem;
+Dropdown.MenuItemToggle = DropdownMenuItemToggle;
+Dropdown.MenuSection    = DropdownMenuSection;
+Dropdown.NotifiItem     = DropdownNotifiItem;
+Dropdown.WithButtons    = DropdownWithButtons;
+Dropdown.Material       = MaterialDropdown;
+Dropdown.MaterialItem   = MaterialDropdownItem;
+
+export default Dropdown;

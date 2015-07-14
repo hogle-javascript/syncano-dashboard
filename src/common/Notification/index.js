@@ -1,1 +1,3 @@
-export {Notification} from './Notification.react';
+import Notification from './Notification.react';
+
+export default Notification;

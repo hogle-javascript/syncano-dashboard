@@ -1,2 +1,7 @@
-export {RequestActions} from './RequestActions';
-export {RequestStore} from './RequestStore';
+import RequestActions from './RequestActions';
+import RequestStore from './RequestStore';
+
+export {
+  RequestActions as Actions,
+  RequestStore as Store
+};

@@ -1,1 +1,3 @@
-export {Label} from './Label.react';
+import Label from './Label.react';
+
+export default Label;

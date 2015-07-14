@@ -1,1 +1,3 @@
-export {Container} from './Container.react';
+import Container from './Container.react';
+
+export default Container;

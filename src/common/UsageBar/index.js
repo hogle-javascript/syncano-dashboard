@@ -1,1 +1,3 @@
-export {UsageBar} from './UsageBar.react';
+import UsageBar from './UsageBar.react';
+
+export default UsageBar;

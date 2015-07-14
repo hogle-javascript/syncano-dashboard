@@ -1,1 +1,3 @@
-export {ColorStore} from './ColorStore';
+import ColorStore from './ColorStore';
+
+export default ColorStore;

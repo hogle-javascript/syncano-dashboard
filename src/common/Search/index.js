@@ -1,1 +1,3 @@
-export {Search} from './Search.react';
+import Search from './Search.react';
+
+export default Search;

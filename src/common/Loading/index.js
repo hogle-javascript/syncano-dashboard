@@ -1,1 +1,3 @@
-export {Loading} from './Loading.react';
+import Loading from './Loading.react';
+
+export default Loading;

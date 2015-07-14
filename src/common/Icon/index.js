@@ -1,2 +1,6 @@
-export {IconStore} from './IconStore';
-export {RoundIcon} from './RoundIcon.react';
+import IconStore from './IconStore';
+import RoundIcon from './RoundIcon.react';
+
+RoundIcon.Store = IconStore;
+
+export default RoundIcon;

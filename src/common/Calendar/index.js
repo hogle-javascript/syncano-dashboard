@@ -1,1 +1,3 @@
-export {Calendar} from './Calendar.react';
+import Calendar from './Calendar.react';
+
+export default Calendar;

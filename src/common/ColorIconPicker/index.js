@@ -1,2 +1,6 @@
-export {ColorIconPicker} from './ColorIconPicker.react';
-export {ColorIconPickerDialog} from './ColorIconPickerDialog.react';
+import ColorIconPicker from './ColorIconPicker.react';
+import ColorIconPickerDialog from './ColorIconPickerDialog.react';
+
+ColorIconPicker.Dialog = ColorIconPickerDialog;
+
+export default ColorIconPicker;
