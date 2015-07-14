@@ -9,5 +9,6 @@
   "disallowQuotedKeysInObjects": null,
   "disallowTrailingComma": null,
   "requireCamelCaseOrUpperCaseIdentifiers": null,
-  "excludeFiles": ["src/lib", "src/apps/Account/Hello.js"]
+  "excludeFiles": ["src/lib", "src/apps/Account/Hello.js"],
+  "esnext": true
 }

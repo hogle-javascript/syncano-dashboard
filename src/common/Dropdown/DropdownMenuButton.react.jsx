@@ -1,8 +1,7 @@
-var React      = require('react');
+var React      = require('react'),
     classNames = require('classnames'),
     mui        = require('material-ui'),
 
-//var ViewActions = require('../actions/ViewActions');
     Constants  = require('../../constants/Constants'),
 
     FontIcon   = mui.FontIcon,

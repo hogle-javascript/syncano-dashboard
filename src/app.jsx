@@ -11,7 +11,6 @@ import tapPlugin from 'react-tap-event-plugin';
 import analytics from './segment';
 
 let container  = document.getElementById('app');
-
 tapPlugin();
 
 Router.run(routes, function (Root, state) {
