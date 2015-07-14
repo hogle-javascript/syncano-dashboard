@@ -4,9 +4,17 @@ module.exports = React.createClass({
 
   displayName: 'Show',
 
+  getInitialState: function() {
+    return {};
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(nextProps);
+  },
+
   render: function() {
-    if (this.props.if === true) {
-      return this.props.children;
+    if (this.state.if) {
+      return this.state.children;
     }
     return null;
   }

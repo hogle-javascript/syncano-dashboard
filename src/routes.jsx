@@ -29,6 +29,8 @@ var React                       = require('react'),
 
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
+    Solutions                   = require('./apps/Solutions/Solutions.react'),
+    SolutionEdit                = require('./apps/Solutions/SolutionEdit.react'),
 
     // Instance Apps
     Admins                      = require('./apps/Admins/Admins.react'),
@@ -41,7 +43,6 @@ var React                       = require('react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
-    Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
     Channels                    = require('./apps/Channels/Channels.react'),
 
@@ -77,13 +78,14 @@ module.exports = (
         <Route name="users" handler={Users} path=":instanceName/users" />
         <DefaultRoute handler={Instances} />
       </Route>
-
       <Route name="profile-billing" handler={Billing} path="/account/billing">
         <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
         <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
         <Route name="profile-billing-invoices" handler={ProfileBillingInvoices} path="invoices" />
         <DefaultRoute handler={ProfileBillingAddress} />
       </Route>
+      <Route name="solutions" handler={Solutions} path="/solutions" />
+      <Route name="solutions-edit" handler={SolutionEdit} path="/solutions/:solutionId/edit" />
       <Route name="profile-settings" handler={ProfileSettings} path="/account" />
       <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
       <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />

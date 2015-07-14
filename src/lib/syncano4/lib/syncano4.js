@@ -409,7 +409,26 @@ var Syncano = (function() {
     };
 
     /**
-     * Object with methods to handle Instances
+     * Object with methods to handle Solutions
+     *
+     * @alias Syncano#Instances
+     * @type {object}
+     * @property {function} list - shortcut to {@link Syncano#listSolutions} method
+     */
+    this.Solutions = {
+      get: this.getSolution.bind(this),
+      list: this.listSolutions.bind(this),
+      listVersions: this.listSolutionVersions.bind(this),
+      create: this.createSolution.bind(this),
+      createVersion: this.createVersion.bind(this),
+      remove: this.removeSolution.bind(this),
+      removeVersion: this.removeSolution.bind(this),
+      star: this.starSolution.bind(this),
+      unstar: this.unstarSolution.bind(this)
+    };
+
+    /**
+     * Object with methods to handle Admins
      *
      * @alias Syncano#Admins
      * @type {object}
@@ -958,6 +977,159 @@ var Syncano = (function() {
         throw new Error('Missing instance name');
       }
       return this.request('GET', 'v1/instances/' + name + '/admins/', params, callbackOK, callbackError);
+    },
+
+    /*********************
+     SOLUTIONS METHODS
+     **********************/
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#getSolution
+     * @alias Syncano.Solutions.get
+     * @param  {number} [id]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    getSolution: function(id, callbackOK, callbackError) {
+      return this.request('GET', 'v1/marketplace/solutions/' + id, {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#listSolutions
+     * @alias Syncano.Solutions.list
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listSolutions: function(params, callbackOK, callbackError) {
+      params = params || {};
+      return this.request('GET', 'v1/marketplace/solutions', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#listSolutions
+     * @alias Syncano.Solutions.list
+     * @param  {object} [params]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listSolutionVersions: function(id, callbackOK, callbackError) {
+      return this.request('GET', 'v1/marketplace/solutions/' + id + '/versions/', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Creates new solution based on passed parameters
+     *
+     * @method Syncano#createSolution
+     * @alias Syncano.Solutions.create
+     * @param {Object} params - values of the solution parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    createSolution: function(params, callbackOK, callbackError) {
+
+      return this.request('POST', 'v1/marketplace/solutions', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes solution based on passed parameters
+     *
+     * @method Syncano#removeSolution
+     * @alias Syncano.Solutions.create
+     * @param {number} solutionId - solutionId
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeSolution: function(solutionId, callbackOK, callbackError) {
+
+      return this.request('DELETE', 'v1/marketplace/solutions/' + solutionId + '/', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Creates new solution based on passed parameters
+     *
+     * @method Syncano#createVersion
+     * @alias Syncano.Solutions.createVersion
+     * @param {number} solutionId - id of the solution
+     * @param {Object} params - values of the version parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    createVersion: function(solutionId, params, callbackOK, callbackError) {
+      var url = 'v1/marketplace/solutions/' + solutionId + '/versions/create_from_instance/';
+      return this.request('POST', url, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes solution version based on passed parameters
+     *
+     * @method Syncano#removeVersion
+     * @alias Syncano.Solutions.create
+     * @param {number} solutionId - solutionId
+     * @param {number} versionId - versionId
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeVersion: function(versionId, solutionId, callbackOK, callbackError) {
+      var url = 'v1/marketplace/solutions/' + solutionId + '/versions/' + versionId + '/';
+      return this.request('DELETE', url, {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Stars solution identified by specified id
+     *
+     * @method Syncano#starSolution
+     * @alias Syncano.Solutions.star
+     * @param {number|object} id - id of solution to star. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    starSolution: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      if (typeof id === 'undefined' || id.length === 0) {
+        throw new Error('Missing solution id');
+      }
+      return this.request('POST', 'v1/marketplace/solutions/' + id + '/star', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Unstars solution identified by specified id
+     *
+     * @method Syncano#unstarSolution
+     * @alias Syncano.Solutions.unstar
+     * @param {number|object} id - id of solution to unstar. If param is an object the id key is taken
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    unstarSolution: function(id, callbackOK, callbackError) {
+      if (typeof id === 'object') {
+        id = id.id;
+      }
+      if (typeof id === 'undefined' || id.length === 0) {
+        throw new Error('Missing solution id');
+      }
+      return this.request('POST', 'v1/marketplace/solutions/' + id + '/unstar', {}, callbackOK, callbackError);
     },
 
     /*********************

@@ -134,7 +134,7 @@ module.exports = Radium(React.createClass({
     return [<Item key="empty">Empty Item</Item>];
   },
 
-  render: function () {
+  render: function() {
     return (
       <ListContainer>
         <Header>
