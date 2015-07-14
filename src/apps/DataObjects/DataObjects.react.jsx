@@ -4,41 +4,25 @@ var React              = require('react'),
 
     // Utils
     HeaderMixin        = require('../Header/HeaderMixin'),
-    ButtonActionMixin  = require('../../mixins/ButtonActionMixin'),
     DialogsMixin       = require('../../mixins/DialogsMixin'),
     InstanceTabsMixin  = require('../../mixins/InstanceTabsMixin'),
     Show               = require('../../common/Show/Show.react'),
 
-    ClassesActions     = require('../Classes/ClassesActions'),
     SessionStore       = require('../Session/SessionStore'),
-    ClassesStore       = require('../Classes/ClassesStore'),
     DataObjectsActions = require('./DataObjectsActions'),
     DataObjectsStore   = require('./DataObjectsStore'),
 
     mui                = require('material-ui'),
-    Transitions        = mui.Styles.Transitions,
-    Colors             = mui.Styles.Colors,
     Dialog             = mui.Dialog,
-    Menu               = mui.Menu,
-    Paper              = mui.Paper,
-    Avatar             = mui.Avatar,
-    FontIcon           = mui.FontIcon,
     IconButton         = mui.IconButton,
-    List               = mui.List,
-    ListDivider        = mui.ListDivider,
-    ListItem           = mui.ListItem,
     Table              = mui.Table,
     Toolbar            = mui.Toolbar,
     ToolbarGroup       = mui.ToolbarGroup,
-    ToolbarSeparator   = mui.ToolbarSeparator,
     ToolbarTitle       = mui.ToolbarTitle,
-    DropDownIcon       = mui.DropDownIcon,
-    DropDownMenu       = mui.DropDownMenu,
     RaisedButton       = mui.RaisedButton,
 
     Loading            = require('../../common/Loading/Loading.react'),
     ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
-    CheckAvatar        = require('./CheckAvatar.react'),
     DataObjectDialog   = require('./DataObjectDialog.react');
 
 module.exports = React.createClass({
@@ -196,10 +180,10 @@ module.exports = React.createClass({
       table = <Loading visible={true} />;
     }
 
-    var selecteMessageText = null;
+    var selectedMessageText = null;
 
     if (this.state.selectedRows && this.state.selectedRows.length > 0) {
-      selecteMessageText = 'selected: ' + this.state.selectedRows.length;
+      selectedMessageText = 'selected: ' + this.state.selectedRows.length;
     }
 
     return (
@@ -209,19 +193,23 @@ module.exports = React.createClass({
 
         <DataObjectDialog />
 
-        <div className="col-flex-1" style={{padding: 0}}>
+        <div className="col-flex-1">
 
-          <Toolbar style={{background: 'transparent', padding: '0px'}}>
+          <Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
 
-            <ToolbarGroup float="left" style={{padding: '0px'}}>
+            <ToolbarGroup>
+              <IconButton
+                iconClassName = "synicon-arrow-left"
+                onClick       = {this.handleBackClick}
+                touch         = {true}
+                style         = {{marginTop: 4}}
+                iconStyle     = {{color: 'rgba(0,0,0,.4)'}}
+              />
+            </ToolbarGroup>
 
-              <FontIcon
-                style     = {{paddingLeft: '0px'}}
-                className = "synicon-arrow-left"
-                onClick   = {this.handleBackClick} />
-
+            <ToolbarGroup>
               <ToolbarTitle text={'Class: ' + this.getParams().className} />
-              <ToolbarTitle text={selecteMessageText} />
+              <ToolbarTitle text={selectedMessageText} />
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
