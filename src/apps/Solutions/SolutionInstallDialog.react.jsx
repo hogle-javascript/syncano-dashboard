@@ -75,6 +75,7 @@ module.exports = React.createClass({
   },
 
   handleDialogShow: function() {
+    console.debug('SolutionInstallDialog::handleDialogShow');
     SolutionEditActions.fetchSolutionVersions(SessionStore.router.getCurrentParams().solutionId);
     InstancesActions.fetch();
   },
