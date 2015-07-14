@@ -15,10 +15,11 @@ var Reflux           = require('reflux'),
     SchedulesActions = require('../Tasks/SchedulesActions'),
     ChannelsActions  = require('../Channels/ChannelsActions'),
 
-    SolutionEditActions = require('./SolutionEditActions');
+    SolutionEditActions = require('./SolutionEditActions'),
+    SolutionVersionDialogActions = require('./SolutionVersionDialogActions');
 
 var SolutionVersionDialogStore = Reflux.createStore({
-  listenables : SolutionEditActions,
+  listenables : SolutionVersionDialogActions,
   mixins      : [
     StoreFormMixin,
     DialogStoreMixin
@@ -42,6 +43,7 @@ var SolutionVersionDialogStore = Reflux.createStore({
   init: function() {
     this.listenToForms();
     this.listenTo(SessionActions.fetchInstance.completed, this.fetchInstanceData);
+    this.listenTo(SolutionEditActions.createVersion.completed, this.onCreateVersionCompleted);
   },
 
   fetchInstanceData: function() {

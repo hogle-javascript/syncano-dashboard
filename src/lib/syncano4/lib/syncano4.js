@@ -416,6 +416,7 @@ var Syncano = (function() {
      * @property {function} list - shortcut to {@link Syncano#listSolutions} method
      */
     this.Solutions = {
+      install: this.installSolution.bind(this),
       get: this.getSolution.bind(this),
       list: this.listSolutions.bind(this),
       listVersions: this.listSolutionVersions.bind(this),
@@ -982,6 +983,25 @@ var Syncano = (function() {
     /*********************
      SOLUTIONS METHODS
      **********************/
+
+    /**
+     * Returns all defined solutions as a list
+     *
+     * @method Syncano#installSolution
+     * @alias Syncano.Solutions.install
+     * @param  {string} [solutionId]
+     * @param  {string} [versionId]
+     * @param  {string} [instanceName]
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    installSolution: function(solutionId, versionId, instanceName, callbackOK, callbackError) {
+      var url = 'v1/marketplace/solutions/' + solutionId + '/versions/' + versionId + '/install/';
+      return this.request('POST', url, {instance : instanceName}, callbackOK, callbackError);
+    },
+
     /**
      * Returns all defined solutions as a list
      *

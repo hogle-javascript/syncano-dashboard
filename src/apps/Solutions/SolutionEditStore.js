@@ -58,13 +58,11 @@ var SolutionsEditStore = Reflux.createStore({
   setSolutionVersions: function(versions) {
     console.debug('SolutionsEditStore::setSolutions');
 
+    this.data.versions = [];
+
     this.data.hasNextPage = versions.hasNextPage();
     this.data.nextParams  = URL.parse(versions.next() || '', true).query;
     this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
-
-    if (!this.data.versions) {
-      this.data.versions = []
-    }
 
     var newItems = [];
     Object.keys(versions).map(function(key) {
@@ -75,6 +73,18 @@ var SolutionsEditStore = Reflux.createStore({
 
     this.data.isLoading = false;
     this.trigger(this.data);
+  },
+
+  getVersionsDropdown: function() {
+    if (!this.data.versions) {
+      return [];
+    }
+    return this.data.versions.map(function(item) {
+      return {
+        payload : item.id,
+        text    : item.number
+      }
+    });
   },
 
   onFetchSolution: function(solution) {
