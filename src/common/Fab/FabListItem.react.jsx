@@ -6,7 +6,6 @@ var React                 = require('react'),
 
     FloatingActionButton  = mui.FloatingActionButton;
 
-
 module.exports = Radium(React.createClass({
 
   displayName: 'FABListItem',
@@ -18,10 +17,16 @@ module.exports = Radium(React.createClass({
   },
 
   getStyles: function() {
-    var styles = {
-      margin: '3px 0'
-    };
-    return this.mergeStyles(styles, this.props.style);
+    return {
+      button: {
+        margin: '3px 0'
+      },
+      icon: {
+        display        : '-webkit-flex; display: flex',
+        AlignItems     : 'center',
+        JustifyContent : 'center'
+      }
+    }
   },
 
   render: function() {
@@ -30,7 +35,9 @@ module.exports = Radium(React.createClass({
     return (
       <FloatingActionButton
         {...this.props}
-        style={styles} />
+        style     = {styles.button}
+        iconStyle = {styles.icon}
+      />
     );
   }
 }));

@@ -16,11 +16,10 @@ var React                 = require('react'),
 
     // Components
     mui                   = require('material-ui'),
-    FloatingActionButton  = mui.FloatingActionButton,
     Dialog                = mui.Dialog,
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
     Container             = require('../../common/Container/Container.react'),
     FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
     ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
     Loading               = require('../../common/Loading/Loading.react'),
     Show                  = require('../../common/Show/Show.react'),
@@ -175,41 +174,40 @@ module.exports = React.createClass({
               iconClassName = {isAnyAndNotAllClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
             <FabListItem
-              label         = "Click here to delete Classes" // TODO: extend component
-              color         = "" // TODO: extend component
+              label         = "Click here to delete Classes"
               mini          = {true}
               disabled      = {someClassIsProtectedFromDelete}
               onClick       = {this.showDialog.bind(null, 'deleteClassDialog')}
-              iconClassName = "synicon-delete" />
+              iconClassName = "synicon-delete"
+            />
 
             <FabListItem
-              label         = "Click here to edit Class" // TODO: extend component
-              color         = "" // TODO: extend component
+              label         = "Click here to edit Class"
               mini          = {true}
               disabled      = {checkedClassesCount > 1}
               onClick       = {this.showClassEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
 
             <FabListItem
               style         = {styles.fabListTopButton}
-              label         = "Click here to customize Class" // TODO: extend component
-              color         = "" // TODO: extend component
+              label         = "Click here to customize Class"
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedClassesCount > 1}
               onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName = "synicon-palette" />
+              iconClassName = "synicon-palette"
+            />
 
           </FabList>
         </Show>
 
-        <FabList
-          style={{bottom: 100}}>
-          <FloatingActionButton
-            label         = "Click here to add Class" // TODO: extend component
-            color         = "" // TODO: extend component
+        <FabList>
+          <FabListItem
+            label         = "Click here to add Class"
             onClick       = {this.showClassDialog}
-            iconClassName = "synicon-plus" />
+            iconClassName = "synicon-plus"
+          />
         </FabList>
 
         <ClassesList
