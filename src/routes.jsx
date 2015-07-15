@@ -23,6 +23,7 @@ var React                       = require('react'),
 
     ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
     ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
+    ProfileBillingPlan          = require('./apps/Profile/ProfileBillingPlan.react'),
     ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
     ProfileBillingPayment       = require('./apps/Profile/ProfileBillingPayment.react'),
     ProfileBillingInvoices      = require('./apps/Profile/ProfileBillingInvoices.react'),
@@ -210,6 +211,11 @@ module.exports = (
         handler = {Billing}
         path    = "/account/billing"
       >
+        <Route
+          name    = "profile-billing-plan"
+          handler = {ProfileBillingPlan}
+          path    = "plan"
+        />
         <Route
           name    = "profile-billing-address"
           handler = {ProfileBillingAddress}

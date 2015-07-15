@@ -39,20 +39,20 @@ module.exports = React.createClass({
 
   subTabsItems: [
     {
-      label: "Current usage",
-      route: "profile-billing-usage"
+      label: 'Billing Plan',
+      route: 'profile-billing-plan'
     },
     {
-      label: "Payment methods",
-      route: "profile-billing-payment"
+      label: 'Payment methods',
+      route: 'profile-billing-payment'
     },
     {
-      label: "Invoices",
-      route: "profile-billing-invoices"
+      label: 'Invoices',
+      route: 'profile-billing-invoices'
     },
     {
-      label: "Billing address",
-      route: "profile-billing-address"
+      label: 'Billing address',
+      route: 'profile-billing-address'
     }
   ],
 
@@ -78,25 +78,25 @@ module.exports = React.createClass({
         <h4>Billing</h4>
         <Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
           <Tab
-            label="Current usage"
-            route="profile-billing-usage"
-            onActive={this.handleTabActive} />
-
+            label    = "Billing plan"
+            route    = "profile-billing-plan"
+            onActive = {this.handleTabActive}
+          />
           <Tab
-            label="Payment methods"
-            route="profile-billing-payment"
-            onActive={this.handleTabActive} />
-
+            label    = "Payment methods"
+            route    = "profile-billing-payment"
+            onActive = {this.handleTabActive}
+          />
           <Tab
-            label="Invoices"
-            route="profile-billing-invoices"
-            onActive={this.handleTabActive} />
-
+            label    = "Invoices"
+            route    = "profile-billing-invoices"
+            onActive = {this.handleTabActive}
+          />
           <Tab
-            label="Billing address"
-            route="profile-billing-address"
-            onActive={this.handleTabActive} />
-
+            label    = "Billing address"
+            route    = "profile-billing-address"
+            onActive = {this.handleTabActive}
+          />
         </Tabs>
         <RouteHandler />
       </div>
