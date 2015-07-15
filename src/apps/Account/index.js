@@ -4,10 +4,10 @@ import PasswordReset from './AccountPasswordReset.react';
 import PasswordResetConfirm from './AccountPasswordResetConfirm.react';
 import PasswordUpdate from './AccountPasswordUpdate.react';
 import Signup from './AccountSignup.react';
-import Actions from './AuthActions.react';
-import Store from './AuthStore.react';
-import Constants from './AuthConstants.react';
-import Hello from './Hello.react';
+import Actions from './AuthActions';
+import Store from './AuthStore';
+import Constants from './AuthConstants';
+import Hello from './Hello';
 
 export {
   Activate,

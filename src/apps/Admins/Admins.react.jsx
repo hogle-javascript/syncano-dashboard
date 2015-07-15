@@ -20,11 +20,10 @@ var React                    = require('react'),
     // Components
     mui                      = require('material-ui'),
     Dialog                   = mui.Dialog,
-    Container                = require('../../common/Container/Container.react'),
-    FabList                  = require('../../common/Fab/FabList.react'),
-    FabListItem              = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog    = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
-    Loading                  = require('../../common/Loading/Loading.react.jsx'),
+    Container                = require('../../common/Container'),
+    FabList                  = require('../../common/Fab'),
+    ColorIconPickerDialog    = require('../../common/ColorIconPicker'),
+    Loading                  = require('../../common/Loading'),
 
     // Local components
     AdminsList               = require('./AdminsList.react'),
@@ -187,19 +186,19 @@ module.exports = React.createClass({
         <Show if={checkedAdmins > 0}>
           <FabList position="top">
 
-            <FabListItem
+            <FabList.Item
               label         = {isAnyAdminSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
               iconClassName = {isAnyAdminSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
-            <FabListItem
+            <FabList.Item
               label         = "Click here to delete Administrator"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName = "synicon-delete" />
 
-            <FabListItem
+            <FabList.Item
               label         = "Click here to edit Admin"
               mini          = {true}
               disabled      = {checkedAdmins > 1}
@@ -212,19 +211,19 @@ module.exports = React.createClass({
         <Show if={checkedInvitations > 0}>
           <FabList position="top">
 
-            <FabListItem
+            <FabList.Item
               label         = {isAnyAdminInvitationSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
               iconClassName = {isAnyAdminInvitationSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
 
-            <FabListItem
+            <FabList.Item
               label         = "Click here to delete Invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeInvitationDialog')}
               iconClassName = "synicon-delete" />
 
-            <FabListItem
+            <FabList.Item
               label         = "Click here to resend invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'resendInvitationDialog')}
@@ -234,7 +233,7 @@ module.exports = React.createClass({
         </Show>
 
         <FabList>
-          <FabListItem
+          <FabList.Item
             label         = "Click here to invite Admin"
             onClick       = {this.showAdminDialog}
             iconClassName = "synicon-plus" />

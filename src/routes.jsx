@@ -13,12 +13,7 @@ var React                       = require('react'),
     NotFound                    = require('./pages/notfound.react'),
 
     // Anonymouns Apps
-    AccountLogin                = require('./apps/Account/AccountLogin.react'),
-    AccountSignup               = require('./apps/Account/AccountSignup.react'),
-    AccountActivate             = require('./apps/Account/AccountActivate.react'),
-    AccountPasswordUpdate       = require('./apps/Account/AccountPasswordUpdate.react'),
-    AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
-    AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
+    Account                     = require('./apps/Account'),
 
     ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
     ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
@@ -33,7 +28,7 @@ var React                       = require('react'),
     SolutionEdit                = require('./apps/Solutions/SolutionEdit.react'),
 
     // Instance Apps
-    Admins                      = require('./apps/Admins/Admins.react'),
+    Admins                      = require('./apps/Admins'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
@@ -52,12 +47,12 @@ var React                       = require('react'),
 
 module.exports = (
   <Route name="app" handler={App} path="/" >
-    <Route name="login" handler={AccountLogin} />
-    <Route name="signup" handler={AccountSignup} />
-    <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
-    <Route name="password-update" handler={AccountPasswordUpdate} path="/password/update" />
-    <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
-    <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
+    <Route name="login" handler={Account.Login} />
+    <Route name="signup" handler={Account.Signup} />
+    <Route name="activate" handler={Account.Activate} path="/activate/:uid/:token" />
+    <Route name="password-update" handler={Account.PasswordUpdate} path="/password/update" />
+    <Route name="password-reset" handler={Account.PasswordReset} path="/password/reset" />
+    <Route name="password-reset-confirm" handler={Account.PasswordResetConfirm} path="/password/reset/:uid/:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
