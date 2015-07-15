@@ -6,9 +6,7 @@ var React                      = require('react'),
     ProfileActions             = require('./ProfileActions'),
     ProfileBillingAddressStore = require('./ProfileBillingAddressStore'),
 
-    mui                        = require('material-ui'),
-    TextField                  = mui.TextField,
-    RaisedButton               = mui.RaisedButton;
+    mui                        = require('material-ui');
 
 
 module.exports = React.createClass({
@@ -81,7 +79,7 @@ module.exports = React.createClass({
         >
           <div className="row vm-6-b">
             <div className="col-flex-1">
-              <TextField
+              <mui.TextField
                 name              = "company_name"
                 fullWidth         = {true}
                 valueLink         = {this.linkState('company_name')}
@@ -91,7 +89,7 @@ module.exports = React.createClass({
                 floatingLabelText = "Company name"
               />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('first_name')}
                 defaultValue      = {this.state.first_name}
                 errorText         = {this.getValidationMessages('first_name').join(' ')}
@@ -101,7 +99,7 @@ module.exports = React.createClass({
                 fullWidth         = {true}
               />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('last_name')}
                 defaultValue      = {this.state.last_name}
                 errorText         = {this.getValidationMessages('last_name').join(' ')}
@@ -111,7 +109,7 @@ module.exports = React.createClass({
                 fullWidth         = {true}
               />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('tax_number')}
                 defaultValue      = {this.state.tax_number}
                 errorText         = {this.getValidationMessages('tax_number').join(' ')}
@@ -119,10 +117,10 @@ module.exports = React.createClass({
                 floatingLabelText = "Tax number"
                 hintText          = "Tax number"
                 fullWidth         = {true}
-                />
+              />
             </div>
             <div className="col-flex-1">
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('address_line1')}
                 defaultValue      = {this.state.address_line1}
                 errorText         = {this.getValidationMessages('address_line1').join(' ')}
@@ -132,7 +130,7 @@ module.exports = React.createClass({
                 fullWidth         = {true}
               />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('address_line2')}
                 defaultValue      = {this.state.address_line2}
                 errorText         = {this.getValidationMessages('address_line2').join(' ')}
@@ -142,7 +140,7 @@ module.exports = React.createClass({
                 fullWidth         = {true}
               />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('address_country')}
                 defaultValue      = {this.state.address_country}
                 errorText         = {this.getValidationMessages('address_country').join(' ')}
@@ -152,7 +150,7 @@ module.exports = React.createClass({
                 fullWidth         = {true}
                 />
 
-              <TextField
+              <mui.TextField
                 valueLink         = {this.linkState('address_state')}
                 defaultValue      = {this.state.address_state}
                 errorText         = {this.getValidationMessages('address_state').join(' ')}
@@ -165,8 +163,7 @@ module.exports = React.createClass({
 
               <div className="row">
                 <div className="col-md-15">
-
-                  <TextField
+                  <mui.TextField
                     valueLink         = {this.linkState('address_zip')}
                     defaultValue      = {this.state.address_zip}
                     errorText         = {this.getValidationMessages('address_zip').join(' ')}
@@ -177,7 +174,7 @@ module.exports = React.createClass({
                   />
                 </div>
                 <div className="col-flex-1">
-                  <TextField
+                  <mui.TextField
                     valueLink         = {this.linkState('address_city')}
                     defaultValue      = {this.state.address_city}
                     errorText         = {this.getValidationMessages('address_city').join(' ')}
@@ -190,14 +187,12 @@ module.exports = React.createClass({
               </div>
             </div>
           </div>
-
-          <RaisedButton
+          <mui.RaisedButton
             type       = "submit"
             label      = "Update"
             className  = "raised-button"
             secondary  = {true}
           />
-
         </form>
       </div>
     );
