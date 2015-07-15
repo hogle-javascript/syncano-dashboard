@@ -1,5 +1,5 @@
 var Syncano    = require('../../lib/syncano4'),
-    connection = new Syncano();
+    connection = new Syncano(undefined, SYNCANO_BASE_URL);
 
 module.exports = {
   Syncano: Syncano,
@@ -15,7 +15,7 @@ module.exports = {
   },
 
   reset: function() {
-    connection = new Syncano();
+    connection = new Syncano(undefined, SYNCANO_BASE_URL);
     connection.setApiKey(null);
     return connection;
   }
