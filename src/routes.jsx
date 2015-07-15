@@ -12,15 +12,8 @@ var React                       = require('react'),
     Billing                     = require('./pages/billing.react'),
     NotFound                    = require('./pages/notfound.react'),
 
-    // Anonymouns Apps
     Account                     = require('./apps/Account'),
-
-    ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
-    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
-    ProfileBillingPayment       = require('./apps/Profile/ProfileBillingPayment.react'),
-    ProfileBillingInvoices      = require('./apps/Profile/ProfileBillingInvoices.react'),
-    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
+    Profile                     = require('./apps/Profile'),
 
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
@@ -72,10 +65,10 @@ module.exports = (
         <DefaultRoute handler={Instances} />
       </Route>
       <Route name="profile-billing" handler={Billing} path="/account/billing">
-        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
-        <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
-        <Route name="profile-billing-invoices" handler={ProfileBillingInvoices} path="invoices" />
-        <DefaultRoute handler={ProfileBillingAddress} />
+        <Route name="profile-billing-address" handler={Profile.BillingAddress} path="address" />
+        <Route name="profile-billing-payment" handler={Profile.BillingPayment} path="payment-methods" />
+        <Route name="profile-billing-invoices" handler={Profile.BillingInvoices} path="invoices" />
+        <DefaultRoute handler={Profile.BillingAddress} />
       </Route>
       <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route
@@ -88,9 +81,9 @@ module.exports = (
         handler = {SolutionEdit}
         path    = "/solutions/:solutionId/edit"
       />
-      <Route name="profile-settings" handler={ProfileSettings} path="/account" />
-      <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
-      <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
+      <Route name="profile-settings" handler={Profile.Settings} path="/account" />
+      <Route name="profile-authentication" handler={Profile.Authentication} path="/account/authentication" />
+      <Route name="profile-invitations" handler={Profile.Invitations} path="/account/invitations" />
       <DefaultRoute handler={Instances} />
     </Route>
 
