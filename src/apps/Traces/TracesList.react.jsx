@@ -122,9 +122,9 @@ module.exports = Radium(React.createClass({
   },
 
   getList: function () {
-    var items = this.state.traces.map(function (item) {
-      return this.renderItem(item)
-    }.bind(this));
+      var items = this.state.items.map(function (item) {
+        return this.renderItem(item)
+      }.bind(this));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

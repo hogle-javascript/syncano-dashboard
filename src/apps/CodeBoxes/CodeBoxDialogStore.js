@@ -42,7 +42,7 @@ var CodeBoxDialogStore = Reflux.createStore({
   onCreateCodeBoxCompleted: function(resp) {
     console.debug('CodeBoxesStore::onCreateCodeBoxCompleted');
     this.dismissDialog();
-    SessionStore.getRouter().transitionTo('codeboxes-edit', {
+    SessionStore.getRouter().transitionTo('codebox-edit', {
       instanceName: SessionStore.getInstance().name,
       codeboxId: resp.id
     });
