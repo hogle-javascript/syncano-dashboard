@@ -37,7 +37,7 @@ deployment:
       - NODE_ENV=production npm run-script publish
       - NODE_ENV=production npm run-script clean
   staging:
-    branch: devel
+    branch: SYNGUI-1076
     commands:
       - npm run-script publish
       - npm run-script clean
