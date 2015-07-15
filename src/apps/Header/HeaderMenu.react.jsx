@@ -31,7 +31,6 @@ module.exports = React.createClass({
     this.state.menuItems.some(function(item, i) {
 
       if (this.isActive(item.route, item.params, item.query)) {
-        console.error("EEE", item.route)
         index = i;
         return true;
       }
