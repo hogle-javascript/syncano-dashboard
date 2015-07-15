@@ -31,9 +31,7 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
-    CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
-    CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
+    CodeBoxes                   = require('./apps/CodeBoxes'),
     Traces                      = require('./apps/Traces/Traces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
@@ -65,8 +63,8 @@ module.exports = (
         <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
         <Route name="codeboxes-traces" handler={Traces} path=":instanceName/codeboxes/:codeboxId/traces" />
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
-        <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
-        <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
+        <Route name="codeboxes-edit" handler={CodeBoxes.Edit} path=":instanceName/codeboxes/:codeboxId/edit" />
+        <Route name="codeboxes-config" handler={CodeBoxes.Config} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="channels" handler={Channels} path=":instanceName/channels" />
