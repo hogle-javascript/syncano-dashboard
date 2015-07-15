@@ -147,7 +147,7 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
 
   if (ENV === 'production') {
     aws.params.Bucket  = 'dashboard-syncano-io';
-    aws.distributionId = 'E3GVWH8UCCSHQ7';
+    aws.distributionId = 'E1OU9ET0QZIL4X';
   }
 
   var src       = ['./dist/**/*', '!./dist/rev-manifest.json'],
