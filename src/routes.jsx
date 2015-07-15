@@ -65,7 +65,8 @@ module.exports = (
     />
     <Route
       name    = "signup"
-      handler = {AccountSignup} />
+      handler = {AccountSignup}
+    />
     <Route
       name    = "activate"
       handler = {AccountActivate}
@@ -116,7 +117,8 @@ module.exports = (
         <Route
           name    = "admins"
           handler = {Admins}
-          path    = ":instanceName/admins" />
+          path    = ":instanceName/admins"
+        />
 
         {/* API keys */}
         <Route
