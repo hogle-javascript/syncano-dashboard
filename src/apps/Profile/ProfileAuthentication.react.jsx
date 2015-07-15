@@ -57,7 +57,14 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       content: {
-        padding         : 48
+        padding         : '24px 48px 48px'
+      },
+      contentRow: {
+        display         : '-webkit-flex; display: flex',
+        AlignItems      : 'center'
+      },
+      accountKey: {
+        margin          : '0 16px 0 0'
       },
       form: {
         maxWidth        : 416
@@ -98,19 +105,21 @@ module.exports = React.createClass({
       >
         <div style={styles.content}>
           <h6>Account key</h6>
-          <p>{this.state.account_key}</p>
-          <ZeroClipboard text={this.state.account_key}>
+          <div style={styles.contentRow}>
+            <p style={styles.accountKey}>{this.state.account_key}</p>
+            <ZeroClipboard text={this.state.account_key}>
+              <mui.FlatButton
+                label   = "COPY"
+                primary = {true}
+                onClick = {this.handleCopyClick}
+              />
+            </ZeroClipboard>
             <mui.FlatButton
-              label   = "COPY"
+              label   = "RESET"
               primary = {true}
-              onClick = {this.handleCopyClick}
+              onClick = {this.handleResetClick}
             />
-          </ZeroClipboard>
-          <mui.FlatButton
-            label   = "RESET"
-            primary = {true}
-            onClick = {this.handleResetClick}
-          />
+          </div>
           <mui.Snackbar
             ref     = "snackbar"
             message = "API key copied to the clipboard"

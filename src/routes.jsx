@@ -10,6 +10,7 @@ var React                       = require('react'),
     Dashboard                   = require('./pages/dashboard.react'),
     Instance                    = require('./pages/instance.react'),
     Billing                     = require('./pages/billing.react'),
+    CodeBoxesPage               = require('./pages/codeBoxes.react'),
     NotFound                    = require('./pages/notfound.react'),
 
     // Anonymouns Apps
@@ -37,12 +38,13 @@ var React                       = require('react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
-    CodeBoxesEdit               = require('./apps/CodeBoxes/CodeBoxesEdit.react'),
-    CodeBoxesConfig             = require('./apps/CodeBoxes/CodeBoxesConfig.react'),
-    Traces                      = require('./apps/Traces/Traces.react'),
+    CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
+    CodeBoxEdit                 = require('./apps/CodeBoxes/CodeBoxEdit.react.jsx'),
+    CodeBoxConfig               = require('./apps/CodeBoxes/CodeBoxConfig.react.jsx'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
+    Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
     Channels                    = require('./apps/Channels/Channels.react'),
 
@@ -67,11 +69,16 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="classes-data-objects" handler={DataObjects} path=":instanceName/classes/:className/objects" />
-        <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxes-traces" handler={Traces} path=":instanceName/codeboxes/:codeboxId/traces" />
+        <Route name="codeboxes" handler={CodeBoxesPage} path=":instanceName/codeboxes">
+          <Route name="codebox" handler={CodeBox} path=":codeboxId">
+            <Route name="codebox-traces" handler={Traces} path="traces" />
+            <Route name="codebox-edit" handler={CodeBoxEdit} path="edit" />
+            <Route name="codebox-config" handler={CodeBoxConfig} path="config" />
+            <DefaultRoute handler={CodeBoxEdit} />
+          </Route>
+          <DefaultRoute handler={CodeBoxes} />
+        </Route>
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
-        <Route name="codeboxes-edit" handler={CodeBoxesEdit} path=":instanceName/codeboxes/:codeboxId/edit" />
-        <Route name="codeboxes-config" handler={CodeBoxesConfig} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="channels" handler={Channels} path=":instanceName/channels" />

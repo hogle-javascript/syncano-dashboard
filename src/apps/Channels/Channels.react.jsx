@@ -92,11 +92,6 @@ module.exports = React.createClass({
     ChannelsActions.removeChannels(ChannelsStore.getCheckedItems());
   },
 
-  handleItemClick: function(itemId) {
-    // Redirect to edit screen
-    this.transitionTo('codeboxes-edit', {instanceName: SessionStore.instance.name, codeboxId: itemId});
-  },
-
   showChannelDialog: function() {
     ChannelsActions.showDialog();
   },
