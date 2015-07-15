@@ -29,7 +29,6 @@ var React                     = require('react'),
     ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
     ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'ProfileInvitations',
@@ -59,7 +58,7 @@ module.exports = React.createClass({
     }
   ],
 
-  initDialogs: function () {
+  initDialogs: function() {
     var checked = ProfileInvitationsStore.getCheckedItems().length;
 
     return [
@@ -73,7 +72,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleAccept}
           ],
           modal: true,
-          children: 'Do you really want to accept ' + checked +' Invitations?'
+          children: 'Do you really want to accept ' + checked + ' Invitations?'
         }
       },
       {
@@ -86,7 +85,7 @@ module.exports = React.createClass({
             {text: "Yes, I'm sure.", onClick: this.handleDecline}
           ],
           modal: true,
-          children: 'Do you really want to decline ' + checked +' Invitations?'
+          children: 'Do you really want to decline ' + checked + ' Invitations?'
         }
       }
     ]
@@ -107,7 +106,7 @@ module.exports = React.createClass({
     ProfileInvitationsActions.uncheckAll();
   },
 
-  checkItem: function(id, state){
+  checkItem: function(id, state) {
     console.info('ProfileInvitations::checkItem');
     ProfileInvitationsActions.checkItem(id, state);
   },
@@ -142,7 +141,7 @@ module.exports = React.createClass({
     }
   },
 
-  renderItem: function (item) {
+  renderItem: function(item) {
     return (
       <Item
         checked = {item.checked}
@@ -162,8 +161,8 @@ module.exports = React.createClass({
     );
   },
 
-  renderList: function () {
-    var items = this.state.items.map(function (item) {
+  renderList: function() {
+    var items = this.state.items.map(function(item) {
       return this.renderItem(item);
     }.bind(this));
 
@@ -174,7 +173,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var styles             = this.getStyles(),
         checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 

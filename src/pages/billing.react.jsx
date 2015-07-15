@@ -5,8 +5,7 @@ var React         = require('react'),
     HeaderMixin   = require('../apps/Header/HeaderMixin'),
 
     mui           = require('material-ui'),
-    Tabs          = mui.Tabs,
-    Tab           = mui.Tab;
+    Common        = require('../common');
 
 module.exports = React.createClass({
 
@@ -42,33 +41,34 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div className="container">
-        <h4>Billing</h4>
-        <Tabs>
-          <Tab
+      <Common.Container.Profile headerText='Billing'>
+        <mui.Tabs>
+          <mui.Tab
             label="Current usage"
             route="profile-billing-usage"
-            onActive={this.handleTabActive} />
+            onActive={this.handleTabActive}
+          />
 
-          <Tab
+          <mui.Tab
             label="Payment methods"
             route="profile-billing-payment"
-            onActive={this.handleTabActive} />
+            onActive={this.handleTabActive}
+          />
 
-          <Tab
+          <mui.Tab
             label="Invoices"
             route="profile-billing-invoices"
-            onActive={this.handleTabActive} />
+            onActive={this.handleTabActive}
+          />
 
-          <Tab
+          <mui.Tab
             label="Billing address"
             route="profile-billing-address"
-            onActive={this.handleTabActive} />
-
-        </Tabs>
+            onActive={this.handleTabActive}
+          />
+        </mui.Tabs>
         <RouteHandler />
-      </div>
+      </Common.Container.Profile>
     );
   }
-
 });
