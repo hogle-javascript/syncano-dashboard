@@ -140,7 +140,7 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
 
   var aws = {
     region: 'us-west-2',
-    distributionId: 'E10VUXJJFKD7D3',
+    distributionId: 'E264182EUP50UN',
     params: {Bucket: 'dashboard-syncano-rocks'},
     patternIndex: /^\/index-[a-f0-9]{10}\.html(\.gz)*$/gi
   };
