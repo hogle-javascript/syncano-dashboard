@@ -10,6 +10,7 @@ var React                       = require('react'),
     Dashboard                   = require('./pages/dashboard.react'),
     Instance                    = require('./pages/instance.react'),
     Billing                     = require('./pages/billing.react'),
+    CodeBoxesPage               = require('./pages/codeBoxes.react'),
     NotFound                    = require('./pages/notfound.react'),
 
     Account                     = require('./apps/Account'),
@@ -53,11 +54,16 @@ module.exports = (
         <Route name="api-keys" handler={ApiKeys} path=":instanceName/api_keys" />
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="classes-data-objects" handler={DataObjects} path=":instanceName/classes/:className/objects" />
-        <Route name="codeboxes" handler={CodeBoxes} path=":instanceName/codeboxes" />
-        <Route name="codeboxes-traces" handler={Traces} path=":instanceName/codeboxes/:codeboxId/traces" />
+        <Route name="codeboxes" handler={CodeBoxesPage} path=":instanceName/codeboxes">
+          <Route name="codebox" handler={CodeBoxes.Details} path=":codeboxId">
+            <Route name="codebox-traces" handler={Traces} path="traces" />
+            <Route name="codebox-edit" handler={CodeBoxes.Edit} path="edit" />
+            <Route name="codebox-config" handler={CodeBoxes.Config} path="config" />
+            <DefaultRoute handler={CodeBoxEdit} />
+          </Route>
+          <DefaultRoute handler={CodeBoxes} />
+        </Route>
         <Route name="codeboxes-add" handler={CodeBoxes} path=":instanceName/codeboxes/:action" />
-        <Route name="codeboxes-edit" handler={CodeBoxes.Edit} path=":instanceName/codeboxes/:codeboxId/edit" />
-        <Route name="codeboxes-config" handler={CodeBoxes.Config} path=":instanceName/codeboxes/:codeboxId/config" />
         <Route name="data-objects" handler={DataObjects} path=":instanceName/objects" />
         <Route name="tasks" handler={Tasks} path=":instanceName/tasks" />
         <Route name="channels" handler={Channels} path=":instanceName/channels" />

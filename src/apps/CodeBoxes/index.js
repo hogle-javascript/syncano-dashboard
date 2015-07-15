@@ -1,6 +1,7 @@
 import CodeBoxes from './CodeBoxes.react';
-import CodeBoxesConfig from './CodeBoxesConfig.react';
-import CodeBoxesEdit from './CodeBoxesEdit.react';
+import CodeBox from './CodeBox.react';
+import CodeBoxConfig from './CodeBoxConfig.react';
+import CodeBoxEdit from './CodeBoxEdit.react';
 import CodeBoxesStore from './CodeBoxesStore';
 import CodeBoxesList from './CodeBoxesList.react';
 import CodeBoxesActions from './CodeBoxesActions';
@@ -12,7 +13,8 @@ CodeBoxes.Store       = CodeBoxesStore;
 CodeBoxes.List        = CodeBoxesList;
 CodeBoxes.Dialog      = CodeBoxDialog;
 CodeBoxes.DialogStore = CodeBoxDialogStore;
-CodeBoxes.Config      = CodeBoxesConfig;
-CodeBoxes.Edit        = CodeBoxesEdit;
+CodeBoxes.Config      = CodeBoxConfig;
+CodeBoxes.Edit        = CodeBoxEdit;
+CodeBoxes.Details     = CodeBox;
 
 export default CodeBoxes;
