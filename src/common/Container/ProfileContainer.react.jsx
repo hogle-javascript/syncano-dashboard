@@ -1,8 +1,7 @@
 var React = require('react'),
 
-    mui    = require('material-ui'),
+    MUI    = require('material-ui'),
     Common = require('../../common');
-
 
 module.exports = React.createClass({
 
@@ -11,14 +10,14 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       container: {
-        marginTop       : 96,
-        marginBottom    : 96
+        marginTop    : 96,
+        marginBottom : 96
       },
       header: {
-        padding         : 48,
-        color           : 'rgba(0, 0, 0, 0.87)',
-        fontSize        : 20,
-        lineHeight      : '24px'
+        padding      : 48,
+        color        : 'rgba(0, 0, 0, 0.87)',
+        fontSize     : 20,
+        lineHeight   : '24px'
       }
     }
   },
@@ -32,7 +31,7 @@ module.exports = React.createClass({
         style     = {styles.container}>
         <div className="row align-center">
           <div className="col-md-25">
-            <mui.Paper
+            <MUI.Paper
               zDepth  = {1}
               rounded = {false}
             >
@@ -42,7 +41,7 @@ module.exports = React.createClass({
               <Common.Loading show={this.props.show}>
                 {this.props.children}
               </Common.Loading>
-            </mui.Paper>
+            </MUI.Paper>
           </div>
         </div>
       </div>
