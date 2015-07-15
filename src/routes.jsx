@@ -13,20 +13,8 @@ var React                       = require('react'),
     CodeBoxesPage               = require('./pages/codeBoxes.react'),
     NotFound                    = require('./pages/notfound.react'),
 
-    // Anonymouns Apps
-    AccountLogin                = require('./apps/Account/AccountLogin.react'),
-    AccountSignup               = require('./apps/Account/AccountSignup.react'),
-    AccountActivate             = require('./apps/Account/AccountActivate.react'),
-    AccountPasswordUpdate       = require('./apps/Account/AccountPasswordUpdate.react'),
-    AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
-    AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
-
-    ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
-    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
-    ProfileBillingPayment       = require('./apps/Profile/ProfileBillingPayment.react'),
-    ProfileBillingInvoices      = require('./apps/Profile/ProfileBillingInvoices.react'),
-    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
+    Account                     = require('./apps/Account'),
+    Profile                     = require('./apps/Profile'),
 
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
@@ -37,10 +25,7 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
-    CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
-    CodeBoxEdit                 = require('./apps/CodeBoxes/CodeBoxEdit.react.jsx'),
-    CodeBoxConfig               = require('./apps/CodeBoxes/CodeBoxConfig.react.jsx'),
+    CodeBoxes                   = require('./apps/CodeBoxes'),
     Traces                      = require('./apps/Traces/Traces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
@@ -55,12 +40,12 @@ var React                       = require('react'),
 
 module.exports = (
   <Route name="app" handler={App} path="/" >
-    <Route name="login" handler={AccountLogin} />
-    <Route name="signup" handler={AccountSignup} />
-    <Route name="activate" handler={AccountActivate} path="/activate/:uid/:token" />
-    <Route name="password-update" handler={AccountPasswordUpdate} path="/password/update" />
-    <Route name="password-reset" handler={AccountPasswordReset} path="/password/reset" />
-    <Route name="password-reset-confirm" handler={AccountPasswordResetConfirm} path="/password/reset/:uid/:token" />
+    <Route name="login" handler={Account.Login} />
+    <Route name="signup" handler={Account.Signup} />
+    <Route name="activate" handler={Account.Activate} path="/activate/:uid/:token" />
+    <Route name="password-update" handler={Account.PasswordUpdate} path="/password/update" />
+    <Route name="password-reset" handler={Account.PasswordReset} path="/password/reset" />
+    <Route name="password-reset-confirm" handler={Account.PasswordResetConfirm} path="/password/reset/:uid/:token" />
 
     <Route name="dashboard" handler={Dashboard} path="/" >
       <Route name="instances" handler={Instance} path="/instances">
@@ -71,10 +56,10 @@ module.exports = (
         <Route name="classes" handler={Classes} path=":instanceName/classes" />
         <Route name="classes-data-objects" handler={DataObjects} path=":instanceName/classes/:className/objects" />
         <Route name="codeboxes" handler={CodeBoxesPage} path=":instanceName/codeboxes">
-          <Route name="codebox" handler={CodeBox} path=":codeboxId">
+          <Route name="codebox" handler={CodeBoxes.Details} path=":codeboxId">
             <Route name="codebox-traces" handler={Traces} path="traces" />
-            <Route name="codebox-edit" handler={CodeBoxEdit} path="edit" />
-            <Route name="codebox-config" handler={CodeBoxConfig} path="config" />
+            <Route name="codebox-edit" handler={CodeBoxes.Edit} path="edit" />
+            <Route name="codebox-config" handler={CodeBoxes.Config} path="config" />
             <DefaultRoute handler={CodeBoxEdit} />
           </Route>
           <DefaultRoute handler={CodeBoxes} />
@@ -87,10 +72,10 @@ module.exports = (
         <DefaultRoute handler={Instances} />
       </Route>
       <Route name="profile-billing" handler={Billing} path="/account/billing">
-        <Route name="profile-billing-address" handler={ProfileBillingAddress} path="address" />
-        <Route name="profile-billing-payment" handler={ProfileBillingPayment} path="payment-methods" />
-        <Route name="profile-billing-invoices" handler={ProfileBillingInvoices} path="invoices" />
-        <DefaultRoute handler={ProfileBillingAddress} />
+        <Route name="profile-billing-address" handler={Profile.BillingAddress} path="address" />
+        <Route name="profile-billing-payment" handler={Profile.BillingPayment} path="payment-methods" />
+        <Route name="profile-billing-invoices" handler={Profile.BillingInvoices} path="invoices" />
+        <DefaultRoute handler={Profile.BillingAddress} />
       </Route>
       <Route name="solutions" handler={Solutions} path="/solutions" />
       <Route
@@ -103,9 +88,9 @@ module.exports = (
         handler = {SolutionEdit}
         path    = "/solutions/:solutionId/edit"
       />
-      <Route name="profile-settings" handler={ProfileSettings} path="/account" />
-      <Route name="profile-authentication" handler={ProfileAuthentication} path="/account/authentication" />
-      <Route name="profile-invitations" handler={ProfileInvitations} path="/account/invitations" />
+      <Route name="profile-settings" handler={Profile.Settings} path="/account" />
+      <Route name="profile-authentication" handler={Profile.Authentication} path="/account/authentication" />
+      <Route name="profile-invitations" handler={Profile.Invitations} path="/account/invitations" />
       <DefaultRoute handler={Instances} />
     </Route>
 

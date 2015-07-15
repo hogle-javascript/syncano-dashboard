@@ -18,9 +18,8 @@ var React                = require('react'),
     RaisedButton         = mui.RaisedButton,
     Paper                = mui.Paper,
 
-    SocialAuthButton     = require('../../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList = require('../../common/SocialAuthButton/SocialAuthButtonList.react'),
-    Logo                 = require('../../common/Logo/Logo.react');
+    SocialAuthButton     = require('../../common/SocialAuthButton'),
+    Logo                 = require('../../common/Logo');
 
 
 require('./Account.sass');
@@ -101,7 +100,7 @@ module.exports = React.createClass({
       )
     }.bind(this));
 
-    return <SocialAuthButtonList>{buttons}</SocialAuthButtonList>
+    return <SocialAuthButton.List>{buttons}</SocialAuthButton.List>
   },
 
   render: function () {

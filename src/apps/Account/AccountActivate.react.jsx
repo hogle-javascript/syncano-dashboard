@@ -8,7 +8,7 @@ var React       = require('react'),
 
     mui         = require('material-ui'),
     Paper       = mui.Paper,
-    Logo        = require('../../common/Logo/Logo.react');
+    Logo        = require('../../common/Logo');
 
 
 module.exports = React.createClass({

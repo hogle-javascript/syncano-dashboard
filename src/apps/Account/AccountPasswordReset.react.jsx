@@ -16,7 +16,7 @@ var React           = require('react'),
     RaisedButton    = mui.RaisedButton,
     Paper           = mui.Paper,
 
-    Logo            = require('../../common/Logo/Logo.react');
+    Logo            = require('../../common/Logo');
 
 
 require('./Account.sass');

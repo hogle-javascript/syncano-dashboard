@@ -15,7 +15,7 @@ var React                    = require('react'),
     TextField                 = mui.TextField,
     SelectField               = mui.SelectField,
     Dialog                    = mui.Dialog,
-    Loading                   = require('../../common/Loading/Loading.react.jsx');
+    Loading                   = require('../../common/Loading');
 
 module.exports = React.createClass({
 
