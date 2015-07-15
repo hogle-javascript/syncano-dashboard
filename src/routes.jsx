@@ -28,7 +28,7 @@ var React                       = require('react'),
     SolutionEdit                = require('./apps/Solutions/SolutionEdit.react'),
 
     // Instance Apps
-    Admins                      = require('./apps/Admins'),
+    Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
     CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
