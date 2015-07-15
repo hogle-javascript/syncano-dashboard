@@ -16,7 +16,6 @@ var React                      = require('react'),
     Paper                      = mui.Paper,
     Loading                    = require('../../common/Loading/Loading.react');
 
-
 module.exports = React.createClass({
 
   displayName: 'ProfileAuthentication',
@@ -67,13 +66,20 @@ module.exports = React.createClass({
         marginBottom    : 96
       },
       header: {
-        padding         : '48px 48px 0',
+        padding         : 48,
         color           : 'rgba(0, 0, 0, 0.87)',
         fontSize        : 20,
         lineHeight      : '24px'
       },
       content: {
-        padding         : 48
+        padding         : '24px 48px 48px'
+      },
+      contentRow: {
+        display         : '-webkit-flex; display: flex',
+        AlignItems      : 'center'
+      },
+      accountKey: {
+        margin          : '0 16px 0 0'
       },
       form: {
         maxWidth        : 416
@@ -101,11 +107,11 @@ module.exports = React.createClass({
     ProfileActions.resetKey();
   },
 
-  handleSuccessfullValidation: function () {
+  handleSuccessfullValidation: function() {
     ProfileActions.changePassword(this.state);
   },
 
-  render: function () {
+  render: function() {
     var styles = this.getStyles();
 
     return (
@@ -124,20 +130,25 @@ module.exports = React.createClass({
             <Loading show={this.state.isLoading}>
               <div style={styles.content}>
                 <h6>Account key</h6>
-                <p>{this.state.account_key}</p>
-                <ZeroClipboard text={this.state.account_key}>
+                <div style={styles.contentRow}>
+                  <p style={styles.accountKey}>{this.state.account_key}</p>
+                  <ZeroClipboard text={this.state.account_key}>
+                    <FlatButton
+                      label   = "COPY"
+                      primary = {true}
+                      onClick = {this.handleCopyClick}
+                    />
+                  </ZeroClipboard>
                   <FlatButton
-                    label       = "COPY"
-                    primary     = {true}
-                    onClick     = {this.handleCopyClick} />
-                </ZeroClipboard>
-                <FlatButton
-                  label       = "RESET"
-                  primary     = {true}
-                  onClick     = {this.handleResetClick} />
+                    label   = "RESET"
+                    primary = {true}
+                    onClick = {this.handleResetClick}
+                  />
+                </div>
                 <Snackbar
-                  ref="snackbar"
-                  message="API key copied to the clipboard" />
+                  ref     = "snackbar"
+                  message = "API key copied to the clipboard"
+                />
               </div>
               <div style={styles.content}>
                 <h6>Password</h6>
@@ -157,7 +168,8 @@ module.exports = React.createClass({
                     className         = "text-field"
                     autoComplete      = "currentPassword"
                     hintText          = "Current password"
-                    fullWidth         = {true} />
+                    fullWidth         = {true}
+                  />
                   <TextField
                     ref               = "newPassword"
                     type              = "password"
@@ -168,7 +180,8 @@ module.exports = React.createClass({
                     className         = "text-field"
                     autoComplete      = "newPassword"
                     hintText          = "New password"
-                    fullWidth         = {true} />
+                    fullWidth         = {true}
+                  />
                   <TextField
                     ref               = "confirmNewPassword"
                     type              = "password"
@@ -179,14 +192,16 @@ module.exports = React.createClass({
                     className         = "text-field vm-6-b"
                     autoComplete      = "confirmNewPassword"
                     hintText          = "Confirm new password"
-                    fullWidth         = {true} />
+                    fullWidth         = {true}
+                  />
                   <RaisedButton
                     type       = "submit"
                     label      = "Update"
                     style      = {styles.updateButton}
                     labelStyle = {styles.updateButtonLabel}
                     className  = "raised-button"
-                    secondary  = {true} />
+                    secondary  = {true}
+                  />
                 </form>
               </div>
             </Loading>
