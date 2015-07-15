@@ -1,5 +1,7 @@
-var React = require('react');
-var Icon = require('../Icon/Icon.react');
+var React = require('react'),
+    mui   = require('material-ui'),
+
+    FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
@@ -32,7 +34,7 @@ module.exports = React.createClass({
           <div className="card-section-inner">
             <div className="card-section-header">
               <div className="card-section-icon">
-                <Icon icon="terminal"/>
+                <FontIcon className="synicon-console"/>
               </div>
               <div className="card-section-header-content">
                 <div className="card-section-title">Result</div>
@@ -47,7 +49,7 @@ module.exports = React.createClass({
           <div className="card-section-inner">
             <div className="card-section-header">
               <div className="card-section-icon">
-                <Icon icon="terminal"/>
+                <FontIcon className="synicon-console"/>
               </div>
               <div className="card-section-header-content">
                 <div className="card-section-title">Meta</div>
@@ -62,7 +64,7 @@ module.exports = React.createClass({
           <div className="card-section-inner">
             <div className="card-section-header">
               <div className="card-section-icon">
-                <Icon icon="terminal"/>
+                <FontIcon className="synicon-console"/>
               </div>
               <div className="card-section-header-content">
                 <div className="card-section-title">Payload</div>

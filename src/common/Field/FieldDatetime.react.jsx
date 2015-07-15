@@ -1,46 +1,80 @@
-var React = require('react');
-var classNames = require('classnames');
+var React      = require('react'),
+    classNames = require('classnames'),
+    mui        = require('material-ui'),
 
-var Calendar = require('../Calendar/Calendar.react');
-var Icon = require('../Icon/Icon.react');
+    FontIcon   = mui.FontIcon,
+    Field      = mui.TextField,
+    Calendar   = require('../Calendar/Calendar.react');
 
-require('./Field.css');
+//require('./Field.css');
 
 module.exports = React.createClass({
 
   displayName: 'FieldDatetime',
 
-  getInitialState: function () {
+  propTypes: {
+    labelText  : React.PropTypes.string,
+    dateFormat : React.PropTypes.string,
+    fieldStyle : React.PropTypes.object
+  },
+
+  getDefaultProps: function () {
     return {
-      visible: true,
+      labelText  : "Date",
+      dateFormat : "YYYY-MM-DDThh:mm:ss.uuuuuuZ",
+      iconColor  : "#0091EA",
+      fieldStyle : {width: "100%"}
     };
   },
 
-  handleOnClick: function () {
+  getInitialState: function () {
+    return {
+      hidden: true
+    };
+  },
+
+  handleClick: function (e) {
     this.setState({
-      visible: !this.state.visible,
+      hidden: !this.state.hidden
     })
   },
 
+  getIconStyle: function() {
+    return {
+      fill   : this.props.iconColor,
+      width  : "16px",
+      height : "16px",
+      cursor : "pointer"
+    }
+  },
+
   render: function () {
-    var iconStyle = {fill: "#000000", width: "16px", height: "16px"};
-    var field = this.props.field;
+    /*var field = this.props.field;
     var cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
-      'field-group': true,
+      'field-group': false,
       'field-group-large-text': this.props.field.largeText,
-    });
+    });*/
     var calendarClasses = classNames({
-      "calendar-field-visible": true,
-      "calendar-field-hidden": this.state.visible,
+      "calendar-field-visible" : true,
+      "calendar-field-hidden"  : this.state.hidden
     })
     return (
-      <div className={cssClasses}>
-        <div className="field-label">{field.displayName}</div>
-        <div className="field-input" ref="input" contentEditable>{field.value}</div>
-        <div className={calendarClasses} ref="calendar">
+      <div> 
+        <Field
+          className         = "abc"
+          ref               = "input"
+          hintText          = {this.props.dateFormat}
+          floatingLabelText = {this.props.labelText}
+          style             = {this.props.fieldStyle} />
+        <div
+          className = {calendarClasses}
+          ref       = "calendar">
           <Calendar inputField={this.refs.input}/>
         </div>
-        <Icon style={iconStyle} icon="arrow_down" handleClick={this.handleOnClick}/>
+        <FontIcon
+          ref       = "icon"
+          className = "synicon-arrow-down"
+          onClick   = {this.handleClick} />
       </div>
     );
   }

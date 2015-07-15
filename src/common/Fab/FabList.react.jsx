@@ -1,30 +1,52 @@
-var React = require('react');
+var React         = require('react'),
+    Radium        = require('radium'),
 
-var FAB   = require('./Fab.react');
-var Label = require('../Label/Label.react');
+    mui           = require('material-ui'),
+    StylePropable = mui.Mixins.StylePropable;
 
-module.exports = React.createClass({
+
+module.exports = Radium(React.createClass({
 
   displayName: 'FABList',
 
+  mixins: [StylePropable],
+
+  getDefaultProps: function () {
+    return {
+      position: 'bottom'
+    }
+  },
+
   propTypes: {
-    buttons: React.PropTypes.array.isRequired,
-    handleFABClick: React.PropTypes.func.isRequired,
+    position: React.PropTypes.string.isRequired
+  },
+
+  getStyles: function() {
+    var styles = {
+      position: 'fixed',
+      right: '2vw',
+      zIndex: 9,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end'
+    };
+
+    if (this.props.position === 'bottom') {
+      styles.bottom = '50px';
+    } else {
+      styles.top    = '200px';
+    }
+
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function() {
-    var buttons = this.props.buttons.map(function(button) {
-      return (
-        <div className="fab-with-label" key={button.name}>
-          <FAB button={button} handleFABClick={this.props.handleFABClick}/>
-          <Label text={button.label} />
-        </div>
-      );
-    }.bind(this));
+    var styles = this.getStyles();
+
     return (
-      <div className="fab-list">
-        {buttons}
+      <div style={styles}>
+        {this.props.children}
       </div>
     );
   }
-});
+}));

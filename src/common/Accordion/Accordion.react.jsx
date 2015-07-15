@@ -1,10 +1,8 @@
-var React = require('react');
+import React from 'react';
+import AccordionListItemPrimary from './AccordionListItemPrimary.react';
+import './Accordion.css';
 
-var AccordionListItemPrimary = require('./AccordionListItemPrimary.react');
-
-require('./Accordion.css');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Accordion',
 

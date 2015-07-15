@@ -1,11 +1,9 @@
-var React = require('react');
-var classNames = require('classnames');
+var React             = require('react'),
+    classNames        = require('classnames'),
+    mui               = require('material-ui'),
 
-//var ModalStore = require('../stores/ModalStore');
-//var ViewActions = require('../actions/ViewActions');
-
-var FieldSelectOption = require('./FieldSelectOption.react');
-var Icon = require('../Icon/Icon.react');
+    FieldSelectOption = require('./FieldSelectOption.react'),
+    FontIcon          = mui.FontIcon;
 
 require('./Field.css');
 
@@ -14,68 +12,78 @@ module.exports = React.createClass({
   displayName: 'FieldSelect',
 
   propTypes: {
-    field: React.PropTypes.object.isRequired,
+    field: React.PropTypes.shape({
+      displayName: React.PropTypes.string,
+      name: React.PropTypes.string,
+      options: React.PropTypes.arrayOf(React.PropTypes.object),
+      type: React.PropTypes.string,
+    }),
     //handleKeyUp: React.PropTypes.func.isRequired,
   },
 
 
   getInitialState: function () {
     return {
-      selectedOptionName: this.props.field.value,
-      errorText: null
-    }
-  },
-
-  componentWillReceiveProps: function (nextProps) {
-    if (nextProps.errorText !== this.state.errorText) {
-      this.setState({errorText: nextProps.errorText})
-    }
-  },
-
-  componentWillUpdate: function (nextProps, nextState) {
-    if (nextState.selectedOptionName !== this.state.selectedOptionName) {
-      ViewActions.clearError(this.props.field.name);
+      optionsVisible: false,
+      selectedOptionName: this.props.field.value
     }
   },
 
   onOptionClick: function (selectedOptionName) {
-    this.setState({selectedOptionName: selectedOptionName})
+    this.setState({
+      selectedOptionName: selectedOptionName,
+      optionsVisible: !this.state.optionsVisible
+    })
   },
 
   toggleOptions: function () {
-    ViewActions.updateVisibleOptions(this.props.field.name);
+    //ViewActions.updateVisibleOptions(this.props.field.name);
   },
 
   onClick: function (e) {
     e.stopPropagation();
-    ViewActions.updateVisibleOptions(this.props.field.name);
+    //ViewActions.updateVisibleOptions(this.props.field.name);
+    this.setState({
+      optionsVisible: !this.state.optionsVisible
+    })
   },
 
   onFocus: function () {
-    ViewActions.updateVisibleOptions(this.props.field.name);
+    //ViewActions.updateVisibleOptions(this.props.field.name);
+    this.setState({
+      optionsVisible: !this.state.optionsVisible
+    })
   },
 
   render: function () {
     var selectedOptionDisplayName;
-    var fieldWithVisibleOptions = ModalStore.getModal().fieldWithVisibleOptions;
+    //var fieldWithVisibleOptions = ModalStore.getModal().fieldWithVisibleOptions;
     var cssClasses = classNames('field-group', 'field-group-select', {
-      'field-group-error': this.state.errorText,
-      'field-options-visible': fieldWithVisibleOptions === this.props.field.name,
+      'field-options-visible': this.state.optionsVisible, //fieldWithVisibleOptions === this.props.field.name,
     });
-    var options = this.props.field.options.map(function (option) {
+    var options = this.props.field.options.map(function(option) {
       if (option.name === this.state.selectedOptionName) {
         selectedOptionDisplayName = option.displayName;
       }
-      return <FieldSelectOption key={option.name} option={option} handleClick={this.onOptionClick}/>
+      return <FieldSelectOption
+               key         = {option.name}
+               option      = {option}
+               handleClick = {this.onOptionClick}/>
     }.bind(this));
     return (
-      <div className={cssClasses} onClick={this.toggleOptions}>
+      <div
+        className = {cssClasses}
+        onClick   = {this.toggleOptions}>
         <div className="field-label">{this.props.field.displayName}</div>
-        <div className="field-input-group" onClick={this.onClick}>
-          <div className="field-input" ref="input" onFocus={this.onFocus}>{selectedOptionDisplayName}</div>
-          <Icon icon="menu-down"/>
+        <div
+          className = "field-input-group"
+          onClick   = {this.onClick}>
+          <div
+            className = "field-input"
+            ref       = "input"
+            onFocus   = {this.onFocus}>{selectedOptionDisplayName}</div>
+          <FontIcon className="synicon-menu-down" />
         </div>
-        <div className="field-error-text">{this.state.errorText}</div>
         <div className="field-options-group">
           {options}
         </div>

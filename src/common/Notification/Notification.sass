@@ -1,0 +1,37 @@
+@import 'config'
+@import 'compass/css3/flexbox.scss'
+@import 'compass/typography/vertical_rhythm.scss'
+
+.notification-container
+  +margin-trailer(1)
+  overflow: hidden
+
+.notification
+  +margin-trailer(2)
+  +rhythm-borders(1px, 2)
+  +horizontal-borders(1px, 1.5)
+  border: 1px solid
+  border-radius: 2px
+
+  &__content
+    +adjust-font-size-to(14px)
+    +display-flex
+    vertical-align: middle
+
+    &__icon
+      min-width: 34px
+
+  &.notification--warning
+    background-color: #FFF3E0
+    border-color: #FF9100
+    color: #FF9100
+
+  &.notification--error
+    background-color: #FCE4EC
+    border-color: #F50057
+    color: #F50057
+
+  &.notification--info
+    background-color: #E1F5FE
+    border-color: #00B0FF
+    color: #00B0FF

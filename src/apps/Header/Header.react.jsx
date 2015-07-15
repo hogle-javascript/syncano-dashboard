@@ -1,114 +1,231 @@
-var React = require('react');
-var classNames = require('classnames');
+var React                       = require('react'),
+    Reflux                      = require('reflux'),
+    Radium                      = require('radium'),
+    Router                      = require('react-router'),
+    Link                        = Router.Link,
+    mui                         = require('material-ui'),
 
-var HeaderStore = require('./store');
-var AuthStore = require('../Auth/store');
+    // Utils & Mixins
+    StylePropable               = mui.Mixins.StylePropable,
 
-//var ViewActions   = require('../actions/ViewActions');
+    // Stores & Actions
+    HeaderActions               = require('./HeaderActions'),
+    HeaderStore                 = require('./HeaderStore'),
+    SessionActions              = require('../Session/SessionActions'),
+    SessionStore                = require('../Session/SessionStore'),
+    InstancesActions            = require('../Instances/InstancesActions'),
+    InstancesStore              = require('../Instances/InstancesStore'),
+    ColorStore                  = require('../../common/Color/ColorStore'),
 
-var Icon = require('../../common/Icon/Icon.react');
-var Tabs = require('../../common/Tabs/Tabs.react');
-var ProgressBar = require('../../common/ProgressBar/ProgressBar.react');
+    // Components
+    Colors                      = mui.Styles.Colors,
+    Tabs                        = mui.Tabs,
+    Tab                         = mui.Tab,
+    Toolbar                     = mui.Toolbar,
+    ToolbarGroup                = mui.ToolbarGroup,
+    Paper                       = mui.Paper,
+    IconButton                  = mui.IconButton,
+    MoreVertIcon                = mui.Icons.NavigationMenu,
 
-var HeaderOptions = require('./HeaderOptions.react');
+    MaterialDropdown            = require('../../common/Dropdown/MaterialDropdown.react'),
+    RoundIcon                   = require('../../common/Icon/RoundIcon.react'),
+    HeaderMenu                  = require('./HeaderMenu.react'),
+    HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react'),
+    HeaderNotificationsDropdown = require('./HeaderNotificationsDropdown.react'),
+    HeaderInstanceMenu          = require('./HeaderInstanceMenu.react'),
+    Logo                        = require('../../common/Logo/Logo.react'),
+    Show                        = require('../../common/Show/Show.react');
 
-require('./Header.css');
+require('./Header.sass');
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
   displayName: 'Header',
 
-  propTypes: {
-    actions: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string.isRequired,
-    icon: React.PropTypes.string,
-    //handleTabClick: React.PropTypes.func.isRequired,
-    //handleAccountMenuItemClick: React.PropTypes.func.isRequired,
+  mixins: [
+    Reflux.connect(HeaderStore),
+    Reflux.connect(InstancesStore),
+    Router.Navigation,
+    Router.State,
+    StylePropable
+  ],
+
+  contextTypes: {
+    router   : React.PropTypes.func.isRequired,
+    muiTheme : React.PropTypes.object
   },
 
-  getInitialState: function () {
+  componentWillMount: function() {
+    SessionStore.getInstance();
+  },
+
+  handleTabActive: function(tab) {
+    this.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick: function(event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout: function() {
+    SessionActions.logout();
+  },
+
+  handleBillingClick: function(event) {
+    this.transitionTo('profile-billing');
+    event.stopPropagation();
+  },
+
+  getStyles: function() {
     return {
-      menu: HeaderStore.getMenu(),
-      //account: AuthStore.getAccount(),
+      topToolbar: {
+        background : this.context.muiTheme.palette.primary1Color,
+        height     : 64,
+        padding    : '0 32px'
+      },
+      logotypeContainer: {
+        height     : '100%',
+        display    : 'flex',
+        alignItems : 'center'
+      },
+      logo: {
+        width: 120
+      },
+      toolbarList: {
+        display: 'flex'
+      },
+      toolbarListItem: {
+        display    : 'inline-flex',
+        alignItems : 'center'
+      },
+      bottomToolbar : {
+        display     : 'flex',
+        fontSize    : 17,
+        fontWeight  : 500,
+        height      : 56,
+        background  : this.context.muiTheme.palette.primary2Color,
+        padding     : '0 32px'
+      },
+      bottomToolbarGroup: {
+        display        : 'flex',
+        float          : 'none',
+        alignItems     : 'center',
+        justifyContent : 'center'
+      },
+      bottomToolbarGroupIcon: {
+        color          : '#fff'
+      }
     }
   },
 
-  getDefaultProps: function () {
+  getDropdownItems: function() {
+    return [{
+      leftIcon: {
+        name  : "synicon-credit-card",
+        style : {}
+      },
+      content: {
+        text  : "Billing",
+        style : {}
+      },
+      name: "billing",
+      handleItemClick: this.handleBillingClick
+    }, {
+      leftIcon: {
+        name  : "synicon-power",
+        style : {
+          color: "#f50057"
+        }
+      },
+      content: {
+        text  : "Logout",
+        style : {
+          color: "#f50057"
+        }
+      },
+      name: "logout",
+      handleItemClick: this.handleLogout
+
+    }]
+  },
+
+  getDropdownHeaderItems: function() {
     return {
-      appLoading: false,
-      actions: [{
-        displayName: 'Account settings',
-        name: 'account'
-      }, {
-        displayName: 'Log out',
-        name: 'logout'
-      }],
+      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail       : this.state.user.email,
+      clickable       : true,
+      handleItemClick : this.handleAccountClick
     }
   },
 
-  componentDidMount: function () {
-    HeaderStore.addChangeListener(this.onChange);
-    AuthStore.addChangeListener(this.onChange);
-  },
+  render: function() {
+    var styles              = this.getStyles(),
+        currentInstance     = SessionStore.getInstance();
 
-  componentWillUnmount: function () {
-    HeaderStore.removeChangeListener(this.onChange);
-    AuthStore.removeChangeListener(this.onChange);
-  },
+    return (
+      <div>
+        <Toolbar style={styles.topToolbar}>
+          <ToolbarGroup style={styles.logotypeContainer}>
+            <Link to="app">
+              <Logo
+                style={styles.logo}
+                className="logo-white"
+              />
+            </Link>
+          </ToolbarGroup>
+          <ToolbarGroup
+            float = "right"
+            style = {{height: '100%'}}>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
+              <li style={styles.toolbarListItem}>
+                <a
+                  href="http://docs.syncano.com/v4.0"
+                  target="_blank">
+                  Docs
+                </a>
+              </li>
+              <li style={styles.toolbarListItem}>
+                <a href="mailto:support@syncano.com">Support</a>
+              </li>
+              <li>
+                <MaterialDropdown
+                  items         = {this.getDropdownItems()}
+                  headerContent = {this.getDropdownHeaderItems()}
+                  iconStyle     = {styles.bottomToolbarGroupIcon}>
+                  Account
+                </MaterialDropdown>
+              </li>
+            </ul>
+          </ToolbarGroup>
+        </Toolbar>
+        <Paper>
+          <Toolbar style={styles.bottomToolbar}>
+            <Show if={currentInstance !== null}>
+              <HeaderInstancesDropdown />
+            </Show>
 
-  onChange: function () {
-    this.setState({
-      menu: HeaderStore.getMenu(),
-      //account: AuthStore.getAccount(),
-    });
-  },
-
-  render: function () {
-
-    var cssClasses = classNames({
-      'header-group': true,
-      'header-group-loading': this.props.appLoading,
-    });
-
-
-    //return (<div>aaa</div> )
-    if (typeof this.props.tabs !== "undefined") {
-      var viewTab = HeaderStore.getAppView().tab;
-      return (
-        <div className={cssClasses}>
-          <div className="header-details">
-            <div className="header-nav-icon" onClick={this.props.handleIconClick}>
-              <Icon icon={this.props.icon}/>
-            </div>
-            <div className="header-text">
-              <div className="header-title">{this.props.title}</div>
-            </div>
-            <HeaderOptions {...this.props} menu={this.state.menu} account={this.state.account} />
-          </div>
-          <Tabs {...this.props} activeTab={viewTab} />
-          <ProgressBar />
-        </div>
-      );
-    } else {
-      return (
-        <div className={cssClasses}>
-          <div className="header-details">
-            <div className="header-nav-icon">
-              <Icon icon={this.props.icon}/>
-            </div>
-            <div className="header-text">
-              <div className="header-title">{this.props.title}</div>
-            </div>
-            <HeaderOptions menu={this.state.menu} actions={this.props.actions} />
-          </div>
-          <ProgressBar />
-        </div>
-      );
-    }
+            <ToolbarGroup
+              className = "col-flex-1"
+              style     = {styles.bottomToolbarGroup}>
+              <HeaderMenu />
+            </ToolbarGroup>
+            <ToolbarGroup style={styles.bottomToolbarGroup}>
+              <IconButton
+                iconClassName = "synicon-magnify"
+                iconStyle = {styles.bottomToolbarGroupIcon}
+              />
+              <HeaderNotificationsDropdown />
+              <Show if={currentInstance !== null}>
+                <HeaderInstanceMenu />
+              </Show>
+            </ToolbarGroup>
+          </Toolbar>
+        </Paper>
+      </div>
+    )
   }
 
-});
-
-
-
-//<HeaderOptions {...this.props} menu={this.state.menu} account={this.state.account} handleAccountMenuItemClick={this.handleAccountMenuItemClick}/>
+}));

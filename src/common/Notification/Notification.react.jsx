@@ -1,49 +1,68 @@
-var React           = require('react');
-var classNames      = require('classnames');
+var React           = require('react'),
+    classNames      = require('classnames'),
 
-//var ViewActions     = require('../actions/ViewActions');
+    mui             = require('material-ui'),
+    StylePropable   = mui.Mixins.StylePropable,
+    FontIcon        = mui.FontIcon;
 
-var Icon            = require('../Icon/Icon.react');
-
-require('./Notification.css');
+require('./Notification.sass');
 
 module.exports = React.createClass({
 
   displayName: 'Notification',
 
-  componentDidMount: function() {
-    setTimeout(function(){
-      ViewActions.closeNotification();
-    }.bind(this), 3000);
+  mixins: [StylePropable],
+
+  propTypes: {
+    type: React.PropTypes.string.isRequired,
+    children: React.PropTypes.any.isRequired
+  },
+
+  getDefaultProps: function() {
+    return {
+      type: 'info'
+    };
+  },
+
+  getStyles: function() {
+    var styles = {
+      fontSize      : 18,
+      lineHeight    : 1,
+      color         : 'inherit',
+      verticalAlign : 'middle'
+    };
+
+    return this.mergeStyles(styles, this.props.style);
   },
 
   render: function() {
-  	var cssClasses  = classNames({
-      'notification-card'    : true,
-      'notification-info'    : this.props.type.status === "info",
-      'notification-error'   : this.props.type.status === "error",
-      'notification-warning' : this.props.type.status === "warning",
+
+    var styles = this.getStyles();
+
+    var cssClasses  = classNames({
+      'notification'          : true,
+      'notification--info'    : this.props.type === 'info',
+      'notification--error'   : this.props.type === 'error',
+      'notification--warning' : this.props.type === 'warning'
     });
-    var iconStyle;
-    if (this.props.type.status === "info") {
-    	  iconStyle = {fill: "#039BE5", width: "22px", heigh: "22px"};
-      } else if (this.props.type.status === "error") {
-      	iconStyle = {fill: "#E53935", width: "22px", heigh: "22px"};
-      } else {
-      	iconStyle = {fill: "#FF9800", width: "22px", heigh: "22px"};
-      }
+
+    var iconClass   = classNames({
+      'information'           : this.props.type === 'info',
+      'alert-circle'          : this.props.type === 'error',
+      'alert'                 : this.props.type === 'warning'
+    });
+
     return (
       <div className={cssClasses}>
-        <div className="notification-content">
-          <div className="notification-icon">
-            <Icon style={iconStyle} type={this.props.type.status} />
+        <div className="notification__content">
+          <div className="notification__content__icon">
+            <FontIcon
+              style     = {styles}
+              className = {"synicon-" + iconClass} />
           </div>
-          <div>
-            <span>{this.props.type.text}</span>
-          </div>
+          <div>{this.props.children}</div>
         </div>
       </div>
     )
   }
-
 });

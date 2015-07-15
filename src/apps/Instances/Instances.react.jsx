@@ -1,178 +1,216 @@
-var React = require('react');
+var React                 = require('react'),
+    Reflux                = require('reflux'),
+    Router                = require('react-router'),
+    Radium                = require('radium'),
 
-var InstancesAppStore = require('./store');
-var InstancesAppActions = require('./actions');
+    // Utils
+    HeaderMixin           = require('../Header/HeaderMixin'),
+    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
+    DialogsMixin          = require('../../mixins/DialogsMixin'),
+    Show                  = require('../../common/Show/Show.react'),
 
-var Header = require('../Header/Header.react');
+    // Stores and Actions
+    SessionActions        = require('../Session/SessionActions'),
+    SessionStore          = require('../Session/SessionStore'),
+    InstancesActions      = require('./InstancesActions'),
+    InstancesStore        = require('./InstancesStore'),
 
-var Lists = require('../../common/Lists/Lists.react');
-var FABList = require('../../common/Fab/FabList.react');
+    // Components
+    mui                   = require('material-ui'),
+    Dialog                = mui.Dialog,
+    Container             = require('../../common/Container/Container.react'),
+    FabList               = require('../../common/Fab/FabList.react'),
+    FabListItem           = require('../../common/Fab/FabListItem.react'),
+    Loading               = require('../../common/Loading/Loading.react'),
+    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
 
-//var ListWithOptions = require('../../common/Lists/ListWithOptions.react');
-var InstancesListWithHeader = require('./InstancesListWithHeader.react');
+    // Local components
+    InstancesList         = require('./InstancesList.react'),
+    InstanceDialog        = require('./InstanceDialog.react');
 
+require('./Instances.sass');
 
-module.exports = React.createClass({
+module.exports = Radium(React.createClass({
 
-  displayName: 'InstancesView',
+  displayName: 'Instances',
 
-  getInitialState: function () {
-    return {
-      myInstances: [],
-      otherInstances: [],
-      //myInstances: InstanceStore._getMyInstances(),
-      //myInstancesViewMode: InstanceStore._getMyInstancesViewMode(),
-      //myInstancesSortMode: InstanceStore._getMyInstancesSortMode(),
-      //
-      //otherInstances: InstanceStore._getOtherInstances(),
-      //otherInstancesViewMode: InstanceStore._getOtherInstancesViewMode(),
-      //otherInstancesSortMode: InstanceStore._getOtherInstancesSortMode(),
-    }
-  },
+  mixins: [
+    Router.State,
+    Router.Navigation,
 
-  componentWillMount: function () {
-    //InstancesAppStore.addChangeListener(this.onChange);
-    InstancesAppActions.getInstances();
-  },
+    Reflux.connect(InstancesStore),
+    HeaderMixin,
+    DialogsMixin
+  ],
 
-  componentDidMount: function () {
-    InstancesAppStore.addChangeListener(this.onChange);
-    //InstancesAppActions.getInstances();
-  },
+  // Dialogs config
+  initDialogs: function() {
+    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor(),
+        checkedInstances = InstancesStore.getCheckedItems();
 
-  componentWillUnmount: function () {
-    //InstancesAppStore.removeChangeListener(this.onChange)
-  },
-
-
-  handleFABClick: function (buttonName) {
-    if (buttonName === "create") {
-      ViewActions.showModalCreateResource('instance');
-    }
-  },
-
-  onChange: function () {
-    console.log('onChange InstancesApp');
-    this.setState({
-      myInstances: InstancesAppStore.getInstances(),
-      otherInstances: InstancesAppStore.getInstances('other'),
-    });
-  },
-
-  filterEmptyLists: function (listOfLists) {
-    return listOfLists.filter(function (list, i) {
-      if (!list.hideEmpty) {
-        return true;
-      } else {
-        return list.data.length > 0;
+    return [{
+      dialog: ColorIconPickerDialog,
+      params: {
+        key          : "pickColorIconDialog",
+        ref          : "pickColorIconDialog",
+        mode         : "add",
+        initialColor : checkedItemIconColor.color,
+        initialIcon  : checkedItemIconColor.icon,
+        handleClick  : this.handleChangePalette
       }
-    })
+    }, {
+      dialog: Dialog,
+      params: {
+        key:    "deleteInstanceDialog",
+        ref:    "deleteInstanceDialog",
+        title:  "Delete an Instance",
+        actions: [
+          {text: 'Cancel', onClick: this.handleCancel},
+          {text: "Confirm", onClick: this.handleDelete}
+        ],
+        modal: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+          this.getDialogList(checkedInstances),
+          <Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        ]
+      }
+    }]
   },
 
-  handleHeaderMenuClick: function (action) {
-    console.log("InstanceView handleHeaderMenuClick", action)
+  componentWillMount: function() {
+    console.info('Instances::componentWillMount');
+    InstancesStore.fetch();
   },
 
-  handleItemMenuClick: function (action) {
-    console.log("InstanceView handleItemMenuClick", action)
+  componentDidMount: function() {
+    console.info('Instances::componentDidMount');
+    if (this.getParams().action == 'add') {
+      // Show Add modal
+      this.showDialog('addInstanceDialog');
+    }
   },
 
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('Instances::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
 
-  render: function () {
-
-    // Instances View Buttons
-    var buttons = [{
-      name: "create",
-      primary: true,
-      displayName: "Create an instance",
-      icon: "plus",
-    }];
-
-    // Lists on the View
-    var myInstancesLists = {
-      heading: "My instances",
-      uuid: "myInstances",
-      contentType: "instances",
-      //viewMode: this.state.myInstancesViewMode,
-      viewMode: 'stream',
-      avatarStyle: 'icon',
-      //sortMode: this.state.myInstancesSortMode,
-      //data: this.state.myInstances,
-      data: this.state.myInstances,
-
-      emptyText: "There are no Instances here. Click here to generate one.",
-      emptyIcon: "vpn-key",
-
-      //itemConfig: {
-      //  ''
-      //},
-
-      actions: [{
-        displayName: 'Sort by name',
-        name: 'sortByName',
+  headerMenuItems: function() {
+    return [
+      {
+        label  : 'Instances',
+        route  : 'instances'
       }, {
-        displayName: 'Sort by date',
-        name: 'sortByDate',
-      }, {
-        displayName: 'Switch to list view',
-        name: 'switchToListView',
-        iconType: 'view-stream',
-      }, {
-        displayName: 'Switch to card view',
-        name: 'switchToCardView',
-        iconType: 'view-module',
-      }]
-    };
+        label : 'Solutions',
+        route : 'solutions'
+      }];
+  },
 
-    var otherInstancesList = {
-      heading: "Instances I belong to",
-      uuid: "otherInstances",
-      contentType: "instances",
-      viewMode: 'stream',
-      //sortMode: this.state.otherInstancesSortMode,
-      data: this.state.otherInstances,
-      avatarStyle: 'icon',
-      //hideEmpty: true,
-      actions: [{
-        displayName: 'Sort by name',
-        name: 'sortByName',
-      }, {
-        displayName: 'Sort by date',
-        name: 'sortByDate',
-      }, {
-        displayName: 'Switch to list view',
-        name: 'switchToListView',
-        iconType: 'view-stream',
-      }, {
-        displayName: 'Switch to card view',
-        name: 'switchToCardView',
-        iconType: 'view-module',
-      }]
-    };
+  handleChangePalette: function(color, icon) {
+    console.info('Instances::handleChangePalette', color, icon);
 
+    InstancesActions.updateInstance(
+      InstancesStore.getCheckedItem().name, {
+        metadata: JSON.stringify({
+          color : color,
+          icon  : icon
+        })
+      }
+    );
+    InstancesActions.uncheckAll()
+  },
 
-    var Lists = this.filterEmptyLists([myInstancesLists, otherInstancesList]);
+  handleDelete: function() {
+    console.info('Instances::handleDelete');
+    InstancesActions.removeInstances(InstancesStore.getCheckedItems());
+  },
 
-    var ListsToShow = Lists.map(function (list, i) {
-      return <InstancesListWithHeader
-        key={i}
-        list={list}
-        handleHeaderMenuClick={this.handleHeaderMenuClick}
-        handleItemMenuClick={this.handleItemMenuClick}
-        />
-    }.bind(this));
+  handleItemClick: function(instanceName) {
+    // Redirect to main instance screen
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName: instanceName});
+  },
 
+  showInstanceDialog: function() {
+    InstancesActions.showDialog();
+  },
 
-    console.log('ListsToShow', ListsToShow);
+  showInstanceEditDialog: function() {
+    InstancesActions.showDialog(InstancesStore.getCheckedItem());
+  },
+
+  render: function() {
+    var checkedInstances      = InstancesStore.getNumberOfChecked(),
+        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isCheckedInstanceShared   = InstancesStore.isCheckedInstanceShared();
 
     return (
-      <div className="content-group">
-        <div className="lists-group">
-          {ListsToShow}
-        </div>
-        <FABList {...this.props} buttons={buttons} handleFABClick={this.handleFABClick}/>
-      </div>
+      <Container id="instances">
+        <InstanceDialog />
+        {this.getDialogs()}
+
+        <Show if={checkedInstances > 0}>
+          <FabList position="top">
+
+            <FabListItem
+              label         = {isAnyInstanceSelected ? "Click here to select all" : "Click here to unselect all"}
+              mini          = {true}
+              onClick       = {isAnyInstanceSelected ? InstancesActions.selectAll : InstancesActions.uncheckAll}
+              iconClassName = {isAnyInstanceSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+
+            <FabListItem
+              label         = "Click here to delete Instances"
+              mini          = {true}
+              onClick       = {this.showDialog.bind(null, 'deleteInstanceDialog')}
+              iconClassName = "synicon-delete" />
+
+            <FabListItem
+              label         = "Click here to edit Instance"
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showInstanceEditDialog}
+              iconClassName = "synicon-pencil" />
+
+            <FabListItem
+              label         = "Click here to customize Instances"
+              secondary     = {true}
+              mini          = {true}
+              disabled      = {checkedInstances > 1}
+              onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
+              iconClassName = "synicon-palette" />
+
+          </FabList>
+        </Show>
+
+        <FabList>
+          <FabListItem
+            label         = "Click here to add Instances"
+            onClick       = {this.showInstanceDialog}
+            iconClassName = "synicon-plus" />
+        </FabList>
+
+        <InstancesList
+          name                 = "My instances"
+          items                = {InstancesStore.getMyInstances()}
+          listType             = "myInstances"
+          viewMode             = "stream"
+          emptyItemHandleClick = {this.showInstanceDialog}
+          emptyItemContent     = "Create an instance" />
+
+        <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>
+        <InstancesList
+          name                 = "Shared with me"
+          items                = {InstancesStore.getOtherInstances()}
+          listType             = "sharedInstances"
+          viewMode             = "stream" />
+        </Show>
+
+      </Container>
     );
   }
 
-});
+}));
