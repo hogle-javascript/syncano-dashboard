@@ -11,7 +11,7 @@ var React        = require('react'),
     Paper        = mui.Paper,
     RaisedButton = mui.RaisedButton,
 
-    Logo         = require('../../common/Logo/Logo.react');
+    Logo         = require('../../common/Logo');
 
 
 module.exports = React.createClass({
