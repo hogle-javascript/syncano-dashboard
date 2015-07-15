@@ -139,14 +139,14 @@ gulp.task('revision:index', ['clean', 'clean:unrevisioned', 'revreplace'], funct
 gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
 
   var aws = {
-    region: 'eu-west-1',
+    region: 'us-west-2',
     distributionId: 'E10VUXJJFKD7D3',
-    params: {Bucket: 'syncano-gui-staging'},
+    params: {Bucket: 'dashboard-syncano-rocks'},
     patternIndex: /^\/index-[a-f0-9]{10}\.html(\.gz)*$/gi
   };
 
   if (ENV === 'production') {
-    aws.params.Bucket  = 'admin-syncano-io';
+    aws.params.Bucket  = 'dashboard-syncano-io';
     aws.distributionId = 'E3GVWH8UCCSHQ7';
   }
 
