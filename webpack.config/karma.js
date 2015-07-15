@@ -7,4 +7,8 @@ config.module.postLoaders = [{
   loader: 'istanbul-instrumenter'
 }];
 
+config.plugins.unshift(
+  new webpack.DefinePlugin({SYNCANO_BASE_URL: JSON.stringify('https://api.syncano.rocks/')})
+);
+
 module.exports = config;
