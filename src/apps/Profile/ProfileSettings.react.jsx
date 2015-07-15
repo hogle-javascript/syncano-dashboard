@@ -8,8 +8,8 @@ var React                = require('react'),
     ProfileSettingsStore = require('./ProfileSettingsStore'),
     SessionStore         = require('../Session/SessionStore'),
 
-    mui                  = require('material-ui'),
-    Common               = require('../../common');
+    MUI                  = require('material-ui'),
+    Container            = require('../../common/Container');
 
 module.exports = React.createClass({
 
@@ -80,9 +80,9 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     return (
-      <Common.Container.Profile
-        headerText='Profile'
-        show={this.state.isLoading}
+      <Container.Profile
+        headerText = 'Profile'
+        show       = {this.state.isLoading}
       >
         <div style={styles.content}>
           {this.renderFormNotifications()}
@@ -92,7 +92,7 @@ module.exports = React.createClass({
             acceptCharset = "UTF-8"
             method        = "post">
 
-            <TextField
+            <MUI.TextField
               ref               = "firstName"
               valueLink         = {this.linkState('firstName')}
               defaultValue      = {this.state.firstName}
@@ -105,7 +105,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <TextField
+            <MUI.TextField
               ref               = "lastName"
               valueLink         = {this.linkState('lastName')}
               defaultValue      = {this.state.lastName}
@@ -118,7 +118,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <TextField
+            <MUI.TextField
               ref               = "email"
               name              = "email"
               value             = {this.state.email}
@@ -130,7 +130,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <mui.RaisedButton
+            <MUI.RaisedButton
               type       = "submit"
               label      = "Update"
               style      = {styles.updateButton}
@@ -140,7 +140,7 @@ module.exports = React.createClass({
             />
           </form>
         </div>
-      </Common.Container.Profile>
+      </Container.Profile>
     );
   }
 });

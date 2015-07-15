@@ -5,7 +5,7 @@ var React         = require('react'),
     HeaderMixin   = require('../apps/Header/HeaderMixin'),
 
     mui           = require('material-ui'),
-    Common        = require('../common');
+    Container     = require('../common/Container');
 
 module.exports = React.createClass({
 
@@ -73,7 +73,7 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <Common.Container.Profile headerText='Billing'>
+      <Container.Profile headerText='Billing'>
         <mui.Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
           <mui.Tab
             label="Current usage"
@@ -100,7 +100,7 @@ module.exports = React.createClass({
           />
         </mui.Tabs>
         <RouteHandler />
-      </Common.Container.Profile>
+      </Container.Profile>
     );
   }
 });

@@ -8,8 +8,8 @@ var React                      = require('react'),
     ProfileActions             = require('./ProfileActions'),
     ProfileAuthenticationStore = require('./ProfileAuthenticationStore'),
 
-    mui                        = require('material-ui'),
-    Common                     = require('../../common');
+    MUI                        = require('material-ui'),
+    Container                  = require('../../common/Container');
 
 module.exports = React.createClass({
 
@@ -99,7 +99,7 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     return (
-      <Common.Container.Profile
+      <Container.Profile
         headerText = 'Authentication'
         show       = {this.state.isLoading}
       >
@@ -108,19 +108,19 @@ module.exports = React.createClass({
           <div style={styles.contentRow}>
             <p style={styles.accountKey}>{this.state.account_key}</p>
             <ZeroClipboard text={this.state.account_key}>
-              <mui.FlatButton
+              <MUI.FlatButton
                 label   = "COPY"
                 primary = {true}
                 onClick = {this.handleCopyClick}
               />
             </ZeroClipboard>
-            <mui.FlatButton
+            <MUI.FlatButton
               label   = "RESET"
               primary = {true}
               onClick = {this.handleResetClick}
             />
           </div>
-          <mui.Snackbar
+          <MUI.Snackbar
             ref     = "snackbar"
             message = "API key copied to the clipboard"
           />
@@ -134,7 +134,7 @@ module.exports = React.createClass({
             acceptCharset = "UTF-8"
             method        = "post">
 
-            <mui.TextField
+            <MUI.TextField
               ref               = "currentPassword"
               type              = "password"
               valueLink         = {this.linkState('currentPassword')}
@@ -147,7 +147,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <mui.TextField
+            <MUI.TextField
               ref               = "newPassword"
               type              = "password"
               valueLink         = {this.linkState('newPassword')}
@@ -160,7 +160,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <mui.TextField
+            <MUI.TextField
               ref               = "confirmNewPassword"
               type              = "password"
               valueLink         = {this.linkState('confirmNewPassword')}
@@ -173,7 +173,7 @@ module.exports = React.createClass({
               fullWidth         = {true}
             />
 
-            <mui.RaisedButton
+            <MUI.RaisedButton
               type       = "submit"
               label      = "Update"
               style      = {styles.updateButton}
@@ -183,7 +183,7 @@ module.exports = React.createClass({
             />
           </form>
         </div>
-      </Common.Container.Profile>
+      </Container.Profile>
     );
   }
 });
