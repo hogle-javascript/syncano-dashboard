@@ -32,7 +32,7 @@ test:
 
 deployment:
   production:
-    branch: SYNGUI-1076
+    branch: master
     commands:
       - NODE_ENV=production npm run-script publish
       - NODE_ENV=production npm run-script clean
