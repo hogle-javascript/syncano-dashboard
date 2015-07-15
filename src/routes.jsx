@@ -60,7 +60,7 @@ module.exports = (
             <Route name="codebox-traces" handler={Traces} path="traces" />
             <Route name="codebox-edit" handler={CodeBoxes.Edit} path="edit" />
             <Route name="codebox-config" handler={CodeBoxes.Config} path="config" />
-            <DefaultRoute handler={CodeBoxEdit} />
+            <DefaultRoute handler={CodeBoxes.Edit} />
           </Route>
           <DefaultRoute handler={CodeBoxes} />
         </Route>
