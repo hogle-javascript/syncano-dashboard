@@ -6,6 +6,7 @@ import CheckIcon from './CheckIcon';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
+import Container from './Container';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
@@ -42,6 +43,7 @@ export {
   Color,
   ColorIconPicker,
   ColumnList,
+  Container,
   Dropdown,
   Editor,
   Fab,
