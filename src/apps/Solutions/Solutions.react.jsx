@@ -13,9 +13,7 @@ var React            = require('react'),
     SolutionsActions = require('./SolutionsActions'),
 
     // Components
-    mui              = require('material-ui'),
-    Tabs             = mui.Tabs,
-    Tab              = mui.Tab,
+    MUI              = require('material-ui'),
     Container        = require('../../common/Container/Container.react'),
     FabList          = require('../../common/Fab/FabList.react'),
     FabListItem      = require('../../common/Fab/FabListItem.react'),
@@ -59,7 +57,21 @@ module.exports = React.createClass({
     this.transitionTo(tab.props.route, tab.props.params);
   },
 
+  getStyles: function() {
+    return {
+      container: {
+        width  : '90%',
+        margin : '40px auto'
+      },
+      sidebar: {
+        minWidth: 230
+      }
+    }
+  },
+
   render: function() {
+    var styles = this.getStyles();
+
     return (
       <div id='solutions'>
         <SolutionDialog />
@@ -68,12 +80,33 @@ module.exports = React.createClass({
           <FabListItem
             label         = "Click here to create Solution"
             onClick       = {this.showSolutionDialog}
-            iconClassName = "synicon-plus" />
+            iconClassName = "synicon-plus"
+          />
         </FabList>
 
+        <div style={styles.container}>
+          <div className="row">
+            <div style={styles.sidebar}>
+              <MUI.List zDepth={1} className="vm-6-b">
+                <MUI.ListItem primaryText="All solutions" />
+                <MUI.ListItem primaryText="Favorite" />
+                <MUI.ListItem primaryText="My solutions" />
+              </MUI.List>
 
-        <SolutionsList items={this.state.items}/>
-
+              <MUI.List zDepth={1} subheader="Tags">
+                <MUI.ListItem primaryText="python" />
+                <MUI.ListItem primaryText="socialmedia" />
+                <MUI.ListItem primaryText="localization" />
+                <MUI.ListItem primaryText="ruby" />
+                <MUI.ListItem primaryText="smartphone" />
+                <MUI.ListItem primaryText="IoT" />
+              </MUI.List>
+            </div>
+            <div className="col-flex-1">
+              <SolutionsList items={this.state.items}/>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
