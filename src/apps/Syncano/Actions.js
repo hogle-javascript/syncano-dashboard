@@ -5,9 +5,11 @@ import Hello from '../Account/Hello.js';
 import Constants from '../../constants/Constants';
 
 let Connection = _Connection.get();
+let D          = _.D;
 
 export default {
 
+  // Accounts
   resendActivationEmail(email) {
     Connection
       .Accounts
@@ -76,6 +78,7 @@ export default {
       });
   },
 
+  // Admins
   fetchAdmins() {
     Connection
       .Admins
@@ -102,6 +105,7 @@ export default {
       .error(this.failure);
   },
 
+  // Invitations
   fetchInvitations() {
     Connection
       .Invitations
@@ -138,6 +142,7 @@ export default {
       .error(this.failure);
   },
 
+  // ApiKeys
   fetchApiKeys() {
     Connection
       .ApiKeys
@@ -184,6 +189,7 @@ export default {
       .catch(this.failure);
   },
 
+  // Channels
   fetchChannels() {
     Connection
       .Channels
@@ -216,6 +222,7 @@ export default {
       .error(this.failure);
   },
 
+  // Classes
   fetchClasses() {
     Connection
       .Classes
@@ -250,6 +257,7 @@ export default {
       .error(this.failure);
   },
 
+  // CodeBox
   fetchCodeBox(codeboxId) {
     Connection
       .CodeBoxes
@@ -322,6 +330,15 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+
+  getTraces(objectId) {
+    Connection
+      .CodeBoxes.traces(objectId, {})
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  // DataView
   createDataView(payload) {
     Connection
       .DataViews
@@ -355,6 +372,8 @@ export default {
       .success(this.completed)
       .error(this.failure);
   },
+
+  // Webhook
   createWebhook(payload) {
     Connection
       .WebHooks
@@ -398,6 +417,7 @@ export default {
       .catch(this.failure);
   },
 
+  // Data Objects
   fetchDataObjects(className) {
     Connection
       .DataObjects
@@ -463,6 +483,7 @@ export default {
       .error(this.failure);
   },
 
+  // Instances
   fetchInstances() {
     Connection
       .Instances
@@ -502,6 +523,7 @@ export default {
       .error(this.failure);
   },
 
+  // Accounts
   updateSettings(payload) {
     Connection
       .Accounts
@@ -524,6 +546,24 @@ export default {
       .catch(this.failure);
   },
 
+  fetchUser(token) {
+    Connection
+      .setApiKey(token)
+      .Accounts
+      .get()
+      .then(this.completed)
+      .catch(this.failure)
+  },
+
+  resetKey() {
+    Connection
+      .Accounts
+      .resetKey()
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  // Billing
   fetchBillingProfile() {
     Connection
       .Billing
@@ -536,14 +576,6 @@ export default {
     Connection
       .Billing
       .updateProfile(payload)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  resetKey() {
-    Connection
-      .Accounts
-      .resetKey()
       .then(this.completed)
       .catch(this.failure);
   },
@@ -577,6 +609,7 @@ export default {
       .catch(this.failure);
   },
 
+  // Account Invitations
   fetchAccountInvitations() {
     Connection
       .AccountInvitations
@@ -605,15 +638,6 @@ export default {
       .error(this.failure);
   },
 
-  fetchUser(token) {
-    Connection
-      .setApiKey(token)
-      .Accounts
-      .get()
-      .then(this.completed)
-      .catch(this.failure)
-  },
-
   fetchInstance(name) {
     Connection
       .setInstance(name)
@@ -621,6 +645,7 @@ export default {
       .catch(this.failure)
   },
 
+  // Solutions
   fetchSolution(solutionId) {
     Connection
       .Solutions
@@ -697,6 +722,7 @@ export default {
       .catch(this.failure);
   },
 
+  // Schedules
   createSchedule(payload) {
     Connection
       .Schedules
@@ -732,6 +758,7 @@ export default {
       .error(this.failure);
   },
 
+  // Triggers
   createTrigger(payload) {
     Connection
       .Triggers
@@ -767,13 +794,7 @@ export default {
       .error(this.failure);
   },
 
-  getTraces(objectId) {
-    Connection
-      .CodeBoxes.traces(objectId, {})
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
+  // Groups
   createGroup(label) {
     Connection
       .Groups
@@ -817,6 +838,7 @@ export default {
       .catch(this.failure);
   },
 
+  // Users
   fetchUsers() {
     Connection
       .Users
