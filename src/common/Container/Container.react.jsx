@@ -1,5 +1,4 @@
-var React      = require('react'),
-    classNames = require('classnames'),
+var React         = require('react'),
 
     mui           = require('material-ui'),
     StylePropable = mui.Mixins.StylePropable;
@@ -25,8 +24,9 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div
-        id={this.props.id}
-        style={this.getStyles()}>
+        id    = {this.props.id}
+        style = {this.getStyles()}
+      >
         {this.props.children}
       </div>
     );

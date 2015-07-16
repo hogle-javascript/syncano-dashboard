@@ -1,7 +1,7 @@
-import ButtonExpandToggle from './ButtonExpandToggle.react';
-import ButtonGroup from './ButtonGroup.react';
+import ExpandToggle from './ButtonExpandToggle.react';
+import Group from './ButtonGroup.react';
 
 export {
-  ButtonExpandToggle as ExpandToggle,
-  ButtonGroup as Group
+  ExpandToggle,
+  Group
 };

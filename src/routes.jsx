@@ -13,20 +13,8 @@ var React                       = require('react'),
     CodeBoxesPage               = require('./pages/codeBoxes.react'),
     NotFound                    = require('./pages/notfound.react'),
 
-    // Anonymouns Apps
-    AccountLogin                = require('./apps/Account/AccountLogin.react'),
-    AccountSignup               = require('./apps/Account/AccountSignup.react'),
-    AccountActivate             = require('./apps/Account/AccountActivate.react'),
-    AccountPasswordUpdate       = require('./apps/Account/AccountPasswordUpdate.react'),
-    AccountPasswordReset        = require('./apps/Account/AccountPasswordReset.react'),
-    AccountPasswordResetConfirm = require('./apps/Account/AccountPasswordResetConfirm.react'),
-
-    ProfileSettings             = require('./apps/Profile/ProfileSettings.react'),
-    ProfileAuthentication       = require('./apps/Profile/ProfileAuthentication.react'),
-    ProfileBillingAddress       = require('./apps/Profile/ProfileBillingAddress.react'),
-    ProfileBillingPayment       = require('./apps/Profile/ProfileBillingPayment.react'),
-    ProfileBillingInvoices      = require('./apps/Profile/ProfileBillingInvoices.react'),
-    ProfileInvitations          = require('./apps/Profile/ProfileInvitations.react'),
+    Account                     = require('./apps/Account'),
+    Profile                     = require('./apps/Profile'),
 
     // Apps for authenticated users
     Instances                   = require('./apps/Instances/Instances.react'),
@@ -37,10 +25,7 @@ var React                       = require('react'),
     Admins                      = require('./apps/Admins/Admins.react'),
     ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
     Classes                     = require('./apps/Classes/Classes.react'),
-    CodeBoxes                   = require('./apps/CodeBoxes/CodeBoxes.react'),
-    CodeBox                     = require('./apps/CodeBoxes/CodeBox.react'),
-    CodeBoxEdit                 = require('./apps/CodeBoxes/CodeBoxEdit.react.jsx'),
-    CodeBoxConfig               = require('./apps/CodeBoxes/CodeBoxConfig.react.jsx'),
+    CodeBoxes                   = require('./apps/CodeBoxes'),
     Traces                      = require('./apps/Traces/Traces.react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
@@ -61,30 +46,30 @@ module.exports = (
     <NotFoundRoute handler={NotFound} />
     <Route
       name    = "login"
-      handler = {AccountLogin}
+      handler = {Account.Login}
     />
     <Route
       name    = "signup"
-      handler = {AccountSignup}
+      handler = {Account.Signup}
     />
     <Route
       name    = "activate"
-      handler = {AccountActivate}
+      handler = {Account.Activate}
       path    = "/activate/:uid/:token"
     />
     <Route
       name    = "password-update"
-      handler = {AccountPasswordUpdate}
+      handler = {Account.PasswordUpdate}
       path    = "/password/update"
     />
     <Route
       name    = "password-reset"
-      handler = {AccountPasswordReset}
+      handler = {Account.PasswordReset}
       path    = "/password/reset"
     />
     <Route
       name    = "password-reset-confirm"
-      handler = {AccountPasswordResetConfirm}
+      handler = {Account.PasswordResetConfirm}
       path    = "/password/reset/:uid/:token"
     />
 
@@ -157,12 +142,12 @@ module.exports = (
             />
             <Route
               name    = "codebox-edit"
-              handler = {CodeBoxEdit}
+              handler = {CodeBoxes.Edit}
               path    = "edit"
             />
             <Route
               name    = "codebox-config"
-              handler = {CodeBoxConfig}
+              handler = {CodeBoxes.Config}
               path    = "config" />
             <DefaultRoute handler={CodeBoxEdit} />
           </Route>
@@ -212,19 +197,19 @@ module.exports = (
       >
         <Route
           name    = "profile-billing-address"
-          handler = {ProfileBillingAddress}
+          handler = {Profile.BillingAddress}
           path    = "address"
         />
         <Route
           name    = "profile-billing-payment"
-          handler = {ProfileBillingPayment}
+          handler = {Profile.BillingPayment}
           path    = "payment-methods"
         />
         <Route
           name    = "profile-billing-invoices"
-          handler = {ProfileBillingInvoices} path="invoices"
+          handler = {Profile.BillingInvoices} path="invoices"
         />
-        <DefaultRoute handler={ProfileBillingAddress} />
+        <DefaultRoute handler={Profile.BillingAddress} />
       </Route>
 
       {/* Solutions */}
@@ -245,16 +230,16 @@ module.exports = (
       />
       <Route
         name    = "profile-settings"
-        handler = {ProfileSettings}
+        handler = {Profile.Settings}
         path    = "/account" />
       <Route
         name    = "profile-authentication"
-        handler = {ProfileAuthentication}
+        handler = {Profile.Authentication}
         path    = "/account/authentication"
       />
       <Route
         name    = "profile-invitations"
-        handler = {ProfileInvitations}
+        handler = {Profile.Invitations}
         path    = "/account/invitations"
       />
       <DefaultRoute handler = {Instances}/>

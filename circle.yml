@@ -28,9 +28,14 @@ test:
     - npm run-script jscs
     - npm test
     - npm run-script codeclimate
-    - npm run-script nightwatch
+    # - npm run-script nightwatch
 
 deployment:
+  production:
+    branch: master
+    commands:
+      - NODE_ENV=production npm run-script publish
+      - NODE_ENV=production npm run-script clean
   staging:
     branch: devel
     commands:

@@ -6,6 +6,7 @@ import CheckIcon from './CheckIcon';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
+import Container from './Container';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
@@ -20,7 +21,7 @@ import ProgressBar from './ProgressBar';
 import Request from './Request';
 import Search from './Search';
 import Show from './Show';
-import Snackbar from './Snackbar';
+import SnackBar from './SnackBar';
 import SocialAuthButton from './SocialAuthButton';
 import SwitchField from './SwitchField';
 import Table from './Table';
@@ -42,6 +43,7 @@ export {
   Color,
   ColorIconPicker,
   ColumnList,
+  Container,
   Dropdown,
   Editor,
   Fab,
@@ -56,7 +58,7 @@ export {
   Request,
   Search,
   Show,
-  Snackbar,
+  SnackBar,
   SocialAuthButton,
   SwitchField,
   Table,
