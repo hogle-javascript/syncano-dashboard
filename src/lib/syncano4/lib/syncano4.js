@@ -385,7 +385,8 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this)
+      activate: this.activateAccount.bind(this),
+      resendActivationEmail: this.resendActivationEmail.bind(this)
     };
 
     this.Billing = {
@@ -1452,6 +1453,23 @@ var Syncano = (function() {
      */
     activateAccount: function(params, callbackOK, callbackError) {
       return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Resend activation email
+     *
+     * @method Syncano#resendActivationEmail
+     * @alias Syncano.Accounts.resendActivationEmail
+     * @param {string} email - email address to resend activation email
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    resendActivationEmail: function(email, callbackOK, callbackError) {
+      if (typeof email === 'undefined') {
+        throw new Error('Missing email address');
+      }
+      return this.request('POST', 'v1/account/resend_email/', {email: email}, callbackOK, callbackError);
     },
 
     /***********************
