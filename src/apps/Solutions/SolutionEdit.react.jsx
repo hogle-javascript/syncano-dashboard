@@ -154,28 +154,24 @@ module.exports = React.createClass({
         </FabList>
 
         <Toolbar style={{background: 'transparent', padding: '0px'}}>
-
             <ToolbarGroup float="left" style={{padding: '0px'}}>
-
               <FontIcon
                 style     = {{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
                 className = "synicon-arrow-left"
-                onClick   = {this.handleBackClick} />
-
+                onClick   = {this.handleBackClick}
+              />
               <ToolbarTitle text={'Solution: ' + this.state.item.label} />
             </ToolbarGroup>
 
             <ToolbarGroup float="right">
-
               <IconButton
                 style            = {{fontSize: 25, marginTop: 5}}
                 iconClassName    = "synicon-delete"
                 tooltip          = "Delete Solution"
                 tooltipAlignment = "bottom-left"
-                onClick          = {this.showDialog('deleteSolutionDialog')} />
-
+                onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
+              />
             </ToolbarGroup>
-
           </Toolbar>
 
         <div className="container" style={{clear: 'both'}}>
