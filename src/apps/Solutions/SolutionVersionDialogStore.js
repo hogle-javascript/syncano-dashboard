@@ -48,13 +48,13 @@ var SolutionVersionDialogStore = Reflux.createStore({
 
   fetchInstanceData: function() {
     console.debug('SolutionVersionDialogStore::fetchInstanceData');
-    ClassesActions.fetch();
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
-    CodeBoxesActions.fetch();
-    TriggersActions.fetch();
-    SchedulesActions.fetch();
-    ChannelsActions.fetch();
+    //ClassesActions.fetch();
+    //DataViewsActions.fetch();
+    //WebhooksActions.fetch();
+    //CodeBoxesActions.fetch();
+    //TriggersActions.fetch();
+    //SchedulesActions.fetch();
+    //ChannelsActions.fetch();
   },
 
   onCreateVersionCompleted: function() {
