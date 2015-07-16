@@ -4,34 +4,47 @@ var Reflux     = require('reflux'),
 
 // TODO: https://github.com/spoike/refluxjs/issues/296
 var AuthActions = Reflux.createActions({
+  resendActivationEmail: {
+    asyncResult : true,
+    children    : ['completed', 'failure']
+  },
   activate: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure']
   },
   passwordSignIn: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
   passwordSignUp: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
   passwordReset: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
   passwordResetConfirm: {
-    asyncResult: true,
-    asyncForm: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    asyncForm   : true,
+    children    : ['completed', 'failure']
   },
   socialLogin: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure']
   }
+});
+
+AuthActions.resendActivationEmail.listen(function(email) {
+  console.info('AuthActions::resendActivationEmail');
+  Connection
+    .Accounts
+    .resendActivationEmail(email)
+    .then(this.complete)
+    .catch(this.failure);
 });
 
 AuthActions.activate.listen(function(payload) {

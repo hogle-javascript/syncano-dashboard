@@ -36,7 +36,7 @@ module.exports = React.createClass({
       name: "empty-notification",
       leftIcon  : {
         name  : "synicon-information",
-        color: "#0091EA"
+        color : "#0091EA"
       },
       content: {
         text  : "You don't have any notifications",
@@ -79,26 +79,26 @@ module.exports = React.createClass({
                       />,
             buttons = <div>
                         <FlatButton
-                          onClick={item.handleAccept}
-                          label={item.buttonsText[0]}
-                          primary={true}
+                          onClick = {item.handleAccept}
+                          label   = {item.buttonsText[0]}
+                          primary = {true}
                         />
                         <FlatButton
-                          onClick={item.handleDecline}
-                          label={item.buttonsText[1]}
+                          onClick = {item.handleDecline}
+                          label   = {item.buttonsText[1]}
                         />
                       </div>;
           return(
             <ListItem
-              leftIcon      = {icon}
-              disabled      = {true}
+              leftIcon = {icon}
+              disabled = {true}
             >
               {item.content.text}
               {buttons}
             </ListItem>
           )
         });
-    return items
+    return items;
   },
 
   getLinkItems: function() {
@@ -120,13 +120,14 @@ module.exports = React.createClass({
 
         return (
           <ListItem
-            onClick            = {item.handleLinkClick}
+            disabled           = {true}
             key                = {item.name + index}
             leftIcon           = {icon}
             secondaryText      = {item.content.secondaryText}
             secondaryTextLines = {item.content.secondaryTextLines || 1}
           >
-            <span style={item.content.style}>
+            <span
+              style   = {item.content.style}>
               {item.content.text}
             </span>
           </ListItem>
