@@ -1,55 +1,36 @@
 var React             = require('react'),
     Reflux            = require('reflux'),
 
-    SolutionsActions  = require('./SolutionsActions'),
-    SolutionsStore    = require('./SolutionsStore'),
-
-    SolutionsListItem = require('./SolutionsListItem.react.jsx');
+    SolutionsListItem = require('./SolutionsListItem.react');
 
 module.exports = React.createClass({
 
   displayName: 'SolutionsList',
 
-  //mixins: [
-  //  Reflux.connect(SolutionsStore)
-  //],
-
-  //componentWillMount: function() {
-  //  console.info('SolutionsList::componentWillMount');
-  //  SolutionsStore.fetch();
-  //},
-
-  getInitialState() {
-    return {
-      items: this.props.items
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(nextProps)
-  },
-
   getStyles: function() {
     return {
       list: {
-        listStyle: 'none',
-        margin: 40,
-        padding: 0
+        listStyle    : 'none',
+        margin       : '0 40px',
+        padding      : 0
       },
       listItem: {
-        padding: '0 20px',
-        marginBottom: 40
+        padding      : '0 15px',
+        marginBottom : 40,
+        minWidth     : 346,
+        maxWidth     : 346
       }
     }
   },
 
   getListItems: function() {
     var styles    = this.getStyles(),
-        listItems = this.state.items.map(function(item) {
+        listItems = this.props.items.map(function(item) {
           return (
             <li
-              className = "col-md-11"
-              style     = {styles.listItem}>
+              className = "col-flex-1"
+              style     = {styles.listItem}
+            >
               <SolutionsListItem data={item} />
             </li>
           )
@@ -62,7 +43,10 @@ module.exports = React.createClass({
     var styles    = this.getStyles();
 
     return (
-      <ul className="row" style={styles.list}>
+      <ul
+        className = "row"
+        style     = {styles.list}
+      >
         {this.getListItems()}
       </ul>
     );
