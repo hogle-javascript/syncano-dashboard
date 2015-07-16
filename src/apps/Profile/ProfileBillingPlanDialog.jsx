@@ -1,184 +1,275 @@
-var React                      = require('react'),
-    Reflux                     = require('reflux'),
+var React       = require('react'),
+    Reflux      = require('reflux'),
 
-    FormMixin                  = require('../../mixins/FormMixin'),
+    FormMixin   = require('../../mixins/FormMixin'),
+    DialogMixin = require('../../mixins/DialogMixin'),
 
-    Store             = require('./ProfileBillingPlanStore'),
-    Actions           = require('./ProfileBillingPlanActions'),
+    Store       = require('./ProfileBillingPlanDialogStore'),
+    Actions     = require('./ProfileBillingPlanDialogActions'),
 
-    Loading                  = require('../../common/Loading/Loading.react.jsx'),
+    Loading     = require('../../common/Loading/Loading.react.jsx'),
 
-    MUI                        = require('material-ui');
+    MUI         = require('material-ui');
 
 module.exports = React.createClass({
 
-  displayName: 'ProfileBillingAddress',
+  displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
+    FormMixin,
+    DialogMixin,
+
     Reflux.connect(Store),
   ],
 
-  componentDidMount: function() {
-    Actions.fetch()
+  handleDialogShow() {
+    console.debug('SolutionInstallDialog::handleDialogShow');
+    Actions.fetchBillingPlans()
   },
 
-  getStyles: function() {
+  handleAddSubmit() {
+    console.debug('SolutionInstallDialog::handleAddSubmit');
+
+    Actions.subscribePlan(this.state.plan.name, {
+      commitment: JSON.stringify({
+        api: this.getInfo('api').total,
+        cbx: this.getInfo('cbx').total
+      })
+    });
+  },
+
+  getStyles() {
     return {
       main: {
         marginTop: 50,
-        fontColor: '#4A4A4A',
+        fontColor: '#4A4A4A'
       },
-      mainDesc: {
-        fontSize   : '1.3em',
-        lineHeight : '1.3em',
+      sectionTopic: {
+        fontSize: '1.3em'
       },
-      summary: {
-        paddingTop: 20
+      table: {
+        marginTop: 20
       },
-      comment: {
-        fontSize: '0.9em'
+      tableRow: {
+        height: 40,
+        textAlign: 'left',
+        lineHeight: '40px',
+        verticalAlign: 'middle'
       },
-      explorerButton: {
-        marginTop: 30
+      tableColumnSummary: {
+        height: 40,
+        margin: 1,
+        fontSize: '1.1em',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        background: '#F2F2F2',
+        verticalAlign: 'middle',
+        lineHeight: '40px'
       },
-      chartHeader: {
-        paddingTop: 50,
-        fontSize: '1.5em'
-      }
+      sectionTotalSummary: {
+        marginTop: 35,
+        fontSize: '1.4em',
+        lineHeight: '1.4em'
+      },
+      sectionComment: {
+        marginTop: 40
+      },
     }
   },
 
-  renderSwitchPlan: function() {
-    if (!this.state.profile) {
+  onSliderChange(type, event, value) {
+    let newState = {};
+    newState[type + 'Selected'] = value;
+    this.setState(newState);
+  },
+
+  renderSlider(type) {
+    if (!this.state.plan) {
       return;
     }
+    const defaultValue = 0;
+    const options      = this.state.plan.options[type];
+    let selected       = this.state[type + 'Selected'];
 
-    if (this.state.profile.subscription.plan === 'builder') {
-      return [
-        <div>{this.state.profile.subscription.plan}</div>,
-        <MUI.Toggle defaultToggled={false}/>,
-        <div style={{marginTop: 10}}>
-          <a>Switch to Production</a>
-        </div>,
-        <div style={{marginTop: 10}}>
-          From $25/month
-        </div>,
-        <div style={{marginTop: 10}}>
-          <div><a>Learn</a> when to flip the</div>
-          <div>switch to production.</div>
+    return (
+      <MUI.Slider
+        ref          = {type + 'Slider'}
+        style        = {{marginBottom: 0}}
+        min          = {0}
+        max          = {(options.length - 1) / 10}
+        value        = {selected !== undefined ? selected : defaultValue}
+        step         = {0.1}
+        onChange     = {this.onSliderChange.bind(this, type)}
+      />
+    )
+  },
+
+  handleSliderLabelsClick(value, type) {
+    let newState = {};
+    newState[type + 'Selected'] = value / 10;
+    this.setState(newState);
+  },
+
+  renderOptions(type) {
+    if (!this.state.plan) {
+      return;
+    }
+    return this.state.plan.options[type].map((option, i) => {
+      return (
+        <div
+          key       = {option}
+          className = "col-flex-1"
+          onClick   = {this.handleSliderLabelsClick.bind(this, i, type)}
+        >
+          {option}
         </div>
-      ]
-    } else if (this.state.profile.subscription.plan === 'production') {
-      return [
-        <div>{this.state.profile.subscription.plan}</div>,
-        <MUI.Toggle defaultToggled={true}/>,
-        <div style={{marginTop: 10}}>
-          <a>Freeze your account</a>
-        </div>,
-      ]
-    }
+      )
+    });
   },
 
-  renderExplorerButtonLabel: function() {
-    if (!this.state.profile) {
-      return;
+  getInfo(type) {
+    let info = {
+      included : 0,
+      overage  : 0,
+      total    : 0
     }
 
-    let plan = this.state.profile.subscription.plan;
-
-    if (plan === 'builder') {
-      return 'Open Plans Explorer';
-    } else if (plan === 'production') {
-      return 'Upgrade your plan';
+    if (!this.state.plan) {
+      return info;
     }
+
+    let pricing     = this.state.plan.pricing[type];
+    let options     = this.state.plan.options[type];
+    let sliderValue = this.state[type + 'Selected'];
+
+    if (!sliderValue) {
+      info = pricing[Object.keys(pricing)[0]];
+      info.total = Object.keys(pricing)[0];
+      return info;
+    }
+
+    let value = String(parseFloat(sliderValue) * 10);
+
+    info = pricing[options[value]];
+    info.total = options[value];
+    return info;
   },
 
-  renderMainDesc: function() {
-    if (!this.state.profile) {
-      return;
-    }
+  render() {
 
-    let plan = this.state.profile.subscription.plan;
+    let styles              = this.getStyles();
+    let apiInfo             = this.getInfo('api');
+    let cbxInfo             = this.getInfo('cbx');
+    let sum                 = parseInt(apiInfo.total) + parseInt(cbxInfo.total);
+    let dialogCustomActions = [
+      <MUI.FlatButton
+        key        = "cancel"
+        label      = "Cancel"
+        onTouchTap = {this.handleCancel}
+        ref        = "cancel" />,
 
-    if (plan === 'builder') {
-      return (
-        <span>
-          You are on the <strong>Builder</strong> plan. It does not cost you anything but there are limits:
-        </span>
-      );
-    } else if (plan === 'production') {
-      return (
-        <span>
-          You are on a $25 Production plan:
-        </span>
-      );
-    }
-  },
-
-  renderCommment: function() {
-    if (!this.state.profile) {
-      return;
-    }
-
-    let plan = this.state.profile.subscription.plan;
-
-    if (plan === 'builder') {
-      return (
-        <span>
-          If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
-          If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
-        </span>
-      );
-    } else if (plan === 'production') {
-      return (
-        <span>
-          You can change your plan at any point and get the benefit of <strong>lower unit prices</strong> immediately.
-          Your new monthly fixed price will start from next billing period.
-        </span>
-      );
-    }
-  },
-
-  render: function() {
-    console.log(this.state)
-
-    let styles = this.getStyles();
+      <MUI.FlatButton
+        key        = "confirm"
+        label      = "Confirm"
+        primary    = {true}
+        onTouchTap = {this.handleFormValidation}
+        ref        = "submit" />
+    ];
 
     return (
       <Loading show={this.state.isLoading}>
-        <div className="row" style={styles.main}>
-          <div className="col-flex-1">
-            <div style={styles.mainDesc}>
-              {this.renderMainDesc()}
-            </div>
-            <div className="row" style={styles.summary}>
-              <div className="col-md-10">
-                <div>1300000</div>
-                <div>50000</div>
+        <MUI.Dialog
+          ref             = "dialog"
+          contentStyle    = {{padding: 0}}
+          onShow          = {this.handleDialogShow}
+          openImmediately = {this.props.openImmediately}
+          actions         = {dialogCustomActions}
+          onDismiss       = {this.resetDialogState}>
+          <div>
+            <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
+            <div style={{color: '#9B9B9B'}}>move the blue bubble to change your plan details</div>
+          </div>
+          <div style={{paddingTop: 40}}>
+            {this.renderFormNotifications()}
+
+            <div className="row">
+              <div className="col-md-24">
+                <div className="row">
+                  <div className="col-flex-1" style={styles.sectionTopic}>API calls</div>
+                  <div className="col-flex-1" style={{color: '#9B9B9B', textAlign: 'right'}}>suggestion based on usage: $60</div>
+                </div>
+                <div>
+                  {this.renderSlider('api')}
+                </div>
+                <div className="row" style={{ textAlign: 'center', verticalAlign: 'middle'}}>
+                  {this.renderOptions('api')}
+                </div>
               </div>
-              <div className="col-flex-1">
-                <div><strong>API calls</strong></div>
-                <div><strong>CodeBox runs</strong></div>
+              <div className="col-md-11" style={{paddingLeft: 35}}>
+                <div>
+                  <div>Total API calls</div>
+                  <div><strong>{apiInfo.included}</strong></div>
+                </div>
+                <div>
+                  <div>Overage Unit Price: API Calls</div>
+                  <div><strong>${apiInfo.overage}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div className="row" style={{paddingTop: 50}}>
+              <div className="col-md-24">
+                <div className="row">
+                  <div className="col-flex-1" style={styles.sectionTopic}>API calls</div>
+                  <div className="col-flex-1" style={{color: '#9B9B9B', textAlign: 'right'}}>suggestion based on usage: $60</div>
+                </div>
+                <div>
+                  {this.renderSlider('cbx')}
+                </div>
+                <div className="row" style={{ textAlign: 'center', verticalAlign: 'middle'}}>
+                  {this.renderOptions('cbx')}
+                </div>
+              </div>
+              <div className="col-md-11" style={{paddingLeft: 35}}>
+                <div>
+                  <div>Total CodeBox runs</div>
+                  <div><strong>{cbxInfo.included}</strong></div>
+                </div>
+                <div>
+                  <div>Overage Unit Price: CodeBox run</div>
+                  <div><strong>${cbxInfo.overage}</strong></div>
+                </div>
+              </div>
+            </div>
+            <div className="row" style={{marginTop: 40}}>
+              <div className="col-md-24">
+                <div style={styles.sectionTopic}>Summary</div>
+                  <div style={styles.table}>
+                    <div className="row" style={styles.tableRow}>
+                      <div className="col-flex-1">API calls</div>
+                      <div className="col-md-10" style={styles.tableColumnSummary}>{apiInfo.included}</div>
+                      <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
+                    </div>
+                    <div className="row" style={styles.tableRow}>
+                      <div className="col-flex-1">CodeBox runs</div>
+                      <div className="col-md-10" style={styles.tableColumnSummary}>{cbxInfo.included}</div>
+                      <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
+                    </div>
+                  </div>
+                <div style={styles.sectionComment}>
+                  The new overage unit price will take effect immediately after purchase and be used
+                  in cost calculations for this month. The new monthly price will start from next billing period.
+                </div>
+              </div>
+              <div className="col-md-11" style={{paddingLeft: 35}}>
+                <div style={styles.sectionTopic}>Your new plan:</div>
+                <div style={styles.sectionTotalSummary}>
+                  <div><strong>${sum}</strong>/month</div>
+                  <div>+ overage</div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-flex-1">
-            <div style={styles.comment}>
-              {this.renderCommment()}
-            </div>
-            <div style={styles.explorerButton}>
-              <MUI.FlatButton label={this.renderExplorerButtonLabel()} />
-            </div>
-          </div>
-          <div className="col-md-10">
-            {this.renderSwitchPlan()}
-          </div>
-        </div>
-        <div className="row">
-          <div style={styles.chartHeader}>
-            See how it works with your <strong>current usage</strong>
-          </div>
-        </div>
+        </MUI.Dialog>
       </Loading>
     );
   }

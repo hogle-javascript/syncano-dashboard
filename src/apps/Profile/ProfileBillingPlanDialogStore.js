@@ -1,27 +1,21 @@
-var Reflux         = require('reflux'),
+var Reflux            = require('reflux'),
 
-    StoreFormMixin     = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin  = require('../../mixins/WaitForStoreMixin'),
+    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
+    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
+    WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
 
-    SessionActions = require('../Session/SessionActions'),
-    Actions = require('./ProfileBillingPlanActions');
+    SessionActions    = require('../Session/SessionActions'),
+    Actions           = require('./ProfileBillingPlanDialogActions');
 
-var ProfileBillingPlanStore = Reflux.createStore({
+module.exports = Reflux.createStore({
   listenables: Actions,
   mixins: [
-    WaitForStoreMixin
+    StoreFormMixin,
+    DialogStoreMixin,
+    WaitForStoreMixin,
   ],
 
-  getInitialState: function() {
-    return {
-      profile   : null,
-      usage     : null,
-      isLoading : true
-    }
-  },
-
   init: function() {
-    this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
       this.refreshData
@@ -29,31 +23,17 @@ var ProfileBillingPlanStore = Reflux.createStore({
   },
 
   refreshData: function() {
-    console.debug('ClassesStore::refreshData');
-    Actions.fetchBillingProfile();
-    Actions.fetchBillingUsage();
+    console.debug('ProfileBillingPlanDialogStore::refreshData');
+    Actions.fetchBillingPlans();
   },
 
-  setProfile: function(profile) {
-    this.data.profile = profile;
-    this.trigger(this.data);
+  setPlans: function(plans) {
+    this.trigger({plan: plans[Object.keys(plans)[0]]});
   },
 
-  setUsage: function(usage) {
-    this.data.usage = usage;
-    this.trigger(this.data);
-  },
-
-  onFetchBillingProfileCompleted: function(payload) {
-    this.data.isLoading = false;
-    this.setProfile(payload);
-  },
-
-  onFetchBillingUsageCompleted: function(payload) {
-    this.data.isLoading = false;
-    this.setUsage(payload);
+  onFetchBillingPlansCompleted: function(payload) {
+    this.isLoading = false;
+    this.setPlans(payload);
   },
 
 });
-
-module.exports = ProfileBillingPlanStore;

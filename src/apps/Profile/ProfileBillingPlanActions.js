@@ -4,54 +4,37 @@ var Reflux     = require('reflux'),
     D          = Syncano.D;
 
 var ProfileBillingPlanActions = Reflux.createActions({
-//  checkItem: {},
-//  uncheckAll: {},
-//  fetch: {},
-//  setInvitations: {},
-//  fetchInvitations: {
-//    asyncResult: true,
-//    loading: true,
-//    children: ['completed', 'failure']
-//  },
-//  declineInvitations: {
-//    asyncResult: true,
-//    children: ['completed', 'failure']
-//  },
-//  acceptInvitations: {
-//    asyncResult: true,
-//    children: ['completed', 'failure']
-//  }
-//});
-//
-//ProfileInvitationsActions.fetchInvitations.listen(function() {
-//  console.info('ProfileInvitationsActions::fetchInvitations');
-//  Connection
-//    .AccountInvitations
-//    .list()
-//    .then(this.completed)
-//    .catch(this.failure);
-//});
-//
-//ProfileInvitationsActions.acceptInvitations.listen(function(items) {
-//  console.info('ProfileInvitationsActions::acceptInvitations');
-//  var promises = items.map(function(item) {
-//    return Connection.AccountInvitations.accept(item.key);
-//  });
-//
-//  D.all(promises)
-//    .success(this.completed)
-//    .error(this.failure);
-//});
-//
-//ProfileInvitationsActions.declineInvitations.listen(function(items) {
-//  console.info('ProfileInvitationsActions::declineInvitations');
-//  var promises = items.map(function(item) {
-//    return Connection.AccountInvitations.remove(item.id);
-//  });
-//
-//  D.all(promises)
-//    .success(this.completed)
-//    .error(this.failure);
+  fetch: {},
+  setBillingPlan: {},
+  fetchBillingProfile: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure']
+  },
+  fetchBillingUsage: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure']
+  },
+
+});
+
+ProfileBillingPlanActions.fetchBillingProfile.listen(function() {
+  console.info('ProfileBillingPlanActions::fetchBillingProfile');
+  Connection
+    .Billing
+    .getProfile()
+    .then(this.completed)
+    .catch(this.failure);
+});
+
+ProfileBillingPlanActions.fetchBillingUsage.listen(function() {
+  console.info('ProfileBillingPlanActions::fetchBillingUsage');
+  Connection
+    .Billing
+    .getUsage()
+    .then(this.completed)
+    .catch(this.failure);
 });
 
 module.exports = ProfileBillingPlanActions;

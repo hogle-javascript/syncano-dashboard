@@ -46,7 +46,6 @@ var React                       = require('react'),
     DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
     Data                        = require('./apps/Data/Data.react'),
     Tasks                       = require('./apps/Tasks/Tasks.react'),
-    Traces                      = require('./apps/Traces/Traces.react'),
     Users                       = require('./apps/Users/Users.react'),
     Channels                    = require('./apps/Channels/Channels.react'),
 

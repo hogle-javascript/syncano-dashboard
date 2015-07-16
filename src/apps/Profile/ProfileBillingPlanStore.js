@@ -1,24 +1,58 @@
-var Reflux         = require('reflux'),
+var Reflux            = require('reflux'),
 
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
+    WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
 
-    ProfileBillingPlanActions = require('./ProfileBillingPlanActions');
+    SessionActions    = require('../Session/SessionActions'),
+    Actions           = require('./ProfileBillingPlanActions');
 
 var ProfileBillingPlanStore = Reflux.createStore({
-  listenables: ProfileBillingPlanActions,
-  mixins: [StoreFormMixin],
+  listenables: Actions,
+  mixins: [
+    WaitForStoreMixin
+  ],
 
-  init: function() {
-    this.listenToForms();
+  getInitialState: function() {
+    return {
+      profile   : null,
+      usage     : null,
+      isLoading : true
+    }
   },
 
-  //onFetchBillingProfileCompleted: function(payload) {
-  //  this.trigger(payload);
-  //},
-  //
-  //onUpdateBillingProfileCompleted: function() {
-  //  this.trigger({feedback: 'Billing address changed successfully.'});
-  //}
+  init: function() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setUser,
+      this.refreshData
+    );
+  },
+
+  refreshData: function() {
+    console.debug('ClassesStore::refreshData');
+    Actions.fetchBillingProfile();
+    Actions.fetchBillingUsage();
+  },
+
+  setProfile: function(profile) {
+    this.data.profile = profile;
+    this.trigger(this.data);
+  },
+
+  setUsage: function(usage) {
+    this.data.usage = usage;
+    this.trigger(this.data);
+  },
+
+  onFetchBillingProfileCompleted: function(payload) {
+    this.data.isLoading = false;
+    this.setProfile(payload);
+  },
+
+  onFetchBillingUsageCompleted: function(payload) {
+    this.data.isLoading = false;
+    this.setUsage(payload);
+  },
 
 });
 

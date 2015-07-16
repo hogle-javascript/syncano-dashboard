@@ -1,40 +1,43 @@
 var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
 
-var ProfileBillingPlanActions = Reflux.createActions({
-  fetch: {},
-  setBillingPlan: {},
-  fetchBillingProfile: {
-    asyncResult: true,
-    loading: true,
-    children: ['completed', 'failure']
+    Connection = require('../Session/Connection').get();
+
+var ProfileBillingPlanDialogActions = Reflux.createActions({
+
+  showDialog    : {},
+  dismissDialog : {},
+  fetch         : {},
+
+  fetchBillingPlans: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
   },
-  fetchBillingUsage: {
-    asyncResult: true,
-    loading: true,
-    children: ['completed', 'failure']
-  },
+
+  subscribePlan: {
+    asyncResult : true,
+    loading     : true,
+    children    : ['completed', 'failure']
+  }
 
 });
 
-ProfileBillingPlanActions.fetchBillingProfile.listen(function() {
-  console.info('ProfileBillingPlanActions::fetchBillingProfile');
-  Connection
-    .Billing
-    .getProfile()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileBillingPlanActions.fetchBillingUsage.listen(function() {
+ProfileBillingPlanDialogActions.subscribePlan.listen((plan, payload) => {
   console.info('ProfileBillingPlanActions::fetchBillingUsage');
   Connection
     .Billing
-    .getUsage()
+    .subscribePlan(plan, payload)
+    .then(completed)
+    .catch(failure);
+});
+
+ProfileBillingPlanDialogActions.fetchBillingPlans.listen(function() {
+  console.info('ProfileBillingPlanActions::fetchBillingUsage');
+  Connection
+    .Billing
+    .getPlans()
     .then(this.completed)
     .catch(this.failure);
 });
 
-module.exports = ProfileBillingPlanActions;
+module.exports = ProfileBillingPlanDialogActions;
