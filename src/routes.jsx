@@ -133,7 +133,7 @@ module.exports = (
           path    = ":instanceName/codeboxes">
           <Route
             name    = "codebox"
-            handler = {CodeBoxes}
+            handler = {CodeBoxes.Details}
             path    = ":codeboxId">
             <Route
               name    = "codebox-traces"
