@@ -43,7 +43,7 @@ AuthActions.resendActivationEmail.listen(function(email) {
   Connection
     .Accounts
     .resendActivationEmail(email)
-    .then(this.complete)
+    .then(this.completed)
     .catch(this.failure);
 });
 

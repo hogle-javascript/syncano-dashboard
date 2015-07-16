@@ -10,12 +10,13 @@ var React                     = require('react'),
     ProfileInvitationsStore   = require('../Profile/ProfileInvitationsStore'),
     ProfileInvitationsActions = require('../Profile/ProfileInvitationsActions'),
 
-    mui                       = require('material-ui'),
-    IconMenu                  = mui.IconMenu,
-    MenuItem                  = mui.MenuItem,
-    FontIcon                  = mui.FontIcon,
-    MenuDivider               = require('material-ui/lib/menus/menu-divider'),
-    IconButton                = mui.IconButton,
+    MUI                       = require('material-ui'),
+    Colors                    = MUI.Styles.Colors,
+    IconMenu                  = MUI.IconMenu,
+    MenuItem                  = MUI.MenuItem,
+    FontIcon                  = MUI.FontIcon,
+    MenuDivider               = MUI.ListDivider,
+    IconButton                = MUI.IconButton,
     DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
 
 
@@ -70,7 +71,7 @@ module.exports = Radium(React.createClass({
 
       resendEmailLink: {
         cursor : "pointer",
-        color  : "#0091EA"
+        color  : Colors.lightBlueA700
       }
     }
   },

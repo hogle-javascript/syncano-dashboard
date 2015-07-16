@@ -54,7 +54,7 @@ module.exports = React.createClass({
                key                = {emptyItem.name}
                disableTouchTap    = {true}
                leftIcon           = {icon}>
-               <span style={emptyItem.content.style}>
+               <span>
                {emptyItem.content.text}
                </span>
              </ListItem>
