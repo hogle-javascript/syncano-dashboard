@@ -62,6 +62,9 @@ module.exports = React.createClass({
       container: {
         width  : '90%',
         margin : '40px auto'
+      },
+      sidebar: {
+        minWidth: 230
       }
     }
   },
@@ -83,7 +86,7 @@ module.exports = React.createClass({
 
         <div style={styles.container}>
           <div className="row">
-            <div className="col-md-5">
+            <div style={styles.sidebar}>
               <MUI.List zDepth={1} className="vm-6-b">
                 <MUI.ListItem primaryText="All solutions" />
                 <MUI.ListItem primaryText="Favorite" />
