@@ -1,83 +1,39 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
+import CreateActions from '../../utils/ActionsConstructor.js'
+import Syncano from '../Syncano';
 
-var InstancesActions = Reflux.createActions({
-  checkItem     : {},
-  uncheckAll    : {},
-  selectAll     : {},
-  fetch         : {},
-  setInstances  : {},
-  showDialog    : {},
-  dismissDialog : {},
-  fetchInstances: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+export default CreateActions({
+    withDialog : true,
+    withCheck  : true,
   },
+  {
+    fetch         : {},
+    setInstances  : {},
 
-  createInstance: {
-    asyncResult : true,
-    asyncForm   : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
-
-  updateInstance: {
-    asyncResult : true,
-    asyncForm   : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
-
-  removeInstances: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+    fetchInstances: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : Syncano.Actions.fetchInstances
+    },
+    createInstance: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : Syncano.Actions.createInstance
+    },
+    updateInstance: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : Syncano.Actions.updateInstance
+    },
+    removeInstances: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : Syncano.Actions.removeInstances
+    }
   }
-});
-
-InstancesActions.fetchInstances.listen(function() {
-  console.info('InstancesActions::fetchInstances');
-  Connection
-    .Instances
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-InstancesActions.createInstance.listen(function(payload) {
-  console.info('InstancesActions::createInstance');
-  Connection
-    .Instances
-    .create({
-      name        : payload.name,
-      description : payload.description,
-      metadata    : payload.metadata
-    })
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-InstancesActions.updateInstance.listen(function(name, payload) {
-  console.info('InstancesActions::updateInstance');
-  Connection
-    .Instances
-    .update(name, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-InstancesActions.removeInstances.listen(function(names) {
-  console.info('InstancesActions::removeInstances');
-  var promises = names.map(function(name) {
-    return Connection.Instances.remove(name);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-module.exports = InstancesActions;
+);
