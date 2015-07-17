@@ -24,7 +24,8 @@ module.exports = React.createClass({
 
   handleDialogShow() {
     console.debug('SolutionInstallDialog::handleDialogShow');
-    Actions.fetchBillingPlans()
+    Actions.fetchBillingPlans();
+    Actions.fetchBillingCard();
   },
 
   handleAddSubmit() {
@@ -72,7 +73,9 @@ module.exports = React.createClass({
         lineHeight: '1.4em'
       },
       sectionComment: {
-        marginTop: 40
+        marginTop: 20,
+        fontSize: '0.8em',
+        color: '#9B9B9B'
       },
     }
   },
@@ -93,7 +96,9 @@ module.exports = React.createClass({
 
     return (
       <MUI.Slider
+        key          = {type + 'Slider'}
         ref          = {type + 'Slider'}
+        name         = {type + 'Slider'}
         style        = {{marginBottom: 0}}
         min          = {0}
         max          = {(options.length - 1) / 10}
@@ -256,8 +261,14 @@ module.exports = React.createClass({
                     </div>
                   </div>
                 <div style={styles.sectionComment}>
-                  The new overage unit price will take effect immediately after purchase and be used
-                  in cost calculations for this month. The new monthly price will start from next billing period.
+                  The new monthly price and overage rate will begin at the start of the next billing period.
+                  Your card will be charged on the 1st of every month.
+                </div>
+                <div style={{height: 150}}>
+                  {this.state.card}
+                </div>
+                <div>
+                  We are going to charge this card, to change it click here.
                 </div>
               </div>
               <div className="col-md-11" style={{paddingLeft: 35}}>

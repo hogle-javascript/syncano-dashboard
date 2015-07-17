@@ -4,8 +4,9 @@ var Reflux            = require('reflux'),
     DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
     WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
 
-    SessionActions    = require('../Session/SessionActions'),
-    Actions           = require('./ProfileBillingPlanDialogActions');
+    SessionActions     = require('../Session/SessionActions'),
+    BillingPlanActions = require('./ProfileBillingPlanActions'),
+    Actions            = require('./ProfileBillingPlanDialogActions');
 
 module.exports = Reflux.createStore({
   listenables: Actions,
@@ -25,6 +26,7 @@ module.exports = Reflux.createStore({
   refreshData: function() {
     console.debug('ProfileBillingPlanDialogStore::refreshData');
     Actions.fetchBillingPlans();
+    Actions.fetchBillingSubscriptions();
   },
 
   setPlans: function(plans) {
@@ -35,5 +37,17 @@ module.exports = Reflux.createStore({
     this.isLoading = false;
     this.setPlans(payload);
   },
+
+  onFetchBillingCardCompleted: function(payload) {
+    this.trigger({
+      isLoading: false,
+      card: payload
+    });
+  },
+
+  onSubscribePlanCompleted() {
+    this.dismissDialog();
+    BillingPlanActions.fetch();
+  }
 
 });

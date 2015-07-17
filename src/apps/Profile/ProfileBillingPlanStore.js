@@ -32,6 +32,7 @@ var ProfileBillingPlanStore = Reflux.createStore({
     console.debug('ClassesStore::refreshData');
     Actions.fetchBillingProfile();
     Actions.fetchBillingUsage();
+    Actions.fetchBillingSubscriptions();
   },
 
   setProfile: function(profile) {
@@ -44,6 +45,11 @@ var ProfileBillingPlanStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  setSubscriptions: function(subscriptions) {
+    this.data.subscriptions = subscriptions;
+    this.trigger(this.data);
+  },
+
   onFetchBillingProfileCompleted: function(payload) {
     this.data.isLoading = false;
     this.setProfile(payload);
@@ -52,6 +58,16 @@ var ProfileBillingPlanStore = Reflux.createStore({
   onFetchBillingUsageCompleted: function(payload) {
     this.data.isLoading = false;
     this.setUsage(payload);
+  },
+  onFetchBillingSubscriptionsCompleted: function(payload) {
+    this.data.isLoading = false;
+    this.setSubscriptions(payload);
+  },
+  onCancelSubscriptionsCompleted: function(payload) {
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
   },
 
 });

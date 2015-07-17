@@ -2,29 +2,37 @@ var React             = require('react'),
     Reflux            = require('reflux'),
 
     FormMixin         = require('../../mixins/FormMixin'),
+    DialogsMixin      = require('../../mixins/DialogsMixin'),
 
     Store             = require('./ProfileBillingPlanStore'),
-    Actions           = require('./ProfileBillingPlanActions'),
-
-    Loading           = require('../../common/Loading/Loading.react.jsx'),
 
     MUI               = require('material-ui'),
+
+    Loading           = require('../../common/Loading/Loading.react.jsx'),
 
     PlanDialogStore   = require('./ProfileBillingPlanDialogStore'),
     PlanDialogActions = require('./ProfileBillingPlanDialogActions'),
     PlanDialog        = require('./ProfileBillingPlanDialog');
 
+import Actions from './ProfileBillingPlanActions.js';
+
 module.exports = React.createClass({
 
-  displayName: 'ProfileBillingDialog',
+  displayName: 'ProfileBillingPlan',
 
   mixins: [
+    DialogsMixin,
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore),
   ],
 
   componentDidMount: function() {
     Actions.fetch()
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('ProfileBillingPlan::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   getStyles: function() {
@@ -44,7 +52,7 @@ module.exports = React.createClass({
         fontSize: '0.9em'
       },
       explorerButton: {
-        marginTop: 30
+        marginTop: 20,
       },
       chartHeader: {
         paddingTop: 50,
@@ -53,9 +61,54 @@ module.exports = React.createClass({
     }
   },
 
+  // Dialogs config
+  initDialogs: function() {
+
+    return [{
+      dialog: MUI.Dialog,
+      params: {
+        key   : 'freezeAccount',
+        ref   : 'freezeAccount',
+        title : 'Freeze Account',
+        actions: [
+          {
+            text    : 'Cancel',
+            onClick : this.handleCancel
+          },
+          {
+            text    : 'Confirm',
+            onClick : this.handleFreezeAccount
+          }
+        ],
+        modal: true,
+        children: ['Do you really want to freeze your account?']
+      }
+    }]
+  },
+
+  isNewSubscription() {
+    return (this.state.subscriptions && this.state.subscriptions.length > 1);
+  },
+
+  handlePlanToggle() {
+    console.debug('ProfileBillingPlan::handlePlanToggle');
+  },
+
+  handleFreezeAccount() {
+    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {return item.id})).then(() => {
+      Actions.fetch();
+    });
+  },
+
   handleShowPlanDialog: function() {
-    console.debug('ProfileBillingDialog::handleShowPlanDialog');
+    console.debug('ProfileBillingPlan::handleShowPlanDialog');
     PlanDialogActions.showDialog();
+  },
+
+  handleDeleteSubscription: function() {
+    Actions.cancelSubscriptions([this.state.subscriptions._items[1].id]).then(() => {
+      Actions.fetch();
+    });
   },
 
   renderSwitchPlan: function() {
@@ -66,7 +119,11 @@ module.exports = React.createClass({
     if (this.state.profile.subscription.plan === 'builder') {
       return [
         <div>{this.state.profile.subscription.plan}</div>,
-        <MUI.Toggle defaultToggled={false}/>,
+        <MUI.Toggle
+          key            = "builder-toggle"
+          defaultToggled = {false}
+          onToggle       = {this.handlePlanToggle}
+        />,
         <div style={{marginTop: 10}}>
           <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
         </div>,
@@ -78,12 +135,16 @@ module.exports = React.createClass({
           <div>switch to production.</div>
         </div>
       ]
-    } else if (this.state.profile.subscription.plan === 'production') {
+    } else if (this.state.profile.subscription.plan === 'paid-commitment') {
       return [
-        <div>{this.state.profile.subscription.plan}</div>,
-        <MUI.Toggle defaultToggled={true}/>,
+        <div>Production</div>,
+        <MUI.Toggle
+          key            = "paid-commitment-toggle"
+          defaultToggled = {true}
+          onToggle       = {this.handlePlanToggle}
+        />,
         <div style={{marginTop: 10}}>
-          <a>Freeze your account</a>
+          <a onClick={this.showDialog.bind(null, 'freezeAccount')}>Freeze your account</a>
         </div>,
       ]
     }
@@ -98,12 +159,46 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return 'Open Plans Explorer';
-    } else if (plan === 'production') {
+    } else if (plan === 'paid-commitment') {
+      if (this.isNewSubscription()) {
+        return 'Change your next commitment';
+      }
       return 'Upgrade your plan';
     }
   },
 
+  renderExplorerButton() {
+    let styles = this.getStyles();
+
+    if (this.isNewSubscription()) {
+      return (
+        <div style={styles.explorerButton}>
+          <MUI.FlatButton
+            label   = {'Cancel Change'}
+            onClick = {this.handleDeleteSubscription}
+          />
+          <MUI.FlatButton
+            style   = {{marginLeft: 15}}
+            label   = {'Upgrade'}
+            onClick = {this.handleShowPlanDialog}
+          />
+        </div>
+      )
+    }
+
+    return (
+      <div style={styles.explorerButton}>
+        <MUI.FlatButton
+          label   = {this.renderExplorerButtonLabel() || ''}
+          onClick = {this.handleShowPlanDialog}
+        />
+      </div>
+    )
+  },
+
   renderMainDesc: function() {
+    let styles = this.getStyles();
+
     if (!this.state.profile) {
       return;
     }
@@ -112,20 +207,50 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return (
-        <span>
+        <span key="builderDesc">
           You are on the <strong>Builder</strong> plan. It does not cost you anything but there are limits:
         </span>
       );
-    } else if (plan === 'production') {
+    } else if (plan === 'paid-commitment') {
+
+      let subscription = this.state.profile.subscription;
+      let commitment = subscription.commitment;
+      let pricing    = subscription.pricing;
+      let total      = parseInt(commitment.api) + parseInt(commitment.cbx);
+
       return (
-        <span>
-          You are on a $25 Production plan:
-        </span>
+        <div
+          key       = "productionDesc-subs"
+          className = "col-flex-1">
+          <div style={styles.mainDesc}>
+            You are on a ${total} Production plan:
+          </div>
+          <div className="row" style={styles.summary}>
+            <div className="col-md-6">
+              <div>{pricing.api.included}</div>
+              <div>{pricing.cbx.included}</div>
+            </div>
+            <div className="col-flex-1">
+              <div><strong>API calls</strong></div>
+              <div><strong>CodeBox runs</strong></div>
+            </div>
+            <div className="col-md-8" style={{textAlign: 'right'}}>
+              <div><strong>+{pricing.api.overage}</strong></div>
+              <div><strong>+{pricing.cbx.overage}</strong></div>
+            </div>
+            <div className="col-md-9">
+              <div>each extra call</div>
+              <div>each extra run</div>
+            </div>
+          </div>
+        </div>
       );
     }
   },
 
   renderCommment: function() {
+    let styles = this.getStyles();
+
     if (!this.state.profile) {
       return;
     }
@@ -134,18 +259,49 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return (
-        <span>
+        <span key="builderComment">
           If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
           If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
         </span>
       );
-    } else if (plan === 'production') {
-      return (
-        <span>
-          You can change your plan at any point and get the benefit of <strong>lower unit prices</strong> immediately.
-          Your new monthly fixed price will start from next billing period.
-        </span>
-      );
+    } else if (plan === 'paid-commitment') {
+
+      if (this.isNewSubscription()) {
+        let subscription = this.state.subscriptions._items[1];
+        let total        = parseInt(subscription.commitment.api) + parseInt(subscription.commitment.cbx);
+        return (
+          <div key='productionComment-subs' >
+            <div style={styles.mainDesc}>
+              Your new <strong>${total}</strong> plan will be available from {subscription.start}:
+            </div>
+            <div className="row" style={styles.summary}>
+              <div className="col-md-6">
+                <div>{subscription.pricing.api.included}</div>
+                <div>{subscription.pricing.cbx.included}</div>
+              </div>
+              <div className="col-flex-1">
+                <div><strong>API calls</strong></div>
+                <div><strong>CodeBox runs</strong></div>
+              </div>
+              <div className="col-md-7" style={{textAlign: 'right'}}>
+                <div><strong>+{subscription.pricing.api.overage}</strong></div>
+                <div><strong>+{subscription.pricing.cbx.overage}</strong></div>
+              </div>
+              <div className="col-flex-1">
+                <div>each extra call</div>
+                <div>each extra run</div>
+              </div>
+            </div>
+          </div>
+        )
+      } else {
+        return (
+          <span key="productionComment">
+            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+            Your new monthly fixed price will start from next billing period.
+          </span>
+        );
+      }
     }
   },
 
@@ -154,35 +310,19 @@ module.exports = React.createClass({
 
     return (
       <Loading show={this.state.isLoading}>
+        {this.getDialogs()}
         <PlanDialog />
         <div className="row" style={styles.main}>
-          <div className="col-flex-1">
-            <div style={styles.mainDesc}>
-              {this.renderMainDesc()}
-            </div>
-            <div className="row" style={styles.summary}>
-              <div className="col-md-10">
-                <div>1300000</div>
-                <div>50000</div>
-              </div>
-              <div className="col-flex-1">
-                <div><strong>API calls</strong></div>
-                <div><strong>CodeBox runs</strong></div>
-              </div>
-            </div>
-          </div>
+
+          {this.renderMainDesc()}
+
           <div className="col-flex-1">
             <div style={styles.comment}>
               {this.renderCommment()}
             </div>
-            <div style={styles.explorerButton}>
-              <MUI.FlatButton
-                label   = {this.renderExplorerButtonLabel()}
-                onClick = {this.handleShowPlanDialog}
-              />
-            </div>
+            {this.renderExplorerButton()}
           </div>
-          <div className="col-md-10">
+          <div className="col-md-8">
             {this.renderSwitchPlan()}
           </div>
         </div>

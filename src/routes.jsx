@@ -215,7 +215,7 @@ module.exports = (
           handler = {Profile.BillingInvoices}
           path    = "invoices"
         />
-        <DefaultRoute handler={Profile.BillingAddress} />
+        <DefaultRoute handler={Profile.BillingPlan} />
       </Route>
 
       {/* Solutions */}

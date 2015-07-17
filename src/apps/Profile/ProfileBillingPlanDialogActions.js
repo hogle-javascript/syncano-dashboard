@@ -1,43 +1,38 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
-
-var ProfileBillingPlanDialogActions = Reflux.createActions({
-
-  showDialog    : {},
-  dismissDialog : {},
-  fetch         : {},
-
-  fetchBillingPlans: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+export default CreateActions({
+    withDialog : true,
   },
+  {
+    fetch         : {},
+    setInstances  : {},
 
-  subscribePlan: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+    fetchBillingPlans: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.listPlans'
+    },
+    subscribePlan: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.subscribePlan'
+    },
+    fetchBillingCard: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.getCard'
+    },
+    fetchBillingSubscriptions: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.listSubscriptions'
+    },
   }
-
-});
-
-ProfileBillingPlanDialogActions.subscribePlan.listen((plan, payload) => {
-  console.info('ProfileBillingPlanActions::fetchBillingUsage');
-  Connection
-    .Billing
-    .subscribePlan(plan, payload)
-    .then(completed)
-    .catch(failure);
-});
-
-ProfileBillingPlanDialogActions.fetchBillingPlans.listen(function() {
-  console.info('ProfileBillingPlanActions::fetchBillingUsage');
-  Connection
-    .Billing
-    .getPlans()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = ProfileBillingPlanDialogActions;
+);

@@ -1,40 +1,44 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-var ProfileBillingPlanActions = Reflux.createActions({
-  fetch: {},
-  setBillingPlan: {},
-  fetchBillingProfile: {
-    asyncResult: true,
-    loading: true,
-    children: ['completed', 'failure']
-  },
-  fetchBillingUsage: {
-    asyncResult: true,
-    loading: true,
-    children: ['completed', 'failure']
-  },
+export default CreateActions(
+  {},
+  {
+    fetch          : {},
+    setBillingPlan : {},
 
-});
-
-ProfileBillingPlanActions.fetchBillingProfile.listen(function() {
-  console.info('ProfileBillingPlanActions::fetchBillingProfile');
-  Connection
-    .Billing
-    .getProfile()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileBillingPlanActions.fetchBillingUsage.listen(function() {
-  console.info('ProfileBillingPlanActions::fetchBillingUsage');
-  Connection
-    .Billing
-    .getUsage()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = ProfileBillingPlanActions;
+    fetchBillingProfile: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.getProfile'
+    },
+    fetchBillingUsage: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.getUsage'
+    },
+    fetchBillingCard: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.getCard'
+    },
+    fetchBillingSubscriptions: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.listSubscriptions'
+    },
+    cancelSubscriptions: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.cancelSubscriptions'
+    },
+  }
+);
