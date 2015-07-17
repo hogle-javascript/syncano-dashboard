@@ -1,17 +1,13 @@
 import _ from 'lodash';
 
-import _Connection from '../Session/Connection.js';
 import Hello from '../Account/Hello.js';
 import Constants from '../../constants/Constants';
-
-let Connection = _Connection.get();
-let D          = _.D;
 
 export default {
 
   // Accounts
   resendActivationEmail(email) {
-    Connection
+    this.Connection
       .Accounts
       .resendActivationEmail(email)
       .then(this.completed)
@@ -19,7 +15,7 @@ export default {
   },
 
   activate(payload) {
-    Connection
+    this.Connection
       .Accounts
       .activate(payload)
       .then(this.completed)
@@ -27,14 +23,14 @@ export default {
   },
 
   passwordSignIn(payload) {
-    Connection
+    this.Connection
       .connect(payload.email, payload.password)
       .then(this.completed)
       .catch(this.failure);
   },
 
   passwordSignUp(payload) {
-    Connection
+    this.Connection
       .Accounts
       .create({
         email    : payload.email,
@@ -45,7 +41,7 @@ export default {
   },
 
   passwordReset(email) {
-    Connection
+    this.Connection
       .Accounts
       .passwordReset(email)
       .then(this.completed)
@@ -53,7 +49,7 @@ export default {
   },
 
   passwordResetConfirm(payload) {
-    Connection
+    this.Connection
       .Accounts
       .passwordResetConfirm(payload)
       .then(this.completed)
@@ -64,7 +60,7 @@ export default {
     Hello
       .login(network)
       .then(auth => {
-        Connection
+        this.Connection
           .socialConnect(
             auth.network,
             auth.authResponse.access_token
@@ -80,7 +76,7 @@ export default {
 
   // Admins
   fetchAdmins() {
-    Connection
+    this.Connection
       .Admins
       .list()
       .then(this.completed)
@@ -88,7 +84,7 @@ export default {
   },
 
   updateAdmin(name, payload) {
-    Connection
+    this.Connection
       .Admins
       .update(name, payload)
       .then(this.completed)
@@ -97,17 +93,17 @@ export default {
 
   removeAdmins(admins) {
     let promises = admins.map(admin => {
-      Connection.Admins.remove(admin)
+      this.Connection.Admins.remove(admin)
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Invitations
   fetchInvitations() {
-    Connection
+    this.Connection
       .Invitations
       .list()
       .then(this.completed)
@@ -115,7 +111,7 @@ export default {
   },
 
   createInvitation(payload) {
-    Connection
+    this.Connection
       .Invitations
       .create(payload)
       .then(this.completed)
@@ -124,27 +120,27 @@ export default {
 
   removeInvitation(items) {
     let promises = items.map(item => {
-      Connection.Invitations.remove(item.id);
+      this.Connection.Invitations.remove(item.id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   resendInvitation(items) {
     let promises = items.map(item => {
-      Connection.Invitations.resend(item.id);
+      this.Connection.Invitations.resend(item.id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // ApiKeys
   fetchApiKeys() {
-    Connection
+    this.Connection
       .ApiKeys
       .list()
       .then(this.completed)
@@ -152,11 +148,11 @@ export default {
   },
 
   createApiKey(payload) {
-    Connection
+    this.Connection
       .ApiKeys
       .create({
         description       : payload.description,
-        allow_user_create : payload.allow_user_create,
+        allow_user_create : payloathis.d.allow_user_create,
         ignore_acl        : payload.ignore_acl
       })
       .then(this.completed)
@@ -164,7 +160,7 @@ export default {
   },
 
   updateApiKey(name, payload) {
-    Connection
+    this.Connection
       .ApiKeys
       .update(name, payload)
       .then(this.completed)
@@ -173,7 +169,7 @@ export default {
 
   removeApiKeys(names) {
     names.map(name => {
-      Connection
+      this.Connection
         .ApiKeys
         .remove(name)
         .then(this.completed)
@@ -182,7 +178,7 @@ export default {
   },
 
   resetApiKey(id) {
-    Connection
+    this.Connection
       .ApiKeys
       .reset(id)
       .then(this.completed)
@@ -191,7 +187,7 @@ export default {
 
   // Channels
   fetchChannels() {
-    Connection
+    this.Connection
       .Channels
       .list()
       .then(this.completed)
@@ -199,14 +195,14 @@ export default {
   },
 
   createChannel(payload) {
-    Connection
+    this.Connection
       .Channels.create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
   updateChannel(channelName, params) {
-    Connection
+    this.Connection
       .Channels.update(channelName, params)
       .then(this.completed)
       .catch(this.failure);
@@ -214,17 +210,17 @@ export default {
 
   removeChannels(names) {
     let promises = names.map(id => {
-      return Connection.Channels.remove(id);
+      return this.Connection.Channels.remove(id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Classes
   fetchClasses() {
-    Connection
+    this.Connection
       .Classes
       .list()
       .then(this.completed)
@@ -232,7 +228,7 @@ export default {
   },
 
   createClass(payload) {
-    Connection
+    this.Connection
       .Classes
       .create(payload)
       .then(this.completed)
@@ -240,7 +236,7 @@ export default {
   },
 
   updateClass(classname, payload) {
-    Connection
+    this.Connection
       .Classes
       .update(classname, payload)
       .then(this.completed)
@@ -249,17 +245,17 @@ export default {
 
   removeClasses(classnames) {
     let promises = classnames.map(classname => {
-      return Connection.Classes.remove(classname);
+      return this.Connection.Classes.remove(classname);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // CodeBox
   fetchCodeBox(codeboxId) {
-    Connection
+    this.Connection
       .CodeBoxes
       .get(codeboxId)
       .then(this.completed)
@@ -267,21 +263,21 @@ export default {
   },
 
   updateCodeBox(codeboxId, params) {
-    Connection
+    this.Connection
       .CodeBoxes.update(codeboxId, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
   runCodeBox(params) {
-    Connection
+    this.Connection
       .CodeBoxes.run(params.id, {payload: params.payload})
       .then(this.completed)
       .catch(this.failure);
   },
 
   fetchCodeBoxes() {
-    Connection
+    this.Connection
       .CodeBoxes
       .list()
       .then(this.completed)
@@ -289,7 +285,7 @@ export default {
   },
 
   createCodeBox(payload) {
-    Connection
+    this.Connection
       .CodeBoxes.create({
         runtime_name : payload.runtime_name,
         label        : payload.label,
@@ -302,37 +298,37 @@ export default {
 
   removeCodeBoxes(ids) {
     let promises = ids.map(id => {
-      return Connection.CodeBoxes.remove(id);
+      return this.Connection.CodeBoxes.remove(id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   fetchCodeBoxTrace(codeboxId, traceId) {
-    Connection
+    this.Connection
       .CodeBoxes.trace(traceId, codeboxId, {})
       .then(this.completed)
       .catch(this.failure);
   },
 
   fetchCodeBoxTraces(codeboxId) {
-    Connection
+    this.Connection
       .CodeBoxes.traces(codeboxId, {})
       .then(this.completed)
       .catch(this.failure);
   },
 
   fetchCodeBoxRuntimes() {
-    Connection
+    this.Connection
       .CodeBoxes.listRuntimes()
       .then(this.completed)
       .catch(this.failure);
   },
 
   getTraces(objectId) {
-    Connection
+    this.Connection
       .CodeBoxes.traces(objectId, {})
       .then(this.completed)
       .catch(this.failure);
@@ -340,7 +336,7 @@ export default {
 
   // DataView
   createDataView(payload) {
-    Connection
+    this.Connection
       .DataViews
       .create(payload)
       .then(this.completed)
@@ -348,7 +344,7 @@ export default {
   },
 
   fetchDataViews() {
-    Connection
+    this.Connection
       .DataViews
       .list()
       .then(this.completed)
@@ -356,7 +352,7 @@ export default {
   },
 
   updateDataView(id, payload) {
-    Connection
+    this.Connection
       .DataViews
       .update(id, payload)
       .then(this.completed)
@@ -365,17 +361,17 @@ export default {
 
   removeDataViews(dataviews) {
     let promises = dataviews.map(dataview => {
-      return Connection.DataViews.remove(dataview.name);
+      return this.Connection.DataViews.remove(dataview.name);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Webhook
   createWebhook(payload) {
-    Connection
+    this.Connection
       .WebHooks
       .create(payload)
       .then(this.completed)
@@ -383,7 +379,7 @@ export default {
   },
 
   fetchWebhooks() {
-    Connection
+    this.Connection
       .WebHooks
       .list()
       .then(this.completed)
@@ -391,7 +387,7 @@ export default {
   },
 
   updateWebhook(id, payload) {
-    Connection
+    this.Connection
       .WebHooks
       .update(id, payload)
       .then(this.completed)
@@ -401,16 +397,16 @@ export default {
   removeWebhooks(ids) {
 
     let promises = ids.map(id => {
-      return Connection.WebHooks.remove(id);
+      return this.Connection.WebHooks.remove(id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   fetchCurrentClassObj(className) {
-    Connection
+    this.Connection
       .Classes
       .get(className)
       .then(this.completed)
@@ -419,7 +415,7 @@ export default {
 
   // Data Objects
   fetchDataObjects(className) {
-    Connection
+    this.Connection
       .DataObjects
       .list(className, {
         page_size : Constants.DATAOBJECTS_PAGE_SIZE,
@@ -431,7 +427,7 @@ export default {
 
   subFetchDataObjects(payload) {
 
-    Connection
+    this.Connection
       .DataObjects
       .list(payload.className, payload.params)
       .then(this.completed)
@@ -440,16 +436,16 @@ export default {
 
   createDataObject(payload) {
 
-    Connection
+    this.Connection
       .DataObjects
       .create(payload.className, payload.params)
       .then(createdItem => {
 
         let promises = payload.fileFields.map(file => {
-          return Connection.DataObjects.uploadFile(payload.className, createdItem, file)
+          return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file)
         });
 
-        D.all(promises)
+        this.D.all(promises)
           .success(this.completed)
           .error(this.failure);
       });
@@ -457,16 +453,16 @@ export default {
 
   updateDataObject(payload) {
 
-    Connection
+    this.Connection
       .DataObjects
       .update(payload.className, payload.params)
       .then(updatedItem => {
 
         let promises = payload.fileFields.map(file => {
-          return Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
+          return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
         });
 
-        D.all(promises)
+        this.D.all(promises)
           .success(this.completed)
           .error(this.failure);
       });
@@ -475,17 +471,17 @@ export default {
   removeDataObjects(className, dataobjects) {
 
     let promises = dataobjects.map(dataobject => {
-      return Connection.DataObjects.remove(className, dataobject)
+      return this.Connection.DataObjects.remove(className, dataobject)
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Instances
   fetchInstances() {
-    Connection
+    this.Connection
       .Instances
       .list()
       .then(this.completed)
@@ -493,7 +489,7 @@ export default {
   },
 
   createInstance(payload) {
-    Connection
+    this.Connection
       .Instances
       .create({
         name        : payload.name,
@@ -505,7 +501,7 @@ export default {
   },
 
   updateInstance(name, payload) {
-    Connection
+    this.Connection
       .Instances
       .update(name, payload)
       .then(this.completed)
@@ -515,17 +511,17 @@ export default {
   removeInstances(names) {
 
     let promises = names.map(name => {
-      return Connection.Instances.remove(name);
+      return this.Connection.Instances.remove(name);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Accounts
   updateSettings(payload) {
-    Connection
+    this.Connection
       .Accounts
       .update({
         first_name: payload.firstName,
@@ -536,7 +532,7 @@ export default {
   },
 
   changePassword(payload) {
-    Connection
+    this.Connection
       .Accounts
       .changePassword({
         current_password : payload.currentPassword,
@@ -547,7 +543,7 @@ export default {
   },
 
   fetchUser(token) {
-    Connection
+    this.Connection
       .setApiKey(token)
       .Accounts
       .get()
@@ -556,7 +552,7 @@ export default {
   },
 
   resetKey() {
-    Connection
+    this.Connection
       .Accounts
       .resetKey()
       .then(this.completed)
@@ -565,7 +561,7 @@ export default {
 
   // Billing
   fetchBillingProfile() {
-    Connection
+    this.Connection
       .Billing
       .getProfile()
       .then(this.completed)
@@ -573,7 +569,7 @@ export default {
   },
 
   updateBillingProfile(payload) {
-    Connection
+    this.Connection
       .Billing
       .updateProfile(payload)
       .then(this.completed)
@@ -581,7 +577,7 @@ export default {
   },
 
   fetchBillingCard() {
-    Connection
+    this.Connection
       .Billing
       .getCard()
       .then(this.completed)
@@ -593,7 +589,7 @@ export default {
       if (response.error) {
         return this.failure(response.error);
       }
-      Connection
+      this.Connection
         .Billing
         .updateCard(response.id)
         .then(this.completed)
@@ -602,7 +598,7 @@ export default {
   },
 
   fetchInvoices() {
-    Connection
+    this.Connection
       .Billing
       .getInvoices()
       .then(this.completed)
@@ -611,7 +607,7 @@ export default {
 
   // Account Invitations
   fetchAccountInvitations() {
-    Connection
+    this.Connection
       .AccountInvitations
       .list()
       .then(this.completed)
@@ -620,26 +616,26 @@ export default {
 
   acceptInvitations(items) {
     let promises = items.map(item => {
-      return Connection.AccountInvitations.accept(item.key);
+      return this.Connection.AccountInvitations.accept(item.key);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   declineInvitations(items) {
     let promises = items.map(item => {
-      return Connection.AccountInvitations.remove(item.id);
+      return this.Connection.AccountInvitations.remove(item.id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   fetchInstance(name) {
-    Connection
+    this.Connection
       .setInstance(name)
       .then(this.completed)
       .catch(this.failure)
@@ -647,7 +643,7 @@ export default {
 
   // Solutions
   fetchSolution(solutionId) {
-    Connection
+    this.Connection
       .Solutions
       .get(solutionId)
       .then(this.completed)
@@ -655,7 +651,7 @@ export default {
   },
 
   fetchSolutionVersions(solutionId) {
-    Connection
+    this.Connection
       .Solutions
       .listVersions(solutionId)
       .then(this.completed)
@@ -663,7 +659,7 @@ export default {
   },
 
   createVersion(solutionId, payload) {
-    Connection
+    this.Connection
       .Solutions
       .createVersion(solutionId, payload)
       .then(this.completed)
@@ -671,7 +667,7 @@ export default {
   },
 
   installSolution(payload) {
-    Connection
+    this.Connection
       .Solutions
       .install(
         payload.solutionId,
@@ -683,7 +679,7 @@ export default {
   },
 
   removeSolution(solutionId) {
-    Connection
+    this.Connection
       .Solutions
       .remove(solutionId)
       .then(this.completed)
@@ -691,7 +687,7 @@ export default {
   },
 
   fetchSolutions() {
-    Connection
+    this.Connection
       .Solutions
       .list()
       .then(this.completed)
@@ -699,7 +695,7 @@ export default {
   },
 
   createSolution(payload) {
-    Connection
+    this.Connection
       .Solutions
       .create(payload)
       .then(this.completed)
@@ -707,7 +703,7 @@ export default {
   },
 
   starSolution(id) {
-    Connection
+    this.Connection
       .Solutions
       .star(id)
       .then(this.completed)
@@ -715,7 +711,7 @@ export default {
   },
 
   unstarSolution(id) {
-    Connection
+    this.Connection
       .Solutions
       .unstar(id)
       .then(this.completed)
@@ -724,7 +720,7 @@ export default {
 
   // Schedules
   createSchedule(payload) {
-    Connection
+    this.Connection
       .Schedules
       .create(payload)
       .then(this.completed)
@@ -732,7 +728,7 @@ export default {
   },
 
   fetchSchedules() {
-    Connection
+    this.Connection
       .Schedules
       .list()
       .then(this.completed)
@@ -740,7 +736,7 @@ export default {
   },
 
   updateSchedule(id, payload) {
-    Connection
+    this.Connection
       .Schedules
       .update(id, payload)
       .then(this.completed)
@@ -750,17 +746,17 @@ export default {
   removeSchedules(schedules) {
 
     let promises = schedules.map(schedule => {
-      return Connection.Schedules.remove(schedule.id);
+      return this.Connection.Schedules.remove(schedule.id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Triggers
   createTrigger(payload) {
-    Connection
+    this.Connection
       .Triggers
       .create(payload)
       .then(this.completed)
@@ -768,7 +764,7 @@ export default {
   },
 
   fetchTriggers() {
-    Connection
+    this.Connection
       .Triggers
       .list()
       .then(this.completed)
@@ -776,7 +772,7 @@ export default {
   },
 
   updateTrigger(id, payload) {
-    Connection
+    this.Connection
       .Triggers
       .update(id, payload)
       .then(this.completed)
@@ -786,17 +782,17 @@ export default {
   removeTriggers(ids) {
 
     let promises = ids.map(id => {
-      return Connection.Triggers.remove(id);
+      return this.Connection.Triggers.remove(id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   // Groups
   createGroup(label) {
-    Connection
+    this.Connection
       .Groups
       .create(label)
       .then(this.completed)
@@ -804,7 +800,7 @@ export default {
   },
 
   fetchGroups() {
-    Connection
+    this.Connection
       .Groups
       .list()
       .then(this.completed)
@@ -812,7 +808,7 @@ export default {
   },
 
   updateGroup(id, payload) {
-    Connection
+    this.Connection
       .Groups
       .update(id, payload)
       .then(this.completed)
@@ -822,16 +818,16 @@ export default {
   removeGroups(ids) {
 
     let promises = ids.map(id => {
-      return Connection.Groups.remove(id);
+      return this.Connection.Groups.remove(id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   fetchGroupUsers(groupId) {
-    Connection
+    this.Connection
       .Groups
       .getUsers(groupId)
       .then(this.completed)
@@ -840,7 +836,7 @@ export default {
 
   // Users
   fetchUsers() {
-    Connection
+    this.Connection
       .Users
       .list()
       .then(this.completed)
@@ -850,7 +846,7 @@ export default {
   createUser(payload, groups) {
 
     if (groups.newGroups) {
-      Connection
+      this.Connection
         .Users
         .create(payload)
         .then(user => {
@@ -858,13 +854,13 @@ export default {
             return addToGroup(user.id, group.id);
           });
 
-          D.all(addUserToGroups)
+          this.D.all(addUserToGroups)
             .success(this.completed)
             .error(this.failure);
         })
         .catch(this.failure);
     } else {
-      Connection
+      this.Connection
         .Users
         .create(payload)
         .then(this.completed)
@@ -893,7 +889,7 @@ export default {
         return removeFromGroup(id, userGroups[userGroupId].id);
       });
 
-      D.all(removeUserFromGroups, addUserToGroups)
+      this.D.all(removeUserFromGroups, addUserToGroups)
         .success(this.completed)
         .error(this.failure);
     });
@@ -902,16 +898,16 @@ export default {
   removeUsers(users) {
 
     let promises = users.map(user => {
-      return Connection.Users.remove(user.id);
+      return this.Connection.Users.remove(user.id);
     });
 
-    D.all(promises)
+    this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
   addToGroup(user, group) {
-    Connection
+    this.Connection
       .Users
       .addToGroup(user, group)
       .then(this.completed)
@@ -919,7 +915,7 @@ export default {
   },
 
   removeFromGroup(user, group) {
-    Connection
+    this.Connection
       .Users
       .removeFromGroup(user, group)
       .then(this.completed)
@@ -927,7 +923,7 @@ export default {
   },
 
   getUserGroups(user) {
-    Connection
+    this.Connection
       .Users
       .getUserGroups(user)
       .then(this.completed)
