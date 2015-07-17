@@ -12,27 +12,27 @@ export default CreateActions({
       asyncResult : true,
       loading     : true,
       children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.fetchInstances'
+      method      : 'Syncano.Actions.Instances.list'
     },
     createInstance: {
       asyncResult : true,
       asyncForm   : true,
       loading     : true,
       children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.createInstance'
+      method      : 'Syncano.Actions.Instances.create'
     },
     updateInstance: {
       asyncResult : true,
       asyncForm   : true,
       loading     : true,
       children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.updateInstance'
+      method      : 'Syncano.Actions.Instances.update'
     },
     removeInstances: {
       asyncResult : true,
       loading     : true,
       children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.removeInstances'
+      method      : 'Syncano.Actions.Instances.remove'
     }
   }
 );
