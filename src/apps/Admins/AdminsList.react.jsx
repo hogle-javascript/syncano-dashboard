@@ -17,12 +17,9 @@ var React             = require('react'),
     Colors            = require('material-ui/lib/styles/colors'),
 
     // List
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
+    Loading           = require('../../common/Loading'),
+    Lists             = require('../../common/Lists'),
+    ColumnList        = require('../../common/ColumnList'),
     ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
     ColumnID          = require('../../common/ColumnList/Column/ID.react'),
     ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
@@ -72,7 +69,7 @@ module.exports = React.createClass({
         isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (
-      <Item
+      <ColumnList.Item
         checked   = {item.checked}
         key       = {item.id}>
         <ColumnCheckIcon
@@ -94,7 +91,7 @@ module.exports = React.createClass({
         </ColumnCheckIcon>
         <ColumnDesc>{item.role}</ColumnDesc>
         <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+      </ColumnList.Item>
     )
   },
 
@@ -109,26 +106,26 @@ module.exports = React.createClass({
       return items;
     }
     return (
-        <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+        <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
-        </EmptyListItem>
+        </ColumnList.EmptyItem>
     );
   },
 
   render: function() {
     return (
-      <ListContainer>
-        <Header>
+      <Lists.Container>
+        <ColumnList.Header>
           <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Role</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
+        </ColumnList.Header>
+        <Lists.List>
           <Loading show={this.state.isLoading}>
             {this.getList()}
           </Loading>
-        </List>
-      </ListContainer>
+        </Lists.List>
+      </Lists.Container>
     );
   }
 });

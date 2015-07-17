@@ -52,6 +52,15 @@ SolutionsActions.createSolution.listen(function(payload) {
     .catch(this.failure);
 });
 
+SolutionsActions.starSolution.listen(function(id) {
+  console.info('SolutionsActions::starSolutions');
+  Connection
+    .Solutions
+    .star(id)
+    .then(this.completed)
+    .catch(this.failure);
+});
+
 SolutionsActions.unstarSolution.listen(function(id) {
   console.info('SolutionsActions::unstarSolutions');
   Connection
