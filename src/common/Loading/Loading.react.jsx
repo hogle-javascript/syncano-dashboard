@@ -47,16 +47,18 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  renderItem: function(type) {
-    if (this.props.show === true) {
-      if (type === 'linear') {
-        return <LinearProgress mode='indeterminate' />
-      }
-      return <CircularProgress
-               mode = 'indeterminate'
-               size = {this.props.size} />
+  renderItem: function() {
+    if (this.props.show === false) {
+      return this.props.children;
     }
-    return this.props.children;
+
+    if (this.props.type === 'linear') {
+      return <LinearProgress mode='indeterminate' />;
+    }
+
+    return <CircularProgress
+             mode = 'indeterminate'
+             size = {this.props.size} />;
   },
 
   render: function() {
@@ -64,7 +66,7 @@ module.exports = Radium(React.createClass({
 
     return (
       <div style={styles}>
-        {this.renderItem(this.props.type)}
+        {this.renderItem()}
       </div>
     )
   }

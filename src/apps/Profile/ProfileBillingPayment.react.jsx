@@ -146,7 +146,7 @@ module.exports = React.createClass({
 
             </p>
             <RaisedButton
-              onClick    = {this.toggleForm.bind(this, true)}
+              onClick    = {this.toggleForm.bind(null, true)}
               type       = "submit"
               label      = {labelPrefix + ' payment'}
               className  = "raised-button"
