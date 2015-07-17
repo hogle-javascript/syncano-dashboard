@@ -1,25 +1,24 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
-export default (config, actions) => {
+export default (options, actions) => {
+  options = options || {};
 
-  if (config.withDialog) {
-    actions.showDialog = {};
+  if (options.withDialog) {
+    actions.showDialog    = {};
     actions.dismissDialog = {};
   }
 
-  if (config.withCheck) {
-    actions.checkItem = {};
-    actions.selectAll = {};
+  if (options.withCheck) {
+    actions.checkItem  = {};
+    actions.selectAll  = {};
     actions.uncheckAll = {};
   }
 
   let RefluxActions = Reflux.createActions(actions);
-
-  Object.keys(actions).map(action => {
-    if (action) {
-      if (actions[action].method) {
-        RefluxActions[action].listen(actions[action].method);
-      }
+  _.forEach(actions, (action, key) => {
+    if (_.isFunction(action.method)) {
+      RefluxActions[key].listen(action.method);
     }
   });
 
