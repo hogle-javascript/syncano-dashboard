@@ -1,7 +1,7 @@
 import Constants from '../../constants/Constants';
 
 export default {
-  fetchDataObjects(className) {
+  list(className) {
     this.Connection
       .DataObjects
       .list(className, {
@@ -12,8 +12,7 @@ export default {
       .catch(this.failure);
   },
 
-  subFetchDataObjects(payload) {
-
+  subList(payload) {
     this.Connection
       .DataObjects
       .list(payload.className, payload.params)
@@ -21,15 +20,14 @@ export default {
       .catch(this.failure);
   },
 
-  createDataObject(payload) {
-
+  create(payload) {
     this.Connection
       .DataObjects
       .create(payload.className, payload.params)
       .then(createdItem => {
 
         let promises = payload.fileFields.map(file => {
-          return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file)
+          this.Connection.DataObjects.uploadFile(payload.className, createdItem, file)
         });
 
         this.D.all(promises)
@@ -38,15 +36,14 @@ export default {
       });
   },
 
-  updateDataObject(payload) {
-
+  update(payload) {
     this.Connection
       .DataObjects
       .update(payload.className, payload.params)
       .then(updatedItem => {
 
         let promises = payload.fileFields.map(file => {
-          return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
+          this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
         });
 
         this.D.all(promises)
@@ -55,14 +52,21 @@ export default {
       });
   },
 
-  removeDataObjects(className, dataobjects) {
-
+  remove(className, dataobjects) {
     let promises = dataobjects.map(dataobject => {
-      return this.Connection.DataObjects.remove(className, dataobject)
+      this.Connection.DataObjects.remove(className, dataobject)
     });
 
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  getClass(className) {
+    this.Connection
+      .Classes
+      .get(className)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

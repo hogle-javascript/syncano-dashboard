@@ -1,5 +1,5 @@
 export default {
-  createSchedule(payload) {
+  create(payload) {
     this.Connection
       .Schedules
       .create(payload)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchSchedules() {
+  list() {
     this.Connection
       .Schedules
       .list()
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateSchedule(id, payload) {
+  update(id, payload) {
     this.Connection
       .Schedules
       .update(id, payload)
@@ -23,7 +23,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeSchedules(schedules) {
+  remove(schedules) {
 
     let promises = schedules.map(schedule => {
       this.Connection.Schedules.remove(schedule.id);

@@ -1,5 +1,5 @@
 export default {
-  fetchInstances() {
+  list() {
     this.Connection
       .Instances
       .list()
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  createInstance(payload) {
+  create(payload) {
     this.Connection
       .Instances
       .create({
@@ -19,7 +19,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateInstance(name, payload) {
+  update(name, payload) {
     this.Connection
       .Instances
       .update(name, payload)
@@ -27,9 +27,9 @@ export default {
       .catch(this.failure);
   },
 
-  removeInstances(names) {
+  remove(names) {
     let promises = names.map(name => {
-      return this.Connection.Instances.remove(name);
+      this.Connection.Instances.remove(name);
     });
 
     this.D.all(promises)

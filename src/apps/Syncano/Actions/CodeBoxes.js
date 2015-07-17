@@ -1,5 +1,5 @@
 export default {
-  fetchCodeBox(codeboxId) {
+  get(codeboxId) {
     this.Connection
       .CodeBoxes
       .get(codeboxId)
@@ -7,21 +7,21 @@ export default {
       .catch(this.failure);
   },
 
-  updateCodeBox(codeboxId, params) {
+  update(codeboxId, params) {
     this.Connection
       .CodeBoxes.update(codeboxId, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  runCodeBox(params) {
+  run(params) {
     this.Connection
       .CodeBoxes.run(params.id, {payload: params.payload})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  fetchCodeBoxes() {
+  list() {
     this.Connection
       .CodeBoxes
       .list()
@@ -29,7 +29,7 @@ export default {
       .catch(this.failure);
   },
 
-  createCodeBox(payload) {
+  create(payload) {
     this.Connection
       .CodeBoxes.create({
         runtime_name : payload.runtime_name,
@@ -41,7 +41,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeCodeBoxes(ids) {
+  remove(ids) {
     let promises = ids.map(id => {
       return this.Connection.CodeBoxes.remove(id);
     });
@@ -51,30 +51,23 @@ export default {
       .error(this.failure);
   },
 
-  fetchCodeBoxTrace(codeboxId, traceId) {
+  getTrace(codeboxId, traceId) {
     this.Connection
       .CodeBoxes.trace(traceId, codeboxId, {})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  fetchCodeBoxTraces(codeboxId) {
+  listTraces(codeboxId) {
     this.Connection
       .CodeBoxes.traces(codeboxId, {})
       .then(this.completed)
       .catch(this.failure);
   },
 
-  fetchCodeBoxRuntimes() {
+  listRuntimes() {
     this.Connection
       .CodeBoxes.listRuntimes()
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  getTraces(objectId) {
-    this.Connection
-      .CodeBoxes.traces(objectId, {})
       .then(this.completed)
       .catch(this.failure);
   }

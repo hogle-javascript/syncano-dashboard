@@ -1,5 +1,5 @@
 export default {
-  createDataView(payload) {
+  create(payload) {
     this.Connection
       .DataViews
       .create(payload)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchDataViews() {
+  list() {
     this.Connection
       .DataViews
       .list()
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateDataView(id, payload) {
+  update(id, payload) {
     this.Connection
       .DataViews
       .update(id, payload)
@@ -23,9 +23,9 @@ export default {
       .catch(this.failure);
   },
 
-  removeDataViews(dataviews) {
+  remove(dataviews) {
     let promises = dataviews.map(dataview => {
-      return this.Connection.DataViews.remove(dataview.name);
+      this.Connection.DataViews.remove(dataview.name);
     });
 
     this.D.all(promises)

@@ -1,5 +1,5 @@
 export default {
-  fetchApiKeys() {
+  list() {
     this.Connection
       .ApiKeys
       .list()
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  createApiKey(payload) {
+  create(payload) {
     this.Connection
       .ApiKeys
       .create({
@@ -19,7 +19,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateApiKey(name, payload) {
+  update(name, payload) {
     this.Connection
       .ApiKeys
       .update(name, payload)
@@ -27,7 +27,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeApiKeys(names) {
+  remove(names) {
     names.map(name => {
       this.Connection
         .ApiKeys
@@ -37,7 +37,7 @@ export default {
     });
   },
 
-  resetApiKey(id) {
+  reset(id) {
     this.Connection
       .ApiKeys
       .reset(id)

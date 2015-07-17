@@ -1,5 +1,5 @@
 export default {
-  createTrigger(payload) {
+  create(payload) {
     this.Connection
       .Triggers
       .create(payload)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchTriggers() {
+  list() {
     this.Connection
       .Triggers
       .list()
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateTrigger(id, payload) {
+  update(id, payload) {
     this.Connection
       .Triggers
       .update(id, payload)
@@ -23,10 +23,10 @@ export default {
       .catch(this.failure);
   },
 
-  removeTriggers(ids) {
+  remove(ids) {
 
     let promises = ids.map(id => {
-      return this.Connection.Triggers.remove(id);
+      this.Connection.Triggers.remove(id);
     });
 
     this.D.all(promises)

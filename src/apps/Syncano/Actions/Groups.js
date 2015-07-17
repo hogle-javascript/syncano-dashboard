@@ -1,5 +1,5 @@
 export default {
-  createGroup(label) {
+  create(label) {
     this.Connection
       .Groups
       .create(label)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchGroups() {
+  list() {
     this.Connection
       .Groups
       .list()
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateGroup(id, payload) {
+  update(id, payload) {
     this.Connection
       .Groups
       .update(id, payload)
@@ -23,7 +23,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeGroups(ids) {
+  remove(ids) {
 
     let promises = ids.map(id => {
       return this.Connection.Groups.remove(id);
@@ -34,7 +34,7 @@ export default {
       .error(this.failure);
   },
 
-  fetchGroupUsers(groupId) {
+  listUsers(groupId) {
     this.Connection
       .Groups
       .getUsers(groupId)

@@ -1,5 +1,5 @@
 export default {
-  fetchInvitations() {
+  list() {
     this.Connection
       .Invitations
       .list()
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  createInvitation(payload) {
+  create(payload) {
     this.Connection
       .Invitations
       .create(payload)
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeInvitation(items) {
+  remove(items) {
     let promises = items.map(item => {
       this.Connection.Invitations.remove(item.id);
     });
@@ -25,7 +25,7 @@ export default {
       .error(this.failure);
   },
 
-  resendInvitation(items) {
+  resend(items) {
     let promises = items.map(item => {
       this.Connection.Invitations.resend(item.id);
     });

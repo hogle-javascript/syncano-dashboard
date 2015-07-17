@@ -1,5 +1,5 @@
 export default {
-  fetchSolution(solutionId) {
+  get(solutionId) {
     this.Connection
       .Solutions
       .get(solutionId)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchSolutionVersions(solutionId) {
+  listVersions(solutionId) {
     this.Connection
       .Solutions
       .listVersions(solutionId)
@@ -23,7 +23,7 @@ export default {
       .catch(this.failure);
   },
 
-  installSolution(payload) {
+  install(payload) {
     this.Connection
       .Solutions
       .install(
@@ -35,7 +35,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeSolution(solutionId) {
+  remove(solutionId) {
     this.Connection
       .Solutions
       .remove(solutionId)
@@ -43,7 +43,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchSolutions() {
+  list() {
     this.Connection
       .Solutions
       .list()
@@ -51,7 +51,7 @@ export default {
       .catch(this.failure);
   },
 
-  createSolution(payload) {
+  create(payload) {
     this.Connection
       .Solutions
       .create(payload)
@@ -59,7 +59,7 @@ export default {
       .catch(this.failure);
   },
 
-  starSolution(id) {
+  star(id) {
     this.Connection
       .Solutions
       .star(id)
@@ -67,7 +67,7 @@ export default {
       .catch(this.failure);
   },
 
-  unstarSolution(id) {
+  unstar(id) {
     this.Connection
       .Solutions
       .unstar(id)

@@ -21,7 +21,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchUser(token) {
+  getUser(token) {
     this.Connection
       .setApiKey(token)
       .Accounts
@@ -34,52 +34,6 @@ export default {
     this.Connection
       .Accounts
       .resetKey()
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  // Billing
-  fetchBillingProfile() {
-    this.Connection
-      .Billing
-      .getProfile()
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  updateBillingProfile(payload) {
-    this.Connection
-      .Billing
-      .updateProfile(payload)
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  fetchBillingCard() {
-    this.Connection
-      .Billing
-      .getCard()
-      .then(this.completed)
-      .catch(this.failure);
-  },
-
-  updateBillingCard(payload) {
-    Stripe.card.createToken(payload, (status, response) => {
-      if (response.error) {
-        return this.failure(response.error);
-      }
-      this.Connection
-        .Billing
-        .updateCard(response.id)
-        .then(this.completed)
-        .catch(this.failure);
-    });
-  },
-
-  fetchInvoices() {
-    this.Connection
-      .Billing
-      .getInvoices()
       .then(this.completed)
       .catch(this.failure);
   }

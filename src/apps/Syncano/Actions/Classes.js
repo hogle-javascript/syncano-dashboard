@@ -1,5 +1,5 @@
 export default {
-  fetchClasses() {
+  list() {
     this.Connection
       .Classes
       .list()
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  createClass(payload) {
+  create(payload) {
     this.Connection
       .Classes
       .create(payload)
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateClass(classname, payload) {
+  update(classname, payload) {
     this.Connection
       .Classes
       .update(classname, payload)
@@ -23,9 +23,9 @@ export default {
       .catch(this.failure);
   },
 
-  removeClasses(classnames) {
+  remove(classnames) {
     let promises = classnames.map(classname => {
-      return this.Connection.Classes.remove(classname);
+      this.Connection.Classes.remove(classname);
     });
 
     this.D.all(promises)

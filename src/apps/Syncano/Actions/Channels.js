@@ -1,5 +1,5 @@
 export default {
-  fetchChannels() {
+  list() {
     this.Connection
       .Channels
       .list()
@@ -7,23 +7,23 @@ export default {
       .catch(this.failure);
   },
 
-  createChannel(payload) {
+  create(payload) {
     this.Connection
       .Channels.create(payload)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  updateChannel(channelName, params) {
+  update(channelName, params) {
     this.Connection
       .Channels.update(channelName, params)
       .then(this.completed)
       .catch(this.failure);
   },
 
-  removeChannels(names) {
+  remove(names) {
     let promises = names.map(id => {
-      return this.Connection.Channels.remove(id);
+      this.Connection.Channels.remove(id);
     });
 
     this.D.all(promises)

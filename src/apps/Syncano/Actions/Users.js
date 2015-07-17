@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export default {
-  fetchUsers() {
+  list() {
     this.Connection
       .Users
       .list()
@@ -9,7 +9,7 @@ export default {
       .catch(this.failure);
   },
 
-  createUser(payload, groups) {
+  create(payload, groups) {
 
     if (groups.newGroups) {
       this.Connection
@@ -34,13 +34,13 @@ export default {
     }
   },
 
-  updateUser(id, payload, groups) {
+  update(id, payload, groups) {
 
-    let addedGroups = _.difference(groups.newGroups, groups.groups),
-      removedGroups = _.difference(groups.groups, groups.newGroups),
-      addUserToGroups = addedGroups.map(group => {
-        return addToGroup(id, group);
-      });
+    let addedGroups     = _.difference(groups.newGroups, groups.groups),
+        removedGroups   = _.difference(groups.groups, groups.newGroups),
+        addUserToGroups = addedGroups.map(group => {
+          return addToGroup(id, group);
+        });
 
     getUserGroups(id).then(groups => {
       let userGroups = Object.keys(groups).map(key => {
@@ -61,7 +61,7 @@ export default {
     });
   },
 
-  removeUsers(users) {
+  remove(users) {
 
     let promises = users.map(user => {
       return this.Connection.Users.remove(user.id);
@@ -88,7 +88,7 @@ export default {
       .catch(this.failure);
   },
 
-  getUserGroups(user) {
+  listUserGroups(user) {
     this.Connection
       .Users
       .getUserGroups(user)

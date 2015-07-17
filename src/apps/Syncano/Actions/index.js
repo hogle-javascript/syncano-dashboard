@@ -3,6 +3,7 @@ import AccountInvitations from './AccountInvitations';
 import Admins from './Admins';
 import Invitations from './Invitations';
 import ApiKeys from './ApiKeys';
+import Billing from './Billing';
 import Channels from './Channels';
 import Classes from './Classes';
 import CodeBoxes from './CodeBoxes';
@@ -23,6 +24,7 @@ export default {
   Admins,
   Invitations,
   ApiKeys,
+  Billing,
   Channels,
   Classes,
   CodeBoxes,

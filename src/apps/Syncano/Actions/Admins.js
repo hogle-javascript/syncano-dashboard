@@ -1,5 +1,5 @@
 export default {
-  fetchAdmins() {
+  list() {
     this.Connection
       .Admins
       .list()
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateAdmin(name, payload) {
+  update(name, payload) {
     this.Connection
       .Admins
       .update(name, payload)
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeAdmins(admins) {
+  remove(admins) {
     let promises = admins.map(admin => {
       this.Connection.Admins.remove(admin)
     });

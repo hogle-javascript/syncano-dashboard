@@ -1,5 +1,5 @@
 export default {
-  fetchAccountInvitations() {
+  list() {
     this.Connection
       .AccountInvitations
       .list()
@@ -7,9 +7,9 @@ export default {
       .catch(this.failure);
   },
 
-  acceptInvitations(items) {
+  accept(items) {
     let promises = items.map(item => {
-      return this.Connection.AccountInvitations.accept(item.key);
+      this.Connection.AccountInvitations.accept(item.key);
     });
 
     this.D.all(promises)
@@ -17,20 +17,13 @@ export default {
       .error(this.failure);
   },
 
-  declineInvitations(items) {
+  decline(items) {
     let promises = items.map(item => {
-      return this.Connection.AccountInvitations.remove(item.id);
+      this.Connection.AccountInvitations.remove(item.id);
     });
 
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
-  },
-
-  fetchInstance(name) {
-    this.Connection
-      .setInstance(name)
-      .then(this.completed)
-      .catch(this.failure)
   }
 };

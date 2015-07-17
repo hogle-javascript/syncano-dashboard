@@ -1,5 +1,5 @@
 export default {
-  createWebhook(payload) {
+  create(payload) {
     this.Connection
       .WebHooks
       .create(payload)
@@ -7,7 +7,7 @@ export default {
       .catch(this.failure);
   },
 
-  fetchWebhooks() {
+  list() {
     this.Connection
       .WebHooks
       .list()
@@ -15,7 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  updateWebhook(id, payload) {
+  update(id, payload) {
     this.Connection
       .WebHooks
       .update(id, payload)
@@ -23,7 +23,7 @@ export default {
       .catch(this.failure);
   },
 
-  removeWebhooks(ids) {
+  remove(ids) {
 
     let promises = ids.map(id => {
       return this.Connection.WebHooks.remove(id);
@@ -32,13 +32,5 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
-  },
-
-  fetchCurrentClassObj(className) {
-    this.Connection
-      .Classes
-      .get(className)
-      .then(this.completed)
-      .catch(this.failure);
   }
 };
