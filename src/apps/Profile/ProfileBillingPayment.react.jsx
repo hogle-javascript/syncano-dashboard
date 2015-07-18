@@ -68,8 +68,8 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       cardContainer: {
-        width: 219,
-        height: 152,
+        width: 220,
+        height: 138,
         background: '#fafafa',
         border: '1px solid #ddd',
         BorderRadius: 10,
@@ -87,12 +87,13 @@ module.exports = React.createClass({
         display: '-webkit-flex; display: flex',
         margin: 'auto 0 0',
         JustifyContent: 'space-between',
-        AlignItems: 'center'
+        AlignItems: 'flex-end'
       },
       cardIcon: {
-        width: 40,
-        height: 40,
-        display: 'block'
+        width: 60,
+        height: 'auto',
+        display: 'block',
+        Transform: 'translateY(18%)'
       }
     }
   },
@@ -100,21 +101,24 @@ module.exports = React.createClass({
   getCardTypeIcon: function(cardType) {
     var styles = this.getStyles();
 
-    if (cardType === 'Visa') {
-      return <PaymentIcon.Visa style={styles.cardIcon} />
-    } else if (cardType === 'Mastercard') {
-      return <PaymentIcon.Mastercard style={styles.cardIcon} />
-    } else {
-      return cardType
+    if (cardType === undefined) {
+      return true;
     }
+
+    return(
+      <PaymentIcon
+        type  = {cardType}
+        style = {styles.cardIcon}
+      />
+    )
   },
 
   render: function() {
-    var styles      = this.getStyles(),
-        hasCard     = !_.isEmpty(this.state.card),
-        showForm    = !hasCard || this.state.showForm === true || this.state.show_form === true,
-        labelPrefix = hasCard ? 'Update' : 'Add',
-        cardTypeIcon = this.getCardTypeIcon(this.state.card.brand);
+    var styles       = this.getStyles(),
+        hasCard      = !_.isEmpty(this.state.card),
+        showForm     = !hasCard || this.state.showForm === true || this.state.show_form === true,
+        labelPrefix  = hasCard ? 'Update' : 'Add',
+        cardTypeIcon = this.state.card.brand ? this.getCardTypeIcon(this.state.card.brand) : null;
 
     return (
       <div style={{padding: 48}}>
@@ -215,7 +219,7 @@ module.exports = React.createClass({
                 </div>
                 <div style={styles.cardFooter}>
                   <div>
-                    <div style={styles.cardHeadline}>Expiry</div>
+                    <div style={styles.cardHeadline}>Expires on</div>
                     {this.state.card.exp_month}/{this.state.card.exp_year}
                   </div>
                   <div>
