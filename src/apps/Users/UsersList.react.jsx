@@ -82,6 +82,10 @@ module.exports = React.createClass({
   renderItemGroups: function(groups) {
     var styles = this.getStyles();
 
+    if (groups.length === 0) {
+      return 'No group';
+    }
+
     var itemGroups = groups.map(function(group) {
       return (
         <li style={styles.groupsListItem}>{group.label}</li>
