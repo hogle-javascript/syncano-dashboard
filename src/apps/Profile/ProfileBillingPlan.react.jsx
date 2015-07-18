@@ -1,23 +1,19 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Moment            = require('moment'),
+import React from 'react';
+import Reflux from 'reflux';
+import Moment from 'moment';
+import MUI from 'material-ui';
 
-    FormMixin         = require('../../mixins/FormMixin'),
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
+import FormMixin from '../../mixins/FormMixin';
+import DialogsMixin from '../../mixins/DialogsMixin';
 
-    Store             = require('./ProfileBillingPlanStore'),
-
-    MUI               = require('material-ui'),
-
-    Loading           = require('../../common/Loading/Loading.react.jsx'),
-
-    PlanDialogStore   = require('./ProfileBillingPlanDialogStore'),
-    PlanDialogActions = require('./ProfileBillingPlanDialogActions'),
-    PlanDialog        = require('./ProfileBillingPlanDialog'),
-
-    Limits            = require('./Limits');
-
+import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
+import PlanDialogStore from './ProfileBillingPlanDialogStore';
+import PlanDialogActions from './ProfileBillingPlanDialogActions';
+
+import Loading from '../../common/Loading/Loading.react.jsx';
+import PlanDialog from './ProfileBillingPlanDialog';
+import Limits from './Limits';
 
 module.exports = React.createClass({
 
@@ -137,19 +133,18 @@ module.exports = React.createClass({
           <div>switch to production.</div>
         </div>
       ]
-    } else if (this.state.profile.subscription.plan === 'paid-commitment') {
-      return [
-        <div>Production</div>,
-        <MUI.Toggle
-          key            = "paid-commitment-toggle"
-          defaultToggled = {true}
-          disabled       = {true}
-        />,
-        <div style={{marginTop: 10}}>
-          <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-        </div>,
-      ]
     }
+    return [
+      <div>Production</div>,
+      <MUI.Toggle
+        key            = "paid-commitment-toggle"
+        defaultToggled = {true}
+        disabled       = {true}
+      />,
+      <div style={{marginTop: 10}}>
+        <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
+      </div>,
+    ]
   },
 
   renderExplorerButtonLabel: function() {

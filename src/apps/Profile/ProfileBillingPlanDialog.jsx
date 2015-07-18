@@ -1,18 +1,17 @@
-var React       = require('react'),
-    Reflux      = require('reflux'),
-    Router      = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import Moment from 'moment';
+import MUI from 'material-ui';
 
-    FormMixin   = require('../../mixins/FormMixin'),
-    DialogMixin = require('../../mixins/DialogMixin'),
+import FormMixin from '../../mixins/FormMixin';
+import DialogMixin from '../../mixins/DialogMixin';
 
-    Store       = require('./ProfileBillingPlanDialogStore'),
-    Actions     = require('./ProfileBillingPlanDialogActions'),
+import Store from './ProfileBillingPlanDialogStore';
+import Actions from './ProfileBillingPlanDialogActions';
 
-    Loading     = require('../../common/Loading/Loading.react.jsx'),
-
-    MUI         = require('material-ui'),
-
-    SliderSection = require('./SliderSection');
+import Loading from '../../common/Loading/Loading.react.jsx';
+import SliderSection from './SliderSection';
 
 module.exports = React.createClass({
 
