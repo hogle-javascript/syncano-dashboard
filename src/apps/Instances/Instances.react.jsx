@@ -142,9 +142,9 @@ module.exports = Radium(React.createClass({
   },
 
   render: function() {
-    var checkedInstances      = Store.getNumberOfChecked(),
-        isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
-        isCheckedInstanceShared   = Store.isCheckedInstanceShared();
+    var checkedInstances        = Store.getNumberOfChecked(),
+        isAnyInstanceSelected   = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isCheckedInstanceShared = Store.isCheckedInstanceShared();
 
     return (
       <Container id="instances">
@@ -200,11 +200,11 @@ module.exports = Radium(React.createClass({
           emptyItemContent     = "Create an instance" />
 
         <Common.Show if={Store.getOtherInstances().length && !this.state.isLoading}>
-        <InstancesList
-          name                 = "Shared with me"
-          items                = {Store.getOtherInstances()}
-          listType             = "sharedInstances"
-          viewMode             = "stream" />
+          <InstancesList
+            name                 = "Shared with me"
+            items                = {Store.getOtherInstances()}
+            listType             = "sharedInstances"
+            viewMode             = "stream" />
         </Common.Show>
 
       </Container>
