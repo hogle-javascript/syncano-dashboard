@@ -34,7 +34,7 @@ import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import UsageBar2 from './UsageBar.react';
 
-export {
+export default {
   Accordion,
   AvatarInitials,
   Button,

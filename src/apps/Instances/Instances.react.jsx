@@ -1,32 +1,28 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
-    Radium                = require('radium'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import Radium from 'radium';
+import MUI from 'material-ui';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
-    Show                  = require('../../common/Show/Show.react'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
+import DialogsMixin from '../../mixins/DialogsMixin';
+import Show from '../../common/Show/Show.react';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    InstancesActions      = require('./InstancesActions'),
-    InstancesStore        = require('./InstancesStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import Actions from './InstancesActions';
+import Store from './InstancesStore';
+import InstanceDialogActions from './InstanceDialogActions';
 
-    // Components
-    mui                   = require('material-ui'),
-    Dialog                = mui.Dialog,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
-    Loading               = require('../../common/Loading/Loading.react'),
-    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+// Components
+import Common from '../../common';
+import Container from '../../common/Container/Container.react'; // TODO: Why I can't reach it via Common?
 
-    // Local components
-    InstancesList         = require('./InstancesList.react'),
-    InstanceDialog        = require('./InstanceDialog.react');
+import InstancesList from './InstancesList.react';
+import InstanceDialog from './InstanceDialog.react';
 
 require('./Instances.sass');
 
@@ -38,41 +34,43 @@ module.exports = Radium(React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(InstancesStore),
+    Reflux.connect(Store),
     HeaderMixin,
     DialogsMixin
   ],
 
   // Dialogs config
   initDialogs: function() {
-    var checkedItemIconColor = InstancesStore.getCheckedItemIconColor(),
-        checkedInstances = InstancesStore.getCheckedItems();
+    var checkedItemIconColor = Store.getCheckedItemIconColor(),
+        checkedInstances = Store.getCheckedItems();
 
-    return [{
-      dialog: ColorIconPickerDialog,
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key          : 'pickColorIconDialog',
+          ref          : 'pickColorIconDialog',
+          mode         : 'add',
+          initialColor : checkedItemIconColor.color,
+          initialIcon  : checkedItemIconColor.icon,
+          handleClick  : this.handleChangePalette
+        }
+      },
+      {
+      dialog: MUI.Dialog,
       params: {
-        key          : "pickColorIconDialog",
-        ref          : "pickColorIconDialog",
-        mode         : "add",
-        initialColor : checkedItemIconColor.color,
-        initialIcon  : checkedItemIconColor.icon,
-        handleClick  : this.handleChangePalette
-      }
-    }, {
-      dialog: Dialog,
-      params: {
-        key:    "deleteInstanceDialog",
-        ref:    "deleteInstanceDialog",
-        title:  "Delete an Instance",
+        key:    'deleteInstanceDialog',
+        ref:    'deleteInstanceDialog',
+        title:  'Delete an Instance',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
-          {text: "Confirm", onClick: this.handleDelete}
+          {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
           this.getDialogList(checkedInstances),
-          <Loading
+          <Common.Loading
             type="linear"
             position="bottom"
             show={this.state.isLoading} />
@@ -83,7 +81,7 @@ module.exports = Radium(React.createClass({
 
   componentWillMount: function() {
     console.info('Instances::componentWillMount');
-    InstancesStore.fetch();
+    Store.fetch();
   },
 
   componentDidMount: function() {
@@ -113,20 +111,20 @@ module.exports = Radium(React.createClass({
   handleChangePalette: function(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
 
-    InstancesActions.updateInstance(
-      InstancesStore.getCheckedItem().name, {
+    Actions.updateInstance(
+      Store.getCheckedItem().name, {
         metadata: JSON.stringify({
           color : color,
           icon  : icon
         })
       }
     );
-    InstancesActions.uncheckAll()
+    Actions.uncheckAll()
   },
 
   handleDelete: function() {
     console.info('Instances::handleDelete');
-    InstancesActions.removeInstances(InstancesStore.getCheckedItems());
+    Actions.removeInstances(Store.getCheckedItems());
   },
 
   handleItemClick: function(instanceName) {
@@ -136,46 +134,46 @@ module.exports = Radium(React.createClass({
   },
 
   showInstanceDialog: function() {
-    InstancesActions.showDialog();
+    InstanceDialogActions.showDialog();
   },
 
   showInstanceEditDialog: function() {
-    InstancesActions.showDialog(InstancesStore.getCheckedItem());
+    InstanceDialogActions.showDialog(Store.getCheckedItem());
   },
 
   render: function() {
-    var checkedInstances      = InstancesStore.getNumberOfChecked(),
+    var checkedInstances      = Store.getNumberOfChecked(),
         isAnyInstanceSelected = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
-        isCheckedInstanceShared   = InstancesStore.isCheckedInstanceShared();
+        isCheckedInstanceShared   = Store.isCheckedInstanceShared();
 
     return (
       <Container id="instances">
         <InstanceDialog />
         {this.getDialogs()}
 
-        <Show if={checkedInstances > 0}>
-          <FabList position="top">
+        <Common.Show if={checkedInstances > 0}>
+          <Common.Fab position="top">
 
-            <FabListItem
-              label         = {isAnyInstanceSelected ? "Click here to select all" : "Click here to unselect all"}
+            <Common.Fab.Item
+              label         = {isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {isAnyInstanceSelected ? InstancesActions.selectAll : InstancesActions.uncheckAll}
-              iconClassName = {isAnyInstanceSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
+              onClick       = {isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName = {isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'} />
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to delete Instances"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteInstanceDialog')}
               iconClassName = "synicon-delete" />
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to edit Instance"
               mini          = {true}
               disabled      = {checkedInstances > 1}
               onClick       = {this.showInstanceEditDialog}
               iconClassName = "synicon-pencil" />
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to customize Instances"
               secondary     = {true}
               mini          = {true}
@@ -183,31 +181,31 @@ module.exports = Radium(React.createClass({
               onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
               iconClassName = "synicon-palette" />
 
-          </FabList>
-        </Show>
+          </Common.Fab>
+        </Common.Show>
 
-        <FabList>
-          <FabListItem
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to add Instances"
             onClick       = {this.showInstanceDialog}
             iconClassName = "synicon-plus" />
-        </FabList>
+        </Common.Fab>
 
         <InstancesList
           name                 = "My instances"
-          items                = {InstancesStore.getMyInstances()}
+          items                = {Store.getMyInstances()}
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showInstanceDialog}
           emptyItemContent     = "Create an instance" />
 
-        <Show if={InstancesStore.getOtherInstances().length && !this.state.isLoading}>
+        <Common.Show if={Store.getOtherInstances().length && !this.state.isLoading}>
         <InstancesList
           name                 = "Shared with me"
-          items                = {InstancesStore.getOtherInstances()}
+          items                = {Store.getOtherInstances()}
           listType             = "sharedInstances"
           viewMode             = "stream" />
-        </Show>
+        </Common.Show>
 
       </Container>
     );
