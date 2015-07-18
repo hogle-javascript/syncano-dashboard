@@ -40,7 +40,7 @@ module.exports = Radium(React.createClass({
   ],
 
   // Dialogs config
-  initDialogs: function() {
+  initDialogs() {
     var checkedItemIconColor = Store.getCheckedItemIconColor(),
         checkedInstances = Store.getCheckedItems();
 
@@ -79,12 +79,12 @@ module.exports = Radium(React.createClass({
     }]
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     console.info('Instances::componentWillMount');
     Store.fetch();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('Instances::componentDidMount');
     if (this.getParams().action == 'add') {
       // Show Add modal
@@ -92,12 +92,12 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  headerMenuItems: function() {
+  headerMenuItems() {
     return [
       {
         label  : 'Instances',
@@ -108,7 +108,7 @@ module.exports = Radium(React.createClass({
       }];
   },
 
-  handleChangePalette: function(color, icon) {
+  handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
 
     Actions.updateInstance(
@@ -122,26 +122,26 @@ module.exports = Radium(React.createClass({
     Actions.uncheckAll()
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('Instances::handleDelete');
     Actions.removeInstances(Store.getCheckedItems());
   },
 
-  handleItemClick: function(instanceName) {
+  handleItemClick(instanceName) {
     // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
 
-  showInstanceDialog: function() {
+  showInstanceDialog() {
     InstanceDialogActions.showDialog();
   },
 
-  showInstanceEditDialog: function() {
+  showInstanceEditDialog() {
     InstanceDialogActions.showDialog(Store.getCheckedItem());
   },
 
-  render: function() {
+  render() {
     var checkedInstances        = Store.getNumberOfChecked(),
         isAnyInstanceSelected   = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
         isCheckedInstanceShared = Store.isCheckedInstanceShared();
