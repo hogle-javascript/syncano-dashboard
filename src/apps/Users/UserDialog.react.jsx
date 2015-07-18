@@ -114,11 +114,12 @@ module.exports = React.createClass({
 
     return (
       <Dialog
-        ref                   = 'dialog'
-        title                 = {title + ' User'}
-        actions               = {dialogStandardActions}
-        onDismiss             = {this.resetDialogState}
-        autoScrollBodyContent = {true} >
+        ref       = 'dialog'
+        title     = {title + ' User'}
+        actions   = {dialogStandardActions}
+        onDismiss = {this.resetDialogState}
+        style     = {{overflow: 'auto'}}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
