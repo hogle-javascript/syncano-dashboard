@@ -15,6 +15,8 @@ var React                       = require('react'),
     Header                    = require('../../common/ColumnList/Header.react'),
     ColumnDesc                = require('../../common/ColumnList/Column/Desc.react');
 
+import Chart from './ProfileBillingChart.react';
+
 module.exports = React.createClass({
 
   displayName: 'ProfileBillingInvoices',
@@ -42,7 +44,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    console.log(this.state);
+    return (<Chart />);
     return (
       <Loading show={this.state.isLoading}>
         <Show if={this.state.invoices.length === 0}>
