@@ -22,7 +22,6 @@ export default CreateActions({
     },
     fetchBillingCard: {
       asyncResult : true,
-      asyncForm   : true,
       loading     : true,
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.getCard'
@@ -33,6 +32,13 @@ export default CreateActions({
       loading     : true,
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.listSubscriptions'
+    },
+    updateCard: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.updateCard'
     },
   }
 );

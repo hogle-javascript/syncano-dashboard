@@ -21,6 +21,7 @@ module.exports = Reflux.createStore({
       SessionActions.setUser,
       this.refreshData
     );
+    this.listenToForms();
   },
 
   refreshData: function() {
@@ -42,6 +43,13 @@ module.exports = Reflux.createStore({
     this.trigger({
       isLoading: false,
       card: payload
+    });
+  },
+
+  onFetchBillingCardFailure: function() {
+    this.trigger({
+      isLoading: false,
+      card: null,
     });
   },
 

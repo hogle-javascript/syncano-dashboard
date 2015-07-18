@@ -1,5 +1,6 @@
 var React             = require('react'),
     Reflux            = require('reflux'),
+    Moment            = require('moment'),
 
     FormMixin         = require('../../mixins/FormMixin'),
     DialogsMixin      = require('../../mixins/DialogsMixin'),
@@ -12,7 +13,9 @@ var React             = require('react'),
 
     PlanDialogStore   = require('./ProfileBillingPlanDialogStore'),
     PlanDialogActions = require('./ProfileBillingPlanDialogActions'),
-    PlanDialog        = require('./ProfileBillingPlanDialog');
+    PlanDialog        = require('./ProfileBillingPlanDialog'),
+
+    Limits            = require('./Limits');
 
 import Actions from './ProfileBillingPlanActions.js';
 
@@ -44,9 +47,6 @@ module.exports = React.createClass({
       mainDesc: {
         fontSize   : '1.3em',
         lineHeight : '1.3em',
-      },
-      summary: {
-        paddingTop: 20
       },
       comment: {
         fontSize: '0.9em'
@@ -81,7 +81,7 @@ module.exports = React.createClass({
           }
         ],
         modal: true,
-        children: ['Do you really want to freeze your account?']
+        children: ['Are you sure you want to freeze your account?']
       }
     }]
   },
@@ -90,8 +90,9 @@ module.exports = React.createClass({
     return (this.state.subscriptions && this.state.subscriptions.length > 1);
   },
 
-  handlePlanToggle() {
+  handleShowFreezeAccountDialog() {
     console.debug('ProfileBillingPlan::handlePlanToggle');
+    this.showDialog('freezeAccount')
   },
 
   handleFreezeAccount() {
@@ -125,6 +126,7 @@ module.exports = React.createClass({
           onToggle       = {this.handlePlanToggle}
         />,
         <div style={{marginTop: 10}}>
+          <div>Launching your app?</div>
           <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
         </div>,
         <div style={{marginTop: 10}}>
@@ -141,10 +143,10 @@ module.exports = React.createClass({
         <MUI.Toggle
           key            = "paid-commitment-toggle"
           defaultToggled = {true}
-          onToggle       = {this.handlePlanToggle}
+          disabled       = {true}
         />,
         <div style={{marginTop: 10}}>
-          <a onClick={this.showDialog.bind(null, 'freezeAccount')}>Freeze your account</a>
+          <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
         </div>,
       ]
     }
@@ -206,10 +208,18 @@ module.exports = React.createClass({
     let plan = this.state.profile.subscription.plan;
 
     if (plan === 'builder') {
+      let limitsData = {
+        api : { included : '10 000' },
+        cbx : { included : '10 000' }
+      };
       return (
-        <span key="builderDesc">
-          You are on the <strong>Builder</strong> plan. It does not cost you anything but there are limits:
-        </span>
+        <div>
+          <div key="builderDesc">
+            <div>Your plan: <strong>Builder</strong></div>
+            <div>It does not cost you anything but there are limits:</div>
+          </div>
+          <Limits data={limitsData} />
+        </div>
       );
     } else if (plan === 'paid-commitment') {
 
@@ -218,31 +228,25 @@ module.exports = React.createClass({
       let pricing    = subscription.pricing;
       let total      = parseInt(commitment.api) + parseInt(commitment.cbx);
 
+      let limitsData = {
+        api : {
+          included : pricing.api.included,
+          overage  : pricing.api.overage
+        },
+        cbx : {
+          included : pricing.cbx.included,
+          overage  : pricing.api.overage
+        }
+      };
+
       return (
         <div
           key       = "productionDesc-subs"
           className = "col-flex-1">
           <div style={styles.mainDesc}>
-            You are on a ${total} Production plan:
+            Current plan <strong>${total}</strong>:
           </div>
-          <div className="row" style={styles.summary}>
-            <div className="col-md-6">
-              <div>{pricing.api.included}</div>
-              <div>{pricing.cbx.included}</div>
-            </div>
-            <div className="col-flex-1">
-              <div><strong>API calls</strong></div>
-              <div><strong>CodeBox runs</strong></div>
-            </div>
-            <div className="col-md-8" style={{textAlign: 'right'}}>
-              <div><strong>+{pricing.api.overage}</strong></div>
-              <div><strong>+{pricing.cbx.overage}</strong></div>
-            </div>
-            <div className="col-md-9">
-              <div>each extra call</div>
-              <div>each extra run</div>
-            </div>
-          </div>
+          <Limits data={limitsData} />
         </div>
       );
     }
@@ -269,29 +273,25 @@ module.exports = React.createClass({
       if (this.isNewSubscription()) {
         let subscription = this.state.subscriptions._items[1];
         let total        = parseInt(subscription.commitment.api) + parseInt(subscription.commitment.cbx);
+
+        let limitsData = {
+          api : {
+            included : subscription.pricing.api.included,
+            overage  : subscription.pricing.api.overage
+          },
+          cbx : {
+            included : subscription.pricing.cbx.included,
+            overage  : subscription.pricing.api.overage
+          }
+        };
+
         return (
           <div key='productionComment-subs' >
             <div style={styles.mainDesc}>
-              Your new <strong>${total}</strong> plan will be available from {subscription.start}:
+              New plan <strong>${total}</strong> (your current plan will
+              expire at the end of the month and your new plan will begin on {Moment(subscription.start).format('LL')}):
             </div>
-            <div className="row" style={styles.summary}>
-              <div className="col-md-6">
-                <div>{subscription.pricing.api.included}</div>
-                <div>{subscription.pricing.cbx.included}</div>
-              </div>
-              <div className="col-flex-1">
-                <div><strong>API calls</strong></div>
-                <div><strong>CodeBox runs</strong></div>
-              </div>
-              <div className="col-md-7" style={{textAlign: 'right'}}>
-                <div><strong>+{subscription.pricing.api.overage}</strong></div>
-                <div><strong>+{subscription.pricing.cbx.overage}</strong></div>
-              </div>
-              <div className="col-flex-1">
-                <div>each extra call</div>
-                <div>each extra run</div>
-              </div>
-            </div>
+            <Limits data={limitsData} />
           </div>
         )
       } else {
