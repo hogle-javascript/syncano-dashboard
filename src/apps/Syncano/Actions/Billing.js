@@ -42,5 +42,47 @@ export default {
       .getInvoices()
       .then(this.completed)
       .catch(this.failure);
+  },
+
+  subscribePlan(plan, payload) {
+    this.Connection
+      .Billing
+      .subscribePlan(plan, payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  listPlans() {
+    this.Connection
+      .Billing
+      .getPlans()
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  listSubscriptions() {
+    this.Connection
+      .Billing
+      .getSubscriptions()
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
+  cancelSubscriptions(ids) {
+    let promises = ids.map(id => {
+      this.Connection.Billing.cancelSubscription(id);
+    });
+
+    this.D.all(promises)
+      .success(this.completed)
+      .error(this.failure);
+  },
+
+  getUsage() {
+    this.Connection
+      .Billing
+      .getUsage()
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

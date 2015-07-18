@@ -196,6 +196,11 @@ module.exports = (
         path    = "/account/billing"
       >
         <Route
+          name    = "profile-billing-plan"
+          handler = {Profile.BillingPlan}
+          path    = "plan"
+        />
+        <Route
           name    = "profile-billing-address"
           handler = {Profile.BillingAddress}
           path    = "address"
@@ -210,7 +215,7 @@ module.exports = (
           handler = {Profile.BillingInvoices}
           path    = "invoices"
         />
-        <DefaultRoute handler={Profile.BillingAddress} />
+        <DefaultRoute handler={Profile.BillingPlan} />
       </Route>
 
       {/* Solutions */}
