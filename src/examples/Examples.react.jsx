@@ -52,6 +52,7 @@ var React                = require('react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
     Loading              = require('../common/Loading/Loading.react'),
+    Slider               = require('../common/Slider/Slider.react'),
 
     ColumnListItem       = require('../common/ColumnList/Item.react'),
     ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
@@ -750,6 +751,18 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
+          <h2>Slider</h2>
+          <Slider legendItems={["$0", "$30", "$100", "$400", "$1000", "$2000"]}/>
+        </div>
+
+        <div className="exampleBox">
+          <h2>Slider</h2>
+          <mui.Slider step={0.1}/>
+        </div>
+
+
+
+        <div className="exampleBox">
           <h2>Menu (component build in progress)</h2>
           <MenuNew style ={{
                   marginRight: 32,
@@ -818,7 +831,6 @@ module.exports = React.createClass({
                   ]}>
 
           </Menu>
-
         </div>
 
       </div>
