@@ -3,6 +3,7 @@ import Radium from 'radium';
 import Router from 'react-router';
 import MUI from 'material-ui';
 
+import SolutionsActions from './SolutionsActions';
 import SolutionStar from '../../common/SolutionStar';
 
 module.exports = React.createClass({
@@ -47,7 +48,7 @@ module.exports = React.createClass({
         color      : '#9b9b9b',
         display    : '-webkit-flex; display: flex',
         AlignItems : 'center',
-        fontSize   : 12, 
+        fontSize   : 12,
         padding    : '4px 0'
       },
       cardTextListIcon: {
@@ -70,6 +71,10 @@ module.exports = React.createClass({
       seeDetailsButton: {
         color         : MUI.Styles.Colors.blue500,
         letterSpacing : 0.5
+      },
+      tag: {
+        color : '#9b9b9b',
+        paddingRight : 3
       }
     }
   },
@@ -104,10 +109,22 @@ module.exports = React.createClass({
     )
   },
 
+  renderItemTags() {
+    let styles = this.getStyles();
+    return this.props.data.tags.map(tag => {
+      return (
+        <a
+          style   = {styles.tag}
+          onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
+          {tag}
+        </a>
+      )
+    });
+  },
+
   render() {
-    var styles          = this.getStyles(),
-        item            = this.props.data,
-        itemTags        = item.tags.join(' ');
+    let styles = this.getStyles();
+    let item = this.props.data;
 
     return (
       <MUI.Card>
@@ -131,7 +148,7 @@ module.exports = React.createClass({
               className = "synicon-tag"
               color     = "rgba(222, 222, 222, 0.54)"
             />
-            {itemTags}
+            {this.renderItemTags()}
           </div>
           {this.renderVersion()}
         </MUI.CardText>

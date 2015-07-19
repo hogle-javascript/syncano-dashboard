@@ -69,13 +69,17 @@ var SolutionsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onSelectOneTag(tag) {
+    this.data.selectedTags = [tag];
+    this.refreshSolutions();
+  },
+
   onToggleTagSelection(tag) {
     let i = this.data.selectedTags.indexOf(tag);
     if (i === -1)
         this.data.selectedTags.push(tag);
     else
         this.data.selectedTags.splice(i, 1);
-    this.trigger(this.data);
 
     this.refreshSolutions();
   },
