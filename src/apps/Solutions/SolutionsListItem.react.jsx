@@ -90,10 +90,10 @@ module.exports = React.createClass({
     let color = null;
 
     if (item.versions.stable) {
-      name = 'stable ' + '(' + item.versions.stable + ')';
+      name = `stable (${item.versions.stable})`;
       color = '#7ED321';
     } else {
-      name = 'development ' + '(' + item.versions.devel + ')';
+      name = `development (${item.versions.devel || 'no versions'})`;
       color = '#f5a623';
     }
 
