@@ -440,7 +440,8 @@ var Syncano = (function() {
       remove: this.removeSolution.bind(this),
       removeVersion: this.removeSolution.bind(this),
       star: this.starSolution.bind(this),
-      unstar: this.unstarSolution.bind(this)
+      unstar: this.unstarSolution.bind(this),
+      listTags: this.listTags.bind(this)
     };
 
     /**
@@ -1169,6 +1170,20 @@ var Syncano = (function() {
         throw new Error('Missing solution id');
       }
       return this.request('POST', 'v1/marketplace/solutions/' + id + '/unstar', {}, callbackOK, callbackError);
+    },
+
+    /**
+     * List of solution tags
+     *
+     * @method Syncano#listTags
+     * @alias Syncano.Solutions.listTags
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listTags: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/marketplace/tags/', {}, callbackOK, callbackError);
     },
 
     /*********************

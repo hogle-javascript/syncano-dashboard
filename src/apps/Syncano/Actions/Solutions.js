@@ -6,7 +6,6 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   listVersions(solutionId) {
     this.Connection
       .Solutions
@@ -14,7 +13,6 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   createVersion(solutionId, payload) {
     this.Connection
       .Solutions
@@ -22,7 +20,6 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   install(payload) {
     this.Connection
       .Solutions
@@ -34,7 +31,6 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   remove(solutionId) {
     this.Connection
       .Solutions
@@ -42,15 +38,13 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
-  list() {
+  list(payload) {
     this.Connection
       .Solutions
-      .list()
+      .list(payload)
       .then(this.completed)
       .catch(this.failure);
   },
-
   create(payload) {
     this.Connection
       .Solutions
@@ -58,7 +52,6 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   star(id) {
     this.Connection
       .Solutions
@@ -66,12 +59,19 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-
   unstar(id) {
     this.Connection
       .Solutions
       .unstar(id)
       .then(this.completed)
       .catch(this.failure);
+  },
+  listTags(id) {
+    this.Connection
+      .Solutions
+      .listTags(id)
+      .then(this.completed)
+      .catch(this.failure);
   }
+
 };

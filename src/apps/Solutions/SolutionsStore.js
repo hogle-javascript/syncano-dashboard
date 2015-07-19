@@ -1,31 +1,30 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    SolutionsActions    = require('./SolutionsActions');
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import Actions from './SolutionsActions';
 
 var SolutionsStore = Reflux.createStore({
-  listenables : SolutionsActions,
+  listenables : Actions,
 
   mixins      : [
-    CheckListStoreMixin,
-    StoreFormMixin,
-    WaitForStoreMixin
+    Mixins.StoreForm,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      items: [],
-      isLoading: false
+      items        : [],
+      tags         : [],
+      selectedTags : [],
+      isLoading    : false
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -34,12 +33,28 @@ var SolutionsStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('SolutionsStore::refreshData');
-    SolutionsActions.fetchSolutions();
+    this.refreshSolutions();
+    Actions.fetchTags();
   },
 
-  setSolutions: function(solutions) {
+  refreshSolutions() {
+    let payload = {};
+    if (this.data.filter == 'created_by_me') {
+      payload.created_by_me = true;
+    }
+    if (this.data.filter == 'starred_by_me') {
+      payload.starred_by_me = true;
+    }
+
+    if (this.data.selectedTags.length)
+      payload.tags = this.data.selectedTags;
+
+    Actions.fetchSolutions(payload);
+  },
+
+  setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
     this.data.items = Object.keys(solutions).map(function(key) {
       return solutions[key];
@@ -47,31 +62,76 @@ var SolutionsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchSolutions: function(solutions) {
+  setTags(tags) {
+    this.data.tags = Object.keys(tags).map(function(key) {
+      return tags[key];
+    });
+    this.trigger(this.data);
+  },
+
+  onSelectOneTag(tag) {
+    this.data.selectedTags = [tag];
+    this.refreshSolutions();
+  },
+
+  onToggleTagSelection(tag) {
+    let i = this.data.selectedTags.indexOf(tag);
+    if (i === -1)
+        this.data.selectedTags.push(tag);
+    else
+        this.data.selectedTags.splice(i, 1);
+
+    this.refreshSolutions();
+  },
+
+  onSetFilter(filter) {
+    this.data.filter = filter;
+    this.refreshSolutions();
+  },
+
+  onFetchSolutions(solutions) {
     console.debug('SolutionsStore::onFetchSolutions');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchSolutionsCompleted: function(items) {
+  onFetchSolutionsCompleted(items) {
     console.debug('SolutionsStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
-    SolutionsActions.setSolutions(items);
+    Actions.setSolutions(items);
   },
 
-  onFetchSolutionsFailure: function() {
+  onFetchSolutionsFailure() {
     console.debug('SolutionsStore::onFetchSolutionsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onUnstarSolutionCompleted: function() {
+  onFetchTags() {
+    console.debug('SolutionsStore::onFetchTags');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchTagsCompleted(tags) {
+    console.debug('SolutionsStore::onFetchTagsCompleted');
+    this.data.isLoading = false;
+    Actions.setTags(tags);
+  },
+
+  onFetchTagsFailure() {
+    console.debug('SolutionsStore::onFetchTagsFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onUnstarSolutionCompleted() {
     console.debug('SolutionsStore::onUnstarSolutionCompleted');
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onStarSolutionCompleted: function() {
+  onStarSolutionCompleted() {
     console.debug('SolutionsStore::onStarSolutionCompleted');
     this.trigger(this.data);
     this.refreshData();

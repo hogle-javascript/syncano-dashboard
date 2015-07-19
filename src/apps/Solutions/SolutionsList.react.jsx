@@ -1,13 +1,13 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    SolutionsListItem = require('./SolutionsListItem.react');
+import SolutionsListItem from './SolutionsListItem.react';
 
 module.exports = React.createClass({
 
   displayName: 'SolutionsList',
 
-  getStyles: function() {
+  getStyles() {
     return {
       list: {
         listStyle    : 'none',
@@ -23,24 +23,24 @@ module.exports = React.createClass({
     }
   },
 
-  getListItems: function() {
-    var styles    = this.getStyles(),
-        listItems = this.props.items.map(function(item) {
-          return (
-            <li
-              className = "col-flex-1"
-              style     = {styles.listItem}
-            >
-              <SolutionsListItem data={item} />
-            </li>
+  getListItems() {
+    let styles    = this.getStyles();
+    let listItems = this.props.items.map(item => {
+      return (
+        <li
+          key       = {item.id}
+          className = "col-flex-1"
+          style     = {styles.listItem}
+        >
+          <SolutionsListItem data={item} />
+        </li>
           )
-        });
-
+    });
     return listItems;
   },
 
-  render: function() {
-    var styles    = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <ul
