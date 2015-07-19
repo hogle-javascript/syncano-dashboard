@@ -346,6 +346,7 @@ module.exports = React.createClass({
                   <FlatButton
                     style     = {{marginTop: 35}}
                     label     = 'Add'
+                    disabled  = {!this.state.fieldType || !this.state.fieldName}
                     secondary = {true}
                     onClick   = {this.handleFieldAdd} />
                 </div>
