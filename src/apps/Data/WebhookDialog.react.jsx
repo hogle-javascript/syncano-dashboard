@@ -54,11 +54,10 @@ module.exports = React.createClass({
 
   handleEditSubmit: function() {
     WebhooksActions.updateWebhook(
-      this.state.id, {
-        name   : this.state.name,
-        codebox : this.state.codebox,
-        'class' : this.state.class,
-        signal  : this.state.signal
+      this.state.name, {
+        codebox     : this.state.codebox,
+        description : this.state.description,
+        'public'    : this.state.public
       });
   },
 
@@ -91,6 +90,7 @@ module.exports = React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
+        onDismiss       = {this.resetDialogState}
         modal           = {true}>
         <div>
           {this.renderFormNotifications()}
@@ -99,6 +99,7 @@ module.exports = React.createClass({
             ref               = "name"
             name              = "name"
             fullWidth         = {true}
+            disabled          = {this.hasEditMode()}
             valueLink         = {this.linkState('name')}
             errorText         = {this.getValidationMessages('name').join(' ')}
             hintText          = "Name of the WebHook"
@@ -125,11 +126,12 @@ module.exports = React.createClass({
             menuItems         = {this.state.codeboxes} />
 
           <Toggle
-            ref      = 'public'
-            name     = 'public'
-            onToggle = {this.handleToogle}
-            style    = {{marginTop: 20}}
-            label    = 'Make this WebHook public?' />
+            ref            = 'public'
+            name           = 'public'
+            onToggle       = {this.handleToogle}
+            style          = {{marginTop: 20}}
+            defaultToggled = {this.state.public}
+            label          = 'Make this WebHook public?' />
 
         </div>
       </Dialog>

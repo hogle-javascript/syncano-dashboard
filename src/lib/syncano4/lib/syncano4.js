@@ -394,7 +394,12 @@ var Syncano = (function() {
       updateProfile: this.updateBillingProfile.bind(this),
       getCard: this.getBillingCard.bind(this),
       updateCard: this.updateBillingCard.bind(this),
-      getInvoices: this.getBillingInvoices.bind(this)
+      getInvoices: this.getBillingInvoices.bind(this),
+      getUsage: this.getBillingUsage.bind(this),
+      getPlans: this.getBillingPlans.bind(this),
+      subscribePlan: this.subscribeBillingPlan.bind(this),
+      getSubscriptions: this.getSubscriptions.bind(this),
+      cancelSubscription: this.cancelSubscription.bind(this)
     };
 
     /**
@@ -1495,6 +1500,30 @@ var Syncano = (function() {
     getBillingInvoices: function(callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
     },
+
+    getBillingUsage: function(type, callbackOK, callbackError) {
+      if (!type) {
+        type = 'hourly';
+      }
+      return this.request('GET', 'v1/usage/' + type + '/', {}, callbackOK, callbackError);
+    },
+
+    getBillingPlans: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/plans/', {}, callbackOK, callbackError);
+    },
+
+    subscribeBillingPlan: function(planName, payload, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/plans/' + planName + '/subscribe', payload, callbackOK, callbackError);
+    },
+
+    getSubscriptions: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/subscriptions/', {}, callbackOK, callbackError);
+    },
+
+    cancelSubscription: function(id, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/subscriptions/' + id + '/cancel/', {}, callbackOK, callbackError);
+    },
+
     /***********************
        DATA OBJECT METHODS
     ************************/
@@ -2470,20 +2499,16 @@ var Syncano = (function() {
      *
      * @method Syncano#updateWebHook
      * @alias Syncano.WebHooks.update
-     * @param {Number} id - webhook id
+     * @param {Number} id - webhook name
      * @param {Object} params - new values of the webhook parameters
-     * @param {string} params.slug -
-     * @param {Number} params.codebox -
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
     updateWebHook: function(id, params, callbackOK, callbackError) {
-      if (typeof id === 'object') {
-        id = id.slug;
-      }
+
       if (typeof id === 'undefined') {
-        throw new Error('Missing webhook slug');
+        throw new Error('Missing webhook name');
       }
       if (typeof linksObject.instance_webhooks === 'undefined') {
         throw new Error('Not connected to any instance');

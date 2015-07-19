@@ -38,20 +38,20 @@ module.exports = React.createClass({
 
   subTabsItems: [
     {
-      label: "Current usage",
-      route: "profile-billing-usage"
+      label: 'Billing Plan',
+      route: 'profile-billing-plan'
     },
     {
-      label: "Payment methods",
-      route: "profile-billing-payment"
+      label: 'Payment methods',
+      route: 'profile-billing-payment'
     },
     {
-      label: "Invoices",
-      route: "profile-billing-invoices"
+      label: 'Invoices',
+      route: 'profile-billing-invoices'
     },
     {
-      label: "Billing address",
-      route: "profile-billing-address"
+      label: 'Billing address',
+      route: 'profile-billing-address'
     }
   ],
 
@@ -76,8 +76,8 @@ module.exports = React.createClass({
       <Container.Profile headerText='Billing'>
         <MUI.Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
           <MUI.Tab
-            label="Current usage"
-            route="profile-billing-usage"
+            label="Billing plan"
+            route="profile-billing-plan"
             onActive={this.handleTabActive}
           />
 

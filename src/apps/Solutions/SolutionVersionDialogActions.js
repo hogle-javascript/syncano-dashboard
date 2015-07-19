@@ -5,7 +5,7 @@ var Reflux     = require('reflux'),
 var SolutionVersionDialogActions = Reflux.createActions({
 
   showDialog: {},
-  dismissDialog: {},
+  dismissDialog: {}
 
 });
 

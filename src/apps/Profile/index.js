@@ -3,6 +3,9 @@ import Authentication from './ProfileAuthentication.react';
 import AuthenticationStore from './ProfileAuthenticationStore';
 import BillingAddress from './ProfileBillingAddress.react';
 import BillingAddressStore from './ProfileBillingAddressStore';
+import BillingPlan from './ProfileBillingPlan.react';
+import BillingPlanStore from './ProfileBillingPlanStore';
+import BillingPlanActions from './ProfileBillingPlanActions';
 import BillingInvoices from './ProfileBillingInvoices.react';
 import BillingInvoicesStore from './ProfileBillingInvoicesStore';
 import BillingPayment from './ProfileBillingPayment.react';
@@ -17,6 +20,9 @@ export {
   Actions,
   Authentication,
   AuthenticationStore,
+  BillingPlan,
+  BillingPlanStore,
+  BillingPlanActions,
   BillingAddress,
   BillingAddressStore,
   BillingInvoices,
