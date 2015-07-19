@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import MUI from 'material-ui';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Slider',
 
@@ -24,36 +24,38 @@ module.exports = Radium(React.createClass({
   },
 
   getStyles() {
-    let styles = {
+    return {
       container: {
-        position: 'relative'
+        position  : 'relative'
       },
       legendItems: {
         position  : 'absolute',
         minWidth  : '100px',
         textAlign : 'center',
-        transform : 'translate(-50%, 0%)'
+        Transform : 'translateX(-50%)'
       },
       lastLegendItem: {
-        transform : 'translate(-100%, 0%) !important',
+        Transform : 'translate(-100%) !important',
         textAlign : 'right !important'
       },
       selectedItem: {
-        color : MUI.Styles.Colors.lightBlueA700
+        color     : MUI.Styles.Colors.lightBlueA700
       }
-    };
-    return styles;
+    }
   },
 
   renderLegend() {
     var styles = this.getStyles().container;
     return (
-        <div style={styles}>{this.renderLegendItems()}</div>
+      <div style={styles}>
+        {this.renderLegendItems()}
+      </div>
     )
   },
 
   renderLegendItems() {
     var styles = this.getStyles();
+
     return this.props.legendItems.map(function(item, i) {
       let position = i / (this.props.legendItems.length - 1) * 100 + '%';
       let isLastItem = i === this.props.legendItems.length - 1;
@@ -65,7 +67,8 @@ module.exports = Radium(React.createClass({
           {left: position},
           isLastItem && styles.lastLegendItem,
           isSelected && styles.selectedItem
-          ]}>
+          ]}
+        >
           {item}
         </div>
       );
