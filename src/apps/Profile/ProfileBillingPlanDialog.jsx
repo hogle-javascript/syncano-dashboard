@@ -9,9 +9,9 @@ import DialogMixin from '../../mixins/DialogMixin';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
-import SliderSection from './SliderSection';
 
 import Common from '../../common';
+import SliderSection from './SliderSection';
 
 module.exports = React.createClass({
 
@@ -154,16 +154,16 @@ module.exports = React.createClass({
     if (this.state.card) {
       return (
         <div>
-        <div style={this.getStyles().sectionTopic}>Credit card info:</div>
-        <div className="row" style={{marginTop: 20, height: 110}}>
-          <div className="col-md-18">
-            <Common.CreditCard card={this.state.card} />
+          <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+          <div className="row" style={{marginTop: 20, height: 110}}>
+            <div className="col-md-18">
+              <Common.CreditCard card={this.state.card} />
+            </div>
+            <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
+              Want to use a different method of payment?
+              Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+            </div>
           </div>
-          <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
-            Want to use a different method of payment?
-            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
-          </div>
-        </div>
         </div>
       )
     }
@@ -236,23 +236,22 @@ module.exports = React.createClass({
     let selected       = this.state[type + 'Selected'];
 
     return (
-      <MUI.Slider
+      <Common.Slider
         key          = {type + 'Slider'}
         ref          = {type + 'Slider'}
         name         = {type + 'Slider'}
-        style        = {{marginBottom: 0}}
-        min          = {0}
-        max          = {(options.length - 1) / 10}
         value        = {selected !== undefined ? selected : defaultValue}
-        step         = {0.1}
-        onChange     = {this.onSliderChange.bind(this, type)}
+        type         = {type}
+        legendItems  = {options}
+        optionClick  = {this.handleSliderLabelsClick}
+        onChange     = {this.onSliderChange}
       />
     )
   },
 
   handleSliderLabelsClick(value, type) {
     let newState = {};
-    newState[type + 'Selected'] = value / 10;
+    newState[type + 'Selected'] = value;
     this.setState(newState);
   },
 
@@ -269,23 +268,6 @@ module.exports = React.createClass({
           </div>
       </div>
     )
-  },
-
-  renderOptions(type) {
-    if (!this.state.plan) {
-      return;
-    }
-    return this.state.plan.options[type].map((option, i) => {
-      return (
-        <div
-          key       = {option}
-          className = "col-flex-1"
-          onClick   = {this.handleSliderLabelsClick.bind(this, i, type)}
-        >
-          {option}
-        </div>
-      )
-    });
   },
 
   getInfo(type) {
@@ -309,7 +291,7 @@ module.exports = React.createClass({
       return info;
     }
 
-    let value = String(parseFloat(sliderValue) * 10);
+    let value = String(parseFloat(sliderValue));
 
     info = pricing[options[value]];
     info.total = options[value];
@@ -381,7 +363,6 @@ module.exports = React.createClass({
               title         = "API calls"
               suggestion    = "60"
               slider        = {this.renderSlider('api')}
-              sliderOptions = {this.renderOptions('api')}
               sliderSummary = {apiSliderSummary}
             />
             <SliderSection
@@ -389,7 +370,6 @@ module.exports = React.createClass({
               title         = "CodeBox runs"
               suggestion    = "100"
               slider        = {this.renderSlider('cbx')}
-              sliderOptions = {this.renderOptions('cbx')}
               sliderSummary = {cbxSliderSummary}
             />
             <div className="row" style={{marginTop: 40}}>

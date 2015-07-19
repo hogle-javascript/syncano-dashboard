@@ -22,6 +22,7 @@ import ProgressBar from './ProgressBar';
 import Request from './Request';
 import Search from './Search';
 import Show from './Show';
+import Slider from './Slider';
 import SnackBar from './SnackBar';
 import SocialAuthButton from './SocialAuthButton';
 import SwitchField from './SwitchField';
@@ -60,6 +61,7 @@ export default {
   Request,
   Search,
   Show,
+  Slider,
   SnackBar,
   SocialAuthButton,
   SwitchField,

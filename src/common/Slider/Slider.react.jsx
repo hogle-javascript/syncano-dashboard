@@ -17,10 +17,10 @@ export default Radium(React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      selectedItem: this.props.defaultSliderValue
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value : nextProps.value
+    })
   },
 
   getStyles() {
@@ -29,10 +29,12 @@ export default Radium(React.createClass({
         position  : 'relative'
       },
       legendItems: {
-        position  : 'absolute',
-        minWidth  : '100px',
-        textAlign : 'center',
-        Transform : 'translateX(-50%)'
+        position   : 'absolute',
+        minWidth   : '100px',
+        textAlign  : 'center',
+        Transform  : 'translateX(-50%)',
+        userSelect : 'none',
+        cursor     : 'pointer'
       },
       lastLegendItem: {
         Transform : 'translate(-100%) !important',
@@ -53,32 +55,34 @@ export default Radium(React.createClass({
     )
   },
 
+  handleOptionsClick(i, type) {
+    this.props.optionClick(i, type);
+  },
+
   renderLegendItems() {
     var styles = this.getStyles();
 
     return this.props.legendItems.map(function(item, i) {
       let position = i / (this.props.legendItems.length - 1) * 100 + '%';
-      let isLastItem = i === this.props.legendItems.length - 1;
-      let isSelected = i === this.state.selectedItem;
+      //let isLastItem = i === this.props.legendItems.length - 1;
+      let isLastItem = false;
+      let isSelected = i === this.state.value;
 
       return (
-        <div style={[
-          styles.legendItems,
-          {left: position},
-          isLastItem && styles.lastLegendItem,
-          isSelected && styles.selectedItem
+        <div
+          key   = {i}
+          style = {[
+            styles.legendItems,
+            {left: position},
+            isLastItem && styles.lastLegendItem,
+            isSelected && styles.selectedItem
           ]}
+          onClick = {this.handleOptionsClick.bind(this, i, this.props.type)}
         >
           {item}
         </div>
       );
     }.bind(this));
-  },
-
-  setSelectedItem(event, value) {
-    this.setState({
-      selectedItem: value
-    })
   },
 
   render() {
@@ -92,8 +96,8 @@ export default Radium(React.createClass({
           min          = {0}
           max          = {this.props.legendItems.length - 1}
           defaultValue = {this.props.defaultSliderValue}
-          onChange     = {this.setSelectedItem}
-          value        = {this.state.selectedItem}
+          onChange     = {this.props.onChange}
+          value        = {this.props.value}
         />
         {this.renderLegend()}
       </div>

@@ -34,11 +34,8 @@ module.exports = React.createClass({
               suggestion based on usage: ${this.props.suggestion}
             </div>
           </div>
-          <div>
+          <div style={{marginTop: 10, padding: 10}}>
             {this.props.slider}
-          </div>
-          <div className="row" style={{ textAlign: 'center', verticalAlign: 'middle'}}>
-            {this.props.sliderOptions}
           </div>
         </div>
         <div className="col-md-11" style={{paddingLeft: 35}}>
