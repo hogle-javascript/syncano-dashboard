@@ -1,6 +1,5 @@
 var React     = require('react'),
     Radium    = require('radium'),
-    Draggable = require('react-draggable'),
 
     MUI       = require('material-ui');
 
@@ -57,19 +56,20 @@ module.exports = Radium(React.createClass({
   renderLegendItems: function() {
     var styles = this.getStyles();
     return this.props.legendItems.map(function(item, i) {
-      var position = i/(this.props.legendItems.length - 1)*100 + '%',
-          isLastItem = i === this.props.legendItems.length - 1,
-          isSelected = i === this.state.selectedItem;
-        return (
-          <div style={[
-            styles.legendItems,
-            {left: position},
-            isLastItem && styles.lastLegendItem,
-            isSelected && styles.selectedItem
-            ]}>
-            {item}
-          </div>
-        );
+      let position = i / (this.props.legendItems.length - 1) * 100 + '%';
+      let isLastItem = i === this.props.legendItems.length - 1;
+      let isSelected = i === this.state.selectedItem;
+
+      return (
+        <div style={[
+          styles.legendItems,
+          {left: position},
+          isLastItem && styles.lastLegendItem,
+          isSelected && styles.selectedItem
+          ]}>
+          {item}
+        </div>
+      );
     }.bind(this));
   },
 
