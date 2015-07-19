@@ -82,15 +82,15 @@ module.exports = Radium(React.createClass({
     return (
       <div>
         <MUI.Slider
-          defaultValue = {this.props.defaultSliderValue}
-          onChange     = {this.setSelectedItem}
           style        = {{margin: '0 auto'}}
-          value        = {this.state.selectedItem}
-          step         = {1}
           name         = 'slider'
           ref          = 'slider'
+          step         = {1}
           min          = {0}
           max          = {this.props.legendItems.length - 1}
+          defaultValue = {this.props.defaultSliderValue}
+          onChange     = {this.setSelectedItem}
+          value        = {this.state.selectedItem}
         />
         {this.renderLegend()}
       </div>
