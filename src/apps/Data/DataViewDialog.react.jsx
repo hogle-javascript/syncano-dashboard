@@ -210,7 +210,7 @@ module.exports = React.createClass({
           <div>Main settings</div>
            <div className='row'>
 
-              <div className='col-xs-8'>
+              <div className='col-xs-10'>
                 <TextField
                   ref               = 'name'
                   name              = 'name'
