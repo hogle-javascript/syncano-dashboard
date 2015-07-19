@@ -149,7 +149,8 @@ module.exports = React.createClass({
               type       = "submit"
               label      = "Log in"
               labelStyle = {{fontSize: '16px'}}
-              style      = {{width: '100%', boxShadow: 'none'}}
+              fullWidth  = {true}
+              style      = {{boxShadow: 'none'}}
               primary    = {true}
             />
           </form>
