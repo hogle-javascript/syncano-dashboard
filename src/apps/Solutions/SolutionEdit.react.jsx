@@ -80,6 +80,12 @@ module.exports = React.createClass({
     }]
   },
 
+  isMySolution() {
+    if (SessionStore.getUser() && this.state.item.author)
+      if (SessionStore.getUser().id === this.state.item.author.id)
+        return true;
+  },
+
   handleDelete: function() {
     console.info('SolutionEdit::handleDelete');
     SolutionEditActions.removeSolution(this.state.item.id).then(
@@ -132,12 +138,14 @@ module.exports = React.createClass({
         <SolutionInstallDialog />
         <SolutionVersionDialog />
 
-        <Common.Fab>
-          <Common.Fab.Item
-            label         = "Click here to create Solution"
-            onClick       = {this.showAddSolutionVersionDialog}
-            iconClassName = "synicon-plus" />
-        </Common.Fab>
+        <Common.Show if={this.isMySolution()}>
+          <Common.Fab>
+            <Common.Fab.Item
+              label         = "Click here to create Solution"
+              onClick       = {this.showAddSolutionVersionDialog}
+              iconClassName = "synicon-plus" />
+          </Common.Fab>
+        </Common.Show>
 
         <MUI.Toolbar style={{background: 'transparent', padding: '0px'}}>
             <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
@@ -150,13 +158,15 @@ module.exports = React.createClass({
             </MUI.ToolbarGroup>
 
             <MUI.ToolbarGroup float="right">
-              <MUI.IconButton
-                style            = {{fontSize: 25, marginTop: 5}}
-                iconClassName    = "synicon-delete"
-                tooltip          = "Delete Solution"
-                tooltipAlignment = "bottom-left"
-                onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
-              />
+              <Common.Show if={this.isMySolution()}>
+                <MUI.IconButton
+                  style            = {{fontSize: 25, marginTop: 5}}
+                  iconClassName    = "synicon-delete"
+                  tooltip          = "Delete Solution"
+                  tooltipAlignment = "bottom-left"
+                  onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
+                />
+              </Common.Show>
             </MUI.ToolbarGroup>
           </MUI.Toolbar>
 
