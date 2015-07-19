@@ -1,9 +1,9 @@
-var React                 = require('react'),
-    Radium                = require('radium'),
-    Router                = require('react-router'),
+import React from 'react';
+import Radium from 'radium';
+import Router from 'react-router';
+import MUI from 'material-ui';
 
-    MUI                   = require('material-ui'),
-    SolutionStar          = require('../../common/SolutionStar');
+import SolutionStar from '../../common/SolutionStar';
 
 module.exports = React.createClass({
 
@@ -14,7 +14,7 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       cardTitleContainer: {
         display  : '-webkit-flex; display: flex',
@@ -74,11 +74,37 @@ module.exports = React.createClass({
     }
   },
 
-  handleSeeMoreClick: function(solutionId) {
+  handleSeeMoreClick(solutionId) {
     this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
-  render: function() {
+  renderVersion() {
+    let styles = this.getStyles();
+    let item = this.props.data;
+    let name = null;
+    let color = null;
+
+    if (item.versions.stable) {
+      name = 'stable ' + '(' + item.versions.stable + ')';
+      color = '#7ED321';
+    } else {
+      name = 'development ' + '(' + item.versions.devel + ')';
+      color = '#f5a623';
+    }
+
+    return (
+      <div style={styles.cardTextList}>
+        <MUI.FontIcon
+          style     = {styles.cardTextListIcon}
+          className = "synicon-information-outline"
+          color     = {color}
+        />
+        {name}
+      </div>
+    )
+  },
+
+  render() {
     var styles          = this.getStyles(),
         item            = this.props.data,
         itemTags        = item.tags.join(' ');
@@ -107,14 +133,7 @@ module.exports = React.createClass({
             />
             {itemTags}
           </div>
-          <div style={styles.cardTextList}>
-            <MUI.FontIcon
-              style     = {styles.cardTextListIcon}
-              className = "synicon-information-outline"
-              color     = "#f5a623"
-            />
-            devel
-          </div>
+          {this.renderVersion()}
         </MUI.CardText>
         <div style={styles.cardFooter}>
           <SolutionStar solution={item} />
