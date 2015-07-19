@@ -11,7 +11,7 @@ import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import Loading from '../../common/Loading/Loading.react.jsx';
+import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 
@@ -308,7 +308,7 @@ module.exports = React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Loading show={this.state.isLoading}>
+      <Common.Loading show={this.state.isLoading}>
         {this.getDialogs()}
         <PlanDialog />
         <div className="row" style={styles.main}>
@@ -330,7 +330,7 @@ module.exports = React.createClass({
             See how it works with your <strong>current usage</strong>
           </div>
         </div>
-      </Loading>
+      </Common.Loading>
     );
   }
 });

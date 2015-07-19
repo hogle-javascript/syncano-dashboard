@@ -1,16 +1,14 @@
-var React                      = require('react'),
-    Reflux                     = require('reflux'),
-    _                          = require('lodash'),
+import React from 'react';
+import Reflux from 'reflux';
+import Radium from 'radium';
+import _ from 'lodash';
+import MUI from 'material-ui';
 
-    FormMixin                  = require('../../mixins/FormMixin'),
+import Mixins from '../../mixins';
+import Common from '../../common';
 
-    ProfileActions             = require('./ProfileActions'),
-    ProfileBillingPaymentStore = require('./ProfileBillingPaymentStore'),
-
-    MUI                        = require('material-ui'),
-    Loading                    = require('../../common/Loading/Loading.react'),
-    Show                       = require('../../common/Show/Show.react'),
-    PaymentIcon                = require('./../../common/PaymentIcon');
+import ProfileActions from './ProfileActions';
+import ProfileBillingPaymentStore from './ProfileBillingPaymentStore';
 
 module.exports = React.createClass({
 
@@ -19,42 +17,42 @@ module.exports = React.createClass({
   mixins: [
     Reflux.connect(ProfileBillingPaymentStore),
     React.addons.LinkedStateMixin,
-    FormMixin
+    Mixins.Form
   ],
 
   validatorConstraints: {
-    number: {
-      presence: true
+    number : {
+      presence : true
     },
     cvc: {
-      presence: true,
-      numericality: {
-        onlyInteger: true,
-        greaterThan: 0
+      presence : true,
+      numericality : {
+        onlyInteger : true,
+        greaterThan : 0
       }
     },
-    exp_month: {
+    exp_month : {
       presence: true,
-      numericality: {
-        onlyInteger: true,
-        greaterThan: 0,
-        lessThanOrEqualTo: 12
+      numericality : {
+        onlyInteger       : true,
+        greaterThan       : 0,
+        lessThanOrEqualTo : 12
       }
     },
-    exp_year: {
+    exp_year : {
       presence: true,
-      numericality: {
-        onlyInteger: true,
-        greaterThan: 0
+      numericality : {
+        onlyInteger : true,
+        greaterThan : 0
       }
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     ProfileActions.fetchBillingCard();
   },
 
-  handleSuccessfullValidation: function() {
+  handleSuccessfullValidation() {
     ProfileActions.updateBillingCard(this.state);
   },
 
@@ -65,74 +63,19 @@ module.exports = React.createClass({
     });
   },
 
-  getStyles: function() {
-    return {
-      cardContainer: {
-        width: 220,
-        height: 138,
-        background: '#fafafa',
-        border: '1px solid #ddd',
-        BorderRadius: 10,
-        padding: 16,
-        color: 'rgba(0, 0, 0, 0.87)',
-        display: '-webkit-flex; display: flex',
-        FlexDirection: 'column'
-      },
-      cardHeadline: {
-        color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: 12,
-        lineHeight: '16px'
-      },
-      cardFooter: {
-        display: '-webkit-flex; display: flex',
-        margin: 'auto 0 0',
-        JustifyContent: 'space-between',
-        AlignItems: 'flex-end'
-      },
-      cardIcon: {
-        width: 60,
-        height: 'auto',
-        display: 'block',
-        Transform: 'translateY(18%)'
-      }
-    }
-  },
-
-  getCardTypeIcon: function(cardType) {
-    var styles = this.getStyles();
-
-    if (cardType === undefined) {
-      return true;
-    }
-
-    return(
-      <PaymentIcon
-        type  = {cardType}
-        style = {styles.cardIcon}
-      />
-    )
-  },
-
-  render: function() {
-    var styles       = this.getStyles(),
-        hasCard      = !_.isEmpty(this.state.card),
-        showForm     = !hasCard || this.state.showForm === true || this.state.show_form === true,
-        labelPrefix  = hasCard ? 'Update' : 'Add',
-        cardTypeIcon = this.state.card.brand ? this.getCardTypeIcon(this.state.card.brand) : null;
+  render() {
+    let hasCard      = !_.isEmpty(this.state.card);
+    let showForm     = !hasCard || this.state.showForm === true || this.state.show_form === true;
+    let labelPrefix  = hasCard ? 'Update' : 'Add';
 
     return (
       <div style={{padding: 48}}>
-        <Loading show={this.state.isLoading}>
-          <Show if={showForm}>
-            <form
-              onSubmit      = {this.handleFormValidation}
-              acceptCharset = "UTF-8"
-              method        = "post"
-            >
-
-              {this.renderFormNotifications()}
-
+        <Common.Loading show={this.state.isLoading}>
+          <Common.Show if={showForm}>
               <div className="row">
+
+                {this.renderFormNotifications()}
+
                 <div className="col-lg-20">
                   <MUI.TextField
                     name              = "number"
@@ -190,13 +133,13 @@ module.exports = React.createClass({
               </div>
               <div className="row">
                 <div className="col-lg-20" style={{display: '-webkit-flex; display: flex'}}>
-                  <Show if={hasCard}>
+                  <Common.Show if={hasCard}>
                     <MUI.RaisedButton
                       onClick   = {this.toggleForm.bind(this, false)}
                       label     = "Cancel"
                       className = "raised-button"
                     />
-                  </Show>
+                  </Common.Show>
                   <MUI.RaisedButton
                     type      = "submit"
                     label     = {labelPrefix + ' payment'}
@@ -206,27 +149,11 @@ module.exports = React.createClass({
                   />
                 </div>
               </div>
-            </form>
-          </Show>
+          </Common.Show>
 
-          <Show if={!showForm}>
+          <Common.Show if={!showForm}>
             <div>
-              <p className="vm-4-b">Your card</p>
-              <div className="vm-6-b" style={styles.cardContainer}>
-                <div>
-                  <div style={styles.cardHeadline}>Card number</div>
-                  <div>*** **** *** {this.state.card.last4}</div>
-                </div>
-                <div style={styles.cardFooter}>
-                  <div>
-                    <div style={styles.cardHeadline}>Expires on</div>
-                    {this.state.card.exp_month}/{this.state.card.exp_year}
-                  </div>
-                  <div>
-                    {cardTypeIcon}
-                  </div>
-                </div>
-              </div>
+              <Common.CreditCard card={this.state.card} />
               <MUI.RaisedButton
                 onClick    = {this.toggleForm.bind(null, true)}
                 type       = "submit"
@@ -235,8 +162,8 @@ module.exports = React.createClass({
                 secondary  = {true}
               />
             </div>
-          </Show>
-        </Loading>
+          </Common.Show>
+        </Common.Loading>
       </div>
     );
   }

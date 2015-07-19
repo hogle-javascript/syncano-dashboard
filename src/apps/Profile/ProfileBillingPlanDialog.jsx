@@ -154,8 +154,16 @@ module.exports = React.createClass({
     if (this.state.card) {
       return (
         <div>
-          Want to use a different method of payment?
-          Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+          <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+          <div className="row" style={{marginTop: 20, height: 110}}>
+            <div className="col-md-18">
+              <Common.CreditCard card={this.state.card} />
+            </div>
+            <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
+              Want to use a different method of payment?
+              Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+            </div>
+          </div>
         </div>
       )
     }

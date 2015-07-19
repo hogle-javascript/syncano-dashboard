@@ -7,6 +7,7 @@ import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
 import Container from './Container';
+import CreditCard from './CreditCard';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
@@ -45,6 +46,7 @@ export default {
   ColorIconPicker,
   ColumnList,
   Container,
+  CreditCard,
   Dropdown,
   Editor,
   Fab,
