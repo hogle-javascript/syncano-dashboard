@@ -7,12 +7,10 @@ var React                      = require('react'),
     ProfileActions             = require('./ProfileActions'),
     ProfileBillingPaymentStore = require('./ProfileBillingPaymentStore'),
 
-    mui                        = require('material-ui'),
-    TextField                  = mui.TextField,
-    RaisedButton               = mui.RaisedButton,
+    MUI                        = require('material-ui'),
     Loading                    = require('../../common/Loading/Loading.react'),
-    Show                       = require('../../common/Show/Show.react');
-
+    Show                       = require('../../common/Show/Show.react'),
+    PaymentIcon                = require('./../../common/PaymentIcon');
 
 module.exports = React.createClass({
 
@@ -56,7 +54,7 @@ module.exports = React.createClass({
     ProfileActions.fetchBillingCard();
   },
 
-  handleSuccessfullValidation: function () {
+  handleSuccessfullValidation: function() {
     ProfileActions.updateBillingCard(this.state);
   },
 
@@ -67,93 +65,179 @@ module.exports = React.createClass({
     });
   },
 
-  render: function () {
-    var hasCard     = !_.isEmpty(this.state.card),
-        showForm    = !hasCard || this.state.showForm === true || this.state.show_form === true,
-        labelPrefix = hasCard ? 'Update': 'Add';
+  getStyles: function() {
+    return {
+      cardContainer: {
+        width: 220,
+        height: 138,
+        background: '#fafafa',
+        border: '1px solid #ddd',
+        BorderRadius: 10,
+        padding: 16,
+        color: 'rgba(0, 0, 0, 0.87)',
+        display: '-webkit-flex; display: flex',
+        FlexDirection: 'column'
+      },
+      cardHeadline: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 12,
+        lineHeight: '16px'
+      },
+      cardFooter: {
+        display: '-webkit-flex; display: flex',
+        margin: 'auto 0 0',
+        JustifyContent: 'space-between',
+        AlignItems: 'flex-end'
+      },
+      cardIcon: {
+        width: 60,
+        height: 'auto',
+        display: 'block',
+        Transform: 'translateY(18%)'
+      }
+    }
+  },
+
+  getCardTypeIcon: function(cardType) {
+    var styles = this.getStyles();
+
+    if (cardType === undefined) {
+      return true;
+    }
+
+    return(
+      <PaymentIcon
+        type  = {cardType}
+        style = {styles.cardIcon}
+      />
+    )
+  },
+
+  render: function() {
+    var styles       = this.getStyles(),
+        hasCard      = !_.isEmpty(this.state.card),
+        showForm     = !hasCard || this.state.showForm === true || this.state.show_form === true,
+        labelPrefix  = hasCard ? 'Update' : 'Add',
+        cardTypeIcon = this.state.card.brand ? this.getCardTypeIcon(this.state.card.brand) : null;
 
     return (
-      <Loading show={this.state.isLoading}>
+      <div style={{padding: 48}}>
+        <Loading show={this.state.isLoading}>
+          <Show if={showForm}>
+            <form
+              onSubmit      = {this.handleFormValidation}
+              acceptCharset = "UTF-8"
+              method        = "post"
+            >
 
-        <Show if={showForm}>
-          <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
+              {this.renderFormNotifications()}
 
-            {this.renderFormNotifications()}
+              <div className="row">
+                <div className="col-lg-20">
+                  <MUI.TextField
+                    name              = "number"
+                    fullWidth         = {true}
+                    valueLink         = {this.linkState('number')}
+                    errorText         = {this.getValidationMessages('number').join(' ')}
+                    hintText          = "Card Number"
+                    floatingLabelText = "Card Number"
+                    dataStripe        = "number"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-20">
+                  <MUI.TextField
+                    name              = "cvc"
+                    fullWidth         = {true}
+                    valueLink         = {this.linkState('cvc')}
+                    errorText         = {this.getValidationMessages('cvc').join(' ')}
+                    hintText          = "CVC"
+                    floatingLabelText = "CVC"
+                    dataStripe        = "cvc"
+                  />
+                </div>
+              </div>
+              <div className="row vm-4-b">
+                <div className="col-lg-20">
+                  <div className="row">
+                    <div className="col-flex-1">
+                      <MUI.TextField
+                        name              = "exp_month"
+                        size              = {2}
+                        fullWidth         = {true}
+                        valueLink         = {this.linkState('exp_month')}
+                        errorText         = {this.getValidationMessages('exp_month').join(' ')}
+                        hintText          = "Expiration month (MM)"
+                        floatingLabelText = "Expiration month (MM)"
+                        dataStripe        = "exp-month"
+                      />
+                    </div>
+                    <div className="col-flex-1">
+                      <MUI.TextField
+                        name              = "exp_year"
+                        size              = {4}
+                        fullWidth         = {true}
+                        valueLink         = {this.linkState('exp_year')}
+                        errorText         = {this.getValidationMessages('exp_year').join(' ')}
+                        hintText          = "Expiration year (YYYY)"
+                        floatingLabelText = "Expiration year (YYYY)"
+                        dataStripe        = "exp-year"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-20" style={{display: '-webkit-flex; display: flex'}}>
+                  <Show if={hasCard}>
+                    <MUI.RaisedButton
+                      onClick   = {this.toggleForm.bind(this, false)}
+                      label     = "Cancel"
+                      className = "raised-button"
+                    />
+                  </Show>
+                  <MUI.RaisedButton
+                    type      = "submit"
+                    label     = {labelPrefix + ' payment'}
+                    className = "raised-button"
+                    secondary = {true}
+                    style     = {{margin: '0 0 0 auto'}}
+                  />
+                </div>
+              </div>
+            </form>
+          </Show>
 
-            <TextField
-              name              = "number"
-              fullWidth         = {true}
-              valueLink         = {this.linkState('number')}
-              errorText         = {this.getValidationMessages('number').join(' ')}
-              hintText          = "Card Number"
-              floatingLabelText = "Card Number"
-              dataStripe        = "number" />
-
-            <TextField
-              name              = "cvc"
-              fullWidth         = {true}
-              valueLink         = {this.linkState('cvc')}
-              errorText         = {this.getValidationMessages('cvc').join(' ')}
-              hintText          = "CVC"
-              floatingLabelText = "CVC"
-              dataStripe        = "cvc" />
-
-            <TextField
-              name              = "exp_month"
-              size              = {2}
-              valueLink         = {this.linkState('exp_month')}
-              errorText         = {this.getValidationMessages('exp_month').join(' ')}
-              hintText          = "Expiration month (MM)"
-              floatingLabelText = "Expiration month (MM)"
-              dataStripe        = "exp-month" />
-
-            <TextField
-              name              = "exp_year"
-              size              = {4}
-              valueLink         = {this.linkState('exp_year')}
-              errorText         = {this.getValidationMessages('exp_year').join(' ')}
-              hintText          = "Expiration year (YYYY)"
-              floatingLabelText = "Expiration year (YYYY)"
-              dataStripe        = "exp-year" />
-
-            <Show if={hasCard}>
-              <RaisedButton
-                onClick    = {this.toggleForm.bind(this, false)}
-                label      = "Cancel"
-                className  = "raised-button"/>
-            </Show>
-
-            <RaisedButton
-              type       = "submit"
-              label      = {labelPrefix + ' payment'}
-              className  = "raised-button"
-              secondary  = {true} />
-
-          </form>
-        </Show>
-
-        <Show if={!showForm}>
-          <div>
-            <h6>Your card</h6>
-            <p>
-              Card number <br />
-              *** **** *** {this.state.card.last4} <br />
-              Expiry <br />
-              {this.state.card.exp_month}/{this.state.card.exp_year} {this.state.card.brand}
-
-            </p>
-            <RaisedButton
-              onClick    = {this.toggleForm.bind(null, true)}
-              type       = "submit"
-              label      = {labelPrefix + ' payment'}
-              className  = "raised-button"
-              secondary  = {true} />
-          </div>
-        </Show>
-      </Loading>
+          <Show if={!showForm}>
+            <div>
+              <p className="vm-4-b">Your card</p>
+              <div className="vm-6-b" style={styles.cardContainer}>
+                <div>
+                  <div style={styles.cardHeadline}>Card number</div>
+                  <div>*** **** *** {this.state.card.last4}</div>
+                </div>
+                <div style={styles.cardFooter}>
+                  <div>
+                    <div style={styles.cardHeadline}>Expires on</div>
+                    {this.state.card.exp_month}/{this.state.card.exp_year}
+                  </div>
+                  <div>
+                    {cardTypeIcon}
+                  </div>
+                </div>
+              </div>
+              <MUI.RaisedButton
+                onClick    = {this.toggleForm.bind(null, true)}
+                type       = "submit"
+                label      = {labelPrefix + ' payment'}
+                className  = "raised-button"
+                secondary  = {true}
+              />
+            </div>
+          </Show>
+        </Loading>
+      </div>
     );
   }
 
