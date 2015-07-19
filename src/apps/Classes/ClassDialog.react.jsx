@@ -122,20 +122,25 @@ module.exports = React.createClass({
 
     var fields = this.state.fields;
 
-    fields.push({
+    let field = {
       fieldName   : this.state.fieldName,
       fieldType   : this.state.fieldType,
-      fieldTarget : this.state.fieldTarget,
       fieldOrder  : this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
       fieldFilter : this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
-    });
+    };
+
+    if (this.state.fieldType === 'reference') {
+      field.fieldTarget = this.state.fieldTarget;
+    }
+
+    fields.push(field);
 
     this.refs.fieldOrder ? this.refs.fieldOrder.setChecked() : null;
     this.refs.fieldFilter ? this.refs.fieldFilter.setChecked() : null;
 
     this.setState({
-      fields    : fields,
-      fieldName : ''
+      fields      : fields,
+      fieldName   : '',
     })
   },
 
