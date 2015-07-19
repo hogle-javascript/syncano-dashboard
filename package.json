@@ -25,7 +25,7 @@
     "react-onclickoutside": "^0.2.4",
     "react-outsideclickhandler": "latest",
     "react-router": "^0.13.3",
-    "react-select": "patrykkopycinski/react-select#build",
+    "react-select": "syncano/react-select#build",
     "react-tap-event-plugin": "^0.1.7",
     "react-zeroclipboard": "^2.0.1",
     "reflux": "latest",
