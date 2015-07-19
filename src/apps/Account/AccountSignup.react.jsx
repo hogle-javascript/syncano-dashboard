@@ -13,17 +13,10 @@ var React                = require('react'),
     AuthConstants        = require('./AuthConstants'),
 
     // Components
-    mui                  = require('material-ui'),
-    TextField            = mui.TextField,
-    RaisedButton         = mui.RaisedButton,
-    Paper                = mui.Paper,
-
-    SocialAuthButton     = require('../../common/SocialAuthButton'),
-    Logo                 = require('../../common/Logo');
-
+    MUI                  = require('material-ui'),
+    Common               = require('../../common');
 
 require('./Account.sass');
-
 
 module.exports = React.createClass({
 
@@ -52,14 +45,14 @@ module.exports = React.createClass({
   },
 
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo(transition) {
       if (SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_REDIRECT_PATH, {}, {});
       }
     }
   },
 
-  componentWillUpdate: function (nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       var router = this.context.router,
@@ -69,47 +62,20 @@ module.exports = React.createClass({
     }
   },
 
-  handleSuccessfullValidation: function () {
+  handleSuccessfullValidation() {
     AuthActions.passwordSignUp({
       email: this.state.email,
       password: this.state.password
     });
   },
 
-  handleSocialSignup: function (network) {
-    return function () {
-      AuthActions.socialLogin(network)
-    };
-  },
-
-  renderSocialButton: function (network) {
-    return (
-      <SocialAuthButton
-          icon        = {'synicon-' + network}
-          label       = {'Sign up with ' + network}
-          handleClick = {this.handleSocialSignup(network)}/>
-    )
-  },
-
-  renderSocialButtons: function () {
-    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function (network){
-      return (
-        <li key={network}>
-          {this.renderSocialButton(network)}
-        </li>
-      )
-    }.bind(this));
-
-    return <SocialAuthButton.List>{buttons}</SocialAuthButton.List>
-  },
-
-  render: function () {
+  render: function() {
     return (
       <div className="account-container">
         <div className="account-logo">
-          <Link to="login"><Logo className="logo-blue" /></Link>
+          <Link to="login"><Common.Logo className="logo-blue" /></Link>
         </div>
-        <Paper
+        <MUI.Paper
           className = "account-container__content"
           rounded   = {false}
         >
@@ -127,7 +93,7 @@ module.exports = React.createClass({
             acceptCharset = "UTF-8"
             method        = "post"
           >
-            <TextField
+            <MUI.TextField
               ref          = "email"
               valueLink    = {this.linkState('email')}
               errorText    = {this.getValidationMessages('email').join(' ')}
@@ -138,7 +104,7 @@ module.exports = React.createClass({
               fullWidth    = {true}
             />
 
-            <TextField
+            <MUI.TextField
               ref          = "password"
               valueLink    = {this.linkState('password')}
               errorText    = {this.getValidationMessages('password').join(' ')}
@@ -150,21 +116,22 @@ module.exports = React.createClass({
               fullWidth    = {true}
             />
 
-            <RaisedButton
+            <MUI.RaisedButton
               type       = "submit"
               label      = "Create my account"
               labelStyle = {{fontSize: '16px'}}
-              style      = {{width: '100%', boxShadow: 'none'}}
+              fullWidth  = {true}
+              style      = {{boxShadow: 'none'}}
               primary    = {true}
             />
           </form>
-          {this.renderSocialButtons()}
+          <Common.SocialAuthButtonsList mode="signup" />
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">
               <li><p>Already have an account? <Link to="login"> Login</Link></p></li>
             </ul>
           </div>
-        </Paper>
+        </MUI.Paper>
         <p className="vm-0-b text--center">By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>
       </div>
     );
