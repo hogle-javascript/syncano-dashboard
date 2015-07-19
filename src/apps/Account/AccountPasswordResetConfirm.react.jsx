@@ -99,8 +99,9 @@ module.exports = React.createClass({
             <RaisedButton
               type       = "submit"
               label      = "Change password"
+              fullWidth  = {true}
               labelStyle = {{fontSize: '16px'}}
-              style      = {{width: '100%', boxShadow: 'none'}}
+              style      = {{boxShadow: 'none'}}
               primary    = {true}
             />
           </form>
