@@ -30,7 +30,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount() {
+  handleDialogShow() {
     this.setState({
       name: Store.genUniqueName()
     });
@@ -78,7 +78,9 @@ module.exports = React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+        onShow          = {this.handleDialogShow}
+      >
         <div>
           {this.renderFormNotifications()}
 

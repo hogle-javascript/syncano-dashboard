@@ -51,8 +51,10 @@ var InstanceDialogStore = Reflux.createStore({
       'wood', 'dream', 'cherry', 'tree', 'fog', 'frost', 'voice', 'paper',
       'frog', 'smoke', 'star'
     ];
-    let rnd = Math.floor(Math.random() * Math.pow(2, 12));
-    return adjs[rnd >> 6 % 64] + '-' + nouns[rnd % 64] + '-' + rnd;
+    let rnd  = Math.floor(Math.random() * 9000) + 1000;
+    let noun = nouns[Math.floor(Math.random() * nouns.length)];
+    let adj  = adjs[Math.floor(Math.random() * adjs.length)];
+    return adj + '-' + noun + '-' + rnd;
   },
 
   onCreateInstanceCompleted: function() {
