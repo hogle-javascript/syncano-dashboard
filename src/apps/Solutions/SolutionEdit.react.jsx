@@ -131,6 +131,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    let item = this.state.item;
     return (
       <Container id='solutions'>
         {this.getDialogs()}
@@ -186,16 +187,18 @@ module.exports = React.createClass({
             <div className="col-flex-1">
               <div className="row">
                  <div className="col-flex-1">
-                    <div>Maciej Kucharz</div>
-                    <div>maciej.kucharz@syncano.com</div>
+                    <div style={{textAlign: 'right', marginTop: 15}}>
+                        <div>{item.author ? item.author.first_name : ''}</div>
+                        <div>{item.author ? item.author.last_name : ''}</div>
+                    </div>
                  </div>
-
                  <div className="col-flex-1">
-                    <MUI.Avatar>MK</MUI.Avatar>
+                    <MUI.Avatar
+                      size = {70}
+                      src  = {item.author ? item.author.avatar_url : null}/>
                  </div>
               </div>
             </div>
-
           </div>
 
           <SolutionVersionsList
