@@ -1,7 +1,7 @@
-let React = require('react');
-let MUI   = require('material-ui');
+import React from 'react';
+import MUI from 'material-ui';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   render() {
     return (

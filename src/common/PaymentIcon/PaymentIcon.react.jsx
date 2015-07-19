@@ -1,16 +1,16 @@
-let React = require('react');
-let AmericanExpress = require('./AmericanExpress.react');
-let DinersClub = require('./DinersClub.react');
-let Discover = require('./Discover.react');
-let JCB = require('./JCB.react');
-let MasterCard = require('./MasterCard.react');
-let Visa = require('./Visa.react');
+import React from 'react';
+import AmericanExpress from './AmericanExpress.react';
+import DinersClub from './DinersClub.react';
+import Discover from './Discover.react';
+import JCB from './JCB.react';
+import MasterCard from './MasterCard.react';
+import Visa from './Visa.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'PaymentIcon',
 
-  getCardIcon: function(cardType, cardStyle) {
+  getCardIcon(cardType = this.props.type, cardStyle = this.props.style) {
     switch(cardType) {
       case 'AmericanExpress':
         return <AmericanExpress style={cardStyle}/>;
@@ -32,12 +32,10 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    var cardIcon = this.getCardIcon(this.props.type, this.props.style);
-
+  render() {
     return (
       <div>
-        {cardIcon}
+        {this.getCardIcon()}
       </div>
     );
   }
