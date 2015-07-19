@@ -114,37 +114,41 @@ module.exports = React.createClass({
     }
 
     if (this.state.profile.subscription.plan === 'builder') {
-      return [
-        <div>{this.state.profile.subscription.plan}</div>,
-        <MUI.Toggle
-          key            = "builder-toggle"
-          defaultToggled = {false}
-          onToggle       = {this.handlePlanToggle}
-        />,
-        <div style={{marginTop: 10}}>
-          <div>Launching your app?</div>
-          <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
-        </div>,
-        <div style={{marginTop: 10}}>
-          From $25/month
-        </div>,
-        <div style={{marginTop: 10}}>
-          <div><a>Learn</a> when to flip the</div>
-          <div>switch to production.</div>
+      return (
+        <div>
+          <div>{this.state.profile.subscription.plan}</div>
+          <MUI.Toggle
+            key            = "builder-toggle"
+            defaultToggled = {false}
+            onToggle       = {this.handlePlanToggle}
+          />,
+          <div style={{marginTop: 10}}>
+            <div>Launching your app?</div>
+            <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
+          </div>,
+          <div style={{marginTop: 10}}>
+            From $25/month
+          </div>,
+          <div style={{marginTop: 10}}>
+            <div><a>Learn</a> when to flip the</div>
+            <div>switch to production.</div>
+          </div>
         </div>
-      ]
+      )
     }
-    return [
-      <div>Production</div>,
-      <MUI.Toggle
-        key            = "paid-commitment-toggle"
-        defaultToggled = {true}
-        disabled       = {true}
-      />,
-      <div style={{marginTop: 10}}>
-        <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-      </div>,
-    ]
+    return (
+      <div>
+        <div>Production</div>
+        <MUI.Toggle
+          key            = "paid-commitment-toggle"
+          defaultToggled = {true}
+          disabled       = {true}
+        />
+        <div style={{marginTop: 10}}>
+          <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
+        </div>
+      </div>
+    )
   },
 
   renderExplorerButtonLabel: function() {
