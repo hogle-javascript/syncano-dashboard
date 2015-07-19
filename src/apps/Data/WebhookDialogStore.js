@@ -40,7 +40,7 @@ var WebhookDialogStore = Reflux.createStore({
     var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
 
     if (codeboxes.length === 0) {
-      codeboxes = [{payload: '', text: 'No classes, add one first'}];
+      codeboxes = [{payload: '', text: 'No CodeBoxes, add one first'}];
     }
     this.trigger({codeboxes: codeboxes});
   },
