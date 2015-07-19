@@ -1,7 +1,6 @@
-var React     = require('react'),
-    Radium    = require('radium'),
-
-    MUI       = require('material-ui');
+import React from 'react';
+import Radium from 'radium';
+import MUI from 'material-ui';
 
 module.exports = Radium(React.createClass({
 
@@ -12,20 +11,20 @@ module.exports = Radium(React.createClass({
     defaultSliderValue: React.PropTypes.number
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       defaultSliderValue: 0
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       selectedItem: this.props.defaultSliderValue
     }
   },
 
-  getStyles: function() {
-    var styles = {
+  getStyles() {
+    let styles = {
       container: {
         position: 'relative'
       },
@@ -46,14 +45,14 @@ module.exports = Radium(React.createClass({
     return styles;
   },
 
-  renderLegend: function() {
+  renderLegend() {
     var styles = this.getStyles().container;
     return (
         <div style={styles}>{this.renderLegendItems()}</div>
     )
   },
 
-  renderLegendItems: function() {
+  renderLegendItems() {
     var styles = this.getStyles();
     return this.props.legendItems.map(function(item, i) {
       let position = i / (this.props.legendItems.length - 1) * 100 + '%';
@@ -73,13 +72,13 @@ module.exports = Radium(React.createClass({
     }.bind(this));
   },
 
-  setSelectedItem: function(e, value) {
+  setSelectedItem(event, value) {
     this.setState({
       selectedItem: value
     })
   },
 
-  render: function() {
+  render() {
     return (
       <div>
         <MUI.Slider
