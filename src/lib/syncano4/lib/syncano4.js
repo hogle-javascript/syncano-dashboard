@@ -2499,20 +2499,16 @@ var Syncano = (function() {
      *
      * @method Syncano#updateWebHook
      * @alias Syncano.WebHooks.update
-     * @param {Number} id - webhook id
+     * @param {Number} id - webhook name
      * @param {Object} params - new values of the webhook parameters
-     * @param {string} params.slug -
-     * @param {Number} params.codebox -
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
     updateWebHook: function(id, params, callbackOK, callbackError) {
-      if (typeof id === 'object') {
-        id = id.slug;
-      }
+
       if (typeof id === 'undefined') {
-        throw new Error('Missing webhook slug');
+        throw new Error('Missing webhook name');
       }
       if (typeof linksObject.instance_webhooks === 'undefined') {
         throw new Error('Not connected to any instance');
