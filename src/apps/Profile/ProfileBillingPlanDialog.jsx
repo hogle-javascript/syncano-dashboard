@@ -9,9 +9,9 @@ import DialogMixin from '../../mixins/DialogMixin';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
-
-import Loading from '../../common/Loading/Loading.react.jsx';
 import SliderSection from './SliderSection';
+
+import Common from '../../common';
 
 module.exports = React.createClass({
 
@@ -148,14 +148,22 @@ module.exports = React.createClass({
 
   renderCard() {
     if (this.state.card === undefined) {
-      return <Loading show={true} />
+      return <Common.Loading show={true} />
     }
 
     if (this.state.card) {
       return (
         <div>
-          Want to use a different method of payment?
-          Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+        <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+        <div className="row" style={{marginTop: 20, height: 110}}>
+          <div className="col-md-18">
+            <Common.CreditCard card={this.state.card} />
+          </div>
+          <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
+            Want to use a different method of payment?
+            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
+          </div>
+        </div>
         </div>
       )
     }
@@ -354,7 +362,7 @@ module.exports = React.createClass({
     );
 
     return (
-      <Loading show={this.state.isLoading}>
+      <Common.Loading show={this.state.isLoading}>
         <MUI.Dialog
           ref             = "dialog"
           contentStyle    = {{padding: 0}}
@@ -421,7 +429,7 @@ module.exports = React.createClass({
             </div>
           </div>
         </MUI.Dialog>
-      </Loading>
+      </Common.Loading>
     );
   }
 });
