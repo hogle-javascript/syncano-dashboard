@@ -175,7 +175,7 @@ import './common/ProgressBar/ProgressBar.react';
 import './common/Search/Search.react';
 import './common/Show/Show.react';
 import './common/SnackBar/Snackbar';
-import './common/SocialAuthButtonsList';
+import './common/SocialAuthButtonsList/SocialAuthButtonsList.react';
 import './common/SwitchField/SwitchField.react';
 import './common/SwitchField/SwitchFieldList.react';
 import './common/SwitchField/SwitchInput.react';
