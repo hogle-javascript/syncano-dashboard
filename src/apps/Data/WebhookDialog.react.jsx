@@ -90,6 +90,7 @@ module.exports = React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
+        onDismiss       = {this.resetDialogState}
         modal           = {true}>
         <div>
           {this.renderFormNotifications()}
@@ -125,11 +126,12 @@ module.exports = React.createClass({
             menuItems         = {this.state.codeboxes} />
 
           <Toggle
-            ref      = 'public'
-            name     = 'public'
-            onToggle = {this.handleToogle}
-            style    = {{marginTop: 20}}
-            label    = 'Make this WebHook public?' />
+            ref            = 'public'
+            name           = 'public'
+            onToggle       = {this.handleToogle}
+            style          = {{marginTop: 20}}
+            defaultToggled = {this.state.public}
+            label          = 'Make this WebHook public?' />
 
         </div>
       </Dialog>
