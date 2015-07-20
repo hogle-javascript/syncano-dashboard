@@ -1,73 +1,38 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
+export default CreateActions({}, {
+  showDialog         : {},
+  dismissDialog      : {},
+  fetch              : {},
+  setSolutions       : {},
+  setFilter          : {},
+  setTags            : {},
+  toggleTagSelection : {},
+  selectOneTag       : {},
 
-var SolutionsActions = Reflux.createActions({
-  //checkItem: {},
-  //uncheckAll: {},
-
-  showDialog    : {},
-  dismissDialog : {},
-
-  fetch: {},
-  setSolutions: {},
-
-  fetchSolutions: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchSolutions : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.list'
   },
-
-  createSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  createSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.create'
   },
-
-  starSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  starSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.star'
   },
-
   unstarSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.unstar'
+  },
+  fetchTags: {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.listTags'
   }
-
 });
-
-SolutionsActions.fetchSolutions.listen(function() {
-  console.info('SolutionsActions::fetchSolutions');
-  Connection
-    .Solutions
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionsActions.createSolution.listen(function(payload) {
-  console.info('SolutionsActions::createSolution');
-  Connection
-    .Solutions
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionsActions.starSolution.listen(function(id) {
-  console.info('SolutionsActions::starSolutions');
-  Connection
-    .Solutions
-    .star(id)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionsActions.unstarSolution.listen(function(id) {
-  console.info('SolutionsActions::unstarSolutions');
-  Connection
-    .Solutions
-    .unstar(id)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = SolutionsActions;

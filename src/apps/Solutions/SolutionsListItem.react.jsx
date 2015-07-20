@@ -1,9 +1,10 @@
-var React                 = require('react'),
-    Radium                = require('radium'),
-    Router                = require('react-router'),
+import React from 'react';
+import Radium from 'radium';
+import Router from 'react-router';
+import MUI from 'material-ui';
 
-    MUI                   = require('material-ui'),
-    SolutionStar          = require('../../common/SolutionStar');
+import SolutionsActions from './SolutionsActions';
+import SolutionStar from '../../common/SolutionStar';
 
 module.exports = React.createClass({
 
@@ -14,7 +15,7 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       cardTitleContainer: {
         display  : '-webkit-flex; display: flex',
@@ -47,7 +48,7 @@ module.exports = React.createClass({
         color      : '#9b9b9b',
         display    : '-webkit-flex; display: flex',
         AlignItems : 'center',
-        fontSize   : 12, 
+        fontSize   : 12,
         padding    : '4px 0'
       },
       cardTextListIcon: {
@@ -70,18 +71,60 @@ module.exports = React.createClass({
       seeDetailsButton: {
         color         : MUI.Styles.Colors.blue500,
         letterSpacing : 0.5
+      },
+      tag: {
+        color : '#9b9b9b',
+        paddingRight : 3
       }
     }
   },
 
-  handleSeeMoreClick: function(solutionId) {
+  handleSeeMoreClick(solutionId) {
     this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
-  render: function() {
-    var styles          = this.getStyles(),
-        item            = this.props.data,
-        itemTags        = item.tags.join(' ');
+  renderVersion() {
+    let styles = this.getStyles();
+    let item = this.props.data;
+    let name = null;
+    let color = null;
+
+    if (item.versions.stable) {
+      name = `stable (${item.versions.stable})`;
+      color = '#7ED321';
+    } else {
+      name = `development (${item.versions.devel || 'no versions'})`;
+      color = '#f5a623';
+    }
+
+    return (
+      <div style={styles.cardTextList}>
+        <MUI.FontIcon
+          style     = {styles.cardTextListIcon}
+          className = "synicon-information-outline"
+          color     = {color}
+        />
+        {name}
+      </div>
+    )
+  },
+
+  renderItemTags() {
+    let styles = this.getStyles();
+    return this.props.data.tags.map(tag => {
+      return (
+        <a
+          style   = {styles.tag}
+          onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
+          {tag}
+        </a>
+      )
+    });
+  },
+
+  render() {
+    let styles = this.getStyles();
+    let item = this.props.data;
 
     return (
       <MUI.Card>
@@ -105,16 +148,9 @@ module.exports = React.createClass({
               className = "synicon-tag"
               color     = "rgba(222, 222, 222, 0.54)"
             />
-            {itemTags}
+            {this.renderItemTags()}
           </div>
-          <div style={styles.cardTextList}>
-            <MUI.FontIcon
-              style     = {styles.cardTextListIcon}
-              className = "synicon-information-outline"
-              color     = "#f5a623"
-            />
-            devel
-          </div>
+          {this.renderVersion()}
         </MUI.CardText>
         <div style={styles.cardFooter}>
           <SolutionStar solution={item} />

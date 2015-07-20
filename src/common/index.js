@@ -24,7 +24,7 @@ import Search from './Search';
 import Show from './Show';
 import Slider from './Slider';
 import SnackBar from './SnackBar';
-import SocialAuthButton from './SocialAuthButton';
+import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SwitchField from './SwitchField';
 import Table from './Table';
 import Tabs from './Tabs';
@@ -63,7 +63,7 @@ export default {
   Show,
   Slider,
   SnackBar,
-  SocialAuthButton,
+  SocialAuthButtonsList,
   SwitchField,
   Table,
   Tabs,

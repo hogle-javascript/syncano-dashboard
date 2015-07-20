@@ -46,8 +46,7 @@ var React                = require('react'),
     SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
     SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
     AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
-    SocialAuthButton     = require('../common/SocialAuthButton/SocialAuthButton.react'),
-    SocialAuthButtonList = require('../common/SocialAuthButton/SocialAuthButtonList.react'),
+    SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
     List                 = require('../common/Lists/List.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
     TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
@@ -688,13 +687,6 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h4>AvatarInitials</h4>
           <AvatarInitials name="George R. R. Martin" />
-        </div>
-
-        <div className="exampleBox">
-          <h2>ButtonSocialAuth</h2>
-          <SocialAuthButton
-            icon="facebook"
-            text="Log in with Facebook" />
         </div>
 
         <div className="exampleBox">

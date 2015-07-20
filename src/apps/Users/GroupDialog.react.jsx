@@ -80,7 +80,7 @@ module.exports = React.createClass({
             <TextField
               ref               = "label"
               label             = "label"
-              style             = {{width:'100%'}}
+              fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = "Name of the group"
