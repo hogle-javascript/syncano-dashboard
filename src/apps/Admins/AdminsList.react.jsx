@@ -90,7 +90,7 @@ module.exports = React.createClass({
           </div>
         </ColumnCheckIcon>
         <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </ColumnList.Item>
     )
   },

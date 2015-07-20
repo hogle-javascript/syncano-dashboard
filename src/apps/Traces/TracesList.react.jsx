@@ -112,7 +112,7 @@ module.exports = Radium(React.createClass({
           </ColumnIconName>
           <ColumnID>{item.id}</ColumnID>
           <ColumnDesc>{item.duration}ms</ColumnDesc>
-          <ColumnDate>{item.executed_at}</ColumnDate>
+          <ColumnDate date={item.executed_at} />
         </Item>
         <Paper zDepth={1} style={styles.trace}>
           <Trace result={item.result}/>

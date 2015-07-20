@@ -81,7 +81,7 @@ module.exports = React.createClass({
         <ColumnID>{item.id}</ColumnID>
         <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.signal}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },

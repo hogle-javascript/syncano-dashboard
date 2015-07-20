@@ -75,7 +75,7 @@ module.exports = React.createClass({
           {ignore_acl}
           {allow_user_create}
         </ColumnText>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },

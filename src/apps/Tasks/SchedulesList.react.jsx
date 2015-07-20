@@ -80,8 +80,8 @@ module.exports = React.createClass({
         <ColumnID>{item.id}</ColumnID>
         <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
         <ColumnDesc>{item.crontab}</ColumnDesc>
-        <ColumnDate>{item.scheduled_next}</ColumnDate>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.scheduled_next} />
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },

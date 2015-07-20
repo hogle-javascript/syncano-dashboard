@@ -14,26 +14,13 @@ var React             = require('react'),
     GroupsStore       = require('./GroupsStore'),
 
     // Components
-    mui               = require('material-ui'),
-    Colors            = mui.Styles.Colors,
-    FontIcon          = mui.FontIcon,
-    DropDownIcon      = mui.DropDownIcon,
-    IconMenu          = mui.IconMenu,
-    IconButton        = mui.IconButton,
+    MUI               = require('material-ui'),
     MenuItem          = require('material-ui/lib/menus/menu-item'),
-    List              = mui.List,
-    ListItem          = mui.ListItem,
-    ListDivider       = mui.ListDivider,
 
     // List
-    Item              = require('../../common/ColumnList/Item.react'),
     EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
     Header            = require('../../common/ColumnList/Header.react'),
     Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
     ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
 
 module.exports = Radium(React.createClass({
@@ -71,7 +58,7 @@ module.exports = Radium(React.createClass({
         paddingBottom : 0
       },
       listItemChecked: {
-        background: Colors.lightBlue50
+        background: MUI.Styles.Colors.lightBlue50
       }
     }
   },
@@ -80,29 +67,29 @@ module.exports = Radium(React.createClass({
     var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
     var styles            = this.getStyles();
     var itemStyles        = itemActive ? styles.listItemChecked : {};
-    var iconButtonElement = <IconButton
+    var iconButtonElement = <MUI.IconButton
                                 touch           = {true}
                                 tooltipPosition = 'bottom-left'
                                 iconClassName   = 'synicon-dots-vertical'
                             />;
 
     var rightIconMenu = (
-      <IconMenu iconButtonElement={iconButtonElement}>
+      <MUI.IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
-      </IconMenu>
+      </MUI.IconMenu>
     );
 
     return (
-      <ListItem
+      <MUI.ListItem
         key             = {item.id}
         innerDivStyle   = {itemStyles}
         onMouseDown     = {this.props.handleItemClick.bind(null, item)}
         rightIconButton = {rightIconMenu}
       >
         {item.label}
-      </ListItem>
+      </MUI.ListItem>
     )
   },
 
@@ -115,7 +102,7 @@ module.exports = Radium(React.createClass({
           if (index < indexOfListItem) {
             return [
               this.renderItem(item),
-              <ListDivider />
+              <MUI.ListDivider />
             ];
           }
           return this.renderItem(item);
@@ -123,12 +110,12 @@ module.exports = Radium(React.createClass({
 
     if (items.length > 0) {
       return (
-        <List
+        <MUI.List
           style  = {styles.list}
           zDepth = {1}
         >
           {listItems}
-        </List>
+        </MUI.List>
       );
     }
 

@@ -77,7 +77,7 @@ module.exports = React.createClass({
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },

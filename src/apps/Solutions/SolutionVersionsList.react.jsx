@@ -84,7 +84,7 @@ module.exports = React.createClass({
         <ColumnID className="col-xs-5 col-md-5">
           {item.installations_count}
         </ColumnID>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },

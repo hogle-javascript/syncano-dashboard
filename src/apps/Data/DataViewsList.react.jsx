@@ -76,7 +76,7 @@ module.exports = React.createClass({
         <ColumnID>{item.id}</ColumnID>
         <ColumnDesc className="col-xs-8">{item.description}</ColumnDesc>
         <ColumnDesc>{item.class}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
+        <ColumnDate date={item.created_at} />
       </Item>
     )
   },
