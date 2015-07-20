@@ -211,7 +211,7 @@ module.exports = React.createClass({
           <div>Main settings</div>
            <div className='row'>
 
-              <div className='col-xs-10'>
+              <div className='col-xs-11'>
                 <TextField
                   ref               = 'name'
                   name              = 'name'
