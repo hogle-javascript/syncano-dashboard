@@ -6,6 +6,8 @@ import MUI from 'material-ui';
 import SolutionsActions from './SolutionsActions';
 import SolutionStar from '../../common/SolutionStar';
 
+import SolutionInstallDialogActions from './SolutionInstallDialogActions';
+
 module.exports = React.createClass({
 
   displayName: 'SolutionsListItem',
@@ -83,6 +85,10 @@ module.exports = React.createClass({
     this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
+  handleInstallClick(solutionId) {
+    SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+  },
+
   renderVersion() {
     let styles = this.getStyles();
     let item = this.props.data;
@@ -102,8 +108,7 @@ module.exports = React.createClass({
         <MUI.FontIcon
           style     = {styles.cardTextListIcon}
           className = "synicon-information-outline"
-          color     = {color}
-        />
+          color     = {color} />
         {name}
       </div>
     )
@@ -114,6 +119,7 @@ module.exports = React.createClass({
     return this.props.data.tags.map(tag => {
       return (
         <a
+          key     = {tag}
           style   = {styles.tag}
           onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
           {tag}
@@ -130,9 +136,9 @@ module.exports = React.createClass({
       <MUI.Card>
         <div style={styles.cardTitleContainer}>
           <MUI.CardTitle
-            style         = {styles.cardTitleRoot}
-            title         = {item.label}
-            titleStyle    = {styles.cardTitle}
+            style      = {styles.cardTitleRoot}
+            title      = {item.label}
+            titleStyle = {styles.cardTitle}
           />
           <div style={styles.cardAvatarContainer}>
             <MUI.Avatar
@@ -165,7 +171,7 @@ module.exports = React.createClass({
           <MUI.IconButton
             iconClassName = "synicon-download"
             iconStyle     = {styles.installIcon}
-            onClick       = {this.handleSeeMoreClick.bind(null, item.id)}
+            onClick       = {this.handleInstallClick.bind(null, item.id)}
             touch         = {true}
           />
         </div>

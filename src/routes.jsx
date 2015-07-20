@@ -1,41 +1,45 @@
-var React                       = require('react'),
-    Router                      = require('react-router'),
-    Route                       = Router.Route,
-    Redirect                    = Router.Redirect,
-    NotFoundRoute               = Router.NotFoundRoute,
-    DefaultRoute                = Router.DefaultRoute,
+import React from 'react';
+import Router from 'react-router';
 
-    // Pages
-    App                         = require('./pages/app.react'),
-    Dashboard                   = require('./pages/dashboard.react'),
-    Instance                    = require('./pages/instance.react'),
-    Billing                     = require('./pages/billing.react'),
-    CodeBoxesPage               = require('./pages/codeBoxes.react'),
-    NotFound                    = require('./pages/notfound.react'),
+// Pages
+import App from './pages/app.react';
+import Dashboard from './pages/dashboard.react';
+import Instance from './pages/instance.react';
+import Billing from './pages/billing.react';
+import CodeBoxesPage from './pages/codeBoxes.react';
+import NotFound from './pages/notfound.react';
 
-    Account                     = require('./apps/Account'),
-    Profile                     = require('./apps/Profile'),
+// Apps
+//import Profile from './apps/Profile'; // TODO: that kind of import doesn't work
+//import Account from './apps/Account'; // TODO: that kind of import doesn't work
+var Account = require('./apps/Account');
+var Profile = require('./apps/Profile');
 
-    // Apps for authenticated users
-    Instances                   = require('./apps/Instances/Instances.react'),
-    Solutions                   = require('./apps/Solutions/Solutions.react'),
-    SolutionEdit                = require('./apps/Solutions/SolutionEdit.react'),
+// Apps for authenticated users
+import Instances from './apps/Instances/Instances.react';
+import Solutions from './apps/Solutions/Solutions.react';
+import SolutionEdit from './apps/Solutions/SolutionEdit.react';
 
-    // Instance Apps
-    Admins                      = require('./apps/Admins/Admins.react'),
-    ApiKeys                     = require('./apps/ApiKeys/ApiKeys.react'),
-    Classes                     = require('./apps/Classes/Classes.react'),
-    CodeBoxes                   = require('./apps/CodeBoxes'),
-    Traces                      = require('./apps/Traces/Traces.react'),
-    DataObjects                 = require('./apps/DataObjects/DataObjects.react'),
-    Data                        = require('./apps/Data/Data.react'),
-    Tasks                       = require('./apps/Tasks/Tasks.react'),
-    Users                       = require('./apps/Users/Users.react'),
-    Channels                    = require('./apps/Channels/Channels.react'),
+// Instance Apps
+import Admins from './apps/Admins/Admins.react';
+import ApiKeys from './apps/ApiKeys/ApiKeys.react';
+import Classes from './apps/Classes/Classes.react';
+import CodeBoxes from './apps/CodeBoxes';
+import Traces from './apps/Traces/Traces.react';
+import DataObjects from './apps/DataObjects/DataObjects.react';
+import Data from './apps/Data/Data.react';
+import Tasks from './apps/Tasks/Tasks.react';
+import Users from './apps/Users/Users.react';
+import Channels from './apps/Channels/Channels.react';
 
-    // Examples
-    Examples                    = require('./examples/Examples.react'),
-    ListExamples                = require('./examples/ListExamples.react');
+// Examples
+import Examples from './examples/Examples.react';
+import ListExamples from './examples/ListExamples.react';
+
+let Route         = Router.Route;
+let Redirect      = Router.Redirect;
+let NotFoundRoute = Router.NotFoundRoute;
+let DefaultRoute  = Router.DefaultRoute;
 
 module.exports = (
   <Route

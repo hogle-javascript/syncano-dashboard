@@ -1,12 +1,33 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
+export default CreateActions({}, {
+  showDialog             : {},
+  dismissDialog          : {},
+  showDialogWithPreFetch : {},
+  setSolutionId          : {},
+  setInstances           : {},
+  setSolutionVersions    : {},
 
-var SolutionInstallDialogActions = Reflux.createActions({
-
-  showDialog: {},
-  dismissDialog: {},
-
+  fetchInstances : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Instances.list'
+  },
+  fetchSolutionVersions : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.listVersions'
+  },
+  installSolution: {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.install'
+  },
+  createInstance: {
+    asyncResult : true,
+    asyncForm   : true,
+    loading     : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Instances.create'
+  },
 });
-
-module.exports = SolutionInstallDialogActions;

@@ -17,6 +17,7 @@ import Common from '../../common';
 
 import SolutionsList from './SolutionsList.react';
 import SolutionDialog from './SolutionDialog.react';
+import SolutionInstallDialog from './SolutionInstallDialog.react';
 
 module.exports = React.createClass({
 
@@ -42,12 +43,14 @@ module.exports = React.createClass({
   headerMenuItems: function() {
     return [
       {
-        label  : 'Instances',
-        route  : 'instances'
-      }, {
+        label : 'Instances',
+        route : 'instances',
+      },
+      {
         label : 'Solutions',
-        route : 'solutions'
-      }];
+        route : 'solutions',
+      }
+    ];
   },
 
   handleTabActive: function(tab) {
@@ -79,10 +82,10 @@ module.exports = React.createClass({
     let tags = this.state.tags.map(item => {
       return (
         <MUI.ListItem
+          key           = {item.text}
           primaryText   = {item.text}
           innerDivStyle = {this.state.selectedTags.indexOf(item.text) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.text)}
-        />
+          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.text)} />
       )
     });
     return (
@@ -98,6 +101,7 @@ module.exports = React.createClass({
     return (
       <div id='solutions'>
         <SolutionDialog />
+        <SolutionInstallDialog />
 
         <Common.Fab>
           <Common.Fab.Item
