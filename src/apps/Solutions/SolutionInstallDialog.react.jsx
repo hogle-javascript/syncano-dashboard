@@ -66,13 +66,6 @@ module.exports = React.createClass({
       });
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.debug('SolutionInstallDialog::componentWillUpdate');
-    if (nextState._dialogVisible && nextState.instance != this.state.instance) {
-      SessionActions.fetchInstance(nextState.instance).then();
-    }
-  },
-
   handleDialogShow() {
     console.debug('SolutionInstallDialog::handleDialogShow');
   },

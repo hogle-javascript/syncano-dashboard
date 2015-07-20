@@ -19,6 +19,7 @@ export default CreateActions({}, {
     method      : 'Syncano.Actions.Solutions.listVersions'
   },
   installSolution: {
+    asyncForm   : true,
     asyncResult : true,
     children    : ['completed', 'failure'],
     method      : 'Syncano.Actions.Solutions.install'
