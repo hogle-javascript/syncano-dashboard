@@ -135,7 +135,10 @@ module.exports = React.createClass({
             titleStyle    = {styles.cardTitle}
           />
           <div style={styles.cardAvatarContainer}>
-            <MUI.Avatar>A</MUI.Avatar>
+            <MUI.Avatar
+              size  = {55}
+              src   = {item.author ? item.author.avatar_url : null}
+            />
           </div>
         </div>
         <MUI.CardText style={styles.cardSubtitle}>

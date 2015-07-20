@@ -1,50 +1,36 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    InstancesActions      = require('../Instances/InstancesActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    SolutionsActions      = require('./SolutionsActions'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import InstancesActions from '../Instances/InstancesActions';
+import SessionStore from '../Session/SessionStore';
+import SolutionsActions from './SolutionsActions';
 
-    SolutionEditActions   = require('./SolutionEditActions'),
-    SolutionEditStore     = require('./SolutionEditStore'),
+import SolutionEditActions from './SolutionEditActions';
+import SolutionEditStore from './SolutionEditStore';
 
-    SolutionInstallDialogStore     = require('./SolutionInstallDialogStore'),
-    SolutionInstallDialogActions     = require('./SolutionInstallDialogActions'),
+import SolutionInstallDialogStore from './SolutionInstallDialogStore';
+import SolutionInstallDialogActions from './SolutionInstallDialogActions';
 
-    SolutionVersionDialogStore     = require('./SolutionVersionDialogStore'),
-    SolutionVersionDialogActions     = require('./SolutionVersionDialogActions'),
+import SolutionVersionDialogStore from './SolutionVersionDialogStore';
+import SolutionVersionDialogActions from './SolutionVersionDialogActions';
 
-    // Components
-    mui                   = require('material-ui'),
-    Avatar                = mui.Avatar,
-    Toolbar               = mui.Toolbar,
-    ToolbarGroup          = mui.ToolbarGroup,
-    ToolbarTitle          = mui.ToolbarTitle,
-    IconButton            = mui.IconButton,
-    FontIcon              = mui.FontIcon,
-    Tabs                  = mui.Tabs,
-    Dialog                = mui.Dialog,
-    RaisedButton          = mui.RaisedButton,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container';
 
-    Tab                   = mui.Tab,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
+import SolutionVersionsList from './SolutionVersionsList.react';
+import SolutionDialog from './SolutionDialog.react';
 
-    SolutionVersionsList  = require('./SolutionVersionsList.react'),
-    SolutionDialog        = require('./SolutionDialog.react'),
-
-    SolutionVersionDialog = require('./SolutionVersionDialog.react'),
-    SolutionInstallDialog = require('./SolutionInstallDialog.react'),
-
-    SolutionStar          = require('../../common/SolutionStar/SolutionStar.react');
+import SolutionVersionDialog from './SolutionVersionDialog.react';
+import SolutionInstallDialog from './SolutionInstallDialog.react';
 
 module.exports = React.createClass({
 
@@ -54,7 +40,7 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    DialogsMixin,
+    Mixins.Dialogs,
     HeaderMixin,
 
     Reflux.connect(SolutionEditStore)
@@ -73,7 +59,7 @@ module.exports = React.createClass({
   //Dialogs config
   initDialogs: function() {
     return [{
-      dialog: Dialog,
+      dialog: MUI.Dialog,
       params: {
         key     : 'deleteSolutionDialog',
         ref     : 'deleteSolutionDialog',
@@ -92,6 +78,12 @@ module.exports = React.createClass({
         children : 'Do you really want to delete this Solution?'
       }
     }]
+  },
+
+  isMySolution() {
+    if (SessionStore.getUser() && this.state.item.author)
+      if (SessionStore.getUser().id === this.state.item.author.id)
+        return true;
   },
 
   handleDelete: function() {
@@ -139,6 +131,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    let item = this.state.item;
     return (
       <Container id='solutions'>
         {this.getDialogs()}
@@ -146,33 +139,37 @@ module.exports = React.createClass({
         <SolutionInstallDialog />
         <SolutionVersionDialog />
 
-        <FabList>
-          <FabListItem
-            label         = "Click here to create Solution"
-            onClick       = {this.showAddSolutionVersionDialog}
-            iconClassName = "synicon-plus" />
-        </FabList>
+        <Common.Show if={this.isMySolution()}>
+          <Common.Fab>
+            <Common.Fab.Item
+              label         = "Click here to create Solution"
+              onClick       = {this.showAddSolutionVersionDialog}
+              iconClassName = "synicon-plus" />
+          </Common.Fab>
+        </Common.Show>
 
-        <Toolbar style={{background: 'transparent', padding: '0px'}}>
-            <ToolbarGroup float="left" style={{padding: '0px'}}>
-              <FontIcon
+        <MUI.Toolbar style={{background: 'transparent', padding: '0px'}}>
+            <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
+              <MUI.FontIcon
                 style     = {{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
                 className = "synicon-arrow-left"
                 onClick   = {this.handleBackClick}
               />
-              <ToolbarTitle text={'Solution: ' + this.state.item.label} />
-            </ToolbarGroup>
+              <MUI.ToolbarTitle text={'Solution: ' + this.state.item.label} />
+            </MUI.ToolbarGroup>
 
-            <ToolbarGroup float="right">
-              <IconButton
-                style            = {{fontSize: 25, marginTop: 5}}
-                iconClassName    = "synicon-delete"
-                tooltip          = "Delete Solution"
-                tooltipAlignment = "bottom-left"
-                onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
-              />
-            </ToolbarGroup>
-          </Toolbar>
+            <MUI.ToolbarGroup float="right">
+              <Common.Show if={this.isMySolution()}>
+                <MUI.IconButton
+                  style            = {{fontSize: 25, marginTop: 5}}
+                  iconClassName    = "synicon-delete"
+                  tooltip          = "Delete Solution"
+                  tooltipAlignment = "bottom-left"
+                  onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
+                />
+              </Common.Show>
+            </MUI.ToolbarGroup>
+          </MUI.Toolbar>
 
         <div className="container" style={{clear: 'both'}}>
 
@@ -180,8 +177,8 @@ module.exports = React.createClass({
             <div className="col-flex-1">
               <h5>{this.state.item.label}</h5>
               <div>{this.state.item.description}</div>
-               <SolutionStar solution={this.state.item} />
-              <RaisedButton
+               <Common.SolutionStar solution={this.state.item} />
+              <MUI.RaisedButton
                 primary = {true}
                 label   = 'Install solution'
                 onClick = {this.handleInstallSolution}
@@ -190,16 +187,18 @@ module.exports = React.createClass({
             <div className="col-flex-1">
               <div className="row">
                  <div className="col-flex-1">
-                    <div>Maciej Kucharz</div>
-                    <div>maciej.kucharz@syncano.com</div>
+                    <div style={{textAlign: 'right', marginTop: 15}}>
+                        <div>{item.author ? item.author.first_name : ''}</div>
+                        <div>{item.author ? item.author.last_name : ''}</div>
+                    </div>
                  </div>
-
                  <div className="col-flex-1">
-                    <Avatar>MK</Avatar>
+                    <MUI.Avatar
+                      size = {70}
+                      src  = {item.author ? item.author.avatar_url : null}/>
                  </div>
               </div>
             </div>
-
           </div>
 
           <SolutionVersionsList
