@@ -59,7 +59,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount: function() {
+  componentWillMount: function() {
     ProfileActions.fetchBillingProfile();
   },
 

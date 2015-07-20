@@ -23,7 +23,7 @@ module.exports = React.createClass({
     Reflux.connect(ProfileBillingInvoicesStore)
   ],
 
-  componentDidMount: function() {
+  componentWillMount: function() {
     ProfileActions.fetchInvoices();
   },
 

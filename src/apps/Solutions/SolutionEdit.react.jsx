@@ -46,10 +46,13 @@ module.exports = React.createClass({
     Reflux.connect(SolutionEditStore)
   ],
 
-  componentDidMount: function() {
-    console.info('SolutionEdit::componentDidMount');
+  componentWillMount: function() {
     InstancesActions.fetch();
     SolutionEditActions.fetch();
+  },
+
+  componentDidMount: function() {
+    console.info('SolutionEdit::componentDidMount');
 
     if (this.getParams().action == 'install') {
       this.handleInstallSolution();

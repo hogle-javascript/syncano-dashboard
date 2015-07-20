@@ -44,8 +44,9 @@ module.exports = React.createClass({
     var instanceName = menuItem.text._store.props.children[1];
 
     // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+    SessionActions.fetchInstance(instanceName).then(function() {
+      this.transitionTo('instance', {instanceName: instanceName});
+    }.bind(this));
   },
 
   handleInstanceActive: function() {
