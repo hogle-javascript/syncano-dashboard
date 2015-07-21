@@ -218,7 +218,8 @@ export default React.createClass({
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version" />
+            emptyItemContent     = "Add new Version"
+          />
 
         </div>
       </Container>
