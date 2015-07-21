@@ -1,39 +1,22 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    SessionStore      = require('../Session/SessionStore'),
-    SolutionEditActions    = require('./SolutionEditActions'),
-    SolutionEditStore      = require('./SolutionEditStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import SolutionEditActions from './SolutionEditActions';
+import SolutionEditStore from './SolutionEditStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
-    IconButton        = mui.IconButton,
-    Avatar            = mui.Avatar,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnText        = require('../../common/ColumnList/Column/Text.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionVersionsList',
 
@@ -47,11 +30,11 @@ module.exports = React.createClass({
   ],
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     SolutionEditActions.checkItem(id, state);
   },
 
-  handleItemClick: function(className) {
+  handleItemClick(className) {
     //SessionStore.getRouter().transitionTo(
     //  'classes-data-objects',
     //  {
@@ -62,41 +45,43 @@ module.exports = React.createClass({
     //console.info('SolutionVersionsList::handleItemClick');
   },
 
-  handleDownloadVersion: function(url) {
+  handleDownloadVersion(url) {
     window.open(url, '_blank');
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
 
     return (
-      <Item
+      <Common.ColumnList.Item
         key          = {item.id}
         id           = {item.id}
-        handleClick  = {this.handleItemClick}>
-        <ColumnDesc><Avatar>{item.number}</Avatar></ColumnDesc>
-        <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnID className="col-xs-5 col-md-5">
-          <IconButton
+        handleClick  = {this.handleItemClick}
+      >
+        <Common.ColumnList.Column.Desc><MUI.Avatar>{item.number}</MUI.Avatar></Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
+          <MUI.IconButton
             iconClassName = "synicon-cloud-download"
             tooltip       = "Download solution file of this version"
-            onClick       = {this.handleDownloadVersion.bind(this, item.data.url)} />
-        </ColumnID>
-        <ColumnID className="col-xs-5 col-md-5">
+            onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
+          />
+        </Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
           {item.installations_count}
-        </ColumnID>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+        </Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function() {
+  getList() {
     if (this.state.versions === null) {
       return;
     }
 
-    var items = this.state.versions.map(function(item) {
-      return this.renderItem(item)
-    }.bind(this));
+    var items = this.state.versions.map(item => {
+      return this.renderItem(item);
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -104,28 +89,28 @@ module.exports = React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Description</ColumnDesc.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Download</ColumnID.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Installations</ColumnID.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Download</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Installations</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

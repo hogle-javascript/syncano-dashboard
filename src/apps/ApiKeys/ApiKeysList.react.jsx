@@ -1,36 +1,20 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions   = require('../Session/SessionActions'),
-    ApiKeysActions   = require('./ApiKeysActions'),
-    ApiKeysStore     = require('./ApiKeysStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import ApiKeysActions from './ApiKeysActions';
+import ApiKeysStore from './ApiKeysStore';
 
-    // Components
-    mui              = require('material-ui'),
-    Colors           = require('material-ui/lib/styles/colors'),
-    FontIcon         = mui.FontIcon,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    ListContainer    = require('../../common/Lists/ListContainer.react'),
-    List             = require('../../common/Lists/List.react'),
-    Item             = require('../../common/ColumnList/Item.react'),
-    EmptyListItem    = require('../../common/ColumnList/EmptyListItem.react'),
-    Header           = require('../../common/ColumnList/Header.react'),
-    Loading          = require('../../common/Loading/Loading.react'),
-    ColumnDate       = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID         = require('../../common/ColumnList/Column/ID.react'),
-    ColumnText       = require('../../common/ColumnList/Column/Text.react'),
-    ColumnKey        = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon  = require('../../common/ColumnList/Column/CheckIcon.react');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ApiKeysList',
 
@@ -41,11 +25,11 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick(id, state) {
     ApiKeysActions.checkItem(id, state);
   },
 
-  renderItem: function (item) {
+  renderItem(item) {
 
     var ignore_acl = null,
         allow_user_create = null;
@@ -58,62 +42,61 @@ module.exports = React.createClass({
     }
 
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
         key     = {item.id}>
-        <ColumnCheckIcon
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'key'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}
+        >
           {item.description}
-        </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnKey color="black">{item.api_key}</ColumnKey>
-        <ColumnText>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.Key color="black">{item.api_key}</Common.ColumnList.Column.Key>
+        <Common.ColumnList.Column.Text>
           {ignore_acl}
           {allow_user_create}
-        </ColumnText>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+        </Common.ColumnList.Column.Text>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function () {
-    var items = this.state.items.map(function (item) {
-      return this.renderItem(item)
-    }.bind(this));
+  getList() {
+    var items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
+
     return (
-      <EmptyListItem
-        handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     );
   },
 
-  render: function () {
+  render() {
     return (
-      <ListContainer>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnKey.Header>Key</ColumnKey.Header>
-          <ColumnText.Header>Permissions</ColumnText.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Key.Header>Key</Common.ColumnList.Column.Key.Header>
+          <Common.ColumnList.Column.Text.Header>Permissions</Common.ColumnList.Column.Text.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

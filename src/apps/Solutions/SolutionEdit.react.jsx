@@ -32,7 +32,7 @@ import SolutionDialog from './SolutionDialog.react';
 import SolutionVersionDialog from './SolutionVersionDialog.react';
 import SolutionInstallDialog from './SolutionInstallDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionEdit',
 
@@ -46,7 +46,7 @@ module.exports = React.createClass({
     Reflux.connect(SolutionEditStore)
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
     InstancesActions.fetch();
     SolutionEditActions.fetch();
@@ -57,7 +57,7 @@ module.exports = React.createClass({
   },
 
   //Dialogs config
-  initDialogs: function() {
+  initDialogs() {
     return [{
       dialog: MUI.Dialog,
       params: {
@@ -86,22 +86,22 @@ module.exports = React.createClass({
         return true;
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('SolutionEdit::handleDelete');
     SolutionEditActions.removeSolution(this.state.item.id).then(
       SessionStore.getRouter().transitionTo('solutions')
     );
   },
 
-  handleInstallSolution: function() {
-    SolutionInstallDialogActions.showDialog();
+  handleInstallSolution() {
+    SolutionInstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 
-  showSolutionDialog: function() {
+  showSolutionDialog() {
     SolutionEditActions.showDialog();
   },
 
-  headerMenuItems: function() {
+  headerMenuItems() {
     return [
       {
         label  : 'Instances',
@@ -114,7 +114,7 @@ module.exports = React.createClass({
     ];
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       margin: '65px auto',
       width: '80%',
@@ -122,15 +122,15 @@ module.exports = React.createClass({
     };
   },
 
-  handleBackClick: function() {
+  handleBackClick() {
     SessionStore.getRouter().transitionTo('solutions');
   },
 
-  showAddSolutionVersionDialog: function() {
+  showAddSolutionVersionDialog() {
     SolutionVersionDialogActions.showDialog();
   },
 
-  render: function() {
+  render() {
     let item = this.state.item;
     return (
       <Container id='solutions'>
@@ -195,7 +195,7 @@ module.exports = React.createClass({
                  <div className="col-flex-1">
                     <MUI.Avatar
                       size = {70}
-                      src  = {item.author ? item.author.avatar_url : null}/>
+                      src  = {item.author ? item.author.avatar_url : null} />
                  </div>
               </div>
             </div>
@@ -204,7 +204,8 @@ module.exports = React.createClass({
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version"/>
+            emptyItemContent     = "Add new Version"
+          />
 
         </div>
       </Container>

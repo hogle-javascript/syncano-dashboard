@@ -17,7 +17,7 @@ import Common from '../../common';
 
 require('react-select/dist/default.css');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'UserDialog',
 
@@ -96,14 +96,14 @@ module.exports = React.createClass({
                             }),
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
@@ -120,8 +120,8 @@ module.exports = React.createClass({
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post">
-
+            method        = "post"
+          >
             <MUI.TextField
               ref               = 'username'
               name              = 'username'
@@ -131,7 +131,6 @@ module.exports = React.createClass({
               hintText          = 'Username'
               floatingLabelText = 'Username'
             />
-
             <MUI.TextField
               ref               = 'password'
               name              = 'password'
@@ -143,7 +142,6 @@ module.exports = React.createClass({
               floatingLabelText = 'Password'
               className         = 'vm-4-b'
             />
-
             <Select
               name        = 'group'
               multi       = {true}
@@ -152,7 +150,6 @@ module.exports = React.createClass({
               options     = {allGroups}
               onChange    = {this.handleSelectFieldChange}
             />
-
           </form>
           <Common.Loading
               type="linear"
@@ -163,5 +160,4 @@ module.exports = React.createClass({
       </MUI.Dialog>
     );
   }
-
 });

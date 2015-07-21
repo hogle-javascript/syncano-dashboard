@@ -5,16 +5,16 @@ import _ from 'lodash';
 import Radium from 'radium';
 import MUI from 'material-ui';
 
-    // Utils
+// Utils
 import HeaderMixin from'../Header/HeaderMixin';
 import ButtonActionMixin from'../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
+// Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
-    // Components
+// Components
 import Common from '../../common';
 
 module.exports = Radium(React.createClass({
@@ -62,9 +62,9 @@ module.exports = Radium(React.createClass({
         styles            = this.getStyles(),
         itemStyles        = itemActive ? styles.listItemChecked : {},
         iconButtonElement = <MUI.IconButton
-                                touch           = {true}
-                                tooltipPosition = 'bottom-left'
-                                iconClassName   = 'synicon-dots-vertical'
+                              touch           = {true}
+                              tooltipPosition = 'bottom-left'
+                              iconClassName   = 'synicon-dots-vertical'
                             />,
         rightIconMenu = (
       <MUI.IconMenu iconButtonElement={iconButtonElement}>

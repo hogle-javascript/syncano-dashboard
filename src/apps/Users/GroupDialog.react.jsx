@@ -46,53 +46,52 @@ module.exports = React.createClass({
         submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-        <MUI.Dialog
-            ref             = "dialog"
-            title           = {title + " Group"}
-            openImmediately = {this.props.openImmediately}
-            actions         = {dialogStandardActions}
-            onDismiss       = {this.resetDialogState}
-          >
-          <div>
-            {this.renderFormNotifications()}
-            <form
-                onSubmit      = {this.handleFormValidation}
-                acceptCharset = "UTF-8"
-                method        = "post"
-              >
+      <MUI.Dialog
+          ref             = "dialog"
+          title           = {title + " Group"}
+          openImmediately = {this.props.openImmediately}
+          actions         = {dialogStandardActions}
+          onDismiss       = {this.resetDialogState}
+        >
+        <div>
+          {this.renderFormNotifications()}
+          <form
+              onSubmit      = {this.handleFormValidation}
+              acceptCharset = "UTF-8"
+              method        = "post"
+            >
 
-              <MUI.TextField
-                  ref               = "label"
-                  label             = "label"
-                  fullWidth         = {true}
-                  valueLink         = {this.linkState('label')}
-                  errorText         = {this.getValidationMessages('label').join(' ')}
-                  hintText          = "Name of the group"
-                  floatingLabelText = "Group Name"
-                />
-
-            </form>
-            <Common.Loading
-                type="linear"
-                position="bottom"
-                show={this.state.isLoading}
+            <MUI.TextField
+                ref               = "label"
+                label             = "label"
+                fullWidth         = {true}
+                valueLink         = {this.linkState('label')}
+                errorText         = {this.getValidationMessages('label').join(' ')}
+                hintText          = "Name of the group"
+                floatingLabelText = "Group Name"
               />
-          </div>
-        </MUI.Dialog>
+
+          </form>
+          <Common.Loading
+              type     = "linear"
+              position = "bottom"
+              show     = {this.state.isLoading}
+            />
+        </div>
+      </MUI.Dialog>
     );
   }
-
 });
 
