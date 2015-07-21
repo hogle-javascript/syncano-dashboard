@@ -51,6 +51,7 @@ module.exports = React.createClass({
       // Show Add modal
       this.showChannelDialog();
     }
+    ChannelsActions.fetch();
   },
 
   // Dialogs config

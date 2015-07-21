@@ -51,6 +51,7 @@ module.exports = React.createClass({
       // Show Add modal
       this.showCodeBoxDialog();
     }
+    CodeBoxesActions.fetch();
   },
 
   // Dialogs config
