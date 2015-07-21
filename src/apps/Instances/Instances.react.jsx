@@ -79,8 +79,8 @@ module.exports = Radium(React.createClass({
     }]
   },
 
-  componentWillMount() {
-    console.info('Instances::componentWillMount');
+  componentDidMount() {
+    console.info('Instances::componentDidMount');
     Store.fetch();
   },
 

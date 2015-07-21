@@ -48,12 +48,13 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
-    InstancesActions.fetch();
-    SolutionEditActions.fetch();
 
     if (this.getParams().action == 'install') {
       this.handleInstallSolution();
     }
+
+    InstancesActions.fetch();
+    SolutionEditActions.fetch();
   },
 
   //Dialogs config

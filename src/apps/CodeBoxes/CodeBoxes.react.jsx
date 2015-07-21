@@ -39,7 +39,7 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     CodeBoxesActions.fetch();
   },
 
