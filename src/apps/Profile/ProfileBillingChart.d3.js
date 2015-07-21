@@ -28,20 +28,19 @@ class BillingChart {
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    let domain = data.domain.map(d => parseDate(d));
-    x.domain(d3.extent(domain));
-    y.domain([0, 1000]);
+    x.domain([parseDate(data.x.min), parseDate(data.x.max)]);
+    y.domain([data.y.min, data.y.max]);
 
-    _.forEach(data.series, (value, key) => {
+    _.forEach(data.y.values, (value) => {
       let area = d3.svg.area()
-        .x( d => x(parseDate(d.date)) )
+        .x( d => x(parseDate(d.date)))
         .y0(height)
         .y1( d => y(+d.value) );
 
       // Add the filled area
       svg.append("path")
-          .datum(value)
-          .attr("class", `area area-${key}`)
+          .datum(value.values)
+          .attr("class", `area area-${value.source}`)
           .attr("d", area);
 
     });

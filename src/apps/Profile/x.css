@@ -38,3 +38,12 @@ path {
 .area-cbx {
   fill: orange;
 }
+
+.area-api-predictions {
+  fill: gray;
+}
+
+.area-cbx-predictions {
+  fill: darkgray;
+}
+

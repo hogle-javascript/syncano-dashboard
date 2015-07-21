@@ -17,6 +17,7 @@ import Schedules from './Schedules';
 import Triggers from './Triggers';
 import Groups from './Groups';
 import Users from './Users';
+import Usage from './Usage';
 
 export default {
   Account,
@@ -37,5 +38,6 @@ export default {
   Schedules,
   Triggers,
   Groups,
-  Users
+  Users,
+  Usage
 };
