@@ -1,37 +1,33 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    DataViewsActions  = require('./DataViewsActions'),
-    DataViewsStore    = require('./DataViewsStore'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import DataViewsActions from './DataViewsActions';
+import DataViewsStore from './DataViewsStore';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
+// Components 
+import MUI from 'material-ui';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
+// List
+import Lists from '../../common/Lists';
+import Item from '../../common/ColumnList/Item.react';
+import EmptyListItem from '../../common/ColumnList/EmptyListItem.react';
+import Header from '../../common/ColumnList/Header.react';
+import Loading from '../../common/Loading/Loading.react';
+import ColumnDate from '../../common/ColumnList/Column/Date.react';
+import ColumnID from '../../common/ColumnList/Column/ID.react';
+import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
+import ColumnKey from '../../common/ColumnList/Column/Key.react';
+import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DataViewsList',
 
@@ -56,21 +52,23 @@ module.exports = React.createClass({
   },
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     return (
       <Item
         checked = {item.checked}
-        key     = {item.name}>
+        key     = {item.name}
+      >
         <ColumnCheckIcon
           id              = {item.name}
           icon            = 'table'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}
+        >
           {item.name}
         </ColumnCheckIcon>
         <ColumnID>{item.id}</ColumnID>
@@ -81,11 +79,11 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function() {
+  getList() {
 
-    var items = this.state.items.map(function(item) {
+    var items = this.state.items.map(item => {
       return this.renderItem(item)
-    }.bind(this));
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -99,9 +97,9 @@ module.exports = React.createClass({
     )
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
+      <Lists.Container>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnID.Header>ID</ColumnID.Header>
@@ -109,12 +107,12 @@ module.exports = React.createClass({
           <ColumnDesc.Header>Class</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List>
+        <Lists.List>
           <Loading show={this.state.isLoading}>
             {this.getList()}
           </Loading>
-        </List>
-      </ListContainer>
+        </Lists.List>
+      </Lists.Container>
     );
   }
 });

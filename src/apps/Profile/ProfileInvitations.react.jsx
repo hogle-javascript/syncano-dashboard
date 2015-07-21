@@ -1,35 +1,32 @@
-var React                     = require('react'),
-    Reflux                    = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    HeaderMixin               = require('../Header/HeaderMixin'),
-    DialogsMixin              = require('../../mixins/DialogsMixin'),
-    Show                      = require('../../common/Show/Show.react'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import DialogsMixin from '../../mixins/DialogsMixin';
+import Show from '../../common/Show/Show.react';
 
-    // Stores and Actions
-    ProfileInvitationsActions = require('./ProfileInvitationsActions'),
-    ProfileInvitationsStore   = require('./ProfileInvitationsStore'),
+// Stores and Actions
+import ProfileInvitationsActions from './ProfileInvitationsActions';
+import ProfileInvitationsStore from './ProfileInvitationsStore';
 
-    // Components
-    mui                       = require('material-ui'),
-    Colors                    = mui.Styles.Colors,
-    Dialog                    = mui.Dialog,
-    FontIcon                  = mui.FontIcon,
-    FabList                   = require('../../common/Fab/FabList.react'),
-    FabListItem               = require('../../common/Fab/FabListItem.react'),
-    Container                 = require('../../common/Container/Container.react'),
+// Components
+import MUI from 'material-ui';
 
-    // List
-    ListContainer             = require('../../common/Lists/ListContainer.react'),
-    List                      = require('../../common/Lists/List.react'),
-    Item                      = require('../../common/ColumnList/Item.react'),
-    Header                    = require('../../common/ColumnList/Header.react'),
-    Loading                   = require('../../common/Loading/Loading.react'),
-    ColumnDesc                = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
+import FabList from '../../common/Fab/FabList.react';
+import FabListItem from '../../common/Fab/FabListItem.react';
+import Container from '../../common/Container/Container.react';
 
-module.exports = React.createClass({
+// List
+import Lists from '../../common/Lists';
+import Item from '../../common/ColumnList/Item.react';
+import Header from '../../common/ColumnList/Header.react';
+import Loading from '../../common/Loading/Loading.react';
+import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
+import ColumnDate from '../../common/ColumnList/Column/Date.react';
+import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
+
+export default React.createClass({
 
   displayName: 'ProfileInvitations',
 
@@ -58,7 +55,7 @@ module.exports = React.createClass({
     }
   ],
 
-  initDialogs: function() {
+  initDialogs() {
     var checked = ProfileInvitationsStore.getCheckedItems().length;
 
     return [
@@ -91,37 +88,37 @@ module.exports = React.createClass({
     ]
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('ProfileInvitations::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('ProfileInvitations::componentDidMount');
     ProfileInvitationsActions.fetch();
   },
 
-  uncheckAll: function() {
+  uncheckAll() {
     console.info('ProfileInvitations::uncheckAll');
     ProfileInvitationsActions.uncheckAll();
   },
 
-  checkItem: function(id, state) {
+  checkItem(id, state) {
     console.info('ProfileInvitations::checkItem');
     ProfileInvitationsActions.checkItem(id, state);
   },
 
-  handleAccept: function() {
+  handleAccept() {
     console.info('ProfileInvitations::handleAccept');
     ProfileInvitationsActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
-  handleDecline: function() {
+  handleDecline() {
     console.info('ProfileInvitations::handleDecline');
     ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         margin       : '64px auto',
@@ -141,17 +138,19 @@ module.exports = React.createClass({
     }
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     return (
       <Item
         checked = {item.checked}
-        key     = {item.id}>
+        key     = {item.id}
+      >
         <ColumnCheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.checkItem} >
+          handleIconClick = {this.checkItem}
+        >
           {item.instance}
         </ColumnCheckIcon>
         <ColumnDesc>{item.inviter}</ColumnDesc>
@@ -161,10 +160,10 @@ module.exports = React.createClass({
     );
   },
 
-  renderList: function() {
-    var items = this.state.items.map(function(item) {
+  renderList() {
+    var items = this.state.items.map(item => {
       return this.renderItem(item);
-    }.bind(this));
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -173,7 +172,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     var styles             = this.getStyles(),
         checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 
@@ -188,19 +187,22 @@ module.exports = React.createClass({
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              iconClassName = "synicon-checkbox-multiple-marked-outline"
+            />
 
             <FabListItem
               label         = "Click here to accept Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
-              iconClassName = "synicon-check" />
+              iconClassName = "synicon-check"
+            />
 
             <FabListItem
               label         = "Click here to decline Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
-              iconClassName = "synicon-delete" />
+              iconClassName = "synicon-delete"
+            />
 
           </FabList>
         </Show>
@@ -217,17 +219,17 @@ module.exports = React.createClass({
             </Show>
 
             <Show if={this.state.items.length > 0 && this.state.isLoading === false}>
-              <ListContainer>
+              <Lists.Container>
                 <Header>
                   <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
                   <ColumnDesc.Header>From</ColumnDesc.Header>
                   <ColumnDesc.Header>Role</ColumnDesc.Header>
                   <ColumnDate.Header>Created</ColumnDate.Header>
                 </Header>
-                <List>
+                <Lists.List>
                   {this.renderList()}
-                </List>
-              </ListContainer>
+                </Lists.List>
+              </Lists.Container>
             </Show>
           </div>
         </Loading>

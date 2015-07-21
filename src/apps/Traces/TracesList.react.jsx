@@ -1,37 +1,32 @@
-var React             = require('react'),
-    Radium            = require('radium'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Radium from 'radium';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionStore      = require('../Session/SessionStore'),
-    SessionActions    = require('../Session/SessionActions'),
-    TracesActions     = require('./TracesActions'),
-    TracesStore       = require('./TracesStore'),
+// Stores and Actions
+import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
+import TracesActions from './TracesActions';
+import TracesStore from './TracesStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Paper             = mui.Paper,
+// Components
+import Trace from '../../common/Trace/TraceResult.react';
 
-    Trace             = require('../../common/Trace/TraceResult.react'),
+// List
+import Lists from '../../common/Lists';
+import Item from '../../common/ColumnList/Item.react';
+import Header from '../../common/ColumnList/Header.react';
+import Loading from '../../common/Loading/Loading.react';
+import ColumnIconName from '../../common/ColumnList/Column/IconName.react';
+import ColumnID from '../../common/ColumnList/Column/ID.react';
+import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
+import ColumnDate from '../../common/ColumnList/Column/Date.react';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnIconName    = require('../../common/ColumnList/Column/IconName.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react');
-
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'TracesList',
 
@@ -42,11 +37,11 @@ module.exports = Radium(React.createClass({
     Router.Navigation
   ],
 
-  componentWillReceiveProps: function(nextProps, nextState) {
+  componentWillReceiveProps(nextProps, nextState) {
     this.setState({items : nextProps.items})
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         display        : 'flex',
@@ -70,7 +65,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  toggleTrace: function(traceId) {
+  toggleTrace(traceId) {
     console.info('CodeBoxesTraces::toggleTrace', traceId);
     if (this.state.visibleTraceId == traceId) {
       this.setState({visibleTraceId: null});
@@ -79,10 +74,10 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  renderItem: function (item) {
+  renderItem(item) {
 
     var styles = this.getStyles(),
-        background = item.status === 'success' ? 'green': 'red';
+        background = item.status === 'success' ? 'green' : 'red';
 
     if (item.id == this.state.visibleTraceId) {
       styles.item = {
@@ -103,11 +98,13 @@ module.exports = Radium(React.createClass({
       <div key={item.id}>
         <Item
           checked = {item.checked}
-          style   = {styles.item}>
+          style   = {styles.item}
+        >
           <ColumnIconName
             id              = {item.id}
             background      = {background}
-            handleNameClick = {this.toggleTrace}>
+            handleNameClick = {this.toggleTrace}
+          >
             {item.status}
           </ColumnIconName>
           <ColumnID>{item.id}</ColumnID>
@@ -121,10 +118,10 @@ module.exports = Radium(React.createClass({
     )
   },
 
-  getList: function () {
-      var items = this.state.items.map(function (item) {
-        return this.renderItem(item)
-      }.bind(this));
+  getList() {
+    var items = this.state.items.map(item => {
+      return this.renderItem(item)
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -134,21 +131,21 @@ module.exports = Radium(React.createClass({
     return [<Item key="empty">Empty Item</Item>];
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
+      <Lists.Container>
         <Header>
           <ColumnIconName.Header>{this.props.name}</ColumnIconName.Header>
           <ColumnID.Header>ID</ColumnID.Header>
           <ColumnDesc.Header>Duration</ColumnDesc.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List>
+        <Lists.List>
           <Loading show={this.state.isLoading}>
             {this.getList()}
           </Loading>
-        </List>
-      </ListContainer>
+        </Lists.List>
+      </Lists.Container>
     );
   }
 }));

@@ -1,37 +1,31 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    SessionStore      = require('../Session/SessionStore'),
-    ClassesActions    = require('./ClassesActions'),
-    ClassesStore      = require('./ClassesStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import ClassesActions from './ClassesActions';
+import ClassesStore from './ClassesStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
+// List
+import Lists from '../../common/Lists/Lists.react';
+import EmptyListItem  from '../../common/ColumnList/EmptyListItem.react';
+import Item from '../../common/ColumnList/Item.react';
+import Header from '../../common/ColumnList/Header.react';
+import Loading from '../../common/Loading/Loading.react';
+import ColumnDate from '../../common/ColumnList/Column/Date.react';
+import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
+import ColumnID from '../../common/ColumnList/Column/ID.react';
+import ColumnText from '../../common/ColumnList/Column/Text.react';
+import ColumnKey from '../../common/ColumnList/Column/Key.react';
+import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnText        = require('../../common/ColumnList/Column/Text.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ClassesList',
 
@@ -43,11 +37,11 @@ module.exports = React.createClass({
   ],
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     ClassesActions.checkItem(id, state);
   },
 
-  handleItemClick: function(className) {
+  handleItemClick(className) {
     SessionStore.getRouter().transitionTo(
       'classes-data-objects',
       {
@@ -58,20 +52,22 @@ module.exports = React.createClass({
     console.info('ClassesList::handleItemClick');
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
 
     return (
       <Item
         key          = {item.name}
         id           = {item.name}
         checked      = {item.checked}
-        handleClick  = {this.handleItemClick}>
+        handleClick  = {this.handleItemClick}
+      >
         <ColumnCheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata.icon}
           background      = {item.metadata.color}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          handleIconClick = {this.handleItemIconClick}
+        >
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
@@ -83,10 +79,10 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function() {
-    var items = this.state.items.map(function(item) {
+  getList() {
+    var items = this.state.items.map(item => {
       return this.renderItem(item)
-    }.bind(this));
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -100,21 +96,21 @@ module.exports = React.createClass({
     )
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
+      <Lists.Container>
         <Header>
           <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
           <ColumnDesc.Header>Description</ColumnDesc.Header>
           <ColumnID.Header className="col-xs-5 col-md-5">Objects</ColumnID.Header>
           <ColumnDate.Header>Created</ColumnDate.Header>
         </Header>
-        <List>
+        <Lists.List>
           <Loading show={this.state.isLoading}>
             {this.getList()}
           </Loading>
-        </List>
-      </ListContainer>
+        </Lists.List>
+      </Lists.Container>
     );
   }
 });

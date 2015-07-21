@@ -1,33 +1,31 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    ChannelsActions  = require('./ChannelsActions'),
-    ChannelsStore    = require('./ChannelsStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import ChannelsActions from './ChannelsActions';
+import ChannelsStore from './ChannelsStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = mui.Styles.Colors,
+// Components
+import MUI from 'material-ui';
 
-    // List
-    List              = require('../../common/Lists/List.react'),
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
+// List
+import List from '../../common/Lists/List.react';
+import ListContainer from '../../common/Lists/ListContainer.react';
+import Item from '../../common/ColumnList/Item.react';
+import EmptyListItem from '../../common/ColumnList/EmptyListItem.react';
+import Header from '../../common/ColumnList/Header.react';
+import Loading from '../../common/Loading/Loading.react';
+import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
+import ColumnDate from '../../common/ColumnList/Column/Date.react';
+import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ChannelsList',
 
@@ -39,30 +37,32 @@ module.exports = React.createClass({
     HeaderMixin
   ],
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({items : nextProps.items})
   },
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     ChannelsActions.checkItem(id, state);
   },
 
-  handleItemClick: function(itemId) {
+  handleItemClick(itemId) {
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     return (
       <Item
         checked = {item.checked}
-        key     = {item.id}>
+        key     = {item.id}
+      >
         <ColumnCheckIcon
           id              = {item.name}
           icon            = {'bullhorn'}
-          background      = {Colors.lightBlueA100}
+          background      = {MUI.Styles.Colors.lightBlueA100}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}>
+          handleNameClick = {this.handleItemClick}
+        >
           {item.name}
         </ColumnCheckIcon>
         <ColumnDesc>{item.description}</ColumnDesc>
@@ -79,10 +79,10 @@ module.exports = React.createClass({
     )
   },
 
-  getList: function() {
-    var items = this.state.items.map(function(item) {
-      return this.renderItem(item)
-    }.bind(this));
+  getList() {
+    var items = this.state.items.map(item => {
+      return this.renderItem(item);
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -96,7 +96,7 @@ module.exports = React.createClass({
     );
   },
 
-  render: function() {
+  render() {
     return (
       <ListContainer>
         <Header>
