@@ -32,7 +32,7 @@ import SolutionDialog from './SolutionDialog.react';
 import SolutionVersionDialog from './SolutionVersionDialog.react';
 import SolutionInstallDialog from './SolutionInstallDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionEdit',
 
@@ -204,7 +204,8 @@ module.exports = React.createClass({
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version" />
+            emptyItemContent     = "Add new Version"
+          />
 
         </div>
       </Container>
