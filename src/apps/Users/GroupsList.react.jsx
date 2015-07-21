@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 import _ from 'lodash';
 import Radium from 'radium';
-import MUI from 'material-ui';
 
 // Utils
 import HeaderMixin from'../Header/HeaderMixin';
@@ -15,9 +14,11 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 // Components
+import MUI from 'material-ui';
+import MenuItem from 'material-ui/lib/menus/menu-item'
 import Common from '../../common';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'GroupsList',
 
@@ -68,9 +69,9 @@ module.exports = Radium(React.createClass({
                             />,
         rightIconMenu = (
       <MUI.IconMenu iconButtonElement={iconButtonElement}>
-        <MUI.MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MUI.MenuItem>
-        <MUI.MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MUI.MenuItem>
-        <MUI.MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MUI.MenuItem>
+        <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
+        <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
+        <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
       </MUI.IconMenu>
     );
 

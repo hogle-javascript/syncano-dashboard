@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Select from 'react-select';
-import MUI from 'material-ui';
 
 // Utils
 import DialogMixin from '../../mixins/DialogMixin';
@@ -13,6 +12,7 @@ import UserDialogStore from './UserDialogStore';
 import GroupsStore from './GroupsStore';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 
 require('react-select/dist/default.css');
@@ -152,10 +152,10 @@ export default React.createClass({
             />
           </form>
           <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-            />
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading}
+          />
         </div>
       </MUI.Dialog>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import Reflux from 'reflux';
-import MUI from 'material-ui';
 
 // Utils
 import DialogMixin from '../../mixins/DialogMixin';
@@ -9,12 +8,13 @@ import FormMixin from '../../mixins/FormMixin';
 // Stores and Actions
 import GroupsActions from './GroupsActions';
 import GroupDialogStore from './GroupDialogStore';
-import GroupsStore from './GroupsStore.js';
+import GroupsStore from './GroupsStore';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'GroupDialog',
 
@@ -59,36 +59,34 @@ module.exports = React.createClass({
 
     return (
       <MUI.Dialog
-          ref             = "dialog"
-          title           = {title + " Group"}
-          openImmediately = {this.props.openImmediately}
-          actions         = {dialogStandardActions}
-          onDismiss       = {this.resetDialogState}
-        >
+        ref             = "dialog"
+        title           = {title + " Group"}
+        openImmediately = {this.props.openImmediately}
+        actions         = {dialogStandardActions}
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
-              onSubmit      = {this.handleFormValidation}
-              acceptCharset = "UTF-8"
-              method        = "post"
-            >
-
+            onSubmit      = {this.handleFormValidation}
+            acceptCharset = "UTF-8"
+            method        = "post"
+          >
             <MUI.TextField
-                ref               = "label"
-                label             = "label"
-                fullWidth         = {true}
-                valueLink         = {this.linkState('label')}
-                errorText         = {this.getValidationMessages('label').join(' ')}
-                hintText          = "Name of the group"
-                floatingLabelText = "Group Name"
-              />
-
+              ref               = "label"
+              label             = "label"
+              fullWidth         = {true}
+              valueLink         = {this.linkState('label')}
+              errorText         = {this.getValidationMessages('label').join(' ')}
+              hintText          = "Name of the group"
+              floatingLabelText = "Group Name"
+            />
           </form>
           <Common.Loading
-              type     = "linear"
-              position = "bottom"
-              show     = {this.state.isLoading}
-            />
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading}
+          />
         </div>
       </MUI.Dialog>
     );
