@@ -55,6 +55,22 @@ module.exports = React.createClass({
     }
   ],
 
+  getStyles: function() {
+    return {
+      subTabsHeader: {
+        backgroundColor: 'transparent'
+      },
+      tabs: {
+        paddingLeft: 150,
+        paddingRight: 150,
+        borderBottom: '1px solid #DDDDDD'
+      },
+      tab: {
+        color: '#444'
+      },
+    }
+  },
+
   getActiveSubTabIndex: function() {
     var index = 0;
     this.subTabsItems.some(function(item, i) {
@@ -72,31 +88,33 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    let styles = this.getStyles();
     return (
       <Container.Profile headerText='Billing'>
-        <MUI.Tabs initialSelectedIndex={this.getActiveSubTabIndex()}>
+        <MUI.Tabs
+          style={styles.tabs}
+          initialSelectedIndex = {this.getActiveSubTabIndex()}
+          tabItemContainerStyle = {styles.subTabsHeader}>
           <MUI.Tab
-            label="Billing plan"
-            route="profile-billing-plan"
-            onActive={this.handleTabActive}
-          />
-
+            style    = {styles.tab}
+            label    = "Billing plan"
+            route    = "profile-billing-plan"
+            onActive = {this.handleTabActive} />
           <MUI.Tab
-            label="Payment methods"
-            route="profile-billing-payment"
-            onActive={this.handleTabActive}
-          />
-
+            style    = {styles.tab}
+            label    = "Payment methods"
+            route    = "profile-billing-payment"
+            onActive = {this.handleTabActive} />
           <MUI.Tab
-            label="Invoices"
-            route="profile-billing-invoices"
-            onActive={this.handleTabActive}
-          />
-
+            style    = {styles.tab}
+            label    = "Invoices"
+            route    = "profile-billing-invoices"
+            onActive = {this.handleTabActive} />
           <MUI.Tab
-            label="Billing address"
-            route="profile-billing-address"
-            onActive={this.handleTabActive}
+            style    = {styles.tab}
+            label    = "Billing address"
+            route    = "profile-billing-address"
+            onActive = {this.handleTabActive}
           />
         </MUI.Tabs>
         <RouteHandler />

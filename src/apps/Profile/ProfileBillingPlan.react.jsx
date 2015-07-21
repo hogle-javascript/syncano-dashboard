@@ -55,7 +55,7 @@ module.exports = React.createClass({
       },
       chartHeader: {
         paddingTop: 50,
-        fontSize: '1.5em'
+        fontSize: '1.3em'
       }
     }
   },
@@ -202,13 +202,15 @@ module.exports = React.createClass({
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
           <div style={styles.explorerButton}>
             <MUI.FlatButton
-              label   = {'Cancel Change'}
-              onClick = {this.handleDeleteSubscription}
+              primary    = {true}
+              label      = {'Cancel Change'}
+              onTouchTap = {this.handleDeleteSubscription}
             />
             <MUI.FlatButton
+              primary = {true}
               style   = {{marginLeft: 15}}
               label   = {'Upgrade'}
-              onClick = {this.handleShowPlanDialog}
+              onTouchTap = {this.handleShowPlanDialog}
             />
           </div>
         </div>
@@ -219,8 +221,9 @@ module.exports = React.createClass({
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div style={styles.explorerButton}>
           <MUI.FlatButton
-            label   = {this.renderExplorerButtonLabel() || ''}
-            onClick = {this.handleShowPlanDialog}
+            primary    = {true}
+            label      = {this.renderExplorerButtonLabel() || ''}
+            onTouchTap = {this.handleShowPlanDialog}
           />
         </div>
       </div>
@@ -325,8 +328,9 @@ module.exports = React.createClass({
               <MUI.IconButton
                 iconClassName = "synicon-information-outline"
                 iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-                tooltip       = "GitHub"
-              />
+                tooltip       = {`your current plan will expire at the end of
+                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`} />
+
             </div>
             <div classsName="col-flex-1">
               <div key='productionComment-subs'>
@@ -344,10 +348,12 @@ module.exports = React.createClass({
         )
       } else {
         return (
-          <span key="productionComment">
-            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-            Your new monthly fixed price will start from next billing period.
-          </span>
+          <div className="row align-middle" style={{FlexDirection: 'column'}}>
+            <div key="productionComment" style={{width: '80%'}}>
+              You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+              Your new monthly fixed price will start from next billing period.
+            </div>
+          </div>
         );
       }
     }

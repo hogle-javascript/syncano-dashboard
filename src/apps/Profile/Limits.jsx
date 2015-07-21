@@ -23,7 +23,7 @@ module.exports = React.createClass({
           <div>CodeBox runs</div>
         </div>
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-9" style={{textAlign: 'right'}}>
+          <div className="col-md-8" style={{textAlign: 'right', whiteSpace: 'nowrap'}}>
             <div><strong>+{this.props.data.api.overage}</strong></div>
             <div><strong>+{this.props.data.cbx.overage}</strong></div>
           </div>
