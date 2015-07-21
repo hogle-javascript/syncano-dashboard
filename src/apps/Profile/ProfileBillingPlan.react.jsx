@@ -229,7 +229,7 @@ module.exports = React.createClass({
 
     let plan = this.state.profile.subscription.plan;
     if (plan === 'free') {
-      return 'You are on FREE (internal) plan - go away! and test billing on an other account!';
+      return 'You are on FREE (internal) plan - go away! and test billing using different account!';
     }
 
     if (plan === 'builder') {
