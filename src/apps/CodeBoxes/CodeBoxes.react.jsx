@@ -39,10 +39,6 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
-    CodeBoxesActions.fetch();
-  },
-
   componentWillUpdate: function(nextProps, nextState) {
     console.info('CodeBoxes::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
@@ -53,6 +49,7 @@ module.exports = React.createClass({
       // Show Add modal
       this.showCodeBoxDialog();
     }
+    CodeBoxesActions.fetch();
   },
 
   // Dialogs config

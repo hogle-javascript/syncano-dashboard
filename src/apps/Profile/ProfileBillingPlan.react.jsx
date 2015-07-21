@@ -118,6 +118,7 @@ module.exports = React.createClass({
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
           <div>{this.state.profile.subscription.plan}</div>
           <MUI.Toggle
+            style          = {{marginTop: 10}}
             key            = "builder-toggle"
             defaultToggled = {false}
             onToggle       = {this.handlePlanToggle}

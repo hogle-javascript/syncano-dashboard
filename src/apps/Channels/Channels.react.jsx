@@ -39,10 +39,6 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
-    ChannelsActions.fetch();
-  },
-
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Channels::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
@@ -53,6 +49,7 @@ module.exports = React.createClass({
       // Show Add modal
       this.showChannelDialog();
     }
+    ChannelsActions.fetch();
   },
 
   // Dialogs config
