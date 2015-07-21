@@ -1,23 +1,18 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin       = require('../../mixins/DialogMixin'),
-    FormMixin         = require('../../mixins/FormMixin'),
+// Utils
+import DialogMixin from '../../mixins/DialogMixin';
+import FormMixin from '../../mixins/FormMixin';
 
-    // Stores and Actions
-    ApiKeysActions    = require('./ApiKeysActions'),
-    ApiKeyDialogStore = require('./ApiKeyDialogStore'),
+// Stores and Actions
+import ApiKeysActions from './ApiKeysActions';
+import ApiKeyDialogStore from './ApiKeyDialogStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Toggle            = mui.Toggle,
-    TextField         = mui.TextField,
-    DropDownMenu      = mui.DropDownMenu,
-    Dialog            = mui.Dialog,
-    Loading           = require('../../common/Loading/Loading.react.jsx');
+// Components
+import MUI from 'material-ui';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ApiKeyDialog',
 
@@ -30,13 +25,13 @@ module.exports = React.createClass({
 
   validatorConstraints: {},
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('ApiKeyDialog::handleDialogHide');
     this.refs.ignore_acl.setToggled(this.state.allow_user_create);
     this.refs.allow_user_create.setToggled(this.state.ignore_acl);
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     ApiKeysActions.createApiKey({
       description       : this.state.description,
       allow_user_create : this.state.allow_user_create,
@@ -44,70 +39,70 @@ module.exports = React.createClass({
     });
   },
 
-  handleToogle: function(event, status) {
+  handleToogle(event, status) {
     var state = {};
     state[event.target.name] = status;
     this.setState(state);
   },
 
-  render: function () {
-    var title                 = this.hasEditMode() ? 'Edit': 'Generate',
-        submitLabel           = this.hasEditMode() ? 'Save changes': 'Confirm',
+  render() {
+    var title                 = this.hasEditMode() ? 'Edit' : 'Generate',
+        submitLabel           = this.hasEditMode() ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel,
-            ref     : 'cancel'
+            text       : 'Cancel',
+            ref        : 'cancel',
+            onTouchTap : this.handleCancel
           },
           {
             text    : {submitLabel},
-            onClick : this.handleFormValidation,
-            ref     : 'submit'
+            ref     : 'submit',
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <MUI.Dialog
         ref             = 'dialog'
         title           = {title + ' an API Key'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'>
-
-            <TextField
+            method        = 'post'
+          >
+            <MUI.TextField
               ref               = 'description'
               name              = 'description'
               fullWidth         = {true}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}
-              floatingLabelText = 'Description of an API Key' />
-
-            <Toggle
+              floatingLabelText = 'Description of an API Key'
+            />
+            <MUI.Toggle
               ref      = 'ignore_acl'
               name     = 'ignore_acl'
               onToggle = {this.handleToogle}
               style    = {{marginTop: 20}}
-              label    = 'Ignore ACL?' />
-
-            <Toggle
+              label    = 'Ignore ACL?'
+            />
+            <MUI.Toggle
               ref      = 'allow_user_create'
               name     = 'allow_user_create'
               onToggle = {this.handleToogle}
               style    = {{marginTop: 20}}
-              label    = 'User registration?' />
-
+              label    = 'User registration?'
+            />
           </form>
         </div>
-      </Dialog>
+      </MUI.Dialog>
     );
   }
-
 });
 

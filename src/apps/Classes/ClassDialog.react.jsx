@@ -1,27 +1,22 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin      = require('../../mixins/DialogMixin'),
-    FormMixin        = require('../../mixins/FormMixin'),
-    Show             = require('../../common/Show/Show.react'),
-    Constants        = require('../../constants/Constants'),
+// Utils
+import DialogMixin from '../../mixins/DialogMixin';
+import FormMixin from '../../mixins/FormMixin';
+import Show from '../../common/Show/Show.react';
+import Constants from '../../constants/Constants';
 
-    // Stores and Actions
-    ClassesActions   = require('./ClassesActions'),
-    ClassDialogStore = require('./ClassDialogStore'),
-    ClassesStore     = require('./ClassesStore'),
+// Stores and Actions
+import ClassesActions from './ClassesActions';
+import ClassDialogStore from './ClassDialogStore';
+import ClassesStore from './ClassesStore';
 
-    // Components
-    mui              = require('material-ui'),
-    TextField        = mui.TextField,
-    Checkbox         = mui.Checkbox,
-    FlatButton       = mui.FlatButton,
-    DropDownMenu     = mui.DropDownMenu,
-    SelectField      = mui.SelectField,
-    Dialog           = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ClassDialog',
 
@@ -38,7 +33,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     if (!this.state.schemaInitialized && this.state.schema) {
       this.setFields(this.state.schema);
       this.setState({
@@ -47,7 +42,7 @@ module.exports = React.createClass({
     }
   },
 
-  getFieldTypes: function() {
+  getFieldTypes() {
     return Constants.fieldTypes.map(function(item) {
       return {
         payload : item,
@@ -56,7 +51,7 @@ module.exports = React.createClass({
     });
   },
 
-  setFields: function(schema) {
+  setFields(schema) {
     var fields = this.state.fields;
 
     schema.map(function(item) {
@@ -72,7 +67,7 @@ module.exports = React.createClass({
     return fields;
   },
 
-  getSchema: function() {
+  getSchema() {
     return JSON.stringify(this.state.fields.map(function(item) {
       var schema =  {
         name   : item.fieldName,
@@ -91,13 +86,14 @@ module.exports = React.createClass({
     }));
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     var schema = this.getSchema();
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
       return;
     }
+
     ClassesActions.createClass({
       name        : this.state.name,
       description : this.state.description,
@@ -105,7 +101,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     ClassesActions.updateClass(
       this.state.name, {
         description : this.state.description,
@@ -114,8 +110,7 @@ module.exports = React.createClass({
     );
   },
 
-  handleFieldAdd: function() {
-
+  handleFieldAdd() {
     if (!this.state.fieldName) {
       return;
     }
@@ -140,11 +135,11 @@ module.exports = React.createClass({
 
     this.setState({
       fields      : fields,
-      fieldName   : '',
+      fieldName   : ''
     })
   },
 
-  handleRemoveField: function(item) {
+  handleRemoveField(item) {
     var fields = [];
     this.state.fields.map(function(field) {
 
@@ -157,7 +152,7 @@ module.exports = React.createClass({
     this.setState({fields: fields});
   },
 
-  handleOnCheck: function(item, event) {
+  handleOnCheck(item, event) {
     var newFields = this.state.fields.map(function(field) {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
@@ -170,7 +165,7 @@ module.exports = React.createClass({
     this.setState({fields: newFields});
   },
 
-  renderSchemaFields: function() {
+  renderSchemaFields() {
     return this.state.fields.map(function(item) {
 
       return (
@@ -210,34 +205,34 @@ module.exports = React.createClass({
     }.bind(this));
   },
 
-  hasFilter: function(fieldType) {
+  hasFilter(fieldType) {
     var noFilterFields = ['file', 'text'];
     return noFilterFields.indexOf(fieldType) < 0 ? true : false;
   },
 
-  hasOrder: function(fieldType) {
+  hasOrder(fieldType) {
     var noOrderFields = ['file', 'text'];
     return noOrderFields.indexOf(fieldType) < 0 ? true : false;
   },
 
-  render: function() {
+  render() {
     var title                 = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel           = 'Confirm',
         dialogStandardActions = [
           {
-            ref      : 'cancel',
-            text     : 'Cancel',
-            onClick  : this.handleCancel
+            ref         : 'cancel',
+            text        : 'Cancel',
+            onTouchTap  : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <MUI.Dialog
         ref             = 'dialog'
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
@@ -246,126 +241,120 @@ module.exports = React.createClass({
         style           = {{overflow: 'auto'}}
         bodyStyle       = {{overflowX: 'initial', overflowY: 'initial'}}
       >
-
         {this.renderFormNotifications()}
-
-            <div className='row'>
-
-              <div className='col-xs-8'>
-                <TextField
-                  ref               = 'name'
-                  name              = 'name'
-                  disabled          = {this.hasEditMode()}
-                  fullWidth         = {true}
-                  valueLink         = {this.linkState('name')}
-                  errorText         = {this.getValidationMessages('name').join(' ')}
-                  hintText          = 'Name of the Class'
-                  floatingLabelText = 'Name' />
-              </div>
-
-              <div className='col-xs-26' style={{paddingLeft: 15}}>
-                <TextField
-                  ref               = 'description'
-                  name              = 'description'
-                  fullWidth         = {true}
-                  valueLink         = {this.linkState('description')}
-                  errorText         = {this.getValidationMessages('description').join(' ')}
-                  hintText          = 'Description of the Class'
-                  floatingLabelText = 'Description' />
-              </div>
-
-            </div>
-
-            <div style={{marginTop: 30}}>Schema</div>
-
-            {this.getValidationMessages('schema').join(' ')}
-
-              <div className='row'>
-                <div className='col-xs-8'>
-                </div>
-                <div className='col-xs-8' style={{paddingLeft: 15}}>
-                </div>
-                <div className='col-xs-8' style={{paddingLeft: 15}}>
-                </div>
-                <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Filter
-                </div>
-                <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  Order
-                </div>
-                <div className='col-xs-5' style={{paddingLeft: 15}}>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='col-xs-8'>
-                   <TextField
-                    ref               = 'fieldName'
-                    name              = 'fieldName'
-                    fullWidth         = {true}
-                    valueLink         = {this.linkState('fieldName')}
-                    errorText         = {this.getValidationMessages('fieldName').join(' ')}
-                    hintText          = 'Name of the Field'
-                    floatingLabelText = 'Name'
-                   />
-                </div>
-                <div className='col-xs-8' style={{paddingLeft: 15}}>
-                  <SelectField
-                    ref               = 'fieldType'
-                    name              = 'fieldType'
-                    floatingLabelText = 'Type'
-                    fullWidth         = {true}
-                    valueLink         = {this.linkState('fieldType')}
-                    errorText         = {this.getValidationMessages('fieldType').join(' ')}
-                    valueMember       = 'payload'
-                    displayMember     = 'text'
-                    menuItems         = {this.getFieldTypes()}
-                  />
-                </div>
-                <div className='col-xs-8' style={{paddingLeft: 15}}>
-                  <Show if={this.state.fieldType === 'reference'}>
-                    <SelectField
-                      ref               = 'fieldTarget'
-                      name              = 'fieldTarget'
-                      floatingLabelText = 'Target Class'
-                      fullWidth         = {true}
-                      valueLink         = {this.linkState('fieldTarget')}
-                      errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
-                      valueMember       = 'payload'
-                      displayMember     = 'text'
-                      menuItems         = {ClassesStore.getClassesDropdown()} />
-                  </Show>
-                </div>
-                <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  <Show if={this.hasFilter(this.state.fieldType)}>
-                    <Checkbox
-                      style = {{marginTop: 35}}
-                      ref   = "fieldFilter"
-                      name  = "filter"/>
-                  </Show>
-                </div>
-                <div className='col-xs-3' style={{paddingLeft: 15}}>
-                  <Show if={this.hasOrder(this.state.fieldType)}>
-                    <Checkbox
-                      style = {{marginTop: 35}}
-                      ref   = "fieldOrder"
-                      name  = "order"/>
-                  </Show>
-                </div>
-                <div className='col-xs-5' style={{paddingLeft: 15}}>
-                  <FlatButton
-                    style     = {{marginTop: 35}}
-                    label     = 'Add'
-                    disabled  = {!this.state.fieldType || !this.state.fieldName}
-                    secondary = {true}
-                    onClick   = {this.handleFieldAdd} />
-                </div>
-              </div>
-
-              <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
-
-      </Dialog>
+        <div className='row'>
+          <div className='col-xs-8'>
+            <MUI.TextField
+              ref               = 'name'
+              name              = 'name'
+              disabled          = {this.hasEditMode()}
+              fullWidth         = {true}
+              valueLink         = {this.linkState('name')}
+              errorText         = {this.getValidationMessages('name').join(' ')}
+              hintText          = 'Name of the Class'
+              floatingLabelText = 'Name'
+            />
+          </div>
+          <div className='col-xs-26' style={{paddingLeft: 15}}>
+            <MUI.TextField
+              ref               = 'description'
+              name              = 'description'
+              fullWidth         = {true}
+              valueLink         = {this.linkState('description')}
+              errorText         = {this.getValidationMessages('description').join(' ')}
+              hintText          = 'Description of the Class'
+              floatingLabelText = 'Description'
+            />
+          </div>
+        </div>
+        <div style={{marginTop: 30}}>Schema</div>
+        {this.getValidationMessages('schema').join(' ')}
+        <div className='row'>
+          <div className='col-xs-8'>
+          </div>
+          <div className='col-xs-8' style={{paddingLeft: 15}}>
+          </div>
+          <div className='col-xs-8' style={{paddingLeft: 15}}>
+          </div>
+          <div className='col-xs-3' style={{paddingLeft: 15}}>
+            Filter
+          </div>
+          <div className='col-xs-3' style={{paddingLeft: 15}}>
+            Order
+          </div>
+          <div className='col-xs-5' style={{paddingLeft: 15}}>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-xs-8'>
+            <MUI.TextField
+             ref               = 'fieldName'
+             name              = 'fieldName'
+             fullWidth         = {true}
+             valueLink         = {this.linkState('fieldName')}
+             errorText         = {this.getValidationMessages('fieldName').join(' ')}
+             hintText          = 'Name of the Field'
+             floatingLabelText = 'Name'
+            />
+          </div>
+          <div className='col-xs-8' style={{paddingLeft: 15}}>
+            <MUI.SelectField
+              ref               = 'fieldType'
+              name              = 'fieldType'
+              floatingLabelText = 'Type'
+              fullWidth         = {true}
+              valueLink         = {this.linkState('fieldType')}
+              errorText         = {this.getValidationMessages('fieldType').join(' ')}
+              valueMember       = 'payload'
+              displayMember     = 'text'
+              menuItems         = {this.getFieldTypes()}
+            />
+          </div>
+          <div className='col-xs-8' style={{paddingLeft: 15}}>
+            <Common.Show if={this.state.fieldType === 'reference'}>
+              <MUI.SelectField
+                ref               = 'fieldTarget'
+                name              = 'fieldTarget'
+                floatingLabelText = 'Target Class'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('fieldTarget')}
+                errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
+                valueMember       = 'payload'
+                displayMember     = 'text'
+                menuItems         = {ClassesStore.getClassesDropdown()}
+              />
+            </Common.Show>
+          </div>
+          <div className='col-xs-3' style={{paddingLeft: 15}}>
+            <Common.Show if={this.hasFilter(this.state.fieldType)}>
+              <MUI.Checkbox
+                style = {{marginTop: 35}}
+                ref   = "fieldFilter"
+                name  = "filter"
+              />
+            </Common.Show>
+          </div>
+          <div className='col-xs-3' style={{paddingLeft: 15}}>
+            <Common.Show if={this.hasOrder(this.state.fieldType)}>
+              <MUI.Checkbox
+                style = {{marginTop: 35}}
+                ref   = "fieldOrder"
+                name  = "order"
+              />
+            </Common.Show>
+          </div>
+          <div className='col-xs-5' style={{paddingLeft: 15}}>
+            <MUI.FlatButton
+              style     = {{marginTop: 35}}
+              label     = 'Add'
+              disabled  = {!this.state.fieldType || !this.state.fieldName}
+              secondary = {true}
+              onClick   = {this.handleFieldAdd}
+            />
+          </div>
+        </div>
+        <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
+      </MUI.Dialog>
     );
   }
-
 });

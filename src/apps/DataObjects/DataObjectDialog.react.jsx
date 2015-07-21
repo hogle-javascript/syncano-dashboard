@@ -1,29 +1,23 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Dropzone              = require('react-dropzone'),
+import React from 'react';
+import Reflux from 'reflux';
+import Dropzone from 'react-dropzone';
 
-    // Utils
-    FormMixin             = require('../../mixins/FormMixin'),
-    DialogMixin           = require('../../mixins/DialogMixin'),
-    Show                  = require('../../common/Show/Show.react'),
+// Utils
+import FormMixin from '../../mixins/FormMixin';
+import DialogMixin from '../../mixins/DialogMixin';
 
-    // Stores and Actions
-    DataObjectsActions    = require('./DataObjectsActions'),
-    DataObjectDialogStore = require('./DataObjectDialogStore'),
-    DataObjectsStore      = require('./DataObjectsStore'),
-    ChannelsActions       = require('../Channels/ChannelsActions'),
-    CodeBoxesStore        = require('../CodeBoxes/CodeBoxesStore'),
+// Stores and Actions
+import DataObjectsActions from './DataObjectsActions';
+import DataObjectDialogStore from './DataObjectDialogStore';
+import DataObjectsStore from './DataObjectsStore';
+import ChannelsActions from '../Channels/ChannelsActions';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
-    // Components
-    mui                   = require('material-ui'),
-    FlatButton            = mui.FlatButton,
-    IconButton            = mui.IconButton,
-    TextField             = mui.TextField,
-    SelectField           = mui.SelectField,
-    DropDownMenu          = mui.DropDownMenu,
-    Dialog                = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DataObjectDialog',
 
@@ -34,12 +28,12 @@ module.exports = React.createClass({
     DialogMixin
   ],
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('DataObjectDialog::handleDialogShow');
     ChannelsActions.fetch();
   },
 
-  validatorConstraints: function() {
+  validatorConstraints() {
     var validateObj = {};
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type === 'integer') {
@@ -51,7 +45,7 @@ module.exports = React.createClass({
     return validateObj;
   },
 
-  getParams: function() {
+  getParams() {
     var params = {
       id                : this.state.id,
       owner             : this.state.owner,
@@ -76,7 +70,7 @@ module.exports = React.createClass({
     return params;
   },
 
-  getFileFields: function() {
+  getFileFields() {
     var fileFields = [];
 
     // Searching for files
@@ -94,8 +88,7 @@ module.exports = React.createClass({
     return fileFields;
   },
 
-  handleAddSubmit: function() {
-
+  handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className  : DataObjectsStore.getCurrentClassName(),
       params     : this.getParams(),
@@ -103,7 +96,7 @@ module.exports = React.createClass({
     })
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     DataObjectsActions.updateDataObject({
       className  : DataObjectsStore.getCurrentClassName(),
       params     : this.getParams(),
@@ -111,7 +104,7 @@ module.exports = React.createClass({
     })
   },
 
-  renderBuiltinFields: function() {
+  renderBuiltinFields() {
     var permissions = [
       {
         text    : 'none',
@@ -135,25 +128,26 @@ module.exports = React.createClass({
       if (this.hasEditMode()) {
         return (
           <div>
-            <TextField
-                ref               = 'field-channel'
-                name              = 'field-channel'
-                fullWidth         = {true}
-                disabled          = {true}
-                floatingLabelText = {this.state.channel || 'no channel'} />
-
-            <TextField
+            <MUI.TextField
+              ref               = 'field-channel'
+              name              = 'field-channel'
+              fullWidth         = {true}
+              disabled          = {true}
+              floatingLabelText = {this.state.channel || 'no channel'}
+            />
+            <MUI.TextField
               ref               = 'field-channel_room'
               name              = 'field-channel_room'
               fullWidth         = {true}
               disabled          = {true}
-              floatingLabelText = {this.state.channel_room || 'no channel'} />
+              floatingLabelText = {this.state.channel_room || 'no channel'}
+            />
           </div>
         )
       }
       return (
         <div>
-          <SelectField
+          <MUI.SelectField
             ref               = 'field-channel'
             name              = 'field-channel'
             fullWidth         = {true}
@@ -162,9 +156,9 @@ module.exports = React.createClass({
             floatingLabelText = 'Channel'
             valueLink         = {this.linkState('channel')}
             errorText         = {this.getValidationMessages('channel').join(' ')}
-            menuItems         = {this.state.channels} />
-
-          <TextField
+            menuItems         = {this.state.channels}
+          />
+          <MUI.TextField
             ref               = 'field-channel_room'
             name              = 'field-channel_room'
             fullWidth         = {true}
@@ -172,7 +166,8 @@ module.exports = React.createClass({
             valueLink         = {this.linkState('channel_room')}
             errorText         = {this.getValidationMessages('channel_room').join(' ')}
             hintText          = 'Channel Room'
-            floatingLabelText = 'Channel Room' />
+            floatingLabelText = 'Channel Room'
+          />
         </div>
       )
     }.bind(this);
@@ -181,43 +176,43 @@ module.exports = React.createClass({
       <div className='row' style={{padding: 0, margin: 0}}>
         <div className='col-flex-1'>
           <div>Built-in fields</div>
-          <TextField
+          <MUI.TextField
             ref               = 'field-owner'
             name              = 'owner'
             fullWidth         = {true}
             valueLink         = {this.linkState('owner')}
             errorText         = {this.getValidationMessages('owner').join(' ')}
             hintText          = 'User ID'
-            floatingLabelText = 'Owner' />
-
-          <TextField
+            floatingLabelText = 'Owner'
+          />
+          <MUI.TextField
             ref               = 'field-group'
             name              = 'owner'
             fullWidth         = {true}
             valueLink         = {this.linkState('group')}
             errorText         = {this.getValidationMessages('group').join(' ')}
             hintText          = 'Group ID'
-            floatingLabelText = 'Group' />
-
+            floatingLabelText = 'Group'
+          />
           {renderChannelFields()}
-
         </div>
 
-      <div className='col-flex-1' style={{paddingLeft: 15}}>
-        <div>Permissions</div>
+        <div className='col-flex-1' style={{paddingLeft: 15}}>
+          <div>Permissions</div>
 
-        <SelectField
-          ref               = 'field-owner_permissions'
-          name              = 'field-owner_permissions'
-          fullWidth         = {true}
-          valueMember       = "payload"
-          displayMember     = "text"
-          valueLink         = {this.linkState('owner_permissions')}
-          floatingLabelText = 'Owner Permissions'
-          errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
-          menuItems         = {permissions} />
+          <MUI.SelectField
+            ref               = 'field-owner_permissions'
+            name              = 'field-owner_permissions'
+            fullWidth         = {true}
+            valueMember       = "payload"
+            displayMember     = "text"
+            valueLink         = {this.linkState('owner_permissions')}
+            floatingLabelText = 'Owner Permissions'
+            errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
+            menuItems         = {permissions}
+          />
 
-          <SelectField
+          <MUI.SelectField
             ref               = 'field-group_permissions'
             name              = 'field-group_permissions'
             fullWidth         = {true}
@@ -226,9 +221,10 @@ module.exports = React.createClass({
             valueLink         = {this.linkState('group_permissions')}
             floatingLabelText = 'Group Permissions'
             errorText         = {this.getValidationMessages('group_permissions').join(' ')}
-            menuItems         = {permissions} />
+            menuItems         = {permissions}
+          />
 
-          <SelectField
+          <MUI.SelectField
             ref               = 'field-other_permissions'
             name              = 'field-other_permissions'
             fullWidth         = {true}
@@ -237,31 +233,31 @@ module.exports = React.createClass({
             valueLink         = {this.linkState('other_permissions')}
             floatingLabelText = 'Other Permissions'
             errorText         = {this.getValidationMessages('other_permissions').join(' ')}
-            menuItems         = {permissions} />
+            menuItems         = {permissions}
+          />
         </div>
       </div>
       ]
   },
 
-  onDrop: function(fieldName, files) {
+  onDrop(fieldName, files) {
     var state = {};
     state[fieldName] = files[0];
     this.setState(state);
   },
 
-  handleFileOnClick: function(value, event) {
+  handleFileOnClick(value, event) {
     event.stopPropagation();
     window.open(value, '_blank')
   },
 
-  handleRemoveFile: function(name) {
+  handleRemoveFile(name) {
     var state = {};
     state[name] = null;
     this.setState(state);
   },
 
-  renderDropZone: function(item) {
-
+  renderDropZone(item) {
     var dropZoneStyle = {
       height      : 80,
       width       : 250,
@@ -283,7 +279,8 @@ module.exports = React.createClass({
         <Dropzone
           ref    = {'file-' + item.name}
           onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
-          style  = {dropZoneStyle} >
+          style  = {dropZoneStyle}
+        >
           <div style={{padding: 15}}>
             {description || 'Click to select files to upload or drop file here.'}
           </div>
@@ -292,14 +289,14 @@ module.exports = React.createClass({
     )
   },
 
-  renderCustomFields: function() {
+  renderCustomFields() {
 
     if (DataObjectsStore.getCurrentClassObj()) {
 
       return DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
         if (item.type === 'boolean') {
           return (
-            <SelectField
+            <MUI.SelectField
               ref               = {item.name}
               name              = {item.name}
               fullWidth         = {true}
@@ -307,7 +304,8 @@ module.exports = React.createClass({
               displayMember     = "text"
               floatingLabelText = {'Value of ' + item.name}
               errorText         = {this.getValidationMessages(item.name).join(' ')}
-              menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
+              menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]}
+            />
           )
         }
 
@@ -319,22 +317,21 @@ module.exports = React.createClass({
               return [
                 <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>,
                 <div className='row' style={{marginTop: 15}}>
-
                   <div className='col-xs-8'>
-                    <IconButton
+                    <MUI.IconButton
                      iconClassName = "synicon-download"
                      onClick       = {this.handleFileOnClick.bind(this, url)}
-                     tooltip       = {url} />
+                     tooltip       = {url}
+                    />
                   </div>
-
                   <div className='col-flex-1'>
-                    <FlatButton
+                    <MUI.FlatButton
                       style     = {{marginTop: 5}}
                       label     = 'Remove'
                       secondary = {true}
-                      onClick   = {this.handleRemoveFile.bind(this, item.name)} />
+                      onClick   = {this.handleRemoveFile.bind(this, item.name)}
+                    />
                   </div>
-
                 </div>
               ]
             }
@@ -343,61 +340,60 @@ module.exports = React.createClass({
         }
 
         return (
-          <TextField
-              ref               = {'field-' + item.name}
-              name              = {item.name}
-              fullWidth         = {true}
-              valueLink         = {this.linkState(item.name)}
-              errorText         = {this.getValidationMessages(item.name).join(' ')}
-              hintText          = {'Field ' + item.name}
-              floatingLabelText = {item.name + ' (' + item.type + ')'} />
+          <MUI.TextField
+            ref               = {'field-' + item.name}
+            name              = {item.name}
+            fullWidth         = {true}
+            valueLink         = {this.linkState(item.name)}
+            errorText         = {this.getValidationMessages(item.name).join(' ')}
+            hintText          = {'Field ' + item.name}
+            floatingLabelText = {item.name + ' (' + item.type + ')'}
+          />
         )
       }.bind(this))
     }
   },
 
-  render: function() {
+  render() {
 
     var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
         addTitle    = 'Add Data Object',
         title       = this.hasEditMode() ? editTitle : addTitle,
         submitLabel = 'Confirm',
-
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <MUI.Dialog
         ref       = 'dialog'
         title     = {title}
         onShow    = {this.handleDialogShow}
         actions   = {dialogStandardActions}
-        onDismiss = {this.resetDialogState}>
+        onDismiss = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <div className="row">
             <div className="col-xs-20">
               {this.renderBuiltinFields()}
             </div>
-
             <div className="col-xs-15" style={{paddingLeft: 15}}>
               <div>Class fields</div>
               {this.renderCustomFields()}
             </div>
           </div>
         </div>
-      </Dialog>
+      </MUI.Dialog>
     );
   }
-
 });

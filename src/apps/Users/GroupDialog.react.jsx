@@ -1,25 +1,20 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin      = require('../../mixins/DialogMixin'),
-    FormMixin        = require('../../mixins/FormMixin'),
+// Utils
+import DialogMixin from '../../mixins/DialogMixin';
+import FormMixin from '../../mixins/FormMixin';
 
-    // Stores and Actions
-    GroupsActions    = require('./GroupsActions'),
-    GroupDialogStore = require('./GroupDialogStore'),
-    GroupsStore      = require('./GroupsStore'),
+// Stores and Actions
+import GroupsActions from './GroupsActions';
+import GroupDialogStore from './GroupDialogStore';
+import GroupsStore from './GroupsStore';
 
-    // Components
-    Loading          = require('../../common/Loading/Loading.react.jsx'),
-    mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
-    TextField        = mui.TextField,
-    DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'GroupDialog',
 
@@ -37,64 +32,65 @@ module.exports = React.createClass({
     }
   },
 
-  handleAddSubmit: function (event) {
+  handleAddSubmit() {
     GroupsActions.createGroup(this.state.label);
   },
 
-  handleEditSubmit: function (event) {
+  handleEditSubmit() {
     GroupsActions.updateGroup(this.state.id, {
       label: this.state.label
     });
   },
 
-  render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+  render() {
+    var title       = this.hasEditMode() ? 'Edit' : 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <MUI.Dialog
         ref             = "dialog"
         title           = {title + " Group"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post">
-
-            <TextField
+            method        = "post"
+          >
+            <MUI.TextField
               ref               = "label"
               label             = "label"
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = "Name of the group"
-              floatingLabelText = "Group Name" />
-
+              floatingLabelText = "Group Name"
+            />
           </form>
-          <Loading
-              type="linear"
-              position="bottom"
-              show={this.state.groups.isLoading} />
+          <Common.Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.groups.isLoading}
+          />
         </div>
-      </Dialog>
+      </MUI.Dialog>
     );
   }
-
 });
 
