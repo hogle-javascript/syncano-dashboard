@@ -16,7 +16,7 @@ import InvitationsStore from './ProfileInvitationsStore';
 import Settings from './ProfileSettings.react';
 import SettingsStore from './ProfileSettingsStore';
 
-export {
+export default {
   Actions,
   Authentication,
   AuthenticationStore,
