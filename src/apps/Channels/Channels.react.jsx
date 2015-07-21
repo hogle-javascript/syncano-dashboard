@@ -39,16 +39,14 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
-    ChannelsActions.fetch();
-  },
-
   componentWillUpdate: function(nextProps, nextState) {
     console.info('Channels::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
   componentDidMount: function() {
+    console.info('Channels::componentDidMount');
+    ChannelsActions.fetch();
     if (this.getParams().action == 'add') {
       // Show Add modal
       this.showChannelDialog();
