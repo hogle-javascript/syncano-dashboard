@@ -109,11 +109,18 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onShowDialogWithPreFetch(solutionId) {
+  onShowDialogWithPreFetch(solutionId, versionId) {
     console.debug('SolutionInstallDialogStore::onShowDialogWithPreFetch', solutionId);
     this.data = this.getInitialState();
     Actions.setSolutionId(solutionId);
-    Actions.fetchSolutionVersions(solutionId);
+
+    if (versionId) {
+      this.data.version = versionId;
+      this.data.hideVersionPicker = true;
+    } else {
+      Actions.fetchSolutionVersions(solutionId);
+    }
+
     Actions.fetchInstances();
     Actions.showDialog();
   },

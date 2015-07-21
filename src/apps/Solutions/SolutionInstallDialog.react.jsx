@@ -127,7 +127,8 @@ module.exports = React.createClass({
               </div>
           </div>
 
-          <MUI.SelectField
+          <Common.Show if={!this.state.hideVersionPicker}>
+            <MUI.SelectField
               ref               = 'version'
               name              = 'version'
               fullWidth         = {true}
@@ -137,6 +138,7 @@ module.exports = React.createClass({
               floatingLabelText = 'Version'
               errorText         = {this.getValidationMessages('version').join(' ')}
               menuItems         = {Store.getVersionsDropdown()} />
+          </Common.Show>
         </div>
       </MUI.Dialog>
     );

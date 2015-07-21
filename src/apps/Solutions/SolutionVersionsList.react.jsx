@@ -16,6 +16,11 @@ import SolutionEditStore from './SolutionEditStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
+import SolutionInstallDialogActions from './SolutionInstallDialogActions';
+
+// Shortcut
+let Column =  Common.ColumnList.Column;
+
 export default React.createClass({
 
   displayName: 'SolutionVersionsList',
@@ -49,27 +54,50 @@ export default React.createClass({
     window.open(url, '_blank');
   },
 
-  renderItem(item) {
+  handleInstallClick(versionId) {
+    SolutionInstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId, versionId);
+  },
 
+  renderItem(item) {
     return (
       <Common.ColumnList.Item
         key          = {item.id}
         id           = {item.id}
-        handleClick  = {this.handleItemClick}
-      >
-        <Common.ColumnList.Column.Desc><MUI.Avatar>{item.number}</MUI.Avatar></Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
+        handleClick  = {this.handleItemClick} >
+        <Column.Desc className="col-xs-5 col-md-5">
+          <div style={{marginLeft: 10}}>
+            <MUI.Avatar style={{fontSize: '1rem'}}>
+              {item.number}
+            </MUI.Avatar>
+          </div>
+        </Column.Desc>
+
+        <Column.Date date={item.created_at} />
+
+        <Column.Desc>
+          {item.type}
+        </Column.Desc>
+
+        <Column.ID className="col-xs-5 col-md-5">
+          {item.installations_count}
+        </Column.ID>
+
+        <Column.ID className="col-xs-4 col-md-4">
           <MUI.IconButton
             iconClassName = "synicon-cloud-download"
             tooltip       = "Download solution file of this version"
             onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
           />
-        </Common.ColumnList.Column.ID>
-        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
-          {item.installations_count}
-        </Common.ColumnList.Column.ID>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.ID>
+
+        <Column.ID className="col-xs-4 col-md-4">
+          <MUI.IconButton
+            iconClassName = "synicon-download"
+            tooltip       = "Install this solution of the solution"
+            onClick       = {this.handleInstallClick.bind(null, item.id)}
+          />
+        </Column.ID>
+
       </Common.ColumnList.Item>
     )
   },
@@ -99,11 +127,31 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Download</Common.ColumnList.Column.ID.Header>
-          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Installations</Common.ColumnList.Column.ID.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.Desc.Header className="col-xs-5 col-md-5">
+            <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
+          </Column.Desc.Header>
+
+          <Column.Date.Header>
+            Created
+          </Column.Date.Header>
+
+          <Column.Desc.Header>
+            Type
+          </Column.Desc.Header>
+
+          <Column.ID.Header className="col-xs-5 col-md-5">
+            Installations
+          </Column.ID.Header>
+
+          <Column.ID.Header className="col-xs-4 col-md-4">
+            Download
+          </Column.ID.Header>
+
+          <Column.ID.Header className="col-xs-4 col-md-4">
+            Install
+          </Column.ID.Header>
+
+
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
