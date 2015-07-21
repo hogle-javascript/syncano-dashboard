@@ -21,7 +21,7 @@ var StoreLoadingMixin = {
   },
 
   setToLoading: function() {
-    if (this.data.isLoading && this.data.isLoading === true) {
+    if (this.data.isLoading === true) {
       return;
     }
     console.debug('StoreLoadingMixin::setToLoading')
@@ -30,7 +30,7 @@ var StoreLoadingMixin = {
   },
 
   setToNotLoading: function() {
-    if (this.data.isLoading && this.data.isLoading === false) {
+    if (this.data.isLoading === false) {
       return;
     }
     console.debug('StoreLoadingMixin::setToNotLoading');

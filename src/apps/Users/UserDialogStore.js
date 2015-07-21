@@ -1,9 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import DialogStoreMixin from '../../mixins/DialogStoreMixin';
-import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
+import Mixins from '../../mixins';
 
 //Stores & Actions
 import UsersActions from './UsersActions';
@@ -11,9 +9,9 @@ import UsersActions from './UsersActions';
 var UserDialogStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin,
-    StoreLoadingMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
