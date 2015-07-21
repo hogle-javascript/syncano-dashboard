@@ -85,6 +85,10 @@ export default Radium(React.createClass({
     }.bind(this));
   },
 
+  handleChange(event, value) {
+    this.props.onChange(this.props.type, event, value);
+  },
+
   render() {
     return (
       <div>
@@ -96,9 +100,8 @@ export default Radium(React.createClass({
           min          = {0}
           max          = {this.props.legendItems.length - 1}
           defaultValue = {this.props.defaultSliderValue}
-          onChange     = {this.props.onChange}
-          value        = {this.props.value}
-        />
+          onChange     = {this.handleChange}
+          value        = {this.state.value} />
         {this.renderLegend()}
       </div>
     )

@@ -96,9 +96,10 @@ module.exports = React.createClass({
         number    : this.state.number,
         exp_year  : this.state.exp_year,
         exp_month : this.state.exp_month
-      }).then(
+      })
+      .then((payload) => {
         subscribe()
-      )
+      })
     }
   },
 
@@ -354,7 +355,7 @@ module.exports = React.createClass({
           onDismiss       = {this.resetDialogState}>
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-            <div style={{color: '#9B9B9B'}}>move the blue bubble to change your plan details</div>
+            <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
           </div>
           <div style={{paddingTop: 34}}>
             {this.renderFormNotifications()}
