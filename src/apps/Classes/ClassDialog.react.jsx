@@ -174,27 +174,27 @@ export default React.createClass({
           <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldType}</span>
           <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldTarget}</span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
-            <Show if={this.hasFilter(item.fieldType)}>
-              <Checkbox
+            <Common.Show if={this.hasFilter(item.fieldType)}>
+              <MUI.Checkbox
                 style          = {{marginTop: 5}}
                 name           = "filter"
                 defaultChecked = {item.fieldFilter}
                 onCheck         = {this.handleOnCheck.bind(this, item)}
               />
-            </Show>
+            </Common.Show>
           </span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
-            <Show if={this.hasOrder(item.fieldType)}>
-              <Checkbox
+            <Common.Show if={this.hasOrder(item.fieldType)}>
+              <MUI.Checkbox
                 style           = {{marginTop: 5}}
                 name            = "order"
                 defaultChecked  = {item.fieldOrder}
                 onCheck         = {this.handleOnCheck.bind(this, item)}
               />
-            </Show>
+            </Common.Show>
           </span>
           <span className='col-xs-5' style={{paddingLeft: 15}}>
-            <FlatButton
+            <MUI.FlatButton
               style     = {{marginTop: 5}}
               label     = 'Remove'
               secondary = {true}
