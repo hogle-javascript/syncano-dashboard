@@ -3,17 +3,16 @@ import Reflux from 'reflux';
 import Select from 'react-select';
 
 // Utils
-import FormMixin from '../../mixins/FormMixin';
-import DialogMixin from '../../mixins/DialogMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import UsersActions from './UsersActions';
 import UserDialogStore from './UserDialogStore';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 import GroupsStore from './GroupsStore';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 require('react-select/dist/default.css');
 
@@ -24,8 +23,8 @@ export default React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(UserDialogStore),
-    FormMixin,
-    DialogMixin
+    Mixins.Form,
+    Mixins.Dialog
   ],
 
   validatorConstraints: {
@@ -35,7 +34,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    var activeGroup = GroupsStore.getActiveGroup(),
+    let activeGroup = GroupsStore.getActiveGroup(),
         userGroups  = this.state.newUserGroups || [this.state.secondInstance] || [activeGroup];
 
     UsersActions.createUser(
@@ -70,7 +69,7 @@ export default React.createClass({
   },
 
   getSelectValueSource() {
-    var activeGroup = GroupsStore.getActiveGroup();
+    let activeGroup = GroupsStore.getActiveGroup();
 
     if (this.state.newUserGroups) {
       return this.linkState('newUserGroups');
@@ -86,7 +85,7 @@ export default React.createClass({
   },
 
   render() {
-    var title             = this.hasEditMode() ? 'Edit' : 'Add',
+    let title             = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel       = 'Confirm',
         selectValueSource = this.getSelectValueSource(),
         selectValue       = selectValueSource ? selectValueSource.value : null,
@@ -151,6 +150,11 @@ export default React.createClass({
               onChange    = {this.handleSelectFieldChange}
             />
           </form>
+          <Common.Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading}
+          />
         </div>
       </MUI.Dialog>
     );

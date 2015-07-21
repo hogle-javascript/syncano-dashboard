@@ -19,7 +19,6 @@ export default React.createClass({
   displayName: 'GroupDialog',
 
   mixins: [
-    Reflux.connect(GroupsStore, 'groups'),
     Reflux.connect(GroupDialogStore),
     React.addons.LinkedStateMixin,
     DialogMixin,
@@ -43,8 +42,8 @@ export default React.createClass({
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
+    let title       = this.hasEditMode() ? 'Edit': 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
         dialogStandardActions = [
           {
             ref        : 'cancel',
@@ -86,7 +85,7 @@ export default React.createClass({
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.groups.isLoading}
+            show     = {this.state.isLoading}
           />
         </div>
       </MUI.Dialog>

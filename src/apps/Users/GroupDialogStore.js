@@ -1,36 +1,40 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    GroupsActions    = require('./GroupsActions');
+//Stores & Actions
+import GroupsActions from './GroupsActions';
 
-var GroupDialogStore = Reflux.createStore({
+let GroupDialogStore = Reflux.createStore({
   listenables : GroupsActions,
+
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore,
+    Mixins.StoreLoading
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      label : null
+      isLoading : false,
+      label     : null
     };
   },
 
-  init: function() {
+  init() {
+    this.data = this.getInitialState();
     this.listenToForms();
+    this.setLoadingStates();
   },
 
-  onCreateGroupCompleted: function() {
+  onCreateGroupCompleted() {
     console.debug('GroupDialogStore::onCreateGroupCompleted');
     this.dismissDialog();
     GroupsActions.fetchGroups();
   },
 
-  onUpdateGroupCompleted: function() {
+  onUpdateGroupCompleted() {
     console.debug('GroupDialogStore::onUpdateGroupCompleted');
     this.dismissDialog();
     GroupsActions.fetchGroups();

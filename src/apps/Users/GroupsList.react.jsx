@@ -5,8 +5,8 @@ import _ from 'lodash';
 import Radium from 'radium';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
+import HeaderMixin from'../Header/HeaderMixin';
+import ButtonActionMixin from'../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -59,16 +59,15 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
-    var styles            = this.getStyles();
-    var itemStyles        = itemActive ? styles.listItemChecked : {};
-    var iconButtonElement = <MUI.IconButton
-                                touch           = {true}
-                                tooltipPosition = 'bottom-left'
-                                iconClassName   = 'synicon-dots-vertical'
-                            />;
-
-    var rightIconMenu = (
+    let itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id,
+        styles            = this.getStyles(),
+        itemStyles        = itemActive ? styles.listItemChecked : {},
+        iconButtonElement = <MUI.IconButton
+                              touch           = {true}
+                              tooltipPosition = 'bottom-left'
+                              iconClassName   = 'synicon-dots-vertical'
+                            />,
+        rightIconMenu = (
       <MUI.IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
@@ -89,7 +88,7 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    var styles          = this.getStyles(),
+    let styles          = this.getStyles(),
         items           = this.state.items,
         itemsCount      = items.length,
         indexOfListItem = itemsCount - 1,
