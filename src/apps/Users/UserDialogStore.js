@@ -1,38 +1,43 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import DialogStoreMixin from '../../mixins/DialogStoreMixin';
+import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
 
-    //Stores & Actions
-    UsersActions     = require('./UsersActions');
+//Stores & Actions
+import UsersActions from './UsersActions';
 
 var UserDialogStore = Reflux.createStore({
   listenables : UsersActions,
   mixins      : [
     StoreFormMixin,
-    DialogStoreMixin
+    DialogStoreMixin,
+    StoreLoadingMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      username : null,
-      password : null,
-      groups   : null
+      username  : null,
+      password  : null,
+      groups    : null,
+      isLoading : false
     };
   },
 
-  init: function() {
+  init() {
+    this.data = this.getInitialState();
     this.listenToForms();
+    this.setLoadingStates();
   },
 
-  onCreateUserCompleted: function() {
+  onCreateUserCompleted() {
     console.debug('UserDialogStore::onCreateUserCompleted');
     this.dismissDialog();
     UsersActions.fetchUsers();
   },
 
-  onUpdateUserCompleted: function() {
+  onUpdateUserCompleted() {
     console.debug('UserDialogStore::onUpdateUserCompleted');
     this.dismissDialog();
     UsersActions.fetchUsers();
