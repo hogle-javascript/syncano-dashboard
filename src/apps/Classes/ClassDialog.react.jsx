@@ -242,7 +242,10 @@ module.exports = React.createClass({
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+        style           = {{overflow: 'auto'}}
+        bodyStyle       = {{overflowX: 'initial', overflowY: 'initial'}}
+      >
 
         {this.renderFormNotifications()}
 
