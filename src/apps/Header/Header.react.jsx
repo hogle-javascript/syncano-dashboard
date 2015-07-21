@@ -213,10 +213,6 @@ module.exports = Radium(React.createClass({
               <HeaderMenu />
             </ToolbarGroup>
             <ToolbarGroup style={styles.bottomToolbarGroup}>
-              <IconButton
-                iconClassName = "synicon-magnify"
-                iconStyle = {styles.bottomToolbarGroupIcon}
-              />
               <HeaderNotificationsDropdown />
               <Show if={currentInstance !== null}>
                 <HeaderInstanceMenu />
