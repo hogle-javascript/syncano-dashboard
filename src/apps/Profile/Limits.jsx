@@ -14,16 +14,16 @@ module.exports = React.createClass({
     var styles = this.getStyles();
     return (
       <div className="row">
-        <div className="col-md-8">
-          <div>{this.props.data.api.included}</div>
-          <div>{this.props.data.cbx.included}</div>
+        <div className="col-md-7" style={{textAlign: 'right'}}>
+          <div><strong>{this.props.data.api.included}</strong></div>
+          <div><strong>{this.props.data.cbx.included}</strong></div>
         </div>
-        <div className="col-flex-1">
-          <div><strong>API calls</strong></div>
-          <div><strong>CodeBox runs</strong></div>
+        <div className="col-md-10">
+          <div>API calls</div>
+          <div>CodeBox runs</div>
         </div>
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
-          <div className="col-md-8" style={{textAlign: 'right'}}>
+          <div className="col-md-9" style={{textAlign: 'right'}}>
             <div><strong>+{this.props.data.api.overage}</strong></div>
             <div><strong>+{this.props.data.cbx.overage}</strong></div>
           </div>

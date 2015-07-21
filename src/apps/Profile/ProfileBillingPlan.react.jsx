@@ -38,14 +38,17 @@ module.exports = React.createClass({
     return {
       main: {
         marginTop: 50,
+        paddingRight: 50,
         color: '#4A4A4A',
       },
       mainDesc: {
-        fontSize   : '1.3em',
-        lineHeight : '1.3em',
+        fontSize   : '1.5rem',
+        lineHeight : '1.5rem',
       },
       comment: {
-        fontSize: '0.9em'
+        fontSize: '0.9em',
+        paddingLeft: 20,
+        paddingRight: 20
       },
       explorerButton: {
         marginTop: 20,
@@ -118,7 +121,6 @@ module.exports = React.createClass({
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
           <div>{this.state.profile.subscription.plan}</div>
           <MUI.Toggle
-            style          = {{marginTop: 10}}
             key            = "builder-toggle"
             defaultToggled = {false}
             onToggle       = {this.handlePlanToggle}
@@ -139,12 +141,12 @@ module.exports = React.createClass({
     else if (this.state.profile.subscription.plan === 'free')
       return;
 
-
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
           <div>
             <MUI.Toggle
+              style          = {{marginTop: 10}}
               key            = "paid-commitment-toggle"
               defaultToggled = {true}
               disabled       = {true}
@@ -197,26 +199,30 @@ module.exports = React.createClass({
 
     if (this.isNewSubscription()) {
       return (
-        <div style={styles.explorerButton}>
-          <MUI.FlatButton
-            label   = {'Cancel Change'}
-            onClick = {this.handleDeleteSubscription}
-          />
-          <MUI.FlatButton
-            style   = {{marginLeft: 15}}
-            label   = {'Upgrade'}
-            onClick = {this.handleShowPlanDialog}
-          />
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div style={styles.explorerButton}>
+            <MUI.FlatButton
+              label   = {'Cancel Change'}
+              onClick = {this.handleDeleteSubscription}
+            />
+            <MUI.FlatButton
+              style   = {{marginLeft: 15}}
+              label   = {'Upgrade'}
+              onClick = {this.handleShowPlanDialog}
+            />
+          </div>
         </div>
       )
     }
 
     return (
-      <div style={styles.explorerButton}>
-        <MUI.FlatButton
-          label   = {this.renderExplorerButtonLabel() || ''}
-          onClick = {this.handleShowPlanDialog}
-        />
+      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div style={styles.explorerButton}>
+          <MUI.FlatButton
+            label   = {this.renderExplorerButtonLabel() || ''}
+            onClick = {this.handleShowPlanDialog}
+          />
+        </div>
       </div>
     )
   },
@@ -272,7 +278,9 @@ module.exports = React.createClass({
           <div style={styles.mainDesc}>
             Current plan <strong>${total}</strong>:
           </div>
-          <Limits data={limitsData} />
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
+          </div>
         </div>
       );
     }
@@ -312,13 +320,29 @@ module.exports = React.createClass({
         };
 
         return (
-          <div key='productionComment-subs' >
-            <div style={styles.mainDesc}>
-              New plan <strong>${total}</strong> (your current plan will
-              expire at the end of the month and your new plan will begin on {Moment(subscription.start).format('LL')}):
+          <div className="row">
+            <div classsName="col-md-20" style={{width: 40, height: 20}}>
+              <MUI.IconButton
+                  className = "synicon-information-outline"
+
+                  iconClassName="synicon-information-outline"
+                  iconStyle={{color: MUI.Styles.Colors.blue500}}
+                  tooltip="GitHub" />
             </div>
-            <Limits data={limitsData} />
-          </div>
+
+            <div classsName="col-flex-1">
+              <div key='productionComment-subs'>
+                <div className="row">
+                  <div style={styles.mainDesc}>
+                    New plan <strong>${total}</strong>:
+                  </div>
+                </div>
+                <div style={{marginTop: 20}}>
+                  <Limits data={limitsData} />
+                </div>
+              </div>
+            </div>
+         </div>
         )
       } else {
         return (
@@ -348,7 +372,7 @@ module.exports = React.createClass({
             </div>
             {this.renderExplorerButton()}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             {this.renderSwitchPlan()}
           </div>
         </div>
