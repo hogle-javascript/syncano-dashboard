@@ -108,15 +108,15 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => {
-      this.renderItem(item)
-    });
+    var items = this.state.items || [];
 
     if (items.length > 0) {
+      items = items.map(item => this.renderItem(item));
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
+
     return [<Common.ColumnList.Item key="empty">Empty Item</Common.ColumnList.Item>];
   },
 

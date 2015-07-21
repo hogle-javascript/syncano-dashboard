@@ -108,9 +108,7 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => {
-      this.renderItem(item)
-    });
+    var items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       return items;
