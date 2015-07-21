@@ -57,7 +57,7 @@ export default React.createClass({
         id           = {item.id}
         handleClick  = {this.handleItemClick}
       >
-        <Common.ColumnList.Column.Desc><Avatar>{item.number}</Avatar></Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc><MUI.Avatar>{item.number}</MUI.Avatar></Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
           <MUI.IconButton
@@ -103,7 +103,7 @@ export default React.createClass({
           <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Download</Common.ColumnList.Column.ID.Header>
           <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Installations</Common.ColumnList.Column.ID.Header>
-          <Common.ColumnList.Column.Header>Created</Common.ColumnList.Column.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
