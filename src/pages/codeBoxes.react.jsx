@@ -18,9 +18,9 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  componentWillMount: function() {
-    console.debug('Instance::componentWillMount');
-      CodeBoxesActions.fetch();
+  componentDidMount: function() {
+    console.debug('Instance::componentDidMount');
+    CodeBoxesActions.fetch();
   },
 
   render: function() {

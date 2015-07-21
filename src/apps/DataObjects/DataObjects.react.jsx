@@ -51,8 +51,8 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount: function() {
-    console.info('DataObjects::componentWillMount');
+  componentDidMount: function() {
+    console.info('DataObjects::componentDidMount');
     DataObjectsActions.fetch();
   },
 

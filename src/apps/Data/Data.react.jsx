@@ -46,15 +46,24 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
-    console.info('Data::componentWillUpdate');
-    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
+  fetch() {
+    DataViewsActions.fetch();
+    WebhooksActions.fetch();
   },
 
   componentDidMount: function() {
     console.info('Data::componentDidMount');
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
+    this.fetch();
+  },
+
+  componentWillReceiveProps() {
+    console.info('Data::componentWillReceiveProps');
+    this.fetch();
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('Data::componentWillUpdate');
+    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   // Dialogs config
