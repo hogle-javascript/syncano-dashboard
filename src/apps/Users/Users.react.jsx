@@ -5,6 +5,7 @@ import Moment from 'moment';
 
 // Utils
 import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
 import UsersActions from './UsersActions';
 import UsersStore from './UsersStore';
@@ -32,7 +33,7 @@ module.exports = React.createClass({
 
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
-    Mixins.Header,
+    HeaderMixin,
     Mixins.InstanceTabs,
     Mixins.Dialogs
   ],
