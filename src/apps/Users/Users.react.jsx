@@ -4,10 +4,7 @@ import Router from 'react-router';
 import Moment from 'moment';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
-import DialogsMixin from '../../mixins/DialogsMixin';
+import Mixins from '../../mixins';
 
 import UsersActions from './UsersActions';
 import UsersStore from './UsersStore';
@@ -35,9 +32,9 @@ module.exports = React.createClass({
 
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
-    HeaderMixin,
-    InstanceTabsMixin,
-    DialogsMixin
+    Mixins.Header,
+    Mixins.InstanceTabs,
+    Mixins.Dialogs
   ],
 
   componentWillUpdate(nextProps, nextState) {
@@ -182,7 +179,6 @@ module.exports = React.createClass({
         isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
         activeGroup       = GroupsStore.getActiveGroup();
 
-
     return (
       <Container>
         {this.getDialogs()}
@@ -191,21 +187,18 @@ module.exports = React.createClass({
 
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
-
             <Common.Fab.Item
               label         = {isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
               iconClassName = {isAnyUserSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"}
             />
-
             <Common.Fab.Item
               label         = "Click here to delete Users"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName = "synicon-delete"
             />
-
             <Common.Fab.Item
               label         = "Click here to edit User"
               mini          = {true}
@@ -213,28 +206,21 @@ module.exports = React.createClass({
               onClick       = {this.showUserEditDialog}
               iconClassName = "synicon-pencil"
             />
-
           </Common.Fab>
         </Common.Show>
-
         <Common.Fab>
-
           <Common.Fab.Item
             label         = "Click here to create User account"
             onClick       = {this.showUserDialog}
             iconClassName = "synicon-account-plus"
           />
-
           <Common.Fab.Item
             label         = "Click here to create Group"
             onClick       = {this.showGroupDialog}
             iconClassName = "synicon-account-multiple-plus"
           />
-
         </Common.Fab>
-
         <Common.Lists.Container className="row">
-
           <div className="col-lg-8">
             <GroupsList
               activeGroup          = {activeGroup}
@@ -250,7 +236,6 @@ module.exports = React.createClass({
               emptyItemContent     = "Create a Group"
             />
           </div>
-
           <div className="col-lg-27">
             <UsersList
               name                 = "Users"
@@ -261,9 +246,7 @@ module.exports = React.createClass({
               emptyItemContent     = "Create a User"
             />
           </div>
-
         </Common.Lists.Container>
-
       </Container>
     );
   }
