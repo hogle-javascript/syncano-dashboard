@@ -23,8 +23,8 @@ var CodeBoxesStore = Reflux.createStore({
   },
 
   runtimeColors: {
-    nodejs: {color: '#80BD01', icon: 'language-python'},
-    python: {color: '#4984B1', icon: 'language-javascript'},
+    nodejs: {color: '#80BD01', icon: 'language-javascript'},
+    python: {color: '#4984B1', icon: 'language-python'},
     golang: {color: '#E0EBF5', icon: 'code-array'},
     ruby:   {color: '#B21000', icon: 'code-array'}
   },
