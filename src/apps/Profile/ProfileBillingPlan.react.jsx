@@ -115,7 +115,7 @@ module.exports = React.createClass({
 
     if (this.state.profile.subscription.plan === 'builder') {
       return (
-        <div>
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
           <div>{this.state.profile.subscription.plan}</div>
           <MUI.Toggle
             key            = "builder-toggle"
@@ -137,16 +137,18 @@ module.exports = React.createClass({
       )
     }
     return (
-      <div>
+      <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
-        <MUI.Toggle
-          key            = "paid-commitment-toggle"
-          defaultToggled = {true}
-          disabled       = {true}
-        />
-        <div style={{marginTop: 10}}>
-          <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-        </div>
+          <div>
+            <MUI.Toggle
+              key            = "paid-commitment-toggle"
+              defaultToggled = {true}
+              disabled       = {true}
+            />
+          </div>
+          <div style={{marginTop: 10}}>
+            <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
+          </div>
       </div>
     )
   },
