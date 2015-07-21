@@ -60,6 +60,7 @@ module.exports = React.createClass({
       {
         dialog: MUI.Dialog,
         params: {
+          key:    'deleteAdminDialog',
           ref:    'deleteAdminDialog',
           title:  'Remove an Administrator',
           actions: [
@@ -81,6 +82,7 @@ module.exports = React.createClass({
         dialog: MUI.Dialog,
         params: {
           title:  'Resend an Invitation',
+          key  : 'resendInvitationDialog',
           ref  : 'resendInvitationDialog',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
@@ -101,6 +103,7 @@ module.exports = React.createClass({
         dialog: MUI.Dialog,
         params: {
           title:  'Delete an Invitation',
+          key  : 'removeInvitationDialog',
           ref  : 'removeInvitationDialog',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},

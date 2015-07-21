@@ -47,16 +47,14 @@ module.exports = React.createClass({
   ],
 
   componentDidMount: function() {
-    InstancesActions.fetch();
-    SolutionEditActions.fetch();
-  },
-
-  componentDidMount: function() {
     console.info('SolutionEdit::componentDidMount');
 
     if (this.getParams().action == 'install') {
       this.handleInstallSolution();
     }
+
+    InstancesActions.fetch();
+    SolutionEditActions.fetch();
   },
 
   //Dialogs config
