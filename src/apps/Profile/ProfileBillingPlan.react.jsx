@@ -25,16 +25,16 @@ module.exports = React.createClass({
     Reflux.connect(PlanDialogStore),
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     Actions.fetch()
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('ProfileBillingPlan::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       main: {
         marginTop: 50,
@@ -58,7 +58,7 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function() {
+  initDialogs() {
 
     return [{
       dialog: MUI.Dialog,
@@ -97,23 +97,23 @@ module.exports = React.createClass({
     });
   },
 
-  handleShowPlanDialog: function() {
+  handleShowPlanDialog() {
     console.debug('ProfileBillingPlan::handleShowPlanDialog');
     PlanDialogActions.showDialog();
   },
 
-  handleDeleteSubscription: function() {
+  handleDeleteSubscription() {
     Actions.cancelSubscriptions([this.state.subscriptions._items[1].id]).then(() => {
       Actions.fetch();
     });
   },
 
-  renderSwitchPlan: function() {
+  renderSwitchPlan() {
     if (!this.state.profile) {
       return;
     }
 
-    if (this.state.profile.subscription.plan === 'builder') {
+    if (this.state.profile.subscription.plan === 'builder')
       return (
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
           <div>{this.state.profile.subscription.plan}</div>
@@ -134,8 +134,11 @@ module.exports = React.createClass({
             <div>switch to production.</div>
           </div>
         </div>
-      )
-    }
+      );
+    else if (this.state.profile.subscription.plan === 'free')
+      return;
+
+
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
@@ -153,7 +156,7 @@ module.exports = React.createClass({
     )
   },
 
-  renderExplorerButtonLabel: function() {
+  renderExplorerButtonLabel() {
     if (!this.state.profile) {
       return;
     }
@@ -168,6 +171,24 @@ module.exports = React.createClass({
       }
       return 'Upgrade your plan';
     }
+  },
+
+  renderChart() {
+    let styles = this.getStyles();
+    if (!this.state.profile) {
+      return;
+    }
+
+    let plan = this.state.profile.subscription.plan;
+
+    if (plan === 'free') {
+      return;
+    }
+    return (
+      <div style={styles.chartHeader}>
+        See how it works with your <strong>current usage</strong>
+      </div>
+     )
   },
 
   renderExplorerButton() {
@@ -199,7 +220,7 @@ module.exports = React.createClass({
     )
   },
 
-  renderMainDesc: function() {
+  renderMainDesc() {
     let styles = this.getStyles();
 
     if (!this.state.profile) {
@@ -207,6 +228,9 @@ module.exports = React.createClass({
     }
 
     let plan = this.state.profile.subscription.plan;
+    if (plan === 'free') {
+      return 'You are on FREE (internal) plan - go away! and test billing on an other account!';
+    }
 
     if (plan === 'builder') {
       let limitsData = {
@@ -253,7 +277,7 @@ module.exports = React.createClass({
     }
   },
 
-  renderCommment: function() {
+  renderCommment() {
     let styles = this.getStyles();
 
     if (!this.state.profile) {
@@ -306,7 +330,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     let styles = this.getStyles();
 
     return (
@@ -328,9 +352,7 @@ module.exports = React.createClass({
           </div>
         </div>
         <div className="row">
-          <div style={styles.chartHeader}>
-            See how it works with your <strong>current usage</strong>
-          </div>
+          {this.renderChart()}
         </div>
       </Common.Loading>
     );
