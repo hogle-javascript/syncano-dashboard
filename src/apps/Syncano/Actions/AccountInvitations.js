@@ -9,7 +9,7 @@ export default {
 
   accept(items) {
     let promises = items.map(item => {
-      this.Connection.AccountInvitations.accept(item.key);
+      return this.Connection.AccountInvitations.accept(item.key);
     });
 
     this.D.all(promises)
@@ -19,7 +19,7 @@ export default {
 
   decline(items) {
     let promises = items.map(item => {
-      this.Connection.AccountInvitations.remove(item.id);
+      return this.Connection.AccountInvitations.remove(item.id);
     });
 
     this.D.all(promises)
