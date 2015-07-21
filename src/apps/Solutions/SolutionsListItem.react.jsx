@@ -1,20 +1,10 @@
-var React                 = require('react'),
-    Moment                = require('moment'),
-    Radium                = require('radium'),
-    Router                = require('react-router'),
+import React from 'react';
+import Radium from 'radium';
+import Router from 'react-router';
+import MUI from 'material-ui';
 
-    mui                   = require('material-ui'),
-    FlatButton            = mui.FlatButton,
-    Avatar                = mui.Avatar,
-    Card                  = mui.Card,
-    CardMedia             = mui.CardMedia,
-    CardTitle             = mui.CardTitle,
-    CardActions           = mui.CardActions,
-    CardText              = mui.CardText,
-    CardHeader            = mui.CardHeader,
-    IconButton            = mui.IconButton,
-
-    SolutionStar          = require('../../common/SolutionStar/SolutionStar.react');
+import SolutionsActions from './SolutionsActions';
+import SolutionStar from '../../common/SolutionStar';
 
 module.exports = React.createClass({
 
@@ -22,125 +12,164 @@ module.exports = React.createClass({
 
   mixins: [
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       cardTitleContainer: {
-        display: 'flex',
-        position: 'relative'
+        display  : '-webkit-flex; display: flex',
+        position : 'relative'
       },
-      starContainer: {
-        position: 'absolute',
-        top: 4,
-        right: 4
-      },
-      cardMedia: {
-        height: 198,
-        backgroundSize: 'cover',
-        backgroundPosition: '50%',
-        backgroundImage: 'url(http://lorempixel.com/600/337/nature/)'
+      cardTitleRoot: {
+        flex       : 1,
+        display    : '-webkit-flex; display: flex',
+        AlignItems : 'center'
       },
       cardTitle: {
-        color: 'rgba(0, 0, 0, 0.87)',
-        fontSize: 20,
-        fontWeight: 500,
-        lineHeight: '24px',
-        height: 48,
-        overflow: 'hidden',
-        marginBottom: 16,
-        paddingRight: 36,
-        display: 'block'
-        //textOverflow: 'ellipsis',
-        //whiteSpace: 'nowrap'
+        color      : '#4a4a4a',
+        fontSize   : 18,
+        lineHeight : '24px',
+        height     : 48,
+        overflow   : 'hidden',
+        display    : 'block'
       },
       cardSubtitle: {
-        color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: 14,
-        fontWeight: 400,
-        lineHeight: '20px',
-        height: 60,
-        overflow: 'hidden',
-        display: 'block'
-        //textOverflow: 'ellipsis',
-        //whiteSpace: 'nowrap'
+        color      : 'rgba(74, 74, 74, 0.64)',
+        fontSize   : 14,
+        fontWeight : 400,
+        lineHeight : '20px',
+        height     : 80,
+        overflow   : 'hidden',
+        display    : 'block',
+        padding    : '0 16px'
       },
       cardTextList: {
-        listStyle: 'none',
-        padding: 0,
-        margin: 0,
-        fontSize: 12,
-        lineHeight: '14px',
-        color: 'rgba(0, 0, 0, 0.54)'
+        color      : '#9b9b9b',
+        display    : '-webkit-flex; display: flex',
+        AlignItems : 'center',
+        fontSize   : 12,
+        padding    : '4px 0'
+      },
+      cardTextListIcon: {
+        fontSize    : 15,
+        marginRight : 8
       },
       cardFooter: {
-        borderTop: '1px solid #ddd',
-        padding: 8,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end'
+        borderTop      : '1px solid #ddd',
+        padding        : 8,
+        display        : '-webkit-flex; display: flex',
+        alignItems     : 'center',
+        justifyContent : 'space-between'
       },
-      activationsCount: {
-        padding: 8,
-        margin: '0 auto 0 0'
+      cardAvatarContainer: {
+        padding : 16
+      },
+      installIcon: {
+        color : MUI.Styles.Colors.blue500
+      },
+      seeDetailsButton: {
+        color         : MUI.Styles.Colors.blue500,
+        letterSpacing : 0.5
+      },
+      tag: {
+        color : '#9b9b9b',
+        paddingRight : 3
       }
     }
   },
 
-  handleSeeMoreClick: function() {
-    this.transitionTo('solutions-edit', {solutionId: this.props.data.id});
+  handleSeeMoreClick(solutionId) {
+    this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
-  render: function() {
-    var styles          = this.getStyles(),
-        item            = this.props.data,
-        itemTags        = item.tags.join(', '),
-        itemUpdatedDate = Moment(item.updated_at).format('DD.MM.YYYY'),
-        itemImageURL    = item.metadata.screenshots ? item.metadata.screenshots[0] : null;
+  renderVersion() {
+    let styles = this.getStyles();
+    let item = this.props.data;
+    let name = null;
+    let color = null;
 
-    if (itemImageURL) {
-      styles.cardMedia.backgroundImage = 'url(' + itemImageURL + ')';
+    if (item.versions.stable) {
+      name = `stable (${item.versions.stable})`;
+      color = '#7ED321';
+    } else {
+      name = `development (${item.versions.devel || 'no versions'})`;
+      color = '#f5a623';
     }
 
     return (
-      <Card>
-        <CardMedia mediaStyle={styles.cardMedia}></CardMedia>
+      <div style={styles.cardTextList}>
+        <MUI.FontIcon
+          style     = {styles.cardTextListIcon}
+          className = "synicon-information-outline"
+          color     = {color}
+        />
+        {name}
+      </div>
+    )
+  },
+
+  renderItemTags() {
+    let styles = this.getStyles();
+    return this.props.data.tags.map(tag => {
+      return (
+        <a
+          style   = {styles.tag}
+          onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
+          {tag}
+        </a>
+      )
+    });
+  },
+
+  render() {
+    let styles = this.getStyles();
+    let item = this.props.data;
+
+    return (
+      <MUI.Card>
         <div style={styles.cardTitleContainer}>
-          <CardTitle title         = {item.label}
-                     titleStyle    = {styles.cardTitle}
-                     subtitle      = {item.description}
-                     subtitleStyle = {styles.cardSubtitle}
+          <MUI.CardTitle
+            style         = {styles.cardTitleRoot}
+            title         = {item.label}
+            titleStyle    = {styles.cardTitle}
           />
-          <div style={styles.starContainer}>
-            <SolutionStar solution={item} />
+          <div style={styles.cardAvatarContainer}>
+            <MUI.Avatar
+              size  = {55}
+              src   = {item.author ? item.author.avatar_url : null}
+            />
           </div>
         </div>
-        <CardText>
-          <div className="row">
-            <div className="col-flex-1" style={{padding: 0}}>
-              <ul style={styles.cardTextList}>
-                <li>Last Version: 4.1</li>
-                <li>Updated: {itemUpdatedDate}</li>
-                <li>Tags: {itemTags}</li>
-              </ul>
-            </div>
-            <div className="col-flex-1" style={{padding: 0, display: 'flex', flexDirection: 'row-reverse'}}>
-              <Avatar>A</Avatar>
-            </div>
+        <MUI.CardText style={styles.cardSubtitle}>
+          {item.description}
+        </MUI.CardText>
+        <MUI.CardText>
+          <div style={styles.cardTextList}>
+            <MUI.FontIcon
+              style     = {styles.cardTextListIcon}
+              className = "synicon-tag"
+              color     = "rgba(222, 222, 222, 0.54)"
+            />
+            {this.renderItemTags()}
           </div>
-        </CardText>
+          {this.renderVersion()}
+        </MUI.CardText>
         <div style={styles.cardFooter}>
-          <CardActions>
-            <FlatButton label="SEE MORE" onClick={this.handleSeeMoreClick} />
-          </CardActions>
+          <SolutionStar solution={item} />
+          <MUI.FlatButton
+            label      = "SEE DETAILS"
+            labelStyle = {styles.seeDetailsButton}
+            onClick    = {this.handleSeeMoreClick.bind(null, item.id)}
+          />
+          <MUI.IconButton
+            iconClassName = "synicon-download"
+            iconStyle     = {styles.installIcon}
+            onClick       = {this.handleSeeMoreClick.bind(null, item.id)}
+            touch         = {true}
+          />
         </div>
-      </Card>
+      </MUI.Card>
     )
   }
 });
-
-
-          //<div style={styles.activationsCount}>
-          //  <strong>245 </strong> activations
-          //</div>

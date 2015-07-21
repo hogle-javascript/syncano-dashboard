@@ -4,17 +4,19 @@ var React                     = require('react'),
     Link                      = Router.Link,
     Radium                    = require('radium'),
 
+    AuthActions               = require('../Account/AuthActions'),
     HeaderActions             = require('./HeaderActions'),
     HeaderStore               = require('./HeaderStore'),
     ProfileInvitationsStore   = require('../Profile/ProfileInvitationsStore'),
     ProfileInvitationsActions = require('../Profile/ProfileInvitationsActions'),
 
-    mui                       = require('material-ui'),
-    IconMenu                  = mui.IconMenu,
-    MenuItem                  = mui.MenuItem,
-    FontIcon                  = mui.FontIcon,
-    MenuDivider               = require('material-ui/lib/menus/menu-divider'),
-    IconButton                = mui.IconButton,
+    MUI                       = require('material-ui'),
+    Colors                    = MUI.Styles.Colors,
+    IconMenu                  = MUI.IconMenu,
+    MenuItem                  = MUI.MenuItem,
+    FontIcon                  = MUI.FontIcon,
+    MenuDivider               = MUI.ListDivider,
+    IconButton                = MUI.IconButton,
     DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
 
 
@@ -52,6 +54,7 @@ module.exports = Radium(React.createClass({
 
   handleResendEmail: function (event) {
     console.info("Header::handleResendEmail");
+    AuthActions.resendActivationEmail(this.state.user.email);
     event.stopPropagation();
   },
 
@@ -64,6 +67,11 @@ module.exports = Radium(React.createClass({
 
       notificationIcon: {
         color: '#ff3d00'
+      },
+
+      resendEmailLink: {
+        cursor : "pointer",
+        color  : Colors.lightBlueA700
       }
     }
   },
@@ -82,13 +90,14 @@ module.exports = Radium(React.createClass({
           style  : {}
         },
         buttonsText: ["Accept", "Decline"],
-        name: "billing",
+        name: "invitation",
         handleAccept: this.handleAcceptInvitations.bind(this, [item]),
         handleDecline: this.handleDeclineInvitations.bind(this, [item])
       }
     }.bind(this));
 
     if (!this.state.user.is_active) {
+      var secondaryLinkStyle = this.getStyles().resendEmailLink;
       notifications.push(
         {
           type: "normal-link",
@@ -98,11 +107,10 @@ module.exports = Radium(React.createClass({
           },
           content: {
             text          : "You email address is not yet verified.",
-            secondaryText : "Resend activation email",
+            secondaryText : <div style={secondaryLinkStyle} onClick={this.handleResendEmail}>Resend activation email</div>,
             style         : {}
           },
-          name: "activation",
-          handleLinkClick: this.handleResendEmail
+          name: "activation"
         }
       )
     }

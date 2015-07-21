@@ -30,12 +30,12 @@ module.exports = Radium(React.createClass({
         margin          : 0,
         height          : 40,
         display         : '-webkit-flex; display: flex',
-        alignItems      : 'center',
-        justifyContent  : 'center'
+        AlignItems      : 'center',
+        JustifyContent  : 'center'
       },
       leftAvatar: {
         top             : '50%',
-        transform       : 'translateY(-50%)'
+        Transform       : 'translateY(-50%)'
       }
     };
     return this.mergeStyles(styles, this.props.style);
@@ -55,9 +55,10 @@ module.exports = Radium(React.createClass({
     return (
       <ListItem
         className  = "empty-list-item"
-        onClick    = {this.props.handleClick}
+        onTouchTap = {this.props.handleClick}
         style      = {styles.listItem}
-        leftAvatar = {leftAvatar}>
+        leftAvatar = {leftAvatar}
+      >
         {this.props.children}
       </ListItem>
     )

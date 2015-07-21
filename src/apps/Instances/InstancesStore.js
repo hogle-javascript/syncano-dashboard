@@ -150,6 +150,11 @@ var InstancesStore = Reflux.createStore({
     this.refreshData();
   },
 
+  onUpdateInstanceCompleted: function() {
+    this.data.hideDialogs = true;
+    this.refreshData();
+  },
+
   getCheckedItemIconColor: function() {
     var singleItem = this.getCheckedItem();
 

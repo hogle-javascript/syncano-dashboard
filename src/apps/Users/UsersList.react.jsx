@@ -1,35 +1,22 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    UsersActions  = require('./UsersActions'),
-    UsersStore    = require('./UsersStore'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import UsersActions from './UsersActions';
+import UsersStore from './UsersStore';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'UsersList',
 
@@ -39,14 +26,14 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
@@ -54,11 +41,11 @@ module.exports = React.createClass({
   },
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       groupsList: {
         margin: '0 -4px',
@@ -79,8 +66,12 @@ module.exports = React.createClass({
     }
   },
 
-  renderItemGroups: function(groups) {
+  renderItemGroups(groups) {
     var styles = this.getStyles();
+
+    if (groups.length === 0) {
+      return 'No group';
+    }
 
     var itemGroups = groups.map(function(group) {
       return (
@@ -93,58 +84,58 @@ module.exports = React.createClass({
     )
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.id}>
-        <ColumnCheckIcon
+        key     = {item.id}
+      >
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick}
+        >
           {item.username}
-        </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc>{this.renderItemGroups(item.groups)}</ColumnDesc>
-        <ColumnDate date={item.profile.updated_at} />
-        <ColumnDate date={item.profile.created_at} />
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.Desc>{this.renderItemGroups(item.groups)}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.profile.updated_at} />
+        <Common.ColumnList.Column.Date date={item.profile.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function() {
-    var items = this.state.items.map(function(item) {
-      return this.renderItem(item)
-    }.bind(this));
+  getList() {
+    var items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       return items;
     }
 
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function() {
+  render() {
     return (
       <div>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>Groups</ColumnDesc.Header>
-          <ColumnDate.Header>Updated</ColumnDate.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Desc.Header>Groups</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Updated</Common.ColumnList.Column.Date.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
+          </Common.Loading>
+        </Common.Lists.List>
       </div>
     );
   }

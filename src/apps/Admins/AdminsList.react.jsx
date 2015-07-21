@@ -1,32 +1,19 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    SessionStore      = require('../Session/SessionStore'),
-    AdminsActions     = require('./AdminsActions'),
-    AdminsStore       = require('./AdminsStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    Loading           = require('../../common/Loading'),
-    Lists             = require('../../common/Lists'),
-    ColumnList        = require('../../common/ColumnList'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AdminsList',
 
@@ -36,25 +23,25 @@ module.exports = React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       ownerLabel: {
         color: 'rgba(0, 0, 0, 0.54)',
@@ -64,68 +51,68 @@ module.exports = React.createClass({
     }
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     var styles  = this.getStyles(),
         isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (
-      <ColumnList.Item
+      <Common.ColumnList.Item
         checked   = {item.checked}
-        key       = {item.id}>
-        <ColumnCheckIcon
+        key       = {item.id}
+      >
+        <Common.ColumnList.Column.CheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
-          checkable       = {!isOwner}>
+          checkable       = {!isOwner}
+        >
           <div>
-            <div>
-              {item.email}
-            </div>
+            <div>{item.email}</div>
             <div style={styles.ownerLabel}>
               {isOwner ? "Owner (cannot be edited)" : null}
             </div>
           </div>
-        </ColumnCheckIcon>
-        <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </ColumnList.Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function() {
+  getList() {
     var items = this.state.items || [];
 
     if (items.length > 0) {
-      items = this.state.items.map(function(item) {
-        return this.renderItem(item)
-      }.bind(this));
+      items = this.state.items.map(item => this.renderItem(item));
 
       return items;
     }
     return (
-        <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </ColumnList.EmptyItem>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+        {this.props.emptyItemContent}
+      </Common.ColumnList.EmptyItem>
     );
   },
 
-  render: function() {
+  render() {
     return (
-      <Lists.Container>
-        <ColumnList.Header>
-          <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Role</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </ColumnList.Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header className="col-xs-25 col-md-20">
+            {this.props.name}
+          </Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

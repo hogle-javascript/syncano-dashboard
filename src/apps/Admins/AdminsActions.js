@@ -50,10 +50,7 @@ AdminsActions.updateAdmin.listen(function(name, payload) {
 
 AdminsActions.removeAdmins.listen(function(admins) {
   console.info('AdminsActions::removeAdmins');
-  var promises = admins.map(function(admin) {
-    Connection.Admins.remove(admin)
-  });
-
+  var promises = admins.map(admin => Connection.Admins.remove(admin));
   D.all(promises)
     .success(this.completed)
     .error(this.failure);

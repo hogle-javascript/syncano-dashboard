@@ -131,6 +131,52 @@ module.exports = React.createClass({
       }
     ];
 
+    let renderChannelFields = function() {
+      if (this.hasEditMode()) {
+        return (
+          <div>
+            <TextField
+                ref               = 'field-channel'
+                name              = 'field-channel'
+                fullWidth         = {true}
+                disabled          = {true}
+                floatingLabelText = {this.state.channel || 'no channel'} />
+
+            <TextField
+              ref               = 'field-channel_room'
+              name              = 'field-channel_room'
+              fullWidth         = {true}
+              disabled          = {true}
+              floatingLabelText = {this.state.channel_room || 'no channel'} />
+          </div>
+        )
+      }
+      return (
+        <div>
+          <SelectField
+            ref               = 'field-channel'
+            name              = 'field-channel'
+            fullWidth         = {true}
+            valueMember       = "payload"
+            displayMember     = "text"
+            floatingLabelText = 'Channel'
+            valueLink         = {this.linkState('channel')}
+            errorText         = {this.getValidationMessages('channel').join(' ')}
+            menuItems         = {this.state.channels} />
+
+          <TextField
+            ref               = 'field-channel_room'
+            name              = 'field-channel_room'
+            fullWidth         = {true}
+            disabled          = {this.hasEditMode()}
+            valueLink         = {this.linkState('channel_room')}
+            errorText         = {this.getValidationMessages('channel_room').join(' ')}
+            hintText          = 'Channel Room'
+            floatingLabelText = 'Channel Room' />
+        </div>
+      )
+    }.bind(this);
+
     return [
       <div className='row' style={{padding: 0, margin: 0}}>
         <div className='col-flex-1'>
@@ -153,25 +199,8 @@ module.exports = React.createClass({
             hintText          = 'Group ID'
             floatingLabelText = 'Group' />
 
-          <SelectField
-            ref               = 'field-channel'
-            name              = 'field-channel'
-            fullWidth         = {true}
-            valueMember       = "payload"
-            displayMember     = "text"
-            floatingLabelText = 'Channel'
-            valueLink         = {this.linkState('channel')}
-            errorText         = {this.getValidationMessages('channel').join(' ')}
-            menuItems         = {this.state.channels} />
+          {renderChannelFields()}
 
-          <TextField
-            ref               = 'field-channel_room'
-            name              = 'field-channel_room'
-            fullWidth         = {true}
-            valueLink         = {this.linkState('channel_room')}
-            errorText         = {this.getValidationMessages('channel_room').join(' ')}
-            hintText          = 'Channel Room'
-            floatingLabelText = 'Channel Room' />
         </div>
 
       <div className='col-flex-1' style={{paddingLeft: 15}}>

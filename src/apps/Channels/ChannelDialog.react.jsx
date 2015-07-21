@@ -97,23 +97,31 @@ module.exports = React.createClass({
           <div>
             {this.renderFormNotifications()}
 
-            <TextField
-              ref               = 'name'
-              valueLink         = {this.linkState('name')}
-              errorText         = {this.getValidationMessages('name').join(' ')}
-              name              = 'name'
-              fullWidth         = {true}
-              hintText          = 'Short name for your Channel'
-              floatingLabelText = 'Label of Channel' />
+            <div className="row">
+              <div className="col-md-12">
 
-            <TextField
-              ref               = 'description'
-              name              = 'description'
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              fullWidth         = {true}
-              hintText          = 'Multiline description of Channel (optional)'
-              floatingLabelText = 'Description of Channel' />
+                <TextField
+                  ref               = 'name'
+                  valueLink         = {this.linkState('name')}
+                  errorText         = {this.getValidationMessages('name').join(' ')}
+                  name              = 'name'
+                  fullWidth         = {true}
+                  hintText          = 'Short name for your Channel'
+                  floatingLabelText = 'Label of Channel' />
+
+              </div>
+              <div className="col-flex-1">
+
+                <TextField
+                  ref               = 'description'
+                  name              = 'description'
+                  valueLink         = {this.linkState('description')}
+                  errorText         = {this.getValidationMessages('description').join(' ')}
+                  fullWidth         = {true}
+                  hintText          = 'Description of Channel (optional)'
+                  floatingLabelText = 'Description of Channel' />
+              </div>
+            </div>
 
             <SelectField
               ref               = 'type'
@@ -128,39 +136,44 @@ module.exports = React.createClass({
               menuItems         = {ChannelsStore.getChannelTypesDropdown()} />
 
             <div style={{marginTop: 40}}>Permissions</div>
-            <TextField
-              ref               = 'group'
-              name              = 'group'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('group')}
-              errorText         = {this.getValidationMessages('group').join(' ')}
-              hintText          = 'ID of the Group'
-              floatingLabelText = 'Group (ID)' />
-
-            <SelectField
-              ref               = 'group_permissions'
-              name              = 'group_permissions'
-              floatingLabelText = 'Group permissions'
-              valueLink         = {this.linkState('group_permissions')}
-              errorText         = {this.getValidationMessages('group_permissions').join(' ')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              fullWidth         = {true}
-              selectedIndex     = {0}
-              menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
-
-            <SelectField
-              ref               = 'other_permissions'
-              name              = 'other_permissions'
-              floatingLabelText = 'Other permissions'
-              valueLink         = {this.linkState('other_permissions')}
-              errorText         = {this.getValidationMessages('other_permissions').join(' ')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              fullWidth         = {true}
-              selectedIndex     = {0}
-              menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
-
+            <div className="row">
+              <div className="col-flex-1">
+                <TextField
+                  ref               = 'group'
+                  name              = 'group'
+                  fullWidth         = {true}
+                  valueLink         = {this.linkState('group')}
+                  errorText         = {this.getValidationMessages('group').join(' ')}
+                  hintText          = 'ID of the Group'
+                  floatingLabelText = 'Group (ID)' />
+              </div>
+              <div className="col-flex-1">
+                <SelectField
+                  ref               = 'group_permissions'
+                  name              = 'group_permissions'
+                  floatingLabelText = 'Group permissions'
+                  valueLink         = {this.linkState('group_permissions')}
+                  errorText         = {this.getValidationMessages('group_permissions').join(' ')}
+                  valueMember       = 'payload'
+                  displayMember     = 'text'
+                  fullWidth         = {true}
+                  selectedIndex     = {0}
+                  menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
+              </div>
+              <div className="col-flex-1">
+                <SelectField
+                  ref               = 'other_permissions'
+                  name              = 'other_permissions'
+                  floatingLabelText = 'Other permissions'
+                  valueLink         = {this.linkState('other_permissions')}
+                  errorText         = {this.getValidationMessages('other_permissions').join(' ')}
+                  valueMember       = 'payload'
+                  displayMember     = 'text'
+                  fullWidth         = {true}
+                  selectedIndex     = {0}
+                  menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
+              </div>
+            </div>
             <Toggle
               ref            = 'custom_publish'
               name           = 'custom_publish'
@@ -168,7 +181,6 @@ module.exports = React.createClass({
               onToggle       = {this.handleToogle}
               style          = {{marginTop: 20}}
               label          = 'Custom publishing in this channel?' />
-
           </div>
           <Loading
             type     = 'linear'

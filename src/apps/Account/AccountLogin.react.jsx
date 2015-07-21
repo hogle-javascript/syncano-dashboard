@@ -13,14 +13,8 @@ var React                = require('react'),
     AuthConstants        = require('./AuthConstants'),
 
     // Components
-    mui                  = require('material-ui'),
-    TextField            = mui.TextField,
-    RaisedButton         = mui.RaisedButton,
-    Paper                = mui.Paper,
-
-    SocialAuthButton     = require('../../common/SocialAuthButton'),
-    Logo                 = require('../../common/Logo');
-
+    MUI                  = require('material-ui'),
+    Common               = require('../../common');
 
 require('./Account.sass');
 
@@ -68,33 +62,6 @@ module.exports = React.createClass({
     }
   },
 
-  handleSocialSignup: function(network) {
-    return function() {
-      AuthActions.socialLogin(network)
-    };
-  },
-
-  renderSocialButton: function(network) {
-    return (
-      <SocialAuthButton
-        icon        = {'synicon-' + network}
-        label       = {'Log in with ' + network}
-        handleClick = {this.handleSocialSignup(network)}/>
-    )
-  },
-
-  renderSocialButtons: function() {
-    var buttons = AuthConstants.SOCIAL_NETWORKS.map(function(network) {
-      return (
-        <li key={network}>
-          {this.renderSocialButton(network)}
-        </li>
-      )
-    }.bind(this));
-
-    return <SocialAuthButton.List>{buttons}</SocialAuthButton.List>
-  },
-
   handleSuccessfullValidation: function() {
     AuthActions.passwordSignIn({
       email: this.state.email,
@@ -106,9 +73,9 @@ module.exports = React.createClass({
     return (
       <div className="account-container">
         <div className="account-logo">
-          <Link to="login"><Logo className="logo-blue" /></Link>
+          <Link to="login"><Common.Logo className="logo-blue" /></Link>
         </div>
-        <Paper
+        <MUI.Paper
           className = "account-container__content"
           ounded    = {false}
         >
@@ -122,7 +89,7 @@ module.exports = React.createClass({
             acceptCharset = "UTF-8"
             method        = "post">
 
-            <TextField
+            <MUI.TextField
               ref="email"
               valueLink    = {this.linkState('email')}
               errorText    = {this.getValidationMessages('email').join(' ')}
@@ -133,7 +100,7 @@ module.exports = React.createClass({
               fullWidth    = {true}
             />
 
-            <TextField
+            <MUI.TextField
               ref          = "password"
               valueLink    = {this.linkState('password')}
               errorText    = {this.getValidationMessages('password').join(' ')}
@@ -145,22 +112,23 @@ module.exports = React.createClass({
               fullWidth    = {true}
             />
 
-            <RaisedButton
+            <MUI.RaisedButton
               type       = "submit"
               label      = "Log in"
               labelStyle = {{fontSize: '16px'}}
-              style      = {{width: '100%', boxShadow: 'none'}}
+              fullWidth  = {true}
+              style      = {{boxShadow: 'none'}}
               primary    = {true}
             />
           </form>
-          {this.renderSocialButtons()}
+          <Common.SocialAuthButtonsList />
           <div className="account-container__content__footer">
             <ul className="list--flex list--horizontal">
               <li><p><Link to="password-reset">Forgot password?</Link></p></li>
               <li><p>Don't have an account?<Link to="signup"> Sign up here</Link></p></li>
             </ul>
           </div>
-        </Paper>
+        </MUI.Paper>
       </div>
     );
   }

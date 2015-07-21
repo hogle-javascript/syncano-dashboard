@@ -385,7 +385,8 @@ var Syncano = (function() {
       resetKey: this.resetAccountKey.bind(this),
       passwordReset: this.accountPasswordReset.bind(this),
       passwordResetConfirm: this.accountPasswordResetConfirm.bind(this),
-      activate: this.activateAccount.bind(this)
+      activate: this.activateAccount.bind(this),
+      resendActivationEmail: this.resendActivationEmail.bind(this)
     };
 
     this.Billing = {
@@ -393,7 +394,12 @@ var Syncano = (function() {
       updateProfile: this.updateBillingProfile.bind(this),
       getCard: this.getBillingCard.bind(this),
       updateCard: this.updateBillingCard.bind(this),
-      getInvoices: this.getBillingInvoices.bind(this)
+      getInvoices: this.getBillingInvoices.bind(this),
+      getUsage: this.getBillingUsage.bind(this),
+      getPlans: this.getBillingPlans.bind(this),
+      subscribePlan: this.subscribeBillingPlan.bind(this),
+      getSubscriptions: this.getSubscriptions.bind(this),
+      cancelSubscription: this.cancelSubscription.bind(this)
     };
 
     /**
@@ -434,7 +440,8 @@ var Syncano = (function() {
       remove: this.removeSolution.bind(this),
       removeVersion: this.removeSolution.bind(this),
       star: this.starSolution.bind(this),
-      unstar: this.unstarSolution.bind(this)
+      unstar: this.unstarSolution.bind(this),
+      listTags: this.listTags.bind(this)
     };
 
     /**
@@ -1165,6 +1172,20 @@ var Syncano = (function() {
       return this.request('POST', 'v1/marketplace/solutions/' + id + '/unstar', {}, callbackOK, callbackError);
     },
 
+    /**
+     * List of solution tags
+     *
+     * @method Syncano#listTags
+     * @alias Syncano.Solutions.listTags
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+
+    listTags: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/marketplace/tags/', {}, callbackOK, callbackError);
+    },
+
     /*********************
        ADMIN METHODS
     **********************/
@@ -1454,6 +1475,23 @@ var Syncano = (function() {
       return this.request('POST', 'v1/account/activate/', params, callbackOK, callbackError);
     },
 
+    /**
+     * Resend activation email
+     *
+     * @method Syncano#resendActivationEmail
+     * @alias Syncano.Accounts.resendActivationEmail
+     * @param {string} email - email address to resend activation email
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    resendActivationEmail: function(email, callbackOK, callbackError) {
+      if (typeof email === 'undefined') {
+        throw new Error('Missing email address');
+      }
+      return this.request('POST', 'v1/account/resend_email/', {email: email}, callbackOK, callbackError);
+    },
+
     /***********************
        BILLING METHODS
     ************************/
@@ -1477,6 +1515,30 @@ var Syncano = (function() {
     getBillingInvoices: function(callbackOK, callbackError) {
       return this.request('GET', 'v1/billing/invoices/', {}, callbackOK, callbackError);
     },
+
+    getBillingUsage: function(type, callbackOK, callbackError) {
+      if (!type) {
+        type = 'hourly';
+      }
+      return this.request('GET', 'v1/usage/' + type + '/', {}, callbackOK, callbackError);
+    },
+
+    getBillingPlans: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/plans/', {}, callbackOK, callbackError);
+    },
+
+    subscribeBillingPlan: function(planName, payload, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/plans/' + planName + '/subscribe', payload, callbackOK, callbackError);
+    },
+
+    getSubscriptions: function(callbackOK, callbackError) {
+      return this.request('GET', 'v1/billing/subscriptions/', {}, callbackOK, callbackError);
+    },
+
+    cancelSubscription: function(id, callbackOK, callbackError) {
+      return this.request('POST', 'v1/billing/subscriptions/' + id + '/cancel/', {}, callbackOK, callbackError);
+    },
+
     /***********************
        DATA OBJECT METHODS
     ************************/
@@ -2452,20 +2514,16 @@ var Syncano = (function() {
      *
      * @method Syncano#updateWebHook
      * @alias Syncano.WebHooks.update
-     * @param {Number} id - webhook id
+     * @param {Number} id - webhook name
      * @param {Object} params - new values of the webhook parameters
-     * @param {string} params.slug -
-     * @param {Number} params.codebox -
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {Object} promise
      */
     updateWebHook: function(id, params, callbackOK, callbackError) {
-      if (typeof id === 'object') {
-        id = id.slug;
-      }
+
       if (typeof id === 'undefined') {
-        throw new Error('Missing webhook slug');
+        throw new Error('Missing webhook name');
       }
       if (typeof linksObject.instance_webhooks === 'undefined') {
         throw new Error('Not connected to any instance');

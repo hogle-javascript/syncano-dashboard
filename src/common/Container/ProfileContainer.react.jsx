@@ -10,14 +10,14 @@ module.exports = React.createClass({
   getStyles: function() {
     return {
       container: {
-        marginTop    : 96,
+        marginTop    : 20,
         marginBottom : 96
       },
       header: {
-        padding      : 48,
-        color        : 'rgba(0, 0, 0, 0.87)',
-        fontSize     : 20,
-        lineHeight   : '24px'
+        paddingBottom : 20,
+        color         : 'rgba(0, 0, 0, 0.87)',
+        fontSize      : 20,
+        lineHeight    : '24px'
       }
     }
   },
@@ -30,18 +30,15 @@ module.exports = React.createClass({
         className = "container"
         style     = {styles.container}>
         <div className="row align-center">
-          <div className="col-md-25">
-            <MUI.Paper
-              zDepth  = {1}
-              rounded = {false}
-            >
+          <div className="col-md-34">
+            <div>
               <div style={styles.header}>
                 {this.props.headerText}
               </div>
               <Common.Loading show={this.props.show}>
                 {this.props.children}
               </Common.Loading>
-            </MUI.Paper>
+            </div>
           </div>
         </div>
       </div>

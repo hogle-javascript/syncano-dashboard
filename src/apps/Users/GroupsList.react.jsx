@@ -1,42 +1,24 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
-    _                 = require('lodash'),
-    Radium            = require('radium'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import _ from 'lodash';
+import Radium from 'radium';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    GroupsActions     = require('./GroupsActions'),
-    GroupsStore       = require('./GroupsStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import GroupsActions from './GroupsActions';
+import GroupsStore from './GroupsStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = mui.Styles.Colors,
-    FontIcon          = mui.FontIcon,
-    DropDownIcon      = mui.DropDownIcon,
-    IconMenu          = mui.IconMenu,
-    IconButton        = mui.IconButton,
-    MenuItem          = require('material-ui/lib/menus/menu-item'),
-    List              = mui.List,
-    ListItem          = mui.ListItem,
-    ListDivider       = mui.ListDivider,
+// Components
+import MUI from 'material-ui';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import Common from '../../common';
 
-    // List
-    Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'GroupsList',
 
@@ -46,108 +28,108 @@ module.exports = Radium(React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  handleIconMenuButtonClick: function(event) {
+  handleIconMenuButtonClick(event) {
     event.stopPropagation();
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       list: {
         paddingTop    : 0,
         paddingBottom : 0
       },
       listItemChecked: {
-        background: Colors.lightBlue50
+        background: MUI.Styles.Colors.lightBlue50
       }
     }
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
     var styles            = this.getStyles();
     var itemStyles        = itemActive ? styles.listItemChecked : {};
-    var iconButtonElement = <IconButton
+    var iconButtonElement = <MUI.IconButton
                                 touch           = {true}
                                 tooltipPosition = 'bottom-left'
                                 iconClassName   = 'synicon-dots-vertical'
                             />;
 
     var rightIconMenu = (
-      <IconMenu iconButtonElement={iconButtonElement}>
+      <MUI.IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
-      </IconMenu>
+      </MUI.IconMenu>
     );
 
     return (
-      <ListItem
+      <MUI.ListItem
         key             = {item.id}
         innerDivStyle   = {itemStyles}
         onMouseDown     = {this.props.handleItemClick.bind(null, item)}
         rightIconButton = {rightIconMenu}
       >
         {item.label}
-      </ListItem>
+      </MUI.ListItem>
     )
   },
 
-  getList: function() {
+  getList() {
     var styles          = this.getStyles(),
         items           = this.state.items,
         itemsCount      = items.length,
         indexOfListItem = itemsCount - 1,
-        listItems       = this.state.items.map(function(item, index) {
+        listItems       = this.state.items.map((item, index) => {
           if (index < indexOfListItem) {
             return [
               this.renderItem(item),
-              <ListDivider />
+              <MUI.ListDivider />
             ];
           }
           return this.renderItem(item);
-        }.bind(this));
+        });
 
     if (items.length > 0) {
       return (
-        <List
+        <MUI.List
           style  = {styles.list}
           zDepth = {1}
         >
           {listItems}
-        </List>
+        </MUI.List>
       );
     }
 
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function() {
+  render() {
     return (
       <div>
-        <Header>
-          <ColumnCheckIcon.Header className="col-flex-1">{this.props.name}</ColumnCheckIcon.Header>
-        </Header>
-        <Loading show={this.state.isLoading}>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+        </Common.ColumnList.Header>
+        <Common.Loading show={this.state.isLoading}>
           {this.getList()}
-        </Loading>
+        </Common.Loading>
       </div>
     );
   }

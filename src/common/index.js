@@ -7,6 +7,7 @@ import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
 import Container from './Container';
+import CreditCard from './CreditCard';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
@@ -21,8 +22,10 @@ import ProgressBar from './ProgressBar';
 import Request from './Request';
 import Search from './Search';
 import Show from './Show';
+import Slider from './Slider';
 import SnackBar from './SnackBar';
-import SocialAuthButton from './SocialAuthButton';
+import SolutionStar from './SolutionStar';
+import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SwitchField from './SwitchField';
 import Table from './Table';
 import Tabs from './Tabs';
@@ -34,7 +37,7 @@ import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import UsageBar2 from './UsageBar.react';
 
-export {
+export default {
   Accordion,
   AvatarInitials,
   Button,
@@ -44,6 +47,7 @@ export {
   ColorIconPicker,
   ColumnList,
   Container,
+  CreditCard,
   Dropdown,
   Editor,
   Fab,
@@ -58,8 +62,10 @@ export {
   Request,
   Search,
   Show,
+  Slider,
   SnackBar,
-  SocialAuthButton,
+  SolutionStar,
+  SocialAuthButtonsList,
   SwitchField,
   Table,
   Tabs,

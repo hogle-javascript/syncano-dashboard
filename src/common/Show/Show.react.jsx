@@ -1,21 +1,19 @@
-var React         = require('react');
+import React from 'react';
+import _ from 'lodash';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Show',
 
-  getInitialState: function() {
-    return {};
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps);
-  },
-
-  render: function() {
-    if (this.state.if) {
-      return this.state.children;
+  render() {
+    if (!this.props.if) {
+      return null;
     }
-    return null;
+
+    if (_.isArray(this.props.children)) {
+      return <div {...this.props}>{this.props.children}</div>;
+    }
+
+    return this.props.children;
   }
 });

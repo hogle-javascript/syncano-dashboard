@@ -1,31 +1,30 @@
-var React         = require('react'),
+import React from 'react';
+import MUI from 'material-ui';
 
-    mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable;
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Container',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
     style: React.PropTypes.object
   },
 
-  getStyles: function() {
+  getStyles() {
     var styles = {
       marginBottom: 50
     };
     return this.mergeStyles(styles, this.props.style);
   },
 
-  render: function() {
+  render() {
+    var styles = this.getStyles();
+
     return (
       <div
         id    = {this.props.id}
-        style = {this.getStyles()}
+        style = {styles}
       >
         {this.props.children}
       </div>
