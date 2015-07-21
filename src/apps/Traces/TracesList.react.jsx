@@ -13,18 +13,8 @@ import SessionActions from '../Session/SessionActions';
 import TracesActions from './TracesActions';
 import TracesStore from './TracesStore';
 
-// Components
-import Trace from '../../common/Trace/TraceResult.react';
-
-// List
-import Lists from '../../common/Lists';
-import Item from '../../common/ColumnList/Item.react';
-import Header from '../../common/ColumnList/Header.react';
-import Loading from '../../common/Loading/Loading.react';
-import ColumnIconName from '../../common/ColumnList/Column/IconName.react';
-import ColumnID from '../../common/ColumnList/Column/ID.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
+import MUI from 'material-ui';
+import Common from '../../common';
 
 export default Radium(React.createClass({
 
@@ -75,7 +65,6 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-
     var styles = this.getStyles(),
         background = item.status === 'success' ? 'green' : 'red';
 
@@ -96,31 +85,31 @@ export default Radium(React.createClass({
 
     return (
       <div key={item.id}>
-        <Item
+        <Common.ColumnList.Item
           checked = {item.checked}
           style   = {styles.item}
         >
-          <ColumnIconName
+          <Common.ColumnList.Column.IconName
             id              = {item.id}
             background      = {background}
             handleNameClick = {this.toggleTrace}
           >
             {item.status}
-          </ColumnIconName>
-          <ColumnID>{item.id}</ColumnID>
-          <ColumnDesc>{item.duration}ms</ColumnDesc>
-          <ColumnDate date={item.executed_at} />
-        </Item>
-        <Paper zDepth={1} style={styles.trace}>
-          <Trace result={item.result}/>
-        </Paper>
+          </Common.ColumnList.Column.IconName>
+          <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
+          <Common.ColumnList.Column.Desc>{item.duration}ms</Common.ColumnList.Column.Desc>
+          <Common.ColumnList.Column.Date date={item.executed_at} />
+        </Common.ColumnList.Item>
+        <MUI.Paper zDepth={1} style={styles.trace}>
+          <Common.Trace.Result result={item.result}/>
+        </MUI.Paper>
       </div>
     )
   },
 
   getList() {
     var items = this.state.items.map(item => {
-      return this.renderItem(item)
+      this.renderItem(item)
     });
 
     if (items.length > 0) {
@@ -128,24 +117,24 @@ export default Radium(React.createClass({
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+    return [<Common.ColumnList.Item key="empty">Empty Item</Common.ColumnList.Item>];
   },
 
   render() {
     return (
-      <Lists.Container>
-        <Header>
-          <ColumnIconName.Header>{this.props.name}</ColumnIconName.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>Duration</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.IconName.Header>{this.props.name}</Common.ColumnList.Column.IconName.Header>
+          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Desc.Header>Duration</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 }));

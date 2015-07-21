@@ -13,16 +13,7 @@ import CodeBoxesStore from './CodeBoxesStore';
 
 // Components
 import MUI from 'material-ui';
-
-// List
-import Lists from '../../common/Lists';
-import Item from '../../common/ColumnList/Item.react';
-import EmptyListItem from '../../common/ColumnList/EmptyListItem.react';
-import Header from '../../common/ColumnList/Header.react';
-import Loading from '../../common/Loading/Loading.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
-import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -57,13 +48,13 @@ export default React.createClass({
     var runtime = CodeBoxesStore.getRuntimeColorIcon(item.runtime_name);
 
     return (
-      <Item
+      <Common.ColumnList.Item
         checked     = {item.checked}
         key         = {item.id}
         id          = {item.id}
         handleClick = {this.handleItemClick}
       >
-        <ColumnCheckIcon
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id}
           icon            = {runtime.icon}
           background      = {runtime.color}
@@ -72,16 +63,16 @@ export default React.createClass({
           handleNameClick = {this.handleItemClick}
         >
           {item.label}
-        </ColumnCheckIcon>
-        <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnDate date={item.created_at} />
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
   getList() {
     var items = this.state.items.map(item => {
-      return this.renderItem(item)
+      this.renderItem(item)
     });
 
     if (items.length > 0) {
@@ -90,26 +81,26 @@ export default React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     );
   },
 
   render() {
     return (
-      <Lists.Container>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Description</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

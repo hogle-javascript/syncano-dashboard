@@ -11,16 +11,7 @@ import SessionStore from '../Session/SessionStore';
 
 // Components
 import MUI from 'material-ui';
-
-// List
-import Loading from '../../common/Loading';
-import Lists from '../../common/Lists';
-import ColumnList from '../../common/ColumnList';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
-import ColumnID from '../../common/ColumnList/Column/ID.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnKey from '../../common/ColumnList/Column/Key.react';
-import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -65,11 +56,11 @@ export default React.createClass({
         isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (
-      <ColumnList.Item
+      <Common.ColumnList.Item
         checked   = {item.checked}
         key       = {item.id}
       >
-        <ColumnCheckIcon
+        <Common.ColumnList.Column.CheckIcon
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
@@ -84,10 +75,10 @@ export default React.createClass({
               {isOwner ? "Owner (cannot be edited)" : null}
             </div>
           </div>
-        </ColumnCheckIcon>
-        <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate date={item.created_at} />
-      </ColumnList.Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
@@ -96,32 +87,34 @@ export default React.createClass({
 
     if (items.length > 0) {
       items = this.state.items.map(item => {
-        return this.renderItem(item)
+        this.renderItem(item)
       });
 
       return items;
     }
     return (
-      <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </ColumnList.EmptyItem>
+      </Common.ColumnList.EmptyItem>
     );
   },
 
   render() {
     return (
-      <Lists.Container>
-        <ColumnList.Header>
-          <ColumnCheckIcon.Header className="col-xs-25 col-md-20">{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Role</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </ColumnList.Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header className="col-xs-25 col-md-20">
+            {this.props.name}
+          </Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

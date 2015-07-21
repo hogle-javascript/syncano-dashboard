@@ -12,19 +12,8 @@ import ProfileInvitationsStore from './ProfileInvitationsStore';
 
 // Components
 import MUI from 'material-ui';
-
-import FabList from '../../common/Fab/FabList.react';
-import FabListItem from '../../common/Fab/FabListItem.react';
+import Common from '../../common';
 import Container from '../../common/Container/Container.react';
-
-// List
-import Lists from '../../common/Lists';
-import Item from '../../common/ColumnList/Item.react';
-import Header from '../../common/ColumnList/Header.react';
-import Loading from '../../common/Loading/Loading.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
-import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
 
 export default React.createClass({
 
@@ -60,7 +49,7 @@ export default React.createClass({
 
     return [
       {
-        dialog: Dialog,
+        dialog: MUI.Dialog,
         params: {
           ref:    "acceptInvitationsDialog",
           title:  "Accept Invitation",
@@ -73,7 +62,7 @@ export default React.createClass({
         }
       },
       {
-        dialog: Dialog,
+        dialog: MUI.Dialog,
         params: {
           ref  : "declineInvitationsDialog",
           title:  "Decline Invitation",
@@ -140,11 +129,11 @@ export default React.createClass({
 
   renderItem(item) {
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
         key     = {item.id}
       >
-        <ColumnCheckIcon
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {MUI.Styles.Colors.blue500}
@@ -152,17 +141,17 @@ export default React.createClass({
           handleIconClick = {this.checkItem}
         >
           {item.instance}
-        </ColumnCheckIcon>
-        <ColumnDesc>{item.inviter}</ColumnDesc>
-        <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate date={item.created_at} />
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc>{item.inviter}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     );
   },
 
   renderList() {
     var items = this.state.items.map(item => {
-      return this.renderItem(item);
+      this.renderItem(item);
     });
 
     if (items.length > 0) {
@@ -180,59 +169,59 @@ export default React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <Show if={checkedInvitations > 0}>
-          <FabList position="top">
+        <Common.Show if={checkedInvitations > 0}>
+          <Common.Fab position="top">
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
               iconClassName = "synicon-checkbox-multiple-marked-outline"
             />
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to accept Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
               iconClassName = "synicon-check"
             />
 
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to decline Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
               iconClassName = "synicon-delete"
             />
 
-          </FabList>
-        </Show>
+          </Common.Fab>
+        </Common.Show>
 
-        <Loading show={this.state.isLoading}>
+        <Common.Loading show={this.state.isLoading}>
           <div>
-            <Show if={this.state.items.length < 1 && this.state.isLoading === false}>
+            <Common.Show if={this.state.items.length < 1 && this.state.isLoading === false}>
               <div style={styles.container}>
-                <FontIcon
+                <MUI.FontIcon
                   style     = {styles.icon}
                   className = "synicon-email-outline" />
                 <p style={styles.text}>You have no invitations</p>
               </div>
-            </Show>
+            </Common.Show>
 
-            <Show if={this.state.items.length > 0 && this.state.isLoading === false}>
-              <Lists.Container>
-                <Header>
-                  <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
-                  <ColumnDesc.Header>From</ColumnDesc.Header>
-                  <ColumnDesc.Header>Role</ColumnDesc.Header>
-                  <ColumnDate.Header>Created</ColumnDate.Header>
-                </Header>
-                <Lists.List>
+            <Common.Show if={this.state.items.length > 0 && this.state.isLoading === false}>
+              <Common.Lists.Container>
+                <Common.ColumnList.Header>
+                  <Common.ColumnList.Column.CheckIcon.Header>Invitations</Common.ColumnList.Column.CheckIcon.Header>
+                  <Common.ColumnList.Column.Desc.Header>From</Common.ColumnList.Column.Desc.Header>
+                  <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
+                  <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+                </Common.ColumnList.Header>
+                <Common.Lists.List>
                   {this.renderList()}
-                </Lists.List>
-              </Lists.Container>
-            </Show>
+                </Common.Lists.List>
+              </Common.Lists.Container>
+            </Common.Show>
           </div>
-        </Loading>
+        </Common.Loading>
       </Container>
     );
   }

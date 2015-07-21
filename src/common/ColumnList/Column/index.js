@@ -5,6 +5,7 @@ import IconName from './IconName.react';
 import Key from './Key.react';
 import Name from './Name.react';
 import Text from './Text.react';
+import ID from './ID.react';
 
 export default {
   CheckIcon,
@@ -13,5 +14,6 @@ export default {
   IconName,
   Key,
   Name,
-  Text
+  Text,
+  ID
 };

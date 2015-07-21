@@ -1,29 +1,24 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
-    _                 = require('lodash'),
-    Radium            = require('radium'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import _ from 'lodash';
+import Radium from 'radium';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    GroupsActions     = require('./GroupsActions'),
-    GroupsStore       = require('./GroupsStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import GroupsActions from './GroupsActions';
+import GroupsStore from './GroupsStore';
 
-    // Components
-    MUI               = require('material-ui'),
-    MenuItem          = require('material-ui/lib/menus/menu-item'),
+// Components
+import MUI from 'material-ui';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import Common from '../../common';
 
-    // List
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'GroupsList',
 
@@ -33,25 +28,25 @@ module.exports = Radium(React.createClass({
     Router.Navigation
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : this.props.items,
       isLoading : this.props.isLoading
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.setState({
       items     : nextProps.items,
       isLoading : nextProps.isLoading
     })
   },
 
-  handleIconMenuButtonClick: function(event) {
+  handleIconMenuButtonClick(event) {
     event.stopPropagation();
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       list: {
         paddingTop    : 0,
@@ -63,7 +58,7 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     var itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id;
     var styles            = this.getStyles();
     var itemStyles        = itemActive ? styles.listItemChecked : {};
@@ -93,12 +88,12 @@ module.exports = Radium(React.createClass({
     )
   },
 
-  getList: function() {
+  getList() {
     var styles          = this.getStyles(),
         items           = this.state.items,
         itemsCount      = items.length,
         indexOfListItem = itemsCount - 1,
-        listItems       = this.state.items.map(function(item, index) {
+        listItems       = this.state.items.map((item, index) => {
           if (index < indexOfListItem) {
             return [
               this.renderItem(item),
@@ -106,7 +101,7 @@ module.exports = Radium(React.createClass({
             ];
           }
           return this.renderItem(item);
-        }.bind(this));
+        });
 
     if (items.length > 0) {
       return (
@@ -120,21 +115,21 @@ module.exports = Radium(React.createClass({
     }
 
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function() {
+  render() {
     return (
       <div>
-        <Header>
-          <ColumnCheckIcon.Header className="col-flex-1">{this.props.name}</ColumnCheckIcon.Header>
-        </Header>
-        <Loading show={this.state.isLoading}>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+        </Common.ColumnList.Header>
+        <Common.Loading show={this.state.isLoading}>
           {this.getList()}
-        </Loading>
+        </Common.Loading>
       </div>
     );
   }

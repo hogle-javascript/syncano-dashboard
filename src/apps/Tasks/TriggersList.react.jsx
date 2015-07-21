@@ -14,18 +14,7 @@ import TriggersStore from './TriggersStore';
 
 // Components
 import MUI from 'material-ui';
-
-// List
-import Lists from '../../common/Lists';
-import Item from '../../common/ColumnList/Item.react';
-import EmptyListItem from '../../common/ColumnList/EmptyListItem.react';
-import Header from '../../common/ColumnList/Header.react';
-import Loading from '../../common/Loading/Loading.react';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
-import ColumnID from '../../common/ColumnList/Column/ID.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnKey from '../../common/ColumnList/Column/Key.react';
-import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -62,11 +51,11 @@ export default React.createClass({
         codeBoxLabel = codeBox ? codeBox.label : '';
 
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
         key     = {item.id}
       >
-        <ColumnCheckIcon
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'arrow-up-bold'
           background      = {MUI.Styles.Colors.blue500}
@@ -74,18 +63,18 @@ export default React.createClass({
           handleIconClick = {this.handleItemIconClick}
         >
           {item.label}
-        </ColumnCheckIcon>
-        <ColumnID>{item.id}</ColumnID>
-        <ColumnDesc className="col-xs-8">{codeBoxLabel}</ColumnDesc>
-        <ColumnDesc>{item.signal}</ColumnDesc>
-        <ColumnDate date={item.created_at} />
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.Desc className="col-xs-8">{codeBoxLabel}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.signal}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
   getList() {
     var items = this.state.items.map(item => {
-      return this.renderItem(item);
+      this.renderItem(item);
     });
 
     if (items.length > 0) {
@@ -94,28 +83,28 @@ export default React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
   render() {
     return (
-      <Lists.Container>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
-          <ColumnDesc.Header>Signal</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Desc.Header className="col-xs-8">CodeBox</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Desc.Header>Signal</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

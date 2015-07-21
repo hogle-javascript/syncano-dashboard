@@ -14,19 +14,7 @@ import SolutionEditStore from './SolutionEditStore';
 
 // Components
 import MUI from 'material-ui';
-
-// List
-import Lists from '../../common/Lists';
-import EmptyListItem from '../../common/ColumnList/EmptyListItem.react';
-import Item from '../../common/ColumnList/Item.react';
-import Header from '../../common/ColumnList/Header.react';
-import Loading from '../../common/Loading/Loading.react';
-import ColumnDate from '../../common/ColumnList/Column/Date.react';
-import ColumnDesc from '../../common/ColumnList/Column/Desc.react';
-import ColumnID from '../../common/ColumnList/Column/ID.react';
-import ColumnText from '../../common/ColumnList/Column/Text.react';
-import ColumnKey from '../../common/ColumnList/Column/Key.react';
-import ColumnCheckIcon from '../../common/ColumnList/Column/CheckIcon.react';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -64,25 +52,25 @@ export default React.createClass({
   renderItem(item) {
 
     return (
-      <Item
+      <Common.ColumnList.Item
         key          = {item.id}
         id           = {item.id}
         handleClick  = {this.handleItemClick}
       >
-        <ColumnDesc><Avatar>{item.number}</Avatar></ColumnDesc>
-        <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnID className="col-xs-5 col-md-5">
-          <IconButton
+        <Common.ColumnList.Column.Desc><Avatar>{item.number}</Avatar></Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
+          <MUI.IconButton
             iconClassName = "synicon-cloud-download"
             tooltip       = "Download solution file of this version"
             onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
           />
-        </ColumnID>
-        <ColumnID className="col-xs-5 col-md-5">
+        </Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
           {item.installations_count}
-        </ColumnID>
-        <ColumnDate date={item.created_at} />
-      </Item>
+        </Common.ColumnList.Column.ID>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
@@ -101,28 +89,28 @@ export default React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
   render() {
     return (
-      <Lists.Container>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Description</ColumnDesc.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Download</ColumnID.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Installations</ColumnID.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <Lists.List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Download</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Installations</Common.ColumnList.Column.ID.Header>
+          <Common.ColumnList.Column.Header>Created</Common.ColumnList.Column.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </Lists.List>
-      </Lists.Container>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });
