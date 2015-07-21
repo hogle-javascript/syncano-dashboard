@@ -71,7 +71,9 @@ export default React.createClass({
 
     if (groups === undefined) {
       return
-    } else if (groups.length === 0) {
+    }
+
+    if (groups.length === 0) {
       return 'No group';
     }
 
