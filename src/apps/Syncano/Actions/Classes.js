@@ -25,7 +25,7 @@ export default {
 
   remove(classnames) {
     let promises = classnames.map(classname => {
-      this.Connection.Classes.remove(classname);
+      return this.Connection.Classes.remove(classname);
     });
 
     this.D.all(promises)

@@ -32,11 +32,9 @@ Router.run(routes, function (Root, state) {
   }
 
   var name  = 'app',
-      names = state.routes.map(function (route) {
-        return route.name;
-      }).filter(function(name) {
-        return name !== undefined;
-      });
+      names = state.routes
+                .map(route => route.name)
+                .filter(name => name !== undefined);
 
   if (names.length > 0) {
     name = names[names.length-1];
