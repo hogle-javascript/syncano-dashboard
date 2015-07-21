@@ -27,19 +27,19 @@ var ScheduleDialogStore = Reflux.createStore({
     },
     {
       payload: '0 0 * * *',
-      text: 'Run once a day on midnight'
+      text: 'Run once a day at midnight'
     },
     {
       payload: '0 0 * * 0',
-      text: 'Run once a week on midnight'
+      text: 'Run once a week at midnight'
     },
     {
       payload: '0 0 1 * *',
-      text: 'Run once a month on midnight'
+      text: 'Run once a month at midnight'
     },
     {
       payload: '0 0 1 1 *',
-      text: 'Run once a year on midnight'
+      text: 'Run once a year at midnight'
     }
   ],
 
