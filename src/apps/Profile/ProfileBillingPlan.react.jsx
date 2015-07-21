@@ -119,19 +119,23 @@ module.exports = React.createClass({
     if (this.state.profile.subscription.plan === 'builder')
       return (
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
-          <div>{this.state.profile.subscription.plan}</div>
-          <MUI.Toggle
-            key            = "builder-toggle"
-            defaultToggled = {false}
-            onToggle       = {this.handlePlanToggle}
-          />,
+
+          <div>Builder</div>
+          <div>
+            <MUI.Toggle
+              style          = {{marginTop: 10}}
+              key            = "builder-toggle"
+              defaultToggled = {false}
+              onToggle       = {this.handlePlanToggle} />
+          </div>
+
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
             <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
-          </div>,
-          <div style={{marginTop: 10}}>
-            From $25/month
-          </div>,
+          </div>
+          <div style={{marginTop: 10, fontSize: '1.1rem', padding: 5}}>
+            From <strong>$25</strong>/month
+          </div>
           <div style={{marginTop: 10}}>
             <div><a>Learn</a> when to flip the</div>
             <div>switch to production.</div>
@@ -244,16 +248,16 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       let limitsData = {
-        api : { included : '10 000' },
-        cbx : { included : '10 000' }
+        api : { included : '100 000' },
+        cbx : { included : '1 000' }
       };
       return (
-        <div>
-          <div key="builderDesc">
-            <div>Your plan: <strong>Builder</strong></div>
-            <div>It does not cost you anything but there are limits:</div>
+        <div className = "col-md-12">
+          <div style={styles.mainDesc}>Your plan: <strong>Builder</strong></div>
+          <div style={{marginTop: 5}}>It does not cost you anything but there are limits:</div>
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
           </div>
-          <Limits data={limitsData} />
         </div>
       );
     } else if (plan === 'paid-commitment') {
@@ -300,10 +304,12 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return (
-        <span key="builderComment">
-          If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
-          If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
-        </span>
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div key="builderComment" style={{width: '80%'}}>
+            If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
+            If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
+          </div>
+        </div>
       );
     } else if (plan === 'paid-commitment') {
 
