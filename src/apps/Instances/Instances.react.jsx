@@ -81,15 +81,11 @@ module.exports = Radium(React.createClass({
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
-    Store.fetch();
-  },
-
-  componentDidMount() {
-    console.info('Instances::componentDidMount');
     if (this.getParams().action == 'add') {
       // Show Add modal
       this.showDialog('addInstanceDialog');
     }
+    Store.fetch();
   },
 
   componentWillUpdate(nextProps, nextState) {
