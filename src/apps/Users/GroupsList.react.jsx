@@ -15,7 +15,7 @@ import GroupsStore from './GroupsStore';
 
 // Components
 import MUI from 'material-ui';
-import MenuItem from 'material-ui/lib/menus/menu-item'
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 export default Radium(React.createClass({
