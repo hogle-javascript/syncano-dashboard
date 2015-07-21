@@ -54,9 +54,7 @@ AdminsInvitationsActions.createInvitation.listen(function(payload) {
 
 AdminsInvitationsActions.removeInvitation.listen(function(items) {
   console.info('AdminsInvitationsActions::removeInvitation');
-  var promises  = items.map(function(item) {
-    Connection.Invitations.remove(item.id);
-  });
+  var promises  = items.map(item => Connection.Invitations.remove(item.id));
 
   D.all(promises)
     .success(this.completed)
@@ -66,9 +64,7 @@ AdminsInvitationsActions.removeInvitation.listen(function(items) {
 
 AdminsInvitationsActions.resendInvitation.listen(function(items) {
   console.info('AdminsInvitationsActions::resendInvitation');
-  var promises = items.map(function(item) {
-    Connection.Invitations.resend(item.id);
-  });
+  var promises = items.map(item => Connection.Invitations.resend(item.id));
 
   D.all(promises)
     .success(this.completed)

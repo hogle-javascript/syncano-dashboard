@@ -25,7 +25,7 @@ export default {
 
   remove(dataviews) {
     let promises = dataviews.map(dataview => {
-      this.Connection.DataViews.remove(dataview.name);
+      return this.Connection.DataViews.remove(dataview.name);
     });
 
     this.D.all(promises)

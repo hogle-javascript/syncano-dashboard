@@ -26,7 +26,7 @@ export default {
   remove(schedules) {
 
     let promises = schedules.map(schedule => {
-      this.Connection.Schedules.remove(schedule.id);
+      return this.Connection.Schedules.remove(schedule.id);
     });
 
     this.D.all(promises)
