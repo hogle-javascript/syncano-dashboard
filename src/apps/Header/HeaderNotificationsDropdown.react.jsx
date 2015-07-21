@@ -36,7 +36,7 @@ module.exports = Radium(React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentWillMount: function () {
+  componentDidMount: function () {
     ProfileInvitationsActions.fetch();
   },
 

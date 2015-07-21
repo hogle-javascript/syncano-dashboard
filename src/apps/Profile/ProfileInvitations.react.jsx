@@ -96,7 +96,7 @@ module.exports = React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     console.info('ProfileInvitations::componentDidMount');
     ProfileInvitationsActions.fetch();
   },

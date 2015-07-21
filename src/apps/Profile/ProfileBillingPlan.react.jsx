@@ -25,7 +25,7 @@ module.exports = React.createClass({
     Reflux.connect(PlanDialogStore),
   ],
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     Actions.fetch()
   },
 

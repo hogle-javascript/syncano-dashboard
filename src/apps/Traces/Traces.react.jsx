@@ -30,7 +30,7 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     var codeboxId = this.getParams().codeboxId;
 
     TracesActions.setCurrentObjectId(codeboxId);

@@ -51,8 +51,8 @@ module.exports = React.createClass({
     WebhooksActions.fetch();
   },
 
-  componentWillMount: function() {
-    console.info('Data::componentWillMount');
+  componentDidMount: function() {
+    console.info('Data::componentDidMount');
     this.fetch();
   },
 

@@ -34,7 +34,7 @@ module.exports = React.createClass({
     Actions.showDialog();
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     console.info('Solutions::componentWillMount');
     Actions.fetch();
   },

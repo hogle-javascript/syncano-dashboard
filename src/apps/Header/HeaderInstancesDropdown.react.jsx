@@ -35,8 +35,8 @@ module.exports = React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentWillMount: function() {
-    console.info('HeaderInstancesDropdown::componentWillMount');
+  componentDidMount: function() {
+    console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
   },
 

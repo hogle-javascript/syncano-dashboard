@@ -46,7 +46,7 @@ module.exports = React.createClass({
     Reflux.connect(SolutionEditStore)
   ],
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     InstancesActions.fetch();
     SolutionEditActions.fetch();
   },

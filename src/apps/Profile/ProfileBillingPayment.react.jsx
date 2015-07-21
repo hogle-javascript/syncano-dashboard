@@ -48,7 +48,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillMount() {
+  componentDidMount() {
     ProfileActions.fetchBillingCard();
   },
 
