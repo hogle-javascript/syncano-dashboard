@@ -1,127 +1,50 @@
-var Reflux     = require('reflux'),
-    Connection = require('../Session/Connection').get(),
-    Stripe     = require('../../stripe');
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-var ProfileActions = Reflux.createActions({
-  updateSettings       : {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  changePassword       : {
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  fetchBillingProfile  : {
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  updateBillingProfile : {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  resetKey             : {
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  fetchBillingCard     : {
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  updateBillingCard    : {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  fetchInvoices        : {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+export default CreateActions(
+  {},
+  {
+    updateSettings: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Profile.updateSettings',
+    },
+    changePassword: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Profile.changePassword',
+    },
+    fetchBillingProfile: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.getProfile',
+    },
+    updateBillingProfile: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.updateProfile',
+    },
+    resetKey: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Profile.resetKey',
+    },
+    fetchBillingCard: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.getCard',
+    },
+    updateBillingCard: {
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.updateCard',
+    },
+    fetchInvoices: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Billing.listInvoices',
+    },
   }
-});
-
-ProfileActions.updateSettings.listen(function(payload) {
-  console.info('ProfileActions::updateSettings');
-  Connection
-    .Accounts
-    .update({
-      first_name : payload.firstName,
-      last_name  : payload.lastName
-    })
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.changePassword.listen(function(payload) {
-  console.info('ProfileActions::changePassword');
-  Connection
-    .Accounts
-    .changePassword({
-      current_password : payload.currentPassword,
-      new_password     : payload.newPassword
-    })
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.fetchBillingProfile.listen(function() {
-  console.info('ProfileActions::fetchBillingProfile');
-  Connection
-    .Billing
-    .getProfile()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.updateBillingProfile.listen(function(payload) {
-  console.info('ProfileActions::updateBillingProfile');
-  Connection
-    .Billing
-    .updateProfile(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.resetKey.listen(function() {
-  console.info('ProfileActions::resetKey');
-  Connection
-    .Accounts
-    .resetKey()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.fetchBillingCard.listen(function() {
-  console.info('ProfileActions::fetchBillingCard');
-  Connection
-    .Billing
-    .getCard()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ProfileActions.updateBillingCard.listen(function(payload) {
-  console.info('ProfileActions::updateBillingCard');
-  Stripe.card.createToken(payload, function(status, response) {
-    if (response.error) {
-      return this.failure(response.error);
-    }
-
-    Connection
-      .Billing
-      .updateCard(response.id)
-      .then(this.completed)
-      .catch(this.failure);
-  }.bind(this));
-});
-
-ProfileActions.fetchInvoices.listen(function() {
-  console.info('ProfileActions::fetchInvoices');
-  Connection
-    .Billing
-    .getInvoices()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = ProfileActions;
+);
