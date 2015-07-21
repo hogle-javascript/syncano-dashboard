@@ -10,10 +10,8 @@ import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
 
 // Apps
-//import Profile from './apps/Profile'; // TODO: that kind of import doesn't work
-//import Account from './apps/Account'; // TODO: that kind of import doesn't work
-var Account = require('./apps/Account');
-var Profile = require('./apps/Profile');
+import Profile from './apps/Profile';
+import Account from './apps/Account';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
