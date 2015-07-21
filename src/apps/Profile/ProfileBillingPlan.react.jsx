@@ -320,19 +320,17 @@ module.exports = React.createClass({
         };
 
         return (
-          <div className="row">
-            <div classsName="col-md-20" style={{width: 40, height: 20}}>
+          <div className="row align-top">
+            <div style={{Transform: 'translateY(-14px)'}}>
               <MUI.IconButton
-                  className = "synicon-information-outline"
-
-                  iconClassName="synicon-information-outline"
-                  iconStyle={{color: MUI.Styles.Colors.blue500}}
-                  tooltip="GitHub" />
+                iconClassName = "synicon-information-outline"
+                iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+                tooltip       = "GitHub"
+              />
             </div>
-
             <div classsName="col-flex-1">
               <div key='productionComment-subs'>
-                <div className="row">
+                <div>
                   <div style={styles.mainDesc}>
                     New plan <strong>${total}</strong>:
                   </div>

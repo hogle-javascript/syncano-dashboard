@@ -30,8 +30,8 @@ module.exports = React.createClass({
         </Show>
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
           <div className="col-md-9">
-            <div>per extra call</div>
-            <div>per extra run</div>
+            <div style={{whiteSpace: 'nowrap'}}>per extra call</div>
+            <div style={{whiteSpace: 'nowrap'}}>per extra run</div>
           </div>
         </Show>
       </div>
