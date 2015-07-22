@@ -1,7 +1,7 @@
-import TraceResult from './TraceResult.react';
-import TraceResultWithMeta from './TraceResultWithMeta.react';
+import Result from './TraceResult.react';
+import ResultWithMeta from './TraceResultWithMeta.react';
 
-export {
-  TraceResult as Result,
-  TraceResultWithMeta as ResultWithMeta
+export default {
+  Result,
+  ResultWithMeta
 };
