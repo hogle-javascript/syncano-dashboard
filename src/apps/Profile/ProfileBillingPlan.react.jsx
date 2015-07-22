@@ -1,16 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Moment from 'moment';
-import MUI from 'material-ui';
 
-import FormMixin from '../../mixins/FormMixin';
-import DialogsMixin from '../../mixins/DialogsMixin';
+import Mixins from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
+import MUI from 'material-ui';
 import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
@@ -20,9 +19,9 @@ module.exports = React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    DialogsMixin,
+    Mixins.Dialogs,
     Reflux.connect(Store),
-    Reflux.connect(PlanDialogStore),
+    Reflux.connect(PlanDialogStore)
   ],
 
   componentDidMount() {
@@ -37,25 +36,25 @@ module.exports = React.createClass({
   getStyles() {
     return {
       main: {
-        marginTop: 50,
-        paddingRight: 50,
-        color: '#4A4A4A',
+        marginTop    : 50,
+        paddingRight : 50,
+        color        : '#4A4A4A'
       },
       mainDesc: {
         fontSize   : '1.5rem',
-        lineHeight : '1.5rem',
+        lineHeight : '1.5rem'
       },
       comment: {
-        fontSize: '0.9em',
-        paddingLeft: 20,
-        paddingRight: 20
+        fontSize     : '0.9em',
+        paddingLeft  : 20,
+        paddingRight : 20
       },
       explorerButton: {
-        marginTop: 20,
+        marginTop : 20
       },
       chartHeader: {
-        paddingTop: 50,
-        fontSize: '1.3em'
+        paddingTop : 50,
+        fontSize   : '1.3em'
       }
     }
   },
@@ -64,7 +63,7 @@ module.exports = React.createClass({
   initDialogs() {
 
     return [{
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key   : 'freezeAccount',
         ref   : 'freezeAccount',
@@ -119,16 +118,15 @@ module.exports = React.createClass({
     if (this.state.profile.subscription.plan === 'builder')
       return (
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
-
           <div>Builder</div>
           <div>
             <MUI.Toggle
               style          = {{marginTop: 10}}
               key            = "builder-toggle"
               defaultToggled = {false}
-              onToggle       = {this.handlePlanToggle} />
+              onToggle       = {this.handlePlanToggle}
+            />
           </div>
-
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
             <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
@@ -335,8 +333,8 @@ module.exports = React.createClass({
                 iconClassName = "synicon-information-outline"
                 iconStyle     = {{color: MUI.Styles.Colors.blue500}}
                 tooltip       = {`your current plan will expire at the end of
-                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`} />
-
+                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`}
+              />
             </div>
             <div classsName="col-flex-1">
               <div key='productionComment-subs'>

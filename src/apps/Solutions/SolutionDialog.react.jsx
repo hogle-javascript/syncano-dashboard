@@ -1,33 +1,28 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    FormMixin           = require('../../mixins/FormMixin'),
-    DialogMixin         = require('../../mixins/DialogMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    SolutionsActions    = require('./SolutionsActions'),
-    SolutionDialogStore = require('./SolutionDialogStore'),
-    ColorStore          = require('../../common/Color/ColorStore'),
-    IconStore           = require('../../common/Icon/IconStore'),
+// Stores and Actions
+import SolutionsActions from './SolutionsActions';
+import SolutionDialogStore from './SolutionDialogStore';
+import ColorStore from '../../common/Color/ColorStore';
+import IconStore from '../../common/Icon/IconStore';
 
-    // Components
-    mui                 = require('material-ui'),
-    Toggle              = mui.Toggle,
-    TextField           = mui.TextField,
-    DropDownMenu        = mui.DropDownMenu,
-    Dialog              = mui.Dialog,
-    FlatButton          = mui.FlatButton;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionDialog',
 
   mixins: [
     Reflux.connect(SolutionDialogStore),
     React.addons.LinkedStateMixin,
-    FormMixin,
-    DialogMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -39,14 +34,13 @@ module.exports = React.createClass({
     }
   },
 
-  handleEditSubmit: function() {
-    SolutionsActions.updateSolution(
-
-      {description: this.state.description}
-    );
+  handleEditSubmit() {
+    SolutionsActions.updateSolution({
+      description: this.state.description
+    });
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     SolutionsActions.createSolution({
       label       : this.state.label,
       description : this.state.description,
@@ -58,41 +52,41 @@ module.exports = React.createClass({
     });
   },
 
-  handleToogle: function(event, status) {
+  handleToogle(event, status) {
     var state = {};
     state[event.target.name] = status;
     this.setState(state);
   },
 
-  render: function() {
-    var title = this.hasEditMode() ? 'Update an Solution' : 'Create a Solution';
-
-    var dialogCustomActions = [
-      <FlatButton
+  render() {
+    let title = this.hasEditMode() ? 'Update an Solution' : 'Create a Solution';
+    let dialogCustomActions = [
+      <MUI.FlatButton
         key        = "cancel"
         label      = "Cancel"
         onTouchTap = {this.handleCancel}
-        ref        = "cancel" />,
-
-      <FlatButton
+        ref        = "cancel"
+      />,
+      <MUI.FlatButton
         key        = "confirm"
         label      = "Confirm"
         primary    = {true}
         onTouchTap = {this.handleFormValidation}
-        ref        = "submit" />
+        ref        = "submit"
+      />
     ];
 
     return (
-      <Dialog
+      <Common.Dialog
         ref             = "dialog"
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
-
-          <TextField
+          <MUI.TextField
               ref               = 'label'
               name              = 'label'
               fullWidth         = {true}
@@ -100,29 +94,28 @@ module.exports = React.createClass({
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = 'Short name for your Solution'
-              floatingLabelText = 'Name' />
-
-            <TextField
-              ref               = 'description'
-              name              = 'description'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              hintText          = 'Sescription of Solution (optional)'
-              floatingLabelText = 'Description' />
-
-            <Toggle
-              ref            = 'public'
-              name           = 'public'
-              defaultToggled = {this.state.public}
-              onToggle       = {this.handleToogle}
-              style          = {{marginTop: 20}}
-              label          = 'Make this solution public?' />
-
+              floatingLabelText = 'Name'
+          />
+          <MUI.TextField
+            ref               = 'description'
+            name              = 'description'
+            fullWidth         = {true}
+            valueLink         = {this.linkState('description')}
+            errorText         = {this.getValidationMessages('description').join(' ')}
+            hintText          = 'Sescription of Solution (optional)'
+            floatingLabelText = 'Description'
+          />
+          <MUI.Toggle
+            ref            = 'public'
+            name           = 'public'
+            defaultToggled = {this.state.public}
+            onToggle       = {this.handleToogle}
+            style          = {{marginTop: 20}}
+            label          = 'Make this solution public?'
+          />
         </div>
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });
 

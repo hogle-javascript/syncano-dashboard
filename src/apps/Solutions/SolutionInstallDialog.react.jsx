@@ -14,7 +14,7 @@ import Actions from './SolutionInstallDialogActions';
 // Components
 import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionInstallDialog',
 
@@ -26,7 +26,7 @@ module.exports = React.createClass({
     Mixins.Form,
     Mixins.Dialog,
 
-    Reflux.connect(Store),
+    Reflux.connect(Store)
   ],
 
   validatorConstraints: {
@@ -89,35 +89,38 @@ module.exports = React.createClass({
         displayMember     = 'text'
         floatingLabelText = 'Instances'
         errorText         = {this.getValidationMessages('instance').join(' ')}
-        menuItems         = {Store.getInstancesDropdown()} />
+        menuItems         = {Store.getInstancesDropdown()}
+      />
     )
   },
 
   render() {
-    var title = 'Install a Solution';
-
-    var dialogCustomActions = [
+    let title = 'Install a Solution';
+    let dialogCustomActions = [
       <MUI.FlatButton
         ref        = 'cancel'
         key        = 'cancel'
         label      = 'Cancel'
-        onTouchTap = {this.handleCancel} />,
+        onTouchTap = {this.handleCancel}
+      />,
       <MUI.FlatButton
         ref        = 'submit'
         key        = 'confirm'
         label      = 'Confirm'
         primary    = {true}
-        onTouchTap = {this.handleFormValidation} />
+        onTouchTap = {this.handleFormValidation}
+      />
     ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = "dialog"
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
 
@@ -140,8 +143,7 @@ module.exports = React.createClass({
               menuItems         = {Store.getVersionsDropdown()} />
           </Common.Show>
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
-
 });

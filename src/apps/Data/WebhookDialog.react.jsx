@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import WebhooksActions from './WebhooksActions';
@@ -13,6 +12,7 @@ import ClassesActions from '../Classes/ClassesActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -21,8 +21,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(WebhookDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -80,7 +80,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' CodeBox Endpoint'}
         openImmediately = {this.props.openImmediately}
@@ -130,7 +130,7 @@ export default React.createClass({
             label          = 'Make this WebHook public?'
           />
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

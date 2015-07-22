@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import TriggersActions from './TriggersActions';
@@ -13,6 +12,7 @@ import ClassesActions from '../Classes/ClassesActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -21,8 +21,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(TriggerDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -66,22 +66,22 @@ export default React.createClass({
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Update' : 'Create',
-        dialogStandardActions = [
-          {
-            ref        : 'cancel',
-            text       : 'Cancel',
-            onTouchTap : this.handleCancel
-          },
-          {
-            ref        : 'submit',
-            text       : 'Confirm',
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title = this.hasEditMode() ? 'Update' : 'Create';
+    let dialogStandardActions = [
+      {
+        ref        : 'cancel',
+        text       : 'Cancel',
+        onTouchTap : this.handleCancel
+      },
+      {
+        ref        : 'submit',
+        text       : 'Confirm',
+        onTouchTap : this.handleFormValidation
+      }
+    ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = "dialog"
         title           = {title + ' a Trigger'}
         openImmediately = {this.props.openImmediately}
@@ -140,7 +140,7 @@ export default React.createClass({
             />
           </form>
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

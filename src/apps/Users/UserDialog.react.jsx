@@ -107,7 +107,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref       = 'dialog'
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
@@ -156,7 +156,7 @@ export default React.createClass({
             show     = {this.state.isLoading}
           />
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

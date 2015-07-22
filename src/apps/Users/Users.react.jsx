@@ -23,7 +23,7 @@ import GroupsList from './GroupsList.react';
 import UserDialog from './UserDialog.react';
 import GroupDialog from './GroupDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Users',
 
@@ -33,9 +33,9 @@ module.exports = React.createClass({
 
     Reflux.connect(UsersStore, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
-    HeaderMixin,
+    Mixins.Dialogs,
     Mixins.InstanceTabs,
-    Mixins.Dialogs
+    HeaderMixin
   ],
 
   componentWillUpdate(nextProps, nextState) {
@@ -126,7 +126,7 @@ module.exports = React.createClass({
     return [
       // Groups
       {
-        dialog: MUI.Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    'removeGroupDialog',
           title:  'Delete Group',
@@ -146,14 +146,15 @@ module.exports = React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.groups.isLoading} />
+              show     = {this.state.groups.isLoading}
+            />
           ]
         }
       },
 
       // Users
       {
-        dialog: MUI.Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    'removeUserDialog',
           title:  'Delete User',
@@ -168,7 +169,8 @@ module.exports = React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.users.isLoading} />
+              show     = {this.state.users.isLoading}
+            />
           ]
         }
       }

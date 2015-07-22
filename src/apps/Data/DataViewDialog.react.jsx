@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import DataViewsActions from './DataViewsActions';
@@ -22,8 +21,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(DataViewDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -191,7 +190,7 @@ export default React.createClass({
     }
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' Data Endpoint'}
         openImmediately = {this.props.openImmediately}
@@ -252,7 +251,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

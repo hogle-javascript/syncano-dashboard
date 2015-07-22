@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import ApiKeysActions from './ApiKeysActions';
@@ -11,6 +10,7 @@ import ApiKeyDialogStore from './ApiKeyDialogStore';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -19,8 +19,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(ApiKeyDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {},
@@ -62,7 +62,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' an API Key'}
         openImmediately = {this.props.openImmediately}
@@ -101,7 +101,7 @@ export default React.createClass({
             />
           </form>
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

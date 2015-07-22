@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import CodeBoxesActions from './CodeBoxesActions';
@@ -20,8 +19,8 @@ export default React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(CodeBoxDialogStore),
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -70,7 +69,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref          = 'dialog'
         title        = {title + ' CodeBox'}
         actions      = {dialogStandardActions}
@@ -123,7 +122,7 @@ export default React.createClass({
           position = 'bottom'
           show     = {this.state.isLoading}
         />
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

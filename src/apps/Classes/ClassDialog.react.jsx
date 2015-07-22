@@ -232,14 +232,12 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onDismiss       = {this.resetDialogState}
-        style           = {{overflow: 'auto'}}
-        bodyStyle       = {{overflowX: 'initial', overflowY: 'initial'}}
       >
         {this.renderFormNotifications()}
         <div className='row'>
@@ -354,7 +352,7 @@ export default React.createClass({
           </div>
         </div>
         <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

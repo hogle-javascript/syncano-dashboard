@@ -81,7 +81,7 @@ export default React.createClass({
     ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref               = "dialog"
         contentInnerStyle = {{paddingBottom: 24, padding: '0px'}}
         actions           = {dialogStandardActions}
@@ -110,7 +110,7 @@ export default React.createClass({
             </div>
           </MUI.Tab>
         </MUI.Tabs>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });
