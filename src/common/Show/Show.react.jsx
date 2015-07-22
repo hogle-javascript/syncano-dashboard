@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 
 export default React.createClass({
 
@@ -10,7 +9,7 @@ export default React.createClass({
       return null;
     }
 
-    if (_.isArray(this.props.children)) {
+    if (React.Children.count(this.props.children) > 1) {
       return <div {...this.props}>{this.props.children}</div>;
     }
 
