@@ -112,9 +112,18 @@ gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
 });
 
 gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevisioned'], function() {
+  function replaceJsIfMap(filename) {
+      if (filename.indexOf('.map') > -1) {
+          return filename.replace('js/', '');
+      }
+      return filename;
+  }
+
   return gulp.src('./dist/**/*')
     .pipe(revReplace({
-      manifest: gulp.src('./' + paths.dist + '/rev-manifest.json')
+      manifest: gulp.src('./' + paths.dist + '/rev-manifest.json'),
+      modifyUnreved: replaceJsIfMap,
+      modifyReved: replaceJsIfMap
     }))
     .pipe(gulp.dest(paths.dist));
 });
