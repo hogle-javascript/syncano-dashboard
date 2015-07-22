@@ -86,7 +86,7 @@ module.exports = Radium(React.createClass({
           color: "#8bc34a"
         },
         content: {
-          text   : <div><b>{item.inviter}</b><span> invited you to his instance </span><b>{item.instance}</b></div>,
+          text   : <div><b>{item.inviter}</b><span> invited you to their instance </span><b>{item.instance}</b></div>,
           style  : {}
         },
         buttonsText: ["Accept", "Decline"],
@@ -106,7 +106,7 @@ module.exports = Radium(React.createClass({
             color: "#ff9800"
           },
           content: {
-            text          : "You email address is not yet verified.",
+            text          : "Your email address is not yet verified.",
             secondaryText : <div style={secondaryLinkStyle} onClick={this.handleResendEmail}>Resend activation email</div>,
             style         : {}
           },
