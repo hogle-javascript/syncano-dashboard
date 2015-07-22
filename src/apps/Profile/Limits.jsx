@@ -1,5 +1,5 @@
-var React = require('react'),
-    Show  = require('../../common/Show/Show.react');
+import React from 'react';
+import Show from '../../common/Show/Show.react';
 
 module.exports = React.createClass({
 
