@@ -30,7 +30,7 @@ module.exports = React.createClass({
         className = "container"
         style     = {styles.container}>
         <div className="row align-center">
-          <div className="col-md-34">
+          <div className="col-flex-1">
             <div>
               <div style={styles.header}>
                 {this.props.headerText}

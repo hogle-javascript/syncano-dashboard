@@ -38,21 +38,24 @@ module.exports = React.createClass({
     return {
       main: {
         marginTop: 50,
+        paddingRight: 50,
         color: '#4A4A4A',
       },
       mainDesc: {
-        fontSize   : '1.3em',
-        lineHeight : '1.3em',
+        fontSize   : '1.5rem',
+        lineHeight : '1.5rem',
       },
       comment: {
-        fontSize: '0.9em'
+        fontSize: '0.9em',
+        paddingLeft: 20,
+        paddingRight: 20
       },
       explorerButton: {
         marginTop: 20,
       },
       chartHeader: {
         paddingTop: 50,
-        fontSize: '1.5em'
+        fontSize: '1.3em'
       }
     }
   },
@@ -116,20 +119,23 @@ module.exports = React.createClass({
     if (this.state.profile.subscription.plan === 'builder')
       return (
         <div className="row align-middle" style={{FlexDirection: 'column'}}>
-          <div>{this.state.profile.subscription.plan}</div>
-          <MUI.Toggle
-            style          = {{marginTop: 10}}
-            key            = "builder-toggle"
-            defaultToggled = {false}
-            onToggle       = {this.handlePlanToggle}
-          />,
+
+          <div>Builder</div>
+          <div>
+            <MUI.Toggle
+              style          = {{marginTop: 10}}
+              key            = "builder-toggle"
+              defaultToggled = {false}
+              onToggle       = {this.handlePlanToggle} />
+          </div>
+
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
             <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
-          </div>,
-          <div style={{marginTop: 10}}>
-            From $25/month
-          </div>,
+          </div>
+          <div style={{marginTop: 10, fontSize: '1.1rem', padding: 5}}>
+            From <strong>$25</strong>/month
+          </div>
           <div style={{marginTop: 10}}>
             <div><a>Learn</a> when to flip the</div>
             <div>switch to production.</div>
@@ -139,12 +145,12 @@ module.exports = React.createClass({
     else if (this.state.profile.subscription.plan === 'free')
       return;
 
-
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
           <div>
             <MUI.Toggle
+              style          = {{marginTop: 10}}
               key            = "paid-commitment-toggle"
               defaultToggled = {true}
               disabled       = {true}
@@ -197,26 +203,33 @@ module.exports = React.createClass({
 
     if (this.isNewSubscription()) {
       return (
-        <div style={styles.explorerButton}>
-          <MUI.FlatButton
-            label   = {'Cancel Change'}
-            onClick = {this.handleDeleteSubscription}
-          />
-          <MUI.FlatButton
-            style   = {{marginLeft: 15}}
-            label   = {'Upgrade'}
-            onClick = {this.handleShowPlanDialog}
-          />
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div style={styles.explorerButton}>
+            <MUI.FlatButton
+              primary    = {true}
+              label      = {'Cancel Change'}
+              onTouchTap = {this.handleDeleteSubscription}
+            />
+            <MUI.FlatButton
+              primary = {true}
+              style   = {{marginLeft: 15}}
+              label   = {'Upgrade'}
+              onTouchTap = {this.handleShowPlanDialog}
+            />
+          </div>
         </div>
       )
     }
 
     return (
-      <div style={styles.explorerButton}>
-        <MUI.FlatButton
-          label   = {this.renderExplorerButtonLabel() || ''}
-          onClick = {this.handleShowPlanDialog}
-        />
+      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div style={styles.explorerButton}>
+          <MUI.FlatButton
+            primary    = {true}
+            label      = {this.renderExplorerButtonLabel() || ''}
+            onTouchTap = {this.handleShowPlanDialog}
+          />
+        </div>
       </div>
     )
   },
@@ -235,16 +248,16 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       let limitsData = {
-        api : { included : '10 000' },
-        cbx : { included : '10 000' }
+        api : { included : '100 000' },
+        cbx : { included : '1 000' }
       };
       return (
-        <div>
-          <div key="builderDesc">
-            <div>Your plan: <strong>Builder</strong></div>
-            <div>It does not cost you anything but there are limits:</div>
+        <div className = "col-md-12">
+          <div style={styles.mainDesc}>Your plan: <strong>Builder</strong></div>
+          <div style={{marginTop: 5}}>It does not cost you anything but there are limits:</div>
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
           </div>
-          <Limits data={limitsData} />
         </div>
       );
     } else if (plan === 'paid-commitment') {
@@ -272,7 +285,9 @@ module.exports = React.createClass({
           <div style={styles.mainDesc}>
             Current plan <strong>${total}</strong>:
           </div>
-          <Limits data={limitsData} />
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
+          </div>
         </div>
       );
     }
@@ -289,10 +304,12 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return (
-        <span key="builderComment">
-          If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
-          If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
-        </span>
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div key="builderComment" style={{width: '80%'}}>
+            If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
+            If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
+          </div>
+        </div>
       );
     } else if (plan === 'paid-commitment') {
 
@@ -312,20 +329,37 @@ module.exports = React.createClass({
         };
 
         return (
-          <div key='productionComment-subs' >
-            <div style={styles.mainDesc}>
-              New plan <strong>${total}</strong> (your current plan will
-              expire at the end of the month and your new plan will begin on {Moment(subscription.start).format('LL')}):
+          <div className="row align-top">
+            <div style={{Transform: 'translateY(-14px)'}}>
+              <MUI.IconButton
+                iconClassName = "synicon-information-outline"
+                iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+                tooltip       = {`your current plan will expire at the end of
+                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`} />
+
             </div>
-            <Limits data={limitsData} />
-          </div>
+            <div classsName="col-flex-1">
+              <div key='productionComment-subs'>
+                <div>
+                  <div style={styles.mainDesc}>
+                    New plan <strong>${total}</strong>:
+                  </div>
+                </div>
+                <div style={{marginTop: 20}}>
+                  <Limits data={limitsData} />
+                </div>
+              </div>
+            </div>
+         </div>
         )
       } else {
         return (
-          <span key="productionComment">
-            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-            Your new monthly fixed price will start from next billing period.
-          </span>
+          <div className="row align-middle" style={{FlexDirection: 'column'}}>
+            <div key="productionComment" style={{width: '80%'}}>
+              You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+              Your new monthly fixed price will start from next billing period.
+            </div>
+          </div>
         );
       }
     }
@@ -348,7 +382,7 @@ module.exports = React.createClass({
             </div>
             {this.renderExplorerButton()}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             {this.renderSwitchPlan()}
           </div>
         </div>
