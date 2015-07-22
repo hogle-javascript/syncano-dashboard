@@ -2,7 +2,7 @@ import {EventEmitter} from 'events';
 import d3 from 'd3';
 import _ from 'lodash';
 
-import './x.css';
+import './ProfileBillingChart.css';
 
 
 class BillingChart {
@@ -58,14 +58,6 @@ class BillingChart {
                              (height+margin.bottom) + ")")
         .style("text-anchor", "middle")
         .text("Date");
-
-  }
-
-  update() {
-
-  }
-
-  draw() {
 
   }
 

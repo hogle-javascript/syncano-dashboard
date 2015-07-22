@@ -3,26 +3,20 @@ import moment from 'moment';
 import d3 from 'd3';
 import _ from 'lodash';
 
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingChartActions';
 
 export default Reflux.createStore({
   listenables: Actions,
-  mixins: [WaitForStoreMixin],
   format: 'YYYY-MM-DD',
 
   init() {
-    // this.waitFor(
-    //   SessionActions.setUser,
-    //   this.refreshData
-    // );
-  },
-
-  refreshData() {
-    // console.debug('ProfileBillingPlanDialogStore::refreshData');
-    // Actions.fetchBillingPlans();
-    // Actions.fetchBillingSubscriptions();
+    this.joinTrailing(
+      SessionActions.setUser,
+      Actions.fetchBillingProfile.completed,
+      Actions.fetchTotalDailyUsage.completed,
+      this.prepareChartData
+    );
   },
 
   getInitialState() {
@@ -41,12 +35,39 @@ export default Reflux.createStore({
     }
   },
 
-  onFetchTotalDailyUsageCompleted(response) {
-    let max     = '1970-01-01';
-    let objects = {
-      'api': {},
-      'cbx': {}
+  prepareChartData(user, profile, usage) {
+    user    = _.first(user);
+    profile = _.first(profile);
+    usage   = _.first(usage);
+
+    let state       = this.getInitialState();
+    state.isLoading = false;
+    state.x.values  = this.getAllDates();
+    state.x.min     = state.x.values[0];
+    state.x.max     = _.last(state.x.values);
+
+    if (_.isEmpty(usage.objects)) {
+      this.trigger(state);
+      return;
+    }
+
+    let subscription = profile.subscription || {};
+    let pricing      = subscription.pricing;
+    let max          = '1970-01-01';
+    let objects      = {
+      api: {},
+      cbx: {}
     };
+
+    if (_.isEmpty(pricing)) {
+      // $5.25
+      pricing = {
+        api: {overage: 0.0000200, included: 200000},
+        cbx: {overage: 0.0002500, included: 5000}
+      };
+    }
+
+    let pricingMax = _.sum(pricing, v => v.included * v.overage);
 
     // Genrrate placeholder for predictions based on objects
     let predictions = _.reduce(objects, (result, v, k) => {
@@ -54,9 +75,13 @@ export default Reflux.createStore({
       return result;
     }, {});
 
-    // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 4}}
-    _.forEach(response.objects, usage => {
-      objects[usage.source][usage.date] = usage.value;
+    // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
+    _.forEach(usage.objects, usage => {
+      if (objects[usage.source] === undefined) {
+        return;
+      }
+
+      objects[usage.source][usage.date] = pricing[usage.source].overage * usage.value;
       if (max < usage.date) {
         max = usage.date;
       }
@@ -82,20 +107,13 @@ export default Reflux.createStore({
     this.sumArrays(objects);
     this.sumArrays(predictions);
 
-    let state       = this.getInitialState();
-    state.isLoading = false;
-    state.x.values  = this.getAllDates();
-    state.x.min     = state.x.values[0];
-    state.x.max     = _.last(state.x.values);
-
     let findYMaxIn  = (!_.isEmpty(predictions)) ? predictions : objects;
     let yMax        = _.max(_.map(findYMaxIn, value => _.max(value, 'value').value));
-
     state.y.min     = 0;
-    state.y.max     = yMax;
+    state.y.max     = _.ceil((yMax < pricingMax) ? pricingMax : yMax);
 
     _.forEach([objects, predictions], (elements, index) => {
-      let keys = _.keys(elements).reverse();
+      let keys   = _.keys(elements).reverse();
       let suffix = (index > 0) ? '-predictions' : '';
 
       _.forEach(keys, key => {
@@ -117,6 +135,16 @@ export default Reflux.createStore({
         })
       });
     }
+
+    state.y.values.push({
+      source: 'pricing-max',
+      values: _.map(state.x.values, date => {
+        return {
+          date: date,
+          value: pricingMax
+        };
+      })
+    });
 
     this.trigger(state);
   },

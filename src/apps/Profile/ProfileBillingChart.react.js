@@ -11,6 +11,7 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
+    Actions.fetchBillingProfile();
     Actions.fetchTotalDailyUsage({
       start: Store.getStartDate(),
       end: Store.getEndDate()

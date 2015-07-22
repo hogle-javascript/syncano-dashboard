@@ -51,3 +51,8 @@ path {
   fill: lightgrey;
 }
 
+.area-pricing-max {
+  fill: gray;
+  fill-opacity: 0.2;
+}
+
