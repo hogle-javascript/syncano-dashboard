@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 
 import Common from '../../common';
 
-import d3Chart from './ProfileBillingChart.d3';
+import BillingChart from './ProfileBillingChart.d3';
 import Actions from './ProfileBillingChartActions';
 import Store from './ProfileBillingChartStore';
 
@@ -23,7 +23,7 @@ export default React.createClass({
       return;
     }
     let element = this.getDOMNode();
-    this.chart  = new d3Chart(element, this.state);
+    this.chart  = new BillingChart(element, this.state);
   },
 
   render() {
