@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import SchedulesActions from './SchedulesActions';
@@ -12,6 +11,7 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -20,8 +20,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(ScheduleDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -60,7 +60,7 @@ export default React.createClass({
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit': 'Create',
+    var title       = this.hasEditMode() ? 'Edit' : 'Create',
         dialogStandardActions = [
           {
             ref        : 'cancel',
@@ -75,7 +75,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' a Schedule'}
         openImmediately = {this.props.openImmediately}
@@ -122,7 +122,7 @@ export default React.createClass({
             />
           </form>
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

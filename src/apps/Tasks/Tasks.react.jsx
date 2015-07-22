@@ -1,40 +1,33 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
-    Show                  = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    SchedulesActions      = require('./SchedulesActions'),
-    SchedulesStore        = require('./SchedulesStore'),
-    TriggersActions       = require('./TriggersActions'),
-    TriggersStore         = require('./TriggersStore'),
-    CodeBoxesActions      = require('../CodeBoxes/CodeBoxesActions'),
-    ClassesActions        = require('../Classes/ClassesActions'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import SchedulesActions from './SchedulesActions';
+import SchedulesStore from './SchedulesStore';
+import TriggersActions from './TriggersActions';
+import TriggersStore from './TriggersStore';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import ClassesActions from '../Classes/ClassesActions';
 
-    // Components
-    mui                   = require('material-ui'),
-    Dialog                = mui.Dialog,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
-    Loading               = require('../../common/Loading/Loading.react'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // Local components
-    SchedulesList         = require('./SchedulesList.react'),
-    TriggersList          = require('./TriggersList.react'),
-    ScheduleDialog        = require('./ScheduleDialog.react'),
-    TriggerDialog         = require('./TriggerDialog.react');
+// Local components
+import SchedulesList from './SchedulesList.react';
+import TriggersList from './TriggersList.react';
+import ScheduleDialog from './ScheduleDialog.react';
+import TriggerDialog from './TriggerDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Tasks',
 
@@ -44,18 +37,18 @@ module.exports = React.createClass({
 
     Reflux.connect(SchedulesStore, 'schedules'),
     Reflux.connect(TriggersStore, 'triggers'),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('Tasks::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('Tasks::componentDidMount');
     ClassesActions.fetch();
     CodeBoxesActions.fetch();
@@ -64,14 +57,13 @@ module.exports = React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function() {
-
-    var checkedTriggers  = TriggersStore.getCheckedItems(),
+  initDialogs() {
+    let checkedTriggers  = TriggersStore.getCheckedItems(),
         checkedSchedules = SchedulesStore.getCheckedItems();
 
     return [
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    'removeTriggerDialog',
           title:  'Delete Trigger',
@@ -87,15 +79,16 @@ module.exports = React.createClass({
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
             this.getDialogList(checkedTriggers, 'label'),
-            <Loading
+            <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.triggers.isLoading} />
+              show     = {this.state.triggers.isLoading}
+            />
           ]
         }
       },
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    'removeScheduleDialog',
           title:  'Delete Schedule',
@@ -107,62 +100,63 @@ module.exports = React.createClass({
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
             this.getDialogList(checkedSchedules, 'label'),
-            <Loading
+            <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.schedules.items.isLoading} />
+              show     = {this.state.schedules.items.isLoading}
+            />
           ]
         }
       }
     ]
   },
 
-  handleRemoveTriggers: function() {
+  handleRemoveTriggers() {
     console.info('Tasks::handleDelete');
     TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
   },
 
-  handleRemoveSchedules: function() {
+  handleRemoveSchedules() {
     console.info('Tasks::handleRemoveSchedules');
     SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
-  uncheckAll: function() {
+  uncheckAll() {
     console.info('Tasks::uncheckAll');
     SchedulesActions.uncheckAll();
     TriggersActions.uncheckAll();
   },
 
-  checkSchedule: function(id, state) {
+  checkSchedule(id, state) {
     console.info('Tasks::checkSchedule');
     SchedulesActions.checkItem(id, state);
     TriggersActions.uncheckAll();
   },
 
-  checkTrigger: function(id, state) {
+  checkTrigger(id, state) {
     console.info('Tasks::checkSchedule');
     TriggersActions.checkItem(id, state);
     SchedulesActions.uncheckAll();
   },
 
-  showScheduleDialog: function() {
+  showScheduleDialog() {
     SchedulesActions.showDialog();
   },
 
-  showScheduleEditDialog: function() {
+  showScheduleEditDialog() {
     SchedulesActions.showDialog(SchedulesStore.getCheckedItem());
   },
 
-  showTriggerDialog: function() {
+  showTriggerDialog() {
     TriggersActions.showDialog();
   },
 
-  showTriggerEditDialog: function() {
+  showTriggerEditDialog() {
     TriggersActions.showDialog(TriggersStore.getCheckedItem());
   },
 
-  render: function() {
-    var checkedSchedules      = SchedulesStore.getNumberOfChecked(),
+  render() {
+    let checkedSchedules      = SchedulesStore.getNumberOfChecked(),
         checkedTriggers       = TriggersStore.getNumberOfChecked(),
         isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
         isAnyTriggerSelected  = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
@@ -175,70 +169,66 @@ module.exports = React.createClass({
         <ScheduleDialog />
         {this.getDialogs()}
 
-        <Show if={checkedSchedules > 0}>
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedSchedules > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = {isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
-              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon} />
-
-            <FabListItem
+              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon}
+            />
+            <Common.Fab.Item
               label         = "Click here to delete Schedules"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeScheduleDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit Schedule"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showScheduleEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <Show if={checkedTriggers > 0}>
-
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedTriggers > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
-              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon} />
-
-            <FabListItem
+              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon}
+            />
+            <Common.Fab.Item
               label         = "Click here to delete Schedules"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeTriggerDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit Trigger"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showTriggerEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <FabList>
-
-          <FabListItem
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to create schedule"
             onClick       = {this.showScheduleDialog}
-            iconClassName = "synicon-camera-timer" />
-
-          <FabListItem
+            iconClassName = "synicon-camera-timer"
+          />
+          <Common.Fab.Item
             label         = "Click here to create Trigger"
             onClick       = {this.showTriggerDialog}
-            iconClassName = "synicon-arrow-up-bold" />
-
-        </FabList>
+            iconClassName = "synicon-arrow-up-bold"
+          />
+        </Common.Fab>
 
         <SchedulesList
           name                 = "Schedules"
@@ -246,7 +236,8 @@ module.exports = React.createClass({
           isLoading            = {this.state.schedules.isLoading}
           items                = {this.state.schedules.items}
           emptyItemHandleClick = {this.showScheduleDialog}
-          emptyItemContent     = "Create a Schedule" />
+          emptyItemContent     = "Create a Schedule"
+        />
 
         <TriggersList
           name                 = "Triggers"
@@ -254,10 +245,9 @@ module.exports = React.createClass({
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
           emptyItemHandleClick = {this.showTriggerDialog}
-          emptyItemContent     = "Create a Trigger" />
-
+          emptyItemContent     = "Create a Trigger"
+        />
       </Container>
     );
   }
-
 });

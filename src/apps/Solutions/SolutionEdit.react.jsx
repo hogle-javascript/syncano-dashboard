@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -60,7 +60,7 @@ export default React.createClass({
   //Dialogs config
   initDialogs() {
     return [{
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key     : 'deleteSolutionDialog',
         ref     : 'deleteSolutionDialog',

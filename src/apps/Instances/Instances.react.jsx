@@ -2,13 +2,10 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
-import MUI from 'material-ui';
 
 // Utils
+import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
-import DialogsMixin from '../../mixins/DialogsMixin';
-import Show from '../../common/Show/Show.react';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -18,6 +15,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react'; // TODO: Why I can't reach it via Common?
 
@@ -26,7 +24,7 @@ import InstanceDialog from './InstanceDialog.react';
 
 require('./Instances.sass');
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Instances',
 
@@ -35,8 +33,8 @@ module.exports = Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin,
-    DialogsMixin
+    Mixins.Dialogs,
+    HeaderMixin
   ],
 
   // Dialogs config
@@ -57,7 +55,7 @@ module.exports = Radium(React.createClass({
         }
       },
       {
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key:    'deleteInstanceDialog',
         ref:    'deleteInstanceDialog',
@@ -73,7 +71,8 @@ module.exports = Radium(React.createClass({
           <Common.Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading} />
+            show={this.state.isLoading}
+          />
         ]
       }
     }]
@@ -149,34 +148,33 @@ module.exports = Radium(React.createClass({
 
         <Common.Show if={checkedInstances > 0}>
           <Common.Fab position="top">
-
             <Common.Fab.Item
               label         = {isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName = {isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'} />
-
+              iconClassName = {isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
+            />
             <Common.Fab.Item
               label         = "Click here to delete Instances"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteInstanceDialog')}
-              iconClassName = "synicon-delete" />
-
+              iconClassName = "synicon-delete"
+            />
             <Common.Fab.Item
               label         = "Click here to edit Instance"
               mini          = {true}
               disabled      = {checkedInstances > 1}
               onClick       = {this.showInstanceEditDialog}
-              iconClassName = "synicon-pencil" />
-
+              iconClassName = "synicon-pencil"
+            />
             <Common.Fab.Item
               label         = "Click here to customize Instances"
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedInstances > 1}
               onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName = "synicon-palette" />
-
+              iconClassName = "synicon-palette"
+            />
           </Common.Fab>
         </Common.Show>
 
@@ -184,7 +182,8 @@ module.exports = Radium(React.createClass({
           <Common.Fab.Item
             label         = "Click here to add Instances"
             onClick       = {this.showInstanceDialog}
-            iconClassName = "synicon-plus" />
+            iconClassName = "synicon-plus"
+          />
         </Common.Fab>
 
         <InstancesList
@@ -193,18 +192,17 @@ module.exports = Radium(React.createClass({
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showInstanceDialog}
-          emptyItemContent     = "Create an instance" />
-
+          emptyItemContent     = "Create an instance"
+        />
         <Common.Show if={Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             name                 = "Shared with me"
             items                = {Store.getOtherInstances()}
             listType             = "sharedInstances"
-            viewMode             = "stream" />
+            viewMode             = "stream"
+          />
         </Common.Show>
-
       </Container>
     );
   }
-
 }));

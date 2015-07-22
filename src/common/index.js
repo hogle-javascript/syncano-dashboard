@@ -8,6 +8,7 @@ import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
 import Container from './Container';
 import CreditCard from './CreditCard';
+import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
@@ -48,6 +49,7 @@ export default {
   ColumnList,
   Container,
   CreditCard,
+  Dialog,
   Dropdown,
   Editor,
   Fab,

@@ -3,11 +3,8 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
+import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
-import DialogsMixin from '../../mixins/DialogsMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
-import Show from '../../common/Show/Show.react';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -20,12 +17,13 @@ import AdminsInvitationsStore from './AdminsInvitationsStore';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
-let Container = require('../../common/Container');
+import Container from '../../common/Container';
+
 // Local components
 import AdminsList from './AdminsList.react';
 import AdminDialog from './AdminDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Admins',
 
@@ -35,9 +33,9 @@ module.exports = React.createClass({
 
     Reflux.connect(AdminsStore, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
 
   componentWillUpdate(nextProps, nextState) {
@@ -58,7 +56,7 @@ module.exports = React.createClass({
 
     return [
       {
-        dialog: MUI.Dialog,
+        dialog: Common.Dialog,
         params: {
           key:    'deleteAdminDialog',
           ref:    'deleteAdminDialog',
@@ -70,16 +68,17 @@ module.exports = React.createClass({
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
-            this.getDialogList(checkedAdmins),
+            this.getDialogList(checkedAdmins, 'email'),
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.admins.isLoading} />
+              show     = {this.state.admins.isLoading}
+            />
           ]
         }
       },
       {
-        dialog: MUI.Dialog,
+        dialog: Common.Dialog,
         params: {
           title:  'Resend an Invitation',
           key  : 'resendInvitationDialog',
@@ -95,12 +94,13 @@ module.exports = React.createClass({
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.invitations.isLoading} />
+              show     = {this.state.invitations.isLoading}
+            />
           ]
         }
       },
       {
-        dialog: MUI.Dialog,
+        dialog: Common.Dialog,
         params: {
           title:  'Delete an Invitation',
           key  : 'removeInvitationDialog',
@@ -116,7 +116,8 @@ module.exports = React.createClass({
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.invitations.isLoading} />
+              show     = {this.state.invitations.isLoading}
+            />
           ]
         }
       }
@@ -186,50 +187,48 @@ module.exports = React.createClass({
 
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
-
             <Common.Fab.Item
               label         = {isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
-              iconClassName = {isAnyAdminSelected ? markedIcon : blankIcon} />
-
+              iconClassName = {isAnyAdminSelected ? markedIcon : blankIcon}
+            />
             <Common.Fab.Item
               label         = "Click here to delete Administrator"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteAdminDialog')}
-              iconClassName = "synicon-delete" />
-
+              iconClassName = "synicon-delete"
+            />
             <Common.Fab.Item
               label         = "Click here to edit Admin"
               mini          = {true}
               disabled      = {checkedAdmins > 1}
               onClick       = {this.showAdminEditDialog}
-              iconClassName = "synicon-pencil" />
-
+              iconClassName = "synicon-pencil"
+            />
           </Common.Fab>
         </Common.Show>
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-
             <Common.Fab.Item
               label         = {isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
-              iconClassName = {isAnyAdminInvitationSelected ? markedIcon : blankIcon} />
-
+              iconClassName = {isAnyAdminInvitationSelected ? markedIcon : blankIcon}
+            />
             <Common.Fab.Item
               label         = "Click here to delete Invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeInvitationDialog')}
-              iconClassName = "synicon-delete" />
-
+              iconClassName = "synicon-delete"
+            />
             <Common.Fab.Item
               label         = "Click here to resend invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'resendInvitationDialog')}
-              iconClassName = "synicon-backup-restore" />
-
+              iconClassName = "synicon-backup-restore"
+            />
           </Common.Fab>
         </Common.Show>
 
@@ -237,15 +236,16 @@ module.exports = React.createClass({
           <Common.Fab.Item
             label         = "Click here to invite Admin"
             onClick       = {this.showAdminDialog}
-            iconClassName = "synicon-plus" />
+            iconClassName = "synicon-plus"
+          />
         </Common.Fab>
 
         <AdminsList
           name       = "Administrators"
           checkItem  = {this.checkAdminItem}
           isLoading  = {this.state.admins.isLoading}
-          items      = {this.state.admins.items}/>
-
+          items      = {this.state.admins.items}
+        />
         <AdminsList
           name                 = "Invitations"
           mode                 = "invitations"
@@ -253,8 +253,8 @@ module.exports = React.createClass({
           emptyItemContent     = "Invite administrator"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
-          items                = {AdminsInvitationsStore.getPendingInvitations()} />
-
+          items                = {AdminsInvitationsStore.getPendingInvitations()}
+        />
       </Container>
     );
   }

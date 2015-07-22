@@ -2,8 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import GroupsActions from './GroupsActions';
@@ -21,8 +20,8 @@ export default React.createClass({
   mixins: [
     Reflux.connect(GroupDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -42,8 +41,8 @@ export default React.createClass({
   },
 
   render() {
-    let title       = this.hasEditMode() ? 'Edit': 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes': 'Create',
+    let title       = this.hasEditMode() ? 'Edit' : 'Add',
+        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
             ref        : 'cancel',
@@ -58,7 +57,7 @@ export default React.createClass({
         ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref             = "dialog"
         title           = {title + " Group"}
         openImmediately = {this.props.openImmediately}
@@ -88,7 +87,7 @@ export default React.createClass({
             show     = {this.state.isLoading}
           />
         </div>
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });
