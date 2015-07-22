@@ -40,6 +40,8 @@ export default React.createClass({
   },
 
   componentDidMount: function() {
+    console.info('CodeBoxes::componentDidMount');
+    CodeBoxesActions.fetch();
     if (this.getParams().action == 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
