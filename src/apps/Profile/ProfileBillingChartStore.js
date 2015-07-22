@@ -71,10 +71,12 @@ export default Reflux.createStore({
 
     // Sum objects
     this.sumAncestors(objects);
-    this.sumAncestors(predictions, k => {
-      let objLength = objects[k].length;
-      return (objLength > 0) ? _.last(objects[k]).value : 0;
+
+    _.forEach(objects, (v, source) => {
+      predictions[source].unshift(_.last(v));
     });
+
+    this.sumAncestors(predictions);
 
     // Sum all results
     this.sumArrays(objects);
@@ -87,14 +89,14 @@ export default Reflux.createStore({
     state.x.max     = _.last(state.x.values);
 
     let findYMaxIn  = (!_.isEmpty(predictions)) ? predictions : objects;
-    let yMax        = _.max(_.map(findYMaxIn, value => _.max(value, 'value').value ));
+    let yMax        = _.max(_.map(findYMaxIn, value => _.max(value, 'value').value));
 
     state.y.min     = 0;
     state.y.max     = yMax;
 
     _.forEach([objects, predictions], (elements, index) => {
       let keys = _.keys(elements).reverse();
-      let suffix = (index > 0) ? '-predictions': '';
+      let suffix = (index > 0) ? '-predictions' : '';
 
       _.forEach(keys, key => {
         state.y.values.push({
@@ -103,6 +105,18 @@ export default Reflux.createStore({
         });
       });
     });
+
+    if (!_.isEmpty(predictions)) {
+      state.y.values.unshift({
+        source: 'predictions-bg',
+        values: _.map(predictions.api, prediction => {
+          return {
+            date: prediction.date,
+            value: yMax
+          };
+        })
+      });
+    }
 
     this.trigger(state);
   },
@@ -136,10 +150,6 @@ export default Reflux.createStore({
             objects[source][date] = 0;
           }
 
-          if (date === max) {
-            predictions[source][date] = objects[source][date];
-          }
-
         } else {
           predictions[source][date] = medians[source];
         }
@@ -157,14 +167,10 @@ export default Reflux.createStore({
     });
   },
 
-  sumAncestors(elements, prevValue) {
-    prevValue = prevValue || function(k) {
-      return 0;
-    };
-
+  sumAncestors(elements) {
     _.forEach(elements, (v, k) => {
       elements[k] = _.reduce(v, (result, value, index) => {
-        value.value += (index > 0) ? result[index - 1].value: prevValue(k);
+        value.value += (index > 0) ? result[index - 1].value : 0;
         result.push(value);
         return result;
       }, []);

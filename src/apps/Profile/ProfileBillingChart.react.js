@@ -18,6 +18,9 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
+    if (this.state.isLoading === true || this.chart !== undefined) {
+      return;
+    }
     let element = this.getDOMNode();
     this.chart  = new d3Chart(element, this.state);
   },

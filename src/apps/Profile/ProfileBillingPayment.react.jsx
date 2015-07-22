@@ -150,19 +150,6 @@ module.exports = React.createClass({
                 </div>
               </div>
           </Common.Show>
-
-          <Common.Show if={!showForm}>
-            <div>
-              <Common.CreditCard card={this.state.card} />
-              <MUI.RaisedButton
-                onClick    = {this.toggleForm.bind(null, true)}
-                type       = "submit"
-                label      = {labelPrefix + ' payment'}
-                className  = "raised-button"
-                secondary  = {true}
-              />
-            </div>
-          </Common.Show>
         </Common.Loading>
       </div>
     );
