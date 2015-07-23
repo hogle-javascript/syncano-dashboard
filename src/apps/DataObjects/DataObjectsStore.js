@@ -1,19 +1,19 @@
-var Reflux              = require('reflux'),
-    URL                 = require('url'),
+import Reflux from 'reflux';
+import URL from 'url';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
-    DataObjectsRenderer = require('./DataObjectsRenderer'),
+import DataObjectsRenderer from './DataObjectsRenderer';
 
-    //Stores & Actions
-    ClassesActions      = require('../Classes/ClassesActions'),
-    ClassesStore        = require('../Classes/ClassesStore'),
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    DataObjectsActions  = require('./DataObjectsActions');
+//Stores & Actions
+import ClassesActions from '../Classes/ClassesActions';
+import ClassesStore from '../Classes/ClassesStore';
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import DataObjectsActions from './DataObjectsActions';
 
 var DataObjectsStore = Reflux.createStore({
   listenables : DataObjectsActions,
@@ -23,7 +23,7 @@ var DataObjectsStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items        : null,
       isLoading    : false,
@@ -88,7 +88,7 @@ var DataObjectsStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -101,38 +101,38 @@ var DataObjectsStore = Reflux.createStore({
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('DataObjectsStore::refreshData');
     DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className)
   },
 
-  refreshDataObjects: function() {
+  refreshDataObjects() {
     console.debug('DataObjectsStore::refreshDataObjects', this.getCurrentClassName());
     DataObjectsActions.fetchDataObjects(this.getCurrentClassName());
   },
 
-  getCurrentClassName: function() {
+  getCurrentClassName() {
     if (this.data.classObj) {
       return this.data.classObj.name;
     }
     return null;
   },
 
-  getCurrentClassObj: function() {
+  getCurrentClassObj() {
     return this.data.classObj;
   },
 
-  getSelectedRowsLength: function() {
+  getSelectedRowsLength() {
     if (this.data.selectedRows) {
       return this.data.selectedRows.length;
     }
     return null;
   },
-  getSelectedRowObj: function(cellNumber) {
+  getSelectedRowObj(cellNumber) {
     return this.data.items[cellNumber];
   },
 
-  setCurrentClassObj: function(classObj) {
+  setCurrentClassObj(classObj) {
     console.debug('DataObjectsStore::onSetCurrentClassObj');
     this.data.classObj = classObj;
 
@@ -151,13 +151,13 @@ var DataObjectsStore = Reflux.createStore({
     this.updateFromLocalStorage()
   },
 
-  setSelectedRows: function(selectedRows) {
+  setSelectedRows(selectedRows) {
     console.debug('DataObjectsStore::setSelectedRows');
     this.data.selectedRows = selectedRows;
     this.trigger(this.data);
   },
 
-  getColumn: function(columnId) {
+  getColumn(columnId) {
     var column = null;
     this.data.columns.some(function(columnObj) {
       if (column.id = columnId) {
@@ -168,7 +168,7 @@ var DataObjectsStore = Reflux.createStore({
     return column;
   },
 
-  setDataObjects: function(items) {
+  setDataObjects(items) {
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.hasNextPage = items.hasNextPage();
@@ -191,20 +191,20 @@ var DataObjectsStore = Reflux.createStore({
   },
 
   // We know number of selected rows, now we need to get ID of the objects
-  getIDsFromTable: function() {
+  getIDsFromTable() {
     return this.data.selectedRows.map(function(rowNumber) {return this.data.items[rowNumber].id}.bind(this));
   },
 
   // Table stuff
-  renderTableData: function() {
+  renderTableData() {
     return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns);
   },
 
-  renderTableHeader: function() {
+  renderTableHeader() {
     return DataObjectsRenderer.renderTableHeader(this.data.classObj, this.data.columns);
   },
 
-  updateFromLocalStorage: function() {
+  updateFromLocalStorage() {
     console.debug('DataObjectsStore::updateFromLocalStorage');
     var className = this.getCurrentClassName(),
         settings  = localStorage.getItem('dataobjects_checkedcolumns_' + className);
@@ -226,12 +226,12 @@ var DataObjectsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  updateLocalStorage: function() {
+  updateLocalStorage() {
     var className = this.getCurrentClassName();
     localStorage.setItem('dataobjects_checkedcolumns_' + className, JSON.stringify(this.getCheckedColumnsIDs()));
   },
 
-  checkToggleColumn: function(columnId) {
+  checkToggleColumn(columnId) {
     console.debug('DataObjectsStore::checkToggleColumn', columnId);
     this.data.columns.map(function(item) {
       if (columnId === item.id) {
@@ -242,11 +242,11 @@ var DataObjectsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getTableColumns: function() {
+  getTableColumns() {
     return this.data.columns;
   },
 
-  getCheckedColumnsIDs: function() {
+  getCheckedColumnsIDs() {
     var columns = [];
     this.data.columns.map(function(column) {
       if (column.checked) {
@@ -256,48 +256,48 @@ var DataObjectsStore = Reflux.createStore({
     return columns;
   },
 
-  onFetchCurrentClassObjCompleted: function(classObj) {
+  onFetchCurrentClassObjCompleted(classObj) {
     console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
     this.data.classObj = classObj; // TODO why, why?
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjects: function() {
+  onFetchDataObjects() {
     console.debug('DataObjectsStore::onFetchDataObjects');
     //this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchDataObjectsCompleted: function(items) {
+  onFetchDataObjectsCompleted(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     this.data.items = [];
     DataObjectsActions.setDataObjects(items);
   },
 
-  onSubFetchDataObjectsCompleted: function(items) {
+  onSubFetchDataObjectsCompleted(items) {
     console.debug('DataObjectsStore::onFetchDataObjectsCompleted');
     DataObjectsActions.setDataObjects(items);
   },
 
-  onCreateDataObjectCompleted: function() {
+  onCreateDataObjectCompleted() {
     console.debug('DataObjectsStore::onCreateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshDataObjects();
   },
 
-  onUpdateDataObjectCompleted: function() {
+  onUpdateDataObjectCompleted() {
     console.debug('DataObjectsStore::onUpdateDataObjectCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshDataObjects();
   },
-  onRemoveDataObjects: function() {
+  onRemoveDataObjects() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onRemoveDataObjectsCompleted: function() {
+  onRemoveDataObjectsCompleted() {
     this.data.hideDialogs = true;
     this.data.selectedRows = null;
     this.trigger(this.data);
