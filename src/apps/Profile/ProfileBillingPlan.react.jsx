@@ -1,67 +1,78 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Moment from 'moment';
-import MUI from 'material-ui';
 
-import FormMixin from '../../mixins/FormMixin';
-import DialogsMixin from '../../mixins/DialogsMixin';
+import Mixins from '../../mixins';
 
 import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
+import MUI from 'material-ui';
 import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
+import Chart from './ProfileBillingChart.react';
 
 module.exports = React.createClass({
 
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    DialogsMixin,
+    Mixins.Dialogs,
     Reflux.connect(Store),
-    Reflux.connect(PlanDialogStore),
+    Reflux.connect(PlanDialogStore)
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     Actions.fetch()
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('ProfileBillingPlan::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       main: {
-        marginTop: 50,
-        color: '#4A4A4A',
+        marginTop    : 50,
+        paddingRight : 50,
+        color        : '#4A4A4A'
       },
       mainDesc: {
-        fontSize   : '1.3em',
-        lineHeight : '1.3em',
+        fontSize   : '1.5rem',
+        lineHeight : '1.5rem'
       },
       comment: {
-        fontSize: '0.9em'
+        fontSize     : '0.9em',
+        paddingLeft  : 20,
+        paddingRight : 20
       },
       explorerButton: {
-        marginTop: 20,
+        marginTop : 20
       },
       chartHeader: {
-        paddingTop: 50,
-        fontSize: '1.5em'
+        paddingTop : 50,
+        fontSize   : '1.3em'
+      },
+      legendSquere: {
+        marginTop: 4,
+        height: 10,
+        width: 10
+      },
+      legend: {
+        fontSize : '0.9rem',
       }
     }
   },
 
   // Dialogs config
-  initDialogs: function() {
+  initDialogs() {
 
     return [{
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key   : 'freezeAccount',
         ref   : 'freezeAccount',
@@ -97,61 +108,69 @@ module.exports = React.createClass({
     });
   },
 
-  handleShowPlanDialog: function() {
+  handleShowPlanDialog() {
     console.debug('ProfileBillingPlan::handleShowPlanDialog');
     PlanDialogActions.showDialog();
   },
 
-  handleDeleteSubscription: function() {
+  handleDeleteSubscription() {
     Actions.cancelSubscriptions([this.state.subscriptions._items[1].id]).then(() => {
       Actions.fetch();
     });
   },
 
-  renderSwitchPlan: function() {
+  renderSwitchPlan() {
     if (!this.state.profile) {
       return;
     }
 
-    if (this.state.profile.subscription.plan === 'builder') {
+    if (this.state.profile.subscription.plan === 'builder')
       return (
-        <div>
-          <div>{this.state.profile.subscription.plan}</div>
-          <MUI.Toggle
-            key            = "builder-toggle"
-            defaultToggled = {false}
-            onToggle       = {this.handlePlanToggle}
-          />,
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div>Builder</div>
+          <div>
+            <MUI.Toggle
+              style          = {{marginTop: 10}}
+              key            = "builder-toggle"
+              defaultToggled = {false}
+              onToggle       = {this.handlePlanToggle}
+            />
+          </div>
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
             <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
-          </div>,
-          <div style={{marginTop: 10}}>
-            From $25/month
-          </div>,
+          </div>
+          <div style={{marginTop: 10, fontSize: '1.1rem', padding: 5}}>
+            From <strong>$25</strong>/month
+          </div>
           <div style={{marginTop: 10}}>
             <div><a>Learn</a> when to flip the</div>
             <div>switch to production.</div>
           </div>
         </div>
-      )
-    }
+      );
+    else if (this.state.profile.subscription.plan === 'free')
+      return;
+
     return (
-      <div>
+      <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
-        <MUI.Toggle
-          key            = "paid-commitment-toggle"
-          defaultToggled = {true}
-          disabled       = {true}
-        />
-        <div style={{marginTop: 10}}>
-          <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-        </div>
+          <div>
+            <MUI.Toggle
+              style          = {{marginTop: 10}}
+              key            = "paid-commitment-toggle"
+              defaultToggled = {true}
+              disabled       = {true}
+            />
+          </div>
+          <div style={{marginTop: 10}}>
+            <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
+          </div>
       </div>
     )
   },
 
-  renderExplorerButtonLabel: function() {
+  renderExplorerButtonLabel() {
     if (!this.state.profile) {
       return;
     }
@@ -168,36 +187,109 @@ module.exports = React.createClass({
     }
   },
 
+  renderChartLegend() {
+    let styles = this.getStyles();
+
+    let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
+    let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
+
+    let apiTotalIndex = _.findIndex(this.state.profile.balance, {source: 'API Call'});
+    let cbxTotalIndex = _.findIndex(this.state.profile.balance, {source: 'CodeBox Executions'});
+
+    let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
+    let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
+
+    return (
+      <div style={{marginTop: 20}}>
+        <div className="row" style={styles.legend}>
+          <div className="col-xs-1" >
+            <div style={apiCallsStyle} />
+          </div>
+          <div className="col-flex-1">
+            <div className="row">
+              <div className="col-md-5">API calls</div>
+              <div className="col-flex-1">(total this month: <strong>{apiTotal}</strong>)</div>
+            </div>
+          </div>
+        </div>
+        <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
+          <div className="col-xs-1">
+            <div style={cbxCallsStyle} />
+          </div>
+          <div className="col-flex-1">
+            <div className="row">
+              <div className="col-md-5">CodeBox runs</div>
+              <div className="col-flex-1">(total this month: <strong>{cbxTotal}</strong>)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderChart() {
+    let styles = this.getStyles();
+    if (!this.state.profile) {
+      return;
+    }
+
+    let plan = this.state.profile.subscription.plan;
+
+    if (plan === 'free') {
+      return (
+        <div style={styles.chartHeader}>
+          See how it works with your <strong>current usage</strong>:
+          {this.renderChartLegend()}
+          <Chart />
+        </div>
+      )
+    }
+    return (
+      <div style={styles.chartHeader}>
+        See how it works with your <strong>current usage</strong>:
+        {this.renderChartLegend()}
+        <Chart />
+      </div>
+     )
+  },
+
   renderExplorerButton() {
     let styles = this.getStyles();
 
     if (this.isNewSubscription()) {
       return (
-        <div style={styles.explorerButton}>
-          <MUI.FlatButton
-            label   = {'Cancel Change'}
-            onClick = {this.handleDeleteSubscription}
-          />
-          <MUI.FlatButton
-            style   = {{marginLeft: 15}}
-            label   = {'Upgrade'}
-            onClick = {this.handleShowPlanDialog}
-          />
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div style={styles.explorerButton}>
+            <MUI.FlatButton
+              primary    = {true}
+              label      = {'Cancel Change'}
+              onTouchTap = {this.handleDeleteSubscription}
+            />
+            <MUI.FlatButton
+              primary = {true}
+              style   = {{marginLeft: 15}}
+              label   = {'Upgrade'}
+              onTouchTap = {this.handleShowPlanDialog}
+            />
+          </div>
         </div>
       )
     }
 
     return (
-      <div style={styles.explorerButton}>
-        <MUI.FlatButton
-          label   = {this.renderExplorerButtonLabel() || ''}
-          onClick = {this.handleShowPlanDialog}
-        />
+      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div style={styles.explorerButton}>
+          <MUI.FlatButton
+            primary    = {true}
+            label      = {this.renderExplorerButtonLabel() || ''}
+            onTouchTap = {this.handleShowPlanDialog}
+          />
+        </div>
       </div>
     )
   },
 
-  renderMainDesc: function() {
+  renderMainDesc() {
     let styles = this.getStyles();
 
     if (!this.state.profile) {
@@ -205,19 +297,22 @@ module.exports = React.createClass({
     }
 
     let plan = this.state.profile.subscription.plan;
+    if (plan === 'free') {
+      return 'You are on FREE (internal) plan - go away! and test billing using different account!';
+    }
 
     if (plan === 'builder') {
       let limitsData = {
-        api : { included : '10 000' },
-        cbx : { included : '10 000' }
+        api : { included : '100 000' },
+        cbx : { included : '1 000' }
       };
       return (
-        <div>
-          <div key="builderDesc">
-            <div>Your plan: <strong>Builder</strong></div>
-            <div>It does not cost you anything but there are limits:</div>
+        <div className = "col-md-12">
+          <div style={styles.mainDesc}>Your plan: <strong>Builder</strong></div>
+          <div style={{marginTop: 5}}>It does not cost you anything but there are limits:</div>
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
           </div>
-          <Limits data={limitsData} />
         </div>
       );
     } else if (plan === 'paid-commitment') {
@@ -245,13 +340,15 @@ module.exports = React.createClass({
           <div style={styles.mainDesc}>
             Current plan <strong>${total}</strong>:
           </div>
-          <Limits data={limitsData} />
+          <div style={{marginTop: 20}}>
+            <Limits data={limitsData} />
+          </div>
         </div>
       );
     }
   },
 
-  renderCommment: function() {
+  renderCommment() {
     let styles = this.getStyles();
 
     if (!this.state.profile) {
@@ -262,10 +359,12 @@ module.exports = React.createClass({
 
     if (plan === 'builder') {
       return (
-        <span key="builderComment">
-          If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
-          If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
-        </span>
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div key="builderComment" style={{width: '80%'}}>
+            If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
+            If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
+          </div>
+        </div>
       );
     } else if (plan === 'paid-commitment') {
 
@@ -285,26 +384,43 @@ module.exports = React.createClass({
         };
 
         return (
-          <div key='productionComment-subs' >
-            <div style={styles.mainDesc}>
-              New plan <strong>${total}</strong> (your current plan will
-              expire at the end of the month and your new plan will begin on {Moment(subscription.start).format('LL')}):
+          <div className="row align-top">
+            <div style={{Transform: 'translateY(-14px)'}}>
+              <MUI.IconButton
+                iconClassName = "synicon-information-outline"
+                iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+                tooltip       = {`your current plan will expire at the end of
+                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`}
+              />
             </div>
-            <Limits data={limitsData} />
-          </div>
+            <div classsName="col-flex-1">
+              <div key='productionComment-subs'>
+                <div>
+                  <div style={styles.mainDesc}>
+                    New plan <strong>${total}</strong>:
+                  </div>
+                </div>
+                <div style={{marginTop: 20}}>
+                  <Limits data={limitsData} />
+                </div>
+              </div>
+            </div>
+         </div>
         )
       } else {
         return (
-          <span key="productionComment">
-            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-            Your new monthly fixed price will start from next billing period.
-          </span>
+          <div className="row align-middle" style={{FlexDirection: 'column'}}>
+            <div key="productionComment" style={{width: '80%'}}>
+              You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+              Your new monthly fixed price will start from next billing period.
+            </div>
+          </div>
         );
       }
     }
   },
 
-  render: function() {
+  render() {
     let styles = this.getStyles();
 
     return (
@@ -321,14 +437,12 @@ module.exports = React.createClass({
             </div>
             {this.renderExplorerButton()}
           </div>
-          <div className="col-md-8">
+          <div className="col-md-6">
             {this.renderSwitchPlan()}
           </div>
         </div>
         <div className="row">
-          <div style={styles.chartHeader}>
-            See how it works with your <strong>current usage</strong>
-          </div>
+          {this.renderChart()}
         </div>
       </Common.Loading>
     );

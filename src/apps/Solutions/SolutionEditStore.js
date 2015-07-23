@@ -75,18 +75,6 @@ var SolutionsEditStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getVersionsDropdown: function() {
-    if (!this.data.versions) {
-      return [];
-    }
-    return this.data.versions.map(function(item) {
-      return {
-        payload : item.id,
-        text    : item.number
-      }
-    });
-  },
-
   onFetchSolution: function(solution) {
     console.debug('SolutionsEditStore::onFetchSolutions');
     this.data.isLoading = true;

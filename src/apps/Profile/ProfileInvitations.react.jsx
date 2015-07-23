@@ -1,42 +1,27 @@
-var React                     = require('react'),
-    Reflux                    = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    HeaderMixin               = require('../Header/HeaderMixin'),
-    DialogsMixin              = require('../../mixins/DialogsMixin'),
-    Show                      = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    ProfileInvitationsActions = require('./ProfileInvitationsActions'),
-    ProfileInvitationsStore   = require('./ProfileInvitationsStore'),
+// Stores and Actions
+import ProfileInvitationsActions from './ProfileInvitationsActions';
+import ProfileInvitationsStore from './ProfileInvitationsStore';
 
-    // Components
-    mui                       = require('material-ui'),
-    Colors                    = mui.Styles.Colors,
-    Dialog                    = mui.Dialog,
-    FontIcon                  = mui.FontIcon,
-    FabList                   = require('../../common/Fab/FabList.react'),
-    FabListItem               = require('../../common/Fab/FabListItem.react'),
-    Container                 = require('../../common/Container/Container.react'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // List
-    ListContainer             = require('../../common/Lists/ListContainer.react'),
-    List                      = require('../../common/Lists/List.react'),
-    Item                      = require('../../common/ColumnList/Item.react'),
-    Header                    = require('../../common/ColumnList/Header.react'),
-    Loading                   = require('../../common/Loading/Loading.react'),
-    ColumnDesc                = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate                = require('../../common/ColumnList/Column/Date.react'),
-    ColumnCheckIcon           = require('../../common/ColumnList/Column/CheckIcon.react');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileInvitations',
 
   mixins: [
     Reflux.connect(ProfileInvitationsStore),
-    HeaderMixin,
-    DialogsMixin
+    Mixins.Dialogs,
+    HeaderMixin
   ],
 
   headerMenuItems: [
@@ -58,12 +43,12 @@ module.exports = React.createClass({
     }
   ],
 
-  initDialogs: function() {
+  initDialogs() {
     var checked = ProfileInvitationsStore.getCheckedItems().length;
 
     return [
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    "acceptInvitationsDialog",
           title:  "Accept Invitation",
@@ -76,7 +61,7 @@ module.exports = React.createClass({
         }
       },
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref  : "declineInvitationsDialog",
           title:  "Decline Invitation",
@@ -91,37 +76,37 @@ module.exports = React.createClass({
     ]
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('ProfileInvitations::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('ProfileInvitations::componentDidMount');
     ProfileInvitationsActions.fetch();
   },
 
-  uncheckAll: function() {
+  uncheckAll() {
     console.info('ProfileInvitations::uncheckAll');
     ProfileInvitationsActions.uncheckAll();
   },
 
-  checkItem: function(id, state) {
+  checkItem(id, state) {
     console.info('ProfileInvitations::checkItem');
     ProfileInvitationsActions.checkItem(id, state);
   },
 
-  handleAccept: function() {
+  handleAccept() {
     console.info('ProfileInvitations::handleAccept');
     ProfileInvitationsActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
-  handleDecline: function() {
+  handleDecline() {
     console.info('ProfileInvitations::handleDecline');
     ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         margin       : '64px auto',
@@ -141,30 +126,30 @@ module.exports = React.createClass({
     }
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.id}>
-        <ColumnCheckIcon
+        key     = {item.id}
+      >
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.checkItem} >
+          handleIconClick = {this.checkItem}
+        >
           {item.instance}
-        </ColumnCheckIcon>
-        <ColumnDesc>{item.inviter}</ColumnDesc>
-        <ColumnDesc>{item.role}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc>{item.inviter}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     );
   },
 
-  renderList: function() {
-    var items = this.state.items.map(function(item) {
-      return this.renderItem(item);
-    }.bind(this));
+  renderList() {
+    var items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -173,7 +158,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
+  render() {
     var styles             = this.getStyles(),
         checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 
@@ -181,56 +166,55 @@ module.exports = React.createClass({
       <Container>
         {this.getDialogs()}
 
-        <Show if={checkedInvitations > 0}>
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedInvitations > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
-
-            <FabListItem
+              iconClassName = "synicon-checkbox-multiple-marked-outline"
+            />
+            <Common.Fab.Item
               label         = "Click here to accept Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
-              iconClassName = "synicon-check" />
-
-            <FabListItem
+              iconClassName = "synicon-check"
+            />
+            <Common.Fab.Item
               label         = "Click here to decline Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
-              iconClassName = "synicon-delete" />
+              iconClassName = "synicon-delete"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <Loading show={this.state.isLoading}>
+        <Common.Loading show={this.state.isLoading}>
           <div>
-            <Show if={this.state.items.length < 1 && this.state.isLoading === false}>
+            <Common.Show if={this.state.items.length < 1 && this.state.isLoading === false}>
               <div style={styles.container}>
-                <FontIcon
+                <MUI.FontIcon
                   style     = {styles.icon}
                   className = "synicon-email-outline" />
                 <p style={styles.text}>You have no invitations</p>
               </div>
-            </Show>
+            </Common.Show>
 
-            <Show if={this.state.items.length > 0 && this.state.isLoading === false}>
-              <ListContainer>
-                <Header>
-                  <ColumnCheckIcon.Header>Invitations</ColumnCheckIcon.Header>
-                  <ColumnDesc.Header>From</ColumnDesc.Header>
-                  <ColumnDesc.Header>Role</ColumnDesc.Header>
-                  <ColumnDate.Header>Created</ColumnDate.Header>
-                </Header>
-                <List>
+            <Common.Show if={this.state.items.length > 0 && this.state.isLoading === false}>
+              <Common.Lists.Container>
+                <Common.ColumnList.Header>
+                  <Common.ColumnList.Column.CheckIcon.Header>Invitations</Common.ColumnList.Column.CheckIcon.Header>
+                  <Common.ColumnList.Column.Desc.Header>From</Common.ColumnList.Column.Desc.Header>
+                  <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
+                  <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+                </Common.ColumnList.Header>
+                <Common.Lists.List>
                   {this.renderList()}
-                </List>
-              </ListContainer>
-            </Show>
+                </Common.Lists.List>
+              </Common.Lists.Container>
+            </Common.Show>
           </div>
-        </Loading>
+        </Common.Loading>
       </Container>
     );
   }

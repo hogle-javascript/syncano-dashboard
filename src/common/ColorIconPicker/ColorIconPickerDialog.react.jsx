@@ -1,21 +1,15 @@
-var React  = require('react'),
-    Reflux = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Components
-    mui    = require('material-ui'),
-    Dialog = mui.Dialog,
-    Tabs   = mui.Tabs,
-    Tab    = mui.Tab,
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    ColorIconPicker = require('./ColorIconPicker.react');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ColorIconPickerDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
+    React.addons.LinkedStateMixin
   ],
 
   propTypes: {
@@ -23,47 +17,45 @@ module.exports = React.createClass({
     icon : React.PropTypes.string,
     initialColor: React.PropTypes.string,
     initialIcon: React.PropTypes.string,
-    handleClick: React.PropTypes.func,
+    handleClick: React.PropTypes.func
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       initialColor: this.props.initialColor,
-      initialIcon: this.props.initialIcon,
+      initialIcon: this.props.initialIcon
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.info('ColorIconPickerDialog::componentWillReceiveProps');
     this.setState({
       color: nextProps.initialColor,
-      icon: nextProps.initialIcon,
+      icon: nextProps.initialIcon
     })
   },
 
-  show: function() {
+  show() {
     this.refs.dialog.show();
   },
 
-  dismiss: function() {
+  dismiss() {
     this.refs.dialog.dismiss();
   },
 
-  handleSubmit: function (event) {
+  handleSubmit() {
     console.info('InstancesAddDialog::handleSubmit');
     this.props.handleClick(this.state.color, this.state.icon);
-    event.preventDefault();
     this.dismiss();
-
   },
 
-  handleCancel: function(event) {
+  handleCancel() {
     this.setState({
       errors: {}});
     this.dismiss();
   },
 
-  handleChange: function(ColorIcon) {
+  handleChange(ColorIcon) {
     console.info('ColorIconPickerDialog::handleChange', ColorIcon);
     if (ColorIcon.color) {
       this.setState({color:  ColorIcon.color});
@@ -73,45 +65,52 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render() {
     var dialogStandardActions = [
-      {text: 'Cancel', onClick: this.handleCancel, ref: 'cancel'},
-      {text: 'Confirm', onClick: this.handleSubmit, ref: 'submit'}
+      {
+        text       : 'Cancel',
+        ref        : 'cancel',
+        onTouchTap : this.handleCancel
+      },
+      {
+        text       : 'Confirm',
+        ref        : 'submit',
+        onTouchTap : this.handleSubmit
+      }
     ];
 
     return (
-      <Dialog
-        ref="dialog"
-        contentInnerStyle={{paddingBottom: 24, padding: '0px'}}
-        actions={dialogStandardActions}>
-        <Tabs>
-
-          <Tab label="Colors">
+      <Common.Dialog
+        ref               = "dialog"
+        contentInnerStyle = {{paddingBottom: 24, padding: '0px'}}
+        actions           = {dialogStandardActions}
+      >
+        <MUI.Tabs>
+          <MUI.Tab label="Colors">
             <div style={{height: 300, padding: '20px 20px 0'}}>
-              <ColorIconPicker
+              <Common.ColorIconPicker
                 ref           = "color"
                 pickerType    = "color"
                 selectedIcon  = {this.state.icon}
                 selectedColor = {this.state.color}
-                handleChange  = {this.handleChange}/>
+                handleChange  = {this.handleChange}
+              />
             </div>
-          </Tab>
-
-          <Tab label="Icons">
+          </MUI.Tab>
+          <MUI.Tab label="Icons">
             <div style={{height: 300, paddingTop: 20}}>
-              <ColorIconPicker
+              <Common.ColorIconPicker
                 ref           = "icon"
                 pickerType    = "icon"
                 selectedColor = {this.state.color}
                 selectedIcon  = {this.state.icon}
-                handleChange  = {this.handleChange}/>
+                handleChange  = {this.handleChange}
+              />
             </div>
-          </Tab>
-
-        </Tabs>
-      </Dialog>
+          </MUI.Tab>
+        </MUI.Tabs>
+      </Common.Dialog>
     );
   }
-
 });
 

@@ -1,37 +1,24 @@
-var React             = require('react'),
-    Radium            = require('radium'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Radium from 'radium';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionStore      = require('../Session/SessionStore'),
-    SessionActions    = require('../Session/SessionActions'),
-    TracesActions     = require('./TracesActions'),
-    TracesStore       = require('./TracesStore'),
+// Stores and Actions
+import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
+import TracesActions from './TracesActions';
+import TracesStore from './TracesStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Paper             = mui.Paper,
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    Trace             = require('../../common/Trace/TraceResult.react'),
+let Column = Common.ColumnList.Column;
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnIconName    = require('../../common/ColumnList/Column/IconName.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react');
-
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'TracesList',
 
@@ -42,35 +29,17 @@ module.exports = Radium(React.createClass({
     Router.Navigation
   ],
 
-  componentWillReceiveProps: function(nextProps, nextState) {
-    this.setState({items : nextProps.items})
-  },
-
-  getStyles: function() {
+  getStyles() {
     return {
-      container: {
-        display        : 'flex',
-        flexWrap       : 'wrap',
-        justifyContent : 'center',
-        height         : '100%',
-        cursor         : 'pointer'
-      },
-      icon : {
-        margin         : 12,
-        height         : 50,
-        width          : 50,
-        display        : 'flex',
-        justifyContent : 'center',
-        alignItems     : 'center'
-      },
-      trace: {
-        visibility     : 'collapse',
-        height         : 0
+      traceResult: {
+        maxHeight      : 0,
+        overflow       : 'hidden',
+        transition     : 'max-height 450ms ease-out'
       }
     }
   },
 
-  toggleTrace: function(traceId) {
+  toggleTrace(traceId) {
     console.info('CodeBoxesTraces::toggleTrace', traceId);
     if (this.state.visibleTraceId == traceId) {
       this.setState({visibleTraceId: null});
@@ -79,76 +48,77 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  renderItem: function (item) {
-
-    var styles = this.getStyles(),
-        background = item.status === 'success' ? 'green': 'red';
+  renderItem(item) {
+    let styles     = this.getStyles(),
+        background = item.status === 'success' ? MUI.Styles.Colors.green400 : MUI.Styles.Colors.red400,
+        icon       = item.status === 'success' ? 'check' : 'alert';
 
     if (item.id == this.state.visibleTraceId) {
-      styles.item = {
-        marginTop   : 10,
-        marginLeft  : '-30px',
-        marginRight : '-30px'
+      styles.traceResult = {
+        maxHeight: '500px',
+        marginBottom : 15,
+        transition: 'max-height 450ms ease-in',
+        overflow: 'auto'
       };
       styles.trace = {
-        marginLeft   : '-30px',
-        marginRight  : '-30px',
-        visibility   : 'visible',
-        marginBottom : 15,
-        height       : null
-      }
+        margin : '15px -30px 0 -30px'
+      };
     }
-
     return (
-      <div key={item.id}>
-        <Item
-          checked = {item.checked}
-          style   = {styles.item}>
-          <ColumnIconName
+      <MUI.Paper zDepth={2} style={styles.trace}>
+        <Common.ColumnList.Item
+          checked     = {item.checked}
+          key         = {item.id}
+          id          = {item.id}
+          handleClick = {this.toggleTrace}
+        >
+          <Common.ColumnList.Column.CheckIcon
             id              = {item.id}
+            icon            = {icon}
             background      = {background}
-            handleNameClick = {this.toggleTrace}>
+            checkable       = {false}
+          >
             {item.status}
-          </ColumnIconName>
-          <ColumnID>{item.id}</ColumnID>
-          <ColumnDesc>{item.duration}ms</ColumnDesc>
-          <ColumnDate>{item.executed_at}</ColumnDate>
-        </Item>
-        <Paper zDepth={1} style={styles.trace}>
-          <Trace result={item.result}/>
-        </Paper>
-      </div>
+          </Common.ColumnList.Column.CheckIcon>
+          <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
+          <Common.ColumnList.Column.Desc>{item.duration}ms</Common.ColumnList.Column.Desc>
+          <Common.ColumnList.Column.Date date={item.executed_at} />
+        </Common.ColumnList.Item>
+        <div style={styles.traceResult}>
+          <Common.Trace.Result result={item.result}/>
+        </div>
+      </MUI.Paper>
     )
   },
 
-  getList: function () {
-      var items = this.state.items.map(function (item) {
-        return this.renderItem(item)
-      }.bind(this));
+  getList() {
+    let items = this.state.items || [];
 
     if (items.length > 0) {
+      items = items.map(item => this.renderItem(item));
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
-    return [<Item key="empty">Empty Item</Item>];
+
+    return [<Common.ColumnList.Item key="empty">Empty Item</Common.ColumnList.Item>];
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
-        <Header>
-          <ColumnIconName.Header>{this.props.name}</ColumnIconName.Header>
-          <ColumnID.Header>ID</ColumnID.Header>
-          <ColumnDesc.Header>Duration</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Column.IconName.Header>{this.props.name}</Column.IconName.Header>
+          <Column.ID.Header>ID</Column.ID.Header>
+          <Column.Desc.Header>Duration</Column.Desc.Header>
+          <Column.Date.Header>Executed</Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 }));

@@ -35,8 +35,8 @@ module.exports = React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentWillMount: function() {
-    console.info('HeaderInstancesDropdown::componentWillMount');
+  componentDidMount: function() {
+    console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
   },
 
@@ -44,8 +44,9 @@ module.exports = React.createClass({
     var instanceName = menuItem.text._store.props.children[1];
 
     // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+    SessionActions.fetchInstance(instanceName).then(function() {
+      this.transitionTo('instance', {instanceName: instanceName});
+    }.bind(this));
   },
 
   handleInstanceActive: function() {

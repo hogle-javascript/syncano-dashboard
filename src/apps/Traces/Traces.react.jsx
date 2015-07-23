@@ -1,46 +1,50 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+import HeaderMixin from '../Header/HeaderMixin';
+import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
     // Stores and Actions
-    TracesActions     = require('./TracesActions'),
-    TracesStore       = require('./TracesStore'),
+import TracesActions from './TracesActions';
+import TracesStore from './TracesStore';
 
     // Components
-    Container         = require('../../common/Container/Container.react'),
+import Container from '../../common/Container/Container.react';
 
     // Local components
-    TracesList        = require('./TracesList.react');
+import TracesList from './TracesList.react';
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Traces',
 
+  propTypes: {
+    tracesFor : React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule']),
+    objectId  : React.PropTypes.number
+  },
+
   mixins: [
     Router.State,
-    Router.Navigation,
 
     Reflux.connect(TracesStore),
     HeaderMixin,
     InstanceTabsMixin
   ],
 
-  componentWillMount: function() {
-    var codeboxId = this.getParams().codeboxId;
-
-    TracesActions.setCurrentObjectId(codeboxId);
-    this.setState({
-      objectId : codeboxId
-    });
-    TracesStore.refreshData();
+  getDefaultProps() {
+    return {
+      tracesFor: 'codebox'
+    }
   },
 
-  render: function () {
+  componentDidMount() {
+    TracesActions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+  },
+
+  render() {
     return (
       <Container>
         <TracesList

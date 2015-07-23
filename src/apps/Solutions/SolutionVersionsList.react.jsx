@@ -1,39 +1,27 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    SessionStore      = require('../Session/SessionStore'),
-    SolutionEditActions    = require('./SolutionEditActions'),
-    SolutionEditStore      = require('./SolutionEditStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import SolutionEditActions from './SolutionEditActions';
+import SolutionEditStore from './SolutionEditStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
-    IconButton        = mui.IconButton,
-    Avatar            = mui.Avatar,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnText        = require('../../common/ColumnList/Column/Text.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
+import SolutionInstallDialogActions from './SolutionInstallDialogActions';
 
-module.exports = React.createClass({
+// Shortcut
+let Column =  Common.ColumnList.Column;
+
+export default React.createClass({
 
   displayName: 'SolutionVersionsList',
 
@@ -47,11 +35,11 @@ module.exports = React.createClass({
   ],
 
   // List
-  handleItemIconClick: function(id, state) {
+  handleItemIconClick(id, state) {
     SolutionEditActions.checkItem(id, state);
   },
 
-  handleItemClick: function(className) {
+  handleItemClick(className) {
     //SessionStore.getRouter().transitionTo(
     //  'classes-data-objects',
     //  {
@@ -62,41 +50,66 @@ module.exports = React.createClass({
     //console.info('SolutionVersionsList::handleItemClick');
   },
 
-  handleDownloadVersion: function(url) {
+  handleDownloadVersion(url) {
     window.open(url, '_blank');
   },
 
-  renderItem: function(item) {
+  handleInstallClick(versionId) {
+    SolutionInstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId, versionId);
+  },
 
+  renderItem(item) {
     return (
-      <Item
+      <Common.ColumnList.Item
         key          = {item.id}
         id           = {item.id}
-        handleClick  = {this.handleItemClick}>
-        <ColumnDesc><Avatar>{item.number}</Avatar></ColumnDesc>
-        <ColumnDesc>{item.description}</ColumnDesc>
-        <ColumnID className="col-xs-5 col-md-5">
-          <IconButton
+        handleClick  = {this.handleItemClick} >
+        <Column.Desc className="col-xs-5 col-md-5">
+          <div style={{marginLeft: 10}}>
+            <MUI.Avatar style={{fontSize: '1rem'}}>
+              {item.number}
+            </MUI.Avatar>
+          </div>
+        </Column.Desc>
+
+        <Column.Date date={item.created_at} />
+
+        <Column.Desc>
+          {item.type}
+        </Column.Desc>
+
+        <Column.ID className="col-xs-5 col-md-5">
+          {item.installations_count}
+        </Column.ID>
+
+        <Column.ID className="col-xs-4 col-md-4">
+          <MUI.IconButton
             iconClassName = "synicon-cloud-download"
             tooltip       = "Download solution file of this version"
-            onClick       = {this.handleDownloadVersion.bind(this, item.data.url)} />
-        </ColumnID>
-        <ColumnID className="col-xs-5 col-md-5">
-          {item.installations_count}
-        </ColumnID>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+            onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
+          />
+        </Column.ID>
+
+        <Column.ID className="col-xs-4 col-md-4">
+          <MUI.IconButton
+            iconClassName = "synicon-download"
+            tooltip       = "Install this solution of the solution"
+            onClick       = {this.handleInstallClick.bind(null, item.id)}
+          />
+        </Column.ID>
+
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function() {
+  getList() {
     if (this.state.versions === null) {
       return;
     }
 
-    var items = this.state.versions.map(function(item) {
-      return this.renderItem(item)
-    }.bind(this));
+    var items = this.state.versions.map(item => {
+      return this.renderItem(item);
+    });
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -104,28 +117,48 @@ module.exports = React.createClass({
       return items;
     }
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function() {
+  render() {
     return (
-      <ListContainer>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header>Description</ColumnDesc.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Download</ColumnID.Header>
-          <ColumnID.Header className="col-xs-5 col-md-5">Installations</ColumnID.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Column.Desc.Header className="col-xs-5 col-md-5">
+            <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
+          </Column.Desc.Header>
+
+          <Column.Date.Header>
+            Created
+          </Column.Date.Header>
+
+          <Column.Desc.Header>
+            Type
+          </Column.Desc.Header>
+
+          <Column.ID.Header className="col-xs-5 col-md-5">
+            Installations
+          </Column.ID.Header>
+
+          <Column.ID.Header className="col-xs-4 col-md-4">
+            Download
+          </Column.ID.Header>
+
+          <Column.ID.Header className="col-xs-4 col-md-4">
+            Install
+          </Column.ID.Header>
+
+
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });

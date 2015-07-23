@@ -38,7 +38,7 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     return (
-      <IconButton 
+      <IconButton
         iconStyle     = {styles}
         iconClassName = "synicon-cog"
       />

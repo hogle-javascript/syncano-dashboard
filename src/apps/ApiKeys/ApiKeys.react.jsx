@@ -1,34 +1,27 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
-    Show                  = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    ApiKeysActions        = require('./ApiKeysActions'),
-    ApiKeysStore          = require('./ApiKeysStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import ApiKeysActions from './ApiKeysActions';
+import ApiKeysStore from './ApiKeysStore';
 
-    // Components
-    mui                   = require('material-ui'),
-    Dialog                = mui.Dialog,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
-    Loading               = require('../../common/Loading/Loading.react.jsx'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // Local components
-    ApiKeysList           = require('./ApiKeysList.react'),
-    ApiKeyDialog          = require('./ApiKeyDialog.react');
+// Local components
+import ApiKeysList from './ApiKeysList.react';
+import ApiKeyDialog from './ApiKeyDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ApiKeys',
 
@@ -37,26 +30,27 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(ApiKeysStore),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('ApiKeys::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentWillMount: function() {
+  componentDidMount() {
     console.info('ApiKeys::componentWillMount');
     ApiKeysActions.fetch();
   },
+
   // Dialogs config
-  initDialogs: function() {
-    var checkedApiKeys = ApiKeysStore.getCheckedItems();
+  initDialogs() {
+    let checkedApiKeys = ApiKeysStore.getCheckedItems();
 
     return [{
-      dialog: Dialog,
+      dialog: Common.Dialog,
       params: {
         title:  "Reset an API Key",
         ref  : "resetApiKeyDialog",
@@ -73,14 +67,15 @@ module.exports = React.createClass({
         modal: true,
         children: [
           'Do you really want to reset this API key?',
-          <Loading
+          <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading} />
+            show     = {this.state.isLoading}
+          />
         ]
       }
     }, {
-      dialog: Dialog,
+      dialog: Common.Dialog,
       params: {
         ref: "deleteApiKeyDialog",
         title: "Delete an API key",
@@ -98,80 +93,75 @@ module.exports = React.createClass({
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
           this.getDialogList(checkedApiKeys),
-          <Loading
+          <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading} />
+            show     = {this.state.isLoading}
+          />
         ]
       }
     }]
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('ApiKeys::handleDelete');
     ApiKeysActions.removeApiKeys(ApiKeysStore.getCheckedItems());
   },
 
-  handleReset: function() {
+  handleReset() {
     console.info('ApiKeys::handleReset');
     ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
   },
 
-  showApiKeyDialog: function() {
+  showApiKeyDialog() {
     ApiKeysActions.showDialog();
   },
 
-  render: function() {
-
-    var checkedApiKeys      = ApiKeysStore.getNumberOfChecked(),
+  render() {
+    let checkedApiKeys      = ApiKeysStore.getNumberOfChecked(),
         isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
 
     return (
       <Container>
         <ApiKeyDialog />
         {this.getDialogs()}
-
-        <Show if={checkedApiKeys > 0}>
-
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedApiKeys > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = {isAnyApiKeySelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyApiKeySelected ? ApiKeysActions.selectAll : ApiKeysActions.uncheckAll}
-              iconClassName = {isAnyApiKeySelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
-
-            <FabListItem
+              iconClassName = {isAnyApiKeySelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"}
+            />
+            <Common.Fab.Item
               label         = "Click here to delete API Keys"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteApiKeyDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit an API Key"
               mini          = {true}
               disabled      = {checkedApiKeys > 1}
               onClick       = {this.showDialog.bind(null, 'resetApiKeyDialog')}
-              iconClassName = "synicon-backup-restore" />
-
-          </FabList>
-        </Show>
-
-        <FabList>
-          <FabListItem
+              iconClassName = "synicon-backup-restore"
+            />
+          </Common.Fab>
+        </Common.Show>
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to add an API Key"
             onClick       = {this.showApiKeyDialog}
-            iconClassName = "synicon-plus" />
-        </FabList>
-
+            iconClassName = "synicon-plus"
+          />
+        </Common.Fab>
         <ApiKeysList
           name                 = "API Keys"
           items                = {this.state.items}
           emptyItemHandleClick = {this.showApiKeyDialog}
-          emptyItemContent     = "Generate an API Key" />
-
+          emptyItemContent     = "Generate an API Key"
+        />
       </Container>
     );
   }
-
 });

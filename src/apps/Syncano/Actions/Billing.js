@@ -1,3 +1,5 @@
+import Stripe from '../../../stripe';
+
 export default {
   getProfile() {
     this.Connection

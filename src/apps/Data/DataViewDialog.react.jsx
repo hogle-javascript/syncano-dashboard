@@ -203,7 +203,7 @@ export default React.createClass({
           {this.renderFormNotifications()}
           <div>Main settings</div>
           <div className='row'>
-            <div className='col-md-12'>
+            <div className='col-xs-12'>
               <MUI.TextField
                 ref               = 'name'
                 name              = 'name'

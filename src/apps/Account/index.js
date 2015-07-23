@@ -9,7 +9,7 @@ import Store from './AuthStore';
 import Constants from './AuthConstants';
 import Hello from './Hello';
 
-export {
+export default {
   Activate,
   Login,
   PasswordReset,

@@ -29,7 +29,7 @@ export default {
 
   remove(names) {
     let promises = names.map(name => {
-      this.Connection.Instances.remove(name);
+      return this.Connection.Instances.remove(name);
     });
 
     this.D.all(promises)

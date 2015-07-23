@@ -1,44 +1,29 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    ButtonActionMixin = require('../../mixins/ButtonActionMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
-    // Stores and Actions
-    SessionActions    = require('../Session/SessionActions'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
-    WebhooksActions   = require('./WebhooksActions'),
-    WebhooksStore     = require('./WebhooksStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import WebhooksActions from './WebhooksActions';
+import WebhooksStore from './WebhooksStore';
 
-    // Components
-    mui               = require('material-ui'),
-    Colors            = require('material-ui/lib/styles/colors'),
-    FontIcon          = mui.FontIcon,
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // List
-    ListContainer     = require('../../common/Lists/ListContainer.react'),
-    List              = require('../../common/Lists/List.react'),
-    Item              = require('../../common/ColumnList/Item.react'),
-    EmptyListItem     = require('../../common/ColumnList/EmptyListItem.react'),
-    Header            = require('../../common/ColumnList/Header.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    ColumnDate        = require('../../common/ColumnList/Column/Date.react'),
-    ColumnID          = require('../../common/ColumnList/Column/ID.react'),
-    ColumnDesc        = require('../../common/ColumnList/Column/Desc.react'),
-    ColumnKey         = require('../../common/ColumnList/Column/Key.react'),
-    ColumnCheckIcon   = require('../../common/ColumnList/Column/CheckIcon.react');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'WebhooksList',
 
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation,
+    Router.Navigation
   ],
 
   getInitialState() {
@@ -56,67 +41,67 @@ module.exports = React.createClass({
   },
 
   // List
-  handleItemIconClick: function (id, state) {
+  handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
   },
 
-  renderItem: function(item) {
+  renderItem(item) {
 
     // TODO: move to store
     return (
-      <Item
+      <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.name}>
-        <ColumnCheckIcon
+        key     = {item.name}
+      >
+        <Common.ColumnList.Column.CheckIcon
           id              = {item.name.toString()}
           icon            = 'arrow-up-bold'
-          background      = {Colors.blue500}
+          background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} >
+          handleIconClick = {this.handleItemIconClick} 
+        >
           {item.name}
-        </ColumnCheckIcon>
-        <ColumnDesc className="col-xs-8">{item.description}</ColumnDesc>
-        <ColumnDesc className="col-xs-8">{item.codebox}</ColumnDesc>
-        <ColumnDesc>{item.public.toString()}</ColumnDesc>
-        <ColumnDate>{item.created_at}</ColumnDate>
-      </Item>
+        </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.Desc className="col-xs-8">{item.description}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc className="col-xs-8">{item.codebox}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Desc>{item.public.toString()}</Common.ColumnList.Column.Desc>
+        <Common.ColumnList.Column.Date date={item.created_at} />
+      </Common.ColumnList.Item>
     )
   },
 
-  getList: function() {
-
-    var items = this.state.items.map(function(item) {
-      return this.renderItem(item)
-    }.bind(this));
+  getList() {
+    var items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
+
     return (
-      <EmptyListItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
-      </EmptyListItem>
+      </Common.ColumnList.EmptyItem>
     )
   },
 
-  render: function () {
+  render() {
     return (
-      <ListContainer>
-        <Header>
-          <ColumnCheckIcon.Header>{this.props.name}</ColumnCheckIcon.Header>
-          <ColumnDesc.Header className="col-xs-8">Description</ColumnDesc.Header>
-          <ColumnDesc.Header className="col-xs-8">CodeBox</ColumnDesc.Header>
-          <ColumnDesc.Header>Public</ColumnDesc.Header>
-          <ColumnDate.Header>Created</ColumnDate.Header>
-        </Header>
-        <List>
-          <Loading show={this.state.isLoading}>
+      <Common.Lists.Container>
+        <Common.ColumnList.Header>
+          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.Desc.Header className="col-xs-8">Description</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Desc.Header className="col-xs-8">CodeBox</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Desc.Header>Public</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+        </Common.ColumnList.Header>
+        <Common.Lists.List>
+          <Common.Loading show={this.state.isLoading}>
             {this.getList()}
-          </Loading>
-        </List>
-      </ListContainer>
+          </Common.Loading>
+        </Common.Lists.List>
+      </Common.Lists.Container>
     );
   }
 });
