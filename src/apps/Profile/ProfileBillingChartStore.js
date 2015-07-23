@@ -118,6 +118,7 @@ export default Reflux.createStore({
 
       _.forEach(keys, key => {
         state.y.values.push({
+          tooltip: true,
           source: key + suffix,
           values: elements[key]
         });
@@ -126,6 +127,7 @@ export default Reflux.createStore({
 
     if (!_.isEmpty(predictions)) {
       state.y.values.unshift({
+        tooltip: false,
         source: 'predictions-bg',
         values: _.map(predictions.api, prediction => {
           return {
@@ -137,6 +139,7 @@ export default Reflux.createStore({
     }
 
     state.y.values.push({
+      tooltip: false,
       source: 'pricing-max',
       values: _.map(state.x.values, date => {
         return {
