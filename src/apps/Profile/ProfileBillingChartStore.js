@@ -24,6 +24,9 @@ export default Reflux.createStore({
       isLoading: true,
       width: 700,
       height: 120,
+      profile: {
+        subscription: {}
+      },
       overage: {
         api: 0,
         cbx: 0,
@@ -54,6 +57,7 @@ export default Reflux.createStore({
 
     let state       = this.getInitialState();
     state.isLoading = false;
+    state.profile   = profile;
     state.x.values  = this.getAllDates();
     state.x.min     = state.x.values[0];
     state.x.max     = _.last(state.x.values);

@@ -26,6 +26,36 @@ export default React.createClass({
     this.chart  = new BillingChart(element, this.state);
   },
 
+  renderSummary() {
+    let plan = this.state.profile.subscription.plan;
+
+    if (plan === 'free') {
+      return <div>It's free account.</div>;
+    }
+
+    if (plan === 'builder') {
+      return (
+        <div>
+          <div>
+            <strong>So far this month</strong>
+            Syncano cost: xxx<br/>
+            Yout cost: xxx
+          </div>
+          <div>$12</div>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <div>
+          <strong>So far this month</strong>
+        </div>
+        <div>${this.state.overage.amount + this.state.covered.amount}</div>
+      </div>
+    );
+  },
+
   render() {
     return (
       <Common.Loading show={this.state.isLoading}>
@@ -55,15 +85,7 @@ export default React.createClass({
             </div>
             <div>${this.state.covered.amount}</div>
           </div>
-          <div>
-            <div>
-              <strong>So far this month</strong>
-              Syncano cost: xxx<br/>
-              Yout cost: xxx
-            </div>
-            <div>$12</div>
-          </div>
-
+          {this.renderSummary()}
         </div>
       </Common.Loading>
     );
