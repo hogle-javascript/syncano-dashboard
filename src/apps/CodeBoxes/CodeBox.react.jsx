@@ -28,7 +28,7 @@ export default React.createClass({
   ],
 
   getActiveSubTabIndex() {
-    var index = 0;
+    let index = 0;
     this.getTabsData().some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
@@ -58,7 +58,9 @@ export default React.createClass({
       subTabsContainer: {
         display        : "flex",
         justifyContent : "center",
-        marginTop      : 30
+        margin         : '30px auto 0 auto',
+        maxWidth       : '85%',
+        borderBottom: '1px solid #DDD'
       },
       title: {
         color     : "#777",
@@ -87,7 +89,7 @@ export default React.createClass({
   },
 
   renderTabs() {
-    var styles = this.getStyles(),
+    let styles = this.getStyles(),
         codeBox = this.state.currentCodeBox;
     if (codeBox !== null) {
       return (
@@ -125,7 +127,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="container">
+      <div>
         {this.renderTabs()}
         <RouteHandler/>
       </div>
