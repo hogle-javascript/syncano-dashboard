@@ -22,7 +22,7 @@ export default React.createClass({
     if (this.state.isLoading === true || this.chart !== undefined) {
       return;
     }
-    let element = this.getDOMNode();
+    let element = this.refs.chart.getDOMNode();
     this.chart  = new BillingChart(element, this.state);
   },
 
@@ -30,7 +30,12 @@ export default React.createClass({
 
     return (
       <Common.Loading show={this.state.isLoading}>
-        <div className="chart" />
+        <div
+          ref       = "chart"
+          className = "chart" />
+        <div
+          ref       = "stats"
+          className = "stats" />
       </Common.Loading>
     );
   }

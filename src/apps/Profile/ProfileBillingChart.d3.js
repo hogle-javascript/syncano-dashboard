@@ -7,7 +7,7 @@ import './ProfileBillingChart.css';
 class BillingChart {
 
   constructor(element, data) {
-    let margin    = {top: 30, right: 0, bottom: 35, left: 0};
+    let margin    = {top: 0, right: 0, bottom: 35, left: 0};
     let width     = data.width - margin.left - margin.right;
     let height    = data.height - margin.top - margin.bottom;
     let parseDate = d3.time.format('%Y-%m-%d').parse;
@@ -22,8 +22,8 @@ class BillingChart {
 
     let svg = d3.select(element)
         .append('svg')
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
+          .attr('width', data.width)
+          .attr('height', data.height)
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
