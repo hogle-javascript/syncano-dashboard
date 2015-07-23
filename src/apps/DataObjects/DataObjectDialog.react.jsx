@@ -303,7 +303,6 @@ export default React.createClass({
             <MUI.SelectField
               ref               = {'field-' + item.name}
               name              = {item.name}
-              //onChange          = {this.handleBoolFieldChange.bind(this, item.name)}
               valueLink         = {this.linkState(item.name)}
               fullWidth         = {true}
               valueMember       = "payload"
