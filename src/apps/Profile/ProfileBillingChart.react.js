@@ -27,9 +27,6 @@ export default React.createClass({
   },
 
   render() {
-    let statsStyles   = {};
-    let overageStyles = {};
-
     return (
       <Common.Loading show={this.state.isLoading}>
         <div
@@ -39,21 +36,24 @@ export default React.createClass({
           ref       = "stats"
           className = "stats">
 
+          <Common.Show if={this.state.overage.amount > 0}>
           <div>
             <div>
               <strong>Overage</strong><br />
-              xx API calls<br />
-              xx CodeBox runs
+              {this.state.overage.api.included} API calls<br />
+              {this.state.overage.cbx.included} CodeBox runs
             </div>
-            <div>$2</div>
+            <div>${this.state.overage.amount}</div>
           </div>
+          </Common.Show>
+
           <div>
             <div>
               <strong>Covered by plan</strong><br />
-              xx API calls<br />
-              xx CodeBox runs
+              {this.state.covered.api.included} API calls<br />
+              {this.state.covered.cbx.included} CodeBox runs
             </div>
-            <div>$10</div>
+            <div>${this.state.covered.amount}</div>
           </div>
           <div>
             <div>

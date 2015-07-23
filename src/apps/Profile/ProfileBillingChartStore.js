@@ -24,8 +24,16 @@ export default Reflux.createStore({
       isLoading: true,
       width: 700,
       height: 120,
-      planMax: 0,
-      profile: {},
+      overage: {
+        api: 0,
+        cbx: 0,
+        amount: 0
+      },
+      covered: {
+        api: 0,
+        cbx: 0,
+        amount: 0
+      },
       x: {
         values: [],
         min: null,
@@ -44,20 +52,8 @@ export default Reflux.createStore({
     profile = _.first(profile);
     usage   = _.first(usage);
 
-    profile.subscription         = profile.subscription || {};
-    profile.subscription.pricing = profile.subscription.pricing || {};
-
-    if (_.isEmpty(profile.subscription.pricing)) {
-      // $5.25
-      profile.subscription.pricing = {
-        api: {overage: 0.0000200, included: 200000},
-        cbx: {overage: 0.0002500, included: 5000}
-      };
-    }
-
     let state       = this.getInitialState();
     state.isLoading = false;
-    state.profile   = profile;
     state.x.values  = this.getAllDates();
     state.x.min     = state.x.values[0];
     state.x.max     = _.last(state.x.values);
@@ -69,6 +65,14 @@ export default Reflux.createStore({
       api: {},
       cbx: {}
     };
+
+    if (_.isEmpty(pricing)) {
+      // $5.25
+      pricing = {
+        api: {overage: 0.0000200, included: 200000},
+        cbx: {overage: 0.0002500, included: 5000}
+      };
+    }
 
     let pricingMax = _.sum(pricing, v => v.included * v.overage);
 
@@ -117,6 +121,24 @@ export default Reflux.createStore({
     state.y.min     = 0;
     state.y.max     = _.ceil((yMax < pricingMax) ? pricingMax : yMax);
     state.height    = state.height * _.ceil(state.y.max / pricingMax);
+
+    state.covered   = _.reduce(pricing, (r, v, k) => {
+      let amount  = v.included * v.overage;
+      r.amount += amount;
+      r[k] = _.extend({}, v, {amount: amount})
+      return r;
+    }, {amount: 0});
+
+    state.overage = _.reduce(pricing, (r, v, k) => {
+      let usage   = _.last(objects[k]).value;
+      let covered = state.covered[k];
+
+      let amount   = (usage > covered.amount) ? usage - covered.amount : 0;
+      let included = _.round(amount / v.overage);
+      r.amount += amount;
+      r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
+      return r;
+    }, {amount: 0});
 
     _.forEach([objects, predictions], (elements, index) => {
       let keys   = _.keys(elements).reverse();
