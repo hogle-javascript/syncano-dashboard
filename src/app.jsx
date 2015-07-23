@@ -40,6 +40,10 @@ Router.run(routes, function (Root, state) {
     name = names[names.length-1];
   }
 
-  analytics.page(name, {path: state.pathname});
+  analytics.page('Dashboard', {
+    Page: name,
+    path: state.pathname
+  });
+
   React.render(<Root/>, container);
 });
