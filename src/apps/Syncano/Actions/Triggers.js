@@ -40,5 +40,5 @@ export default {
         .traces(triggerId)
         .then(this.completed)
         .catch(this.failure);
-  },
+  }
 };

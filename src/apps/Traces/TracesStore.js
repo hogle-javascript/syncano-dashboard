@@ -1,9 +1,9 @@
 import Reflux from 'reflux';
 
-    // Utils & Mixins
+// Utils & Mixins
 import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
 
-    // Stores & Actions
+// Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import AuthStore from '../Account/AuthStore';
 import TracesActions from './TracesActions';
@@ -37,19 +37,14 @@ export default Reflux.createStore({
   },
 
   fetchTraces() {
-    if (this.data.tracesFor === 'codebox') {
-      TracesActions.fetchCodeBoxTraces(this.data.objectId);
-      return
-    }
-    if (this.data.tracesFor === 'webhook') {
-      TracesActions.fetchWebhookTraces(this.data.objectId);
-    }
-    if (this.data.tracesFor === 'trigger') {
-      TracesActions.fetchTriggerTraces(this.data.objectId);
-    }
-    if (this.data.tracesFor === 'schedule') {
-      TracesActions.fetchScheduleTraces(this.data.objectId);
-    }
+    let fetch = {
+      codebox  : TracesActions.fetchCodeBoxTraces,
+      webhook  : TracesActions.fetchWebhookTraces,
+      trigger  : TracesActions.fetchTriggerTraces,
+      schedule : TracesActions.fetchScheduleTraces
+    };
+
+    fetch[this.data.tracesFor](this.data.objectId);
   },
 
   onSetCurrentObjectId(ObjectId, tracesFor) {
@@ -61,9 +56,7 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
-    this.data.items = Object.keys(tracesObj).map((item) => {
-      return tracesObj[item];
-    });
+    this.data.items = Object.keys(tracesObj).map((item) => tracesObj[item]);
     this.data.isLoading = false;
     this.trigger(this.data);
   },

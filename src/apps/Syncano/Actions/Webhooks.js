@@ -40,5 +40,5 @@ export default {
         .traces(webhookId)
         .then(this.completed)
         .catch(this.failure);
-  },
+  }
 };

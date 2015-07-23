@@ -11,7 +11,7 @@ import CodeBoxStore from './CodeBoxStore';
 import CodeBoxActions from './CodeBoxActions';
 
 // Components
-import Apps from '../';
+import Traces from '../Traces';
 import Container from '../../common/Container';
 
 
@@ -27,14 +27,14 @@ export default React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     CodeBoxActions.fetch();
   },
 
   render() {
     let codeBoxId = this.getParams().codeboxId;
     return (
-      <Apps.Traces
+      <Traces
         objectId  = {codeBoxId}
         tracesFor = 'codebox'
       />

@@ -40,5 +40,5 @@ export default {
         .traces(scheduleId)
         .then(this.completed)
         .catch(this.failure);
-  },
+  }
 };
