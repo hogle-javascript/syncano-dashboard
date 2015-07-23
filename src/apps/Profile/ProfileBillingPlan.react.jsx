@@ -441,7 +441,7 @@ module.exports = React.createClass({
             {this.renderSwitchPlan()}
           </div>
         </div>
-        <div className="row">
+        <div>
           {this.renderChart()}
         </div>
       </Common.Loading>

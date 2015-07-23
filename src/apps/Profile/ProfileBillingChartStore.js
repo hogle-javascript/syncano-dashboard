@@ -129,7 +129,7 @@ export default Reflux.createStore({
     state.covered   = _.reduce(pricing, (r, v, k) => {
       let amount  = v.included * v.overage;
       r.amount += amount;
-      r[k] = _.extend({}, v, {amount: amount})
+      r[k] = _.extend({}, v, {amount: amount});
       return r;
     }, {amount: 0});
 

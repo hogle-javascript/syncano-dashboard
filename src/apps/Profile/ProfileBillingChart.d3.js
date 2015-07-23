@@ -53,7 +53,7 @@ class BillingChart {
 
         if (middle) {
           svg.append('text')
-            .attr('class', 'label label-${value.source}')
+            .attr('class', `label label-${value.source}`)
             .attr('transform', 'translate(' + x(parseDate(middle.date)) + ' ,' + (margin.bottom) + ')')
             .style('text-anchor', 'middle')
             .text(value.label);
@@ -97,14 +97,6 @@ class BillingChart {
         .attr('class', 'x axis')
         .attr('transform', `translate(0, ${height})`)
         .call(xAxis);
-
-    // Add the text label for the X axis
-    svg.append('text')
-        .attr('transform',
-              'translate(' + (width / 2) + ' ,' +
-                             (height + margin.bottom) + ')')
-        .style('text-anchor', 'middle')
-        .text('Date');
 
     // Add the text label for the X axis
     svg.append('text')

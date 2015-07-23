@@ -59,35 +59,65 @@ export default React.createClass({
   render() {
     return (
       <Common.Loading show={this.state.isLoading}>
-        <div
-          ref       = "chart"
-          className = "chart" />
-        <div
-          ref       = "stats"
-          className = "stats">
-
-          <Common.Show if={this.state.overage.amount > 0}>
-          <div>
-            <div>
-              <strong>Overage</strong><br />
-              {this.state.overage.api.included} API calls<br />
-              {this.state.overage.cbx.included} CodeBox runs
-            </div>
-            <div>${this.state.overage.amount}</div>
+        <div className="row">
+          <div className="col" style={{width: 700}}>
+            <div
+              ref       = "chart"
+              className = "chart" />
+            <div
+              ref       = "stats"
+              className = "stats" />
           </div>
-          </Common.Show>
-
-          <div>
+          <div className="col-md-6" style={{padding: 0, background: '#F6E8E8', marginBottom: 35, display: 'flex', flexDirection: 'column-reverse'}}>
             <div>
-              <strong>Covered by plan</strong><br />
-              {this.state.covered.api.included} API calls<br />
-              {this.state.covered.cbx.included} CodeBox runs
+              <div style={{height: '100%', background: '#F6E8E8'}}>
+                <Common.Show if={this.state.overage.amount > 0}>
+                  <div style={{height: 125, background: '#F6E8E8'}}>
+                    <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
+                      <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+                        Overage
+                      </div>
+                      <div className="row" style={{paddingLeft: 15, marginTop: 15}}>
+                        <div className="col-md-14" style={{textAlign: 'right'}}>
+                          <div><strong>{this.state.overage.api.included}</strong></div>
+                          <div><strong>{this.state.overage.cbx.included}</strong></div>
+                        </div>
+                        <div className="col-flex-1">
+                          <div>API calls</div>
+                          <div>CodeBox runs</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Common.Show>
+              </div>
+              <div style={{height: 125, background: '#E1E1E1'}}>
+                <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
+                  <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+                    Covered by Syncano
+                  </div>
+                  <div className="row" style={{paddingLeft: 15, marginTop: 15}}>
+                    <div className="col-md-14" style={{textAlign: 'right'}}>
+                      <div><strong>{this.state.covered.api.included}</strong></div>
+                      <div><strong>{this.state.covered.cbx.included}</strong></div>
+                    </div>
+                    <div className="col-flex-1">
+                      <div>API calls</div>
+                      <div>CodeBox runs</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
-            <div>${this.state.covered.amount}</div>
           </div>
-          {this.renderSummary()}
         </div>
       </Common.Loading>
     );
   }
 });
+
+//${this.state.overage.amount}
+//${this.state.covered.amount}
+
+//{this.renderSummary()}
