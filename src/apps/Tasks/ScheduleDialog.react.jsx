@@ -1,31 +1,27 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin         = require('../../mixins/DialogMixin'),
-    FormMixin           = require('../../mixins/FormMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    SchedulesActions    = require('./SchedulesActions'),
-    ScheduleDialogStore = require('./ScheduleDialogStore'),
-    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
+// Stores and Actions
+import SchedulesActions from './SchedulesActions';
+import ScheduleDialogStore from './ScheduleDialogStore';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
-    // Components
-    mui                 = require('material-ui'),
-    Toggle              = mui.Toggle,
-    TextField           = mui.TextField,
-    SelectField         = mui.SelectField,
-    Dialog              = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ScheduleDialog',
 
   mixins: [
     Reflux.connect(ScheduleDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -40,12 +36,12 @@ module.exports = React.createClass({
     }
   },
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
     CodeBoxesActions.fetch();
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     SchedulesActions.createSchedule({
       label    : this.state.label,
       crontab  : this.state.crontab,
@@ -53,7 +49,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     SchedulesActions.updateSchedule(
       this.state.id, {
         label    : this.state.label,
@@ -63,45 +59,46 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
-    var title       = this.hasEditMode() ? 'Edit': 'Create',
+  render() {
+    var title       = this.hasEditMode() ? 'Edit' : 'Create',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : 'Confirm',
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : 'Confirm',
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' a Schedule'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'>
-
-            <TextField
+            method        = 'post'
+          >
+            <MUI.TextField
               ref               = 'label'
               name              = 'label'
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Label of the schedule' />
-
-            <SelectField
+              hintText          = 'Label of the schedule'
+            />
+            <MUI.SelectField
               ref               = 'codebox'
               name              = 'codebox'
               hintText          = 'CodeBox'
@@ -110,9 +107,9 @@ module.exports = React.createClass({
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {this.state.codeboxes} />
-
-            <SelectField
+              menuItems         = {this.state.codeboxes}
+            />
+            <MUI.SelectField
               ref               = 'crontab'
               name              = 'crontab'
               hintText          = 'CronTab'
@@ -121,13 +118,12 @@ module.exports = React.createClass({
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {ScheduleDialogStore.getCrontabDropdown()} />
-
+              menuItems         = {ScheduleDialogStore.getCrontabDropdown()}
+            />
           </form>
         </div>
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });
 

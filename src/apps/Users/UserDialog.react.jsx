@@ -1,36 +1,30 @@
-var React            = require('react'),
-    Reflux           = require('reflux'),
-    Select           = require('react-select'),
+import React from 'react';
+import Reflux from 'reflux';
+import Select from 'react-select';
 
-    // Utils
-    FormMixin        = require('../../mixins/FormMixin'),
-    DialogMixin      = require('../../mixins/DialogMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    UsersActions     = require('./UsersActions'),
-    UserDialogStore  = require('./UserDialogStore'),
-    CodeBoxesStore   = require('../CodeBoxes/CodeBoxesStore'),
-    GroupsStore      = require('./GroupsStore'),
+// Stores and Actions
+import UsersActions from './UsersActions';
+import UserDialogStore from './UserDialogStore';
+import GroupsStore from './GroupsStore';
 
-    // Components
-    mui              = require('material-ui'),
-    Toggle           = mui.Toggle,
-    TextField        = mui.TextField,
-    SelectField      = mui.SelectField,
-    DropDownMenu     = mui.DropDownMenu,
-    Dialog           = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
 require('react-select/dist/default.css');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'UserDialog',
 
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(UserDialogStore),
-    FormMixin,
-    DialogMixin
+    Mixins.Form,
+    Mixins.Dialog
   ],
 
   validatorConstraints: {
@@ -39,8 +33,8 @@ module.exports = React.createClass({
     }
   },
 
-  handleAddSubmit: function() {
-    var activeGroup = GroupsStore.getActiveGroup(),
+  handleAddSubmit() {
+    let activeGroup = GroupsStore.getActiveGroup(),
         userGroups  = this.state.newUserGroups || [this.state.secondInstance] || [activeGroup];
 
     UsersActions.createUser(
@@ -54,7 +48,7 @@ module.exports = React.createClass({
     );
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     UsersActions.updateUser(
       this.state.id,
       {
@@ -68,14 +62,14 @@ module.exports = React.createClass({
     );
   },
 
-  handleSelectFieldChange: function(newValue, selectedGroups) {
+  handleSelectFieldChange(newValue, selectedGroups) {
     this.setState({
       newUserGroups: selectedGroups
     })
   },
 
-  getSelectValueSource: function() {
-    var activeGroup = GroupsStore.getActiveGroup();
+  getSelectValueSource() {
+    let activeGroup = GroupsStore.getActiveGroup();
 
     if (this.state.newUserGroups) {
       return this.linkState('newUserGroups');
@@ -90,8 +84,8 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    var title             = this.hasEditMode() ? 'Edit' : 'Add',
+  render() {
+    let title             = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel       = 'Confirm',
         selectValueSource = this.getSelectValueSource(),
         selectValue       = selectValueSource ? selectValueSource.value : null,
@@ -101,19 +95,19 @@ module.exports = React.createClass({
                             }),
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <Common.Dialog
         ref       = 'dialog'
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
@@ -125,9 +119,9 @@ module.exports = React.createClass({
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post">
-
-            <TextField
+            method        = "post"
+          >
+            <MUI.TextField
               ref               = 'username'
               name              = 'username'
               fullWidth         = {true}
@@ -136,8 +130,7 @@ module.exports = React.createClass({
               hintText          = 'Username'
               floatingLabelText = 'Username'
             />
-
-            <TextField
+            <MUI.TextField
               ref               = 'password'
               name              = 'password'
               type              = 'password'
@@ -148,7 +141,6 @@ module.exports = React.createClass({
               floatingLabelText = 'Password'
               className         = 'vm-4-b'
             />
-
             <Select
               name        = 'group'
               multi       = {true}
@@ -157,11 +149,14 @@ module.exports = React.createClass({
               options     = {allGroups}
               onChange    = {this.handleSelectFieldChange}
             />
-
           </form>
+          <Common.Loading
+            type     = "linear"
+            position = "bottom"
+            show     = {this.state.isLoading}
+          />
         </div>
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });

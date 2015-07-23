@@ -1,31 +1,26 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    DialogsMixin      = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    Show              = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionStore     = require('../Session/SessionStore'),
-    CodeBoxesActions = require('./CodeBoxesActions'),
-    CodeBoxesStore   = require('./CodeBoxesStore'),
+// Stores and Actions
+import SessionStore from '../Session/SessionStore';
+import CodeBoxesActions from './CodeBoxesActions';
+import CodeBoxesStore from './CodeBoxesStore';
 
-    // Components
-    mui              = require('material-ui'),
-    Dialog           = mui.Dialog,
-    Loading          = require('../../common/Loading/Loading.react.jsx'),
-    Container        = require('../../common/Container/Container.react'),
-    FabList          = require('../../common/Fab/FabList.react'),
-    FabListItem      = require('../../common/Fab/FabListItem.react'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // Local components
-    CodeBoxesList    = require('./CodeBoxesList.react'),
-    CodeBoxDialog    = require('./CodeBoxDialog.react');
+// Local components
+import CodeBoxesList from './CodeBoxesList.react';
+import CodeBoxDialog from './CodeBoxDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'CodeBoxes',
 
@@ -34,14 +29,10 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(CodeBoxesStore),
-    DialogsMixin,
-    HeaderMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
-
-  componentWillMount: function() {
-    CodeBoxesActions.fetch();
-  },
 
   componentWillUpdate: function(nextProps, nextState) {
     console.info('CodeBoxes::componentWillUpdate');
@@ -49,10 +40,13 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
+    console.info('CodeBoxes::componentDidMount');
+    CodeBoxesActions.fetch();
     if (this.getParams().action == 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
     }
+    CodeBoxesActions.fetch();
   },
 
   // Dialogs config
@@ -60,7 +54,7 @@ module.exports = React.createClass({
     var checkedCodeboxes = CodeBoxesStore.getCheckedItems();
 
     return [{
-      dialog: Dialog,
+      dialog: Common.Dialog,
       params: {
         ref     : 'deleteCodeBoxDialog',
         title   : 'Delete CodeBox',
@@ -78,10 +72,11 @@ module.exports = React.createClass({
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
           this.getDialogList(checkedCodeboxes),
-          <Loading
+          <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading} />
+            show     = {this.state.isLoading} 
+          />
         ]
       }
     }]
@@ -101,7 +96,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-
     var checkedItems         = CodeBoxesStore.getNumberOfChecked(),
         isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
         markedIcon           = 'synicon-checkbox-multiple-marked-outline',
@@ -112,46 +106,45 @@ module.exports = React.createClass({
         <CodeBoxDialog />
         {this.getDialogs()}
 
-        <Show if={checkedItems > 0}>
-
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedItems > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = {isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyCodeboxSelected ? CodeBoxesActions.selectAll : CodeBoxesActions.uncheckAll}
-              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon} />
-
-            <FabListItem
+              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon}
+            />
+            <Common.Fab.Item
               label         = "Click here to delete CodeBoxes"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteCodeBoxDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit CodeBox"
               mini          = {true}
               disabled      = {checkedItems > 1}
               onClick       = {this.showCodeBoxEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <FabList>
-          <FabListItem
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to add CodeBox"
             onClick       = {this.showCodeBoxDialog}
-            iconClassName = "synicon-plus" />
-        </FabList>
+            iconClassName = "synicon-plus"
+          />
+        </Common.Fab>
 
         <CodeBoxesList
           name                 = "CodeBoxes"
           items                = {this.state.items}
           emptyItemHandleClick = {this.showCodeBoxDialog}
-          emptyItemContent     = "Create a CodeBox" />
+          emptyItemContent     = "Create a CodeBox"
+        />
       </Container>
     );
   }
-
 });

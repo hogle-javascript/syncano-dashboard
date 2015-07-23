@@ -1,34 +1,27 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin         = require('../../mixins/DialogMixin'),
-    FormMixin           = require('../../mixins/FormMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    ChannelsStore       = require('./ChannelsStore'),
-    ChannelsActions     = require('./ChannelsActions'),
-    ChannelDialogStore  = require('./ChannelDialogStore'),
+// Stores and Actions
+import ChannelsStore from './ChannelsStore';
+import ChannelsActions from './ChannelsActions';
+import ChannelDialogStore from './ChannelDialogStore';
 
-    // Components
-    mui                 = require('material-ui'),
-    TextField           = mui.TextField,
-    Toggle              = mui.Toggle,
-    DropDownMenu        = mui.DropDownMenu,
-    SelectField         = mui.SelectField,
-    Dialog              = mui.Dialog,
-    Loading             = require('../../common/Loading/Loading.react.jsx');
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ChannelDialog',
 
   mixins: [
     React.addons.LinkedStateMixin,
-
     Reflux.connect(ChannelDialogStore),
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -40,7 +33,7 @@ module.exports = React.createClass({
     }
   },
 
-  getParams: function() {
+  getParams() {
     return {
       name              : this.state.name,
       description       : this.state.description,
@@ -52,143 +45,144 @@ module.exports = React.createClass({
     }
   },
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     ChannelsActions.updateChannel(this.state.name, this.getParams());
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     ChannelsActions.createChannel(this.getParams());
   },
 
-  handleToogle: function(event, status) {
+  handleToogle(event, status) {
     var state = {};
     state[event.target.name] = status;
     this.setState(state);
   },
 
-  render: function() {
+  render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Create Channel',
         dialogStandardActions = [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel,
-            ref     : 'cancel'
+            text       : 'Cancel',
+            ref        : 'cancel',
+            onTouchTap : this.handleCancel
           }, {
-            text    : submitLabel,
-            onClick : this.handleFormValidation,
-            ref     : 'submit'
+            text       : submitLabel,
+            ref        : 'submit',
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <div>
-        <Dialog
-          ref          = 'dialog'
-          title        = {title + ' Channel'}
-          actions      = {dialogStandardActions}
-          onDismiss    = {this.resetDialogState}
-          onShow       = {this.handleDialogShow}
-          contentStyle = {{padding: '8px 0 0 0'}}  >
-          <div>
-            {this.renderFormNotifications()}
+      <Common.Dialog
+        ref          = 'dialog'
+        title        = {title + ' Channel'}
+        actions      = {dialogStandardActions}
+        onDismiss    = {this.resetDialogState}
+        onShow       = {this.handleDialogShow}
+        contentStyle = {{padding: '8px 0 0 0'}}
+      >
+        <div>
+          {this.renderFormNotifications()}
 
-            <div className="row">
-              <div className="col-md-12">
-
-                <TextField
-                  ref               = 'name'
-                  valueLink         = {this.linkState('name')}
-                  errorText         = {this.getValidationMessages('name').join(' ')}
-                  name              = 'name'
-                  fullWidth         = {true}
-                  hintText          = 'Short name for your Channel'
-                  floatingLabelText = 'Label of Channel' />
-
-              </div>
-              <div className="col-flex-1">
-
-                <TextField
-                  ref               = 'description'
-                  name              = 'description'
-                  valueLink         = {this.linkState('description')}
-                  errorText         = {this.getValidationMessages('description').join(' ')}
-                  fullWidth         = {true}
-                  hintText          = 'Description of Channel (optional)'
-                  floatingLabelText = 'Description of Channel' />
-              </div>
+          <div className="row">
+            <div className="col-md-12">
+              <MUI.TextField
+                ref               = 'name'
+                valueLink         = {this.linkState('name')}
+                errorText         = {this.getValidationMessages('name').join(' ')}
+                name              = 'name'
+                fullWidth         = {true}
+                hintText          = 'Short name for your Channel'
+                floatingLabelText = 'Label of Channel'
+              />
             </div>
-
-            <SelectField
-              ref               = 'type'
-              name              = 'type'
-              floatingLabelText = 'Channel type'
-              valueLink         = {this.linkState('type')}
-              errorText         = {this.getValidationMessages('type').join(' ')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              fullWidth         = {true}
-              selectedIndex     = {0}
-              menuItems         = {ChannelsStore.getChannelTypesDropdown()} />
-
-            <div style={{marginTop: 40}}>Permissions</div>
-            <div className="row">
-              <div className="col-flex-1">
-                <TextField
-                  ref               = 'group'
-                  name              = 'group'
-                  fullWidth         = {true}
-                  valueLink         = {this.linkState('group')}
-                  errorText         = {this.getValidationMessages('group').join(' ')}
-                  hintText          = 'ID of the Group'
-                  floatingLabelText = 'Group (ID)' />
-              </div>
-              <div className="col-flex-1">
-                <SelectField
-                  ref               = 'group_permissions'
-                  name              = 'group_permissions'
-                  floatingLabelText = 'Group permissions'
-                  valueLink         = {this.linkState('group_permissions')}
-                  errorText         = {this.getValidationMessages('group_permissions').join(' ')}
-                  valueMember       = 'payload'
-                  displayMember     = 'text'
-                  fullWidth         = {true}
-                  selectedIndex     = {0}
-                  menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
-              </div>
-              <div className="col-flex-1">
-                <SelectField
-                  ref               = 'other_permissions'
-                  name              = 'other_permissions'
-                  floatingLabelText = 'Other permissions'
-                  valueLink         = {this.linkState('other_permissions')}
-                  errorText         = {this.getValidationMessages('other_permissions').join(' ')}
-                  valueMember       = 'payload'
-                  displayMember     = 'text'
-                  fullWidth         = {true}
-                  selectedIndex     = {0}
-                  menuItems         = {ChannelsStore.getChannelPermissionsDropdown()} />
-              </div>
+            <div className="col-flex-1">
+              <MUI.TextField
+                ref               = 'description'
+                name              = 'description'
+                valueLink         = {this.linkState('description')}
+                errorText         = {this.getValidationMessages('description').join(' ')}
+                fullWidth         = {true}
+                hintText          = 'Description of Channel (optional)'
+                floatingLabelText = 'Description of Channel'
+              />
             </div>
-            <Toggle
-              ref            = 'custom_publish'
-              name           = 'custom_publish'
-              defaultToggled = {this.state.custom_publish}
-              onToggle       = {this.handleToogle}
-              style          = {{marginTop: 20}}
-              label          = 'Custom publishing in this channel?' />
           </div>
-          <Loading
-            type     = 'linear'
-            position = 'bottom'
-            show     = {this.state.isLoading} />
-        </Dialog>
-      </div>
+          <MUI.SelectField
+            ref               = 'type'
+            name              = 'type'
+            floatingLabelText = 'Channel type'
+            valueLink         = {this.linkState('type')}
+            errorText         = {this.getValidationMessages('type').join(' ')}
+            valueMember       = 'payload'
+            displayMember     = 'text'
+            fullWidth         = {true}
+            selectedIndex     = {0}
+            menuItems         = {ChannelsStore.getChannelTypesDropdown()}
+          />
+          <div style={{marginTop: 40}}>Permissions</div>
+          <div className="row">
+            <div className="col-flex-1">
+              <MUI.TextField
+                ref               = 'group'
+                name              = 'group'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('group')}
+                errorText         = {this.getValidationMessages('group').join(' ')}
+                hintText          = 'ID of the Group'
+                floatingLabelText = 'Group (ID)'
+              />
+            </div>
+            <div className="col-flex-1">
+              <MUI.SelectField
+                ref               = 'group_permissions'
+                name              = 'group_permissions'
+                floatingLabelText = 'Group permissions'
+                valueLink         = {this.linkState('group_permissions')}
+                errorText         = {this.getValidationMessages('group_permissions').join(' ')}
+                valueMember       = 'payload'
+                displayMember     = 'text'
+                fullWidth         = {true}
+                selectedIndex     = {0}
+                menuItems         = {ChannelsStore.getChannelPermissionsDropdown()}
+              />
+            </div>
+            <div className="col-flex-1">
+              <MUI.SelectField
+                ref               = 'other_permissions'
+                name              = 'other_permissions'
+                floatingLabelText = 'Other permissions'
+                valueLink         = {this.linkState('other_permissions')}
+                errorText         = {this.getValidationMessages('other_permissions').join(' ')}
+                valueMember       = 'payload'
+                displayMember     = 'text'
+                fullWidth         = {true}
+                selectedIndex     = {0}
+                menuItems         = {ChannelsStore.getChannelPermissionsDropdown()}
+              />
+            </div>
+          </div>
+          <MUI.Toggle
+            ref            = 'custom_publish'
+            name           = 'custom_publish'
+            defaultToggled = {this.state.custom_publish}
+            onToggle       = {this.handleToogle}
+            style          = {{marginTop: 20}}
+            label          = 'Custom publishing in this channel?'
+          />
+        </div>
+        <Common.Loading
+          type     = 'linear'
+          position = 'bottom'
+          show     = {this.state.isLoading}
+        />
+      </Common.Dialog>
     );
   }
-
 });

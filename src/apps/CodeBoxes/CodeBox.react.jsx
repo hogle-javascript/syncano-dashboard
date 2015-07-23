@@ -1,21 +1,19 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
-    RouteHandler      = Router.RouteHandler,
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+import HeaderMixin from '../Header/HeaderMixin';
+import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
-    CodeBoxStore      = require('./CodeBoxStore'),
-    CodeBoxActions    = require('./CodeBoxActions'),
+import CodeBoxStore from './CodeBoxStore';
+import CodeBoxActions from './CodeBoxActions';
 
-    Loading           = require('../../common/Loading/Loading.react'),
-    mui               = require('material-ui'),
-    Colors            = mui.Styles.Colors,
-    Tabs              = mui.Tabs,
-    Tab               = mui.Tab;
+import Common from '../../common';
+import MUI from 'material-ui';
 
-module.exports = React.createClass({
+let RouteHandler = Router.RouteHandler;
+
+export default React.createClass({
 
   displayName: 'CodeBox',
 
@@ -29,19 +27,19 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  getActiveSubTabIndex: function() {
+  getActiveSubTabIndex() {
     var index = 0;
-    this.getTabsData().some(function (item, i) {
+    this.getTabsData().some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
         return true;
       }
-    }.bind(this));
+    });
 
     return index;
   },
 
-  handleTabActive: function(tab) {
+  handleTabActive(tab) {
     this.transitionTo(tab.props.route,
       {
         codeboxId    : this.state.currentCodeBox.id,
@@ -49,7 +47,7 @@ module.exports = React.createClass({
       });
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       subTabsHeader: {
         backgroundColor: "transparent"
@@ -73,7 +71,7 @@ module.exports = React.createClass({
     }
   },
 
-  getTabsData: function() {
+  getTabsData() {
     return [
       {
         label : "Edit",
@@ -88,7 +86,7 @@ module.exports = React.createClass({
     ];
   },
 
-  renderTabs: function() {
+  renderTabs() {
     var styles = this.getStyles(),
         codeBox = this.state.currentCodeBox;
     if (codeBox !== null) {
@@ -96,35 +94,36 @@ module.exports = React.createClass({
         <div style={styles.subTabsContainer}>
 
           <div style={styles.title}>Codebox: {codeBox.label}</div>
-          <Tabs
+          <MUI.Tabs
             initialSelectedIndex  = {this.getActiveSubTabIndex()}
             tabItemContainerStyle = {styles.subTabsHeader}
-            tabWidth              = {100}>
-            <Tab
+            tabWidth              = {100}
+          >
+            <MUI.Tab
               style    = {styles.tab}
               label    = "Edit"
               route    = "codebox-edit"
               onActive = {this.handleTabActive}>
-              </Tab>
-            <Tab
+            </MUI.Tab>
+            <MUI.Tab
               style    = {styles.tab}
               label    = "Config"
               route    = "codebox-config"
               onActive = {this.handleTabActive}>
-            </Tab>
-            <Tab
+            </MUI.Tab>
+            <MUI.Tab
               style    = {styles.tab}
               label    = "Traces"
               route    = "codebox-traces"
               onActive = {this.handleTabActive}>
-            </Tab>
-          </Tabs>
+            </MUI.Tab>
+          </MUI.Tabs>
         </div>
       );
     }
   },
 
-  render: function() {
+  render() {
     return (
       <div className="container">
         {this.renderTabs()}

@@ -1,10 +1,11 @@
 var React                       = require('react'),
     Reflux                      = require('reflux'),
-    _                           = require('lodash'),
 
+    SessionStore                = require('../Session/SessionStore'),
     ProfileActions              = require('./ProfileActions'),
     ProfileBillingInvoicesStore = require('./ProfileBillingInvoicesStore'),
 
+    MUI                         = require('material-ui'),
     Loading                     = require('../../common/Loading/Loading.react'),
     Show                        = require('../../common/Show/Show.react'),
 
@@ -27,6 +28,12 @@ module.exports = React.createClass({
     ProfileActions.fetchInvoices();
   },
 
+  handlePDFClick: function(invoice) {
+    let pdfUrl = SYNCANO_BASE_URL + invoice.links.pdf.replace('/', '');
+    pdfUrl += '?api_key=' + SessionStore.getToken('');
+    location.href = pdfUrl;
+  },
+
   renderListItem: function(invoice) {
     return (
       <Item key = {invoice.id}>
@@ -35,7 +42,10 @@ module.exports = React.createClass({
         <ColumnDesc>{invoice.amount}</ColumnDesc>
         <ColumnDesc>{invoice.status}</ColumnDesc>
         <ColumnDesc>
-          <a href={invoice.links.pdf}>VIEW</a>
+          <MUI.FlatButton
+            label   = "VIEW"
+            primary = {true}
+            onClick = {this.handlePDFClick.bind(null, invoice)} />
         </ColumnDesc>
       </Item>
     );

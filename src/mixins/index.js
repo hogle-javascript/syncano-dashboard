@@ -1,5 +1,6 @@
 import ButtonActionMixin from './ButtonActionMixin';
 import DialogMixin from './DialogMixin';
+import DialogStoreMixin from './DialogStoreMixin';
 import DialogsMixin from './DialogsMixin';
 import FormMixin from './FormMixin';
 import CheckListStoreMixin from './CheckListStoreMixin';
@@ -12,6 +13,7 @@ let Mixins = {};
 Mixins.ButtonAction = ButtonActionMixin;
 Mixins.Dialog = DialogMixin;
 Mixins.Dialogs = DialogsMixin;
+Mixins.DialogStore = DialogStoreMixin;
 Mixins.Form = FormMixin;
 Mixins.CheckListStore = CheckListStoreMixin;
 Mixins.InstanceTabs = InstanceTabsMixin;

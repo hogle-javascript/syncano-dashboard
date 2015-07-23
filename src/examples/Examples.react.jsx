@@ -248,7 +248,7 @@ module.exports = React.createClass({
 
     var dialogStandardActions = [
       {text: 'Cancel'},
-      {text: 'Submit', onClick: this._onDialogSubmit, ref: 'submit'}
+      {text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit'}
     ];
 
     var modalState = true;

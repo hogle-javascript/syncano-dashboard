@@ -1,31 +1,27 @@
-var React                    = require('react'),
-    Reflux                   = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin              = require('../../mixins/DialogMixin'),
-    FormMixin                = require('../../mixins/FormMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    AdminsActions            = require('./AdminsActions'),
-    AdminsInvitationsActions = require('./AdminsInvitationsActions'),
-    AdminDialogStore         = require('./AdminDialogStore'),
+// Stores and Actions
+import AdminsActions from './AdminsActions';
+import AdminsInvitationsActions from './AdminsInvitationsActions';
+import AdminDialogStore from './AdminDialogStore';
 
-    // Components
-    mui                       = require('material-ui'),
-    TextField                 = mui.TextField,
-    SelectField               = mui.SelectField,
-    Dialog                    = mui.Dialog,
-    Loading                   = require('../../common/Loading');
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AdminDialog',
 
   mixins: [
     Reflux.connect(AdminDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -40,50 +36,51 @@ module.exports = React.createClass({
     }
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     AdminsInvitationsActions.createInvitation({
       email : this.state.email,
       role  : this.state.role
     });
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     AdminsActions.updateAdmin(this.state.id, {
       role  : this.state.role
     });
   },
 
-  render: function() {
+  render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Invite',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' an Administrator'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}>
+        onDismiss       = {this.resetDialogState}
+      >
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'>
-
-            <TextField
+            method        = 'post'
+          >
+            <MUI.TextField
               ref               = 'email'
               name              = 'email'
               fullWidth         = {true}
@@ -91,9 +88,9 @@ module.exports = React.createClass({
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
               hintText          = 'Email of the administrator'
-              floatingLabelText = 'Email' />
-
-            <SelectField
+              floatingLabelText = 'Email'
+            />
+            <MUI.SelectField
               ref               = 'role'
               name              = 'role'
               autoWidth         = {true}
@@ -103,14 +100,12 @@ module.exports = React.createClass({
               floatingLabelText = 'Role of the administrator'
               style             = {{width: '50%'}}
               errorText         = {this.getValidationMessages('role').join(' ')}
-              menuItems         = {AdminDialogStore.getRoles()} />
-
+              menuItems         = {AdminDialogStore.getRoles()}
+            />
           </form>
         </div>
-
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });
 
