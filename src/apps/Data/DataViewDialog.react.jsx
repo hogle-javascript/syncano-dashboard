@@ -1,34 +1,28 @@
-var React               = require('react'),
-    Reflux              = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin         = require('../../mixins/DialogMixin'),
-    FormMixin           = require('../../mixins/FormMixin'),
-    Show                = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    DataViewsActions    = require('./DataViewsActions'),
-    DataViewDialogStore = require('./DataViewDialogStore'),
-    ClassesActions    = require('../Classes/ClassesActions'),
-    ClassesStore    = require('../Classes/ClassesStore'),
+// Stores and Actions
+import DataViewsActions from './DataViewsActions';
+import DataViewDialogStore from './DataViewDialogStore';
+import ClassesActions from '../Classes/ClassesActions';
+import ClassesStore from '../Classes/ClassesStore';
 
-    // Components
-    mui                 = require('material-ui'),
-    Toggle              = mui.Toggle,
-    Checkbox            = mui.Checkbox,
-    TextField           = mui.TextField,
-    SelectField         = mui.SelectField,
-    Dialog              = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DataViewDialog',
 
   mixins: [
     Reflux.connect(DataViewDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -40,13 +34,12 @@ module.exports = React.createClass({
     }
   },
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('DataViewDialog::handleDialogShow');
     ClassesActions.fetch();
   },
 
-  handleAddSubmit: function() {
-
+  handleAddSubmit() {
     DataViewsActions.createDataView({
       name        : this.state.name,
       'class'     : this.state.class,
@@ -58,7 +51,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     DataViewsActions.updateDataView(
       this.state.name, {
         'class'     : this.state.class,
@@ -71,7 +64,7 @@ module.exports = React.createClass({
     );
   },
 
-  handleToggle: function(fieldsType, fieldName, event, value) {
+  handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataViewDialog::handleToggle', arguments);
 
     var genList = function(list, fieldName, value) {
@@ -97,14 +90,14 @@ module.exports = React.createClass({
     }
   },
 
-  isEnabled: function(list, field) {
+  isEnabled(list, field) {
     if (!list) {
       return;
     }
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
-  renderFields: function() {
+  renderFields() {
     console.info('DataViewDialog::renderFields', this.state.class);
 
     var fields = [
@@ -119,7 +112,7 @@ module.exports = React.createClass({
         return (
           <div className='row'>
             <div className='col-flex-1'>
-              <Toggle
+              <MUI.Toggle
                 key            = {field.name}
                 name           = {field.name}
                 value          = {field.name}
@@ -129,28 +122,27 @@ module.exports = React.createClass({
               />
             </div>
             <div className='col-xs-8'>
-              <Show if={field.type === 'reference'}>
-                <Checkbox
+              <Common.Show if={field.type === 'reference'}>
+                <MUI.Checkbox
                   name           = "expand"
                   defaultChecked = {_this.isEnabled(_this.state.expand, field.name)}
                   disabled       = {!_this.isEnabled(_this.state.fields, field.name)}
                   onCheck        = {_this.handleToggle.bind(_this, 'expandFields', field.name)}
                 />
-              </Show>
+              </Common.Show>
             </div>
-
           </div>
         )
       }.bind(this)))
     }
   },
 
-  renderOptions: function() {
+  renderOptions() {
     console.info('DataViewDialog::renderOrderBy', this.state.class);
 
     return [
       <div>Response options</div>,
-      <SelectField
+      <MUI.SelectField
         ref               = "order_by"
         name              = "order_by"
         floatingLabelText = "Order by"
@@ -159,32 +151,33 @@ module.exports = React.createClass({
         errorText         = {this.getValidationMessages('class').join(' ')}
         valueMember       = "payload"
         displayMember     = "text"
-        menuItems         = {ClassesStore.getClassOrderFieldsPayload(this.state.class)} />,
-
-      <TextField
-          ref               = 'page_size'
-          name              = 'page_size'
-          fullWidth         = {true}
-          valueLink         = {this.linkState('page_size')}
-          errorText         = {this.getValidationMessages('page_size').join(' ')}
-          hintText          = 'Number'
-          floatingLabelText = 'Number of records in data set' />
+        menuItems         = {ClassesStore.getClassOrderFieldsPayload(this.state.class)}
+      />,
+      <MUI.TextField
+        ref               = 'page_size'
+        name              = 'page_size'
+        fullWidth         = {true}
+        valueLink         = {this.linkState('page_size')}
+        errorText         = {this.getValidationMessages('page_size').join(' ')}
+        hintText          = 'Number'
+        floatingLabelText = 'Number of records in data set'
+      />
     ]
   },
 
-  render: function() {
+  render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
@@ -197,74 +190,69 @@ module.exports = React.createClass({
     }
 
     return (
-      <Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' Data Endpoint'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
         onDismiss       = {this.resetDialogState}
-        modal           = {true}>
+        modal           = {true}
+      >
         <div>
           {this.renderFormNotifications()}
-
           <div>Main settings</div>
-           <div className='row'>
-
-              <div className='col-xs-11'>
-                <TextField
-                  ref               = 'name'
-                  name              = 'name'
-                  fullWidth         = {true}
-                  disabled          = {this.hasEditMode()}
-                  valueLink         = {this.linkState('name')}
-                  errorText         = {this.getValidationMessages('name').join(' ')}
-                  hintText          = 'Name of the endpoint'
-                  floatingLabelText = 'Endpoint' />
-              </div>
-
-              <div className='col-flex-1' style={{paddingLeft: 15}}>
-                <TextField
-                    ref               = 'description'
-                    name              = 'description'
-                    fullWidth         = {true}
-                    valueLink         = {this.linkState('description')}
-                    errorText         = {this.getValidationMessages('description').join(' ')}
-                    hintText          = 'Description of the endpoint'
-                    floatingLabelText = 'Description' />
-              </div>
-
+          <div className='row'>
+            <div className='col-md-12'>
+              <MUI.TextField
+                ref               = 'name'
+                name              = 'name'
+                fullWidth         = {true}
+                disabled          = {this.hasEditMode()}
+                valueLink         = {this.linkState('name')}
+                errorText         = {this.getValidationMessages('name').join(' ')}
+                hintText          = 'Name of the endpoint'
+                floatingLabelText = 'Endpoint'
+              />
             </div>
-            <div className='row'>
-              <div className='col-flex-1'>
-                <SelectField
-                    ref               = "class"
-                    name              = "class"
-                    fullWidth         = {true}
-                    floatingLabelText = "Class"
-                    valueLink         = {this.linkState('class')}
-                    errorText         = {this.getValidationMessages('class').join(' ')}
-                    valueMember       = "payload"
-                    displayMember     = "text"
-                    menuItems         = {this.state.classes} />
-                </div>
+            <div className='col-flex-1' style={{paddingLeft: 15}}>
+              <MUI.TextField
+                ref               = 'description'
+                name              = 'description'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('description')}
+                errorText         = {this.getValidationMessages('description').join(' ')}
+                hintText          = 'Description of the endpoint'
+                floatingLabelText = 'Description'
+              />
             </div>
-
+          </div>
+          <div className='row'>
+            <div className='col-flex-1'>
+              <MUI.SelectField
+                ref               = "class"
+                name              = "class"
+                fullWidth         = {true}
+                floatingLabelText = "Class"
+                valueLink         = {this.linkState('class')}
+                errorText         = {this.getValidationMessages('class').join(' ')}
+                valueMember       = "payload"
+                displayMember     = "text"
+                menuItems         = {this.state.classes}
+              />
+            </div>
+          </div>
           <div className="row" style={{marginTop: 30}}>
-
             <div className="col-flex-1">
               {fields}
             </div>
             <div className="col-flex-1" style={{paddingLeft: 40}}>
               {options}
             </div>
-
           </div>
-
         </div>
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });
 
