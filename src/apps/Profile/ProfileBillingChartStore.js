@@ -22,6 +22,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       isLoading: true,
+      width: 700,
+      height: 120,
       x: {
         values: [],
         min: null,
@@ -53,7 +55,7 @@ export default Reflux.createStore({
 
     let subscription = profile.subscription || {};
     let pricing      = subscription.pricing;
-    let max          = '1970-01-01';
+    let max          = moment(this.getDate()).format(this.format);
     let objects      = {
       api: {},
       cbx: {}
@@ -82,9 +84,6 @@ export default Reflux.createStore({
       }
 
       objects[usage.source][usage.date] = pricing[usage.source].overage * usage.value;
-      if (max < usage.date) {
-        max = usage.date;
-      }
     });
 
     // Fill blanks in objects and predictions
@@ -111,6 +110,7 @@ export default Reflux.createStore({
     let yMax        = _.max(_.map(findYMaxIn, value => _.max(value, 'value').value));
     state.y.min     = 0;
     state.y.max     = _.ceil((yMax < pricingMax) ? pricingMax : yMax);
+    state.height    = state.height * _.ceil(state.y.max / pricingMax);
 
     _.forEach([objects, predictions], (elements, index) => {
       let keys   = _.keys(elements).reverse();

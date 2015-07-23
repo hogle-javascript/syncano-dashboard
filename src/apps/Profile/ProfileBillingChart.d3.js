@@ -8,8 +8,8 @@ class BillingChart {
 
   constructor(element, data) {
     let margin    = {top: 30, right: 0, bottom: 35, left: 0};
-    let width     = 700 - margin.left - margin.right;
-    let height    = 270 - margin.top - margin.bottom;
+    let width     = data.width - margin.left - margin.right;
+    let height    = data.height - margin.top - margin.bottom;
     let parseDate = d3.time.format('%Y-%m-%d').parse;
 
     let x = d3.time.scale().range([0, width]);
