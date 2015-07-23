@@ -188,7 +188,10 @@ module.exports = React.createClass({
     let plan = this.state.profile.subscription.plan;
 
     if (plan === 'free') {
-      return;
+      <div style={styles.chartHeader}>
+        See how it works with your <strong>current usage</strong>
+        <Chart />
+      </div>
     }
     return (
       <div style={styles.chartHeader}>
