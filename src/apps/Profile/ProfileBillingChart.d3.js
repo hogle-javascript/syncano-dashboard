@@ -62,20 +62,20 @@ class BillingChart {
           .attr('cy', d => y(+d.value))
           .style('fill-opacity', 0)
           .on('mouseover', function(d) {
-              tooltip
-                .transition()
-                .duration(200)
-                .style('opacity', .9);
+            tooltip
+              .transition()
+              .duration(200)
+              .style('opacity', .9);
 
-              tooltip
-                .style('left', (d3.event.pageX - 31) + 'px')
-                .style('top', (d3.event.pageY - 35) + 'px')
-                .html('$' + _.round(d.value, 2));
+            tooltip
+              .style('left', (d3.event.pageX - 31) + 'px')
+              .style('top', (d3.event.pageY - 35) + 'px')
+              .html('$' + _.round(d.value, 2));
           })
           .on('mouseout', function(d) {
-              tooltip.transition()
-                  .duration(500)
-                  .style('opacity', 0);
+            tooltip.transition()
+              .duration(500)
+              .style('opacity', 0);
           });
 
     });
