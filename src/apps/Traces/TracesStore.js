@@ -1,62 +1,90 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
     // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
 
     // Stores & Actions
-    SessionStore        = require('../Session/SessionStore'),
-    AuthStore           = require('../Account/AuthStore'),
-    TracesActions       = require('./TracesActions');
+import SessionStore from '../Session/SessionStore';
+import AuthStore from '../Account/AuthStore';
+import TracesActions from './TracesActions';
 
-var TracesStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: TracesActions,
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       objectId  : null,
-      isLoading : true,
-      payload   : ''
+      tracesFor : null,
+      isLoading : true
     }
   },
 
-  init: function() {
-
-    this.data = {
-      items: []
-    };
+  init() {
+    this.data = this.getInitialState();
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
     this.listenTo(SessionStore, this.refreshData);
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('TracesStore::refreshData');
 
-    if (SessionStore.instance) {
-      if (this.data.objectId) {
-        TracesActions.getTraces(this.data.objectId);
-      }
+    if (SessionStore.instance && this.data.objectId) {
+      this.fetchTraces();
     }
   },
 
-  onSetCurrentObjectId: function(ObjectId) {
-    console.debug('TracesStore::onSetCurrentObjectId', ObjectId);
-    this.data.objectId = ObjectId;
-    this.trigger(this.data)
+  fetchTraces() {
+    if (this.data.tracesFor === 'codebox') {
+      TracesActions.fetchCodeBoxTraces(this.data.objectId);
+      return
+    }
+    if (this.data.tracesFor === 'webhook') {
+      TracesActions.fetchWebhookTraces(this.data.objectId);
+    }
+    if (this.data.tracesFor === 'trigger') {
+      TracesActions.fetchTriggerTraces(this.data.objectId);
+    }
+    if (this.data.tracesFor === 'schedule') {
+      TracesActions.fetchScheduleTraces(this.data.objectId);
+    }
   },
 
-  onGetTracesCompleted: function(tracesObj) {
-    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+  onSetCurrentObjectId(ObjectId, tracesFor) {
+    console.debug('TracesStore::onSetCurrentObjectId', ObjectId, tracesFor);
+    this.data.objectId = ObjectId;
+    this.data.tracesFor = tracesFor;
+    this.trigger(this.data);
+  },
 
-    this.data.items = Object.keys(tracesObj).map(function(item) {
+  saveTraces(tracesObj) {
+    this.data.items = Object.keys(tracesObj).map((item) => {
       return tracesObj[item];
     });
     this.data.isLoading = false;
     this.trigger(this.data);
+  },
+
+  onFetchCodeBoxTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    this.saveTraces(tracesObj);
+  },
+
+  onFetchWebhookTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    this.saveTraces(tracesObj);
+  },
+
+  onFetchTriggerTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    this.saveTraces(tracesObj);
+  },
+
+  onFetchScheduleTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    this.saveTraces(tracesObj);
   }
 
 });
-
-module.exports = TracesStore;

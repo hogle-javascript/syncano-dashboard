@@ -1,25 +1,29 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
     // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+import HeaderMixin from '../Header/HeaderMixin';
+import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
     // Stores and Actions
-    TracesActions     = require('./TracesActions'),
-    TracesStore       = require('./TracesStore'),
+import TracesActions from './TracesActions';
+import TracesStore from './TracesStore';
 
     // Components
-    Container         = require('../../common/Container/Container.react'),
+import Container from '../../common/Container/Container.react';
 
     // Local components
-    TracesList        = require('./TracesList.react');
+import TracesList from './TracesList.react';
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Traces',
+
+  propTypes: {
+    tracesFor: React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule'])
+  },
 
   mixins: [
     Router.State,
@@ -30,17 +34,21 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
-    var codeboxId = this.getParams().codeboxId;
+  getDefaultProps() {
+    return {
+      tracesFor: 'codebox'
+    }
+  },
 
-    TracesActions.setCurrentObjectId(codeboxId);
-    this.setState({
-      objectId : codeboxId
-    });
+  componentDidMount() {
+    // TODO: we have to remember to keep names of params with convention like in codeboxes case to keep this working ie. codeboxId, webhookId, triggerId
+    let objectId = this.getParams()[this.props.tracesFor + 'Id'];
+
+    TracesActions.setCurrentObjectId(objectId, this.props.tracesFor);
     TracesStore.refreshData();
   },
 
-  render: function () {
+  render() {
     return (
       <Container>
         <TracesList

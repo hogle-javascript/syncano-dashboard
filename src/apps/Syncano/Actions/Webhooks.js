@@ -32,5 +32,13 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
-  }
+  },
+
+  listTraces(webhookId) {
+    this.Connection
+        .WebHooks
+        .traces(webhookId)
+        .then(this.completed)
+        .catch(this.failure);
+  },
 };
