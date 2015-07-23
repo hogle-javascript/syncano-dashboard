@@ -30,6 +30,12 @@ class BillingChart {
     x.domain([parseDate(data.x.min), parseDate(data.x.max)]);
     y.domain([data.y.min, data.y.max]);
 
+    // Define the div for the tooltip
+    let tooltip = d3.select(element)
+                    .append('div')
+                    .attr('class', 'tooltip')
+                    .style('opacity', 0);
+
     _.forEach(data.y.values, (value) => {
       let area = d3.svg.area()
         .x(d => x(parseDate(d.date)))
@@ -41,6 +47,36 @@ class BillingChart {
           .datum(value.values)
           .attr('class', `area area-${value.source}`)
           .attr('d', area);
+
+      if (!value.tooltip) {
+        return;
+      }
+
+      // Add the scatterplot
+      svg.selectAll('dot')
+          .data(value.values)
+        .enter()
+          .append('circle')
+          .attr('r', 5)
+          .attr('cx', d => x(parseDate(d.date)))
+          .attr('cy', d => y(+d.value))
+          .style('fill-opacity', 0)
+          .on('mouseover', function(d) {
+              tooltip
+                .transition()
+                .duration(200)
+                .style('opacity', .9);
+
+              tooltip
+                .style('left', (d3.event.pageX - 31) + 'px')
+                .style('top', (d3.event.pageY - 35) + 'px')
+                .html('$' + _.round(d.value, 2));
+          })
+          .on('mouseout', function(d) {
+              tooltip.transition()
+                  .duration(500)
+                  .style('opacity', 0);
+          });
 
     });
 
@@ -57,7 +93,6 @@ class BillingChart {
                              (height + margin.bottom) + ')')
         .style('text-anchor', 'middle')
         .text('Date');
-
   }
 
 };

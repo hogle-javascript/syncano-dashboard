@@ -56,3 +56,15 @@ path {
   fill-opacity: 0.2;
 }
 
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 70px;
+  height: 20px;
+  padding: 2px;
+  font-size: 12px;
+  background: lightsteelblue;
+  border: 0px;
+  pointer-events: none;
+}
+
