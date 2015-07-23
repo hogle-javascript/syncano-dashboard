@@ -235,22 +235,16 @@ module.exports = React.createClass({
 
     let plan = this.state.profile.subscription.plan;
 
-    if (plan === 'free') {
-      return (
-        <div style={styles.chartHeader}>
-          See how it works with your <strong>current usage</strong>:
-          {this.renderChartLegend()}
-          <Chart />
-        </div>
-      )
-    }
     return (
       <div style={styles.chartHeader}>
         See how it works with your <strong>current usage</strong>:
         {this.renderChartLegend()}
-        <Chart />
+        <div style={{marginTop: 25}}>
+          <Chart />
+        </div>
       </div>
-     )
+    )
+
   },
 
   renderExplorerButton() {

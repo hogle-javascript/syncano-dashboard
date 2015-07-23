@@ -57,6 +57,16 @@ export default React.createClass({
   },
 
   render() {
+    let plan = this.state.profile.subscription.plan;
+
+    let coveredText = '';
+    if (plan === 'builder' || plan === 'free')
+      coveredText = 'Covered by Syncano';
+    else if (this.state.profile.subscription.plan === 'paid-commitment') {
+      let amount = this.state.covered ? this.state.covered.amount : '';
+      coveredText = `Covered by $${amount} plan`;
+    }
+
     return (
       <Common.Loading show={this.state.isLoading}>
         <div className="row">
@@ -68,7 +78,14 @@ export default React.createClass({
               ref       = "stats"
               className = "stats" />
           </div>
-          <div className="col-md-6" style={{padding: 0, background: '#F6E8E8', marginBottom: 35, display: 'flex', flexDirection: 'column-reverse'}}>
+          <div
+            className="col-md-6"
+            style={{
+              padding       : 0,
+              background    : '#F6E8E8',
+              marginBottom  : 35,
+              display       : 'flex',
+              flexDirection : 'column-reverse'}}>
             <div>
               <div style={{height: '100%', background: '#F6E8E8'}}>
                 <Common.Show if={this.state.overage.amount > 0}>
@@ -94,7 +111,7 @@ export default React.createClass({
               <div style={{height: 125, background: '#E1E1E1'}}>
                 <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
                   <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
-                    Covered by Syncano
+                    {coveredText}
                   </div>
                   <div className="row" style={{paddingLeft: 15, marginTop: 15}}>
                     <div className="col-md-14" style={{textAlign: 'right'}}>
