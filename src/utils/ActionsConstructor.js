@@ -11,6 +11,11 @@ let Context    = {
 };
 
 export default (options, actions) => {
+  if (actions === undefined) {
+    actions = options;
+    options = null;
+  }
+
   options = options || {};
 
   if (options.withDialog) {
