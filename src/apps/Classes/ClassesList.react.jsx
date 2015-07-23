@@ -7,6 +7,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
+import ColorStore from '../../common/Color/ColorStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
@@ -54,7 +55,7 @@ export default React.createClass({
         <Common.ColumnList.Column.CheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata ? item.metadata.icon : 'table-large'}
-          background      = {item.metadata ? item.metadata.color : MUI.Styles.Colors.blue500}
+          background      = {ColorStore.getColorByName(item.metadata ? item.metadata.color : 'blue')}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
         >
