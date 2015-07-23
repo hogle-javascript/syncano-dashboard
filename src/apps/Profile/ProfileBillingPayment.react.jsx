@@ -72,6 +72,10 @@ module.exports = React.createClass({
       <div style={{padding: 48}}>
         <Common.Loading show={this.state.isLoading}>
           <Common.Show if={showForm}>
+            <form
+              onSubmit      = {this.handleFormValidation}
+              acceptCharset = "UTF-8"
+              method        = "post">
               <div className="row">
 
                 {this.renderFormNotifications()}
@@ -149,6 +153,7 @@ module.exports = React.createClass({
                   />
                 </div>
               </div>
+            </form>
           </Common.Show>
 
           <Common.Show if={!showForm}>

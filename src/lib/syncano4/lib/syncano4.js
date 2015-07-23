@@ -402,6 +402,11 @@ var Syncano = (function() {
       cancelSubscription: this.cancelSubscription.bind(this)
     };
 
+    this.Usage = {
+      getDaily: this.getDailyUsage.bind(this),
+      getHourly: this.getHourlyUsage.bind(this)
+    };
+
     /**
      * Object with methods to handle Instances
      *
@@ -1537,6 +1542,18 @@ var Syncano = (function() {
 
     cancelSubscription: function(id, callbackOK, callbackError) {
       return this.request('POST', 'v1/billing/subscriptions/' + id + '/cancel/', {}, callbackOK, callbackError);
+    },
+
+    /***********************
+       USAGE
+    ************************/
+
+    getHourlyUsage: function(params, callbackOK, callbackError) {
+      return this.request('GET', 'v1/usage/hourly/', params || {}, callbackOK, callbackError);
+    },
+
+    getDailyUsage: function(params, callbackOK, callbackError) {
+      return this.request('GET', 'v1/usage/daily/', params || {}, callbackOK, callbackError);
     },
 
     /***********************

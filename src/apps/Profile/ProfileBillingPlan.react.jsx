@@ -13,6 +13,7 @@ import MUI from 'material-ui';
 import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
+import Chart from './ProfileBillingChart.react';
 
 module.exports = React.createClass({
 
@@ -192,6 +193,7 @@ module.exports = React.createClass({
     return (
       <div style={styles.chartHeader}>
         See how it works with your <strong>current usage</strong>
+        <Chart />
       </div>
      )
   },
