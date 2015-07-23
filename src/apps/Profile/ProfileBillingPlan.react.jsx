@@ -56,6 +56,14 @@ module.exports = React.createClass({
       chartHeader: {
         paddingTop : 50,
         fontSize   : '1.3em'
+      },
+      legendSquere: {
+        marginTop: 4,
+        height: 10,
+        width: 10
+      },
+      legend: {
+        fontSize : '0.9rem',
       }
     }
   },
@@ -179,6 +187,46 @@ module.exports = React.createClass({
     }
   },
 
+  renderChartLegend() {
+    let styles = this.getStyles();
+
+    let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
+    let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
+
+    let apiTotalIndex = _.findIndex(this.state.profile.balance, {source: 'API Call'});
+    let cbxTotalIndex = _.findIndex(this.state.profile.balance, {source: 'CodeBox Executions'});
+
+    let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
+    let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
+
+    return (
+      <div style={{marginTop: 20}}>
+        <div className="row" style={styles.legend}>
+          <div className="col-xs-1" >
+            <div style={apiCallsStyle} />
+          </div>
+          <div className="col-flex-1">
+            <div className="row">
+              <div className="col-md-5">API calls</div>
+              <div className="col-flex-1">(total this month: <strong>{apiTotal}</strong>)</div>
+            </div>
+          </div>
+        </div>
+        <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
+          <div className="col-xs-1">
+            <div style={cbxCallsStyle} />
+          </div>
+          <div className="col-flex-1">
+            <div className="row">
+              <div className="col-md-5">CodeBox runs</div>
+              <div className="col-flex-1">(total this month: <strong>{cbxTotal}</strong>)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
   renderChart() {
     let styles = this.getStyles();
     if (!this.state.profile) {
@@ -188,14 +236,18 @@ module.exports = React.createClass({
     let plan = this.state.profile.subscription.plan;
 
     if (plan === 'free') {
-      <div style={styles.chartHeader}>
-        See how it works with your <strong>current usage</strong>
-        <Chart />
-      </div>
+      return (
+        <div style={styles.chartHeader}>
+          See how it works with your <strong>current usage</strong>:
+          {this.renderChartLegend()}
+          <Chart />
+        </div>
+      )
     }
     return (
       <div style={styles.chartHeader}>
-        See how it works with your <strong>current usage</strong>
+        See how it works with your <strong>current usage</strong>:
+        {this.renderChartLegend()}
         <Chart />
       </div>
      )
