@@ -27,6 +27,8 @@ export default React.createClass({
   },
 
   render() {
+    let statsStyles   = {};
+    let overageStyles = {};
 
     return (
       <Common.Loading show={this.state.isLoading}>
@@ -35,7 +37,34 @@ export default React.createClass({
           className = "chart" />
         <div
           ref       = "stats"
-          className = "stats" />
+          className = "stats">
+
+          <div>
+            <div>
+              <strong>Overage</strong><br />
+              xx API calls<br />
+              xx CodeBox runs
+            </div>
+            <div>$2</div>
+          </div>
+          <div>
+            <div>
+              <strong>Covered by plan</strong><br />
+              xx API calls<br />
+              xx CodeBox runs
+            </div>
+            <div>$10</div>
+          </div>
+          <div>
+            <div>
+              <strong>So far this month</strong>
+              Syncano cost: xxx<br/>
+              Yout cost: xxx
+            </div>
+            <div>$12</div>
+          </div>
+
+        </div>
       </Common.Loading>
     );
   }

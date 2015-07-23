@@ -24,6 +24,8 @@ export default Reflux.createStore({
       isLoading: true,
       width: 700,
       height: 120,
+      planMax: 0,
+      profile: {},
       x: {
         values: [],
         min: null,
@@ -42,16 +44,23 @@ export default Reflux.createStore({
     profile = _.first(profile);
     usage   = _.first(usage);
 
+    profile.subscription         = profile.subscription || {};
+    profile.subscription.pricing = profile.subscription.pricing || {};
+
+    if (_.isEmpty(profile.subscription.pricing)) {
+      // $5.25
+      profile.subscription.pricing = {
+        api: {overage: 0.0000200, included: 200000},
+        cbx: {overage: 0.0002500, included: 5000}
+      };
+    }
+
     let state       = this.getInitialState();
     state.isLoading = false;
+    state.profile   = profile;
     state.x.values  = this.getAllDates();
     state.x.min     = state.x.values[0];
     state.x.max     = _.last(state.x.values);
-
-    if (_.isEmpty(usage.objects)) {
-      this.trigger(state);
-      return;
-    }
 
     let subscription = profile.subscription || {};
     let pricing      = subscription.pricing;
@@ -61,15 +70,12 @@ export default Reflux.createStore({
       cbx: {}
     };
 
-    if (_.isEmpty(pricing)) {
-      // $5.25
-      pricing = {
-        api: {overage: 0.0000200, included: 200000},
-        cbx: {overage: 0.0002500, included: 5000}
-      };
-    }
-
     let pricingMax = _.sum(pricing, v => v.included * v.overage);
+
+    if (_.isEmpty(usage.objects)) {
+      this.trigger(state);
+      return;
+    }
 
     // Genrrate placeholder for predictions based on objects
     let predictions = _.reduce(objects, (result, v, k) => {
