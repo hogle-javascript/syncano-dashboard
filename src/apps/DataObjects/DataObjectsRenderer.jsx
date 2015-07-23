@@ -77,7 +77,7 @@ var DataObjectsRenderer = {
         var value    = item[column.id],
             renderer = this.getColumnRenderer(column.id);
 
-        if (typeof value === 'object') {
+        if (value && typeof value === 'object') {
 
           if (value.type === 'reference') {
             value = this.renderReference(item[column.id]);

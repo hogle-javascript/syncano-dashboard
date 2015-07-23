@@ -61,7 +61,7 @@ export default React.createClass({
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
-          params[item.name] = this.state['field-' + item.name];
+          params[item.name] = this.state[item.name];
         } else {
           var fieldValue = this.refs['field-' + item.name].getValue();
           if (fieldValue) {
@@ -293,12 +293,6 @@ export default React.createClass({
     )
   },
 
-  handleBoolFieldChange(fieldName, event, value, valueObj) {
-    let state = {};
-    state['field-' + fieldName] = valueObj.payload;
-    this.setState(state)
-  },
-
   renderCustomFields() {
 
     if (DataObjectsStore.getCurrentClassObj()) {
@@ -309,7 +303,8 @@ export default React.createClass({
             <MUI.SelectField
               ref               = {'field-' + item.name}
               name              = {item.name}
-              onChange          = {this.handleBoolFieldChange.bind(this, item.name)}
+              //onChange          = {this.handleBoolFieldChange.bind(this, item.name)}
+              valueLink         = {this.linkState(item.name)}
               fullWidth         = {true}
               valueMember       = "payload"
               displayMember     = "text"
@@ -366,6 +361,8 @@ export default React.createClass({
   },
 
   render() {
+
+    console.log('XXXX', this.state)
 
     var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
         addTitle    = 'Add Data Object',
