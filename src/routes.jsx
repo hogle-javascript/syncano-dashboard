@@ -23,7 +23,6 @@ import Admins from './apps/Admins/Admins.react';
 import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import Classes from './apps/Classes/Classes.react';
 import CodeBoxes from './apps/CodeBoxes';
-import Traces from './apps/Traces/Traces.react';
 import DataObjects from './apps/DataObjects/DataObjects.react';
 import Data from './apps/Data/Data.react';
 import Tasks from './apps/Tasks/Tasks.react';
@@ -139,7 +138,7 @@ module.exports = (
             path    = ":codeboxId">
             <Route
               name    = "codebox-traces"
-              handler = {Traces}
+              handler = {CodeBoxes.Traces}
               path    = "traces"
             />
             <Route

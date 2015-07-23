@@ -4,7 +4,7 @@ var webpack = require('webpack'),
 config.bail     = true;
 config.debug    = false;
 config.profile  = false;
-config.devtool  = 'eval';
+config.devtool  = 'cheap-source-map';
 config.progress = false;
 config.plugins  = config.plugins.concat(
   new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.io/'"}),
