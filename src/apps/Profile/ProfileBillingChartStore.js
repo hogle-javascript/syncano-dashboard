@@ -128,6 +128,7 @@ export default Reflux.createStore({
     if (!_.isEmpty(predictions)) {
       state.y.values.unshift({
         tooltip: false,
+        label: 'Predictions',
         source: 'predictions-bg',
         values: _.map(predictions.api, prediction => {
           return {

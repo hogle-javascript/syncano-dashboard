@@ -6,7 +6,7 @@ import './ProfileBillingChart.css';
 
 class BillingChart {
 
-  constructor(element, data) {
+  constructor(chartElement, data) {
     let margin    = {top: 0, right: 0, bottom: 35, left: 0};
     let width     = data.width - margin.left - margin.right;
     let height    = data.height - margin.top - margin.bottom;
@@ -20,7 +20,7 @@ class BillingChart {
         .orient('bottom')
         .ticks(5);
 
-    let svg = d3.select(element)
+    let svg = d3.select(chartElement)
         .append('svg')
           .attr('width', data.width)
           .attr('height', data.height)
@@ -31,7 +31,7 @@ class BillingChart {
     y.domain([data.y.min, data.y.max]);
 
     // Define the div for the tooltip
-    let tooltip = d3.select(element)
+    let tooltip = d3.select(chartElement)
                     .append('div')
                     .attr('class', 'tooltip')
                     .style('opacity', 0);
@@ -47,6 +47,18 @@ class BillingChart {
           .datum(value.values)
           .attr('class', `area area-${value.source}`)
           .attr('d', area);
+
+      if (value.label !== undefined && value.values.length > 1) {
+        let middle = value.values[_.round((value.values.length - 1) / 2)];
+
+        if (middle) {
+          svg.append('text')
+            .attr('class', 'label label-${value.source}')
+            .attr('transform', 'translate(' + x(parseDate(middle.date)) + ' ,' + (margin.bottom) + ')')
+            .style('text-anchor', 'middle')
+            .text(value.label);
+        }
+      }
 
       if (!value.tooltip) {
         return;
@@ -85,6 +97,14 @@ class BillingChart {
         .attr('class', 'x axis')
         .attr('transform', `translate(0, ${height})`)
         .call(xAxis);
+
+    // Add the text label for the X axis
+    svg.append('text')
+        .attr('transform',
+              'translate(' + (width / 2) + ' ,' +
+                             (height + margin.bottom) + ')')
+        .style('text-anchor', 'middle')
+        .text('Date');
 
     // Add the text label for the X axis
     svg.append('text')
