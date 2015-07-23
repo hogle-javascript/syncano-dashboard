@@ -60,9 +60,13 @@ export default React.createClass({
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type !== 'file') {
-        var fieldValue = this.refs['field-' + item.name].getValue();
-        if (fieldValue) {
-          params[item.name] = fieldValue;
+        if (item.type === 'boolean') {
+          params[item.name] = this.state['field-' + item.name];
+        } else {
+          var fieldValue = this.refs['field-' + item.name].getValue();
+          if (fieldValue) {
+            params[item.name] = fieldValue;
+          }
         }
       }
     }.bind(this));
@@ -289,6 +293,12 @@ export default React.createClass({
     )
   },
 
+  handleBoolFieldChange(fieldName, event, value, valueObj) {
+    let state = {};
+    state['field-' + fieldName] = valueObj.payload;
+    this.setState(state)
+  },
+
   renderCustomFields() {
 
     if (DataObjectsStore.getCurrentClassObj()) {
@@ -297,8 +307,9 @@ export default React.createClass({
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField
-              ref               = {item.name}
+              ref               = {'field-' + item.name}
               name              = {item.name}
+              onChange          = {this.handleBoolFieldChange.bind(this, item.name)}
               fullWidth         = {true}
               valueMember       = "payload"
               displayMember     = "text"

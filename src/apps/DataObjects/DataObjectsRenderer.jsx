@@ -1,24 +1,21 @@
-var React      = require('react'),
-    Moment = require('moment'),
-
-    mui        = require('material-ui'),
-    IconButton = mui.IconButton,
-    FlatButton = mui.FlatButton;
+import React from 'react';
+import Moment from 'moment';
+import MUI from 'material-ui';
 
 var DataObjectsRenderer = {
 
-  columnsRenderers: function() {
+  columnsRenderers() {
     return {
       'created_at' : this.renderColumnDate
     }
   },
 
-  getColumnRenderer: function(column) {
+  getColumnRenderer(column) {
     return this.columnsRenderers()[column];
   },
 
   // Columns renderers
-  renderColumnDate: function(value) {
+  renderColumnDate(value) {
     if (!value) {
       return '';
     }
@@ -30,27 +27,27 @@ var DataObjectsRenderer = {
     )
   },
 
-  renderReference: function(obj) {
+  renderReference(obj) {
     return (
         <div>{obj.target + ': ' + obj.value}</div>
     )
   },
 
-  handleFileOnClick: function(value, event) {
+  handleFileOnClick(value, event) {
     event.stopPropagation();
     window.open(value, '_blank')
   },
 
-  renderFile: function(obj) {
+  renderFile(obj) {
     return (
-        <IconButton
+        <MUI.IconButton
           iconClassName = "synicon-download"
           onClick       = {this.handleFileOnClick.bind(this, obj.value)} />
     )
   },
 
   // Header
-  renderTableHeader: function(classObj, columns) {
+  renderTableHeader(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
 
     var header = {};
@@ -68,7 +65,7 @@ var DataObjectsRenderer = {
   },
 
   // Table Body
-  renderTableData: function(items, columns) {
+  renderTableData(items, columns) {
 
     var tableItems = [];
 
@@ -77,7 +74,7 @@ var DataObjectsRenderer = {
 
       columns.map(function(column) {
 
-        var value    = item[column.id] ? item[column.id] : '',
+        var value    = item[column.id],
             renderer = this.getColumnRenderer(column.id);
 
         if (typeof value === 'object') {
@@ -89,16 +86,19 @@ var DataObjectsRenderer = {
             value = this.renderFile(item[column.id]);
           }
 
-        } else if (typeof value === 'string' || typeof item[column.id] === 'number') {
-
+        } else {
           // Simple string or renderer
           if (renderer) {
             value = renderer(item[column.id])
           }
         }
 
+        if (typeof value === 'boolean' || typeof value === 'number') {
+          value = value !== null ? value.toString() : value;
+        }
+
         row[column.id] = {
-          content: value,
+          content: <div>{value}</div>,
           style: { width: column.width }
         }
       }.bind(this));
