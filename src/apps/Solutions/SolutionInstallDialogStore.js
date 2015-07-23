@@ -1,45 +1,146 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions = require('../Session/SessionActions'),
-    InstancesActions = require('../Instances/InstancesActions'),
-    SolutionsEditActions = require('./SolutionEditActions'),
-    SolutionInstallDialogActions = require('./SolutionInstallDialogActions');
+//Stores & Actions
+import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
+import InstancesActions from '../Instances/InstancesActions';
+import SolutionsEditActions from './SolutionEditActions';
+import Actions from './SolutionInstallDialogActions';
 
-var SolutionVersionDialogStore = Reflux.createStore({
-  listenables : SolutionInstallDialogActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
+      instances : null,
+      versions : [
+        {payload: '', text: 'Loading...'}
+      ]
     };
   },
 
-  init: function() {
+  init() {
+    this.data = this.getInitialState();
     this.listenToForms();
-
-    this.listenTo(SolutionsEditActions.fetchSolutionVersions.completed, this.refreshState);
-    this.listenTo(InstancesActions.fetchInstances.completed, this.refreshState);
-
-    this.listenTo(SolutionsEditActions.installSolution.completed, this.onInstallSolutionCompleted);
   },
 
-  refreshState: function() {
+  refreshState() {
     this.trigger(this)
   },
 
-  onInstallSolutionCompleted: function() {
-    console.debug('SolutionVersionDialogStore::onInstallSolutionCompleted');
-    this.dismissDialog();
+  getVersionsDropdown() {
+    if (!this.data.versions) {
+      return [];
+    }
+    return this.data.versions.map(function(item) {
+      return {
+        payload : item.id,
+        text    : item.number
+      }
+    });
+  },
+
+  getInstancesDropdown() {
+    if (this.data.instances === null) {
+      return [{payload: '', text: 'Loading...'}]
+    }
+    return this.data.instances.map(function(item) {
+      return {
+        payload : item.name,
+        text    : item.name
+      }
+    });
+  },
+
+  setSolutionId(solutionId) {
+    this.data.solutionId = solutionId;
+  },
+
+  setInstances(instances) {
+    console.debug('SolutionInstallDialogStore::setInstances');
+    this.data.instances = Object.keys(instances).map(function(key) {
+      return instances[key];
+    });
+    this.trigger(this.data);
+  },
+
+  setSolutionVersions(versions) {
+    console.debug('SolutionInstallDialogStore::setInstances');
+    this.data.versions = Object.keys(versions).map(function(key) {
+      return versions[key];
+    });
+    this.data.versions.reverse();
+    this.data.version = this.data.versions[0].id ;
+    this.trigger(this.data);
+  },
+
+  getDefaultVersion() {
+    if (this.data.versions)
+      return this.data.versions[0].number;
+  },
+
+  onFetchInstancesCompleted(items) {
+    console.debug('SolutionInstallDialogStore::onFetchInstancesCompleted');
+    Actions.setInstances(items);
+  },
+
+  onFetchSolutionVersions() {
+    console.debug('SolutionInstallDialogStore::onFetchSolutionVersions');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchSolutionVersionsCompleted(versions) {
+    console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
+    this.data.isLoading = false;
+    Actions.setSolutionVersions(versions);
+  },
+
+  onFetchSolutionVersionsFailure() {
+    console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onShowDialogWithPreFetch(solutionId, versionId) {
+    console.debug('SolutionInstallDialogStore::onShowDialogWithPreFetch', solutionId);
+    this.data = this.getInitialState();
+    Actions.setSolutionId(solutionId);
+
+    if (versionId) {
+      this.data.version = versionId;
+      this.data.hideVersionPicker = true;
+    } else {
+      Actions.fetchSolutionVersions(solutionId);
+    }
+
+    Actions.fetchInstances();
+    Actions.showDialog();
+  },
+
+  onInstallSolution() {
+    console.debug('SolutionInstallDialogStore::onInstallSolution');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onInstallSolutionCompleted(payload) {
+    console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
+    this.data.isLoading = false;
+    SessionStore.getRouter().transitionTo('instance', {instanceName: payload.instance});
+  },
+
+  onInstallSolutionFailure() {
+    console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
   },
 
 });
-
-module.exports = SolutionVersionDialogStore;

@@ -1,37 +1,31 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
-    Show                  = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    DataViewsActions      = require('./DataViewsActions'),
-    DataViewsStore        = require('./DataViewsStore'),
-    WebhooksActions       = require('./WebhooksActions'),
-    WebhooksStore         = require('./WebhooksStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import DataViewsActions from './DataViewsActions';
+import DataViewsStore from './DataViewsStore';
+import WebhooksActions from './WebhooksActions';
+import WebhooksStore from './WebhooksStore';
 
-    // Components
-    mui                   = require('material-ui'),
-    Dialog                = mui.Dialog,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // Local components
-    DataViewsList         = require('./DataViewsList.react'),
-    WebhooksList          = require('./WebhooksList.react'),
-    DataViewDialog        = require('./DataViewDialog.react'),
-    WebhookDialog         = require('./WebhookDialog.react');
+// Local components
+import DataViewsList from './DataViewsList.react';
+import WebhooksList from './WebhooksList.react';
+import DataViewDialog from './DataViewDialog.react';
+import WebhookDialog from './WebhookDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Data',
 
@@ -41,20 +35,29 @@ module.exports = React.createClass({
 
     Reflux.connect(DataViewsStore, 'dataviews'),
     Reflux.connect(WebhooksStore, 'webhooks'),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
-    console.info('Data::componentWillUpdate');
-    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
+  fetch() {
+    DataViewsActions.fetch();
+    WebhooksActions.fetch();
   },
 
   componentDidMount: function() {
     console.info('Data::componentDidMount');
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
+    this.fetch();
+  },
+
+  componentWillReceiveProps() {
+    console.info('Data::componentWillReceiveProps');
+    this.fetch();
+  },
+
+  componentWillUpdate: function(nextProps, nextState) {
+    console.info('Data::componentWillUpdate');
+    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   // Dialogs config
@@ -62,7 +65,7 @@ module.exports = React.createClass({
 
     return [
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref   : 'removeWebhookDialog',
           title : 'Delete Webhook',
@@ -79,7 +82,7 @@ module.exports = React.createClass({
         }
       },
       {
-        dialog: Dialog,
+        dialog: Common.Dialog,
         params: {
           ref:    'removeDataViewDialog',
           title:  'Delete DataView',
@@ -142,70 +145,66 @@ module.exports = React.createClass({
         <DataViewDialog />
         {this.getDialogs()}
 
-        <Show if={checkedDataViews > 0}>
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedDataViews > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
-
-            <FabListItem
+              iconClassName = "synicon-checkbox-multiple-marked-outline"
+            />
+            <Common.Fab.Item
               label         = "Click here to delete Data Endpoint"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeDataViewDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit Data Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showDataViewEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <Show if={checkedWebhooks > 0}>
-
-          <FabList position="top">
-
-            <FabListItem
+        <Common.Show if={checkedWebhooks > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
-
-            <FabListItem
+              iconClassName = "synicon-checkbox-multiple-marked-outline"
+            />
+            <Common.Fab.Item
               label         = "Click here to delete CodeBox Endpoint"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeWebhookDialog')}
-              iconClassName = "synicon-delete" />
-
-            <FabListItem
+              iconClassName = "synicon-delete"
+            />
+            <Common.Fab.Item
               label         = "Click here to edit CodeBox Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showWebhookEditDialog}
-              iconClassName = "synicon-pencil" />
+              iconClassName = "synicon-pencil"
+            />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <FabList>
-
-          <FabListItem
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to create Data Endpoint"
             onClick       = {this.showDataViewDialog}
-            iconClassName = "synicon-table" />
-
-          <FabListItem
+            iconClassName = "synicon-table"
+          />
+          <Common.Fab.Item
             label         = "Click here to create CodeBox Endpoint"
             onClick       = {this.showWebhookDialog}
-            iconClassName = "synicon-arrow-up-bold" />
-
-        </FabList>
+            iconClassName = "synicon-arrow-up-bold"
+          />
+        </Common.Fab>
 
         <DataViewsList
           name                 = "Data Endpoints"
@@ -213,7 +212,8 @@ module.exports = React.createClass({
           isLoading            = {this.state.dataviews.isLoading}
           items                = {this.state.dataviews.items}
           emptyItemHandleClick = {this.showDataViewDialog}
-          emptyItemContent     = "Create a DataView" />
+          emptyItemContent     = "Create a DataView"
+        />
 
         <WebhooksList
           name                 = "CodeBox Endpoints"
@@ -221,10 +221,9 @@ module.exports = React.createClass({
           isLoading            = {this.state.webhooks.isLoading}
           items                = {this.state.webhooks.items}
           emptyItemHandleClick = {this.showWebhookDialog}
-          emptyItemContent     = "Create a Webhook" />
-
+          emptyItemContent     = "Create a Webhook"
+        />
       </Container>
     );
   }
-
 });

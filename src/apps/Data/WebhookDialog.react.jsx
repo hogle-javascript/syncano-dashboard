@@ -1,32 +1,28 @@
-var React              = require('react'),
-    Reflux             = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    // Utils
-    DialogMixin        = require('../../mixins/DialogMixin'),
-    FormMixin          = require('../../mixins/FormMixin'),
+// Utils
+import Mixins from '../../mixins';
 
-    // Stores and Actions
-    WebhooksActions    = require('./WebhooksActions'),
-    WebhookDialogStore = require('./WebhookDialogStore'),
-    CodeBoxesActions   = require('../CodeBoxes/CodeBoxesActions'),
-    ClassesActions     = require('../Classes/ClassesActions'),
+// Stores and Actions
+import WebhooksActions from './WebhooksActions';
+import WebhookDialogStore from './WebhookDialogStore';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import ClassesActions from '../Classes/ClassesActions';
 
-    // Components
-    mui                = require('material-ui'),
-    Toggle             = mui.Toggle,
-    TextField          = mui.TextField,
-    SelectField        = mui.SelectField,
-    Dialog             = mui.Dialog;
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'WebhookDialog',
 
   mixins: [
     Reflux.connect(WebhookDialogStore),
     React.addons.LinkedStateMixin,
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -38,12 +34,12 @@ module.exports = React.createClass({
     }
   },
 
-  handleDialogShow: function() {
+  handleDialogShow() {
     console.info('WebhookDialog::handleDialogShow');
     CodeBoxesActions.fetch();
   },
 
-  handleAddSubmit: function() {
+  handleAddSubmit() {
     WebhooksActions.createWebhook({
       name        : this.state.name,
       codebox     : this.state.codebox,
@@ -52,7 +48,7 @@ module.exports = React.createClass({
     });
   },
 
-  handleEditSubmit: function() {
+  handleEditSubmit() {
     WebhooksActions.updateWebhook(
       this.state.name, {
         codebox     : this.state.codebox,
@@ -61,41 +57,41 @@ module.exports = React.createClass({
       });
   },
 
-  handleToogle: function(event, status) {
+  handleToogle(event, status) {
     var state = {};
     state[event.target.name] = status;
     this.setState(state);
   },
 
-  render: function() {
+  render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
-            ref     : 'cancel',
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            ref        : 'cancel',
+            text       : 'Cancel',
+            onTouchTap : this.handleCancel
           },
           {
-            ref     : 'submit',
-            text    : {submitLabel},
-            onClick : this.handleFormValidation
+            ref        : 'submit',
+            text       : {submitLabel},
+            onTouchTap : this.handleFormValidation
           }
         ];
 
     return (
-      <Dialog
+      <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' CodeBox Endpoint'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
         onDismiss       = {this.resetDialogState}
-        modal           = {true}>
+        modal           = {true}
+      >
         <div>
           {this.renderFormNotifications()}
-
-          <TextField
+          <MUI.TextField
             ref               = "name"
             name              = "name"
             fullWidth         = {true}
@@ -103,18 +99,18 @@ module.exports = React.createClass({
             valueLink         = {this.linkState('name')}
             errorText         = {this.getValidationMessages('name').join(' ')}
             hintText          = "Name of the WebHook"
-            floatingLabelText = "Name" />
-
-          <TextField
+            floatingLabelText = "Name"
+          />
+          <MUI.TextField
             ref               = "description"
             name              = "description"
             fullWidth         = {true}
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = "Description of the WebHook"
-            floatingLabelText = "Description" />
-
-          <SelectField
+            floatingLabelText = "Description"
+          />
+          <MUI.SelectField
             ref               = "codebox"
             name              = "codebox"
             floatingLabelText = "CodeBox"
@@ -123,20 +119,19 @@ module.exports = React.createClass({
             valueMember       = "payload"
             displayMember     = "text"
             fullWidth         = {true}
-            menuItems         = {this.state.codeboxes} />
-
-          <Toggle
+            menuItems         = {this.state.codeboxes}
+          />
+          <MUI.Toggle
             ref            = 'public'
             name           = 'public'
             onToggle       = {this.handleToogle}
             style          = {{marginTop: 20}}
             defaultToggled = {this.state.public}
-            label          = 'Make this WebHook public?' />
-
+            label          = 'Make this WebHook public?'
+          />
         </div>
-      </Dialog>
+      </Common.Dialog>
     );
   }
-
 });
 

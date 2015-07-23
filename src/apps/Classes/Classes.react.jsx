@@ -1,34 +1,27 @@
-var React                 = require('react'),
-    Reflux                = require('reflux'),
-    Router                = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin           = require('../Header/HeaderMixin'),
-    ButtonActionMixin     = require('../../mixins/ButtonActionMixin'),
-    DialogsMixin          = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin     = require('../../mixins/InstanceTabsMixin'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    // Stores and Actions
-    SessionActions        = require('../Session/SessionActions'),
-    SessionStore          = require('../Session/SessionStore'),
-    ClassesActions        = require('./ClassesActions'),
-    ClassesStore          = require('./ClassesStore'),
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import ClassesActions from './ClassesActions';
+import ClassesStore from './ClassesStore';
 
-    // Components
-    mui                   = require('material-ui'),
-    Dialog                = mui.Dialog,
-    Container             = require('../../common/Container/Container.react'),
-    FabList               = require('../../common/Fab/FabList.react'),
-    FabListItem           = require('../../common/Fab/FabListItem.react'),
-    ColorIconPickerDialog = require('../../common/ColorIconPicker/ColorIconPickerDialog.react'),
-    Loading               = require('../../common/Loading/Loading.react'),
-    Show                  = require('../../common/Show/Show.react'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-    // Local components
-    ClassesList           = require('./ClassesList.react'),
-    ClassDialog           = require('./ClassDialog.react');
+// Local components
+import ClassesList from './ClassesList.react';
+import ClassDialog from './ClassDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Classes',
 
@@ -37,9 +30,9 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(ClassesStore),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
   ],
 
   componentWillUpdate: function(nextProps, nextState) {
@@ -58,7 +51,7 @@ module.exports = React.createClass({
         checkedClasses       = ClassesStore.getCheckedItems();
 
     return [{
-      dialog: ColorIconPickerDialog,
+      dialog: Common.ColorIconPicker.Dialog,
       params: {
         key          : 'pickColorIconDialog',
         ref          : 'pickColorIconDialog',
@@ -69,7 +62,7 @@ module.exports = React.createClass({
       }
     },
     {
-      dialog: Dialog,
+      dialog: Common.Dialog,
       params: {
         key   : 'deleteClassDialog',
         ref   : 'deleteClassDialog',
@@ -88,10 +81,11 @@ module.exports = React.createClass({
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
           this.getDialogList(checkedClasses),
-          <Loading
+          <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading} />
+            show     = {this.state.isLoading}
+          />
         ]
       }
     }]
@@ -163,33 +157,29 @@ module.exports = React.createClass({
         <ClassDialog />
         {this.getDialogs()}
 
-        <Show if={checkedClassesCount > 0}>
-          <FabList position="top">
-
-            <FabListItem
-              label         = {isAnyAndNotAllClassSelected ? "Click here to select all" : "Click here to unselect all"} // TODO: extend component
-              color         = "" // TODO: extend component
+        <Common.Show if={checkedClassesCount > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.Item
+              label         = {isAnyAndNotAllClassSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
-              iconClassName = {isAnyAndNotAllClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"} />
-
-            <FabListItem
+              iconClassName = {isAnyAndNotAllClassSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"}
+            />
+            <Common.Fab.Item
               label         = "Click here to delete Classes"
               mini          = {true}
               disabled      = {someClassIsProtectedFromDelete}
               onClick       = {this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName = "synicon-delete"
             />
-
-            <FabListItem
+            <Common.Fab.Item
               label         = "Click here to edit Class"
               mini          = {true}
               disabled      = {checkedClassesCount > 1}
               onClick       = {this.showClassEditDialog}
               iconClassName = "synicon-pencil"
             />
-
-            <FabListItem
+            <Common.Fab.Item
               style         = {styles.fabListTopButton}
               label         = "Click here to customize Class"
               secondary     = {true}
@@ -198,27 +188,25 @@ module.exports = React.createClass({
               onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
               iconClassName = "synicon-palette"
             />
+          </Common.Fab>
+        </Common.Show>
 
-          </FabList>
-        </Show>
-
-        <FabList>
-          <FabListItem
+        <Common.Fab>
+          <Common.Fab.Item
             label         = "Click here to add Class"
             onClick       = {this.showClassDialog}
             iconClassName = "synicon-plus"
           />
-        </FabList>
+        </Common.Fab>
 
         <ClassesList
           name                 = "Classes"
           items                = {this.state.items}
           checkItem            = {this.checkClassItem}
           emptyItemHandleClick = {this.showClassDialog}
-          emptyItemContent     = "Create a Class" />
-
+          emptyItemContent     = "Create a Class"
+        />
       </Container>
     );
   }
-
 });

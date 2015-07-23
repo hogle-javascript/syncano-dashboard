@@ -64,6 +64,7 @@ export default React.createClass({
         >
           {item.label}
         </Common.ColumnList.Column.CheckIcon>
+        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
         <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
@@ -91,6 +92,7 @@ export default React.createClass({
       <Common.Lists.Container>
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
           <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
         </Common.ColumnList.Header>

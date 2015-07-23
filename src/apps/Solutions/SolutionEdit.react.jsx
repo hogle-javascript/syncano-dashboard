@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -32,7 +32,7 @@ import SolutionDialog from './SolutionDialog.react';
 import SolutionVersionDialog from './SolutionVersionDialog.react';
 import SolutionInstallDialog from './SolutionInstallDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionEdit',
 
@@ -46,20 +46,21 @@ module.exports = React.createClass({
     Reflux.connect(SolutionEditStore)
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
-    InstancesActions.fetch();
-    SolutionEditActions.fetch();
 
     if (this.getParams().action == 'install') {
       this.handleInstallSolution();
     }
+
+    InstancesActions.fetch();
+    SolutionEditActions.fetch();
   },
 
   //Dialogs config
-  initDialogs: function() {
+  initDialogs() {
     return [{
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key     : 'deleteSolutionDialog',
         ref     : 'deleteSolutionDialog',
@@ -86,22 +87,22 @@ module.exports = React.createClass({
         return true;
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('SolutionEdit::handleDelete');
     SolutionEditActions.removeSolution(this.state.item.id).then(
       SessionStore.getRouter().transitionTo('solutions')
     );
   },
 
-  handleInstallSolution: function() {
-    SolutionInstallDialogActions.showDialog();
+  handleInstallSolution() {
+    SolutionInstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 
-  showSolutionDialog: function() {
+  showSolutionDialog() {
     SolutionEditActions.showDialog();
   },
 
-  headerMenuItems: function() {
+  headerMenuItems() {
     return [
       {
         label  : 'Instances',
@@ -114,7 +115,7 @@ module.exports = React.createClass({
     ];
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       margin: '65px auto',
       width: '80%',
@@ -122,15 +123,15 @@ module.exports = React.createClass({
     };
   },
 
-  handleBackClick: function() {
+  handleBackClick() {
     SessionStore.getRouter().transitionTo('solutions');
   },
 
-  showAddSolutionVersionDialog: function() {
+  showAddSolutionVersionDialog() {
     SolutionVersionDialogActions.showDialog();
   },
 
-  render: function() {
+  render() {
     let item = this.state.item;
     return (
       <Container id='solutions'>
@@ -175,27 +176,41 @@ module.exports = React.createClass({
 
         <div className="row" style={this.getStyles()}>
             <div className="col-flex-1">
-              <h5>{this.state.item.label}</h5>
-              <div>{this.state.item.description}</div>
-               <Common.SolutionStar solution={this.state.item} />
-              <MUI.RaisedButton
-                primary = {true}
-                label   = 'Install solution'
-                onClick = {this.handleInstallSolution}
-              />
+              <div style={{textAlign: 'left', fontSize: '2rem', lineHeight: '2rem'}}>
+                {this.state.item.label}
+              </div>
+              <div style={{marginTop: 25, textAlign: 'left', fontSize: '1.2rem', lineHeight: '1.2rem', height: 100}}>
+                {this.state.item.description}
+              </div>
+              <div className="row" style={{marginLeft: 5}}>
+                <div style={{width: 160}}>
+                  <MUI.RaisedButton
+                    primary = {true}
+                    label   = 'Install solution'
+                    onClick = {this.handleInstallSolution} />
+                  </div>
+                <div className="col-flex-1">
+                  <Common.SolutionStar solution={this.state.item} />
+                </div>
+              </div>
+
             </div>
             <div className="col-flex-1">
               <div className="row">
                  <div className="col-flex-1">
-                    <div style={{textAlign: 'right', marginTop: 15}}>
+                   <div className="row align-right">
+                    <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
                         <div>{item.author ? item.author.first_name : ''}</div>
                         <div>{item.author ? item.author.last_name : ''}</div>
                     </div>
+                   </div>
                  </div>
-                 <div className="col-flex-1">
-                    <MUI.Avatar
-                      size = {70}
-                      src  = {item.author ? item.author.avatar_url : null}/>
+                 <div className="col-md-8">
+                   <div className="row align-right">
+                     <MUI.Avatar
+                       size = {70}
+                       src  = {item.author ? item.author.avatar_url : null} />
+                   </div>
                  </div>
               </div>
             </div>
@@ -204,7 +219,8 @@ module.exports = React.createClass({
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version"/>
+            emptyItemContent     = "Add new Version"
+          />
 
         </div>
       </Container>

@@ -21,8 +21,8 @@ module.exports = React.createClass({
   ],
 
   contextTypes: {
-      router   : React.PropTypes.func.isRequired,
-      muiTheme : React.PropTypes.object
+    router   : React.PropTypes.func.isRequired,
+    muiTheme : React.PropTypes.object
   },
 
   getActiveMenuItemIndex: function() {

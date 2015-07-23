@@ -2,18 +2,17 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Moment from 'moment';
-import MUI from 'material-ui';
 
-import FormMixin from '../../mixins/FormMixin';
-import DialogMixin from '../../mixins/DialogMixin';
+import Mixins from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
+import MUI from 'material-ui';
 import Common from '../../common';
 import SliderSection from './SliderSection';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileBillingPlanDialog',
 
@@ -23,10 +22,10 @@ module.exports = React.createClass({
     Router.State,
     Router.Navigation,
 
-    FormMixin,
-    DialogMixin,
+    Mixins.Dialog,
+    Mixins.Form,
 
-    Reflux.connect(Store),
+    Reflux.connect(Store)
   ],
 
   validatorConstraints() {
@@ -96,9 +95,10 @@ module.exports = React.createClass({
         number    : this.state.number,
         exp_year  : this.state.exp_year,
         exp_month : this.state.exp_month
-      }).then(
+      })
+      .then((payload) => {
         subscribe()
-      )
+      })
     }
   },
 
@@ -304,6 +304,7 @@ module.exports = React.createClass({
     let apiInfo             = this.getInfo('api');
     let cbxInfo             = this.getInfo('cbx');
     let sum                 = parseInt(apiInfo.total) + parseInt(cbxInfo.total);
+
     let dialogCustomActions = [
       <MUI.FlatButton
         key        = "cancel"
@@ -345,16 +346,17 @@ module.exports = React.createClass({
 
     return (
       <Common.Loading show={this.state.isLoading}>
-        <MUI.Dialog
+        <Common.Dialog
           ref             = "dialog"
           contentStyle    = {{padding: 0}}
           onShow          = {this.handleDialogShow}
           openImmediately = {this.props.openImmediately}
           actions         = {dialogCustomActions}
-          onDismiss       = {this.resetDialogState}>
+          onDismiss       = {this.resetDialogState}
+        >
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-            <div style={{color: '#9B9B9B'}}>move the blue bubble to change your plan details</div>
+            <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
           </div>
           <div style={{paddingTop: 34}}>
             {this.renderFormNotifications()}
@@ -408,7 +410,7 @@ module.exports = React.createClass({
               </div>
             </div>
           </div>
-        </MUI.Dialog>
+        </Common.Dialog>
       </Common.Loading>
     );
   }

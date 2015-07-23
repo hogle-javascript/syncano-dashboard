@@ -7,13 +7,14 @@ var HeaderMixin = {
   },
 
   statics: {
-    willTransitionTo: function() {
+    willTransitionTo() {
+      console.debug('HeaderMixin:willTransitionTo');
       HeaderActions.clear();
     }
   },
 
-  componentDidMount: function() {
-    var menuItems   = this.headerMenuItems || [];
+  setupMenu() {
+    var menuItems = this.headerMenuItems || [];
 
     if (typeof menuItems === 'function') {
       menuItems = menuItems.call(this);
@@ -29,7 +30,14 @@ var HeaderMixin = {
     } else if (hasMenuItems) {
       HeaderActions.setMenuItems(menuItems);
     }
+  },
 
+  componentWillReceiveProps() {
+    this.setupMenu();
+  },
+
+  componentDidMount: function() {
+    this.setupMenu();
   },
 
   setHeaderMenuItems: function(menuItems) {

@@ -69,6 +69,10 @@ export default React.createClass({
   renderItemGroups(groups) {
     var styles = this.getStyles();
 
+    if (groups === undefined) {
+      return
+    }
+
     if (groups.length === 0) {
       return 'No group';
     }

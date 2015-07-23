@@ -7,6 +7,7 @@ import CodeBoxesList from './CodeBoxesList.react';
 import CodeBoxesActions from './CodeBoxesActions';
 import CodeBoxDialog from './CodeBoxDialog.react';
 import CodeBoxDialogStore from './CodeBoxDialogStore';
+import CodeBoxTraces from './CodeBoxTraces.react';
 
 CodeBoxes.Actions     = CodeBoxesActions;
 CodeBoxes.Store       = CodeBoxesStore;
@@ -16,5 +17,6 @@ CodeBoxes.DialogStore = CodeBoxDialogStore;
 CodeBoxes.Config      = CodeBoxConfig;
 CodeBoxes.Edit        = CodeBoxEdit;
 CodeBoxes.Details     = CodeBox;
+CodeBoxes.Traces      = CodeBoxTraces;
 
 export default CodeBoxes;
