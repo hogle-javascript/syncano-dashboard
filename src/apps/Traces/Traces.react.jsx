@@ -22,12 +22,12 @@ export default React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule'])
+    tracesFor : React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule']),
+    objectId  : React.PropTypes.number
   },
 
   mixins: [
     Router.State,
-    Router.Navigation,
 
     Reflux.connect(TracesStore),
     HeaderMixin,
@@ -41,11 +41,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    // TODO: we have to remember to keep names of params with convention like in codeboxes case to keep this working ie. codeboxId, webhookId, triggerId
-    let objectId = this.getParams()[this.props.tracesFor + 'Id'];
-
-    TracesActions.setCurrentObjectId(objectId, this.props.tracesFor);
-    TracesStore.refreshData();
+    TracesActions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
   },
 
   render() {

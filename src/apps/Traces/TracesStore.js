@@ -57,6 +57,7 @@ export default Reflux.createStore({
     this.data.objectId = ObjectId;
     this.data.tracesFor = tracesFor;
     this.trigger(this.data);
+    this.refreshData();
   },
 
   saveTraces(tracesObj) {
