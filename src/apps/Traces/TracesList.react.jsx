@@ -31,24 +31,10 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      container: {
-        display        : 'flex',
-        flexWrap       : 'wrap',
-        justifyContent : 'center',
-        height         : '100%',
-        cursor         : 'pointer'
-      },
-      icon : {
-        margin         : 12,
-        height         : 50,
-        width          : 50,
-        display        : 'flex',
-        justifyContent : 'center',
-        alignItems     : 'center'
-      },
-      trace: {
-        visibility     : 'collapse',
-        height         : 0
+      traceResult: {
+        maxHeight      : 0,
+        overflow       : 'hidden',
+        transition     : 'max-height 450ms ease-out'
       }
     }
   },
@@ -68,17 +54,18 @@ export default Radium(React.createClass({
         icon       = item.status === 'success' ? 'check' : 'alert';
 
     if (item.id == this.state.visibleTraceId) {
-      styles.trace = {
-        marginLeft   : '-50px',
-        marginRight  : '-50px',
-        visibility   : 'visible',
+      styles.traceResult = {
+        maxHeight: '500px',
         marginBottom : 15,
-        height       : null
-      }
+        transition: 'max-height 450ms ease-in',
+        overflow: 'auto'
+      };
+      styles.trace = {
+        margin : '15px -30px 0 -30px'
+      };
     }
-
     return (
-      <div>
+      <MUI.Paper zDepth={2} style={styles.trace}>
         <Common.ColumnList.Item
           checked     = {item.checked}
           key         = {item.id}
@@ -97,10 +84,10 @@ export default Radium(React.createClass({
           <Common.ColumnList.Column.Desc>{item.duration}ms</Common.ColumnList.Column.Desc>
           <Common.ColumnList.Column.Date date={item.executed_at} />
         </Common.ColumnList.Item>
-        <MUI.Paper zDepth={1} style={styles.trace}>
+        <div style={styles.traceResult}>
           <Common.Trace.Result result={item.result}/>
-        </MUI.Paper>
-      </div>
+        </div>
+      </MUI.Paper>
     )
   },
 
