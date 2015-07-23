@@ -84,8 +84,8 @@ module.exports = React.createClass({
         <MUI.ListItem
           key           = {item.name}
           primaryText   = {item.name}
-          innerDivStyle = {this.state.selectedTags.indexOf(item.text) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.text)} />
+          innerDivStyle = {this.state.selectedTags.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
+          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.name)} />
       )
     });
     return (
