@@ -40,7 +40,8 @@ Router.run(routes, function (Root, state) {
     name = names[names.length-1];
   }
 
-  analytics.page('Dashboard', name, {
+  analytics.page('Dashboard', {
+    Page: name,
     path: state.pathname
   });
 
