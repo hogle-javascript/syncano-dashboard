@@ -149,8 +149,6 @@ export default React.createClass({
     var fields = [];
     this.state.fields.map(function(field) {
 
-      console.log(field.fieldName, item.fieldName);
-
       if (field.fieldName !== item.fieldName) {
         fields.push(field);
       }
@@ -252,7 +250,6 @@ export default React.createClass({
       }
     ];
 
-    console.log(this.state)
     return (
       <Common.Dialog
         ref             = 'dialog'
