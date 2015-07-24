@@ -3,7 +3,6 @@ var Reflux              = require('reflux'),
     // Utils & Mixins
     CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
     StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
     WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
 
     // Stores & Actions
@@ -16,14 +15,12 @@ var InstancesStore = Reflux.createStore({
   mixins      : [
     CheckListStoreMixin,
     StoreFormMixin,
-    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
   getInitialState: function() {
     return {
-      items     : [],
-      isLoading : false
+      items: null
     }
   },
 
@@ -33,8 +30,6 @@ var InstancesStore = Reflux.createStore({
       SessionActions.setUser,
       this.refreshData
     );
-    this.listenToForms();
-    this.setLoadingStates();
   },
 
   refreshData: function() {
@@ -106,10 +101,16 @@ var InstancesStore = Reflux.createStore({
   },
 
   getMyInstances: function() {
+    if (this.data.items === null) {
+      return this.data.items;
+    }
     return this.data.items.filter(this.filterMyInstances);
   },
 
   getOtherInstances: function() {
+    if (this.data.items === null) {
+      return this.data.items;
+    }
     return this.data.items.filter(this.filterOtherInstances);
   },
 
