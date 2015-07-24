@@ -30,6 +30,9 @@ export default React.createClass({
   ],
 
   validatorConstraints: {
+    instance: {
+      presence: true
+    },
     version: {
       presence: true
     }
@@ -82,7 +85,8 @@ export default React.createClass({
             name              = "instance"
             fullWidth         = {true}
             disabled          = {true}
-            value             = {this.state.instances[0].name}
+            valueLink         = {this.linkState('instance')}
+            errorText         = {this.getValidationMessages('instance').join(' ')}
             floatingLabelText = "Instance Name" />
       )
     }
