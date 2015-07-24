@@ -35,6 +35,21 @@ export default Radium(React.createClass({
         maxHeight      : 0,
         overflow       : 'hidden',
         transition     : 'max-height 450ms ease-out'
+      },
+      noTracesContainer: {
+        margin       : '64px auto',
+        textAlign    : 'center'
+      },
+      noTracesIcon: {
+        fontSize     : 96,
+        lineHeight   : 1,
+        marginBottom : 16,
+        color        : 'rgba(0, 0, 0, 0.24)'
+      },
+      noTracesText: {
+        color        : 'rgba(0, 0, 0, 0.67)',
+        fontSize     : 34,
+        margin       : 0
       }
     }
   },
@@ -92,7 +107,8 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    let items = this.state.items || [];
+    let items  = this.state.items || [],
+        styles = this.getStyles();
 
     if (items.length > 0) {
       items = items.map(item => this.renderItem(item));
@@ -101,23 +117,39 @@ export default Radium(React.createClass({
       return items;
     }
 
-    return [<Common.ColumnList.Item key="empty">Empty Item</Common.ColumnList.Item>];
+    return [
+      <div style={styles.noTracesContainer}>
+        <MUI.FontIcon
+          style     = {styles.noTracesIcon}
+          className = "synicon-package-variant" />
+        <p style={styles.noTracesText}>There is no traces for this CodeBox yet</p>
+      </div>
+    ];
   },
 
-  render() {
-    return (
-      <Common.Lists.Container>
+  getHeader() {
+    if (this.state.items.length > 0) {
+      return (
         <Common.ColumnList.Header>
           <Column.IconName.Header>{this.props.name}</Column.IconName.Header>
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Desc.Header>Duration</Column.Desc.Header>
           <Column.Date.Header>Executed</Column.Date.Header>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+      )
+    }
+    return;
+  },
+
+  render() {
+    return (
+      <Common.Lists.Container>
+        <Common.Loading show={this.state.isLoading}>
+          {this.getHeader()}
+          <Common.Lists.List>
             {this.getList()}
-          </Common.Loading>
-        </Common.Lists.List>
+          </Common.Lists.List>
+        </Common.Loading>
       </Common.Lists.Container>
     );
   }
