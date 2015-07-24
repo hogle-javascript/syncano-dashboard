@@ -20,6 +20,23 @@ export default Radium(React.createClass({
     loading: React.PropTypes.bool
   },
 
+  getStyles() {
+    return {
+      payloadStyle: {
+        display         : 'flex',
+        flexDirection   : 'column',
+        padding         : '0px 10px 0px 10px',
+        backgroundColor : '#F1F1F1'
+      },
+      trace: {
+        backgroundColor : '#4C4A43',
+        color           : 'white',
+        height          : '200px',
+        padding         : 10
+      }
+    }
+  },
+
   getInitialState() {
     return {
       panelCollapsed: true
@@ -33,12 +50,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let payloadStyle = {
-          display         : 'flex',
-          flexDirection   : 'column',
-          padding         : '0px 10px 0px 10px',
-          backgroundColor : '#F1F1F1'
-        },
+    let styles = this.getStyles(),
         unfoldIcon  = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
         trace;
 
@@ -48,24 +60,17 @@ export default Radium(React.createClass({
           ref     = "trace"
           rounded = {false}
           zDepth  = {1}
-          style   = {{
-            backgroundColor : '#4C4A43',
-            color           : 'white',
-            height          : '200px',
-            padding         : 10
-          }}>
+          style   = {styles.trace}>
           {this.props.trace}
         </MUI.Paper>
       );
     }
 
     return (
-      <MUI.Paper
-        zDepth = {1}
-        style  = {{backgroundColor: '#F1F1F1'}}>
+      <MUI.Paper zDepth = {1}>
         <MUI.Paper
           zDepth = {1}
-          style  = {payloadStyle}>
+          style  = {styles.payloadStyle}>
           <MUI.TextField
             ref               = "payloadField"
             defaultValue      = '{"abc": 123}'

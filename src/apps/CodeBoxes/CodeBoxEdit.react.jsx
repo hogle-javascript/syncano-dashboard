@@ -82,8 +82,7 @@ export default React.createClass({
             <Common.Editor.Panel
               ref     = "tracePanel"
               trace   = {this.state.lastTraceResult}
-              loading = {!this.state.lastTraceReady}>
-            </Common.Editor.Panel>
+              loading = {!this.state.lastTraceReady} />
           </div>
         </div>
       )
