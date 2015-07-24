@@ -4,7 +4,7 @@ import MUI from 'material-ui';
 
 import SolutionsActions from '../../apps/Solutions/SolutionsActions';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'SolutionStar',
 
@@ -39,7 +39,7 @@ module.exports = Radium(React.createClass({
   },
 
   handleIconClick(solutionId) {
-    var isStarred = this.isStarred();
+    let isStarred = this.isStarred();
 
     this.setState({
       starred_by_me : !this.state.starred_by_me,
@@ -50,10 +50,10 @@ module.exports = Radium(React.createClass({
   },
 
   render() {
-    var styles        = this.getStyles(),
-        isStarred     = this.isStarred(),
-        iconStyle     = isStarred ? styles.starred : styles.icon,
-        iconClassName = isStarred ? 'synicon-star' : 'synicon-star-outline';
+    let styles        = this.getStyles();
+    let isStarred     = this.isStarred();
+    let iconStyle     = isStarred ? styles.starred : styles.icon;
+    let iconClassName = isStarred ? 'synicon-star' : 'synicon-star-outline';
 
     return (
       <div style={styles.container}>
