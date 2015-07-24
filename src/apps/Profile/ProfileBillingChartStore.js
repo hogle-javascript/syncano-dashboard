@@ -45,7 +45,7 @@ export default Reflux.createStore({
             type : 'timeseries',
             tick: {
               fit: true,
-              format: "%b %d"
+              format: '%b %d'
             }
           },
           y: {
@@ -182,7 +182,7 @@ export default Reflux.createStore({
     _.forEach(elements, (v, k) => {
       let keys = _.keys(v).sort();
       elements[k] = _.reduce(keys, (r, key, index) => {
-        let prev = (index > 0) ? r[index-1]: 0;
+        let prev = (index > 0) ? r[index - 1] : 0;
         r.push(v[key] + prev);
         return r;
       }, []);
