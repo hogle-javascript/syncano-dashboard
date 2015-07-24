@@ -58,11 +58,13 @@ module.exports = React.createClass({
         marginRight : 8
       },
       cardFooter: {
-        borderTop      : '1px solid #ddd',
-        padding        : 8,
-        display        : '-webkit-flex; display: flex',
-        alignItems     : 'center',
-        justifyContent : 'space-between'
+        borderTop            : '1px solid #ddd',
+        padding              : 8,
+        display              : '-webkit-flex; display: flex',
+        WebkitAlignItems     : 'center',
+        alignItems           : 'center',
+        WebkitJustifyContent : 'space-between',
+        justifyContent       : 'space-between'
       },
       cardAvatarContainer: {
         padding : 16
