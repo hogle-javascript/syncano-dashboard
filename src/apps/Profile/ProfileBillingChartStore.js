@@ -155,6 +155,13 @@ export default Reflux.createStore({
       position: 'middle'
     });
 
+    // state.chart.regions.push({
+    //   axis: 'y',
+    //   start: 0,
+    //   end: state.covered.amount,
+    //   class: 'covered'
+    // });
+
     state.overage = _.reduce(pricing, (r, v, k) => {
       let covered     = state.covered[k];
       let amount   = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
