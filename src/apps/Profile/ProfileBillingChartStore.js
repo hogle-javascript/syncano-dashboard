@@ -110,6 +110,7 @@ export default Reflux.createStore({
 
     let subscription = profile.subscription || {};
     let pricing      = subscription.pricing;
+    let usageAmount  = {'api': 0, 'cbx': 0};
     let columns      = {'api': {}, 'cbx': {}};
 
     if (_.isEmpty(pricing)) {
@@ -125,7 +126,10 @@ export default Reflux.createStore({
       if (columns[usage.source] === undefined) {
         return;
       }
-      columns[usage.source][usage.date] = pricing[usage.source].overage * usage.value;
+
+      let amount = pricing[usage.source].overage * usage.value;
+      columns[usage.source][usage.date] = amount;
+      usage[usage.source] += amount;
     });
 
     this.fillBlanks(columns);
@@ -137,7 +141,6 @@ export default Reflux.createStore({
       state.chart.data.types[name] = 'area-spline';
     });
 
-    let pricingMax = _.sum(pricing, v => v.included * v.overage);
     state.covered  = _.reduce(pricing, (r, v, k) => {
       let amount  = v.included * v.overage;
       r.amount += amount;
@@ -151,6 +154,16 @@ export default Reflux.createStore({
       text: 'Covered by plan',
       position: 'middle'
     });
+
+    state.overage = _.reduce(pricing, (r, v, k) => {
+      let covered     = state.covered[k];
+      let amount   = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
+      let included = _.round(amount / v.overage);
+
+      r.amount += amount;
+      r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
+      return r;
+    }, {amount: 0});
 
     this.trigger(state);
   },
