@@ -76,7 +76,15 @@ export default React.createClass({
     }
 
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
-      return;
+      return (
+        <MUI.TextField
+            ref               = "instance"
+            name              = "instance"
+            fullWidth         = {true}
+            disabled          = {true}
+            value             = {this.state.instances[0].name}
+            floatingLabelText = "Instance Name" />
+      )
     }
 
     return (
