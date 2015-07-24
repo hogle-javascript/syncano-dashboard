@@ -35,7 +35,7 @@ export default React.createClass({
 
   handleAddSubmit() {
     let activeGroup = GroupsStore.getActiveGroup(),
-        userGroups  = this.state.newUserGroups || [this.state.secondInstance] || [activeGroup];
+        userGroups  = this.state.newUserGroups || this.state.secondInstance || activeGroup;
 
     UsersActions.createUser(
       {
@@ -49,6 +49,8 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
+    let userGroups = this.getSelectValueSource().value;
+
     UsersActions.updateUser(
       this.state.id,
       {
@@ -57,7 +59,7 @@ export default React.createClass({
       },
       {
         groups    : this.state.groups,
-        newGroups : this.state.newUserGroups
+        newGroups : userGroups
       }
     );
   },
@@ -88,7 +90,7 @@ export default React.createClass({
     let title             = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel       = 'Confirm',
         selectValueSource = this.getSelectValueSource(),
-        selectValue       = selectValueSource ? selectValueSource.value : null,
+        selectValue       = '',
         allGroups         = GroupsStore.getGroups().map(function(group) {
                               group.value = group.id + '';
                               return group;
@@ -105,6 +107,12 @@ export default React.createClass({
             onTouchTap : this.handleFormValidation
           }
         ];
+
+    if (selectValueSource && _.isArray(selectValueSource.value)) {
+      selectValue = selectValueSource.value.map(value => value.id).join(',');
+    } else if (selectValueSource && selectValueSource.value) {
+      selectValue = selectValueSource.value;
+    }
 
     return (
       <Common.Dialog

@@ -1,12 +1,10 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import _ from 'lodash';
 import Radium from 'radium';
 
 // Utils
 import HeaderMixin from'../Header/HeaderMixin';
-import ButtonActionMixin from'../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -62,18 +60,20 @@ export default Radium(React.createClass({
     let itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id,
         styles            = this.getStyles(),
         itemStyles        = itemActive ? styles.listItemChecked : {},
-        iconButtonElement = <MUI.IconButton
-                              touch           = {true}
-                              tooltipPosition = 'bottom-left'
-                              iconClassName   = 'synicon-dots-vertical'
-                            />,
+        iconButtonElement = (
+          <MUI.IconButton
+            touch           = {true}
+            tooltipPosition = 'bottom-left'
+            iconClassName   = 'synicon-dots-vertical'
+          />
+        ),
         rightIconMenu = (
-      <MUI.IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
-        <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
-        <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
-      </MUI.IconMenu>
-    );
+          <MUI.IconMenu iconButtonElement={iconButtonElement}>
+            <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
+            <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
+            <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
+          </MUI.IconMenu>
+        );
 
     return (
       <MUI.ListItem
