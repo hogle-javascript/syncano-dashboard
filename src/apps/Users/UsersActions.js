@@ -1,10 +1,11 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D,
-    _          = require('lodash');
+import Reflux from 'reflux';
+import Syncano from '../Session/Connection';
+import _ from 'lodash';
 
-var UsersActions = Reflux.createActions({
+let Connection = Syncano.get(),
+    D          = Syncano.D;
+
+let UsersActions = Reflux.createActions({
   checkItem     : {},
   uncheckAll    : {},
   selectAll     : {},
@@ -63,19 +64,20 @@ UsersActions.fetchUsers.listen(function() {
 UsersActions.createUser.listen(function(payload, groups) {
   console.debug('UsersActions::createUser', payload, groups);
 
-  if (groups.newGroups) {
+  let userGroups      = groups.newGroups ? groups.newGroups : null,
+      userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
+
+  if (userGroups) {
     Connection
       .Users
       .create(payload)
-      .then(function(user) {
-        var addUserToGroups = groups.newGroups.map(function(group) {
-          return UsersActions.addToGroup(user.id, group.id);
-        });
+      .then(user => {
+        let addUserToGroups = userGroupsArray.map(group => UsersActions.addToGroup(user.id, group.id));
 
         D.all(addUserToGroups)
           .success(this.completed)
           .error(this.failure);
-      }.bind(this))
+      })
       .catch(this.failure);
   } else {
     Connection
@@ -91,37 +93,28 @@ UsersActions.updateUser.listen(function(id, payload, groups) {
   console.error('updateUserPayload', payload);
   console.error('updateUserGroups', groups);
 
-  var addedGroups     = _.difference(groups.newGroups, groups.groups),
-      removedGroups   = _.difference(groups.groups, groups.newGroups),
-      addUserToGroups = addedGroups.map(function(group) {
-        return UsersActions.addToGroup(id, group);
-      });
+  Connection
+    .Users
+    .update(id, payload)
+    .success(() => {
+      let groupsId             = groups.groups.map(group => group.id),
+          newGroupsId          = groups.newGroups.map(group => group.id),
+          addedGroups          = _.difference(newGroupsId, groupsId),
+          removedGroups        = _.difference(groupsId, newGroupsId),
+          addUserToGroups      = addedGroups.map(group => UsersActions.addToGroup(id, group)),
+          removeUserFromGroups = removedGroups.map(group => UsersActions.removeFromGroup(id, group)),
+          promises             = removeUserFromGroups.concat(addUserToGroups);
 
-  UsersActions.getUserGroups(id).then(function(groups) {
-    console.error('userGroupsData', groups);
-    var userGroups = Object.keys(groups).map(function(key) {
-      return groups[key];
-    });
-
-    var removeUserFromGroups = removedGroups.map(function(group) {
-      var userGroupId = _.findIndex(userGroups, function(userGroup) {
-        return userGroup.group.id === group.id
-      });
-
-      return UsersActions.removeFromGroup(id, userGroups[userGroupId].id);
-    });
-
-    D.all(removeUserFromGroups, addUserToGroups)
-      .success(this.completed)
-      .error(this.failure);
-  }.bind(this));
+      D.all(promises)
+        .success(this.completed)
+        .error(this.failure);
+    })
+    .error(this.failure);
 });
 
 UsersActions.removeUsers.listen(function(users) {
   console.info('UsersActions::removeUsers');
-  var promises = users.map(function(user) {
-    return Connection.Users.remove(user.id);
-  });
+  let promises = users.map(user => Connection.Users.remove(user.id));
 
   D.all(promises)
     .success(this.completed)
@@ -155,4 +148,4 @@ UsersActions.getUserGroups.listen(function(user) {
     .catch(this.failure);
 });
 
-module.exports = UsersActions;
+export default UsersActions;

@@ -214,7 +214,7 @@ export default React.createClass({
         <Common.Fab>
           <Common.Fab.Item
             label         = "Click here to create User account"
-            onClick       = {this.showUserDialog}
+            onClick       = {this.showUserDialog.bind(null, null)}
             iconClassName = "synicon-account-plus"
           />
           <Common.Fab.Item
