@@ -60,9 +60,13 @@ export default React.createClass({
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type !== 'file') {
-        var fieldValue = this.refs['field-' + item.name].getValue();
-        if (fieldValue) {
-          params[item.name] = fieldValue;
+        if (item.type === 'boolean') {
+          params[item.name] = this.state[item.name];
+        } else {
+          var fieldValue = this.refs['field-' + item.name].getValue();
+          if (fieldValue) {
+            params[item.name] = fieldValue;
+          }
         }
       }
     }.bind(this));
@@ -297,8 +301,9 @@ export default React.createClass({
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField
-              ref               = {item.name}
+              ref               = {'field-' + item.name}
               name              = {item.name}
+              valueLink         = {this.linkState(item.name)}
               fullWidth         = {true}
               valueMember       = "payload"
               displayMember     = "text"
@@ -355,7 +360,6 @@ export default React.createClass({
   },
 
   render() {
-
     var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
         addTitle    = 'Add Data Object',
         title       = this.hasEditMode() ? editTitle : addTitle,

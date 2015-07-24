@@ -1,31 +1,28 @@
-var React = require('react'),
-    mui   = require('material-ui'),
+import React from 'react';
 
-    FontIcon = mui.FontIcon;
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: "TraceResult",
 
-  render: function () {
+  getStyles() {
+    let styles =  {
+      result: {
+        padding: '25px',
+        color: 'white',
+        whiteSpace: 'pre',
+        font: "12px/normal 'Monaco', monospace",
+        backgroundColor: '#4C4A43'
+      }
+    }
+    return styles;
+  },
+
+  render() {
+    let styles = this.getStyles();
     return (
-      <div className="card-body">
-        <div className="card-section">
-          <div className="card-section-inner">
-            <div className="card-section-header">
-              <div className="card-section-icon">
-                <FontIcon icon="synicon-information"/>
-              </div>
-              <div className="card-section-header-content">
-                <div className="card-section-title">Result</div>
-              </div>
-            </div>
-            <div className="card-section-body">
-              <div className="card-section-result">
-                {this.props.result}
-              </div>
-            </div>
-          </div>
+      <div>
+        <div style={styles.result}>
+          {this.props.result}
         </div>
       </div>
     )

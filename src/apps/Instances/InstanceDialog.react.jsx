@@ -30,9 +30,11 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    this.setState({
-      name: Store.genUniqueName()
-    });
+    if (!this.hasEditMode()) {
+      this.setState({
+        name: Store.genUniqueName()
+      });
+    }
   },
 
   handleEditSubmit() {

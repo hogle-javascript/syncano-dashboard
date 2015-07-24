@@ -43,10 +43,9 @@ export default React.createClass({
     this.refs.dialog.dismiss();
   },
 
-  handleSubmit(event) {
+  handleSubmit() {
     console.info('InstancesAddDialog::handleSubmit');
     this.props.handleClick(this.state.color, this.state.icon);
-    event.preventDefault();
     this.dismiss();
   },
 
