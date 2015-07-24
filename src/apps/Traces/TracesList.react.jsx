@@ -128,7 +128,7 @@ export default Radium(React.createClass({
   },
 
   getHeader() {
-    if (this.state.items > 1 && !this.state.isLoading) {
+    if (this.state.items.length > 0) {
       return (
         <Common.ColumnList.Header>
           <Column.IconName.Header>{this.props.name}</Column.IconName.Header>
@@ -144,12 +144,12 @@ export default Radium(React.createClass({
   render() {
     return (
       <Common.Lists.Container>
-        {this.getHeader()}
-        <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+        <Common.Loading show={this.state.isLoading}>
+          {this.getHeader()}
+          <Common.Lists.List>
             {this.getList()}
-          </Common.Loading>
-        </Common.Lists.List>
+          </Common.Lists.List>
+        </Common.Loading>
       </Common.Lists.Container>
     );
   }
