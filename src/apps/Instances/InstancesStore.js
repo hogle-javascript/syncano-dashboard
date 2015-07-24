@@ -30,6 +30,7 @@ var InstancesStore = Reflux.createStore({
       SessionActions.setUser,
       this.refreshData
     );
+    this.listenToForms();
   },
 
   refreshData: function() {
