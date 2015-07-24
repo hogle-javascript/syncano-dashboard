@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import MUI from 'material-ui';
+import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -13,6 +13,7 @@ import Store from './SolutionsStore';
 import Actions from './SolutionsActions';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 
 import SolutionsList from './SolutionsList.react';
@@ -31,16 +32,23 @@ module.exports = React.createClass({
     Reflux.connect(Store)
   ],
 
-  showSolutionDialog: function() {
+  showSolutionDialog() {
     Actions.showDialog();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('Solutions::componentWillMount');
     Actions.fetch();
   },
 
-  headerMenuItems: function() {
+  isFriend() {
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser().email;
+      return (_.endsWith(email, 'syncano.com') || _.endsWith(email, 'chimeraprime.com'));
+    }
+  },
+
+  headerMenuItems() {
     return [
       {
         label : 'Instances',
@@ -53,11 +61,11 @@ module.exports = React.createClass({
     ];
   },
 
-  handleTabActive: function(tab) {
+  handleTabActive(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         width  : '90%',
@@ -95,21 +103,23 @@ module.exports = React.createClass({
     )
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div id='solutions'>
         <SolutionDialog />
         <SolutionInstallDialog />
 
-        <Common.Fab>
-          <Common.Fab.Item
-            label         = "Click here to create Solution"
-            onClick       = {this.showSolutionDialog}
-            iconClassName = "synicon-plus"
-          />
-        </Common.Fab>
+        <Common.Show if={this.isFriend()}>
+          <Common.Fab>
+            <Common.Fab.Item
+              label         = "Click here to create Solution"
+              onClick       = {this.showSolutionDialog}
+              iconClassName = "synicon-plus"
+            />
+          </Common.Fab>
+       </Common.Show>
 
         <div style={styles.container}>
           <div className="row">
