@@ -35,12 +35,12 @@ module.exports = React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
   },
 
-  handleDropdownItemClick: function(e, selectedIndex, menuItem) {
+  handleDropdownItemClick(e, selectedIndex, menuItem) {
     var instanceName = menuItem.text._store.props.children[1];
 
     // Redirect to main instance screen
@@ -49,22 +49,24 @@ module.exports = React.createClass({
     }.bind(this));
   },
 
-  handleInstanceActive: function() {
-    var currentInstance     = SessionStore.instance,
-        instancesList       = InstancesStore.getMyInstances().reverse(),
+  handleInstanceActive() {
+    if (InstancesStore.getMyInstances()) {
+      var currentInstance = SessionStore.instance,
+        instancesList = InstancesStore.getMyInstances().reverse(),
         instanceActiveIndex = null;
 
-    instancesList.some(function(e, index) {
-      if (e.name === currentInstance.name) {
-        instanceActiveIndex = index;
-        return true;
-      }
-    });
+      instancesList.some(function(e, index) {
+        if (e.name === currentInstance.name) {
+          instanceActiveIndex = index;
+          return true;
+        }
+      });
 
-    return instanceActiveIndex;
+      return instanceActiveIndex;
+    }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       instanceToolbarGroup: {
         display        : '-webkit-box; display: flex',
@@ -114,12 +116,16 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    var styles        = this.getStyles(),
-        instance      = SessionStore.instance,
-        instancesList = InstancesStore.getMyInstances().reverse();
+  render() {
+    let styles        = this.getStyles();
+    let instance      = SessionStore.instance;
+    let instancesList = InstancesStore.getMyInstances();
 
-    if (!instance || !instancesList.length > 0) {
+    if (instancesList) {
+      instancesList.reverse();
+    }
+
+    if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
