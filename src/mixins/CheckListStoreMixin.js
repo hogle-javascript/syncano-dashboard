@@ -1,6 +1,10 @@
 var CheckListStoreMixin = {
 
   getNumberOfChecked: function() {
+    if (this.data.items === null) {
+      return 0;
+    }
+
     var checkedFilter = function(item) {
       return item.checked === true;
     };
@@ -41,6 +45,10 @@ var CheckListStoreMixin = {
   getCheckedItem: function() {
     // Looking for the first 'checked' item
     var checkedItem = null;
+    if (this.data.items === null) {
+      return checkedItem;
+    }
+
     this.data.items.some(function(item) {
       if (item.checked) {
         checkedItem = item;
@@ -51,6 +59,10 @@ var CheckListStoreMixin = {
   },
 
   getCheckedItems: function() {
+    if (this.data.items === null) {
+      return [];
+    }
+
     return this.data.items.filter(function(item) {
       return item.checked;
     });
