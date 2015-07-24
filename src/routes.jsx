@@ -116,16 +116,17 @@ module.exports = (
         {/* Classes */}
         <Route
           name    = "classes"
-          handler = {Classes}
-          path    = ":instanceName/classes"
-        />
+          path    = ":instanceName/classes">
 
-        {/* Classes - Data Objects */}
-        <Route
-          name    = "classes-data-objects"
-          handler = {DataObjects}
-          path    = ":instanceName/classes/:className/objects"
-        />
+          {/* Classes - Data Objects */}
+          <Route
+            name    = "classes-data-objects"
+            handler = {DataObjects}
+            path    = ":className/objects"
+          />
+
+          <DefaultRoute handler={Classes} />
+        </Route>
 
         {/* CodeBoxes */}
         <Route
