@@ -1,13 +1,13 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreLoadingMixin = require('../../mixins/StoreLoadingMixin'),
-    WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
+import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
+import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
-    SessionActions    = require('../Session/SessionActions'),
-    SessionStore      = require('../Session/SessionStore'),
-    CodeBoxActions    = require('./CodeBoxActions');
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import CodeBoxActions from './CodeBoxActions';
 
-var CodeBoxStore = Reflux.createStore({
+let CodeBoxStore = Reflux.createStore({
   listenables: CodeBoxActions,
   mixins: [
     WaitForStoreMixin
@@ -20,18 +20,19 @@ var CodeBoxStore = Reflux.createStore({
     golang : 'golang'
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       currentCodeBox  : null,
 
       payload         : '{"abc":123}',
       traces          : [],
       lastTraceResult : null,
+      lastTraceReady  : true,
       isLoading       : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -40,28 +41,28 @@ var CodeBoxStore = Reflux.createStore({
     );
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('CodeBoxStore::refreshData');
     CodeBoxActions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId);
     CodeBoxActions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
-  getCurrentCodeBox: function() {
+  getCurrentCodeBox() {
     console.debug('CodeBoxStore::getCurrentCodeBox');
     return this.data.currentCodeBox;
   },
 
-  onFetchCodeBoxCompleted: function(codeBox) {
+  onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted')
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },
 
-  getEditorMode: function() {
+  getEditorMode() {
     return this.langMap[this.data.currentCodeBox.runtime_name];
   },
 
-  fetchTraces: function() {
+  fetchTraces() {
     console.debug('CodeBoxStore::fetchTraces');
     if (this.data.currentCodeBoxId === null) {
       return;
@@ -69,34 +70,34 @@ var CodeBoxStore = Reflux.createStore({
     CodeBoxActions.fetchCodeBoxTraces(this.data.currentCodeBox.id);
   },
 
-  onFetchCodeBoxTracesCompleted: function(traces) {
+  onFetchCodeBoxTracesCompleted(traces) {
     console.debug('CodeBoxStore::onFetchCodeBoxTracesCompleted');
-    this.data.traces = Object.keys(traces).map(function(key) {
-      return traces[key]
-    });
+    this.data.traces = Object.keys(traces).map((key) => traces[key]);
     this.data.isLoading = false;
     this.getCodeBoxLastTraceResult();
   },
 
-  onRunCodeBoxCompleted: function() {
+  onRunCodeBoxCompleted() {
     console.debug('CodeBoxStore::onRunCodeBoxCompleted');
     this.refreshData();
   },
 
-  getCodeBoxLastTraceResult: function() {
+  getCodeBoxLastTraceResult() {
     console.debug('CodeBoxStore::getCodeBoxLastTraceResult');
     if (this.data.traces.length > 0) {
-      var lastTrace = this.data.traces[this.data.traces.length - 1];
+      let lastTrace = this.data.traces[this.data.traces.length - 1];
       if (lastTrace.status === 'pending') {
-        setTimeout(function() {
+        this.data.lastTraceReady = false;
+        setTimeout(() => {
           this.fetchTraces()
-        }.bind(this), 300);
+        }, 300);
       } else {
         if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
         } else {
           this.data.lastTraceResult = lastTrace.result.stdout;
         }
+        this.data.lastTraceReady = true;
       }
     }
     this.trigger(this.data);
@@ -104,4 +105,4 @@ var CodeBoxStore = Reflux.createStore({
 
 });
 
-module.exports = CodeBoxStore;
+export default CodeBoxStore;
