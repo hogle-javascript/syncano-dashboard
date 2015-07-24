@@ -48,8 +48,7 @@ export default React.createClass({
         {...this.props}
         style     = {style}
         bodyStyle = {bodyStyle}
-        ref       = 'dialog'
-      >
+        ref       = 'dialog'>
         {this.props.children}
     </MUI.Dialog>
     );

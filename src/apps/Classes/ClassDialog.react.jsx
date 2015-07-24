@@ -95,17 +95,23 @@ export default React.createClass({
     }
 
     ClassesActions.createClass({
-      name        : this.state.name,
-      description : this.state.description,
-      schema      : schema
+      name              : this.state.name,
+      description       : this.state.description,
+      group             : this.state.group,
+      group_permissions : this.state.group_permissions,
+      other_permissions : this.state.other_permissions,
+      schema            : schema
     });
   },
 
   handleEditSubmit() {
     ClassesActions.updateClass(
       this.state.name, {
-        description : this.state.description,
-        schema      : this.getSchema()
+        description       : this.state.description,
+        group             : this.state.group,
+        group_permissions : this.state.group_permissions,
+        other_permissions : this.state.other_permissions,
+        schema            : this.getSchema()
       }
     );
   },
@@ -216,142 +222,198 @@ export default React.createClass({
   },
 
   render() {
-    var title                 = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel           = 'Confirm',
-        dialogStandardActions = [
-          {
-            ref         : 'cancel',
-            text        : 'Cancel',
-            onTouchTap  : this.handleCancel
-          },
-          {
-            ref        : 'submit',
-            text       : {submitLabel},
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title                 = this.hasEditMode() ? 'Edit' : 'Add';
+    let submitLabel           = 'Confirm';
+    let dialogStandardActions = [
+      {
+        ref         : 'cancel',
+        text        : 'Cancel',
+        onTouchTap  : this.handleCancel
+      },
+      {
+        ref        : 'submit',
+        text       : {submitLabel},
+        onTouchTap : this.handleFormValidation
+      }
+    ];
 
+    let permissions = [
+      {
+        text    : 'none',
+        payload : 'none'
+      },
+      {
+        text    : 'read',
+        payload : 'read'
+      },
+      {
+        text    : 'create objects',
+        payload : 'create_objects'
+      }
+    ];
+
+    console.log(this.state)
     return (
       <Common.Dialog
         ref             = 'dialog'
         title           = {title + ' Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState} >
         {this.renderFormNotifications()}
-        <div className='row'>
-          <div className='col-xs-8'>
-            <MUI.TextField
-              ref               = 'name'
-              name              = 'name'
-              disabled          = {this.hasEditMode()}
-              fullWidth         = {true}
-              valueLink         = {this.linkState('name')}
-              errorText         = {this.getValidationMessages('name').join(' ')}
-              hintText          = 'Name of the Class'
-              floatingLabelText = 'Name'
-            />
-          </div>
-          <div className='col-xs-26' style={{paddingLeft: 15}}>
-            <MUI.TextField
-              ref               = 'description'
-              name              = 'description'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              hintText          = 'Description of the Class'
-              floatingLabelText = 'Description'
-            />
-          </div>
-        </div>
-        <div style={{marginTop: 30}}>Schema</div>
-        {this.getValidationMessages('schema').join(' ')}
-        <div className='row'>
-          <div className='col-xs-8'>
-          </div>
-          <div className='col-xs-8' style={{paddingLeft: 15}}>
-          </div>
-          <div className='col-xs-8' style={{paddingLeft: 15}}>
-          </div>
-          <div className='col-xs-3' style={{paddingLeft: 15}}>
-            Filter
-          </div>
-          <div className='col-xs-3' style={{paddingLeft: 15}}>
-            Order
-          </div>
-          <div className='col-xs-5' style={{paddingLeft: 15}}>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-xs-8'>
-            <MUI.TextField
-             ref               = 'fieldName'
-             name              = 'fieldName'
-             fullWidth         = {true}
-             valueLink         = {this.linkState('fieldName')}
-             errorText         = {this.getValidationMessages('fieldName').join(' ')}
-             hintText          = 'Name of the Field'
-             floatingLabelText = 'Name'
-            />
-          </div>
-          <div className='col-xs-8' style={{paddingLeft: 15}}>
-            <MUI.SelectField
-              ref               = 'fieldType'
-              name              = 'fieldType'
-              floatingLabelText = 'Type'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('fieldType')}
-              errorText         = {this.getValidationMessages('fieldType').join(' ')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              menuItems         = {this.getFieldTypes()}
-            />
-          </div>
-          <div className='col-xs-8' style={{paddingLeft: 15}}>
-            <Common.Show if={this.state.fieldType === 'reference'}>
-              <MUI.SelectField
-                ref               = 'fieldTarget'
-                name              = 'fieldTarget'
-                floatingLabelText = 'Target Class'
+        <form
+          onSubmit      = {this.handleFormValidation}
+          acceptCharset = "UTF-8"
+          method        = "post">
+          <div className='row'>
+            <div className='col-xs-8'>
+              <MUI.TextField
+                ref               = 'name'
+                name              = 'name'
+                disabled          = {this.hasEditMode()}
                 fullWidth         = {true}
-                valueLink         = {this.linkState('fieldTarget')}
-                errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
+                valueLink         = {this.linkState('name')}
+                errorText         = {this.getValidationMessages('name').join(' ')}
+                hintText          = 'Name of the Class'
+                floatingLabelText = 'Name'
+              />
+            </div>
+            <div className='col-xs-26' style={{paddingLeft: 15}}>
+              <MUI.TextField
+                ref               = 'description'
+                name              = 'description'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('description')}
+                errorText         = {this.getValidationMessages('description').join(' ')}
+                hintText          = 'Description of the Class'
+                floatingLabelText = 'Description'
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-flex-1">
+              <MUI.TextField
+                ref               = 'field-group'
+                name              = 'owner'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('group')}
+                errorText         = {this.getValidationMessages('group').join(' ')}
+                hintText          = 'Group ID'
+                floatingLabelText = 'Group' />
+            </div>
+            <div className="col-flex-1">
+              <MUI.SelectField
+                ref               = 'field-group_permissions'
+                name              = 'field-group_permissions'
+                fullWidth         = {true}
+                valueMember       = "payload"
+                displayMember     = "text"
+                valueLink         = {this.linkState('group_permissions')}
+                floatingLabelText = 'Group Permissions'
+                errorText         = {this.getValidationMessages('group_permissions').join(' ')}
+                menuItems         = {permissions} />
+            </div>
+            <div className="col-flex-1">
+              <MUI.SelectField
+                ref               = 'field-other_permissions'
+                name              = 'field-other_permissions'
+                fullWidth         = {true}
+                valueMember       = "payload"
+                displayMember     = "text"
+                valueLink         = {this.linkState('other_permissions')}
+                floatingLabelText = 'Other Permissions'
+                errorText         = {this.getValidationMessages('other_permissions').join(' ')}
+                menuItems         = {permissions} />
+            </div>
+          </div>
+          <div style={{marginTop: 30}}>Schema</div>
+          {this.getValidationMessages('schema').join(' ')}
+          <div className='row'>
+            <div className='col-xs-8'>
+            </div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}>
+            </div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}>
+            </div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>
+              Filter
+            </div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>
+              Order
+            </div>
+            <div className='col-xs-5' style={{paddingLeft: 15}}>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-xs-8'>
+              <MUI.TextField
+               ref               = 'fieldName'
+               name              = 'fieldName'
+               fullWidth         = {true}
+               valueLink         = {this.linkState('fieldName')}
+               errorText         = {this.getValidationMessages('fieldName').join(' ')}
+               hintText          = 'Name of the Field'
+               floatingLabelText = 'Name'
+              />
+            </div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}>
+              <MUI.SelectField
+                ref               = 'fieldType'
+                name              = 'fieldType'
+                floatingLabelText = 'Type'
+                fullWidth         = {true}
+                valueLink         = {this.linkState('fieldType')}
+                errorText         = {this.getValidationMessages('fieldType').join(' ')}
                 valueMember       = 'payload'
                 displayMember     = 'text'
-                menuItems         = {ClassesStore.getClassesDropdown()}
+                menuItems         = {this.getFieldTypes()}
               />
-            </Common.Show>
-          </div>
-          <div className='col-xs-3' style={{paddingLeft: 15}}>
-            <Common.Show if={this.hasFilter(this.state.fieldType)}>
-              <MUI.Checkbox
-                style = {{marginTop: 35}}
-                ref   = "fieldFilter"
-                name  = "filter"
+            </div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}>
+              <Common.Show if={this.state.fieldType === 'reference'}>
+                <MUI.SelectField
+                  ref               = 'fieldTarget'
+                  name              = 'fieldTarget'
+                  floatingLabelText = 'Target Class'
+                  fullWidth         = {true}
+                  valueLink         = {this.linkState('fieldTarget')}
+                  errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
+                  valueMember       = 'payload'
+                  displayMember     = 'text'
+                  menuItems         = {ClassesStore.getClassesDropdown()}
+                />
+              </Common.Show>
+            </div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>
+              <Common.Show if={this.hasFilter(this.state.fieldType)}>
+                <MUI.Checkbox
+                  style = {{marginTop: 35}}
+                  ref   = "fieldFilter"
+                  name  = "filter"
+                />
+              </Common.Show>
+            </div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>
+              <Common.Show if={this.hasOrder(this.state.fieldType)}>
+                <MUI.Checkbox
+                  style = {{marginTop: 35}}
+                  ref   = "fieldOrder"
+                  name  = "order"
+                />
+              </Common.Show>
+            </div>
+            <div className='col-xs-5' style={{paddingLeft: 15}}>
+              <MUI.FlatButton
+                style     = {{marginTop: 35}}
+                label     = 'Add'
+                disabled  = {!this.state.fieldType || !this.state.fieldName}
+                secondary = {true}
+                onClick   = {this.handleFieldAdd}
               />
-            </Common.Show>
+            </div>
           </div>
-          <div className='col-xs-3' style={{paddingLeft: 15}}>
-            <Common.Show if={this.hasOrder(this.state.fieldType)}>
-              <MUI.Checkbox
-                style = {{marginTop: 35}}
-                ref   = "fieldOrder"
-                name  = "order"
-              />
-            </Common.Show>
-          </div>
-          <div className='col-xs-5' style={{paddingLeft: 15}}>
-            <MUI.FlatButton
-              style     = {{marginTop: 35}}
-              label     = 'Add'
-              disabled  = {!this.state.fieldType || !this.state.fieldName}
-              secondary = {true}
-              onClick   = {this.handleFieldAdd}
-            />
-          </div>
-        </div>
-        <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
+          <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
+        </form>
       </Common.Dialog>
     );
   }
