@@ -17,8 +17,7 @@ module.exports = React.createClass({
       listItem: {
         padding      : '0 15px',
         marginBottom : 40,
-        minWidth     : 346,
-        maxWidth     : 346
+        width        : 346
       }
     }
   },
@@ -27,14 +26,13 @@ module.exports = React.createClass({
     let styles    = this.getStyles();
     let listItems = this.props.items.map(item => {
       return (
-        <li
+        <div
           key       = {item.id}
-          className = "col-flex-1"
           style     = {styles.listItem}
         >
           <SolutionsListItem data={item} />
-        </li>
-          )
+        </div>
+      )
     });
     return listItems;
   },
@@ -43,12 +41,12 @@ module.exports = React.createClass({
     let styles = this.getStyles();
 
     return (
-      <ul
+      <div
         className = "row"
         style     = {styles.list}
       >
         {this.getListItems()}
-      </ul>
+      </div>
     );
   }
 });
