@@ -55,7 +55,7 @@ export default Reflux.createStore({
         grid: {
           x: {
             lines: [
-              {value: today, text: 'Today'}
+              {value: today, text: 'Today', position: 'start'}
             ]
           },
           y: {lines: []}
@@ -138,7 +138,7 @@ export default Reflux.createStore({
     _.forEach(columns, (values, name) => {
       state.chart.data.columns.push([name].concat(values));
       state.chart.data.groups[0].push(name);
-      state.chart.data.types[name] = 'area-spline';
+      state.chart.data.types[name] = 'area';
     });
 
     state.covered  = _.reduce(pricing, (r, v, k) => {
