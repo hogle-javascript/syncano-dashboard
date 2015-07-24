@@ -24,6 +24,19 @@ export default Reflux.createStore({
       isLoading: true,
       width: 700,
       height: 120,
+      profile: {
+        subscription: {}
+      },
+      overage: {
+        api: 0,
+        cbx: 0,
+        amount: 0
+      },
+      covered: {
+        api: 0,
+        cbx: 0,
+        amount: 0
+      },
       x: {
         values: [],
         min: null,
@@ -44,14 +57,10 @@ export default Reflux.createStore({
 
     let state       = this.getInitialState();
     state.isLoading = false;
+    state.profile   = profile;
     state.x.values  = this.getAllDates();
     state.x.min     = state.x.values[0];
     state.x.max     = _.last(state.x.values);
-
-    if (_.isEmpty(usage.objects)) {
-      this.trigger(state);
-      return;
-    }
 
     let subscription = profile.subscription || {};
     let pricing      = subscription.pricing;
@@ -70,6 +79,11 @@ export default Reflux.createStore({
     }
 
     let pricingMax = _.sum(pricing, v => v.included * v.overage);
+
+    if (_.isEmpty(usage.objects)) {
+      this.trigger(state);
+      return;
+    }
 
     // Genrrate placeholder for predictions based on objects
     let predictions = _.reduce(objects, (result, v, k) => {
@@ -112,6 +126,24 @@ export default Reflux.createStore({
     state.y.max     = _.ceil((yMax < pricingMax) ? pricingMax : yMax);
     state.height    = state.height * _.ceil(state.y.max / pricingMax);
 
+    state.covered   = _.reduce(pricing, (r, v, k) => {
+      let amount  = v.included * v.overage;
+      r.amount += amount;
+      r[k] = _.extend({}, v, {amount: amount});
+      return r;
+    }, {amount: 0});
+
+    state.overage = _.reduce(pricing, (r, v, k) => {
+      let usage   = _.last(objects[k]).value;
+      let covered = state.covered[k];
+
+      let amount   = (usage > covered.amount) ? usage - covered.amount : 0;
+      let included = _.round(amount / v.overage);
+      r.amount += amount;
+      r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
+      return r;
+    }, {amount: 0});
+
     _.forEach([objects, predictions], (elements, index) => {
       let keys   = _.keys(elements).reverse();
       let suffix = (index > 0) ? '-predictions' : '';
@@ -128,6 +160,7 @@ export default Reflux.createStore({
     if (!_.isEmpty(predictions)) {
       state.y.values.unshift({
         tooltip: false,
+        label: 'Predictions',
         source: 'predictions-bg',
         values: _.map(predictions.api, prediction => {
           return {
