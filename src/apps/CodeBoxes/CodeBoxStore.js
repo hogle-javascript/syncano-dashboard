@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 
-import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
 import SessionActions from '../Session/SessionActions';
@@ -24,7 +23,6 @@ let CodeBoxStore = Reflux.createStore({
     return {
       currentCodeBox  : null,
 
-      payload         : '{"abc":123}',
       traces          : [],
       lastTraceResult : null,
       lastTraceReady  : true,
