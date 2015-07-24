@@ -360,9 +360,6 @@ export default React.createClass({
   },
 
   render() {
-
-    console.log('XXXX', this.state)
-
     var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
         addTitle    = 'Add Data Object',
         title       = this.hasEditMode() ? editTitle : addTitle,
