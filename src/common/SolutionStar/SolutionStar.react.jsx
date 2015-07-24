@@ -10,8 +10,8 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      starred_by_me : this.props.solution.starred_by_me,
-      stars_count   : this.props.solution.stars_count
+      starred_by_me : this.props.solution.starred_by_me || false,
+      stars_count   : this.props.solution.stars_count || 0,
     };
   },
 
