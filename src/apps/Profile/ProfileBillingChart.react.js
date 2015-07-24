@@ -1,6 +1,7 @@
 import 'd3';
 import 'c3/c3.css';
 import c3 from 'c3';
+import _ from 'lodash';
 
 import React from 'react';
 import Reflux from 'reflux';
@@ -9,6 +10,8 @@ import Common from '../../common';
 
 import Actions from './ProfileBillingChartActions';
 import Store from './ProfileBillingChartStore';
+
+require('./ProfileBillingChart.css');
 
 export default React.createClass({
   mixins: [Reflux.connect(Store)],
@@ -35,30 +38,54 @@ export default React.createClass({
   renderSummary() {
     let plan = this.state.profile.subscription.plan;
 
-    if (plan === 'free') {
-      return <div>It's free account.</div>;
+    let coveredText = '';
+    if (plan === 'builder' || plan === 'free')
+      coveredText = 'Covered by Syncano';
+    else if (this.state.profile.subscription.plan === 'paid-commitment') {
+      let amount = this.state.covered ? this.state.covered.amount : '';
+      coveredText = `So far this month`;
     }
 
-    if (plan === 'builder') {
+    if (plan === 'builder' || plan === 'free') {
+      let totalIndex = _.findIndex(this.state.profile.balance, {source: 'Plan Fee'});
+      let amountTotal = this.state.profile.balance[totalIndex].quantity;
+
       return (
-        <div>
-          <div>
-            <strong>So far this month</strong>
-            Syncano cost: xxx<br/>
-            Yout cost: xxx
+        <div style={{paddingTop: 25}}>
+
+          <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+            {coveredText}
           </div>
-          <div>$12</div>
+
+          <div className="row align-middle" style={{marginTop: 25}}>
+            <div className="col-flex-1" style={{textAlign: 'center'}}>
+              <div style={{textDecoration: 'line-through', fontSize: '2rem'}}>${amountTotal}</div>
+              <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
+            </div>
+          </div>
+
         </div>
       );
     }
 
+    let amountTotal = this.state.overage.amount + this.state.covered.amount;
     return (
-      <div>
-        <div>
-          <strong>So far this month</strong>
+        <div style={{paddingTop: 25}}>
+
+          <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+            {coveredText}
+          </div>
+
+          <div className="row align-middle" style={{marginTop: 20}}>
+            <div className="col-flex-1" style={{textAlign: 'center'}}>
+              <div style={{fontSize: '2rem'}}>${amountTotal}</div>
+              <div style={{marginTop: 15, fontSize: '1rem'}}>
+                ${this.state.covered.amount} plan + ${this.state.overage.amount} overage
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div>${this.state.overage.amount + this.state.covered.amount}</div>
-      </div>
     );
   },
 
@@ -84,14 +111,13 @@ export default React.createClass({
             className="col-md-6"
             style={{
               padding       : 0,
-              background    : '#F6E8E8',
               marginBottom  : 35,
               display       : 'flex',
               flexDirection : 'column-reverse'}}>
             <div>
-              <div style={{height: '100%', background: '#F6E8E8'}}>
+              <div style={{height: '100%'}}>
                 <Common.Show if={this.state.overage.amount > 0}>
-                  <div style={{height: 125, background: '#F6E8E8'}}>
+                  <div>
                     <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
                       <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
                         Overage
@@ -112,23 +138,8 @@ export default React.createClass({
               </div>
 
               <div style={{height: 125, background: '#E1E1E1'}}>
-                <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
-                  <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
-                    {coveredText}
-                  </div>
-                  <div className="row" style={{paddingLeft: 15, marginTop: 15}}>
-                    <div className="col-md-14" style={{textAlign: 'right'}}>
-                      <div><strong>{this.state.covered.api.included}</strong></div>
-                      <div><strong>{this.state.covered.cbx.included}</strong></div>
-                    </div>
-                    <div className="col-flex-1">
-                      <div>API calls</div>
-                      <div>CodeBox runs</div>
-                    </div>
-                  </div>
-                </div>
+                {this.renderSummary()}
               </div>
-
 
             </div>
           </div>

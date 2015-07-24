@@ -42,14 +42,21 @@ export default Reflux.createStore({
         },
         axis: {
           x : {
-            type : 'timeseries',
-            tick: {
-              fit: true,
-              format: '%b %d'
+            label : 'Day of the month',
+            type  : 'timeseries',
+            tick : {
+              fit    : true,
+              format : '%b %d'
             }
           },
           y: {
-            show: false
+            label: 'Cost ($)',
+            type  : 'indexed',
+            tick : {
+              format : function(x) { return x / 2 ? x : null  },
+              fit    : true,
+            },
+            show: true
           }
         },
         grid: {
@@ -105,10 +112,12 @@ export default Reflux.createStore({
     usage   = _.first(usage);
 
     let state       = this.getInitialState();
+
     state.isLoading = false;
     state.profile   = profile;
 
     let subscription = profile.subscription || {};
+    let plan         = subscription.plan || {};
     let pricing      = subscription.pricing;
     let usageAmount  = {'api': 0, 'cbx': 0};
     let columns      = {'api': {}, 'cbx': {}};
@@ -171,6 +180,14 @@ export default Reflux.createStore({
       r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
       return r;
     }, {amount: 0});
+
+    if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 &&  _.last(state.chart.data.columns[2]) < 6) {
+      state.chart.axis.y.max = state.covered.amount + (0.1 * state.covered.amount);
+    }
+
+    if (plan == 'builder' && _.last(state.chart.data.columns[1]) < 0.5 &&  _.last(state.chart.data.columns[2]) < 0.5) {
+      state.chart.axis.y.max = 0.5;
+    }
 
     this.trigger(state);
   },

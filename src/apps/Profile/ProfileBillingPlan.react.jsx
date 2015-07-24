@@ -190,6 +190,10 @@ module.exports = React.createClass({
   renderChartLegend() {
     let styles = this.getStyles();
 
+    let subscription = this.state.profile.subscription;
+    let plan         = subscription.plan;
+    let pricing      = subscription.pricing;
+
     let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
     let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
 
@@ -199,29 +203,53 @@ module.exports = React.createClass({
     let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
     let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
 
+    let renderUsage = function(type) {
+      if (plan === 'paid-commitment') {
+        let usage = {
+          'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included),
+          'cbx' : parseFloat(cbxTotal) / parseFloat(pricing.cbx.included),
+        };
+        return [
+          <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
+            <strong>{usage[type]}%</strong>
+          </div>,
+          <div className="col-md-8">of plan usage</div>
+        ]
+      }
+    };
+
     return (
       <div style={{marginTop: 20}}>
-        <div className="row" style={styles.legend}>
-          <div className="col-xs-1" >
-            <div style={apiCallsStyle} />
-          </div>
-          <div className="col-flex-1">
-            <div className="row">
-              <div className="col-md-5">API calls</div>
-              <div className="col-flex-1">(total this month: <strong>{apiTotal}</strong>)</div>
+        <div className="row">
+
+          <div className="col-md-18">
+
+            <div className="row" style={styles.legend}>
+              <div className="col-xs-1" >
+                <div style={apiCallsStyle} />
+              </div>
+              <div className="col-flex-1">
+                <div className="row">
+                  <div className="col-md-8">API calls</div>
+                  <div className="col-md-8">this month: <strong>{apiTotal}</strong></div>
+                  {renderUsage('api')}
+                </div>
+              </div>
+            </div>
+            <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
+              <div className="col-xs-1">
+                <div style={cbxCallsStyle} />
+              </div>
+              <div className="col-flex-1">
+                <div className="row">
+                  <div className="col-md-8">CodeBox runs</div>
+                  <div className="col-md-8">this month: <strong>{cbxTotal}</strong></div>
+                  {renderUsage('cbx')}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
-          <div className="col-xs-1">
-            <div style={cbxCallsStyle} />
-          </div>
-          <div className="col-flex-1">
-            <div className="row">
-              <div className="col-md-5">CodeBox runs</div>
-              <div className="col-flex-1">(total this month: <strong>{cbxTotal}</strong>)</div>
-            </div>
-          </div>
+
         </div>
       </div>
     )
