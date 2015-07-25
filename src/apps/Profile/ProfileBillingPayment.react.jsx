@@ -76,9 +76,10 @@ module.exports = React.createClass({
               onSubmit      = {this.handleFormValidation}
               acceptCharset = "UTF-8"
               method        = "post">
-              <div className="row">
 
-                {this.renderFormNotifications()}
+              {this.renderFormNotifications()}
+
+              <div className="row">
 
                 <div className="col-lg-20">
                   <MUI.TextField
