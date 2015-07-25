@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -15,6 +16,8 @@ import WebhooksStore from './WebhooksStore';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
+
+let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
@@ -45,27 +48,50 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
+  handleURLClick() {
+    this.refs.snackbar.show();
+    setTimeout(function() {
+      this.refs.snackbar.dismiss()
+    }.bind(this), 1200)
+  },
+
   renderItem(item) {
 
-    // TODO: move to store
+    let publicString = item.public.toString();
+    let publicCell = publicString;
+
+    if (item.public) {
+      publicCell = (
+        <div style={{marginLeft: '-14px'}}>
+          <ReactZeroClipboard text={SYNCANO_BASE_URL + item.links['public-link']}>
+            <MUI.IconButton
+              iconClassName = "synicon-link-variant"
+              tooltip       = "Copy Webhook URL"
+              onClick       = {this.handleURLClick}
+            />
+          </ReactZeroClipboard>
+        </div>
+      )
+    }
+
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
         key     = {item.name}
       >
-        <Common.ColumnList.Column.CheckIcon
+        <Column.CheckIcon
           id              = {item.name.toString()}
           icon            = 'arrow-up-bold'
           background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick} 
+          handleIconClick = {this.handleItemIconClick}
         >
           {item.name}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc className="col-xs-8">{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc className="col-xs-8">{item.codebox}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc>{item.public.toString()}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.CheckIcon>
+        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
+        <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
+        <Column.Desc className="col-xs-5">{publicCell}</Column.Desc>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
@@ -90,17 +116,20 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-8">Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-8">CodeBox</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header>Public</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
+          <Column.Desc.Header className="col-xs-4">CodeBox</Column.Desc.Header>
+          <Column.Key.Header className="col-xs-5">Public</Column.Key.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
             {this.getList()}
           </Common.Loading>
         </Common.Lists.List>
+        <MUI.Snackbar
+            ref     = "snackbar"
+            message = "URL copied to the clipboard" />
       </Common.Lists.Container>
     );
   }
