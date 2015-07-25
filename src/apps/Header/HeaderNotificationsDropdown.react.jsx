@@ -1,26 +1,17 @@
-var React                     = require('react'),
-    Reflux                    = require('reflux'),
-    Router                    = require('react-router'),
-    Link                      = Router.Link,
-    Radium                    = require('radium'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import Radium from 'radium';
 
-    AuthActions               = require('../Account/AuthActions'),
-    HeaderActions             = require('./HeaderActions'),
-    HeaderStore               = require('./HeaderStore'),
-    ProfileInvitationsStore   = require('../Profile/ProfileInvitationsStore'),
-    ProfileInvitationsActions = require('../Profile/ProfileInvitationsActions'),
+import AuthActions from '../Account/AuthActions';
+import HeaderStore from './HeaderStore';
+import ProfileInvitationsStore from '../Profile/ProfileInvitationsStore';
+import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 
-    MUI                       = require('material-ui'),
-    Colors                    = MUI.Styles.Colors,
-    IconMenu                  = MUI.IconMenu,
-    MenuItem                  = MUI.MenuItem,
-    FontIcon                  = MUI.FontIcon,
-    MenuDivider               = MUI.ListDivider,
-    IconButton                = MUI.IconButton,
-    DropdownNotifiItem        = require("../../common/Dropdown/DropdownNotifiItem.react");
+import MUI from 'material-ui';
+import Loading from '../../common/Loading';
 
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',
 
@@ -36,33 +27,34 @@ module.exports = Radium(React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     ProfileInvitationsActions.fetch();
   },
 
-  handleAcceptInvitations: function (items, event) {
+  handleAcceptInvitations(items) {
     console.info("Header::handleAcceptInvitations");
     ProfileInvitationsActions.acceptInvitations(items);
     event.stopPropagation();
   },
 
-  handleDeclineInvitations: function (items, event) {
+  handleDeclineInvitations(items) {
     console.info("Header::handleDeclineInvitations");
     ProfileInvitationsActions.declineInvitations(items);
     event.stopPropagation();
   },
 
-  handleResendEmail: function (event) {
+  handleResendEmail(event) {
     console.info("Header::handleResendEmail");
     AuthActions.resendActivationEmail(this.state.user.email);
+    this.refs.snackbar.show();
     event.stopPropagation();
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       icon: {
-        color : '#fff',
-        fontSize: 21
+        color    : MUI.Styles.Colors.white,
+        fontSize : 21
       },
 
       notificationIcon: {
@@ -71,55 +63,96 @@ module.exports = Radium(React.createClass({
 
       resendEmailLink: {
         cursor : "pointer",
-        color  : Colors.lightBlueA700
+        color  : MUI.Styles.Colors.lightBlueA700
       }
     }
   },
 
-  getNotificationItems: function () {
-    var notifications = [];
-    notifications = this.state.accountInvitations.items.map(function (item) {
-      return {
-        type: "invitation",
-        leftIcon: {
-          name  : "synicon-share-variant",
-          color: "#8bc34a"
-        },
-        content: {
-          text   : <div><b>{item.inviter}</b><span> invited you to their instance </span><b>{item.instance}</b></div>,
-          style  : {}
-        },
-        buttonsText: ["Accept", "Decline"],
-        name: "invitation",
-        handleAccept: this.handleAcceptInvitations.bind(this, [item]),
-        handleDecline: this.handleDeclineInvitations.bind(this, [item])
-      }
-    }.bind(this));
+  renderItems() {
+    if (this.state.user.isActive && this.state.accountInvitations.items.length > 0) {
+      let icon = (
+        <MUI.FontIcon
+          className = {'synicon-information'}
+          color     = {MUI.Styles.Colors.lightBlueA700}
+        />
+      )
+      return (
+        <MUI.ListItem
+          primaryText = "You dont't have any notifications"
+          disabled    = {true}
+          leftIcon    = {icon}
+        />
+      )
+    }
 
-    if (!this.state.user.is_active) {
-      var secondaryLinkStyle = this.getStyles().resendEmailLink;
+    let notifications = this.state.accountInvitations.items.map(item => {
+      let icon = (
+        <MUI.FontIcon
+          className = {'synicon-share-variant'}
+          color     = {MUI.Styles.Colors.lightGreen500}
+        />
+      ),
+      content = (
+        <div>
+          <b>{item.inviter}</b>
+          <span> invited you to their instance </span>
+          <b>{item.instance}</b>
+        </div>
+      ),
+      buttons = [
+        <MUI.FlatButton
+          onClick = {this.handleAcceptInvitations.bind(this, [item])}
+          label   = 'Accept'
+          primary = {true}
+        />,
+        <MUI.FlatButton
+          onClick = {this.handleDeclineInvitations.bind(this, [item])}
+          label   = 'Decline'
+        />
+      ];
+
+      return (
+        <MUI.ListItem
+          disabled = {true}
+          leftIcon = {icon}
+        >
+          {content}
+          {buttons}
+        </MUI.ListItem>
+      );
+    });
+
+    if (!this.state.user.isActive) {
+      let icon = (
+        <MUI.FontIcon
+          className = {'synicon-alert'}
+          color     = {MUI.Styles.Colors.orange500}
+        />
+      ),
+
+      resendLink = (
+        <div
+          style   = {this.getStyles().resendEmailLink}
+          onClick = {this.handleResendEmail}
+        >
+          Resend activation email
+        </div>
+      )
       notifications.push(
-        {
-          type: "normal-link",
-          leftIcon: {
-            name   : "synicon-alert",
-            color: "#ff9800"
-          },
-          content: {
-            text          : "Your email address is not yet verified.",
-            secondaryText : <div style={secondaryLinkStyle} onClick={this.handleResendEmail}>Resend activation email</div>,
-            style         : {}
-          },
-          name: "activation"
-        }
+        <MUI.ListItem
+          primaryText   = 'Your email address is not yet verified.'
+          secondaryText = {resendLink}
+          disabled      = {true}
+          leftIcon      = {icon}
+        />
       )
     }
 
     return notifications;
   },
 
-  renderIcon: function () {
-    var notifications         = this.getNotificationItems(),
+  renderIcon() {
+    let notifications         = this.renderItems(),
         notificationCountIcon = null,
         iconClassName         = "synicon-",
         styles                = this.getStyles();
@@ -131,35 +164,46 @@ module.exports = Radium(React.createClass({
     }
 
     if (notifications.length > 0) {
-      var synIconName = notifications.length < 10 ? notifications.length : "9-plus";
-      notificationCountIcon = <FontIcon
-        className = {"synicon-numeric-" + synIconName + "-box notification-count-icon"}
-        color     = {styles.notificationIcon.color}/>
+      let synIconName = notifications.length < 10 ? notifications.length : "9-plus";
+      notificationCountIcon = (
+        <MUI.FontIcon
+          className = {"synicon-numeric-" + synIconName + "-box notification-count-icon"}
+          color     = {styles.notificationIcon.color}
+        />
+      )
     }
 
-    return(
+    return (
       <div>
         {notificationCountIcon}
-        <IconButton iconStyle={styles.icon} iconClassName={iconClassName} />
+        <MUI.IconButton
+          iconStyle     = {styles.icon}
+          iconClassName = {iconClassName}
+          onClick       = {ProfileInvitationsActions.fetchInvitations}
+        />
       </div>
     )
   },
 
-  renderItems: function (items) {
-    return(
-      <DropdownNotifiItem
-        items={items}
-        isLoading={this.props.isLoading} />
-    )
-  },
-
-  render: function() {
-    return(
-      <IconMenu desktop={true} iconButtonElement={this.renderIcon()}>
-        <MenuItem>Notifications</MenuItem>
-        <MenuDivider />
-        {this.renderItems(this.getNotificationItems())}
-      </IconMenu>
+  render() {
+    return (
+      <div>
+        <MUI.IconMenu
+          desktop           = {true}
+          iconButtonElement = {this.renderIcon()}
+        >
+          <Loading show={this.state.accountInvitations.isLoading}>
+            <MUI.List subheader='Notifications'>
+              {this.renderItems()}
+            </MUI.List>
+          </Loading>
+        </MUI.IconMenu>
+        <MUI.Snackbar
+          ref = 'snackbar'
+          message = 'Activation e-mail was send'
+          autoHideDuration = {3000}
+        />
+      </div>
     )
   }
 }));
