@@ -206,8 +206,8 @@ module.exports = React.createClass({
     let renderUsage = function(type) {
       if (plan === 'paid-commitment') {
         let usage = {
-          'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included),
-          'cbx' : parseFloat(cbxTotal) / parseFloat(pricing.cbx.included),
+          'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
+          'cbx' : parseFloat(cbxTotal) / parseFloat(pricing.cbx.included) * 100,
         };
         return [
           <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
