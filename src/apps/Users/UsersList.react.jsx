@@ -16,6 +16,8 @@ import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
+let Column = Common.ColumnList.Column;
+
 export default React.createClass({
 
   displayName: 'UsersList',
@@ -94,7 +96,7 @@ export default React.createClass({
         checked = {item.checked}
         key     = {item.id}
       >
-        <Common.ColumnList.Column.CheckIcon
+        <Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {MUI.Styles.Colors.blue500}
@@ -102,11 +104,11 @@ export default React.createClass({
           handleIconClick = {this.handleItemIconClick}
         >
           {item.username}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
-        <Common.ColumnList.Column.Desc>{this.renderItemGroups(item.groups)}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.profile.updated_at} />
-        <Common.ColumnList.Column.Date date={item.profile.created_at} />
+        </Column.CheckIcon>
+        <Column.ID>{item.id}</Column.ID>
+        <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
+        <Column.Date date={item.profile.updated_at} />
+        <Column.Date date={item.profile.created_at} />
       </Common.ColumnList.Item>
     )
   },
@@ -119,7 +121,7 @@ export default React.createClass({
     }
 
     return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick.bind(null, null)}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
     )
@@ -129,11 +131,11 @@ export default React.createClass({
     return (
       <div>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
-          <Common.ColumnList.Column.Desc.Header>Groups</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Date.Header>Updated</Common.ColumnList.Column.Date.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.ID.Header>ID</Column.ID.Header>
+          <Column.Desc.Header>Groups</Column.Desc.Header>
+          <Column.Date.Header>Updated</Column.Date.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

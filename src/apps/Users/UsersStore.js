@@ -57,11 +57,11 @@ let UsersStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchUsers(items) {
+  onFetchUsers() {
     console.debug('UsersStore::onFetchUsers');
   },
 
-  onFetchUsersCompleted(users) {
+  onFetchUsersCompleted() {
     console.debug('UsersStore::onFetchUsersCompleted');
   },
 
@@ -71,12 +71,12 @@ let UsersStore = Reflux.createStore({
     this.refreshData();
   },
 
-  onCreateUserCompleted(user) {
+  onCreateUserCompleted() {
     console.debug('UsersStore::onCreateUserCompleted');
     this.refreshData();
   },
 
-  onUpdateUserCompleted(user) {
+  onUpdateUserCompleted() {
     console.debug('UsersStore::onUpdateUserCompleted');
     this.refreshData();
   },

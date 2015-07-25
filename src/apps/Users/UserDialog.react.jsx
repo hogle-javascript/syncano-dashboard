@@ -27,10 +27,26 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  validatorConstraints: {
-    username: {
-      presence: true
-    }
+  validatorConstraints() {
+    let addFormConstraints = {
+      username: {
+        presence: true
+      },
+      password: {
+        presence: true
+      }
+    };
+    let editFormmConstraints = {
+      username: {
+        presence: true
+      }
+    };
+
+    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
+  },
+
+  componentWillUnmount() {
+    GroupsStore.resetActiveGroup();
   },
 
   handleAddSubmit() {
@@ -120,7 +136,6 @@ export default React.createClass({
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}
-        style     = {{overflow: 'auto'}}
       >
         <div>
           {this.renderFormNotifications()}

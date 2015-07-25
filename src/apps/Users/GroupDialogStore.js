@@ -23,9 +23,7 @@ let GroupDialogStore = Reflux.createStore({
   },
 
   init() {
-    this.data = this.getInitialState();
     this.listenToForms();
-    this.setLoadingStates();
   },
 
   onCreateGroupCompleted() {
@@ -39,7 +37,6 @@ let GroupDialogStore = Reflux.createStore({
     this.dismissDialog();
     GroupsActions.fetchGroups();
   }
-
 });
 
 module.exports = GroupDialogStore;
