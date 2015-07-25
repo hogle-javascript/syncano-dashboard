@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import MUI from 'material-ui';
 
-var DataObjectsRenderer = {
+export default {
 
   columnsRenderers() {
     return {
@@ -67,23 +67,26 @@ var DataObjectsRenderer = {
   // Table Body
   renderTableData(items, columns) {
 
-    var tableItems = [];
+    let tableItems = [];
 
     items.map(function(item) {
-      var row = {};
+      let row = {};
 
       columns.map(function(column) {
 
-        var value    = item[column.id],
-            renderer = this.getColumnRenderer(column.id);
+        let value    = item[column.id];
+        let renderer = this.getColumnRenderer(column.id);
 
         if (value && typeof value === 'object') {
 
           if (value.type === 'reference') {
-            value = this.renderReference(item[column.id]);
+            value = this.renderReference(value);
           }
           if (value.type === 'file') {
-            value = this.renderFile(item[column.id]);
+            value = this.renderFile(value);
+          }
+          if (value.type === 'datetime') {
+            value = this.renderColumnDate(value.value);
           }
 
         } else {
@@ -111,5 +114,3 @@ var DataObjectsRenderer = {
   }
 
 };
-
-module.exports = DataObjectsRenderer;

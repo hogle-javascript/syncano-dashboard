@@ -62,7 +62,21 @@ export default React.createClass({
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
           params[item.name] = this.state[item.name];
-        } else {
+        } else if (item.type === 'datetime') {
+          let date = this.refs['fielddate-' + item.name].getDate();
+          let time = this.refs['fieldtime-' + item.name].getTime();
+
+          let dateTime = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDay(),
+            time.getHours(),
+            time.getMinutes(),
+            0
+          );
+          params[item.name] = dateTime.toISOString();
+        }
+        else {
           var fieldValue = this.refs['field-' + item.name].getValue();
           if (fieldValue) {
             params[item.name] = fieldValue;
@@ -80,7 +94,7 @@ export default React.createClass({
     // Searching for files
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type === 'file') {
-        var file = this.state['file-' + item.name];
+        let file = this.state['file-' + item.name];
         if (file) {
           fileFields.push({
             name: item.name,
@@ -176,7 +190,7 @@ export default React.createClass({
       )
     }.bind(this);
 
-    return [
+    return (
       <div className='row' style={{padding: 0, margin: 0}}>
         <div className='col-flex-1'>
           <div>Built-in fields</div>
@@ -241,7 +255,7 @@ export default React.createClass({
           />
         </div>
       </div>
-      ]
+    )
   },
 
   onDrop(fieldName, files) {
@@ -311,6 +325,35 @@ export default React.createClass({
               errorText         = {this.getValidationMessages(item.name).join(' ')}
               menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]}
             />
+          )
+        }
+
+        if (item.type === 'datetime') {
+
+          let value = this.state[item.name] ? new Date(this.state[item.name].value) : null;
+          let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
+
+          return (
+            <div>
+              <div className="row" style={labelStyle}>
+                <div>{item.name} (datetime)</div>
+              </div>
+              <div className="row">
+                <div className="col-flex-1">
+                  <MUI.DatePicker
+                    ref            = {'fielddate-' + item.name}
+                    textFieldStyle = {{width: '100%'}}
+                    mode           = "landscape"
+                    defaultDate    = {value} />
+                </div>
+                <div className="col-flex-1">
+                  <MUI.TimePicker
+                    ref         = {'fieldtime-' + item.name}
+                    style       = {{width: '100%'}}
+                    defaultTime = {value} />
+                </div>
+              </div>
+            </div>
           )
         }
 
