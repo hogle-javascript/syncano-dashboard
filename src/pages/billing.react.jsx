@@ -71,6 +71,10 @@ module.exports = React.createClass({
     }
   },
 
+  componentWillReceiveProps(nextProps, nextState) {
+    this.refs.tabs.setState({selectedIndex: this.getActiveSubTabIndex()})
+  },
+
   getActiveSubTabIndex: function() {
     var index = 0;
     this.subTabsItems.some(function(item, i) {
@@ -92,8 +96,9 @@ module.exports = React.createClass({
     return (
       <Container.Profile headerText='Billing'>
         <MUI.Tabs
-          style={styles.tabs}
-          initialSelectedIndex = {this.getActiveSubTabIndex()}
+          ref                   = "tabs"
+          style                 = {styles.tabs}
+          initialSelectedIndex  = {this.getActiveSubTabIndex()}
           tabItemContainerStyle = {styles.subTabsHeader}>
           <MUI.Tab
             style    = {styles.tab}
