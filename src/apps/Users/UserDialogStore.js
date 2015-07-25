@@ -8,10 +8,10 @@ import UsersActions from './UsersActions';
 
 var UserDialogStore = Reflux.createStore({
   listenables : UsersActions,
+
   mixins      : [
     Mixins.StoreForm,
-    Mixins.DialogStore,
-    Mixins.StoreLoading
+    Mixins.DialogStore
   ],
 
   getInitialState() {
@@ -24,9 +24,7 @@ var UserDialogStore = Reflux.createStore({
   },
 
   init() {
-    this.data = this.getInitialState();
     this.listenToForms();
-    this.setLoadingStates();
   },
 
   onCreateUserCompleted() {
