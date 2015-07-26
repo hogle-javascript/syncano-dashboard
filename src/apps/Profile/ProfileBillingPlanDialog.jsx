@@ -66,10 +66,6 @@ export default React.createClass({
     Actions.fetchBillingPlans();
     Actions.fetchBillingCard();
   },
-  //
-  //handleSuccessfullValidation: function () {
-  //  ProfileActions.updateBillingCard(this.state);
-  //},
 
   handleEditSubmit() {
     this.handleAddSubmit();
@@ -78,11 +74,16 @@ export default React.createClass({
   handleAddSubmit() {
     console.debug('ProfileBillingPlanDialog::handleAddSubmit');
 
+    let apiTotal = this.getInfo('api').total;
+    let cbxTotal = this.getInfo('cbx').total;
+
+    let total = parseInt(apiTotal) + parseInt(cbxTotal);
+
     let subscribe = function() {
       return Actions.subscribePlan(this.state.plan.name, {
         commitment: JSON.stringify({
-          api: this.getInfo('api').total,
-          cbx: this.getInfo('cbx').total
+          api: apiTotal,
+          cbx: cbxTotal,
         })
       });
     }.bind(this);
@@ -100,6 +101,12 @@ export default React.createClass({
         subscribe()
       })
     }
+
+    Actions.updateBillingProfile({
+      hard_limit: total * 3,
+      soft_limit: total * 1.5,
+    });
+
   },
 
   getStyles() {
