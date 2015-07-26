@@ -1,16 +1,16 @@
-var Reflux              = require('reflux'),
-    URL                 = require('url'),
+import Reflux from 'reflux';
+import URL from 'url';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    SolutionEditActions = require('./SolutionEditActions');
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import SolutionEditActions from './SolutionEditActions';
 
-var SolutionsEditStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : SolutionEditActions,
 
   mixins      : [
@@ -19,7 +19,7 @@ var SolutionsEditStore = Reflux.createStore({
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       item: {
         stars_count : 0
@@ -29,7 +29,7 @@ var SolutionsEditStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -38,24 +38,24 @@ var SolutionsEditStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('SolutionsEditStore::refreshData');
-    var solutionId = SessionStore.router.getCurrentParams().solutionId;
+    let solutionId = SessionStore.router.getCurrentParams().solutionId;
     SolutionEditActions.fetchSolution(solutionId);
     SolutionEditActions.fetchSolutionVersions(solutionId);
   },
 
-  getSolution: function() {
+  getSolution() {
     return this.data.item;
   },
 
-  setSolution: function(solution) {
+  setSolution(solution) {
     console.debug('SolutionsEditStore::setSolutions');
     this.data.item = solution;
     this.trigger(this.data);
   },
 
-  setSolutionVersions: function(versions) {
+  setSolutionVersions(versions) {
     console.debug('SolutionsEditStore::setSolutions');
 
     this.data.versions = [];
@@ -64,7 +64,7 @@ var SolutionsEditStore = Reflux.createStore({
     this.data.nextParams  = URL.parse(versions.next() || '', true).query;
     this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
 
-    var newItems = [];
+    let newItems = [];
     Object.keys(versions).map(function(key) {
       newItems.splice(0, 0, versions[key]);
     }.bind(this));
@@ -75,59 +75,57 @@ var SolutionsEditStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchSolution: function(solution) {
+  onFetchSolution(solution) {
     console.debug('SolutionsEditStore::onFetchSolutions');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchSolutionCompleted: function(solution) {
+  onFetchSolutionCompleted(solution) {
     console.debug('SolutionsEditStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
     SolutionEditActions.setSolution(solution);
   },
 
-  onFetchSolutionFailure: function() {
+  onFetchSolutionFailure() {
     console.debug('SolutionsEditStore::onFetchSolutionsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onFetchSolutionVersions: function() {
+  onFetchSolutionVersions() {
     console.debug('SolutionsEditStore::onFetchSolutionVersions');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchSolutionVersionsCompleted: function(versions) {
+  onFetchSolutionVersionsCompleted(versions) {
     console.debug('SolutionsEditStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
     SolutionEditActions.setSolutionVersions(versions);
   },
 
-  onFetchSolutionVersionsFailure: function() {
+  onFetchSolutionVersionsFailure() {
     console.debug('SolutionsEditStore::onFetchSolutionVersionsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
-  onRemoveSolution: function() {
+  onRemoveSolution() {
     console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onRemoveSolutionCompleted: function() {
+  onRemoveSolutionCompleted() {
     console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = false;
   },
 
-  onRemoveSolutionFailure: function() {
+  onRemoveSolutionFailure() {
     console.debug('SolutionsEditStore::onRemoveSolutionFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
 });
-
-module.exports = SolutionsEditStore;

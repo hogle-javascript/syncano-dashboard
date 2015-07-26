@@ -8,7 +8,7 @@ import SolutionStar from '../../common/SolutionStar';
 
 import SolutionInstallDialogActions from './SolutionInstallDialogActions';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionsListItem',
 
