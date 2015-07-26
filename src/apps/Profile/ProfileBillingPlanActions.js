@@ -12,6 +12,11 @@ export default CreateActions(
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.getProfile'
     },
+    updateBillingProfile: {
+      asyncResult : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.updateProfile'
+    },
     fetchBillingUsage: {
       asyncResult : true,
       asyncForm   : true,

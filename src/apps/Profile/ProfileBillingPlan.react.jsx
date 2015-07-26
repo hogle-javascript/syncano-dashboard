@@ -20,10 +20,34 @@ module.exports = React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
+    React.addons.LinkedStateMixin,
+    Mixins.Form,
     Mixins.Dialogs,
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],
+
+  validatorConstraints() {
+    return {
+      soft_limit: {
+        numericality: {
+          onlyInteger: true
+        }
+      },
+      hard_limit: {
+        equality: {
+          attribute: 'soft_limit',
+          message: 'Hard limit have to be higher then soft limit',
+          comparator: function(v1, v2) {
+            return parseInt(v1) > parseInt(v2);
+          }
+        },
+        numericality: {
+          onlyInteger: true,
+        }
+      }
+    }
+  },
 
   componentDidMount() {
     Actions.fetch()
@@ -405,14 +429,20 @@ module.exports = React.createClass({
           }
         };
 
+        let toolTip = (
+          <div style={{whiteSpace: 'normal', textAlign: 'left', width: 250}}>
+            Your current plan will expire at the end of the month and your new plan
+            will begin on {Moment(subscription.start).format('LL')}
+          </div>
+        );
+
         return (
           <div className="row align-top">
             <div style={{Transform: 'translateY(-14px)'}}>
               <MUI.IconButton
                 iconClassName = "synicon-information-outline"
                 iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-                tooltip       = {`your current plan will expire at the end of
-                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`}
+                tooltip       = {toolTip}
               />
             </div>
             <div classsName="col-flex-1">
@@ -442,6 +472,79 @@ module.exports = React.createClass({
     }
   },
 
+  handleSuccessfullValidation: function() {
+    this.handleAddSubmit();
+  },
+
+  handleAddSubmit() {
+    Actions.updateBillingProfile({
+      hard_limit: this.state.hard_limit,
+      soft_limit: this.state.soft_limit
+    });
+  },
+
+  renderLimitsForm() {
+    if (!this.state.profile) {
+      return;
+    }
+    let subscription = this.state.profile.subscription;
+    let plan         = subscription.plan;
+
+    if (plan === 'builder' || plan === 'free') {
+      return null;
+    }
+
+    let toolTip = (
+      <div style={{whiteSpace: 'normal', textAlign: 'left', width: 200}}>
+        Here you can set limits for your plan. You will be notified after reaching soft limit.
+        After reaching hard limit your account will be frozen to avoid additional costs.
+      </div>
+    );
+
+    return (
+      <div className="row" style={{marginTop: 30, paddingLeft: 30}}>
+        <div className="col-md-5">
+          <MUI.TextField
+              ref          = "soft_limit"
+              valueLink    = {this.linkState('soft_limit')}
+              errorText    = {this.getValidationMessages('soft_limit').join(' ')}
+              name         = "soft_limit"
+              className    = "text-field"
+              hintText     = "Soft Limit"
+              fullWidth    = {true}
+          />
+        </div>
+        <div className="col-md-5">
+          <MUI.TextField
+            ref          = "hard_limit"
+            valueLink    = {this.linkState('hard_limit')}
+            errorText    = {this.getValidationMessages('hard_limit').join(' ')}
+            name         = "hard_limit"
+            className    = "text-field"
+            hintText     = "Hard Limit"
+            fullWidth    = {true}
+          />
+        </div>
+        <div className="col-md-4" style={{paddingRight: 0}}>
+          <MUI.FlatButton
+              primary    = {true}
+              label      = {'Set Limits'}
+              disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
+              onTouchTap = {this.handleFormValidation}
+            />
+        </div>
+        <div className="col-md-5" style={{paddingLeft: 0}}>
+          <MUI.IconButton
+            iconClassName = "synicon-information-outline"
+            iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+            tooltip       = {toolTip}
+          />
+        </div>
+     </div>
+    )
+
+  },
+
   render() {
     let styles = this.getStyles();
 
@@ -465,6 +568,9 @@ module.exports = React.createClass({
         </div>
         <div>
           {this.renderChart()}
+        </div>
+        <div>
+          {this.renderLimitsForm()}
         </div>
       </Common.Loading>
     );

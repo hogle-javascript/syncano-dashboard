@@ -13,6 +13,11 @@ export default CreateActions({
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.listPlans'
     },
+    updateBillingProfile: {
+      asyncResult : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.updateProfile'
+    },
     subscribePlan: {
       asyncResult : true,
       asyncForm   : true,
