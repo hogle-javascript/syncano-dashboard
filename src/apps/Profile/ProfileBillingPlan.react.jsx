@@ -211,7 +211,7 @@ module.exports = React.createClass({
         };
         return [
           <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
-            <strong>{usage[type]}%</strong>
+            <strong>{usage[type].toFixed(2)}%</strong>
           </div>,
           <div className="col-md-8">of plan usage</div>
         ]
