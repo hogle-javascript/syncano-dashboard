@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   getParams() {
-    var params = {
+    let params = {
       id                : this.state.id,
       owner             : this.state.owner,
       group             : this.state.group,
@@ -56,6 +56,8 @@ export default React.createClass({
       group_permissions : this.state.group_permissions,
       other_permissions : this.state.other_permissions
     };
+
+    let files = this.getFileFields();
 
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
@@ -81,6 +83,17 @@ export default React.createClass({
           if (fieldValue) {
             params[item.name] = fieldValue;
           }
+        }
+      } else {
+        let delFile = true;
+        files.some(file => {
+          if (file.name === item.name) {
+            delFile = false;
+            return true;
+          }
+        });
+        if (delFile) {
+          params[item.name] = null;
         }
       }
     }.bind(this));
