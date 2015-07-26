@@ -52,6 +52,13 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  isPlanCanceled() {
+    if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
+      return false;
+    }
+    return this.data.subscriptions._items[0].end || false;
+  },
+
   onFetchBillingProfileCompleted(payload) {
     this.data.isLoading = false;
     this.setProfile(payload);
@@ -61,15 +68,30 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.setUsage(payload);
   },
+
   onFetchBillingSubscriptionsCompleted(payload) {
     this.data.isLoading = false;
     this.setSubscriptions(payload);
   },
+
   onCancelSubscriptionsCompleted(payload) {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
+
+  onCancelNewPlanCompleted() {
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
+  },
+
+  onSubscribePlanCompleted() {
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.refreshData();
+  }
 
 });

@@ -88,8 +88,15 @@ export default React.createClass({
       });
     }.bind(this);
 
+    let setLimits = function() {
+      return Actions.updateBillingProfile({
+        hard_limit: total * 3,
+        soft_limit: total * 1.5,
+      });
+    };
+
     if (this.state.card) {
-      subscribe()
+      subscribe().then(setLimits);
     } else {
       Actions.updateCard({
         cvc       : this.state.cvc,
@@ -98,15 +105,11 @@ export default React.createClass({
         exp_month : this.state.exp_month
       })
       .then((payload) => {
-        subscribe()
+        subscribe().then(
+          setLimits
+        )
       })
     }
-
-    Actions.updateBillingProfile({
-      hard_limit: total * 3,
-      soft_limit: total * 1.5,
-    });
-
   },
 
   getStyles() {
@@ -305,6 +308,13 @@ export default React.createClass({
     return info;
   },
 
+  handleDismiss() {
+    this.resetDialogState();
+    if (typeof this.props.onDismiss === 'function') {
+      this.props.onDismiss()
+    }
+  },
+
   render() {
 
     let styles              = this.getStyles();
@@ -359,7 +369,7 @@ export default React.createClass({
           onShow          = {this.handleDialogShow}
           openImmediately = {this.props.openImmediately}
           actions         = {dialogCustomActions}
-          onDismiss       = {this.resetDialogState}
+          onDismiss       = {this.handleDismiss}
         >
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>

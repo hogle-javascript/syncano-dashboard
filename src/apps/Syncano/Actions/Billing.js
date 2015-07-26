@@ -54,6 +54,26 @@ export default {
       .catch(this.failure);
   },
 
+  cancelNewPlan(subscriptions) {
+    let currentPlan = subscriptions[0];
+
+    this.Connection.
+      Billing.cancelSubscription(subscriptions[1].id)
+      .then(
+       this.Connection
+        .Billing
+        .subscribePlan(currentPlan.plan, {
+          commitment: JSON.stringify({
+            api: currentPlan.commitment.api,
+            cbx: currentPlan.commitment.cbx,
+          })
+        })
+        .then(this.completed)
+        .catch(this.failure)
+      )
+      .catch(this.failure);
+  },
+
   listPlans() {
     this.Connection
       .Billing
