@@ -58,6 +58,15 @@ module.exports = React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
+  setupToggles() {
+    if (this.refs['builder-toggle'] && this.state.profile.subscription.plan === 'builder') {
+      this.refs['builder-toggle'].setToggled(false);
+    }
+    if (this.refs['paid-commitment-toggle'] && this.state.profile.subscription.plan === 'paid-commitment') {
+      this.refs['paid-commitment-toggle'].setToggled(true);
+    }
+  },
+
   getStyles() {
     return {
       main: {
@@ -71,8 +80,6 @@ module.exports = React.createClass({
       },
       comment: {
         fontSize     : '0.9em',
-        paddingLeft  : 20,
-        paddingRight : 20
       },
       explorerButton: {
         marginTop : 20
@@ -98,21 +105,21 @@ module.exports = React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        key   : 'freezeAccount',
-        ref   : 'freezeAccount',
-        title : 'Freeze Account',
+        key   : 'cancelProductionPlan',
+        ref   : 'cancelProductionPlan',
+        title : 'Cancel Production Plan',
         actions: [
           {
             text    : 'Cancel',
-            onClick : this.handleCancel
+            onClick : this.handleCancelCancelProductionPlan
           },
           {
             text    : 'Confirm',
-            onClick : this.handleFreezeAccount
+            onClick : this.handleCancelProductionPlan
           }
         ],
         modal: true,
-        children: ['Are you sure you want to freeze your account?']
+        children: ['Are you sure you want to cancel Production plan?']
       }
     }]
   },
@@ -121,12 +128,18 @@ module.exports = React.createClass({
     return (this.state.subscriptions && this.state.subscriptions.length > 1);
   },
 
-  handleShowFreezeAccountDialog() {
-    console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.showDialog('freezeAccount')
+  handleCancelCancelProductionPlan() {
+    this.setupToggles();
+    this.refs.cancelProductionPlan.dismiss();
   },
 
-  handleFreezeAccount() {
+  handleShowCancelPlanDialog() {
+    console.debug('ProfileBillingPlan::handlePlanToggle');
+    this.refs['paid-commitment-toggle'].setToggled(false);
+    this.showDialog('cancelProductionPlan')
+  },
+
+  handleCancelProductionPlan() {
     Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {return item.id})).then(() => {
       Actions.fetch();
     });
@@ -138,9 +151,7 @@ module.exports = React.createClass({
   },
 
   handleDeleteSubscription() {
-    Actions.cancelSubscriptions([this.state.subscriptions._items[1].id]).then(() => {
-      Actions.fetch();
-    });
+    Actions.cancelNewPlan(this.state.subscriptions._items);
   },
 
   renderSwitchPlan() {
@@ -155,9 +166,9 @@ module.exports = React.createClass({
           <div>
             <MUI.Toggle
               style          = {{marginTop: 10}}
+              ref            = "builder-toggle"
               key            = "builder-toggle"
-              defaultToggled = {false}
-              onToggle       = {this.handlePlanToggle}
+              onToggle       = {this.handleShowPlanDialog}
             />
           </div>
           <div style={{marginTop: 10}}>
@@ -176,20 +187,39 @@ module.exports = React.createClass({
     else if (this.state.profile.subscription.plan === 'free')
       return;
 
+    let renderComment = function() {
+      if (Store.isPlanCanceled()) {
+        return (
+          <div style={{marginTop: 10, textAlign: 'center'}}>
+            <div>Your plan will expire on</div>
+            <div style={{color: 'red', padding: 3}}>
+              {Store.isPlanCanceled()}
+            </div>
+            <div>Click <a onClick={this.handleShowPlanDialog}> here </a> to extend.</div>
+          </div>
+        )
+      } else {
+        return (
+          <div style={{marginTop: 10}}>
+            <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
+          </div>
+        )
+      }
+    }.bind(this);
+
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
           <div>
             <MUI.Toggle
               style          = {{marginTop: 10}}
+              ref            = "paid-commitment-toggle"
               key            = "paid-commitment-toggle"
               defaultToggled = {true}
-              disabled       = {true}
+              onToggle       = {this.handleShowCancelPlanDialog}
             />
           </div>
-          <div style={{marginTop: 10}}>
-            <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-          </div>
+          {renderComment()}
       </div>
     )
   },
@@ -284,8 +314,6 @@ module.exports = React.createClass({
     if (!this.state.profile) {
       return;
     }
-
-    let plan = this.state.profile.subscription.plan;
 
     return (
       <div style={styles.chartHeader}>
@@ -438,7 +466,7 @@ module.exports = React.createClass({
 
         return (
           <div className="row align-top">
-            <div style={{Transform: 'translateY(-14px)'}}>
+            <div classsName="col-md-3" style={{Transform: 'translateY(-14px)'}}>
               <MUI.IconButton
                 iconClassName = "synicon-information-outline"
                 iconStyle     = {{color: MUI.Styles.Colors.blue500}}
@@ -446,16 +474,14 @@ module.exports = React.createClass({
               />
             </div>
             <div classsName="col-flex-1">
-              <div key='productionComment-subs'>
-                <div>
-                  <div style={styles.mainDesc}>
-                    New plan <strong>${total}</strong>:
-                  </div>
-                </div>
-                <div style={{marginTop: 20}}>
-                  <Limits data={limitsData} />
-                </div>
+
+              <div style={styles.mainDesc}>
+                New plan <strong>${total}</strong>:
               </div>
+              <div style={{marginTop: 20}}>
+                <Limits data={limitsData} />
+              </div>
+
             </div>
          </div>
         )
@@ -470,6 +496,11 @@ module.exports = React.createClass({
         );
       }
     }
+  },
+
+  handlePlanDialogDismiss() {
+    this.setupToggles();
+    Actions.fetch();
   },
 
   handleSuccessfullValidation: function() {
@@ -551,7 +582,7 @@ module.exports = React.createClass({
     return (
       <Common.Loading show={this.state.isLoading}>
         {this.getDialogs()}
-        <PlanDialog />
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
         <div className="row" style={styles.main}>
 
           {this.renderMainDesc()}
