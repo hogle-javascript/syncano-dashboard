@@ -94,7 +94,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="classes-list-container">
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header>Description</Column.Desc.Header>
