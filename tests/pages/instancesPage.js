@@ -49,10 +49,12 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: 'div.row'
+      selector: '//div[@id="instances"]',
+      locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: 'div.row span'
+      selector: '//span[contains(@class,"synicon")',
+      locateStrategy: 'xpath'
     },
     editButton: {
       selector: '.synicon-pencil'
@@ -61,7 +63,7 @@ module.exports = {
       selector: '.synicon-delete'
     },
     instancesTableRowDescription: {
-      selector: '//div[@class="row"]/div[2]',
+      selector: '//div[@class="col-flex-1"]',
       locateStrategy: 'xpath'
     },
     addInstanceModalTitle: {
