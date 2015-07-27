@@ -11,6 +11,11 @@ import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import MUI from 'material-ui';
 import Loading from '../../common/Loading';
 
+import Menu from 'material-ui/lib/menus/menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuDivider from 'material-ui/lib/menus/menu-divider';
+
+
 export default Radium(React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',
@@ -47,7 +52,7 @@ export default Radium(React.createClass({
     console.info("Header::handleResendEmail");
     AuthActions.resendActivationEmail(this.state.user.email);
     this.refs.snackbar.show();
-    event.stopPropagation();
+    event.preventDefault();
   },
 
   getStyles() {
@@ -61,26 +66,41 @@ export default Radium(React.createClass({
         color: '#ff3d00'
       },
 
-      resendEmailLink: {
-        cursor : "pointer",
-        color  : MUI.Styles.Colors.lightBlueA700
-      }
+      resendEmailText: {
+        cursor     : "pointer",
+        color      : MUI.Styles.Colors.lightBlueA700
+      },
+      menuItem: {
+        whiteSpace    : 'normal',
+        lineHeight    : '24px',
+        color         : '#777',
+        minWidth      : '360px',
+        paddingTop    : '12px',
+        paddingBottom : '12px'
+      },
     }
   },
 
   renderItems() {
-    if (this.state.user.isActive && this.state.accountInvitations.items.length > 0) {
+    let styles = this.getStyles();
+    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dopdown isn't closing because of returned childrens in DIV tag
+    if (this.state.accountInvitations.isLoading === true) {
+      return <Loading show={true} />
+    }
+
+    if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
         <MUI.FontIcon
-          className = {'synicon-information'}
+          className = 'synicon-information'
           color     = {MUI.Styles.Colors.lightBlueA700}
         />
       )
       return (
-        <MUI.ListItem
+        <MenuItem
           primaryText = "You dont't have any notifications"
           disabled    = {true}
           leftIcon    = {icon}
+          style       = {styles.menuItem}
         />
       )
     }
@@ -88,63 +108,61 @@ export default Radium(React.createClass({
     let notifications = this.state.accountInvitations.items.map(item => {
       let icon = (
         <MUI.FontIcon
-          className = {'synicon-share-variant'}
+          className = 'synicon-share-variant'
           color     = {MUI.Styles.Colors.lightGreen500}
         />
       ),
       content = (
         <div>
-          <b>{item.inviter}</b>
-          <span> invited you to their instance </span>
-          <b>{item.instance}</b>
+          <strong>{item.inviter + ' '}</strong>
+            invited you to their instance
+          <strong>{' ' + item.instance}</strong>
         </div>
       ),
       buttons = [
         <MUI.FlatButton
-          onClick = {this.handleAcceptInvitations.bind(this, [item])}
-          label   = 'Accept'
-          primary = {true}
+          onTouchTap = {this.handleAcceptInvitations.bind(this, [item])}
+          label      = 'Accept'
+          primary    = {true}
         />,
         <MUI.FlatButton
-          onClick = {this.handleDeclineInvitations.bind(this, [item])}
-          label   = 'Decline'
+          onTouchTap = {this.handleDeclineInvitations.bind(this, [item])}
+          label      = 'Decline'
         />
       ];
 
       return (
-        <MUI.ListItem
+        <MenuItem
           disabled = {true}
           leftIcon = {icon}
+          style    = {styles.menuItem}
         >
           {content}
           {buttons}
-        </MUI.ListItem>
+        </MenuItem>
       );
     });
 
-    if (!this.state.user.isActive) {
+    if (!this.state.user.is_active) {
       let icon = (
         <MUI.FontIcon
-          className = {'synicon-alert'}
+          className = 'synicon-alert'
           color     = {MUI.Styles.Colors.orange500}
         />
       ),
 
       resendLink = (
-        <div
-          style   = {this.getStyles().resendEmailLink}
-          onClick = {this.handleResendEmail}
-        >
-          Resend activation email
+        <div style={this.getStyles().resendEmailText}>
+          Your email address is not yet verified. Click here to resend activation email.
         </div>
       )
       notifications.push(
-        <MUI.ListItem
-          primaryText   = 'Your email address is not yet verified.'
-          secondaryText = {resendLink}
-          disabled      = {true}
-          leftIcon      = {icon}
-        />
+        <MenuItem
+          leftIcon = {icon}
+          style    = {styles.menuItem}
+        >
+          {resendLink}
+        </MenuItem>
       )
     }
 
@@ -185,22 +203,31 @@ export default Radium(React.createClass({
     )
   },
 
+  test() {
+    console.error("XXX")
+  },
+
   render() {
+    console.error(this.state)
     return (
       <div>
         <MUI.IconMenu
-          desktop           = {true}
           iconButtonElement = {this.renderIcon()}
+          onItemTouchTap    = {this.handleResendEmail}
+          autoWidth         = {false}
+          maxWidth          = '400px'
         >
-          <Loading show={this.state.accountInvitations.isLoading}>
-            <MUI.List subheader='Notifications'>
-              {this.renderItems()}
-            </MUI.List>
-          </Loading>
+          <MenuItem
+            key         = 'notificationDropdownHeader'
+            primaryText = 'Notifications'
+            disabled    = {true}
+          />
+          <MenuDivider />
+            {this.renderItems()}
         </MUI.IconMenu>
         <MUI.Snackbar
-          ref = 'snackbar'
-          message = 'Activation e-mail was send'
+          ref              = 'snackbar'
+          message          = 'Activation e-mail was send'
           autoHideDuration = {3000}
         />
       </div>
