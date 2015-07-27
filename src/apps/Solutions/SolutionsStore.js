@@ -7,7 +7,7 @@ import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import Actions from './SolutionsActions';
 
-var SolutionsStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : Actions,
 
   mixins      : [
@@ -40,13 +40,10 @@ var SolutionsStore = Reflux.createStore({
   },
 
   refreshSolutions() {
-    let payload = {};
-    if (this.data.filter == 'created_by_me') {
-      payload.created_by_me = true;
-    }
-    if (this.data.filter == 'starred_by_me') {
-      payload.starred_by_me = true;
-    }
+    let payload = {
+      created_by_me: this.data.filter === 'created_by_me' || false,
+      starred_by_me: this.data.filter === 'starred_by_me' || false
+    };
 
     if (this.data.selectedTags.length)
       payload.tags = this.data.selectedTags;
@@ -138,5 +135,3 @@ var SolutionsStore = Reflux.createStore({
   }
 
 });
-
-module.exports = SolutionsStore;
