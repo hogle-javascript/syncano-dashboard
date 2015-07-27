@@ -1,18 +1,18 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
-    SessionActions    = require('../Session/SessionActions'),
-    Actions           = require('./ProfileBillingPlanActions');
+import SessionActions from '../Session/SessionActions';
+import Actions from './ProfileBillingPlanActions';
 
-var ProfileBillingPlanStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     WaitForStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       profile   : null,
       usage     : null,
@@ -20,7 +20,7 @@ var ProfileBillingPlanStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -28,48 +28,70 @@ var ProfileBillingPlanStore = Reflux.createStore({
     );
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ClassesStore::refreshData');
     Actions.fetchBillingProfile();
     Actions.fetchBillingUsage();
     Actions.fetchBillingSubscriptions();
   },
 
-  setProfile: function(profile) {
-    this.data.profile = profile;
+  setProfile(profile) {
+    this.data.profile    = profile;
+    this.data.soft_limit = profile.soft_limit;
+    this.data.hard_limit = profile.hard_limit;
     this.trigger(this.data);
   },
 
-  setUsage: function(usage) {
+  setUsage(usage) {
     this.data.usage = usage;
     this.trigger(this.data);
   },
 
-  setSubscriptions: function(subscriptions) {
+  setSubscriptions(subscriptions) {
     this.data.subscriptions = subscriptions;
     this.trigger(this.data);
   },
 
-  onFetchBillingProfileCompleted: function(payload) {
+  isPlanCanceled() {
+    if (!this.data.subscriptions || this.data.subscriptions.length > 1) {
+      return false;
+    }
+    return this.data.subscriptions._items[0].end || false;
+  },
+
+  onFetchBillingProfileCompleted(payload) {
     this.data.isLoading = false;
     this.setProfile(payload);
   },
 
-  onFetchBillingUsageCompleted: function(payload) {
+  onFetchBillingUsageCompleted(payload) {
     this.data.isLoading = false;
     this.setUsage(payload);
   },
-  onFetchBillingSubscriptionsCompleted: function(payload) {
+
+  onFetchBillingSubscriptionsCompleted(payload) {
     this.data.isLoading = false;
     this.setSubscriptions(payload);
   },
-  onCancelSubscriptionsCompleted: function(payload) {
+
+  onCancelSubscriptionsCompleted(payload) {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-});
+  onCancelNewPlanCompleted() {
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.trigger(this.data);
+    this.refreshData();
+  },
 
-module.exports = ProfileBillingPlanStore;
+  onSubscribePlanCompleted() {
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.refreshData();
+  }
+
+});

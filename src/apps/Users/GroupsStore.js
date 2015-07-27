@@ -1,25 +1,24 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
-    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions      = require('../Session/SessionActions'),
-    GroupsActions       = require('./GroupsActions'),
-    UsersActions        = require('./UsersActions'),
-    UsersStore          = require('./UsersStore');
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import GroupsActions from './GroupsActions';
+import UsersActions from './UsersActions';
+import UsersStore from './UsersStore';
 
-var GroupsStore = Reflux.createStore({
+let GroupsStore = Reflux.createStore({
   listenables : GroupsActions,
-  mixins      : [
-    CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+
+  mixins : [
+    Mixins.CheckListStore,
+    Mixins.StoreLoading,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items: [],
       activeGroup: null,
@@ -27,7 +26,7 @@ var GroupsStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -37,7 +36,7 @@ var GroupsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  setGroups: function(groups) {
+  setGroups(groups) {
     console.debug('GroupsStore::setGroups');
 
     this.data.items = Object.keys(groups).map(function(key) {
@@ -47,19 +46,24 @@ var GroupsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getGroups: function(empty) {
+  getGroups(empty) {
     return this.data.items || empty || null;
   },
 
-  getActiveGroup: function(empty) {
+  getActiveGroup(empty) {
     return this.data.activeGroup || empty || null;
   },
 
-  refreshData: function() {
+  resetActiveGroup() {
+    this.data.activeGroup = null;
+    this.trigger(this.data);
+  },
+
+  refreshData() {
     GroupsActions.fetchGroups();
   },
 
-  onSetActiveGroup: function(group) {
+  onSetActiveGroup(group) {
     console.debug('GroupsStore::onSetActiveGroup');
 
     var isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
@@ -67,27 +71,26 @@ var GroupsStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchGroups: function(items) {
+  onFetchGroups(items) {
     console.debug('GroupsStore::onFetchGroups');
     this.trigger(this.data);
   },
 
-  onFetchGroupsCompleted: function(items) {
+  onFetchGroupsCompleted(items) {
     console.debug('GroupsStore::onFetchGroupsCompleted');
     GroupsActions.setGroups(items);
   },
 
-  onRemoveGroupsCompleted: function(payload) {
+  onRemoveGroupsCompleted(payload) {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onFetchGroupUsers: function() {
+  onFetchGroupUsers() {
     this.data.isLoading = false;
     this.trigger(this.data);
   }
-
 });
 
 module.exports = GroupsStore;
