@@ -1,24 +1,17 @@
-var React              = require('react'),
-    Router             = require('react-router'),
-    Reflux             = require('reflux'),
-    RouteHandler       = Router.RouteHandler,
+import React                                 from 'react';
+import Router                                from 'react-router';
+import SessionActions                        from '../apps/Session/SessionActions';
+import SessionStore                          from '../apps/Session/SessionStore';
+import mui                                   from 'material-ui';
+import {SyncanoTheme, SnackbarNotifications} from './../common';
 
-    SessionActions     = require('../apps/Session/SessionActions'),
-    SessionStore       = require('../apps/Session/SessionStore'),
-    RequestStore       = require('../common/Request/RequestStore'),
+let ThemeManager = new mui.Styles.ThemeManager();
 
-    mui                = require('material-ui'),
-    ThemeManager       = new mui.Styles.ThemeManager(),
-    Snackbar           = mui.Snackbar,
-    SyncanoTheme       = require('./../common/SyncanoTheme');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'App',
 
   mixins: [
-    Reflux.connect(RequestStore),
     Router.State
   ],
 
@@ -30,55 +23,30 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  getChildContext: function(){
+  getChildContext(){
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  getInitialState: function() {
-    return {
-      showErrorSnackbar: false
-    };
-  },
-
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     if (this.getParams().instanceName === undefined) {
       SessionStore.removeInstance();
     }
-
-    if (this.state.showErrorSnackbar !== nextState.showErrorSnackbar) {
-      if (nextState.showErrorSnackbar === true) {
-        this.refs.errorSnackbar.show();
-      } else {
-        this.refs.errorSnackbar.dismiss();
-      }
-    }
-
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 
-  handleActionTouchTap: function () {
-    // Reloads current page without cache
-    location.reload(true);
-  },
-
-  render: function(){
+  render(){
     return (
       <div>
-        <RouteHandler/>
-        <Snackbar
-          ref              = "errorSnackbar"
-          message          = "Something went wrong"
-          action           = "refresh"
-          onActionTouchTap = {this.handleActionTouchTap} />
+        <Router.RouteHandler/>
+        <SnackbarNotifications />
       </div>
     );
   }
-
 });
