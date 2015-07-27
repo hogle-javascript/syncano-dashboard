@@ -22,7 +22,7 @@ var instancesCommands = {
       .click(button);
   },
   isModalClosed: function(element) {
-    return this.waitForElementNotVisible(element, 5000);
+    return this.waitForElementNotVisible(element, 15000);
   },
 };
 
@@ -49,11 +49,11 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: '//div[@id="instances"]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[2]',
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//span[contains(@class,"synicon")',
+      selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
       locateStrategy: 'xpath'
     },
     editButton: {
@@ -63,7 +63,7 @@ module.exports = {
       selector: '.synicon-delete'
     },
     instancesTableRowDescription: {
-      selector: '//div[@class="col-flex-1"]',
+      selector: '//div[@class="instances-list-container"]/div[2]/*',
       locateStrategy: 'xpath'
     },
     addInstanceModalTitle: {
