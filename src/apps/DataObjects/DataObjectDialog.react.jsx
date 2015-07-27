@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   validatorConstraints() {
-    var validateObj = {};
+    let validateObj = {};
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
       if (item.type === 'integer') {
         validateObj[item.name] = {numericality: true}
@@ -79,7 +79,7 @@ export default React.createClass({
           params[item.name] = dateTime.toISOString();
         }
         else {
-          var fieldValue = this.refs['field-' + item.name].getValue();
+          let fieldValue = this.refs['field-' + item.name].getValue();
           if (fieldValue) {
             params[item.name] = fieldValue;
           }
@@ -102,7 +102,7 @@ export default React.createClass({
   },
 
   getFileFields() {
-    var fileFields = [];
+    let fileFields = [];
 
     // Searching for files
     DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
@@ -136,7 +136,7 @@ export default React.createClass({
   },
 
   renderBuiltinFields() {
-    var permissions = [
+    let permissions = [
       {
         text    : 'none',
         payload : 'none'
@@ -158,7 +158,7 @@ export default React.createClass({
     let renderChannelFields = function() {
       if (this.hasEditMode()) {
         return (
-          <div>
+          <div key="edit-fields">
             <MUI.TextField
               ref               = 'field-channel'
               name              = 'field-channel'
@@ -177,7 +177,7 @@ export default React.createClass({
         )
       }
       return (
-        <div>
+        <div key="add-fields">
           <MUI.SelectField
             ref               = 'field-channel'
             name              = 'field-channel'
@@ -272,7 +272,7 @@ export default React.createClass({
   },
 
   onDrop(fieldName, files) {
-    var state = {};
+    let state = {};
     state[fieldName] = files[0];
     this.setState(state);
   },
@@ -283,13 +283,13 @@ export default React.createClass({
   },
 
   handleRemoveFile(name) {
-    var state = {};
+    let state = {};
     state[name] = null;
     this.setState(state);
   },
 
   renderDropZone(item) {
-    var dropZoneStyle = {
+    let dropZoneStyle = {
       height      : 80,
       width       : 250,
       borderStyle : 'dashed',
@@ -298,14 +298,16 @@ export default React.createClass({
       color       : 'grey'
     };
 
-    var file        = this.state['file-' + item.name],
-        description = file ? file.name : null;
+    let file        = this.state['file-' + item.name];
+    let description = file ? file.name : null;
 
     if (description) {
       description = description + ' (' + file.size + ' bytes)'
     }
     return (
-      <div style={{marginTop: 25}}>
+      <div
+        key   = {'dropzone-' + item.name}
+        style = {{marginTop: 25}}>
         <div style={{marginBottom: 10, color: 'grey'}}>{item.name + ' (file)'}</div>
         <Dropzone
           ref    = {'file-' + item.name}
@@ -328,6 +330,7 @@ export default React.createClass({
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField
+              key               = {'field-' + item.name}
               ref               = {'field-' + item.name}
               name              = {item.name}
               valueLink         = {this.linkState(item.name)}
@@ -343,11 +346,11 @@ export default React.createClass({
 
         if (item.type === 'datetime') {
 
-          let value = this.state[item.name] ? new Date(this.state[item.name].value) : null;
+          let value      = this.state[item.name] ? new Date(this.state[item.name].value) : null;
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
-            <div>
+            <div key={'field-' + item.name}>
               <div className="row" style={labelStyle}>
                 <div>{item.name} (datetime)</div>
               </div>
@@ -374,27 +377,29 @@ export default React.createClass({
 
           if (this.hasEditMode()) {
             if (this.state[item.name]) {
-              var url = this.state[item.name].value;
-              return [
-                <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>,
-                <div className='row' style={{marginTop: 15}}>
-                  <div className='col-xs-8'>
-                    <MUI.IconButton
-                     iconClassName = "synicon-download"
-                     onClick       = {this.handleFileOnClick.bind(this, url)}
-                     tooltip       = {url}
-                    />
-                  </div>
-                  <div className='col-flex-1'>
-                    <MUI.FlatButton
-                      style     = {{marginTop: 5}}
-                      label     = 'Remove'
-                      secondary = {true}
-                      onClick   = {this.handleRemoveFile.bind(this, item.name)}
-                    />
+              let url = this.state[item.name].value;
+              return (
+                <div key={'file-' + item.name}>
+                  <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>
+                  <div className='row' style={{marginTop: 15}}>
+                    <div className='col-xs-8'>
+                      <MUI.IconButton
+                       iconClassName = "synicon-download"
+                       onClick       = {this.handleFileOnClick.bind(this, url)}
+                       tooltip       = {url}
+                      />
+                    </div>
+                    <div className='col-flex-1'>
+                      <MUI.FlatButton
+                        style     = {{marginTop: 5}}
+                        label     = 'Remove'
+                        secondary = {true}
+                        onClick   = {this.handleRemoveFile.bind(this, item.name)}
+                      />
+                    </div>
                   </div>
                 </div>
-              ]
+              )
             }
           }
           return this.renderDropZone(item);
@@ -402,6 +407,7 @@ export default React.createClass({
 
         return (
           <MUI.TextField
+            key               = {'field-' + item.name}
             ref               = {'field-' + item.name}
             name              = {item.name}
             fullWidth         = {true}
@@ -416,22 +422,22 @@ export default React.createClass({
   },
 
   render() {
-    var editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')',
-        addTitle    = 'Add Data Object',
-        title       = this.hasEditMode() ? editTitle : addTitle,
-        submitLabel = 'Confirm',
-        dialogStandardActions = [
-          {
-            ref        : 'cancel',
-            text       : 'Cancel',
-            onTouchTap : this.handleCancel
-          },
-          {
-            ref        : 'submit',
-            text       : {submitLabel},
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
+    let addTitle    = 'Add Data Object';
+    let title       = this.hasEditMode() ? editTitle : addTitle;
+    let submitLabel = 'Confirm';
+    let dialogStandardActions = [
+      {
+        ref        : 'cancel',
+        text       : 'Cancel',
+        onTouchTap : this.handleCancel
+      },
+      {
+        ref        : 'submit',
+        text       : {submitLabel},
+        onTouchTap : this.handleFormValidation
+      }
+    ];
 
     return (
       <MUI.Dialog

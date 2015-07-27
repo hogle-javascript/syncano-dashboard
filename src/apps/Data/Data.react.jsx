@@ -67,6 +67,7 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key   : 'removeWebhookDialog',
           ref   : 'removeWebhookDialog',
           title : 'Delete Webhook',
           actions: [
@@ -84,6 +85,7 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key:    'removeDataViewDialog',
           ref:    'removeDataViewDialog',
           title:  'Delete DataView',
           actions: [
