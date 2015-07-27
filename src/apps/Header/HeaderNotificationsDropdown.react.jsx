@@ -48,11 +48,10 @@ export default Radium(React.createClass({
     event.stopPropagation();
   },
 
-  handleResendEmail(event) {
+  handleResendEmail() {
     console.info("Header::handleResendEmail");
     AuthActions.resendActivationEmail(this.state.user.email);
     this.refs.snackbar.show();
-    event.preventDefault();
   },
 
   getStyles() {
@@ -201,10 +200,6 @@ export default Radium(React.createClass({
         />
       </div>
     )
-  },
-
-  test() {
-    console.error("XXX")
   },
 
   render() {
