@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
   propTypes: {
     disabled : React.PropTypes.bool,
-    columns  : React.PropTypes.object
+    columns  : React.PropTypes.array
   },
 
   getInitialState: function() {
@@ -37,15 +37,20 @@ module.exports = React.createClass({
 
   renderMenuItems: function() {
     return this.state.columns.map(function(column) {
+      let checkbox = (
+        <Checkbox
+          checked = {column.checked}
+          onCheck = {this.handleClick.bind(null, column.id)}
+        />
+      );
+
       return (
         <ListItem
+          key           = {column.id}
           id            = {column.id}
           primaryText   = {column.name}
           secondaryText = {column.tooltip}
-          leftCheckbox  = {<Checkbox
-                             checked = {column.checked}
-                             onCheck = {this.handleClick.bind(null, column.id)}
-                           />}
+          leftCheckbox  = {checkbox}
         />
       )
     }.bind(this))
