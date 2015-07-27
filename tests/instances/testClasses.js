@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['instances'],
+  tags: ['classes'],
   before: function(client) {
     var loginPage = client.page.loginPage();
     loginPage.goToLoginPage();
@@ -12,41 +12,45 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'Test Add Instance' : function(client) {
+  'Test Add Class' : function(client) {
     var classesPage = client.page.classesPage();
     classesPage.navigate();
-    instancesPage.clickFAB();
-    instancesPage.fillInstanceName();
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
-    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(5000);
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
+    classesPage.clickFAB();
+    classesPage.selectFromDropdown('@createModalDropdown', '@createModalSchemaString');
+    classesPage.clickButton('@addButton');
 
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
+    classesPage.fillInputField('@createModalNameInput', 'className');
+    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description');
+
+    classesPage.expect.element('@addClassModalTitle').to.be.present.after(5000);
+    classesPage.clickButton('@confirmButton');
+    classesPage.isModalClosed('@addClassModalTitle');
+
+    classesPage.expect.element('@classesTableRow').to.be.present.after(5000);
+    classesPage.expect.element('@classesTableRow').to.contain.text('nightwatch_test_class_description');
 
   },
-  'Test Edit Instance' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@editButton');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@editInstanceModalTitle');
+  'Test Edit Class' : function(client) {
+    var classesPage = client.page.classesPage();
+    classesPage.clickSelectClass();
+    classesPage.clickButton('@editButton');
+    classesPage.fillClassDescription('nightwatch_test_instance_new_description');
+    classesPage.clickButton('@confirmButton');
+    classesPage.isModalClosed('@editClassModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
-    instancesPage.expect.element('@instancesTableRowDescription')
-    .to.contain.text('nightwatch_test_instance_new_description');
+    classesPage.expect.element('@classesTableRowDescription').to.be.present.after(5000);
+    classesPage.expect.element('@classesTableRowDescription')
+    .to.contain.text('nightwatch_test_class_new_description');
   },
-  'Test Delete Instance' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@deleteButton');
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+  'Test Delete Class' : function(client) {
+    var classesPage = client.page.classesPage();
+    classesPage.clickSelectClass();
+    classesPage.clickButton('@deleteButton');
+    classesPage.clickButton('@confirmDeleteButton');
+    classesPage.isModalClosed('@deleteClassModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
-    instancesPage.expect.element('@instancesTableRowDescription')
-    .to.not.contain.text('nightwatch_test_instance_description');
+    classesPage.expect.element('@classesTableRowDescription').to.be.present.after(5000);
+    classesPage.expect.element('@classesTableRowDescription')
+    .to.not.contain.text('nightwatch_test_class_description');
   }
 };
