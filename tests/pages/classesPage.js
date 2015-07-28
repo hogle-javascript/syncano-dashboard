@@ -97,15 +97,15 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addClassModalTitle: {
-      selector: '//h3[text()="Add Class"]',
+      selector: '//h3[text()="Add a Class"]',
       locateStrategy: 'xpath'
     },
     editClassModalTitle: {
-      selector: '//h3[text()="Update Class"]',
+      selector: '//h3[text()="Update a Class"]',
       locateStrategy: 'xpath'
     },
     deleteClassModalTitle: {
-      selector: '//h3[text()="Delete Class"]',
+      selector: '//h3[text()="Delete a Class"]',
       locateStrategy: 'xpath'
     }
   }

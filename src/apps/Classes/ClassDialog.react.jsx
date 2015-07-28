@@ -253,7 +253,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref             = 'dialog'
-        title           = {title + ' Class'}
+        title           = {title + ' a Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onDismiss       = {this.resetDialogState} >
