@@ -1,12 +1,6 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
-
-var SolutionVersionDialogActions = Reflux.createActions({
-
-  showDialog: {},
-  dismissDialog: {}
-
+export default CreateActions({}, {
+  showDialog         : {},
+  dismissDialog      : {},
 });
-
-module.exports = SolutionVersionDialogActions;
