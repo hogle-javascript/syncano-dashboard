@@ -6,14 +6,14 @@ let RequestStore = Reflux.createStore({
   listenables: RequestActions,
 
   onCompleted(event, method, url) {
-    this.addErrorSnackbar(event);
+    this.setErrorSnackbar(event);
   },
 
   onError(event, method, url) {
-    this.addErrorSnackbar(event);
+    this.setErrorSnackbar(event);
   },
 
-  addErrorSnackbar(event) {
+  setErrorSnackbar(event) {
     if (event.target.status >= 500 && event.target.status <= 599) {
       SnackbarNotificationActions.set({
         message: 'Something went wrong',
