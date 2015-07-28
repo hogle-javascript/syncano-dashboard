@@ -1,3 +1,3 @@
 import Reflux from 'reflux';
 
-export default Reflux.createActions(['add']);
+export default Reflux.createActions(['add', 'clear']);

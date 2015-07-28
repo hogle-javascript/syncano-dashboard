@@ -13,6 +13,7 @@ import CodeBoxStore from './CodeBoxStore';
 // Components
 import Common from '../../common';
 import Container from '../../common/Container';
+import SnackbarNotificationsActions from '../../common/SnackbarNotifications/SnackbarNotificationsActions';
 
 export default React.createClass({
 
@@ -57,7 +58,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
     CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
-    Common.SnackbarNotifications.Actions.add({
+    SnackbarNotificationsActions.add({
       message: 'Saving...'
     });
   },

@@ -6,20 +6,28 @@ import SnackbarNotificationsActions from './SnackbarNotificationsActions';
 export default Reflux.createStore({
   listenables: SnackbarNotificationsActions,
 
-  init() {
-    this.notifications = []
+  getInitialState() {
+    return {notifications: []};
   },
 
-  get() {
-    console.log('SnackbarNotificationsStore::get');
-    return _.remove(this.notifications, n => true);
-  },
-
-  add(snackbar) {
+  add(...snackbars) {
     console.log('SnackbarNotificationsStore::add');
-    snackbar.openOnMount = snackbar.openOnMount || true;
-    this.notifications.push(snackbar);
-    this.trigger({});
+
+    _.forEach(snackbars, snackbar => {
+      let key                   = `notification-${Date.now()}`;
+      snackbar.ref              = snackbar.ref              || key;
+      snackbar.key              = snackbar.key              || key;
+      snackbar.openOnMount      = snackbar.openOnMount      || true;
+      snackbar.action           = snackbar.action           || 'dismiss';
+      snackbar.onActionTouchTap = snackbar.onActionTouchTap || function(ref) { this.refs[ref].dismiss(); };
+    });
+
+    this.trigger({notifications: snackbars});
+  },
+
+  clear() {
+    console.log('SnackbarNotificationsStore::clear');
+    this.trigger({notifications: []});
   }
 
 });

@@ -13,23 +13,17 @@ export default React.createClass({
 
   renderNotification(notification, index) {
     return <MUI.Snackbar
-              ref              = {`notification-${index}`}
-              key              = {`notification-${index}`}
+              ref              = {notification.ref}
+              key              = {notification.key}
               message          = {notification.message}
               action           = {notification.action}
               autoHideDuration = {notification.autoHideDuration}
-              onActionTouchTap = {notification.onActionTouchTap}
+              onActionTouchTap = {notification.onActionTouchTap.bind(this, notification.ref)}
               openOnMount      = {notification.openOnMount}
               style            = {notification.style} />;
   },
 
   render() {
-    let notifications = Store.get();
-
-    if (notifications.length === 0) {
-      return null;
-    }
-
-    return <div>{notifications.map(this.renderNotification)}</div>;
+    return <div>{this.state.notifications.map(this.renderNotification)}</div>;
   }
 });
