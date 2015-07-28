@@ -1,13 +1,11 @@
 var signupCommands = {
   clickSubmitButton: function() {
-    this.api.pause(1000);
-    return this.waitForElementVisible('@submitButton', 1000)
+    return this.waitForElementVisible('@submitButton')
       .click('@submitButton')
-      .waitForElementNotPresent('@submitButton', 5000);
+      .waitForElementNotPresent('@submitButton');
   },
   clickTermsOfUseLink: function() {
-    this.api.pause(1000);
-    return this.waitForElementVisible('@termsOfUseLink', 1000)
+    return this.waitForElementVisible('@termsOfUseLink')
       .click('@termsOfUseLink');
   }
 };
