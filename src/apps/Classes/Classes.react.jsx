@@ -66,7 +66,7 @@ export default React.createClass({
       params: {
         key   : 'deleteClassDialog',
         ref   : 'deleteClassDialog',
-        title : 'Delete an API Key',
+        title : 'Delete a Class',
         actions: [
           {
             text    : 'Cancel',
