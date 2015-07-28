@@ -3,52 +3,46 @@ import Reflux from 'reflux';
 
 import SolutionsListItem from './SolutionsListItem.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SolutionsList',
 
   getStyles() {
     return {
-      list: {
+      list : {
         listStyle    : 'none',
         margin       : '0 40px',
         padding      : 0
       },
-      listItem: {
+      listItem : {
         padding      : '0 15px',
         marginBottom : 40,
-        minWidth     : 346,
-        maxWidth     : 346
+        width        : 346
       }
     }
   },
 
   getListItems() {
-    let styles    = this.getStyles();
-    let listItems = this.props.items.map(item => {
+    return this.props.items.map(item => {
       return (
-        <li
-          key       = {item.id}
-          className = "col-flex-1"
-          style     = {styles.listItem}
+        <div
+          key   = {item.id}
+          style = {this.getStyles().listItem}
         >
           <SolutionsListItem data={item} />
-        </li>
-          )
+        </div>
+      )
     });
-    return listItems;
   },
 
   render() {
-    let styles = this.getStyles();
-
     return (
-      <ul
+      <div
         className = "row"
-        style     = {styles.list}
+        style     = {this.getStyles().list}
       >
         {this.getListItems()}
-      </ul>
+      </div>
     );
   }
 });

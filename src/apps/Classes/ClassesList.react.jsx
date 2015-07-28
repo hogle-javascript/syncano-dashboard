@@ -7,12 +7,16 @@ import HeaderMixin from '../Header/HeaderMixin';
 import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
+import ColorStore from '../../common/Color/ColorStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
 import ClassesStore from './ClassesStore';
 
+import MUI from 'material-ui';
 import Common from '../../common';
+
+let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
@@ -48,22 +52,27 @@ export default React.createClass({
         key          = {item.name}
         id           = {item.name}
         checked      = {item.checked}
-        handleClick  = {this.handleItemClick}
-      >
-        <Common.ColumnList.Column.CheckIcon
+        handleClick  = {this.handleItemClick} >
+        <Column.CheckIcon
           id              = {item.name.toString()}
-          icon            = {item.metadata.icon}
-          background      = {item.metadata.color}
+          icon            = {item.metadata ? item.metadata.icon : 'table-large'}
+          background      = {ColorStore.getColorByName(item.metadata ? item.metadata.color : 'blue')}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-        >
+          handleIconClick = {this.handleItemIconClick}>
           {item.name}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.ID className="col-xs-5 col-md-5">
+        </Column.CheckIcon>
+        <Column.Desc>{item.description}</Column.Desc>
+        <Column.ID className="col-xs-3 col-md-3">{item.group}</Column.ID>
+        <Column.Desc className="col-xs-5 col-md-5">
+          <div>
+            <div>group: {item.group_permissions}</div>
+            <div>other: {item.other_permissions}</div>
+          </div>
+        </Column.Desc>
+        <Column.ID className="col-xs-5 col-md-5">
           {item.objects_count}
-        </Common.ColumnList.Column.ID>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.ID>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
@@ -87,10 +96,12 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.ID.Header className="col-xs-5 col-md-5">Objects</Common.ColumnList.Column.ID.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.Desc.Header>Description</Column.Desc.Header>
+          <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
+          <Column.Desc.Header className="col-xs-5">Permissions</Column.Desc.Header>
+          <Column.ID.Header className="col-xs-5 col-md-5">Objects</Column.ID.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

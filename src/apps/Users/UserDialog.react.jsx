@@ -27,15 +27,31 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  validatorConstraints: {
-    username: {
-      presence: true
-    }
+  validatorConstraints() {
+    let addFormConstraints = {
+      username: {
+        presence: true
+      },
+      password: {
+        presence: true
+      }
+    };
+    let editFormmConstraints = {
+      username: {
+        presence: true
+      }
+    };
+
+    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
+  },
+
+  componentWillUnmount() {
+    GroupsStore.resetActiveGroup();
   },
 
   handleAddSubmit() {
     let activeGroup = GroupsStore.getActiveGroup(),
-        userGroups  = this.state.newUserGroups || [this.state.secondInstance] || [activeGroup];
+        userGroups  = this.state.newUserGroups || this.state.secondInstance || activeGroup;
 
     UsersActions.createUser(
       {
@@ -49,6 +65,8 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
+    let userGroups = this.getSelectValueSource().value;
+
     UsersActions.updateUser(
       this.state.id,
       {
@@ -57,7 +75,7 @@ export default React.createClass({
       },
       {
         groups    : this.state.groups,
-        newGroups : this.state.newUserGroups
+        newGroups : userGroups
       }
     );
   },
@@ -88,7 +106,7 @@ export default React.createClass({
     let title             = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel       = 'Confirm',
         selectValueSource = this.getSelectValueSource(),
-        selectValue       = selectValueSource ? selectValueSource.value : null,
+        selectValue       = '',
         allGroups         = GroupsStore.getGroups().map(function(group) {
                               group.value = group.id + '';
                               return group;
@@ -106,13 +124,18 @@ export default React.createClass({
           }
         ];
 
+    if (selectValueSource && _.isArray(selectValueSource.value)) {
+      selectValue = selectValueSource.value.map(value => value.id).join(',');
+    } else if (selectValueSource && selectValueSource.value) {
+      selectValue = selectValueSource.value;
+    }
+
     return (
       <Common.Dialog
         ref       = 'dialog'
         title     = {title + ' User'}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}
-        style     = {{overflow: 'auto'}}
       >
         <div>
           {this.renderFormNotifications()}

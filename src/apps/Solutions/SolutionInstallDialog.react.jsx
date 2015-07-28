@@ -30,6 +30,9 @@ export default React.createClass({
   ],
 
   validatorConstraints: {
+    instance: {
+      presence: true
+    },
     version: {
       presence: true
     }
@@ -76,7 +79,16 @@ export default React.createClass({
     }
 
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
-      return;
+      return (
+        <MUI.TextField
+            ref               = "instance"
+            name              = "instance"
+            fullWidth         = {true}
+            disabled          = {true}
+            valueLink         = {this.linkState('instance')}
+            errorText         = {this.getValidationMessages('instance').join(' ')}
+            floatingLabelText = "Instance Name" />
+      )
     }
 
     return (

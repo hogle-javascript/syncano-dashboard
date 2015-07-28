@@ -1,14 +1,21 @@
-var React            = require('react'),
-    Radium           = require('radium'),
-    MUI              = require('material-ui'),
+import React from 'react';
+import Radium from 'radium';
+import MUI from 'material-ui';
 
-    SolutionsActions = require('../../apps/Solutions/SolutionsActions');
+import SolutionsActions from '../../apps/Solutions/SolutionsActions';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'SolutionStar',
 
-  getStyles: function() {
+  getInitialState() {
+    return {
+      starred_by_me : this.props.solution.starred_by_me || false,
+      stars_count   : this.props.solution.stars_count || 0,
+    };
+  },
+
+  getStyles() {
     return {
       container: {
         display    : '-webkit-flex; display: flex',
@@ -27,20 +34,26 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  isStarred: function() {
-    return this.props.solution.starred_by_me;
+  isStarred() {
+    return this.state.starred_by_me;
   },
 
-  handleIconClick: function(solutionId) {
-    var isStarred = this.isStarred();
+  handleIconClick(solutionId) {
+    let isStarred = this.isStarred();
+
+    this.setState({
+      starred_by_me : !this.state.starred_by_me,
+      stars_count   : isStarred ? this.state.stars_count - 1 : this.state.stars_count + 1
+    });
+
     return isStarred ? SolutionsActions.unstarSolution(solutionId) : SolutionsActions.starSolution(solutionId);
   },
 
-  render: function() {
-    var styles        = this.getStyles(),
-        isStarred     = this.isStarred(),
-        iconStyle     = isStarred ? styles.starred : styles.icon,
-        iconClassName = isStarred ? 'synicon-star' : 'synicon-star-outline';
+  render() {
+    let styles        = this.getStyles();
+    let isStarred     = this.isStarred();
+    let iconStyle     = isStarred ? styles.starred : styles.icon;
+    let iconClassName = isStarred ? 'synicon-star' : 'synicon-star-outline';
 
     return (
       <div style={styles.container}>
@@ -50,7 +63,7 @@ module.exports = Radium(React.createClass({
           iconStyle     = {iconStyle}
         />
         <div style={styles.starsCount}>
-          {this.props.solution.stars_count.toString()}
+          {this.state.stars_count.toString()}
         </div>
       </div>
     )

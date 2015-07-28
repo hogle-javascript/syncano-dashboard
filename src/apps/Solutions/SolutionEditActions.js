@@ -1,11 +1,6 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
-
-var SolutionEditActions = Reflux.createActions({
-  //checkItem: {},
-  //uncheckAll: {},
-
+export default CreateActions({
   showDialog    : {},
   dismissDialog : {},
 
@@ -13,99 +8,49 @@ var SolutionEditActions = Reflux.createActions({
   setSolution: {},
   setSolutionVersions : {},
 
-  fetchSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.get'
   },
-
-  fetchSolutionVersions: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchSolutionVersions : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.listVersions'
   },
-
-  createVersion: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  fetchSolutions : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.list'
   },
-
-  installSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  createSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.create'
   },
-
-  removeSolution: {
-    asyncResult: true,
-    children: ['completed', 'failure']
+  installSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.install'
   },
-
-  //starSolution: {
-  //  asyncResult: true,
-  //  children: ['completed', 'failure']
-  //},
-  //
-  //unstarSolution: {
-  //  asyncResult: true,
-  //  children: ['completed', 'failure']
-  //}
-
+  createVersion : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.createVersion'
+  },
+  removeSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.remove'
+  },
+  starSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.star'
+  },
+  unstarSolution: {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.unstar'
+  },
 });
-
-SolutionEditActions.fetchSolution.listen(function(solutionId) {
-  console.info('SolutionsActions::fetchSolutions');
-  Connection
-    .Solutions
-    .get(solutionId)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionEditActions.fetchSolutionVersions.listen(function(solutionId) {
-  console.info('SolutionsActions::fetchSolutions');
-  Connection
-    .Solutions
-    .listVersions(solutionId)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionEditActions.createVersion.listen(function(solutionId, payload) {
-  console.info('SolutionsActions::createSolution');
-  Connection
-    .Solutions
-    .createVersion(solutionId, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionEditActions.installSolution.listen(function(payload) {
-  console.info('SolutionsActions::installSolution');
-  Connection
-    .Solutions
-    .install(
-      payload.solutionId,
-      payload.versionId,
-      payload.instanceName
-    )
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SolutionEditActions.removeSolution.listen(function(solutionId) {
-  console.info('SolutionsActions::createSolution');
-  Connection
-    .Solutions
-    .remove(solutionId)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-//SolutionsActions.unstarSolution.listen(function(id) {
-//  console.info('SolutionsActions::unstarSolutions');
-//  Connection
-//    .Solutions
-//    .unstar(id)
-//    .then(this.completed)
-//    .catch(this.failure);
-//});
-
-module.exports = SolutionEditActions;

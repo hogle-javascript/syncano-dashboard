@@ -12,6 +12,18 @@ export default CreateActions(
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.getProfile'
     },
+    updateBillingProfile: {
+      asyncResult : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.updateProfile'
+    },
+    cancelNewPlan: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Billing.cancelNewPlan'
+    },
     fetchBillingUsage: {
       asyncResult : true,
       asyncForm   : true,

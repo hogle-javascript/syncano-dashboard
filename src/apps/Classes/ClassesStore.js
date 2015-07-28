@@ -116,8 +116,8 @@ var ClassesStore = Reflux.createStore({
       }
     }
     return {
-      color : singleItem.metadata.color,
-      icon  : singleItem.metadata.icon
+      color : singleItem.metadata ? singleItem.metadata.color : 'blue',
+      icon  : singleItem.metadata ? singleItem.metadata.icon : 'table-large'
     };
   },
 

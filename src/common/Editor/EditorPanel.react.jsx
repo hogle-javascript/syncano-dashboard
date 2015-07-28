@@ -1,18 +1,13 @@
-var React          = require('react'),
-    Radium         = require('radium'),
-    classNames     = require('classnames'),
+import React from 'react';
+import Radium from 'radium';
+import classNames from 'classnames';
 
-    mui            = require('material-ui'),
-    FontIcon       = mui.FontIcon,
-    TextField      = mui.TextField,
-    Paper          = mui.Paper,
-    FontIcon       = mui.FontIcon,
-    LinearProgress = mui.LinearProgress;
+import MUI from 'material-ui';
+import Loading from '../../common/Loading';
 
 require('./Editor.css');
 
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
@@ -22,106 +17,75 @@ module.exports = Radium(React.createClass({
 
   propTypes: {
     trace: React.PropTypes.string,
-    buttons: React.PropTypes.array,
-    payload: React.PropTypes.shape({
-      value: React.PropTypes.string,
-      requestChange: React.PropTypes.func.isRequired
-    }),
-    loading: React.PropTypes.shape({
-      value: React.PropTypes.bool,
-      requestChange: React.PropTypes.func.isRequired
-    })
+    loading: React.PropTypes.bool
   },
 
-  getInitialState: function () {
+  getStyles() {
     return {
-      panelCollapsed: true,
-      trace: this.props.trace,
-      loading: this.props.loading
+      payloadStyle: {
+        display         : 'flex',
+        flexDirection   : 'column',
+        padding         : '0px 10px 0px 10px',
+        backgroundColor : '#F1F1F1'
+      },
+      trace: {
+        backgroundColor : '#4C4A43',
+        color           : 'white',
+        height          : '200px',
+        padding         : 10
+      }
     }
   },
 
-  getDefaultProps: function() {
+  getInitialState() {
     return {
-      loading: {
-        value: "",
-        requestChange: function() {}
-      }
-    };
+      panelCollapsed: true
+    }
   },
 
-  componentWillReceiveProps: function(nextProps, nextState) {
-    this.setState(nextProps);
-  },
-
-  handleToggleClick: function () {
+  handleToggleClick() {
     this.setState({
       panelCollapsed: !this.state.panelCollapsed
     });
   },
 
-  getProgressBar: function () {
-    if (this.state.loading.value) {
-      return (<LinearProgress mode="indeterminate" />);
-    }
-  },
-
-  getPayloadValue: function() {
-    return this.state.payload;
-  },
-
-  render: function () {
-    var cssClasses = classNames('editor-panel', {
-          'editor-panel-collapsed': this.state.panelCollapsed
-        }),
-        payloadStyle = {
-          display         : 'flex',
-          flexDirection   : 'column',
-          padding         : '0px 10px 0px 10px',
-          backgroundColor : '#F1F1F1'
-        },
-        progressBar = this.getProgressBar(),
+  render() {
+    let styles = this.getStyles(),
         unfoldIcon  = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
         trace;
 
     if (this.state.panelCollapsed) {
       trace = (
-        <Paper
+        <MUI.Paper
           ref     = "trace"
           rounded = {false}
           zDepth  = {1}
-          style   = {{
-            backgroundColor : '#4C4A43',
-            color           : 'white',
-            height          : '200px'
-          }}>
+          style   = {styles.trace}>
           {this.props.trace}
-        </Paper>
+        </MUI.Paper>
       );
     }
 
     return (
-      <Paper
-        zDepth = {1}
-        style  = {{'background-color': '#F1F1F1'}}>
-        <Paper
+      <MUI.Paper zDepth = {1}>
+        <MUI.Paper
           zDepth = {1}
-          style  = {payloadStyle}>
-          <TextField
+          style  = {styles.payloadStyle}>
+          <MUI.TextField
             ref               = "payloadField"
-            valueLink         = {this.props.payload}
+            defaultValue      = '{"abc": 123}'
             fullWidth         = {true}
             hintText          = 'Type in your payload here e.g. {"my_argument": "test123}'
             floatingLabelText = "Payload" />
             <div
               className="editor-toolbar-unfold-button"
               onClick={this.handleToggleClick}>
-              <FontIcon className={unfoldIcon}/>
+              <MUI.FontIcon className={unfoldIcon}/>
             </div>
-        </Paper>
-        {progressBar}
+        </MUI.Paper>
+        <Loading show={this.props.loading} type='linear' />
         {trace}
-      </Paper>
+      </MUI.Paper>
     );
   }
 

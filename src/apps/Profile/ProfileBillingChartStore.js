@@ -20,19 +20,90 @@ export default Reflux.createStore({
   },
 
   getInitialState() {
+    let today    = this.getToday();
+    let allDates = this.getAllDates();
+    let x        = ['x'].concat(allDates);
+
     return {
       isLoading: true,
-      x: {
-        values: [],
-        min: null,
-        max: null
+      chart: {
+        data: {
+          x: 'x',
+          columns: [x],
+          types: {},
+          groups: [[]],
+          colors: {
+            api: '#77D8F6',
+            cbx: '#FFD78E'
+          }
+        },
+        point: {
+          show: false
+        },
+        axis: {
+          x : {
+            label : 'Day of the month',
+            type  : 'timeseries',
+            tick : {
+              fit    : true,
+              format : '%b %d'
+            }
+          },
+          y: {
+            label: 'Cost ($)',
+            type  : 'indexed',
+            tick : {
+              format : function(x) { return x / 2 ? x : null  },
+              fit    : true,
+            },
+            show: true
+          }
+        },
+        grid: {
+          x: {
+            lines: [
+              {value: today, text: 'Today', position: 'start'}
+            ]
+          },
+          y: {lines: []}
+        },
+        tooltip: {
+          format: {
+            title: d => {
+              let title = moment(d).format('MMM DD');
+              let date  = moment(d).format(this.format);
+              if (date > today) {
+                title = `Prediction for ${title}`;
+              }
+              return title;
+            },
+            name: name => {
+              return {api: 'API calls', cbx: 'CodeBox runs'}[name];
+            },
+            value: value => d3.format('$')(_.round(value, 5))
+          }
+        },
+        regions: [{
+          start: today,
+          end: _.last(allDates),
+          class: 'predictions'
+        }],
+        legend: {show: false}
       },
-      'y': {
-        values: [],
-        min: 0,
-        max: null
+      profile: {
+        subscription: {}
+      },
+      overage: {
+        api: 0,
+        cbx: 0,
+        amount: 0
+      },
+      covered: {
+        api: 0,
+        cbx: 0,
+        amount: 0
       }
-    }
+    };
   },
 
   prepareChartData(user, profile, usage) {
@@ -41,23 +112,15 @@ export default Reflux.createStore({
     usage   = _.first(usage);
 
     let state       = this.getInitialState();
-    state.isLoading = false;
-    state.x.values  = this.getAllDates();
-    state.x.min     = state.x.values[0];
-    state.x.max     = _.last(state.x.values);
 
-    if (_.isEmpty(usage.objects)) {
-      this.trigger(state);
-      return;
-    }
+    state.isLoading = false;
+    state.profile   = profile;
 
     let subscription = profile.subscription || {};
+    let plan         = subscription.plan || {};
     let pricing      = subscription.pricing;
-    let max          = '1970-01-01';
-    let objects      = {
-      api: {},
-      cbx: {}
-    };
+    let usageAmount  = {'api': 0, 'cbx': 0};
+    let columns      = {'api': {}, 'cbx': {}};
 
     if (_.isEmpty(pricing)) {
       // $5.25
@@ -67,131 +130,99 @@ export default Reflux.createStore({
       };
     }
 
-    let pricingMax = _.sum(pricing, v => v.included * v.overage);
-
-    // Genrrate placeholder for predictions based on objects
-    let predictions = _.reduce(objects, (result, v, k) => {
-      result[k] = {};
-      return result;
-    }, {});
-
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
     _.forEach(usage.objects, usage => {
-      if (objects[usage.source] === undefined) {
+      if (columns[usage.source] === undefined) {
         return;
       }
 
-      objects[usage.source][usage.date] = pricing[usage.source].overage * usage.value;
-      if (max < usage.date) {
-        max = usage.date;
-      }
+      let amount = pricing[usage.source].overage * usage.value;
+      columns[usage.source][usage.date] = amount;
+      usage[usage.source] += amount;
     });
 
-    // Fill blanks in objects and predictions
-    this.fillBlanks(objects, predictions, max);
+    this.fillBlanks(columns);
+    this.objectToArray(columns);
 
-    // Map nested objects back to arrays in proper order
-    this.nestedObjectToArray(objects);
-    this.nestedObjectToArray(predictions);
-
-    // Sum objects
-    this.sumAncestors(objects);
-
-    _.forEach(objects, (v, source) => {
-      predictions[source].unshift(_.last(v));
+    _.forEach(columns, (values, name) => {
+      state.chart.data.columns.push([name].concat(values));
+      state.chart.data.groups[0].push(name);
+      state.chart.data.types[name] = 'area';
     });
 
-    this.sumAncestors(predictions);
+    state.covered  = _.reduce(pricing, (r, v, k) => {
+      let amount  = v.included * v.overage;
+      r.amount += amount;
+      r[k] = _.extend({}, v, {amount: amount});
+      return r;
+    }, {amount: 0});
 
-    // Sum all results
-    this.sumArrays(objects);
-    this.sumArrays(predictions);
-
-    let findYMaxIn  = (!_.isEmpty(predictions)) ? predictions : objects;
-    let yMax        = _.max(_.map(findYMaxIn, value => _.max(value, 'value').value));
-    state.y.min     = 0;
-    state.y.max     = _.ceil((yMax < pricingMax) ? pricingMax : yMax);
-
-    _.forEach([objects, predictions], (elements, index) => {
-      let keys   = _.keys(elements).reverse();
-      let suffix = (index > 0) ? '-predictions' : '';
-
-      _.forEach(keys, key => {
-        state.y.values.push({
-          source: key + suffix,
-          values: elements[key]
-        });
-      });
+    state.covered.amount = _.round(state.covered.amount, 0);
+    state.chart.grid.y.lines.push({
+      value: state.covered.amount,
+      text: 'Covered by plan',
+      position: 'middle'
     });
 
-    if (!_.isEmpty(predictions)) {
-      state.y.values.unshift({
-        source: 'predictions-bg',
-        values: _.map(predictions.api, prediction => {
-          return {
-            date: prediction.date,
-            value: yMax
-          };
-        })
-      });
+    // state.chart.regions.push({
+    //   axis: 'y',
+    //   start: 0,
+    //   end: state.covered.amount,
+    //   class: 'covered'
+    // });
+
+    state.overage = _.reduce(pricing, (r, v, k) => {
+      let covered     = state.covered[k];
+      let amount   = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
+      let included = _.round(amount / v.overage);
+
+      r.amount += amount;
+      r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
+      return r;
+    }, {amount: 0});
+
+    if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 &&  _.last(state.chart.data.columns[2]) < 6) {
+      state.chart.axis.y.max = state.covered.amount + (0.1 * state.covered.amount);
     }
 
-    state.y.values.push({
-      source: 'pricing-max',
-      values: _.map(state.x.values, date => {
-        return {
-          date: date,
-          value: pricingMax
-        };
-      })
-    });
+    if (plan == 'builder' && _.last(state.chart.data.columns[1]) < 0.5 &&  _.last(state.chart.data.columns[2]) < 0.5) {
+      state.chart.axis.y.max = 0.5;
+    }
 
     this.trigger(state);
   },
 
-  sumArrays(elements) {
-    let keys = _.keys(elements).sort();
-    _.forEach(keys, (key, index) => {
-      if (index === 0) {
-        return;
-      }
-
-      elements[key] = _.zipWith(elements[keys[index - 1]], elements[key], (v1, v2) => {
-        v2.value += v1.value;
-        return v2;
-      });
-    });
-
-  },
-
-  fillBlanks(objects, predictions, max) {
+  fillBlanks(columns) {
     // We need to calculate median for predictions
-    let medians = _.reduce(objects, (result, v, k) => {
+    let today   = this.getToday();
+    let medians = _.reduce(columns, (result, v, k) => {
       result[k] = _.round(d3.median(_.values(v)) || 0);
       return result;
     }, {});
 
     _.forEach(this.getAllDates(), date => {
-      _.forEach(objects, (v, source) => {
-        if (date <= max) {
-          if (objects[source][date] === undefined) {
-            objects[source][date] = 0;
-          }
-
-        } else {
-          predictions[source][date] = medians[source];
+      _.forEach(columns, (v, source) => {
+        if (columns[source][date] === undefined) {
+          columns[source][date] = 0;
         }
+
+        if (date > today) {
+          columns[source][date] += medians[source];
+        }
+
       });
     });
 
   },
 
-  nestedObjectToArray(elements) {
+  objectToArray(elements) {
     _.forEach(elements, (v, k) => {
       let keys = _.keys(v).sort();
-      elements[k] = _.map(keys, key => {
-        return {date: key, value: v[key]};
-      })
+      elements[k] = _.reduce(keys, (r, key, index) => {
+        let prev = (index > 0) ? r[index - 1] : 0;
+        r.push(v[key] + prev);
+        return r;
+      }, []);
     });
   },
 
@@ -210,6 +241,10 @@ export default Reflux.createStore({
     today.year  = today.getFullYear();
     today.month = today.getMonth();
     return today;
+  },
+
+  getToday() {
+    return moment(this.getDate()).format(this.format);
   },
 
   getAllDates() {

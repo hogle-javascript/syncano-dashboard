@@ -1,24 +1,21 @@
-var React      = require('react'),
-    Moment = require('moment'),
+import React from 'react';
+import Moment from 'moment';
+import MUI from 'material-ui';
 
-    mui        = require('material-ui'),
-    IconButton = mui.IconButton,
-    FlatButton = mui.FlatButton;
+export default {
 
-var DataObjectsRenderer = {
-
-  columnsRenderers: function() {
+  columnsRenderers() {
     return {
       'created_at' : this.renderColumnDate
     }
   },
 
-  getColumnRenderer: function(column) {
+  getColumnRenderer(column) {
     return this.columnsRenderers()[column];
   },
 
   // Columns renderers
-  renderColumnDate: function(value) {
+  renderColumnDate(value) {
     if (!value) {
       return '';
     }
@@ -30,27 +27,27 @@ var DataObjectsRenderer = {
     )
   },
 
-  renderReference: function(obj) {
+  renderReference(obj) {
     return (
         <div>{obj.target + ': ' + obj.value}</div>
     )
   },
 
-  handleFileOnClick: function(value, event) {
+  handleFileOnClick(value, event) {
     event.stopPropagation();
     window.open(value, '_blank')
   },
 
-  renderFile: function(obj) {
+  renderFile(obj) {
     return (
-        <IconButton
+        <MUI.IconButton
           iconClassName = "synicon-download"
           onClick       = {this.handleFileOnClick.bind(this, obj.value)} />
     )
   },
 
   // Header
-  renderTableHeader: function(classObj, columns) {
+  renderTableHeader(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
 
     var header = {};
@@ -68,37 +65,43 @@ var DataObjectsRenderer = {
   },
 
   // Table Body
-  renderTableData: function(items, columns) {
+  renderTableData(items, columns) {
 
-    var tableItems = [];
+    let tableItems = [];
 
     items.map(function(item) {
-      var row = {};
+      let row = {};
 
       columns.map(function(column) {
 
-        var value    = item[column.id] ? item[column.id] : '',
-            renderer = this.getColumnRenderer(column.id);
+        let value    = item[column.id];
+        let renderer = this.getColumnRenderer(column.id);
 
-        if (typeof value === 'object') {
+        if (value && typeof value === 'object') {
 
           if (value.type === 'reference') {
-            value = this.renderReference(item[column.id]);
+            value = this.renderReference(value);
           }
           if (value.type === 'file') {
-            value = this.renderFile(item[column.id]);
+            value = this.renderFile(value);
+          }
+          if (value.type === 'datetime') {
+            value = this.renderColumnDate(value.value);
           }
 
-        } else if (typeof value === 'string' || typeof item[column.id] === 'number') {
-
+        } else {
           // Simple string or renderer
           if (renderer) {
             value = renderer(item[column.id])
           }
         }
 
+        if (typeof value === 'boolean' || typeof value === 'number') {
+          value = value !== null ? value.toString() : value;
+        }
+
         row[column.id] = {
-          content: value,
+          content: <div>{value}</div>,
           style: { width: column.width }
         }
       }.bind(this));
@@ -111,5 +114,3 @@ var DataObjectsRenderer = {
   }
 
 };
-
-module.exports = DataObjectsRenderer;

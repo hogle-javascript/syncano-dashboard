@@ -4,13 +4,8 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import DataViewsActions from './DataViewsActions';
-import DataViewsStore from './DataViewsStore';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components 
 import MUI from 'material-ui';
@@ -60,7 +55,6 @@ export default React.createClass({
         >
           {item.name}
         </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
         <Common.ColumnList.Column.Desc className="col-xs-8">{item.description}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Desc>{item.class}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at} />
@@ -89,7 +83,6 @@ export default React.createClass({
       <Common.Lists.Container>
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.ID.Header>ID</Common.ColumnList.Column.ID.Header>
           <Common.ColumnList.Column.Desc.Header className="col-xs-8">Description</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.Desc.Header>Class</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>

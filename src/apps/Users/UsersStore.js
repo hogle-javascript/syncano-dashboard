@@ -1,32 +1,31 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
-    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions      = require('../Session/SessionActions'),
-    UsersActions        = require('./UsersActions'),
-    GroupsActions       = require('./GroupsActions'),
-    GroupsStore         = require('./GroupsStore');
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import UsersActions from './UsersActions';
+import GroupsActions from './GroupsActions';
+import GroupsStore from './GroupsStore';
 
-var UsersStore = Reflux.createStore({
+let UsersStore = Reflux.createStore({
   listenables : [UsersActions, GroupsActions],
+
   mixins      : [
-    CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreLoading,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items: [],
       isLoading: true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -37,63 +36,65 @@ var UsersStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function() {
-    var activeGroup = GroupsStore.getActiveGroup();
+  refreshData() {
+    let activeGroup = GroupsStore.getActiveGroup();
 
     if (activeGroup) {
       GroupsActions.fetchGroupUsers(activeGroup.id).then(function(payload) {
         UsersStore.setUsers(payload);
       });
     } else {
-      UsersActions.fetchUsers();
+      UsersActions.fetchUsers().then(function(payload) {
+        UsersStore.setUsers(payload);
+      });
     }
   },
 
-  setUsers: function(users) {
-    this.data.items = Object.keys(users).map(function(key) {
-      if (users[key].user) {
-        return users[key].user;
-      }
-      return users[key];
-    });
+  setUsers(users) {
+    let usersArray  = users._items ? users._items : users;
+
+    this.data.items = Object.keys(usersArray).map(key => usersArray[key].user ? usersArray[key].user : usersArray[key]);
     this.trigger(this.data);
   },
 
-  onFetchUsers: function(items) {
+  onFetchUsers() {
     console.debug('UsersStore::onFetchUsers');
-    this.trigger(this.data);
   },
 
-  onFetchUsersCompleted: function(users) {
+  onFetchUsersCompleted() {
     console.debug('UsersStore::onFetchUsersCompleted');
-    UsersActions.setUsers(users);
   },
 
-  onRemoveUsersCompleted: function(payload) {
+  onRemoveUsersCompleted() {
     console.debug('UsersStore::onRemoveUsersCompleted');
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
-  onUpdateUserCompleted: function() {
-    console.debug('UsersStore::onUpdateUserCompleted');
+  onCreateUserCompleted() {
+    console.debug('UsersStore::onCreateUserCompleted');
+    this.refreshData();
   },
 
-  onUpdateGroupCompleted: function() {
+  onUpdateUserCompleted() {
+    console.debug('UsersStore::onUpdateUserCompleted');
+    this.refreshData();
+  },
+
+  onUpdateGroupCompleted() {
     console.debug('UsersStore::onUpdateGroupCompleted');
     this.refreshData();
   },
 
-  onRemoveGroupsCompleted: function() {
+  onRemoveGroupsCompleted() {
     console.debug('UsersStore::onRemoveGroupsCompleted');
     this.refreshData();
   },
 
-  onSetActiveGroup: function() {
+  onSetActiveGroup() {
     console.debug('UsersStore::onSetActiveGroup');
     this.refreshData();
   }
 });
 
-module.exports = UsersStore;
+export default UsersStore;

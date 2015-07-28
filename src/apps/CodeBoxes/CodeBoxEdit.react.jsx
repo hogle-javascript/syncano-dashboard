@@ -1,24 +1,21 @@
-var React                = require('react'),
-    Reflux               = require('reflux'),
-    Router               = require('react-router'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    HeaderMixin          = require('../Header/HeaderMixin'),
-    InstanceTabsMixin    = require('../../mixins/InstanceTabsMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
-    // Stores and Actions
-    CodeBoxActions       = require('./CodeBoxActions'),
-    CodeBoxStore         = require('./CodeBoxStore'),
+// Stores and Actions
+import CodeBoxActions from './CodeBoxActions';
+import CodeBoxStore from './CodeBoxStore';
 
-    // Components
-    Container            = require('../../common/Container/Container.react'),
-    FabList              = require('../../common/Fab/FabList.react'),
-    FabListItem          = require('../../common/Fab/FabListItem.react'),
-    Loading              = require('../../common/Loading/Loading.react'),
-    Editor               = require('../../common/Editor/Editor.react'),
-    EditorPanel          = require('../../common/Editor/EditorPanel.react');
+// Components
+import Common from '../../common';
+import Container from '../../common/Container';
+import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'CodeBoxEdit',
 
@@ -32,11 +29,11 @@ module.exports = React.createClass({
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     CodeBoxActions.fetch();
   },
 
-  getStyles: function () {
+  getStyles() {
     return {
       container: {
         margin   : '25px auto',
@@ -50,20 +47,24 @@ module.exports = React.createClass({
     }
   },
 
-  handleRun: function() {
+  handleRun() {
     CodeBoxActions.runCodeBox({
       id      : this.state.currentCodeBox.id,
-      payload : this.state.payload
+      payload : this.refs.tracePanel.refs.payloadField.getValue()
+    });
+
+  },
+
+  handleUpdate() {
+    let source = this.refs.editorSource.editor.getValue();
+    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    SnackbarNotificationActions.set({
+      message: 'Saving...'
     });
   },
 
-  handleUpdate: function() {
-    var source = this.refs.editorSource.editor.getValue();
-    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
-  },
-
-  renderEditor: function() {
-    var styles     = this.getStyles(),
+  renderEditor() {
+    let styles     = this.getStyles(),
         source     = null,
         codeBox    = this.state.currentCodeBox,
         editorMode = 'python';
@@ -75,45 +76,42 @@ module.exports = React.createClass({
       return (
         <div>
 
-          <Editor
+          <Common.Editor
             ref   = "editorSource"
             mode  = {editorMode}
             theme = "github"
             value = {source} />
 
           <div style={styles.tracePanel}>
-            <EditorPanel
+            <Common.Editor.Panel
               ref     = "tracePanel"
               trace   = {this.state.lastTraceResult}
-              payload = {this.linkState('payload')}
-              loading = {this.linkState('isLoading')}>
-            </EditorPanel>
+              loading = {!this.state.lastTraceReady} />
           </div>
         </div>
       )
     }
   },
 
-  render: function () {
-    var styles     = this.getStyles();
-
+  render() {
+    let styles = this.getStyles();
     return (
       <Container style={styles.container}>
-        <FabList position="top">
-          <FabListItem
+        <Common.Fab position="top">
+          <Common.Fab.Item
             label         = "Click here to save CodeBox"
             mini          = {true}
             onClick       = {this.handleUpdate}
             iconClassName = "synicon-content-save" />
-          <FabListItem
+          <Common.Fab.Item
             label         = "Click here to execute CodeBox"
             mini          = {true}
             onClick       = {this.handleRun}
             iconClassName = "synicon-play" />
-        </FabList>
-        <Loading show={this.state.isLoading}>
+        </Common.Fab>
+        <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
-        </Loading>
+        </Common.Loading>
       </Container>
     );
   }

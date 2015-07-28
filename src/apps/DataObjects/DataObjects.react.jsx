@@ -1,6 +1,7 @@
 var React              = require('react'),
     Reflux             = require('reflux'),
     Router             = require('react-router'),
+    _                  = require('lodash'),
 
     // Utils
     HeaderMixin        = require('../Header/HeaderMixin'),
@@ -79,7 +80,15 @@ module.exports = React.createClass({
   },
 
   showDataObjectEditDialog: function(cellNumber) {
-    DataObjectsActions.showDialog(DataObjectsStore.getSelectedRowObj(cellNumber));
+    var dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
+    dataObject = _.reduce(dataObject, (r, v, k) => {
+      if (_.isObject(v) && v.type === 'reference') {
+        v = v.value;
+      }
+      r[k] = v;
+      return r;
+    }, {});
+    DataObjectsActions.showDialog(dataObject);
   },
 
   handleDelete: function() {

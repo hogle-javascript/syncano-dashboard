@@ -45,7 +45,7 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Tasks::componentWillUpdate');
     // Merging "hideDialogs
-    this.hideDialogs(nextState.hideDialogs || nextState.triggers.hideDialogs);
+    this.hideDialogs(nextState.schedules.hideDialogs || nextState.triggers.hideDialogs);
   },
 
   componentDidMount() {

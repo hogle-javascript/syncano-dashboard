@@ -1,32 +1,32 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import DialogStoreMixin from '../../mixins/DialogStoreMixin';
 
-    //Stores & Actions
-    SessionStore       = require('../Session/SessionStore'),
-    SolutionsActions   = require('./SolutionsActions');
+//Stores & Actions
+import SessionStore from '../Session/SessionStore';
+import SolutionsActions from './SolutionsActions';
 
-var SolutionDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : SolutionsActions,
   mixins      : [
     StoreFormMixin,
     DialogStoreMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       name        : null,
       description : null
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  onCreateSolutionCompleted: function(solution) {
+  onCreateSolutionCompleted(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
     this.dismissDialog();
     SolutionsActions.fetchSolutions();
@@ -38,12 +38,10 @@ var SolutionDialogStore = Reflux.createStore({
     );
   },
 
-  onUpdateSolutionCompleted: function() {
+  onUpdateSolutionCompleted() {
     console.debug('SolutionDialogStore::onUpdateSolutionCompleted');
     this.dismissDialog();
     SolutionsActions.fetchSolutions();
   }
 
 });
-
-module.exports = SolutionDialogStore;

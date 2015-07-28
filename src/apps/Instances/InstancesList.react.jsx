@@ -10,7 +10,6 @@ import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 import ColorStore from '../../common/Color/ColorStore';
 import SessionActions from '../Session/SessionActions';
 import InstancesActions from './InstancesActions';
-import InstancesStore from './InstancesStore';
 
 import Common from '../../common';
 
@@ -21,7 +20,6 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    Reflux.connect(InstancesStore, 'instancesStore'),
     HeaderMixin
   ],
 
@@ -73,19 +71,22 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    if (this.state.items === null) {
+      return <Common.Loading show={true} />
 
-    if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
-      return items;
     }
 
-    return(
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
-    )
+    if (this.state.items.length === 0) {
+      return(
+        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </Common.ColumnList.EmptyItem>
+      )
+    }
+
+    var items = this.state.items.map(item => this.renderItem(item));
+    items.reverse();
+    return items;
   },
 
   getStyles() {
@@ -101,16 +102,14 @@ export default React.createClass({
     var styles = this.getStyles();
 
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className='instances-list-container'>
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
           <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
-          <Common.Loading show={this.state.instancesStore.isLoading}>
-            {this.getList()}
-          </Common.Loading>
+          {this.getList()}
         </Common.Lists.List>
       </Common.Lists.Container>
     );

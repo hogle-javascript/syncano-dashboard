@@ -32,5 +32,13 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  listTraces(triggerId) {
+    this.Connection
+        .Triggers
+        .traces(triggerId)
+        .then(this.completed)
+        .catch(this.failure);
   }
 };

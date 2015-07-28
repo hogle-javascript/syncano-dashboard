@@ -30,9 +30,11 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    this.setState({
-      name: Store.genUniqueName()
-    });
+    if (!this.hasEditMode()) {
+      this.setState({
+        name: Store.genUniqueName()
+      });
+    }
   },
 
   handleEditSubmit() {
@@ -90,7 +92,7 @@ export default React.createClass({
             valueLink         = {this.linkState('name')}
             errorText         = {this.getValidationMessages('name').join(' ')}
             hintText          = "Short name for your Instance"
-            floatingLabelText = "Name" 
+            floatingLabelText = "Name"
           />
           <MUI.TextField
             ref               = "description"
@@ -99,7 +101,7 @@ export default React.createClass({
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = "Multiline description of Instance (optional)"
-            floatingLabelText = "Description" 
+            floatingLabelText = "Description"
           />
         </div>
       </Common.Dialog>

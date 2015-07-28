@@ -82,9 +82,9 @@ export default React.createClass({
   },
 
   isMySolution() {
-    if (SessionStore.getUser() && this.state.item.author)
-      if (SessionStore.getUser().id === this.state.item.author.id)
-        return true;
+    let user   = SessionStore.getUser();
+    let author = this.state.item.author;
+    return (user && author && user.id === author.id);
   },
 
   handleDelete() {

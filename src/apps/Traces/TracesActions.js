@@ -1,21 +1,28 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Connection = require('../Session/Connection').get();
-
-var TracesActions = Reflux.createActions({
-  'setCurrentObjectId': {},
-  'getTraces': {
+export default CreateActions({}, {
+  setCurrentObjectId: {},
+  fetchCodeBoxTraces: {
     asyncResult: true,
-    children: ['completed', 'failure']
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.CodeBoxes.listTraces'
   },
-});
 
-TracesActions.getTraces.listen(function(objectId) {
-  console.info('TracesActions::getTraces', objectId);
-  Connection
-    .CodeBoxes.traces(objectId, {})
-    .then(this.completed)
-    .catch(this.failure);
-});
+  fetchWebhookTraces: {
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Webhooks.listTraces'
+  },
 
-module.exports = TracesActions;
+  fetchTriggerTraces: {
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Triggers.listTraces'
+  },
+
+  fetchScheduleTraces: {
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Schedules.listTraces'
+  }
+});

@@ -40,7 +40,7 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     var checkedItemIconColor = Store.getCheckedItemIconColor(),
-        checkedInstances = Store.getCheckedItems();
+        checkedInstances     = Store.getCheckedItems();
 
     return [
       {
@@ -138,7 +138,7 @@ export default Radium(React.createClass({
 
   render() {
     var checkedInstances        = Store.getNumberOfChecked(),
-        isAnyInstanceSelected   = checkedInstances >= 1 && checkedInstances < (this.state.items.length),
+        isAnyInstanceSelected   = this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length),
         isCheckedInstanceShared = Store.isCheckedInstanceShared();
 
     return (
@@ -194,7 +194,7 @@ export default Radium(React.createClass({
           emptyItemHandleClick = {this.showInstanceDialog}
           emptyItemContent     = "Create an instance"
         />
-        <Common.Show if={Store.getOtherInstances().length && !this.state.isLoading}>
+        <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             name                 = "Shared with me"
             items                = {Store.getOtherInstances()}

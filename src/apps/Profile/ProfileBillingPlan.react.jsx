@@ -20,10 +20,34 @@ module.exports = React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
+    React.addons.LinkedStateMixin,
+    Mixins.Form,
     Mixins.Dialogs,
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],
+
+  validatorConstraints() {
+    return {
+      soft_limit: {
+        numericality: {
+          onlyInteger: true
+        }
+      },
+      hard_limit: {
+        equality: {
+          attribute: 'soft_limit',
+          message: 'Hard limit have to be higher then soft limit',
+          comparator: function(v1, v2) {
+            return parseInt(v1) > parseInt(v2);
+          }
+        },
+        numericality: {
+          onlyInteger: true,
+        }
+      }
+    }
+  },
 
   componentDidMount() {
     Actions.fetch()
@@ -32,6 +56,15 @@ module.exports = React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('ProfileBillingPlan::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
+  },
+
+  setupToggles() {
+    if (this.refs['builder-toggle'] && this.state.profile.subscription.plan === 'builder') {
+      this.refs['builder-toggle'].setToggled(false);
+    }
+    if (this.refs['paid-commitment-toggle'] && this.state.profile.subscription.plan === 'paid-commitment') {
+      this.refs['paid-commitment-toggle'].setToggled(true);
+    }
   },
 
   getStyles() {
@@ -47,8 +80,6 @@ module.exports = React.createClass({
       },
       comment: {
         fontSize     : '0.9em',
-        paddingLeft  : 20,
-        paddingRight : 20
       },
       explorerButton: {
         marginTop : 20
@@ -56,6 +87,14 @@ module.exports = React.createClass({
       chartHeader: {
         paddingTop : 50,
         fontSize   : '1.3em'
+      },
+      legendSquere: {
+        marginTop: 4,
+        height: 10,
+        width: 10
+      },
+      legend: {
+        fontSize : '0.9rem',
       }
     }
   },
@@ -66,21 +105,21 @@ module.exports = React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        key   : 'freezeAccount',
-        ref   : 'freezeAccount',
-        title : 'Freeze Account',
+        key   : 'cancelProductionPlan',
+        ref   : 'cancelProductionPlan',
+        title : 'Cancel Production Plan',
         actions: [
           {
             text    : 'Cancel',
-            onClick : this.handleCancel
+            onClick : this.handleCancelCancelProductionPlan
           },
           {
             text    : 'Confirm',
-            onClick : this.handleFreezeAccount
+            onClick : this.handleCancelProductionPlan
           }
         ],
         modal: true,
-        children: ['Are you sure you want to freeze your account?']
+        children: ['Are you sure you want to cancel Production plan?']
       }
     }]
   },
@@ -89,12 +128,18 @@ module.exports = React.createClass({
     return (this.state.subscriptions && this.state.subscriptions.length > 1);
   },
 
-  handleShowFreezeAccountDialog() {
-    console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.showDialog('freezeAccount')
+  handleCancelCancelProductionPlan() {
+    this.setupToggles();
+    this.refs.cancelProductionPlan.dismiss();
   },
 
-  handleFreezeAccount() {
+  handleShowCancelPlanDialog() {
+    console.debug('ProfileBillingPlan::handlePlanToggle');
+    this.refs['paid-commitment-toggle'].setToggled(false);
+    this.showDialog('cancelProductionPlan')
+  },
+
+  handleCancelProductionPlan() {
     Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {return item.id})).then(() => {
       Actions.fetch();
     });
@@ -106,9 +151,7 @@ module.exports = React.createClass({
   },
 
   handleDeleteSubscription() {
-    Actions.cancelSubscriptions([this.state.subscriptions._items[1].id]).then(() => {
-      Actions.fetch();
-    });
+    Actions.cancelNewPlan(this.state.subscriptions._items);
   },
 
   renderSwitchPlan() {
@@ -123,9 +166,9 @@ module.exports = React.createClass({
           <div>
             <MUI.Toggle
               style          = {{marginTop: 10}}
+              ref            = "builder-toggle"
               key            = "builder-toggle"
-              defaultToggled = {false}
-              onToggle       = {this.handlePlanToggle}
+              onToggle       = {this.handleShowPlanDialog}
             />
           </div>
           <div style={{marginTop: 10}}>
@@ -144,20 +187,39 @@ module.exports = React.createClass({
     else if (this.state.profile.subscription.plan === 'free')
       return;
 
+    let renderComment = function() {
+      if (Store.isPlanCanceled()) {
+        return (
+          <div style={{marginTop: 10, textAlign: 'center'}}>
+            <div>Your plan will expire on</div>
+            <div style={{color: 'red', padding: 3}}>
+              {Store.isPlanCanceled()}
+            </div>
+            <div>Click <a onClick={this.handleShowPlanDialog}> here </a> to extend.</div>
+          </div>
+        )
+      } else {
+        return (
+          <div style={{marginTop: 10}}>
+            <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
+          </div>
+        )
+      }
+    }.bind(this);
+
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
         <div>Production</div>
           <div>
             <MUI.Toggle
               style          = {{marginTop: 10}}
+              ref            = "paid-commitment-toggle"
               key            = "paid-commitment-toggle"
               defaultToggled = {true}
-              disabled       = {true}
+              onToggle       = {this.handleShowCancelPlanDialog}
             />
           </div>
-          <div style={{marginTop: 10}}>
-            <a onClick={this.handleShowFreezeAccountDialog}>Freeze your account</a>
-          </div>
+          {renderComment()}
       </div>
     )
   },
@@ -179,23 +241,90 @@ module.exports = React.createClass({
     }
   },
 
+  renderChartLegend() {
+    let styles = this.getStyles();
+
+    let subscription = this.state.profile.subscription;
+    let plan         = subscription.plan;
+    let pricing      = subscription.pricing;
+
+    let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
+    let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
+
+    let apiTotalIndex = _.findIndex(this.state.profile.balance, {source: 'API Call'});
+    let cbxTotalIndex = _.findIndex(this.state.profile.balance, {source: 'CodeBox Executions'});
+
+    let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
+    let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
+
+    let renderUsage = function(type) {
+      if (plan === 'paid-commitment') {
+        let usage = {
+          'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
+          'cbx' : parseFloat(cbxTotal) / parseFloat(pricing.cbx.included) * 100,
+        };
+        return [
+          <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
+            <strong>{usage[type].toFixed(2)}%</strong>
+          </div>,
+          <div className="col-md-8">of plan usage</div>
+        ]
+      }
+    };
+
+    return (
+      <div style={{marginTop: 20}}>
+        <div className="row">
+
+          <div className="col-md-18">
+
+            <div className="row" style={styles.legend}>
+              <div className="col-xs-1" >
+                <div style={apiCallsStyle} />
+              </div>
+              <div className="col-flex-1">
+                <div className="row">
+                  <div className="col-md-8">API calls</div>
+                  <div className="col-md-8">this month: <strong>{apiTotal}</strong></div>
+                  {renderUsage('api')}
+                </div>
+              </div>
+            </div>
+            <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
+              <div className="col-xs-1">
+                <div style={cbxCallsStyle} />
+              </div>
+              <div className="col-flex-1">
+                <div className="row">
+                  <div className="col-md-8">CodeBox runs</div>
+                  <div className="col-md-8">this month: <strong>{cbxTotal}</strong></div>
+                  {renderUsage('cbx')}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    )
+  },
+
   renderChart() {
     let styles = this.getStyles();
     if (!this.state.profile) {
       return;
     }
 
-    let plan = this.state.profile.subscription.plan;
-
-    if (plan === 'free') {
-      return;
-    }
     return (
       <div style={styles.chartHeader}>
-        See how it works with your <strong>current usage</strong>
-        <Chart />
+        See how it works with your <strong>current usage</strong>:
+        {this.renderChartLegend()}
+        <div style={{marginTop: 25}}>
+          <Chart />
+        </div>
       </div>
-     )
+    )
+
   },
 
   renderExplorerButton() {
@@ -328,27 +457,31 @@ module.exports = React.createClass({
           }
         };
 
+        let toolTip = (
+          <div style={{whiteSpace: 'normal', textAlign: 'left', width: 250}}>
+            Your current plan will expire at the end of the month and your new plan
+            will begin on {Moment(subscription.start).format('LL')}
+          </div>
+        );
+
         return (
           <div className="row align-top">
-            <div style={{Transform: 'translateY(-14px)'}}>
+            <div classsName="col-md-3" style={{Transform: 'translateY(-14px)'}}>
               <MUI.IconButton
                 iconClassName = "synicon-information-outline"
                 iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-                tooltip       = {`your current plan will expire at the end of
-                the month and your new plan will begin on ${Moment(subscription.start).format('LL')})`}
+                tooltip       = {toolTip}
               />
             </div>
             <div classsName="col-flex-1">
-              <div key='productionComment-subs'>
-                <div>
-                  <div style={styles.mainDesc}>
-                    New plan <strong>${total}</strong>:
-                  </div>
-                </div>
-                <div style={{marginTop: 20}}>
-                  <Limits data={limitsData} />
-                </div>
+
+              <div style={styles.mainDesc}>
+                New plan <strong>${total}</strong>:
               </div>
+              <div style={{marginTop: 20}}>
+                <Limits data={limitsData} />
+              </div>
+
             </div>
          </div>
         )
@@ -365,13 +498,91 @@ module.exports = React.createClass({
     }
   },
 
+  handlePlanDialogDismiss() {
+    this.setupToggles();
+    Actions.fetch();
+  },
+
+  handleSuccessfullValidation: function() {
+    this.handleAddSubmit();
+  },
+
+  handleAddSubmit() {
+    Actions.updateBillingProfile({
+      hard_limit: this.state.hard_limit,
+      soft_limit: this.state.soft_limit
+    });
+  },
+
+  renderLimitsForm() {
+    if (!this.state.profile) {
+      return;
+    }
+    let subscription = this.state.profile.subscription;
+    let plan         = subscription.plan;
+
+    if (plan === 'builder' || plan === 'free') {
+      return null;
+    }
+
+    let toolTip = (
+      <div style={{whiteSpace: 'normal', textAlign: 'left', width: 200}}>
+        Here you can set limits for your plan. You will be notified after reaching soft limit.
+        After reaching hard limit your account will be frozen to avoid additional costs.
+      </div>
+    );
+
+    return (
+      <div className="row" style={{marginTop: 30, paddingLeft: 30}}>
+        <div className="col-md-5">
+          <MUI.TextField
+              ref          = "soft_limit"
+              valueLink    = {this.linkState('soft_limit')}
+              errorText    = {this.getValidationMessages('soft_limit').join(' ')}
+              name         = "soft_limit"
+              className    = "text-field"
+              hintText     = "Soft Limit"
+              fullWidth    = {true}
+          />
+        </div>
+        <div className="col-md-5">
+          <MUI.TextField
+            ref          = "hard_limit"
+            valueLink    = {this.linkState('hard_limit')}
+            errorText    = {this.getValidationMessages('hard_limit').join(' ')}
+            name         = "hard_limit"
+            className    = "text-field"
+            hintText     = "Hard Limit"
+            fullWidth    = {true}
+          />
+        </div>
+        <div className="col-md-4" style={{paddingRight: 0}}>
+          <MUI.FlatButton
+              primary    = {true}
+              label      = {'Set Limits'}
+              disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
+              onTouchTap = {this.handleFormValidation}
+            />
+        </div>
+        <div className="col-md-5" style={{paddingLeft: 0}}>
+          <MUI.IconButton
+            iconClassName = "synicon-information-outline"
+            iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+            tooltip       = {toolTip}
+          />
+        </div>
+     </div>
+    )
+
+  },
+
   render() {
     let styles = this.getStyles();
 
     return (
       <Common.Loading show={this.state.isLoading}>
         {this.getDialogs()}
-        <PlanDialog />
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
         <div className="row" style={styles.main}>
 
           {this.renderMainDesc()}
@@ -386,8 +597,11 @@ module.exports = React.createClass({
             {this.renderSwitchPlan()}
           </div>
         </div>
-        <div className="row">
+        <div>
           {this.renderChart()}
+        </div>
+        <div>
+          {this.renderLimitsForm()}
         </div>
       </Common.Loading>
     );

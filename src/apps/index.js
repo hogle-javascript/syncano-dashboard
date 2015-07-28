@@ -15,7 +15,7 @@ import Tasks from './Tasks';
 import Traces from './Traces';
 import Users from './Users';
 
-export {
+export default {
   Account,
   Admins,
   ApiKeys,

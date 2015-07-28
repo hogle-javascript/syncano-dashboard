@@ -15,6 +15,8 @@ import ChannelsStore from './ChannelsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
+let Column = Common.ColumnList.Column;
+
 export default React.createClass({
 
   displayName: 'ChannelsList',
@@ -43,30 +45,28 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.id}
-      >
-        <Common.ColumnList.Column.CheckIcon
+        key     = {item.id} >
+        <Column.CheckIcon
           id              = {item.name}
           icon            = {'bullhorn'}
           background      = {MUI.Styles.Colors.lightBlueA100}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}
-        >
+          handleNameClick = {this.handleItemClick} >
           {item.name}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc className="col-xs-5 col-md-5">
+        </Column.CheckIcon>
+        <Column.Desc>{item.description}</Column.Desc>
+        <Column.Desc className="col-xs-5 col-md-5">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
-        </Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc className="col-xs-5 col-md-5">{item.type}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc className="col-xs-5 col-md-5">
+        </Column.Desc>
+        <Column.Desc className="col-xs-5 col-md-5">{item.type}</Column.Desc>
+        <Column.Desc className="col-xs-5 col-md-5">
           {item.custom_publish ? 'Yes' : 'No'}
-        </Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.Desc>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
@@ -91,14 +91,14 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>
+          <Column.CheckIcon.Header>
             {this.props.name}
-          </Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-5">Permissions</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-5">Type</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-5">Custom publish</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          </Column.CheckIcon.Header>
+          <Column.Desc.Header>Description</Column.Desc.Header>
+          <Column.Desc.Header className="col-xs-5">Permissions</Column.Desc.Header>
+          <Column.Desc.Header className="col-xs-5">Type</Column.Desc.Header>
+          <Column.Desc.Header className="col-xs-5">Custom publish</Column.Desc.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
