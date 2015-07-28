@@ -5,10 +5,6 @@ var classesCommands = {
       .click('@fab')
       .waitForElementVisible('@confirmButton', 5000);
   },
-  fillClassName: function() {
-    return this.waitForElementVisible('@createModalNameInput', 1000)
-      .setValue('@createModalNameInput', 'nightwatch_test_class');
-  },
   fillInputField: function(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
@@ -39,7 +35,7 @@ var classesCommands = {
       .click(button);
   },
   isModalClosed: function(element) {
-    return this.waitForElementNotVisible(element, 15000);
+    return this.waitForElementNotPresent(element);
   },
 };
 
@@ -57,7 +53,11 @@ module.exports = {
       selector: 'input[name=fieldName]'
     },
     createModalDropdown: {
-      selector: '//label[text()="Type"]',
+      selector: '//form//label[text()="Type"]',
+      locateStrategy: 'xpath'
+    },
+    createModalDropdownType: {
+      selector: '//div[@class="type-dropdown"]',
       locateStrategy: 'xpath'
     },
     createModalSchemaString: {
@@ -74,8 +74,11 @@ module.exports = {
       selector: '//span[text()="Add"]',
       locateStrategy: 'xpath'
     },
+    editButton: {
+      selector: '.synicon-pencil'
+    },
     classTableRow: {
-      selector: '//div[text()="test_class_description"]',
+      selector: '//div[@class="classes-list-container"]/div[2]',
       locateStrategy: 'xpath'
     },
     selectClass: {
@@ -83,7 +86,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     classTableRowDescription: {
-      selector: '//div[@class="classes-list-container"]/div[2]/*',
+      selector: '//div[@class="classes-list-container"]/div[2]//div[@class="col-flex-1"]',
       locateStrategy: 'xpath'
     },
     deleteButton: {
