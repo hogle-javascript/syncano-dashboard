@@ -253,7 +253,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref             = 'dialog'
-        title           = {title + ' Class'}
+        title           = {title + ' a Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onDismiss       = {this.resetDialogState} >
@@ -355,6 +355,7 @@ export default React.createClass({
             </div>
             <div className='col-xs-8' style={{paddingLeft: 15}}>
               <MUI.SelectField
+                className         = 'type-dropdown'
                 ref               = 'fieldType'
                 name              = 'fieldType'
                 floatingLabelText = 'Type'
