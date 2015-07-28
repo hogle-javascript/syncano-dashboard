@@ -153,7 +153,7 @@ export default React.createClass({
     let checkedDataViews      = DataViewsStore.getNumberOfChecked(),
         checkedWebhooks       = WebhooksStore.getNumberOfChecked(),
         isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < (this.state.dataviews.items.length),
-        isAnyTriggerSelected  = checkedWebhooks >= 1 && checkedWebhooks < (this.state.webhooks.items.length),
+        isAnyWebhookSelected  = checkedWebhooks >= 1 && checkedWebhooks < (this.state.webhooks.items.length),
         markedIcon            = 'synicon-checkbox-multiple-marked-outline',
         blankIcon             = 'synicon-checkbox-multiple-blank-outline';
 
@@ -190,10 +190,10 @@ export default React.createClass({
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              label         = {isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {isAnyTriggerSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
-              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon}
+              onClick       = {isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              iconClassName = {isAnyWebhookSelected ? markedIcon : blankIcon}
             />
             <Common.Fab.Item
               label         = "Click here to delete CodeBox Endpoint"
