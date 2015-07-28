@@ -1,22 +1,17 @@
-var React                       = require('react'),
-    Reflux                      = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    SessionStore                = require('../Session/SessionStore'),
-    ProfileActions              = require('./ProfileActions'),
-    ProfileBillingInvoicesStore = require('./ProfileBillingInvoicesStore'),
+import SessionStore from '../Session/SessionStore';
+import ProfileActions from './ProfileActions';
+import ProfileBillingInvoicesStore from './ProfileBillingInvoicesStore';
 
-    MUI                         = require('material-ui'),
-    Loading                     = require('../../common/Loading/Loading.react'),
-    Show                        = require('../../common/Show/Show.react'),
+import MUI from 'material-ui';
+import Common from '../../common';
+import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
-    // List
-    ListContainer             = require('../../common/Lists/ListContainer.react'),
-    List                      = require('../../common/Lists/List.react'),
-    Item                      = require('../../common/ColumnList/Item.react'),
-    Header                    = require('../../common/ColumnList/Header.react'),
-    ColumnDesc                = require('../../common/ColumnList/Column/Desc.react');
+let Column = Common.ColumnList.Column;
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileBillingInvoices',
 
@@ -24,17 +19,17 @@ module.exports = React.createClass({
     Reflux.connect(ProfileBillingInvoicesStore)
   ],
 
-  componentDidMount: function() {
+  componentDidMount() {
     ProfileActions.fetchInvoices();
   },
 
-  handlePDFClick: function(invoice) {
+  handlePDFClick(invoice) {
     let pdfUrl = SYNCANO_BASE_URL + invoice.links.pdf.replace('/', '');
     pdfUrl += '?api_key=' + SessionStore.getToken('');
     location.href = pdfUrl;
   },
 
-  renderListItem: function(invoice) {
+  renderListItem(invoice) {
     return (
       <Item key = {invoice.id}>
         <ColumnDesc>{invoice.period}</ColumnDesc>
@@ -51,31 +46,30 @@ module.exports = React.createClass({
     );
   },
 
-  render: function () {
+  render() {
     return (
-      <Loading show={this.state.isLoading}>
-        <Show if={this.state.invoices.length === 0}>
-          <div>
-            <p>You have no invoices</p>
-          </div>
-        </Show>
+      <Common.Loading show={this.state.isLoading}>
+        <Common.Show if={this.state.invoices.length < 1}>
+          <EmptyContainer
+            icon = 'synicon-file-outline'
+            text = 'You have no invoices'/>
+        </Common.Show>
 
-        <Show if={this.state.invoices.length > 0}>
-          <ListContainer>
-            <Header>
-              <ColumnDesc.Header>Period</ColumnDesc.Header>
-              <ColumnDesc.Header>Invoice ID</ColumnDesc.Header>
-              <ColumnDesc.Header>Amount</ColumnDesc.Header>
-              <ColumnDesc.Header>Status</ColumnDesc.Header>
-              <ColumnDesc.Header>Action</ColumnDesc.Header>
-            </Header>
-            <List>
+        <Common.Show if={this.state.invoices.length > 0}>
+          <Common.Lists.Container>
+            <Common.ColumnList.Header>
+              <Column.Desc.Header>Period</Column.Desc.Header>
+              <Column.Desc.Header>Invoice ID</Column.Desc.Header>
+              <Column.Desc.Header>Amount</Column.Desc.Header>
+              <Column.Desc.Header>Status</Column.Desc.Header>
+              <Column.Desc.Header>Action</Column.Desc.Header>
+            </Common.ColumnList.Header>
+            <Common.Lists.List>
               {this.state.invoices.map(this.renderListItem)}
-            </List>
-          </ListContainer>
-        </Show>
-      </Loading>
+            </Common.Lists.List>
+          </Common.Lists.Container>
+        </Common.Show>
+      </Common.Loading>
     );
   }
-
 });
