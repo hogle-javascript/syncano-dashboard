@@ -12,7 +12,7 @@ export default React.createClass({
   ],
 
   renderNotification(notification, index) {
-    return <Snackbar
+    return <MUI.Snackbar
               ref              = {`notification-${index}`}
               key              = {`notification-${index}`}
               message          = {notification.message}

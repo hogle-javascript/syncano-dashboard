@@ -57,6 +57,9 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
     CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    Common.SnackbarNotifications.Actions.add({
+      message: 'Saving...'
+    });
   },
 
   renderEditor() {
