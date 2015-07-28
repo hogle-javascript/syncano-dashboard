@@ -96,6 +96,7 @@ export default Radium(React.createClass({
       )
       return (
         <MenuItem
+          key         = "empty"
           primaryText = "You dont't have any notifications"
           disabled    = {true}
           leftIcon    = {icon}
@@ -132,6 +133,7 @@ export default Radium(React.createClass({
 
       return (
         <MenuItem
+          key      = {`invitation-${item.id}`}
           disabled = {true}
           leftIcon = {icon}
           style    = {styles.menuItem}
@@ -157,6 +159,7 @@ export default Radium(React.createClass({
       )
       notifications.push(
         <MenuItem
+          key      = "resend-link"
           leftIcon = {icon}
           style    = {styles.menuItem}
         >
@@ -203,7 +206,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-    console.error(this.state)
     return (
       <div>
         <MUI.IconMenu
