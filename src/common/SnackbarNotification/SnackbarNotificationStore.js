@@ -16,12 +16,9 @@ export default Reflux.createStore({
   set(snackbar) {
     console.log('SnackbarNotificationStore::set');
 
-    let key                   = `notification-${Date.now()}`;
-    snackbar.key              = snackbar.key              || key;
-    snackbar.openOnMount      = snackbar.openOnMount      || true;
-    snackbar.action           = snackbar.action           || 'dismiss';
-    snackbar.onActionTouchTap = snackbar.onActionTouchTap || function() { this.refs.snackbar.dismiss(); };
-    this.snackbar             = snackbar;
+    snackbar.key         = snackbar.key         || Date.now();
+    snackbar.openOnMount = snackbar.openOnMount || true;
+    this.snackbar        = snackbar;
     this.trigger({snackbar: this.snackbar});
   },
 
@@ -33,7 +30,8 @@ export default Reflux.createStore({
     }
 
     this.snackbar = null;
-    this.trigger({snackbar: this.snackbar});
+    // Small debounce
+    setTimeout(() => this.trigger({snackbar: this.snackbar}), 150);
   }
 
 });

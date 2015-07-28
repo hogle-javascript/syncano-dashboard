@@ -11,6 +11,14 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
+  componentWillUpdate() {
+    console.log('SnackbarNotification::componentWillUpdate');
+
+    if (this.state.snackbar !== null) {
+      this.refs.snackbar.dismiss();
+    }
+  },
+
   render() {
     let snackbar = this.state.snackbar;
 
@@ -24,7 +32,7 @@ export default React.createClass({
               message          = {snackbar.message}
               action           = {snackbar.action}
               autoHideDuration = {snackbar.autoHideDuration}
-              onActionTouchTap = {snackbar.onActionTouchTap.bind(this)}
+              onActionTouchTap = {snackbar.onActionTouchTap}
               openOnMount      = {snackbar.openOnMount}
               style            = {snackbar.style} />;
   }

@@ -3,7 +3,7 @@ import Router                                from 'react-router';
 import SessionActions                        from '../apps/Session/SessionActions';
 import SessionStore                          from '../apps/Session/SessionStore';
 import mui                                   from 'material-ui';
-import {SyncanoTheme, SnackbarNotifications} from './../common';
+import {SyncanoTheme, SnackbarNotification}  from './../common';
 
 let ThemeManager = new mui.Styles.ThemeManager();
 
@@ -45,7 +45,7 @@ export default React.createClass({
     return (
       <div>
         <Router.RouteHandler/>
-        <SnackbarNotifications />
+        <SnackbarNotification />
       </div>
     );
   }
