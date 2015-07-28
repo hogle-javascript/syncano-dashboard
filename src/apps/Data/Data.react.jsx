@@ -45,7 +45,7 @@ export default React.createClass({
     WebhooksActions.fetch();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
   },
@@ -55,13 +55,13 @@ export default React.createClass({
     this.fetch();
   },
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
   },
 
   // Dialogs config
-  initDialogs: function() {
+  initDialogs() {
 
     return [
       {
@@ -105,41 +105,57 @@ export default React.createClass({
     ]
   },
 
-  handleRemoveWebhooks: function() {
+  handleRemoveWebhooks() {
     console.info('Data::handleDelete');
     WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
   },
 
-  handleRemoveDataViews: function() {
+  handleRemoveDataViews() {
     console.info('Data::handleRemoveDataViews');
     DataViewsActions.removeDataViews(DataViewsStore.getCheckedItems());
   },
 
-  uncheckAll: function() {
+  uncheckAll() {
     console.info('Data::uncheckAll');
     DataViewsActions.uncheckAll();
     WebhooksActions.uncheckAll();
   },
 
-  showDataViewDialog: function() {
+  showDataViewDialog() {
     DataViewsActions.showDialog();
   },
 
-  showDataViewEditDialog: function() {
+  showDataViewEditDialog() {
     DataViewsActions.showDialog(DataViewsStore.getCheckedItem());
   },
 
-  showWebhookDialog: function() {
+  showWebhookDialog() {
     WebhooksActions.showDialog();
   },
 
-  showWebhookEditDialog: function() {
+  showWebhookEditDialog() {
     WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
   },
 
-  render: function() {
-    var checkedDataViews = DataViewsStore.getNumberOfChecked(),
-        checkedWebhooks  = WebhooksStore.getNumberOfChecked();
+  checkDataViewItem(id, state) {
+    console.info('Data::checkDataViewItem');
+    DataViewsActions.checkItem(id, state);
+    WebhooksActions.uncheckAll();
+  },
+
+  checkWebhook(id, state) {
+    console.info('Data::checkWebhook');
+    WebhooksActions.checkItem(id, state);
+    DataViewsActions.uncheckAll();
+  },
+
+  render() {
+    let checkedDataViews      = DataViewsStore.getNumberOfChecked(),
+        checkedWebhooks       = WebhooksStore.getNumberOfChecked(),
+        isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < (this.state.dataviews.items.length),
+        isAnyTriggerSelected  = checkedWebhooks >= 1 && checkedWebhooks < (this.state.webhooks.items.length),
+        markedIcon            = 'synicon-checkbox-multiple-marked-outline',
+        blankIcon             = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -150,10 +166,10 @@ export default React.createClass({
         <Common.Show if={checkedDataViews > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = "Click here to unselect all"
+              label         = {isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline"
+              onClick       = {isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
+              iconClassName = {isAnyDataViewSelected ? markedIcon : blankIcon}
             />
             <Common.Fab.Item
               label         = "Click here to delete Data Endpoint"
@@ -174,10 +190,10 @@ export default React.createClass({
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = "Click here to unselect all"
+              label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline"
+              onClick       = {isAnyTriggerSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon}
             />
             <Common.Fab.Item
               label         = "Click here to delete CodeBox Endpoint"
@@ -210,7 +226,7 @@ export default React.createClass({
 
         <DataViewsList
           name                 = "Data Endpoints"
-          checkItem            = {DataViewsActions.checkItem}
+          checkItem            = {this.checkDataViewItem}
           isLoading            = {this.state.dataviews.isLoading}
           items                = {this.state.dataviews.items}
           emptyItemHandleClick = {this.showDataViewDialog}
@@ -219,7 +235,7 @@ export default React.createClass({
 
         <WebhooksList
           name                 = "CodeBox Endpoints"
-          checkItem            = {WebhooksActions.checkItem}
+          checkItem            = {this.checkWebhook}
           isLoading            = {this.state.webhooks.isLoading}
           items                = {this.state.webhooks.items}
           emptyItemHandleClick = {this.showWebhookDialog}
