@@ -14,6 +14,8 @@ import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
+let Column = Common.ColumnList.Column;
+
 export default React.createClass({
 
   displayName: 'ProfileInvitations',
@@ -106,33 +108,13 @@ export default React.createClass({
     ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
   },
 
-  getStyles() {
-    return {
-      container: {
-        margin       : '64px auto',
-        textAlign    : 'center'
-      },
-      icon: {
-        fontSize     : 96,
-        lineHeight   : 1,
-        marginBottom : 16,
-        color        : 'rgba(0, 0, 0, 0.24)'
-      },
-      text: {
-        color        : 'rgba(0, 0, 0, 0.87)',
-        fontSize     : 34,
-        margin       : 0
-      }
-    }
-  },
-
   renderItem(item) {
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
         key     = {item.id}
       >
-        <Common.ColumnList.Column.CheckIcon
+        <Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {MUI.Styles.Colors.blue500}
@@ -140,10 +122,10 @@ export default React.createClass({
           handleIconClick = {this.checkItem}
         >
           {item.instance}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.inviter}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.CheckIcon>
+        <Column.Desc>{item.inviter}</Column.Desc>
+        <Column.Desc>{item.role}</Column.Desc>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     );
   },
@@ -190,30 +172,25 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Loading show={this.state.isLoading}>
-          <div>
-            <Common.Show if={this.state.items.length < 1 && this.state.isLoading === false}>
-              <div style={styles.container}>
-                <MUI.FontIcon
-                  style     = {styles.icon}
-                  className = "synicon-email-outline" />
-                <p style={styles.text}>You have no invitations</p>
-              </div>
-            </Common.Show>
+          <Common.Show if={this.state.items.length < 1}>
+            <EmptyContainer
+              icon = 'synicon-email-outline'
+              text = 'You have no invitations'/>
+          </Common.Show>
 
-            <Common.Show if={this.state.items.length > 0 && this.state.isLoading === false}>
-              <Common.Lists.Container>
-                <Common.ColumnList.Header>
-                  <Common.ColumnList.Column.CheckIcon.Header>Invitations</Common.ColumnList.Column.CheckIcon.Header>
-                  <Common.ColumnList.Column.Desc.Header>From</Common.ColumnList.Column.Desc.Header>
-                  <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
-                  <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
-                </Common.ColumnList.Header>
-                <Common.Lists.List>
-                  {this.renderList()}
-                </Common.Lists.List>
-              </Common.Lists.Container>
-            </Common.Show>
-          </div>
+          <Common.Show if={this.state.items.length > 0}>
+            <Common.Lists.Container>
+              <Common.ColumnList.Header>
+                <Column.CheckIcon.Header>Invitations</Column.CheckIcon.Header>
+                <Column.Desc.Header>From</Column.Desc.Header>
+                <Column.Desc.Header>Role</Column.Desc.Header>
+                <Column.Date.Header>Created</Column.Date.Header>
+              </Common.ColumnList.Header>
+              <Common.Lists.List>
+                {this.renderList()}
+              </Common.Lists.List>
+            </Common.Lists.Container>
+          </Common.Show>
         </Common.Loading>
       </Container>
     );
