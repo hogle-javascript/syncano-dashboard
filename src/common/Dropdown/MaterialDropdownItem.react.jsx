@@ -1,28 +1,21 @@
-var React               = require('react'),
-    classNames          = require('classnames'),
-    gravatar            = require('gravatar'),
+import React from 'react';
+import Gravatar from 'gravatar';
 
-    mui                 = require('material-ui'),
-    List                = mui.List,
-    ListItem            = mui.ListItem,
-    ListDivider         = mui.ListDivider,
-    Avatar              = mui.Avatar,
-    FontIcon            = mui.FontIcon;
+import MUI from 'material-ui';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
-      leftIcon           : React.PropTypes.shape({
-        name  : React.PropTypes.string,
-        style : React.PropTypes.object
+      leftIcon : React.PropTypes.shape({
+        name   : React.PropTypes.string,
+        style  : React.PropTypes.object
       }),
-      subheader          : React.PropTypes.string,
-      subheaderStyle     : React.PropTypes.object,
-      content            : React.PropTypes.shape({
+      subheader      : React.PropTypes.string,
+      subheaderStyle : React.PropTypes.object,
+      content        : React.PropTypes.shape({
         text  : React.PropTypes.string,
         style : React.PropTypes.object
       }),
@@ -32,64 +25,88 @@ module.exports = React.createClass({
       handleItemClick    : React.PropTypes.func        // function to call after DropdownMenuItem click
     })),
     headerContent: React.PropTypes.shape({
-      userFullName       : React.PropTypes.string,
-      userEmail          : React.PropTypes.string,
-      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
+      userFullName     : React.PropTypes.string,
+      userEmail        : React.PropTypes.string,
+      handleItemClick  : React.PropTypes.func,                  // if "clickable" props is defined as false or
+      clickable        : React.PropTypes.bool                   // is not defined function will not be triggered
     })
   },
 
-  renderHeaderContent: function () {
-    var headerContent;
+  isHeaderNecessary() {
+    let headerContentProps = this.props.headerContent;
 
-    if (this.props.headerContent) {
-      var gravatarUrl = gravatar.url(this.props.headerContent.userEmail, {}, true),
-          avatar = <Avatar src={gravatarUrl} />;
-      headerContent = <List>
-                        <ListItem
-                          leftAvatar      = {avatar}
-                          secondaryText   = {this.props.headerContent.userEmail}
-                          disableTouchTap = {!this.props.headerContent.clickable}
-                          onClick         = {this.props.headerContent.handleItemClick}>
-                          {this.props.headerContent.userFullName}
-                        </ListItem>
-                        <ListDivider />
-                      </List>;
-    };
-    return headerContent;
+    return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
   },
 
-  renderItems: function () {
-    var items = this.props.items.map(function (item, i) {
-      var icon = <FontIcon
+  getStyles() {
+    return {
+      avatar: {
+        Transform: 'translateY(-50%)',
+        top: '50%'
+      }
+    }
+  },
+
+  renderHeaderContent() {
+    let styles             = this.getStyles(),
+        headerContentProps = this.props.headerContent,
+        headerContentElement;
+
+    if (this.isHeaderNecessary()) {
+      let gravatarUrl   = Gravatar.url(headerContentProps.userEmail, {}, true),
+          avatar        = <MUI.Avatar style={styles.avatar} src={gravatarUrl} />,
+          primaryText   = headerContentProps.userFullName || headerContentProps.userEmail,
+          secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
+
+      headerContentElement = (
+        <MUI.ListItem
+          leftAvatar      = {avatar}
+          primaryText     = {primaryText}
+          secondaryText   = {secondaryText}
+          disableTouchTap = {!headerContentProps.clickable}
+          onClick         = {headerContentProps.handleItemClick} />
+      )
+    }
+
+    return headerContentElement;
+  },
+
+  renderHeaderContentDivider() {
+    return this.isHeaderNecessary() ? <MUI.ListDivider /> : null;
+  },
+
+  renderItems() {
+    let items = this.props.items.map((item, index) => {
+      let icon = <MUI.FontIcon
                    className = {item.leftIcon.name || null}
                    style     = {item.leftIcon.style} />;
       return (
-        <List
-          key            = {item.name + i}
+        <MUI.List
+          key            = {item.name + index}
           subheader      = {item.subheader || null}
           subheaderStyle = {item.subheaderStyle}>
-          <ListItem
+          <MUI.ListItem
             onClick            = {item.handleItemClick}
             leftIcon           = {icon}
             secondaryText      = {item.secondaryText}
             secondaryTextLines = {item.secondaryTextLines || 1}>
             <span style={item.content.style}>
-            {item.content.text}
+              {item.content.text}
             </span>
-          </ListItem>
-        </List>)
-    })
+          </MUI.ListItem>
+        </MUI.List>
+      )
+    });
     return items
   },
 
-  render: function () {
+  render() {
     return (
-      <div>
-      {this.renderHeaderContent()}
-      {this.renderItems()}
-      </div>
+      <MUI.List>
+        {this.renderHeaderContent()}
+        {this.renderHeaderContentDivider()}
+        {this.renderItems()}
+      </MUI.List>
     );
   }
-
 });
