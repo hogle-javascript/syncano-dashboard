@@ -49,8 +49,7 @@ module.exports = {
     client.pause(1000);
     classesPage.clickButton('@confirmDeleteButton');
     classesPage.isModalClosed('@deleteClassModalTitle');
-    classesPage.verify.elementNotPresent('@deleteClassModalTitle')
-    client.pause(1000);
+    classesPage.verify.elementNotPresent('@deleteClassModalTitle');
 
     classesPage.verify.elementPresent('@classTableRowDescription');
     classesPage.verify.containsText('@classTableRowDescription', 'Class that holds profiles for users.');
