@@ -1,20 +1,28 @@
 import Reflux from 'reflux';
 import RequestActions from './RequestActions';
+import SnackbarNotificationActions from '../SnackbarNotification/SnackbarNotificationActions';
 
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,
 
   onCompleted(event, method, url) {
-    this.showErrorSnackbar(event);
+    this.setErrorSnackbar(event);
   },
 
   onError(event, method, url) {
-    this.showErrorSnackbar(event);
+    this.setErrorSnackbar(event);
   },
 
-  showErrorSnackbar(event) {
+  setErrorSnackbar(event) {
     if (event.target.status >= 500 && event.target.status <= 599) {
-      this.trigger({showErrorSnackbar: true});
+      SnackbarNotificationActions.set({
+        message: 'Something went wrong',
+        action: 'refresh',
+        onActionTouchTap() {
+          // Reloads current page without cache
+          location.reload(true);
+        }
+      });
     }
   }
 
