@@ -14,6 +14,15 @@ export default React.createClass({
   componentWillUpdate() {
     console.log('SnackbarNotification::componentWillUpdate');
 
+    if (this.state.snackbar === null) {
+      return;
+    }
+
+    if (this.state.snackbar.delay !== undefined) {
+      delete this.state.snackbar.delay;
+      return;
+    }
+
     if (this.state.snackbar !== null) {
       this.refs.snackbar.dismiss();
     }
@@ -32,7 +41,7 @@ export default React.createClass({
               message          = {snackbar.message}
               action           = {snackbar.action}
               autoHideDuration = {snackbar.autoHideDuration}
-              onActionTouchTap = {snackbar.onActionTouchTap}
+              onActionTouchTap = {(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this): undefined}
               openOnMount      = {snackbar.openOnMount}
               style            = {snackbar.style} />;
   }
