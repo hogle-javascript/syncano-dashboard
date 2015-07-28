@@ -102,7 +102,7 @@ export default React.createClass({
     var styles = this.getStyles();
 
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className='instances-list-container'>
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
           <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>

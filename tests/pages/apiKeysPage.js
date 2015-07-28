@@ -35,10 +35,12 @@ module.exports = {
       selector: 'button span[data-reactid*="$submitLabel"]'
     },
     apiKeysTableRow: {
-      selector: 'div.row'
+      selector: '//div[text()="test_api_key_description"]',
+      locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: 'div.row span'
+      selector: '//span[@class="synicon-key"]',
+      locateStrategy: 'xpath'
     },
     deleteButton: {
       selector: '.synicon-delete'

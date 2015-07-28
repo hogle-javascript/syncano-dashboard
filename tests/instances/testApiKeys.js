@@ -31,7 +31,6 @@ module.exports = {
     apiKeysPage.waitForModalToClose();
 
     apiKeysPage.expect.element('@apiKeysTableRow').to.be.present.after(5000);
-    apiKeysPage.expect.element('@apiKeysTableRow').to.contain.text('test_api_key_description');
   },
   'Test Delete Api Key': function(client) {
     var apiKeysPage = client.page.apiKeysPage();
