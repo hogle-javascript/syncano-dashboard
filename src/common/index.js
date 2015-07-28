@@ -37,7 +37,7 @@ import ContentTraces from './ContentTraces.react';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import UsageBar2 from './UsageBar.react';
-import SnackbarNotifications from './SnackbarNotifications';
+import SnackbarNotification from './SnackbarNotification';
 
 export default {
   Accordion,
@@ -79,5 +79,5 @@ export default {
   Spacing,
   SyncanoTheme,
   UsageBar2,
-  SnackbarNotifications
+  SnackbarNotification
 };

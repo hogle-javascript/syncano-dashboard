@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import RequestActions from './RequestActions';
-import SnackbarNotificationsActions from '../SnackbarNotifications/SnackbarNotificationsActions';
+import SnackbarNotificationActions from '../SnackbarNotification/SnackbarNotificationActions';
 
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,
@@ -15,7 +15,7 @@ let RequestStore = Reflux.createStore({
 
   addErrorSnackbar(event) {
     if (event.target.status >= 500 && event.target.status <= 599) {
-      SnackbarNotificationsActions.add({
+      SnackbarNotificationActions.set({
         message: 'Something went wrong',
         action: 'refresh',
         onActionTouchTap() {
