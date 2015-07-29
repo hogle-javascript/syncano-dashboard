@@ -14,6 +14,7 @@ import InstancesStore from '../Instances/InstancesStore';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
+import Logo from '../../common/Logo/Logo.react';
 
 import HeaderMenu from './HeaderMenu.react';
 import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
@@ -153,8 +154,8 @@ export default Radium(React.createClass({
           <MUI.ToolbarGroup style={styles.logotypeContainer}>
             <Router.Link to="app">
               <Common.Logo
-                style={styles.logo}
-                className="logo-white" />
+                style     = {styles.logo}
+                className = "logo-white" />
             </Router.Link>
           </MUI.ToolbarGroup>
           <MUI.ToolbarGroup
