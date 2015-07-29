@@ -1,16 +1,17 @@
-var Reflux         = require('reflux'),
-    analytics      = require('../../segment'),
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
-    SessionActions = require('../Session/SessionActions'),
-    SessionStore   = require('../Session/SessionStore'),
-    AuthActions    = require('./AuthActions'),
-    AuthConstans   = require('./AuthConstants');
+import Reflux from 'reflux';
+import analytics from '../../segment';
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import Actions from './AuthActions';
+import AuthConstans from './AuthConstants';
 
-var AuthStore = Reflux.createStore({
-  listenables: AuthActions,
+export default Reflux.createStore({
+  listenables: Actions,
+  
   mixins: [StoreFormMixin],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       email           : null,
       password        : null,
@@ -18,19 +19,19 @@ var AuthStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },
 
-  onActivate: function() {
+  onActivate() {
     this.trigger({
       status: 'Account activation in progress...'
     });
   },
 
-  onActivateCompleted: function(payload) {
+  onActivateCompleted(payload) {
     this.trigger({
       status: 'Account activated successfully. You\'ll now be redirected to Syncano Dashboard.'
     });
@@ -40,49 +41,46 @@ var AuthStore = Reflux.createStore({
     }, 3000);
   },
 
-  onActivateFailure: function() {
+  onActivateFailure() {
     this.trigger({
       status: 'Invalid or expired activation link.'
     });
   },
 
-  onPasswordSignUpCompleted: function(payload) {
+  onPasswordSignUpCompleted(payload) {
     analytics.track('Sign up Dashboard', {
       authBackend: 'password'
     });
     this.onPasswordSignInCompleted(payload);
   },
 
-  onPasswordSignInCompleted: function(payload) {
+  onPasswordSignInCompleted(payload) {
     SessionActions.login(payload);
   },
 
-  onPasswordResetCompleted: function() {
+  onPasswordResetCompleted() {
     this.trigger({
       email    : null,
       feedback : 'Check your inbox.'
     });
   },
 
-  onPasswordResetConfirmCompleted: function(payload) {
+  onPasswordResetConfirmCompleted(payload) {
     this.onPasswordSignInCompleted(payload);
     SessionStore.getRouter().transitionTo('password-update');
   },
 
-  checkSession: function(Session) {
+  checkSession(Session) {
     if (Session.isAuthenticated()) {
       this.trigger(this.data);
     }
   },
 
-  onSocialLoginCompleted: function(payload) {
+  onSocialLoginCompleted(payload) {
     console.debug('AuthStore::onSocialLoginCompleted', payload);
     analytics.track('Sign up Dashboard', {
       authBackend: payload.network
     });
     this.onPasswordSignInCompleted(payload);
   }
-
 });
-
-module.exports = AuthStore;

@@ -1,5 +1,5 @@
-var hello       = require('hellojs'),
-    credentials = {},
+import hello from 'hellojs';
+let credentials = {},
     options     = {};
 
 credentials.facebook = FACEBOOK_ID;
