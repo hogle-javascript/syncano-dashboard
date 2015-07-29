@@ -8,7 +8,6 @@ import AuthConstans from './AuthConstants';
 
 export default Reflux.createStore({
   listenables: Actions,
-  
   mixins: [StoreFormMixin],
 
   getInitialState() {
