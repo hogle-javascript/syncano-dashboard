@@ -14,17 +14,15 @@ let container  = document.getElementById('app');
 tapPlugin();
 
 Router.run(routes, function (Root, state) {
-  if (!window.opener) {
-    var pathname = decodeURIComponent(state.pathname).replace('//', '/');
+  var pathname = decodeURIComponent(state.pathname).replace('//', '/');
 
-    // Remove trailing slash
-    if (pathname.match('/$') !== null) {
-      pathname = pathname.slice(0, -1);
-    }
+  // Remove trailing slash
+  if (pathname.match('/$') !== null) {
+    pathname = pathname.slice(0, -1);
+  }
 
-    if (pathname !== state.pathname) {
-      location.hash = pathname;
-    }
+  if (pathname !== state.pathname) {
+    location.hash = pathname;
   }
 
   if (state.query.distinct_id !== undefined) {
