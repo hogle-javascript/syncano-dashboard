@@ -1,13 +1,13 @@
-var React = require('react'),
+import React from 'react';
 
-    MUI    = require('material-ui'),
-    Common = require('../../common');
+import MUI from 'material-ui';
+import Common from '../../common';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileContainer',
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         marginTop    : 20,
@@ -22,8 +22,8 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div

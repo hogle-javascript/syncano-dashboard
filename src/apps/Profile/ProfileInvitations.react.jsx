@@ -13,6 +13,7 @@ import ProfileInvitationsStore from './ProfileInvitationsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
+import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
 let Column = Common.ColumnList.Column;
 
@@ -141,8 +142,7 @@ export default React.createClass({
   },
 
   render() {
-    var styles             = this.getStyles(),
-        checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
+    var checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
 
     return (
       <Container>
