@@ -152,8 +152,8 @@ export default React.createClass({
   render() {
     let checkedDataViews      = DataViewsStore.getNumberOfChecked(),
         checkedWebhooks       = WebhooksStore.getNumberOfChecked(),
-        isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < (this.state.dataviews.items.length),
-        isAnyWebhookSelected  = checkedWebhooks >= 1 && checkedWebhooks < (this.state.webhooks.items.length),
+        isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length,
+        isAnyWebhookSelected  = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length,
         markedIcon            = 'synicon-checkbox-multiple-marked-outline',
         blankIcon             = 'synicon-checkbox-multiple-blank-outline';
 
