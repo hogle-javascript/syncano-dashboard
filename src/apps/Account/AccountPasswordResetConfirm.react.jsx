@@ -1,32 +1,24 @@
-var React           = require('react'),
-    Reflux          = require('reflux'),
-    Router          = require('react-router'),
-    Link            = Router.Link,
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    // Utils
-    FormMixin       = require('../../mixins/FormMixin'),
+// Utils
+import FormMixin from '../../mixins/FormMixin';
 
-    // Stores and Actions
-    AuthStore       = require('./AuthStore'),
-    AuthActions     = require('./AuthActions'),
+// Stores and Actions
+import Store from './AuthStore';
+import Actions from './AuthActions';
 
-    // Components
-    mui             = require('material-ui'),
-    TextField       = mui.TextField,
-    RaisedButton    = mui.RaisedButton,
-    Paper           = mui.Paper,
+// Components
+import MUI from 'material-ui';
+import Container from '../../common/Container/AccountContainer.react';
 
-    Logo            = require('../../common/Logo');
-
-
-require('./Account.sass');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AccountPasswordResetConfirm',
 
   mixins: [
-    Reflux.connect(AuthStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     Router.State,
     FormMixin
@@ -42,71 +34,59 @@ module.exports = React.createClass({
     }
   },
 
-  handleSuccessfullValidation: function () {
-    var params = this.getParams();
-    AuthActions.passwordResetConfirm({
+  handleSuccessfullValidation() {
+    let params = this.getParams();
+    Actions.passwordResetConfirm({
       new_password: this.state.password,
       uid: params.uid,
       token: params.token
     });
   },
 
-  render: function() {
+  render() {
     return (
-      <div className="account-container">
-        <div className="account-logo">
-          <Link to="login"><Logo className="logo-blue" /></Link>
+      <Container>
+        <div className="account-container__content__header">
+          <p className="">Choose a new password</p>
         </div>
-        <Paper
-          className="account-container__content"
-          rounded={false}
-        >
-          <div className="account-container__content__header">
-            <p className="">Choose a new password</p>
-          </div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit      = {this.handleFormValidation}
-            className     = "account-container__content__form"
-            acceptCharset = "UTF-8"
-            method        = "post"
-          >
+        {this.renderFormNotifications()}
+        <form
+          onSubmit      = {this.handleFormValidation}
+          className     = "account-container__content__form"
+          acceptCharset = "UTF-8"
+          method        = "post">
 
-            <TextField
-              ref          = "password"
-              valueLink    = {this.linkState('password')}
-              errorText    = {this.getValidationMessages('password').join(' ')}
-              type         = "password"
-              name         = "password"
-              className    = "text-field"
-              autoComplete = "password"
-              hintText     = "New password"
-              fullWidth    = {true}
-            />
+          <MUI.TextField
+            ref          = "password"
+            valueLink    = {this.linkState('password')}
+            errorText    = {this.getValidationMessages('password').join(' ')}
+            type         = "password"
+            name         = "password"
+            className    = "text-field"
+            autoComplete = "password"
+            hintText     = "New password"
+            fullWidth    = {true} />
 
-            <TextField
-              ref          = "confirmPassword"
-              valueLink    = {this.linkState('confirmPassword')}
-              errorText    = {this.getValidationMessages('confirmPassword').join(' ')}
-              type         = "password"
-              name         = "confirmPassword"
-              className    = "text-field vm-4-b"
-              autoComplete = "confirmPassword"
-              hintText     = "Confirm password"
-              fullWidth    = {true}
-            />
+          <MUI.TextField
+            ref          = "confirmPassword"
+            valueLink    = {this.linkState('confirmPassword')}
+            errorText    = {this.getValidationMessages('confirmPassword').join(' ')}
+            type         = "password"
+            name         = "confirmPassword"
+            className    = "text-field vm-4-b"
+            autoComplete = "confirmPassword"
+            hintText     = "Confirm password"
+            fullWidth    = {true} />
 
-            <RaisedButton
-              type       = "submit"
-              label      = "Change password"
-              fullWidth  = {true}
-              labelStyle = {{fontSize: '16px'}}
-              style      = {{boxShadow: 'none'}}
-              primary    = {true}
-            />
-          </form>
-        </Paper>
-      </div>
+          <MUI.RaisedButton
+            type       = "submit"
+            label      = "Change password"
+            fullWidth  = {true}
+            labelStyle = {{fontSize: '16px'}}
+            style      = {{boxShadow: 'none'}}
+            primary    = {true} />
+        </form>
+      </Container>
     );
   }
 });
