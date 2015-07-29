@@ -4,6 +4,7 @@ import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
+import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
 import CodeBoxActions from './CodeBoxActions';
 
 let CodeBoxStore = Reflux.createStore({
@@ -99,6 +100,14 @@ let CodeBoxStore = Reflux.createStore({
       }
     }
     this.trigger(this.data);
+  },
+
+  onUpdateCodeBoxCompleted() {
+    SnackbarNotificationActions.dismiss();
+  },
+
+  onUpdateCodeBoxFailure() {
+    SnackbarNotificationActions.dismiss();
   }
 
 });

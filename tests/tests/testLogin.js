@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['nightwatch'],
+  tags: ['login'],
   'Test Login' : function(client) {
     client
         .page.loginPage().goToLoginPage()

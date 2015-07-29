@@ -50,7 +50,7 @@ export default React.createClass({
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Invite',
+    let title       = this.hasEditMode() ? 'Edit' : 'Invite',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
@@ -71,15 +71,13 @@ export default React.createClass({
         title           = {title + ' an Administrator'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'
-          >
+            method        = 'post'>
             <MUI.TextField
               ref               = 'email'
               name              = 'email'
@@ -88,8 +86,8 @@ export default React.createClass({
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
               hintText          = 'Email of the administrator'
-              floatingLabelText = 'Email'
-            />
+              floatingLabelText = 'Email' />
+
             <MUI.SelectField
               ref               = 'role'
               name              = 'role'
@@ -100,8 +98,7 @@ export default React.createClass({
               floatingLabelText = 'Role of the administrator'
               style             = {{width: '50%'}}
               errorText         = {this.getValidationMessages('role').join(' ')}
-              menuItems         = {AdminDialogStore.getRoles()}
-            />
+              menuItems         = {AdminDialogStore.getRoles()} />
           </form>
         </div>
       </Common.Dialog>

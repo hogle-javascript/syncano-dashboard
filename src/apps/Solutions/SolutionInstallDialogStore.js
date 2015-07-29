@@ -6,6 +6,7 @@ import Mixins from '../../mixins';
 //Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
+import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
 import InstancesActions from '../Instances/InstancesActions';
 import SolutionsEditActions from './SolutionEditActions';
 import Actions from './SolutionInstallDialogActions';
@@ -140,6 +141,14 @@ export default Reflux.createStore({
     console.debug('SolutionInstallDialogStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
     SessionStore.getRouter().transitionTo('instance', {instanceName: payload.instance});
+    SnackbarNotificationActions.set({
+      delay: true,
+      message: 'Solution installed successful',
+      action: 'dismiss',
+      onActionTouchTap() {
+        this.refs.snackbar.dismiss();
+      }
+    })
   },
 
   onInstallSolutionFailure() {

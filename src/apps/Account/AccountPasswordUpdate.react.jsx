@@ -1,25 +1,20 @@
-var React        = require('react'),
-    Reflux       = require('reflux'),
-    Router       = require('react-router'),
-    Link         = Router.Link,
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
 
-    AuthStore    = require('./AuthStore'),
-    AuthActions  = require('./AuthActions'),
-    AuthConstans = require('./AuthConstants'),
+import Store from './AuthStore';
+import Actions from './AuthActions';
+import Constants from './AuthConstants';
 
-    mui          = require('material-ui'),
-    Paper        = mui.Paper,
-    RaisedButton = mui.RaisedButton,
+import MUI from 'material-ui';
+import Container from '../../common/Container/AccountContainer.react';
 
-    Logo         = require('../../common/Logo');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AccountPasswordUpdate',
 
   mixins: [
-    Reflux.connect(AuthStore),
+    Reflux.connect(Store),
     Router.State,
     Router.Navigation
   ],
@@ -28,7 +23,7 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       text: {
         color        : 'rgba(0, 0, 0, 0.54)',
@@ -47,40 +42,33 @@ module.exports = React.createClass({
     }
   },
 
-  handleButtonClick: function() {
-    this.transitionTo(AuthConstans.LOGIN_REDIRECT_PATH);
+  handleButtonClick() {
+    this.transitionTo(Constants.LOGIN_REDIRECT_PATH);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
-      <div className="account-container" ref="loginPage">
-        <div className="account-logo">
-          <Link to="login"><Logo className="logo-blue" /></Link>
+      <Container>
+        <div className="account-container__content__header">
+          <p className="vm-0-b">Password updated</p>
         </div>
-        <Paper className="account-container__content" rounded={false}>
-          <div className="account-container__content__header">
-            <p className="vm-0-b">Password updated</p>
-          </div>
-          <div>
-            <p
-              className = "vm-4-b"
-              style     = {styles.text}
-            >
-              Sweet! Your new password has now been set and you can log in.
-            </p>
+        <div>
+          <p
+            className = "vm-4-b"
+            style     = {styles.text}>
+            Sweet! Your new password has now been set and you can log in.
+          </p>
 
-            <RaisedButton
-              style      = {styles.button}
-              labelStyle = {styles.buttonLabel}
-              label      = "Go to dashboard"
-              onClick    = {this.handleButtonClick}
-              primary    = {true}
-            />
-          </div>
-        </Paper>
-      </div>
+          <MUI.RaisedButton
+            style      = {styles.button}
+            labelStyle = {styles.buttonLabel}
+            label      = "Go to dashboard"
+            onClick    = {this.handleButtonClick}
+            primary    = {true} />
+        </div>
+      </Container>
     )
   }
 });

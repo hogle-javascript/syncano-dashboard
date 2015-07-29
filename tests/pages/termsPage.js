@@ -3,7 +3,8 @@ module.exports = {
   commands: [],
   elements: {
     termsOfUseContainer: {
-      selector: 'div.terms'
+      selector: '//h1[text()="Terms of Service"]',
+      locateStrategy: 'xpath'
     }
   }
 };
