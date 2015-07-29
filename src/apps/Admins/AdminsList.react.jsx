@@ -52,7 +52,7 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    var styles  = this.getStyles(),
+    let styles  = this.getStyles(),
         isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (
@@ -83,7 +83,7 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items || [];
+    let items = this.state.items || [];
 
     if (items.length > 0) {
       items = this.state.items.map(item => this.renderItem(item));
