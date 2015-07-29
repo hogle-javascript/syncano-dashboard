@@ -11,6 +11,7 @@ import CodeBoxActions from './CodeBoxActions';
 import CodeBoxStore from './CodeBoxStore';
 
 // Components
+import Snackbar from 'material-ui/lib/snackbar';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -47,11 +48,16 @@ export default React.createClass({
   },
 
   handleRun() {
-    CodeBoxActions.runCodeBox({
-      id      : this.state.currentCodeBox.id,
-      payload : this.refs.tracePanel.refs.payloadField.getValue()
-    });
-
+    let payloadErrors = this.refs.tracePanel.state.errors,
+        payloadIsValid = typeof payloadErrors.payloadValue === 'undefined' ? true : false;
+    if (payloadIsValid) {
+      CodeBoxActions.runCodeBox({
+        id      : this.state.currentCodeBox.id,
+        payload : this.refs.tracePanel.refs.payloadField.getValue()
+      });
+    } else {
+      this.refs.snackbar.show();
+    }
   },
 
   handleUpdate() {
@@ -76,13 +82,15 @@ export default React.createClass({
             ref   = "editorSource"
             mode  = {editorMode}
             theme = "github"
-            value = {source} />
+            value = {source}
+          />
 
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
               ref     = "tracePanel"
               trace   = {this.state.lastTraceResult}
-              loading = {!this.state.lastTraceReady} />
+              loading = {!this.state.lastTraceReady}
+            />
           </div>
         </div>
       )
@@ -98,16 +106,23 @@ export default React.createClass({
             label         = "Click here to save CodeBox"
             mini          = {true}
             onClick       = {this.handleUpdate}
-            iconClassName = "synicon-content-save" />
+            iconClassName = "synicon-content-save"
+          />
           <Common.Fab.Item
             label         = "Click here to execute CodeBox"
             mini          = {true}
             onClick       = {this.handleRun}
-            iconClassName = "synicon-play" />
+            iconClassName = "synicon-play"
+          />
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Common.Loading>
+        <Snackbar
+          message          = "Can't run CodeBox with invalid payload"
+          ref              = "snackbar"
+          autoHideDuration = {3000}
+        />
       </Container>
     );
   }

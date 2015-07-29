@@ -2,6 +2,10 @@ import React from 'react';
 import Radium from 'radium';
 import classNames from 'classnames';
 
+// Utils
+import FormMixin from '../../mixins/FormMixin';
+
+// Components
 import MUI from 'material-ui';
 import Loading from '../../common/Loading';
 
@@ -12,12 +16,37 @@ export default Radium(React.createClass({
   displayName: 'EditorPanel',
 
   mixins: [
-    React.addons.LinkedStateMixin
+    React.addons.LinkedStateMixin,
+    FormMixin
   ],
 
   propTypes: {
     trace: React.PropTypes.string,
     loading: React.PropTypes.bool
+  },
+
+  getInitialState() {
+    return {
+      panelCollapsed : true,
+      payloadValue   : '{"abc": 123}'
+    }
+  },
+
+  validatorConstraints: {
+    payloadValue: (value) => {
+      try {
+        JSON.parse(value);
+        return null
+      }
+      catch(err) {
+        return {
+          format: {
+            pattern : '',
+            message : 'is not a valid JSON'
+          }
+        }
+      }
+    }
   },
 
   getStyles() {
@@ -37,16 +66,16 @@ export default Radium(React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      panelCollapsed: true
-    }
-  },
-
   handleToggleClick() {
     this.setState({
       panelCollapsed: !this.state.panelCollapsed
     });
+  },
+
+  handleOnChangePayload() {
+    this.setState({
+      payloadValue: this.refs.payloadField.getValue()
+    }, this.handleFormValidation)
   },
 
   render() {
@@ -60,7 +89,8 @@ export default Radium(React.createClass({
           ref     = "trace"
           rounded = {false}
           zDepth  = {1}
-          style   = {styles.trace}>
+          style   = {styles.trace}
+        >
           {this.props.trace}
         </MUI.Paper>
       );
@@ -72,18 +102,26 @@ export default Radium(React.createClass({
           zDepth = {1}
           style  = {styles.payloadStyle}>
           <MUI.TextField
-            ref               = "payloadField"
-            defaultValue      = '{"abc": 123}'
+            name              = 'payloadField'
+            ref               = 'payloadField'
+            value             = {this.state.payloadValue}
             fullWidth         = {true}
             hintText          = 'Type in your payload here e.g. {"my_argument": "test123}'
-            floatingLabelText = "Payload" />
+            floatingLabelText = 'Payload'
+            onChange          = {this.handleOnChangePayload}
+            errorText         = {this.getValidationMessages('payloadValue').join(' ')}
+          />
             <div
               className="editor-toolbar-unfold-button"
-              onClick={this.handleToggleClick}>
+              onClick={this.handleToggleClick}
+            >
               <MUI.FontIcon className={unfoldIcon}/>
             </div>
         </MUI.Paper>
-        <Loading show={this.props.loading} type='linear' />
+        <Loading
+          show = {this.props.loading}
+          type = 'linear'
+        />
         {trace}
       </MUI.Paper>
     );
