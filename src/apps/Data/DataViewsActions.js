@@ -1,73 +1,36 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js';
 
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
-
-var DataViewsActions = Reflux.createActions({
+export default CreateActions({}, {
   checkItem    : {},
   uncheckAll   : {},
+  selectAll    : {},
   fetch        : {},
   setDataViews : {},
   showDialog   : {},
   dismissDialog: {},
+
   fetchDataViews: {
     asyncResult : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.DataViews.list'
   },
   createDataView: {
     asyncResult : true,
     asyncForm   : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.DataViews.create'
   },
   updateDataView: {
     asyncResult : true,
     asyncForm   : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.DataViews.update'
   },
   removeDataViews: {
     asyncResult : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.DataViews.remove'
   }
 
 });
 
-DataViewsActions.createDataView.listen(function(payload) {
-  console.info('DataViewsActions::createDataView', payload);
-  Connection
-    .DataViews
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-DataViewsActions.fetchDataViews.listen(function() {
-  console.info('DataViewsActions::fetchDataViews');
-  Connection
-    .DataViews
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-DataViewsActions.updateDataView.listen(function(id, payload) {
-  console.info('DataViewsActions::updateDataView');
-  Connection
-    .DataViews
-    .update(id, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-DataViewsActions.removeDataViews.listen(function(dataviews) {
-  console.info('DataViewsActions::removeDataViews');
-  var promises = dataviews.map(function(dataview) {
-    return Connection.DataViews.remove(dataview.name);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-module.exports = DataViewsActions;
