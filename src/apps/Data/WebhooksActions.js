@@ -4,6 +4,7 @@ export default CreateActions(
   {},
   {
     checkItem     : {},
+    selectAll     : {},
     uncheckAll    : {},
     fetch         : {},
     setWebhooks   : {},

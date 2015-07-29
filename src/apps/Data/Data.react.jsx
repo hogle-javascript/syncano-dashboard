@@ -137,9 +137,25 @@ export default React.createClass({
     WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
   },
 
+  checkDataViewItem(id, state) {
+    console.info('Data::checkDataViewItem');
+    DataViewsActions.checkItem(id, state);
+    WebhooksActions.uncheckAll();
+  },
+
+  checkWebhook(id, state) {
+    console.info('Data::checkWebhook');
+    WebhooksActions.checkItem(id, state);
+    DataViewsActions.uncheckAll();
+  },
+
   render() {
-    let checkedDataViews = DataViewsStore.getNumberOfChecked(),
-        checkedWebhooks  = WebhooksStore.getNumberOfChecked();
+    let checkedDataViews      = DataViewsStore.getNumberOfChecked(),
+        checkedWebhooks       = WebhooksStore.getNumberOfChecked(),
+        isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length,
+        isAnyWebhookSelected  = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length,
+        markedIcon            = 'synicon-checkbox-multiple-marked-outline',
+        blankIcon             = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -150,10 +166,10 @@ export default React.createClass({
         <Common.Show if={checkedDataViews > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = "Click here to unselect all"
+              label         = {isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
+              iconClassName = {isAnyDataViewSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Data Endpoint"
               mini          = {true}
@@ -171,10 +187,10 @@ export default React.createClass({
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = "Click here to unselect all"
+              label         = {isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              onClick       = {isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              iconClassName = {isAnyWebhookSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete CodeBox Endpoint"
               mini          = {true}
@@ -202,7 +218,7 @@ export default React.createClass({
 
         <DataViewsList
           name                 = "Data Endpoints"
-          checkItem            = {DataViewsActions.checkItem}
+          checkItem            = {this.checkDataViewItem}
           isLoading            = {this.state.dataviews.isLoading}
           items                = {this.state.dataviews.items}
           emptyItemHandleClick = {this.showDataViewDialog}
@@ -210,7 +226,7 @@ export default React.createClass({
 
         <WebhooksList
           name                 = "CodeBox Endpoints"
-          checkItem            = {WebhooksActions.checkItem}
+          checkItem            = {this.checkWebhook}
           isLoading            = {this.state.webhooks.isLoading}
           items                = {this.state.webhooks.items}
           emptyItemHandleClick = {this.showWebhookDialog}

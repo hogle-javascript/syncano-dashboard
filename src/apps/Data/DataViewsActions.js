@@ -5,6 +5,7 @@ export default CreateActions(
   {
     checkItem    : {},
     uncheckAll   : {},
+    selectAll    : {},
     fetch        : {},
     setDataViews : {},
     showDialog   : {},

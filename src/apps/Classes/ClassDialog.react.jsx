@@ -2,9 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import DialogMixin from '../../mixins/DialogMixin';
-import FormMixin from '../../mixins/FormMixin';
-import Show from '../../common/Show/Show.react';
+import Mixins from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
@@ -23,8 +21,8 @@ export default React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(ClassDialogStore),
-    DialogMixin,
-    FormMixin
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -43,7 +41,7 @@ export default React.createClass({
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map(function(item) {
+    return Constants.fieldTypes.map(item => {
       return {
         payload : item,
         text    : item
@@ -52,9 +50,9 @@ export default React.createClass({
   },
 
   setFields(schema) {
-    var fields = this.state.fields;
+    let fields = this.state.fields;
 
-    schema.map(function(item) {
+    schema.map(item => {
       fields.push({
         fieldName   : item.name,
         fieldType   : item.type,
@@ -68,8 +66,8 @@ export default React.createClass({
   },
 
   getSchema() {
-    return JSON.stringify(this.state.fields.map(function(item) {
-      var schema =  {
+    return JSON.stringify(this.state.fields.map(item => {
+      let schema =  {
         name   : item.fieldName,
         type   : item.fieldType,
         target : item.fieldTarget
@@ -87,7 +85,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    var schema = this.getSchema();
+    let schema = this.getSchema();
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
@@ -121,7 +119,7 @@ export default React.createClass({
       return;
     }
 
-    var fields = this.state.fields;
+    let fields = this.state.fields;
 
     let field = {
       fieldName   : this.state.fieldName,
@@ -146,9 +144,8 @@ export default React.createClass({
   },
 
   handleRemoveField(item) {
-    var fields = [];
-    this.state.fields.map(function(field) {
-
+    let fields = [];
+    this.state.fields.map(field => {
       if (field.fieldName !== item.fieldName) {
         fields.push(field);
       }
@@ -157,12 +154,13 @@ export default React.createClass({
   },
 
   handleOnCheck(item, event) {
-    var newFields = this.state.fields.map(function(field) {
+    let newFields = this.state.fields.map(field => {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
           field.fieldOrder = event.target.checked;
-        } else if (event.target.name === 'filter')
+        } else if (event.target.name === 'filter') {
           field.fieldFilter = event.target.checked;
+        }
       }
       return field;
     });
@@ -170,7 +168,7 @@ export default React.createClass({
   },
 
   renderSchemaFields() {
-    return this.state.fields.map(function(item) {
+    return this.state.fields.map(item => {
 
       return (
         <div key={item.fieldName} className='row'>
@@ -183,8 +181,7 @@ export default React.createClass({
                 style          = {{marginTop: 5}}
                 name           = "filter"
                 defaultChecked = {item.fieldFilter}
-                onCheck         = {this.handleOnCheck.bind(this, item)}
-              />
+                onCheck         = {this.handleOnCheck.bind(this, item)} />
             </Common.Show>
           </span>
           <span className='col-xs-3' style={{paddingLeft: 15}}>
@@ -193,8 +190,7 @@ export default React.createClass({
                 style           = {{marginTop: 5}}
                 name            = "order"
                 defaultChecked  = {item.fieldOrder}
-                onCheck         = {this.handleOnCheck.bind(this, item)}
-              />
+                onCheck         = {this.handleOnCheck.bind(this, item)} />
             </Common.Show>
           </span>
           <span className='col-xs-5' style={{paddingLeft: 15}}>
@@ -206,16 +202,16 @@ export default React.createClass({
           </span>
         </div>
       )
-    }.bind(this));
+    });
   },
 
   hasFilter(fieldType) {
-    var noFilterFields = ['file', 'text'];
+    let noFilterFields = ['file', 'text'];
     return noFilterFields.indexOf(fieldType) < 0 ? true : false;
   },
 
   hasOrder(fieldType) {
-    var noOrderFields = ['file', 'text'];
+    let noOrderFields = ['file', 'text'];
     return noOrderFields.indexOf(fieldType) < 0 ? true : false;
   },
 
@@ -256,7 +252,7 @@ export default React.createClass({
         title           = {title + ' a Class'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState} >
+        onDismiss       = {this.resetDialogState}>
         {this.renderFormNotifications()}
         <form
           onSubmit      = {this.handleFormValidation}
@@ -272,8 +268,7 @@ export default React.createClass({
                 valueLink         = {this.linkState('name')}
                 errorText         = {this.getValidationMessages('name').join(' ')}
                 hintText          = 'Name of the Class'
-                floatingLabelText = 'Name'
-              />
+                floatingLabelText = 'Name' />
             </div>
             <div className='col-xs-26' style={{paddingLeft: 15}}>
               <MUI.TextField
@@ -283,8 +278,7 @@ export default React.createClass({
                 valueLink         = {this.linkState('description')}
                 errorText         = {this.getValidationMessages('description').join(' ')}
                 hintText          = 'Description of the Class'
-                floatingLabelText = 'Description'
-              />
+                floatingLabelText = 'Description' />
             </div>
           </div>
           <div className="row">
@@ -326,20 +320,12 @@ export default React.createClass({
           <div style={{marginTop: 30}}>Schema</div>
           {this.getValidationMessages('schema').join(' ')}
           <div className='row'>
-            <div className='col-xs-8'>
-            </div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}>
-            </div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}>
-            </div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>
-              Filter
-            </div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>
-              Order
-            </div>
-            <div className='col-xs-5' style={{paddingLeft: 15}}>
-            </div>
+            <div className='col-xs-8'></div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}></div>
+            <div className='col-xs-8' style={{paddingLeft: 15}}></div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>Filter</div>
+            <div className='col-xs-3' style={{paddingLeft: 15}}>Order</div>
+            <div className='col-xs-5' style={{paddingLeft: 15}}></div>
           </div>
           <div className='row'>
             <div className='col-xs-8'>
@@ -350,8 +336,7 @@ export default React.createClass({
                valueLink         = {this.linkState('fieldName')}
                errorText         = {this.getValidationMessages('fieldName').join(' ')}
                hintText          = 'Name of the Field'
-               floatingLabelText = 'Name'
-              />
+               floatingLabelText = 'Name' />
             </div>
             <div className='col-xs-8' style={{paddingLeft: 15}}>
               <MUI.SelectField
@@ -364,8 +349,7 @@ export default React.createClass({
                 errorText         = {this.getValidationMessages('fieldType').join(' ')}
                 valueMember       = 'payload'
                 displayMember     = 'text'
-                menuItems         = {this.getFieldTypes()}
-              />
+                menuItems         = {this.getFieldTypes()} />
             </div>
             <div className='col-xs-8' style={{paddingLeft: 15}}>
               <Common.Show if={this.state.fieldType === 'reference'}>
@@ -378,8 +362,7 @@ export default React.createClass({
                   errorText         = {this.getValidationMessages('fieldTarget').join(' ')}
                   valueMember       = 'payload'
                   displayMember     = 'text'
-                  menuItems         = {ClassesStore.getClassesDropdown()}
-                />
+                  menuItems         = {ClassesStore.getClassesDropdown()} />
               </Common.Show>
             </div>
             <div className='col-xs-3' style={{paddingLeft: 15}}>
@@ -387,8 +370,7 @@ export default React.createClass({
                 <MUI.Checkbox
                   style = {{marginTop: 35}}
                   ref   = "fieldFilter"
-                  name  = "filter"
-                />
+                  name  = "filter" />
               </Common.Show>
             </div>
             <div className='col-xs-3' style={{paddingLeft: 15}}>
@@ -396,8 +378,7 @@ export default React.createClass({
                 <MUI.Checkbox
                   style = {{marginTop: 35}}
                   ref   = "fieldOrder"
-                  name  = "order"
-                />
+                  name  = "order" />
               </Common.Show>
             </div>
             <div className='col-xs-5' style={{paddingLeft: 15}}>
@@ -406,8 +387,7 @@ export default React.createClass({
                 label     = 'Add'
                 disabled  = {!this.state.fieldType || !this.state.fieldName}
                 secondary = {true}
-                onClick   = {this.handleFieldAdd}
-              />
+                onClick   = {this.handleFieldAdd} />
             </div>
           </div>
           <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
