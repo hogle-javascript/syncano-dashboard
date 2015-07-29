@@ -14,6 +14,7 @@ import CodeBoxStore from './CodeBoxStore';
 import Snackbar from 'material-ui/lib/snackbar';
 import Common from '../../common';
 import Container from '../../common/Container';
+import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
 
 export default React.createClass({
 
@@ -63,6 +64,9 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
     CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    SnackbarNotificationActions.set({
+      message: 'Saving...'
+    });
   },
 
   renderEditor() {

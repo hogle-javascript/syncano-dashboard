@@ -9,7 +9,7 @@ var Reflux         = require('reflux'),
     ColorStore     = require('../../common/Color/ColorStore'),
     SyncanoTheme   = require('../../common/SyncanoTheme');
 
-var SessionStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: SessionActions,
 
   init: function() {
@@ -186,5 +186,3 @@ var SessionStore = Reflux.createStore({
   }
 
 });
-
-module.exports = SessionStore;

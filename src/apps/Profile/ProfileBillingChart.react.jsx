@@ -17,6 +17,8 @@ export default React.createClass({
   mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
+    console.log('ProfileBillingChart::componentDidMount');
+
     Actions.fetchBillingProfile();
     Actions.fetchTotalDailyUsage({
       start: Store.getStartDate(),
@@ -25,6 +27,8 @@ export default React.createClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('ProfileBillingChart::componentDidUpdate');
+
     if (this.state.isLoading === true || this.chart !== undefined) {
       return;
     }
