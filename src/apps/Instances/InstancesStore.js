@@ -1,30 +1,28 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin      = require('../../mixins/StoreFormMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    // Stores & Actions
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    InstancesActions    = require('./InstancesActions');
+// Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import Actions from './InstancesActions';
 
-var InstancesStore = Reflux.createStore({
-  listenables : InstancesActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    CheckListStoreMixin,
-    StoreFormMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreForm,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items: null
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -33,22 +31,22 @@ var InstancesStore = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('InstancesStore::refreshData');
-    InstancesActions.fetchInstances();
+    Actions.fetchInstances();
   },
 
-  amIOwner: function(item) {
+  amIOwner(item) {
     if (item) {
       return item.owner.email === SessionStore.getUser().email;
     }
   },
 
-  onCheckItem: function(checkId, state) {
+  onCheckItem(checkId, state) {
     console.debug('InstancesStore::onCheckItem');
 
-    var item         = this.getInstanceById(checkId);
-    var checkedItems = this.getCheckedItems();
+    let item         = this.getInstanceById(checkId),
+        checkedItems = this.getCheckedItems();
 
     // Unchecking or no items checked
     if (!state || checkedItems.length === 0) {
@@ -58,12 +56,12 @@ var InstancesStore = Reflux.createStore({
     }
 
     // Checking if the item is from the same list as other checked
-    var newItemFromMyList   = this.amIOwner(item),
+    let newItemFromMyList   = this.amIOwner(item),
         otherItemFromMyList = this.amIOwner(checkedItems[0]);
 
     item.checked = state;
     if (!(newItemFromMyList && otherItemFromMyList)) {
-      this.data.items.forEach(function(existingItem) {
+      this.data.items.forEach(existingItem => {
         // Uncheck all other then new one
         if (item.name !== existingItem.name) {
           existingItem.checked = false;
@@ -74,49 +72,49 @@ var InstancesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  getInstanceById: function(name) {
-    var instance = null;
-    this.data.items.some(function(item) {
+  getInstanceById(name) {
+    let instance = null;
+    this.data.items.some(item => {
       if (item.name.toString() === name.toString()) {
         instance = item;
         return true;
       }
-    }.bind(this));
+    });
     return instance;
   },
 
-  isCheckedInstanceShared: function() {
-    var checkedItems = this.getCheckedItems();
+  isCheckedInstanceShared() {
+    let checkedItems = this.getCheckedItems();
     if (checkedItems) {
       return !this.amIOwner(checkedItems[0]);
     }
   },
 
   // Filters
-  filterMyInstances: function(item) {
+  filterMyInstances(item) {
     return this.amIOwner(item);
   },
 
-  filterOtherInstances: function(item) {
+  filterOtherInstances(item) {
     return !this.amIOwner(item);
   },
 
-  getMyInstances: function() {
+  getMyInstances() {
     if (this.data.items === null) {
       return this.data.items;
     }
     return this.data.items.filter(this.filterMyInstances);
   },
 
-  getOtherInstances: function() {
+  getOtherInstances() {
     if (this.data.items === null) {
       return this.data.items;
     }
     return this.data.items.filter(this.filterOtherInstances);
   },
 
-  getInstancesDropdown: function() {
-    return this.data.items.map(function(item) {
+  getInstancesDropdown() {
+    return this.data.items.map(item => {
       return {
         payload : item.name,
         text    : item.name
@@ -124,41 +122,39 @@ var InstancesStore = Reflux.createStore({
     });
   },
 
-  setInstances: function(instances) {
+  setInstances(instances) {
     console.debug('InstancesStore::setInstances');
-    this.data.items = Object.keys(instances).map(function(key) {
-      return instances[key];
-    });
+    this.data.items = Object.keys(instances).map(key => instances[key]);
     this.trigger(this.data);
   },
 
-  onFetchInstances: function(instances) {
+  onFetchInstances(instances) {
     console.debug('InstancesStore::onFetchInstances');
     this.trigger(this.data);
   },
 
-  onFetchInstancesCompleted: function(items) {
+  onFetchInstancesCompleted(items) {
     console.debug('InstancesStore::onFetchInstancesCompleted');
-    InstancesActions.setInstances(items);
+    Actions.setInstances(items);
   },
 
-  onFetchInstancesFailure: function() {
+  onFetchInstancesFailure() {
     console.debug('InstancesStore::onFetchInstancesFailure');
     this.trigger(this.data);
   },
 
-  onRemoveInstancesCompleted: function() {
+  onRemoveInstancesCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  onUpdateInstanceCompleted: function() {
+  onUpdateInstanceCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  getCheckedItemIconColor: function() {
-    var singleItem = this.getCheckedItem();
+  getCheckedItemIconColor() {
+    let singleItem = this.getCheckedItem();
 
     if (!singleItem) {
       return {
@@ -172,7 +168,4 @@ var InstancesStore = Reflux.createStore({
       icon  : singleItem.metadata.icon
     };
   }
-
 });
-
-module.exports = InstancesStore;
