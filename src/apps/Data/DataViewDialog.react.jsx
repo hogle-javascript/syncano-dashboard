@@ -67,19 +67,19 @@ export default React.createClass({
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataViewDialog::handleToggle', arguments);
 
-    var genList = function(list, fieldName, value) {
-      var arr = list.replace(/ /g, '').split(',').filter(function(n) { return n });
+    let genList = (list, fieldName, value) => {
+      let arr = list.replace(/ /g, '').split(',').filter(n => n);
 
       if (value) {
         arr.push(fieldName);
       } else {
-        arr = arr.filter(function(n) { return n != fieldName });
+        arr = arr.filter(n => n != fieldName );
       }
 
       return arr.join(',');
     };
 
-    var fields = '';
+    let fields = '';
     if (fieldsType === 'showFields') {
       fields = genList(this.state.fields, fieldName, value);
       this.setState({fields: fields});
@@ -100,7 +100,7 @@ export default React.createClass({
   renderFields() {
     console.info('DataViewDialog::renderFields', this.state.class);
 
-    var fields = [
+    let fields = [
       <div className='row' style={{marginBottom: 20}}>
         <div className='col-flex-1'>Class Fields</div>
         <div className='col-xs-8'>Expand</div>
@@ -108,7 +108,7 @@ export default React.createClass({
         _this  = this;
 
     if (this.state.class) {
-      return fields.concat(ClassesStore.getClassFields(this.state.class).map(function(field) {
+      return fields.concat(ClassesStore.getClassFields(this.state.class).map(field => {
         return (
           <div className='row'>
             <div className='col-flex-1'>
@@ -133,7 +133,7 @@ export default React.createClass({
             </div>
           </div>
         )
-      }.bind(this)))
+      }))
     }
   },
 
@@ -151,8 +151,7 @@ export default React.createClass({
         errorText         = {this.getValidationMessages('class').join(' ')}
         valueMember       = "payload"
         displayMember     = "text"
-        menuItems         = {ClassesStore.getClassOrderFieldsPayload(this.state.class)}
-      />,
+        menuItems         = {ClassesStore.getClassOrderFieldsPayload(this.state.class)} />,
       <MUI.TextField
         ref               = 'page_size'
         name              = 'page_size'
@@ -160,13 +159,12 @@ export default React.createClass({
         valueLink         = {this.linkState('page_size')}
         errorText         = {this.getValidationMessages('page_size').join(' ')}
         hintText          = 'Number'
-        floatingLabelText = 'Number of records in data set'
-      />
+        floatingLabelText = 'Number of records in data set' />
     ]
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
+    let title       = this.hasEditMode() ? 'Edit' : 'Add',
         submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
         dialogStandardActions = [
           {
@@ -181,7 +179,7 @@ export default React.createClass({
           }
         ];
 
-    var fields    = null,
+    let fields    = null,
         options   = null;
 
     if (this.state.class) {
@@ -197,8 +195,7 @@ export default React.createClass({
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
         onDismiss       = {this.resetDialogState}
-        modal           = {true}
-      >
+        modal           = {true}>
         <div>
           {this.renderFormNotifications()}
           <div>Main settings</div>
@@ -212,8 +209,7 @@ export default React.createClass({
                 valueLink         = {this.linkState('name')}
                 errorText         = {this.getValidationMessages('name').join(' ')}
                 hintText          = 'Name of the endpoint'
-                floatingLabelText = 'Endpoint'
-              />
+                floatingLabelText = 'Endpoint' />
             </div>
             <div className='col-flex-1' style={{paddingLeft: 15}}>
               <MUI.TextField
@@ -223,8 +219,7 @@ export default React.createClass({
                 valueLink         = {this.linkState('description')}
                 errorText         = {this.getValidationMessages('description').join(' ')}
                 hintText          = 'Description of the endpoint'
-                floatingLabelText = 'Description'
-              />
+                floatingLabelText = 'Description' />
             </div>
           </div>
           <div className='row'>
@@ -238,8 +233,7 @@ export default React.createClass({
                 errorText         = {this.getValidationMessages('class').join(' ')}
                 valueMember       = "payload"
                 displayMember     = "text"
-                menuItems         = {this.state.classes}
-              />
+                menuItems         = {this.state.classes} />
             </div>
           </div>
           <div className="row" style={{marginTop: 30}}>
