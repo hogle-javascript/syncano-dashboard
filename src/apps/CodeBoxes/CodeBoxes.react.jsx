@@ -8,8 +8,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
-import CodeBoxesActions from './CodeBoxesActions';
-import CodeBoxesStore from './CodeBoxesStore';
+import Actions from './CodeBoxesActions';
+import Store from './CodeBoxesStore';
 
 // Components
 import MUI from 'material-ui';
@@ -28,30 +28,30 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(CodeBoxesStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('CodeBoxes::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
-    CodeBoxesActions.fetch();
+    Actions.fetch();
     if (this.getParams().action == 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
     }
-    CodeBoxesActions.fetch();
+    Actions.fetch();
   },
 
   // Dialogs config
-  initDialogs: function() {
-    var checkedCodeboxes = CodeBoxesStore.getCheckedItems();
+  initDialogs() {
+    let checkedCodeboxes = Store.getCheckedItems();
 
     return [{
       dialog: Common.Dialog,
@@ -82,21 +82,21 @@ export default React.createClass({
     }]
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('CodeBoxes::handleDelete');
-    CodeBoxesActions.removeCodeBoxes(CodeBoxesStore.getCheckedItems());
+    Actions.removeCodeBoxes(Store.getCheckedItems());
   },
 
-  showCodeBoxDialog: function() {
-    CodeBoxesActions.showDialog();
+  showCodeBoxDialog() {
+    Actions.showDialog();
   },
 
-  showCodeBoxEditDialog: function() {
-    CodeBoxesActions.showDialog(CodeBoxesStore.getCheckedItem());
+  showCodeBoxEditDialog() {
+    Actions.showDialog(Store.getCheckedItem());
   },
 
-  render: function() {
-    var checkedItems         = CodeBoxesStore.getNumberOfChecked(),
+  render() {
+    let checkedItems         = Store.getNumberOfChecked(),
         isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
         markedIcon           = 'synicon-checkbox-multiple-marked-outline',
         blankIcon            = 'synicon-checkbox-multiple-blank-outline';
@@ -111,22 +111,19 @@ export default React.createClass({
             <Common.Fab.Item
               label         = {isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {isAnyCodeboxSelected ? CodeBoxesActions.selectAll : CodeBoxesActions.uncheckAll}
-              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon}
-            />
+              onClick       = {isAnyCodeboxSelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete CodeBoxes"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteCodeBoxDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit CodeBox"
               mini          = {true}
               disabled      = {checkedItems > 1}
               onClick       = {this.showCodeBoxEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -134,16 +131,14 @@ export default React.createClass({
           <Common.Fab.Item
             label         = "Click here to add CodeBox"
             onClick       = {this.showCodeBoxDialog}
-            iconClassName = "synicon-plus"
-          />
+            iconClassName = "synicon-plus" />
         </Common.Fab>
 
         <CodeBoxesList
           name                 = "CodeBoxes"
           items                = {this.state.items}
           emptyItemHandleClick = {this.showCodeBoxDialog}
-          emptyItemContent     = "Create a CodeBox"
-        />
+          emptyItemContent     = "Create a CodeBox" />
       </Container>
     );
   }

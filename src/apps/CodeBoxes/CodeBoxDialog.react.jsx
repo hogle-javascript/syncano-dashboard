@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import CodeBoxesActions from './CodeBoxesActions';
-import CodeBoxDialogStore from './CodeBoxDialogStore';
+import Actions from './CodeBoxesActions';
+import Store from './CodeBoxDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -18,7 +18,7 @@ export default React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(CodeBoxDialogStore),
+    Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -34,11 +34,11 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
-    CodeBoxesActions.fetchCodeBoxRuntimes();
+    Actions.fetchCodeBoxRuntimes();
   },
 
   handleEditSubmit() {
-    CodeBoxesActions.updateCodeBox(this.state.id, {
+    Actions.updateCodeBox(this.state.id, {
       label        : this.state.label,
       description  : this.state.description,
       runtime_name : this.state.runtime_name
@@ -46,7 +46,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    CodeBoxesActions.createCodeBox({
+    Actions.createCodeBox({
       label        : this.state.label,
       description  : this.state.description,
       runtime_name : this.state.runtime_name
@@ -75,8 +75,7 @@ export default React.createClass({
         actions      = {dialogStandardActions}
         onDismiss    = {this.resetDialogState}
         onShow       = {this.handleDialogShow}
-        contentStyle = {{padding: '8px 0 0 0'}}
-      >
+        contentStyle = {{padding: '8px 0 0 0'}}>
         <div>
           {this.renderFormNotifications()}
           <form
@@ -91,8 +90,7 @@ export default React.createClass({
               name              = 'label'
               style             = {{width:500}}
               hintText          = 'Short name for your CodeBox'
-              floatingLabelText = 'Label of CodeBox'
-            />
+              floatingLabelText = 'Label of CodeBox' />
             <MUI.TextField
               ref               = 'description'
               name              = 'description'
@@ -102,8 +100,7 @@ export default React.createClass({
               className         = 'text-field'
               multiLine         = {true}
               hintText          = 'Multiline description of CodeBox (optional)'
-              floatingLabelText = 'Description of CodeBox'
-            />
+              floatingLabelText = 'Description of CodeBox' />
             <MUI.SelectField
               ref               = 'runtime_name'
               name              = 'runtime_name'
@@ -113,15 +110,13 @@ export default React.createClass({
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {this.state.runtimes}
-            />
+              menuItems         = {this.state.runtimes} />
           </form>
         </div>
         <Common.Loading
           type     = 'linear'
           position = 'bottom'
-          show     = {this.state.isLoading}
-        />
+          show     = {this.state.isLoading} />
       </Common.Dialog>
     );
   }

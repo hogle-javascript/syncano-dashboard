@@ -5,10 +5,10 @@ import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
-import CodeBoxActions from './CodeBoxActions';
+import Actions from './CodeBoxActions';
 
-let CodeBoxStore = Reflux.createStore({
-  listenables: CodeBoxActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [
     WaitForStoreMixin
   ],
@@ -42,8 +42,8 @@ let CodeBoxStore = Reflux.createStore({
 
   refreshData() {
     console.debug('CodeBoxStore::refreshData');
-    CodeBoxActions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId);
-    CodeBoxActions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
+    Actions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId);
+    Actions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
   getCurrentCodeBox() {
@@ -52,7 +52,7 @@ let CodeBoxStore = Reflux.createStore({
   },
 
   onFetchCodeBoxCompleted(codeBox) {
-    console.debug('CodeBoxStore::onFetchCodeBoxCompleted')
+    console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },
@@ -66,7 +66,7 @@ let CodeBoxStore = Reflux.createStore({
     if (this.data.currentCodeBoxId === null) {
       return;
     }
-    CodeBoxActions.fetchCodeBoxTraces(this.data.currentCodeBox.id);
+    Actions.fetchCodeBoxTraces(this.data.currentCodeBox.id);
   },
 
   onFetchCodeBoxTracesCompleted(traces) {
@@ -109,7 +109,4 @@ let CodeBoxStore = Reflux.createStore({
   onUpdateCodeBoxFailure() {
     SnackbarNotificationActions.dismiss();
   }
-
 });
-
-export default CodeBoxStore;

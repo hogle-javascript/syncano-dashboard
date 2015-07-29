@@ -7,13 +7,12 @@ import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 // Stores & Actions
-import CodeBoxStore from './CodeBoxStore';
-import CodeBoxActions from './CodeBoxActions';
+import Store from './CodeBoxStore';
+import Actions from './CodeBoxActions';
 
 // Components
 import Traces from '../Traces';
 import Container from '../../common/Container';
-
 
 export default React.createClass({
 
@@ -22,13 +21,13 @@ export default React.createClass({
   mixins: [
     Router.State,
 
-    Reflux.connect(CodeBoxStore),
+    Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin
   ],
 
   componentDidMount() {
-    CodeBoxActions.fetch();
+    Actions.fetch();
   },
 
   render() {
@@ -36,9 +35,7 @@ export default React.createClass({
     return (
       <Traces
         objectId  = {codeBoxId}
-        tracesFor = 'codebox'
-      />
+        tracesFor = 'codebox' />
     );
   }
-
 });
