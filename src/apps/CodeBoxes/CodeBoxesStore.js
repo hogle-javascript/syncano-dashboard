@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 
-import Mixins from '../../mixins';  
+import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './CodeBoxesActions';
