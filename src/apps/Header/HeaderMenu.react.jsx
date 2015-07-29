@@ -1,17 +1,13 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    Reflux        = require('reflux'),
+import React from 'react';
+import Router from 'react-router';
+import Reflux from 'reflux';
 
-    HeaderActions = require('./HeaderActions'),
-    HeaderStore   = require('./HeaderStore'),
+import HeaderActions from './HeaderActions';
+import HeaderStore from './HeaderStore';
 
-    mui           = require('material-ui'),
-    Tabs          = mui.Tabs,
-    Tab           = mui.Tab,
-    Colors        = mui.Styles.Colors;
+import MUI from 'material-ui';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'HeaderMenu',
 
@@ -25,24 +21,23 @@ module.exports = React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  getActiveMenuItemIndex: function() {
+  getActiveMenuItemIndex() {
     var index = 0;
 
-    this.state.menuItems.some(function(item, i) {
-
+    this.state.menuItems.some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
         return true;
       }
-    }.bind(this));
+    });
     return index;
   },
 
-  handleTabActive: function(tab) {
+  handleTabActive(tab) {
     this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       menuContainer: {
         display         : '-webki-inline-flex; display: inline-flex',
@@ -62,11 +57,11 @@ module.exports = React.createClass({
     }
   },
 
-  renderMenuItem: function(tab, index) {
+  renderMenuItem(tab, index) {
     var styles = this.getStyles();
 
     return (
-      <Tab
+      <MUI.Tab
         key      = {'menuItem-' + tab.route + '-' + index}
         label    = {tab.label}
         route    = {tab.route}
@@ -76,7 +71,7 @@ module.exports = React.createClass({
     )
   },
 
-  render: function() {
+  render() {
     var styles = this.getStyles();
 
     if (this.state.menuItems.length === 0) {
@@ -85,13 +80,12 @@ module.exports = React.createClass({
 
     return (
       <div style={styles.menuContainer}>
-        <Tabs
+        <MUI.Tabs
           tabItemContainerStyle = {styles.menu}
           initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
           {this.state.menuItems.map(this.renderMenuItem)}
-        </Tabs>
+        </MUI.Tabs>
       </div>
     );
   }
-
 });

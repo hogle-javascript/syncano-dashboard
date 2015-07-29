@@ -1,10 +1,11 @@
-var Reflux    = require('reflux');
+import CreateActions from '../../utils/ActionsConstructor.js';
 
-var HeaderActions = Reflux.createActions([
-  'set',
-  'setMenuItems',
-  'clear',
-  'clearMenuItems'
-]);
-
-module.exports = HeaderActions;
+export default CreateActions(
+  {},
+  {
+    set            : {},
+    setMenuItems   : {},
+    clear          : {},
+    clearMenuItems : {}
+  }
+);

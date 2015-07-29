@@ -1,12 +1,10 @@
-var React         = require('react'),
-    Router        = require('react-router'),
+import React from 'react';
+import Router from 'react-router';
 
-    mui           = require('material-ui'),
-    IconMenu      = mui.IconMenu,
-    IconButton    = mui.IconButton,
-    MenuItem      = require('material-ui/lib/menus/menu-item');
+import MUI from 'material-ui';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'HeaderInstanceMenu',
 
@@ -38,19 +36,18 @@ module.exports = React.createClass({
     var styles = this.getStyles();
 
     return (
-      <IconButton
+      <MUI.IconButton
         iconStyle     = {styles}
-        iconClassName = "synicon-cog"
-      />
+        iconClassName = "synicon-cog" />
     )
   },
 
   render: function() {
     return (
-      <IconMenu iconButtonElement={this.renderMenuIcon()}>
+      <MUI.IconMenu iconButtonElement={this.renderMenuIcon()}>
         <MenuItem onClick={this.handleAdminsClick}>Admins</MenuItem>
         <MenuItem onClick={this.handleApiKeysClick}>API Keys</MenuItem>
-      </IconMenu>
+      </MUI.IconMenu>
     )
   }
 });

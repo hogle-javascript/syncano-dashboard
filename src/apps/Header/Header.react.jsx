@@ -1,44 +1,28 @@
-var React                       = require('react'),
-    Reflux                      = require('reflux'),
-    Radium                      = require('radium'),
-    Router                      = require('react-router'),
-    Link                        = Router.Link,
-    mui                         = require('material-ui'),
+import React from 'react';
+import Reflux from 'reflux';
+import Radium from 'radium';
+import Router from 'react-router';
 
-    // Utils & Mixins
-    StylePropable               = mui.Mixins.StylePropable,
+// Stores & Actions
+import HeaderActions from './HeaderActions';
+import HeaderStore from './HeaderStore';
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import InstancesActions from '../Instances/InstancesActions';
+import InstancesStore from '../Instances/InstancesStore';
 
-    // Stores & Actions
-    HeaderActions               = require('./HeaderActions'),
-    HeaderStore                 = require('./HeaderStore'),
-    SessionActions              = require('../Session/SessionActions'),
-    SessionStore                = require('../Session/SessionStore'),
-    InstancesActions            = require('../Instances/InstancesActions'),
-    InstancesStore              = require('../Instances/InstancesStore'),
-    ColorStore                  = require('../../common/Color/ColorStore'),
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    // Components
-    Colors                      = mui.Styles.Colors,
-    Tabs                        = mui.Tabs,
-    Tab                         = mui.Tab,
-    Toolbar                     = mui.Toolbar,
-    ToolbarGroup                = mui.ToolbarGroup,
-    Paper                       = mui.Paper,
-    IconButton                  = mui.IconButton,
-    MoreVertIcon                = mui.Icons.NavigationMenu,
-
-    MaterialDropdown            = require('../../common/Dropdown/MaterialDropdown.react'),
-    RoundIcon                   = require('../../common/Icon/RoundIcon.react'),
-    HeaderMenu                  = require('./HeaderMenu.react'),
-    HeaderInstancesDropdown     = require('./HeaderInstancesDropdown.react'),
-    HeaderNotificationsDropdown = require('./HeaderNotificationsDropdown.react'),
-    HeaderInstanceMenu          = require('./HeaderInstanceMenu.react'),
-    Logo                        = require('../../common/Logo/Logo.react'),
-    Show                        = require('../../common/Show/Show.react');
+import HeaderMenu from './HeaderMenu.react';
+import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
+import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
+import HeaderInstanceMenu from './HeaderInstanceMenu.react';
 
 require('./Header.sass');
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Header',
 
@@ -47,7 +31,7 @@ module.exports = Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
-    StylePropable
+    MUI.Mixins.StylePropable
   ],
 
   contextTypes: {
@@ -55,29 +39,29 @@ module.exports = Radium(React.createClass({
     muiTheme : React.PropTypes.object
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     SessionStore.getInstance();
   },
 
-  handleTabActive: function(tab) {
+  handleTabActive(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
   },
 
-  handleAccountClick: function(event) {
+  handleAccountClick(event) {
     this.transitionTo('profile-settings');
     event.stopPropagation();
   },
 
-  handleLogout: function() {
+  handleLogout() {
     SessionActions.logout();
   },
 
-  handleBillingClick: function(event) {
+  handleBillingClick(event) {
     this.transitionTo('profile-billing');
     event.stopPropagation();
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       topToolbar: {
         background : this.context.muiTheme.palette.primary1Color,
@@ -119,38 +103,38 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getDropdownItems: function() {
+  getDropdownItems() {
     return [{
       leftIcon: {
-        name  : "synicon-credit-card",
+        name  : 'synicon-credit-card',
         style : {}
       },
       content: {
-        text  : "Billing",
+        text  : 'Billing',
         style : {}
       },
-      name: "billing",
+      name: 'billing',
       handleItemClick: this.handleBillingClick
     }, {
       leftIcon: {
-        name  : "synicon-power",
+        name  : 'synicon-power',
         style : {
-          color: "#f50057"
+          color: '#f50057'
         }
       },
       content: {
-        text  : "Logout",
+        text  : 'Logout',
         style : {
-          color: "#f50057"
+          color: '#f50057'
         }
       },
-      name: "logout",
+      name: 'logout',
       handleItemClick: this.handleLogout
 
     }]
   },
 
-  getDropdownHeaderItems: function() {
+  getDropdownHeaderItems() {
     return {
       userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
       userEmail       : this.state.user.email,
@@ -159,22 +143,21 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function() {
-    var styles              = this.getStyles(),
+  render() {
+    let styles              = this.getStyles(),
         currentInstance     = SessionStore.getInstance();
 
     return (
       <div>
-        <Toolbar style={styles.topToolbar}>
-          <ToolbarGroup style={styles.logotypeContainer}>
-            <Link to="app">
-              <Logo
+        <MUI.Toolbar style={styles.topToolbar}>
+          <MUI.ToolbarGroup style={styles.logotypeContainer}>
+            <Router.Link to="app">
+              <Common.Logo
                 style={styles.logo}
-                className="logo-white"
-              />
-            </Link>
-          </ToolbarGroup>
-          <ToolbarGroup
+                className="logo-white" />
+            </Router.Link>
+          </MUI.ToolbarGroup>
+          <MUI.ToolbarGroup
             float = "right"
             style = {{height: '100%'}}>
             <ul
@@ -191,37 +174,36 @@ module.exports = Radium(React.createClass({
                 <a href="mailto:support@syncano.com">Support</a>
               </li>
               <li>
-                <MaterialDropdown
+                <Common.Dropdown.Material
                   items         = {this.getDropdownItems()}
                   headerContent = {this.getDropdownHeaderItems()}
                   iconStyle     = {styles.bottomToolbarGroupIcon}>
                   Account
-                </MaterialDropdown>
+                </Common.Dropdown.Material>
               </li>
             </ul>
-          </ToolbarGroup>
-        </Toolbar>
-        <Paper>
-          <Toolbar style={styles.bottomToolbar}>
-            <Show if={currentInstance !== null}>
+          </MUI.ToolbarGroup>
+        </MUI.Toolbar>
+        <MUI.Paper>
+          <MUI.Toolbar style={styles.bottomToolbar}>
+            <Common.Show if={currentInstance !== null}>
               <HeaderInstancesDropdown />
-            </Show>
+            </Common.Show>
 
-            <ToolbarGroup
+            <MUI.ToolbarGroup
               className = "col-flex-1"
               style     = {styles.bottomToolbarGroup}>
               <HeaderMenu />
-            </ToolbarGroup>
-            <ToolbarGroup style={styles.bottomToolbarGroup}>
+            </MUI.ToolbarGroup>
+            <MUI.ToolbarGroup style={styles.bottomToolbarGroup}>
               <HeaderNotificationsDropdown />
-              <Show if={currentInstance !== null}>
+              <Common.Show if={currentInstance !== null}>
                 <HeaderInstanceMenu />
-              </Show>
-            </ToolbarGroup>
-          </Toolbar>
-        </Paper>
+              </Common.Show>
+            </MUI.ToolbarGroup>
+          </MUI.Toolbar>
+        </MUI.Paper>
       </div>
     )
   }
-
 }));
