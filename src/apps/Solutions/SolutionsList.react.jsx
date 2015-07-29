@@ -73,13 +73,10 @@ module.exports = React.createClass({
       sidebar: {
         minWidth: 230
       },
-      listItemChecked: {
-        background: MUI.Styles.Colors.lightBlue50
-      }
     }
   },
 
-  handleChangeFilter(filter, event) {
+  handleChangeFilter(filter) {
     Actions.setFilter(filter);
   },
 
@@ -95,23 +92,8 @@ module.exports = React.createClass({
     SolutionsActions.selectOneTag(tag);
   },
 
-  renderTags() {
-    var styles = this.getStyles();
-
-    let tags = this.state.tags.map(item => {
-      return (
-        <MUI.ListItem
-          key           = {item.name}
-          primaryText   = {item.name}
-          innerDivStyle = {this.state.selectedTags.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.name)} />
-      )
-    });
-    return (
-      <MUI.List zDepth={1} subheader="Tags">
-        {tags}
-      </MUI.List>
-    )
+  handleToggleTagSelection(name) {
+    Actions.toggleTagSelection(name);
   },
 
   render() {
@@ -153,7 +135,10 @@ module.exports = React.createClass({
                   onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
                 />
               </MUI.List>
-              {this.renderTags()}
+              <Common.Tags.List
+                items              = {this.state.tags}
+                selectedItems      = {this.state.selectedTags}
+                toggleTagSelection = {this.handleToggleTagSelection} />
             </div>
             <div className="col-flex-1">
               <Common.Solutions.List

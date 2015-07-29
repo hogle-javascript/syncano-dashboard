@@ -9,20 +9,8 @@ import SessionActions from '../Session/SessionActions';
 import SolutionsActions from './SolutionsActions';
 import SolutionEditActions from './SolutionEditActions';
 import SolutionEditStore from './SolutionEditStore';
-import SolutionVersionDialogStore from './SolutionVersionDialogStore';
-import InstancesStore from '../Instances/InstancesStore';
-import ColorStore from '../../common/Color/ColorStore';
-import IconStore from '../../common/Icon/IconStore';
 
-import WebhooksStore from '../Data/WebhooksStore';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import ClassesStore from '../Classes/ClassesStore';
-import DataViewsStore from '../Data/DataViewsStore';
-import DataViewsActions from '../Data/DataViewsActions';
-
-import ChannelsStore from '../Channels/ChannelsStore';
-import TriggersStore from '../Tasks/TriggersStore';
-import SchedulesStore from '../Tasks/SchedulesStore';
+import Store from './SolutionVersionDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -33,13 +21,7 @@ export default React.createClass({
   displayName: 'SolutionVersionDialog',
 
   mixins: [
-    Reflux.connect(SolutionVersionDialogStore),
-    Reflux.connect(DataViewsStore, 'dataviews'),
-    Reflux.connect(ClassesStore, 'classes'),
-    Reflux.connect(CodeBoxesStore, 'codebox'),
-    Reflux.connect(TriggersStore, 'triggers'),
-    Reflux.connect(SchedulesStore, 'schedules'),
-    Reflux.connect(ChannelsStore, 'channels'),
+    Reflux.connect(Store),
 
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
