@@ -5,6 +5,7 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
+import Solution from './pages/solution.react';
 import Billing from './pages/billing.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
@@ -15,8 +16,7 @@ import Account from './apps/Account';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
-import Solutions from './apps/Solutions/Solutions.react';
-import SolutionEdit from './apps/Solutions/SolutionEdit.react';
+import Solutions from './apps/Solutions';
 
 // Instance Apps
 import Admins from './apps/Admins/Admins.react';
@@ -223,19 +223,29 @@ module.exports = (
       {/* Solutions */}
       <Route
         name    = "solutions"
-        handler = {Solutions}
+        handler = {Solution}
         path    = "/solutions"
-      />
-      <Route
-        name    = "solutions-install"
-        handler = {SolutionEdit}
-        path    = "/solutions/:solutionId/:action"
-      />
-      <Route
-        name    = "solutions-edit"
-        handler = {SolutionEdit}
-        path    = "/solutions/:solutionId/edit"
-      />
+      >
+        <Route
+          name    = "solutions-list"
+          handler = {Solutions.List}
+          path    = "list"
+        />
+        <Route
+          name    = "solutions-install"
+          handler = {Solutions.Edit}
+          path    = "/solutions/:solutionId/:action"
+        />
+        <Route
+          name    = "solutions-edit"
+          handler = {Solutions.Edit}
+          path    = "/solutions/:solutionId/edit"
+        />
+        <Redirect
+          from  = "/solutions"
+          to    = "solutions-list"
+        />
+      </Route>
       <Route
         name    = "profile-settings"
         handler = {Profile.Settings}

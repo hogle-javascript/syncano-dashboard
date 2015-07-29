@@ -1,47 +1,170 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Router from 'react-router';
+import _ from 'lodash';
 
-import SolutionsListItem from './SolutionsListItem.react';
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
 
-export default React.createClass({
+// Stores and Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import Store from './SolutionsStore';
+import Actions from './SolutionsActions';
 
-  displayName: 'SolutionsList',
+// Components
+import MUI from 'material-ui';
+import Common from '../../common';
+
+import SolutionDialog from './SolutionDialog.react';
+import SolutionInstallDialog from './SolutionInstallDialog.react';
+
+module.exports = React.createClass({
+
+  displayName: 'Solutions',
+
+  mixins: [
+    Router.State,
+    Router.Navigation,
+
+    HeaderMixin,
+    Reflux.connect(Store)
+  ],
+
+  showSolutionDialog() {
+    Actions.showDialog();
+  },
+
+  componentDidMount() {
+    console.info('Solutions::componentWillMount');
+    Actions.fetch();
+  },
+
+  isFriend() {
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser().email;
+      return (_.endsWith(email, 'syncano.com') || _.endsWith(email, 'chimeraprime.com'));
+    }
+  },
+
+  headerMenuItems() {
+    return [
+      {
+        label : 'Instances',
+        route : 'instances',
+      },
+      {
+        label : 'Solutions',
+        route : 'solutions',
+      }
+    ];
+  },
+
+  handleTabActive(tab) {
+    this.transitionTo(tab.props.route, tab.props.params);
+  },
 
   getStyles() {
     return {
-      list : {
-        listStyle    : 'none',
-        margin       : '0 40px',
-        padding      : 0
+      container: {
+        width  : '90%',
+        margin : '40px auto'
       },
-      listItem : {
-        padding      : '0 15px',
-        marginBottom : 40,
-        width        : 346
+      sidebar: {
+        minWidth: 230
+      },
+      listItemChecked: {
+        background: MUI.Styles.Colors.lightBlue50
       }
     }
   },
 
-  getListItems() {
-    return this.props.items.map(item => {
+  handleChangeFilter(filter, event) {
+    Actions.setFilter(filter);
+  },
+
+  handleInstallClick(solutionId) {
+    SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+  },
+
+  handleSeeMoreClick(solutionId) {
+    this.transitionTo('solutions-edit', {solutionId: solutionId});
+  },
+
+  handleTagClick(tag) {
+    SolutionsActions.selectOneTag(tag);
+  },
+
+  renderTags() {
+    var styles = this.getStyles();
+
+    let tags = this.state.tags.map(item => {
       return (
-        <div
-          key   = {item.id}
-          style = {this.getStyles().listItem}
-        >
-          <SolutionsListItem data={item} />
-        </div>
+        <MUI.ListItem
+          key           = {item.name}
+          primaryText   = {item.name}
+          innerDivStyle = {this.state.selectedTags.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
+          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.name)} />
       )
     });
+    return (
+      <MUI.List zDepth={1} subheader="Tags">
+        {tags}
+      </MUI.List>
+    )
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
-      <div
-        className = "row"
-        style     = {this.getStyles().list}
-      >
-        {this.getListItems()}
+      <div id='solutions'>
+        <SolutionDialog />
+        <SolutionInstallDialog />
+
+        <Common.Show if={this.isFriend()}>
+          <Common.Fab>
+            <Common.Fab.Item
+              label         = "Click here to create Solution"
+              onClick       = {this.showSolutionDialog}
+              iconClassName = "synicon-plus"
+            />
+          </Common.Fab>
+       </Common.Show>
+
+        <div style={styles.container}>
+          <div className="row">
+            <div style={styles.sidebar}>
+              <MUI.List zDepth={1} className="vm-6-b">
+                <MUI.ListItem
+                  innerDivStyle = {!this.state.filter ? styles.listItemChecked : {}}
+                  primaryText   = "All solutions"
+                  onTouchTap    = {this.handleChangeFilter.bind(this, null)}
+                />
+                <MUI.ListDivider />
+                <MUI.ListItem
+                  innerDivStyle = {this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
+                  primaryText   = "Favorite"
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')}
+                />
+                <MUI.ListItem
+                  innerDivStyle = {this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
+                  primaryText   = "My solutions"
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
+                />
+              </MUI.List>
+              {this.renderTags()}
+            </div>
+            <div className="col-flex-1">
+              <Common.Solutions.List
+                items      = {this.state.items}
+                onInstall  = {this.handleInstallClick}
+                onSeeMore  = {this.handleSeeMoreClick}
+                onTagClick = {this.handleTagClick}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

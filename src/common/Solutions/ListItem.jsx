@@ -1,21 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
-import Router from 'react-router';
 import MUI from 'material-ui';
 
-import SolutionsActions from './SolutionsActions';
-import SolutionStar from '../../common/SolutionStar';
-
-import SolutionInstallDialogActions from './SolutionInstallDialogActions';
+import SolutionStar from '../SolutionStar';
 
 export default React.createClass({
 
   displayName: 'SolutionsListItem',
-
-  mixins: [
-    Router.State,
-    Router.Navigation
-  ],
 
   getStyles() {
     return {
@@ -84,11 +75,19 @@ export default React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId: solutionId});
+    console.log("YYY", this.props)
+    this.props.onSeeMore(solutionId);
+    //this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
   handleInstallClick(solutionId) {
-    SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+    this.props.onInstall(solutionId);
+    //SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+  },
+
+  handleTagClick(tag) {
+    this.props.onTagClick(solutionId);
+    //SolutionsActions.selectOneTag.bind(null, tag)
   },
 
   renderVersion() {
@@ -123,7 +122,7 @@ export default React.createClass({
         <a
           key     = {tag}
           style   = {styles.tag}
-          onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
+          onClick = {this.handleTagClick.bind(null, tag)}>
           {tag}
         </a>
       )
@@ -136,6 +135,7 @@ export default React.createClass({
 
     return (
       <MUI.Card>
+
         <div style={styles.cardTitleContainer}>
           <MUI.CardTitle
             style      = {styles.cardTitleRoot}
@@ -149,9 +149,11 @@ export default React.createClass({
             />
           </div>
         </div>
+
         <MUI.CardText style={styles.cardSubtitle}>
           {item.description}
         </MUI.CardText>
+
         <MUI.CardText>
           <div style={styles.cardTextList}>
             <MUI.FontIcon
@@ -163,6 +165,7 @@ export default React.createClass({
           </div>
           {this.renderVersion()}
         </MUI.CardText>
+
         <div style={styles.cardFooter}>
           <SolutionStar solution={item} />
           <MUI.FlatButton
@@ -177,6 +180,7 @@ export default React.createClass({
             touch         = {true}
           />
         </div>
+
       </MUI.Card>
     )
   }
