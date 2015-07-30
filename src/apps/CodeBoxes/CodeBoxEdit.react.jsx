@@ -80,7 +80,7 @@ export default React.createClass({
           <Common.Editor
             ref   = "editorSource"
             mode  = {editorMode}
-            theme = "github"
+            theme = "tomorrow"
             value = {source} />
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
