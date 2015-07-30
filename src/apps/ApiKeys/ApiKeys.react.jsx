@@ -91,7 +91,7 @@ export default React.createClass({
         modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
-          this.getDialogList(checkedApiKeys, 'description'),
+          this.getDialogList(checkedApiKeys, 'api_key'),
           <Common.Loading
             type     = "linear"
             position = "bottom"
