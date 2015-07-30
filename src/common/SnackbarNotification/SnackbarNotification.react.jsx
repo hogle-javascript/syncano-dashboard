@@ -28,6 +28,28 @@ export default React.createClass({
     }
   },
 
+  componentDidUpdate() {
+    console.log('SnackbarNotification::componentDidUpdate');
+
+    if (this.state.snackbar === null) {
+      return;
+    }
+
+    if (this.state.snackbar.openOnMount === true) {
+      return;
+    }
+
+    if (this.refs.snackbar._wasOpen === true) {
+      return;
+    }
+
+    if (this.refs.snackbar.state.open === false) {
+      this.refs.snackbar._wasOpen = true;
+      this.refs.snackbar.show();
+    }
+
+  },
+
   render() {
     let snackbar = this.state.snackbar;
 
