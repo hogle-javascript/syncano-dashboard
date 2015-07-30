@@ -1,13 +1,12 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
-  {},
   {
-    checkItem             : {},
-    uncheckAll            : {},
+    withCheck  : true,
+    withDialog : true
+  },
+  {
     checkToggleColumn     : {},
-    showDialog            : {},
-    dismissDialog         : {},
     fetch                 : {},
     setDataObjects        : {},
     setCurrentClassObj    : {},
