@@ -1,20 +1,16 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
-  {},
   {
-    checkItem           : {},
-    uncheckAll          : {},
-    selectAll           : {},
-
+    withCheck  : true,
+    withDialog : true
+  },
+  {
     fetch               : {},
     setCodeBoxes        : {},
     setCodeBoxTraces    : {},
     setCodeBoxRuntimes  : {},
     setCurrentCodeBoxId : {},
-
-    showDialog          : {},
-    dismissDialog       : {},
 
     fetchCodeBoxes: {
       asyncResult : true,
