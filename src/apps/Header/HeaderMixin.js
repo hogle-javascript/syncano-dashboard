@@ -1,7 +1,7 @@
-var React         = require('react'),
-    HeaderActions = require('./HeaderActions');
+import React from 'react';
+import HeaderActions from './HeaderActions';
 
-var HeaderMixin = {
+export default {
   contextTypes: {
     router: React.PropTypes.func
   },
@@ -14,13 +14,13 @@ var HeaderMixin = {
   },
 
   setupMenu() {
-    var menuItems = this.headerMenuItems || [];
+    let menuItems = this.headerMenuItems || [];
 
     if (typeof menuItems === 'function') {
       menuItems = menuItems.call(this);
     }
 
-    var hasMenuItems = menuItems && menuItems.length > 0;
+    let hasMenuItems = menuItems && menuItems.length > 0;
 
     // We want to have just one render here
     if (hasMenuItems) {
@@ -36,14 +36,11 @@ var HeaderMixin = {
     this.setupMenu();
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     this.setupMenu();
   },
 
-  setHeaderMenuItems: function(menuItems) {
+  setHeaderMenuItems(menuItems) {
     HeaderActions.setMenuItems(menuItems);
   }
-
 };
-
-module.exports = HeaderMixin;
