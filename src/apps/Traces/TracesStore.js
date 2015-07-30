@@ -6,10 +6,10 @@ import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import AuthStore from '../Account/AuthStore';
-import TracesActions from './TracesActions';
+import Actions from './TracesActions';
 
 export default Reflux.createStore({
-  listenables: TracesActions,
+  listenables: Actions,
 
   getInitialState() {
     return {
@@ -38,10 +38,10 @@ export default Reflux.createStore({
 
   fetchTraces() {
     let fetch = {
-      codebox  : TracesActions.fetchCodeBoxTraces,
-      webhook  : TracesActions.fetchWebhookTraces,
-      trigger  : TracesActions.fetchTriggerTraces,
-      schedule : TracesActions.fetchScheduleTraces
+      codebox  : Actions.fetchCodeBoxTraces,
+      webhook  : Actions.fetchWebhookTraces,
+      trigger  : Actions.fetchTriggerTraces,
+      schedule : Actions.fetchScheduleTraces
     };
 
     fetch[this.data.tracesFor](this.data.objectId);
@@ -56,7 +56,7 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
-    this.data.items = Object.keys(tracesObj).map((item) => tracesObj[item]);
+    this.data.items = Object.keys(tracesObj).map(item => tracesObj[item]);
     this.data.isLoading = false;
     this.trigger(this.data);
   },

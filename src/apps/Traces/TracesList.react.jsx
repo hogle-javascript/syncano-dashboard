@@ -5,13 +5,12 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import TracesActions from './TracesActions';
-import TracesStore from './TracesStore';
+import Actions from './TracesActions';
+import Store from './TracesStore';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -23,7 +22,7 @@ export default Radium(React.createClass({
   displayName: 'TracesList',
 
   mixins: [
-    Reflux.connect(TracesStore),
+    Reflux.connect(Store),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -85,19 +84,17 @@ export default Radium(React.createClass({
           checked     = {item.checked}
           key         = {item.id}
           id          = {item.id}
-          handleClick = {this.toggleTrace}
-        >
-          <Common.ColumnList.Column.CheckIcon
+          handleClick = {this.toggleTrace}>
+          <Column.CheckIcon
             id              = {item.id}
             icon            = {icon}
             background      = {background}
-            checkable       = {false}
-          >
+            checkable       = {false}>
             {item.status}
-          </Common.ColumnList.Column.CheckIcon>
-          <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
-          <Common.ColumnList.Column.Desc>{item.duration}ms</Common.ColumnList.Column.Desc>
-          <Common.ColumnList.Column.Date date={item.executed_at} />
+          </Column.CheckIcon>
+          <Column.ID>{item.id}</Column.ID>
+          <Column.Desc>{item.duration}ms</Column.Desc>
+          <Column.Date date={item.executed_at} />
         </Common.ColumnList.Item>
         <div style={styles.traceResult}>
           <Common.Trace.Result result={item.result}/>
