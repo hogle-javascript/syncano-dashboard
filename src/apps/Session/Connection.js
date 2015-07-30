@@ -1,20 +1,21 @@
-var Syncano    = require('../../lib/syncano4'),
-    connection = new Syncano(undefined, SYNCANO_BASE_URL);
+import Syncano from '../../lib/syncano4';
 
-module.exports = {
+let connection = new Syncano(undefined, SYNCANO_BASE_URL);
+
+export default {
   Syncano: Syncano,
   Deferred: connection.Deferred,
   D: connection.Deferred,
 
-  get: function() {
+  get() {
     return connection;
   },
 
-  set: function(_connection) {
+  set(_connection) {
     connection = _connection;
   },
 
-  reset: function() {
+  reset() {
     connection = new Syncano(undefined, SYNCANO_BASE_URL);
     connection.setApiKey(null);
     return connection;
