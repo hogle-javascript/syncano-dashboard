@@ -99,6 +99,23 @@ export default Reflux.createStore({
     return !this.amIOwner(item);
   },
 
+  getAllInstances(reversed) {
+    reversed = reversed || false;
+
+    if (this.data.items === null) {
+      return this.data.items;
+    }
+
+    let my    = this.getMyInstances()    || [];
+    let other = this.getOtherInstances() || [];
+
+    if (reversed === true) {
+      my.reverse();
+      other.reverse();
+    }
+    return [].concat(my, other);
+  },
+
   getMyInstances() {
     if (this.data.items === null) {
       return this.data.items;

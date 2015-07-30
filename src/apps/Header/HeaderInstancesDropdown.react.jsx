@@ -44,10 +44,10 @@ export default React.createClass({
   },
 
   handleInstanceActive() {
-    if (InstancesStore.getMyInstances()) {
-      let currentInstance = SessionStore.instance,
-        instancesList = InstancesStore.getMyInstances().reverse(),
-        instanceActiveIndex = null;
+    if (InstancesStore.getAllInstances()) {
+      let currentInstance     = SessionStore.instance,
+          instancesList       = InstancesStore.getAllInstances(true),
+          instanceActiveIndex = null;
 
       instancesList.some((event, index) => {
         if (event.name === currentInstance.name) {
@@ -113,18 +113,14 @@ export default React.createClass({
   render() {
     let styles        = this.getStyles();
     let instance      = SessionStore.instance;
-    let instancesList = InstancesStore.getMyInstances();
-
-    if (instancesList) {
-      instancesList.reverse();
-    }
+    let instancesList = InstancesStore.getAllInstances(true);
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
     let dropDownMenuItems = instancesList.map((item, index) => {
-      let iconBackground = {
+    let iconBackground    = {
           backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND
         },
         icon             = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON,
