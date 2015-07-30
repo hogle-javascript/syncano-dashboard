@@ -1,24 +1,21 @@
-var React             = require('react'),
-    Reflux            = require('reflux'),
-    Router            = require('react-router'),
-    Radium            = require('radium'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import Radium from 'radium';
 
-    // Utils
-    HeaderMixin       = require('../Header/HeaderMixin'),
-    InstanceTabsMixin = require('../../mixins/InstanceTabsMixin'),
+// Utils
+import HeaderMixin from '../Header/HeaderMixin';
+import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
-    // Stores and Actions
-    CodeBoxActions    = require('./CodeBoxActions'),
-    CodeBoxStore      = require('./CodeBoxStore'),
+// Stores and Actions
+import Actions from './CodeBoxActions';
+import Store from './CodeBoxStore';
 
-    // Components
-    Container         = require('../../common/Container/Container.react'),
-    FabList           = require('../../common/Fab/FabList.react'),
-    FabListItem       = require('../../common/Fab/FabListItem.react'),
-    Loading           = require('../../common/Loading/Loading.react'),
-    Editor            = require('../../common/Editor/Editor.react');
+// Components
+import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'CodeBoxConfig',
 
@@ -27,16 +24,16 @@ module.exports = Radium(React.createClass({
     Router.Navigation,
     React.addons.LinkedStateMixin,
 
-    Reflux.connect(CodeBoxStore),
+    Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin
   ],
 
-  componentDidMount: function() {
-    CodeBoxActions.fetch();
+  componentDidMount() {
+    Actions.fetch();
   },
 
-  getStyles: function () {
+  getStyles () {
     return {
       container: {
         margin   : '25px auto',
@@ -46,13 +43,13 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleUpdate: function() {
-    var config = this.refs.editorConfig.editor.getValue();
-    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {config: config});
+  handleUpdate() {
+    let config = this.refs.editorConfig.editor.getValue();
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {config: config});
   },
 
-  renderEditor: function() {
-    var config  = null,
+  renderEditor() {
+    let config  = null,
         codeBox = this.state.currentCodeBox;
 
     if (codeBox) {
@@ -60,7 +57,7 @@ module.exports = Radium(React.createClass({
 
       return (
         <div>
-          <Editor
+          <Common.Editor
             ref    = "editorConfig"
             height = {300}
             mode   = "javascript"
@@ -71,24 +68,23 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function () {
+  render () {
     console.debug('CodeBoxConfig::render');
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <Container style={styles.container}>
-        <FabList position="top">
-          <FabListItem
+        <Common.Fab position="top">
+          <Common.Fab.Item
             label         = "Click here to save CodeBox"
             mini          = {true}
             onClick       = {this.handleUpdate}
             iconClassName = "synicon-content-save" />
-        </FabList>
-        <Loading show={this.state.isLoading}>
+        </Common.Fab>
+        <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
-        </Loading>
+        </Common.Loading>
       </Container>
     );
   }
-
 }));
