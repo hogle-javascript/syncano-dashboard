@@ -1,31 +1,30 @@
-var Reflux              = require('reflux'),
-    _                   = require('lodash'),
+import Reflux from 'reflux';
+import _ from 'lodash';
 
-    // Utils & Mixins
-    Constans            = require('../../constants/Constants'),
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Constans from '../../constants/Constants';
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions      = require('../Session/SessionActions'),
-    SessionStore        = require('../Session/SessionStore'),
-    ClassesActions      = require('./ClassesActions');
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import ClassesActions from './ClassesActions';
 
-var ClassesStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : ClassesActions,
   mixins      : [
-    CheckListStoreMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items: [],
       isLoading: true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -34,17 +33,17 @@ var ClassesStore = Reflux.createStore({
     );
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ClassesStore::refreshData');
     ClassesActions.fetchClasses();
   },
 
-  getItems: function() {
+  getItems() {
     return this.data.items;
   },
 
-  getClassesDropdown: function() {
-    return this.data.items.map(function(item) {
+  getClassesDropdown() {
+    return this.data.items.map(item => {
       return {
         payload : item.name,
         text    : item.name
@@ -52,9 +51,9 @@ var ClassesStore = Reflux.createStore({
     });
   },
 
-  onGetClassByName: function(className) {
-    var classObj = null;
-    this.data.items.some(function(item) {
+  onGetClassByName(className) {
+    let  classObj = null;
+    this.data.items.some(item => {
       if (item.name == className) {
         classObj = item;
         return true;
@@ -63,9 +62,9 @@ var ClassesStore = Reflux.createStore({
     return classObj;
   },
 
-  getClassFields: function(className) {
-    var classObj = null;
-    this.data.items.some(function(item) {
+  getClassFields(className) {
+    let  classObj = null;
+    this.data.items.some(item => {
       if (item.name == className) {
         classObj = item;
         return true;
@@ -74,11 +73,11 @@ var ClassesStore = Reflux.createStore({
     return classObj.schema;
   },
 
-  getClassRelationFields: function(className) {
-    var allFields      = this.getClassFields(className),
+  getClassRelationFields(className) {
+    let  allFields      = this.getClassFields(className),
         relationFields = [];
 
-    allFields.map(function(item) {
+    allFields.map(item => {
       if (item.type === 'reference') {
         relationFields.push(item);
       }
@@ -86,12 +85,11 @@ var ClassesStore = Reflux.createStore({
     return relationFields;
   },
 
-  getClassOrderFieldsPayload: function(className) {
-    var allFields      = this.getClassFields(className),
+  getClassOrderFieldsPayload(className) {
+    let  allFields      = this.getClassFields(className),
         orderPayload = [];
 
-    allFields.map(function(item) {
-      console.log(item)
+    allFields.map(item => {
       if (item.order_index) {
         orderPayload.push({
           text    : item.name + ' (ascending)',
@@ -106,8 +104,8 @@ var ClassesStore = Reflux.createStore({
     return orderPayload;
   },
 
-  getCheckedItemIconColor: function() {
-    var singleItem = this.getCheckedItem();
+  getCheckedItemIconColor() {
+    let  singleItem = this.getCheckedItem();
 
     if (!singleItem) {
       return {
@@ -121,8 +119,8 @@ var ClassesStore = Reflux.createStore({
     };
   },
 
-  setProtectedFromEditClasses: function(item) {
-    var indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
+  setProtectedFromEditClasses(item) {
+    let  indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
 
     if (indexInProtectedFromEditArray > -1) {
       item.protectedFromEdit = Constans.PROTECTED_FROM_EDIT_CLASS_NAMES[indexInProtectedFromEditArray];
@@ -131,17 +129,15 @@ var ClassesStore = Reflux.createStore({
     return item;
   },
 
-  setProtectedFromDeleteClasses: function(item) {
+  setProtectedFromDeleteClasses(item) {
     if (Constans.PROTECTED_FROM_DELETE_CLASS_NAMES.indexOf(item.name) > -1) {
       item.protectedFromDelete = true;
     }
     return item;
   },
 
-  setClasses: function(items) {
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+  setClasses(items) {
+    this.data.items = Object.keys(items).map(key => items[key]);
 
     if (this.data.items.length > 0) {
       this.data.items = this.data.items.map(this.setProtectedFromDeleteClasses);
@@ -151,23 +147,20 @@ var ClassesStore = Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchClasses: function() {
+  onFetchClasses() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchClassesCompleted: function(items) {
+  onFetchClassesCompleted(items) {
     console.debug('ClassesStore::onFetchClassesCompleted');
     this.data.isLoading = false;
     ClassesActions.setClasses(items);
   },
 
-  onRemoveClassesCompleted: function() {
+  onRemoveClassesCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = ClassesStore;

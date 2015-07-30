@@ -1,30 +1,28 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
-    SessionActions           = require('../Session/SessionActions'),
-    ApiKeysActions           = require('./ApiKeysActions');
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import Actions from './ApiKeysActions';
 
-var ApiKeysStore = Reflux.createStore({
-  listenables : ApiKeysActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    CheckListStoreMixin,
-    WaitForStoreMixin,
-    StoreLoadingMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     };
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -34,43 +32,37 @@ var ApiKeysStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ApiKeysStore::refreshData');
-    ApiKeysActions.fetchApiKeys();
+    Actions.fetchApiKeys();
   },
 
-  setApiKeys: function(items) {
+  setApiKeys(items) {
     console.debug('AdminsStore::setApiKeys');
 
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
-
+    this.data.items = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  onFetchApiKeys: function() {
+  onFetchApiKeys() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchApiKeysCompleted: function(items) {
+  onFetchApiKeysCompleted(items) {
     console.debug('ApiKeysStore::onFetchApiKeysCompleted');
-    ApiKeysActions.setApiKeys(items);
+    Actions.setApiKeys(items);
   },
 
-  onRemoveApiKeysCompleted: function() {
+  onRemoveApiKeysCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onResetApiKeyCompleted: function() {
+  onResetApiKeyCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = ApiKeysStore;

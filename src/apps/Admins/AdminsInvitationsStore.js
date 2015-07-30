@@ -1,33 +1,30 @@
-var Reflux                   = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin      = require('../../mixins/CheckListStoreMixin'),
-    StoreFormMixin           = require('../../mixins/StoreFormMixin'),
-    StoreLoadingMixin        = require('../../mixins/StoreLoadingMixin'),
-    WaitForStoreMixin        = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions           = require('../Session/SessionActions'),
-    SessionStore             = require('../Session/SessionStore'),
-    AdminsInvitationsActions = require('./AdminsInvitationsActions');
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import AdminsInvitationsActions from './AdminsInvitationsActions';
 
-var AdminsInvitationsStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : AdminsInvitationsActions,
   mixins      : [
-    CheckListStoreMixin,
-    StoreFormMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreForm,
+    Mixins.StoreLoading,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -38,62 +35,54 @@ var AdminsInvitationsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('AdminsInvitationsStore::refreshData');
     AdminsInvitationsActions.fetchInvitations();
   },
 
-  selectAllAdminsInvitations: function() {
-    this.getPendingInvitations().forEach(function(item) {
+  selectAllAdminsInvitations() {
+    this.getPendingInvitations().forEach(item => {
       item.checked = true;
     });
     this.trigger(this.data);
   },
 
-  setInvitations: function(items) {
+  setInvitations(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
 
     this.data.items = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  getPendingInvitations: function() {
+  getPendingInvitations() {
     console.debug('AdminsInvitationsStore::getPendingInvitations');
 
-    var isInvitationPending = function(element) {
-      return (element.state === 'new');
-    };
+    let isInvitationPending = (element) => element.state === 'new';
 
-    var pendingInvitations = this.data.items.filter(isInvitationPending);
-
+    let pendingInvitations = this.data.items.filter(isInvitationPending);
     return pendingInvitations;
   },
 
-  onFetchInvitations: function(items) {
+  onFetchInvitations(items) {
     this.trigger(this.data);
   },
 
-  onFetchInvitationsCompleted: function(items) {
+  onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
-    this.data.items = Object.keys(items).map(function(item) {
-      return items[item];
-    });
+    this.data.items = Object.keys(items).map(item => items[item]);
     this.trigger(this.data);
     AdminsInvitationsActions.setInvitations(items);
   },
 
-  onRemoveInvitationCompleted: function() {
+  onRemoveInvitationCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onResendInvitationCompleted: function() {
+  onResendInvitationCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     AdminsInvitationsActions.uncheckAll();
   }
-
 });
-
-module.exports = AdminsInvitationsStore;

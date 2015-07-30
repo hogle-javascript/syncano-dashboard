@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import ApiKeysActions from './ApiKeysActions';
-import ApiKeyDialogStore from './ApiKeyDialogStore';
+import Actions from './ApiKeysActions';
+import Store from './ApiKeyDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -17,7 +17,7 @@ export default React.createClass({
   displayName: 'ApiKeyDialog',
 
   mixins: [
-    Reflux.connect(ApiKeyDialogStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    ApiKeysActions.createApiKey({
+    Actions.createApiKey({
       description       : this.state.description,
       allow_user_create : this.state.allow_user_create,
       ignore_acl        : this.state.ignore_acl
@@ -40,13 +40,13 @@ export default React.createClass({
   },
 
   handleToogle(event, status) {
-    var state = {};
+    let state = {};
     state[event.target.name] = status;
     this.setState(state);
   },
 
   render() {
-    var title                 = this.hasEditMode() ? 'Edit' : 'Generate',
+    let title                 = this.hasEditMode() ? 'Edit' : 'Generate',
         submitLabel           = this.hasEditMode() ? 'Save changes' : 'Confirm',
         dialogStandardActions = [
           {
@@ -68,37 +68,32 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'
-          >
+            method        = 'post'>
             <MUI.TextField
               ref               = 'description'
               name              = 'description'
               fullWidth         = {true}
               valueLink         = {this.linkState('description')}
               errorText         = {this.getValidationMessages('description').join(' ')}
-              floatingLabelText = 'Description of an API Key'
-            />
+              floatingLabelText = 'Description of an API Key' />
             <MUI.Toggle
               ref      = 'ignore_acl'
               name     = 'ignore_acl'
               onToggle = {this.handleToogle}
               style    = {{marginTop: 20}}
-              label    = 'Ignore ACL?'
-            />
+              label    = 'Ignore ACL?' />
             <MUI.Toggle
               ref      = 'allow_user_create'
               name     = 'allow_user_create'
               onToggle = {this.handleToogle}
               style    = {{marginTop: 20}}
-              label    = 'User registration?'
-            />
+              label    = 'User registration?' />
           </form>
         </div>
       </Common.Dialog>
