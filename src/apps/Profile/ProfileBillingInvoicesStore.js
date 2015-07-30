@@ -1,22 +1,20 @@
-var Reflux         = require('reflux'),
-    ProfileActions = require('./ProfileActions');
+import Reflux from 'reflux';
+import Actions from './ProfileActions';
 
-var ProfileBillingInvoicesStore = Reflux.createStore({
-  listenables: ProfileActions,
+export default Reflux.createStore({
+  listenables: Actions,
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isLoading: true,
       invoices: []
     }
   },
 
-  onFetchInvoicesCompleted: function(invoices) {
+  onFetchInvoicesCompleted(invoices) {
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
 
-    invoices = Object.keys(invoices).map(function(key) {
-      return invoices[key];
-    });
+    invoices = Object.keys(invoices).map(key => invoices[key]);
 
     this.trigger({
       isLoading: false,
@@ -24,11 +22,8 @@ var ProfileBillingInvoicesStore = Reflux.createStore({
     });
   },
 
-  onFetchInvoicesFailure: function() {
+  onFetchInvoicesFailure() {
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesFailure');
     this.trigger({isLoading: false});
   }
-
 });
-
-module.exports = ProfileBillingInvoicesStore;

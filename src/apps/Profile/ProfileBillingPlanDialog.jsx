@@ -79,19 +79,19 @@ export default React.createClass({
 
     let total = parseInt(apiTotal) + parseInt(cbxTotal);
 
-    let subscribe = function() {
+    let subscribe = () => {
       return Actions.subscribePlan(this.state.plan.name, {
         commitment: JSON.stringify({
           api: apiTotal,
-          cbx: cbxTotal,
+          cbx: cbxTotal
         })
       });
-    }.bind(this);
+    };
 
-    let setLimits = function() {
+    let setLimits = () => {
       return Actions.updateBillingProfile({
         hard_limit: total * 3,
-        soft_limit: total * 1.5,
+        soft_limit: total * 1.5
       });
     };
 

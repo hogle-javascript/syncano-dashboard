@@ -1,14 +1,14 @@
-var Reflux         = require('reflux'),
+import Reflux         from 'reflux';
 
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
-    ProfileActions = require('./ProfileActions');
+import Actions from './ProfileActions';
 
-var ProfileBillingPaymentStore = Reflux.createStore({
-  listenables: ProfileActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       showForm: false,
       show_form: false,
@@ -21,28 +21,25 @@ var ProfileBillingPaymentStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  onFetchBillingCardCompleted: function(payload) {
+  onFetchBillingCardCompleted(payload) {
     this.trigger({
       isLoading: false,
       card: payload
     });
   },
 
-  onFetchBillingCardFailure: function() {
+  onFetchBillingCardFailure() {
     this.trigger({isLoading: false});
   },
 
-  onUpdateBillingCardCompleted: function(payload) {
-    var state = this.getInitialState();
+  onUpdateBillingCardCompleted(payload) {
+    let state = this.getInitialState();
     state.card      = payload;
     state.isLoading = false;
     this.trigger(state);
   }
-
 });
-
-module.exports = ProfileBillingPaymentStore;

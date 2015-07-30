@@ -1,30 +1,29 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    ClassesActions      = require('../Classes/ClassesActions'),
-    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
-    SessionActions      = require('../Session/SessionActions'),
-    WebhooksActions     = require('./WebhooksActions');
+//Stores & Actions
+import ClassesActions from '../Classes/ClassesActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SessionActions from '../Session/SessionActions';
+import WebhooksActions from './WebhooksActions';
 
-var WebhooksStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : WebhooksActions,
   mixins      : [
-    CheckListStoreMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -33,39 +32,34 @@ var WebhooksStore = Reflux.createStore({
     );
   },
 
-  setWebhooks: function(items) {
-    this.data.items = Object.keys(items).map(function(item) {
-      return items[item];
-    });
+  setWebhooks(items) {
+    this.data.items = Object.keys(items).map(item => items[item]);
     this.trigger(this.data);
   },
 
-  getWebhooks: function(empty) {
+  getWebhooks(empty) {
     return this.data.items || empty || null;
   },
 
-  refreshData: function() {
+  refreshData() {
     WebhooksActions.fetchWebhooks();
   },
 
-  onFetchWebhooks: function() {
+  onFetchWebhooks() {
     console.debug('WebhooksStore::onFetchWebhooks');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchWebhooksCompleted: function(items) {
+  onFetchWebhooksCompleted(items) {
     console.debug('WebhooksStore::onFetchWebhooksCompleted');
     this.data.isLoading = false;
     WebhooksActions.setWebhooks(items);
   },
 
-  onRemoveWebhooksCompleted: function() {
+  onRemoveWebhooksCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = WebhooksStore;

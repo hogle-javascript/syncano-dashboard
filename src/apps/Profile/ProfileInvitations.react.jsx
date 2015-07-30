@@ -6,8 +6,8 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import ProfileInvitationsActions from './ProfileInvitationsActions';
-import ProfileInvitationsStore from './ProfileInvitationsStore';
+import Actions from './ProfileInvitationsActions';
+import Store from './ProfileInvitationsStore';
 
 // Components
 import MUI from 'material-ui';
@@ -22,7 +22,7 @@ export default React.createClass({
   displayName: 'ProfileInvitations',
 
   mixins: [
-    Reflux.connect(ProfileInvitationsStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     HeaderMixin
   ],
@@ -47,17 +47,17 @@ export default React.createClass({
   ],
 
   initDialogs() {
-    var checked = ProfileInvitationsStore.getCheckedItems().length;
+    let checked = Store.getCheckedItems().length;
 
     return [
       {
         dialog: Common.Dialog,
         params: {
-          ref:    "acceptInvitationsDialog",
-          title:  "Accept Invitation",
+          ref   : 'acceptInvitationsDialog',
+          title : 'Accept Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleAccept}
+            {text: 'Yes, I\'m sure.', onClick: this.handleAccept}
           ],
           modal: true,
           children: 'Do you really want to accept ' + checked + ' Invitations?'
@@ -66,11 +66,11 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          ref  : "declineInvitationsDialog",
-          title:  "Decline Invitation",
+          ref   : 'declineInvitationsDialog',
+          title : 'Decline Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: "Yes, I'm sure.", onClick: this.handleDecline}
+            {text: 'Yes, I\'m sure.', onClick: this.handleDecline}
           ],
           modal: true,
           children: 'Do you really want to decline ' + checked + ' Invitations?'
@@ -86,42 +86,40 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('ProfileInvitations::componentDidMount');
-    ProfileInvitationsActions.fetch();
+    Actions.fetch();
   },
 
   uncheckAll() {
     console.info('ProfileInvitations::uncheckAll');
-    ProfileInvitationsActions.uncheckAll();
+    Actions.uncheckAll();
   },
 
   checkItem(id, state) {
     console.info('ProfileInvitations::checkItem');
-    ProfileInvitationsActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleAccept() {
     console.info('ProfileInvitations::handleAccept');
-    ProfileInvitationsActions.acceptInvitations(ProfileInvitationsStore.getCheckedItems());
+    Actions.acceptInvitations(Store.getCheckedItems());
   },
 
   handleDecline() {
     console.info('ProfileInvitations::handleDecline');
-    ProfileInvitationsActions.declineInvitations(ProfileInvitationsStore.getCheckedItems());
+    Actions.declineInvitations(Store.getCheckedItems());
   },
 
   renderItem(item) {
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.id}
-      >
+        key     = {item.id}>
         <Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.checkItem}
-        >
+          handleIconClick = {this.checkItem}>
           {item.instance}
         </Column.CheckIcon>
         <Column.Desc>{item.inviter}</Column.Desc>
@@ -132,7 +130,7 @@ export default React.createClass({
   },
 
   renderList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -142,7 +140,7 @@ export default React.createClass({
   },
 
   render() {
-    var checkedInvitations = ProfileInvitationsStore.getNumberOfChecked();
+    let checkedInvitations = Store.getNumberOfChecked();
 
     return (
       <Container>
@@ -154,20 +152,17 @@ export default React.createClass({
               label         = "Click here to unselect all"
               mini          = {true}
               onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline"
-            />
+              iconClassName = "synicon-checkbox-multiple-marked-outline" />
             <Common.Fab.Item
               label         = "Click here to accept Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
-              iconClassName = "synicon-check"
-            />
+              iconClassName = "synicon-check" />
             <Common.Fab.Item
               label         = "Click here to decline Invitations"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
           </Common.Fab>
         </Common.Show>
 

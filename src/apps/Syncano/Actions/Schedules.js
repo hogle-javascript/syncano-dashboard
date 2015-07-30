@@ -24,7 +24,6 @@ export default {
   },
 
   remove(schedules) {
-
     let promises = schedules.map(schedule => {
       return this.Connection.Schedules.remove(schedule.id);
     });

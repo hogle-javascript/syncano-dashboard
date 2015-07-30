@@ -1,7 +1,6 @@
 import Reflux from 'reflux';
 
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingPlanActions';
@@ -9,7 +8,7 @@ import Actions from './ProfileBillingPlanActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
-    WaitForStoreMixin
+    Mixins.WaitForStore
   ],
 
   getInitialState() {
@@ -93,5 +92,4 @@ export default Reflux.createStore({
     this.data.hideDialogs = true;
     this.refreshData();
   }
-
 });

@@ -20,7 +20,7 @@ import SolutionsList from './SolutionsList.react';
 import SolutionDialog from './SolutionDialog.react';
 import SolutionInstallDialog from './SolutionInstallDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Solutions',
 
@@ -52,11 +52,11 @@ module.exports = React.createClass({
     return [
       {
         label : 'Instances',
-        route : 'instances',
+        route : 'instances'
       },
       {
         label : 'Solutions',
-        route : 'solutions',
+        route : 'solutions'
       }
     ];
   },
@@ -85,7 +85,7 @@ module.exports = React.createClass({
   },
 
   renderTags() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     let tags = this.state.tags.map(item => {
       return (
@@ -116,8 +116,7 @@ module.exports = React.createClass({
             <Common.Fab.Item
               label         = "Click here to create Solution"
               onClick       = {this.showSolutionDialog}
-              iconClassName = "synicon-plus"
-            />
+              iconClassName = "synicon-plus" />
           </Common.Fab>
        </Common.Show>
 
@@ -128,19 +127,16 @@ module.exports = React.createClass({
                 <MUI.ListItem
                   innerDivStyle = {!this.state.filter ? styles.listItemChecked : {}}
                   primaryText   = "All solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, null)}
-                />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, null)} />
                 <MUI.ListDivider />
                 <MUI.ListItem
                   innerDivStyle = {this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
                   primaryText   = "Favorite"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')}
-                />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')} />
                 <MUI.ListItem
                   innerDivStyle = {this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
                   primaryText   = "My solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
-                />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')} />
               </MUI.List>
               {this.renderTags()}
             </div>

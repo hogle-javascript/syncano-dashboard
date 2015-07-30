@@ -5,10 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import SolutionsActions from './SolutionsActions';
-import SolutionDialogStore from './SolutionDialogStore';
-import ColorStore from '../../common/Color/ColorStore';
-import IconStore from '../../common/Icon/IconStore';
+import Actions from './SolutionsActions';
+import Store from './SolutionDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -19,7 +17,7 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    Reflux.connect(SolutionDialogStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
@@ -35,19 +33,19 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    SolutionsActions.updateSolution({
+    Actions.updateSolution({
       description: this.state.description
     });
   },
 
   handleAddSubmit() {
-    SolutionsActions.createSolution({
+    Actions.createSolution({
       label       : this.state.label,
       description : this.state.description,
       public      : this.state.public ? true : false
       //metadata: {
-      //  color     : ColorStore.getRandomColorName(),
-      //  icon      : IconStore.getRandomIconPickerIcon()
+      //  color     : Common.Color.getRandomColorName(),
+      //  icon      : Common.Icon.Store.getRandomIconPickerIcon()
       //}
     });
   },
@@ -65,15 +63,13 @@ export default React.createClass({
         key        = "cancel"
         label      = "Cancel"
         onTouchTap = {this.handleCancel}
-        ref        = "cancel"
-      />,
+        ref        = "cancel" />,
       <MUI.FlatButton
         key        = "confirm"
         label      = "Confirm"
         primary    = {true}
         onTouchTap = {this.handleFormValidation}
-        ref        = "submit"
-      />
+        ref        = "submit" />
     ];
 
     return (
@@ -82,8 +78,7 @@ export default React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
@@ -94,8 +89,7 @@ export default React.createClass({
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = 'Short name for your Solution'
-              floatingLabelText = 'Name'
-          />
+              floatingLabelText = 'Name' />
           <MUI.TextField
             ref               = 'description'
             name              = 'description'
@@ -103,16 +97,14 @@ export default React.createClass({
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = 'Sescription of Solution (optional)'
-            floatingLabelText = 'Description'
-          />
+            floatingLabelText = 'Description' />
           <MUI.Toggle
             ref            = 'public'
             name           = 'public'
             defaultToggled = {this.state.public}
             onToggle       = {this.handleToogle}
             style          = {{marginTop: 20}}
-            label          = 'Make this solution public?'
-          />
+            label          = 'Make this solution public?' />
         </div>
       </Common.Dialog>
     );

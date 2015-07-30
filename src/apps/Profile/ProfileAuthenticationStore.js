@@ -1,41 +1,42 @@
-var Reflux         = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
-    SessionStore   = require('../Session/SessionStore'),
-    SessionActions = require('../Session/SessionActions'),
+import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
 
-    ProfileActions = require('./ProfileActions');
+import Actions from './ProfileActions';
 
-var ProfileAuthenticationStore = Reflux.createStore({
-  listenables: ProfileActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function() {
-    var account_key = SessionStore.getUser({}).account_key;
+  getInitialState() {
+    let account_key = SessionStore.getUser({}).account_key;
+
     return {
       isLoading: account_key === undefined,
       account_key: account_key
     }
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(SessionActions.setUser, this.setUser);
   },
 
-  setUser: function() {
+  setUser() {
     this.trigger({
       isLoading: false,
       account_key: SessionStore.getUser({}).account_key
     });
   },
 
-  onResetKeyCompleted: function(payload) {
+  onResetKeyCompleted(payload) {
     SessionActions.setUser(payload);
   },
 
-  onChangePasswordCompleted: function(payload) {
+  onChangePasswordCompleted() {
     this.trigger({
       feedback: 'Password changed successfully.',
       currentPassword: null,
@@ -43,7 +44,4 @@ var ProfileAuthenticationStore = Reflux.createStore({
       confirmNewPassword: null
     });
   }
-
 });
-
-module.exports = ProfileAuthenticationStore;

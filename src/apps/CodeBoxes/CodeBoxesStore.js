@@ -1,18 +1,16 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+import Mixins from '../../mixins';
 
-    SessionActions      = require('../Session/SessionActions'),
-    CodeBoxesActions    = require('./CodeBoxesActions');
+import SessionActions from '../Session/SessionActions';
+import Actions from './CodeBoxesActions';
 
-var CodeBoxesStore = Reflux.createStore({
-  listenables: CodeBoxesActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [
-    CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreLoading,
+    Mixins.WaitForStore
   ],
 
   langMap: {
@@ -29,7 +27,7 @@ var CodeBoxesStore = Reflux.createStore({
     ruby:   {color: '#B21000', icon: 'code-array'}
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items               : [],
 
@@ -46,7 +44,7 @@ var CodeBoxesStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -54,33 +52,33 @@ var CodeBoxesStore = Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
-    this.listenTo(CodeBoxesActions.setCurrentCodeBoxId, this.fetchTraces)
+    this.listenTo(Actions.setCurrentCodeBoxId, this.fetchTraces)
   },
 
-  fetchTraces: function() {
+  fetchTraces() {
     console.debug('CodeBoxesStore::fetchTraces');
     if (this.data.currentCodeBoxId === null) {
       return;
     }
-    CodeBoxesActions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
+    Actions.fetchCodeBoxTraces(this.data.currentCodeBoxId);
   },
 
-  getItems: function() {
+  getItems() {
     return this.data.items;
   },
 
-  getEditorMode: function(codeBox) {
+  getEditorMode(codeBox) {
     // jscs:disable
     return this.langMap[codeBox.runtime_name];
     // jscs:enable
   },
 
-  getRuntimeColorIcon: function(runtime) {
+  getRuntimeColorIcon(runtime) {
     return this.runtimeColors[runtime];
   },
 
-  getCodeBoxesDropdown: function() {
-    return this.data.items.map(function(item) {
+  getCodeBoxesDropdown() {
+    return this.data.items.map(item => {
       return {
         payload : item.id,
         text    : item.label
@@ -88,36 +86,35 @@ var CodeBoxesStore = Reflux.createStore({
     });
   },
 
-  getCurrentCodeBox: function() {
-
+  getCurrentCodeBox() {
     if (!this.data.currentCodeBoxId) {
       return null;
     }
 
-    var currentItem = null;
-    this.data.items.some(function(item) {
+    let currentItem = null;
+    this.data.items.some(item => {
       if (item.id.toString() === this.data.currentCodeBoxId.toString()) {
         currentItem = item;
         return true;
       }
-    }.bind(this));
+    });
     return currentItem;
   },
 
-  getCodeBoxById: function(id) {
-    var codeBox = null;
-    this.data.items.some(function(item) {
+  getCodeBoxById(id) {
+    let codeBox = null;
+    this.data.items.some(item => {
       if (item.id.toString() === id.toString()) {
         codeBox = item;
         return true;
       }
-    }.bind(this));
+    });
     return codeBox;
   },
 
-  getCodeBoxIndex: function(id) {
-    var codeBoxIndex = null;
-    this.data.items.some(function(item, index) {
+  getCodeBoxIndex(id) {
+    let codeBoxIndex = null;
+    this.data.items.some((item, index) => {
       if (item.id.toString() === id.toString()) {
         codeBoxIndex = index;
         return true;
@@ -126,74 +123,69 @@ var CodeBoxesStore = Reflux.createStore({
     return codeBoxIndex;
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('CodeBoxesStore::refreshData');
-    CodeBoxesActions.fetchCodeBoxes();
+    Actions.fetchCodeBoxes();
   },
 
-  setCodeBoxes: function(items) {
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+  setCodeBoxes(items) {
+    this.data.items = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  setCodeBoxTraces: function(items) {
-    this.data.traces = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+  setCodeBoxTraces(items) {
+    this.data.traces = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  onSetCurrentCodeBoxId: function(CodeBoxId) {
+  onSetCurrentCodeBoxId(CodeBoxId) {
     console.debug('CodeBoxesStore::onSetCurrentCodeBoxId', CodeBoxId);
     this.data.currentCodeBoxId = CodeBoxId;
     this.trigger(this.data);
   },
 
-  onRemoveCodeBoxesCompleted: function(payload) {
+  onRemoveCodeBoxesCompleted(payload) {
     console.debug('CodeBoxesStore::onRemoveCodeBoxesCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  onFetchCodeBoxes: function() {
+  onFetchCodeBoxes() {
     console.debug('CodeBoxesStore::onFetchCodeBoxes');
     this.trigger(this.data);
   },
 
-  onFetchCodeBoxesCompleted: function(items) {
+  onFetchCodeBoxesCompleted(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    CodeBoxesActions.setCodeBoxes(items);
+    Actions.setCodeBoxes(items);
   },
 
-  onRunCodeBox: function() {
+  onRunCodeBox() {
     console.debug('CodeBoxesStore::onRunCodeBox');
     this.trigger(this.data);
   },
 
-  onRunCodeBoxCompleted: function(trace) {
+  onRunCodeBoxCompleted(trace) {
     console.debug('CodeBoxesStore::onRunCodeBoxCompleted');
     this.data.lastTrace = trace;
-    CodeBoxesActions.fetchCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
+    Actions.fetchCodeBoxTrace(this.data.currentCodeBoxId, trace.id);
   },
 
-  onFetchCodeBoxTraceCompleted: function(trace) {
+  onFetchCodeBoxTraceCompleted(trace) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTrace');
     if (trace.status == 'pending') {
-      var CodeBoxId = this.data.currentCodeBoxId;
-      setTimeout(function() {CodeBoxesActions.fetchCodeBoxTrace(CodeBoxId, trace.id)}, 300);
+      let CodeBoxId = this.data.currentCodeBoxId;
+      setTimeout(() => {
+        Actions.fetchCodeBoxTrace(CodeBoxId, trace.id)
+      }, 300);
     } else {
       this.data.lastTraceResult = trace.result;
     }
     this.trigger(this.data);
   },
 
-  onFetchCodeBoxTracesCompleted: function(items) {
+  onFetchCodeBoxTracesCompleted(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTraces');
-    CodeBoxesActions.setCodeBoxTraces(items);
+    Actions.setCodeBoxTraces(items);
   }
-
 });
-
-module.exports = CodeBoxesStore;

@@ -1,13 +1,9 @@
-var React       = require('react'),
-    classNames  = require('classnames'),
+import React       from 'react';
+import classNames  from 'classnames';
 
-    mui         = require('material-ui'),
-    Avatar      = mui.Avatar,
-    Paper       = mui.Paper,
-    Colors      = mui.Styles.Colors;
+import MUI         from 'material-ui';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ColumnAvatarCheck',
 
@@ -18,20 +14,20 @@ module.exports = React.createClass({
     handleIconClick : React.PropTypes.func
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       color      : 'black',
-      hoverColor : Colors.blue600
+      hoverColor : MUI.Styles.Colors.blue600
     }
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       checked : this.props.checked
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       icon: {
         margin: 0
@@ -39,29 +35,28 @@ module.exports = React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick: function (event) {
+  handleIconClick(event) {
     console.info('ColumnAvatarCheck:handleClick');
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },
 
-  handleMouseOver: function () {
+  handleMouseOver() {
     this.setState({
       hovered: true
     });
   },
-  handleMouseLeave: function () {
+  handleMouseLeave() {
     this.setState({
       hovered: false
     });
   },
 
-  getIconState: function () {
-
-    var GREY = 'rgba(0,0,0,0.2)';
+  getIconState() {
+    let GREY = 'rgba(0,0,0,0.2)';
 
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
@@ -77,21 +72,21 @@ module.exports = React.createClass({
     return {icon: this.props.icon, color: this.props.background};
   },
 
-  render: function () {
-
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     // Which icon to show?
-    var iconState = this.getIconState(),
-        icon = <FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
+    let iconState = this.getIconState(),
+        icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon} />;
 
-    return <Avatar
+    return(
+      <MUI.Avatar
         icon            = {icon}
         style           = {this.props.style}
         backgroundColor = {iconState.color}
         onClick         = {this.handleIconClick}
         onMouseOver     = {this.handleMouseOver}
-        onMouseOut      = {this.handleMouseLeave}
-        />;
+        onMouseOut      = {this.handleMouseLeave} />
+    )
   }
 });

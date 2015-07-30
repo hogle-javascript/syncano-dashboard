@@ -24,7 +24,6 @@ SolutionEdit.Store            = SolutionEditStore;
 
 SolutionVersionDialog.Actions = SolutionVersionDialogActions;
 SolutionVersionDialog.Store   = SolutionVersionDialogStore;
-SolutionVersionDialog.Store   = SolutionVersionDialogStore;
 
 SolutionInstallDialog.Actions = SolutionInstallDialogActions;
 SolutionInstallDialog.Store   = SolutionInstallDialogStore;

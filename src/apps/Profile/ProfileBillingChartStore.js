@@ -52,8 +52,8 @@ export default Reflux.createStore({
             label: 'Cost ($)',
             type  : 'indexed',
             tick : {
-              format : function(x) { return x / 2 ? x : null  },
-              fit    : true,
+              format : (x) => { return x / 2 ? x : null  },
+              fit    : true
             },
             show: true
           }

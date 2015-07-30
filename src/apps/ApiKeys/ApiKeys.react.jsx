@@ -9,8 +9,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import ApiKeysActions from './ApiKeysActions';
-import ApiKeysStore from './ApiKeysStore';
+import Actions from './ApiKeysActions';
+import Store from './ApiKeysStore';
 
 // Components
 import MUI from 'material-ui';
@@ -29,7 +29,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ApiKeysStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -42,25 +42,25 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('ApiKeys::componentWillMount');
-    ApiKeysActions.fetch();
+    Actions.fetch();
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedApiKeys = ApiKeysStore.getCheckedItems();
+    let checkedApiKeys = Store.getCheckedItems();
 
     return [{
       dialog: Common.Dialog,
       params: {
-        title:  "Reset an API Key",
-        ref  : "resetApiKeyDialog",
+        title : 'Reset an API Key',
+        ref   : 'resetApiKeyDialog',
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : "Confirm",
+            text    : 'Confirm',
             onClick : this.handleReset
           }
         ],
@@ -70,34 +70,32 @@ export default React.createClass({
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading}
-          />
+            show     = {this.state.isLoading} />
         ]
       }
     }, {
       dialog: Common.Dialog,
       params: {
-        ref: "deleteApiKeyDialog",
-        title: "Delete an API key",
+        title : 'Delete an API key',
+        ref   : 'deleteApiKeyDialog',
         actions: [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : "Confirm",
+            text    : 'Confirm',
             onClick : this.handleDelete
           }
         ],
         modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
-          this.getDialogList(checkedApiKeys),
+          this.getDialogList(checkedApiKeys, 'description'),
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading}
-          />
+            show     = {this.state.isLoading} />
         ]
       }
     }]
@@ -105,33 +103,34 @@ export default React.createClass({
 
   handleDelete() {
     console.info('ApiKeys::handleDelete');
-    ApiKeysActions.removeApiKeys(ApiKeysStore.getCheckedItems());
+    Actions.removeApiKeys(Store.getCheckedItems());
   },
 
   handleReset() {
     console.info('ApiKeys::handleReset');
-    ApiKeysActions.resetApiKey(ApiKeysStore.getCheckedItem().id);
+    Actions.resetApiKey(Store.getCheckedItem().id);
   },
 
   showApiKeyDialog() {
-    ApiKeysActions.showDialog();
+    Actions.showDialog();
   },
 
   render() {
-    let checkedApiKeys      = ApiKeysStore.getNumberOfChecked(),
+    let checkedApiKeys      = Store.getNumberOfChecked(),
         isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
 
     return (
       <Container>
         <ApiKeyDialog />
         {this.getDialogs()}
+
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyApiKeySelected ? "Click here to select all" : "Click here to unselect all"}
+              label         = {isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
-              onClick       = {isAnyApiKeySelected ? ApiKeysActions.selectAll : ApiKeysActions.uncheckAll}
-              iconClassName = {isAnyApiKeySelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"}
+              onClick       = {isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName = {isAnyApiKeySelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
             />
             <Common.Fab.Item
               label         = "Click here to delete API Keys"

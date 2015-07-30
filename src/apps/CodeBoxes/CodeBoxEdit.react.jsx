@@ -7,8 +7,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 // Stores and Actions
-import CodeBoxActions from './CodeBoxActions';
-import CodeBoxStore from './CodeBoxStore';
+import Actions from './CodeBoxActions';
+import Store from './CodeBoxStore';
 
 // Components
 import Snackbar from 'material-ui/lib/snackbar';
@@ -25,13 +25,13 @@ export default React.createClass({
     Router.Navigation,
     React.addons.LinkedStateMixin,
 
-    Reflux.connect(CodeBoxStore),
+    Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin
   ],
 
   componentDidMount() {
-    CodeBoxActions.fetch();
+    Actions.fetch();
   },
 
   getStyles() {
@@ -52,7 +52,7 @@ export default React.createClass({
     let payloadErrors = this.refs.tracePanel.state.errors,
         payloadIsValid = typeof payloadErrors.payloadValue === 'undefined' ? true : false;
     if (payloadIsValid) {
-      CodeBoxActions.runCodeBox({
+      Actions.runCodeBox({
         id      : this.state.currentCodeBox.id,
         payload : this.refs.tracePanel.refs.payloadField.getValue()
       });
@@ -63,7 +63,7 @@ export default React.createClass({
 
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
-    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
     SnackbarNotificationActions.set({
       message: 'Saving...'
     });
@@ -77,24 +77,20 @@ export default React.createClass({
 
     if (codeBox) {
       source     = codeBox.source;
-      editorMode = CodeBoxStore.getEditorMode();
+      editorMode = Store.getEditorMode();
 
       return (
         <div>
-
           <Common.Editor
             ref   = "editorSource"
             mode  = {editorMode}
             theme = "github"
-            value = {source}
-          />
-
+            value = {source} />
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
               ref     = "tracePanel"
               trace   = {this.state.lastTraceResult}
-              loading = {!this.state.lastTraceReady}
-            />
+              loading = {!this.state.lastTraceReady} />
           </div>
         </div>
       )
@@ -110,14 +106,12 @@ export default React.createClass({
             label         = "Click here to save CodeBox"
             mini          = {true}
             onClick       = {this.handleUpdate}
-            iconClassName = "synicon-content-save"
-          />
+            iconClassName = "synicon-content-save" />
           <Common.Fab.Item
             label         = "Click here to execute CodeBox"
             mini          = {true}
             onClick       = {this.handleRun}
-            iconClassName = "synicon-play"
-          />
+            iconClassName = "synicon-play" />
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
@@ -125,10 +119,8 @@ export default React.createClass({
         <Snackbar
           message          = "Can't run CodeBox with invalid payload"
           ref              = "snackbar"
-          autoHideDuration = {3000}
-        />
+          autoHideDuration = {3000} />
       </Container>
     );
   }
-
 });

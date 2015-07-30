@@ -2,18 +2,18 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 
-    // Utils
+// Utils
 import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
-    // Stores and Actions
-import TracesActions from './TracesActions';
-import TracesStore from './TracesStore';
+// Stores and Actions
+import Store from './TracesStore';
+import Actions from './TracesActions';
 
-    // Components
+// Components
 import Container from '../../common/Container/Container.react';
 
-    // Local components
+// Local components
 import TracesList from './TracesList.react';
 
 
@@ -29,7 +29,7 @@ export default React.createClass({
   mixins: [
     Router.State,
 
-    Reflux.connect(TracesStore),
+    Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin
   ],
@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    TracesActions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
   },
 
   render() {
@@ -53,5 +53,4 @@ export default React.createClass({
       </Container>
     );
   }
-
 });

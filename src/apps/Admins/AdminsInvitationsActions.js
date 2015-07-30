@@ -1,10 +1,6 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-    Syncano    = require('../Session/Connection'),
-    Connection = require('../Session/Connection').get(),
-    D          = Syncano.D;
-
-var AdminsInvitationsActions = Reflux.createActions({
+export default CreateActions({
   checkItem      : {},
   uncheckAll     : {},
   selectAll      : {},
@@ -14,62 +10,26 @@ var AdminsInvitationsActions = Reflux.createActions({
   fetchInvitations: {
     asyncResult : true,
     loading     : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Invitations.list'
   },
   createInvitation: {
     asyncResult : true,
     asyncForm   : true,
     loading     : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Invitations.create'
   },
   resendInvitation: {
     asyncResult : true,
     loading     : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Invitations.resend'
   },
   removeInvitation: {
     asyncResult : true,
     loading     : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Invitations.remove'
   }
 });
-
-AdminsInvitationsActions.fetchInvitations.listen(function() {
-  console.info('AdminsInvitationsActions::fetchInvitations');
-  Connection
-    .Invitations
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-AdminsInvitationsActions.createInvitation.listen(function(payload) {
-  console.info('AdminsInvitationsActions::createAdmin');
-  Connection
-    .Invitations
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-AdminsInvitationsActions.removeInvitation.listen(function(items) {
-  console.info('AdminsInvitationsActions::removeInvitation');
-  var promises  = items.map(item => Connection.Invitations.remove(item.id));
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-
-});
-
-AdminsInvitationsActions.resendInvitation.listen(function(items) {
-  console.info('AdminsInvitationsActions::resendInvitation');
-  var promises = items.map(item => Connection.Invitations.resend(item.id));
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-
-});
-
-module.exports = AdminsInvitationsActions;
