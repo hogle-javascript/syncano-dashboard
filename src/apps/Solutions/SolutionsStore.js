@@ -53,16 +53,12 @@ export default Reflux.createStore({
 
   setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
-    this.data.items = Object.keys(solutions).map(function(key) {
-      return solutions[key];
-    });
+    this.data.items = Object.keys(solutions).map(key => solutions[key]);
     this.trigger(this.data);
   },
 
   setTags(tags) {
-    this.data.tags = Object.keys(tags).map(function(key) {
-      return tags[key];
-    });
+    this.data.tags = Object.keys(tags).map(key => tags[key]);
     this.trigger(this.data);
   },
 
@@ -73,10 +69,12 @@ export default Reflux.createStore({
 
   onToggleTagSelection(tag) {
     let i = this.data.selectedTags.indexOf(tag);
-    if (i === -1)
-        this.data.selectedTags.push(tag);
-    else
-        this.data.selectedTags.splice(i, 1);
+
+    if (i === -1) {
+      this.data.selectedTags.push(tag);
+    } else {
+      this.data.selectedTags.splice(i, 1);
+    }
 
     this.refreshSolutions();
   },
@@ -133,5 +131,4 @@ export default Reflux.createStore({
     this.trigger(this.data);
     this.refreshData();
   }
-
 });

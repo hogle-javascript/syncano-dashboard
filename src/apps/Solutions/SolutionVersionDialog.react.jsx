@@ -81,7 +81,7 @@ export default React.createClass({
     Object.keys(spec).map(section => {
       let pkName = this.pkMap(section);
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(function(item) {
+      Object.keys(spec[section]).map(item => {
         if (spec[section][item] === true) {
           let obj = {};
           if (pkName === 'id') {
@@ -124,8 +124,7 @@ export default React.createClass({
           name     = {item.name}
           value    = {item.name}
           label    = {item.name}
-          onToggle = {this.handleToogle.bind(this, item.name, 'data')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.name, 'data')} />
       )
     });
   },
@@ -138,8 +137,7 @@ export default React.createClass({
           name     = {item.name}
           value    = {item.name}
           label    = {item.name}
-          onToggle = {this.handleToogle.bind(this, item.name, 'classes')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.name, 'classes')} />
       )
     });
   },
@@ -152,8 +150,7 @@ export default React.createClass({
           name     = {item.label}
           value    = {item.id}
           label    = {item.label}
-          onToggle = {this.handleToogle.bind(this, item.id, 'codeboxes')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.id, 'codeboxes')} />
       )
     });
   },
@@ -166,8 +163,7 @@ export default React.createClass({
           name     = {item.label}
           value    = {item.id}
           label    = {item.label}
-          onToggle = {this.handleToogle.bind(this, item.id, 'schedules')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.id, 'schedules')} />
       )
     });
   },
@@ -180,8 +176,7 @@ export default React.createClass({
           name     = {item.label}
           value    = {item.id}
           label    = {item.label}
-          onToggle = {this.handleToogle.bind(this, item.id, 'triggers')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.id, 'triggers')} />
       )
     });
   },
@@ -194,8 +189,7 @@ export default React.createClass({
           name     = {item.name}
           value    = {item.name}
           label    = {item.name}
-          onToggle = {this.handleToogle.bind(this, item.name, 'channels')}
-        />
+          onToggle = {this.handleToogle.bind(this, item.name, 'channels')} />
       )
     });
   },
@@ -214,15 +208,13 @@ export default React.createClass({
         ref        = 'cancel'
         key        = 'cancel'
         label      = 'Cancel'
-        onTouchTap = {this.handleCancel}
-      />,
+        onTouchTap = {this.handleCancel} />,
       <MUI.FlatButton
         ref        = 'submit'
         key        = 'confirm'
         label      = 'Confirm'
         primary    = {true}
-        onTouchTap = {this.handleFormValidation}
-      />
+        onTouchTap = {this.handleFormValidation} />
     ];
 
     return (
@@ -231,8 +223,7 @@ export default React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
 
@@ -246,8 +237,7 @@ export default React.createClass({
                 valueLink         = {this.linkState('version')}
                 errorText         = {this.getValidationMessages('version').join(' ')}
                 hintText          = 'Short name for your Solution'
-                floatingLabelText = 'Version number'
-              />
+                floatingLabelText = 'Version number' />
             </div>
             <div className='col-xs-26' style={{paddingLeft: 15}}>
               <MUI.SelectField
@@ -260,8 +250,7 @@ export default React.createClass({
                 displayMember     = 'text'
                 floatingLabelText = 'Instances'
                 errorText         = {this.getValidationMessages('instance').join(' ')}
-                menuItems         = {InstancesStore.getInstancesDropdown()}
-              />
+                menuItems         = {InstancesStore.getInstancesDropdown()} />
             </div>
           </div>
 
@@ -270,20 +259,17 @@ export default React.createClass({
               <MUI.Tab
                 label    = "Data Endpoints"
                 route    = "solutions-market"
-                onActive = {this.handleTabActive}
-              >
+                onActive = {this.handleTabActive}>
                 {this.renderData()}
               </MUI.Tab>
               <MUI.Tab
                 label    = "Classes"
-                onActive = {this.handleTabActive}
-              >
+                onActive = {this.handleTabActive}>
                 {this.renderClasses()}
               </MUI.Tab>
               <MUI.Tab
                 label    = "CodeBox"
-                onActive = {this.handleTabActive}
-              >
+                onActive = {this.handleTabActive}>
                 <div style = {{height: 300}}>
                   {this.renderCodeBoxes()}
                 </div>
@@ -291,8 +277,7 @@ export default React.createClass({
               <MUI.Tab
                 label    = "Tasks"
                 route    = "solutions-my"
-                onActive = {this.handleTabActive}
-              >
+                onActive = {this.handleTabActive}>
                 <div className='row'>
                   <div className='col-flex-1'>
                     <div>Triggers</div>
@@ -306,8 +291,7 @@ export default React.createClass({
               </MUI.Tab>
               <MUI.Tab
                 label    = "Channels"
-                onActive = {this.handleTabActive}
-              >
+                onActive = {this.handleTabActive}>
                 {this.renderChannels()}
               </MUI.Tab>
             </MUI.Tabs>

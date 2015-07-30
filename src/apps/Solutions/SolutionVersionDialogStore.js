@@ -1,31 +1,30 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionActions = require('../Session/SessionActions'),
+//Stores & Actions
+import SessionActions from '../Session/SessionActions';
 
-    DataViewsActions = require('../Data/DataViewsActions'),
-    WebhooksActions  = require('../Data/WebhooksActions'),
-    ClassesActions   = require('../Classes/ClassesActions'),
-    CodeBoxesActions = require('../CodeBoxes/CodeBoxesActions'),
-    TriggersActions  = require('../Tasks/TriggersActions'),
-    SchedulesActions = require('../Tasks/SchedulesActions'),
-    ChannelsActions  = require('../Channels/ChannelsActions'),
+import DataViewsActions from '../Data/DataViewsActions';
+import WebhooksActions from '../Data/WebhooksActions';
+import ClassesActions from '../Classes/ClassesActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import TriggersActions from '../Tasks/TriggersActions';
+import SchedulesActions from '../Tasks/SchedulesActions';
+import ChannelsActions from '../Channels/ChannelsActions';
 
-    SolutionEditActions = require('./SolutionEditActions'),
-    SolutionVersionDialogActions = require('./SolutionVersionDialogActions');
+import SolutionEditActions from './SolutionEditActions';
+import SolutionVersionDialogActions from './SolutionVersionDialogActions';
 
-var SolutionVersionDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : SolutionVersionDialogActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       name        : null,
       description : null,
@@ -35,18 +34,18 @@ var SolutionVersionDialogStore = Reflux.createStore({
         codeboxes : {},
         triggers  : {},
         schedules : {},
-        channels  : {},
+        channels  : {}
       }
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(SessionActions.fetchInstance.completed, this.fetchInstanceData);
     this.listenTo(SolutionEditActions.createVersion.completed, this.onCreateVersionCompleted);
   },
 
-  fetchInstanceData: function() {
+  fetchInstanceData() {
     console.debug('SolutionVersionDialogStore::fetchInstanceData');
     //ClassesActions.fetch();
     //DataViewsActions.fetch();
@@ -57,12 +56,9 @@ var SolutionVersionDialogStore = Reflux.createStore({
     //ChannelsActions.fetch();
   },
 
-  onCreateVersionCompleted: function() {
+  onCreateVersionCompleted() {
     console.debug('SolutionVersionDialogStore::onCreateSolutionCompleted');
     this.dismissDialog();
     SolutionEditActions.fetch();
-  },
-
+  }
 });
-
-module.exports = SolutionVersionDialogStore;

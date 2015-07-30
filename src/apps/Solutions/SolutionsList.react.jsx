@@ -27,8 +27,7 @@ export default React.createClass({
       return (
         <div
           key   = {item.id}
-          style = {this.getStyles().listItem}
-        >
+          style = {this.getStyles().listItem}>
           <SolutionsListItem data={item} />
         </div>
       )
@@ -39,8 +38,7 @@ export default React.createClass({
     return (
       <div
         className = "row"
-        style     = {this.getStyles().list}
-      >
+        style     = {this.getStyles().list}>
         {this.getListItems()}
       </div>
     );

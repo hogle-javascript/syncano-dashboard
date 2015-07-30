@@ -4,19 +4,18 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import SolutionEditActions from './SolutionEditActions';
 import SolutionEditStore from './SolutionEditStore';
+import SolutionInstallDialogActions from './SolutionInstallDialogActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
-import SolutionInstallDialogActions from './SolutionInstallDialogActions';
 
 // Shortcut
 let Column =  Common.ColumnList.Column;
@@ -107,7 +106,7 @@ export default React.createClass({
       return;
     }
 
-    var items = this.state.versions.map(item => {
+    let items = this.state.versions.map(item => {
       return this.renderItem(item);
     });
 
