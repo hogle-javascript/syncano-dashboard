@@ -1,7 +1,7 @@
 import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions({
-    withDialog : true,
+    withDialog : true
   },
   {
     fetch         : {},
@@ -44,6 +44,6 @@ export default CreateActions({
       loading     : true,
       children    : ['completed', 'failure'],
       method      : 'Syncano.Actions.Billing.updateCard'
-    },
+    }
   }
 );

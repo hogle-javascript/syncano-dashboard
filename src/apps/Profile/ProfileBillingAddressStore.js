@@ -1,25 +1,22 @@
-var Reflux         = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
-    ProfileActions = require('./ProfileActions');
+import Actions from './ProfileActions';
 
-var ProfileBillingAddressStore = Reflux.createStore({
-  listenables: ProfileActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [StoreFormMixin],
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  onFetchBillingProfileCompleted: function(payload) {
+  onFetchBillingProfileCompleted(payload) {
     this.trigger(payload);
   },
 
-  onUpdateBillingProfileCompleted: function() {
+  onUpdateBillingProfileCompleted() {
     this.trigger({feedback: 'Billing address changed successfully.'});
   }
-
 });
-
-module.exports = ProfileBillingAddressStore;

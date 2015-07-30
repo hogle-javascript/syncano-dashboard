@@ -1,12 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import HeaderMixin from '../Header/HeaderMixin';
 import FormMixin from '../../mixins/FormMixin';
+import HeaderMixin from '../Header/HeaderMixin';
 
-import ProfileActions from './ProfileActions';
-import ProfileSettingsStore from './ProfileSettingsStore';
 import SessionStore from '../Session/SessionStore';
+import Actions from './ProfileActions';
+import Store from './ProfileSettingsStore';
 
 import MUI from 'material-ui';
 import Container from '../../common/Container/ProfileContainer.react';
@@ -16,7 +16,7 @@ export default React.createClass({
   displayName: 'ProfileSettings',
 
   mixins: [
-    Reflux.connect(ProfileSettingsStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     HeaderMixin,
     FormMixin
@@ -73,7 +73,7 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    ProfileActions.updateSettings(this.state);
+    Actions.updateSettings(this.state);
   },
 
   render() {
