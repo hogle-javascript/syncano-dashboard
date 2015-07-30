@@ -1,8 +1,8 @@
-import CreateActions from '../../utils/ActionsConstructor.js'
+import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
     withDialog : true,
-    withCheck  : true,
+    withCheck  : true
   },
   {
     fetch         : {},

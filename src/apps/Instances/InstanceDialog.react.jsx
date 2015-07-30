@@ -56,22 +56,20 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance';
-    let dialogCustomActions = [
-      <MUI.FlatButton
-        key        = "cancel"
-        label      = "Cancel"
-        onTouchTap = {this.handleCancel}
-        ref        = "cancel"
-      />,
-      <MUI.FlatButton
-        key        = "confirm"
-        label      = "Confirm"
-        primary    = {true}
-        onTouchTap = {this.handleFormValidation}
-        ref        = "submit"
-      />
-    ];
+    let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance',
+        dialogCustomActions = [
+          <MUI.FlatButton
+            key        = "cancel"
+            label      = "Cancel"
+            onTouchTap = {this.handleCancel}
+            ref        = "cancel" />,
+          <MUI.FlatButton
+            key        = "confirm"
+            label      = "Confirm"
+            primary    = {true}
+            onTouchTap = {this.handleFormValidation}
+            ref        = "submit" />
+        ];
 
     return (
       <Common.Dialog
@@ -80,8 +78,7 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
         onDismiss       = {this.resetDialogState}
-        onShow          = {this.handleDialogShow}
-      >
+        onShow          = {this.handleDialogShow}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
@@ -92,8 +89,7 @@ export default React.createClass({
             valueLink         = {this.linkState('name')}
             errorText         = {this.getValidationMessages('name').join(' ')}
             hintText          = "Short name for your Instance"
-            floatingLabelText = "Name"
-          />
+            floatingLabelText = "Name" />
           <MUI.TextField
             ref               = "description"
             name              = "description"
@@ -101,8 +97,7 @@ export default React.createClass({
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = "Multiline description of Instance (optional)"
-            floatingLabelText = "Description"
-          />
+            floatingLabelText = "Description" />
         </div>
       </Common.Dialog>
     );
