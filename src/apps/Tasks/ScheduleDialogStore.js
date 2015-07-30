@@ -1,19 +1,18 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SchedulesActions  = require('./SchedulesActions'),
-    CodeBoxesActions  = require('../CodeBoxes/CodeBoxesActions'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore');
+//Stores & Actions
+import SchedulesActions from './SchedulesActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
-var ScheduleDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : SchedulesActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
   crontabItems: [
@@ -43,7 +42,7 @@ var ScheduleDialogStore = Reflux.createStore({
     }
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       label     : null,
       crontab   : null,
@@ -54,14 +53,14 @@ var ScheduleDialogStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(CodeBoxesActions.setCodeBoxes, this.getCodeBoxesDropdown);
   },
 
-  getCodeBoxesDropdown: function() {
+  getCodeBoxesDropdown() {
     console.debug('ScheduleDialogStore::getCodeBoxesDropdown');
-    var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
+    let codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
 
     if (codeboxes.length === 0) {
       codeboxes = [{payload: '', text: 'No codeboxes, add one first'}];
@@ -70,22 +69,19 @@ var ScheduleDialogStore = Reflux.createStore({
     this.trigger({codeboxes: codeboxes});
   },
 
-  getCrontabDropdown: function() {
+  getCrontabDropdown() {
     return this.crontabItems;
   },
 
-  onCreateScheduleCompleted: function() {
+  onCreateScheduleCompleted() {
     console.debug('ScheduleDialogStore::onCreateScheduleCompleted');
     this.dismissDialog();
     SchedulesActions.fetchSchedules();
   },
 
-  onUpdateScheduleCompleted: function() {
+  onUpdateScheduleCompleted() {
     console.debug('ScheduleDialogStore::onUpdateScheduleCompleted');
     this.dismissDialog();
     SchedulesActions.fetchSchedules();
   }
-
 });
-
-module.exports = ScheduleDialogStore;

@@ -1,73 +1,33 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js';
 
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
-
-var TriggersActions = Reflux.createActions({
-  checkItem     : {},
-  uncheckAll    : {},
-  selectAll     : {},
+export default CreateActions(
+  {
+    withCheck  : true,
+    withDialog : true
+  },
+  {
   fetch         : {},
   setTriggers   : {},
-  showDialog    : {},
-  dismissDialog : {},
   createTrigger: {
     asyncResult : true,
     asyncForm   : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Triggers.create'
   },
   fetchTriggers: {
     asyncResult : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Triggers.list'
   },
   updateTrigger: {
     asyncResult : true,
     asyncForm   : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Triggers.update'
   },
   removeTriggers: {
     asyncResult : true,
-    children    : ['completed', 'failure']
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Triggers.remove'
   }
 });
-
-TriggersActions.createTrigger.listen(function(payload) {
-  console.info('TriggersActions::createTrigger');
-  Connection
-    .Triggers
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-TriggersActions.fetchTriggers.listen(function() {
-  console.info('TriggersActions::fetchTriggers');
-  Connection
-    .Triggers
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-TriggersActions.updateTrigger.listen(function(id, payload) {
-  console.info('TriggersActions::updateTrigger');
-  Connection
-    .Triggers
-    .update(id, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-TriggersActions.removeTriggers.listen(function(ids) {
-  console.info('TriggersActions::removeTriggers');
-  var promises = ids.map(function(id) {
-    return Connection.Triggers.remove(id);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-module.exports = TriggersActions;

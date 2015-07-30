@@ -1,21 +1,20 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    TriggersActions   = require('./TriggersActions'),
-    CodeBoxesActions  = require('../CodeBoxes/CodeBoxesActions'),
-    ClassesActions    = require('../Classes/ClassesActions'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore'),
-    ClassesStore      = require('../Classes/ClassesStore');
+//Stores & Actions
+import TriggersActions from './TriggersActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import ClassesActions from '../Classes/ClassesActions';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import ClassesStore from '../Classes/ClassesStore';
 
-var TriggerDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
   signalMenuItems: [
@@ -33,7 +32,7 @@ var TriggerDialogStore = Reflux.createStore({
     }
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       label: null,
       signal: '',
@@ -47,7 +46,7 @@ var TriggerDialogStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.joinTrailing(
       CodeBoxesActions.setCodeBoxes,
@@ -56,15 +55,15 @@ var TriggerDialogStore = Reflux.createStore({
     );
   },
 
-  getSignalsDropdown: function() {
+  getSignalsDropdown() {
     return this.signalMenuItems;
   },
 
-  getDropdowns: function() {
+  getDropdowns() {
     console.debug('TriggerDialogStore::getDropdowns');
-    var dropdowns = {
-      codeboxes: CodeBoxesStore.getCodeBoxesDropdown(),
-      classes: ClassesStore.getClassesDropdown()
+    let dropdowns = {
+      codeboxes : CodeBoxesStore.getCodeBoxesDropdown(),
+      classes   : ClassesStore.getClassesDropdown()
     };
 
     if (dropdowns.codeboxes.length === 0) {
@@ -78,18 +77,15 @@ var TriggerDialogStore = Reflux.createStore({
     this.trigger(dropdowns);
   },
 
-  onCreateTriggerCompleted: function() {
+  onCreateTriggerCompleted() {
     console.debug('TriggerDialogStore::onCreateTriggerCompleted');
     this.dismissDialog();
     TriggersActions.fetchTriggers();
   },
 
-  onUpdateTriggerCompleted: function() {
+  onUpdateTriggerCompleted() {
     console.debug('TriggerDialogStore::onUpdateTriggerCompleted');
     this.dismissDialog();
     TriggersActions.fetchTriggers();
   }
-
 });
-
-module.exports = TriggerDialogStore;
