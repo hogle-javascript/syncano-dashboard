@@ -12,7 +12,6 @@ export default Reflux.createStore({
 
   init() {
     this.joinTrailing(
-      SessionActions.setUser,
       Actions.fetchBillingProfile.completed,
       Actions.fetchTotalDailyUsage.completed,
       this.prepareChartData
@@ -106,8 +105,7 @@ export default Reflux.createStore({
     };
   },
 
-  prepareChartData(user, profile, usage) {
-    user    = _.first(user);
+  prepareChartData(profile, usage) {
     profile = _.first(profile);
     usage   = _.first(usage);
 

@@ -1,20 +1,19 @@
-var Reflux           = require('reflux'),
+import Reflux           from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    ClassesActions   = require('./ClassesActions');
+//Stores & Actions
+import Actions   from './ClassesActions';
 
-var ClassDialogStore = Reflux.createStore({
-  listenables : ClassesActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       description : null,
       name        : null,
@@ -22,22 +21,19 @@ var ClassDialogStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  onCreateClassCompleted: function() {
+  onCreateClassCompleted() {
     console.debug('ClassDialogStore::onCreateClassCompleted');
     this.dismissDialog();
-    ClassesActions.fetchClasses();
+    Actions.fetchClasses();
   },
 
-  onUpdateClassCompleted: function() {
+  onUpdateClassCompleted() {
     console.debug('ClassDialogStore::onUpdateClassCompleted');
     this.dismissDialog();
-    ClassesActions.fetchClasses();
+    Actions.fetchClasses();
   }
-
 });
-
-module.exports = ClassDialogStore;

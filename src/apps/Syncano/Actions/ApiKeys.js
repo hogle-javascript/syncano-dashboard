@@ -12,7 +12,7 @@ export default {
       .ApiKeys
       .create({
         description       : payload.description,
-        allow_user_create : payloathis.d.allow_user_create,
+        allow_user_create : payload.allow_user_create,
         ignore_acl        : payload.ignore_acl
       })
       .then(this.completed)
