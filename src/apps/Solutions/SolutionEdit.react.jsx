@@ -150,31 +150,30 @@ export default React.createClass({
         </Common.Show>
 
         <MUI.Toolbar style={{background: 'transparent', padding: '0px'}}>
-            <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
-              <MUI.FontIcon
-                style     = {{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
-                className = "synicon-arrow-left"
-                onClick   = {this.handleBackClick}
-              />
-              <MUI.ToolbarTitle text={'Solution: ' + this.state.item.label} />
-            </MUI.ToolbarGroup>
+          <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
+            <MUI.FontIcon
+              style     = {{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
+              className = "synicon-arrow-left"
+              onClick   = {this.handleBackClick}
+            />
+            <MUI.ToolbarTitle text={'Solution: ' + this.state.item.label} />
+          </MUI.ToolbarGroup>
 
-            <MUI.ToolbarGroup float="right">
-              <Common.Show if={this.isMySolution()}>
-                <MUI.IconButton
-                  style            = {{fontSize: 25, marginTop: 5}}
-                  iconClassName    = "synicon-delete"
-                  tooltip          = "Delete Solution"
-                  tooltipAlignment = "bottom-left"
-                  onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
-                />
-              </Common.Show>
-            </MUI.ToolbarGroup>
-          </MUI.Toolbar>
+          <MUI.ToolbarGroup float="right">
+            <Common.Show if={this.isMySolution()}>
+              <MUI.IconButton
+                style            = {{fontSize: 25, marginTop: 5}}
+                iconClassName    = "synicon-delete"
+                tooltip          = "Delete Solution"
+                tooltipAlignment = "bottom-left"
+                onClick          = {this.showDialog.bind(null, 'deleteSolutionDialog')}
+              />
+            </Common.Show>
+          </MUI.ToolbarGroup>
+        </MUI.Toolbar>
 
         <div className="container" style={{clear: 'both'}}>
-
-        <div className="row" style={this.getStyles()}>
+          <div className="row" style={this.getStyles()}>
             <div className="col-flex-1">
               <div style={{textAlign: 'left', fontSize: '2rem', lineHeight: '2rem'}}>
                 {this.state.item.label}
@@ -188,20 +187,19 @@ export default React.createClass({
                     primary = {true}
                     label   = 'Install solution'
                     onClick = {this.handleInstallSolution} />
-                  </div>
+                </div>
                 <div className="col-flex-1">
                   <Common.SolutionStar solution={this.state.item} />
                 </div>
               </div>
-
             </div>
             <div className="col-flex-1">
               <div className="row">
                  <div className="col-flex-1">
                    <div className="row align-right">
                     <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
-                        <div>{item.author ? item.author.first_name : ''}</div>
-                        <div>{item.author ? item.author.last_name : ''}</div>
+                      <div>{item.author ? item.author.first_name : ''}</div>
+                      <div>{item.author ? item.author.last_name : ''}</div>
                     </div>
                    </div>
                  </div>
@@ -215,13 +213,10 @@ export default React.createClass({
               </div>
             </div>
           </div>
-
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version"
-          />
-
+            emptyItemContent     = "Add new Version" />
         </div>
       </Container>
     );

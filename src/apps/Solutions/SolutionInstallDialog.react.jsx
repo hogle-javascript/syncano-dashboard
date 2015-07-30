@@ -81,13 +81,13 @@ export default React.createClass({
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
       return (
         <MUI.TextField
-            ref               = "instance"
-            name              = "instance"
-            fullWidth         = {true}
-            disabled          = {true}
-            valueLink         = {this.linkState('instance')}
-            errorText         = {this.getValidationMessages('instance').join(' ')}
-            floatingLabelText = "Instance Name" />
+          ref               = "instance"
+          name              = "instance"
+          fullWidth         = {true}
+          disabled          = {true}
+          valueLink         = {this.linkState('instance')}
+          errorText         = {this.getValidationMessages('instance').join(' ')}
+          floatingLabelText = "Instance Name" />
       )
     }
 
@@ -101,8 +101,7 @@ export default React.createClass({
         displayMember     = 'text'
         floatingLabelText = 'Instances'
         errorText         = {this.getValidationMessages('instance').join(' ')}
-        menuItems         = {Store.getInstancesDropdown()}
-      />
+        menuItems         = {Store.getInstancesDropdown()} />
     )
   },
 
@@ -113,15 +112,13 @@ export default React.createClass({
         ref        = 'cancel'
         key        = 'cancel'
         label      = 'Cancel'
-        onTouchTap = {this.handleCancel}
-      />,
+        onTouchTap = {this.handleCancel} />,
       <MUI.FlatButton
         ref        = 'submit'
         key        = 'confirm'
         label      = 'Confirm'
         primary    = {true}
-        onTouchTap = {this.handleFormValidation}
-      />
+        onTouchTap = {this.handleFormValidation} />
     ];
 
     return (
@@ -131,15 +128,14 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
 
           <div className='row'>
-              <div className='col-flex-1'>
-                {this.renderInstanceField()}
-              </div>
+            <div className='col-flex-1'>
+              {this.renderInstanceField()}
+            </div>
           </div>
 
           <Common.Show if={!this.state.hideVersionPicker}>

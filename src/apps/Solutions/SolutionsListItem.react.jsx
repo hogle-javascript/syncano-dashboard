@@ -118,6 +118,7 @@ export default React.createClass({
 
   renderItemTags() {
     let styles = this.getStyles();
+
     return this.props.data.tags.map(tag => {
       return (
         <a
@@ -131,8 +132,8 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let item = this.props.data;
+    let styles = this.getStyles(),
+        item   = this.props.data;
 
     return (
       <MUI.Card>
@@ -140,13 +141,11 @@ export default React.createClass({
           <MUI.CardTitle
             style      = {styles.cardTitleRoot}
             title      = {item.label}
-            titleStyle = {styles.cardTitle}
-          />
+            titleStyle = {styles.cardTitle} />
           <div style={styles.cardAvatarContainer}>
             <MUI.Avatar
               size  = {55}
-              src   = {item.author ? item.author.avatar_url : null}
-            />
+              src   = {item.author ? item.author.avatar_url : null} />
           </div>
         </div>
         <MUI.CardText style={styles.cardSubtitle}>
@@ -157,8 +156,7 @@ export default React.createClass({
             <MUI.FontIcon
               style     = {styles.cardTextListIcon}
               className = "synicon-tag"
-              color     = "rgba(222, 222, 222, 0.54)"
-            />
+              color     = "rgba(222, 222, 222, 0.54)" />
             {this.renderItemTags()}
           </div>
           {this.renderVersion()}
@@ -168,14 +166,12 @@ export default React.createClass({
           <MUI.FlatButton
             label      = "SEE DETAILS"
             labelStyle = {styles.seeDetailsButton}
-            onClick    = {this.handleSeeMoreClick.bind(null, item.id)}
-          />
+            onClick    = {this.handleSeeMoreClick.bind(null, item.id)} />
           <MUI.IconButton
             iconClassName = "synicon-download"
             iconStyle     = {styles.installIcon}
             onClick       = {this.handleInstallClick.bind(null, item.id)}
-            touch         = {true}
-          />
+            touch         = {true} />
         </div>
       </MUI.Card>
     )

@@ -2,21 +2,19 @@ import Reflux from 'reflux';
 import URL from 'url';
 
 // Utils & Mixins
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import SolutionEditActions from './SolutionEditActions';
+import Actions from './SolutionEditActions';
 
 export default Reflux.createStore({
-  listenables : SolutionEditActions,
+  listenables : Actions,
 
   mixins      : [
-    CheckListStoreMixin,
-    StoreFormMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreForm,
+    Mixins.WaitForStore
   ],
 
   getInitialState() {
@@ -41,8 +39,8 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
-    SolutionEditActions.fetchSolution(solutionId);
-    SolutionEditActions.fetchSolutionVersions(solutionId);
+    Actions.fetchSolution(solutionId);
+    Actions.fetchSolutionVersions(solutionId);
   },
 
   getSolution() {
@@ -65,12 +63,9 @@ export default Reflux.createStore({
     this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
 
     let newItems = [];
-    Object.keys(versions).map(function(key) {
-      newItems.splice(0, 0, versions[key]);
-    }.bind(this));
+    Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
-
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -84,7 +79,7 @@ export default Reflux.createStore({
   onFetchSolutionCompleted(solution) {
     console.debug('SolutionsEditStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
-    SolutionEditActions.setSolution(solution);
+    Actions.setSolution(solution);
   },
 
   onFetchSolutionFailure() {
@@ -102,7 +97,7 @@ export default Reflux.createStore({
   onFetchSolutionVersionsCompleted(versions) {
     console.debug('SolutionsEditStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
-    SolutionEditActions.setSolutionVersions(versions);
+    Actions.setSolutionVersions(versions);
   },
 
   onFetchSolutionVersionsFailure() {
@@ -126,6 +121,5 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::onRemoveSolutionFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
-  },
-
+  }
 });

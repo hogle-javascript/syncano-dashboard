@@ -1,18 +1,17 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import DialogStoreMixin from '../../mixins/DialogStoreMixin';
+import Mixins from '../../mixins';
 
 //Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import SolutionsActions from './SolutionsActions';
+import Actions from './SolutionsActions';
 
 export default Reflux.createStore({
-  listenables : SolutionsActions,
+  listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
   getInitialState() {
@@ -29,7 +28,7 @@ export default Reflux.createStore({
   onCreateSolutionCompleted(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
     this.dismissDialog();
-    SolutionsActions.fetchSolutions();
+    Actions.fetchSolutions();
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       {
@@ -41,7 +40,6 @@ export default Reflux.createStore({
   onUpdateSolutionCompleted() {
     console.debug('SolutionDialogStore::onUpdateSolutionCompleted');
     this.dismissDialog();
-    SolutionsActions.fetchSolutions();
+    Actions.fetchSolutions();
   }
-
 });
