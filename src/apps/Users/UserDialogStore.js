@@ -6,7 +6,7 @@ import Mixins from '../../mixins';
 //Stores & Actions
 import UsersActions from './UsersActions';
 
-var UserDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : UsersActions,
 
   mixins      : [
@@ -38,7 +38,4 @@ var UserDialogStore = Reflux.createStore({
     this.dismissDialog();
     UsersActions.fetchUsers();
   }
-
 });
-
-module.exports = UserDialogStore;

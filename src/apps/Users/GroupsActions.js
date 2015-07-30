@@ -1,91 +1,46 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
+import CreateActions from '../../utils/ActionsConstructor.js';
 
-var GroupsActions = Reflux.createActions({
-  checkItem      : {},
-  uncheckAll     : {},
-  selectAll      : {},
-  fetch          : {},
-  setGroups      : {},
-  showDialog     : {},
-  dismissDialog  : {},
-  setActiveGroup : {},
-  fetchGroups: {
-    asyncResult: true,
-    loading    : true,
-    children   : ['completed', 'failure']
+export default CreateActions(
+  {
+    withDialog : true,
+    withCheck  : true
   },
-  createGroup: {
-    asyncResult : true,
-    asyncForm   : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
-  updateGroup: {
-    asyncResult : true,
-    asyncForm   : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
-  removeGroups: {
-    asyncResult : true,
-    loading     : true,
-    children: ['completed', 'failure']
-  },
-  fetchGroupUsers: {
-    asyncResult: true,
-    loading    : true,
-    children   : ['completed', 'failure']
+  {
+    fetch          : {},
+    setGroups      : {},
+    setActiveGroup : {},
+    fetchGroups: {
+      asyncResult: true,
+      loading    : true,
+      children   : ['completed', 'failure'],
+      method     : 'Syncano.Actions.Groups.list'
+    },
+    createGroup: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method     : 'Syncano.Actions.Groups.create'
+    },
+    updateGroup: {
+      asyncResult : true,
+      asyncForm   : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method     : 'Syncano.Actions.Groups.update'
+    },
+    removeGroups: {
+      asyncResult : true,
+      loading     : true,
+      children: ['completed', 'failure'],
+      method     : 'Syncano.Actions.Groups.remove'
+
+    },
+    fetchGroupUsers: {
+      asyncResult: true,
+      loading    : true,
+      children   : ['completed', 'failure'],
+      method     : 'Syncano.Actions.Groups.listUsers'
+    }
   }
-});
-
-GroupsActions.createGroup.listen(function(label) {
-  console.info('GroupsActions::createGroup');
-  Connection
-    .Groups
-    .create(label)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-GroupsActions.fetchGroups.listen(function() {
-  console.info('GroupsActions::fetchGroups');
-  Connection
-    .Groups
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-GroupsActions.updateGroup.listen(function(id, payload) {
-  console.info('GroupsActions::updateGroup');
-  Connection
-    .Groups
-    .update(id, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-GroupsActions.removeGroups.listen(function(ids) {
-  console.info('GroupsActions::removeGroups');
-  var promises = ids.map(function(id) {
-    return Connection.Groups.remove(id);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-GroupsActions.fetchGroupUsers.listen(function(groupId) {
-  console.info('GroupsActions::fetchUsers');
-  Connection
-    .Groups
-    .getUsers(groupId)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = GroupsActions;
+);

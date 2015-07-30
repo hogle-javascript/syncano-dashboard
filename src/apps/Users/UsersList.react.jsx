@@ -8,9 +8,9 @@ import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
-import UsersActions from './UsersActions';
-import UsersStore from './UsersStore';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import Store from './UsersStore';
+import Actions from './UsersActions';
 
 // Components
 import MUI from 'material-ui';
@@ -69,7 +69,7 @@ export default React.createClass({
   },
 
   renderItemGroups(groups) {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     if (groups === undefined) {
       return
@@ -79,11 +79,7 @@ export default React.createClass({
       return 'No group';
     }
 
-    var itemGroups = groups.map(function(group) {
-      return (
-        <li style={styles.groupsListItem}>{group.label}</li>
-      )
-    });
+    let itemGroups = groups.map(group => <li style={styles.groupsListItem}>{group.label}</li>);
 
     return (
       <ul style={styles.groupsList}>{itemGroups}</ul>
@@ -94,15 +90,13 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.id}
-      >
+        key     = {item.id}>
         <Column.CheckIcon
           id              = {item.id.toString()}
           icon            = 'account'
           background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-        >
+          handleIconClick = {this.handleItemIconClick}>
           {item.username}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
@@ -114,7 +108,7 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       return items;
