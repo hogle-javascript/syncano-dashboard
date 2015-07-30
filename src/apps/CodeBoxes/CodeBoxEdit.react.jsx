@@ -13,7 +13,8 @@ import Store from './CodeBoxStore';
 // Components
 import Common from '../../common';
 import Container from '../../common/Container';
-import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
+
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -26,7 +27,8 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
@@ -58,7 +60,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
-    SnackbarNotificationActions.set({
+    this.setSnackbarNotification({
       message: 'Saving...'
     });
   },

@@ -4,13 +4,14 @@ import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
+import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 import Actions from './CodeBoxActions';
 
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
-    WaitForStoreMixin
+    WaitForStoreMixin,
+    SnackbarNotificationMixin
   ],
 
   langMap: {
@@ -103,10 +104,10 @@ export default Reflux.createStore({
   },
 
   onUpdateCodeBoxCompleted() {
-    SnackbarNotificationActions.dismiss();
+    this.dismissSnackbarNotification();
   },
 
   onUpdateCodeBoxFailure() {
-    SnackbarNotificationActions.dismiss();
+    this.dismissSnackbarNotification();
   }
 });
