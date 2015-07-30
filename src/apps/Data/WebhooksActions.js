@@ -1,15 +1,14 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
-  {},
   {
-    checkItem     : {},
-    selectAll     : {},
-    uncheckAll    : {},
+    withCheck  : true,
+    withDialog : true
+  },
+  {
     fetch         : {},
     setWebhooks   : {},
-    showDialog    : {},
-    dismissDialog : {},
+
     createWebhook: {
       asyncResult : true,
       asyncForm   : true,

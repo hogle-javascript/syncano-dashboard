@@ -1,15 +1,14 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
-  {},
   {
-    checkItem    : {},
-    uncheckAll   : {},
-    selectAll    : {},
+    withCheck  : true,
+    withDialog : true
+  },
+  {
     fetch        : {},
     setDataViews : {},
-    showDialog   : {},
-    dismissDialog: {},
+
     fetchDataViews: {
       asyncResult : true,
       children    : ['completed', 'failure'],
