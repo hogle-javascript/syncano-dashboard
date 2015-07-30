@@ -72,12 +72,6 @@ export default Radium(React.createClass({
     });
   },
 
-  handleOnChangePayload() {
-    this.setState({
-      payloadValue: this.refs.payloadField.getValue()
-    }, this.handleFormValidation)
-  },
-
   render() {
     let styles = this.getStyles(),
         unfoldIcon  = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
@@ -89,8 +83,7 @@ export default Radium(React.createClass({
           ref     = "trace"
           rounded = {false}
           zDepth  = {1}
-          style   = {styles.trace}
-        >
+          style   = {styles.trace} >
           {this.props.trace}
         </MUI.Paper>
       );
@@ -104,24 +97,21 @@ export default Radium(React.createClass({
           <MUI.TextField
             name              = 'payloadField'
             ref               = 'payloadField'
-            value             = {this.state.payloadValue}
+            valueLink         = {this.linkState('payloadValue')}
             fullWidth         = {true}
             hintText          = 'Type in your payload here e.g. {"my_argument": "test123}'
             floatingLabelText = 'Payload'
-            onChange          = {this.handleOnChangePayload}
-            errorText         = {this.getValidationMessages('payloadValue').join(' ')}
-          />
+            onBlur            = {this.handleFormValidation}
+            errorText         = {this.getValidationMessages('payloadValue').join(' ')} />
             <div
-              className="editor-toolbar-unfold-button"
-              onClick={this.handleToggleClick}
-            >
+              className = "editor-toolbar-unfold-button"
+              onClick   = {this.handleToggleClick} >
               <MUI.FontIcon className={unfoldIcon}/>
             </div>
         </MUI.Paper>
         <Loading
           show = {this.props.loading}
-          type = 'linear'
-        />
+          type = 'linear' />
         {trace}
       </MUI.Paper>
     );

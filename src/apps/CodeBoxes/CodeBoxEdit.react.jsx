@@ -11,10 +11,10 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import Snackbar from 'material-ui/lib/snackbar';
+import {Snackbar} from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
-import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
+let SnackbarNotificationActions = Common.SnackbarNotification.Actions;
 
 export default React.createClass({
 
