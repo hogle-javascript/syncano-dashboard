@@ -5,14 +5,15 @@ import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './SolutionsActions';
+import Actions from './ListViewActions';
 
 export default Reflux.createStore({
   listenables : Actions,
 
   mixins      : [
     Mixins.StoreForm,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreHelpers
   ],
 
   getInitialState() {
@@ -60,9 +61,7 @@ export default Reflux.createStore({
   },
 
   setTags(tags) {
-    this.data.tags = Object.keys(tags).map(function(key) {
-      return tags[key];
-    });
+    this.data.tags = this.saveListFromSyncano(tags);
     this.trigger(this.data);
   },
 

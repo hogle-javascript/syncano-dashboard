@@ -1,53 +1,38 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
-
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
-
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
-import SolutionEditActions from './SolutionEditActions';
-import SolutionEditStore from './SolutionEditStore';
 
 // Components
 import MUI from 'material-ui';
-import Common from '../../common';
-
-import SolutionInstallDialogActions from './SolutionInstallDialogActions';
+import ColumnList from '../ColumnList';
+import Loading from '../Loading';
+import Lists from '../Lists';
 
 // Shortcut
-let Column =  Common.ColumnList.Column;
+let Column =  ColumnList.Column;
 
 export default React.createClass({
 
   displayName: 'SolutionVersionsList',
 
-  mixins: [
+  getInitialState() {
+    return {
+      items    : this.props.items,
+      isLoading: this.props.items ? false : true
+    };
+  },
 
-    HeaderMixin,
-    Router.State,
-    Router.Navigation,
-
-    Reflux.connect(SolutionEditStore)
-  ],
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      items     : nextProps.items,
+      isLoading : nextProps.items ? false : true
+    })
+  },
 
   // List
   handleItemIconClick(id, state) {
-    SolutionEditActions.checkItem(id, state);
   },
 
   handleItemClick(className) {
-    //SessionStore.getRouter().transitionTo(
-    //  'classes-data-objects',
-    //  {
-    //    instanceName : SessionStore.getInstance().name,
-    //    className    : className
-    //  }
-    //);
-    //console.info('SolutionVersionsList::handleItemClick');
   },
 
   handleDownloadVersion(url) {
@@ -55,12 +40,13 @@ export default React.createClass({
   },
 
   handleInstallClick(versionId) {
-    SolutionInstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId, versionId);
+    if (this.props.onInstall)
+      this.props.onInstall(versionId);
   },
 
   renderItem(item) {
     return (
-      <Common.ColumnList.Item
+      <ColumnList.Item
         key          = {item.id}
         id           = {item.id}
         handleClick  = {this.handleItemClick} >
@@ -98,35 +84,33 @@ export default React.createClass({
           />
         </Column.ID>
 
-      </Common.ColumnList.Item>
+      </ColumnList.Item>
     )
   },
 
   getList() {
-    if (this.state.versions === null) {
+    if (this.state.items === null) {
       return;
     }
 
-    var items = this.state.versions.map(item => {
+    let items = this.state.items.map(item => {
       return this.renderItem(item);
     });
 
-    if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
-      items.reverse();
+    if (items.length > 0)
       return items;
-    }
+
     return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+      <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      </ColumnList.EmptyItem>
     )
   },
 
   render() {
     return (
-      <Common.Lists.Container>
-        <Common.ColumnList.Header>
+      <Lists.Container>
+        <ColumnList.Header>
           <Column.Desc.Header className="col-xs-5 col-md-5">
             <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
           </Column.Desc.Header>
@@ -152,13 +136,13 @@ export default React.createClass({
           </Column.ID.Header>
 
 
-        </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+        </ColumnList.Header>
+        <Lists.List>
+          <Loading show={this.state.isLoading}>
             {this.getList()}
-          </Common.Loading>
-        </Common.Lists.List>
-      </Common.Lists.Container>
+          </Loading>
+        </Lists.List>
+      </Lists.Container>
     );
   }
 });

@@ -5,7 +5,7 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
-import Solution from './pages/solution.react';
+import Solution from './pages/solutions';
 import Billing from './pages/billing.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
@@ -228,18 +228,23 @@ module.exports = (
       >
         <Route
           name    = "solutions-list"
-          handler = {Solutions.List}
+          handler = {Solutions.ListView}
           path    = "list"
         />
         <Route
           name    = "solutions-install"
-          handler = {Solutions.Edit}
+          handler = {Solutions.EditView}
           path    = "/solutions/:solutionId/:action"
         />
         <Route
           name    = "solutions-edit"
-          handler = {Solutions.Edit}
+          handler = {Solutions.EditView}
           path    = "/solutions/:solutionId/edit"
+        />
+        <Route
+          name    = "solutions-add-version"
+          handler = {Solutions.AddVersionView}
+          path    = "/solutions/:solutionId/versions/add"
         />
         <Redirect
           from  = "/solutions"

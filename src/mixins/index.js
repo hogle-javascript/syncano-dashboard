@@ -8,6 +8,7 @@ import InstanceTabsMixin from './InstanceTabsMixin';
 import StoreFormMixin from './StoreFormMixin';
 import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
+import StoreHelpersMixin from './StoreHelpersMixin';
 
 let Mixins = {};
 Mixins.ButtonAction = ButtonActionMixin;
@@ -20,5 +21,6 @@ Mixins.InstanceTabs = InstanceTabsMixin;
 Mixins.StoreForm = StoreFormMixin;
 Mixins.StoreLoading = StoreLoadingMixin;
 Mixins.WaitForStore = WaitForStoreMixin;
+Mixins.StoreHelpers = StoreHelpersMixin;
 
 export default Mixins;

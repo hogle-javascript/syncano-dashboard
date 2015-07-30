@@ -7,17 +7,20 @@ import _ from 'lodash';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Store from './SolutionsStore';
-import Actions from './SolutionsActions';
+
+import Store from './ListViewStore';
+import Actions from './ListViewActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
-import SolutionDialog from './SolutionDialog.react';
-import SolutionInstallDialog from './SolutionInstallDialog.react';
+import CreateDialogActions from './CreateDialogActions';
+import CreateDialog from './CreateDialog';
+
+import InstallDialogActions from './InstallDialogActions';
+import InstallDialog from './InstallDialog';
 
 module.exports = React.createClass({
 
@@ -32,7 +35,7 @@ module.exports = React.createClass({
   ],
 
   showSolutionDialog() {
-    Actions.showDialog();
+    CreateDialogActions.showDialog();
   },
 
   componentDidMount() {
@@ -81,7 +84,7 @@ module.exports = React.createClass({
   },
 
   handleInstallClick(solutionId) {
-    SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+    InstallDialogActions.showDialogWithPreFetch(solutionId);
   },
 
   handleSeeMoreClick(solutionId) {
@@ -89,7 +92,7 @@ module.exports = React.createClass({
   },
 
   handleTagClick(tag) {
-    SolutionsActions.selectOneTag(tag);
+    Actions.selectOneTag(tag);
   },
 
   handleToggleTagSelection(name) {
@@ -101,8 +104,8 @@ module.exports = React.createClass({
 
     return (
       <div id='solutions'>
-        <SolutionDialog />
-        <SolutionInstallDialog />
+        <CreateDialog />
+        <InstallDialog />
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>

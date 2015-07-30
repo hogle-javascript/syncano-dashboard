@@ -75,19 +75,21 @@ export default React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    console.log("YYY", this.props)
     this.props.onSeeMore(solutionId);
-    //this.transitionTo('solutions-edit', {solutionId: solutionId});
   },
 
   handleInstallClick(solutionId) {
     this.props.onInstall(solutionId);
-    //SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
   },
 
   handleTagClick(tag) {
     this.props.onTagClick(solutionId);
     //SolutionsActions.selectOneTag.bind(null, tag)
+  },
+
+  isNoVersions() {
+    let item = this.props.data;
+    return (item && !item.versions.devel && !item.versions.stable);
   },
 
   renderVersion() {
@@ -117,6 +119,10 @@ export default React.createClass({
 
   renderItemTags() {
     let styles = this.getStyles();
+
+    if (this.props.data.tags && this.props.data.tags.length === 0)
+      return <div style={styles.tag}>no tags</div>;
+
     return this.props.data.tags.map(tag => {
       return (
         <a
@@ -175,7 +181,8 @@ export default React.createClass({
           />
           <MUI.IconButton
             iconClassName = "synicon-download"
-            iconStyle     = {styles.installIcon}
+            disabled      = {this.isNoVersions()}
+            iconStyle     = {this.isNoVersions() ? {} : styles.installIcon}
             onClick       = {this.handleInstallClick.bind(null, item.id)}
             touch         = {true}
           />

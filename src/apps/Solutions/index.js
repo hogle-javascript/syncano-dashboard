@@ -1,19 +1,10 @@
-import SolutionDialog from './SolutionDialog.react';
-
-import SolutionEdit from './SolutionEdit.react';
-import SolutionsList from './SolutionsList.react';
-
-import SolutionInstallDialog from './SolutionInstallDialog.react';
-
-import SolutionVersionDialog from './SolutionVersionDialog.react';
-import SolutionVersionsList from './SolutionVersionsList.react';
+import EditView from './EditView';
+import ListView from './ListView';
+import AddVersionView from './AddVersionView';
 
 let Solutions = {};
-Solutions.Dialog              = SolutionDialog;
-Solutions.Edit                = SolutionEdit;
-Solutions.List                = SolutionsList;
-Solutions.InstallDialog       = SolutionInstallDialog;
-Solutions.VersionDialog       = SolutionVersionDialog;
-Solutions.VersionsList        = SolutionVersionsList;
+Solutions.EditView = EditView;
+Solutions.ListView = ListView;
+Solutions.AddVersionView = AddVersionView;
 
 export default Solutions;

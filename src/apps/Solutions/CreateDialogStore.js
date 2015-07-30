@@ -6,7 +6,7 @@ import DialogStoreMixin from '../../mixins/DialogStoreMixin';
 
 //Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import SolutionsActions from './SolutionsActions';
+import SolutionsActions from './CreateDialogActions';
 
 export default Reflux.createStore({
   listenables : SolutionsActions,
@@ -28,8 +28,6 @@ export default Reflux.createStore({
 
   onCreateSolutionCompleted(solution) {
     console.debug('SolutionDialogStore::onCreateSolutionCompleted');
-    this.dismissDialog();
-    SolutionsActions.fetchSolutions();
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       {

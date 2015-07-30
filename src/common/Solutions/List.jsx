@@ -22,7 +22,6 @@ export default React.createClass({
   },
 
   getListItems() {
-    console.log("XXX", this.props)
     return this.props.items.map(item => {
       return (
         <div

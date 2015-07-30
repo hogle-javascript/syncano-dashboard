@@ -4,8 +4,9 @@ export default CreateActions({
   showDialog    : {},
   dismissDialog : {},
 
-  fetch: {},
-  setSolution: {},
+  fetch               : {},
+  setTags             : {},
+  setSolution         : {},
   setSolutionVersions : {},
 
   fetchSolution : {
@@ -43,6 +44,11 @@ export default CreateActions({
     children    : ['completed', 'failure'],
     method      : 'Syncano.Actions.Solutions.remove'
   },
+  updateSolution : {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.update'
+  },
   starSolution : {
     asyncResult : true,
     children    : ['completed', 'failure'],
@@ -53,4 +59,9 @@ export default CreateActions({
     children    : ['completed', 'failure'],
     method      : 'Syncano.Actions.Solutions.unstar'
   },
+  fetchTags: {
+    asyncResult : true,
+    children    : ['completed', 'failure'],
+    method      : 'Syncano.Actions.Solutions.listTags'
+  }
 });

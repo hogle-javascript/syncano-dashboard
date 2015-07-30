@@ -5,10 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import SolutionsActions from './SolutionsActions';
-import SolutionDialogStore from './SolutionDialogStore';
-import ColorStore from '../../common/Color/ColorStore';
-import IconStore from '../../common/Icon/IconStore';
+import Actions from './CreateDialogActions';
+import Store from './CreateDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -19,10 +17,11 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    Reflux.connect(SolutionDialogStore),
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
-    Mixins.Form
+    Mixins.Form,
+
+    Reflux.connect(Store),
   ],
 
   validatorConstraints: {
@@ -35,13 +34,13 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    SolutionsActions.updateSolution({
+    Actions.updateSolution({
       description: this.state.description
     });
   },
 
   handleAddSubmit() {
-    SolutionsActions.createSolution({
+    Actions.createSolution({
       label       : this.state.label,
       description : this.state.description,
       public      : this.state.public ? true : false

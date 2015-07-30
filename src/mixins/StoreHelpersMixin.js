@@ -10,5 +10,18 @@ export default {
       }
     });
   },
-
+  getSelectOptions(list, labelArg, valueArg) {
+    if (!list) {
+      return [];
+    }
+    return list.map(function(item) {
+      return {
+        label : item[labelArg],
+        value : item[valueArg]
+      }
+    });
+  },
+  saveListFromSyncano(obj) {
+    return obj._items;
+  }
 };

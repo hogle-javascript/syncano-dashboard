@@ -441,6 +441,7 @@ var Syncano = (function() {
       list: this.listSolutions.bind(this),
       listVersions: this.listSolutionVersions.bind(this),
       create: this.createSolution.bind(this),
+      update: this.updateSolution.bind(this),
       createVersion: this.createVersion.bind(this),
       remove: this.removeSolution.bind(this),
       removeVersion: this.removeSolution.bind(this),
@@ -1084,8 +1085,21 @@ var Syncano = (function() {
      * @returns {object} promise
      */
     createSolution: function(params, callbackOK, callbackError) {
-
       return this.request('POST', 'v1/marketplace/solutions', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Update  solution based on passed parameters
+     *
+     * @method Syncano#updateSolution
+     * @alias Syncano.Solutions.update
+     * @param {Object} params - values of the solution parameters
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateSolution: function(id, params, callbackOK, callbackError) {
+      return this.request('PATCH', 'v1/marketplace/solutions/' + id, params, callbackOK, callbackError);
     },
 
     /**
