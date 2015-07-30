@@ -129,14 +129,14 @@ export default React.createClass({
         dialog: Common.Dialog,
         params: {
           ref:    'removeGroupDialog',
-          title:  'Delete Group',
+          title:  'Delete a Group',
           actions: [
             {
               text    : 'Cancel',
               onClick : this.handleCancelGroupsDialog
             },
             {
-              text    : 'Yes, I\'m sure',
+              text    : 'Confirm',
               onClick : this.handleRemoveGroups
             }
           ],
@@ -156,10 +156,10 @@ export default React.createClass({
         dialog: Common.Dialog,
         params: {
           ref:    'removeUserDialog',
-          title:  'Delete User',
+          title:  'Delete a User',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Yes, I\'m sure', onClick: this.handleRemoveUsers}
+            {text: 'Confirm', onClick: this.handleRemoveUsers}
           ],
           modal: true,
           children: [
@@ -201,7 +201,7 @@ export default React.createClass({
               onClick       = {this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName = "synicon-delete" />
             <Common.Fab.Item
-              label         = "Click here to edit User"
+              label         = "Click here to edit a User"
               mini          = {true}
               disabled      = {checkedUsers > 1}
               onClick       = {this.showUserEditDialog}
@@ -210,11 +210,11 @@ export default React.createClass({
         </Common.Show>
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to create User account"
+            label         = "Click here to create a User account"
             onClick       = {this.showUserDialog.bind(null, null)}
             iconClassName = "synicon-account-plus" />
           <Common.Fab.Item
-            label         = "Click here to create Group"
+            label         = "Click here to create a Group"
             onClick       = {this.showGroupDialog}
             iconClassName = "synicon-account-multiple-plus" />
         </Common.Fab>

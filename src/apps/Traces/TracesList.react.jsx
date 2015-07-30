@@ -119,7 +119,7 @@ export default Radium(React.createClass({
         <MUI.FontIcon
           style     = {styles.noTracesIcon}
           className = "synicon-package-variant" />
-        <p style={styles.noTracesText}>There is no traces for this CodeBox yet</p>
+        <p style={styles.noTracesText}>There are no traces for this CodeBox yet</p>
       </div>
     ];
   },

@@ -133,7 +133,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref       = 'dialog'
-        title     = {title + ' User'}
+        title     = {title + ' a User'}
         actions   = {dialogStandardActions}
         onDismiss = {this.resetDialogState}>
         <div>

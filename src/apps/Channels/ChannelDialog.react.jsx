@@ -65,7 +65,7 @@ export default React.createClass({
 
   render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create Channel',
+        submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm',
         dialogStandardActions = [
           {
             text       : 'Cancel',
@@ -81,7 +81,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref          = 'dialog'
-        title        = {title + ' Channel'}
+        title        = {title + ' a Channel'}
         actions      = {dialogStandardActions}
         onDismiss    = {this.resetDialogState}
         onShow       = {this.handleDialogShow}
@@ -99,7 +99,7 @@ export default React.createClass({
                 name              = 'name'
                 fullWidth         = {true}
                 hintText          = 'Short name for your Channel'
-                floatingLabelText = 'Label of Channel'
+                floatingLabelText = 'Label of a Channel'
               />
             </div>
             <div className="col-flex-1">
@@ -109,8 +109,8 @@ export default React.createClass({
                 valueLink         = {this.linkState('description')}
                 errorText         = {this.getValidationMessages('description').join(' ')}
                 fullWidth         = {true}
-                hintText          = 'Description of Channel (optional)'
-                floatingLabelText = 'Description of Channel'
+                hintText          = 'Description of a Channel (optional)'
+                floatingLabelText = 'Description of a Channel'
               />
             </div>
           </div>

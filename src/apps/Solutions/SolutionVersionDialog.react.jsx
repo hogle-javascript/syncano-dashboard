@@ -202,7 +202,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit version of Solution' : 'Create version of Solution';
+    let title = this.hasEditMode() ? 'Edit Solution version' : 'Create Solution version';
     let dialogCustomActions = [
       <MUI.FlatButton
         ref        = 'cancel'

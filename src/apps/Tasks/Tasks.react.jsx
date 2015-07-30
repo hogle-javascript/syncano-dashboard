@@ -66,13 +66,13 @@ export default React.createClass({
         dialog: Common.Dialog,
         params: {
           ref:    'removeTriggerDialog',
-          title:  'Delete Trigger',
+          title:  'Delete a Trigger',
           actions: [
             {
               text    : 'Cancel',
               onClick : this.handleCancel},
             {
-              text    : 'Yes, I\'m sure',
+              text    : 'Confirm',
               onClick : this.handleRemoveTriggers}
           ],
           modal: true,
@@ -90,10 +90,10 @@ export default React.createClass({
         dialog: Common.Dialog,
         params: {
           ref:    'removeScheduleDialog',
-          title:  'Delete Schedule',
+          title:  'Delete a Schedule',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Yes, I\'m sure', onClick: this.handleRemoveSchedules}
+            {text: 'Confirm', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
           children: [
@@ -180,7 +180,7 @@ export default React.createClass({
               onClick       = {this.showDialog.bind(null, 'removeScheduleDialog')}
               iconClassName = "synicon-delete" />
             <Common.Fab.Item
-              label         = "Click here to edit Schedule"
+              label         = "Click here to edit a Schedule"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showScheduleEditDialog}
@@ -201,7 +201,7 @@ export default React.createClass({
               onClick       = {this.showDialog.bind(null, 'removeTriggerDialog')}
               iconClassName = "synicon-delete" />
             <Common.Fab.Item
-              label         = "Click here to edit Trigger"
+              label         = "Click here to edit a Trigger"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showTriggerEditDialog}
@@ -211,11 +211,11 @@ export default React.createClass({
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to create schedule"
+            label         = "Click here to create a Schedule"
             onClick       = {this.showScheduleDialog}
             iconClassName = "synicon-camera-timer" />
           <Common.Fab.Item
-            label         = "Click here to create Trigger"
+            label         = "Click here to create a Trigger"
             onClick       = {this.showTriggerDialog}
             iconClassName = "synicon-arrow-up-bold" />
         </Common.Fab>

@@ -57,7 +57,7 @@ export default React.createClass({
       dialog: Common.Dialog,
       params: {
         ref     : 'deleteCodeBoxDialog',
-        title   : 'Delete CodeBox',
+        title   : 'Delete a CodeBox',
         actions : [
           {
             text    : 'Cancel',
