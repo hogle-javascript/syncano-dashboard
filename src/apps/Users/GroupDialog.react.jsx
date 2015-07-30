@@ -62,15 +62,13 @@ export default React.createClass({
         title           = {title + " Group"}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post"
-          >
+            method        = "post">
             <MUI.TextField
               ref               = "label"
               label             = "label"
@@ -78,14 +76,12 @@ export default React.createClass({
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = "Name of the group"
-              floatingLabelText = "Group Name"
-            />
+              floatingLabelText = "Group Name" />
           </form>
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading}
-          />
+            show     = {this.state.isLoading} />
         </div>
       </Common.Dialog>
     );

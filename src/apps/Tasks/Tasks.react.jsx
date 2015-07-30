@@ -82,8 +82,7 @@ export default React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.triggers.isLoading}
-            />
+              show     = {this.state.triggers.isLoading} />
           ]
         }
       },
@@ -103,8 +102,7 @@ export default React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.schedules.items.isLoading}
-            />
+              show     = {this.state.schedules.items.isLoading} />
           ]
         }
       }
@@ -175,21 +173,18 @@ export default React.createClass({
               label         = {isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
-              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Schedules"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeScheduleDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit Schedule"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showScheduleEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -199,21 +194,18 @@ export default React.createClass({
               label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
-              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Schedules"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeTriggerDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit Trigger"
               mini          = {true}
               disabled      = {checkedSchedules > 1}
               onClick       = {this.showTriggerEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -221,13 +213,11 @@ export default React.createClass({
           <Common.Fab.Item
             label         = "Click here to create schedule"
             onClick       = {this.showScheduleDialog}
-            iconClassName = "synicon-camera-timer"
-          />
+            iconClassName = "synicon-camera-timer" />
           <Common.Fab.Item
             label         = "Click here to create Trigger"
             onClick       = {this.showTriggerDialog}
-            iconClassName = "synicon-arrow-up-bold"
-          />
+            iconClassName = "synicon-arrow-up-bold" />
         </Common.Fab>
 
         <SchedulesList
@@ -236,8 +226,7 @@ export default React.createClass({
           isLoading            = {this.state.schedules.isLoading}
           items                = {this.state.schedules.items}
           emptyItemHandleClick = {this.showScheduleDialog}
-          emptyItemContent     = "Create a Schedule"
-        />
+          emptyItemContent     = "Create a Schedule" />
 
         <TriggersList
           name                 = "Triggers"
@@ -245,8 +234,7 @@ export default React.createClass({
           isLoading            = {this.state.triggers.isLoading}
           items                = {this.state.triggers.items}
           emptyItemHandleClick = {this.showTriggerDialog}
-          emptyItemContent     = "Create a Trigger"
-        />
+          emptyItemContent     = "Create a Trigger" />
       </Container>
     );
   }

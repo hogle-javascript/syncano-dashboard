@@ -1,22 +1,21 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    WebhooksActions   = require('./WebhooksActions'),
-    CodeBoxesActions  = require('../CodeBoxes/CodeBoxesActions'),
-    CodeBoxesStore    = require('../CodeBoxes/CodeBoxesStore');
+//Stores & Actions
+import WebhooksActions   from './WebhooksActions';
+import CodeBoxesActions  from '../CodeBoxes/CodeBoxesActions';
+import CodeBoxesStore    from '../CodeBoxes/CodeBoxesStore';
 
-var WebhookDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : WebhooksActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       label     : '',
       signal    : '',
@@ -30,14 +29,14 @@ var WebhookDialogStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(CodeBoxesActions.setCodeBoxes, this.getCodeBoxDropdown);
   },
 
-  getCodeBoxDropdown: function() {
+  getCodeBoxDropdown() {
     console.debug('DataViewDialogStore::getCodeBoxDropdown');
-    var codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
+    let codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
 
     if (codeboxes.length === 0) {
       codeboxes = [{payload: '', text: 'No CodeBoxes, add one first'}];
@@ -45,18 +44,15 @@ var WebhookDialogStore = Reflux.createStore({
     this.trigger({codeboxes: codeboxes});
   },
 
-  onCreateWebhookCompleted: function() {
+  onCreateWebhookCompleted() {
     console.debug('WebhookDialogStore::onCreateWebhookCompleted');
     this.dismissDialog();
     WebhooksActions.fetchWebhooks();
   },
 
-  onUpdateWebhookCompleted: function() {
+  onUpdateWebhookCompleted() {
     console.debug('WebhookDialogStore::onUpdateWebhookCompleted');
     this.dismissDialog();
     WebhooksActions.fetchWebhooks();
   }
-
 });
-
-module.exports = WebhookDialogStore;

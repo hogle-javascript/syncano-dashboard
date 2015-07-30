@@ -8,8 +8,8 @@ import HeaderMixin from'../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
-import GroupsActions from './GroupsActions';
-import GroupsStore from './GroupsStore';
+import Actions from './GroupsActions';
+import Store from './GroupsStore';
 
 // Components
 import MUI from 'material-ui';
@@ -64,8 +64,7 @@ export default Radium(React.createClass({
           <MUI.IconButton
             touch           = {true}
             tooltipPosition = 'bottom-left'
-            iconClassName   = 'synicon-dots-vertical'
-          />
+            iconClassName   = 'synicon-dots-vertical' />
         ),
         rightIconMenu = (
           <MUI.IconMenu iconButtonElement={iconButtonElement}>
@@ -80,8 +79,7 @@ export default Radium(React.createClass({
         key             = {item.id}
         innerDivStyle   = {itemStyles}
         onMouseDown     = {this.props.handleItemClick.bind(null, item)}
-        rightIconButton = {rightIconMenu}
-      >
+        rightIconButton = {rightIconMenu}>
         {item.label}
       </MUI.ListItem>
     )
@@ -106,8 +104,7 @@ export default Radium(React.createClass({
       return (
         <MUI.List
           style  = {styles.list}
-          zDepth = {1}
-        >
+          zDepth = {1}>
           {listItems}
         </MUI.List>
       );

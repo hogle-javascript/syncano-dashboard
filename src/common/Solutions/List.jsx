@@ -42,8 +42,7 @@ export default React.createClass({
     return (
       <div
         className = "row"
-        style     = {this.getStyles().list}
-      >
+        style     = {this.getStyles().list}>
         {this.getListItems()}
       </div>
     );

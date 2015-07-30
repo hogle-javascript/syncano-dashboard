@@ -1,22 +1,20 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
-    WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
+import Mixins from '../../mixins';
 
-    SessionActions     = require('../Session/SessionActions'),
-    BillingPlanActions = require('./ProfileBillingPlanActions'),
-    Actions            = require('./ProfileBillingPlanDialogActions');
+import SessionActions from '../Session/SessionActions';
+import BillingPlanActions from './ProfileBillingPlanActions';
+import Actions from './ProfileBillingPlanDialogActions';
 
 module.exports = Reflux.createStore({
   listenables: Actions,
   mixins: [
-    StoreFormMixin,
-    DialogStoreMixin,
-    WaitForStoreMixin,
+    Mixins.StoreForm,
+    Mixins.DialogStore,
+    Mixins.WaitForStore
   ],
 
-  init: function() {
+  init() {
     this.waitFor(
       SessionActions.setUser,
       this.refreshData
@@ -24,32 +22,32 @@ module.exports = Reflux.createStore({
     this.listenToForms();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ProfileBillingPlanDialogStore::refreshData');
     Actions.fetchBillingPlans();
     Actions.fetchBillingSubscriptions();
   },
 
-  setPlans: function(plans) {
+  setPlans(plans) {
     this.trigger({plan: plans[Object.keys(plans)[0]]});
   },
 
-  onFetchBillingPlansCompleted: function(payload) {
+  onFetchBillingPlansCompleted(payload) {
     this.isLoading = false;
     this.setPlans(payload);
   },
 
-  onFetchBillingCardCompleted: function(payload) {
+  onFetchBillingCardCompleted(payload) {
     this.trigger({
       isLoading: false,
       card: payload
     });
   },
 
-  onFetchBillingCardFailure: function() {
+  onFetchBillingCardFailure() {
     this.trigger({
       isLoading: false,
-      card: null,
+      card: null
     });
   },
 
@@ -57,5 +55,4 @@ module.exports = Reflux.createStore({
     this.dismissDialog();
     BillingPlanActions.fetch();
   }
-
 });

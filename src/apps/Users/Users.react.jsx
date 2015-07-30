@@ -7,8 +7,8 @@ import Moment from 'moment';
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
-import UsersActions from './UsersActions';
-import UsersStore from './UsersStore';
+import Actions from './UsersActions';
+import Store from './UsersStore';
 import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
@@ -31,7 +31,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(UsersStore, 'users'),
+    Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
@@ -45,7 +45,7 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Users::componentDidMount');
-    UsersActions.fetch();
+    Actions.fetch();
     GroupsActions.fetch();
   },
 
@@ -56,12 +56,12 @@ export default React.createClass({
 
   handleRemoveUsers() {
     console.info('Users::handleRemoveUsers');
-    UsersActions.removeUsers(UsersStore.getCheckedItems());
+    Actions.removeUsers(Store.getCheckedItems());
   },
 
   uncheckAllUsers() {
     console.info('Users::uncheckAllUsers');
-    UsersActions.uncheckAll();
+    Actions.uncheckAll();
   },
 
   uncheckAllGroups() {
@@ -71,7 +71,7 @@ export default React.createClass({
 
   selectAllUsers() {
     console.info('Users::selectAllUsers');
-    UsersActions.selectAll();
+    Actions.selectAll();
   },
 
   selectAllGroups() {
@@ -81,21 +81,21 @@ export default React.createClass({
 
   checkUser(id, state) {
     console.info('User::checkUser');
-    UsersActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   checkGroup(id, state) {
     console.info('User::checkGroup');
-    UsersActions.uncheckAll();
+    Actions.uncheckAll();
     GroupsActions.checkItem(id, state);
   },
 
   showUserDialog(group) {
-    UsersActions.showDialog(undefined, group);
+    Actions.showDialog(undefined, group);
   },
 
   showUserEditDialog() {
-    UsersActions.showDialog(UsersStore.getCheckedItem());
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   showGroupDialog() {
@@ -121,7 +121,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedUsers  = UsersStore.getCheckedItems();
+    let checkedUsers  = Store.getCheckedItems();
 
     return [
       // Groups
@@ -146,8 +146,7 @@ export default React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.groups.isLoading}
-            />
+              show     = {this.state.groups.isLoading} />
           ]
         }
       },
@@ -169,8 +168,7 @@ export default React.createClass({
             <Common.Loading
               type     = 'linear'
               position = 'bottom'
-              show     = {this.state.users.isLoading}
-            />
+              show     = {this.state.users.isLoading} />
           ]
         }
       }
@@ -178,9 +176,11 @@ export default React.createClass({
   },
 
   render() {
-    let checkedUsers      = UsersStore.getNumberOfChecked(),
+    let checkedUsers      = Store.getNumberOfChecked(),
         isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
-        activeGroup       = GroupsStore.getActiveGroup();
+        activeGroup       = GroupsStore.getActiveGroup(),
+        markedIcon        = 'synicon-checkbox-multiple-marked-outline',
+        blankIcon         = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -194,34 +194,29 @@ export default React.createClass({
               label         = {isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
               mini          = {true}
               onClick       = {isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
-              iconClassName = {isAnyUserSelected ? "synicon-checkbox-multiple-marked-outline" : "synicon-checkbox-multiple-blank-outline"}
-            />
+              iconClassName = {isAnyUserSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Users"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeUserDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit User"
               mini          = {true}
               disabled      = {checkedUsers > 1}
               onClick       = {this.showUserEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
           <Common.Fab.Item
             label         = "Click here to create User account"
             onClick       = {this.showUserDialog.bind(null, null)}
-            iconClassName = "synicon-account-plus"
-          />
+            iconClassName = "synicon-account-plus" />
           <Common.Fab.Item
             label         = "Click here to create Group"
             onClick       = {this.showGroupDialog}
-            iconClassName = "synicon-account-multiple-plus"
-          />
+            iconClassName = "synicon-account-multiple-plus" />
         </Common.Fab>
         <Common.Lists.Container className="row">
           <div className="col-lg-8">
@@ -236,8 +231,7 @@ export default React.createClass({
               isLoading            = {this.state.groups.isLoading}
               items                = {this.state.groups.items}
               emptyItemHandleClick = {this.showGroupDialog}
-              emptyItemContent     = "Create a Group"
-            />
+              emptyItemContent     = "Create a Group" />
           </div>
           <div className="col-lg-27">
             <UsersList
@@ -246,12 +240,10 @@ export default React.createClass({
               isLoading            = {this.state.users.isLoading}
               items                = {this.state.users.items}
               emptyItemHandleClick = {this.showUserDialog}
-              emptyItemContent     = "Create a User"
-            />
+              emptyItemContent     = "Create a User" />
           </div>
         </Common.Lists.Container>
       </Container>
     );
   }
-
 });

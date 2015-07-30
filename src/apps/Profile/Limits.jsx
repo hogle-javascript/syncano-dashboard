@@ -1,17 +1,17 @@
 import React from 'react';
 import Show from '../../common/Show/Show.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Limits',
 
-  getStyles: function() {
-    return {
-    }
+  getStyles() {
+    return {}
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
+    
     return (
       <div className="row">
         <div className="col-md-9" style={{textAlign: 'right'}}>
@@ -37,5 +37,4 @@ module.exports = React.createClass({
       </div>
     )
   }
-
 });

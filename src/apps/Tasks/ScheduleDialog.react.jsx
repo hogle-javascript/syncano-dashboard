@@ -60,7 +60,7 @@ export default React.createClass({
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Create',
+    let title       = this.hasEditMode() ? 'Edit' : 'Create',
         dialogStandardActions = [
           {
             ref        : 'cancel',
@@ -81,23 +81,20 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = 'UTF-8'
-            method        = 'post'
-          >
+            method        = 'post'>
             <MUI.TextField
               ref               = 'label'
               name              = 'label'
               fullWidth         = {true}
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Label of the schedule'
-            />
+              hintText          = 'Label of the schedule' />
             <MUI.SelectField
               ref               = 'codebox'
               name              = 'codebox'
@@ -107,8 +104,7 @@ export default React.createClass({
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {this.state.codeboxes}
-            />
+              menuItems         = {this.state.codeboxes} />
             <MUI.SelectField
               ref               = 'crontab'
               name              = 'crontab'
@@ -118,8 +114,7 @@ export default React.createClass({
               valueMember       = 'payload'
               displayMember     = 'text'
               fullWidth         = {true}
-              menuItems         = {ScheduleDialogStore.getCrontabDropdown()}
-            />
+              menuItems         = {ScheduleDialogStore.getCrontabDropdown()} />
           </form>
         </div>
       </Common.Dialog>

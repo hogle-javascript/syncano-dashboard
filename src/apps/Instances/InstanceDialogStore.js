@@ -1,28 +1,27 @@
-var Reflux           = require('reflux'),
+import Reflux           from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    Actions = require('./InstanceDialogActions'),
-    InstancesActions = require('./InstancesActions');
+//Stores & Actions
+import Actions from './InstanceDialogActions';
+import InstancesActions from './InstancesActions';
 
-var InstanceDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       name        : null,
       description : null
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
@@ -57,18 +56,15 @@ var InstanceDialogStore = Reflux.createStore({
     return adj + '-' + noun + '-' + rnd;
   },
 
-  onCreateInstanceCompleted: function() {
+  onCreateInstanceCompleted() {
     console.debug('InstanceDialogStore::onCreateInstanceCompleted');
     this.dismissDialog();
     InstancesActions.fetchInstances();
   },
 
-  onUpdateInstanceCompleted: function() {
+  onUpdateInstanceCompleted() {
     console.debug('InstanceDialogStore::onUpdateInstanceCompleted');
     this.dismissDialog();
     InstancesActions.fetchInstances();
   }
-
 });
-
-module.exports = InstanceDialogStore;

@@ -1,21 +1,20 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    SessionStore     = require('../Session/SessionStore'),
-    CodeBoxesActions = require('./CodeBoxesActions');
+//Stores & Actions
+import SessionStore from '../Session/SessionStore';
+import Actions from './CodeBoxesActions';
 
-var CodeBoxDialogStore = Reflux.createStore({
-  listenables : CodeBoxesActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     // jscs:disable
     return {
       label                : null,
@@ -28,18 +27,18 @@ var CodeBoxDialogStore = Reflux.createStore({
     // jscs:enable
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  setCodeBoxRuntimes: function(payload) {
-    var runtimes = Object.keys(payload).map(function(runtime) {
+  setCodeBoxRuntimes(payload) {
+    var runtimes = Object.keys(payload).map(runtime => {
       return {payload: runtime, text: runtime};
     });
     this.trigger({runtimes: runtimes});
   },
 
-  onCreateCodeBoxCompleted: function(resp) {
+  onCreateCodeBoxCompleted(resp) {
     console.debug('CodeBoxesStore::onCreateCodeBoxCompleted');
     this.dismissDialog();
     SessionStore.getRouter().transitionTo('codebox-edit', {
@@ -48,17 +47,14 @@ var CodeBoxDialogStore = Reflux.createStore({
     });
   },
 
-  onUpdateCodeBoxCompleted: function() {
+  onUpdateCodeBoxCompleted() {
     console.debug('CodeBoxDialogStore::onUpdateCodeBoxCompleted');
     this.dismissDialog();
-    CodeBoxesActions.fetchCodeBoxes();
+    Actions.fetchCodeBoxes();
   },
 
-  onFetchCodeBoxRuntimesCompleted: function(runtimes) {
+  onFetchCodeBoxRuntimesCompleted(runtimes) {
     console.debug('CodeBoxDialogStore::onFetchCodeBoxRuntimesCompleted');
-    CodeBoxesActions.setCodeBoxRuntimes(runtimes);
+    Actions.setCodeBoxRuntimes(runtimes);
   }
-
 });
-
-module.exports = CodeBoxDialogStore;

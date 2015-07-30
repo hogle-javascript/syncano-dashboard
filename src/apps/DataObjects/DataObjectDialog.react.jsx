@@ -3,8 +3,7 @@ import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
 
 // Utils
-import FormMixin from '../../mixins/FormMixin';
-import DialogMixin from '../../mixins/DialogMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import DataObjectsActions from './DataObjectsActions';
@@ -24,8 +23,8 @@ export default React.createClass({
   mixins: [
     React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
-    FormMixin,
-    DialogMixin
+    Mixins.Form,
+    Mixins.Dialog
   ],
 
   handleDialogShow() {
@@ -35,7 +34,7 @@ export default React.createClass({
 
   validatorConstraints() {
     let validateObj = {};
-    DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
+    DataObjectsStore.getCurrentClassObj().schema.map(item => {
       if (item.type === 'integer') {
         validateObj[item.name] = {numericality: true}
       } else if (item.type === 'text') {
@@ -60,7 +59,7 @@ export default React.createClass({
     let files = this.getFileFields();
 
     // All "dynamic" fields
-    DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
+    DataObjectsStore.getCurrentClassObj().schema.map(item => {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
           params[item.name] = this.state[item.name];
@@ -96,7 +95,7 @@ export default React.createClass({
           params[item.name] = null;
         }
       }
-    }.bind(this));
+    });
 
     return params;
   },
@@ -105,7 +104,7 @@ export default React.createClass({
     let fileFields = [];
 
     // Searching for files
-    DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
+    DataObjectsStore.getCurrentClassObj().schema.map(item => {
       if (item.type === 'file') {
         let file = this.state['file-' + item.name];
         if (file) {
@@ -115,7 +114,8 @@ export default React.createClass({
           })
         }
       }
-    }.bind(this));
+    });
+
     return fileFields;
   },
 
@@ -155,7 +155,7 @@ export default React.createClass({
       }
     ];
 
-    let renderChannelFields = function() {
+    let renderChannelFields = () => {
       if (this.hasEditMode()) {
         return (
           <div key="edit-fields">
@@ -164,15 +164,13 @@ export default React.createClass({
               name              = 'field-channel'
               fullWidth         = {true}
               disabled          = {true}
-              floatingLabelText = {this.state.channel || 'no channel'}
-            />
+              floatingLabelText = {this.state.channel || 'no channel'} />
             <MUI.TextField
               ref               = 'field-channel_room'
               name              = 'field-channel_room'
               fullWidth         = {true}
               disabled          = {true}
-              floatingLabelText = {this.state.channel_room || 'no channel'}
-            />
+              floatingLabelText = {this.state.channel_room || 'no channel'} />
           </div>
         )
       }
@@ -187,8 +185,7 @@ export default React.createClass({
             floatingLabelText = 'Channel'
             valueLink         = {this.linkState('channel')}
             errorText         = {this.getValidationMessages('channel').join(' ')}
-            menuItems         = {this.state.channels}
-          />
+            menuItems         = {this.state.channels} />
           <MUI.TextField
             ref               = 'field-channel_room'
             name              = 'field-channel_room'
@@ -197,11 +194,10 @@ export default React.createClass({
             valueLink         = {this.linkState('channel_room')}
             errorText         = {this.getValidationMessages('channel_room').join(' ')}
             hintText          = 'Channel Room'
-            floatingLabelText = 'Channel Room'
-          />
+            floatingLabelText = 'Channel Room' />
         </div>
       )
-    }.bind(this);
+    };
 
     return (
       <div className='row' style={{padding: 0, margin: 0}}>
@@ -214,8 +210,7 @@ export default React.createClass({
             valueLink         = {this.linkState('owner')}
             errorText         = {this.getValidationMessages('owner').join(' ')}
             hintText          = 'User ID'
-            floatingLabelText = 'Owner'
-          />
+            floatingLabelText = 'Owner' />
           <MUI.TextField
             ref               = 'field-group'
             name              = 'owner'
@@ -223,14 +218,12 @@ export default React.createClass({
             valueLink         = {this.linkState('group')}
             errorText         = {this.getValidationMessages('group').join(' ')}
             hintText          = 'Group ID'
-            floatingLabelText = 'Group'
-          />
+            floatingLabelText = 'Group' />
           {renderChannelFields()}
         </div>
 
         <div className='col-flex-1' style={{paddingLeft: 15}}>
           <div>Permissions</div>
-
           <MUI.SelectField
             ref               = 'field-owner_permissions'
             name              = 'field-owner_permissions'
@@ -240,9 +233,7 @@ export default React.createClass({
             valueLink         = {this.linkState('owner_permissions')}
             floatingLabelText = 'Owner Permissions'
             errorText         = {this.getValidationMessages('owner_permissions').join(' ')}
-            menuItems         = {permissions}
-          />
-
+            menuItems         = {permissions} />
           <MUI.SelectField
             ref               = 'field-group_permissions'
             name              = 'field-group_permissions'
@@ -252,9 +243,7 @@ export default React.createClass({
             valueLink         = {this.linkState('group_permissions')}
             floatingLabelText = 'Group Permissions'
             errorText         = {this.getValidationMessages('group_permissions').join(' ')}
-            menuItems         = {permissions}
-          />
-
+            menuItems         = {permissions} />
           <MUI.SelectField
             ref               = 'field-other_permissions'
             name              = 'field-other_permissions'
@@ -264,8 +253,7 @@ export default React.createClass({
             valueLink         = {this.linkState('other_permissions')}
             floatingLabelText = 'Other Permissions'
             errorText         = {this.getValidationMessages('other_permissions').join(' ')}
-            menuItems         = {permissions}
-          />
+            menuItems         = {permissions} />
         </div>
       </div>
     )
@@ -312,8 +300,7 @@ export default React.createClass({
         <Dropzone
           ref    = {'file-' + item.name}
           onDrop = {this.onDrop.bind(this, 'file-' + item.name)}
-          style  = {dropZoneStyle}
-        >
+          style  = {dropZoneStyle}>
           <div style={{padding: 15}}>
             {description || 'Click to select files to upload or drop file here.'}
           </div>
@@ -326,7 +313,7 @@ export default React.createClass({
 
     if (DataObjectsStore.getCurrentClassObj()) {
 
-      return DataObjectsStore.getCurrentClassObj().schema.map(function(item) {
+      return DataObjectsStore.getCurrentClassObj().schema.map(item => {
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField
@@ -339,13 +326,11 @@ export default React.createClass({
               displayMember     = "text"
               floatingLabelText = {'Value of ' + item.name}
               errorText         = {this.getValidationMessages(item.name).join(' ')}
-              menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]}
-            />
+              menuItems         = {[{text: 'True', payload: true}, {text: 'False', payload: false}]} />
           )
         }
 
         if (item.type === 'datetime') {
-
           let value      = this.state[item.name] ? new Date(this.state[item.name].value) : null;
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
@@ -386,16 +371,14 @@ export default React.createClass({
                       <MUI.IconButton
                        iconClassName = "synicon-download"
                        onClick       = {this.handleFileOnClick.bind(this, url)}
-                       tooltip       = {url}
-                      />
+                       tooltip       = {url} />
                     </div>
                     <div className='col-flex-1'>
                       <MUI.FlatButton
                         style     = {{marginTop: 5}}
                         label     = 'Remove'
                         secondary = {true}
-                        onClick   = {this.handleRemoveFile.bind(this, item.name)}
-                      />
+                        onClick   = {this.handleRemoveFile.bind(this, item.name)} />
                     </div>
                   </div>
                 </div>
@@ -414,10 +397,9 @@ export default React.createClass({
             valueLink         = {this.linkState(item.name)}
             errorText         = {this.getValidationMessages(item.name).join(' ')}
             hintText          = {'Field ' + item.name}
-            floatingLabelText = {item.name + ' (' + item.type + ')'}
-          />
+            floatingLabelText = {item.name + ' (' + item.type + ')'} />
         )
-      }.bind(this))
+      })
     }
   },
 
@@ -445,8 +427,7 @@ export default React.createClass({
         title     = {title}
         onShow    = {this.handleDialogShow}
         actions   = {dialogStandardActions}
-        onDismiss = {this.resetDialogState}
-      >
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <div className="row">

@@ -1,22 +1,22 @@
-var React                      = require('react'),
-    Reflux                     = require('reflux'),
-    ZeroClipboard              = require('react-zeroclipboard'),
+import React from 'react';
+import Reflux from 'reflux';
+import ZeroClipboard from 'react-zeroclipboard';
 
-    HeaderMixin                = require('../Header/HeaderMixin'),
-    FormMixin                  = require('../../mixins/FormMixin'),
+import FormMixin from '../../mixins/FormMixin';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    ProfileActions             = require('./ProfileActions'),
-    ProfileAuthenticationStore = require('./ProfileAuthenticationStore'),
+import Store from './ProfileAuthenticationStore';
+import Actions from './ProfileActions';
 
-    MUI                        = require('material-ui'),
-    Container                  = require('../../common/Container');
+import MUI from 'material-ui';
+import Container from '../../common/Container';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileAuthentication',
 
   mixins: [
-    Reflux.connect(ProfileAuthenticationStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     HeaderMixin,
     FormMixin
@@ -54,7 +54,7 @@ module.exports = React.createClass({
     }
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       content: {
         padding         : '24px 48px 48px'
@@ -83,26 +83,25 @@ module.exports = React.createClass({
     }
   },
 
-  handleCopyClick: function() {
+  handleCopyClick() {
     this.refs.snackbar.show();
   },
 
-  handleResetClick: function() {
-    ProfileActions.resetKey();
+  handleResetClick() {
+    Actions.resetKey();
   },
 
-  handleSuccessfullValidation: function() {
-    ProfileActions.changePassword(this.state);
+  handleSuccessfullValidation() {
+    Actions.changePassword(this.state);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <Container.Profile
         headerText = 'Authentication'
-        show       = {this.state.isLoading}
-      >
+        show       = {this.state.isLoading}>
         <div style={styles.content}>
           <h6>Account key</h6>
           <div style={styles.contentRow}>
@@ -111,19 +110,16 @@ module.exports = React.createClass({
               <MUI.FlatButton
                 label   = "COPY"
                 primary = {true}
-                onClick = {this.handleCopyClick}
-              />
+                onClick = {this.handleCopyClick} />
             </ZeroClipboard>
             <MUI.FlatButton
               label   = "RESET"
               primary = {true}
-              onClick = {this.handleResetClick}
-            />
+              onClick = {this.handleResetClick} />
           </div>
           <MUI.Snackbar
             ref     = "snackbar"
-            message = "API key copied to the clipboard"
-          />
+            message = "API key copied to the clipboard" />
         </div>
         <div style={styles.content}>
           <h6>Password</h6>
@@ -133,7 +129,6 @@ module.exports = React.createClass({
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
             method        = "post">
-
             <MUI.TextField
               ref               = "currentPassword"
               type              = "password"
@@ -144,9 +139,7 @@ module.exports = React.createClass({
               className         = "text-field"
               autoComplete      = "currentPassword"
               hintText          = "Current password"
-              fullWidth         = {true}
-            />
-
+              fullWidth         = {true} />
             <MUI.TextField
               ref               = "newPassword"
               type              = "password"
@@ -157,9 +150,7 @@ module.exports = React.createClass({
               className         = "text-field"
               autoComplete      = "newPassword"
               hintText          = "New password"
-              fullWidth         = {true}
-            />
-
+              fullWidth         = {true} />
             <MUI.TextField
               ref               = "confirmNewPassword"
               type              = "password"
@@ -170,17 +161,14 @@ module.exports = React.createClass({
               className         = "text-field vm-6-b"
               autoComplete      = "confirmNewPassword"
               hintText          = "Confirm new password"
-              fullWidth         = {true}
-            />
-
+              fullWidth         = {true} />
             <MUI.RaisedButton
               type       = "submit"
               label      = "Update"
               style      = {styles.updateButton}
               labelStyle = {styles.updateButtonLabel}
               className  = "raised-button"
-              secondary  = {true}
-            />
+              secondary  = {true} />
           </form>
         </div>
       </Container.Profile>

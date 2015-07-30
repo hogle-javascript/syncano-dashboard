@@ -37,19 +37,19 @@ export default Radium(React.createClass({
   },
 
   handleAcceptInvitations(items) {
-    console.info("Header::handleAcceptInvitations");
+    console.info('Header::handleAcceptInvitations');
     ProfileInvitationsActions.acceptInvitations(items);
     event.stopPropagation();
   },
 
   handleDeclineInvitations(items) {
-    console.info("Header::handleDeclineInvitations");
+    console.info('Header::handleDeclineInvitations');
     ProfileInvitationsActions.declineInvitations(items);
     event.stopPropagation();
   },
 
   handleResendEmail() {
-    console.info("Header::handleResendEmail");
+    console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(this.state.user.email);
     this.refs.snackbar.show();
   },
@@ -82,7 +82,7 @@ export default Radium(React.createClass({
 
   renderItems() {
     let styles = this.getStyles();
-    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dopdown isn't closing because of returned childrens in DIV tag
+    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't closing because of returned childrens in DIV tag
     if (this.state.accountInvitations.isLoading === true) {
       return <Loading show={true} />
     }
@@ -93,7 +93,7 @@ export default Radium(React.createClass({
           className = 'synicon-information'
           color     = {MUI.Styles.Colors.lightBlueA700}
         />
-      )
+      );
       return (
         <MenuItem
           key         = "empty"
@@ -123,12 +123,10 @@ export default Radium(React.createClass({
         <MUI.FlatButton
           onTouchTap = {this.handleAcceptInvitations.bind(this, [item])}
           label      = 'Accept'
-          primary    = {true}
-        />,
+          primary    = {true} />,
         <MUI.FlatButton
           onTouchTap = {this.handleDeclineInvitations.bind(this, [item])}
-          label      = 'Decline'
-        />
+          label      = 'Decline' />
       ];
 
       return (
@@ -136,8 +134,7 @@ export default Radium(React.createClass({
           key      = {`invitation-${item.id}`}
           disabled = {true}
           leftIcon = {icon}
-          style    = {styles.menuItem}
-        >
+          style    = {styles.menuItem}>
           {content}
           {buttons}
         </MenuItem>
@@ -148,21 +145,19 @@ export default Radium(React.createClass({
       let icon = (
         <MUI.FontIcon
           className = 'synicon-alert'
-          color     = {MUI.Styles.Colors.orange500}
-        />
+          color     = {MUI.Styles.Colors.orange500} />
       ),
 
       resendLink = (
         <div style={this.getStyles().resendEmailText}>
           Your email address is not yet verified. Click here to resend activation email.
         </div>
-      )
+      );
       notifications.push(
         <MenuItem
           key      = "resend-link"
           leftIcon = {icon}
-          style    = {styles.menuItem}
-        >
+          style    = {styles.menuItem}>
           {resendLink}
         </MenuItem>
       )
@@ -174,7 +169,7 @@ export default Radium(React.createClass({
   renderIcon() {
     let notifications         = this.renderItems(),
         notificationCountIcon = null,
-        iconClassName         = "synicon-",
+        iconClassName         = 'synicon-',
         styles                = this.getStyles();
 
     if (notifications.length > 0) {
@@ -184,12 +179,11 @@ export default Radium(React.createClass({
     }
 
     if (notifications.length > 0) {
-      let synIconName = notifications.length < 10 ? notifications.length : "9-plus";
+      let synIconName = notifications.length < 10 ? notifications.length : '9-plus';
       notificationCountIcon = (
         <MUI.FontIcon
-          className = {"synicon-numeric-" + synIconName + "-box notification-count-icon"}
-          color     = {styles.notificationIcon.color}
-        />
+          className = {'synicon-numeric-' + synIconName + '-box notification-count-icon'}
+          color     = {styles.notificationIcon.color} />
       )
     }
 
@@ -199,8 +193,7 @@ export default Radium(React.createClass({
         <MUI.IconButton
           iconStyle     = {styles.icon}
           iconClassName = {iconClassName}
-          onClick       = {ProfileInvitationsActions.fetchInvitations}
-        />
+          onClick       = {ProfileInvitationsActions.fetchInvitations} />
       </div>
     )
   },
@@ -212,21 +205,18 @@ export default Radium(React.createClass({
           iconButtonElement = {this.renderIcon()}
           onItemTouchTap    = {this.handleResendEmail}
           autoWidth         = {false}
-          maxWidth          = '400px'
-        >
+          maxWidth          = '400px'>
           <MenuItem
             key         = 'notificationDropdownHeader'
             primaryText = 'Notifications'
-            disabled    = {true}
-          />
+            disabled    = {true} />
           <MenuDivider />
             {this.renderItems()}
         </MUI.IconMenu>
         <MUI.Snackbar
           ref              = 'snackbar'
           message          = 'Activation e-mail was send'
-          autoHideDuration = {3000}
-        />
+          autoHideDuration = {3000} />
       </div>
     )
   }

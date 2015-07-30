@@ -6,7 +6,7 @@ import Mixins from '../../mixins';
 //Stores & Actions
 import GroupsActions from './GroupsActions';
 
-let GroupDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : GroupsActions,
 
   mixins      : [
@@ -38,5 +38,3 @@ let GroupDialogStore = Reflux.createStore({
     GroupsActions.fetchGroups();
   }
 });
-
-module.exports = GroupDialogStore;

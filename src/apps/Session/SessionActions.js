@@ -1,7 +1,8 @@
-var Reflux     = require('reflux'),
-    Connection = require('./Connection').get();
+import Reflux from 'reflux';
+import _Connection from './Connection';
 
-var SessionActions = Reflux.createActions({
+let Connection     = _Connection.get();
+let SessionActions = Reflux.createActions({
   login       : {},
   logout      : {},
   setToken    : {},
@@ -38,4 +39,4 @@ SessionActions.fetchInstance.listen(function(name) {
     .catch(this.failure)
 });
 
-module.exports = SessionActions;
+export default SessionActions;

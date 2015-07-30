@@ -1,25 +1,19 @@
-var React              = require('react'),
-    Reflux             = require('reflux'),
-    Router             = require('react-router'),
-    Radium             = require('radium'),
-    mui                = require('material-ui'),
-    ColumnListConstans = require('../../common/ColumnList/ColumnListConstans'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import Radium from 'radium';
 
-    StylePropable      = mui.Mixins.StylePropable,
+import HeaderActions from './HeaderActions';
+import HeaderStore from './HeaderStore';
+import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
+import InstancesActions from '../Instances/InstancesActions';
+import InstancesStore from '../Instances/InstancesStore';
 
-    HeaderActions      = require('./HeaderActions'),
-    HeaderStore        = require('./HeaderStore'),
-    SessionActions     = require('../Session/SessionActions'),
-    SessionStore       = require('../Session/SessionStore'),
-    InstancesActions   = require('../Instances/InstancesActions'),
-    InstancesStore     = require('../Instances/InstancesStore'),
-    ColorStore         = require('../../common/Color/ColorStore'),
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    FontIcon           = mui.FontIcon,
-    DropDownMenu       = mui.DropDownMenu,
-    ToolbarGroup       = mui.ToolbarGroup;
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'HeaderInstancesDropdown',
 
@@ -40,23 +34,23 @@ module.exports = React.createClass({
     InstancesStore.fetch();
   },
 
-  handleDropdownItemClick(e, selectedIndex, menuItem) {
-    var instanceName = menuItem.text._store.props.children[1];
+  handleDropdownItemClick(event, selectedIndex, menuItem) {
+    let instanceName = menuItem.text._store.props.children[1];
 
     // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName).then(function() {
+    SessionActions.fetchInstance(instanceName).then(() => {
       this.transitionTo('instance', {instanceName: instanceName});
-    }.bind(this));
+    });
   },
 
   handleInstanceActive() {
-    if (InstancesStore.getMyInstances()) {
-      var currentInstance = SessionStore.instance,
-        instancesList = InstancesStore.getMyInstances().reverse(),
-        instanceActiveIndex = null;
+    if (InstancesStore.getAllInstances()) {
+      let currentInstance     = SessionStore.instance,
+          instancesList       = InstancesStore.getAllInstances(true),
+          instanceActiveIndex = null;
 
-      instancesList.some(function(e, index) {
-        if (e.name === currentInstance.name) {
+      instancesList.some((event, index) => {
+        if (event.name === currentInstance.name) {
           instanceActiveIndex = index;
           return true;
         }
@@ -119,26 +113,22 @@ module.exports = React.createClass({
   render() {
     let styles        = this.getStyles();
     let instance      = SessionStore.instance;
-    let instancesList = InstancesStore.getMyInstances();
-
-    if (instancesList) {
-      instancesList.reverse();
-    }
+    let instancesList = InstancesStore.getAllInstances(true);
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
-    var dropDownMenuItems = instancesList.map(function(item, index) {
-      var iconBackground = {
-          backgroundColor: ColorStore.getColorByName(item.metadata.color, 'dark') || ColumnListConstans.DEFAULT_BACKGROUND
+    let dropDownMenuItems = instancesList.map((item, index) => {
+    let iconBackground    = {
+          backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND
         },
-        icon             = item.metadata.icon ? item.metadata.icon : ColumnListConstans.DEFAULT_ICON,
+        icon             = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON,
         iconClassName    = 'synicon-' + icon,
         text             = <div style={styles.dropdownLabelContainer}>
-                             <FontIcon
+                             <MUI.FontIcon
                                className = {iconClassName}
-                               style     = {StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
+                               style     = {MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
 
                              {item.name}
                            </div>;
@@ -150,10 +140,10 @@ module.exports = React.createClass({
     });
 
     return (
-      <ToolbarGroup
+      <MUI.ToolbarGroup
         key   = {0}
         style = {styles.instanceToolbarGroup}>
-        <DropDownMenu
+        <MUI.DropDownMenu
           className      = "instances-dropdown"
           labelStyle     = {styles.dropdownLabel}
           underlineStyle = {styles.dropdownLabelUnderline}
@@ -161,7 +151,7 @@ module.exports = React.createClass({
           menuItems      = {dropDownMenuItems}
           onChange       = {this.handleDropdownItemClick}
           selectedIndex  = {this.handleInstanceActive()} />
-      </ToolbarGroup>
+      </MUI.ToolbarGroup>
     )
   }
 });

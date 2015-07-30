@@ -7,13 +7,14 @@ import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 // Stores and Actions
-import CodeBoxActions from './CodeBoxActions';
-import CodeBoxStore from './CodeBoxStore';
+import Actions from './CodeBoxActions';
+import Store from './CodeBoxStore';
 
 // Components
 import Common from '../../common';
 import Container from '../../common/Container';
-import SnackbarNotificationActions from '../../common/SnackbarNotification/SnackbarNotificationActions';
+
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -24,13 +25,14 @@ export default React.createClass({
     Router.Navigation,
     React.addons.LinkedStateMixin,
 
-    Reflux.connect(CodeBoxStore),
+    Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    InstanceTabsMixin,
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
-    CodeBoxActions.fetch();
+    Actions.fetch();
   },
 
   getStyles() {
@@ -48,7 +50,7 @@ export default React.createClass({
   },
 
   handleRun() {
-    CodeBoxActions.runCodeBox({
+    Actions.runCodeBox({
       id      : this.state.currentCodeBox.id,
       payload : this.refs.tracePanel.refs.payloadField.getValue()
     });
@@ -57,8 +59,8 @@ export default React.createClass({
 
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
-    CodeBoxActions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
-    SnackbarNotificationActions.set({
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    this.setSnackbarNotification({
       message: 'Saving...'
     });
   },
@@ -71,17 +73,15 @@ export default React.createClass({
 
     if (codeBox) {
       source     = codeBox.source;
-      editorMode = CodeBoxStore.getEditorMode();
+      editorMode = Store.getEditorMode();
 
       return (
         <div>
-
           <Common.Editor
             ref   = "editorSource"
             mode  = {editorMode}
-            theme = "github"
+            theme = "tomorrow"
             value = {source} />
-
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
               ref     = "tracePanel"
@@ -115,5 +115,4 @@ export default React.createClass({
       </Container>
     );
   }
-
 });

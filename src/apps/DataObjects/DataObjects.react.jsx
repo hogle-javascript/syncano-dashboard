@@ -1,32 +1,23 @@
-var React              = require('react'),
-    Reflux             = require('reflux'),
-    Router             = require('react-router'),
-    _                  = require('lodash'),
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+import _ from 'lodash';
 
-    // Utils
-    HeaderMixin        = require('../Header/HeaderMixin'),
-    DialogsMixin       = require('../../mixins/DialogsMixin'),
-    InstanceTabsMixin  = require('../../mixins/InstanceTabsMixin'),
-    Show               = require('../../common/Show/Show.react'),
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    SessionStore       = require('../Session/SessionStore'),
-    DataObjectsActions = require('./DataObjectsActions'),
-    DataObjectsStore   = require('./DataObjectsStore'),
+import SessionStore from '../Session/SessionStore';
+import DataObjectsActions from './DataObjectsActions';
+import DataObjectsStore from './DataObjectsStore';
 
-    mui                = require('material-ui'),
-    Dialog             = mui.Dialog,
-    IconButton         = mui.IconButton,
-    Table              = mui.Table,
-    Toolbar            = mui.Toolbar,
-    ToolbarGroup       = mui.ToolbarGroup,
-    ToolbarTitle       = mui.ToolbarTitle,
-    RaisedButton       = mui.RaisedButton,
+import MUI from 'material-ui';
+import Common from '../../common';
 
-    Loading            = require('../../common/Loading/Loading.react'),
-    ColumnsFilterMenu  = require('./ColumnsFilterMenu.react'),
-    DataObjectDialog   = require('./DataObjectDialog.react');
+import ColumnsFilterMenu from './ColumnsFilterMenu.react';
+import DataObjectDialog from './DataObjectDialog.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DataObjects',
 
@@ -35,12 +26,12 @@ module.exports = React.createClass({
     Router.Navigation,
 
     Reflux.connect(DataObjectsStore),
-    HeaderMixin,
-    DialogsMixin,
-    InstanceTabsMixin
+    Mixins.Header,
+    Mixins.Dialogs,
+    Mixins.InstanceTabs
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
@@ -52,15 +43,15 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('DataObjects::componentDidMount');
     DataObjectsActions.fetch();
   },
 
   //Dialogs config
-  initDialogs: function() {
+  initDialogs() {
     return [{
-      dialog: Dialog,
+      dialog: MUI.Dialog,
       params: {
         key:    'deleteDataObjectDialog',
         ref:    'deleteDataObjectDialog',
@@ -75,12 +66,12 @@ module.exports = React.createClass({
     }]
   },
 
-  showDataObjectDialog: function() {
+  showDataObjectDialog() {
     DataObjectsActions.showDialog();
   },
 
-  showDataObjectEditDialog: function(cellNumber) {
-    var dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
+  showDataObjectEditDialog(cellNumber) {
+    let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
     dataObject = _.reduce(dataObject, (r, v, k) => {
       if (_.isObject(v) && v.type === 'reference') {
         v = v.value;
@@ -91,18 +82,18 @@ module.exports = React.createClass({
     DataObjectsActions.showDialog(dataObject);
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('DataObjects::handleDelete');
     DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
   },
 
-  handleRowSelection: function(selectedRow) {
+  handleRowSelection(selectedRow) {
     console.info('DataObjects::handleRowSelection');
-    var rowsSelection = [selectedRow[0]];
+    let rowsSelection = [selectedRow[0]];
 
     // It there is more than one arg it means that it is multiple selection
     if (selectedRow.length > 1) {
-      var start = selectedRow[1].start,
+      let start = selectedRow[1].start,
           end   = selectedRow[1].end;
 
       // What is start and what is end depends on the direction of checking rows
@@ -119,22 +110,22 @@ module.exports = React.createClass({
     DataObjectsActions.setSelectedRows(rowsSelection);
   },
 
-  handleCellClick: function(cellNumber, cellName) {
+  handleCellClick(cellNumber, cellName) {
     console.info('DataObjects::handleCellClick', arguments);
     if (cellName != undefined) {
       this.showDataObjectEditDialog(cellNumber);
     }
   },
 
-  renderTable: function() {
+  renderTable() {
     console.info('DataObjects::renderTable');
-    var tableData   = DataObjectsStore.renderTableData(),
+    let tableData   = DataObjectsStore.renderTableData(),
         tableHeader = DataObjectsStore.renderTableHeader(),
         colOrder    = DataObjectsStore.getCheckedColumnsIDs();
 
     return (
       <div>
-        <Table
+        <MUI.Table
           ref                 = "table"
           headerColumns       = {tableHeader}
           columnOrder         = {colOrder}
@@ -151,27 +142,27 @@ module.exports = React.createClass({
           style     = {{margin: 50}} >
           <div>Loaded {tableData.length} Data Objects</div>
         </div>
-        <Show if={this.state.hasNextPage}>
+        <Common.Show if={this.state.hasNextPage}>
           <div
             className = "row align-center"
             style     = {{margin: 50}} >
-            <RaisedButton
+            <MUI.RaisedButton
               label   = "Load more"
               onClick = {this.handleMoreRows}/>
           </div>
-        </Show>
+        </Common.Show>
       </div>
     )
   },
 
-  handleMoreRows: function() {
+  handleMoreRows() {
     DataObjectsActions.subFetchDataObjects({
       className : this.state.classObj.name,
       params    : this.state.nextParams
     });
   },
 
-  handleBackClick: function() {
+  handleBackClick() {
     SessionStore.getRouter().transitionTo(
       'classes',
       {
@@ -180,16 +171,16 @@ module.exports = React.createClass({
     );
   },
 
-  render: function() {
+  render() {
+    let table = null;
 
-    var table = null;
     if (this.state.items) {
       table = this.renderTable();
     } else {
-      table = <Loading visible={true} />;
+      table = <Common.Loading visible={true} />;
     }
 
-    var selectedMessageText = null;
+    let selectedMessageText = null;
 
     if (this.state.selectedRows && this.state.selectedRows.length > 0) {
       selectedMessageText = 'selected: ' + this.state.selectedRows.length;
@@ -199,37 +190,33 @@ module.exports = React.createClass({
 
       <div className="row" style={{'height': '100%'}}>
         {this.getDialogs()}
-
         <DataObjectDialog />
 
         <div className="col-flex-1">
-
-          <Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
-
-            <ToolbarGroup>
-              <IconButton
+          <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
+            <MUI.ToolbarGroup>
+              <MUI.IconButton
                 iconClassName = "synicon-arrow-left"
                 onClick       = {this.handleBackClick}
                 touch         = {true}
                 style         = {{marginTop: 4}}
-                iconStyle     = {{color: 'rgba(0,0,0,.4)'}}
-              />
-            </ToolbarGroup>
+                iconStyle     = {{color: 'rgba(0,0,0,.4)'}} />
+            </MUI.ToolbarGroup>
 
-            <ToolbarGroup>
-              <ToolbarTitle text={'Class: ' + this.getParams().className} />
-              <ToolbarTitle text={selectedMessageText} />
-            </ToolbarGroup>
+            <MUI.ToolbarGroup>
+              <MUI.ToolbarTitle text={'Class: ' + this.getParams().className} />
+              <MUI.ToolbarTitle text={selectedMessageText} />
+            </MUI.ToolbarGroup>
 
-            <ToolbarGroup float="right">
+            <MUI.ToolbarGroup float="right">
 
-              <IconButton
+              <MUI.IconButton
                 style         = {{fontSize: 25, marginTop: 5}}
                 iconClassName = "synicon-plus"
                 tooltip       = "Add Data Objects"
                 onClick       = {this.showDataObjectDialog} />
 
-              <IconButton
+              <MUI.IconButton
                 style         = {{fontSize: 25, marginTop: 5}}
                 iconClassName = "synicon-delete"
                 tooltip       = "Delete Data Objects"
@@ -240,20 +227,18 @@ module.exports = React.createClass({
                 columns           = {DataObjectsStore.getTableColumns()}
                 checkToggleColumn = {DataObjectsActions.checkToggleColumn} />
 
-            </ToolbarGroup>
+            </MUI.ToolbarGroup>
 
-          </Toolbar>
+          </MUI.Toolbar>
 
           <div style={{clear: 'both', height: '100%'}}>
-            <Show if={this.state.isLoading}>
-              <Loading type='linear' />
-            </Show>
+            <Common.Show if={this.state.isLoading}>
+              <Common.Loading type='linear' />
+            </Common.Show>
             {table}
           </div>
-
         </div>
       </div>
     );
   }
-
 });
