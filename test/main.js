@@ -72,7 +72,6 @@ import './apps/Profile/ProfileSettings.react';
 import './apps/Profile/ProfileSettingsStore';
 import './apps/Session/Connection';
 import './apps/Session/SessionActions';
-import './apps/Session/SessionMixin';
 import './apps/Session/SessionStore';
 import './apps/Tasks/ScheduleDialog.react';
 import './apps/Tasks/ScheduleDialogStore';
