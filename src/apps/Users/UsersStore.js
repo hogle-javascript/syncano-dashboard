@@ -9,7 +9,7 @@ import UsersActions from './UsersActions';
 import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
-let UsersStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : [UsersActions, GroupsActions],
 
   mixins      : [
@@ -40,13 +40,9 @@ let UsersStore = Reflux.createStore({
     let activeGroup = GroupsStore.getActiveGroup();
 
     if (activeGroup) {
-      GroupsActions.fetchGroupUsers(activeGroup.id).then(function(payload) {
-        UsersStore.setUsers(payload);
-      });
+      GroupsActions.fetchGroupUsers(activeGroup.id).then(payload => this.setUsers(payload));
     } else {
-      UsersActions.fetchUsers().then(function(payload) {
-        UsersStore.setUsers(payload);
-      });
+      UsersActions.fetchUsers().then(payload => this.setUsers(payload));
     }
   },
 
@@ -96,5 +92,3 @@ let UsersStore = Reflux.createStore({
     this.refreshData();
   }
 });
-
-export default UsersStore;
