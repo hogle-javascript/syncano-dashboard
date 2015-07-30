@@ -64,6 +64,10 @@ export default Reflux.createStore({
     return this.getSelectOptions(this.data.tags, 'name', 'name');
   },
 
+  getItemTags() {
+    return this.getSelectValuesFromList(this.data.item.tags);
+  },
+
   setSolutionVersions(versions) {
     console.debug('SolutionsEditStore::setSolutions');
 

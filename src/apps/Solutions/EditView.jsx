@@ -132,6 +132,13 @@ export default React.createClass({
         fontSize    : 24,
         marginRight : 14
       },
+      description : {
+        color      : 'rgba(0,0,0,.54)',
+        textAlign  : 'left',
+        fontSize   : '1rem',
+        lineHeight : '1rem',
+        height     : 100
+      }
     };
   },
 
@@ -156,8 +163,8 @@ export default React.createClass({
     return this.state.item.tags.map(tag => {
       return (
         <div
-          key     = {tag}
-          style   = {styles.tag}>
+          key   = {tag}
+          style = {styles.tag}>
           {tag}
         </div>
       )
@@ -215,7 +222,8 @@ export default React.createClass({
                   {this.state.item.label}
                 </div>
               </div>
-              <div className="row vp-3-t" style={{color: 'rgba(0,0,0,.54)', textAlign: 'left', fontSize: '1rem', lineHeight: '1rem', height: 100}}>
+              <div
+                className="row vp-3-t" style={styles.description}>
                   {this.state.item.description}
               </div>
 
@@ -231,11 +239,11 @@ export default React.createClass({
               </Common.Show>
 
               <Common.Show if={this.isMySolution()}>
-                <div className="row">
+                <div className="row vp-1-b">
                   <div className="col-flex-1">
                     <div className="vp-1-b">Tags</div>
                       <Select
-                        value       = ""
+                        value       = {Store.getItemTags()}
                         delimiter   = ","
                         multi       = {true}
                         allowCreate = {true}

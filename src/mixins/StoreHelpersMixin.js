@@ -21,6 +21,17 @@ export default {
       }
     });
   },
+  getSelectValuesFromList(list) {
+    if (!list) {
+      return [];
+    }
+    return list.map(function(item) {
+      return {
+        label : item,
+        value : item
+      }
+    });
+  },
   saveListFromSyncano(obj) {
     return obj._items;
   }
