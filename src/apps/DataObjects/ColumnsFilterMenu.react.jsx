@@ -1,12 +1,8 @@
-var React       = require('react'),
+import React from 'react';
 
-    mui         = require('material-ui'),
-    IconButton  = mui.IconButton,
-    IconMenu    = mui.IconMenu,
-    Checkbox    = mui.Checkbox,
-    ListItem    = mui.ListItem;
+import MUI from 'material-ui';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ColumnsFilterMenu',
 
@@ -15,58 +11,55 @@ module.exports = React.createClass({
     columns  : React.PropTypes.array
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       disabled: this.props.disabled,
       columns: this.props.columns
     }
   },
 
-  componentWillReceiveProps: function(newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({columns: newProps.columns});
   },
 
-  handleMenuClick: function() {
+  handleMenuClick() {
     console.info('ColumnAvatarCheck:handleClick');
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },
 
-  handleClick: function(columnId) {
+  handleClick(columnId) {
     this.props.checkToggleColumn(columnId);
   },
 
-  renderMenuItems: function() {
-    return this.state.columns.map(function(column) {
+  renderMenuItems() {
+    return this.state.columns.map(column => {
       let checkbox = (
-        <Checkbox
+        <MUI.Checkbox
           checked = {column.checked}
-          onCheck = {this.handleClick.bind(null, column.id)}
-        />
+          onCheck = {this.handleClick.bind(null, column.id)} />
       );
 
       return (
-        <ListItem
+        <MUI.ListItem
           key           = {column.id}
           id            = {column.id}
           primaryText   = {column.name}
           secondaryText = {column.tooltip}
-          leftCheckbox  = {checkbox}
-        />
+          leftCheckbox  = {checkbox} />
       )
-    }.bind(this))
+    });
   },
 
-  render: function() {
-    var mainIcon = <IconButton iconClassName="synicon-view-column" />;
+  render() {
+    let mainIcon = <MUI.IconButton iconClassName="synicon-view-column" />;
 
     return (
-      <IconMenu
+      <MUI.IconMenu
         closeOnItemTouchTap = {false}
         iconButtonElement   = {mainIcon}
-        openDirection       = "bottom-left"
-      >
+        openDirection       = "bottom-left">
         {this.renderMenuItems()}
-      </IconMenu>
+      </MUI.IconMenu>
     )
   }
 });
