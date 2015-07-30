@@ -1,17 +1,17 @@
-var Reflux         = require('reflux'),
+import Reflux from 'reflux';
 
-    StoreFormMixin = require('../../mixins/StoreFormMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
-    SessionStore   = require('../Session/SessionStore'),
-    SessionActions = require('../Session/SessionActions'),
-    ProfileActions = require('./ProfileActions');
+import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
+import Actions from './ProfileActions';
 
-var ProfileSettingsStore = Reflux.createStore({
-  listenables: ProfileActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [StoreFormMixin],
 
-  getInitialState: function() {
-    var user = SessionStore.getUser({});
+  getInitialState() {
+    let user = SessionStore.getUser({});
     return {
       // jscs:disable
       firstName : user.first_name,
@@ -21,16 +21,16 @@ var ProfileSettingsStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.listenTo(SessionStore, this.checkSession);
     this.listenToForms();
   },
 
-  checkSession: function(Session) {
+  checkSession(Session) {
     console.debug('ProfileSettingsStore:checkSession');
     if (Session.isReady()) {
-      var user = SessionStore.getUser({});
+      let user = SessionStore.getUser({});
       this.trigger({
         // jscs:disable
         firstName : user.first_name,
@@ -41,14 +41,11 @@ var ProfileSettingsStore = Reflux.createStore({
     }
   },
 
-  onUpdateSettingsCompleted: function(payload) {
+  onUpdateSettingsCompleted(payload) {
     SessionActions.setUser(payload);
 
     this.trigger({
       feedback: 'Profile saved successfully.'
     });
-  },
-
+  }
 });
-
-module.exports = ProfileSettingsStore;

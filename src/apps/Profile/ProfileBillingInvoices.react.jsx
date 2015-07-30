@@ -2,8 +2,8 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import SessionStore from '../Session/SessionStore';
-import ProfileActions from './ProfileActions';
-import ProfileBillingInvoicesStore from './ProfileBillingInvoicesStore';
+import Actions from './ProfileActions';
+import Store from './ProfileBillingInvoicesStore';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -16,11 +16,11 @@ export default React.createClass({
   displayName: 'ProfileBillingInvoices',
 
   mixins: [
-    Reflux.connect(ProfileBillingInvoicesStore)
+    Reflux.connect(Store)
   ],
 
   componentDidMount() {
-    ProfileActions.fetchInvoices();
+    Actions.fetchInvoices();
   },
 
   handlePDFClick(invoice) {

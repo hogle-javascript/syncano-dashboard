@@ -15,7 +15,7 @@ import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileBillingPlan',
 
@@ -38,12 +38,12 @@ module.exports = React.createClass({
         equality: {
           attribute: 'soft_limit',
           message: 'Hard limit have to be higher then soft limit',
-          comparator: function(v1, v2) {
+          comparator: (v1, v2) => {
             return parseInt(v1) > parseInt(v2);
           }
         },
         numericality: {
-          onlyInteger: true,
+          onlyInteger: true
         }
       }
     }
@@ -187,7 +187,7 @@ module.exports = React.createClass({
     else if (this.state.profile.subscription.plan === 'free')
       return;
 
-    let renderComment = function() {
+    let renderComment = () => {
       if (Store.isPlanCanceled()) {
         return (
           <div style={{marginTop: 10, textAlign: 'center'}}>
@@ -205,7 +205,7 @@ module.exports = React.createClass({
           </div>
         )
       }
-    }.bind(this);
+    };
 
     return (
       <div className="row align-middle" style={{FlexDirection: 'column'}}>
@@ -257,7 +257,7 @@ module.exports = React.createClass({
     let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
     let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
 
-    let renderUsage = function(type) {
+    let renderUsage = (type) => {
       if (plan === 'paid-commitment') {
         let usage = {
           'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
@@ -503,7 +503,7 @@ module.exports = React.createClass({
     Actions.fetch();
   },
 
-  handleSuccessfullValidation: function() {
+  handleSuccessfullValidation() {
     this.handleAddSubmit();
   },
 
