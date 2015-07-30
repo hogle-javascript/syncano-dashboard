@@ -169,21 +169,18 @@ export default React.createClass({
               label         = {isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
-              iconClassName = {isAnyDataViewSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyDataViewSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Data Endpoint"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeDataViewDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit Data Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showDataViewEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -193,21 +190,18 @@ export default React.createClass({
               label         = {isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
-              iconClassName = {isAnyWebhookSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyWebhookSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete CodeBox Endpoint"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeWebhookDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit CodeBox Endpoint"
               mini          = {true}
               disabled      = {checkedDataViews > 1}
               onClick       = {this.showWebhookEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -215,13 +209,11 @@ export default React.createClass({
           <Common.Fab.Item
             label         = "Click here to create Data Endpoint"
             onClick       = {this.showDataViewDialog}
-            iconClassName = "synicon-table"
-          />
+            iconClassName = "synicon-table" />
           <Common.Fab.Item
             label         = "Click here to create CodeBox Endpoint"
             onClick       = {this.showWebhookDialog}
-            iconClassName = "synicon-arrow-up-bold"
-          />
+            iconClassName = "synicon-arrow-up-bold" />
         </Common.Fab>
 
         <DataViewsList
@@ -230,8 +222,7 @@ export default React.createClass({
           isLoading            = {this.state.dataviews.isLoading}
           items                = {this.state.dataviews.items}
           emptyItemHandleClick = {this.showDataViewDialog}
-          emptyItemContent     = "Create a DataView"
-        />
+          emptyItemContent     = "Create a DataView" />
 
         <WebhooksList
           name                 = "CodeBox Endpoints"
@@ -239,8 +230,7 @@ export default React.createClass({
           isLoading            = {this.state.webhooks.isLoading}
           items                = {this.state.webhooks.items}
           emptyItemHandleClick = {this.showWebhookDialog}
-          emptyItemContent     = "Create a Webhook"
-        />
+          emptyItemContent     = "Create a Webhook" />
       </Container>
     );
   }

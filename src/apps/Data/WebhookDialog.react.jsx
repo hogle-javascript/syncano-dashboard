@@ -87,8 +87,7 @@ export default React.createClass({
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
         onDismiss       = {this.resetDialogState}
-        modal           = {true}
-      >
+        modal           = {true}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
@@ -99,8 +98,7 @@ export default React.createClass({
             valueLink         = {this.linkState('name')}
             errorText         = {this.getValidationMessages('name').join(' ')}
             hintText          = "Name of the WebHook"
-            floatingLabelText = "Name"
-          />
+            floatingLabelText = "Name" />
           <MUI.TextField
             ref               = "description"
             name              = "description"
@@ -108,8 +106,7 @@ export default React.createClass({
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = "Description of the WebHook"
-            floatingLabelText = "Description"
-          />
+            floatingLabelText = "Description" />
           <MUI.SelectField
             ref               = "codebox"
             name              = "codebox"
@@ -119,16 +116,14 @@ export default React.createClass({
             valueMember       = "payload"
             displayMember     = "text"
             fullWidth         = {true}
-            menuItems         = {this.state.codeboxes}
-          />
+            menuItems         = {this.state.codeboxes} />
           <MUI.Toggle
             ref            = 'public'
             name           = 'public'
             onToggle       = {this.handleToogle}
             style          = {{marginTop: 20}}
             defaultToggled = {this.state.public}
-            label          = 'Make this WebHook public?'
-          />
+            label          = 'Make this WebHook public?' />
         </div>
       </Common.Dialog>
     );
