@@ -6,6 +6,8 @@ import './app.sass';
 
 import React from 'react';
 import Router from 'react-router';
+import URI from 'URIjs';
+import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
 import analytics from './segment';
@@ -14,15 +16,26 @@ let container  = document.getElementById('app');
 tapPlugin();
 
 Router.run(routes, function (Root, state) {
-  var pathname = decodeURIComponent(state.pathname).replace('//', '/');
+  let uri         = new URI(),
+      originalUri = uri.normalize().toString(),
+      search      = uri.search(true),
+      pathname    = decodeURIComponent(state.pathname).replace('//', '/'),
+      query       = _.extend({}, search, state.query);
 
   // Remove trailing slash
   if (pathname.match('/$') !== null) {
     pathname = pathname.slice(0, -1);
   }
 
-  if (pathname !== state.pathname) {
-    location.hash = pathname;
+  uri.search(query);
+  uri.hash(`${pathname}${uri.search()}`);
+  uri.search('');
+
+  let normalizedUri = uri.normalize().toString();
+
+  if (originalUri !== normalizedUri) {
+    location.href = normalizedUri;
+    return;
   }
 
   if (state.query.distinct_id !== undefined) {
