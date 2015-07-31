@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import URL from 'url';
+import URI from 'URIjs';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -169,8 +169,8 @@ export default Reflux.createStore({
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.hasNextPage = items.hasNextPage();
-    this.data.nextParams  = URL.parse(items.next() || '', true).query;
-    this.data.prevParams  = URL.parse(items.prev() || '', true).query;
+    this.data.nextParams  = new URI(items.next() || '').search(true);
+    this.data.prevParams  = new URI(items.prev() || '').search(true);
 
     if (!this.data.items) {
       this.data.items = []

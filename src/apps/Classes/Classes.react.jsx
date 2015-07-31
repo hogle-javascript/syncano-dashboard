@@ -189,7 +189,7 @@ export default React.createClass({
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add Class"
+            label         = "Click here to add a Class"
             onClick       = {this.showClassDialog}
             iconClassName = "synicon-plus" />
         </Common.Fab>

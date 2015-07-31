@@ -71,7 +71,7 @@ export default React.createClass({
         <Column.ID className="col-xs-4 col-md-4">
           <MUI.IconButton
             iconClassName = "synicon-cloud-download"
-            tooltip       = "Download solution file of this version"
+            tooltip       = "Download this Solution version file"
             onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
           />
         </Column.ID>
@@ -79,7 +79,7 @@ export default React.createClass({
         <Column.ID className="col-xs-4 col-md-4">
           <MUI.IconButton
             iconClassName = "synicon-download"
-            tooltip       = "Install this solution of the solution"
+            tooltip       = "Install this Solution version"
             onClick       = {this.handleInstallClick.bind(null, item.id)}
           />
         </Column.ID>

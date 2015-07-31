@@ -57,14 +57,14 @@ export default React.createClass({
       dialog: Common.Dialog,
       params: {
         ref     : 'deleteChannelDialog',
-        title   : 'Delete Channel',
+        title   : 'Delete a Channel',
         actions : [
           {
             text    : 'Cancel',
             onClick : this.handleCancel
           },
           {
-            text    : 'Yes, I\'m sure',
+            text    : 'Confirm',
             onClick : this.handleDelete
           }
         ],
@@ -122,7 +122,7 @@ export default React.createClass({
               iconClassName = "synicon-delete"
             />
             <Common.Fab.Item
-              label         = "Click here to edit Channel"
+              label         = "Click here to edit a Channel"
               mini          = {true}
               disabled      = {checkedItems > 1}
               onClick       = {this.showChannelEditDialog}
@@ -133,7 +133,7 @@ export default React.createClass({
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add Channel"
+            label         = "Click here to add a Channel"
             onClick       = {this.showChannelDialog}
             iconClassName = "synicon-plus"
           />

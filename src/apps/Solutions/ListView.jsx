@@ -110,7 +110,7 @@ module.exports = React.createClass({
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
             <Common.Fab.Item
-              label         = "Click here to create Solution"
+              label         = "Click here to create a Solution"
               onClick       = {this.showSolutionDialog}
               iconClassName = "synicon-plus"
             />

@@ -165,7 +165,7 @@ export default React.createClass({
 
   render() {
     let title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create',
+        submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm',
         dialogStandardActions = [
           {
             ref        : 'cancel',
@@ -190,7 +190,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref             = 'dialog'
-        title           = {title + ' Data Endpoint'}
+        title           = {title + ' a Data Endpoint'}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
