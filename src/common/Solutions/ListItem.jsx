@@ -17,7 +17,7 @@ export default React.createClass({
       cardTitleRoot: {
         flex       : 1,
         display    : '-webkit-flex; display: flex',
-        AlignItems : 'center'
+        alignItems : 'center'
       },
       cardTitle: {
         color      : '#4a4a4a',
@@ -40,7 +40,7 @@ export default React.createClass({
       cardTextList: {
         color      : '#9b9b9b',
         display    : '-webkit-flex; display: flex',
-        AlignItems : 'center',
+        alignItems : 'center',
         fontSize   : 12,
         padding    : '4px 0'
       },
@@ -49,13 +49,11 @@ export default React.createClass({
         marginRight : 8
       },
       cardFooter: {
-        borderTop            : '1px solid #ddd',
-        padding              : 8,
-        display              : '-webkit-flex; display: flex',
-        WebkitAlignItems     : 'center',
-        alignItems           : 'center',
-        WebkitJustifyContent : 'space-between',
-        justifyContent       : 'space-between'
+        borderTop      : '1px solid #ddd',
+        padding        : 8,
+        display        : '-webkit-flex; display: flex',
+        alignItems     : 'center',
+        justifyContent : 'space-between'
       },
       cardAvatarContainer: {
         padding : 16

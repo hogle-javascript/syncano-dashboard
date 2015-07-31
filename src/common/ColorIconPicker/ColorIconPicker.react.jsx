@@ -1,15 +1,12 @@
-var React      = require('react'),
-    Radium     = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    ColorStore = require('../Color/ColorStore'),
-    IconStore  = require('../Icon/IconStore'),
+import MUI from 'material-ui';
 
-    mui        = require('material-ui'),
-    FontIcon   = mui.FontIcon,
-    Paper      = mui.Paper;
+import ColorStore from '../Color/ColorStore';
+import IconStore from '../Icon/IconStore';
 
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColorIconPicker',
 
@@ -20,7 +17,7 @@ module.exports = Radium(React.createClass({
     handleChange  : React.PropTypes.func
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
         display        : 'flex',
@@ -30,7 +27,7 @@ module.exports = Radium(React.createClass({
         height         : '100%',
         cursor         : 'pointer'
       },
-      item : {
+      item: {
         margin         : 12,
         height         : 50,
         width          : 50,
@@ -41,14 +38,14 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       selectedColor : this.props.selectedColor,
       selectedIcon  : this.props.selectedIcon
     }
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.info('ColorIconPicker::componentWillReceiveProps');
     this.setState({
       selectedColor : nextProps.selectedColor,
@@ -56,22 +53,22 @@ module.exports = Radium(React.createClass({
     })
   },
 
-  handleSetColor: function(event) {
+  handleSetColor(event) {
     console.info('IconPicker::handleSetColor', event.target.id);
     event.preventDefault();
     this.setState({selectedColor: event.target.id});
     this.props.handleChange({'color': event.target.id});
   },
 
-  handleSetIcon: function(event) {
+  handleSetIcon(event) {
     console.info('IconPicker::handleSetIcon', event.target.id);
     event.preventDefault();
     this.setState({selectedIcon: event.target.id});
     this.props.handleChange({'icon': event.target.id});
   },
 
-  genIconItem: function(icon) {
-    var styles    = this.getStyles().item,
+  genIconItem(icon) {
+    let styles    = this.getStyles().item,
         zDepth    = 0,
         iconColor = '#000';
 
@@ -82,24 +79,24 @@ module.exports = Radium(React.createClass({
     }
 
     return (
-      <Paper
+      <MUI.Paper
         zDepth = {zDepth}
         key    = {icon}
         circle = {true}
         style  = {styles}>
 
-          <FontIcon
+          <MUI.FontIcon
             id        = {icon}
             className = {"synicon-" + icon}
             style     = {{color: iconColor}}
             onClick   = {this.handleSetIcon} />
 
-      </Paper>
+      </MUI.Paper>
     )
   },
 
-  genColorItem: function(color) {
-    var icon,
+  genColorItem(color) {
+    let icon,
         styles = this.getStyles().item,
         zDepth = 0;
 
@@ -107,33 +104,32 @@ module.exports = Radium(React.createClass({
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon   = <FontIcon
+      icon   = <MUI.FontIcon
                  className = {"synicon-" + this.state.selectedIcon}
                  style     = {{color: 'white'}} />;
     }
+    
     return (
-      <Paper
+      <MUI.Paper
         id      = {color}
         zDepth  = {zDepth}
         key     = {color}
         circle  = {true}
         style   = {styles}
         onClick = {this.handleSetColor}>
-          {icon}
-      </Paper>
+        {icon}
+      </MUI.Paper>
     );
   },
 
-  render: function () {
-    var items  = null,
+  render() {
+    let items  = null,
         styles = this.getStyles();
 
-    if (this.props.pickerType === "color") {
-      items = ColorStore.getColorPickerPalette().map(function (color) {
-        return this.genColorItem(color)}.bind(this));
+    if (this.props.pickerType === 'color') {
+      items = ColorStore.getColorPickerPalette().map(color => this.genColorItem(color));
     } else {
-      items = IconStore.getIconPickerIcons().map(function (icon) {
-        return this.genIconItem(icon)}.bind(this));
+      items = IconStore.getIconPickerIcons().map(icon => this.genIconItem(icon));
     }
 
     return (
