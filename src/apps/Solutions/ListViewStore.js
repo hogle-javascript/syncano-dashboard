@@ -70,10 +70,11 @@ export default Reflux.createStore({
 
   onToggleTagSelection(tag) {
     let i = this.data.selectedTags.indexOf(tag);
-    if (i === -1)
-        this.data.selectedTags.push(tag);
-    else
-        this.data.selectedTags.splice(i, 1);
+    if (i === -1) {
+      this.data.selectedTags.push(tag);
+    } else {
+      this.data.selectedTags.splice(i, 1);
+    }
 
     this.refreshSolutions();
   },

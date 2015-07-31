@@ -165,8 +165,9 @@ export default React.createClass({
       )
     });
 
-    if (checkboxes.length === 0)
+    if (checkboxes.length === 0) {
       return null;
+    }
 
     return (
       <div className="col-xs-35 col-md-35 col-lg-35">
