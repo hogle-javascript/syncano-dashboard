@@ -18,12 +18,11 @@ tapPlugin();
 Router.run(routes, function (Root, state) {
   let uri         = new URI(),
       originalUri = uri.normalize().toString(),
-      search      = uri.search(true),
       pathname    = decodeURIComponent(state.pathname).replace('//', '/'),
-      query       = _.extend({}, search, state.query);
+      query       = _.extend({}, uri.search(true), state.query);
 
   // Remove trailing slash
-  if (pathname.match('/$') !== null) {
+  if (pathname.length > 1 && pathname.match('/$') !== null) {
     pathname = pathname.slice(0, -1);
   }
 
