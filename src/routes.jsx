@@ -5,7 +5,6 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
-import Solution from './pages/solutions';
 import Billing from './pages/billing.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
@@ -223,7 +222,6 @@ module.exports = (
       {/* Solutions */}
       <Route
         name    = "solutions"
-        handler = {Solution}
         path    = "/solutions"
       >
         <Route
@@ -250,6 +248,7 @@ module.exports = (
           from  = "/solutions"
           to    = "solutions-list"
         />
+        <DefaultRoute handler={Solutions.ListView} />
       </Route>
       <Route
         name    = "profile-settings"
