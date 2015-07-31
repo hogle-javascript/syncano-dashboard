@@ -61,7 +61,7 @@ export default React.createClass({
       },
       contentRow: {
         display         : '-webkit-flex; display: flex',
-        AlignItems      : 'center'
+        alignItems      : 'center'
       },
       accountKey: {
         margin          : '0 16px 0 0'

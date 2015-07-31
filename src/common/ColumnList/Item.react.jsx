@@ -1,24 +1,21 @@
-var React           = require('react'),
-    Radium          = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    mui             = require('material-ui'),
-    StylePropable   = mui.Mixins.StylePropable,
-    Colors          = mui.Styles.Colors,
-    Paper           = mui.Paper;
+import MUI from 'material-ui';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Item',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       hoverable   : false
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       base: {
         display         : 'flex',
@@ -26,11 +23,11 @@ module.exports = Radium(React.createClass({
         justifyContent  : 'center'
       },
       checked: {
-        backgroundColor : Colors.lightBlue50
+        backgroundColor : MUI.Styles.Colors.lightBlue50
       },
       hoverable: {
         ':hover': {
-          backgroundColor: Colors.grey100,
+          backgroundColor: MUI.Styles.Colors.grey100,
           cursor         : 'pointer'
         }
       },
@@ -40,11 +37,11 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  handleClick: function() {
+  handleClick() {
     this.props.handleClick(this.props.id);
   },
 
-  render: function () {
+  render() {
     var styles  = this.getStyles(),
       cursor    = (this.props.hoverable || this.props.handleClick),
       hoverable = cursor && !this.props.checked;
@@ -52,13 +49,13 @@ module.exports = Radium(React.createClass({
 
     return (
       <Paper
-        onClick   = {this.props.handleClick ? this.handleClick : null}
-        zDepth    = {1}
-        style     = {[styles.base,
-                    this.props.checked && styles.checked,
-                    hoverable && styles.hoverable,
-                    cursor && styles.cursor]}
-        rounded   = {false}>
+        onClick = {this.props.handleClick ? this.handleClick : null}
+        zDepth  = {1}
+        style   = {[styles.base,
+                  this.props.checked && styles.checked,
+                  hoverable && styles.hoverable,
+                  cursor && styles.cursor]}
+        rounded = {false}>
         {this.props.children}
       </Paper>
     )

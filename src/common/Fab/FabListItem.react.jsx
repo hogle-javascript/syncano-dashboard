@@ -1,43 +1,39 @@
-var React                 = require('react'),
-    Radium                = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    mui                   = require('material-ui'),
-    StylePropable         = mui.Mixins.StylePropable,
+import MUI from 'material-ui';
 
-    FloatingActionButton  = mui.FloatingActionButton;
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'FABListItem',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
     handleClick: React.PropTypes.func
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       button: {
         margin: '3px 0'
       },
       icon: {
         display        : '-webkit-flex; display: flex',
-        AlignItems     : 'center',
-        JustifyContent : 'center'
+        alignItems     : 'center',
+        justifyContent : 'center'
       }
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
-      <FloatingActionButton
+      <MUI.FloatingActionButton
         {...this.props}
         style     = {styles.button}
-        iconStyle = {styles.icon}
-      />
+        iconStyle = {styles.icon} />
     );
   }
 }));
