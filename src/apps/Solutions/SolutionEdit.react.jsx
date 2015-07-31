@@ -143,7 +143,7 @@ export default React.createClass({
         <Common.Show if={this.isMySolution()}>
           <Common.Fab>
             <Common.Fab.Item
-              label         = "Click here to create Solution"
+              label         = "Click here to create a new Solution"
               onClick       = {this.showAddSolutionVersionDialog}
               iconClassName = "synicon-plus" />
           </Common.Fab>
@@ -185,7 +185,7 @@ export default React.createClass({
                 <div style={{width: 160}}>
                   <MUI.RaisedButton
                     primary = {true}
-                    label   = 'Install solution'
+                    label   = 'Install Solution'
                     onClick = {this.handleInstallSolution} />
                 </div>
                 <div className="col-flex-1">
@@ -216,7 +216,7 @@ export default React.createClass({
           <SolutionVersionsList
             name                 = "Versions"
             emptyItemHandleClick = {this.showAddSolutionVersionDialog}
-            emptyItemContent     = "Add new Version" />
+            emptyItemContent     = "Add a new Version" />
         </div>
       </Container>
     );

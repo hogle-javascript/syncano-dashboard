@@ -404,8 +404,8 @@ export default React.createClass({
   },
 
   render() {
-    let editTitle   = 'Edit Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
-    let addTitle    = 'Add Data Object';
+    let editTitle   = 'Edit a Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
+    let addTitle    = 'Add a Data Object';
     let title       = this.hasEditMode() ? editTitle : addTitle;
     let submitLabel = 'Confirm';
     let dialogStandardActions = [

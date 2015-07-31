@@ -66,7 +66,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update' : 'Create';
+    let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
       {
         ref        : 'cancel',

@@ -55,7 +55,7 @@ export default React.createClass({
 
   render() {
     var title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = this.hasEditMode() ? 'Save changes' : 'Create Codebox',
+        submitLabel = this.hasEditMode() ? 'Confrim' : 'Confirm',
         dialogStandardActions = [
           {
             text       : 'Cancel',
@@ -71,7 +71,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref          = 'dialog'
-        title        = {title + ' CodeBox'}
+        title        = {title + ' a CodeBox'}
         actions      = {dialogStandardActions}
         onDismiss    = {this.resetDialogState}
         onShow       = {this.handleDialogShow}
@@ -90,7 +90,7 @@ export default React.createClass({
               name              = 'label'
               style             = {{width:500}}
               hintText          = 'Short name for your CodeBox'
-              floatingLabelText = 'Label of CodeBox' />
+              floatingLabelText = 'Label of a CodeBox' />
             <MUI.TextField
               ref               = 'description'
               name              = 'description'
@@ -99,8 +99,8 @@ export default React.createClass({
               style             = {{width:500}}
               className         = 'text-field'
               multiLine         = {true}
-              hintText          = 'Multiline description of CodeBox (optional)'
-              floatingLabelText = 'Description of CodeBox' />
+              hintText          = 'Multiline CodeBox description (optional)'
+              floatingLabelText = 'Description of a CodeBox' />
             <MUI.SelectField
               ref               = 'runtime_name'
               name              = 'runtime_name'

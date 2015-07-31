@@ -57,7 +57,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update an Solution' : 'Create a Solution';
+    let title = this.hasEditMode() ? 'Update a Solution' : 'Create a Solution';
     let dialogCustomActions = [
       <MUI.FlatButton
         key        = "cancel"
@@ -96,7 +96,7 @@ export default React.createClass({
             fullWidth         = {true}
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = 'Sescription of Solution (optional)'
+            hintText          = 'Description of a Solution (optional)'
             floatingLabelText = 'Description' />
           <MUI.Toggle
             ref            = 'public'
