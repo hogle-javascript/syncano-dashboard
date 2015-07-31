@@ -22,6 +22,8 @@ import Container from '../../common/Container/Container.react'; // TODO: Why I c
 import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
 
+import {isLoading} from '../../decorators';
+
 require('./Instances.sass');
 
 export default Radium(React.createClass({
@@ -136,6 +138,7 @@ export default Radium(React.createClass({
     InstanceDialogActions.showDialog(Store.getCheckedItem());
   },
 
+  @isLoading
   render() {
     let checkedInstances        = Store.getNumberOfChecked(),
         isAnyInstanceSelected   = this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length),
