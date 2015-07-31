@@ -63,9 +63,29 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let styles     = this.getStyles(),
-        background = item.status === 'success' ? MUI.Styles.Colors.green400 : MUI.Styles.Colors.red400,
-        icon       = item.status === 'success' ? 'check' : 'alert';
+    let styles = this.getStyles();
+    let status = {
+      blocked: {
+        background: 'rgba(0,0,0,0.2)',
+        icon: 'alert'
+      },
+      pending: {
+        background: MUI.Styles.Colors.lightBlue500,
+        icon: 'timelapse'
+      },
+      success: {
+        background: MUI.Styles.Colors.green400,
+        icon: 'check'
+      },
+      failure: {
+        background: MUI.Styles.Colors.red400,
+        icon: 'alert'
+      },
+      timeout: {
+        background: MUI.Styles.Colors.red400,
+        icon: 'alert'
+      }
+    }[item.status];
 
     if (item.id == this.state.visibleTraceId) {
       styles.traceResult = {
@@ -87,14 +107,16 @@ export default Radium(React.createClass({
           handleClick = {this.toggleTrace}>
           <Column.CheckIcon
             id              = {item.id}
-            icon            = {icon}
-            background      = {background}
+            icon            = {status.icon}
+            background      = {status.background}
             checkable       = {false}>
             {item.status}
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{item.duration}ms</Column.Desc>
-          <Column.Date date={item.executed_at} />
+          <Column.Date
+            date      = {item.executed_at}
+            ifInvalid = {item.status} />
         </Common.ColumnList.Item>
         <div style={styles.traceResult}>
           <Common.Trace.Result result={item.result}/>

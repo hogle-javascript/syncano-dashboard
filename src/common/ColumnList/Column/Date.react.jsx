@@ -29,8 +29,9 @@ module.exports = Radium(React.createClass({
   displayName: 'ColumnDate',
 
   propTypes: {
-    color : React.PropTypes.string,
-    date  : React.PropTypes.string
+    color      : React.PropTypes.string,
+    date       : React.PropTypes.string,
+    ifInvalid  : React.PropTypes.string
   },
 
   statics :{
@@ -57,14 +58,19 @@ module.exports = Radium(React.createClass({
   },
 
   render: function() {
-    var styles = this.getStyles();
+    var styles    = this.getStyles(),
+        ifInvalid = this.props.ifInvalid || '',
+        date      = Moment(this.props.date),
+        isValid   = date.isValid(),
+        format    = isValid ? date.format('DD/MM/YYYY') : ifInvalid,
+        lts       = isValid ? date.format('LTS') : '';
 
     return (
       <div
         className = {this.props.className}
         style     = {styles}>
-        <span>{Moment(this.props.date).format('DD/MM/YYYY')}</span>
-        <span>{Moment(this.props.date).format('LTS')}</span>
+        <span>{format}</span>
+        <span>{lts}</span>
       </div>
     );
 
