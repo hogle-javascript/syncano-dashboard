@@ -5,14 +5,15 @@ import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './SolutionsActions';
+import Actions from './ListViewActions';
 
 export default Reflux.createStore({
   listenables : Actions,
 
   mixins      : [
     Mixins.StoreForm,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreHelpers
   ],
 
   getInitialState() {
@@ -53,12 +54,12 @@ export default Reflux.createStore({
 
   setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
-    this.data.items = Object.keys(solutions).map(key => solutions[key]);
+    this.data.items = this.saveListFromSyncano(solutions);
     this.trigger(this.data);
   },
 
   setTags(tags) {
-    this.data.tags = Object.keys(tags).map(key => tags[key]);
+    this.data.tags = this.saveListFromSyncano(tags);
     this.trigger(this.data);
   },
 
@@ -69,7 +70,6 @@ export default Reflux.createStore({
 
   onToggleTagSelection(tag) {
     let i = this.data.selectedTags.indexOf(tag);
-
     if (i === -1) {
       this.data.selectedTags.push(tag);
     } else {
@@ -131,4 +131,5 @@ export default Reflux.createStore({
     this.trigger(this.data);
     this.refreshData();
   }
+
 });

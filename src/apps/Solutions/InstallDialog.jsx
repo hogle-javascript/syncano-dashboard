@@ -8,8 +8,8 @@ import Mixins from '../../mixins';
 
 // Stores and Actions
 import InstanceDialogStore from '../Instances/InstanceDialogStore';
-import Store from './SolutionInstallDialogStore';
-import Actions from './SolutionInstallDialogActions';
+import Store from './InstallDialogStore';
+import Actions from './InstallDialogActions';
 
 // Components
 import Common from '../../common';

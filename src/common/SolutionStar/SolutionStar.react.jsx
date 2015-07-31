@@ -2,8 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 import MUI from 'material-ui';
 
-import SolutionsActions from '../../apps/Solutions/SolutionsActions';
-
 export default Radium(React.createClass({
 
   displayName: 'SolutionStar',
@@ -46,7 +44,7 @@ export default Radium(React.createClass({
       stars_count   : isStarred ? this.state.stars_count - 1 : this.state.stars_count + 1
     });
 
-    return isStarred ? SolutionsActions.unstarSolution(solutionId) : SolutionsActions.starSolution(solutionId);
+    return isStarred ? this.props.unstar(solutionId) : this.props.star(solutionId);
   },
 
   render() {

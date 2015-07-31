@@ -52,6 +52,13 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+  update(id, payload) {
+    this.Connection
+      .Solutions
+      .update(id, payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
   star(id) {
     this.Connection
       .Solutions
