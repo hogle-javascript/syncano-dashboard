@@ -8,6 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
+import {isLoading} from '../../decorators';
 
 import Common from '../../common';
 
@@ -69,10 +70,6 @@ export default React.createClass({
   },
 
   getList() {
-    if (this.state.items === null) {
-      return <Common.Loading show={true} />
-    }
-
     if (this.state.items.length === 0) {
       return (
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
@@ -95,6 +92,7 @@ export default React.createClass({
     }
   },
 
+  @isLoading({attr: 'state.items'})
   render() {
     let styles = this.getStyles();
 
