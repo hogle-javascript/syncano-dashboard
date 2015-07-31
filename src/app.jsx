@@ -17,7 +17,7 @@ tapPlugin();
 
 Router.run(routes, function (Root, state) {
   let uri         = new URI(),
-      originalUri = uri.toString(),
+      originalUri = uri.normalize().toString(),
       pathname    = decodeURIComponent(state.pathname).replace('//', '/'),
       query       = _.extend({}, uri.search(true), state.query);
 
@@ -30,7 +30,7 @@ Router.run(routes, function (Root, state) {
   uri.hash(`${pathname}${uri.search()}`);
   uri.search('');
 
-  let normalizedUri = uri.toString();
+  let normalizedUri = uri.normalize().toString();
 
   if (originalUri !== normalizedUri) {
     location.href = normalizedUri;
