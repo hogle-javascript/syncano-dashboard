@@ -132,6 +132,10 @@ export default React.createClass({
 
   renderCheckboxes(label, data, pk, labelPk, type) {
 
+    if (data.length === 0) {
+      return null;
+    }
+
     // TODO: move all the styles to getStyles()
     let sectionStyle = {
       paddingTop    : 10,
@@ -164,10 +168,6 @@ export default React.createClass({
         </div>
       )
     });
-
-    if (checkboxes.length === 0) {
-      return null;
-    }
 
     return (
       <div className="col-xs-35 col-md-35 col-lg-35">
@@ -227,7 +227,7 @@ export default React.createClass({
           <div style={{marginTop: 40}}>
             {this.renderFormNotifications()}
             <div className='row'>
-              <div className='col-xs-35 col-lg-8'>
+              <div className='col-lg-8'>
                 <MUI.SelectField
                   ref               = 'type'
                   name              = 'type'
@@ -239,7 +239,7 @@ export default React.createClass({
                   menuItems         =  {Store.getTypes()}
                 />
               </div>
-              <div className='col-xs-35 col-lg-26' style={{paddingLeft: 15}}>
+              <div className='col-lg-26'>
                 <MUI.SelectField
                   ref               = 'instance'
                   name              = 'instance'
@@ -268,23 +268,20 @@ export default React.createClass({
              {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
           </div>
           <div className="row" style={{paddingTop: 30}}>
-            <div className="col-flex-1">
-            </div>
-            <div className="col-lg-25" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                <MUI.FlatButton
-                  style      = {{marginRight: 10}}
-                  ref        = 'cancel'
-                  key        = 'cancel'
-                  label      = 'Cancel'
-                  onTouchTap = {this.handleCancel} />
-                <MUI.RaisedButton
-                  style      = {{marginRight: 10}}
-                  ref        = 'submit'
-                  key        = 'confirm'
-                  label      = 'Confirm'
-                  disable    = {this.state.instance ? false : true}
-                  primary    = {true}
-                  onTouchTap = {this.handleFormValidation} />
+            <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <MUI.FlatButton
+                style      = {{marginRight: 10}}
+                ref        = 'cancel'
+                key        = 'cancel'
+                label      = 'Cancel'
+                onTouchTap = {this.handleCancel} />
+              <MUI.RaisedButton
+                ref        = 'submit'
+                key        = 'confirm'
+                label      = 'Confirm'
+                disable    = {this.state.instance ? false : true}
+                primary    = {true}
+                onTouchTap = {this.handleFormValidation} />
             </div>
           </div>
         </Common.Container>

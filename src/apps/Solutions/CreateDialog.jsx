@@ -81,20 +81,18 @@ export default React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-              ref               = 'label'
-              name              = 'label'
-              fullWidth         = {true}
-              disabled          = {this.hasEditMode() ? true : false}
-              valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Short name for your Solution'
-              floatingLabelText = 'Name'
-          />
+            ref               = 'label'
+            name              = 'label'
+            fullWidth         = {true}
+            disabled          = {this.hasEditMode() ? true : false}
+            valueLink         = {this.linkState('label')}
+            errorText         = {this.getValidationMessages('label').join(' ')}
+            hintText          = 'Short name for your Solution'
+            floatingLabelText = 'Name' />
           <MUI.TextField
             ref               = 'description'
             name              = 'description'
@@ -102,16 +100,14 @@ export default React.createClass({
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
             hintText          = 'Description of a Solution (optional)'
-            floatingLabelText = 'Description'
-          />
+            floatingLabelText = 'Description' />
           <MUI.Toggle
             ref            = 'public'
             name           = 'public'
             defaultToggled = {this.state.public}
             onToggle       = {this.handleToogle}
             style          = {{marginTop: 20}}
-            label          = 'Make this solution public?'
-          />
+            label          = 'Make this solution public?' />
         </div>
       </Common.Dialog>
     );
