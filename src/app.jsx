@@ -31,10 +31,10 @@ Router.run(routes, function (Root, state) {
   uri.hash(`${pathname}${uri.search()}`);
   uri.search('');
 
-  let normalizeUri = uri.normalize().toString();
+  let normalizedUri = uri.normalize().toString();
 
-  if (originalUri !== normalizeUri) {
-    location.href = normalizeUri;
+  if (originalUri !== normalizedUri) {
+    location.href = normalizedUri;
     return;
   }
 
