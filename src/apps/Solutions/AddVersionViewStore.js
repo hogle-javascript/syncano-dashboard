@@ -18,6 +18,17 @@ export default Reflux.createStore({
     Mixins.StoreHelpers
   ],
 
+  types: [
+    {
+      text: 'stable',
+      payload: 'stable'
+    },
+    {
+      text: 'development',
+      payload: 'devel'
+    }
+  ],
+
   getInitialState() {
     return {
       name        : null,
@@ -61,6 +72,10 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('AddVersionViewStore::refreshData');
     Actions.fetchInstances();
+  },
+
+  getTypes() {
+    return this.types;
   },
 
   setInstances: function(instances) {

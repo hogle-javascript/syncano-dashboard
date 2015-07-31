@@ -198,16 +198,6 @@ export default React.createClass({
   },
 
   render() {
-
-    let types = [{
-      text    : 'stable',
-      payload : 'stable'
-    },
-    {
-      text    : 'development',
-      payload : 'devel'
-    }];
-
     return (
       <div>
         <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
@@ -245,7 +235,7 @@ export default React.createClass({
                   valueMember       = 'payload'
                   displayMember     = 'text'
                   floatingLabelText = 'Type'
-                  menuItems         =  {types}
+                  menuItems         =  {Store.getTypes()}
                 />
               </div>
               <div className='col-xs-35 col-lg-26' style={{paddingLeft: 15}}>
