@@ -9,8 +9,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import WebhooksActions from './WebhooksActions';
-import WebhooksStore from './WebhooksStore';
+import Actions from './WebhooksActions';
+import Store from './WebhooksStore';
 
 // Components
 import MUI from 'material-ui';
@@ -55,18 +55,17 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let publicString = item.public.toString();
-    let publicCell = publicString;
+    let publicString = item.public.toString(),
+        publicCell   = publicString;
 
     if (item.public) {
       publicCell = (
         <div style={{marginLeft: '-14px'}}>
           <ReactZeroClipboard text={SYNCANO_BASE_URL + item.links['public-link']}>
             <MUI.IconButton
-              iconClassName = "synicon-link-letiant"
+              iconClassName = "synicon-link-variant"
               tooltip       = "Copy Webhook URL"
-              onClick       = {this.handleURLClick}
-            />
+              onClick       = {this.handleURLClick} />
           </ReactZeroClipboard>
         </div>
       )
