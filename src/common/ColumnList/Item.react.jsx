@@ -48,7 +48,7 @@ export default Radium(React.createClass({
 
 
     return (
-      <Paper
+      <MUI.Paper
         onClick = {this.props.handleClick ? this.handleClick : null}
         zDepth  = {1}
         style   = {[styles.base,
@@ -57,7 +57,7 @@ export default Radium(React.createClass({
                   cursor && styles.cursor]}
         rounded = {false}>
         {this.props.children}
-      </Paper>
+      </MUI.Paper>
     )
   }
 }));
