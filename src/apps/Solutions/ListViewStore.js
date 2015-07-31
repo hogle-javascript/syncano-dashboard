@@ -54,9 +54,7 @@ export default Reflux.createStore({
 
   setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
-    this.data.items = Object.keys(solutions).map(function(key) {
-      return solutions[key];
-    });
+    this.data.items = this.saveListFromSyncano(solutions);
     this.trigger(this.data);
   },
 

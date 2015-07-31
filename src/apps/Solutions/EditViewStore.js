@@ -78,9 +78,7 @@ export default Reflux.createStore({
     this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
 
     let newItems = [];
-    Object.keys(versions).map(function(key) {
-      newItems.splice(0, 0, versions[key]);
-    }.bind(this));
+    Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
 
