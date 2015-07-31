@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import Actions from './SolutionsActions';
-import Store from './SolutionDialogStore';
+import Actions from './CreateDialogActions';
+import Store from './CreateDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -17,10 +17,11 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
-    Mixins.Form
+    Mixins.Form,
+
+    Reflux.connect(Store),
   ],
 
   validatorConstraints: {
@@ -44,8 +45,8 @@ export default React.createClass({
       description : this.state.description,
       public      : this.state.public ? true : false
       //metadata: {
-      //  color     : Common.Color.getRandomColorName(),
-      //  icon      : Common.Icon.Store.getRandomIconPickerIcon()
+      //  color     : ColorStore.getRandomColorName(),
+      //  icon      : IconStore.getRandomIconPickerIcon()
       //}
     });
   },
@@ -63,13 +64,15 @@ export default React.createClass({
         key        = "cancel"
         label      = "Cancel"
         onTouchTap = {this.handleCancel}
-        ref        = "cancel" />,
+        ref        = "cancel"
+      />,
       <MUI.FlatButton
         key        = "confirm"
         label      = "Confirm"
         primary    = {true}
         onTouchTap = {this.handleFormValidation}
-        ref        = "submit" />
+        ref        = "submit"
+      />
     ];
 
     return (
@@ -82,14 +85,14 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-              ref               = 'label'
-              name              = 'label'
-              fullWidth         = {true}
-              disabled          = {this.hasEditMode() ? true : false}
-              valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Short name for your Solution'
-              floatingLabelText = 'Name' />
+            ref               = 'label'
+            name              = 'label'
+            fullWidth         = {true}
+            disabled          = {this.hasEditMode() ? true : false}
+            valueLink         = {this.linkState('label')}
+            errorText         = {this.getValidationMessages('label').join(' ')}
+            hintText          = 'Short name for your Solution'
+            floatingLabelText = 'Name' />
           <MUI.TextField
             ref               = 'description'
             name              = 'description'

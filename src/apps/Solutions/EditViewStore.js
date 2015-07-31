@@ -6,21 +6,22 @@ import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Actions from './SolutionEditActions';
+import Actions from './EditViewActions';
 
 export default Reflux.createStore({
   listenables : Actions,
 
   mixins      : [
-    Mixins.CheckListStore,
     Mixins.StoreForm,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreHelpers
   ],
 
   getInitialState() {
     return {
       item: {
-        stars_count : 0
+        stars_count : 0,
+        tags        : [],
       },
       versions: null,
       isLoading: false
@@ -39,6 +40,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
+    Actions.fetchTags();
     Actions.fetchSolution(solutionId);
     Actions.fetchSolutionVersions(solutionId);
   },
@@ -51,6 +53,19 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::setSolutions');
     this.data.item = solution;
     this.trigger(this.data);
+  },
+
+  setTags(tags) {
+    this.data.tags = this.saveListFromSyncano(tags);
+    this.trigger(this.data);
+  },
+
+  getTagsOptions() {
+    return this.getSelectOptions(this.data.tags, 'name', 'name');
+  },
+
+  getItemTags() {
+    return this.getSelectValuesFromList(this.data.item.tags);
   },
 
   setSolutionVersions(versions) {
@@ -66,6 +81,7 @@ export default Reflux.createStore({
     Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
+
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -121,5 +137,23 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::onRemoveSolutionFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
-  }
+  },
+  onFetchTags() {
+    console.debug('SolutionsStore::onFetchTags');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchTagsCompleted(tags) {
+    console.debug('SolutionsStore::onFetchTagsCompleted');
+    this.data.isLoading = false;
+    Actions.setTags(tags);
+  },
+
+  onFetchTagsFailure() {
+    console.debug('SolutionsStore::onFetchTagsFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
 });
