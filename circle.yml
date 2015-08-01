@@ -25,7 +25,7 @@ dependencies:
 
 test:
   override:
-    - npm run-script jscs
+    - npm run-script eslint
     - npm test
     - npm run-script codeclimate
     # - npm run-script nightwatch
