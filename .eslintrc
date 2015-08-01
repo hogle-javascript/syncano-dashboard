@@ -4,6 +4,9 @@
     "browser": true,
     "es6": true
   },
+  "plugins": [
+    "react"
+  ],
   "globals": {
     "FACEBOOK_ID": true,
     "GOOGLE_ID": true,
@@ -12,6 +15,24 @@
     "SENTRY_DSN": true,
     "ANALYTICS_WRITE_KEY": true,
     "STRIPE_PUBLISHABLE_KEY": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": false,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "jsx": true
   },
   "rules": {
     "strict": 0,
@@ -191,8 +212,55 @@
     "max-params": [1, 4],
     "max-statements": [1, 4],
     "no-bitwise": 2,
-    "no-plusplus": 2
+    "no-plusplus": 2,
 
-
+    // React
+    "react/display-name": 0,
+    "react/jsx-boolean-value": 2,
+    "react/jsx-curly-spacing": 1,
+    // "react/jsx-max-props-per-line": 1,
+    "react/jsx-no-duplicate-props": 2,
+    "react/jsx-no-undef": 2,
+    "react/jsx-quotes": [2, "double"],
+    "react/jsx-sort-prop-types": 0,
+    "react/jsx-sort-props": 0,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-danger": 1,
+    "react/no-did-mount-set-state": [2, "allow-in-func"],
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 2,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/react-in-jsx-scope": 2,
+    "react/require-extension": 1,
+    "react/self-closing-comp": 2,
+    "react/wrap-multilines": [2, "never"],
+    "react/sort-comp": [2, {
+      "order": [
+        "displayName",
+        "propTypes",
+        "contextTypes",
+        "childContextTypes",
+        "mixins",
+        "statics",
+        "defaultProps",
+        "constructor",
+        "getDefaultProps",
+        "getInitialState",
+        "getChildContext",
+        "componentWillMount",
+        "componentDidMount",
+        "componentWillReceiveProps",
+        "shouldComponentUpdate",
+        "componentWillUpdate",
+        "componentDidUpdate",
+        "componentWillUnmount",
+        "/^on.+$/",
+        "/^get.+$/",
+        "/^render.+$/",
+        "render"
+      ]
+    }]
   }
 }
