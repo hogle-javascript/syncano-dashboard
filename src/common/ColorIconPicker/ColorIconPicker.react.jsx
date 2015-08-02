@@ -84,13 +84,11 @@ export default Radium(React.createClass({
         key    = {icon}
         circle = {true}
         style  = {styles}>
-
-          <MUI.FontIcon
-            id        = {icon}
-            className = {"synicon-" + icon}
-            style     = {{color: iconColor}}
-            onClick   = {this.handleSetIcon} />
-
+        <MUI.FontIcon
+          id        = {icon}
+          className = {`synicon-${icon}`}
+          style     = {{color: iconColor}}
+          onClick   = {this.handleSetIcon} />
       </MUI.Paper>
     )
   },
@@ -105,7 +103,7 @@ export default Radium(React.createClass({
     if (color === this.state.selectedColor) {
       zDepth = 3;
       icon   = <MUI.FontIcon
-                 className = {"synicon-" + this.state.selectedIcon}
+                 className = {`synicon-${this.state.selectedIcon}`}
                  style     = {{color: 'white'}} />;
     }
     

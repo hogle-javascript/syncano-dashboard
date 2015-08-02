@@ -9,30 +9,28 @@ export default Radium(React.createClass({
 
   mixins: [MUI.Mixins.StylePropable],
 
-  getDefaultProps() {
-    return {
-      hoverable   : false
-    }
-  },
-
   getStyles() {
     return {
       base: {
-        display         : 'flex',
-        marginBottom    : 0,
-        justifyContent  : 'center'
+        display        : 'flex',
+        marginBottom   : 0,
+        justifyContent : 'center',
+        background     : '#fff'
+      },
+      noBackground: {
+        background     : 'none',
+        borderTop      : '1px solid #ddd',
+        borderBottom   : '1px solid #ddd',
+        marginTop      : '-1px'
       },
       checked: {
-        backgroundColor : MUI.Styles.Colors.lightBlue50
+        background : MUI.Styles.Colors.lightBlue50
       },
       hoverable: {
-        ':hover': {
-          backgroundColor: MUI.Styles.Colors.grey100,
-          cursor         : 'pointer'
+        cursor   : 'pointer',
+        ':hover' : {
+          background : MUI.Styles.Colors.grey100
         }
-      },
-      cursor: {
-        cursor: 'pointer'
       }
     };
   },
@@ -41,23 +39,44 @@ export default Radium(React.createClass({
     this.props.handleClick(this.props.id);
   },
 
-  render() {
-    var styles  = this.getStyles(),
-      cursor    = (this.props.hoverable || this.props.handleClick),
-      hoverable = cursor && !this.props.checked;
-
+  renderClickableItem() {
+    let styles = this.getStyles();
 
     return (
       <MUI.Paper
-        onClick = {this.props.handleClick ? this.handleClick : null}
+        onClick = {this.props.handleClick}
         zDepth  = {1}
-        style   = {[styles.base,
-                  this.props.checked && styles.checked,
-                  hoverable && styles.hoverable,
-                  cursor && styles.cursor]}
+        style   = {[
+          styles.base,
+          styles.hoverable,
+          this.props.checked === true && styles.checked
+        ]}
         rounded = {false}>
         {this.props.children}
       </MUI.Paper>
     )
+  },
+
+  renderItem() {
+    let styles = this.getStyles();
+
+    return (
+      <MUI.Paper
+        zDepth  = {0}
+        style   = {[
+          styles.base,
+          styles.noBackground,
+          this.props.checked === true && styles.checked
+        ]}
+        rounded = {false}>
+        {this.props.children}
+      </MUI.Paper>
+    )
+  },
+
+  render() {
+    let isClickable = this.props.handleClick;
+
+    return isClickable ? this.renderClickableItem() : this.renderItem();
   }
 }));

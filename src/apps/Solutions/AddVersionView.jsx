@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import Radium from 'radium';
 
 // Utils
 import Mixins from '../../mixins';
@@ -18,7 +19,7 @@ import Actions from './AddVersionViewActions';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'AddVersionView',
 
@@ -30,12 +31,12 @@ export default React.createClass({
     Mixins.Dialog,
     Mixins.Form,
     HeaderMixin,
-    Reflux.connect(Store),
+    Reflux.connect(Store)
   ],
 
   validatorConstraints: {
     instance: {
-      presence: true,
+      presence: true
     }
   },
 
@@ -91,7 +92,7 @@ export default React.createClass({
     Object.keys(spec).map(section => {
       let pkName = this.pkMap(section);
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(function(item) {
+      Object.keys(spec[section]).map(item => {
         if (spec[section][item] === true) {
           let obj = {};
           if (pkName === 'id') {
@@ -141,13 +142,13 @@ export default React.createClass({
       paddingTop    : 10,
       paddingBottom : 20,
       margin        : 1,
-      background    : '#F4F4F4',
+      background    : '#F4F4F4'
     };
 
     let sectionTitleStyle = {
       fontSize: '1.2rem',
       marginTop: 15,
-      marginBottom: 10,
+      marginBottom: 10
     };
 
     let checkboxes = data.map(item => {
@@ -288,4 +289,4 @@ export default React.createClass({
     </div>
     );
   }
-});
+}));

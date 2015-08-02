@@ -4,7 +4,7 @@ import MUI from 'material-ui';
 
 import SolutionStar from '../SolutionStar';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'SolutionsListItem',
 
@@ -91,10 +91,10 @@ export default React.createClass({
   },
 
   renderVersion() {
-    let styles = this.getStyles();
-    let item = this.props.data;
-    let name = null;
-    let color = null;
+    let styles = this.getStyles(),
+        item   = this.props.data,
+        name   = null,
+        color  = null;
 
     if (item.versions.stable) {
       name = `stable (${item.versions.stable})`;
@@ -118,8 +118,9 @@ export default React.createClass({
   renderItemTags() {
     let styles = this.getStyles();
 
-    if (this.props.data.tags && this.props.data.tags.length === 0)
+    if (this.props.data.tags && this.props.data.tags.length === 0) {
       return <div style={styles.tag}>no tags</div>;
+    }
 
     return this.props.data.tags.map(tag => {
       return (
@@ -134,23 +135,20 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles();
-    let item = this.props.data;
+    let styles = this.getStyles(),
+        item   = this.props.data;
 
     return (
       <MUI.Card>
-
         <div style={styles.cardTitleContainer}>
           <MUI.CardTitle
             style      = {styles.cardTitleRoot}
             title      = {item.label}
-            titleStyle = {styles.cardTitle}
-          />
+            titleStyle = {styles.cardTitle} />
           <div style={styles.cardAvatarContainer}>
             <MUI.Avatar
               size  = {55}
-              src   = {item.author ? item.author.avatar_url : null}
-            />
+              src   = {item.author ? item.author.avatar_url : null} />
           </div>
         </div>
 
@@ -163,8 +161,7 @@ export default React.createClass({
             <MUI.FontIcon
               style     = {styles.cardTextListIcon}
               className = "synicon-tag"
-              color     = "rgba(222, 222, 222, 0.54)"
-            />
+              color     = "rgba(222, 222, 222, 0.54)" />
             {this.renderItemTags()}
           </div>
           {this.renderVersion()}
@@ -175,18 +172,15 @@ export default React.createClass({
           <MUI.FlatButton
             label      = "SEE DETAILS"
             labelStyle = {styles.seeDetailsButton}
-            onClick    = {this.handleSeeMoreClick.bind(null, item.id)}
-          />
+            onClick    = {this.handleSeeMoreClick.bind(null, item.id)} />
           <MUI.IconButton
             iconClassName = "synicon-download"
             disabled      = {this.isNoVersions()}
             iconStyle     = {this.isNoVersions() ? {} : styles.installIcon}
             onClick       = {this.handleInstallClick.bind(null, item.id)}
-            touch         = {true}
-          />
+            touch         = {true} />
         </div>
-
       </MUI.Card>
     )
   }
-});
+}));

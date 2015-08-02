@@ -10,7 +10,7 @@ import Common from '../../common';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ProfileBillingPayment',
 
@@ -64,9 +64,9 @@ export default React.createClass({
   },
 
   render() {
-    let hasCard     = !_.isEmpty(this.state.card);
-    let showForm    = !hasCard || this.state.showForm === true || this.state.show_form === true;
-    let labelPrefix = hasCard ? 'Update' : 'Add';
+    let hasCard     = !_.isEmpty(this.state.card),
+        showForm    = !hasCard || this.state.showForm === true || this.state.show_form === true,
+        labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
       <div style={{padding: 48}}>
@@ -164,4 +164,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}));

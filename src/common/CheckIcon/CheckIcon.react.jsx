@@ -1,14 +1,11 @@
-var React      = require('react'),
-    Radium     = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    ColorStore = require('../Color/ColorStore'),
+import ColorStore from '../Color/ColorStore';
 
-    mui        = require('material-ui'),
-    Colors     = mui.Styles.Colors,
-    FontIcon   = mui.FontIcon,
-    Paper      = mui.Paper;
+import MUI from 'material-ui';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'CheckIcon',
 
@@ -20,13 +17,13 @@ module.exports = Radium(React.createClass({
     handleClick : React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       checkable: true
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       hovered    : false,
       checked    : this.props.checked,
@@ -34,11 +31,11 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  componentWillReceiveProps: function(newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({checked: newProps.checked})
   },
 
-  handleClick: function(event) {
+  handleClick(event) {
     event.stopPropagation();
     if (this.props.handleClick) {
       this.props.handleClick(this.props.id, !this.state.checked);
@@ -49,26 +46,25 @@ module.exports = Radium(React.createClass({
     });
   },
 
-  handleMouseOver: function() {
+  handleMouseOver() {
     this.setState({
       hovered: true
     });
   },
-  handleMouseLeave: function() {
+  handleMouseLeave() {
     this.setState({
       hovered: false
     });
   },
 
-  getIconState: function() {
-
-    var GREY = 'rgba(0,0,0,0.2)';
+  getIconState() {
+    let GREY = 'rgba(0,0,0,0.2)';
 
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
       return {
         icon  : 'checkbox-marked-outline',
-        color : Colors.lightBlue500
+        color : MUI.Styles.Colors.lightBlue500
       };
     }
 
@@ -87,7 +83,7 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       icon: {
         color      : '#fff',
@@ -109,8 +105,8 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  render: function() {
-    var styles          = this.getStyles(),
+  render() {
+    let styles          = this.getStyles(),
         iconState       = this.getIconState(),
         iconStyle       = styles.icon,
         iconClass       = iconState.icon,
@@ -120,19 +116,17 @@ module.exports = Radium(React.createClass({
     backgroundStyle.backgroundColor = iconState.color;
 
     return (
-      <Paper
+      <MUI.Paper
         zDepth       = {0}
         circle       = {true}
         style        = {[styles.background, this.props.checkable && styles.checkable]}
         onMouseOver  = {this.props.checkable ? this.handleMouseOver : null}
         onMouseLeave = {this.props.checkable ? this.handleMouseLeave : null}
-        onClick      = {this.props.checkable ? this.handleClick : null}
-      >
-        <FontIcon
-          className = {"synicon-" + iconClass}
-          style     = {iconStyle}
-        />
-      </Paper>
+        onClick      = {this.props.checkable ? this.handleClick : null}>
+        <MUI.FontIcon
+          className = {`synicon-${iconClass}`}
+          style     = {iconStyle} />
+      </MUI.Paper>
     )
   }
 }));

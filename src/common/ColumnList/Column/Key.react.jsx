@@ -1,23 +1,19 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ReactZeroClipboard = require('react-zeroclipboard'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ReactZeroClipboard from 'react-zeroclipboard';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Colors             = mui.Styles.Colors,
-    Snackbar           = mui.Snackbar,
-    Paper              = mui.Paper,
-    FlatButton         = mui.FlatButton;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     }
   },
 
-  render: function() {
+  render() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -26,7 +22,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnID',
 
@@ -39,16 +35,16 @@ module.exports = Radium(React.createClass({
     Header : Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       key: {
-        display       : 'flex',
+        display       : '-webkit-flex; display: flex',
         flexDirection : 'row',
         alignItems    : 'center',
         fontSize      : 14,
@@ -58,37 +54,34 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleClick: function() {
+  handleClick() {
     this.refs.snackbar.show();
   },
 
-  render: function() {
+  render() {
     var styles = this.getStyles();
 
     return (
-
       <div
         className   = {this.props.className}
         style       = {styles.key}>
-          <div
-            ref = "key"
-            className = "col-xs-25">
-            {this.props.children}
-          </div>
+        <div
+          ref       = "key"
+          className = "col-xs-25">
+          {this.props.children}
+        </div>
 
         <ReactZeroClipboard text={this.props.children}>
-            <FlatButton
-              label       = "COPY"
-              primary     = {true}
-              onClick     = {this.handleClick} />
+          <MUI.FlatButton
+            label       = "COPY"
+            primary     = {true}
+            onClick     = {this.handleClick} />
         </ReactZeroClipboard>
 
-        <Snackbar
+        <MUI.Snackbar
           ref="snackbar"
           message="API key copied to the clipboard" />
       </div>
-
     );
   }
-
 }));
