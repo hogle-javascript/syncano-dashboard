@@ -119,7 +119,7 @@ export default React.createClass({
               display       : 'flex',
               flexDirection : 'column-reverse'}}>
             <div>
-              <div style={{height: '100%'}}>
+              <div style={{height: 'calc(100% - 125px)'}}>
                 <Common.Show if={this.state.overage.amount > 0}>
                   <div>
                     <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
