@@ -83,7 +83,7 @@ export default React.createClass({
             label      = "Change password"
             fullWidth  = {true}
             labelStyle = {{fontSize: '16px'}}
-            style      = {{boxShadow: 'none'}}
+            style      = {{boxShadow: 'none', height: '48px'}}
             primary    = {true} />
         </form>
       </Container>
