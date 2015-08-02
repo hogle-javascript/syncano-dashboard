@@ -13,7 +13,7 @@ import InstancesStore from '../Instances/InstancesStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'HeaderInstancesDropdown',
 
@@ -111,9 +111,9 @@ export default React.createClass({
   },
 
   render() {
-    let styles        = this.getStyles();
-    let instance      = SessionStore.instance;
-    let instancesList = InstancesStore.getAllInstances(true);
+    let styles        = this.getStyles(),
+        instance      = SessionStore.instance,
+        instancesList = InstancesStore.getAllInstances(true);
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
@@ -154,4 +154,4 @@ export default React.createClass({
       </MUI.ToolbarGroup>
     )
   }
-});
+}));

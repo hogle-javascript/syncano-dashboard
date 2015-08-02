@@ -1,20 +1,18 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Paper              = mui.Paper,
-    Colors             = mui.Styles.Colors;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.DESC
     }
   },
 
-  render: function() {
+  render() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -23,7 +21,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnDesc',
 
@@ -38,24 +36,24 @@ module.exports = Radium(React.createClass({
     Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600,
+      hoverColor : MUI.Styles.Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.DESC
     };
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       color      : this.props.color,
       hoverColor : this.props.hoverColor
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
-      display        : 'flex',
+      display        : '-webkit-flex; display: flex',
       flexDirection  : 'row',
       alignItems     : 'center',
       fontSize       : 12,
@@ -66,12 +64,12 @@ module.exports = Radium(React.createClass({
     }
   },
 
-  handleClick: function() {
+  handleClick() {
     this.props.handleClick(this.props.id);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
@@ -80,6 +78,5 @@ module.exports = Radium(React.createClass({
         {this.props.children}
       </div>
     );
-
   }
 }));

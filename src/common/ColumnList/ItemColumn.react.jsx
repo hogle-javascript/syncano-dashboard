@@ -7,13 +7,13 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      display        : 'flex',
+      display        : '-webkit-flex; display: flex',
       flexDirection  : 'column',
       justifyContent : 'center'
     }
   },
 
-  render: function() {
+  render() {
     let styles = this.getStyles();
 
     return (
