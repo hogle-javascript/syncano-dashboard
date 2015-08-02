@@ -2,7 +2,8 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "plugins": [
     "react"
@@ -35,11 +36,11 @@
     "jsx": true
   },
   "rules": {
-    "strict": 0,
+    "strict": [2, "never"],
 
     // Possible Errors
-    "comma-dangle": [2, "never"],
-    "no-cond-assign": 2,
+    "comma-dangle": [2, "always-multiline"],
+    "no-cond-assign": [2, "always"],
     "no-console": 0,
     "no-constant-condition": 2,
     "no-control-regex": 2,
@@ -51,7 +52,7 @@
     "no-empty": 2,
     "no-ex-assign": 2,
     "no-extra-boolean-cast": 2,
-    "no-extra-parens": 2,
+    "no-extra-parens": [2, "functions"],
     "no-extra-semi": 2,
     "no-func-assign": 2,
     "no-inner-declarations": 2,
@@ -73,7 +74,7 @@
     "complexity": 0,
     // "complexity": [1, 2],
     "consistent-return": 2,
-    "curly": 2,
+    "curly": [2, "multi-line"],
     "default-case": 2,
     "dot-notation": 2,
     "dot-location": 0,
@@ -121,7 +122,7 @@
     "no-with": 2,
     "radix": 2,
     "vars-on-top": 2,
-    "wrap-iife": 2,
+    "wrap-iife": [2, "any"],
     "yoda": 2,
 
     // Variables
@@ -134,7 +135,10 @@
     "no-undef-init": 2,
     "no-undef": 2,
     "no-undefined": 2,
-    "no-unused-vars": 2,
+    "no-unused-vars": [2, {
+      "vars": "local",
+      "args": "after-used"
+    }],
     "no-use-before-define": 2,
 
     // Stylistic Issues
@@ -142,27 +146,31 @@
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "camelcase": 0,
     "comma-spacing": [2, {"before": false, "after": true}],
-    "comma-style": 2,
+    "comma-style": [2, "last"],
     "computed-property-spacing": [2, "never"],
     "consistent-this": 2,
     "eol-last": 2,
-    "func-names": 0,
+    "func-names": 1,
     "func-style": 0,
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i"]}],
     "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
-    "key-spacing": 2,
+    "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing
+        "beforeColon": false,
+        "afterColon": true
+    }],
     "lines-around-comment": 2,
     "linebreak-style": 2,
     "max-nested-callbacks": 2,
-    "new-cap": 2,
+    "new-cap": [2, {"newIsCap": true}],
     "new-parens": 2,
-    "newline-after-var": 2,
+    // TODO
+    "newline-after-var": 0,
     "no-array-constructor": 2,
     "no-continue": 2,
     "no-inline-comments": 2,
     "no-lonely-if": 2,
     "no-mixed-spaces-and-tabs": 2,
-    "no-multiple-empty-lines": 2,
+    "no-multiple-empty-lines": [2, {"max": 2}],
     "no-nested-ternary": 2,
     "no-new-object": 2,
     "no-spaced-func": 2,
@@ -176,7 +184,7 @@
     "operator-linebreak": 2,
     "padded-blocks": [2, "never"],
     "quote-props": 2,
-    "quotes": [2, "single"],
+    "quotes": [2, "single", "avoid-escape"],
     "id-match": 2,
     "semi-spacing": [2, {"before": false, "after": true}],
     "quote-props": [2, "as-needed"],
@@ -188,7 +196,10 @@
     "space-infix-ops": 2,
     "space-return-throw-case": 2,
     "space-unary-ops": 2,
-    "spaced-comment": 2,
+    "spaced-comment": [2, "always",  {
+      "exceptions": ["-", "+"],
+      "markers": ["=", "!"]
+    }],
     "wrap-regex": 2,
 
     // ECMAScript 6
