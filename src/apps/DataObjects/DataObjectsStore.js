@@ -29,15 +29,9 @@ export default Reflux.createStore({
         {
           id      : 'id',
           name    : 'Id',
-          width   : 20,
+          width   : 90,
           tooltip : 'Built-in property: ID',
           checked : true
-        },
-        {
-          id      : 'owner',
-          name    : 'Owner',
-          width   : 20,
-          checked : false
         },
         {
           id      : 'revision',
@@ -47,37 +41,43 @@ export default Reflux.createStore({
           checked : true
         },
         {
+          id      : 'owner',
+          name    : 'Owner',
+          width   : 90,
+          checked : false
+        },
+        {
           id      : 'group',
           name    : 'Group',
-          width   : 30,
+          width   : 90,
           tooltip : 'Built-in property: Group',
           checked : false
         },
         {
           id      : 'owner_permissions',
-          name    : 'Owner p',
-          width   : 60,
+          name    : 'Owner permissions',
+          width   : 90,
           tooltip : 'Built-in property: Owner Permissions',
           checked : false
         },
         {
           id      : 'group_permissions',
-          name    : 'Group p',
-          width   : 60,
+          name    : 'Group permissions',
+          width   : 90,
           tooltip : 'Built-in property: Group Permissions',
           checked : false
         },
         {
           id      : 'other_permissions',
-          name    : 'Other p',
-          width   : 60,
+          name    : 'Other permissions',
+          width   : 90,
           tooltip : 'Built-in property: Other Permissions',
           checked : false
         },
         {
           id      : 'created_at',
           name    : 'Created',
-          width   : 200,
+          width   : 120,
           tooltip : 'Built-in property: Created At',
           checked : true
         }
@@ -125,8 +125,13 @@ export default Reflux.createStore({
     }
     return null;
   },
+
   getSelectedRowObj(cellNumber) {
     return this.data.items[cellNumber];
+  },
+
+  getItems() {
+    return this.data.items;
   },
 
   setCurrentClassObj(classObj) {
@@ -211,11 +216,7 @@ export default Reflux.createStore({
     let checkedColumns = JSON.parse(settings);
 
     this.data.columns.map(column => {
-      if (checkedColumns.indexOf(column.id) != -1) {
-        column.checked = true;
-      } else {
-        column.checked = false;
-      }
+      column.checked = checkedColumns.indexOf(column.id) != -1;
     });
 
     this.trigger(this.data);
