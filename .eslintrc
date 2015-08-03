@@ -134,7 +134,7 @@
     "no-shadow": 2,
     "no-undef-init": 2,
     "no-undef": 2,
-    "no-undefined": 2,
+    "no-undefined": 1,
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -152,7 +152,7 @@
     "eol-last": 2,
     "func-names": 1,
     "func-style": 0,
-    "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i"]}],
+    "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "D"]}],
     "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing
         "beforeColon": false,
@@ -179,7 +179,7 @@
     "no-underscore-dangle": 0,
     "no-unneeded-ternary": 2,
     "object-curly-spacing": [2, "never"],
-    "one-var": 0,
+    "one-var": 1,
     "operator-assignment": 2,
     "operator-linebreak": 2,
     "padded-blocks": [2, "never"],

@@ -91,7 +91,7 @@
     "build": "gulp build",
     "publish": "gulp publish",
     "clean": "gulp clean",
-    "eslint": "eslint src tests",
+    "eslint": "eslint src --quiet --ext .js --ext .jsx",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
     "nightwatch": "nightwatch",
