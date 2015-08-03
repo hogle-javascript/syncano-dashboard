@@ -39,7 +39,7 @@
     "strict": [2, "never"],
 
     // Possible Errors
-    "comma-dangle": [2, "always-multiline"],
+    "comma-dangle": [2, "never"],
     "no-cond-assign": [2, "always"],
     "no-console": 0,
     "no-constant-condition": 2,
