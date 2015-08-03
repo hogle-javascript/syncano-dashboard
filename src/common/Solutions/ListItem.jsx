@@ -17,7 +17,8 @@ export default Radium(React.createClass({
       cardTitleRoot: {
         flex       : 1,
         display    : '-webkit-flex; display: flex',
-        alignItems : 'center'
+        alignItems : 'center',
+        maxWidth   : 'calc(100% - 87px)'
       },
       cardTitle: {
         color      : '#4a4a4a',
