@@ -64,7 +64,7 @@ export default React.createClass({
           className       = "col-xs-25 col-md-20"
           id              = {item.id.toString()}
           icon            = 'account'
-          background      = {MUI.Styles.Colors.blue500}
+          background      = {Common.Color.getColorByName('blue', 'xlight')}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           checkable       = {!isOwner}

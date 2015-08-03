@@ -11,10 +11,11 @@ export default React.createClass({
     return {
       container: {
         marginTop    : 20,
-        marginBottom : 96
+        marginBottom : 96,
+        marginLeft   : 300,
       },
       header: {
-        paddingBottom : 20,
+        paddingBottom : 48,
         color         : 'rgba(0, 0, 0, 0.87)',
         fontSize      : 20,
         lineHeight    : '24px'

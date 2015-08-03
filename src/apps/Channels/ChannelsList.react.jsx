@@ -49,7 +49,7 @@ export default React.createClass({
         <Column.CheckIcon
           id              = {item.name}
           icon            = {'bullhorn'}
-          background      = {MUI.Styles.Colors.lightBlueA100}
+          background      = {Common.Color.getColorByName('blue', 'xlight')}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick} >

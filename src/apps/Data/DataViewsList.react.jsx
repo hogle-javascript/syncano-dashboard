@@ -48,13 +48,13 @@ export default React.createClass({
         <Column.CheckIcon
           id              = {item.name}
           icon            = 'table'
-          background      = {MUI.Styles.Colors.blue500}
+          background      = {Common.Color.getColorByName('blue', 'xlight')}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
-        <Column.Desc className="col-xs-8">{item.description}</Column.Desc>
-        <Column.Desc>{item.class}</Column.Desc>
+        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
+        <Column.Desc className="col-xs-9">{item.class}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
@@ -81,8 +81,8 @@ export default React.createClass({
       <Common.Lists.Container>
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
-          <Column.Desc.Header className="col-xs-8">Description</Column.Desc.Header>
-          <Column.Desc.Header>Class</Column.Desc.Header>
+          <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
+          <Column.Desc.Header className="col-xs-9">Class</Column.Desc.Header>
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>

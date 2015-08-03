@@ -29,7 +29,6 @@ import SolutionStar from './SolutionStar';
 import Solutions from './Solutions';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SwitchField from './SwitchField';
-import Table from './Table';
 import Tabs from './Tabs';
 import Tags from './Tags';
 import Trace from './Trace';
@@ -73,7 +72,6 @@ export default {
   Solutions,
   SocialAuthButtonsList,
   SwitchField,
-  Table,
   Tabs,
   Tags,
   Trace,
