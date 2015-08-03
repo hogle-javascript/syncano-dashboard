@@ -9,6 +9,10 @@ export default Radium(React.createClass({
 
   mixins: [MUI.Mixins.StylePropable],
 
+  getDefaultProps() {
+    zDepth: 1
+  },
+
   getStyles() {
     return {
       base: {
@@ -41,7 +45,7 @@ export default Radium(React.createClass({
     return (
       <MUI.Paper
         onClick = {this.props.handleClick}
-        zDepth  = {1}
+        zDepth  = {this.props.zDepth}
         style   = {[
           styles.base,
           styles.hoverable,

@@ -77,6 +77,11 @@ export default Radium(React.createClass({
         paddingTop    : '12px',
         paddingBottom : '12px'
       },
+      menu: {
+        maxHeight : '500px',
+        overflowY : 'auto',
+        border    : '1px solid #DDD'
+      }
     }
   },
 
@@ -199,13 +204,15 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
     return (
       <div>
         <MUI.IconMenu
           iconButtonElement = {this.renderIcon()}
           onItemTouchTap    = {this.handleResendEmail}
           autoWidth         = {false}
-          maxWidth          = '400px'>
+          maxWidth          = '400px'
+          menuStyle         = {styles.menu}>
           <MenuItem
             key         = 'notificationDropdownHeader'
             primaryText = 'Notifications'
