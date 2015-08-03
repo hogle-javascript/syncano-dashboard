@@ -100,13 +100,14 @@ export default Radium(React.createClass({
     }
     return (
       <MUI.Paper
-        zDepth = {2}
+        zDepth = {1}
         style  = {styles.trace}>
         <Common.ColumnList.Item
           checked     = {item.checked}
           key         = {item.id}
           id          = {item.id}
-          handleClick = {this.toggleTrace}>
+          zDepth      = {0}
+          handleClick = {this.toggleTrace.bind(null, item.id)}>
           <Column.CheckIcon
             id              = {item.id.toString()}
             icon            = {status.icon}

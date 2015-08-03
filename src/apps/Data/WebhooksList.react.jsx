@@ -57,8 +57,8 @@ export default React.createClass({
   handleItemClick(itemName) {
     // Redirect to traces screen
     this.transitionTo('webhook-traces', {
-      instanceName: this.getParams().instanceName,
-      webhookName: itemName
+      instanceName : this.getParams().instanceName,
+      webhookName  : itemName
     });
   },
 
@@ -84,7 +84,7 @@ export default React.createClass({
         checked     = {item.checked}
         id          = {item.name}
         key         = {item.name}
-        handleClick = {this.handleItemClick} >
+        handleClick = {this.handleItemClick.bind(null, item.name)} >
 
         <Column.CheckIcon
           id              = {item.name.toString()}
