@@ -35,10 +35,6 @@ export default Radium(React.createClass({
     };
   },
 
-  handleClick() {
-    this.props.handleClick(this.props.id);
-  },
-
   renderClickableItem() {
     let styles = this.getStyles();
 
