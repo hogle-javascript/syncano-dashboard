@@ -14,10 +14,6 @@ export default Radium(React.createClass({
     }
   },
 
-  propTypes: {
-    children: React.PropTypes.any.isRequired
-  },
-
   getStyles() {
     return {
       list: {
@@ -58,7 +54,7 @@ export default Radium(React.createClass({
     AuthConstants.SOCIAL_NETWORKS.map((network, index) => {
       buttons.push(
         <MUI.ListItem
-          key         = {index}
+          key         = {`network-${index}`}
           style       = {styles.listItem}
           primaryText = {buttonLabel + network}
           onTouchTap  = {this.handleSocialSignup.bind(null, network)}
@@ -69,7 +65,7 @@ export default Radium(React.createClass({
         />
       );
       if (index < lastListItemIndex) {
-        buttons.push(<MUI.ListDivider style={styles.listDivider} />);
+        buttons.push(<MUI.ListDivider key={`divider-${index}`} style={styles.listDivider} />);
       }
     });
 
