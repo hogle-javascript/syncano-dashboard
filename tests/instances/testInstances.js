@@ -1,12 +1,12 @@
 module.exports = {
   tags: ['instances'],
   before: function(client) {
-    var loginPage = client.page.loginPage();
-    loginPage.goToLoginPage();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    var signupPage = client.page.signupPage();
+    var slug = Date.now();
+    signupPage.navigate();
+    signupPage.setValue('@emailInput', 'syncano.bot+' + slug + '@gmail.com');
+    signupPage.setValue('@passInput', slug);
+    signupPage.clickSubmitButton();
 
   },
   after: function(client) {
@@ -17,11 +17,11 @@ module.exports = {
     instancesPage.clickFAB();
     instancesPage.fillInstanceName();
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
-    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(5000);
+    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@addInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
 
   },
@@ -33,7 +33,7 @@ module.exports = {
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
+    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRowDescription')
     .to.contain.text('nightwatch_test_instance_new_description');
   },
@@ -41,11 +41,10 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickSelectInstance();
     instancesPage.clickButton('@deleteButton');
+    client.pause(1000);
     instancesPage.clickButton('@confirmDeleteButton');
     instancesPage.isModalClosed('@deleteInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(5000);
-    instancesPage.expect.element('@instancesTableRowDescription')
-    .to.not.contain.text('nightwatch_test_instance_description');
+    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
 };

@@ -11,6 +11,7 @@ import WebhooksList from './WebhooksList.react';
 import WebhooksActions from './WebhooksActions';
 import WebhookDialog from './WebhookDialog.react';
 import WebhookDialogStore from './WebhookDialogStore';
+import WebhookTraces from './WebhookTraces.react';
 
 Data.Actions            = DataViewsActions;
 Data.Store              = DataViewsStore;
@@ -23,5 +24,6 @@ Data.WebhooksStore      = WebhooksStore;
 Data.WebhooksList       = WebhooksList;
 Data.WebhookDialog      = WebhookDialog;
 Data.WebhookDialogStore = WebhookDialogStore;
+Data.WebhookTraces      = WebhookTraces;
 
 export default Data;

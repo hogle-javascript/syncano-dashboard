@@ -47,32 +47,47 @@ export default {
   },
 
   // Header
-  renderTableHeader(classObj, columns) {
+  renderTableHeader: function(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
 
-    let header = {};
-
     // Initial columns
-    columns.map(item => {
-      header[item.id] = {
-        content : item.name,
-        tooltip : item.tooltip,
-        style   : {width: item.width ? item.width : null}
+    let columnsComponents = columns.map((item, index) => {
+      if (item.checked) {
+        return (
+          <MUI.TableHeaderColumn
+            key        = {'header-column-' + index}
+            style      = {{width: item.width ? item.width : null, whiteSpace: 'normal', wordWrap: 'normal'}}
+            tooltip    = {item.tooltip} >
+            {item.name}
+          </MUI.TableHeaderColumn>
+        );
       }
     });
 
-    return header;
+    // TODO: select all doesn't work properly in material-ui
+    return (
+      <MUI.TableHeader
+        key              = 'header'
+        enableSelectAll  = {false}
+        displaySelectAll = {false}>
+        <MUI.TableRow key='header-row'>
+          {columnsComponents}
+        </MUI.TableRow>
+      </MUI.TableHeader>
+    );
   },
 
   // Table Body
   renderTableData(items, columns) {
 
-    let tableItems = [];
-
-    items.map(item => {
+    return items.map((item, index) => {
       let row = {};
 
-      columns.map(column => {
+      let columnsComponents = columns.map((column, index) => {
+
+        if (!column.checked) {
+          return;
+        }
 
         let value    = item[column.id];
         let renderer = this.getColumnRenderer(column.id);
@@ -103,14 +118,24 @@ export default {
         row[column.id] = {
           content: <div>{value}</div>,
           style: { width: column.width }
-        }
+        };
+
+        return (
+          <MUI.TableRowColumn
+            key   = {`${column.id}-${index}`}
+            style = {{width: column.width}}>
+            {value}
+          </MUI.TableRowColumn>
+        );
       });
 
-      tableItems.push(row);
+      return (
+        <MUI.TableRow key={'row-' + index}>
+          {columnsComponents}
+        </MUI.TableRow>
+      );
 
     });
-
-    return tableItems;
   }
 
 };

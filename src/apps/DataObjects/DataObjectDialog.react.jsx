@@ -67,15 +67,17 @@ export default React.createClass({
           let date = this.refs['fielddate-' + item.name].getDate();
           let time = this.refs['fieldtime-' + item.name].getTime();
 
-          let dateTime = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDay(),
-            time.getHours(),
-            time.getMinutes(),
-            0
-          );
-          params[item.name] = dateTime.toISOString();
+          if (date) {
+            let dateTime = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDay(),
+              time.getHours(),
+              time.getMinutes(),
+              0
+            );
+            params[item.name] = dateTime.toISOString();
+          }
         }
         else {
           let fieldValue = this.refs['field-' + item.name].getValue();
@@ -345,13 +347,15 @@ export default React.createClass({
                     ref            = {'fielddate-' + item.name}
                     textFieldStyle = {{width: '100%'}}
                     mode           = "landscape"
-                    defaultDate    = {value} />
+                    defaultDate    = {value || undefined}
+                    />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref         = {'fieldtime-' + item.name}
                     style       = {{width: '100%'}}
-                    defaultTime = {value} />
+                    defaultTime = {value || undefined}
+                    />
                 </div>
               </div>
             </div>

@@ -54,6 +54,14 @@ export default React.createClass({
     }, 1200)
   },
 
+  handleItemClick(itemName) {
+    // Redirect to traces screen
+    this.transitionTo('webhook-traces', {
+      instanceName : this.getParams().instanceName,
+      webhookName  : itemName
+    });
+  },
+
   renderItem(item) {
     let publicString = item.public.toString(),
         publicCell   = publicString;
@@ -73,8 +81,11 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.name}>
+        checked     = {item.checked}
+        id          = {item.name}
+        key         = {item.name}
+        handleClick = {this.handleItemClick.bind(null, item.name)} >
+
         <Column.CheckIcon
           id              = {item.name.toString()}
           icon            = 'arrow-up-bold'

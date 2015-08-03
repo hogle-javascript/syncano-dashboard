@@ -89,6 +89,10 @@ module.exports = {
       selector: '//div[@class="classes-list-container"]/div[2]//div[@class="col-flex-1"]',
       locateStrategy: 'xpath'
     },
+    classTableName: {
+      selector: '//div[@class="classes-list-container"]/div[2]//div[@class="col-xs-10"]',
+      locateStrategy: 'xpath'
+    },
     deleteButton: {
       selector: '.synicon-delete'
     },
