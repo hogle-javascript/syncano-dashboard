@@ -65,7 +65,9 @@ export default Radium(React.createClass({
         />
       );
       if (index < lastListItemIndex) {
-        buttons.push(<MUI.ListDivider key={`divider-${index}`} style={styles.listDivider} />);
+        buttons.push(<MUI.ListDivider
+                        key   = {`divider-${index}`}
+                        style = {styles.listDivider} />);
       }
     });
 
