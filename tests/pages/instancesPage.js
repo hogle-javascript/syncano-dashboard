@@ -43,7 +43,8 @@ module.exports = {
       selector: 'input[name=description]'
     },
     confirmButton: {
-      selector: 'button span[data-reactid*="$confirm"]'
+      selector: '//span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     },
     confirmDeleteButton: {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
