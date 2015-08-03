@@ -106,7 +106,7 @@ export default Radium(React.createClass({
           id          = {item.id}
           handleClick = {this.toggleTrace}>
           <Column.CheckIcon
-            id              = {item.id}
+            id              = {item.id.toString()}
             icon            = {status.icon}
             background      = {status.background}
             checkable       = {false}>
