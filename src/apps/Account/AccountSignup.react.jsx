@@ -111,7 +111,7 @@ export default React.createClass({
             label      = "Create my account"
             labelStyle = {{fontSize: '16px'}}
             fullWidth  = {true}
-            style      = {{boxShadow: 'none'}}
+            style      = {{boxShadow: 'none', height: '48px'}}
             primary    = {true} />
         </form>
         <Common.SocialAuthButtonsList mode="signup" />

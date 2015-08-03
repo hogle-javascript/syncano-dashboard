@@ -34,6 +34,7 @@ export default React.createClass({
       button: {
         width        : '100%',
         boxShadow    : 'none',
+        height       : '48px',
         marginBottom : 28
       },
       buttonLabel: {
@@ -58,7 +59,7 @@ export default React.createClass({
           <p
             className = "vm-4-b"
             style     = {styles.text}>
-            Sweet! Your new password has now been set and you can log in.
+            Sweet! Your new password has now been set and you can login.
           </p>
 
           <MUI.RaisedButton

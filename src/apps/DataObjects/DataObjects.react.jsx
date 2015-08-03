@@ -87,55 +87,52 @@ export default React.createClass({
     DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
   },
 
-  handleRowSelection(selectedRow) {
-    console.info('DataObjects::handleRowSelection');
-    let rowsSelection = [selectedRow[0]];
-
-    // It there is more than one arg it means that it is multiple selection
-    if (selectedRow.length > 1) {
-      let start = selectedRow[1].start,
-          end   = selectedRow[1].end;
-
-      // What is start and what is end depends on the direction of checking rows
-      if (end < start) {
-        end   = selectedRow[1].start;
-        start = selectedRow[1].end;
-      }
-      rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
-    } else if (selectedRow.length === 0) {
-      rowsSelection = [];
-    }
+  handleRowSelection(selectedRows) {
+    console.info('DataObjects::handleRowSelection', arguments);
+    let rowsSelection = selectedRows;
 
     // Writing to the store
+    if (selectedRows === 'all') {
+      rowsSelection = DataObjectsStore.getItems().map((item, index) => {return index})
+    }
+
     DataObjectsActions.setSelectedRows(rowsSelection);
+  },
+
+  handleSelectAll(selectAll) {
+    console.info('DataObjects::handleSelectAll', selectAll);
   },
 
   handleCellClick(cellNumber, cellName) {
     console.info('DataObjects::handleCellClick', arguments);
-    if (cellName != undefined) {
+    if (cellName != undefined && cellName !== 0) {
       this.showDataObjectEditDialog(cellNumber);
     }
   },
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    let tableData   = DataObjectsStore.renderTableData(),
-        tableHeader = DataObjectsStore.renderTableHeader(),
-        colOrder    = DataObjectsStore.getCheckedColumnsIDs();
+    let tableData   = DataObjectsStore.renderTableData();
+    let tableHeader = DataObjectsStore.renderTableHeader(this.handleSelectAll);
 
     return (
       <div>
         <MUI.Table
           ref                 = "table"
-          headerColumns       = {tableHeader}
-          columnOrder         = {colOrder}
-          rowData             = {tableData}
           multiSelectable     = {true}
           deselectOnClickaway = {false}
           showRowHover        = {true}
           onCellClick         = {this.handleCellClick}
           onRowSelection      = {this.handleRowSelection}
-          />
+          >
+          {tableHeader}
+          <MUI.TableBody
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={true}
+            stripedRows={false}>
+            {tableData}
+          </MUI.TableBody>
+        </MUI.Table>
 
         <div
           className = "row align-center"

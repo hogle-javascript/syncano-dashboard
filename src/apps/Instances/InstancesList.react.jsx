@@ -41,7 +41,6 @@ export default React.createClass({
   },
 
   handleItemClick(instanceName) {
-    // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
@@ -52,7 +51,7 @@ export default React.createClass({
         checked     = {item.checked}
         id          = {item.name}
         key         = {item.name}
-        handleClick = {this.handleItemClick}>
+        handleClick = {this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}

@@ -11,6 +11,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
+import {Snackbar} from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -50,11 +51,16 @@ export default React.createClass({
   },
 
   handleRun() {
-    Actions.runCodeBox({
-      id      : this.state.currentCodeBox.id,
-      payload : this.refs.tracePanel.refs.payloadField.getValue()
-    });
-
+    let payloadErrors = this.refs.tracePanel.state.errors,
+        payloadIsValid = typeof payloadErrors.payloadValue === 'undefined' ? true : false;
+    if (payloadIsValid) {
+      Actions.runCodeBox({
+        id      : this.state.currentCodeBox.id,
+        payload : this.refs.tracePanel.refs.payloadField.getValue()
+      });
+    } else {
+      this.refs.snackbar.show();
+    }
   },
 
   handleUpdate() {
@@ -112,6 +118,10 @@ export default React.createClass({
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Common.Loading>
+        <Snackbar
+          message          = "Can't run CodeBox with invalid payload"
+          ref              = "snackbar"
+          autoHideDuration = {3000} />
       </Container>
     );
   }

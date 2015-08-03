@@ -26,7 +26,7 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
       'EBCallBackMessageReceived',
       // See http://toolbar.conduit.com/Developer/HtmlAndGadget/Methods/JSInjection.aspx
       'conduitPage',
-      '/No route matches path/i'
+      /No route matches path/i
     ],
     ignoreUrls: [
       // Facebook flakiness

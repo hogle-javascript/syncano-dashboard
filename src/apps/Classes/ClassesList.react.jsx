@@ -52,7 +52,7 @@ export default React.createClass({
         key          = {item.name}
         id           = {item.name}
         checked      = {item.checked}
-        handleClick  = {this.handleItemClick} >
+        handleClick  = {this.handleItemClick.bind(null, item.name)} >
         <Column.CheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata ? item.metadata.icon : 'table-large'}

@@ -99,14 +99,17 @@ export default Radium(React.createClass({
       };
     }
     return (
-      <MUI.Paper zDepth={2} style={styles.trace}>
+      <MUI.Paper
+        zDepth = {1}
+        style  = {styles.trace}>
         <Common.ColumnList.Item
           checked     = {item.checked}
           key         = {item.id}
           id          = {item.id}
-          handleClick = {this.toggleTrace}>
+          zDepth      = {0}
+          handleClick = {this.toggleTrace.bind(null, item.id)}>
           <Column.CheckIcon
-            id              = {item.id}
+            id              = {item.id.toString()}
             icon            = {status.icon}
             background      = {status.background}
             checkable       = {false}>
@@ -127,7 +130,25 @@ export default Radium(React.createClass({
 
   getList() {
     let items  = this.state.items || [],
-        styles = this.getStyles();
+        styles = this.getStyles(),
+        tracesFor = {
+          codebox  : {
+            name : 'CodeBox',
+            icon : 'synicon-package-variant'
+          },
+          webhook  : {
+            name : 'Webhook',
+            icon : 'synicon-arrow-up-bold'
+          },
+          trigger  : {
+            name : 'Trigger',
+            icon : 'synicon-arrow-up-bold'
+          },
+          schedule : {
+            name : 'Schedule',
+            icon : 'synicon-camera-timer'
+          }
+        };
 
     if (items.length > 0) {
       items = items.map(item => this.renderItem(item));
@@ -140,8 +161,8 @@ export default Radium(React.createClass({
       <div style={styles.noTracesContainer}>
         <MUI.FontIcon
           style     = {styles.noTracesIcon}
-          className = "synicon-package-variant" />
-        <p style={styles.noTracesText}>There are no traces for this CodeBox yet</p>
+          className = {tracesFor[this.props.tracesFor].icon} />
+        <p style={styles.noTracesText}>There are no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
       </div>
     ];
   },

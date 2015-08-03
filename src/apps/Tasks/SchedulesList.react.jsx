@@ -7,9 +7,9 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
-import SchedulesActions from './SchedulesActions';
-import SchedulesStore from './SchedulesStore';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import Store from './SchedulesStore';
+import Actions from './SchedulesActions';
 
 // Components
 import MUI from 'material-ui';
@@ -64,7 +64,7 @@ export default React.createClass({
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Desc className="col-xs-8">{codeBoxLabel}</Column.Desc>
+        <Column.Desc className="col-sm-6">{codeBoxLabel}</Column.Desc>
         <Column.Desc>{item.crontab}</Column.Desc>
         <Column.Date date={item.scheduled_next} />
         <Column.Date date={item.created_at} />
@@ -94,7 +94,7 @@ export default React.createClass({
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Desc.Header className="col-xs-8">CodeBox</Column.Desc.Header>
+          <Column.Desc.Header className="col-sm-6">CodeBox</Column.Desc.Header>
           <Column.Desc.Header>Crontab</Column.Desc.Header>
           <Column.Date.Header>Next run</Column.Date.Header>
           <Column.Date.Header>Created</Column.Date.Header>
