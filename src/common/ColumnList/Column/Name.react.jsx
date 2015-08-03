@@ -1,27 +1,25 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Paper              = mui.Paper,
-    Colors             = mui.Styles.Colors;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
-  getDefaultProps: function() {
+let Header = React.createClass({
+  getDefaultProps() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       fontSize    : 20,
       fontWeight  : 500
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
@@ -33,7 +31,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnName',
 
@@ -47,40 +45,38 @@ module.exports = Radium(React.createClass({
     Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       color      : 'rgba(0,0,0,.54)',
-      hoverColor : Colors.blue600,
+      hoverColor : MUI.Styles.Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.NAME
     };
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
-      display         : 'flex',
-      flexDirection   : 'row',
-      fontSize        : 12,
-      padding         : '16px 8px',
-      alignSelf       : 'center',
-      cursor          : 'pointer',
-      color           : this.state.color,
+      display       : '-webkit-flex; display: flex',
+      flexDirection : 'row',
+      fontSize      : 12,
+      padding       : '16px 8px',
+      alignSelf     : 'center',
+      cursor        : 'pointer',
+      color         : this.state.color,
       ':hover' : {
         color : this.state.hoverColor
       }
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
         className   = {this.props.className}
-        style       = {styles}
-      >
+        style       = {styles}>
         {this.props.children}
       </div>
     );
-
   }
 }));

@@ -8,8 +8,8 @@ import Mixins from '../../mixins';
 
 // Stores and Actions
 import InstanceDialogStore from '../Instances/InstanceDialogStore';
-import Store from './SolutionInstallDialogStore';
-import Actions from './SolutionInstallDialogActions';
+import Store from './InstallDialogStore';
+import Actions from './InstallDialogActions';
 
 // Components
 import Common from '../../common';
@@ -19,10 +19,11 @@ export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
+    React.addons.LinkedStateMixin,
+
     Router.State,
     Router.Navigation,
 
-    React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialog,
 
@@ -71,6 +72,23 @@ export default React.createClass({
 
   handleDialogShow() {
     console.debug('SolutionInstallDialog::handleDialogShow');
+  },
+
+  renderCustomFormNotifications() {
+    let nonFormFields = ['classes'];
+    let messages = [];
+    Object.keys(this.state.errors).map((fieldName) => {
+      if (nonFormFields.indexOf(fieldName) > -1) {
+        this.state.errors[fieldName].map(error => {
+          Object.keys(error).map(key => {
+            messages.push(error[key]);
+          });
+        });
+      }
+    });
+    if (messages.length > 0) {
+      return <Common.Notification type='error'>{messages.join(' ')}</Common.Notification>;
+    }
   },
 
   renderInstanceField() {
@@ -131,6 +149,7 @@ export default React.createClass({
         onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
+          {this.renderCustomFormNotifications()}
 
           <div className='row'>
             <div className='col-flex-1'>

@@ -8,8 +8,8 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 import InstancesActions from '../Instances/InstancesActions';
-import SolutionsEditActions from './SolutionEditActions';
-import Actions from './SolutionInstallDialogActions';
+
+import Actions from './InstallDialogActions';
 
 export default Reflux.createStore({
   listenables : Actions,

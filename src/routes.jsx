@@ -15,8 +15,7 @@ import Account from './apps/Account';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
-import Solutions from './apps/Solutions/Solutions.react';
-import SolutionEdit from './apps/Solutions/SolutionEdit.react';
+import Solutions from './apps/Solutions';
 
 // Instance Apps
 import Admins from './apps/Admins/Admins.react';
@@ -233,19 +232,34 @@ module.exports = (
       {/* Solutions */}
       <Route
         name    = "solutions"
-        handler = {Solutions}
         path    = "/solutions"
-      />
-      <Route
-        name    = "solutions-install"
-        handler = {SolutionEdit}
-        path    = "/solutions/:solutionId/:action"
-      />
-      <Route
-        name    = "solutions-edit"
-        handler = {SolutionEdit}
-        path    = "/solutions/:solutionId/edit"
-      />
+      >
+        <Route
+          name    = "solutions-list"
+          handler = {Solutions.ListView}
+          path    = "list"
+        />
+        <Route
+          name    = "solutions-install"
+          handler = {Solutions.EditView}
+          path    = "/solutions/:solutionId/:action"
+        />
+        <Route
+          name    = "solutions-edit"
+          handler = {Solutions.EditView}
+          path    = "/solutions/:solutionId/edit"
+        />
+        <Route
+          name    = "solutions-add-version"
+          handler = {Solutions.AddVersionView}
+          path    = "/solutions/:solutionId/versions/add"
+        />
+        <Redirect
+          from  = "/solutions"
+          to    = "solutions-list"
+        />
+        <DefaultRoute handler={Solutions.ListView} />
+      </Route>
       <Route
         name    = "profile-settings"
         handler = {Profile.Settings}

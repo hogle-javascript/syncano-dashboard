@@ -24,9 +24,6 @@ var SyncanoTheme = {
   },
   getComponentThemes: function(palette) {
     return {
-      button: {
-        height: 48
-      },
       flatButton: {
         primaryTextColor : palette.primary1Color,
         textColor        : 'rgba(0, 0, 0, 0.54)'

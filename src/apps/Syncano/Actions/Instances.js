@@ -35,5 +35,12 @@ export default {
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  set(name) {
+    this.Connection
+      .setInstance(name)
+      .then(this.completed)
+      .catch(this.failure)
   }
 };

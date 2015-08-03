@@ -66,7 +66,7 @@ export default React.createClass({
             label      = "Reset password"
             fullWidth  = {true}
             labelStyle = {{fontSize: '16px'}}
-            style      = {{boxShadow: 'none'}}
+            style      = {{boxShadow: 'none', height: '48px'}}
             primary    = {true} />
         </form>
         <div className="account-container__content__footer">

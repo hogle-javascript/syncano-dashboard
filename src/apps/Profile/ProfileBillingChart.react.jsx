@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import React from 'react';
 import Reflux from 'reflux';
+import Radium from 'radium';
 
 import Common from '../../common';
 
@@ -13,7 +14,7 @@ import Store from './ProfileBillingChartStore';
 
 require('./ProfileBillingChart.css');
 
-export default React.createClass({
+export default Radium(React.createClass({
   mixins: [Reflux.connect(Store)],
 
   componentDidMount() {
@@ -119,7 +120,7 @@ export default React.createClass({
               display       : 'flex',
               flexDirection : 'column-reverse'}}>
             <div>
-              <div style={{height: '100%'}}>
+              <div style={{height: 'calc(100% - 125px)'}}>
                 <Common.Show if={this.state.overage.amount > 0}>
                   <div>
                     <div style={{paddingTop: 25, fontSize: '0.9rem'}}>
@@ -151,7 +152,7 @@ export default React.createClass({
       </Common.Loading>
     );
   }
-});
+}));
 
 //${this.state.overage.amount}
 //${this.state.covered.amount}

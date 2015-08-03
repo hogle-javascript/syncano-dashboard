@@ -105,10 +105,10 @@ export default React.createClass({
 
           <MUI.RaisedButton
             type       = "submit"
-            label      = "Log in"
+            label      = "Login"
             labelStyle = {{fontSize: '16px'}}
             fullWidth  = {true}
-            style      = {{boxShadow: 'none'}}
+            style      = {{boxShadow: 'none', height: '48px'}}
             primary    = {true} />
 
         </form>

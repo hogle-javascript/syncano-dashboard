@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Radium from 'radium';
 import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
@@ -11,7 +12,7 @@ import Actions from './ProfileActions';
 import MUI from 'material-ui';
 import Container from '../../common/Container';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ProfileAuthentication',
 
@@ -61,7 +62,7 @@ export default React.createClass({
       },
       contentRow: {
         display         : '-webkit-flex; display: flex',
-        AlignItems      : 'center'
+        alignItems      : 'center'
       },
       accountKey: {
         margin          : '0 16px 0 0'
@@ -174,4 +175,4 @@ export default React.createClass({
       </Container.Profile>
     );
   }
-});
+}));

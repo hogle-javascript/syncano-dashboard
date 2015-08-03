@@ -1,21 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
-import Router from 'react-router';
 import MUI from 'material-ui';
 
-import SolutionsActions from './SolutionsActions';
-import SolutionStar from '../../common/SolutionStar';
+import SolutionStar from '../SolutionStar';
 
-import SolutionInstallDialogActions from './SolutionInstallDialogActions';
-
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'SolutionsListItem',
-
-  mixins: [
-    Router.State,
-    Router.Navigation
-  ],
 
   getStyles() {
     return {
@@ -26,7 +17,8 @@ export default React.createClass({
       cardTitleRoot: {
         flex       : 1,
         display    : '-webkit-flex; display: flex',
-        AlignItems : 'center'
+        alignItems : 'center',
+        maxWidth   : 'calc(100% - 87px)'
       },
       cardTitle: {
         color      : '#4a4a4a',
@@ -49,7 +41,7 @@ export default React.createClass({
       cardTextList: {
         color      : '#9b9b9b',
         display    : '-webkit-flex; display: flex',
-        AlignItems : 'center',
+        alignItems : 'center',
         fontSize   : 12,
         padding    : '4px 0'
       },
@@ -58,13 +50,11 @@ export default React.createClass({
         marginRight : 8
       },
       cardFooter: {
-        borderTop            : '1px solid #ddd',
-        padding              : 8,
-        display              : '-webkit-flex; display: flex',
-        WebkitAlignItems     : 'center',
-        alignItems           : 'center',
-        WebkitJustifyContent : 'space-between',
-        justifyContent       : 'space-between'
+        borderTop      : '1px solid #ddd',
+        padding        : 8,
+        display        : '-webkit-flex; display: flex',
+        alignItems     : 'center',
+        justifyContent : 'space-between'
       },
       cardAvatarContainer: {
         padding : 16
@@ -84,18 +74,28 @@ export default React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId: solutionId});
+    this.props.onSeeMore(solutionId);
   },
 
   handleInstallClick(solutionId) {
-    SolutionInstallDialogActions.showDialogWithPreFetch(solutionId);
+    this.props.onInstall(solutionId);
+  },
+
+  handleTagClick(tag) {
+    this.props.onTagClick(solutionId);
+    //SolutionsActions.selectOneTag.bind(null, tag)
+  },
+
+  isNoVersions() {
+    let item = this.props.data;
+    return (item && !item.versions.devel && !item.versions.stable);
   },
 
   renderVersion() {
-    let styles = this.getStyles();
-    let item = this.props.data;
-    let name = null;
-    let color = null;
+    let styles = this.getStyles(),
+        item   = this.props.data,
+        name   = null,
+        color  = null;
 
     if (item.versions.stable) {
       name = `stable (${item.versions.stable})`;
@@ -119,12 +119,16 @@ export default React.createClass({
   renderItemTags() {
     let styles = this.getStyles();
 
+    if (this.props.data.tags && this.props.data.tags.length === 0) {
+      return <div style={styles.tag}>no tags</div>;
+    }
+
     return this.props.data.tags.map(tag => {
       return (
         <a
           key     = {tag}
           style   = {styles.tag}
-          onClick = {SolutionsActions.selectOneTag.bind(null, tag)}>
+          onClick = {this.handleTagClick.bind(null, tag)}>
           {tag}
         </a>
       )
@@ -148,9 +152,11 @@ export default React.createClass({
               src   = {item.author ? item.author.avatar_url : null} />
           </div>
         </div>
+
         <MUI.CardText style={styles.cardSubtitle}>
           {item.description}
         </MUI.CardText>
+
         <MUI.CardText>
           <div style={styles.cardTextList}>
             <MUI.FontIcon
@@ -161,6 +167,7 @@ export default React.createClass({
           </div>
           {this.renderVersion()}
         </MUI.CardText>
+
         <div style={styles.cardFooter}>
           <SolutionStar solution={item} />
           <MUI.FlatButton
@@ -169,11 +176,12 @@ export default React.createClass({
             onClick    = {this.handleSeeMoreClick.bind(null, item.id)} />
           <MUI.IconButton
             iconClassName = "synicon-download"
-            iconStyle     = {styles.installIcon}
+            disabled      = {this.isNoVersions()}
+            iconStyle     = {this.isNoVersions() ? {} : styles.installIcon}
             onClick       = {this.handleInstallClick.bind(null, item.id)}
             touch         = {true} />
         </div>
       </MUI.Card>
     )
   }
-});
+}));

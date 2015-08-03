@@ -1,26 +1,25 @@
-var React       = require('react'),
-    Radium      = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    mui         = require('material-ui'),
-    Paper       = mui.Paper;
-
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ItemColumn',
 
-  render: function () {
-    var styles = {
-      display        : 'flex',
+  getStyles() {
+    return {
+      display        : '-webkit-flex; display: flex',
       flexDirection  : 'column',
       justifyContent : 'center'
-    };
+    }
+  },
+
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div style={styles}>
         {this.props.children}
       </div>
     );
-
   }
 }));

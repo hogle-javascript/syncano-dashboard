@@ -7,20 +7,22 @@ import _ from 'lodash';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Store from './SolutionsStore';
-import Actions from './SolutionsActions';
+
+import Store from './ListViewStore';
+import Actions from './ListViewActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
-import SolutionsList from './SolutionsList.react';
-import SolutionDialog from './SolutionDialog.react';
-import SolutionInstallDialog from './SolutionInstallDialog.react';
+import CreateDialogActions from './CreateDialogActions';
+import CreateDialog from './CreateDialog';
 
-export default React.createClass({
+import InstallDialogActions from './InstallDialogActions';
+import InstallDialog from './InstallDialog';
+
+module.exports = React.createClass({
 
   displayName: 'Solutions',
 
@@ -33,7 +35,7 @@ export default React.createClass({
   ],
 
   showSolutionDialog() {
-    Actions.showDialog();
+    CreateDialogActions.showDialog();
   },
 
   componentDidMount() {
@@ -52,11 +54,11 @@ export default React.createClass({
     return [
       {
         label : 'Instances',
-        route : 'instances'
+        route : 'instances',
       },
       {
         label : 'Solutions',
-        route : 'solutions'
+        route : 'solutions',
       }
     ];
   },
@@ -74,33 +76,27 @@ export default React.createClass({
       sidebar: {
         minWidth: 230
       },
-      listItemChecked: {
-        background: MUI.Styles.Colors.lightBlue50
-      }
     }
   },
 
-  handleChangeFilter(filter, event) {
+  handleChangeFilter(filter) {
     Actions.setFilter(filter);
   },
 
-  renderTags() {
-    let styles = this.getStyles();
+  handleInstallClick(solutionId) {
+    InstallDialogActions.showDialogWithPreFetch(solutionId);
+  },
 
-    let tags = this.state.tags.map(item => {
-      return (
-        <MUI.ListItem
-          key           = {item.name}
-          primaryText   = {item.name}
-          innerDivStyle = {this.state.selectedTags.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.name)} />
-      )
-    });
-    return (
-      <MUI.List zDepth={1} subheader="Tags">
-        {tags}
-      </MUI.List>
-    )
+  handleSeeMoreClick(solutionId) {
+    this.transitionTo('solutions-edit', {solutionId: solutionId});
+  },
+
+  handleTagClick(tag) {
+    Actions.selectOneTag(tag);
+  },
+
+  handleToggleTagSelection(name) {
+    Actions.toggleTagSelection(name);
   },
 
   render() {
@@ -108,15 +104,16 @@ export default React.createClass({
 
     return (
       <div id='solutions'>
-        <SolutionDialog />
-        <SolutionInstallDialog />
+        <CreateDialog />
+        <InstallDialog />
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
             <Common.Fab.Item
               label         = "Click here to create a Solution"
               onClick       = {this.showSolutionDialog}
-              iconClassName = "synicon-plus" />
+              iconClassName = "synicon-plus"
+            />
           </Common.Fab>
        </Common.Show>
 
@@ -127,21 +124,32 @@ export default React.createClass({
                 <MUI.ListItem
                   innerDivStyle = {!this.state.filter ? styles.listItemChecked : {}}
                   primaryText   = "All solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, null)} />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, null)}
+                />
                 <MUI.ListDivider />
                 <MUI.ListItem
                   innerDivStyle = {this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
                   primaryText   = "Favorite"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')} />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')}
+                />
                 <MUI.ListItem
                   innerDivStyle = {this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
                   primaryText   = "My solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')} />
+                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
+                />
               </MUI.List>
-              {this.renderTags()}
+              <Common.Tags.List
+                items              = {this.state.tags}
+                selectedItems      = {this.state.selectedTags}
+                toggleTagSelection = {this.handleToggleTagSelection} />
             </div>
             <div className="col-flex-1">
-              <SolutionsList items={this.state.items}/>
+              <Common.Solutions.List
+                items      = {this.state.items}
+                onInstall  = {this.handleInstallClick}
+                onSeeMore  = {this.handleSeeMoreClick}
+                onTagClick = {this.handleTagClick}
+              />
             </div>
           </div>
         </div>
