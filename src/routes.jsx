@@ -24,7 +24,7 @@ import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import Classes from './apps/Classes/Classes.react';
 import CodeBoxes from './apps/CodeBoxes';
 import DataObjects from './apps/DataObjects/DataObjects.react';
-import Data from './apps/Data/Data.react';
+import Data from './apps/Data';
 import Tasks from './apps/Tasks/Tasks.react';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
@@ -95,9 +95,19 @@ module.exports = (
         {/* Data */}
         <Route
           name    = "data"
-          handler = {Data}
           path    = ":instanceName/data"
+        >
+
+          {/* Webhook Traces */}
+          <Route
+            name    = 'webhook-traces'
+            handler = {Data.WebhookTraces}
+            path    = 'webhook/:webhookName/traces'
           />
+
+          <DefaultRoute handler={Data} />
+
+        </Route>
 
         {/* Admins */}
         <Route
