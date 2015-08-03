@@ -1,6 +1,6 @@
 /* jshint expr: true */
 module.exports = {
-  tags: ['signup'],  
+  tags: ['signup'],
   'Test': function(client) {
     var signupPage = client.page.signupPage();
     var slug = Date.now();
