@@ -1,20 +1,20 @@
 var instancesCommands = {
   clickFAB: function() {
-    return this.waitForElementVisible('@fab', 1000)
+    return this.waitForElementVisible('@fab')
       .click('@fab')
-      .waitForElementVisible('@confirmButton', 5000);
+      .waitForElementVisible('@confirmButton');
   },
   fillInstanceName: function() {
-    return this.waitForElementVisible('@createModalNameInput', 1000)
+    return this.waitForElementVisible('@createModalNameInput')
       .setValue('@createModalNameInput', 'nightwatch_test_instance');
   },
   fillInstanceDescription: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
+    return this.waitForElementVisible('@createModalDescriptionInput')
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
   clickSelectInstance: function() {
-    return this.waitForElementVisible('@selectInstance', 5000)
+    return this.waitForElementVisible('@selectInstance')
       .click('@selectInstance');
   },
   clickButton: function(button) {
@@ -22,7 +22,7 @@ var instancesCommands = {
       .click(button);
   },
   isModalClosed: function(element) {
-    return this.waitForElementNotVisible(element, 15000);
+    return this.waitForElementNotVisible(element);
   },
 };
 
@@ -63,8 +63,11 @@ module.exports = {
       selector: '.synicon-delete'
     },
     instancesTableRowDescription: {
-      selector: '//div[@class="instances-list-container"]/div[2]/*',
+      selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
       locateStrategy: 'xpath'
+    },
+    emptyListItem: {
+      selector: '.empty-list-item'
     },
     addInstanceModalTitle: {
       selector: '//h3[text()="Create an Instance"]',
