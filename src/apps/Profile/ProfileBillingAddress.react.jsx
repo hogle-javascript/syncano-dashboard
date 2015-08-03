@@ -1,20 +1,19 @@
-var React                      = require('react'),
-    Reflux                     = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    FormMixin                  = require('../../mixins/FormMixin'),
+import FormMixin from '../../mixins/FormMixin';
 
-    ProfileActions             = require('./ProfileActions'),
-    ProfileBillingAddressStore = require('./ProfileBillingAddressStore'),
+import Actions from './ProfileActions';
+import Store from './ProfileBillingAddressStore';
 
-    MUI                        = require('material-ui');
+import MUI from 'material-ui';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileBillingAddress',
 
   mixins: [
-    Reflux.connect(ProfileBillingAddressStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     FormMixin
   ],
@@ -59,15 +58,15 @@ module.exports = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    ProfileActions.fetchBillingProfile();
+  componentDidMount() {
+    Actions.fetchBillingProfile();
   },
 
-  handleSuccessfullValidation: function() {
-    ProfileActions.updateBillingProfile(this.state);
+  handleSuccessfullValidation() {
+    Actions.updateBillingProfile(this.state);
   },
 
-  render: function() {
+  render() {
     return (
       <div style={{padding: 48}}>
         {this.renderFormNotifications()}
@@ -75,8 +74,7 @@ module.exports = React.createClass({
         <form
           onSubmit      = {this.handleFormValidation}
           acceptCharset = "UTF-8"
-          method        = "post"
-        >
+          method        = "post">
           <div className="row vm-6-b">
             <div className="col-flex-1">
               <MUI.TextField
@@ -86,9 +84,7 @@ module.exports = React.createClass({
                 defaultValue      = {this.state.company_name}
                 errorText         = {this.getValidationMessages('company_name').join(' ')}
                 hintText          = "Company name"
-                floatingLabelText = "Company name"
-              />
-
+                floatingLabelText = "Company name" />
               <MUI.TextField
                 valueLink         = {this.linkState('first_name')}
                 defaultValue      = {this.state.first_name}
@@ -96,9 +92,7 @@ module.exports = React.createClass({
                 name              = "first_name"
                 floatingLabelText = "First name"
                 hintText          = "First name"
-                fullWidth         = {true}
-              />
-
+                fullWidth         = {true} />
               <MUI.TextField
                 valueLink         = {this.linkState('last_name')}
                 defaultValue      = {this.state.last_name}
@@ -106,9 +100,7 @@ module.exports = React.createClass({
                 name              = "last_name"
                 floatingLabelText = "Last name"
                 hintText          = "Last name"
-                fullWidth         = {true}
-              />
-
+                fullWidth         = {true} />
               <MUI.TextField
                 valueLink         = {this.linkState('tax_number')}
                 defaultValue      = {this.state.tax_number}
@@ -116,8 +108,7 @@ module.exports = React.createClass({
                 name              = "tax_number"
                 floatingLabelText = "Tax number"
                 hintText          = "Tax number"
-                fullWidth         = {true}
-              />
+                fullWidth         = {true} />
             </div>
             <div className="col-flex-1">
               <MUI.TextField
@@ -127,9 +118,7 @@ module.exports = React.createClass({
                 name              = "address_line1"
                 floatingLabelText = "Address"
                 hintText          = "Address"
-                fullWidth         = {true}
-              />
-
+                fullWidth         = {true} />
               <MUI.TextField
                 valueLink         = {this.linkState('address_line2')}
                 defaultValue      = {this.state.address_line2}
@@ -137,9 +126,7 @@ module.exports = React.createClass({
                 name              = "address_line2"
                 floatingLabelText = "Address"
                 hintText          = "Address"
-                fullWidth         = {true}
-              />
-
+                fullWidth         = {true} />
               <MUI.TextField
                 valueLink         = {this.linkState('address_country')}
                 defaultValue      = {this.state.address_country}
@@ -147,9 +134,7 @@ module.exports = React.createClass({
                 name              = "address_country"
                 floatingLabelText = "Country"
                 hintText          = "Country"
-                fullWidth         = {true}
-                />
-
+                fullWidth         = {true}  />
               <MUI.TextField
                 valueLink         = {this.linkState('address_state')}
                 defaultValue      = {this.state.address_state}
@@ -158,8 +143,7 @@ module.exports = React.createClass({
                 floatingLabelText = "State"
                 autoComplete      = "State"
                 hintText          = "State"
-                fullWidth         = {true}
-              />
+                fullWidth         = {true} />
 
               <div className="row">
                 <div className="col-md-15">
@@ -170,8 +154,7 @@ module.exports = React.createClass({
                     name              = "address_zip"
                     floatingLabelText = "Zip code"
                     hintText          = "Zip code"
-                    fullWidth         = {true}
-                  />
+                    fullWidth         = {true} />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TextField
@@ -181,8 +164,7 @@ module.exports = React.createClass({
                     name              = "address_city"
                     floatingLabelText = "City"
                     hintText          = "City"
-                    fullWidth         = {true}
-                  />
+                    fullWidth         = {true} />
                 </div>
               </div>
             </div>
@@ -191,11 +173,9 @@ module.exports = React.createClass({
             type       = "submit"
             label      = "Update"
             className  = "raised-button"
-            secondary  = {true}
-          />
+            secondary  = {true} />
         </form>
       </div>
     );
   }
-
 });

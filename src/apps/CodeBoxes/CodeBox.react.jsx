@@ -5,11 +5,11 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
-import CodeBoxStore from './CodeBoxStore';
-import CodeBoxActions from './CodeBoxActions';
+import Store from './CodeBoxStore';
+import Actions from './CodeBoxActions';
 
-import Common from '../../common';
 import MUI from 'material-ui';
+import Container from '../../common/Container';
 
 let RouteHandler = Router.RouteHandler;
 
@@ -22,7 +22,7 @@ export default React.createClass({
     Router.Navigation,
     React.addons.LinkedStateMixin,
 
-    Reflux.connect(CodeBoxStore),
+    Reflux.connect(Store),
     HeaderMixin,
     InstanceTabsMixin
   ],
@@ -44,31 +44,21 @@ export default React.createClass({
       {
         codeboxId    : this.state.currentCodeBox.id,
         instanceName : this.getParams().instanceName
-      });
+      }
+    );
   },
 
   getStyles() {
     return {
       subTabsHeader: {
-        backgroundColor: "transparent"
+        backgroundColor: 'transparent'
+      },
+      tabs: {
+        padding     : '0 250px',
+        borderBottom: '1px solid #DDDDDD'
       },
       tab: {
-        color: "#444"
-      },
-      subTabsContainer: {
-        display        : "flex",
-        justifyContent : "center",
-        margin         : '30px auto 0 auto',
-        maxWidth       : '85%',
-        borderBottom: '1px solid #DDD'
-      },
-      title: {
-        color     : "#777",
-        fontSize  : 20,
-        position  : "absolute",
-        left      : 100,
-        marginTop : 15,
-        width     : "250px"
+        color: '#444'
       }
     }
   },
@@ -76,14 +66,14 @@ export default React.createClass({
   getTabsData() {
     return [
       {
-        label : "Edit",
-        route : "codebox-edit"
+        label : 'Edit',
+        route : 'codebox-edit'
       }, {
-        label : "Config",
-        route : "codebox-config"
+        label : 'Config',
+        route : 'codebox-config'
       }, {
-        label : "Traces",
-        route : "codebox-traces"
+        label : 'Traces',
+        route : 'codebox-traces'
       }
     ];
   },
@@ -91,47 +81,41 @@ export default React.createClass({
   renderTabs() {
     let styles = this.getStyles(),
         codeBox = this.state.currentCodeBox;
+
     if (codeBox !== null) {
       return (
-        <div style={styles.subTabsContainer}>
-
-          <div style={styles.title}>Codebox: {codeBox.label}</div>
-          <MUI.Tabs
-            initialSelectedIndex  = {this.getActiveSubTabIndex()}
-            tabItemContainerStyle = {styles.subTabsHeader}
-            tabWidth              = {100}
-          >
-            <MUI.Tab
-              style    = {styles.tab}
-              label    = "Edit"
-              route    = "codebox-edit"
-              onActive = {this.handleTabActive}>
-            </MUI.Tab>
-            <MUI.Tab
-              style    = {styles.tab}
-              label    = "Config"
-              route    = "codebox-config"
-              onActive = {this.handleTabActive}>
-            </MUI.Tab>
-            <MUI.Tab
-              style    = {styles.tab}
-              label    = "Traces"
-              route    = "codebox-traces"
-              onActive = {this.handleTabActive}>
-            </MUI.Tab>
-          </MUI.Tabs>
-        </div>
+        <MUI.Tabs
+          initialSelectedIndex  = {this.getActiveSubTabIndex()}
+          tabItemContainerStyle = {styles.subTabsHeader}
+          style                 = {styles.tabs}>
+          <MUI.Tab
+            style    = {styles.tab}
+            label    = "Edit"
+            route    = "codebox-edit"
+            onActive = {this.handleTabActive} />
+          <MUI.Tab
+            style    = {styles.tab}
+            label    = "Config"
+            route    = "codebox-config"
+            onActive = {this.handleTabActive} />
+          <MUI.Tab
+            style    = {styles.tab}
+            label    = "Traces"
+            route    = "codebox-traces"
+            onActive = {this.handleTabActive} />
+        </MUI.Tabs>
       );
     }
   },
 
   render() {
+    let codeBoxLabel = this.state.currentCodeBox !== null ? 'CodeBox: ' + this.state.currentCodeBox.label : null;
+
     return (
-      <div>
+      <Container.Profile headerText={codeBoxLabel}>
         {this.renderTabs()}
         <RouteHandler/>
-      </div>
+      </Container.Profile>
     );
   }
-
 });

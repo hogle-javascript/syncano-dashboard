@@ -8,8 +8,8 @@ import Mixins from '../../mixins';
 
 // Stores and Actions
 import InstanceDialogStore from '../Instances/InstanceDialogStore';
-import Store from './SolutionInstallDialogStore';
-import Actions from './SolutionInstallDialogActions';
+import Store from './InstallDialogStore';
+import Actions from './InstallDialogActions';
 
 // Components
 import Common from '../../common';
@@ -19,10 +19,11 @@ export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
+    React.addons.LinkedStateMixin,
+
     Router.State,
     Router.Navigation,
 
-    React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialog,
 
@@ -73,6 +74,23 @@ export default React.createClass({
     console.debug('SolutionInstallDialog::handleDialogShow');
   },
 
+  renderCustomFormNotifications() {
+    let nonFormFields = ['classes'];
+    let messages = [];
+    Object.keys(this.state.errors).map((fieldName) => {
+      if (nonFormFields.indexOf(fieldName) > -1) {
+        this.state.errors[fieldName].map(error => {
+          Object.keys(error).map(key => {
+            messages.push(error[key]);
+          });
+        });
+      }
+    });
+    if (messages.length > 0) {
+      return <Common.Notification type='error'>{messages.join(' ')}</Common.Notification>;
+    }
+  },
+
   renderInstanceField() {
     if (this.state.instances === null) {
       return <Common.Loading />
@@ -81,13 +99,13 @@ export default React.createClass({
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
       return (
         <MUI.TextField
-            ref               = "instance"
-            name              = "instance"
-            fullWidth         = {true}
-            disabled          = {true}
-            valueLink         = {this.linkState('instance')}
-            errorText         = {this.getValidationMessages('instance').join(' ')}
-            floatingLabelText = "Instance Name" />
+          ref               = "instance"
+          name              = "instance"
+          fullWidth         = {true}
+          disabled          = {true}
+          valueLink         = {this.linkState('instance')}
+          errorText         = {this.getValidationMessages('instance').join(' ')}
+          floatingLabelText = "Instance Name" />
       )
     }
 
@@ -101,8 +119,7 @@ export default React.createClass({
         displayMember     = 'text'
         floatingLabelText = 'Instances'
         errorText         = {this.getValidationMessages('instance').join(' ')}
-        menuItems         = {Store.getInstancesDropdown()}
-      />
+        menuItems         = {Store.getInstancesDropdown()} />
     )
   },
 
@@ -113,15 +130,13 @@ export default React.createClass({
         ref        = 'cancel'
         key        = 'cancel'
         label      = 'Cancel'
-        onTouchTap = {this.handleCancel}
-      />,
+        onTouchTap = {this.handleCancel} />,
       <MUI.FlatButton
         ref        = 'submit'
         key        = 'confirm'
         label      = 'Confirm'
         primary    = {true}
-        onTouchTap = {this.handleFormValidation}
-      />
+        onTouchTap = {this.handleFormValidation} />
     ];
 
     return (
@@ -131,15 +146,15 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
+          {this.renderCustomFormNotifications()}
 
           <div className='row'>
-              <div className='col-flex-1'>
-                {this.renderInstanceField()}
-              </div>
+            <div className='col-flex-1'>
+              {this.renderInstanceField()}
+            </div>
           </div>
 
           <Common.Show if={!this.state.hideVersionPicker}>

@@ -7,7 +7,7 @@ require('brace/mode/python');
 require('brace/mode/javascript');
 require('brace/mode/ruby');
 require('brace/mode/golang');
-require('brace/theme/github');
+require('brace/theme/tomorrow');
 
 
 module.exports = React.createClass({

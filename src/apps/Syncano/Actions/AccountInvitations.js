@@ -8,9 +8,7 @@ export default {
   },
 
   accept(items) {
-    let promises = items.map(item => {
-      return this.Connection.AccountInvitations.accept(item.key);
-    });
+    let promises = items.map(item => this.Connection.AccountInvitations.accept(item.key));
 
     this.D.all(promises)
       .success(this.completed)
@@ -18,9 +16,7 @@ export default {
   },
 
   decline(items) {
-    let promises = items.map(item => {
-      return this.Connection.AccountInvitations.remove(item.id);
-    });
+    let promises = items.map(item => this.Connection.AccountInvitations.remove(item.id));
 
     this.D.all(promises)
       .success(this.completed)

@@ -1,28 +1,26 @@
-var Reflux                    = require('reflux'),
+import Reflux from 'reflux';
 
-    CheckListStoreMixin       = require('../../mixins/CheckListStoreMixin'),
-    StoreLoadingMixin         = require('../../mixins/StoreLoadingMixin'),
-    WaitForStoreMixin         = require('../../mixins/WaitForStoreMixin'),
+import Mixins from '../../mixins';
 
-    SessionActions            = require('../Session/SessionActions'),
-    ProfileInvitationsActions = require('./ProfileInvitationsActions');
+import SessionActions from '../Session/SessionActions';
+import Actions from './ProfileInvitationsActions';
 
-var ProfileInvitationsStore = Reflux.createStore({
-  listenables: ProfileInvitationsActions,
+export default Reflux.createStore({
+  listenables: Actions,
   mixins: [
-    CheckListStoreMixin,
-    StoreLoadingMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.StoreLoading,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -31,61 +29,56 @@ var ProfileInvitationsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ProfileInvitationsStore::refreshData');
-    ProfileInvitationsActions.fetchInvitations();
+    Actions.fetchInvitations();
   },
 
-  getInviations: function(empty) {
+  getInviations(empty) {
     return this.data.items || empty || null;
   },
 
-  setInvitations: function(items) {
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+  setInvitations(items) {
+    this.data.items = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  onFetchInvitations: function() {
+  onFetchInvitations() {
     console.debug('ProfileInvitationsStore::onFetchInvitations');
     this.trigger(this.data);
   },
 
-  onFetchInvitationsCompleted: function(items) {
+  onFetchInvitationsCompleted(items) {
     console.debug('ProfileInvitationsStore::onGetInstanesCompleted');
-    ProfileInvitationsActions.setInvitations(items);
+    Actions.setInvitations(items);
   },
 
-  onFetchInvitationsFailure: function(items) {
+  onFetchInvitationsFailure() {
     console.debug('ProfileInvitationsStore::onFetchInvitationsFailure');
     this.trigger(this.data);
   },
 
-  onAcceptInvitationsCompleted: function() {
+  onAcceptInvitationsCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onAcceptInvitationsFailure: function() {
+  onAcceptInvitationsFailure() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onDeclineInvitationsCompleted: function() {
+  onDeclineInvitationsCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   },
 
-  onDeclineInvitationsFailure: function() {
+  onDeclineInvitationsFailure() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = ProfileInvitationsStore;

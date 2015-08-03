@@ -1,30 +1,29 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    ClassesActions      = require('../Classes/ClassesActions'),
-    CodeBoxesActions    = require('../CodeBoxes/CodeBoxesActions'),
-    SessionActions      = require('../Session/SessionActions'),
-    TriggersActions     = require('./TriggersActions');
+//Stores & Actions
+import ClassesActions from '../Classes/ClassesActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SessionActions from '../Session/SessionActions';
+import TriggersActions from './TriggersActions';
 
-var TriggersStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : TriggersActions,
   mixins      : [
-    CheckListStoreMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -35,39 +34,34 @@ var TriggersStore = Reflux.createStore({
     );
   },
 
-  setTriggers: function(items) {
-    this.data.items = Object.keys(items).map(function(item) {
-      return items[item];
-    });
+  setTriggers(items) {
+    this.data.items = Object.keys(items).map(item => items[item]);
     this.trigger(this.data);
   },
 
-  getTriggers: function(empty) {
+  getTriggers(empty) {
     return this.data.items || empty || null;
   },
 
-  refreshData: function() {
+  refreshData() {
     TriggersActions.fetchTriggers();
   },
 
-  onFetchTriggers: function() {
+  onFetchTriggers() {
     console.debug('TriggersStore::onFetchTriggers');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchTriggersCompleted: function(items) {
+  onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
     this.data.isLoading = false;
     TriggersActions.setTriggers(items);
   },
 
-  onRemoveTriggersCompleted: function() {
+  onRemoveTriggersCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = TriggersStore;

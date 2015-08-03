@@ -1,20 +1,19 @@
-var Reflux           = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin   = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    ApiKeysActions     = require('./ApiKeysActions');
+//Stores & Actions
+import Actions from './ApiKeysActions';
 
-var ApiKeyDialogStore = Reflux.createStore({
-  listenables : ApiKeysActions,
+export default Reflux.createStore({
+  listenables : Actions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     // jscs:disable
     return {
       description       : null,
@@ -24,22 +23,19 @@ var ApiKeyDialogStore = Reflux.createStore({
     // jscs:enable
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  onCreateApiKeyCompleted: function() {
+  onCreateApiKeyCompleted() {
     console.debug('ApiKeyDialogStore::onCreateApiKeyCompleted');
     this.dismissDialog();
-    ApiKeysActions.fetchApiKeys();
+    Actions.fetchApiKeys();
   },
 
-  onUpdateApiKeyCompleted: function() {
+  onUpdateApiKeyCompleted() {
     console.debug('ApiKeyDialogStore::onUpdateApiKeyCompleted');
     this.dismissDialog();
-    ApiKeysActions.fetchApiKeys();
+    Actions.fetchApiKeys();
   }
-
 });
-
-module.exports = ApiKeyDialogStore;

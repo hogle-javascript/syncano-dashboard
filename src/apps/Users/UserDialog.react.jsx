@@ -6,8 +6,8 @@ import Select from 'react-select';
 import Mixins from '../../mixins';
 
 // Stores and Actions
+import Store from './UserDialogStore';
 import UsersActions from './UsersActions';
-import UserDialogStore from './UserDialogStore';
 import GroupsStore from './GroupsStore';
 
 // Components
@@ -22,7 +22,7 @@ export default React.createClass({
 
   mixins: [
     React.addons.LinkedStateMixin,
-    Reflux.connect(UserDialogStore),
+    Reflux.connect(Store),
     Mixins.Form,
     Mixins.Dialog
   ],
@@ -107,7 +107,7 @@ export default React.createClass({
         submitLabel       = 'Confirm',
         selectValueSource = this.getSelectValueSource(),
         selectValue       = '',
-        allGroups         = GroupsStore.getGroups().map(function(group) {
+        allGroups         = GroupsStore.getGroups().map(group => {
                               group.value = group.id + '';
                               return group;
                             }),
@@ -133,17 +133,15 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref       = 'dialog'
-        title     = {title + ' User'}
+        title     = {title + ' a User'}
         actions   = {dialogStandardActions}
-        onDismiss = {this.resetDialogState}
-      >
+        onDismiss = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post"
-          >
+            method        = "post">
             <MUI.TextField
               ref               = 'username'
               name              = 'username'
@@ -151,8 +149,7 @@ export default React.createClass({
               valueLink         = {this.linkState('username')}
               errorText         = {this.getValidationMessages('username').join(' ')}
               hintText          = 'Username'
-              floatingLabelText = 'Username'
-            />
+              floatingLabelText = 'Username' />
             <MUI.TextField
               ref               = 'password'
               name              = 'password'
@@ -162,22 +159,19 @@ export default React.createClass({
               errorText         = {this.getValidationMessages('password').join(' ')}
               hintText          = 'User password'
               floatingLabelText = 'Password'
-              className         = 'vm-4-b'
-            />
+              className         = 'vm-4-b' />
             <Select
               name        = 'group'
               multi       = {true}
               value       = {selectValue}
               placeholder = 'User groups'
               options     = {allGroups}
-              onChange    = {this.handleSelectFieldChange}
-            />
+              onChange    = {this.handleSelectFieldChange} />
           </form>
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading}
-          />
+            show     = {this.state.isLoading} />
         </div>
       </Common.Dialog>
     );

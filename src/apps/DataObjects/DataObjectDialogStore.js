@@ -1,22 +1,21 @@
-var Reflux             = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin     = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin   = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    DataObjectsActions = require('./DataObjectsActions'),
-    ChannelsStore      = require('../Channels/ChannelsStore'),
-    ChannelsActions    = require('../Channels/ChannelsActions');
+//Stores & Actions
+import DataObjectsActions from './DataObjectsActions';
+import ChannelsStore from '../Channels/ChannelsStore';
+import ChannelsActions from '../Channels/ChannelsActions';
 
-var DataObjectDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : DataObjectsActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       username : null,
       password : null,
@@ -26,12 +25,12 @@ var DataObjectDialogStore = Reflux.createStore({
     }
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(ChannelsActions.setChannels, this.getChannelsDropdown);
   },
 
-  getChannelsDropdown: function() {
+  getChannelsDropdown() {
     console.debug('DataViewDialogStore::getChannelsDropdown');
     var channels = ChannelsStore.getChannelsDropdown();
 
@@ -42,16 +41,13 @@ var DataObjectDialogStore = Reflux.createStore({
     this.trigger({channels: channels});
   },
 
-  onCreateDataObjectCompleted: function() {
+  onCreateDataObjectCompleted() {
     console.debug('DataObjectDialogStore::onCreateDataObjectCompleted');
     this.dismissDialog();
   },
 
-  onUpdateDataObjectCompleted: function() {
+  onUpdateDataObjectCompleted() {
     console.debug('DataObjectDialogStore::onUpdateDataObjectCompleted');
     this.dismissDialog();
   }
-
 });
-
-module.exports = DataObjectDialogStore;

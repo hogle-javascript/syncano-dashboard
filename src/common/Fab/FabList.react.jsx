@@ -1,17 +1,15 @@
-var React         = require('react'),
-    Radium        = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable;
+import MUI from 'material-ui';
 
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'FABList',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       position: 'bottom'
     }
@@ -21,14 +19,14 @@ module.exports = Radium(React.createClass({
     position: React.PropTypes.string.isRequired
   },
 
-  getStyles: function() {
-    var styles = {
-      position: 'fixed',
-      right: '2vw',
-      zIndex: 9,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-end'
+  getStyles() {
+    let styles = {
+      position       : 'fixed',
+      right          : '2vw',
+      zIndex         : 9,
+      display        : 'flex',
+      flexDirection  : 'column',
+      alignItems     : 'flex-end'
     };
 
     if (this.props.position === 'bottom') {
@@ -40,8 +38,8 @@ module.exports = Radium(React.createClass({
     return this.mergeStyles(styles, this.props.style);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div style={styles}>

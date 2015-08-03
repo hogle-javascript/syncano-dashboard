@@ -7,15 +7,15 @@ import MUI from 'material-ui';
 import Mixins from '../../mixins';
 import Common from '../../common';
 
-import ProfileActions from './ProfileActions';
-import ProfileBillingPaymentStore from './ProfileBillingPaymentStore';
+import Actions from './ProfileActions';
+import Store from './ProfileBillingPaymentStore';
 
-module.exports = React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ProfileBillingPayment',
 
   mixins: [
-    Reflux.connect(ProfileBillingPaymentStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     Mixins.Form
   ],
@@ -49,14 +49,14 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    ProfileActions.fetchBillingCard();
+    Actions.fetchBillingCard();
   },
 
   handleSuccessfullValidation() {
-    ProfileActions.updateBillingCard(this.state);
+    Actions.updateBillingCard(this.state);
   },
 
-  toggleForm: function(state) {
+  toggleForm(state) {
     this.setState({
       showForm: state,
       show_form: state
@@ -64,9 +64,9 @@ module.exports = React.createClass({
   },
 
   render() {
-    let hasCard      = !_.isEmpty(this.state.card);
-    let showForm     = !hasCard || this.state.showForm === true || this.state.show_form === true;
-    let labelPrefix  = hasCard ? 'Update' : 'Add';
+    let hasCard     = !_.isEmpty(this.state.card),
+        showForm    = !hasCard || this.state.showForm === true || this.state.show_form === true,
+        labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
       <div style={{padding: 48}}>
@@ -76,11 +76,9 @@ module.exports = React.createClass({
               onSubmit      = {this.handleFormValidation}
               acceptCharset = "UTF-8"
               method        = "post">
-
               {this.renderFormNotifications()}
 
               <div className="row">
-
                 <div className="col-lg-20">
                   <MUI.TextField
                     name              = "number"
@@ -89,8 +87,7 @@ module.exports = React.createClass({
                     errorText         = {this.getValidationMessages('number').join(' ')}
                     hintText          = "Card Number"
                     floatingLabelText = "Card Number"
-                    dataStripe        = "number"
-                  />
+                    dataStripe        = "number" />
                 </div>
               </div>
               <div className="row">
@@ -102,8 +99,7 @@ module.exports = React.createClass({
                     errorText         = {this.getValidationMessages('cvc').join(' ')}
                     hintText          = "CVC"
                     floatingLabelText = "CVC"
-                    dataStripe        = "cvc"
-                  />
+                    dataStripe        = "cvc" />
                 </div>
               </div>
               <div className="row vm-4-b">
@@ -118,8 +114,7 @@ module.exports = React.createClass({
                         errorText         = {this.getValidationMessages('exp_month').join(' ')}
                         hintText          = "Expiration month (MM)"
                         floatingLabelText = "Expiration month (MM)"
-                        dataStripe        = "exp-month"
-                      />
+                        dataStripe        = "exp-month" />
                     </div>
                     <div className="col-flex-1">
                       <MUI.TextField
@@ -130,8 +125,7 @@ module.exports = React.createClass({
                         errorText         = {this.getValidationMessages('exp_year').join(' ')}
                         hintText          = "Expiration year (YYYY)"
                         floatingLabelText = "Expiration year (YYYY)"
-                        dataStripe        = "exp-year"
-                      />
+                        dataStripe        = "exp-year" />
                     </div>
                   </div>
                 </div>
@@ -142,16 +136,14 @@ module.exports = React.createClass({
                     <MUI.RaisedButton
                       onClick   = {this.toggleForm.bind(this, false)}
                       label     = "Cancel"
-                      className = "raised-button"
-                    />
+                      className = "raised-button" />
                   </Common.Show>
                   <MUI.RaisedButton
                     type      = "submit"
                     label     = {labelPrefix + ' payment'}
                     className = "raised-button"
                     secondary = {true}
-                    style     = {{margin: '0 0 0 auto'}}
-                  />
+                    style     = {{margin: '0 0 0 auto'}} />
                 </div>
               </div>
             </form>
@@ -165,13 +157,11 @@ module.exports = React.createClass({
                 type       = "submit"
                 label      = {labelPrefix + ' payment'}
                 className  = "raised-button"
-                secondary  = {true}
-              />
+                secondary  = {true} />
             </div>
           </Common.Show>
         </Common.Loading>
       </div>
     );
   }
-
-});
+}));

@@ -1,76 +1,38 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = require('../Session/Connection').get(),
-    D          = Syncano.D;
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-var ClassesActions = Reflux.createActions({
-  checkItem      : {},
-  uncheckAll     : {},
-  selectAll      : {},
+export default CreateActions({
+    checkItem: {},
+    uncheckAll: {},
+    selectAll: {},
 
-  setClasses     : {},
-  fetch          : {},
-  getClassByName : {},
+    setClasses: {},
+    fetch: {},
+    getClassByName: {},
 
-  showDialog     : {},
-  dismissDialog  : {},
+    showDialog: {},
+    dismissDialog: {},
 
-  fetchClasses: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  createClass: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  updateClass: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
-  },
-  removeClasses: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    fetchClasses: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Classes.list'
+    },
+    createClass: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Classes.create'
+    },
+    updateClass: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Classes.update'
+    },
+    removeClasses: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Classes.remove'
+    }
   }
-});
-
-ClassesActions.fetchClasses.listen(function() {
-  console.info('ClassesActions::fetchClasses');
-  Connection
-    .Classes
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ClassesActions.createClass.listen(function(payload) {
-  console.info('ClassesActions::createClass', payload);
-  Connection
-    .Classes
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ClassesActions.updateClass.listen(function(classname, payload) {
-  console.info('ClassesActions::updateClass');
-  Connection
-    .Classes
-    .update(classname, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-ClassesActions.removeClasses.listen(function(classnames) {
-  console.info('ClassesActions::removeClasses');
-  var promises = classnames.map(function(classname) {
-    return Connection.Classes.remove(classname);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-module.exports = ClassesActions;
+);

@@ -1,7 +1,6 @@
 import React from 'react';
-import Reflux from 'reflux';
 
-import SolutionsListItem from './SolutionsListItem.react';
+import ListItem from './ListItem';
 
 export default React.createClass({
 
@@ -26,10 +25,14 @@ export default React.createClass({
     return this.props.items.map(item => {
       return (
         <div
-          key   = {item.id}
-          style = {this.getStyles().listItem}
+          key        = {item.id}
+          style      = {this.getStyles().listItem}
         >
-          <SolutionsListItem data={item} />
+          <ListItem
+            data={item}
+            onInstall  = {this.props.onInstall}
+            onSeeMore  = {this.props.onSeeMore}
+            onTagClick = {this.props.onTagClick}/>
         </div>
       )
     });
@@ -39,8 +42,7 @@ export default React.createClass({
     return (
       <div
         className = "row"
-        style     = {this.getStyles().list}
-      >
+        style     = {this.getStyles().list}>
         {this.getListItems()}
       </div>
     );

@@ -66,7 +66,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update' : 'Create';
+    let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
       {
         ref        : 'cancel',
@@ -87,15 +87,13 @@ export default React.createClass({
         openImmediately = {this.props.openImmediately}
         actions         = {dialogStandardActions}
         onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
             onSubmit      = {this.handleFormValidation}
             acceptCharset = "UTF-8"
-            method        = "post"
-          >
+            method        = "post">
             <MUI.TextField
               ref               = "label"
               name              = "label"
@@ -103,8 +101,7 @@ export default React.createClass({
               valueLink         = {this.linkState('label')}
               errorText         = {this.getValidationMessages('label').join(' ')}
               hintText          = "Label of the trigger"
-              floatingLabelText = "Label" 
-            />
+              floatingLabelText = "Label" />
             <MUI.SelectField
               ref               = "signal"
               name              = "signal"
@@ -114,8 +111,7 @@ export default React.createClass({
               errorText         = {this.getValidationMessages('signal').join(' ')}
               valueMember       = "payload"
               displayMember     = "text"
-              menuItems         = {TriggerDialogStore.getSignalsDropdown()} 
-            />
+              menuItems         = {TriggerDialogStore.getSignalsDropdown()} />
             <MUI.SelectField
               ref               = "class"
               name              = "class"
@@ -125,8 +121,7 @@ export default React.createClass({
               errorText         = {this.getValidationMessages('class').join(' ')}
               valueMember       = "payload"
               displayMember     = "text"
-              menuItems         = {this.state.classes} 
-            />
+              menuItems         = {this.state.classes} />
             <MUI.SelectField
               ref               = "codebox"
               name              = "codebox"
@@ -136,8 +131,7 @@ export default React.createClass({
               valueMember       = "payload"
               displayMember     = "text"
               fullWidth         = {true}
-              menuItems         = {this.state.codeboxes} 
-            />
+              menuItems         = {this.state.codeboxes} />
           </form>
         </div>
       </Common.Dialog>

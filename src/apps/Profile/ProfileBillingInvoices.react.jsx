@@ -2,25 +2,26 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import SessionStore from '../Session/SessionStore';
-import ProfileActions from './ProfileActions';
-import ProfileBillingInvoicesStore from './ProfileBillingInvoicesStore';
+import Actions from './ProfileActions';
+import Store from './ProfileBillingInvoicesStore';
 
 import MUI from 'material-ui';
 import Common from '../../common';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
-let Column = Common.ColumnList.Column;
+let ColumnList = Common.ColumnList;
+let Column     = ColumnList.Column;
 
 export default React.createClass({
 
   displayName: 'ProfileBillingInvoices',
 
   mixins: [
-    Reflux.connect(ProfileBillingInvoicesStore)
+    Reflux.connect(Store)
   ],
 
   componentDidMount() {
-    ProfileActions.fetchInvoices();
+    Actions.fetchInvoices();
   },
 
   handlePDFClick(invoice) {
@@ -31,18 +32,18 @@ export default React.createClass({
 
   renderListItem(invoice) {
     return (
-      <Item key = {invoice.id}>
-        <ColumnDesc>{invoice.period}</ColumnDesc>
-        <ColumnDesc>{invoice.id}</ColumnDesc>
-        <ColumnDesc>{invoice.amount}</ColumnDesc>
-        <ColumnDesc>{invoice.status}</ColumnDesc>
-        <ColumnDesc>
+      <ColumnList.Item key = {invoice.id}>
+        <Column.Desc>{invoice.period}</Column.Desc>
+        <Column.Desc>{invoice.id}</Column.Desc>
+        <Column.Desc>{invoice.amount}</Column.Desc>
+        <Column.Desc>{invoice.status}</Column.Desc>
+        <Column.Desc>
           <MUI.FlatButton
             label   = "VIEW"
             primary = {true}
             onClick = {this.handlePDFClick.bind(null, invoice)} />
-        </ColumnDesc>
-      </Item>
+        </Column.Desc>
+      </ColumnList.Item>
     );
   },
 

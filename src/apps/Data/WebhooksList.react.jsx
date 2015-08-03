@@ -5,13 +5,12 @@ import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import WebhooksActions from './WebhooksActions';
-import WebhooksStore from './WebhooksStore';
+import Actions from './WebhooksActions';
+import Store from './WebhooksStore';
 
 // Components
 import MUI from 'material-ui';
@@ -50,15 +49,14 @@ export default React.createClass({
 
   handleURLClick() {
     this.refs.snackbar.show();
-    setTimeout(function() {
+    setTimeout(() => {
       this.refs.snackbar.dismiss()
-    }.bind(this), 1200)
+    }, 1200)
   },
 
   renderItem(item) {
-
-    let publicString = item.public.toString();
-    let publicCell = publicString;
+    let publicString = item.public.toString(),
+        publicCell   = publicString;
 
     if (item.public) {
       publicCell = (
@@ -67,8 +65,7 @@ export default React.createClass({
             <MUI.IconButton
               iconClassName = "synicon-link-variant"
               tooltip       = "Copy Webhook URL"
-              onClick       = {this.handleURLClick}
-            />
+              onClick       = {this.handleURLClick} />
           </ReactZeroClipboard>
         </div>
       )
@@ -77,15 +74,13 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.name}
-      >
+        key     = {item.name}>
         <Column.CheckIcon
           id              = {item.name.toString()}
           icon            = 'arrow-up-bold'
           background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-        >
+          handleIconClick = {this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
@@ -97,7 +92,7 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -128,8 +123,8 @@ export default React.createClass({
           </Common.Loading>
         </Common.Lists.List>
         <MUI.Snackbar
-            ref     = "snackbar"
-            message = "URL copied to the clipboard" />
+          ref     = "snackbar"
+          message = "URL copied to the clipboard" />
       </Common.Lists.Container>
     );
   }

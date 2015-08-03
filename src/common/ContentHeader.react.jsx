@@ -9,17 +9,17 @@ module.exports = React.createClass({
 
   displayName: 'ContentHeader',
 
-  getInitialState: function () {
-      return {
-          headerNameWidth: 11
-      };
+  getInitialState: function() {
+    return {
+      headerNameWidth: 11
+    };
   },
 
   toggleDropdownMenu: function() {
     ViewActions.showDropdown(this.props.list.uuid);
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.setState({
       headerNameWidth: this.props.initialHeaderWidth
     }, function() {

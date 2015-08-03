@@ -52,7 +52,7 @@ export default React.createClass({
         key          = {item.name}
         id           = {item.name}
         checked      = {item.checked}
-        handleClick  = {this.handleItemClick} >
+        handleClick  = {this.handleItemClick.bind(null, item.name)} >
         <Column.CheckIcon
           id              = {item.name.toString()}
           icon            = {item.metadata ? item.metadata.icon : 'table-large'}
@@ -78,7 +78,7 @@ export default React.createClass({
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -94,7 +94,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="classes-list-container">
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header>Description</Column.Desc.Header>

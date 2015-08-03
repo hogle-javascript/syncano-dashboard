@@ -1,74 +1,34 @@
-var Reflux     = require('reflux'),
+import CreateActions from '../../utils/ActionsConstructor.js';
 
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
-
-var SchedulesActions = Reflux.createActions({
-  checkItem    : {},
-  uncheckAll   : {},
-  selectAll    : {},
-  fetch        : {},
-  setSchedules : {},
-  showDialog   : {},
-  dismissDialog: {},
-  fetchSchedules: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+export default CreateActions(
+  {
+    withCheck  : true,
+    withDialog : true
   },
-  createSchedule: {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  updateSchedule: {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  removeSchedules: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+  {
+    fetch        : {},
+    setSchedules : {},
+    fetchSchedules: {
+      asyncResult : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Schedules.list'
+    },
+    createSchedule: {
+      asyncResult : true,
+      asyncForm   : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Schedules.create'
+    },
+    updateSchedule: {
+      asyncResult : true,
+      asyncForm   : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Schedules.update'
+    },
+    removeSchedules: {
+      asyncResult : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.Schedules.remove'
+    }
   }
-
-});
-
-SchedulesActions.createSchedule.listen(function(payload) {
-  console.info('SchedulesActions::createSchedule', payload);
-  Connection
-    .Schedules
-    .create(payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SchedulesActions.fetchSchedules.listen(function() {
-  console.info('SchedulesActions::fetchSchedules');
-  Connection
-    .Schedules
-    .list()
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SchedulesActions.updateSchedule.listen(function(id, payload) {
-  console.info('SchedulesActions::updateSchedule');
-  Connection
-    .Schedules
-    .update(id, payload)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-SchedulesActions.removeSchedules.listen(function(schedules) {
-  console.info('SchedulesActions::removeSchedules');
-  var promises = schedules.map(function(schedule) {
-    return Connection.Schedules.remove(schedule.id);
-  });
-
-  D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
-});
-
-module.exports = SchedulesActions;
+);

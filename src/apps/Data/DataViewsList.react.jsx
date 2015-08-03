@@ -5,11 +5,11 @@ import Router from 'react-router';
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
-// Stores and Actions
-
-// Components 
+// Components
 import MUI from 'material-ui';
 import Common from '../../common';
+
+let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
@@ -44,26 +44,24 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked = {item.checked}
-        key     = {item.name}
-      >
-        <Common.ColumnList.Column.CheckIcon
+        key     = {item.name}>
+        <Column.CheckIcon
           id              = {item.name}
           icon            = 'table'
           background      = {MUI.Styles.Colors.blue500}
           checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-        >
+          handleIconClick = {this.handleItemIconClick}>
           {item.name}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc className="col-xs-8">{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Desc>{item.class}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.CheckIcon>
+        <Column.Desc className="col-xs-8">{item.description}</Column.Desc>
+        <Column.Desc>{item.class}</Column.Desc>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -82,10 +80,10 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header className="col-xs-8">Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Desc.Header>Class</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.Desc.Header className="col-xs-8">Description</Column.Desc.Header>
+          <Column.Desc.Header>Class</Column.Desc.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

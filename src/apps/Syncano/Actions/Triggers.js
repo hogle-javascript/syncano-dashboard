@@ -24,10 +24,7 @@ export default {
   },
 
   remove(ids) {
-
-    let promises = ids.map(id => {
-      return this.Connection.Triggers.remove(id);
-    });
+    let promises = ids.map(id => this.Connection.Triggers.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

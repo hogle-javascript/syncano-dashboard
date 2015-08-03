@@ -7,10 +7,10 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
+import Actions from './AdminsActions';
+import Store from './AdminsStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import AdminsActions from './AdminsActions';
-import AdminsStore from './AdminsStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
@@ -31,7 +31,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(AdminsStore, 'admins'),
+    Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
@@ -46,12 +46,12 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Admins::componentDidMount');
-    AdminsActions.fetch();
+    Actions.fetch();
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedAdmins            = AdminsStore.getCheckedItems();
+    let checkedAdmins            = Store.getCheckedItems();
     let checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
 
     return [
@@ -72,8 +72,7 @@ export default React.createClass({
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.admins.isLoading}
-            />
+              show     = {this.state.admins.isLoading} />
           ]
         }
       },
@@ -94,8 +93,7 @@ export default React.createClass({
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.invitations.isLoading}
-            />
+              show     = {this.state.invitations.isLoading} />
           ]
         }
       },
@@ -116,8 +114,7 @@ export default React.createClass({
             <Common.Loading
               type     = "linear"
               position = "bottom"
-              show     = {this.state.invitations.isLoading}
-            />
+              show     = {this.state.invitations.isLoading} />
           ]
         }
       }
@@ -126,7 +123,7 @@ export default React.createClass({
 
   handleDeleteAdmin() {
     console.info('Admins::handleDelete');
-    AdminsActions.removeAdmins(AdminsStore.getCheckedItems());
+    Actions.removeAdmins(Store.getCheckedItems());
   },
 
   handleResendInvitation() {
@@ -140,13 +137,13 @@ export default React.createClass({
 
   uncheckAll() {
     console.info('Admins::uncheckAll');
-    AdminsActions.uncheckAll();
+    Actions.uncheckAll();
     AdminsInvitationsActions.uncheckAll();
   },
 
   selectAllAdmins() {
     console.info('Admins::selectAllAdmins');
-    AdminsActions.selectAllAdmins();
+    Actions.selectAllAdmins();
   },
 
   selectAllAdminsInvitations() {
@@ -156,24 +153,24 @@ export default React.createClass({
 
   checkAdminItem(id, state) {
     AdminsInvitationsActions.uncheckAll();
-    AdminsActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   checkInvitationItem(id, state) {
-    AdminsActions.uncheckAll();
+    Actions.uncheckAll();
     AdminsInvitationsActions.checkItem(id, state);
   },
 
   showAdminDialog() {
-    AdminsActions.showDialog();
+    Actions.showDialog();
   },
 
   showAdminEditDialog() {
-    AdminsActions.showDialog(AdminsStore.getCheckedItem());
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   render() {
-    let checkedAdmins                = AdminsStore.getNumberOfChecked();
+    let checkedAdmins                = Store.getNumberOfChecked();
     let checkedInvitations           = AdminsInvitationsStore.getNumberOfChecked();
     let isAnyAdminSelected           = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1);
     let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
@@ -191,21 +188,18 @@ export default React.createClass({
               label         = {isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
-              iconClassName = {isAnyAdminSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyAdminSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Administrator"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteAdminDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit Admin"
               mini          = {true}
               disabled      = {checkedAdmins > 1}
               onClick       = {this.showAdminEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
           </Common.Fab>
         </Common.Show>
 
@@ -215,20 +209,17 @@ export default React.createClass({
               label         = {isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
-              iconClassName = {isAnyAdminInvitationSelected ? markedIcon : blankIcon}
-            />
+              iconClassName = {isAnyAdminInvitationSelected ? markedIcon : blankIcon} />
             <Common.Fab.Item
               label         = "Click here to delete Invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'removeInvitationDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to resend invitation"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'resendInvitationDialog')}
-              iconClassName = "synicon-backup-restore"
-            />
+              iconClassName = "synicon-backup-restore" />
           </Common.Fab>
         </Common.Show>
 
@@ -236,16 +227,14 @@ export default React.createClass({
           <Common.Fab.Item
             label         = "Click here to invite Admin"
             onClick       = {this.showAdminDialog}
-            iconClassName = "synicon-plus"
-          />
+            iconClassName = "synicon-plus" />
         </Common.Fab>
 
         <AdminsList
           name       = "Administrators"
           checkItem  = {this.checkAdminItem}
           isLoading  = {this.state.admins.isLoading}
-          items      = {this.state.admins.items}
-        />
+          items      = {this.state.admins.items} />
         <AdminsList
           name                 = "Invitations"
           mode                 = "invitations"
@@ -253,10 +242,8 @@ export default React.createClass({
           emptyItemContent     = "Invite administrator"
           checkItem            = {this.checkInvitationItem}
           isLoading            = {this.state.invitations.isLoading}
-          items                = {AdminsInvitationsStore.getPendingInvitations()}
-        />
+          items                = {AdminsInvitationsStore.getPendingInvitations()} />
       </Container>
     );
   }
-
 });

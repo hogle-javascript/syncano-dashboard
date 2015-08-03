@@ -5,12 +5,12 @@ import Mixins from '../../mixins';
 
 //Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import GroupsActions from './GroupsActions';
+import Actions from './GroupsActions';
 import UsersActions from './UsersActions';
 import UsersStore from './UsersStore';
 
-let GroupsStore = Reflux.createStore({
-  listenables : GroupsActions,
+export default Reflux.createStore({
+  listenables : Actions,
 
   mixins : [
     Mixins.CheckListStore,
@@ -39,10 +39,7 @@ let GroupsStore = Reflux.createStore({
   setGroups(groups) {
     console.debug('GroupsStore::setGroups');
 
-    this.data.items = Object.keys(groups).map(function(key) {
-      return groups[key];
-    });
-
+    this.data.items = Object.keys(groups).map(key => groups[key]);
     this.trigger(this.data);
   },
 
@@ -60,13 +57,13 @@ let GroupsStore = Reflux.createStore({
   },
 
   refreshData() {
-    GroupsActions.fetchGroups();
+    Actions.fetchGroups();
   },
 
   onSetActiveGroup(group) {
     console.debug('GroupsStore::onSetActiveGroup');
 
-    var isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
+    let isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
     this.data.activeGroup = isCurrentActiveGroup ? null : group;
     this.trigger(this.data);
   },
@@ -78,7 +75,7 @@ let GroupsStore = Reflux.createStore({
 
   onFetchGroupsCompleted(items) {
     console.debug('GroupsStore::onFetchGroupsCompleted');
-    GroupsActions.setGroups(items);
+    Actions.setGroups(items);
   },
 
   onRemoveGroupsCompleted(payload) {
@@ -92,5 +89,3 @@ let GroupsStore = Reflux.createStore({
     this.trigger(this.data);
   }
 });
-
-module.exports = GroupsStore;

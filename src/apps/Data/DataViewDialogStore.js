@@ -1,22 +1,21 @@
-var Reflux            = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin    = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin  = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    DataViewsActions  = require('./DataViewsActions'),
-    ClassesActions  = require('../Classes/ClassesActions'),
-    ClassesStore    = require('../Classes/ClassesStore');
+//Stores & Actions
+import DataViewsActions from './DataViewsActions';
+import ClassesActions from '../Classes/ClassesActions';
+import ClassesStore from '../Classes/ClassesStore';
 
-var DataViewDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : DataViewsActions,
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       label     : '',
       crontab   : '',
@@ -33,14 +32,14 @@ var DataViewDialogStore = Reflux.createStore({
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
     this.listenTo(ClassesActions.setClasses, this.getClassesDropdown);
   },
 
-  getClassesDropdown: function() {
+  getClassesDropdown() {
     console.debug('DataViewDialogStore::getClassesDropdown');
-    var classes = ClassesStore.getClassesDropdown();
+    let classes = ClassesStore.getClassesDropdown();
 
     if (classes.length === 0) {
       classes = [{payload: '', text: 'No classes, add one first'}];
@@ -49,22 +48,19 @@ var DataViewDialogStore = Reflux.createStore({
     this.trigger({classes: classes});
   },
 
-  getCrontabDropdown: function() {
+  getCrontabDropdown() {
     return this.crontabItems;
   },
 
-  onCreateDataViewCompleted: function() {
+  onCreateDataViewCompleted() {
     console.debug('DataViewDialogStore::onCreateDataViewCompleted');
     this.dismissDialog();
     DataViewsActions.fetchDataViews();
   },
 
-  onUpdateDataViewCompleted: function() {
+  onUpdateDataViewCompleted() {
     console.debug('DataViewDialogStore::onUpdateDataViewCompleted');
     this.dismissDialog();
     DataViewsActions.fetchDataViews();
   }
-
 });
-
-module.exports = DataViewDialogStore;

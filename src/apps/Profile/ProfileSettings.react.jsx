@@ -1,22 +1,22 @@
-var React                = require('react'),
-    Reflux               = require('reflux'),
+import React from 'react';
+import Reflux from 'reflux';
 
-    HeaderMixin          = require('../Header/HeaderMixin'),
-    FormMixin            = require('../../mixins/FormMixin'),
+import FormMixin from '../../mixins/FormMixin';
+import HeaderMixin from '../Header/HeaderMixin';
 
-    ProfileActions       = require('./ProfileActions'),
-    ProfileSettingsStore = require('./ProfileSettingsStore'),
-    SessionStore         = require('../Session/SessionStore'),
+import SessionStore from '../Session/SessionStore';
+import Actions from './ProfileActions';
+import Store from './ProfileSettingsStore';
 
-    MUI                  = require('material-ui'),
-    Container            = require('../../common/Container');
+import MUI from 'material-ui';
+import Container from '../../common/Container/ProfileContainer.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ProfileSettings',
 
   mixins: [
-    Reflux.connect(ProfileSettingsStore),
+    Reflux.connect(Store),
     React.addons.LinkedStateMixin,
     HeaderMixin,
     FormMixin
@@ -50,7 +50,7 @@ module.exports = React.createClass({
     }
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       content: {
         padding      : 48
@@ -72,18 +72,17 @@ module.exports = React.createClass({
     }
   },
 
-  handleSuccessfullValidation: function() {
-    ProfileActions.updateSettings(this.state);
+  handleSuccessfullValidation() {
+    Actions.updateSettings(this.state);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
-      <Container.Profile
+      <Container
         headerText = 'Profile'
-        show       = {this.state.isLoading}
-      >
+        show       = {this.state.isLoading}>
         <div style={styles.content}>
           {this.renderFormNotifications()}
           <form
@@ -102,8 +101,7 @@ module.exports = React.createClass({
               className         = "text-field"
               autoComplete      = "firstName"
               hintText          = "First name"
-              fullWidth         = {true}
-            />
+              fullWidth         = {true} />
 
             <MUI.TextField
               ref               = "lastName"
@@ -115,8 +113,7 @@ module.exports = React.createClass({
               className         = "text-field"
               autoComplete      = "lastName"
               hintText          = "Last name"
-              fullWidth         = {true}
-            />
+              fullWidth         = {true} />
 
             <MUI.TextField
               ref               = "email"
@@ -127,8 +124,7 @@ module.exports = React.createClass({
               autoComplete      = "email"
               hintText          = "Your email"
               disabled          = {true}
-              fullWidth         = {true}
-            />
+              fullWidth         = {true} />
 
             <MUI.RaisedButton
               type       = "submit"
@@ -136,11 +132,10 @@ module.exports = React.createClass({
               style      = {styles.updateButton}
               labelStyle = {styles.updateButtonLabel}
               className  = "raised-button"
-              secondary  = {true}
-            />
+              secondary  = {true} />
           </form>
         </div>
-      </Container.Profile>
+      </Container>
     );
   }
 });

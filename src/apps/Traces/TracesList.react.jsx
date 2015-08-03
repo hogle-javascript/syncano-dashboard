@@ -5,13 +5,12 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import TracesActions from './TracesActions';
-import TracesStore from './TracesStore';
+import Actions from './TracesActions';
+import Store from './TracesStore';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -23,7 +22,7 @@ export default Radium(React.createClass({
   displayName: 'TracesList',
 
   mixins: [
-    Reflux.connect(TracesStore),
+    Reflux.connect(Store),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -64,9 +63,29 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let styles     = this.getStyles(),
-        background = item.status === 'success' ? MUI.Styles.Colors.green400 : MUI.Styles.Colors.red400,
-        icon       = item.status === 'success' ? 'check' : 'alert';
+    let styles = this.getStyles();
+    let status = {
+      blocked: {
+        background: 'rgba(0,0,0,0.2)',
+        icon: 'alert'
+      },
+      pending: {
+        background: MUI.Styles.Colors.lightBlue500,
+        icon: 'timelapse'
+      },
+      success: {
+        background: MUI.Styles.Colors.green400,
+        icon: 'check'
+      },
+      failure: {
+        background: MUI.Styles.Colors.red400,
+        icon: 'alert'
+      },
+      timeout: {
+        background: MUI.Styles.Colors.red400,
+        icon: 'alert'
+      }
+    }[item.status];
 
     if (item.id == this.state.visibleTraceId) {
       styles.traceResult = {
@@ -85,19 +104,19 @@ export default Radium(React.createClass({
           checked     = {item.checked}
           key         = {item.id}
           id          = {item.id}
-          handleClick = {this.toggleTrace}
-        >
-          <Common.ColumnList.Column.CheckIcon
-            id              = {item.id}
-            icon            = {icon}
-            background      = {background}
-            checkable       = {false}
-          >
+          handleClick = {this.toggleTrace.bind(null, item.id)}>
+          <Column.CheckIcon
+            id              = {item.id.toString()}
+            icon            = {status.icon}
+            background      = {status.background}
+            checkable       = {false}>
             {item.status}
-          </Common.ColumnList.Column.CheckIcon>
-          <Common.ColumnList.Column.ID>{item.id}</Common.ColumnList.Column.ID>
-          <Common.ColumnList.Column.Desc>{item.duration}ms</Common.ColumnList.Column.Desc>
-          <Common.ColumnList.Column.Date date={item.executed_at} />
+          </Column.CheckIcon>
+          <Column.ID>{item.id}</Column.ID>
+          <Column.Desc>{item.duration}ms</Column.Desc>
+          <Column.Date
+            date      = {item.executed_at}
+            ifInvalid = {item.status} />
         </Common.ColumnList.Item>
         <div style={styles.traceResult}>
           <Common.Trace.Result result={item.result}/>
@@ -122,7 +141,7 @@ export default Radium(React.createClass({
         <MUI.FontIcon
           style     = {styles.noTracesIcon}
           className = "synicon-package-variant" />
-        <p style={styles.noTracesText}>There is no traces for this CodeBox yet</p>
+        <p style={styles.noTracesText}>There are no traces for this CodeBox yet</p>
       </div>
     ];
   },

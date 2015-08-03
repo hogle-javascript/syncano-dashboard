@@ -1,13 +1,14 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    RouteHandler  = Router.RouteHandler,
+import React        from 'react';
+import Router       from 'react-router';
 
-    HeaderMixin   = require('../apps/Header/HeaderMixin'),
+import HeaderMixin  from '../apps/Header/HeaderMixin';
 
-    MUI           = require('material-ui'),
-    Container     = require('../common/Container');
+import MUI          from 'material-ui';
+import Container    from '../common/Container';
 
-module.exports = React.createClass({
+let RouteHandler  = Router.RouteHandler;
+
+export default React.createClass({
 
   displayName: 'ProfileBilling',
 
@@ -55,15 +56,14 @@ module.exports = React.createClass({
     }
   ],
 
-  getStyles: function() {
+  getStyles() {
     return {
       subTabsHeader: {
         backgroundColor: 'transparent'
       },
       tabs: {
-        paddingLeft: 150,
-        paddingRight: 150,
-        borderBottom: '1px solid #DDDDDD'
+        padding      : '0 150px',
+        borderBottom : '1px solid #DDDDDD'
       },
       tab: {
         color: '#444'
@@ -75,23 +75,23 @@ module.exports = React.createClass({
     this.refs.tabs.setState({selectedIndex: this.getActiveSubTabIndex()})
   },
 
-  getActiveSubTabIndex: function() {
-    var index = 0;
-    this.subTabsItems.some(function(item, i) {
+  getActiveSubTabIndex() {
+    let index = 0;
+    this.subTabsItems.some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
         return true;
       }
-    }.bind(this));
+    });
 
     return index;
   },
 
-  handleTabActive: function(tab) {
+  handleTabActive(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
   },
 
-  render: function() {
+  render() {
     let styles = this.getStyles();
     return (
       <Container.Profile headerText='Billing'>

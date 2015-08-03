@@ -1,21 +1,20 @@
-var Reflux                    = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    StoreFormMixin            = require('../../mixins/StoreFormMixin'),
-    DialogStoreMixin          = require('../../mixins/DialogStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    AdminsActions            = require('./AdminsActions'),
-    AdminsInvitationsActions = require('./AdminsInvitationsActions');
+//Stores & Actions
+import AdminsActions from './AdminsActions';
+import AdminsInvitationsActions from './AdminsInvitationsActions';
 
-var AdminDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : [
     AdminsActions,
     AdminsInvitationsActions
   ],
   mixins      : [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore
   ],
 
   roleMenuItems: [
@@ -33,33 +32,30 @@ var AdminDialogStore = Reflux.createStore({
     }
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       email : null,
       role  : ''
     };
   },
 
-  init: function() {
+  init() {
     this.listenToForms();
   },
 
-  getRoles: function() {
+  getRoles() {
     return this.roleMenuItems;
   },
 
-  onCreateInvitationCompleted: function() {
+  onCreateInvitationCompleted() {
     console.debug('AdminDialogStore::onCreateInvitationCompleted');
     this.dismissDialog();
     AdminsInvitationsActions.fetchInvitations();
   },
 
-  onUpdateAdminCompleted: function() {
+  onUpdateAdminCompleted() {
     console.debug('AdminDialogStore::onUpdateAdminCompleted');
     this.dismissDialog();
     AdminsActions.fetchAdmins();
   }
-
 });
-
-module.exports = AdminDialogStore;

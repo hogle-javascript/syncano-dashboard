@@ -39,7 +39,7 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-    var checkedItemIconColor = Store.getCheckedItemIconColor(),
+    let checkedItemIconColor = Store.getCheckedItemIconColor(),
         checkedInstances     = Store.getCheckedItems();
 
     return [
@@ -137,7 +137,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    var checkedInstances        = Store.getNumberOfChecked(),
+    let checkedInstances        = Store.getNumberOfChecked(),
         isAnyInstanceSelected   = this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length),
         isCheckedInstanceShared = Store.isCheckedInstanceShared();
 
@@ -152,29 +152,25 @@ export default Radium(React.createClass({
               label         = {isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini          = {true}
               onClick       = {isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName = {isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
-            />
+              iconClassName = {isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'} />
             <Common.Fab.Item
               label         = "Click here to delete Instances"
               mini          = {true}
               onClick       = {this.showDialog.bind(null, 'deleteInstanceDialog')}
-              iconClassName = "synicon-delete"
-            />
+              iconClassName = "synicon-delete" />
             <Common.Fab.Item
               label         = "Click here to edit Instance"
               mini          = {true}
               disabled      = {checkedInstances > 1}
               onClick       = {this.showInstanceEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              iconClassName = "synicon-pencil" />
             <Common.Fab.Item
               label         = "Click here to customize Instances"
               secondary     = {true}
               mini          = {true}
               disabled      = {checkedInstances > 1}
               onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName = "synicon-palette"
-            />
+              iconClassName = "synicon-palette" />
           </Common.Fab>
         </Common.Show>
 
@@ -192,15 +188,13 @@ export default Radium(React.createClass({
           listType             = "myInstances"
           viewMode             = "stream"
           emptyItemHandleClick = {this.showInstanceDialog}
-          emptyItemContent     = "Create an instance"
-        />
+          emptyItemContent     = "Create an instance" />
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             name                 = "Shared with me"
             items                = {Store.getOtherInstances()}
             listType             = "sharedInstances"
-            viewMode             = "stream"
-          />
+            viewMode             = "stream" />
         </Common.Show>
       </Container>
     );

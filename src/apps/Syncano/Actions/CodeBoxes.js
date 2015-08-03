@@ -42,9 +42,7 @@ export default {
   },
 
   remove(ids) {
-    let promises = ids.map(id => {
-      return this.Connection.CodeBoxes.remove(id);
-    });
+    let promises = ids.map(id => this.Connection.CodeBoxes.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

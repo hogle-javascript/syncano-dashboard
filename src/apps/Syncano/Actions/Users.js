@@ -10,15 +10,15 @@ export default {
   },
 
   create(payload, groups) {
+    let userGroups      = groups.newGroups ? groups.newGroups : null,
+        userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
 
-    if (groups.newGroups) {
+    if (userGroups) {
       this.Connection
         .Users
         .create(payload)
         .then(user => {
-          let addUserToGroups = groups.newGroups.map(group => {
-            return addToGroup(user.id, group.id);
-          });
+          let addUserToGroups = userGroupsArray.map(group => this.Connection.Users.addToGroup(user.id, group.id));
 
           this.D.all(addUserToGroups)
             .success(this.completed)
@@ -35,37 +35,27 @@ export default {
   },
 
   update(id, payload, groups) {
+    this.Connection
+      .Users
+      .update(id, payload)
+      .success(() => {
+        let groupsId             = groups.groups.map(group => group.id),
+            newGroupsId          = groups.newGroups.map(group => group.id),
+            addedGroups          = _.difference(newGroupsId, groupsId),
+            removedGroups        = _.difference(groupsId, newGroupsId),
+            addUserToGroups      = addedGroups.map(group => this.Connection.Users.addToGroup(id, group)),
+            removeUserFromGroups = removedGroups.map(group => this.Connection.Users.removeFromGroup(id, group)),
+            promises             = removeUserFromGroups.concat(addUserToGroups);
 
-    let addedGroups     = _.difference(groups.newGroups, groups.groups),
-        removedGroups   = _.difference(groups.groups, groups.newGroups),
-        addUserToGroups = addedGroups.map(group => {
-          return addToGroup(id, group);
-        });
-
-    getUserGroups(id).then(groups => {
-      let userGroups = Object.keys(groups).map(key => {
-        return groups[key];
-      });
-
-      let removeUserFromGroups = removedGroups.map(group => {
-        let userGroupId = _.findIndex(userGroups, userGroup => {
-          return userGroup.group.id === group.id
-        });
-
-        return removeFromGroup(id, userGroups[userGroupId].id);
-      });
-
-      this.D.all(removeUserFromGroups, addUserToGroups)
-        .success(this.completed)
-        .error(this.failure);
-    });
+        this.D.all(promises)
+          .success(this.completed)
+          .error(this.failure);
+      })
+      .error(this.failure);
   },
 
   remove(users) {
-
-    let promises = users.map(user => {
-      return this.Connection.Users.remove(user.id);
-    });
+    let promises = users.map(user => this.Connection.Users.remove(user.id));
 
     this.D.all(promises)
       .success(this.completed)

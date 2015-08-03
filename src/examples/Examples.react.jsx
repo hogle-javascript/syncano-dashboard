@@ -258,13 +258,13 @@ module.exports = React.createClass({
 
     var socialAuthButtons = [{
       icon: 'github',
-      text: 'Log in with Github'
+      text: 'Login with Github'
     }, {
       icon: 'google',
-      text: 'Log in with Google'
+      text: 'Login with Google'
     }, {
       icon: 'facebook',
-      text: 'Log in with Facebook'
+      text: 'Login with Facebook'
     }];
 
     var billingProfile = {

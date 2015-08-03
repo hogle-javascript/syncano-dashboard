@@ -50,10 +50,10 @@ export default {
   renderTableHeader(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
 
-    var header = {};
+    let header = {};
 
     // Initial columns
-    columns.map(function(item) {
+    columns.map(item => {
       header[item.id] = {
         content : item.name,
         tooltip : item.tooltip,
@@ -69,10 +69,10 @@ export default {
 
     let tableItems = [];
 
-    items.map(function(item) {
+    items.map(item => {
       let row = {};
 
-      columns.map(function(column) {
+      columns.map(column => {
 
         let value    = item[column.id];
         let renderer = this.getColumnRenderer(column.id);
@@ -104,11 +104,11 @@ export default {
           content: <div>{value}</div>,
           style: { width: column.width }
         }
-      }.bind(this));
+      });
 
       tableItems.push(row);
 
-    }.bind(this));
+    });
 
     return tableItems;
   }

@@ -4,14 +4,14 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
-import ColorStore from '../../common/Color/ColorStore';
 import SessionActions from '../Session/SessionActions';
-import InstancesActions from './InstancesActions';
+import Actions from './InstancesActions';
 
 import Common from '../../common';
+
+let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
@@ -37,11 +37,10 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     console.info('InstancesList::handleItemIconClick', id, state);
-    InstancesActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleItemClick(instanceName) {
-    // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
@@ -52,20 +51,18 @@ export default React.createClass({
         checked     = {item.checked}
         id          = {item.name}
         key         = {item.name}
-        handleClick = {this.handleItemClick}
-      >
-        <Common.ColumnList.Column.CheckIcon
+        handleClick = {this.handleItemClick.bind(null, item.name)}>
+        <Column.CheckIcon
           id              = {item.name}
           icon            = {item.metadata.icon}
-          background      = {ColorStore.getColorByName(item.metadata.color)}
+          background      = {Common.Color.getColorByName(item.metadata.color)}
           checked         = {item.checked}
           handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}
-        >
+          handleNameClick = {this.handleItemClick}>
           {item.name}
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.description}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        </Column.CheckIcon>
+        <Column.Desc>{item.description}</Column.Desc>
+        <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
@@ -73,18 +70,17 @@ export default React.createClass({
   getList() {
     if (this.state.items === null) {
       return <Common.Loading show={true} />
-
     }
 
     if (this.state.items.length === 0) {
-      return(
+      return (
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
         </Common.ColumnList.EmptyItem>
       )
     }
 
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map(item => this.renderItem(item));
     items.reverse();
     return items;
   },
@@ -99,14 +95,14 @@ export default React.createClass({
   },
 
   render() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <Common.Lists.Container className='instances-list-container'>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header>{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
-          <Common.ColumnList.Column.Desc.Header>Description</Common.ColumnList.Column.Desc.Header>
-          <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
+          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.Desc.Header>Description</Column.Desc.Header>
+          <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
           {this.getList()}

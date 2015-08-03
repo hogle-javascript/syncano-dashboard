@@ -5,10 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import SolutionsActions from './SolutionsActions';
-import SolutionDialogStore from './SolutionDialogStore';
-import ColorStore from '../../common/Color/ColorStore';
-import IconStore from '../../common/Icon/IconStore';
+import Actions from './CreateDialogActions';
+import Store from './CreateDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -19,10 +17,11 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    Reflux.connect(SolutionDialogStore),
     React.addons.LinkedStateMixin,
     Mixins.Dialog,
-    Mixins.Form
+    Mixins.Form,
+
+    Reflux.connect(Store),
   ],
 
   validatorConstraints: {
@@ -35,13 +34,13 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    SolutionsActions.updateSolution({
+    Actions.updateSolution({
       description: this.state.description
     });
   },
 
   handleAddSubmit() {
-    SolutionsActions.createSolution({
+    Actions.createSolution({
       label       : this.state.label,
       description : this.state.description,
       public      : this.state.public ? true : false
@@ -59,7 +58,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update an Solution' : 'Create a Solution';
+    let title = this.hasEditMode() ? 'Update a Solution' : 'Create a Solution';
     let dialogCustomActions = [
       <MUI.FlatButton
         key        = "cancel"
@@ -82,37 +81,33 @@ export default React.createClass({
         title           = {title}
         openImmediately = {this.props.openImmediately}
         actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}
-      >
+        onDismiss       = {this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-              ref               = 'label'
-              name              = 'label'
-              fullWidth         = {true}
-              disabled          = {this.hasEditMode() ? true : false}
-              valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join(' ')}
-              hintText          = 'Short name for your Solution'
-              floatingLabelText = 'Name'
-          />
+            ref               = 'label'
+            name              = 'label'
+            fullWidth         = {true}
+            disabled          = {this.hasEditMode() ? true : false}
+            valueLink         = {this.linkState('label')}
+            errorText         = {this.getValidationMessages('label').join(' ')}
+            hintText          = 'Short name for your Solution'
+            floatingLabelText = 'Name' />
           <MUI.TextField
             ref               = 'description'
             name              = 'description'
             fullWidth         = {true}
             valueLink         = {this.linkState('description')}
             errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = 'Sescription of Solution (optional)'
-            floatingLabelText = 'Description'
-          />
+            hintText          = 'Description of a Solution (optional)'
+            floatingLabelText = 'Description' />
           <MUI.Toggle
             ref            = 'public'
             name           = 'public'
             defaultToggled = {this.state.public}
             onToggle       = {this.handleToogle}
             style          = {{marginTop: 20}}
-            label          = 'Make this solution public?'
-          />
+            label          = 'Make this solution public?' />
         </div>
       </Common.Dialog>
     );

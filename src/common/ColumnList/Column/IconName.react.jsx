@@ -1,20 +1,18 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Paper              = mui.Paper,
-    Colors             = mui.Styles.Colors;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       className : ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       fontSize    : 20,
       fontWeight  : 500,
@@ -22,8 +20,8 @@ var Header = React.createClass({
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
@@ -35,7 +33,7 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnCheckIcon',
 
@@ -51,24 +49,24 @@ module.exports = Radium(React.createClass({
     Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       color      : 'black',
-      hoverColor : Colors.blue600,
+      hoverColor : MUI.Styles.Colors.blue600,
       className  : ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       checked    : this.props.checked
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
-        display         : 'flex',
+        display        : '-webkit-flex; display: flex',
         flexDirection   : 'row',
         alignItems      : 'center',
         fontSize        : 12,
@@ -77,7 +75,7 @@ module.exports = Radium(React.createClass({
       name: {
         fontSize        : 16,
         lineHeight      : '20px',
-        display         : 'flex',
+        display        : '-webkit-flex; display: flex',
         flexDirection   : 'column',
         justifyContent  : 'center',
         cursor          : 'pointer',
@@ -98,32 +96,30 @@ module.exports = Radium(React.createClass({
     };
   },
 
-  componentWillReceiveProps: function(newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick: function(id, state) {
+  handleIconClick(id, state) {
     console.info('ColumnCheckIcon:handleClick');
     this.props.handleIconClick(id, state);
   },
 
-  handleNameClick: function() {
+  handleNameClick() {
     console.info('ColumnCheckIcon:handleClick');
     this.props.handleNameClick(this.props.id);
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
         className = {this.props.className}
         style     = {styles.container}>
-
-        <Paper
+        <MUI.Paper
           circle = {true}
           style  = {styles.icon} />
-
         <div
           style       = {styles.name}
           onClick     = {this.handleNameClick}>

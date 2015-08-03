@@ -1,68 +1,38 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get();
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-var CodeBoxActions = Reflux.createActions({
-  setCurrentCodeBoxTraces : {},
-  setCurrentCodeBoxId     : {},
-  setCurrentCodeBox       : {},
-  fetch                   : {},
+export default CreateActions(
+  {},
+  {
+    setCurrentCodeBoxTraces : {},
+    setCurrentCodeBoxId     : {},
+    setCurrentCodeBox       : {},
+    fetch                   : {},
 
-  fetchCodeBox: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
+    fetchCodeBox: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.CodeBoxes.get'
+    },
 
-  updateCodeBox: {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
-  },
-  runCodeBox: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
-  },
+    updateCodeBox: {
+      asyncResult : true,
+      asyncForm   : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.CodeBoxes.update'
+    },
+    runCodeBox: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.CodeBoxes.run'
+    },
 
-  fetchCodeBoxTraces: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+    fetchCodeBoxTraces: {
+      asyncResult : true,
+      loading     : true,
+      children    : ['completed', 'failure'],
+      method      : 'Syncano.Actions.CodeBoxes.listTraces'
+    }
   }
-});
-
-CodeBoxActions.fetchCodeBox.listen(function(codeboxId) {
-  console.info('CodeBoxActions::fetchCodeBox');
-  Connection
-    .CodeBoxes
-    .get(codeboxId)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-CodeBoxActions.updateCodeBox.listen(function(codeboxId, params) {
-  console.info('CodeBoxActions::updateCodeBox');
-  Connection
-    .CodeBoxes.update(codeboxId, params)
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-CodeBoxActions.runCodeBox.listen(function(params) {
-  console.info('CodeBoxActions::runCodeBox');
-  Connection
-    .CodeBoxes.run(params.id, {payload: params.payload})
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-CodeBoxActions.fetchCodeBoxTraces.listen(function(codeboxId) {
-  console.info('CodeBoxActions::fetchCodeBoxTraces', codeboxId);
-  Connection
-    .CodeBoxes.traces(codeboxId, {})
-    .then(this.completed)
-    .catch(this.failure);
-});
-
-module.exports = CodeBoxActions;
+);

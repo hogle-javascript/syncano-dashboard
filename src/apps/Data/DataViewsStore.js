@@ -1,29 +1,28 @@
-var Reflux              = require('reflux'),
+import Reflux from 'reflux';
 
-    // Utils & Mixins
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+// Utils & Mixins
+import Mixins from '../../mixins';
 
-    //Stores & Actions
-    Constants           = require('../../constants/Constants'),
-    SessionActions      = require('../Session/SessionActions'),
-    DataViewsActions    = require('./DataViewsActions');
+//Stores & Actions
+import Constants from '../../constants/Constants';
+import SessionActions from '../Session/SessionActions';
+import DataViewsActions from './DataViewsActions';
 
-var DataViewsStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables : DataViewsActions,
   mixins      : [
-    CheckListStoreMixin,
-    WaitForStoreMixin
+    Mixins.CheckListStore,
+    Mixins.WaitForStore
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       items     : [],
       isLoading : true
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -32,42 +31,37 @@ var DataViewsStore = Reflux.createStore({
     );
   },
 
-  getDataViews: function(empty) {
+  getDataViews(empty) {
     return this.data.items || empty || null;
   },
 
-  setDataViews: function(items) {
+  setDataViews(items) {
     console.debug('DataViewsStore::setDataViews');
-    this.data.items = Object.keys(items).map(function(key) {
-      return items[key];
-    });
+    this.data.items = Object.keys(items).map(key => items[key]);
     this.trigger(this.data);
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('DataViewsStore::refreshData');
     DataViewsActions.fetchDataViews();
   },
 
-  onFetchDataViews: function() {
+  onFetchDataViews() {
     console.debug('DataViewsStore::onFetchDataViews');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchDataViewsCompleted: function(items) {
+  onFetchDataViewsCompleted(items) {
     console.debug('DataViewsStore::onFetchDataViewsCompleted');
     this.data.isLoading = false;
     DataViewsActions.setDataViews(items);
   },
 
-  onRemoveDataViewsCompleted: function() {
+  onRemoveDataViewsCompleted() {
     console.debug('DataViewsStore::onRemoveDataViewsCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();
   }
-
 });
-
-module.exports = DataViewsStore;

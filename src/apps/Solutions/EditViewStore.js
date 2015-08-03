@@ -2,27 +2,26 @@ import Reflux from 'reflux';
 import URL from 'url';
 
 // Utils & Mixins
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import SolutionEditActions from './SolutionEditActions';
+import Actions from './EditViewActions';
 
 export default Reflux.createStore({
-  listenables : SolutionEditActions,
+  listenables : Actions,
 
   mixins      : [
-    CheckListStoreMixin,
-    StoreFormMixin,
-    WaitForStoreMixin
+    Mixins.StoreForm,
+    Mixins.WaitForStore,
+    Mixins.StoreHelpers
   ],
 
   getInitialState() {
     return {
       item: {
-        stars_count : 0
+        stars_count : 0,
+        tags        : [],
       },
       versions: null,
       isLoading: false
@@ -41,8 +40,9 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
-    SolutionEditActions.fetchSolution(solutionId);
-    SolutionEditActions.fetchSolutionVersions(solutionId);
+    Actions.fetchTags();
+    Actions.fetchSolution(solutionId);
+    Actions.fetchSolutionVersions(solutionId);
   },
 
   getSolution() {
@@ -55,6 +55,19 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  setTags(tags) {
+    this.data.tags = this.saveListFromSyncano(tags);
+    this.trigger(this.data);
+  },
+
+  getTagsOptions() {
+    return this.getSelectOptions(this.data.tags, 'name', 'name');
+  },
+
+  getItemTags() {
+    return this.getSelectValuesFromList(this.data.item.tags);
+  },
+
   setSolutionVersions(versions) {
     console.debug('SolutionsEditStore::setSolutions');
 
@@ -65,9 +78,7 @@ export default Reflux.createStore({
     this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
 
     let newItems = [];
-    Object.keys(versions).map(function(key) {
-      newItems.splice(0, 0, versions[key]);
-    }.bind(this));
+    Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
 
@@ -84,7 +95,7 @@ export default Reflux.createStore({
   onFetchSolutionCompleted(solution) {
     console.debug('SolutionsEditStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
-    SolutionEditActions.setSolution(solution);
+    Actions.setSolution(solution);
   },
 
   onFetchSolutionFailure() {
@@ -102,7 +113,7 @@ export default Reflux.createStore({
   onFetchSolutionVersionsCompleted(versions) {
     console.debug('SolutionsEditStore::onFetchSolutionVersionsCompleted');
     this.data.isLoading = false;
-    SolutionEditActions.setSolutionVersions(versions);
+    Actions.setSolutionVersions(versions);
   },
 
   onFetchSolutionVersionsFailure() {
@@ -124,6 +135,23 @@ export default Reflux.createStore({
 
   onRemoveSolutionFailure() {
     console.debug('SolutionsEditStore::onRemoveSolutionFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+  onFetchTags() {
+    console.debug('SolutionsStore::onFetchTags');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchTagsCompleted(tags) {
+    console.debug('SolutionsStore::onFetchTagsCompleted');
+    this.data.isLoading = false;
+    Actions.setTags(tags);
+  },
+
+  onFetchTagsFailure() {
+    console.debug('SolutionsStore::onFetchTagsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
   },

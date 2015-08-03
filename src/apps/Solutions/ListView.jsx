@@ -7,18 +7,20 @@ import _ from 'lodash';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import Store from './SolutionsStore';
-import Actions from './SolutionsActions';
+
+import Store from './ListViewStore';
+import Actions from './ListViewActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
-import SolutionsList from './SolutionsList.react';
-import SolutionDialog from './SolutionDialog.react';
-import SolutionInstallDialog from './SolutionInstallDialog.react';
+import CreateDialogActions from './CreateDialogActions';
+import CreateDialog from './CreateDialog';
+
+import InstallDialogActions from './InstallDialogActions';
+import InstallDialog from './InstallDialog';
 
 module.exports = React.createClass({
 
@@ -33,7 +35,7 @@ module.exports = React.createClass({
   ],
 
   showSolutionDialog() {
-    Actions.showDialog();
+    CreateDialogActions.showDialog();
   },
 
   componentDidMount() {
@@ -74,33 +76,27 @@ module.exports = React.createClass({
       sidebar: {
         minWidth: 230
       },
-      listItemChecked: {
-        background: MUI.Styles.Colors.lightBlue50
-      }
     }
   },
 
-  handleChangeFilter(filter, event) {
+  handleChangeFilter(filter) {
     Actions.setFilter(filter);
   },
 
-  renderTags() {
-    var styles = this.getStyles();
+  handleInstallClick(solutionId) {
+    InstallDialogActions.showDialogWithPreFetch(solutionId);
+  },
 
-    let tags = this.state.tags.map(item => {
-      return (
-        <MUI.ListItem
-          key           = {item.name}
-          primaryText   = {item.name}
-          innerDivStyle = {this.state.selectedTags.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {Actions.toggleTagSelection.bind(this, item.name)} />
-      )
-    });
-    return (
-      <MUI.List zDepth={1} subheader="Tags">
-        {tags}
-      </MUI.List>
-    )
+  handleSeeMoreClick(solutionId) {
+    this.transitionTo('solutions-edit', {solutionId: solutionId});
+  },
+
+  handleTagClick(tag) {
+    Actions.selectOneTag(tag);
+  },
+
+  handleToggleTagSelection(name) {
+    Actions.toggleTagSelection(name);
   },
 
   render() {
@@ -108,13 +104,13 @@ module.exports = React.createClass({
 
     return (
       <div id='solutions'>
-        <SolutionDialog />
-        <SolutionInstallDialog />
+        <CreateDialog />
+        <InstallDialog />
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
             <Common.Fab.Item
-              label         = "Click here to create Solution"
+              label         = "Click here to create a Solution"
               onClick       = {this.showSolutionDialog}
               iconClassName = "synicon-plus"
             />
@@ -142,10 +138,18 @@ module.exports = React.createClass({
                   onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
                 />
               </MUI.List>
-              {this.renderTags()}
+              <Common.Tags.List
+                items              = {this.state.tags}
+                selectedItems      = {this.state.selectedTags}
+                toggleTagSelection = {this.handleToggleTagSelection} />
             </div>
             <div className="col-flex-1">
-              <SolutionsList items={this.state.items}/>
+              <Common.Solutions.List
+                items      = {this.state.items}
+                onInstall  = {this.handleInstallClick}
+                onSeeMore  = {this.handleSeeMoreClick}
+                onTagClick = {this.handleTagClick}
+              />
             </div>
           </div>
         </div>

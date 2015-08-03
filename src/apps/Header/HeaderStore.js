@@ -1,23 +1,23 @@
-var Reflux        = require('reflux'),
+import Reflux from 'reflux';
 
-    SessionStore  = require('../Session/SessionStore'),
-    HeaderActions = require('./HeaderActions');
+import SessionStore from '../Session/SessionStore';
+import HeaderActions from './HeaderActions';
 
-var HeaderStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: HeaderActions,
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       menuItems   : [],
       user        : SessionStore.getUser({})
     }
   },
 
-  init: function() {
+  init() {
     this.listenTo(SessionStore, this.refreshData);
   },
 
-  refreshData: function(Session) {
+  refreshData(Session) {
     console.debug('HeaderStore::refreshData');
 
     if (Session.isReady()) {
@@ -26,28 +26,25 @@ var HeaderStore = Reflux.createStore({
 
   },
 
-  onSetMenuItems: function(payload) {
+  onSetMenuItems(payload) {
     console.debug('HeaderStore::onSetMenuItems');
     this.trigger({menuItems: payload});
   },
 
-  onClearMenuItems: function() {
+  onClearMenuItems() {
     console.debug('HeaderStore::onClearMenuItems');
     this.trigger({menuItems: []});
   },
 
-  onSet: function(payload) {
+  onSet(payload) {
     console.debug('HeaderStore::onSet');
     this.trigger(payload);
   },
 
-  onClear: function(payload) {
+  onClear(payload) {
     console.debug('HeaderStore::onClear');
     this.trigger({
       menuItems: []
     });
   }
-
 });
-
-module.exports = HeaderStore;
