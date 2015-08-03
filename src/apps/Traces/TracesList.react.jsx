@@ -104,7 +104,7 @@ export default Radium(React.createClass({
           checked     = {item.checked}
           key         = {item.id}
           id          = {item.id}
-          handleClick = {this.toggleTrace}>
+          handleClick = {this.toggleTrace.bind(null, item.id)}>
           <Column.CheckIcon
             id              = {item.id.toString()}
             icon            = {status.icon}

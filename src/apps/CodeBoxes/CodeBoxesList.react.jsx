@@ -54,7 +54,7 @@ export default React.createClass({
         checked     = {item.checked}
         key         = {item.id}
         id          = {item.id}
-        handleClick = {this.handleItemClick}>
+        handleClick = {this.handleItemClick.bind(null, item.id)}>
         <Column.CheckIcon
           id              = {item.id.toString()}
           icon            = {runtime.icon}
