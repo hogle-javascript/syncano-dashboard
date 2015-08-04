@@ -37,8 +37,7 @@ export default Radium(React.createClass({
       try {
         JSON.parse(value);
         return null
-      }
-      catch(err) {
+      } catch (err) {
         return {
           format: {
             pattern : '',

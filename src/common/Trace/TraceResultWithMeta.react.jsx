@@ -10,24 +10,21 @@ module.exports = React.createClass({
   render: function() {
     var metaListed = '';
     var argsListed = '';
+    var key        = null;
     if (this.props.args && this.props.meta) {
-      for (var key in this.props.meta) {
+      for (key in this.props.meta) {
         if (this.props.meta.hasOwnProperty(key)) {
           metaListed += key + ': ' + this.props.meta[key] + '\n';
         }
       }
-      ;
-      for (var key in this.props.args) {
+
+      for (key in this.props.args) {
         if (this.props.args.hasOwnProperty(key)) {
           argsListed += key + ': ' + this.props.args[key] + '\n';
         }
       }
     }
-    ;
 
-    //if (this.props.args && this.props.meta) {
-    //
-    //}
     return (
       <div className="card-body">
         <div className="card-section">

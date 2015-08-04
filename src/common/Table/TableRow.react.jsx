@@ -23,6 +23,7 @@ module.exports = React.createClass({
   render: function() {
     var dropdown = this.props.dropdown;
     var dropdownVisible = this.props.dropdown === this.props.item.uuid;
+    var optionsColumn = null;
     var columns = this.props.columns.filter(function(column, i) {
       return column.selected;
     }.bind(this)).map(function(column, i) {
@@ -44,10 +45,10 @@ module.exports = React.createClass({
                key={i} data={data}
                column={column}/>
     }.bind(this));
-    var optionsColumn = null;
+
     if (!this.props.readOnly) {
       var actions = ConfigStore.getConfig()[this.props.item.type].actions;
-      var optionsColumn = (
+      optionsColumn = (
         <TableData
           {...this.props}
           key="options"

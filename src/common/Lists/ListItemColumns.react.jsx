@@ -94,8 +94,8 @@ module.exports = React.createClass({
       'card-trace-timeout'     : status === "timeout",
     });
     if (this.state.animateInk) {
-      inkStyle['top'] = "50px";
-      inkStyle['left'] = "50px";
+      inkStyle.top = "50px";
+      inkStyle.left = "50px";
     }
     if (this.props.list.viewMode === "cards") {
       return (
@@ -140,7 +140,7 @@ module.exports = React.createClass({
       var avatar = contentType === "users" ? initialsComponent : iconComponent;
       var dropdown = this.props.actions.length > 0 ? dropdownComponent : null;
       var buttonExpandToggle = this.props.expandable ? <ButtonExpandToggle parentExpanded={this.props.expanded} /> : null;
-      
+
       return (
         <div className={cssClasses}>
           <div

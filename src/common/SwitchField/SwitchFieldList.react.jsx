@@ -15,10 +15,10 @@ module.exports = React.createClass({
 
   getSwitchFields: function() {
     var fields = this.props.fields.map(function(field){
-      return <SwitchField 
+      return <SwitchField
                handleFieldLinkClick={this.props.handleFieldLinkClick}
-               handleSwitchClick={this.props.handleSwitchClick} 
-               key={field.name} 
+               handleSwitchClick={this.props.handleSwitchClick}
+               key={field.name}
                ref={field.name}
                toggled={field.enabled}
                textEnabled={field.textEnabled}
