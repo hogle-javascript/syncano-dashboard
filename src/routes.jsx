@@ -77,24 +77,23 @@ module.exports = (
     <Route
       name="dashboard"
       handler={Dashboard}
-      path="/"
-      >
+      path="/">
       <Route
         name="instances"
+        handler={Instances}
+        path="instances"/>
+
+      <Route
+        name="instance"
         handler={Instance}
-        path="/instances">
-        <Redirect
-          name="instance"
-          from="instance"
-          to="data"
-          path=":instanceName"
-          />
-        <DefaultRoute handler={Instances}/>
+        path="instances/:instanceName">
+
+        <DefaultRoute handler={Data}/>
 
         {/* Data */}
         <Route
           name="data"
-          path=":instanceName/data"
+          path="data"
           >
 
           {/* Webhook Traces */}
@@ -112,20 +111,20 @@ module.exports = (
         <Route
           name="admins"
           handler={Admins}
-          path=":instanceName/admins"
+          path="admins"
           />
 
         {/* API keys */}
         <Route
           name="api-keys"
           handler={ApiKeys}
-          path=":instanceName/api_keys"
+          path="api_keys"
           />
 
         {/* Classes */}
         <Route
           name="classes"
-          path=":instanceName/classes">
+          path="classes">
 
           {/* Classes - Data Objects */}
           <Route
@@ -141,7 +140,7 @@ module.exports = (
         <Route
           name="codeboxes"
           handler={CodeBoxesPage}
-          path=":instanceName/codeboxes">
+          path="codeboxes">
           <Route
             name="codebox"
             handler={CodeBoxes.Details}
@@ -167,45 +166,45 @@ module.exports = (
         <Route
           name="codeboxes-add"
           handler={CodeBoxes}
-          path=":instanceName/codeboxes/:action"
+          path="codeboxes/:action"
           />
 
         {/* Data Objects */}
         <Route
           name="data-objects"
           handler={DataObjects}
-          path=":instanceName/objects"
+          path="objects"
           />
 
         {/* Tasks */}
         <Route
           name="tasks"
           handler={Tasks}
-          path=":instanceName/tasks"
+          path="tasks"
           />
 
         {/* Channels */}
         <Route
           name="channels"
           handler={Channels}
-          path=":instanceName/channels"
+          path="channels"
           />
 
         {/* Users */}
         <Route
           name="users"
           handler={Users}
-          path=":instanceName/users"
+          path="users"
           />
 
       </Route>
 
       {/* Profile Billing */}
       <Route
-        name = "profile"
-        handler = {ProfilePage}
-        path = "/account"
-      >
+        name="profile"
+        handler={ProfilePage}
+        path="/account"
+        >
         <Route
           name="profile-billing-plan"
           handler={Profile.BillingPlan}
@@ -225,6 +224,20 @@ module.exports = (
           name="profile-billing-invoices"
           handler={Profile.BillingInvoices}
           path="invoices"
+          />
+        <Route
+          name="profile-settings"
+          handler={Profile.Settings}
+          path="/account"/>
+        <Route
+          name="profile-authentication"
+          handler={Profile.Authentication}
+          path="/account/authentication"
+          />
+        <Route
+          name="profile-invitations"
+          handler={Profile.Invitations}
+          path="/account/invitations"
           />
         <DefaultRoute handler={Profile.BillingPlan}/>
       </Route>
@@ -260,20 +273,7 @@ module.exports = (
           />
         <DefaultRoute handler={Solutions.ListView}/>
       </Route>
-      <Route
-        name="profile-settings"
-        handler={Profile.Settings}
-        path="/account"/>
-      <Route
-        name="profile-authentication"
-        handler={Profile.Authentication}
-        path="/account/authentication"
-        />
-      <Route
-        name="profile-invitations"
-        handler={Profile.Invitations}
-        path="/account/invitations"
-        />
+
       <DefaultRoute handler={Instances}/>
     </Route>
 
