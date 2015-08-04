@@ -5,7 +5,7 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
-import Billing from './pages/billing.react';
+import ProfilePage from './pages/profile.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
 
@@ -202,31 +202,45 @@ module.exports = (
 
       {/* Profile Billing */}
       <Route
-        name    = "profile-billing"
-        handler = {Billing}
-        path    = "/account/billing"
+        name    = "profile"
+        handler = {ProfilePage}
+        path    = "/account"
       >
         <Route
           name    = "profile-billing-plan"
           handler = {Profile.BillingPlan}
-          path    = "plan"
+          path    = "billing/plan"
         />
         <Route
           name    = "profile-billing-address"
           handler = {Profile.BillingAddress}
-          path    = "address"
+          path    = "billing/address"
         />
         <Route
           name    = "profile-billing-payment"
           handler = {Profile.BillingPayment}
-          path    = "payment-methods"
+          path    = "billing/payment-methods"
         />
         <Route
           name    = "profile-billing-invoices"
           handler = {Profile.BillingInvoices}
-          path    = "invoices"
+          path    = "billing/invoices"
         />
-        <DefaultRoute handler={Profile.BillingPlan} />
+        <Route
+          name    = "profile-settings"
+          handler = {Profile.Settings}
+          path    = "account/profile" />
+        <Route
+          name    = "profile-authentication"
+          handler = {Profile.Authentication}
+          path    = "account/authentication"
+        />
+        <Route
+          name    = "profile-invitations"
+          handler = {Profile.Invitations}
+          path    = "account/invitations"
+        />
+        <DefaultRoute handler={Profile.Settings} />
       </Route>
 
       {/* Solutions */}
@@ -260,20 +274,6 @@ module.exports = (
         />
         <DefaultRoute handler={Solutions.ListView} />
       </Route>
-      <Route
-        name    = "profile-settings"
-        handler = {Profile.Settings}
-        path    = "/account" />
-      <Route
-        name    = "profile-authentication"
-        handler = {Profile.Authentication}
-        path    = "/account/authentication"
-      />
-      <Route
-        name    = "profile-invitations"
-        handler = {Profile.Invitations}
-        path    = "/account/invitations"
-      />
       <DefaultRoute handler = {Instances}/>
     </Route>
 

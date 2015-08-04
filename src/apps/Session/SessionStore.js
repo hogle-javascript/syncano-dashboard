@@ -5,7 +5,6 @@ import Connection     from './Connection';
 import SessionActions from './SessionActions';
 
 import Colors         from 'material-ui/lib/styles/colors';
-import ColorStore     from '../../common/Color/ColorStore';
 import SyncanoTheme   from '../../common/SyncanoTheme';
 
 export default Reflux.createStore({

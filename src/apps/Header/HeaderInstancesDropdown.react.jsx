@@ -76,7 +76,7 @@ export default Radium(React.createClass({
       },
       dropdownLabelContainer: {
         display        : '-webkit-box; display: flex',
-        alignItems     : 'center'
+        alignItems     : 'center',
       },
       dropdownLabel: {
         WebkitBoxFlex  : '1',
@@ -85,7 +85,8 @@ export default Radium(React.createClass({
         textOverflow   : 'ellipsis',
         overflow       : 'hidden',
         paddingRight   : 40,
-        color          : '#fff',
+        paddingLeft    : 0,
+        color          : 'black',
         fontWeight     : 400
       },
       dropdownInstanceIcon: {
@@ -103,9 +104,7 @@ export default Radium(React.createClass({
       },
       dropdownMenuItem: {
         height      : 'auto',
-        lineHeight  : '40px',
-        paddingLeft : 32,
-        color: '#000'
+        paddingLeft : 16,
       }
     }
   },
@@ -140,18 +139,15 @@ export default Radium(React.createClass({
     });
 
     return (
-      <MUI.ToolbarGroup
-        key   = {0}
-        style = {styles.instanceToolbarGroup}>
-        <MUI.DropDownMenu
-          className      = "instances-dropdown"
-          labelStyle     = {styles.dropdownLabel}
-          underlineStyle = {styles.dropdownLabelUnderline}
-          menuItemStyle  = {styles.dropdownMenuItem}
-          menuItems      = {dropDownMenuItems}
-          onChange       = {this.handleDropdownItemClick}
-          selectedIndex  = {this.handleInstanceActive()} />
-      </MUI.ToolbarGroup>
+      <MUI.DropDownMenu
+        className      = "instances-dropdown"
+        style          = {{width: '100%'}}
+        labelStyle     = {styles.dropdownLabel}
+        underlineStyle = {styles.dropdownLabelUnderline}
+        menuItemStyle  = {styles.dropdownMenuItem}
+        menuItems      = {dropDownMenuItems}
+        onChange       = {this.handleDropdownItemClick}
+        selectedIndex  = {this.handleInstanceActive()} />
     )
   }
 }));

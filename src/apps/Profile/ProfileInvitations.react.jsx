@@ -24,26 +24,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Mixins.Dialogs,
-    HeaderMixin
-  ],
-
-  headerMenuItems: [
-    {
-      route: 'profile-settings',
-      label: 'Profile'
-    },
-    {
-      route: 'profile-authentication',
-      label: 'Authentication'
-    },
-    {
-      route: 'profile-billing',
-      label: 'Billing'
-    },
-    {
-      route: 'profile-invitations',
-      label: 'Invitations'
-    }
   ],
 
   initDialogs() {

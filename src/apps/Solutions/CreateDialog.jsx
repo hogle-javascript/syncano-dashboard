@@ -45,7 +45,7 @@ export default React.createClass({
       description : this.state.description,
       public      : this.state.public ? true : false
       //metadata: {
-      //  color     : ColorStore.getRandomColorName(),
+      //  color     : Common.Color.getRandomColorName(),
       //  icon      : IconStore.getRandomIconPickerIcon()
       //}
     });
