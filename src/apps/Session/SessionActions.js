@@ -3,13 +3,15 @@ import _Connection from './Connection';
 
 let Connection     = _Connection.get();
 let SessionActions = Reflux.createActions({
-  login       : {},
-  logout      : {},
-  setToken    : {},
-  setRouter   : {},
-  setUser     : {},
-  setTheme    : {},
-  setInstance : {},
+  login                : {},
+  logout               : {},
+  setToken             : {},
+  setRouter            : {},
+  setUser              : {},
+  setTheme             : {},
+  setInstance          : {},
+  setInvitationFromUrl : {},
+  getInvitationFromUrl : {},
   fetchUser: {
     asyncResult : true,
     children    : ['completed', 'failure']

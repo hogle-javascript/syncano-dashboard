@@ -52,9 +52,19 @@ export default Reflux.createStore({
     return this.theme || empty || null;
   },
 
+  getInvitationFromUrl() {
+    console.info('SessionStore::getInvitationFomUrl');
+    return sessionStorage.getItem('invitationKey');
+  },
+
   setToken(token) {
     console.info('SessionStore::setToken');
     this.token = token;
+  },
+
+  setInvitationFromUrl(invitationKey) {
+    console.info('SessionStore::setInvitationFomUrl');
+    sessionStorage.setItem('invitationKey', invitationKey);
   },
 
   setUser(user) {
@@ -165,6 +175,7 @@ export default Reflux.createStore({
     this.connection = Connection.reset();
 
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('invitationKey');
     this.removeInstance();
     this.router.transitionTo('login');
     this.trigger(this);

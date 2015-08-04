@@ -3,6 +3,7 @@ import analytics from '../../segment';
 import StoreFormMixin from '../../mixins/StoreFormMixin';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
+import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import Actions from './AuthActions';
 import AuthConstans from './AuthConstants';
 
@@ -55,6 +56,14 @@ export default Reflux.createStore({
 
   onPasswordSignInCompleted(payload) {
     SessionActions.login(payload);
+    this.acceptInvitationFromUrl();
+  },
+
+  acceptInvitationFromUrl() {
+    let invKey = SessionStore.getInvitationFromUrl();
+    if (invKey) {
+      ProfileInvitationsActions.acceptInvitations(invKey);
+    }
   },
 
   onPasswordResetCompleted() {
