@@ -10,9 +10,9 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 export default Reflux.createStore({
-  listenables : [UsersActions, GroupsActions],
+  listenables: [UsersActions, GroupsActions],
 
-  mixins      : [
+  mixins: [
     Mixins.CheckListStore,
     Mixins.StoreLoading,
     Mixins.WaitForStore
@@ -47,7 +47,7 @@ export default Reflux.createStore({
   },
 
   setUsers(users) {
-    let usersArray  = users._items ? users._items : users;
+    let usersArray = users._items ? users._items : users;
 
     this.data.items = Object.keys(usersArray).map(key => usersArray[key].user ? usersArray[key].user : usersArray[key]);
     this.trigger(this.data);

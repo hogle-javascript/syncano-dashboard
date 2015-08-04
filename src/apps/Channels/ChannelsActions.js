@@ -1,35 +1,35 @@
-var Reflux     = require('reflux'),
-    Syncano    = require('../Session/Connection'),
-    Connection = Syncano.get(),
-    D          = Syncano.D;
+let Reflux = require('reflux'),
+  Syncano = require('../Session/Connection'),
+  Connection = Syncano.get(),
+  D = Syncano.D;
 
-var ChannelsActions = Reflux.createActions({
-  checkItem           : {},
-  uncheckAll          : {},
-  selectAll           : {},
-  fetch               : {},
-  setChannels         : {},
-  showDialog          : {},
-  dismissDialog       : {},
+let ChannelsActions = Reflux.createActions({
+  checkItem: {},
+  uncheckAll: {},
+  selectAll: {},
+  fetch: {},
+  setChannels: {},
+  showDialog: {},
+  dismissDialog: {},
 
   fetchChannels: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure']
   },
   createChannel: {
-    asyncForm   : true,
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncForm: true,
+    asyncResult: true,
+    children: ['completed', 'failure']
   },
   updateChannel: {
-    asyncResult : true,
-    asyncForm   : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    asyncForm: true,
+    children: ['completed', 'failure']
   },
   removeChannels: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   },
 });
 
@@ -60,7 +60,7 @@ ChannelsActions.updateChannel.listen(function(channelName, params) {
 
 ChannelsActions.removeChannels.listen(function(names) {
   console.info('ChannelsActions::removeChannels');
-  var promises = names.map(function(id) {
+  let promises = names.map(function(id) {
     return Connection.Channels.remove(id);
   });
 

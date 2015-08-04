@@ -51,12 +51,12 @@ export default React.createClass({
 
   handleAddSubmit() {
     let activeGroup = GroupsStore.getActiveGroup(),
-        userGroups  = this.state.newUserGroups || this.state.secondInstance || activeGroup;
+      userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
 
     UsersActions.createUser(
       {
-        username : this.state.username,
-        password : this.state.password
+        username: this.state.username,
+        password: this.state.password
       },
       {
         newGroups: userGroups
@@ -74,8 +74,8 @@ export default React.createClass({
         password: this.state.password
       },
       {
-        groups    : this.state.groups,
-        newGroups : userGroups
+        groups: this.state.groups,
+        newGroups: userGroups
       }
     );
   },
@@ -97,32 +97,31 @@ export default React.createClass({
       return this.state.secondInstance;
     } else if (activeGroup) {
       return activeGroup;
-    } else {
-      return null
     }
+    return null;
   },
 
   render() {
-    let title             = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel       = 'Confirm',
-        selectValueSource = this.getSelectValueSource(),
-        selectValue       = '',
-        allGroups         = GroupsStore.getGroups().map(group => {
-                              group.value = group.id + '';
-                              return group;
-                            }),
-        dialogStandardActions = [
-          {
-            ref        : 'cancel',
-            text       : 'Cancel',
-            onTouchTap : this.handleCancel
-          },
-          {
-            ref        : 'submit',
-            text       : {submitLabel},
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title = this.hasEditMode() ? 'Edit' : 'Add',
+      submitLabel = 'Confirm',
+      selectValueSource = this.getSelectValueSource(),
+      selectValue = '',
+      allGroups = GroupsStore.getGroups().map(group => {
+        group.value = group.id + '';
+        return group;
+      }),
+      dialogStandardActions = [
+        {
+          ref: 'cancel',
+          text: 'Cancel',
+          onTouchTap: this.handleCancel
+        },
+        {
+          ref: 'submit',
+          text: {submitLabel},
+          onTouchTap: this.handleFormValidation
+        }
+      ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
       selectValue = selectValueSource.value.map(value => value.id).join(',');
@@ -132,46 +131,46 @@ export default React.createClass({
 
     return (
       <Common.Dialog
-        ref       = 'dialog'
-        title     = {title + ' a User'}
-        actions   = {dialogStandardActions}
-        onDismiss = {this.resetDialogState}>
+        ref='dialog'
+        title={title + ' a User'}
+        actions={dialogStandardActions}
+        onDismiss={this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = "UTF-8"
-            method        = "post">
+            onSubmit={this.handleFormValidation}
+            acceptCharset="UTF-8"
+            method="post">
             <MUI.TextField
-              ref               = 'username'
-              name              = 'username'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('username')}
-              errorText         = {this.getValidationMessages('username').join(' ')}
-              hintText          = 'Username'
-              floatingLabelText = 'Username' />
+              ref='username'
+              name='username'
+              fullWidth={true}
+              valueLink={this.linkState('username')}
+              errorText={this.getValidationMessages('username').join(' ')}
+              hintText='Username'
+              floatingLabelText='Username'/>
             <MUI.TextField
-              ref               = 'password'
-              name              = 'password'
-              type              = 'password'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('password')}
-              errorText         = {this.getValidationMessages('password').join(' ')}
-              hintText          = 'User password'
-              floatingLabelText = 'Password'
-              className         = 'vm-4-b' />
+              ref='password'
+              name='password'
+              type='password'
+              fullWidth={true}
+              valueLink={this.linkState('password')}
+              errorText={this.getValidationMessages('password').join(' ')}
+              hintText='User password'
+              floatingLabelText='Password'
+              className='vm-4-b'/>
             <Select
-              name        = 'group'
-              multi       = {true}
-              value       = {selectValue}
-              placeholder = 'User groups'
-              options     = {allGroups}
-              onChange    = {this.handleSelectFieldChange} />
+              name='group'
+              multi={true}
+              value={selectValue}
+              placeholder='User groups'
+              options={allGroups}
+              onChange={this.handleSelectFieldChange}/>
           </form>
           <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading} />
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
         </div>
       </Common.Dialog>
     );

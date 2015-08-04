@@ -8,6 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
+import {isLoading} from '../../decorators';
 
 import Common from '../../common';
 
@@ -31,7 +32,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items : nextProps.items})
+    this.setState({items: nextProps.items})
   },
 
   // List
@@ -48,30 +49,26 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked     = {item.checked}
-        id          = {item.name}
-        key         = {item.name}
-        handleClick = {this.handleItemClick.bind(null, item.name)}>
+        checked={item.checked}
+        id={item.name}
+        key={item.name}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
-          id              = {item.name}
-          icon            = {item.metadata.icon}
-          background      = {Common.Color.getColorByName(item.metadata.color)}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}>
+          id={item.name}
+          icon={item.metadata.icon}
+          background={Common.Color.getColorByName(item.metadata.color)}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}
+          handleNameClick={this.handleItemClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },
 
   getList() {
-    if (this.state.items === null) {
-      return <Common.Loading show={true} />
-    }
-
     if (this.state.items.length === 0) {
       return (
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
@@ -94,6 +91,7 @@ export default React.createClass({
     }
   },
 
+  @isLoading({attr: 'state.items'})
   render() {
     let styles = this.getStyles();
 

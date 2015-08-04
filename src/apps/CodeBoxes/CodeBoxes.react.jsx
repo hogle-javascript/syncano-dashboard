@@ -42,7 +42,7 @@ export default React.createClass({
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
     Actions.fetch();
-    if (this.getParams().action == 'add') {
+    if (this.getParams().action === 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
     }
@@ -56,16 +56,16 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        ref     : 'deleteCodeBoxDialog',
-        title   : 'Delete a CodeBox',
-        actions : [
+        ref: 'deleteCodeBoxDialog',
+        title: 'Delete a CodeBox',
+        actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            text: 'Cancel',
+            onClick: this.handleCancel
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleDelete
+            text: 'Confirm',
+            onClick: this.handleDelete
           }
         ],
         modal: true,
@@ -73,10 +73,9 @@ export default React.createClass({
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
           this.getDialogList(checkedCodeboxes),
           <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading} 
-          />
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
         ]
       }
     }]
@@ -96,50 +95,50 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems         = Store.getNumberOfChecked(),
-        isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
-        markedIcon           = 'synicon-checkbox-multiple-marked-outline',
-        blankIcon            = 'synicon-checkbox-multiple-blank-outline';
+    let checkedItems = Store.getNumberOfChecked();
+    let isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
-      <Container>
+      <div>
         <CodeBoxDialog />
         {this.getDialogs()}
 
         <Common.Show if={checkedItems > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyCodeboxSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName = {isAnyCodeboxSelected ? markedIcon : blankIcon} />
+              label={isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyCodeboxSelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName={isAnyCodeboxSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete CodeBoxes"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'deleteCodeBoxDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete CodeBoxes"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'deleteCodeBoxDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit CodeBox"
-              mini          = {true}
-              disabled      = {checkedItems > 1}
-              onClick       = {this.showCodeBoxEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit CodeBox"
+              mini={true}
+              disabled={checkedItems > 1}
+              onClick={this.showCodeBoxEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add CodeBox"
-            onClick       = {this.showCodeBoxDialog}
-            iconClassName = "synicon-plus" />
+            label="Click here to add CodeBox"
+            onClick={this.showCodeBoxDialog}
+            iconClassName="synicon-plus"/>
         </Common.Fab>
 
         <CodeBoxesList
-          name                 = "CodeBoxes"
-          items                = {this.state.items}
-          emptyItemHandleClick = {this.showCodeBoxDialog}
-          emptyItemContent     = "Create a CodeBox" />
-      </Container>
+          name="CodeBoxes"
+          items={this.state.items}
+          emptyItemHandleClick={this.showCodeBoxDialog}
+          emptyItemContent="Create a CodeBox"/>
+      </div>
     );
   }
 });

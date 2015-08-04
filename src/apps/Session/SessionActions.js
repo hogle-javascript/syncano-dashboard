@@ -1,42 +1,25 @@
-import Reflux from 'reflux';
-import _Connection from './Connection';
+import CreateActions from '../../utils/ActionsConstructor.js'
 
-let Connection     = _Connection.get();
-let SessionActions = Reflux.createActions({
-  login       : {},
-  logout      : {},
-  setToken    : {},
-  setRouter   : {},
-  setUser     : {},
-  setTheme    : {},
-  setInstance : {},
+export default CreateActions(
+  {},
+  {
+  login: {},
+  logout: {},
+  setToken: {},
+  setRouter: {},
+  setUser: {},
+  setTheme: {},
+  setInstance: {},
+  setInvitationFromUrl: {},
+  getInvitationFromUrl: {},
   fetchUser: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Profile.getUser'
   },
   fetchInstance: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Instances.set'
   }
 });
-
-SessionActions.fetchUser.listen(function(token) {
-  console.info('SessionActions::fetchUser');
-
-  Connection
-    .setApiKey(token)
-    .Accounts
-    .get()
-    .then(this.completed)
-    .catch(this.failure)
-});
-
-SessionActions.fetchInstance.listen(function(name) {
-  console.info('SessionActions::fetchInstance');
-  Connection
-    .setInstance(name)
-    .then(this.completed)
-    .catch(this.failure)
-});
-
-export default SessionActions;

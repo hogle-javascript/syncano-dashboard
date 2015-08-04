@@ -1,28 +1,28 @@
-var objectAssign = require('object-assign');
+let objectAssign = require('object-assign');
 
 // TODO: add some options like: exclude, ignore, prefix etc
-var StoreFormMixin = {
+let StoreFormMixin = {
 
-  getInitialFormState: function() {
+  getInitialFormState() {
     return {
-      errors    : {},
-      feedback  : null,
-      canSubmit : true
+      errors: {},
+      feedback: null,
+      canSubmit: true
     }
   },
 
-  listenToForms: function() {
+  listenToForms() {
     if (this.listenables) {
-      var arr = [].concat(this.listenables);
-      for (var i = 0; i < arr.length; i++) {
+      let arr = [].concat(this.listenables);
+      for (let i = 0; i < arr.length; i++) {
         this.listenToForm(arr[i]);
       }
     }
   },
 
-  listenToForm: function(listenable) {
-    for (var key in listenable) {
-      var action = listenable[key];
+  listenToForm(listenable) {
+    for (let key in listenable) {
+      let action = listenable[key];
       if (action.asyncResult === true && action.asyncForm === true) {
         // TODO: add more checks
         this.listenTo(action, this.handleForm);
@@ -32,19 +32,19 @@ var StoreFormMixin = {
     }
   },
 
-  handleForm: function() {
+  handleForm() {
     console.log('StoreFormMixin::handleForm');
     this.trigger({canSubmit: false});
   },
 
-  handleFormCompleted: function() {
+  handleFormCompleted() {
     console.log('StoreFormMixin::handleFormCompleted');
     this.trigger(this.getInitialFormState());
   },
 
-  handleFormFailure: function(payload) {
+  handleFormFailure(payload) {
     console.log('StoreFormMixin::handleFormFailure');
-    var state = this.getInitialFormState();
+    let state = this.getInitialFormState();
 
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
@@ -63,7 +63,7 @@ var StoreFormMixin = {
       }
       // jscs:enable
 
-      for (var field in payload) {
+      for (let field in payload) {
         state.errors[field] = [].concat(payload[field]);
       }
     }

@@ -34,10 +34,10 @@ export default Radium(React.createClass({
       return;
     }
 
-    let config    = this.state.chart;
+    let config = this.state.chart;
     config.bindto = this.refs.chart.getDOMNode();
-    config.size   = {width: 700, height: 300};
-    this.chart    = c3.generate(config);
+    config.size = {width: 700, height: 300};
+    this.chart = c3.generate(config);
   },
 
   renderSummary() {
@@ -75,22 +75,22 @@ export default Radium(React.createClass({
 
     let amountTotal = this.state.overage.amount + this.state.covered.amount;
     return (
-        <div style={{paddingTop: 25}}>
+      <div style={{paddingTop: 25}}>
 
-          <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
-            {coveredText}
-          </div>
+        <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+          {coveredText}
+        </div>
 
-          <div className="row align-middle" style={{marginTop: 20}}>
-            <div className="col-flex-1" style={{textAlign: 'center'}}>
-              <div style={{fontSize: '2rem'}}>${amountTotal}</div>
-              <div style={{marginTop: 15, fontSize: '1rem'}}>
-                ${this.state.covered.amount} plan + ${this.state.overage.amount} overage
-              </div>
+        <div className="row align-middle" style={{marginTop: 20}}>
+          <div className="col-flex-1" style={{textAlign: 'center'}}>
+            <div style={{fontSize: '2rem'}}>${amountTotal}</div>
+            <div style={{marginTop: 15, fontSize: '1rem'}}>
+              ${this.state.covered.amount} plan + ${this.state.overage.amount} overage
             </div>
           </div>
-
         </div>
+
+      </div>
     );
   },
 
@@ -109,9 +109,9 @@ export default Radium(React.createClass({
       <Common.Loading show={this.state.isLoading}>
         <div className="row">
           <div
-            ref       = "chart"
-            className = "col chart"
-            style={{width: 700}} />
+            ref="chart"
+            className="col chart"
+            style={{width: 700}}/>
           <div
             className="col-md-6"
             style={{

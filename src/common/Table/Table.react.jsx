@@ -1,8 +1,8 @@
-var React       = require('react');
-var classNames  = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
-var TableHeader = require('./TableHeader.react');
-var TableBody   = require('./TableBody.react');
+let TableHeader = require('./TableHeader.react');
+let TableBody = require('./TableBody.react');
 
 
 module.exports = React.createClass({
@@ -16,7 +16,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var cssClasses = classNames({
+    let cssClasses = classNames({
       'table': true,
       'table-read-only': this.props.readOnly,
     });

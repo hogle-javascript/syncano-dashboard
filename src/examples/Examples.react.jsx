@@ -11,7 +11,7 @@ var React                = require('react'),
     Dialog               = mui.Dialog,
     Snackbar             = mui.Snackbar,
     FlatButton           = mui.FlatButton,
-    List                 = mui.List,
+    // List                 = mui.List,
     ListItem             = mui.ListItem,
     ListDivider          = mui.ListDivider,
     Avatar               = mui.Avatar,
@@ -37,11 +37,6 @@ var React                = require('react'),
     FabList              = require('../common/Fab/FabList.react'),
     UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
-    FieldPassword        = require('../common/Field/FieldPassword.react'),
-    FieldReadonly        = require('../common/Field/FieldReadonly.react'),
-    FieldDatetime        = require('../common/Field/FieldDatetime.react'),
-    FieldSelectOption    = require('../common/Field/FieldSelectOption.react'),
-    FieldSelect          = require('../common/Field/FieldSelect.react'),
     SwitchField          = require('../common/SwitchField/SwitchField.react'),
     SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
     SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
@@ -66,7 +61,7 @@ module.exports = React.createClass({
 
   displayName: 'Examples',
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       errorText: null
     };
@@ -76,13 +71,13 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function () {
+  getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     ThemeManager.setPalette({
       primary1Color: Colors.blueA700,
       primary2Color: Colors.lightBlueA700,
@@ -98,10 +93,10 @@ module.exports = React.createClass({
     });
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
   },
 
   dummyDisplayError: function(e) {
@@ -143,15 +138,13 @@ module.exports = React.createClass({
   },
 
   getMaxDate: function(maxYear) {
-    var date = new Date;
-    date.setFullYear(maxYear);
-    return date;
+    return new Date().setFullYear(maxYear);
   },
 
-  render: function () {
+  render: function() {
 
 
-    var dummyClick = function (action) {
+    var dummyClick = function(action) {
       console.log('Click!', action);
     };
 
@@ -238,12 +231,12 @@ module.exports = React.createClass({
       color: '#FFC52D'
     };
 
-    var handleSnackbarClick = function () {
+    var handleSnackbarClick = function() {
       this.refs.snackbar.show()
     }.bind(this);
 
-    var handleSnackbarAction = function () {
-      window.alert("Bum!");
+    var handleSnackbarAction = function() {
+      console.log("Bum!");
     };
 
     var dialogStandardActions = [
@@ -252,7 +245,7 @@ module.exports = React.createClass({
     ];
 
     var modalState = true;
-    var handleStandardDialogTouchTap = function () {
+    var handleStandardDialogTouchTap = function() {
       this.refs.standardDialog.show();
     }.bind(this);
 
@@ -350,12 +343,12 @@ module.exports = React.createClass({
       id: "allUsers",
       uuid: "allUsers",
       displayName: "All users",
-      isNavigationElement: true,
-    },{
+      isNavigationElement: true
+    }, {
       id: "groups",
       uuid: "groups",
       displayName: "Groups",
-      isNavigationElement: true,
+      isNavigationElement: true
       //payload: this.state.groups,
     }];
 
@@ -443,7 +436,7 @@ module.exports = React.createClass({
             <ListItem
               leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
-              secondaryTextLines={1} 
+              secondaryTextLines={1}
               onClick={dummyClick} >
               Name LastName
             </ListItem>
@@ -561,41 +554,6 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>FieldDatetime</h4>
-          <FieldDatetime
-            dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
-            labelText="Date"
-            iconColor="red"
-            fieldStyle={{width: "100%"}} />
-        </div>
-
-        <div className="exampleBox">
-          <h4>FieldPassword (Material UI)</h4>
-          <TextField
-            name="password"
-            type="password"
-            floatingLabelText="Password" />
-        </div>
-
-        <div className="exampleBox">
-          <h4>FieldReadonly</h4>
-          <FieldReadonly field={someField}/>
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldReadonly (material UI)</h2>
-          <TextField
-            defaultValue="Your name - 5 chars only"
-            disabled={true}
-            fullWidth={true} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldSelect</h2>
-          <FieldSelect field={fieldSelect}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>SelectField (Drop Down from material UI)</h2>
           <SelectField
             menuItems={fieldSelectMUI} />
@@ -701,15 +659,15 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>TraceResultWithMeta</h2>
-          <TraceResultWithMeta 
-            meta={{'test': 'Some meta'}} 
-            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}  
+          <TraceResultWithMeta
+            meta={{'test': 'Some meta'}}
+            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}
             result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">
           <h2>Loading</h2>
-          <Loading 
+          <Loading
             type    = "linear"
             show    = {true} />
           <Loading show={true}/>
@@ -751,8 +709,6 @@ module.exports = React.createClass({
           <h2>Slider</h2>
           <mui.Slider step={0.1}/>
         </div>
-
-
 
         <div className="exampleBox">
           <h2>Menu (component build in progress)</h2>
@@ -820,9 +776,7 @@ module.exports = React.createClass({
                   {text: <MenuItem>ASDASD</MenuItem>},
                   {text: <MenuItem>ASDASD</MenuItem>},
                   {text: <MenuItem>ASDASD</MenuItem>}
-                  ]}>
-
-          </Menu>
+                  ]} />
         </div>
 
       </div>

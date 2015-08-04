@@ -42,10 +42,14 @@ export default React.createClass({
   handleTabActive(tab) {
     this.transitionTo(tab.props.route,
       {
-        codeboxId    : this.state.currentCodeBox.id,
-        instanceName : this.getParams().instanceName
+        codeboxId: this.state.currentCodeBox.id,
+        instanceName: this.getParams().instanceName
       }
     );
+  },
+
+  handleBackClick() {
+    this.transitionTo('codeboxes', this.getParams());
   },
 
   getStyles() {
@@ -54,7 +58,7 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
-        padding     : '0 250px',
+        padding: '0 250px',
         borderBottom: '1px solid #DDDDDD'
       },
       tab: {
@@ -66,56 +70,85 @@ export default React.createClass({
   getTabsData() {
     return [
       {
-        label : 'Edit',
-        route : 'codebox-edit'
+        label: 'Edit',
+        route: 'codebox-edit'
       }, {
-        label : 'Config',
-        route : 'codebox-config'
+        label: 'Config',
+        route: 'codebox-config'
       }, {
-        label : 'Traces',
-        route : 'codebox-traces'
+        label: 'Traces',
+        route: 'codebox-traces'
       }
     ];
   },
 
   renderTabs() {
     let styles = this.getStyles(),
-        codeBox = this.state.currentCodeBox;
+      codeBox = this.state.currentCodeBox;
 
     if (codeBox !== null) {
       return (
         <MUI.Tabs
-          initialSelectedIndex  = {this.getActiveSubTabIndex()}
-          tabItemContainerStyle = {styles.subTabsHeader}
-          style                 = {styles.tabs}>
+          initialSelectedIndex={this.getActiveSubTabIndex()}
+          tabItemContainerStyle={styles.subTabsHeader}
+          style={styles.tabs}>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Edit"
-            route    = "codebox-edit"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Edit"
+            route="codebox-edit"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Config"
-            route    = "codebox-config"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Config"
+            route="codebox-config"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Traces"
-            route    = "codebox-traces"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Traces"
+            route="codebox-traces"
+            onActive={this.handleTabActive}/>
         </MUI.Tabs>
       );
     }
   },
 
   render() {
-    let codeBoxLabel = this.state.currentCodeBox !== null ? 'CodeBox: ' + this.state.currentCodeBox.label : null;
+    let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
 
     return (
-      <Container.Profile headerText={codeBoxLabel}>
-        {this.renderTabs()}
-        <RouteHandler/>
-      </Container.Profile>
+      <div style={{margin: '65px auto', width: '80%'}}>
+        <MUI.Toolbar style={{
+          position: 'fixed',
+          top: 64,
+          right: 0,
+          paddingLeft: 256,
+          background: 'rgba(215,215,215,0.6)',
+          padding: '0px 32px 0 24px'}}>
+          <MUI.ToolbarGroup>
+            <MUI.IconButton
+              iconClassName="synicon-arrow-left"
+              tooltip="Go back to CodeBoxes list"
+              tooltipPosition="bottom-right"
+              onClick={this.handleBackClick}
+              touch={true}
+              style={{marginTop: 4}}
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup>
+            <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup float="right">
+          </MUI.ToolbarGroup>
+
+        </MUI.Toolbar>
+
+        <div style={{paddingTop: 32}}>
+          {this.renderTabs()}
+          <RouteHandler/>
+        </div>
+      </div>
     );
   }
 });

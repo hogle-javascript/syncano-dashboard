@@ -1,5 +1,5 @@
-var React  = require('react'),
-    Radium = require('radium');
+let React = require('react'),
+  Radium = require('radium');
 
 module.exports = Radium(React.createClass({
 
@@ -9,9 +9,9 @@ module.exports = Radium(React.createClass({
     topic: React.PropTypes.string
   },
 
-  render: function () {
+  render() {
 
-    var headerStyle = {
+    let headerStyle = {
       root: {
         'display': 'flex',
         'justify-content': 'flex-end',

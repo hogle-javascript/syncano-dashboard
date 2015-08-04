@@ -31,11 +31,10 @@ export default React.createClass({
   },
 
   render() {
-    let codeBoxId = this.getParams().codeboxId;
     return (
       <Traces
-        objectId  = {codeBoxId}
-        tracesFor = 'codebox' />
+        objectId={this.getParams().codeboxId}
+        tracesFor='codebox'/>
     );
   }
 });

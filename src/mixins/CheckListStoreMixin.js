@@ -1,33 +1,34 @@
-var CheckListStoreMixin = {
+export default {
 
-  getNumberOfChecked: function() {
+  getNumberOfChecked() {
     if (this.data.items === null) {
       return 0;
     }
 
-    var checkedFilter = function(item) {
+    let checkedFilter = function(item) {
       return item.checked === true;
     };
     return this.data.items.filter(checkedFilter).length;
   },
 
-  onCheckItem: function(checkId, state) {
+  onCheckItem(checkId, state) {
     console.debug('CheckListStoreMixin::onCheckItem');
+    checkId = checkId.toString();
 
     this.data.items.forEach(function(item) {
       // TODO: If item don't have id we are checking name, we should consider name->id in js lib
       if (item.id) {
-        if (checkId == item.id) {
+        if (checkId === item.id.toString()) {
           item.checked = state;
         }
-      } else if (checkId == item.name) {
+      } else if (checkId === item.name) {
         item.checked = state;
       }
     }.bind(this));
     this.trigger(this.data);
   },
 
-  onUncheckAll: function() {
+  onUncheckAll() {
 
     this.data.items.forEach(function(item) {
       item.checked = false;
@@ -35,16 +36,16 @@ var CheckListStoreMixin = {
     this.trigger(this.data);
   },
 
-  onSelectAll: function() {
+  onSelectAll() {
     this.data.items.forEach(function(item) {
       item.checked = true;
     });
     this.trigger(this.data);
   },
 
-  getCheckedItem: function() {
+  getCheckedItem() {
     // Looking for the first 'checked' item
-    var checkedItem = null;
+    let checkedItem = null;
     if (this.data.items === null) {
       return checkedItem;
     }
@@ -58,7 +59,7 @@ var CheckListStoreMixin = {
     return checkedItem;
   },
 
-  getCheckedItems: function() {
+  getCheckedItems() {
     if (this.data.items === null) {
       return [];
     }
@@ -69,5 +70,3 @@ var CheckListStoreMixin = {
   },
 
 };
-
-module.exports = CheckListStoreMixin;

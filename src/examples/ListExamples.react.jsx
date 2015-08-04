@@ -27,32 +27,32 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function () {
+  getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function () {
+  componentWillMount: function() {
     ThemeManager.setPalette({
       accent1Color: Colors.deepOrange500
     });
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       checkingState: false,
       checkedItemNumber: 0
     }
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
   },
 
-  handleIconClick: function (id, state) {
+  handleIconClick: function(id, state) {
     var checkedItemNumber;
     if (state) {
       checkedItemNumber = ++this.state.checkedItemNumber;
@@ -68,8 +68,8 @@ module.exports = React.createClass({
     console.log('checked', checkedItemNumber)
   },
 
-  render: function () {
-    var dummyClick = function (action) {
+  render: function() {
+    var dummyClick = function(action) {
       console.log('Click!', action);
     };
     var list = {
@@ -116,7 +116,7 @@ module.exports = React.createClass({
     var items = [];
     if (data.length > 0) {
       console.log('Iterate over items', data);
-      items = Object.keys(data).map(function (item, i) {
+      items = Object.keys(data).map(function(item, i) {
         return (<ListItem
           key={i}
           item={data[item]}

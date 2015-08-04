@@ -25,15 +25,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -52,23 +52,23 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let styles  = this.getStyles(),
-        isOwner = item.id === SessionStore.getInstance().owner.id;
+    let styles = this.getStyles();
+    let isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (
       <Common.ColumnList.Item
-        checked   = {item.checked}
-        key       = {item.id}
-      >
-        <Common.ColumnList.Column.CheckIcon
-          className       = "col-xs-25 col-md-20"
-          id              = {item.id.toString()}
-          icon            = 'account'
-          background      = {MUI.Styles.Colors.blue500}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          checkable       = {!isOwner}
+        checked={item.checked}
+        key={item.id}
         >
+        <Common.ColumnList.Column.CheckIcon
+          className="col-xs-25 col-md-20"
+          id={item.id.toString()}
+          icon='account'
+          background={Common.Color.getColorByName('blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}
+          checkable={!isOwner}
+          >
           <div>
             <div>{item.email}</div>
             <div style={styles.ownerLabel}>
@@ -77,7 +77,7 @@ export default React.createClass({
           </div>
         </Common.ColumnList.Column.CheckIcon>
         <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at} />
+        <Common.ColumnList.Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },

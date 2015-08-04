@@ -34,9 +34,9 @@ export default {
 
   listTraces(webhookId) {
     this.Connection
-        .WebHooks
-        .traces(webhookId)
-        .then(this.completed)
-        .catch(this.failure);
+      .WebHooks
+      .traces(webhookId)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

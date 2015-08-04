@@ -25,24 +25,24 @@ export default React.createClass({
 
   getStyles() {
     return {
-      fontWeight     : 300,
-      fontSize       : 16,
-      lineHeight     : '1em',
-      borderRadius   : '100%',
-      color          : '#fff',
-      display        : 'flex',
-      alignItems     : 'center',
-      justifyContent : 'center',
-      userSelect     : 'none',
-      cursor         : 'default'
+      fontWeight: 300,
+      fontSize: 16,
+      lineHeight: '1em',
+      borderRadius: '100%',
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      userSelect: 'none',
+      cursor: 'default'
     }
   },
 
   render() {
     let styles = this.getStyles(),
-        initials,
-        colors = ColorStore.getAllColors(),
-        nameFragments = this.props.name.split(' ');
+      initials,
+      colors = ColorStore.getAllColors(),
+      nameFragments = this.props.name.split(' ');
 
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();
@@ -58,8 +58,8 @@ export default React.createClass({
 
     return (
       <MUI.Avatar
-        style           = {styles}
-        backgroundColor = {styles.backgroundColor}>
+        style={styles}
+        backgroundColor={styles.backgroundColor}>
         {initials}
       </MUI.Avatar>
     );

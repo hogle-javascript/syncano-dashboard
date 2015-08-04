@@ -11,8 +11,8 @@ import AdminsInvitationsStore from './AdminsInvitationsStore';
 import AdminsActions from './AdminsActions';
 
 export default Reflux.createStore({
-  listenables : AdminsActions,
-  mixins      : [
+  listenables: AdminsActions,
+  mixins: [
     Reflux.connect(AdminsInvitationsStore),
     Mixins.CheckListStore,
     Mixins.StoreLoading,
@@ -21,8 +21,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     }
   },
 

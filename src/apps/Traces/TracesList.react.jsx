@@ -31,31 +31,31 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       traceResult: {
-        maxHeight      : 0,
-        overflow       : 'hidden',
-        transition     : 'max-height 450ms ease-out'
+        maxHeight: 0,
+        overflow: 'hidden',
+        transition: 'max-height 450ms ease-out'
       },
       noTracesContainer: {
-        margin       : '64px auto',
-        textAlign    : 'center'
+        margin: '64px auto',
+        textAlign: 'center'
       },
       noTracesIcon: {
-        fontSize     : 96,
-        lineHeight   : 1,
-        marginBottom : 16,
-        color        : 'rgba(0, 0, 0, 0.24)'
+        fontSize: 96,
+        lineHeight: 1,
+        marginBottom: 16,
+        color: 'rgba(0, 0, 0, 0.24)'
       },
       noTracesText: {
-        color        : 'rgba(0, 0, 0, 0.67)',
-        fontSize     : 34,
-        margin       : 0
+        color: 'rgba(0, 0, 0, 0.67)',
+        fontSize: 34,
+        margin: 0
       }
     }
   },
 
   toggleTrace(traceId) {
     console.info('CodeBoxesTraces::toggleTrace', traceId);
-    if (this.state.visibleTraceId == traceId) {
+    if (this.state.visibleTraceId === traceId) {
       this.setState({visibleTraceId: null});
     } else {
       this.setState({visibleTraceId: traceId});
@@ -87,37 +87,41 @@ export default Radium(React.createClass({
       }
     }[item.status];
 
-    if (item.id == this.state.visibleTraceId) {
+    if (item.id === this.state.visibleTraceId) {
       styles.traceResult = {
         maxHeight: '500px',
-        marginBottom : 15,
+        marginBottom: 15,
         transition: 'max-height 450ms ease-in',
         overflow: 'auto'
       };
       styles.trace = {
-        margin : '15px -30px 0 -30px'
+        margin: '15px -30px 0 -30px'
       };
     }
     return (
-      <MUI.Paper zDepth={2} style={styles.trace}>
+      <MUI.Paper
+        zDepth={1}
+        style={styles.trace}>
         <Common.ColumnList.Item
-          checked     = {item.checked}
-          key         = {item.id}
-          id          = {item.id}
-          handleClick = {this.toggleTrace.bind(null, item.id)}>
+          checked={item.checked}
+          key={item.id}
+          id={item.id}
+          zDepth={0}
+          handleClick={this.toggleTrace.bind(null, item.id)}>
           <Column.CheckIcon
-            id              = {item.id.toString()}
-            icon            = {status.icon}
-            background      = {status.background}
-            checkable       = {false}>
+            id={item.id.toString()}
+            icon={status.icon}
+            background={status.background}
+            checkable={false}>
             {item.status}
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{item.duration}ms</Column.Desc>
           <Column.Date
-            date      = {item.executed_at}
-            ifInvalid = {item.status} />
+            date={item.executed_at}
+            ifInvalid={item.status}/>
         </Common.ColumnList.Item>
+
         <div style={styles.traceResult}>
           <Common.Trace.Result result={item.result}/>
         </div>
@@ -126,8 +130,26 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    let items  = this.state.items || [],
-        styles = this.getStyles();
+    let items = this.state.items || [],
+      styles = this.getStyles(),
+      tracesFor = {
+        codebox: {
+          name: 'CodeBox',
+          icon: 'synicon-package-variant'
+        },
+        webhook: {
+          name: 'Webhook',
+          icon: 'synicon-arrow-up-bold'
+        },
+        trigger: {
+          name: 'Trigger',
+          icon: 'synicon-arrow-up-bold'
+        },
+        schedule: {
+          name: 'Schedule',
+          icon: 'synicon-camera-timer'
+        }
+      };
 
     if (items.length > 0) {
       items = items.map(item => this.renderItem(item));
@@ -139,9 +161,10 @@ export default Radium(React.createClass({
     return [
       <div style={styles.noTracesContainer}>
         <MUI.FontIcon
-          style     = {styles.noTracesIcon}
-          className = "synicon-package-variant" />
-        <p style={styles.noTracesText}>There are no traces for this CodeBox yet</p>
+          style={styles.noTracesIcon}
+          className={tracesFor[this.props.tracesFor].icon}/>
+
+        <p style={styles.noTracesText}>There are no traces for this {tracesFor[this.props.tracesFor].name} yet</p>
       </div>
     ];
   },

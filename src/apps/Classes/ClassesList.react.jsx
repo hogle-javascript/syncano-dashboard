@@ -7,7 +7,6 @@ import HeaderMixin from '../Header/HeaderMixin';
 import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
-import ColorStore from '../../common/Color/ColorStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
@@ -38,8 +37,8 @@ export default React.createClass({
     SessionStore.getRouter().transitionTo(
       'classes-data-objects',
       {
-        instanceName : SessionStore.getInstance().name,
-        className    : className
+        instanceName: SessionStore.getInstance().name,
+        className: className
       }
     );
     console.info('ClassesList::handleItemClick');
@@ -49,30 +48,30 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        key          = {item.name}
-        id           = {item.name}
-        checked      = {item.checked}
-        handleClick  = {this.handleItemClick.bind(null, item.name)} >
+        key={item.name}
+        id={item.name}
+        checked={item.checked}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
-          id              = {item.name.toString()}
-          icon            = {item.metadata ? item.metadata.icon : 'table-large'}
-          background      = {ColorStore.getColorByName(item.metadata ? item.metadata.color : 'blue')}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name.toString()}
+          icon={item.metadata ? item.metadata.icon : 'table-large'}
+          background={Common.Color.getColorByName(item.metadata ? item.metadata.color : 'blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.ID className="col-xs-3 col-md-3">{item.group}</Column.ID>
-        <Column.Desc className="col-xs-5 col-md-5">
+        <Column.Desc className="col-xs-6 col-md-6">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
         </Column.Desc>
-        <Column.ID className="col-xs-5 col-md-5">
+        <Column.ID className="col-xs-4 col-md-4">
           {item.objects_count}
         </Column.ID>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },
@@ -87,7 +86,7 @@ export default React.createClass({
     }
     return (
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
+        {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
     )
   },
@@ -99,8 +98,8 @@ export default React.createClass({
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header>Description</Column.Desc.Header>
           <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
-          <Column.Desc.Header className="col-xs-5">Permissions</Column.Desc.Header>
-          <Column.ID.Header className="col-xs-5 col-md-5">Objects</Column.ID.Header>
+          <Column.Desc.Header className="col-xs-6">Permissions</Column.Desc.Header>
+          <Column.ID.Header className="col-xs-4 col-md-4">Objects</Column.ID.Header>
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>

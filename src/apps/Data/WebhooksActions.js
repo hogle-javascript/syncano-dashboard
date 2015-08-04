@@ -2,34 +2,34 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck  : true,
-    withDialog : true
+    withCheck: true,
+    withDialog: true
   },
   {
-    fetch         : {},
-    setWebhooks   : {},
+    fetch: {},
+    setWebhooks: {},
 
     createWebhook: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Webhooks.create'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Webhooks.create'
     },
     fetchWebhooks: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Webhooks.list'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Webhooks.list'
     },
     updateWebhook: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Webhooks.update'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Webhooks.update'
     },
     removeWebhooks: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Webhooks.remove'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Webhooks.remove'
     }
   }
 );

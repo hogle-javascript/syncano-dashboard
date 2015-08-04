@@ -24,10 +24,10 @@ export default {
     this.Connection
       .Solutions
       .install(
-        payload.solutionId,
-        payload.versionId,
-        payload.instanceName
-      )
+      payload.solutionId,
+      payload.versionId,
+      payload.instanceName
+    )
       .then(this.completed)
       .catch(this.failure);
   },

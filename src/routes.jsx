@@ -5,7 +5,7 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
-import Billing from './pages/billing.react';
+import ProfilePage from './pages/profile.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
 
@@ -23,7 +23,7 @@ import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import Classes from './apps/Classes/Classes.react';
 import CodeBoxes from './apps/CodeBoxes';
 import DataObjects from './apps/DataObjects/DataObjects.react';
-import Data from './apps/Data/Data.react';
+import Data from './apps/Data';
 import Tasks from './apps/Tasks/Tasks.react';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
@@ -32,249 +32,259 @@ import Channels from './apps/Channels/Channels.react';
 import Examples from './examples/Examples.react';
 import ListExamples from './examples/ListExamples.react';
 
-let Route         = Router.Route;
-let Redirect      = Router.Redirect;
-let NotFoundRoute = Router.NotFoundRoute;
-let DefaultRoute  = Router.DefaultRoute;
+const Route = Router.Route;
+const Redirect = Router.Redirect;
+const NotFoundRoute = Router.NotFoundRoute;
+const DefaultRoute = Router.DefaultRoute;
 
 module.exports = (
   <Route
-    name    = "app"
-    handler = {App}
-    path    = "/"
-  >
-    <NotFoundRoute handler={NotFound} />
+    name="app"
+    handler={App}
+    path="/"
+    >
+    <NotFoundRoute handler={NotFound}/>
     <Route
-      name    = "login"
-      handler = {Account.Login}
-    />
+      name="login"
+      handler={Account.Login}
+      />
     <Route
-      name    = "signup"
-      handler = {Account.Signup}
-    />
+      name="signup"
+      handler={Account.Signup}
+      />
     <Route
-      name    = "activate"
-      handler = {Account.Activate}
-      path    = "/activate/:uid/:token"
-    />
+      name="activate"
+      handler={Account.Activate}
+      path="/activate/:uid/:token"
+      />
     <Route
-      name    = "password-update"
-      handler = {Account.PasswordUpdate}
-      path    = "/password/update"
-    />
+      name="password-update"
+      handler={Account.PasswordUpdate}
+      path="/password/update"
+      />
     <Route
-      name    = "password-reset"
-      handler = {Account.PasswordReset}
-      path    = "/password/reset"
-    />
+      name="password-reset"
+      handler={Account.PasswordReset}
+      path="/password/reset"
+      />
     <Route
-      name    = "password-reset-confirm"
-      handler = {Account.PasswordResetConfirm}
-      path    = "/password/reset/:uid/:token"
-    />
+      name="password-reset-confirm"
+      handler={Account.PasswordResetConfirm}
+      path="/password/reset/:uid/:token"
+      />
 
     {/* Dashboard */}
     <Route
-      name    = "dashboard"
-      handler = {Dashboard}
-      path    = "/"
-    >
+      name="dashboard"
+      handler={Dashboard}
+      path="/">
       <Route
-        name    = "instances"
-        handler = {Instance}
-        path    = "/instances">
-        <Redirect
-          name  = "instance"
-          from  = "instance"
-          to    = "data"
-          path  = ":instanceName"
-        />
-        <DefaultRoute handler={Instances} />
+        name="instances"
+        handler={Instances}
+        path="instances"/>
+
+      <Route
+        name="instance"
+        handler={Instance}
+        path="instances/:instanceName">
+
+        <DefaultRoute handler={Data}/>
 
         {/* Data */}
         <Route
-          name    = "data"
-          handler = {Data}
-          path    = ":instanceName/data"
-          />
+          name="data"
+          path="data"
+          >
+
+          {/* Webhook Traces */}
+          <Route
+            name='webhook-traces'
+            handler={Data.WebhookTraces}
+            path='webhook/:webhookName/traces'
+            />
+
+          <DefaultRoute handler={Data}/>
+
+        </Route>
 
         {/* Admins */}
         <Route
-          name    = "admins"
-          handler = {Admins}
-          path    = ":instanceName/admins"
-        />
+          name="admins"
+          handler={Admins}
+          path="admins"
+          />
 
         {/* API keys */}
         <Route
-          name    = "api-keys"
-          handler = {ApiKeys}
-          path    = ":instanceName/api_keys"
-        />
+          name="api-keys"
+          handler={ApiKeys}
+          path="api_keys"
+          />
 
         {/* Classes */}
         <Route
-          name    = "classes"
-          path    = ":instanceName/classes">
+          name="classes"
+          path="classes">
 
           {/* Classes - Data Objects */}
           <Route
-            name    = "classes-data-objects"
-            handler = {DataObjects}
-            path    = ":className/objects"
-          />
+            name="classes-data-objects"
+            handler={DataObjects}
+            path=":className/objects"
+            />
 
-          <DefaultRoute handler={Classes} />
+          <DefaultRoute handler={Classes}/>
         </Route>
 
         {/* CodeBoxes */}
         <Route
-          name    = "codeboxes"
-          handler = {CodeBoxesPage}
-          path    = ":instanceName/codeboxes">
+          name="codeboxes"
+          handler={CodeBoxesPage}
+          path="codeboxes">
           <Route
-            name    = "codebox"
-            handler = {CodeBoxes.Details}
-            path    = ":codeboxId">
+            name="codebox"
+            handler={CodeBoxes.Details}
+            path=":codeboxId">
             <Route
-              name    = "codebox-traces"
-              handler = {CodeBoxes.Traces}
-              path    = "traces"
-            />
+              name="codebox-traces"
+              handler={CodeBoxes.Traces}
+              path="traces"
+              />
             <Route
-              name    = "codebox-edit"
-              handler = {CodeBoxes.Edit}
-              path    = "edit"
-            />
+              name="codebox-edit"
+              handler={CodeBoxes.Edit}
+              path="edit"
+              />
             <Route
-              name    = "codebox-config"
-              handler = {CodeBoxes.Config}
-              path    = "config" />
-            <DefaultRoute handler={CodeBoxes.Edit} />
+              name="codebox-config"
+              handler={CodeBoxes.Config}
+              path="config"/>
+            <DefaultRoute handler={CodeBoxes.Edit}/>
           </Route>
-          <DefaultRoute handler={CodeBoxes} />
+          <DefaultRoute handler={CodeBoxes}/>
         </Route>
         <Route
-          name    = "codeboxes-add"
-          handler = {CodeBoxes}
-          path    = ":instanceName/codeboxes/:action"
-        />
+          name="codeboxes-add"
+          handler={CodeBoxes}
+          path="codeboxes/:action"
+          />
 
         {/* Data Objects */}
         <Route
-          name    = "data-objects"
-          handler = {DataObjects}
-          path    = ":instanceName/objects"
-        />
+          name="data-objects"
+          handler={DataObjects}
+          path="objects"
+          />
 
         {/* Tasks */}
         <Route
-          name    = "tasks"
-          handler = {Tasks}
-          path    = ":instanceName/tasks"
-        />
+          name="tasks"
+          handler={Tasks}
+          path="tasks"
+          />
 
         {/* Channels */}
         <Route
-          name    = "channels"
-          handler = {Channels}
-          path    = ":instanceName/channels"
-        />
+          name="channels"
+          handler={Channels}
+          path="channels"
+          />
 
         {/* Users */}
         <Route
-          name    = "users"
-          handler = {Users}
-          path    = ":instanceName/users"
-        />
+          name="users"
+          handler={Users}
+          path="users"
+          />
 
       </Route>
 
       {/* Profile Billing */}
       <Route
-        name    = "profile-billing"
-        handler = {Billing}
-        path    = "/account/billing"
-      >
+        name="profile"
+        handler={ProfilePage}
+        path="/account"
+        >
         <Route
-          name    = "profile-billing-plan"
-          handler = {Profile.BillingPlan}
-          path    = "plan"
-        />
+          name="profile-billing-plan"
+          handler={Profile.BillingPlan}
+          path="plan"
+          />
         <Route
-          name    = "profile-billing-address"
-          handler = {Profile.BillingAddress}
-          path    = "address"
-        />
+          name="profile-billing-address"
+          handler={Profile.BillingAddress}
+          path="address"
+          />
         <Route
-          name    = "profile-billing-payment"
-          handler = {Profile.BillingPayment}
-          path    = "payment-methods"
-        />
+          name="profile-billing-payment"
+          handler={Profile.BillingPayment}
+          path="payment-methods"
+          />
         <Route
-          name    = "profile-billing-invoices"
-          handler = {Profile.BillingInvoices}
-          path    = "invoices"
-        />
-        <DefaultRoute handler={Profile.BillingPlan} />
+          name="profile-billing-invoices"
+          handler={Profile.BillingInvoices}
+          path="invoices"
+          />
+        <Route
+          name="profile-settings"
+          handler={Profile.Settings}
+          path="/account"/>
+        <Route
+          name="profile-authentication"
+          handler={Profile.Authentication}
+          path="/account/authentication"
+          />
+        <Route
+          name="profile-invitations"
+          handler={Profile.Invitations}
+          path="/account/invitations"
+          />
+        <DefaultRoute handler={Profile.BillingPlan}/>
       </Route>
 
       {/* Solutions */}
       <Route
-        name    = "solutions"
-        path    = "/solutions"
-      >
+        name="solutions"
+        path="/solutions"
+        >
         <Route
-          name    = "solutions-list"
-          handler = {Solutions.ListView}
-          path    = "list"
-        />
+          name="solutions-list"
+          handler={Solutions.ListView}
+          path="list"
+          />
         <Route
-          name    = "solutions-install"
-          handler = {Solutions.EditView}
-          path    = "/solutions/:solutionId/:action"
-        />
+          name="solutions-install"
+          handler={Solutions.EditView}
+          path="/solutions/:solutionId/:action"
+          />
         <Route
-          name    = "solutions-edit"
-          handler = {Solutions.EditView}
-          path    = "/solutions/:solutionId/edit"
-        />
+          name="solutions-edit"
+          handler={Solutions.EditView}
+          path="/solutions/:solutionId/edit"
+          />
         <Route
-          name    = "solutions-add-version"
-          handler = {Solutions.AddVersionView}
-          path    = "/solutions/:solutionId/versions/add"
-        />
+          name="solutions-add-version"
+          handler={Solutions.AddVersionView}
+          path="/solutions/:solutionId/versions/add"
+          />
         <Redirect
-          from  = "/solutions"
-          to    = "solutions-list"
-        />
-        <DefaultRoute handler={Solutions.ListView} />
+          from="/solutions"
+          to="solutions-list"
+          />
+        <DefaultRoute handler={Solutions.ListView}/>
       </Route>
-      <Route
-        name    = "profile-settings"
-        handler = {Profile.Settings}
-        path    = "/account" />
-      <Route
-        name    = "profile-authentication"
-        handler = {Profile.Authentication}
-        path    = "/account/authentication"
-      />
-      <Route
-        name    = "profile-invitations"
-        handler = {Profile.Invitations}
-        path    = "/account/invitations"
-      />
-      <DefaultRoute handler = {Instances}/>
+
+      <DefaultRoute handler={Instances}/>
     </Route>
 
     {/* Examples */}
     <Route
-      name    = "examples"
-      handler = {Examples}
-    />
+      name="examples"
+      handler={Examples}
+      />
     <Route
-      name    = "listsexamples"
-      handler = {ListExamples}
-    />
+      name="listsexamples"
+      handler={ListExamples}
+      />
   </Route>
 );

@@ -46,58 +46,58 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createInstance({
-      name        : this.state.name,
-      description : this.state.description,
+      name: this.state.name,
+      description: this.state.description,
       metadata: {
-        color     : Common.Color.getRandomColorName(),
-        icon      : Common.Icon.Store.getRandomIconPickerIcon()
+        color: Common.Color.getRandomColorName(),
+        icon: Common.Icon.Store.getRandomIconPickerIcon()
       }
     });
   },
 
   render() {
     let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance',
-        dialogCustomActions = [
-          <MUI.FlatButton
-            key        = "cancel"
-            label      = "Cancel"
-            onTouchTap = {this.handleCancel}
-            ref        = "cancel" />,
-          <MUI.FlatButton
-            key        = "confirm"
-            label      = "Confirm"
-            primary    = {true}
-            onTouchTap = {this.handleFormValidation}
-            ref        = "submit" />
-        ];
+      dialogCustomActions = [
+        <MUI.FlatButton
+          key="cancel"
+          label="Cancel"
+          onTouchTap={this.handleCancel}
+          ref="cancel"/>,
+        <MUI.FlatButton
+          key="confirm"
+          label="Confirm"
+          primary={true}
+          onTouchTap={this.handleFormValidation}
+          ref="submit"/>
+      ];
 
     return (
       <Common.Dialog
-        ref             = "dialog"
-        title           = {title}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogCustomActions}
-        onDismiss       = {this.resetDialogState}
-        onShow          = {this.handleDialogShow}>
+        ref="dialog"
+        title={title}
+        openImmediately={this.props.openImmediately}
+        actions={dialogCustomActions}
+        onDismiss={this.resetDialogState}
+        onShow={this.handleDialogShow}>
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-            ref               = "name"
-            name              = "name"
-            fullWidth         = {true}
-            disabled          = {true}
-            valueLink         = {this.linkState('name')}
-            errorText         = {this.getValidationMessages('name').join(' ')}
-            hintText          = "Short name for your Instance"
-            floatingLabelText = "Name" />
+            ref="name"
+            name="name"
+            fullWidth={true}
+            disabled={true}
+            valueLink={this.linkState('name')}
+            errorText={this.getValidationMessages('name').join(' ')}
+            hintText="Short name for your Instance"
+            floatingLabelText="Name"/>
           <MUI.TextField
-            ref               = "description"
-            name              = "description"
-            fullWidth         = {true}
-            valueLink         = {this.linkState('description')}
-            errorText         = {this.getValidationMessages('description').join(' ')}
-            hintText          = "Multiline description of Instance (optional)"
-            floatingLabelText = "Description" />
+            ref="description"
+            name="description"
+            fullWidth={true}
+            valueLink={this.linkState('description')}
+            errorText={this.getValidationMessages('description').join(' ')}
+            hintText="Multiline description of Instance (optional)"
+            floatingLabelText="Description"/>
         </div>
       </Common.Dialog>
     );

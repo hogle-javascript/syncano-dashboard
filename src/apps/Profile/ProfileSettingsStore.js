@@ -14,10 +14,10 @@ export default Reflux.createStore({
     let user = SessionStore.getUser({});
     return {
       // jscs:disable
-      firstName : user.first_name,
-      lastName  : user.last_name,
+      firstName: user.first_name,
+      lastName: user.last_name,
       // jscs:enable
-      email     : user.email
+      email: user.email
     }
   },
 
@@ -33,10 +33,10 @@ export default Reflux.createStore({
       let user = SessionStore.getUser({});
       this.trigger({
         // jscs:disable
-        firstName : user.first_name,
-        lastName  : user.last_name,
+        firstName: user.first_name,
+        lastName: user.last_name,
         // jscs:enable
-        email     : user.email
+        email: user.email
       });
     }
   },

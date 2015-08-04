@@ -1,8 +1,8 @@
-var React      = require('react'),
-    classNames = require('classnames'),
+let React = require('react'),
+  classNames = require('classnames'),
 
-    mui        = require('material-ui'),
-    Toggle     = mui.Toggle;
+  mui = require('material-ui'),
+  Toggle = mui.Toggle;
 
 require('./SwitchField.css');
 
@@ -11,13 +11,13 @@ module.exports = React.createClass({
   displayName: 'SwitchField',
 
   propTypes: {
-    handleFieldLinkClick : React.PropTypes.func.isRequired,
-    handleSwitchClick    : React.PropTypes.func.isRequired,
-    toggled              : React.PropTypes.bool.isRequired,
-    textEnabled          : React.PropTypes.string.isRequired,
-    textDisabled         : React.PropTypes.string.isRequired,
-    name                 : React.PropTypes.string.isRequired,
-    heading              : React.PropTypes.string.isRequired
+    handleFieldLinkClick: React.PropTypes.func.isRequired,
+    handleSwitchClick: React.PropTypes.func.isRequired,
+    toggled: React.PropTypes.bool.isRequired,
+    textEnabled: React.PropTypes.string.isRequired,
+    textDisabled: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    heading: React.PropTypes.string.isRequired
   },
 
   getInitialState: function() {
@@ -38,12 +38,12 @@ module.exports = React.createClass({
   },
 
   getText: function() {
-    var textEnabled = (
+    let textEnabled = (
       <div>{this.props.textEnabled}
         <span
-          ref       = "changeLink"
-          className = "action-link"
-          onClick   = {this.handleFieldLinkClick}>
+          ref="changeLink"
+          className="action-link"
+          onClick={this.handleFieldLinkClick}>
           {' Change ' + this.props.name + '.'}
         </span>
       </div>
@@ -60,11 +60,11 @@ module.exports = React.createClass({
         </div>
         <div className="switch-field-input">
           <Toggle
-            ref            = "MUIToggle"
-            onToggle       = {this.handleSwitchClick}
-            defaultToggled = {this.props.toggled}
-            name           = {this.props.name}
-          />
+            ref="MUIToggle"
+            onToggle={this.handleSwitchClick}
+            defaultToggled={this.props.toggled}
+            name={this.props.name}
+            />
         </div>
       </div>
     );

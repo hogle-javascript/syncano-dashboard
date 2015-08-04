@@ -39,84 +39,84 @@ export default React.createClass({
 
   handleEditSubmit() {
     Actions.updateCodeBox(this.state.id, {
-      label        : this.state.label,
-      description  : this.state.description,
-      runtime_name : this.state.runtime_name
+      label: this.state.label,
+      description: this.state.description,
+      runtime_name: this.state.runtime_name
     });
   },
 
   handleAddSubmit() {
     Actions.createCodeBox({
-      label        : this.state.label,
-      description  : this.state.description,
-      runtime_name : this.state.runtime_name
+      label: this.state.label,
+      description: this.state.description,
+      runtime_name: this.state.runtime_name
     });
   },
 
   render() {
-    var title       = this.hasEditMode() ? 'Edit' : 'Add',
-        submitLabel = this.hasEditMode() ? 'Confrim' : 'Confirm',
-        dialogStandardActions = [
-          {
-            text       : 'Cancel',
-            ref        : 'cancel',
-            onTouchTap : this.handleCancel
-          }, {
-            text       : submitLabel,
-            ref        : 'submit',
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title = this.hasEditMode() ? 'Edit' : 'Add',
+      submitLabel = this.hasEditMode() ? 'Confrim' : 'Confirm',
+      dialogStandardActions = [
+        {
+          text: 'Cancel',
+          ref: 'cancel',
+          onTouchTap: this.handleCancel
+        }, {
+          text: submitLabel,
+          ref: 'submit',
+          onTouchTap: this.handleFormValidation
+        }
+      ];
 
     return (
       <Common.Dialog
-        ref          = 'dialog'
-        title        = {title + ' a CodeBox'}
-        actions      = {dialogStandardActions}
-        onDismiss    = {this.resetDialogState}
-        onShow       = {this.handleDialogShow}
-        contentStyle = {{padding: '8px 0 0 0'}}>
+        ref='dialog'
+        title={title + ' a CodeBox'}
+        actions={dialogStandardActions}
+        onDismiss={this.resetDialogState}
+        onShow={this.handleDialogShow}
+        contentStyle={{padding: '8px 0 0 0'}}>
         <div>
           {this.renderFormNotifications()}
           <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = 'UTF-8'
-            method        = 'post'
-          >
+            onSubmit={this.handleFormValidation}
+            acceptCharset='UTF-8'
+            method='post'
+            >
             <MUI.TextField
-              ref               = 'label'
-              valueLink         = {this.linkState('label')}
-              errorText         = {this.getValidationMessages('label').join(' ')}
-              name              = 'label'
-              style             = {{width:500}}
-              hintText          = 'Short name for your CodeBox'
-              floatingLabelText = 'Label of a CodeBox' />
+              ref='label'
+              valueLink={this.linkState('label')}
+              errorText={this.getValidationMessages('label').join(' ')}
+              name='label'
+              style={{width:500}}
+              hintText='Short name for your CodeBox'
+              floatingLabelText='Label of a CodeBox'/>
             <MUI.TextField
-              ref               = 'description'
-              name              = 'description'
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              style             = {{width:500}}
-              className         = 'text-field'
-              multiLine         = {true}
-              hintText          = 'Multiline CodeBox description (optional)'
-              floatingLabelText = 'Description of a CodeBox' />
+              ref='description'
+              name='description'
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              style={{width:500}}
+              className='text-field'
+              multiLine={true}
+              hintText='Multiline CodeBox description (optional)'
+              floatingLabelText='Description of a CodeBox'/>
             <MUI.SelectField
-              ref               = 'runtime_name'
-              name              = 'runtime_name'
-              floatingLabelText = 'Runtime name'
-              valueLink         = {this.linkState('runtime_name')}
-              errorText         = {this.getValidationMessages('runtime_name').join(' ')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              fullWidth         = {true}
-              menuItems         = {this.state.runtimes} />
+              ref='runtime_name'
+              name='runtime_name'
+              floatingLabelText='Runtime name'
+              valueLink={this.linkState('runtime_name')}
+              errorText={this.getValidationMessages('runtime_name').join(' ')}
+              valueMember='payload'
+              displayMember='text'
+              fullWidth={true}
+              menuItems={this.state.runtimes}/>
           </form>
         </div>
         <Common.Loading
-          type     = 'linear'
-          position = 'bottom'
-          show     = {this.state.isLoading} />
+          type='linear'
+          position='bottom'
+          show={this.state.isLoading}/>
       </Common.Dialog>
     );
   }

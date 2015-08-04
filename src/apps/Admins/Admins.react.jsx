@@ -51,16 +51,16 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedAdmins            = Store.getCheckedItems();
+    let checkedAdmins = Store.getCheckedItems();
     let checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
 
     return [
       {
         dialog: Common.Dialog,
         params: {
-          key:    'deleteAdminDialog',
-          ref:    'deleteAdminDialog',
-          title:  'Remove an Administrator',
+          key: 'deleteAdminDialog',
+          ref: 'deleteAdminDialog',
+          title: 'Remove an Administrator',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
@@ -70,18 +70,18 @@ export default React.createClass({
             'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
             this.getDialogList(checkedAdmins, 'email'),
             <Common.Loading
-              type     = "linear"
-              position = "bottom"
-              show     = {this.state.admins.isLoading} />
+              type="linear"
+              position="bottom"
+              show={this.state.admins.isLoading}/>
           ]
         }
       },
       {
         dialog: Common.Dialog,
         params: {
-          title:  'Resend an Invitation',
-          key  : 'resendInvitationDialog',
-          ref  : 'resendInvitationDialog',
+          title: 'Resend an Invitation',
+          key: 'resendInvitationDialog',
+          ref: 'resendInvitationDialog',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleResendInvitation}
@@ -91,18 +91,18 @@ export default React.createClass({
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations),
             <Common.Loading
-              type     = "linear"
-              position = "bottom"
-              show     = {this.state.invitations.isLoading} />
+              type="linear"
+              position="bottom"
+              show={this.state.invitations.isLoading}/>
           ]
         }
       },
       {
         dialog: Common.Dialog,
         params: {
-          title:  'Delete an Invitation',
-          key  : 'removeInvitationDialog',
-          ref  : 'removeInvitationDialog',
+          title: 'Delete an Invitation',
+          key: 'removeInvitationDialog',
+          ref: 'removeInvitationDialog',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
@@ -112,9 +112,9 @@ export default React.createClass({
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations),
             <Common.Loading
-              type     = "linear"
-              position = "bottom"
-              show     = {this.state.invitations.isLoading} />
+              type="linear"
+              position="bottom"
+              show={this.state.invitations.isLoading}/>
           ]
         }
       }
@@ -170,12 +170,12 @@ export default React.createClass({
   },
 
   render() {
-    let checkedAdmins                = Store.getNumberOfChecked();
-    let checkedInvitations           = AdminsInvitationsStore.getNumberOfChecked();
-    let isAnyAdminSelected           = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1);
+    let checkedAdmins = Store.getNumberOfChecked();
+    let checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
+    let isAnyAdminSelected = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1);
     let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
-    let markedIcon                   = 'synicon-checkbox-multiple-marked-outline';
-    let blankIcon                    = 'synicon-checkbox-multiple-blank-outline';
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -185,64 +185,64 @@ export default React.createClass({
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
-              iconClassName = {isAnyAdminSelected ? markedIcon : blankIcon} />
+              label={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
+              iconClassName={isAnyAdminSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete Administrator"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'deleteAdminDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete Administrator"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'deleteAdminDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit Admin"
-              mini          = {true}
-              disabled      = {checkedAdmins > 1}
-              onClick       = {this.showAdminEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit Admin"
+              mini={true}
+              disabled={checkedAdmins > 1}
+              onClick={this.showAdminEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
-              iconClassName = {isAnyAdminInvitationSelected ? markedIcon : blankIcon} />
+              label={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
+              iconClassName={isAnyAdminInvitationSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete Invitation"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'removeInvitationDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete Invitation"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeInvitationDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to resend invitation"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'resendInvitationDialog')}
-              iconClassName = "synicon-backup-restore" />
+              label="Click here to resend invitation"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'resendInvitationDialog')}
+              iconClassName="synicon-backup-restore"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to invite Admin"
-            onClick       = {this.showAdminDialog}
-            iconClassName = "synicon-plus" />
+            label="Click here to invite Admin"
+            onClick={this.showAdminDialog}
+            iconClassName="synicon-plus"/>
         </Common.Fab>
 
         <AdminsList
-          name       = "Administrators"
-          checkItem  = {this.checkAdminItem}
-          isLoading  = {this.state.admins.isLoading}
-          items      = {this.state.admins.items} />
+          name="Administrators"
+          checkItem={this.checkAdminItem}
+          isLoading={this.state.admins.isLoading}
+          items={this.state.admins.items}/>
         <AdminsList
-          name                 = "Invitations"
-          mode                 = "invitations"
-          emptyItemHandleClick = {this.showAdminDialog}
-          emptyItemContent     = "Invite administrator"
-          checkItem            = {this.checkInvitationItem}
-          isLoading            = {this.state.invitations.isLoading}
-          items                = {AdminsInvitationsStore.getPendingInvitations()} />
+          name="Invitations"
+          mode="invitations"
+          emptyItemHandleClick={this.showAdminDialog}
+          emptyItemContent="Invite administrator"
+          checkItem={this.checkInvitationItem}
+          isLoading={this.state.invitations.isLoading}
+          items={AdminsInvitationsStore.getPendingInvitations()}/>
       </Container>
     );
   }

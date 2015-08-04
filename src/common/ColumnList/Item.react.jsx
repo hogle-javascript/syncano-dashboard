@@ -9,27 +9,31 @@ export default Radium(React.createClass({
 
   mixins: [MUI.Mixins.StylePropable],
 
+  getDefaultProps() {
+    return {zDepth: 1};
+  },
+
   getStyles() {
     return {
       base: {
-        display        : 'flex',
-        marginBottom   : 0,
-        justifyContent : 'center',
-        background     : '#fff'
+        display: 'flex',
+        marginBottom: 0,
+        justifyContent: 'center',
+        background: '#fff'
       },
       noBackground: {
-        background     : 'none',
-        borderTop      : '1px solid #ddd',
-        borderBottom   : '1px solid #ddd',
-        marginTop      : '-1px'
+        background: 'none',
+        borderTop: '1px solid #ddd',
+        borderBottom: '1px solid #ddd',
+        marginTop: '-1px'
       },
       checked: {
-        background : MUI.Styles.Colors.lightBlue50
+        background: MUI.Styles.Colors.lightBlue50
       },
       hoverable: {
-        cursor   : 'pointer',
-        ':hover' : {
-          background : MUI.Styles.Colors.grey100
+        cursor: 'pointer',
+        ':hover': {
+          background: MUI.Styles.Colors.grey100
         }
       }
     };
@@ -40,14 +44,14 @@ export default Radium(React.createClass({
 
     return (
       <MUI.Paper
-        onClick = {this.props.handleClick}
-        zDepth  = {1}
-        style   = {[
+        onClick={this.props.handleClick}
+        zDepth={this.props.zDepth}
+        style={[
           styles.base,
           styles.hoverable,
           this.props.checked === true && styles.checked
         ]}
-        rounded = {false}>
+        rounded={false}>
         {this.props.children}
       </MUI.Paper>
     )
@@ -58,13 +62,13 @@ export default Radium(React.createClass({
 
     return (
       <MUI.Paper
-        zDepth  = {0}
-        style   = {[
+        zDepth={0}
+        style={[
           styles.base,
           styles.noBackground,
           this.props.checked === true && styles.checked
         ]}
-        rounded = {false}>
+        rounded={false}>
         {this.props.children}
       </MUI.Paper>
     )

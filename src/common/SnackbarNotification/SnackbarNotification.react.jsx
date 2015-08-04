@@ -58,13 +58,13 @@ export default React.createClass({
     }
 
     return <MUI.Snackbar
-              ref              = "snackbar"
-              key              = {snackbar.key}
-              message          = {snackbar.message}
-              action           = {snackbar.action}
-              autoHideDuration = {snackbar.autoHideDuration}
-              onActionTouchTap = {(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this): undefined}
-              openOnMount      = {snackbar.openOnMount}
-              style            = {snackbar.style} />;
+      ref="snackbar"
+      key={snackbar.key}
+      message={snackbar.message}
+      action={snackbar.action}
+      autoHideDuration={snackbar.autoHideDuration}
+      onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : undefined}
+      openOnMount={snackbar.openOnMount}
+      style={snackbar.style}/>;
   }
 });

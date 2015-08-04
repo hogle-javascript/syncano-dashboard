@@ -1,10 +1,10 @@
-var React = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./Tabs.css');
 
 
-var Tab = React.createClass({
+let Tab = React.createClass({
 
   displayName: 'Tab',
 
@@ -13,7 +13,7 @@ var Tab = React.createClass({
   },
 
   render: function() {
-    var cssClasses = classNames('tab', {
+    let cssClasses = classNames('tab', {
       'tab-active': this.props.active,
     });
     return (
@@ -30,9 +30,9 @@ module.exports = React.createClass({
   displayName: 'Tabs',
 
   render: function() {
-    var tabs = this.props.tabs.map(function(tab){
-      var active = tab.name === this.props.activeTab;
-      return <Tab {...this.props} ref="tab" key={tab.name} tab={tab} active={active} />
+    let tabs = this.props.tabs.map(function(tab) {
+      let active = tab.name === this.props.activeTab;
+      return <Tab {...this.props} ref="tab" key={tab.name} tab={tab} active={active}/>
     }.bind(this));
     return (
       <div className="tabs-group" ref="tabs">

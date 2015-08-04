@@ -53,8 +53,8 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
-      var router = this.context.router,
-          next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let router = this.context.router,
+        next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
@@ -67,8 +67,9 @@ export default React.createClass({
     });
   },
 
-  render: function() {
-    let bottomContent = <p className="vm-0-b text--center">By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>;
+  render() {
+    let bottomContent = <p className="vm-0-b text--center">By signing up you agree to our <a
+      href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>;
 
     return (
       <Container bottomContent={bottomContent}>
@@ -81,40 +82,41 @@ export default React.createClass({
         </div>
         {this.renderFormNotifications()}
         <form
-          onSubmit      = {this.handleFormValidation}
-          className     = "account-container__content__form"
-          acceptCharset = "UTF-8"
-          method        = "post">
+          onSubmit={this.handleFormValidation}
+          className="account-container__content__form"
+          acceptCharset="UTF-8"
+          method="post">
           <MUI.TextField
-            ref          = "email"
-            valueLink    = {this.linkState('email')}
-            errorText    = {this.getValidationMessages('email').join(' ')}
-            name         = "email"
-            className    = "text-field"
-            autoComplete = "email"
-            hintText     = "Email"
-            fullWidth    = {true} />
+            ref="email"
+            valueLink={this.linkState('email')}
+            errorText={this.getValidationMessages('email').join(' ')}
+            name="email"
+            className="text-field"
+            autoComplete="email"
+            hintText="Email"
+            fullWidth={true}/>
 
           <MUI.TextField
-            ref          = "password"
-            valueLink    = {this.linkState('password')}
-            errorText    = {this.getValidationMessages('password').join(' ')}
-            type         = "password"
-            name         = "password"
-            className    = "text-field vm-4-b"
-            autoComplete = "password"
-            hintText     = "My password"
-            fullWidth    = {true} />
+            ref="password"
+            valueLink={this.linkState('password')}
+            errorText={this.getValidationMessages('password').join(' ')}
+            type="password"
+            name="password"
+            className="text-field vm-4-b"
+            autoComplete="password"
+            hintText="My password"
+            fullWidth={true}/>
 
           <MUI.RaisedButton
-            type       = "submit"
-            label      = "Create my account"
-            labelStyle = {{fontSize: '16px'}}
-            fullWidth  = {true}
-            style      = {{boxShadow: 'none', height: '48px'}}
-            primary    = {true} />
+            type="submit"
+            label="Create my account"
+            labelStyle={{fontSize: '16px'}}
+            fullWidth={true}
+            style={{boxShadow: 'none', height: '48px'}}
+            primary={true}/>
         </form>
-        <Common.SocialAuthButtonsList mode="signup" />
+        <Common.SocialAuthButtonsList mode="signup"/>
+
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
             <li><p>Already have an account? <Router.Link to="login"> Login</Router.Link></p></li>

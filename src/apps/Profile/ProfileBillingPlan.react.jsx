@@ -70,23 +70,23 @@ export default React.createClass({
   getStyles() {
     return {
       main: {
-        marginTop    : 50,
-        paddingRight : 50,
-        color        : '#4A4A4A'
+        marginTop: 50,
+        paddingRight: 50,
+        color: '#4A4A4A'
       },
       mainDesc: {
-        fontSize   : '1.5rem',
-        lineHeight : '1.5rem'
+        fontSize: '1.5rem',
+        lineHeight: '1.5rem'
       },
       comment: {
-        fontSize     : '0.9em',
+        fontSize: '0.9em',
       },
       explorerButton: {
-        marginTop : 20
+        marginTop: 20
       },
       chartHeader: {
-        paddingTop : 50,
-        fontSize   : '1.3em'
+        paddingTop: 50,
+        fontSize: '1.3em'
       },
       legendSquere: {
         marginTop: 4,
@@ -105,17 +105,17 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        key   : 'cancelProductionPlan',
-        ref   : 'cancelProductionPlan',
-        title : 'Cancel Production Plan',
+        key: 'cancelProductionPlan',
+        ref: 'cancelProductionPlan',
+        title: 'Cancel Production Plan',
         actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancelCancelProductionPlan
+            text: 'Cancel',
+            onClick: this.handleCancelCancelProductionPlan
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleCancelProductionPlan
+            text: 'Confirm',
+            onClick: this.handleCancelProductionPlan
           }
         ],
         modal: true,
@@ -140,7 +140,9 @@ export default React.createClass({
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {return item.id})).then(() => {
+    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
+      return item.id
+    })).then(() => {
       Actions.fetch();
     });
   },
@@ -161,19 +163,18 @@ export default React.createClass({
 
     if (this.state.profile.subscription.plan === 'builder')
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div>Builder</div>
           <div>
             <MUI.Toggle
-              style          = {{marginTop: 10}}
-              ref            = "builder-toggle"
-              key            = "builder-toggle"
-              onToggle       = {this.handleShowPlanDialog}
-            />
+              style={{marginTop: 10}}
+              ref="builder-toggle"
+              key="builder-toggle"
+              onToggle={this.handleShowPlanDialog}/>
           </div>
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
-            <a onClick = {this.handleShowPlanDialog}>Switch to Production</a>
+            <a onClick={this.handleShowPlanDialog}>Switch to Production</a>
           </div>
           <div style={{marginTop: 10, fontSize: '1.1rem', padding: 5}}>
             From <strong>$25</strong>/month
@@ -198,28 +199,26 @@ export default React.createClass({
             <div>Click <a onClick={this.handleShowPlanDialog}> here </a> to extend.</div>
           </div>
         )
-      } else {
-        return (
-          <div style={{marginTop: 10}}>
-            <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
-          </div>
-        )
       }
+      return (
+        <div style={{marginTop: 10}}>
+          <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
+        </div>
+      );
     };
 
     return (
-      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+      <div className="row align-middle" style={{flexDirection: 'column'}}>
         <div>Production</div>
-          <div>
-            <MUI.Toggle
-              style          = {{marginTop: 10}}
-              ref            = "paid-commitment-toggle"
-              key            = "paid-commitment-toggle"
-              defaultToggled = {true}
-              onToggle       = {this.handleShowCancelPlanDialog}
-            />
-          </div>
-          {renderComment()}
+        <div>
+          <MUI.Toggle
+            style={{marginTop: 10}}
+            ref="paid-commitment-toggle"
+            key="paid-commitment-toggle"
+            defaultToggled={true}
+            onToggle={this.handleShowCancelPlanDialog}/>
+        </div>
+        {renderComment()}
       </div>
     )
   },
@@ -245,8 +244,8 @@ export default React.createClass({
     let styles = this.getStyles();
 
     let subscription = this.state.profile.subscription;
-    let plan         = subscription.plan;
-    let pricing      = subscription.pricing;
+    let plan = subscription.plan;
+    let pricing = subscription.pricing;
 
     let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
     let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
@@ -260,8 +259,8 @@ export default React.createClass({
     let renderUsage = (type) => {
       if (plan === 'paid-commitment') {
         let usage = {
-          'api' : parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
-          'cbx' : parseFloat(cbxTotal) / parseFloat(pricing.cbx.included) * 100,
+          'api': parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
+          'cbx': parseFloat(cbxTotal) / parseFloat(pricing.cbx.included) * 100,
         };
         return [
           <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
@@ -279,8 +278,8 @@ export default React.createClass({
           <div className="col-md-18">
 
             <div className="row" style={styles.legend}>
-              <div className="col-xs-1" >
-                <div style={apiCallsStyle} />
+              <div className="col-xs-1">
+                <div style={apiCallsStyle}/>
               </div>
               <div className="col-flex-1">
                 <div className="row">
@@ -292,7 +291,7 @@ export default React.createClass({
             </div>
             <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
               <div className="col-xs-1">
-                <div style={cbxCallsStyle} />
+                <div style={cbxCallsStyle}/>
               </div>
               <div className="col-flex-1">
                 <div className="row">
@@ -332,32 +331,32 @@ export default React.createClass({
 
     if (this.isNewSubscription()) {
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div style={styles.explorerButton}>
             <MUI.FlatButton
-              primary    = {true}
-              label      = {'Cancel Change'}
-              onTouchTap = {this.handleDeleteSubscription}
-            />
+              primary={true}
+              label={'Cancel Change'}
+              onTouchTap={this.handleDeleteSubscription}
+              />
             <MUI.FlatButton
-              primary = {true}
-              style   = {{marginLeft: 15}}
-              label   = {'Upgrade'}
-              onTouchTap = {this.handleShowPlanDialog}
-            />
+              primary={true}
+              style={{marginLeft: 15}}
+              label={'Upgrade'}
+              onTouchTap={this.handleShowPlanDialog}
+              />
           </div>
         </div>
       )
     }
 
     return (
-      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+      <div className="row align-middle" style={{flexDirection: 'column'}}>
         <div style={styles.explorerButton}>
           <MUI.FlatButton
-            primary    = {true}
-            label      = {this.renderExplorerButtonLabel() || ''}
-            onTouchTap = {this.handleShowPlanDialog}
-          />
+            primary={true}
+            label={this.renderExplorerButtonLabel() || ''}
+            onTouchTap={this.handleShowPlanDialog}
+            />
         </div>
       </div>
     )
@@ -377,15 +376,15 @@ export default React.createClass({
 
     if (plan === 'builder') {
       let limitsData = {
-        api : { included : '100 000' },
-        cbx : { included : '1 000' }
+        api: {included : '100 000'},
+        cbx: {included : '1 000'}
       };
       return (
-        <div className = "col-md-12">
+        <div className="col-md-12">
           <div style={styles.mainDesc}>Your plan: <strong>Builder</strong></div>
           <div style={{marginTop: 5}}>It does not cost you anything but there are limits:</div>
           <div style={{marginTop: 20}}>
-            <Limits data={limitsData} />
+            <Limits data={limitsData}/>
           </div>
         </div>
       );
@@ -393,29 +392,29 @@ export default React.createClass({
 
       let subscription = this.state.profile.subscription;
       let commitment = subscription.commitment;
-      let pricing    = subscription.pricing;
-      let total      = parseInt(commitment.api) + parseInt(commitment.cbx);
+      let pricing = subscription.pricing;
+      let total = parseInt(commitment.api) + parseInt(commitment.cbx);
 
       let limitsData = {
-        api : {
-          included : pricing.api.included,
-          overage  : pricing.api.overage
+        api: {
+          included: pricing.api.included,
+          overage: pricing.api.overage
         },
-        cbx : {
-          included : pricing.cbx.included,
-          overage  : pricing.api.overage
+        cbx: {
+          included: pricing.cbx.included,
+          overage: pricing.api.overage
         }
       };
 
       return (
         <div
-          key       = "productionDesc-subs"
-          className = "col-flex-1">
+          key="productionDesc-subs"
+          className="col-flex-1">
           <div style={styles.mainDesc}>
             Current plan <strong>${total}</strong>:
           </div>
           <div style={{marginTop: 20}}>
-            <Limits data={limitsData} />
+            <Limits data={limitsData}/>
           </div>
         </div>
       );
@@ -433,7 +432,7 @@ export default React.createClass({
 
     if (plan === 'builder') {
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div key="builderComment" style={{width: '80%'}}>
             If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
             If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
@@ -444,16 +443,16 @@ export default React.createClass({
 
       if (this.isNewSubscription()) {
         let subscription = this.state.subscriptions._items[1];
-        let total        = parseInt(subscription.commitment.api) + parseInt(subscription.commitment.cbx);
+        let total = parseInt(subscription.commitment.api) + parseInt(subscription.commitment.cbx);
 
         let limitsData = {
-          api : {
-            included : subscription.pricing.api.included,
-            overage  : subscription.pricing.api.overage
+          api: {
+            included: subscription.pricing.api.included,
+            overage: subscription.pricing.api.overage
           },
-          cbx : {
-            included : subscription.pricing.cbx.included,
-            overage  : subscription.pricing.api.overage
+          cbx: {
+            included: subscription.pricing.cbx.included,
+            overage: subscription.pricing.api.overage
           }
         };
 
@@ -466,12 +465,11 @@ export default React.createClass({
 
         return (
           <div className="row align-top">
-            <div classsName="col-md-3" style={{Transform: 'translateY(-14px)'}}>
+            <div classsName="col-md-3" style={{transform: 'translateY(-14px)'}}>
               <MUI.IconButton
-                iconClassName = "synicon-information-outline"
-                iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-                tooltip       = {toolTip}
-              />
+                iconClassName="synicon-information-outline"
+                iconStyle={{color: Common.Color.getColorByName('blue', 'xlight')}}
+                tooltip={toolTip}/>
             </div>
             <div classsName="col-flex-1">
 
@@ -479,22 +477,21 @@ export default React.createClass({
                 New plan <strong>${total}</strong>:
               </div>
               <div style={{marginTop: 20}}>
-                <Limits data={limitsData} />
+                <Limits data={limitsData}/>
               </div>
 
             </div>
-         </div>
-        )
-      } else {
-        return (
-          <div className="row align-middle" style={{FlexDirection: 'column'}}>
-            <div key="productionComment" style={{width: '80%'}}>
-              You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-              Your new monthly fixed price will start from next billing period.
-            </div>
           </div>
-        );
+        )
       }
+      return (
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
+          <div key="productionComment" style={{width: '80%'}}>
+            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+            Your new monthly fixed price will start from next billing period.
+          </div>
+        </div>
+      );
     }
   },
 
@@ -519,7 +516,7 @@ export default React.createClass({
       return;
     }
     let subscription = this.state.profile.subscription;
-    let plan         = subscription.plan;
+    let plan = subscription.plan;
 
     if (plan === 'builder' || plan === 'free') {
       return null;
@@ -533,47 +530,42 @@ export default React.createClass({
     );
 
     return (
-      <div className="row" style={{marginTop: 30, paddingLeft: 30}}>
+      <div className="row align-middle" style={{marginTop: 30, paddingLeft: 30}}>
         <div className="col-md-5">
           <MUI.TextField
-              ref          = "soft_limit"
-              valueLink    = {this.linkState('soft_limit')}
-              errorText    = {this.getValidationMessages('soft_limit').join(' ')}
-              name         = "soft_limit"
-              className    = "text-field"
-              hintText     = "Soft Limit"
-              fullWidth    = {true}
-          />
+            ref               = "soft_limit"
+            valueLink         = {this.linkState('soft_limit')}
+            errorText         = {this.getValidationMessages('soft_limit').join(' ')}
+            name              = "soft_limit"
+            className         = "text-field"
+            floatingLabelText = "Soft Limit"
+            fullWidth         = {true} />
         </div>
         <div className="col-md-5">
           <MUI.TextField
-            ref          = "hard_limit"
-            valueLink    = {this.linkState('hard_limit')}
-            errorText    = {this.getValidationMessages('hard_limit').join(' ')}
-            name         = "hard_limit"
-            className    = "text-field"
-            hintText     = "Hard Limit"
-            fullWidth    = {true}
-          />
+            ref               = "hard_limit"
+            valueLink         = {this.linkState('hard_limit')}
+            errorText         = {this.getValidationMessages('hard_limit').join(' ')}
+            name              = "hard_limit"
+            className         = "text-field"
+            floatingLabelText = "Hard Limit"
+            fullWidth         = {true} />
         </div>
         <div className="col-md-4" style={{paddingRight: 0}}>
           <MUI.FlatButton
-              primary    = {true}
-              label      = {'Set Limits'}
-              disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
-              onTouchTap = {this.handleFormValidation}
-            />
+            primary    = {true}
+            label      = 'Set Limits'
+            disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
+            onTouchTap = {this.handleFormValidation} />
         </div>
         <div className="col-md-5" style={{paddingLeft: 0}}>
           <MUI.IconButton
             iconClassName = "synicon-information-outline"
             iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-            tooltip       = {toolTip}
-          />
+            tooltip       = {toolTip} />
         </div>
-     </div>
+      </div>
     )
-
   },
 
   render() {
@@ -582,7 +574,8 @@ export default React.createClass({
     return (
       <Common.Loading show={this.state.isLoading}>
         {this.getDialogs()}
-        <PlanDialog onDismiss={this.handlePlanDialogDismiss} />
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+
         <div className="row" style={styles.main}>
 
           {this.renderMainDesc()}

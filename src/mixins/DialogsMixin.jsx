@@ -1,31 +1,30 @@
-var React = require('react');
+import React from 'react';
 
-var DialogsMixin = {
-  getDialogs: function() {
-    var dialogs = this.initDialogs();
+export default {
+  getDialogs() {
+    let dialogs = this.initDialogs();
     return dialogs.map(function(dialog) {
       return React.createElement(dialog.dialog, dialog.params);
     }.bind(this))
   },
 
-  showDialog: function(ref) {
+  showDialog(ref) {
     this.refs[ref].show();
   },
 
-  getDialogListLength: function(items) {
+  getDialogListLength(items) {
     return items.length
   },
 
-  getDialogList: function(items, paramName) {
-    var paramName = paramName || 'name',
-      listItems = items.map(function(item) {
-        return <li>{item[paramName]}</li>;
-      });
+  getDialogList(items, paramName) {
+    let listItems = items.map(function(item) {
+      return <li>{item[paramName || 'name']}</li>;
+    });
 
     return <ul>{listItems}</ul>;
   },
 
-  hideDialogs: function(hideDialogsFlag) {
+  hideDialogs(hideDialogsFlag) {
     if (hideDialogsFlag) {
       return this.initDialogs().map(function(dialogConf) {
         this.refs[dialogConf.params.ref].dismiss();
@@ -35,4 +34,3 @@ var DialogsMixin = {
 
 };
 
-module.exports = DialogsMixin;

@@ -8,9 +8,9 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './ListViewActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
+  listenables: Actions,
 
-  mixins      : [
+  mixins: [
     Mixins.StoreForm,
     Mixins.WaitForStore,
     Mixins.StoreHelpers
@@ -18,10 +18,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items        : [],
-      tags         : [],
-      selectedTags : [],
-      isLoading    : false
+      items: null,
+      tags: [],
+      selectedTags: [],
+      isLoading: false
     }
   },
 

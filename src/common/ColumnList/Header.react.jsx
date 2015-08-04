@@ -1,21 +1,21 @@
-var React         = require('react'),
-    Radium        = require('radium');
+let React = require('react'),
+  Radium = require('radium');
 
 
 module.exports = Radium(React.createClass({
 
   displayName: 'Header',
 
-  render: function () {
+  render() {
 
-    var headerStyle = {
+    let headerStyle = {
       root: {
-        display        : 'flex',
-        alignItems     : 'center',
-        fontSize       : 14,
-        lineHeight     : '24px',
-        color          : 'rgba(0,0,0,.54)',
-        marginBottom   : 16
+        display: 'flex',
+        alignItems: 'center',
+        fontSize: 14,
+        lineHeight: '24px',
+        color: 'rgba(0,0,0,.54)',
+        marginBottom: 16
       }
     };
 

@@ -10,8 +10,8 @@ import SessionActions from '../Session/SessionActions';
 import Actions from './AddVersionViewActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore,
     Mixins.WaitForStore,
@@ -31,28 +31,28 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      name        : null,
-      type        : 'devel',
-      description : null,
-      instances   : null,
-      instanceData : {
-        views     : [],
-        classes   : [],
-        webhooks  : [],
-        codeboxes : [],
-        triggers  : [],
-        schedules : [],
-        channels  : [],
+      name: null,
+      type: 'devel',
+      description: null,
+      instances: null,
+      instanceData: {
+        views: [],
+        classes: [],
+        webhooks: [],
+        codeboxes: [],
+        triggers: [],
+        schedules: [],
+        channels: [],
 
       },
-      exportSpec  : {
-        views     : [],
-        classes   : {},
-        webhooks  : [],
-        codeboxes : {},
-        triggers  : {},
-        schedules : {},
-        channels  : {},
+      exportSpec: {
+        views: [],
+        classes: {},
+        webhooks: [],
+        codeboxes: {},
+        triggers: {},
+        schedules: {},
+        channels: {},
       }
     };
   },
@@ -78,7 +78,7 @@ export default Reflux.createStore({
     return this.types;
   },
 
-  setInstances: function(instances) {
+  setInstances(instances) {
     console.debug('AddVersionViewStore::setInstances');
     this.data.instances = Object.keys(instances).map(function(key) {
       return instances[key];
