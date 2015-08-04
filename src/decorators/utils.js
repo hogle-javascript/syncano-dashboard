@@ -19,7 +19,7 @@ export function decorate(handler, args) {
     return handler(...args, []);
   }
 
-  return function () {
+  return function() {
     return handler(...arguments, args);
   };
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import Loading from '../common/Loading';
-import { decorate } from './utils';
+import {decorate} from './utils';
 
 function applyIsLoading(context, fn, args, config, options) {
+  config  = config  || {};
+  options = options || {};
+
   let attr  = config.attr || 'state.isLoading';
   let show  = config.show || [false, null];
   let value = _.get(context, config.attr, false);
@@ -16,13 +19,11 @@ function applyIsLoading(context, fn, args, config, options) {
 }
 
 
-function handleDescriptor(target, key, descriptor, [config = {}, options = {}]) {
-  return {
-    ...descriptor,
-    value: function isLoadingWrapper() {
-      return applyIsLoading(this, descriptor.value, arguments, config, options);
-    }
-  };
+function handleDescriptor(target, key, descriptor, config, options) {
+  descriptor.value = function isLoadingWrapper() {
+    return applyIsLoading(this, descriptor.value, arguments, config, options);
+  }
+  return descriptor;
 }
 
 export default function isLoading(...args) {
