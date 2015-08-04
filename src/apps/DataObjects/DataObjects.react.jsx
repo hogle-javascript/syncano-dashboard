@@ -187,12 +187,18 @@ export default React.createClass({
 
     return (
 
-      <div className="row" style={{'height': '100%'}}>
+      <div className="row" style={{paddingTop: 24, 'height': '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
 
         <div className="col-flex-1">
-          <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
+          <MUI.Toolbar style={{
+            position: 'fixed',
+            top: 64,
+            right: 0,
+            paddingLeft: 256,
+            background: 'rgba(215,215,215,0.6)',
+            padding: '0px 32px 0 24px'}}>
             <MUI.ToolbarGroup>
               <MUI.IconButton
                 iconClassName="synicon-arrow-left"
