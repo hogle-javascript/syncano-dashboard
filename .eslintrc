@@ -248,6 +248,8 @@
     "react/require-extension": 1,
     "react/self-closing-comp": 2,
     "react/wrap-multilines": [2, "never"],
+    "react/jsx-quotes" : 1,
+    "react/prop-types" : 1,
     "react/sort-comp": [2, {
       "order": [
         "displayName",
