@@ -50,12 +50,12 @@ export default React.createClass({
     this.props.tracesFor.slice(1) + ': ' + this.props.objectId : null;
 
     return (
-      <Container.Profile headerText={headerText}>
+      <div>
         <TracesList
           tracesFor={this.props.tracesFor}
           name="Traces"
           items={this.state.traces}/>
-      </Container.Profile>
+      </div>
     );
   }
 });

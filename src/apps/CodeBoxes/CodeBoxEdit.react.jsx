@@ -11,7 +11,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import {Snackbar} from 'material-ui';
+import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -119,7 +119,7 @@ export default React.createClass({
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Common.Loading>
-        <Snackbar
+        <MUI.Snackbar
           message="Can't run CodeBox with invalid payload"
           ref="snackbar"
           autoHideDuration={3000}/>

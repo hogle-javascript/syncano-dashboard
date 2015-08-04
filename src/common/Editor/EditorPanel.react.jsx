@@ -103,11 +103,6 @@ export default Radium(React.createClass({
             onBlur={this.handleFormValidation}
             errorText={this.getValidationMessages('payloadValue').join(' ')}/>
 
-          <div
-            className="editor-toolbar-unfold-button"
-            onClick={this.handleToggleClick}>
-            <MUI.FontIcon className={unfoldIcon}/>
-          </div>
         </MUI.Paper>
         <Loading
           show={this.props.loading}

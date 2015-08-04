@@ -1,9 +1,8 @@
-var React = require('react'),
-  Router = require('react-router'),
-  RouteHandler = Router.RouteHandler,
+import React from 'react';
+import Router from 'react-router';
 
 // Stores and Action
-  CodeBoxesActions = require('../apps/CodeBoxes/CodeBoxesActions');
+import CodeBoxesActions from '../apps/CodeBoxes/CodeBoxesActions';
 
 module.exports = React.createClass({
 
@@ -24,7 +23,7 @@ module.exports = React.createClass({
   },
 
   render() {
-    return <RouteHandler />
+    return <Router.RouteHandler />
   }
 
 });
