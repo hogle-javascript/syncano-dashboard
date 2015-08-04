@@ -60,61 +60,58 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Container
-        headerText='Profile'
-        show={this.state.isLoading}>
-        <div style={styles.content}>
-          {this.renderFormNotifications()}
-          <form
-            style={styles.form}
-            onSubmit={this.handleFormValidation}
-            acceptCharset="UTF-8"
-            method="post">
+      <div style={styles.content}>
+        {this.renderFormNotifications()}
+        <form
+          style={styles.form}
+          onSubmit={this.handleFormValidation}
+          acceptCharset="UTF-8"
+          method="post">
 
-            <MUI.TextField
-              ref="firstName"
-              valueLink={this.linkState('firstName')}
-              defaultValue={this.state.firstName}
-              errorText={this.getValidationMessages('firstName').join(' ')}
-              name="firstName"
-              floatingLabelText="First name"
-              className="text-field"
-              autoComplete="firstName"
-              hintText="First name"
-              fullWidth={true}/>
+          <MUI.TextField
+            ref="firstName"
+            valueLink={this.linkState('firstName')}
+            defaultValue={this.state.firstName}
+            errorText={this.getValidationMessages('firstName').join(' ')}
+            name="firstName"
+            floatingLabelText="First name"
+            className="text-field"
+            autoComplete="firstName"
+            hintText="First name"
+            fullWidth={true}/>
 
-            <MUI.TextField
-              ref="lastName"
-              valueLink={this.linkState('lastName')}
-              defaultValue={this.state.lastName}
-              errorText={this.getValidationMessages('lastName').join(' ')}
-              name="lastName"
-              floatingLabelText="Last name"
-              className="text-field"
-              autoComplete="lastName"
-              hintText="Last name"
-              fullWidth={true}/>
+          <MUI.TextField
+            ref="lastName"
+            valueLink={this.linkState('lastName')}
+            defaultValue={this.state.lastName}
+            errorText={this.getValidationMessages('lastName').join(' ')}
+            name="lastName"
+            floatingLabelText="Last name"
+            className="text-field"
+            autoComplete="lastName"
+            hintText="Last name"
+            fullWidth={true}/>
 
-            <MUI.TextField
-              ref="email"
-              name="email"
-              value={this.state.email}
-              floatingLabelText="Email"
-              className="text-field vm-6-b"
-              autoComplete="email"
-              hintText="Your email"
-              disabled={true}
-              fullWidth={true}/>
+          <MUI.TextField
+            ref="email"
+            name="email"
+            value={this.state.email}
+            floatingLabelText="Email"
+            className="text-field vm-6-b"
+            autoComplete="email"
+            hintText="Your email"
+            disabled={true}
+            fullWidth={true}/>
 
-            <MUI.RaisedButton
-              type="submit"
-              label="Update"
-              style={styles.updateButton}
-              labelStyle={styles.updateButtonLabel}
-              className="raised-button"
-              secondary={true}/>
-          </form>
-        </div>
+          <MUI.RaisedButton
+            type="submit"
+            label="Update"
+            style={styles.updateButton}
+            labelStyle={styles.updateButtonLabel}
+            className="raised-button"
+            secondary={true}/>
+        </form>
+      </div>
     );
   }
 });

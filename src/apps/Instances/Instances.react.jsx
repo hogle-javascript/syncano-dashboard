@@ -24,7 +24,6 @@ import InstanceDialog from './InstanceDialog.react';
 require('./Instances.sass');
 
 export default Radium(React.createClass({
-
   displayName: 'Instances',
 
   mixins: [

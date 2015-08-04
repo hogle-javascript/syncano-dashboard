@@ -52,7 +52,7 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let styles = this.getStyles(); 
+    let styles = this.getStyles();
     let isOwner = item.id === SessionStore.getInstance().owner.id;
 
     return (

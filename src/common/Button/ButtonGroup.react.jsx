@@ -35,7 +35,7 @@ module.exports = React.createClass({
   render() {
     let buttons = [];
     if (this.props.buttons) {
-      let buttons = this.props.buttons.map(function(button, i) {
+      buttons = this.props.buttons.map(function(button, i) {
         return <Button {...this.props} key={i} data={button}/>
       }.bind(this));
     }

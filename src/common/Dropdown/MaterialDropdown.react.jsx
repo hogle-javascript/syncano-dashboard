@@ -80,7 +80,6 @@ module.exports = React.createClass({
     return <MaterialDropdownItem
       items={this.props.items}
       headerContent={this.props.headerContent}/>
-    
   },
 
   renderIcon: function() {
@@ -90,12 +89,12 @@ module.exports = React.createClass({
       notificationCountIcon = <FontIcon
         className={"synicon-numeric-" + synIconName + "-box" }
         style={{
-                                  padding  : "0 4px",
-                                  color    : "#ff3d00",
-                                  position : "absolute",
-                                  top      : "-14px",
-                                  right    : "-14px"
-                                }}/>
+          padding  : "0 4px",
+          color    : "#ff3d00",
+          position : "absolute",
+          top      : "-14px",
+          right    : "-14px"
+        }}/>
     }
     //return(
     //  <div>

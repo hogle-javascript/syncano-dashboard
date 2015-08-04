@@ -52,7 +52,6 @@ module.exports = React.createClass({
     }
   },
   componentDidMount: function() {
-    let self = this;
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
     this.editor.getSession().setMode('ace/mode/' + this.props.mode);

@@ -21,7 +21,7 @@ export default {
         if (checkId === item.id.toString()) {
           item.checked = state;
         }
-      } else if (checkId == item.name) {
+      } else if (checkId === item.name) {
         item.checked = state;
       }
     }.bind(this));

@@ -30,24 +30,24 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      selectedIndex : 0,
-      headerText    : 'Profile',
+      selectedIndex: 0,
+      headerText: 'Profile',
     };
   },
 
   menuItems() {
     return [
-      { type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules' },
-      { route: 'data', text: 'Data' },
-      { route: 'classes', text: 'Classes' },
-      { route: 'codeboxes', text: 'CodeBoxes' },
-      { route: 'users', text: 'Users' },
-      { route: 'channels', text: 'Channels' },
-      { route: 'tasks', text: 'Tasks' },
+      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
+      {route: 'data', text: 'Data'},
+      {route: 'classes', text: 'Classes'},
+      {route: 'codeboxes', text: 'CodeBoxes'},
+      {route: 'users', text: 'Users'},
+      {route: 'channels', text: 'Channels'},
+      {route: 'tasks', text: 'Tasks'},
 
-      { type: MUI.MenuItem.Types.SUBHEADER, text: 'Settings' },
-      { route: 'admins', text: 'Administrators' },
-      { route: 'api-keys', text: 'API keys' },
+      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Settings'},
+      {route: 'admins', text: 'Administrators'},
+      {route: 'api-keys', text: 'API keys'},
     ];
   },
 
@@ -55,7 +55,7 @@ module.exports = React.createClass({
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
         <HeaderInstancesDropdown />
-     </div>
+      </div>
     )
   },
 
@@ -68,11 +68,11 @@ module.exports = React.createClass({
     return (
       <div>
         <MUI.LeftNav
-          ref           = "leftNav"
-          header        = {this.renderInstanceDropdown()}
-          selectedIndex = {this.state.selectedIndex || 0}
-          style         = {{marginTop: 64, overflow: 'normal'}} menuItems={this.menuItems()}
-          onChange      = {this.handleTabActive} />
+          ref="leftNav"
+          header={this.renderInstanceDropdown()}
+          selectedIndex={this.state.selectedIndex || 0}
+          style={{marginTop: 64, overflow: 'normal'}} menuItems={this.menuItems()}
+          onChange={this.handleTabActive}/>
 
         <div style={{marginTop: 96, marginLeft: 204}}>
           <Router.RouteHandler />

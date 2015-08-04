@@ -63,7 +63,7 @@ export default React.createClass({
       message={snackbar.message}
       action={snackbar.action}
       autoHideDuration={snackbar.autoHideDuration}
-      onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this): undefined}
+      onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : undefined}
       openOnMount={snackbar.openOnMount}
       style={snackbar.style}/>;
   }
