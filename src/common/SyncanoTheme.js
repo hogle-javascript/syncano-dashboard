@@ -5,7 +5,7 @@ import Spacing from './Spacing';
 
 export default {
   spacing: Spacing,
-  contentFontFamily: 'Roboto, sans-serif',
+  contentFontFamily: 'Avenir LT W01_35 Light1475496',
   getPalette: function() {
     return {
       primary1Color: Colors.blue700,
@@ -33,7 +33,7 @@ export default {
       },
       floatingActionButton: {
         color: Colors.pinkA200
-      }
+      },
     };
   }
 };

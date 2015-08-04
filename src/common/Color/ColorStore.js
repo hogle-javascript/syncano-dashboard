@@ -24,6 +24,9 @@ let ColorStore = {
       return Colors[name + '700'];
     }
     if (variation === 'light') {
+      return Colors[name + '300'];
+    }
+    if (variation === 'xlight') {
       return Colors[name + '100'];
     }
     return Colors[name + '500'];

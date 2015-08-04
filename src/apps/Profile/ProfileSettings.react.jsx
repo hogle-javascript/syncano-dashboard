@@ -18,7 +18,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     React.addons.LinkedStateMixin,
-    HeaderMixin,
     FormMixin
   ],
 
@@ -31,32 +30,13 @@ export default React.createClass({
     }
   },
 
-  headerMenuItems: [
-    {
-      route: 'profile-settings',
-      label: 'Profile'
-    },
-    {
-      route: 'profile-authentication',
-      label: 'Authentication'
-    },
-    {
-      route: 'profile-billing',
-      label: 'Billing'
-    },
-    {
-      route: 'profile-invitations',
-      label: 'Invitations'
-    }
-  ],
-
   getStyles() {
     return {
       content: {
-        padding: 48
+        padding : '0 0 48px'
       },
       form: {
-        maxWidth: 416
+        maxWidth : 416
       },
       updateButton: {
         height: 36,
@@ -135,7 +115,6 @@ export default React.createClass({
               secondary={true}/>
           </form>
         </div>
-      </Container>
     );
   }
 });

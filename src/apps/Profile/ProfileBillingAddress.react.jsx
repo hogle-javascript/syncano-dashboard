@@ -68,7 +68,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div style={{padding: 48}}>
+      <div>
         {this.renderFormNotifications()}
 
         <form

@@ -48,8 +48,8 @@ export default React.createClass({
 
   renderItem(item) {
     // TODO: move to store
-    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox),
-      codeBoxLabel = codeBox ? codeBox.label : '';
+    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
+    let codeBoxLabel = codeBox ? codeBox.label : '';
 
     return (
       <Common.ColumnList.Item
@@ -58,7 +58,7 @@ export default React.createClass({
         <Column.CheckIcon
           id={item.id.toString()}
           icon='arrow-up-bold'
-          background={MUI.Styles.Colors.blue500}
+          background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.label}

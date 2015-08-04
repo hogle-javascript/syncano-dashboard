@@ -32,8 +32,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let ignore_acl = null,
-      allow_user_create = null;
+    let ignore_acl = null;
+    let allow_user_create = null;
 
     if (item.ignore_acl) {
       ignore_acl = <div>Ignore ACL</div>;
@@ -49,7 +49,7 @@ export default React.createClass({
         <Column.CheckIcon
           id={item.id.toString()}
           icon='key'
-          background={MUI.Styles.Colors.blue500}
+          background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}
           >

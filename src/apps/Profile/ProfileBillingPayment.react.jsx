@@ -69,7 +69,6 @@ export default Radium(React.createClass({
       labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
-      <div style={{padding: 48}}>
         <Common.Loading show={this.state.isLoading}>
           <Common.Show if={showForm}>
             <form
@@ -161,7 +160,6 @@ export default Radium(React.createClass({
             </div>
           </Common.Show>
         </Common.Loading>
-      </div>
     );
   }
 }));

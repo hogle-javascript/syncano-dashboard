@@ -45,9 +45,9 @@ export default Radium(React.createClass({
 
   handleInstanceActive() {
     if (InstancesStore.getAllInstances()) {
-      let currentInstance = SessionStore.instance,
-        instancesList = InstancesStore.getAllInstances(true),
-        instanceActiveIndex = null;
+      let currentInstance = SessionStore.instance;
+      let instancesList = InstancesStore.getAllInstances(true);
+      let instanceActiveIndex = null;
 
       instancesList.some((event, index) => {
         if (event.name === currentInstance.name) {
@@ -75,18 +75,19 @@ export default Radium(React.createClass({
         display: 'none'
       },
       dropdownLabelContainer: {
-        display: '-webkit-box; display: flex',
-        alignItems: 'center'
+        display        : '-webkit-box; display: flex',
+        alignItems     : 'center',
       },
       dropdownLabel: {
-        WebkitBoxFlex: '1',
-        flex: '1',
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        paddingRight: 40,
-        color: '#fff',
-        fontWeight: 400
+        WebkitBoxFlex  : '1',
+        flex           : '1',
+        whiteSpace     : 'nowrap',
+        textOverflow   : 'ellipsis',
+        overflow       : 'hidden',
+        paddingRight   : 40,
+        paddingLeft    : 0,
+        color          : 'black',
+        fontWeight     : 400
       },
       dropdownInstanceIcon: {
         minWidth: 32,
@@ -102,10 +103,8 @@ export default Radium(React.createClass({
         margin: '8px 16px 8px 0'
       },
       dropdownMenuItem: {
-        height: 'auto',
-        lineHeight: '40px',
-        paddingLeft: 32,
-        color: '#000'
+        height      : 'auto',
+        paddingLeft : 16,
       }
     }
   },
@@ -140,18 +139,15 @@ export default Radium(React.createClass({
     });
 
     return (
-      <MUI.ToolbarGroup
-        key={0}
-        style={styles.instanceToolbarGroup}>
-        <MUI.DropDownMenu
-          className="instances-dropdown"
-          labelStyle={styles.dropdownLabel}
-          underlineStyle={styles.dropdownLabelUnderline}
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={dropDownMenuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()}/>
-      </MUI.ToolbarGroup>
+      <MUI.DropDownMenu
+        className      = "instances-dropdown"
+        style          = {{width: '100%'}}
+        labelStyle     = {styles.dropdownLabel}
+        underlineStyle = {styles.dropdownLabelUnderline}
+        menuItemStyle  = {styles.dropdownMenuItem}
+        menuItems      = {dropDownMenuItems}
+        onChange       = {this.handleDropdownItemClick}
+        selectedIndex  = {this.handleInstanceActive()} />
     )
   }
 }));

@@ -70,8 +70,8 @@ module.exports = React.createClass({
   getStyles() {
     return {
       container: {
-        width: '90%',
-        margin: '40px auto'
+        width : '90%',
+        margin : '96px auto'
       },
       sidebar: {
         minWidth: 230

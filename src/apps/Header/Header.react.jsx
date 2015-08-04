@@ -58,31 +58,40 @@ export default Radium(React.createClass({
   },
 
   handleBillingClick(event) {
-    this.transitionTo('profile-billing');
+    this.transitionTo('profile-billing-plan');
     event.stopPropagation();
   },
 
   getStyles() {
     return {
+      main: {
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        zIndex: 8
+      },
       topToolbar: {
-        background: this.context.muiTheme.palette.primary1Color,
-        height: 64,
-        padding: '0 32px'
+        background : this.context.muiTheme.palette.primary1Color,
+        height     : 64,
+        padding    : 0,
       },
       logotypeContainer: {
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center'
+        paddingLeft : 24,
+        height      : '100%',
+        display     : 'flex',
+        alignItems  : 'center'
       },
       logo: {
         width: 120
       },
       toolbarList: {
+        padding: 10,
         display: 'flex'
       },
       toolbarListItem: {
-        display: 'inline-flex',
-        alignItems: 'center'
+        display    : 'inline-flex',
+        alignItems : 'center',
+        cursor     : 'pointer'
       },
       bottomToolbar: {
         display: 'flex',
@@ -144,12 +153,16 @@ export default Radium(React.createClass({
     }
   },
 
+  handleSolutionsClick() {
+    this.transitionTo('solutions');
+  },
+
   render() {
-    let styles = this.getStyles(),
-      currentInstance = SessionStore.getInstance();
+    let styles = this.getStyles();
+    let currentInstance = SessionStore.getInstance();
 
     return (
-      <div>
+      <div style={styles.main}>
         <MUI.Toolbar style={styles.topToolbar}>
           <MUI.ToolbarGroup style={styles.logotypeContainer}>
             <Router.Link to="app">
@@ -160,7 +173,7 @@ export default Radium(React.createClass({
           </MUI.ToolbarGroup>
           <MUI.ToolbarGroup
             float="right"
-            style={{height: '100%'}}>
+            style={{marginLeft: 100, height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
@@ -174,6 +187,9 @@ export default Radium(React.createClass({
               <li style={styles.toolbarListItem}>
                 <a href="mailto:support@syncano.com">Support</a>
               </li>
+              <li style={styles.toolbarListItem}>
+                <a onClick={this.handleSolutionsClick}>Solutions</a>
+              </li>
               <li>
                 <Common.Dropdown.Material
                   items={this.getDropdownItems()}
@@ -182,28 +198,12 @@ export default Radium(React.createClass({
                   Account
                 </Common.Dropdown.Material>
               </li>
+              <li style={styles.toolbarListItem}>
+                <HeaderNotificationsDropdown />
+              </li>
             </ul>
           </MUI.ToolbarGroup>
         </MUI.Toolbar>
-        <MUI.Paper>
-          <MUI.Toolbar style={styles.bottomToolbar}>
-            <Common.Show if={currentInstance !== null}>
-              <HeaderInstancesDropdown />
-            </Common.Show>
-
-            <MUI.ToolbarGroup
-              className="col-flex-1"
-              style={styles.bottomToolbarGroup}>
-              <HeaderMenu />
-            </MUI.ToolbarGroup>
-            <MUI.ToolbarGroup style={styles.bottomToolbarGroup}>
-              <HeaderNotificationsDropdown />
-              <Common.Show if={currentInstance !== null}>
-                <HeaderInstanceMenu />
-              </Common.Show>
-            </MUI.ToolbarGroup>
-          </MUI.Toolbar>
-        </MUI.Paper>
       </div>
     )
   }

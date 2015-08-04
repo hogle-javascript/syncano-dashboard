@@ -10,14 +10,15 @@ export default React.createClass({
   getStyles() {
     return {
       container: {
-        marginTop: 20,
-        marginBottom: 96
+        marginTop : 20,
+        marginBottom : 96,
+        marginLeft : 300,
       },
       header: {
-        paddingBottom: 20,
-        color: 'rgba(0, 0, 0, 0.87)',
-        fontSize: 20,
-        lineHeight: '24px'
+        paddingBottom : 48,
+        color : 'rgba(0, 0, 0, 0.87)',
+        fontSize : 20,
+        lineHeight : '24px'
       }
     }
   },

@@ -5,7 +5,7 @@ import Router from 'react-router';
 import App from './pages/app.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
-import Billing from './pages/billing.react';
+import ProfilePage from './pages/profile.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
 
@@ -202,10 +202,10 @@ module.exports = (
 
       {/* Profile Billing */}
       <Route
-        name="profile-billing"
-        handler={Billing}
-        path="/account/billing"
-        >
+        name = "profile"
+        handler = {ProfilePage}
+        path = "/account"
+      >
         <Route
           name="profile-billing-plan"
           handler={Profile.BillingPlan}

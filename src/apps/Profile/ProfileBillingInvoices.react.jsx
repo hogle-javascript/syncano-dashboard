@@ -57,7 +57,7 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Show if={this.state.invoices.length > 0}>
-          <Common.Lists.Container>
+          <Common.Lists.Container style={{width: '100%', margin: '65px 0px 0px 0px'}}>
             <Common.ColumnList.Header>
               <Column.Desc.Header>Period</Column.Desc.Header>
               <Column.Desc.Header>Invoice ID</Column.Desc.Header>

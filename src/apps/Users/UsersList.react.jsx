@@ -94,7 +94,7 @@ export default React.createClass({
         <Column.CheckIcon
           id={item.id.toString()}
           icon='account'
-          background={MUI.Styles.Colors.blue500}
+          background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.username}

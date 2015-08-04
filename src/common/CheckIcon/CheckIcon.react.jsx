@@ -1,8 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-import ColorStore from '../Color/ColorStore';
-
 import MUI from 'material-ui';
 
 export default Radium(React.createClass({
