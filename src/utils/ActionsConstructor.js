@@ -4,10 +4,10 @@ import _ from 'lodash';
 import Connection from '../apps/Session/Connection';
 import Syncano from '../apps/Syncano';
 
-let Libraries  = {Syncano};
-let Context    = {
-  Connection : Connection.get(),
-  D          : Connection.D
+let Libraries = {Syncano};
+let Context = {
+  Connection: Connection.get(),
+  D: Connection.D
 };
 
 export default (options, actions) => {
@@ -19,13 +19,13 @@ export default (options, actions) => {
   options = options || {};
 
   if (options.withDialog) {
-    actions.showDialog    = {};
+    actions.showDialog = {};
     actions.dismissDialog = {};
   }
 
   if (options.withCheck) {
-    actions.checkItem  = {};
-    actions.selectAll  = {};
+    actions.checkItem = {};
+    actions.selectAll = {};
     actions.uncheckAll = {};
   }
 

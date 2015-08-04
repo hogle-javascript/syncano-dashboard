@@ -1,5 +1,5 @@
-var React = require('react'),
-    classNames = require('classnames');
+let React = require('react'),
+  classNames = require('classnames');
 
 module.exports = React.createClass({
 
@@ -15,7 +15,7 @@ module.exports = React.createClass({
     e.stopPropagation();
   },
 
-  render: function () {
+  render() {
     return (
       <div className="dropdown-menu-item clickable" onClick={this.handleItemClick}>{this.props.action.content}</div>
     );

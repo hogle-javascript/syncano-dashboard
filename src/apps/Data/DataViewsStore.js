@@ -9,16 +9,16 @@ import SessionActions from '../Session/SessionActions';
 import DataViewsActions from './DataViewsActions';
 
 export default Reflux.createStore({
-  listenables : DataViewsActions,
-  mixins      : [
+  listenables: DataViewsActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
   ],
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     }
   },
 

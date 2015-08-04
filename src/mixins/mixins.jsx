@@ -2,22 +2,22 @@ module.exports = {}
 
 module.exports.toggleMenuMixin = {
 
-  handleClickOutside: function (evt) {
+  handleClickOutside(evt) {
     this.clearMenuVisability();
   },
 
-  toggleMenu: function (name, e) {
+  toggleMenu(name, e) {
     e.stopPropagation();
 
-    var state = {};
+    let state = {};
     state[name] = !this.state[name];
 
     this.setState(state);
   },
 
-  clearMenuVisability: function () {
-    var newState = {};
-    this.state.toggleArgs.map(function (item) {
+  clearMenuVisability() {
+    let newState = {};
+    this.state.toggleArgs.map(function(item) {
       newState[item] = false;
     });
     this.setState(newState);
@@ -27,12 +27,12 @@ module.exports.toggleMenuMixin = {
 
 module.exports.dropdownClickMixin = {
 
-  handleClick: function (e) {
+  handleClick(e) {
     this.props.handleClick(this.props.action.name);
     e.stopPropagation();
     //ViewActions.closeDropdown();
 
-    //var action = this.props.action.name;
+    //let action = this.props.action.name;
     //if (Constants.VIEW_MODES.indexOf(Constants.VIEW_ACTIONS_MAP[action]) != -1) {
     //  ViewActions.updateViewMode(this.props.list.uuid, action);
     //}

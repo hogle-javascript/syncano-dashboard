@@ -17,27 +17,27 @@ export default React.createClass({
   },
 
   getStyles() {
-    var styles = {
+    let styles = {
       marginBottom: 50
     };
     return this.mergeStyles(styles, this.props.style);
   },
 
   render() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <div
-        className = "account-container"
-        id        = {this.props.id}
-        style     = {styles}
-        ref       = {this.props.ref}>
+        className="account-container"
+        id={this.props.id}
+        style={styles}
+        ref={this.props.ref}>
         <div className="account-logo">
-          <Router.Link to="login"><Common.Logo className="logo-blue" /></Router.Link>
+          <Router.Link to="login"><Common.Logo className="logo-blue"/></Router.Link>
         </div>
         <MUI.Paper
-          className = "account-container__content"
-          rounded    = {false}>
+          className="account-container__content"
+          rounded={false}>
           {this.props.children}
         </MUI.Paper>
         {this.props.bottomContent}

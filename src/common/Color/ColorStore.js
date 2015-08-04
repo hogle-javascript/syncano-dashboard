@@ -1,13 +1,13 @@
-var Colors = require('material-ui/lib/styles/colors');
+let Colors = require('material-ui/lib/styles/colors');
 
-var ColorStore = {
+let ColorStore = {
   syncanoThemeColorName: 'blue',
 
   getColorPickerPalette: function() {
-    var colors = [],
-        uniqueColors = Object.keys(Colors).filter(function(key) {
-          return key.slice(-3) === '500';
-        });
+    let colors = [],
+      uniqueColors = Object.keys(Colors).filter(function(key) {
+        return key.slice(-3) === '500';
+      });
 
     uniqueColors.map(function(color) {
       color = color.slice(0, -3);
@@ -33,9 +33,9 @@ var ColorStore = {
   },
 
   getRandomColorName: function() {
-    var uniqueColors      = this.getColorPickerPalette(),
-        uniqueColorsCount = uniqueColors.length,
-        randomNumber      = Math.floor((Math.random() * uniqueColorsCount));
+    let uniqueColors = this.getColorPickerPalette(),
+      uniqueColorsCount = uniqueColors.length,
+      randomNumber = Math.floor((Math.random() * uniqueColorsCount));
 
     return uniqueColors[randomNumber];
   },

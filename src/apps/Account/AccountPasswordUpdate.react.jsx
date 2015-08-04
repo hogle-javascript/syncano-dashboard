@@ -26,19 +26,19 @@ export default React.createClass({
   getStyles() {
     return {
       text: {
-        color        : 'rgba(0, 0, 0, 0.54)',
-        lineHeight   : '20px',
-        textAlign    : 'center',
-        padding      : '0 14%'
+        color: 'rgba(0, 0, 0, 0.54)',
+        lineHeight: '20px',
+        textAlign: 'center',
+        padding: '0 14%'
       },
       button: {
-        width        : '100%',
-        boxShadow    : 'none',
-        height       : '48px',
-        marginBottom : 28
+        width: '100%',
+        boxShadow: 'none',
+        height: '48px',
+        marginBottom: 28
       },
       buttonLabel: {
-        fontSize     : 16
+        fontSize: 16
       }
     }
   },
@@ -57,17 +57,17 @@ export default React.createClass({
         </div>
         <div>
           <p
-            className = "vm-4-b"
-            style     = {styles.text}>
+            className="vm-4-b"
+            style={styles.text}>
             Sweet! Your new password has now been set and you can login.
           </p>
 
           <MUI.RaisedButton
-            style      = {styles.button}
-            labelStyle = {styles.buttonLabel}
-            label      = "Go to dashboard"
-            onClick    = {this.handleButtonClick}
-            primary    = {true} />
+            style={styles.button}
+            labelStyle={styles.buttonLabel}
+            label="Go to dashboard"
+            onClick={this.handleButtonClick}
+            primary={true}/>
         </div>
       </Container>
     )

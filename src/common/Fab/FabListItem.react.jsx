@@ -19,9 +19,9 @@ export default Radium(React.createClass({
         margin: '3px 0'
       },
       icon: {
-        display        : '-webkit-flex; display: flex',
-        alignItems     : 'center',
-        justifyContent : 'center'
+        display: '-webkit-flex; display: flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }
     }
   },
@@ -32,8 +32,8 @@ export default Radium(React.createClass({
     return (
       <MUI.FloatingActionButton
         {...this.props}
-        style     = {styles.button}
-        iconStyle = {styles.icon} />
+        style={styles.button}
+        iconStyle={styles.icon}/>
     );
   }
 }));

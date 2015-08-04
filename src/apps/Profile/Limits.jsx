@@ -11,7 +11,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    
+
     return (
       <div className="row">
         <div className="col-md-9" style={{textAlign: 'right'}}>

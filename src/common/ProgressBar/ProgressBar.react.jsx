@@ -1,5 +1,5 @@
-var React = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./ProgressBar.css');
 
@@ -11,15 +11,15 @@ module.exports = React.createClass({
     visible: React.PropTypes.bool
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       visible: this.props.visible || false,
     }
   },
 
-  render: function () {
+  render() {
 
-    var cssClasses = classNames({
+    let cssClasses = classNames({
       'progress-bar-group': true,
       'progress-bar-visible': this.state.visible,
     });

@@ -52,40 +52,40 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        title : 'Reset an API Key',
-        ref   : 'resetApiKeyDialog',
+        title: 'Reset an API Key',
+        ref: 'resetApiKeyDialog',
         actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            text: 'Cancel',
+            onClick: this.handleCancel
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleReset
+            text: 'Confirm',
+            onClick: this.handleReset
           }
         ],
         modal: true,
         children: [
           'Do you really want to reset this API key?',
           <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading} />
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
         ]
       }
     }, {
       dialog: Common.Dialog,
       params: {
-        title : 'Delete an API key',
-        ref   : 'deleteApiKeyDialog',
+        title: 'Delete an API key',
+        ref: 'deleteApiKeyDialog',
         actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            text: 'Cancel',
+            onClick: this.handleCancel
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleDelete
+            text: 'Confirm',
+            onClick: this.handleDelete
           }
         ],
         modal: true,
@@ -93,9 +93,9 @@ export default React.createClass({
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
           this.getDialogList(checkedApiKeys, 'api_key'),
           <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading} />
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
         ]
       }
     }]
@@ -116,8 +116,8 @@ export default React.createClass({
   },
 
   render() {
-    let checkedApiKeys      = Store.getNumberOfChecked(),
-        isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
+    let checkedApiKeys = Store.getNumberOfChecked(),
+      isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
 
     return (
       <Container>
@@ -127,39 +127,39 @@ export default React.createClass({
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName = {isAnyApiKeySelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
-            />
+              label={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName={isAnyApiKeySelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
+              />
             <Common.Fab.Item
-              label         = "Click here to delete API Keys"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'deleteApiKeyDialog')}
-              iconClassName = "synicon-delete"
-            />
+              label="Click here to delete API Keys"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'deleteApiKeyDialog')}
+              iconClassName="synicon-delete"
+              />
             <Common.Fab.Item
-              label         = "Click here to edit an API Key"
-              mini          = {true}
-              disabled      = {checkedApiKeys > 1}
-              onClick       = {this.showDialog.bind(null, 'resetApiKeyDialog')}
-              iconClassName = "synicon-backup-restore"
-            />
+              label="Click here to edit an API Key"
+              mini={true}
+              disabled={checkedApiKeys > 1}
+              onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
+              iconClassName="synicon-backup-restore"
+              />
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add an API Key"
-            onClick       = {this.showApiKeyDialog}
-            iconClassName = "synicon-plus"
-          />
+            label="Click here to add an API Key"
+            onClick={this.showApiKeyDialog}
+            iconClassName="synicon-plus"
+            />
         </Common.Fab>
         <ApiKeysList
-          name                 = "API Keys"
-          items                = {this.state.items}
-          emptyItemHandleClick = {this.showApiKeyDialog}
-          emptyItemContent     = "Generate an API Key"
-        />
+          name="API Keys"
+          items={this.state.items}
+          emptyItemHandleClick={this.showApiKeyDialog}
+          emptyItemContent="Generate an API Key"
+          />
       </Container>
     );
   }

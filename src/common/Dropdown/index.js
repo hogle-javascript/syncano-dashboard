@@ -8,13 +8,13 @@ import DropdownWithButtons from './DropdownWithButtons.react';
 import MaterialDropdown from './MaterialDropdown.react';
 import MaterialDropdownItem from './MaterialDropdownItem.react';
 
-Dropdown.MenuButton     = DropdownMenuButton;
-Dropdown.MenuItem       = DropdownMenuItem;
+Dropdown.MenuButton = DropdownMenuButton;
+Dropdown.MenuItem = DropdownMenuItem;
 Dropdown.MenuItemToggle = DropdownMenuItemToggle;
-Dropdown.MenuSection    = DropdownMenuSection;
-Dropdown.NotifiItem     = DropdownNotifiItem;
-Dropdown.WithButtons    = DropdownWithButtons;
-Dropdown.Material       = MaterialDropdown;
-Dropdown.MaterialItem   = MaterialDropdownItem;
+Dropdown.MenuSection = DropdownMenuSection;
+Dropdown.NotifiItem = DropdownNotifiItem;
+Dropdown.WithButtons = DropdownWithButtons;
+Dropdown.Material = MaterialDropdown;
+Dropdown.MaterialItem = MaterialDropdownItem;
 
 export default Dropdown;

@@ -8,35 +8,36 @@ export default React.createClass({
 
   displayName: 'InvitationsMenuItem',
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       buttons: [{
-        type        : 'flat',
-        isDefault   : false,
-        name        : 'declined',
-        displayName : 'Decline'
+        type: 'flat',
+        isDefault: false,
+        name: 'declined',
+        displayName: 'Decline'
       }, {
-        type        : 'flat',
-        isDefault   : false,
-        name        : 'accepted',
-        displayName : 'Accept'
+        type: 'flat',
+        isDefault: false,
+        name: 'accepted',
+        displayName: 'Accept'
       }]
     }
   },
 
-  handleButtonClick: function(action) {
+  handleButtonClick(action) {
     //ServerActions.respondToInvitation(action, this.props.invitation);
   },
 
-  render: function() {
+  render() {
     return (
       <div className="invitations-menu-item">
         <div className="invitations-menu-text">
-          You're invited by <b>{this.props.invitation.inviter}</b> to the instance <b>{this.props.invitation.instance}</b>.
+          You're invited by <b>{this.props.invitation.inviter}</b> to the instance
+          <b>{this.props.invitation.instance}</b>.
         </div>
         <ButtonGroup
           buttons={this.props.buttons}
-          handleClick={this.handleButtonClick} />
+          handleClick={this.handleButtonClick}/>
       </div>
     );
   }

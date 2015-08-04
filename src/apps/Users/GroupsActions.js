@@ -2,45 +2,45 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withDialog : true,
-    withCheck  : true
+    withDialog: true,
+    withCheck: true
   },
   {
-    fetch          : {},
-    setGroups      : {},
-    setActiveGroup : {},
+    fetch: {},
+    setGroups: {},
+    setActiveGroup: {},
     fetchGroups: {
       asyncResult: true,
-      loading    : true,
-      children   : ['completed', 'failure'],
-      method     : 'Syncano.Actions.Groups.list'
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Groups.list'
     },
     createGroup: {
-      asyncResult : true,
-      asyncForm   : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method     : 'Syncano.Actions.Groups.create'
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Groups.create'
     },
     updateGroup: {
-      asyncResult : true,
-      asyncForm   : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method     : 'Syncano.Actions.Groups.update'
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Groups.update'
     },
     removeGroups: {
-      asyncResult : true,
-      loading     : true,
+      asyncResult: true,
+      loading: true,
       children: ['completed', 'failure'],
-      method     : 'Syncano.Actions.Groups.remove'
+      method: 'Syncano.Actions.Groups.remove'
 
     },
     fetchGroupUsers: {
       asyncResult: true,
-      loading    : true,
-      children   : ['completed', 'failure'],
-      method     : 'Syncano.Actions.Groups.listUsers'
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Groups.listUsers'
     }
   }
 );

@@ -32,8 +32,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let ignore_acl = null,
-        allow_user_create = null;
+    let ignore_acl = null;
+    let allow_user_create = null;
 
     if (item.ignore_acl) {
       ignore_acl = <div>Ignore ACL</div>;
@@ -44,15 +44,15 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked={item.checked}
+        key={item.id}>
         <Column.CheckIcon
-          id              = {item.id.toString()}
-          icon            = 'key'
-          background      = {Common.Color.getColorByName('blue', 'xlight')}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-        >
+          id={item.id.toString()}
+          icon='key'
+          background={Common.Color.getColorByName('blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}
+          >
           {item.description}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
@@ -61,7 +61,7 @@ export default React.createClass({
           {ignore_acl}
           {allow_user_create}
         </Column.Text>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },

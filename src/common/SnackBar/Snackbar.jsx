@@ -1,7 +1,7 @@
-var React         = require('react');
+let React = require('react');
 
-//var ViewActions   = require('../actions/ViewActions');
-//var ServerActions = require('../actions/ServerActions');
+//let ViewActions   = require('../actions/ViewActions');
+//let ServerActions = require('../actions/ServerActions');
 
 require('./Snackbar.css');
 
@@ -10,7 +10,7 @@ module.exports = React.createClass({
   displayName: 'Snackbar',
 
   componentDidMount: function() {
-    setTimeout(function(){
+    setTimeout(function() {
       ViewActions.closeSnackbar();
     }.bind(this), 5000);
   },

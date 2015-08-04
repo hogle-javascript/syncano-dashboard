@@ -9,8 +9,8 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.StoreForm,
     Mixins.WaitForStore
@@ -45,8 +45,8 @@ export default Reflux.createStore({
   onCheckItem(checkId, state) {
     console.debug('InstancesStore::onCheckItem');
 
-    let item         = this.getInstanceById(checkId),
-        checkedItems = this.getCheckedItems();
+    let item = this.getInstanceById(checkId),
+      checkedItems = this.getCheckedItems();
 
     // Unchecking or no items checked
     if (!state || checkedItems.length === 0) {
@@ -56,8 +56,8 @@ export default Reflux.createStore({
     }
 
     // Checking if the item is from the same list as other checked
-    let newItemFromMyList   = this.amIOwner(item),
-        otherItemFromMyList = this.amIOwner(checkedItems[0]);
+    let newItemFromMyList = this.amIOwner(item),
+      otherItemFromMyList = this.amIOwner(checkedItems[0]);
 
     item.checked = state;
     if (!(newItemFromMyList && otherItemFromMyList)) {
@@ -106,7 +106,7 @@ export default Reflux.createStore({
       return this.data.items;
     }
 
-    let my    = this.getMyInstances()    || [];
+    let my = this.getMyInstances() || [];
     let other = this.getOtherInstances() || [];
 
     if (reversed === true) {
@@ -133,8 +133,8 @@ export default Reflux.createStore({
   getInstancesDropdown() {
     return this.data.items.map(item => {
       return {
-        payload : item.name,
-        text    : item.name
+        payload: item.name,
+        text: item.name
       }
     });
   },
@@ -175,14 +175,14 @@ export default Reflux.createStore({
 
     if (!singleItem) {
       return {
-        color : null,
-        icon  : null
+        color: null,
+        icon: null
       }
     }
 
     return {
-      color : singleItem.metadata.color,
-      icon  : singleItem.metadata.icon
+      color: singleItem.metadata.color,
+      icon: singleItem.metadata.icon
     };
   }
 });

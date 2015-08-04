@@ -12,20 +12,20 @@ export default React.createClass({
   },
 
   getStyles() {
-    var styles = {
+    let styles = {
       marginBottom: 50
     };
     return this.mergeStyles(styles, this.props.style);
   },
 
   render() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <div
-        id    = {this.props.id}
-        style = {styles}
-      >
+        id={this.props.id}
+        style={styles}
+        >
         {this.props.children}
       </div>
     );

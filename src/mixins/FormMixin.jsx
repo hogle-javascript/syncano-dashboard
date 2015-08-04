@@ -1,26 +1,26 @@
-var React        = require('react'),
-    objectAssign = require('object-assign'),
-    validate     = require('validate.js'),
+import React from 'react';
+import objectAssign from 'object-assign';
+import validate from 'validate.js';
 
-    Notification = require('../common/Notification/Notification.react');
+import Notification from '../common/Notification/Notification.react';
 
 validate.moment = require('moment');
 
-var FormMixin = {
+export default {
 
-  getInitialState: function() {
+  getInitialState() {
     return this.getInitialFormState();
   },
 
-  getInitialFormState: function() {
+  getInitialFormState() {
     return {
-      errors    : {},
-      feedback  : null,
-      canSubmit : true
+      errors: {},
+      feedback: null,
+      canSubmit: true
     }
   },
 
-  renderFormErrorFeedback: function() {
+  renderFormErrorFeedback() {
     if (!this.state.errors || this.state.errors.feedback === undefined) {
       return;
     }
@@ -28,7 +28,7 @@ var FormMixin = {
     return <Notification type='error'>{this.state.errors.feedback}</Notification>;
   },
 
-  renderFormFeedback: function() {
+  renderFormFeedback() {
     if (!this.state.feedback || this.state.feedback === undefined) {
       return
     }
@@ -36,22 +36,22 @@ var FormMixin = {
     return <Notification>{this.state.feedback}</Notification>;
   },
 
-  renderFormNotifications: function() {
+  renderFormNotifications() {
     return this.renderFormErrorFeedback() || this.renderFormFeedback()
   },
 
-  resetForm: function() {
+  resetForm() {
     this.setState(this.getInitialFormState());
   },
 
-  validate: function(key, callback) {
+  validate(key, callback) {
     if (typeof key === 'function') {
       callback = key;
       key = undefined;
     }
 
-    var constraints = this.validatorConstraints   || {},
-        attributes  = this.getValidatorAttributes || this.state;
+    let constraints = this.validatorConstraints || {};
+    let attributes = this.getValidatorAttributes || this.state;
 
     if (typeof constraints === 'function') {
       constraints = constraints.call(this);
@@ -63,16 +63,16 @@ var FormMixin = {
 
     // f***ing js
     if (key !== undefined) {
-      var keyConstraints = {},
-          keyAttributes  = {};
+      let keyConstraints = {},
+        keyAttributes = {};
 
       keyConstraints[key] = constraints[key];
-      constraints         = keyConstraints;
-      keyAttributes[key]  = attributes[key];
-      attributes          = keyAttributes;
+      constraints = keyConstraints;
+      keyAttributes[key] = attributes[key];
+      attributes = keyAttributes;
     }
 
-    var errors = objectAssign(
+    let errors = objectAssign(
       {},
       (key !== undefined) ? this.state.errors : {},
       validate(attributes, constraints)
@@ -85,7 +85,9 @@ var FormMixin = {
   },
 
   handleFormValidation: function(event) {
-    event ? event.preventDefault() : null;
+    if (event) {
+      event.preventDefault();
+    }
 
     // FormMixin compatibility
     if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {
@@ -103,23 +105,23 @@ var FormMixin = {
     }.bind(this));
   },
 
-  handleValidation: function(key, callback) {
+  handleValidation(key, callback) {
     return function(event) {
       event.preventDefault();
       this.validate(key, callback);
     }.bind(this);
   },
 
-  getValidationMessages: function(key) {
-    var errors = this.state.errors || {};
+  getValidationMessages(key) {
+    let errors = this.state.errors || {};
 
     if (Object.keys(errors).length === 0) {
       return [];
     }
 
     if (key === undefined) {
-      var flattenErrors = [];
-      for (var error in errors) {
+      let flattenErrors = [];
+      for (let error in errors) {
         flattenErrors.push.apply(flattenErrors, errors[error]);
       }
       return flattenErrors;
@@ -128,25 +130,25 @@ var FormMixin = {
     return errors[key] ? errors[key] : [];
   },
 
-  clearValidations: function() {
+  clearValidations() {
     this.setState({
       errors: {}
     });
   },
 
-  isInputDisabled: function(inputName) {
-    var hasProtectedFromEditProperty = this.state.protectedFromEdit;
+  isInputDisabled(inputName) {
+    let hasProtectedFromEditProperty = this.state.protectedFromEdit;
     if (hasProtectedFromEditProperty && hasProtectedFromEditProperty.fields) {
       return hasProtectedFromEditProperty.fields.indexOf(inputName) > -1;
     }
     return false;
   },
 
-  isValid: function(key) {
+  isValid(key) {
     return this.state.errors[key] === undefined || this.state.errors[key] === null;
   },
 
-  _invokeCallback: function(key, callback) {
+  _invokeCallback(key, callback) {
     if (typeof callback !== 'function') {
       return;
     }
@@ -159,5 +161,3 @@ var FormMixin = {
   }
 
 };
-
-module.exports = FormMixin;
