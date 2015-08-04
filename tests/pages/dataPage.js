@@ -1,4 +1,4 @@
-var instanceCommands = {
+var dataCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
@@ -6,13 +6,17 @@ var instanceCommands = {
 };
 
 module.exports = {
-  commands: [instanceCommands],
+  commands: [dataCommands],
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
     },
     cogIcon: {
       selector: '.synicon-cog'
+    },
+    webhookListItem: {
+      selector: '//div[text()="webhook_description"]',
+      locateStrategy: 'xpath'
     }
   }
 };
