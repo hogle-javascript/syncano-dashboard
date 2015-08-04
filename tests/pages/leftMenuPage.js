@@ -19,6 +19,10 @@ module.exports = {
     users: {
       selector: '//div[@tabindex="0"]//span[text()="Users"]',
       locateStrategy: 'xpath'
+    },
+    channels: {
+      selector: '//div[@tabindex="0"]//span[text()="Channels"]',
+      locateStrategy: 'xpath'
     }
   }
 };
