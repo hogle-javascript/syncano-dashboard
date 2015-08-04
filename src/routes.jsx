@@ -32,10 +32,10 @@ import Channels from './apps/Channels/Channels.react';
 import Examples from './examples/Examples.react';
 import ListExamples from './examples/ListExamples.react';
 
-let Route = Router.Route;
-let Redirect = Router.Redirect;
-let NotFoundRoute = Router.NotFoundRoute;
-let DefaultRoute = Router.DefaultRoute;
+const Route = Router.Route;
+const Redirect = Router.Redirect;
+const NotFoundRoute = Router.NotFoundRoute;
+const DefaultRoute = Router.DefaultRoute;
 
 module.exports = (
   <Route
