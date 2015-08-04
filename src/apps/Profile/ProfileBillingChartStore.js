@@ -136,9 +136,9 @@ export default Reflux.createStore({
         return;
       }
 
-      let amount = pricing[usage.source].overage * usage.value;
-      columns[usage.source][usage.date] = amount;
-      usage[usage.source] += amount;
+      let amount = pricing[_usage.source].overage * _usage.value;
+      columns[_usage.source][_usage.date] = amount;
+      usageAmount[_usage.source] += amount;
     });
 
     this.fillBlanks(columns);
