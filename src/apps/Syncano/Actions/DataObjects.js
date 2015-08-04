@@ -5,8 +5,8 @@ export default {
     this.Connection
       .DataObjects
       .list(className, {
-        page_size : Constants.DATAOBJECTS_PAGE_SIZE,
-        order_by  : '-created_at'
+        page_size: Constants.DATAOBJECTS_PAGE_SIZE,
+        order_by: '-created_at'
       })
       .then(this.completed)
       .catch(this.failure);

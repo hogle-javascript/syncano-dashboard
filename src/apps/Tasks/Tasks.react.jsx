@@ -58,39 +58,41 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedTriggers  = TriggersStore.getCheckedItems(),
-        checkedSchedules = SchedulesStore.getCheckedItems();
+    let checkedTriggers = TriggersStore.getCheckedItems(),
+      checkedSchedules = SchedulesStore.getCheckedItems();
 
     return [
       {
         dialog: Common.Dialog,
         params: {
-          ref:    'removeTriggerDialog',
-          title:  'Delete a Trigger',
+          ref: 'removeTriggerDialog',
+          title: 'Delete a Trigger',
           actions: [
             {
-              text    : 'Cancel',
-              onClick : this.handleCancel},
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
             {
-              text    : 'Confirm',
-              onClick : this.handleRemoveTriggers}
+              text: 'Confirm',
+              onClick: this.handleRemoveTriggers
+            }
           ],
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
             this.getDialogList(checkedTriggers, 'label'),
             <Common.Loading
-              type     = 'linear'
-              position = 'bottom'
-              show     = {this.state.triggers.isLoading} />
+              type='linear'
+              position='bottom'
+              show={this.state.triggers.isLoading}/>
           ]
         }
       },
       {
         dialog: Common.Dialog,
         params: {
-          ref:    'removeScheduleDialog',
-          title:  'Delete a Schedule',
+          ref: 'removeScheduleDialog',
+          title: 'Delete a Schedule',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveSchedules}
@@ -100,9 +102,9 @@ export default React.createClass({
             'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
             this.getDialogList(checkedSchedules, 'label'),
             <Common.Loading
-              type     = 'linear'
-              position = 'bottom'
-              show     = {this.state.schedules.items.isLoading} />
+              type='linear'
+              position='bottom'
+              show={this.state.schedules.items.isLoading}/>
           ]
         }
       }
@@ -154,12 +156,12 @@ export default React.createClass({
   },
 
   render() {
-    let checkedSchedules      = SchedulesStore.getNumberOfChecked(),
-        checkedTriggers       = TriggersStore.getNumberOfChecked(),
-        isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
-        isAnyTriggerSelected  = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
-        markedIcon           = 'synicon-checkbox-multiple-marked-outline',
-        blankIcon            = 'synicon-checkbox-multiple-blank-outline';
+    let checkedSchedules = SchedulesStore.getNumberOfChecked(),
+      checkedTriggers = TriggersStore.getNumberOfChecked(),
+      isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
+      isAnyTriggerSelected = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
+      markedIcon = 'synicon-checkbox-multiple-marked-outline',
+      blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -170,71 +172,71 @@ export default React.createClass({
         <Common.Show if={checkedSchedules > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
-              iconClassName = {isAnyScheduleSelected ? markedIcon : blankIcon} />
+              label={isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
+              iconClassName={isAnyScheduleSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete Schedules"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'removeScheduleDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete Schedules"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeScheduleDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit a Schedule"
-              mini          = {true}
-              disabled      = {checkedSchedules > 1}
-              onClick       = {this.showScheduleEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit a Schedule"
+              mini={true}
+              disabled={checkedSchedules > 1}
+              onClick={this.showScheduleEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Show if={checkedTriggers > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
-              iconClassName = {isAnyTriggerSelected ? markedIcon : blankIcon} />
+              label={isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
+              iconClassName={isAnyTriggerSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete Schedules"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'removeTriggerDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete Schedules"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeTriggerDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit a Trigger"
-              mini          = {true}
-              disabled      = {checkedSchedules > 1}
-              onClick       = {this.showTriggerEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit a Trigger"
+              mini={true}
+              disabled={checkedSchedules > 1}
+              onClick={this.showTriggerEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to create a Schedule"
-            onClick       = {this.showScheduleDialog}
-            iconClassName = "synicon-camera-timer" />
+            label="Click here to create a Schedule"
+            onClick={this.showScheduleDialog}
+            iconClassName="synicon-camera-timer"/>
           <Common.Fab.Item
-            label         = "Click here to create a Trigger"
-            onClick       = {this.showTriggerDialog}
-            iconClassName = "synicon-arrow-up-bold" />
+            label="Click here to create a Trigger"
+            onClick={this.showTriggerDialog}
+            iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>
 
         <SchedulesList
-          name                 = "Schedules"
-          checkItem            = {this.checkSchedule}
-          isLoading            = {this.state.schedules.isLoading}
-          items                = {this.state.schedules.items}
-          emptyItemHandleClick = {this.showScheduleDialog}
-          emptyItemContent     = "Create a Schedule" />
+          name="Schedules"
+          checkItem={this.checkSchedule}
+          isLoading={this.state.schedules.isLoading}
+          items={this.state.schedules.items}
+          emptyItemHandleClick={this.showScheduleDialog}
+          emptyItemContent="Create a Schedule"/>
 
         <TriggersList
-          name                 = "Triggers"
-          checkItem            = {this.checkTrigger}
-          isLoading            = {this.state.triggers.isLoading}
-          items                = {this.state.triggers.items}
-          emptyItemHandleClick = {this.showTriggerDialog}
-          emptyItemContent     = "Create a Trigger" />
+          name="Triggers"
+          checkItem={this.checkTrigger}
+          isLoading={this.state.triggers.isLoading}
+          items={this.state.triggers.items}
+          emptyItemHandleClick={this.showTriggerDialog}
+          emptyItemContent="Create a Trigger"/>
       </Container>
     );
   }

@@ -7,8 +7,8 @@ export default React.createClass({
   displayName: 'ColumnsFilterMenu',
 
   propTypes: {
-    disabled : React.PropTypes.bool,
-    columns  : React.PropTypes.array
+    disabled: React.PropTypes.bool,
+    columns: React.PropTypes.array
   },
 
   getInitialState() {
@@ -35,29 +35,29 @@ export default React.createClass({
     return this.state.columns.map(column => {
       let checkbox = (
         <MUI.Checkbox
-          checked = {column.checked}
-          onCheck = {this.handleClick.bind(null, column.id)} />
+          checked={column.checked}
+          onCheck={this.handleClick.bind(null, column.id)}/>
       );
 
       return (
         <MUI.ListItem
-          key           = {column.id}
-          id            = {column.id}
-          primaryText   = {column.name}
-          secondaryText = {column.tooltip}
-          leftCheckbox  = {checkbox} />
+          key={column.id}
+          id={column.id}
+          primaryText={column.name}
+          secondaryText={column.tooltip}
+          leftCheckbox={checkbox}/>
       )
     });
   },
 
   render() {
-    let mainIcon = <MUI.IconButton iconClassName="synicon-view-column" />;
+    let mainIcon = <MUI.IconButton iconClassName="synicon-view-column"/>;
 
     return (
       <MUI.IconMenu
-        closeOnItemTouchTap = {false}
-        iconButtonElement   = {mainIcon}
-        openDirection       = "bottom-left">
+        closeOnItemTouchTap={false}
+        iconButtonElement={mainIcon}
+        openDirection="bottom-left">
         {this.renderMenuItems()}
       </MUI.IconMenu>
     )

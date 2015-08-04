@@ -30,7 +30,7 @@ export default React.createClass({
   ],
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items : nextProps.items})
+    this.setState({items: nextProps.items})
   },
 
   // List
@@ -44,13 +44,13 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.id} >
+        checked={item.checked}
+        key={item.id}>
         <Column.CheckIcon
-          id              = {item.name}
-          icon            = {'bullhorn'}
-          background      = {Common.Color.getColorByName('blue', 'xlight')}
-          checked         = {item.checked}
+          id = {item.name}
+          icon = {'bullhorn'}
+          background = {Common.Color.getColorByName('blue', 'xlight')}
+          checked = {item.checked}
           handleIconClick = {this.handleItemIconClick}
           handleNameClick = {this.handleItemClick} >
           {item.name}
@@ -66,13 +66,13 @@ export default React.createClass({
         <Column.Desc className="col-xs-5 col-md-5">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },
 
   getList() {
-    var items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

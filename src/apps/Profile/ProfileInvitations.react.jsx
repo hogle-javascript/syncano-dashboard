@@ -33,8 +33,8 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          ref   : 'acceptInvitationsDialog',
-          title : 'Accept Invitation',
+          ref: 'acceptInvitationsDialog',
+          title: 'Accept Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Yes, I\'m sure.', onClick: this.handleAccept}
@@ -46,8 +46,8 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          ref   : 'declineInvitationsDialog',
-          title : 'Decline Invitation',
+          ref: 'declineInvitationsDialog',
+          title: 'Decline Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Yes, I\'m sure.', onClick: this.handleDecline}
@@ -92,19 +92,19 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked={item.checked}
+        key={item.id}>
         <Column.CheckIcon
-          id              = {item.id.toString()}
-          icon            = 'account'
-          background      = {MUI.Styles.Colors.blue500}
-          checked         = {item.checked}
-          handleIconClick = {this.checkItem}>
+          id={item.id.toString()}
+          icon='account'
+          background={MUI.Styles.Colors.blue500}
+          checked={item.checked}
+          handleIconClick={this.checkItem}>
           {item.instance}
         </Column.CheckIcon>
         <Column.Desc>{item.inviter}</Column.Desc>
         <Column.Desc>{item.role}</Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     );
   },
@@ -129,28 +129,28 @@ export default React.createClass({
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = "Click here to unselect all"
-              mini          = {true}
-              onClick       = {this.uncheckAll}
-              iconClassName = "synicon-checkbox-multiple-marked-outline" />
+              label="Click here to unselect all"
+              mini={true}
+              onClick={this.uncheckAll}
+              iconClassName="synicon-checkbox-multiple-marked-outline"/>
             <Common.Fab.Item
-              label         = "Click here to accept Invitations"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'acceptInvitationsDialog')}
-              iconClassName = "synicon-check" />
+              label="Click here to accept Invitations"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'acceptInvitationsDialog')}
+              iconClassName="synicon-check"/>
             <Common.Fab.Item
-              label         = "Click here to decline Invitations"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'declineInvitationsDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to decline Invitations"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'declineInvitationsDialog')}
+              iconClassName="synicon-delete"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Loading show={this.state.isLoading}>
           <Common.Show if={this.state.items.length < 1}>
             <EmptyContainer
-              icon = 'synicon-email-outline'
-              text = 'You have no invitations'/>
+              icon='synicon-email-outline'
+              text='You have no invitations'/>
           </Common.Show>
 
           <Common.Show if={this.state.items.length > 0}>

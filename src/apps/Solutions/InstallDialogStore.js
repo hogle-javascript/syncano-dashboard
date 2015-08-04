@@ -12,8 +12,8 @@ import InstancesActions from '../Instances/InstancesActions';
 import Actions from './InstallDialogActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore,
     SnackbarNotificationMixin
@@ -21,8 +21,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      instances : null,
-      versions : [
+      instances: null,
+      versions: [
         {payload: '', text: 'Loading...'}
       ]
     };
@@ -43,8 +43,8 @@ export default Reflux.createStore({
     }
     return this.data.versions.map(item => {
       return {
-        payload : item.id,
-        text    : item.number
+        payload: item.id,
+        text: item.number
       }
     });
   },
@@ -55,8 +55,8 @@ export default Reflux.createStore({
     }
     return this.data.instances.map(item => {
       return {
-        payload : item.name,
-        text    : item.name
+        payload: item.name,
+        text: item.name
       }
     });
   },
@@ -80,7 +80,7 @@ export default Reflux.createStore({
     console.debug('SolutionInstallDialogStore::setInstances');
     this.data.versions = Object.keys(versions).map(key => versions[key]);
     this.data.versions.reverse();
-    this.data.version = this.data.versions[0].id ;
+    this.data.version = this.data.versions[0].id;
     this.trigger(this.data);
   },
 

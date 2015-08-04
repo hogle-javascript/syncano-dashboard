@@ -11,24 +11,24 @@ import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 import ClassesStore from '../Classes/ClassesStore';
 
 export default Reflux.createStore({
-  listenables : TriggersActions,
-  mixins      : [
+  listenables: TriggersActions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   signalMenuItems: [
     {
-      payload : 'post_create',
-      text    : 'create'
+      payload: 'post_create',
+      text: 'create'
     },
     {
-      payload : 'post_update',
-      text    : 'update'
+      payload: 'post_update',
+      text: 'update'
     },
     {
-      payload : 'post_delete',
-      text    : 'delete'
+      payload: 'post_delete',
+      text: 'delete'
     }
   ],
 
@@ -62,8 +62,8 @@ export default Reflux.createStore({
   getDropdowns() {
     console.debug('TriggerDialogStore::getDropdowns');
     let dropdowns = {
-      codeboxes : CodeBoxesStore.getCodeBoxesDropdown(),
-      classes   : ClassesStore.getClassesDropdown()
+      codeboxes: CodeBoxesStore.getCodeBoxesDropdown(),
+      classes: ClassesStore.getClassesDropdown()
     };
 
     if (dropdowns.codeboxes.length === 0) {

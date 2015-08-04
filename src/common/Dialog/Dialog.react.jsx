@@ -13,8 +13,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      style     : {},
-      bodyStyle : {}
+      style: {},
+      bodyStyle: {}
     }
   },
 
@@ -40,17 +40,17 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles(),
-        style  = this.mergeAndPrefix(this.props.style, styles.style),
-        bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
+      style = this.mergeAndPrefix(this.props.style, styles.style),
+      bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
 
     return (
       <MUI.Dialog
         {...this.props}
-        style     = {style}
-        bodyStyle = {bodyStyle}
-        ref       = 'dialog'>
+        style={style}
+        bodyStyle={bodyStyle}
+        ref='dialog'>
         {this.props.children}
-    </MUI.Dialog>
+      </MUI.Dialog>
     );
   }
 });

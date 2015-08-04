@@ -10,16 +10,16 @@ import SessionActions from '../Session/SessionActions';
 import TriggersActions from './TriggersActions';
 
 export default Reflux.createStore({
-  listenables : TriggersActions,
-  mixins      : [
+  listenables: TriggersActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
   ],
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     }
   },
 

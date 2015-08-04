@@ -1,20 +1,20 @@
-var React = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./Button.css');
 
 
-var Button = React.createClass({
+let Button = React.createClass({
 
   displayName: 'Button',
 
-  handleClick: function () {
+  handleClick() {
     this.props.handleClick(this.props.data.name);
   },
 
-  render: function () {
-    var data = "data" in this.props ? this.props.data : this.props;
-    var cssClasses = classNames({
+  render() {
+    let data = "data" in this.props ? this.props.data : this.props;
+    let cssClasses = classNames({
       'button': true,
       'button-raised': data.type === 'raised',
       'button-flat': data.type === 'flat',
@@ -32,10 +32,10 @@ module.exports = React.createClass({
 
   displayName: 'ButtonGroup',
 
-  render: function () {
-    var buttons = [];
+  render() {
+    let buttons = [];
     if (this.props.buttons) {
-      var buttons = this.props.buttons.map(function (button, i) {
+      buttons = this.props.buttons.map(function(button, i) {
         return <Button {...this.props} key={i} data={button}/>
       }.bind(this));
     }

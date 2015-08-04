@@ -7,12 +7,12 @@ import ListItemEmpty from './ListItemEmpty.react';
 import Lists from './Lists.react';
 import ListWithOptions from './ListWithOptions.react';
 
-Lists.List             = List;
+Lists.List = List;
 Lists.List.WithOptions = ListWithOptions;
-Lists.Container        = ListContainer;
-Lists.Header           = ListHeader;
-Lists.Item             = ListItem;
-Lists.Item.Columns     = ListItemColumns;
-Lists.Item.Empty       = ListItemEmpty;
+Lists.Container = ListContainer;
+Lists.Header = ListHeader;
+Lists.Item = ListItem;
+Lists.Item.Columns = ListItemColumns;
+Lists.Item.Empty = ListItemEmpty;
 
 export default Lists;

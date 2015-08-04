@@ -61,13 +61,13 @@ export default React.createClass({
           instanceName: instanceName
         })
       });
-    }
-    else
+    } else {
       Actions.installSolution({
-        solutionId   : this.state.solutionId,
-        versionId    : this.state.version,
-        instanceName : instanceName
+        solutionId: this.state.solutionId,
+        versionId: this.state.version,
+        instanceName: instanceName
       });
+    }
   },
 
   handleDialogShow() {
@@ -99,27 +99,27 @@ export default React.createClass({
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
       return (
         <MUI.TextField
-          ref               = "instance"
-          name              = "instance"
-          fullWidth         = {true}
-          disabled          = {true}
-          valueLink         = {this.linkState('instance')}
-          errorText         = {this.getValidationMessages('instance').join(' ')}
-          floatingLabelText = "Instance Name" />
+          ref="instance"
+          name="instance"
+          fullWidth={true}
+          disabled={true}
+          valueLink={this.linkState('instance')}
+          errorText={this.getValidationMessages('instance').join(' ')}
+          floatingLabelText="Instance Name"/>
       )
     }
 
     return (
       <MUI.SelectField
-        ref               = 'instance'
-        name              = 'instance'
-        fullWidth         = {true}
-        valueLink         = {this.linkState('instance')}
-        valueMember       = 'payload'
-        displayMember     = 'text'
-        floatingLabelText = 'Instances'
-        errorText         = {this.getValidationMessages('instance').join(' ')}
-        menuItems         = {Store.getInstancesDropdown()} />
+        ref='instance'
+        name='instance'
+        fullWidth={true}
+        valueLink={this.linkState('instance')}
+        valueMember='payload'
+        displayMember='text'
+        floatingLabelText='Instances'
+        errorText={this.getValidationMessages('instance').join(' ')}
+        menuItems={Store.getInstancesDropdown()}/>
     )
   },
 
@@ -127,26 +127,26 @@ export default React.createClass({
     let title = 'Install a Solution';
     let dialogCustomActions = [
       <MUI.FlatButton
-        ref        = 'cancel'
-        key        = 'cancel'
-        label      = 'Cancel'
-        onTouchTap = {this.handleCancel} />,
+        ref='cancel'
+        key='cancel'
+        label='Cancel'
+        onTouchTap={this.handleCancel}/>,
       <MUI.FlatButton
-        ref        = 'submit'
-        key        = 'confirm'
-        label      = 'Confirm'
-        primary    = {true}
-        onTouchTap = {this.handleFormValidation} />
+        ref='submit'
+        key='confirm'
+        label='Confirm'
+        primary={true}
+        onTouchTap={this.handleFormValidation}/>
     ];
 
     return (
       <Common.Dialog
-        ref             = "dialog"
-        title           = {title}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogCustomActions}
-        onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}>
+        ref="dialog"
+        title={title}
+        openImmediately={this.props.openImmediately}
+        actions={dialogCustomActions}
+        onShow={this.handleDialogShow}
+        onDismiss={this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           {this.renderCustomFormNotifications()}
@@ -159,15 +159,15 @@ export default React.createClass({
 
           <Common.Show if={!this.state.hideVersionPicker}>
             <MUI.SelectField
-              ref               = 'version'
-              name              = 'version'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('version')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              floatingLabelText = 'Version'
-              errorText         = {this.getValidationMessages('version').join(' ')}
-              menuItems         = {Store.getVersionsDropdown()} />
+              ref='version'
+              name='version'
+              fullWidth={true}
+              valueLink={this.linkState('version')}
+              valueMember='payload'
+              displayMember='text'
+              floatingLabelText='Version'
+              errorText={this.getValidationMessages('version').join(' ')}
+              menuItems={Store.getVersionsDropdown()}/>
           </Common.Show>
         </div>
       </Common.Dialog>

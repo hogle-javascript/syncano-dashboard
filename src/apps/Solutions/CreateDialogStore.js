@@ -9,16 +9,16 @@ import SessionStore from '../Session/SessionStore';
 import SolutionsActions from './CreateDialogActions';
 
 export default Reflux.createStore({
-  listenables : SolutionsActions,
-  mixins      : [
+  listenables: SolutionsActions,
+  mixins: [
     StoreFormMixin,
     DialogStoreMixin
   ],
 
   getInitialState() {
     return {
-      name        : null,
-      description : null
+      name: null,
+      description: null
     };
   },
 
@@ -31,7 +31,7 @@ export default Reflux.createStore({
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       {
-        solutionId : solution.id
+        solutionId: solution.id
       }
     );
   },

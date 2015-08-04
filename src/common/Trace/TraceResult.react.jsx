@@ -5,7 +5,7 @@ export default React.createClass({
   displayName: "TraceResult",
 
   getStyles() {
-    let styles =  {
+    let styles = {
       result: {
         padding: '25px',
         color: 'white',

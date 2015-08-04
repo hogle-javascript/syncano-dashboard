@@ -8,34 +8,34 @@ import AdminsActions from './AdminsActions';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 export default Reflux.createStore({
-  listenables : [
+  listenables: [
     AdminsActions,
     AdminsInvitationsActions
   ],
-  mixins      : [
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   roleMenuItems: [
     {
-      payload : 'read',
-      text    : 'read'
+      payload: 'read',
+      text: 'read'
     },
     {
-      payload : 'write',
-      text    : 'write'
+      payload: 'write',
+      text: 'write'
     },
     {
-      payload : 'full',
-      text    : 'full'
+      payload: 'full',
+      text: 'full'
     }
   ],
 
   getInitialState() {
     return {
-      email : null,
-      role  : ''
+      email: null,
+      role: ''
     };
   },
 

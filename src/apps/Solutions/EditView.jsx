@@ -46,7 +46,7 @@ export default React.createClass({
   componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
 
-    if (this.getParams().action == 'install') {
+    if (this.getParams().action === 'install') {
       this.handleInstallSolution();
     }
 
@@ -59,27 +59,27 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        key     : 'deleteCreateDialog',
-        ref     : 'deleteCreateDialog',
-        title   : 'Delete a Solution',
-        actions : [
+        key: 'deleteCreateDialog',
+        ref: 'deleteCreateDialog',
+        title: 'Delete a Solution',
+        actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            text: 'Cancel',
+            onClick: this.handleCancel
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleDelete
+            text: 'Confirm',
+            onClick: this.handleDelete
           }
         ],
-        modal    : true,
-        children : 'Do you really want to delete this Solution?'
+        modal: true,
+        children: 'Do you really want to delete this Solution?'
       }
     }]
   },
 
   isMySolution() {
-    let user   = SessionStore.getUser();
+    let user = SessionStore.getUser();
     let author = this.state.item.author;
     return (user && author && user.id === author.id);
   },
@@ -107,12 +107,12 @@ export default React.createClass({
   headerMenuItems() {
     return [
       {
-        label  : 'Instances',
-        route  : 'instances'
+        label: 'Instances',
+        route: 'instances'
       },
       {
-        label : 'Solutions',
-        route : 'solutions'
+        label: 'Solutions',
+        route: 'solutions'
       }
     ];
   },
@@ -125,19 +125,19 @@ export default React.createClass({
         maxWidth: '1140px'
       },
       tag: {
-        color : '#9b9b9b',
-        paddingRight : 5
+        color: '#9b9b9b',
+        paddingRight: 5
       },
       cardTextListIcon: {
-        fontSize    : 24,
-        marginRight : 14
+        fontSize: 24,
+        marginRight: 14
       },
-      description : {
-        color      : 'rgba(0,0,0,.54)',
-        textAlign  : 'left',
-        fontSize   : '1rem',
-        lineHeight : '1rem',
-        height     : 100
+      description: {
+        color: 'rgba(0,0,0,.54)',
+        textAlign: 'left',
+        fontSize: '1rem',
+        lineHeight: '1rem',
+        height: 100
       }
     };
   },
@@ -151,7 +151,11 @@ export default React.createClass({
   },
 
   handleTagsListChange(tagsString, tagsArray) {
-    Actions.updateSolution(this.state.item.id, {tags: tagsArray.map(item => {return item.value})});
+    Actions.updateSolution(this.state.item.id, {
+      tags: tagsArray.map(item => {
+        return item.value
+      })
+    });
   },
 
   renderItemTags() {
@@ -163,8 +167,8 @@ export default React.createClass({
     return this.state.item.tags.map(tag => {
       return (
         <div
-          key   = {tag}
-          style = {styles.tag}>
+          key={tag}
+          style={styles.tag}>
           {tag}
         </div>
       )
@@ -184,38 +188,38 @@ export default React.createClass({
         <Common.Show if={this.isMySolution()}>
           <Common.Fab>
             <Common.Fab.Item
-              label         = "Click here to create Solution"
-              onClick       = {this.handleAddVersion}
-              iconClassName = "synicon-plus" />
+              label="Click here to create Solution"
+              onClick={this.handleAddVersion}
+              iconClassName="synicon-plus"/>
           </Common.Fab>
         </Common.Show>
 
         <MUI.Toolbar style={{background: 'transparent', padding: '0px'}}>
-            <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
-              <MUI.FontIcon
-                style     = {{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
-                className = "synicon-arrow-left"
-                onClick   = {this.handleBackClick}
+          <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
+            <MUI.FontIcon
+              style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
+              className="synicon-arrow-left"
+              onClick={this.handleBackClick}
               />
-              <MUI.ToolbarTitle text={'Solutions'} />
-            </MUI.ToolbarGroup>
+            <MUI.ToolbarTitle text={'Solutions'}/>
+          </MUI.ToolbarGroup>
 
-            <MUI.ToolbarGroup float="right">
-              <Common.Show if={this.isMySolution()}>
-                <MUI.IconButton
-                  style            = {{fontSize: 25, marginTop: 5}}
-                  iconClassName    = "synicon-delete"
-                  tooltip          = "Delete Solution"
-                  tooltipPosition  = "bottom-left"
-                  onClick          = {this.showDialog.bind(null, 'deleteCreateDialog')}
+          <MUI.ToolbarGroup float="right">
+            <Common.Show if={this.isMySolution()}>
+              <MUI.IconButton
+                style={{fontSize: 25, marginTop: 5}}
+                iconClassName="synicon-delete"
+                tooltip="Delete Solution"
+                tooltipPosition="bottom-left"
+                onClick={this.showDialog.bind(null, 'deleteCreateDialog')}
                 />
-              </Common.Show>
-            </MUI.ToolbarGroup>
-          </MUI.Toolbar>
+            </Common.Show>
+          </MUI.ToolbarGroup>
+        </MUI.Toolbar>
 
         <div className="container" style={{clear: 'both'}}>
 
-        <div className="row" style={styles.main}>
+          <div className="row" style={styles.main}>
             <div className="col-flex-1">
               <div className="row">
                 <div style={{textAlign: 'left', fontSize: '1.5rem', lineHeight: '1.5rem'}}>
@@ -224,16 +228,16 @@ export default React.createClass({
               </div>
               <div
                 className="row vp-3-t" style={styles.description}>
-                  {this.state.item.description}
+                {this.state.item.description}
               </div>
 
               <Common.Show if={!this.isMySolution()}>
                 <div className="row">
                   <MUI.FontIcon
-                    style     = {styles.cardTextListIcon}
-                    className = "synicon-tag"
-                    color     = "rgba(222, 222, 222, 0.54)"
-                  />
+                    style={styles.cardTextListIcon}
+                    className="synicon-tag"
+                    color="rgba(222, 222, 222, 0.54)"
+                    />
                   {this.renderItemTags()}
                 </div>
               </Common.Show>
@@ -242,53 +246,53 @@ export default React.createClass({
                 <div className="row vp-1-b">
                   <div className="col-flex-1">
                     <div className="vp-1-b">Tags</div>
-                      <Select
-                        value       = {Store.getItemTags()}
-                        delimiter   = ","
-                        multi       = {true}
-                        allowCreate = {true}
-                        placeholder = "Select tags"
-                        options     = {Store.getTagsOptions()}
-                        onChange    = {this.handleTagsListChange}/>
-                    </div>
+                    <Select
+                      value={Store.getItemTags()}
+                      delimiter=","
+                      multi={true}
+                      allowCreate={true}
+                      placeholder="Select tags"
+                      options={Store.getTagsOptions()}
+                      onChange={this.handleTagsListChange}/>
+                  </div>
                 </div>
               </Common.Show>
 
-              <div className="row" style= {{marginLeft: '-18px'}}>
+              <div className="row" style={{marginLeft: '-18px'}}>
                 <Common.SolutionStar
-                  solution = {this.state.item}
-                  star     = {Actions.starSolution}
-                  unstar   = {Actions.unstarSolution}
+                  solution={this.state.item}
+                  star={Actions.starSolution}
+                  unstar={Actions.unstarSolution}
                   />
               </div>
 
               <div className="row vp-5-t align-left">
 
                 <MUI.RaisedButton
-                  primary  = {true}
-                  disabled = {this.state.versions && this.state.versions.length < 1}
-                  label    = 'Install solution'
-                  onClick  = {this.handleInstallSolution} />
+                  primary={true}
+                  disabled={this.state.versions && this.state.versions.length < 1}
+                  label='Install solution'
+                  onClick={this.handleInstallSolution}/>
               </div>
 
             </div>
             <div className="col-flex-1">
               <div className="row">
-                 <div className="col-flex-1">
-                   <div className="row align-right">
+                <div className="col-flex-1">
+                  <div className="row align-right">
                     <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
-                        <div>{item.author ? item.author.first_name : ''}</div>
-                        <div>{item.author ? item.author.last_name : ''}</div>
+                      <div>{item.author ? item.author.first_name : ''}</div>
+                      <div>{item.author ? item.author.last_name : ''}</div>
                     </div>
-                   </div>
-                 </div>
-                 <div className="col-md-8">
-                   <div className="row align-right">
-                     <MUI.Avatar
-                       size = {70}
-                       src  = {item.author ? item.author.avatar_url : null} />
-                   </div>
-                 </div>
+                  </div>
+                </div>
+                <div className="col-md-8">
+                  <div className="row align-right">
+                    <MUI.Avatar
+                      size={70}
+                      src={item.author ? item.author.avatar_url : null}/>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -300,12 +304,12 @@ export default React.createClass({
 
           <Common.Show if={!this.isNoVersions() || this.isMySolution()}>
             <Common.Solutions.VersionsList
-              name                 = "Versions"
-              items                = {this.state.versions}
-              onInstall            = {this.handleInstallSolution}
-              emptyItemHandleClick = {this.handleAddVersion}
-              emptyItemContent     = "Add new Version"
-            />
+              name="Versions"
+              items={this.state.versions}
+              onInstall={this.handleInstallSolution}
+              emptyItemHandleClick={this.handleAddVersion}
+              emptyItemContent="Add new Version"
+              />
           </Common.Show>
 
         </div>

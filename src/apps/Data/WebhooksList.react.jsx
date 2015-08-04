@@ -30,15 +30,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -57,23 +57,23 @@ export default React.createClass({
   handleItemClick(itemName) {
     // Redirect to traces screen
     this.transitionTo('webhook-traces', {
-      instanceName : this.getParams().instanceName,
-      webhookName  : itemName
+      instanceName: this.getParams().instanceName,
+      webhookName: itemName
     });
   },
 
   renderItem(item) {
     let publicString = item.public.toString(),
-        publicCell   = publicString;
+      publicCell = publicString;
 
     if (item.public) {
       publicCell = (
         <div style={{marginLeft: '-14px'}}>
           <ReactZeroClipboard text={SYNCANO_BASE_URL + item.links['public-link']}>
             <MUI.IconButton
-              iconClassName = "synicon-link-variant"
-              tooltip       = "Copy Webhook URL"
-              onClick       = {this.handleURLClick} />
+              iconClassName="synicon-link-variant"
+              tooltip="Copy Webhook URL"
+              onClick={this.handleURLClick}/>
           </ReactZeroClipboard>
         </div>
       )
@@ -81,17 +81,17 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        checked     = {item.checked}
-        id          = {item.name}
-        key         = {item.name}
-        handleClick = {this.handleItemClick.bind(null, item.name)} >
+        checked={item.checked}
+        id={item.name}
+        key={item.name}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
 
         <Column.CheckIcon
-          id              = {item.name.toString()}
-          icon            = 'arrow-up-bold'
-          background      = {Common.Color.getColorByName('blue', 'xlight')}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name.toString()}
+          icon='arrow-up-bold'
+          background={Common.Color.getColorByName('blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
@@ -134,8 +134,8 @@ export default React.createClass({
           </Common.Loading>
         </Common.Lists.List>
         <MUI.Snackbar
-          ref     = "snackbar"
-          message = "URL copied to the clipboard" />
+          ref="snackbar"
+          message="URL copied to the clipboard"/>
       </Common.Lists.Container>
     );
   }

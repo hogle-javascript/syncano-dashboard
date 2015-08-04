@@ -1,11 +1,11 @@
-var WaitForStoreMixin = {
+export default {
 
-  init: function() {
-    this._shouldFetch   = false;
+  init() {
+    this._shouldFetch = false;
     this._fetchCallback = null;
   },
 
-  fetch: function() {
+  fetch() {
     console.debug('WaitForStoreMixin::fetch', this._shouldFetch);
 
     if (this._shouldFetch === false) {
@@ -17,21 +17,21 @@ var WaitForStoreMixin = {
     }
   },
 
-  waitFor: function() {
+  waitFor() {
     console.debug('WaitForStoreMixin::waitFor');
 
     if (arguments.length < 2) {
       throw Error('At least two arguments are required: Action, Callback.');
     }
 
-    var args         = [].splice.call(arguments, 0),
-        callback     = args.pop(),
-        listenMethod = (args.length > 1) ? this.joinTrailing : this.listenTo;
+    let args = [].splice.call(arguments, 0),
+      callback = args.pop(),
+      listenMethod = (args.length > 1) ? this.joinTrailing : this.listenTo;
 
     if (this.listenables) {
-      var listenables = [].concat(this.listenables);
-      for (var i = 0; i < listenables.length; i++) {
-        var listenable = listenables[i];
+      let listenables = [].concat(this.listenables);
+      for (let i = 0; i < listenables.length; i++) {
+        let listenable = listenables[i];
         if (listenable.fetch !== undefined) {
           args.push(listenable.fetch);
         }
@@ -44,5 +44,3 @@ var WaitForStoreMixin = {
   }
 
 };
-
-module.exports = WaitForStoreMixin;

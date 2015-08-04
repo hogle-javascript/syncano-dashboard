@@ -1,9 +1,9 @@
-var React            = require('react'),
-    Router           = require('react-router'),
-    RouteHandler     = Router.RouteHandler,
+var React = require('react'),
+  Router = require('react-router'),
+  RouteHandler = Router.RouteHandler,
 
-    // Stores and Action
-    CodeBoxesActions = require('../apps/CodeBoxes/CodeBoxesActions');
+// Stores and Action
+  CodeBoxesActions = require('../apps/CodeBoxes/CodeBoxesActions');
 
 module.exports = React.createClass({
 
@@ -18,12 +18,12 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.debug('Instance::componentDidMount');
     CodeBoxesActions.fetch();
   },
 
-  render: function() {
+  render() {
     return <RouteHandler />
   }
 

@@ -1,9 +1,9 @@
-var React            = require('react'),
-    classNames       = require('classnames'),
-    Radium           = require('radium'),
-    mui              = require('material-ui'),
-    CircularProgress = mui.CircularProgress,
-    LinearProgress   = mui.LinearProgress;
+let React = require('react'),
+  classNames = require('classnames'),
+  Radium = require('radium'),
+  mui = require('material-ui'),
+  CircularProgress = mui.CircularProgress,
+  LinearProgress = mui.LinearProgress;
 
 module.exports = Radium(React.createClass({
 
@@ -16,27 +16,27 @@ module.exports = Radium(React.createClass({
 
   getDefaultProps: function() {
     return {
-      type : 'circular',
-      size : 1,
-      show : false
+      type: 'circular',
+      size: 1,
+      show: false
     }
   },
 
   getStyles: function() {
-    var styles = {
+    let styles = {
       base: {
-        display        : 'flex',
-        justifyContent : 'center',
-        width          : '100%',
-        left           : 0
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        left: 0
       },
       top: {
-        position : 'absolute',
-        top      : 0
+        position: 'absolute',
+        top: 0
       },
       bottom: {
-        position : 'absolute',
-        bottom   : 0
+        position: 'absolute',
+        bottom: 0
       }
     };
     if (this.props.show) {
@@ -53,16 +53,16 @@ module.exports = Radium(React.createClass({
     }
 
     if (this.props.type === 'linear') {
-      return <LinearProgress mode='indeterminate' />;
+      return <LinearProgress mode='indeterminate'/>;
     }
 
     return <CircularProgress
-             mode = 'indeterminate'
-             size = {this.props.size} />;
+      mode='indeterminate'
+      size={this.props.size}/>;
   },
 
   render: function() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <div style={styles}>
