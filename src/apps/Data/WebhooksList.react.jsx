@@ -47,7 +47,8 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
-  handleURLClick() {
+  handleURLClick(event) {
+    event.stopPropagation();
     this.refs.snackbar.show();
     setTimeout(() => {
       this.refs.snackbar.dismiss()
