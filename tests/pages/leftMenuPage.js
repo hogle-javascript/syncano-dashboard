@@ -27,6 +27,14 @@ module.exports = {
     tasks: {
       selector: '//div[@tabindex="0"]//span[text()="Tasks"]',
       locateStrategy: 'xpath'
+    },
+    administrators: {
+      selector: '//div[@tabindex="0"]//span[text()="Administrators"]',
+      locateStrategy: 'xpath'
+    },
+    apiKeys: {
+      selector: '//div[@tabindex="0"]//span[text()="API keys"]',
+      locateStrategy: 'xpath'
     }
   }
 };
