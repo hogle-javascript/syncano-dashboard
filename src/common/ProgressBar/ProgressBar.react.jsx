@@ -11,13 +11,13 @@ module.exports = React.createClass({
     visible: React.PropTypes.bool
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       visible: this.props.visible || false,
     }
   },
 
-  render: function () {
+  render: function() {
 
     var cssClasses = classNames({
       'progress-bar-group': true,

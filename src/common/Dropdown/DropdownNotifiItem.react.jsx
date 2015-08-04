@@ -27,7 +27,7 @@ module.exports = React.createClass({
     })
   },
 
-  renderEmptyNotification: function () {
+  renderEmptyNotification: function() {
     var emptyItem = {
       subheader: "Notifications",
       subheaderStyle: {
@@ -62,16 +62,16 @@ module.exports = React.createClass({
   },
 
   getInvitationItems: function() {
-    var invitationItems = this.props.items.filter(function (item, index) {
+    var invitationItems = this.props.items.filter(function(item, index) {
       return item.type === "invitation";
     });
 
     return invitationItems;
   },
 
-  renderInvitationItems: function () {
+  renderInvitationItems: function() {
     var invitationItems = this.getInvitationItems(),
-        items = invitationItems.map(function (item) {
+        items = invitationItems.map(function(item) {
 
         var icon    = <FontIcon
                         className = {item.leftIcon.name || null}
@@ -102,14 +102,14 @@ module.exports = React.createClass({
   },
 
   getLinkItems: function() {
-    var linkItems = this.props.items.filter(function (item) {
+    var linkItems = this.props.items.filter(function(item) {
       return item.type === "normal-link";
     });
 
     return linkItems;
   },
 
-  renderNormalLinkItems: function () {
+  renderNormalLinkItems: function() {
     var linkItems = this.getLinkItems(),
         items = linkItems.map(function(item, index) {
 
@@ -136,7 +136,7 @@ module.exports = React.createClass({
     return items
   },
 
-  renderItems: function () {
+  renderItems: function() {
     var items = [];
 
     if (this.props.items.length === 0) {
@@ -149,7 +149,7 @@ module.exports = React.createClass({
     return items;
   },
 
-  render: function () {
+  render: function() {
     return (
       <Loading
         show = {this.props.isLoading}

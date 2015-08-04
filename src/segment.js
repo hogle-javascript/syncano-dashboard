@@ -5,6 +5,6 @@ if (ANALYTICS_WRITE_KEY !== undefined && ANALYTICS_WRITE_KEY.length > 0) {
   analytics.page('Dashboard', {
     Init: true
   });
-};
+}
 
 module.exports = analytics;

@@ -13,7 +13,7 @@ module.exports = React.createClass({
 
   mixins: [Mixins.dropdownClickMixin],
 
-  render: function () {
+  render: function() {
     return (
       <div
         className = "dropdown-menu-button"

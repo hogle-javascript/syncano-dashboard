@@ -8,11 +8,11 @@ var Button = React.createClass({
 
   displayName: 'Button',
 
-  handleClick: function () {
+  handleClick: function() {
     this.props.handleClick(this.props.data.name);
   },
 
-  render: function () {
+  render: function() {
     var data = "data" in this.props ? this.props.data : this.props;
     var cssClasses = classNames({
       'button': true,
@@ -32,10 +32,10 @@ module.exports = React.createClass({
 
   displayName: 'ButtonGroup',
 
-  render: function () {
+  render: function() {
     var buttons = [];
     if (this.props.buttons) {
-      var buttons = this.props.buttons.map(function (button, i) {
+      var buttons = this.props.buttons.map(function(button, i) {
         return <Button {...this.props} key={i} data={button}/>
       }.bind(this));
     }

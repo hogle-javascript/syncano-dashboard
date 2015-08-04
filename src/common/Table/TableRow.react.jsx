@@ -8,11 +8,11 @@ module.exports = React.createClass({
 
   displayName: 'TableRow',
 
-  toggleDropdownMenu: function () {
+  toggleDropdownMenu: function() {
     ViewActions.showDropdown(this.props.item.uuid);
   },
 
-  handleDropdownMenuItemClick: function (action) {
+  handleDropdownMenuItemClick: function(action) {
     if (action === "delete") {
       ViewActions.showModalConfirmDeleteResource(this.props.item);
     } else if (action === "edit") {
@@ -20,12 +20,12 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render: function() {
     var dropdown = this.props.dropdown;
     var dropdownVisible = this.props.dropdown === this.props.item.uuid;
-    var columns = this.props.columns.filter(function (column, i) {
+    var columns = this.props.columns.filter(function(column, i) {
       return column.selected;
-    }.bind(this)).map(function (column, i) {
+    }.bind(this)).map(function(column, i) {
       var data = this.props.item[column.name];
       if (column.name === "created_at" || column.name === "updated_at") {
         data = Moment(this.props.item[column.name]).format('DD-MM-YYYY, h:mm:ss a');

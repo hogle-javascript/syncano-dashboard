@@ -6,7 +6,7 @@ module.exports = Radium(React.createClass({
 
   displayName: 'Header',
 
-  render: function () {
+  render: function() {
 
     var headerStyle = {
       root: {

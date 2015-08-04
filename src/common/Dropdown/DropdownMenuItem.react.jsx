@@ -15,7 +15,7 @@ module.exports = React.createClass({
     e.stopPropagation();
   },
 
-  render: function () {
+  render: function() {
     return (
       <div className="dropdown-menu-item clickable" onClick={this.handleItemClick}>{this.props.action.content}</div>
     );

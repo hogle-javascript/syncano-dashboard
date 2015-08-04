@@ -38,7 +38,7 @@ module.exports = React.createClass({
     iconStyle: React.PropTypes.object,
   },
 
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       iconStyle: {
         width  : "18px",
@@ -48,22 +48,22 @@ module.exports = React.createClass({
     };
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       icon: this.props.icon || 'dots-vertical',
       isOpen: false,
     }
   },
 
-  toggleOpenClose: function (e) {
+  toggleOpenClose: function(e) {
     this.setState({isOpen: !this.state.isOpen});
   },
 
-  close: function () {
+  close: function() {
     this.setState({'isOpen': false});
   },
 
-  render: function () {
+  render: function() {
 
     var cssClasses = classNames({
       'dropdown-menu'         : true,
@@ -86,7 +86,7 @@ module.exports = React.createClass({
       </div>
     }
 
-    var items = this.props.items.map(function (item, i) {
+    var items = this.props.items.map(function(item, i) {
       return <DropdownMenuItem key={item.name + i} action={item} handleItemClick={item.handleItemClick}/>
     }.bind(this));
 

@@ -85,7 +85,9 @@ var FormMixin = {
   },
 
   handleFormValidation: function(event) {
-    event ? event.preventDefault() : null;
+    if (event) {
+      event.preventDefault();
+    }
 
     // FormMixin compatibility
     if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {

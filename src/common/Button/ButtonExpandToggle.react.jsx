@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
   displayName: 'ButtonExpandToggle',
 
-  render: function () {
+  render: function() {
     var icon = this.props.parentExpanded ? "synicon-unfold-less" : "synicon-unfold-more";
     return (
       <div

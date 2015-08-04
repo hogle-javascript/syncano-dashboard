@@ -12,7 +12,7 @@ module.exports = React.createClass({
     enabled: React.PropTypes.func.isRequired,
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       enabled: this.props.enabled,
     };

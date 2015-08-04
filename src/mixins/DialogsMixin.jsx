@@ -17,10 +17,10 @@ var DialogsMixin = {
   },
 
   getDialogList: function(items, paramName) {
-    var paramName = paramName || 'name',
-      listItems = items.map(function(item) {
-        return <li>{item[paramName]}</li>;
-      });
+    paramName = paramName || 'name';
+    var listItems = items.map(function(item) {
+      return <li>{item[paramName]}</li>;
+    });
 
     return <ul>{listItems}</ul>;
   },

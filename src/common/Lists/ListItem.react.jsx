@@ -21,7 +21,7 @@ module.exports = React.createClass({
     avatarStyle: React.PropTypes.oneOf(['user', 'icon'])
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
 
     var color = '#e2e2e2';
     var icon = '';
@@ -39,13 +39,13 @@ module.exports = React.createClass({
   },
 
 
-  handleItemMenuClick: function (action) {
+  handleItemMenuClick: function(action) {
     // We need to add here information about *item*
     action['item'] = this.props.item;
     this.props.handleItemMenuClick(action);
   },
 
-  render: function () {
+  render: function() {
 
     var item = this.props.item;
 

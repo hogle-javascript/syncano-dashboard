@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
   displayName: "TraceResultWithMeta",
 
-  render: function () {
+  render: function() {
     var metaListed = '';
     var argsListed = '';
     if (this.props.args && this.props.meta) {

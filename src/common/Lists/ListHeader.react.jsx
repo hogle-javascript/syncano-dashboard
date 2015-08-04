@@ -9,7 +9,7 @@ module.exports = Radium(React.createClass({
     topic: React.PropTypes.string
   },
 
-  render: function () {
+  render: function() {
 
     var headerStyle = {
       root: {

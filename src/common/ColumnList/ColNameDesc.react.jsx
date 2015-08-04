@@ -24,26 +24,26 @@ module.exports = React.createClass({
     };
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
     }
   },
 
-  handleMouseOver: function () {
+  handleMouseOver: function() {
     this.setState({'color': this.props.hoverColor})
   },
 
-  handleMouseLeave: function () {
+  handleMouseLeave: function() {
     this.setState({'color': this.props.color})
   },
 
-  handleClick: function () {
+  handleClick: function() {
     this.props.handleClick(this.props.id);
   },
 
-  render: function () {
+  render: function() {
 
     return (
       <div

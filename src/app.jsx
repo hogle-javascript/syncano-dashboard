@@ -15,7 +15,7 @@ import analytics from './segment';
 let container  = document.getElementById('app');
 tapPlugin();
 
-Router.run(routes, function (Root, state) {
+Router.run(routes, function(Root, state) {
   let uri         = new URI(),
       originalUri = uri.normalize().toString(),
       pathname    = decodeURIComponent(state.pathname).replace('//', '/'),

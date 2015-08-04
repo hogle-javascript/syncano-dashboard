@@ -10,15 +10,15 @@ module.exports = React.createClass({
 
   displayName: 'AccordionListItemPrimary',
 
-  onItemClick: function () {
+  onItemClick: function() {
     ViewActions.setAccordionSelectedItem(this.props.item);
   },
 
-  onExpandableItemClick: function () {
+  onExpandableItemClick: function() {
     ViewActions.setAccordionExpandedItem(this.props.item)
   },
 
-  render: function () {
+  render: function() {
     var cssClasses = classNames({
       'accordion-list-item': true,
       'accordion-list-item-primary': true,
@@ -26,7 +26,7 @@ module.exports = React.createClass({
       'accordion-list-item-expanded': this.props.expandedItemId === this.props.item.id,
     });
     if ("payload" in this.props.item && this.props.item.payload.length > 0) {
-      var payloadItems = this.props.item.payload.map(function (item) {
+      var payloadItems = this.props.item.payload.map(function(item) {
         return <AccordionListItemSecondary
                  {...this.props}
                  key  = {item.id}
