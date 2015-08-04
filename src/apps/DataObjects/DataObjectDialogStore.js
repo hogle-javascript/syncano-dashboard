@@ -9,17 +9,17 @@ import ChannelsStore from '../Channels/ChannelsStore';
 import ChannelsActions from '../Channels/ChannelsActions';
 
 export default Reflux.createStore({
-  listenables : DataObjectsActions,
-  mixins      : [
+  listenables: DataObjectsActions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      username : null,
-      password : null,
-      channels : [
+      username: null,
+      password: null,
+      channels: [
         {payload: '', text: 'Loading...'}
       ]
     }
@@ -32,7 +32,7 @@ export default Reflux.createStore({
 
   getChannelsDropdown() {
     console.debug('DataViewDialogStore::getChannelsDropdown');
-    var channels = ChannelsStore.getChannelsDropdown();
+    let channels = ChannelsStore.getChannelsDropdown();
 
     if (channels.length === 0) {
       channels = [{payload: '', text: 'No channels, add one first'}];

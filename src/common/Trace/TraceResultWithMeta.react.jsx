@@ -1,33 +1,29 @@
-var React = require('react'),
-    mui   = require('material-ui'),
+import React from 'react';
+import mui from 'material-ui';
 
-    FontIcon = mui.FontIcon;
+let FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
   displayName: "TraceResultWithMeta",
 
-  render: function () {
-    var metaListed = '';
-    var argsListed = '';
+  render() {
+    let metaListed = '';
+    let argsListed = '';
     if (this.props.args && this.props.meta) {
-      for (var key in this.props.meta) {
+      for (let key in this.props.meta) {
         if (this.props.meta.hasOwnProperty(key)) {
           metaListed += key + ': ' + this.props.meta[key] + '\n';
         }
       }
-      ;
-      for (var key in this.props.args) {
+
+      for (key in this.props.args) {
         if (this.props.args.hasOwnProperty(key)) {
           argsListed += key + ': ' + this.props.args[key] + '\n';
         }
       }
     }
-    ;
 
-    //if (this.props.args && this.props.meta) {
-    //
-    //}
     return (
       <div className="card-body">
         <div className="card-section">

@@ -1,137 +1,135 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Paper              = mui.Paper,
-    Colors             = mui.Styles.Colors,
+import MUI from 'material-ui';
 
-    CheckIcon          = require('../../../common/CheckIcon/CheckIcon.react');
+import CheckIcon from '../../../common/CheckIcon/CheckIcon.react';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
+      className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
-      fontSize    : 20,
-      fontWeight  : 500,
-      paddingLeft : 16
+      fontSize : 20,
+      fontWeight : 500,
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
-        className = {this.props.className}
-        style     = {styles}>
+        className={this.props.className}
+        style={styles}>
         {this.props.children}
       </div>
     )
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnCheckIcon',
 
   propTypes: {
-    id              : React.PropTypes.string,
-    color           : React.PropTypes.string,
-    hoverColor      : React.PropTypes.string,
-    checkable       : React.PropTypes.bool,
-    handleIconClick : React.PropTypes.func,
-    handleNameClick : React.PropTypes.func
+    id: React.PropTypes.string,
+    color: React.PropTypes.string,
+    hoverColor: React.PropTypes.string,
+    checkable: React.PropTypes.bool,
+    handleIconClick: React.PropTypes.func,
+    handleNameClick: React.PropTypes.func
   },
 
-  statics :{
+  statics: {
     Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      color      : 'black',
-      hoverColor : Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
-      checkable  : true
+      color: 'black',
+      hoverColor: MUI.Styles.Colors.blue600,
+      className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
+      checkable: true
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      checked    : this.props.checked
+      checked: this.props.checked
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       container: {
-        display        : 'flex',
-        flexDirection  : 'row',
-        alignItems     : 'center',
-        fontSize       : 12,
-        padding        : '16px 8px'
+        display: '-webkit-flex; display: flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        fontSize: 12,
+        padding: '16px 8px'
       },
       name: {
-        fontSize       : 16,
-        lineHeight     : '20px',
-        display        : 'flex',
-        flexDirection  : 'column',
-        justifyContent : 'center',
-        wordBreak      : 'break-all',
-        pointerEvents  : 'none',
-        color          : this.state.color
+        fontSize: 16,
+        lineHeight: '20px',
+        display: '-webkit-flex; display: flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        wordBreak: 'break-all',
+        pointerEvents: 'none',
+        color: this.state.color
       },
       link: {
-        cursor         : 'pointer',
-        pointerEvents  : 'auto',
-        ':hover'       : {
-          color        : this.props.hoverColor
+        cursor: 'pointer',
+        pointerEvents: 'auto',
+        ':hover': {
+          color: this.props.hoverColor
         }
       }
     }
   },
 
-  componentWillReceiveProps: function(newProps) {
+  componentWillReceiveProps(newProps) {
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick: function(id, state) {
+  handleIconClick(id, state) {
     console.info('ColumnCheckIcon:handleClick');
     this.props.handleIconClick(id, state);
   },
 
-  handleNameClick: function() {
+  handleNameClick() {
     console.info('ColumnCheckIcon:handleClick');
     if (typeof this.props.handleNameClick === 'function') {
       this.props.handleNameClick(this.props.id);
     }
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
-        className = {this.props.className}
-        style     = {styles.container}>
+        className={this.props.className}
+        style={styles.container}>
         <CheckIcon
-          id          = {this.props.id}
-          icon        = {this.props.icon || ColumnListConstans.DEFAULT_ICON}
-          background  = {this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-          checked     = {this.state.checked}
-          handleClick = {this.handleIconClick}
-          checkable   = {this.props.checkable} />
+          id={this.props.id}
+          icon={this.props.icon || ColumnListConstans.DEFAULT_ICON}
+          background={this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
+          checked={this.state.checked}
+          handleClick={this.handleIconClick}
+          checkable={this.props.checkable}/>
+
         <div
-          style       = {styles.name}
-          onMouseOver = {this.handleMouseOver}
-          onMouseOut  = {this.handleMouseLeave}>
+          style={styles.name}
+          onMouseOver={this.handleMouseOver}
+          onMouseOut={this.handleMouseLeave}>
           {this.props.children}
         </div>
       </div>

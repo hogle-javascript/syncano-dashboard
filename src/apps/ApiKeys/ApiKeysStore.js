@@ -8,8 +8,8 @@ import SessionActions from '../Session/SessionActions';
 import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore,
     Mixins.StoreLoading
@@ -17,8 +17,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     };
   },
 

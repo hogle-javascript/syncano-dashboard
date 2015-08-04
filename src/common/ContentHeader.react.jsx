@@ -1,29 +1,29 @@
-var React               = require('react');
+let React = require('react');
 
-//var ViewActions         = require('../actions/ViewActions');
+//let ViewActions         = require('../actions/ViewActions');
 
-var Dropdown            = require('./Dropdown/Dropdown.react');
-var DropdownWithButtons = require('./Dropdown/DropdownWithButtons.react');
+let Dropdown = require('./Dropdown/Dropdown.react');
+let DropdownWithButtons = require('./Dropdown/DropdownWithButtons.react');
 
 module.exports = React.createClass({
 
   displayName: 'ContentHeader',
 
-  getInitialState: function () {
-      return {
-          headerNameWidth: 11
-      };
+  getInitialState: function() {
+    return {
+      headerNameWidth: 11
+    };
   },
 
   toggleDropdownMenu: function() {
     ViewActions.showDropdown(this.props.list.uuid);
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.setState({
       headerNameWidth: this.props.initialHeaderWidth
     }, function() {
-      var updatedHeaderNameWidth = this.state.headerNameWidth;
+      let updatedHeaderNameWidth = this.state.headerNameWidth;
       this.props.headerColumns.forEach(function(column) {
         updatedHeaderNameWidth -= column.width;
       });
@@ -36,9 +36,9 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var dropdownVisible = this.props.dropdown === this.props.list.uuid;
-    var dropdown;
-    var columns = this.props.headerColumns.map(function(column) {
+    let dropdownVisible = this.props.dropdown === this.props.list.uuid;
+    let dropdown;
+    let columns = this.props.headerColumns.map(function(column) {
       return <div className={column.className} ref={column.ref}>{column.text}</div>
     });
     return (

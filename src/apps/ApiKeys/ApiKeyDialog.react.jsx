@@ -33,9 +33,9 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createApiKey({
-      description       : this.state.description,
-      allow_user_create : this.state.allow_user_create,
-      ignore_acl        : this.state.ignore_acl
+      description: this.state.description,
+      allow_user_create: this.state.allow_user_create,
+      ignore_acl: this.state.ignore_acl
     });
   },
 
@@ -46,54 +46,54 @@ export default React.createClass({
   },
 
   render() {
-    let title                 = this.hasEditMode() ? 'Edit' : 'Generate',
-        submitLabel           = this.hasEditMode() ? 'Save changes' : 'Confirm',
-        dialogStandardActions = [
-          {
-            text       : 'Cancel',
-            ref        : 'cancel',
-            onTouchTap : this.handleCancel
-          },
-          {
-            text    : {submitLabel},
-            ref     : 'submit',
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title = this.hasEditMode() ? 'Edit' : 'Generate',
+      submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
+      dialogStandardActions = [
+        {
+          text: 'Cancel',
+          ref: 'cancel',
+          onTouchTap: this.handleCancel
+        },
+        {
+          text: {submitLabel},
+          ref: 'submit',
+          onTouchTap: this.handleFormValidation
+        }
+      ];
 
     return (
       <Common.Dialog
-        ref             = 'dialog'
-        title           = {title + ' an API Key'}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogStandardActions}
-        onShow          = {this.handleDialogShow}
-        onDismiss       = {this.resetDialogState}>
+        ref='dialog'
+        title={title + ' an API Key'}
+        openImmediately={this.props.openImmediately}
+        actions={dialogStandardActions}
+        onShow={this.handleDialogShow}
+        onDismiss={this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = 'UTF-8'
-            method        = 'post'>
+            onSubmit={this.handleFormValidation}
+            acceptCharset='UTF-8'
+            method='post'>
             <MUI.TextField
-              ref               = 'description'
-              name              = 'description'
-              fullWidth         = {true}
-              valueLink         = {this.linkState('description')}
-              errorText         = {this.getValidationMessages('description').join(' ')}
-              floatingLabelText = 'Description of an API Key' />
+              ref='description'
+              name='description'
+              fullWidth={true}
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              floatingLabelText='Description of an API Key'/>
             <MUI.Toggle
-              ref      = 'ignore_acl'
-              name     = 'ignore_acl'
-              onToggle = {this.handleToogle}
-              style    = {{marginTop: 20}}
-              label    = 'Ignore ACL?' />
+              ref='ignore_acl'
+              name='ignore_acl'
+              onToggle={this.handleToogle}
+              style={{marginTop: 20}}
+              label='Ignore ACL?'/>
             <MUI.Toggle
-              ref      = 'allow_user_create'
-              name     = 'allow_user_create'
-              onToggle = {this.handleToogle}
-              style    = {{marginTop: 20}}
-              label    = 'User registration?' />
+              ref='allow_user_create'
+              name='allow_user_create'
+              onToggle={this.handleToogle}
+              style={{marginTop: 20}}
+              label='User registration?'/>
           </form>
         </div>
       </Common.Dialog>

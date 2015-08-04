@@ -48,47 +48,47 @@ export default React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
-        checkedClasses       = ClassesStore.getCheckedItems();
+      checkedClasses = ClassesStore.getCheckedItems();
 
     return [{
       dialog: Common.ColorIconPicker.Dialog,
       params: {
-        key          : 'pickColorIconDialog',
-        ref          : 'pickColorIconDialog',
-        mode         : 'add',
-        initialColor : checkedItemIconColor.color,
-        initialIcon  : checkedItemIconColor.icon,
-        handleClick  : this.handleChangePalette
+        key: 'pickColorIconDialog',
+        ref: 'pickColorIconDialog',
+        mode: 'add',
+        initialColor: checkedItemIconColor.color,
+        initialIcon: checkedItemIconColor.icon,
+        handleClick: this.handleChangePalette
       }
     },
-    {
-      dialog: Common.Dialog,
-      params: {
-        key   : 'deleteClassDialog',
-        ref   : 'deleteClassDialog',
-        title : 'Delete a Class',
-        actions: [
-          {
-            text    : 'Cancel',
-            onClick : this.handleCancel
-          },
-          {
-            text    : 'Confirm',
-            onClick : this.handleDelete
-          }
-        ],
-        modal: true,
-        children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
-          this.getDialogList(checkedClasses),
-          <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading}
-          />
-        ]
-      }
-    }]
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteClassDialog',
+          ref: 'deleteClassDialog',
+          title: 'Delete a Class',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleDelete
+            }
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+            this.getDialogList(checkedClasses),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading}
+              />
+          ]
+        }
+      }]
   },
 
   handleChangePalette(color, icon) {
@@ -97,8 +97,8 @@ export default React.createClass({
     ClassesActions.updateClass(
       ClassesStore.getCheckedItem().name, {
         metadata: JSON.stringify({
-          color : color,
-          icon  : icon
+          color: color,
+          icon: icon
         })
       }
     );
@@ -146,11 +146,11 @@ export default React.createClass({
   },
 
   render() {
-    let styles                         = this.getStyles(),
-        checkedClasses                 = ClassesStore.getCheckedItems(),
-        checkedClassesCount            = ClassesStore.getNumberOfChecked(),
-        isAnyAndNotAllClassSelected    = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length),
-        someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
+    let styles = this.getStyles(),
+      checkedClasses = ClassesStore.getCheckedItems(),
+      checkedClassesCount = ClassesStore.getNumberOfChecked(),
+      isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length),
+      someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
 
     return (
       <Container>
@@ -160,46 +160,46 @@ export default React.createClass({
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
-              iconClassName = {isAnyAndNotAllClassSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'} />
+              label={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
+              iconClassName={isAnyAndNotAllClassSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}/>
             <Common.Fab.Item
-              label         = "Click here to delete Classes"
-              mini          = {true}
-              disabled      = {someClassIsProtectedFromDelete}
-              onClick       = {this.showDialog.bind(null, 'deleteClassDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete Classes"
+              mini={true}
+              disabled={someClassIsProtectedFromDelete}
+              onClick={this.showDialog.bind(null, 'deleteClassDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit Class"
-              mini          = {true}
-              disabled      = {checkedClassesCount > 1}
-              onClick       = {this.showClassEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit Class"
+              mini={true}
+              disabled={checkedClassesCount > 1}
+              onClick={this.showClassEditDialog}
+              iconClassName="synicon-pencil"/>
             <Common.Fab.Item
-              style         = {styles.fabListTopButton}
-              label         = "Click here to customize Class"
-              secondary     = {true}
-              mini          = {true}
-              disabled      = {checkedClassesCount > 1}
-              onClick       = {this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName = "synicon-palette" />
+              style={styles.fabListTopButton}
+              label="Click here to customize Class"
+              secondary={true}
+              mini={true}
+              disabled={checkedClassesCount > 1}
+              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
+              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add a Class"
-            onClick       = {this.showClassDialog}
-            iconClassName = "synicon-plus" />
+            label="Click here to add a Class"
+            onClick={this.showClassDialog}
+            iconClassName="synicon-plus"/>
         </Common.Fab>
 
         <ClassesList
-          name                 = "Classes"
-          items                = {this.state.items}
-          checkItem            = {this.checkClassItem}
-          emptyItemHandleClick = {this.showClassDialog}
-          emptyItemContent     = "Create a Class" />
+          name="Classes"
+          items={this.state.items}
+          checkItem={this.checkClassItem}
+          emptyItemHandleClick={this.showClassDialog}
+          emptyItemContent="Create a Class"/>
       </Container>
     );
   }

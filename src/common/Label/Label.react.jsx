@@ -1,4 +1,4 @@
-var React = require('react');
+let React = require('react');
 
 require('./Label.css');
 

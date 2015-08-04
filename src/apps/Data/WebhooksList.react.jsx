@@ -9,8 +9,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import WebhooksActions from './WebhooksActions';
-import WebhooksStore from './WebhooksStore';
+import Actions from './WebhooksActions';
+import Store from './WebhooksStore';
 
 // Components
 import MUI from 'material-ui';
@@ -30,15 +30,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -54,19 +54,26 @@ export default React.createClass({
     }, 1200)
   },
 
+  handleItemClick(itemName) {
+    // Redirect to traces screen
+    this.transitionTo('webhook-traces', {
+      instanceName: this.getParams().instanceName,
+      webhookName: itemName
+    });
+  },
+
   renderItem(item) {
-    let publicString = item.public.toString();
-    let publicCell = publicString;
+    let publicString = item.public.toString(),
+      publicCell = publicString;
 
     if (item.public) {
       publicCell = (
         <div style={{marginLeft: '-14px'}}>
           <ReactZeroClipboard text={SYNCANO_BASE_URL + item.links['public-link']}>
             <MUI.IconButton
-              iconClassName = "synicon-link-letiant"
-              tooltip       = "Copy Webhook URL"
-              onClick       = {this.handleURLClick}
-            />
+              iconClassName="synicon-link-variant"
+              tooltip="Copy Webhook URL"
+              onClick={this.handleURLClick}/>
           </ReactZeroClipboard>
         </div>
       )
@@ -74,19 +81,22 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.name}>
+        checked={item.checked}
+        id={item.name}
+        key={item.name}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
+
         <Column.CheckIcon
-          id              = {item.name.toString()}
-          icon            = 'arrow-up-bold'
-          background      = {MUI.Styles.Colors.blue500}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name.toString()}
+          icon='arrow-up-bold'
+          background={Common.Color.getColorByName('blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
-        <Column.Desc className="col-xs-5">{publicCell}</Column.Desc>
+        <Column.Desc className="col-xs-5">{item.codebox}</Column.Desc>
+        <Column.Desc className="col-xs-4">{publicCell}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
@@ -114,8 +124,8 @@ export default React.createClass({
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
-          <Column.Desc.Header className="col-xs-4">CodeBox</Column.Desc.Header>
-          <Column.Key.Header className="col-xs-5">Public</Column.Key.Header>
+          <Column.Desc.Header className="col-xs-5">CodeBox ID</Column.Desc.Header>
+          <Column.Key.Header className="col-xs-4">Public</Column.Key.Header>
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
@@ -124,8 +134,8 @@ export default React.createClass({
           </Common.Loading>
         </Common.Lists.List>
         <MUI.Snackbar
-          ref     = "snackbar"
-          message = "URL copied to the clipboard" />
+          ref="snackbar"
+          message="URL copied to the clipboard"/>
       </Common.Lists.Container>
     );
   }

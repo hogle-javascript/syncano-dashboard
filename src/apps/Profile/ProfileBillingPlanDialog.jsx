@@ -99,16 +99,16 @@ export default React.createClass({
       subscribe().then(setLimits);
     } else {
       Actions.updateCard({
-        cvc       : this.state.cvc,
-        number    : this.state.number,
-        exp_year  : this.state.exp_year,
-        exp_month : this.state.exp_month
+        cvc: this.state.cvc,
+        number: this.state.number,
+        exp_year: this.state.exp_year,
+        exp_month: this.state.exp_month
       })
-      .then((payload) => {
-        subscribe().then(
-          setLimits
-        )
-      })
+        .then((payload) => {
+          subscribe().then(
+            setLimits
+          )
+        })
     }
   },
 
@@ -158,7 +158,7 @@ export default React.createClass({
 
   renderCard() {
     if (this.state.card === undefined) {
-      return <Common.Loading show={true} />
+      return <Common.Loading show={true}/>
     }
 
     if (this.state.card) {
@@ -167,7 +167,7 @@ export default React.createClass({
           <div style={this.getStyles().sectionTopic}>Credit card info:</div>
           <div className="row" style={{marginTop: 20, height: 110}}>
             <div className="col-md-18">
-              <Common.CreditCard card={this.state.card} />
+              <Common.CreditCard card={this.state.card}/>
             </div>
             <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
               Want to use a different method of payment?
@@ -182,14 +182,14 @@ export default React.createClass({
         <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
         <div className="row">
           <div className="col-flex-1">
-              <MUI.TextField
-                name="number"
-                fullWidth={true}
-                valueLink={this.linkState('number')}
-                errorText={this.getValidationMessages('number').join(' ')}
-                hintText="Card Number"
-                floatingLabelText="Card Number"
-                dataStripe="number"/>
+            <MUI.TextField
+              name="number"
+              fullWidth={true}
+              valueLink={this.linkState('number')}
+              errorText={this.getValidationMessages('number').join(' ')}
+              hintText="Card Number"
+              floatingLabelText="Card Number"
+              dataStripe="number"/>
           </div>
         </div>
 
@@ -242,20 +242,20 @@ export default React.createClass({
       return;
     }
     const defaultValue = 0;
-    const options      = this.state.plan.options[type];
-    let selected       = this.state[type + 'Selected'];
+    const options = this.state.plan.options[type];
+    let selected = this.state[type + 'Selected'];
 
     return (
       <Common.Slider
-        key          = {type + 'Slider'}
-        ref          = {type + 'Slider'}
-        name         = {type + 'Slider'}
-        value        = {selected !== undefined ? selected : defaultValue}
-        type         = {type}
-        legendItems  = {options}
-        optionClick  = {this.handleSliderLabelsClick}
-        onChange     = {this.onSliderChange}
-      />
+        key={type + 'Slider'}
+        ref={type + 'Slider'}
+        name={type + 'Slider'}
+        value={selected !== undefined ? selected : defaultValue}
+        type={type}
+        legendItems={options}
+        optionClick={this.handleSliderLabelsClick}
+        onChange={this.onSliderChange}
+        />
     )
   },
 
@@ -268,31 +268,31 @@ export default React.createClass({
   renderSliderSummary(info) {
     return (
       <div>
-          <div>
-            <div>{info.included.label}</div>
-            <div><strong>{info.included.value}</strong></div>
-          </div>
-          <div>
-            <div>{info.overage.label}</div>
-            <div><strong>${info.overage.value}</strong></div>
-          </div>
+        <div>
+          <div>{info.included.label}</div>
+          <div><strong>{info.included.value}</strong></div>
+        </div>
+        <div>
+          <div>{info.overage.label}</div>
+          <div><strong>${info.overage.value}</strong></div>
+        </div>
       </div>
     )
   },
 
   getInfo(type) {
     let info = {
-      included : 0,
-      overage  : 0,
-      total    : 0
+      included: 0,
+      overage: 0,
+      total: 0
     };
 
     if (!this.state.plan) {
       return info;
     }
 
-    let pricing     = this.state.plan.pricing[type];
-    let options     = this.state.plan.options[type];
+    let pricing = this.state.plan.pricing[type];
+    let options = this.state.plan.options[type];
     let sliderValue = this.state[type + 'Selected'];
 
     if (!sliderValue) {
@@ -317,24 +317,24 @@ export default React.createClass({
 
   render() {
 
-    let styles              = this.getStyles();
-    let apiInfo             = this.getInfo('api');
-    let cbxInfo             = this.getInfo('cbx');
-    let sum                 = parseInt(apiInfo.total) + parseInt(cbxInfo.total);
+    let styles = this.getStyles();
+    let apiInfo = this.getInfo('api');
+    let cbxInfo = this.getInfo('cbx');
+    let sum = parseInt(apiInfo.total) + parseInt(cbxInfo.total);
 
     let dialogCustomActions = [
       <MUI.FlatButton
-        key        = "cancel"
-        label      = "Cancel"
-        onTouchTap = {this.handleCancel}
-        ref        = "cancel" />,
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
 
       <MUI.FlatButton
-        key        = "confirm"
-        label      = "Confirm"
-        primary    = {true}
-        onTouchTap = {this.handleFormValidation}
-        ref        = "submit" />
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.handleFormValidation}
+        ref="submit"/>
     ];
 
     let apiSliderSummary = this.renderSliderSummary({
@@ -364,13 +364,13 @@ export default React.createClass({
     return (
       <Common.Loading show={this.state.isLoading}>
         <Common.Dialog
-          ref             = "dialog"
-          contentStyle    = {{padding: 0}}
-          onShow          = {this.handleDialogShow}
-          openImmediately = {this.props.openImmediately}
-          actions         = {dialogCustomActions}
-          onDismiss       = {this.handleDismiss}
-        >
+          ref="dialog"
+          contentStyle={{padding: 0}}
+          onShow={this.handleDialogShow}
+          openImmediately={this.props.openImmediately}
+          actions={dialogCustomActions}
+          onDismiss={this.handleDismiss}
+          >
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
             <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
@@ -379,35 +379,36 @@ export default React.createClass({
             {this.renderFormNotifications()}
 
             <SliderSection
-              title         = "API calls"
-              suggestion    = "60"
-              slider        = {this.renderSlider('api')}
-              sliderSummary = {apiSliderSummary}
-            />
+              title="API calls"
+              suggestion="60"
+              slider={this.renderSlider('api')}
+              sliderSummary={apiSliderSummary}
+              />
             <SliderSection
-              style         = {{paddingTop: 50}}
-              title         = "CodeBox runs"
-              suggestion    = "100"
-              slider        = {this.renderSlider('cbx')}
-              sliderSummary = {cbxSliderSummary}
-            />
+              style={{paddingTop: 50}}
+              title="CodeBox runs"
+              suggestion="100"
+              slider={this.renderSlider('cbx')}
+              sliderSummary={cbxSliderSummary}
+              />
+
             <div className="row" style={{marginTop: 40}}>
               <div className="col-md-24">
                 <div style={styles.sectionTopic}>Summary</div>
-                  <div style={styles.table}>
-                    <div className="row" style={styles.tableRow}>
-                      <div className="col-flex-1">API calls</div>
-                      <div className="col-md-10" style={styles.tableColumnSummary}>{apiInfo.included}</div>
-                      <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
-                    </div>
-                    <div className="row" style={styles.tableRow}>
-                      <div className="col-flex-1">CodeBox runs</div>
-                      <div className="col-md-10" style={styles.tableColumnSummary}>{cbxInfo.included}</div>
-                      <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
-                    </div>
+                <div style={styles.table}>
+                  <div className="row" style={styles.tableRow}>
+                    <div className="col-flex-1">API calls</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{apiInfo.included}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
+                  <div className="row" style={styles.tableRow}>
+                    <div className="col-flex-1">CodeBox runs</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{cbxInfo.included}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
+                  </div>
+                </div>
                 <div style={{marginTop: 30}}>
-                    {this.renderCard()}
+                  {this.renderCard()}
                 </div>
               </div>
               <div className="col-md-11" style={{paddingLeft: 35}}>

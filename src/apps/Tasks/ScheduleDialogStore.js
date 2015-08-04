@@ -9,8 +9,8 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 export default Reflux.createStore({
-  listenables : SchedulesActions,
-  mixins      : [
+  listenables: SchedulesActions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
@@ -44,10 +44,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      label     : null,
-      crontab   : null,
-      codebox   : null,
-      codeboxes : [
+      label: null,
+      crontab: null,
+      codebox: null,
+      codeboxes: [
         {payload: '', text: 'Loading...'}
       ]
     };

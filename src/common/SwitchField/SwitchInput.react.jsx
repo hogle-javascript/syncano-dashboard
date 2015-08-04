@@ -1,5 +1,5 @@
-var React      = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./SwitchField.css');
 
@@ -12,7 +12,7 @@ module.exports = React.createClass({
     enabled: React.PropTypes.func.isRequired,
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       enabled: this.props.enabled,
     };
@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var cssClasses = classNames('switch-input', {
+    let cssClasses = classNames('switch-input', {
       'switch-input-enabled': this.state.enabled,
       'switch-input-disabled': !this.state.enabled,
     });

@@ -30,7 +30,7 @@ export default React.createClass({
   ],
 
   componentWillReceiveProps(nextProps, nextState) {
-    this.setState({items : nextProps.items})
+    this.setState({items: nextProps.items})
   },
 
   // List
@@ -51,22 +51,22 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        checked     = {item.checked}
-        key         = {item.id}
-        id          = {item.id}
-        handleClick = {this.handleItemClick}>
+        checked={item.checked}
+        key={item.id}
+        id={item.id}
+        handleClick={this.handleItemClick.bind(null, item.id)}>
         <Column.CheckIcon
-          id              = {item.id}
-          icon            = {runtime.icon}
-          background      = {runtime.color}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}>
+          id={item.id.toString()}
+          icon={runtime.icon}
+          background={runtime.color}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}
+          handleNameClick={this.handleItemClick}>
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc>{item.description}</Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },

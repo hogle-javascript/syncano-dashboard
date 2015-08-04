@@ -6,6 +6,8 @@ import './app.sass';
 
 import React from 'react';
 import Router from 'react-router';
+import URI from 'URIjs';
+import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
 import analytics from './segment';
@@ -13,16 +15,26 @@ import analytics from './segment';
 let container  = document.getElementById('app');
 tapPlugin();
 
-Router.run(routes, function (Root, state) {
-  var pathname = decodeURIComponent(state.pathname).replace('//', '/');
+Router.run(routes, function(Root, state) {
+  let uri         = new URI(),
+      originalUri = uri.normalize().toString(),
+      pathname    = decodeURIComponent(state.pathname).replace('//', '/'),
+      query       = _.extend({}, uri.search(true), state.query);
 
   // Remove trailing slash
-  if (pathname.match('/$') !== null) {
+  if (pathname.length > 1 && pathname.match('/$') !== null) {
     pathname = pathname.slice(0, -1);
   }
 
-  if (pathname !== state.pathname) {
-    location.hash = pathname;
+  uri.search(query);
+  uri.hash(`${pathname}${uri.search()}`);
+  uri.search('');
+
+  let normalizedUri = uri.normalize().toString();
+
+  if (originalUri !== normalizedUri) {
+    location.href = normalizedUri;
+    return;
   }
 
   if (state.query.distinct_id !== undefined) {
@@ -32,10 +44,10 @@ Router.run(routes, function (Root, state) {
   var name  = 'app',
       names = state.routes
                 .map(route => route.name)
-                .filter(name => name !== undefined);
+                .filter(n => n !== undefined);
 
   if (names.length > 0) {
-    name = names[names.length-1];
+    name = names[names.length - 1];
   }
 
   analytics.page('Dashboard', {

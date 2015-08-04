@@ -1,12 +1,10 @@
-var React      = require('react'),
+import React from 'react';
 
-    ColorStore = require('../Color/ColorStore'),
+import ColorStore from '../Color/ColorStore';
 
-    mui        = require('material-ui'),
-    Avatar     = mui.Avatar;
+import MUI from 'material-ui';
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AvatarInitials',
 
@@ -16,16 +14,16 @@ module.exports = React.createClass({
     singleInitial: React.PropTypes.bool
   },
 
-  getHash: function(str) {
-    var hash;
-    for (var i = 0; i < str.length; i++) {
+  getHash(str) {
+    let hash;
+    for (let i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash) + str.charCodeAt(i);
       hash |= 0;
     }
     return Math.abs(hash);
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       fontWeight: 300,
       fontSize: 16,
@@ -40,18 +38,18 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
-    var styles = this.getStyles(),
-        initials,
-        colors = ColorStore.getAllColors(),
-        nameFragments = this.props.name.split(' ');
+  render() {
+    let styles = this.getStyles(),
+      initials,
+      colors = ColorStore.getAllColors(),
+      nameFragments = this.props.name.split(' ');
 
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();
     } else {
-      initials = nameFragments.filter(function(nameFragment, index, arr){
+      initials = nameFragments.filter(function(nameFragment, index, arr) {
         return index === 0 || index === arr.length - 1
-      }).map(function(nameFragment){
+      }).map(function(nameFragment) {
         return nameFragment.charAt(0).toUpperCase();
       }).join('');
     }
@@ -59,10 +57,11 @@ module.exports = React.createClass({
     styles.backgroundColor = this.props.backgroundColor || colors[this.getHash(this.props.name) % colors.length];
 
     return (
-      <Avatar style={styles} backgroundColor={styles.backgroundColor} >
+      <MUI.Avatar
+        style={styles}
+        backgroundColor={styles.backgroundColor}>
         {initials}
-      </Avatar>
+      </MUI.Avatar>
     );
   }
-
 });

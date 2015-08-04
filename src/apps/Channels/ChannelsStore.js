@@ -1,13 +1,13 @@
-var Reflux              = require('reflux'),
+let Reflux = require('reflux'),
 
-    CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-    StoreLoadingMixin   = require('../../mixins/StoreLoadingMixin'),
-    WaitForStoreMixin   = require('../../mixins/WaitForStoreMixin'),
+  CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
+  StoreLoadingMixin = require('../../mixins/StoreLoadingMixin'),
+  WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
 
-    SessionActions      = require('../Session/SessionActions'),
-    ChannelsActions     = require('./ChannelsActions');
+  SessionActions = require('../Session/SessionActions'),
+  ChannelsActions = require('./ChannelsActions');
 
-var ChannelsStore = Reflux.createStore({
+let ChannelsStore = Reflux.createStore({
   listenables: ChannelsActions,
   mixins: [
     CheckListStoreMixin,
@@ -17,37 +17,37 @@ var ChannelsStore = Reflux.createStore({
 
   channelTypes: [
     {
-      payload : 'default',
-      text    : 'Default'
+      payload: 'default',
+      text: 'Default'
     },
     {
-      payload : 'separate_rooms',
-      text    : 'Separate rooms'
+      payload: 'separate_rooms',
+      text: 'Separate rooms'
     }
   ],
 
   channelPermissions: [
     {
-      'text'    : 'none',
-      'payload' : 'none'
+      'text': 'none',
+      'payload': 'none'
     },
     {
-      'text'    : 'subscribe',
-      'payload' : 'subscribe'
+      'text': 'subscribe',
+      'payload': 'subscribe'
     },
     {
-      'text'    : 'publish',
-      'payload' : 'publish'
+      'text': 'publish',
+      'payload': 'publish'
     }
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return {
-      items : [],
+      items: [],
     }
   },
 
-  init: function() {
+  init() {
     this.data = this.getInitialState();
     this.waitFor(
       SessionActions.setUser,
@@ -57,54 +57,54 @@ var ChannelsStore = Reflux.createStore({
     this.setLoadingStates();
   },
 
-  getItems: function() {
+  getItems() {
     return this.data.items;
   },
 
-  getChannelsDropdown: function() {
-    var dropdown = [{
-      payload : 'no channel',
-      text    : 'no channel'
+  getChannelsDropdown() {
+    let dropdown = [{
+      payload: 'no channel',
+      text: 'no channel'
     }];
     return dropdown.concat(this.data.items.map(function(item) {
       return {
-        payload : item.name,
-        text    : item.name
+        payload: item.name,
+        text: item.name
       }
     }));
   },
 
-  getChannelTypesDropdown: function() {
+  getChannelTypesDropdown() {
     return this.channelTypes;
   },
-  getChannelPermissionsDropdown: function() {
+  getChannelPermissionsDropdown() {
     return this.channelPermissions;
   },
 
-  refreshData: function() {
+  refreshData() {
     console.debug('ChannelsStore::refreshData');
     ChannelsActions.fetchChannels();
   },
 
-  setChannels: function(items) {
+  setChannels(items) {
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
     });
     this.trigger(this.data);
   },
 
-  onRemoveChannelsCompleted: function(payload) {
+  onRemoveChannelsCompleted(payload) {
     console.debug('ChannelsStore::onRemoveChannelsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  onFetchChannels: function() {
+  onFetchChannels() {
     console.debug('ChannelsStore::onFetchChannels');
     this.trigger(this.data);
   },
 
-  onFetchChannelsCompleted: function(items) {
+  onFetchChannelsCompleted(items) {
     console.debug('ChannelsStore::onFetchChannelsCompleted');
     ChannelsActions.setChannels(items);
   }

@@ -1,7 +1,7 @@
-var React  = require('react'),
+let React = require('react'),
 
-    mui    = require('material-ui'),
-    Colors = mui.Styles.Colors;
+  mui = require('material-ui'),
+  Colors = mui.Styles.Colors;
 
 
 module.exports = React.createClass({
@@ -22,26 +22,26 @@ module.exports = React.createClass({
     };
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
     }
   },
 
-  handleMouseOver: function () {
+  handleMouseOver() {
     this.setState({'color': this.props.hoverColor})
   },
 
-  handleMouseLeave: function () {
+  handleMouseLeave() {
     this.setState({'color': this.props.color})
   },
 
-  handleClick: function () {
+  handleClick() {
     this.props.handleClick(this.props.id);
   },
 
-  render: function () {
+  render() {
 
     return (
       <div

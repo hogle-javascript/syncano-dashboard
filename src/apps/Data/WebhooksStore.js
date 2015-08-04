@@ -10,16 +10,16 @@ import SessionActions from '../Session/SessionActions';
 import WebhooksActions from './WebhooksActions';
 
 export default Reflux.createStore({
-  listenables : WebhooksActions,
-  mixins      : [
+  listenables: WebhooksActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
   ],
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     }
   },
 

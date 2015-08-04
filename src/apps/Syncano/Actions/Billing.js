@@ -60,7 +60,7 @@ export default {
     this.Connection.
       Billing.cancelSubscription(subscriptions[1].id)
       .then(
-       this.Connection
+      this.Connection
         .Billing
         .subscribePlan(currentPlan.plan, {
           commitment: JSON.stringify({
@@ -70,7 +70,7 @@ export default {
         })
         .then(this.completed)
         .catch(this.failure)
-      )
+    )
       .catch(this.failure);
   },
 

@@ -4,7 +4,7 @@ import MUI from 'material-ui';
 
 import PaymentIcon from '../PaymentIcon';
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Card',
 
@@ -21,11 +21,11 @@ module.exports = Radium(React.createClass({
         height: 138,
         background: '#fafafa',
         border: '1px solid #ddd',
-        BorderRadius: 10,
+        borderRadius: 10,
         padding: 16,
         color: 'rgba(0, 0, 0, 0.87)',
         display: '-webkit-flex; display: flex',
-        FlexDirection: 'column'
+        flexDirection: 'column'
       },
       cardHeadline: {
         color: 'rgba(0, 0, 0, 0.54)',
@@ -35,20 +35,20 @@ module.exports = Radium(React.createClass({
       cardFooter: {
         display: '-webkit-flex; display: flex',
         margin: 'auto 0 0',
-        JustifyContent: 'space-between',
-        AlignItems: 'flex-end'
+        justifyContent: 'space-between',
+        alignItems: 'flex-end'
       },
       cardIcon: {
         width: 60,
         height: 'auto',
         display: 'block',
-        Transform: 'translateY(18%)'
+        transform: 'translateY(18%)'
       }
     }
   },
 
   getCardTypeIcon(cardType) {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     if (cardType === undefined) {
       return true;
@@ -56,16 +56,14 @@ module.exports = Radium(React.createClass({
 
     return (
       <PaymentIcon
-        type  = {cardType}
-        style = {styles.cardIcon}
-      />
+        type={cardType}
+        style={styles.cardIcon}/>
     )
   },
 
   render() {
-    var styles = this.getStyles();
-
-    let cardTypeIcon = this.props.card.brand ? this.getCardTypeIcon(this.props.card.brand) : null;
+    let styles = this.getStyles(),
+      cardTypeIcon = this.props.card.brand ? this.getCardTypeIcon(this.props.card.brand) : null;
 
     return (
       <div className="vm-6-b" style={styles.cardContainer}>

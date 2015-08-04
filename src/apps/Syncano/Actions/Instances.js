@@ -11,9 +11,9 @@ export default {
     this.Connection
       .Instances
       .create({
-        name        : payload.name,
-        description : payload.description,
-        metadata    : payload.metadata
+        name: payload.name,
+        description: payload.description,
+        metadata: payload.metadata
       })
       .then(this.completed)
       .catch(this.failure);
@@ -28,12 +28,19 @@ export default {
   },
 
   remove(names) {
-    let promises = names.map(name => {
+    let promises = names.map((name) => {
       return this.Connection.Instances.remove(name);
     });
 
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
+  },
+
+  set(name) {
+    this.Connection
+      .setInstance(name)
+      .then(this.completed)
+      .catch(this.failure)
   }
 };

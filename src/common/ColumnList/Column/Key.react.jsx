@@ -1,23 +1,19 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    ReactZeroClipboard = require('react-zeroclipboard'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import ReactZeroClipboard from 'react-zeroclipboard';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Colors             = mui.Styles.Colors,
-    Snackbar           = mui.Snackbar,
-    Paper              = mui.Paper,
-    FlatButton         = mui.FlatButton;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.KEY
+      className: ColumnListConstans.DEFAULT_CLASSNAME.KEY
     }
   },
 
-  render: function() {
+  render() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -26,69 +22,66 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnID',
 
   propTypes: {
-    id          : React.PropTypes.string,
-    handleClick : React.PropTypes.func
+    id: React.PropTypes.string,
+    handleClick: React.PropTypes.func
   },
 
-  statics :{
-    Header : Header
+  statics: {
+    Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.KEY
+      className: ColumnListConstans.DEFAULT_CLASSNAME.KEY
     };
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       key: {
-        display       : 'flex',
-        flexDirection : 'row',
-        alignItems    : 'center',
-        fontSize      : 14,
-        lineHeight    : '16px',
-        padding       : '16px 8px'
+        display: '-webkit-flex; display: flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        fontSize: 14,
+        lineHeight: '16px',
+        padding: '16px 8px'
       }
     }
   },
 
-  handleClick: function() {
+  handleClick() {
     this.refs.snackbar.show();
   },
 
-  render: function() {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
-
       <div
-        className   = {this.props.className}
-        style       = {styles.key}>
-          <div
-            ref = "key"
-            className = "col-xs-25">
-            {this.props.children}
-          </div>
+        className={this.props.className}
+        style={styles.key}>
+        <div
+          ref="key"
+          className="col-xs-25">
+          {this.props.children}
+        </div>
 
         <ReactZeroClipboard text={this.props.children}>
-            <FlatButton
-              label       = "COPY"
-              primary     = {true}
-              onClick     = {this.handleClick} />
+          <MUI.FlatButton
+            label="COPY"
+            primary={true}
+            onClick={this.handleClick}/>
         </ReactZeroClipboard>
 
-        <Snackbar
+        <MUI.Snackbar
           ref="snackbar"
-          message="API key copied to the clipboard" />
+          message="API key copied to the clipboard"/>
       </div>
-
     );
   }
-
 }));

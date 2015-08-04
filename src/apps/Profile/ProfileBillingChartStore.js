@@ -19,16 +19,16 @@ export default Reflux.createStore({
   },
 
   getInitialState() {
-    let today    = this.getToday();
+    let today = this.getToday();
     let allDates = this.getAllDates();
-    let x        = ['x'].concat(allDates);
+    let xColumn  = ['x'].concat(allDates);
 
     return {
       isLoading: true,
       chart: {
         data: {
           x: 'x',
-          columns: [x],
+          columns: [xColumn],
           types: {},
           groups: [[]],
           colors: {
@@ -40,20 +40,22 @@ export default Reflux.createStore({
           show: false
         },
         axis: {
-          x : {
-            label : 'Day of the month',
-            type  : 'timeseries',
-            tick : {
-              fit    : true,
-              format : '%b %d'
+          x: {
+            label: 'Day of the month',
+            type: 'timeseries',
+            tick: {
+              fit: true,
+              format: '%b %d'
             }
           },
           y: {
             label: 'Cost ($)',
-            type  : 'indexed',
-            tick : {
-              format : (x) => { return x / 2 ? x : null  },
-              fit    : true
+            type: 'indexed',
+            tick: {
+              format: (x) => {
+                return x / 2 ? x : null
+              },
+              fit: true
             },
             show: true
           }
@@ -70,7 +72,7 @@ export default Reflux.createStore({
           format: {
             title: d => {
               let title = moment(d).format('MMM DD');
-              let date  = moment(d).format(this.format);
+              let date = moment(d).format(this.format);
               if (date > today) {
                 title = `Prediction for ${title}`;
               }
@@ -107,18 +109,18 @@ export default Reflux.createStore({
 
   prepareChartData(profile, usage) {
     profile = _.first(profile);
-    usage   = _.first(usage);
+    usage = _.first(usage);
 
-    let state       = this.getInitialState();
+    let state = this.getInitialState();
 
     state.isLoading = false;
-    state.profile   = profile;
+    state.profile = profile;
 
     let subscription = profile.subscription || {};
-    let plan         = subscription.plan || {};
-    let pricing      = subscription.pricing;
-    let usageAmount  = {'api': 0, 'cbx': 0};
-    let columns      = {'api': {}, 'cbx': {}};
+    let plan = subscription.plan || {};
+    let pricing = subscription.pricing;
+    let usageAmount = {'api': 0, 'cbx': 0};
+    let columns = {'api': {}, 'cbx': {}};
 
     if (_.isEmpty(pricing)) {
       // $5.25
@@ -129,8 +131,8 @@ export default Reflux.createStore({
     }
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
-    _.forEach(usage.objects, usage => {
-      if (columns[usage.source] === undefined) {
+    _.forEach(usage.objects, _usage => {
+      if (columns[_usage.source] === undefined) {
         return;
       }
 
@@ -148,8 +150,8 @@ export default Reflux.createStore({
       state.chart.data.types[name] = 'area';
     });
 
-    state.covered  = _.reduce(pricing, (r, v, k) => {
-      let amount  = v.included * v.overage;
+    state.covered = _.reduce(pricing, (r, v, k) => {
+      let amount = v.included * v.overage;
       r.amount += amount;
       r[k] = _.extend({}, v, {amount: amount});
       return r;
@@ -170,8 +172,8 @@ export default Reflux.createStore({
     // });
 
     state.overage = _.reduce(pricing, (r, v, k) => {
-      let covered     = state.covered[k];
-      let amount   = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
+      let covered = state.covered[k];
+      let amount = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
       let included = _.round(amount / v.overage);
 
       r.amount += amount;
@@ -179,11 +181,11 @@ export default Reflux.createStore({
       return r;
     }, {amount: 0});
 
-    if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 &&  _.last(state.chart.data.columns[2]) < 6) {
+    if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 && _.last(state.chart.data.columns[2]) < 6) {
       state.chart.axis.y.max = state.covered.amount + (0.1 * state.covered.amount);
     }
 
-    if (plan == 'builder' && _.last(state.chart.data.columns[1]) < 0.5 &&  _.last(state.chart.data.columns[2]) < 0.5) {
+    if (plan === 'builder' && _.last(state.chart.data.columns[1]) < 0.5 && _.last(state.chart.data.columns[2]) < 0.5) {
       state.chart.axis.y.max = 0.5;
     }
 
@@ -192,7 +194,7 @@ export default Reflux.createStore({
 
   fillBlanks(columns) {
     // We need to calculate median for predictions
-    let today   = this.getToday();
+    let today = this.getToday();
     let medians = _.reduce(columns, (result, v, k) => {
       result[k] = _.round(d3.median(_.values(v)) || 0);
       return result;
@@ -235,8 +237,8 @@ export default Reflux.createStore({
   },
 
   getDate() {
-    let today   = new Date();
-    today.year  = today.getFullYear();
+    let today = new Date();
+    today.year = today.getFullYear();
     today.month = today.getMonth();
     return today;
   },

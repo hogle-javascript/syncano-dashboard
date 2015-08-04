@@ -7,8 +7,8 @@ import Mixins from '../../mixins';
 import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
@@ -16,9 +16,9 @@ export default Reflux.createStore({
   getInitialState() {
     // jscs:disable
     return {
-      description       : null,
-      ignore_acl        : false,
-      allow_user_create : false
+      description: null,
+      ignore_acl: false,
+      allow_user_create: false
     };
     // jscs:enable
   },

@@ -34,8 +34,8 @@ export default React.createClass({
     let codeBoxId = this.getParams().codeboxId;
     return (
       <Traces
-        objectId  = {codeBoxId}
-        tracesFor = 'codebox' />
+        objectId={codeBoxId}
+        tracesFor='codebox'/>
     );
   }
 });

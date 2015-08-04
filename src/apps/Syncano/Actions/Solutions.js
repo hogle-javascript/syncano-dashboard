@@ -24,10 +24,10 @@ export default {
     this.Connection
       .Solutions
       .install(
-        payload.solutionId,
-        payload.versionId,
-        payload.instanceName
-      )
+      payload.solutionId,
+      payload.versionId,
+      payload.instanceName
+    )
       .then(this.completed)
       .catch(this.failure);
   },
@@ -49,6 +49,13 @@ export default {
     this.Connection
       .Solutions
       .create(payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  update(id, payload) {
+    this.Connection
+      .Solutions
+      .update(id, payload)
       .then(this.completed)
       .catch(this.failure);
   },

@@ -14,63 +14,60 @@ export default Radium(React.createClass({
     }
   },
 
-  propTypes: {
-    children: React.PropTypes.any.isRequired
-  },
-
   getStyles() {
     return {
       list: {
-        paddingTop    : 0,
-        paddingBottom : 0,
-        marginBottom  : 24,
-        border        : '1px solid' + MUI.Styles.Colors.blue700
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginBottom: 24,
+        border: '1px solid' + MUI.Styles.Colors.blue700
       },
       listItem: {
-        color : MUI.Styles.Colors.blue700,
+        color: MUI.Styles.Colors.blue700,
         ':hover': {
-          backgroundColor : MUI.Styles.Colors.blue700,
-          color           : '#fff'
+          backgroundColor: MUI.Styles.Colors.blue700,
+          color: '#fff'
         }
       },
       listItemIcon: {
-        color      : 'inherit',
-        transition : 'none'
+        color: 'inherit',
+        transition: 'none',
+        left: 12
       },
       listDivider: {
-        backgroundColor : MUI.Styles.Colors.blue700
+        backgroundColor: MUI.Styles.Colors.blue700
       }
     }
   },
 
   handleSocialSignup(network) {
-    return function() {
-      AuthActions.socialLogin(network)
-    };
+    AuthActions.socialLogin(network)
   },
 
   renderSocialButtons() {
-    let styles = this.getStyles();
-    let socialNetworksCount = AuthConstants.SOCIAL_NETWORKS.length;
-    let lastListItemIndex = socialNetworksCount - 1;
-    let buttonLabel = this.props.mode === 'signup' ? 'Sign up with ' : 'Log in with ';
-    let buttons = [];
+    let styles = this.getStyles(),
+      socialNetworksCount = AuthConstants.SOCIAL_NETWORKS.length,
+      lastListItemIndex = socialNetworksCount - 1,
+      buttonLabel = this.props.mode === 'signup' ? 'Sign up with ' : 'Login with ',
+      buttons = [];
 
     AuthConstants.SOCIAL_NETWORKS.map((network, index) => {
       buttons.push(
         <MUI.ListItem
-          key         = {index}
-          style       = {styles.listItem}
-          primaryText = {buttonLabel + network}
-          onTouchTap  = {this.handleSocialSignup(network)}
-          leftIcon    = {<MUI.FontIcon
+          key={`network-${index}`}
+          style={styles.listItem}
+          primaryText={buttonLabel + network}
+          onTouchTap={this.handleSocialSignup.bind(null, network)}
+          leftIcon={<MUI.FontIcon
                          style     = {styles.listItemIcon}
-                         className = {'synicon-' + network}
+                         className = {`synicon-${network}`}
                          />}
-        />
+          />
       );
       if (index < lastListItemIndex) {
-        buttons.push(<MUI.ListDivider style={styles.listDivider} />);
+        buttons.push(<MUI.ListDivider
+          key={`divider-${index}`}
+          style={styles.listDivider}/>);
       }
     });
 

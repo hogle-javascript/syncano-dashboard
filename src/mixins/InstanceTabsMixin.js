@@ -1,5 +1,5 @@
-var InstanceTabsMixin = {
-  headerMenuItems: function() {
+export default {
+  headerMenuItems() {
     var params = {
       instanceName: this.getParams().instanceName
     };
@@ -8,36 +8,34 @@ var InstanceTabsMixin = {
       {
         label: 'Data',
         route: 'data',
-        params: params
+        params
       },
       {
         label: 'Classes',
         route: 'classes',
-        params: params
+        params
       },
       {
         label: 'Users',
         route: 'users',
-        params: params
+        params
       },
       {
         label: 'CodeBoxes',
         route: 'codeboxes',
-        params: params
+        params
       },
       {
         label: 'Channels',
         route: 'channels',
-        params: params
+        params
       },
       {
         label: 'Tasks',
         route: 'tasks',
-        params: params
+        params
       }
     ];
   },
 
 };
-
-module.exports = InstanceTabsMixin;

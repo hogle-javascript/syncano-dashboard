@@ -38,7 +38,7 @@ export default React.createClass({
 
     if (!nextState.selectedRows) {
       if (this.refs.table) {
-        this.refs.table.setState({ selectedRows: [] });
+        this.refs.table.setState({selectedRows: []});
       }
     }
   },
@@ -53,9 +53,9 @@ export default React.createClass({
     return [{
       dialog: MUI.Dialog,
       params: {
-        key:    'deleteDataObjectDialog',
-        ref:    'deleteDataObjectDialog',
-        title:  'Delete a Data Object',
+        key: 'deleteDataObjectDialog',
+        ref: 'deleteDataObjectDialog',
+        title: 'Delete a Data Object',
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
@@ -87,68 +87,67 @@ export default React.createClass({
     DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
   },
 
-  handleRowSelection(selectedRow) {
-    console.info('DataObjects::handleRowSelection');
-    let rowsSelection = [selectedRow[0]];
-
-    // It there is more than one arg it means that it is multiple selection
-    if (selectedRow.length > 1) {
-      let start = selectedRow[1].start,
-          end   = selectedRow[1].end;
-
-      // What is start and what is end depends on the direction of checking rows
-      if (end < start) {
-        end   = selectedRow[1].start;
-        start = selectedRow[1].end;
-      }
-      rowsSelection = Array.apply(null, Array(end)).map(function(_, i) {return i;}).slice(start);
-    } else if (selectedRow.length === 0) {
-      rowsSelection = [];
-    }
+  handleRowSelection(selectedRows) {
+    console.info('DataObjects::handleRowSelection', arguments);
+    let rowsSelection = selectedRows;
 
     // Writing to the store
+    if (selectedRows === 'all') {
+      rowsSelection = DataObjectsStore.getItems().map((item, index) => {
+        return index
+      })
+    }
+
     DataObjectsActions.setSelectedRows(rowsSelection);
+  },
+
+  handleSelectAll(selectAll) {
+    console.info('DataObjects::handleSelectAll', selectAll);
   },
 
   handleCellClick(cellNumber, cellName) {
     console.info('DataObjects::handleCellClick', arguments);
-    if (cellName != undefined) {
+    if (cellName !== undefined && cellName !== 0) {
       this.showDataObjectEditDialog(cellNumber);
     }
   },
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    let tableData   = DataObjectsStore.renderTableData(),
-        tableHeader = DataObjectsStore.renderTableHeader(),
-        colOrder    = DataObjectsStore.getCheckedColumnsIDs();
+    let tableData = DataObjectsStore.renderTableData();
+    let tableHeader = DataObjectsStore.renderTableHeader(this.handleSelectAll);
 
     return (
       <div>
         <MUI.Table
-          ref                 = "table"
-          headerColumns       = {tableHeader}
-          columnOrder         = {colOrder}
-          rowData             = {tableData}
-          multiSelectable     = {true}
-          deselectOnClickaway = {false}
-          showRowHover        = {true}
-          onCellClick         = {this.handleCellClick}
-          onRowSelection      = {this.handleRowSelection}
-          />
+          ref="table"
+          multiSelectable={true}
+          deselectOnClickaway={false}
+          showRowHover={true}
+          onCellClick={this.handleCellClick}
+          onRowSelection={this.handleRowSelection}
+          >
+          {tableHeader}
+          <MUI.TableBody
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={true}
+            stripedRows={false}>
+            {tableData}
+          </MUI.TableBody>
+        </MUI.Table>
 
         <div
-          className = "row align-center"
-          style     = {{margin: 50}} >
+          className="row align-center"
+          style={{margin: 50}}>
           <div>Loaded {tableData.length} Data Objects</div>
         </div>
         <Common.Show if={this.state.hasNextPage}>
           <div
-            className = "row align-center"
-            style     = {{margin: 50}} >
+            className="row align-center"
+            style={{margin: 50}}>
             <MUI.RaisedButton
-              label   = "Load more"
-              onClick = {this.handleMoreRows}/>
+              label="Load more"
+              onClick={this.handleMoreRows}/>
           </div>
         </Common.Show>
       </div>
@@ -157,8 +156,8 @@ export default React.createClass({
 
   handleMoreRows() {
     DataObjectsActions.subFetchDataObjects({
-      className : this.state.classObj.name,
-      params    : this.state.nextParams
+      className: this.state.classObj.name,
+      params: this.state.nextParams
     });
   },
 
@@ -166,7 +165,7 @@ export default React.createClass({
     SessionStore.getRouter().transitionTo(
       'classes',
       {
-        instanceName : SessionStore.getInstance().name
+        instanceName: SessionStore.getInstance().name
       }
     );
   },
@@ -177,7 +176,7 @@ export default React.createClass({
     if (this.state.items) {
       table = this.renderTable();
     } else {
-      table = <Common.Loading visible={true} />;
+      table = <Common.Loading visible={true}/>;
     }
 
     let selectedMessageText = null;
@@ -196,36 +195,36 @@ export default React.createClass({
           <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
             <MUI.ToolbarGroup>
               <MUI.IconButton
-                iconClassName = "synicon-arrow-left"
-                onClick       = {this.handleBackClick}
-                touch         = {true}
-                style         = {{marginTop: 4}}
-                iconStyle     = {{color: 'rgba(0,0,0,.4)'}} />
+                iconClassName="synicon-arrow-left"
+                onClick={this.handleBackClick}
+                touch={true}
+                style={{marginTop: 4}}
+                iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
             </MUI.ToolbarGroup>
 
             <MUI.ToolbarGroup>
-              <MUI.ToolbarTitle text={'Class: ' + this.getParams().className} />
-              <MUI.ToolbarTitle text={selectedMessageText} />
+              <MUI.ToolbarTitle text={'Class: ' + this.getParams().className}/>
+              <MUI.ToolbarTitle text={selectedMessageText}/>
             </MUI.ToolbarGroup>
 
             <MUI.ToolbarGroup float="right">
 
               <MUI.IconButton
-                style         = {{fontSize: 25, marginTop: 5}}
-                iconClassName = "synicon-plus"
-                tooltip       = "Add Data Objects"
-                onClick       = {this.showDataObjectDialog} />
+                style={{fontSize: 25, marginTop: 5}}
+                iconClassName="synicon-plus"
+                tooltip="Add Data Objects"
+                onClick={this.showDataObjectDialog}/>
 
               <MUI.IconButton
-                style         = {{fontSize: 25, marginTop: 5}}
-                iconClassName = "synicon-delete"
-                tooltip       = "Delete Data Objects"
-                disabled      = {!(this.state.selectedRows)}
-                onClick       = {this.showDialog.bind(null, 'deleteDataObjectDialog')} />
+                style={{fontSize: 25, marginTop: 5}}
+                iconClassName="synicon-delete"
+                tooltip="Delete Data Objects"
+                disabled={!(this.state.selectedRows)}
+                onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
               <ColumnsFilterMenu
-                columns           = {DataObjectsStore.getTableColumns()}
-                checkToggleColumn = {DataObjectsActions.checkToggleColumn} />
+                columns={DataObjectsStore.getTableColumns()}
+                checkToggleColumn={DataObjectsActions.checkToggleColumn}/>
 
             </MUI.ToolbarGroup>
 
@@ -233,7 +232,7 @@ export default React.createClass({
 
           <div style={{clear: 'both', height: '100%'}}>
             <Common.Show if={this.state.isLoading}>
-              <Common.Loading type='linear' />
+              <Common.Loading type='linear'/>
             </Common.Show>
             {table}
           </div>

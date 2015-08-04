@@ -7,17 +7,17 @@ import Mixins from '../../mixins';
 import Actions   from './ClassesActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      description : null,
-      name        : null,
-      fields      : []
+      description: null,
+      name: null,
+      fields: []
     };
   },
 

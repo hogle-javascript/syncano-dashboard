@@ -1,15 +1,13 @@
-var React         = require('react'),
-    Radium        = require('radium'),
+import React from 'react';
+import Radium from 'radium';
 
-    mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable;
+import MUI from 'material-ui';
 
-
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'RoundIcon',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
     id: React.PropTypes.string,
@@ -18,37 +16,36 @@ module.exports = Radium(React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  handleClick: function () {
+  handleClick() {
     if (this.props.handleClick) {
       this.props.handleClick(this.props.id);
     }
   },
 
-  getStyles: function() {
-    var styles = {
-        width: 40,
-        height: 40,
-        borderRadius: '50%',
-        backgroundColor: this.props.background,
-        margin: '12px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+  getStyles() {
+    let styles = {
+      width: 40,
+      height: 40,
+      borderRadius: '50%',
+      backgroundColor: this.props.background,
+      margin: '12px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     };
 
     return this.mergeStyles(styles, this.props.style);
   },
 
-  render: function () {
-    var styles = this.getStyles();
+  render() {
+    let styles = this.getStyles();
 
     return (
       <div
-        style   = {styles}
-        onClick = {this.handleClick}>
+        style={styles}
+        onClick={this.handleClick}>
         {this.props.children}
       </div>
     )
   }
-
 }));

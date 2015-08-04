@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items : nextProps.items})
+    this.setState({items: nextProps.items})
   },
 
   // List
@@ -42,7 +42,6 @@ export default React.createClass({
   },
 
   handleItemClick(instanceName) {
-    // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName: instanceName});
   },
@@ -50,21 +49,21 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked     = {item.checked}
-        id          = {item.name}
-        key         = {item.name}
-        handleClick = {this.handleItemClick}>
+        checked={item.checked}
+        id={item.name}
+        key={item.name}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
-          id              = {item.name}
-          icon            = {item.metadata.icon}
-          background      = {Common.Color.getColorByName(item.metadata.color)}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick}>
+          id={item.name}
+          icon={item.metadata.icon}
+          background={Common.Color.getColorByName(item.metadata.color)}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}
+          handleNameClick={this.handleItemClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },

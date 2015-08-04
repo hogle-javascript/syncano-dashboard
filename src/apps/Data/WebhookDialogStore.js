@@ -9,21 +9,21 @@ import CodeBoxesActions  from '../CodeBoxes/CodeBoxesActions';
 import CodeBoxesStore    from '../CodeBoxes/CodeBoxesStore';
 
 export default Reflux.createStore({
-  listenables : WebhooksActions,
-  mixins      : [
+  listenables: WebhooksActions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      label     : '',
-      signal    : '',
-      'class'   : '',
-      codeboxes : [
+      label: '',
+      signal: '',
+      'class': '',
+      codeboxes: [
         {
-          payload : '',
-          text    : 'Loading...'
+          payload: '',
+          text: 'Loading...'
         }
       ]
     };

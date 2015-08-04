@@ -8,16 +8,16 @@ import Actions from './InstanceDialogActions';
 import InstancesActions from './InstancesActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      name        : null,
-      description : null
+      name: null,
+      description: null
     };
   },
 
@@ -50,9 +50,9 @@ export default Reflux.createStore({
       'wood', 'dream', 'cherry', 'tree', 'fog', 'frost', 'voice', 'paper',
       'frog', 'smoke', 'star'
     ];
-    let rnd  = Math.floor(Math.random() * 9000) + 1000;
+    let rnd = Math.floor(Math.random() * 9000) + 1000;
     let noun = nouns[Math.floor(Math.random() * nouns.length)];
-    let adj  = adjs[Math.floor(Math.random() * adjs.length)];
+    let adj = adjs[Math.floor(Math.random() * adjs.length)];
     return adj + '-' + noun + '-' + rnd;
   },
 

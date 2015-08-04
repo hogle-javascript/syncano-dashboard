@@ -4,43 +4,43 @@ export default CreateActions(
   {},
   {
     resendActivationEmail: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.resendActivationEmail'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.resendActivationEmail'
     },
     activate: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.activate'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.activate'
     },
     passwordSignIn: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.passwordSignIn'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.passwordSignIn'
     },
     passwordSignUp: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.passwordSignUp'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.passwordSignUp'
     },
     passwordReset: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.passwordReset'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.passwordReset'
     },
     passwordResetConfirm: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.passwordResetConfirm'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.passwordResetConfirm'
     },
     socialLogin: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Account.socialLogin'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Account.socialLogin'
     }
   }
 );

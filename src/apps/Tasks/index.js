@@ -10,17 +10,17 @@ import TriggersActions from './TriggersActions';
 import TriggersList from './TriggersList.react';
 import TriggersStore from './TriggersStore';
 
-Tasks.ScheduleDialog      = ScheduleDialog;
+Tasks.ScheduleDialog = ScheduleDialog;
 Tasks.ScheduleDialogStore = ScheduleDialogStore;
-Tasks.SchedulesActions    = SchedulesActions;
-Tasks.SchedulesList       = SchedulesList;
-Tasks.SchedulesStore      = SchedulesStore;
+Tasks.SchedulesActions = SchedulesActions;
+Tasks.SchedulesList = SchedulesList;
+Tasks.SchedulesStore = SchedulesStore;
 
-Tasks.TriggersList        = TriggersList;
-Tasks.TriggersStore       = TriggersStore;
-Tasks.TriggersActions     = TriggersActions;
-Tasks.TriggersActions     = TriggersActions;
-Tasks.TriggerDialog       = TriggerDialog;
-Tasks.TriggerDialogStore  = TriggerDialogStore;
+Tasks.TriggersList = TriggersList;
+Tasks.TriggersStore = TriggersStore;
+Tasks.TriggersActions = TriggersActions;
+Tasks.TriggersActions = TriggersActions;
+Tasks.TriggerDialog = TriggerDialog;
+Tasks.TriggerDialogStore = TriggerDialogStore;
 
 export default Tasks;

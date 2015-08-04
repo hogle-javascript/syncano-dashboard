@@ -1,12 +1,11 @@
-var React       = require('react'),
-    classNames  = require('classnames');
+let React = require('react'),
+  classNames = require('classnames');
 
 module.exports = React.createClass({
 
   displayName: 'List',
 
-  propTypes: {
-  },
+  propTypes: {},
 
   render: function() {
     return (

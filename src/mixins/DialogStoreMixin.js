@@ -1,21 +1,21 @@
-var objectAssign = require('object-assign');
+let objectAssign = require('object-assign');
 
-var DialogStoreMixin = {
+let DialogStoreMixin = {
 
-  getInitialState: function() {
+  getInitialState() {
     return this.getInitialDialogState();
   },
 
-  getInitialDialogState: function() {
+  getInitialDialogState() {
     return {
-      _dialogMode    : 'add',
-      _dialogVisible : false
+      _dialogMode: 'add',
+      _dialogVisible: false
     }
   },
 
-  showDialog: function(instance, secondInstance) {
+  showDialog(instance, secondInstance) {
     console.debug('DialogStoreMixin::showDialog');
-    var state = {_dialogVisible: true};
+    let state = {_dialogVisible: true};
 
     if (instance !== undefined) {
       state = objectAssign(state, instance, {_dialogMode: 'edit'});
@@ -26,7 +26,7 @@ var DialogStoreMixin = {
     this.trigger(state);
   },
 
-  dismissDialog: function() {
+  dismissDialog() {
     console.debug('DialogStoreMixin::dismissDialog');
     this.trigger(this.getInitialDialogState());
   }

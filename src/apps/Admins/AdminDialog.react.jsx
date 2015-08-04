@@ -38,67 +38,67 @@ export default React.createClass({
 
   handleAddSubmit() {
     AdminsInvitationsActions.createInvitation({
-      email : this.state.email,
-      role  : this.state.role
+      email: this.state.email,
+      role: this.state.role
     });
   },
 
   handleEditSubmit() {
     AdminsActions.updateAdmin(this.state.id, {
-      role  : this.state.role
+      role: this.state.role
     });
   },
 
   render() {
-    let title       = this.hasEditMode() ? 'Edit' : 'Invite',
-        submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
-        dialogStandardActions = [
-          {
-            ref        : 'cancel',
-            text       : 'Cancel',
-            onTouchTap : this.handleCancel
-          },
-          {
-            ref        : 'submit',
-            text       : {submitLabel},
-            onTouchTap : this.handleFormValidation
-          }
-        ];
+    let title = this.hasEditMode() ? 'Edit' : 'Invite';
+    let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
+    let dialogStandardActions = [
+        {
+          ref: 'cancel',
+          text: 'Cancel',
+          onTouchTap: this.handleCancel
+        },
+        {
+          ref: 'submit',
+          text: {submitLabel},
+          onTouchTap: this.handleFormValidation
+        }
+      ];
 
     return (
       <Common.Dialog
-        ref             = 'dialog'
-        title           = {title + ' an Administrator'}
-        openImmediately = {this.props.openImmediately}
-        actions         = {dialogStandardActions}
-        onDismiss       = {this.resetDialogState}>
+        ref='dialog'
+        title={title + ' an Administrator'}
+        openImmediately={this.props.openImmediately}
+        actions={dialogStandardActions}
+        onDismiss={this.resetDialogState}>
         <div>
           {this.renderFormNotifications()}
           <form
-            onSubmit      = {this.handleFormValidation}
-            acceptCharset = 'UTF-8'
-            method        = 'post'>
+            onSubmit={this.handleFormValidation}
+            acceptCharset='UTF-8'
+            method='post'>
             <MUI.TextField
-              ref               = 'email'
-              name              = 'email'
-              fullWidth         = {true}
-              disabled          = {this.hasEditMode() ? true : false}
-              valueLink         = {this.linkState('email')}
-              errorText         = {this.getValidationMessages('email').join(' ')}
-              hintText          = 'Email of the administrator'
-              floatingLabelText = 'Email' />
+              ref='email'
+              name='email'
+              fullWidth={true}
+              disabled={this.hasEditMode()}
+              valueLink={this.linkState('email')}
+              errorText={this.getValidationMessages('email').join(' ')}
+              hintText='Email of the administrator'
+              floatingLabelText='Email'/>
 
             <MUI.SelectField
-              ref               = 'role'
-              name              = 'role'
-              autoWidth         = {true}
-              valueLink         = {this.linkState('role')}
-              valueMember       = 'payload'
-              displayMember     = 'text'
-              floatingLabelText = 'Role of the administrator'
-              style             = {{width: '50%'}}
-              errorText         = {this.getValidationMessages('role').join(' ')}
-              menuItems         = {AdminDialogStore.getRoles()} />
+              ref='role'
+              name='role'
+              autoWidth={true}
+              valueLink={this.linkState('role')}
+              valueMember='payload'
+              displayMember='text'
+              floatingLabelText='Role of the administrator'
+              style={{width: '50%'}}
+              errorText={this.getValidationMessages('role').join(' ')}
+              menuItems={AdminDialogStore.getRoles()}/>
           </form>
         </div>
       </Common.Dialog>

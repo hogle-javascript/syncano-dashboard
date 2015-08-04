@@ -1,21 +1,19 @@
-var React              = require('react'),
-    Radium             = require('radium'),
-    Moment             = require('moment'),
-    ColumnListConstans = require('../ColumnListConstans'),
+import React from 'react';
+import Radium from 'radium';
+import Moment from 'moment';
+import ColumnListConstans from '../ColumnListConstans';
 
-    mui                = require('material-ui'),
-    Paper              = mui.Paper,
-    Colors             = mui.Styles.Colors;
+import MUI from 'material-ui';
 
-var Header = React.createClass({
+let Header = React.createClass({
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.DATE
+      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
     }
   },
 
-  render: function() {
+  render() {
     return (
       <div className={this.props.className}>
         {this.props.children}
@@ -24,55 +22,54 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ColumnDate',
 
   propTypes: {
-    color      : React.PropTypes.string,
-    date       : React.PropTypes.string,
-    ifInvalid  : React.PropTypes.string
+    color: React.PropTypes.string,
+    date: React.PropTypes.string,
+    ifInvalid: React.PropTypes.string
   },
 
-  statics :{
-    Header : Header
+  statics: {
+    Header: Header
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      color      : 'rgba(0,0,0,.54)',
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.DATE
+      color: 'rgba(0,0,0,.54)',
+      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
     };
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
-      display        : 'flex',
-      flexDirection  : 'column',
-      justifyContent : 'center',
-      fontSize       : '12px',
-      lineHeight     : '16px',
-      padding        : '16px 8px',
-      color          : this.props.color
+      display: '-webkit-flex; display: flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      fontSize: '12px',
+      lineHeight: '16px',
+      padding: '16px 8px',
+      color: this.props.color
     };
   },
 
-  render: function() {
-    var styles    = this.getStyles(),
-        ifInvalid = this.props.ifInvalid || '',
-        date      = Moment(this.props.date),
-        isValid   = date.isValid(),
-        format    = isValid ? date.format('DD/MM/YYYY') : ifInvalid,
-        lts       = isValid ? date.format('LTS') : '';
+  render() {
+    let styles = this.getStyles(),
+      ifInvalid = this.props.ifInvalid || '',
+      date = Moment(this.props.date),
+      isValid = date.isValid(),
+      format = isValid ? date.format('DD/MM/YYYY') : ifInvalid,
+      lts = isValid ? date.format('LTS') : '';
 
     return (
       <div
-        className = {this.props.className}
-        style     = {styles}>
+        className={this.props.className}
+        style={styles}>
         <span>{format}</span>
         <span>{lts}</span>
       </div>
     );
-
   }
 }));

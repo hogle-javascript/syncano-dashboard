@@ -13,10 +13,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items     : [],
-      objectId  : null,
-      tracesFor : null,
-      isLoading : true
+      items: [],
+      objectId: null,
+      tracesFor: null,
+      isLoading: true
     }
   },
 
@@ -29,7 +29,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('TracesStore::refreshData');
+    console.debug('TracesStore::refreshData', this.data);
 
     if (SessionStore.instance && this.data.objectId) {
       this.fetchTraces();
@@ -38,10 +38,10 @@ export default Reflux.createStore({
 
   fetchTraces() {
     let fetch = {
-      codebox  : Actions.fetchCodeBoxTraces,
-      webhook  : Actions.fetchWebhookTraces,
-      trigger  : Actions.fetchTriggerTraces,
-      schedule : Actions.fetchScheduleTraces
+      codebox: Actions.fetchCodeBoxTraces,
+      webhook: Actions.fetchWebhookTraces,
+      trigger: Actions.fetchTriggerTraces,
+      schedule: Actions.fetchScheduleTraces
     };
 
     fetch[this.data.tracesFor](this.data.objectId);
@@ -62,22 +62,22 @@ export default Reflux.createStore({
   },
 
   onFetchCodeBoxTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    console.debug('TracesStore::onFetchCodeBoxTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   },
 
   onFetchWebhookTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    console.debug('TracesStore::onFetchWebhookTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   },
 
   onFetchTriggerTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    console.debug('TracesStore::onFetchTriggerTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   },
 
   onFetchScheduleTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onGetCodeBoxTraces', tracesObj);
+    console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   }
 

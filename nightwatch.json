@@ -33,7 +33,8 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
-      }
+      },
+      "exclude": "utils.js"
     },
     "chrome" : {
       "desiredCapabilities": {

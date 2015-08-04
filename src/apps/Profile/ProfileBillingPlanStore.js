@@ -13,9 +13,9 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      profile   : null,
-      usage     : null,
-      isLoading : true
+      profile: null,
+      usage: null,
+      isLoading: true
     }
   },
 
@@ -35,7 +35,7 @@ export default Reflux.createStore({
   },
 
   setProfile(profile) {
-    this.data.profile    = profile;
+    this.data.profile = profile;
     this.data.soft_limit = profile.soft_limit;
     this.data.hard_limit = profile.hard_limit;
     this.trigger(this.data);

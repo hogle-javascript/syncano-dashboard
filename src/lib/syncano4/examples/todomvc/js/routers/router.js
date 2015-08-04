@@ -1,7 +1,7 @@
 /*global Backbone */
 var app = app || {};
 
-(function () {
+(function() {
 	'use strict';
 
 	// Todo Router
@@ -11,7 +11,7 @@ var app = app || {};
 			'*filter': 'setFilter'
 		},
 
-		setFilter: function (param) {
+		setFilter: function(param) {
 			// Set the current filter to be used
 			app.TodoFilter = param || '';
 

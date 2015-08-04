@@ -1,8 +1,8 @@
-var React      = require('react'),
-    classNames = require('classnames'),
+let React = require('react'),
+  classNames = require('classnames'),
 
-    mui           = require('material-ui'),
-    StylePropable = mui.Mixins.StylePropable;
+  mui = require('material-ui'),
+  StylePropable = mui.Mixins.StylePropable;
 
 module.exports = React.createClass({
 
@@ -16,7 +16,7 @@ module.exports = React.createClass({
   },
 
   getStyles: function() {
-    var styles = {
+    let styles = {
       margin: '65px auto',
       width: '80%'
     };
@@ -24,13 +24,13 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <div
-        style     = {styles}
-        className = {this.props.className}
-      >
+        style={styles}
+        className={this.props.className}
+        >
         {this.props.children}
       </div>
     );
