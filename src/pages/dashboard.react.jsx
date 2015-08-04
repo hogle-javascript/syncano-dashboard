@@ -23,14 +23,14 @@ module.exports = React.createClass({
   },
 
   statics: {
-    willTransitionTo: function (transition) {
+    willTransitionTo(transition) {
       if (!SessionStore.isAuthenticated()) {
         transition.redirect(AuthConstants.LOGIN_URL, {}, {'next': transition.path});
       }
     }
   },
 
-  render: function () {
+  render() {
     return (
       <div>
         <Header />

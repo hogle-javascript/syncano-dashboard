@@ -18,7 +18,7 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  componentWillMount: function () {
+  componentWillMount() {
     console.debug('Instance::componentWillMount');
     var params = this.getParams();
     if (params.instanceName) {
@@ -26,7 +26,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
+  render() {
     return <RouteHandler />
   }
 

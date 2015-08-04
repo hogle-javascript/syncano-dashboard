@@ -18,12 +18,12 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  componentDidMount: function () {
+  componentDidMount() {
     console.debug('Instance::componentDidMount');
     CodeBoxesActions.fetch();
   },
 
-  render: function () {
+  render() {
     return <RouteHandler />
   }
 
