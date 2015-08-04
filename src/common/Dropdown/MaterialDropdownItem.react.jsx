@@ -53,18 +53,20 @@ export default React.createClass({
       headerContentElement;
 
     if (this.isHeaderNecessary()) {
-      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {}, true),
-        avatar = <MUI.Avatar style={styles.avatar} src={gravatarUrl}/>,
-        primaryText = headerContentProps.userFullName || headerContentProps.userEmail,
-        secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
+
+      let location = window.location;
+      let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
+      let gravatarUrl   = Gravatar.url(headerContentProps.userEmail, {d: fallBackAvatar}, true);
+      let primaryText   = headerContentProps.userFullName || headerContentProps.userEmail;
+      let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
       headerContentElement = (
         <MUI.ListItem
-          leftAvatar={avatar}
-          primaryText={primaryText}
-          secondaryText={secondaryText}
-          disableTouchTap={!headerContentProps.clickable}
-          onClick={headerContentProps.handleItemClick}/>
+          leftAvatar      = {<MUI.Avatar style={styles.avatar} src={gravatarUrl} />}
+          primaryText     = {primaryText}
+          secondaryText   = {secondaryText}
+          disableTouchTap = {!headerContentProps.clickable}
+          onClick         = {headerContentProps.handleItemClick} />
       )
     }
 

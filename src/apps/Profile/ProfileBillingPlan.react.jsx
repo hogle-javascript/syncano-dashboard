@@ -94,7 +94,7 @@ export default React.createClass({
         width: 10
       },
       legend: {
-        fontSize: '0.9rem',
+        fontSize : '0.9rem',
       }
     }
   },
@@ -163,15 +163,14 @@ export default React.createClass({
 
     if (this.state.profile.subscription.plan === 'builder')
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div>Builder</div>
           <div>
             <MUI.Toggle
               style={{marginTop: 10}}
               ref="builder-toggle"
               key="builder-toggle"
-              onToggle={this.handleShowPlanDialog}
-              />
+              onToggle={this.handleShowPlanDialog}/>
           </div>
           <div style={{marginTop: 10}}>
             <div>Launching your app?</div>
@@ -210,7 +209,7 @@ export default React.createClass({
     };
 
     return (
-      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+      <div className="row align-middle" style={{flexDirection: 'column'}}>
         <div>Production</div>
         <div>
           <MUI.Toggle
@@ -218,8 +217,7 @@ export default React.createClass({
             ref="paid-commitment-toggle"
             key="paid-commitment-toggle"
             defaultToggled={true}
-            onToggle={this.handleShowCancelPlanDialog}
-            />
+            onToggle={this.handleShowCancelPlanDialog}/>
         </div>
         {renderComment()}
       </div>
@@ -334,7 +332,7 @@ export default React.createClass({
 
     if (this.isNewSubscription()) {
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div style={styles.explorerButton}>
             <MUI.FlatButton
               primary={true}
@@ -353,7 +351,7 @@ export default React.createClass({
     }
 
     return (
-      <div className="row align-middle" style={{FlexDirection: 'column'}}>
+      <div className="row align-middle" style={{flexDirection: 'column'}}>
         <div style={styles.explorerButton}>
           <MUI.FlatButton
             primary={true}
@@ -435,7 +433,7 @@ export default React.createClass({
 
     if (plan === 'builder') {
       return (
-        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+        <div className="row align-middle" style={{flexDirection: 'column'}}>
           <div key="builderComment" style={{width: '80%'}}>
             If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
             If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
@@ -468,12 +466,11 @@ export default React.createClass({
 
         return (
           <div className="row align-top">
-            <div classsName="col-md-3" style={{Transform: 'translateY(-14px)'}}>
+            <div classsName="col-md-3" style={{transform: 'translateY(-14px)'}}>
               <MUI.IconButton
                 iconClassName="synicon-information-outline"
                 iconStyle={{color: MUI.Styles.Colors.blue500}}
-                tooltip={toolTip}
-                />
+                tooltip={toolTip}/>
             </div>
             <div classsName="col-flex-1">
 
@@ -489,7 +486,7 @@ export default React.createClass({
         )
       } else {
         return (
-          <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div className="row align-middle" style={{flexDirection: 'column'}}>
             <div key="productionComment" style={{width: '80%'}}>
               You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
               Your new monthly fixed price will start from next billing period.
@@ -535,47 +532,42 @@ export default React.createClass({
     );
 
     return (
-      <div className="row" style={{marginTop: 30, paddingLeft: 30}}>
+      <div className="row align-middle" style={{marginTop: 30, paddingLeft: 30}}>
         <div className="col-md-5">
           <MUI.TextField
-            ref="soft_limit"
-            valueLink={this.linkState('soft_limit')}
-            errorText={this.getValidationMessages('soft_limit').join(' ')}
-            name="soft_limit"
-            className="text-field"
-            hintText="Soft Limit"
-            fullWidth={true}
-            />
+            ref               = "soft_limit"
+            valueLink         = {this.linkState('soft_limit')}
+            errorText         = {this.getValidationMessages('soft_limit').join(' ')}
+            name              = "soft_limit"
+            className         = "text-field"
+            floatingLabelText = "Soft Limit"
+            fullWidth         = {true} />
         </div>
         <div className="col-md-5">
           <MUI.TextField
-            ref="hard_limit"
-            valueLink={this.linkState('hard_limit')}
-            errorText={this.getValidationMessages('hard_limit').join(' ')}
-            name="hard_limit"
-            className="text-field"
-            hintText="Hard Limit"
-            fullWidth={true}
-            />
+            ref               = "hard_limit"
+            valueLink         = {this.linkState('hard_limit')}
+            errorText         = {this.getValidationMessages('hard_limit').join(' ')}
+            name              = "hard_limit"
+            className         = "text-field"
+            floatingLabelText = "Hard Limit"
+            fullWidth         = {true} />
         </div>
         <div className="col-md-4" style={{paddingRight: 0}}>
           <MUI.FlatButton
-            primary={true}
-            label={'Set Limits'}
-            disabled={(!this.state.hard_limit && !this.state.soft_limit)}
-            onTouchTap={this.handleFormValidation}
-            />
+            primary    = {true}
+            label      = 'Set Limits'
+            disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
+            onTouchTap = {this.handleFormValidation} />
         </div>
         <div className="col-md-5" style={{paddingLeft: 0}}>
           <MUI.IconButton
-            iconClassName="synicon-information-outline"
-            iconStyle={{color: MUI.Styles.Colors.blue500}}
-            tooltip={toolTip}
-            />
+            iconClassName = "synicon-information-outline"
+            iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+            tooltip       = {toolTip} />
         </div>
       </div>
     )
-
   },
 
   render() {

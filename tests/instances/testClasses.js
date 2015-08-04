@@ -13,16 +13,18 @@ module.exports = {
     client.end();
   },
   'Test Add Class' : function(client) {
+    var className = 'a' + Date.now();
+    client.globals.className = className;
     var classesPage = client.page.classesPage();
     classesPage.navigate();
     classesPage.clickFAB();
 
-    classesPage.fillInputField('@createModalNameInput', 'className');
+    classesPage.fillInputField('@createModalNameInput', className);
     classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description');
     classesPage.fillInputField('@createModalFieldNameInput', 'schemaName');
     classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString');
     classesPage.clickButton('@addButton');
-
+    client.pause(1000);
     classesPage.verify.elementPresent('@addClassModalTitle');
     classesPage.clickButton('@confirmButton');
     classesPage.isModalClosed('@addClassModalTitle');
@@ -50,7 +52,7 @@ module.exports = {
     classesPage.isModalClosed('@deleteClassModalTitle');
     classesPage.verify.elementNotPresent('@deleteClassModalTitle');
 
-    classesPage.verify.elementPresent('@classTableRowDescription');
-    classesPage.verify.containsText('@classTableRowDescription', 'Class that holds profiles for users.');
+    classesPage.verify.elementPresent('@classTableName');
+    classesPage.expect.element('@classTableName').to.not.contain.text(client.globals.className);
   }
 };
