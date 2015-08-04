@@ -32,7 +32,6 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     Mixins.Dialogs,
-    HeaderMixin
   ],
 
   // Dialogs config
@@ -88,17 +87,6 @@ export default Radium(React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
-  },
-
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      }, {
-        label: 'Solutions',
-        route: 'solutions'
-      }];
   },
 
   handleChangePalette(color, icon) {
