@@ -50,9 +50,9 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Invite',
-      submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm',
-      dialogStandardActions = [
+    let title = this.hasEditMode() ? 'Edit' : 'Invite';
+    let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
+    let dialogStandardActions = [
         {
           ref: 'cancel',
           text: 'Cancel',

@@ -176,7 +176,7 @@ export default Reflux.createStore({
     if (this.token === 'undefined') {
       return false;
     }
-    return this.token ? true : false;
+    return this.token !== null;
   },
 
   isReady() {

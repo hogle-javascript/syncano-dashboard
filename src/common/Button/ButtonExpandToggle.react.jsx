@@ -1,13 +1,13 @@
-let React = require('react'),
-  mui = require('material-ui'),
+import React from 'react';
+import mui from 'material-ui';
 
-  FontIcon = mui.FontIcon;
+const FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
   displayName: 'ButtonExpandToggle',
 
-  render() {
+  render: function() {
     let icon = this.props.parentExpanded ? "synicon-unfold-less" : "synicon-unfold-more";
     return (
       <div

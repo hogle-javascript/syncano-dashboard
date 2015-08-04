@@ -75,8 +75,7 @@ export default React.createClass({
           <Common.Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading}
-            />
+            show={this.state.isLoading}/>
         ]
       }
     }]
@@ -96,10 +95,10 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked(),
-      isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
-      markedIcon = 'synicon-checkbox-multiple-marked-outline',
-      blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let checkedItems = Store.getNumberOfChecked();
+    let isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>

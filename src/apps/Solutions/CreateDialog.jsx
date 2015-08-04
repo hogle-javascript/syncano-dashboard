@@ -41,13 +41,9 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createSolution({
-      label: this.state.label,
-      description: this.state.description,
-      public: this.state.public ? true : false
-      //metadata: {
-      //  color     : Common.Color.getRandomColorName(),
-      //  icon      : IconStore.getRandomIconPickerIcon()
-      //}
+      label       : this.state.label,
+      description : this.state.description,
+      public      : this.state.public
     });
   },
 
@@ -85,14 +81,14 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-            ref='label'
-            name='label'
-            fullWidth={true}
-            disabled={this.hasEditMode() ? true : false}
-            valueLink={this.linkState('label')}
-            errorText={this.getValidationMessages('label').join(' ')}
-            hintText='Short name for your Solution'
-            floatingLabelText='Name'/>
+            ref               = 'label'
+            name              = 'label'
+            fullWidth         = {true}
+            disabled          = {this.hasEditMode()}
+            valueLink         = {this.linkState('label')}
+            errorText         = {this.getValidationMessages('label').join(' ')}
+            hintText          = 'Short name for your Solution'
+            floatingLabelText = 'Name' />
           <MUI.TextField
             ref='description'
             name='description'

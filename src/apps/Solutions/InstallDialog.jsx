@@ -61,13 +61,13 @@ export default React.createClass({
           instanceName: instanceName
         })
       });
-    }
-    else
+    } else {
       Actions.installSolution({
         solutionId: this.state.solutionId,
         versionId: this.state.version,
         instanceName: instanceName
       });
+    }
   },
 
   handleDialogShow() {

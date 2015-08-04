@@ -94,8 +94,8 @@ module.exports = React.createClass({
       'card-trace-timeout': status === "timeout",
     });
     if (this.state.animateInk) {
-      inkStyle['top'] = "50px";
-      inkStyle['left'] = "50px";
+      inkStyle.top = "50px";
+      inkStyle.left = "50px";
     }
     if (this.props.list.viewMode === "cards") {
       return (

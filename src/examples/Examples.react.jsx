@@ -1,61 +1,56 @@
-var React = require('react'),
-  mui = require('material-ui'),
-  gravatar = require('gravatar'),
+var React                = require('react'),
+    mui                  = require('material-ui'),
+    gravatar             = require('gravatar'),
 
-  ThemeManager = new mui.Styles.ThemeManager(),
-  TextField = mui.TextField,
-  DatePicker = mui.DatePicker,
-  TimePicker = mui.TimePicker,
-  Colors = mui.Styles.Colors,
-  LinearProgress = mui.LinearProgress,
-  Dialog = mui.Dialog,
-  Snackbar = mui.Snackbar,
-  FlatButton = mui.FlatButton,
-  List = mui.List,
-  ListItem = mui.ListItem,
-  ListDivider = mui.ListDivider,
-  Avatar = mui.Avatar,
-  Toggle = mui.Toggle,
-  IconButton = mui.IconButton,
-  FontIcon = mui.FontIcon,
-  IconMenu = mui.IconMenu,
-  Menu = mui.Menu,       // this menu is from lib/menu/menu
-  MenuItem = mui.MenuItem,   // this menu item is from lib/menu/menu-items
-  SelectField = mui.SelectField,
-  ArrowDropRight = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-  MenuNew = require('material-ui/lib/menus/menu'),
-  MenuItemNew = require('material-ui/lib/menus/menu-item'),
+    ThemeManager         = new mui.Styles.ThemeManager(),
+    TextField            = mui.TextField,
+    DatePicker           = mui.DatePicker,
+    TimePicker           = mui.TimePicker,
+    Colors               = mui.Styles.Colors,
+    LinearProgress       = mui.LinearProgress,
+    Dialog               = mui.Dialog,
+    Snackbar             = mui.Snackbar,
+    FlatButton           = mui.FlatButton,
+    // List                 = mui.List,
+    ListItem             = mui.ListItem,
+    ListDivider          = mui.ListDivider,
+    Avatar               = mui.Avatar,
+    Toggle               = mui.Toggle,
+    IconButton           = mui.IconButton,
+    FontIcon             = mui.FontIcon,
+    IconMenu             = mui.IconMenu,
+    Menu                 = mui.Menu,       // this menu is from lib/menu/menu
+    MenuItem             = mui.MenuItem,   // this menu item is from lib/menu/menu-items
+    SelectField          = mui.SelectField,
+    ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
+    MenuNew              = require('material-ui/lib/menus/menu'),
+    MenuItemNew          = require('material-ui/lib/menus/menu-item'),
 
-  Dropdown = require('../common/Dropdown/Dropdown.react'),
-  MaterialDropdown = require('../common/Dropdown/MaterialDropdown.react'),
-  CheckIcon = require('../common/CheckIcon/CheckIcon.react'),
-  ProgressBar = require('../common/ProgressBar/ProgressBar.react'),
-  Label = require('../common/Label/Label.react'),
-  ListItemEmpty = require('../common/Lists/ListItemEmpty.react'),
-  Editor = require('../common/Editor/Editor.react'),
-  EditorPanel = require('../common/Editor/EditorPanel.react'),
-  FabList = require('../common/Fab/FabList.react'),
-  UsageBar = require('../common/UsageBar/UsageBar.react'),
+    Dropdown             = require('../common/Dropdown/Dropdown.react'),
+    MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
+    CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
+    ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
+    Label                = require('../common/Label/Label.react'),
+    ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
+    Editor               = require('../common/Editor/Editor.react'),
+    EditorPanel          = require('../common/Editor/EditorPanel.react'),
+    FabList              = require('../common/Fab/FabList.react'),
+    UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
-  FieldPassword = require('../common/Field/FieldPassword.react'),
-  FieldReadonly = require('../common/Field/FieldReadonly.react'),
-  FieldDatetime = require('../common/Field/FieldDatetime.react'),
-  FieldSelectOption = require('../common/Field/FieldSelectOption.react'),
-  FieldSelect = require('../common/Field/FieldSelect.react'),
-  SwitchField = require('../common/SwitchField/SwitchField.react'),
-  SwitchFieldList = require('../common/SwitchField/SwitchFieldList.react'),
-  SwitchInput = require('../common/SwitchField/SwitchInput.react'),
-  AvatarInitials = require('../common/AvatarInitials/AvatarInitials.react'),
-  SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
-  List = require('../common/Lists/List.react'),
-  Trace = require('../common/Trace/TraceResult.react'),
-  TraceResultWithMeta = require('../common/Trace/TraceResultWithMeta.react'),
-  Loading = require('../common/Loading/Loading.react'),
-  Slider = require('../common/Slider/Slider.react'),
+    SwitchField          = require('../common/SwitchField/SwitchField.react'),
+    SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
+    SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
+    AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
+    SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
+    List                 = require('../common/Lists/List.react'),
+    Trace                = require('../common/Trace/TraceResult.react'),
+    TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
+    Loading              = require('../common/Loading/Loading.react'),
+    Slider               = require('../common/Slider/Slider.react'),
 
-  ColumnListItem = require('../common/ColumnList/Item.react'),
-  ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
-  ColumnNameDesc = require('../common/ColumnList/ColNameDesc.react');
+    ColumnListItem       = require('../common/ColumnList/Item.react'),
+    ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
+    ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
 
 
 //var FlatButton = require('material-ui').FlatButton;
@@ -66,7 +61,7 @@ module.exports = React.createClass({
 
   displayName: 'Examples',
 
-  getInitialState() {
+  getInitialState: function() {
     return {
       errorText: null
     };
@@ -76,13 +71,13 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext() {
+  getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount() {
+  componentWillMount: function() {
     ThemeManager.setPalette({
       primary1Color: Colors.blueA700,
       primary2Color: Colors.lightBlueA700,
@@ -98,10 +93,10 @@ module.exports = React.createClass({
     });
   },
 
-  getDefaultProps() {
+  getDefaultProps: function() {
   },
 
-  componentDidMount() {
+  componentDidMount: function() {
   },
 
   dummyDisplayError: function(e) {
@@ -143,12 +138,10 @@ module.exports = React.createClass({
   },
 
   getMaxDate: function(maxYear) {
-    var date = new Date;
-    date.setFullYear(maxYear);
-    return date;
+    return new Date().setFullYear(maxYear);
   },
 
-  render() {
+  render: function() {
 
 
     var dummyClick = function(action) {
@@ -243,7 +236,7 @@ module.exports = React.createClass({
     }.bind(this);
 
     var handleSnackbarAction = function() {
-      window.alert("Bum!");
+      console.log("Bum!");
     };
 
     var dialogStandardActions = [
@@ -276,18 +269,18 @@ module.exports = React.createClass({
     };
 
     var switchFields = [{
-      name: 'limit',
-      enabled: true,
-      heading: 'Limit',
-      textEnabled: 'Hard limit is currently enabled. Your account will stop working when the limit is reached.',
-      textDisabled: 'Hard limit is currently disabled. Your account will stop working when the limit is reached.',
-    }, {
-      name: 'alert',
-      enabled: false,
-      heading: 'Alert',
-      textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
-      textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
-    }];
+        name: 'limit',
+        enabled: true,
+        heading: 'Limit',
+        textEnabled: 'Hard limit is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Hard limit is currently disabled. Your account will stop working when the limit is reached.',
+      }, {
+        name: 'alert',
+        enabled: false,
+        heading: 'Alert',
+        textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
+        textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
+      }];
 
     var payload = '{test: "testvalue"}';
 
@@ -350,51 +343,51 @@ module.exports = React.createClass({
       id: "allUsers",
       uuid: "allUsers",
       displayName: "All users",
-      isNavigationElement: true,
+      isNavigationElement: true
     }, {
       id: "groups",
       uuid: "groups",
       displayName: "Groups",
-      isNavigationElement: true,
+      isNavigationElement: true
       //payload: this.state.groups,
     }];
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
     var notifications = [{
-      type: "normal-link",
-      leftIcon: {
-        name: "synicon-alert",
-        style: {
+      type     : "normal-link",
+      leftIcon : {
+        name   : "synicon-alert",
+        style  : {
           color: "#ff9800"
         }
       },
       content: {
-        text: "You email address is not yet verified.",
-        secondaryText: "Resend activation email",
-        style: {}
+        text          : "You email address is not yet verified.",
+        secondaryText : "Resend activation email",
+        style         : {}
       },
-      name: "activation",
-      handleLinkClick: dummyClick
+      name            : "activation",
+      handleLinkClick : dummyClick
     }, {
-      type: "invitation",
-      leftIcon: {
-        name: "synicon-share-variant",
-        style: {
+      type     : "invitation",
+      leftIcon : {
+        name   : "synicon-share-variant",
+        style  : {
           color: "#8bc34a"
         }
       },
-      content: {
-        text: <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
-        style: {}
+      content  : {
+        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
+        style  : {}
       },
-      buttonsText: ["Accept", "Decline"],
-      name: "billing",
-      handleAccept: dummyClick.bind(this, [item]),
-      handleDecline: dummyClick.bind(this, [item])
+      buttonsText   : ["Accept", "Decline"],
+      name          : "billing",
+      handleAccept  : dummyClick.bind(this, [item]),
+      handleDecline : dummyClick.bind(this, [item])
     }];
 
-    var icon = <FontIcon className="synicon-delete"/>;
+    var icon = <FontIcon className = "synicon-delete" />;
 
     return (
 
@@ -404,38 +397,37 @@ module.exports = React.createClass({
         <div className="exampleBox">
           <h2>Dropdown</h2>
           <Dropdown
-            items={dropdownItems}
-            headerContent={dropdownHeader}/>
+              items={dropdownItems}
+              headerContent={dropdownHeader} />
         </div>
 
         <div className="exampleBox">
           <h2>Material dropdown</h2>
-
           <div style={{
                  display        : 'flex',
                  float          : 'none',
                  alignItems     : 'center',
                  justifyContent : 'center'
                }}>
-            <MaterialDropdown
-              type="notification"
-              icon={"bell"}
-              items={notifications}
-              iconStyle={{padding: "0 4px"}}
-              isLoading={false}/>
-            <MaterialDropdown
-              type="notification"
-              icon={"bell"}
-              items={[]}
-              iconStyle={{padding: "0 4px"}}
-              isLoading={false}/>
-            <MaterialDropdown
-              type="notification"
-              icon={"bell"}
-              items={[]}
-              iconStyle={{padding: "0 4px"}}
-              isLoading={true}/>
-          </div>
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {notifications}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {false} />
+          <MaterialDropdown
+              type      = "notification"
+              icon      = {"bell"}
+              items     = {[]}
+              iconStyle = {{padding: "0 4px"}}
+              isLoading = {true} />
+            </div>
         </div>
 
         <div className="exampleBox">
@@ -445,7 +437,7 @@ module.exports = React.createClass({
               leftAvatar={<Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
               secondaryTextLines={1}
-              onClick={dummyClick}>
+              onClick={dummyClick} >
               Name LastName
             </ListItem>
             <ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</ListItem>
@@ -462,23 +454,23 @@ module.exports = React.createClass({
                   Do you want to grab brunch?
                 </p>
               }
-              secondaryTextLines={2}>item with gravatar and text
+              secondaryTextLines={2} >item with gravatar and text
             </ListItem>
-            <ListDivider inset={true}/>
+            <ListDivider inset={true} />
           </List>
         </div>
 
         <div className="exampleBox">
           <h4>Icon 1</h4>
           <FontIcon
-            className="synicon-bell"
-            color="#0091EA"
-            hoverColor="#1a237e"/>
+            className  = "synicon-bell"
+            color      = "#0091EA"
+            hoverColor = "#1a237e"  />
         </div>
 
         <div className="exampleBox">
           <h4>CheckIcon</h4>
-          <CheckIcon icon="beta" background="blue"/>
+          <CheckIcon icon="beta" background="blue" />
         </div>
 
         <div className="exampleBox">
@@ -506,10 +498,10 @@ module.exports = React.createClass({
           <h4>ListColumnItem </h4>
           <ColumnListItem>
             <ColumnListItemColumn grid="1">
-              <CheckIcon icon="notifications" background="blue" width='40px'/>
+              <CheckIcon icon="notifications" background="blue" width='40px' />
             </ColumnListItemColumn>
             <ColumnListItemColumn grid="5">
-              <ColumnNameDesc name="My Codebox" description="Description of my codebox"/>
+              <ColumnNameDesc name="My Codebox" description="Description of my codebox" />
             </ColumnListItemColumn>
             <ColumnListItemColumn grid="2">
               <span><strong>2345</strong></span>
@@ -558,66 +550,31 @@ module.exports = React.createClass({
             onChange={this.dummyDisplayError}
             floatingLabelText="Your name"
             fullWidth={true}
-            style={{borderBottomColor: "0091EA"}}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>FieldDatetime</h4>
-          <FieldDatetime
-            dateFormat="YYYY-MM-DDThh:mm:ss.uuuuuuZ"
-            labelText="Date"
-            iconColor="red"
-            fieldStyle={{width: "100%"}}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>FieldPassword (Material UI)</h4>
-          <TextField
-            name="password"
-            type="password"
-            floatingLabelText="Password"/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>FieldReadonly</h4>
-          <FieldReadonly field={someField}/>
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldReadonly (material UI)</h2>
-          <TextField
-            defaultValue="Your name - 5 chars only"
-            disabled={true}
-            fullWidth={true}/>
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldSelect</h2>
-          <FieldSelect field={fieldSelect}/>
+            style={{borderBottomColor: "0091EA"}} />
         </div>
 
         <div className="exampleBox">
           <h2>SelectField (Drop Down from material UI)</h2>
           <SelectField
-            menuItems={fieldSelectMUI}/>
+            menuItems={fieldSelectMUI} />
         </div>
 
         <div className="exampleBox">
           <h2>FieldSelectOption</h2>
           <FieldSelectOption
             option={fieldSelectOption}
-            handleClick={this.dummyClick}/>
-          <FieldSelectOption
+            handleClick={this.dummyClick} />
+            <FieldSelectOption
             option={fieldSelectOption}
-            handleClick={this.dummyClick}/>
-          <FieldSelectOption
+            handleClick={this.dummyClick} />
+            <FieldSelectOption
             option={fieldSelectOption}
-            handleClick={this.dummyClick}/>
+            handleClick={this.dummyClick} />
         </div>
 
         <div className="exampleBox">
           <h2>material-ui</h2>
-          <LinearProgress mode="indeterminate"/>
+          <LinearProgress mode="indeterminate" />
         </div>
 
         <div className="exampleBox">
@@ -625,7 +582,7 @@ module.exports = React.createClass({
           <SwitchFieldList
             handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
             handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
-            fields={switchFields}/>
+            fields={switchFields} />
         </div>
 
         <div className="exampleBox">
@@ -637,14 +594,14 @@ module.exports = React.createClass({
             heading="React skills"
             toggled={true}
             textEnabled="Dummy text enabled"
-            textDisabled="dummy text disabled"/>
+            textDisabled="dummy text disabled" />
         </div>
 
         <div className="exampleBox">
           <h2>SwitchInput</h2>
           <SwitchInput
             handleClick={dummyClick.bind(this, "handleClick")}
-            enabled={true}/>
+            enabled={true} />
         </div>
 
         <div className="exampleBox">
@@ -653,8 +610,8 @@ module.exports = React.createClass({
             name="ToggleButton"
             value="ValueToggle"
             label="tempomat"
-            onToggle={dummyClick.bind(this, "Mui Toggle")}/>
-        </div>
+            onToggle={dummyClick.bind(this, "Mui Toggle")} />
+          </div>
 
         <div className="exampleBox">
           <h4>material-ui - Snackbar</h4>
@@ -674,7 +631,7 @@ module.exports = React.createClass({
           <h2>material-ui Dialog</h2>
           <FlatButton
             label="Bum!"
-            onClick={handleStandardDialogTouchTap}/>
+            onClick={handleStandardDialogTouchTap}  />
           <Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
@@ -687,7 +644,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h4>AvatarInitials</h4>
-          <AvatarInitials name="George R. R. Martin"/>
+          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">
@@ -697,7 +654,7 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Trace</h2>
-          <Trace result={"Some not very long result: " + source}/>
+          <Trace result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">
@@ -705,42 +662,42 @@ module.exports = React.createClass({
           <TraceResultWithMeta
             meta={{'test': 'Some meta'}}
             args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}
-            result={"Some not very long result: " + source}/>
+            result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">
           <h2>Loading</h2>
           <Loading
-            type="linear"
-            show={true}/>
+            type    = "linear"
+            show    = {true} />
           <Loading show={true}/>
         </div>
 
         <div className="exampleBox">
           <h2>DatePicker</h2>
-          <DatePicker hintText="Portrait Dialog"/>
+          <DatePicker hintText="Portrait Dialog" />
           <DatePicker
-            hintText="Landscape Dialog"
-            mode="landscape"/>
+            hintText = "Landscape Dialog"
+            mode     = "landscape" />
           <DatePicker
-            maxDate={this.getMaxDate(2020)}
-            minDate={this.getMinDate(1990)}
-            formatDate={this.getDateFormat}
-            defaultDate={this.getDateNow()}
-            ref="modifiedDatePicker"
-            hintText="Ranged Date Picker"
-            showYearSelector={true}
-            onChange={this.logDate}/>
+            maxDate          = {this.getMaxDate(2020)}
+            minDate          = {this.getMinDate(1990)}
+            formatDate       = {this.getDateFormat}
+            defaultDate      = {this.getDateNow()}
+            ref              = "modifiedDatePicker"
+            hintText         = "Ranged Date Picker"
+            showYearSelector = {true}
+            onChange         = {this.logDate} />
         </div>
 
         <div className="exampleBox">
           <h2>TimePicker</h2>
           <TimePicker
-            format="ampm"/>
+            format="ampm" />
           <TimePicker
-            ref="modifiedTimePicker"
-            format="24hr"
-            onChange={this.logTime}/>
+            ref      = "modifiedTimePicker"
+            format   = "24hr"
+            onChange = {this.logTime}/>
         </div>
 
         <div className="exampleBox">
@@ -753,10 +710,9 @@ module.exports = React.createClass({
           <mui.Slider step={0.1}/>
         </div>
 
-
         <div className="exampleBox">
           <h2>Menu (component build in progress)</h2>
-          <MenuNew style={{
+          <MenuNew style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
@@ -770,8 +726,8 @@ module.exports = React.createClass({
 
           <IconMenu iconButtonElement={<IconButton>{icon}</IconButton>} openDirection="top-right">
             <MenuItemNew
-              insetChildren={true}
-              leftIcon={icon}>Refresh</MenuItemNew>
+              insetChildren = {true}
+              leftIcon      = {icon}>Refresh</MenuItemNew>
             <MenuItemNew>Send Feedback More</MenuItemNew>
             <MenuItemNew checked={true}>Settings</MenuItemNew>
             <MenuItemNew checked={true}>Help</MenuItemNew>
@@ -780,9 +736,9 @@ module.exports = React.createClass({
 
 
           <MenuNew
-            desktop={true}
-            width={320}
-            style={{
+            desktop = {true}
+            width   = {320}
+            style   = {{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
@@ -810,19 +766,17 @@ module.exports = React.createClass({
 
         <div className="exampleBox">
           <h2>Menu</h2>
-          <Menu style={{
+          <Menu style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
                   position: 'relative',
                   zIndex: 0}}
-                menuItems={[
+                  menuItems={[
                   {text: <MenuItem>ASDASD</MenuItem>},
                   {text: <MenuItem>ASDASD</MenuItem>},
                   {text: <MenuItem>ASDASD</MenuItem>}
-                  ]}>
-
-          </Menu>
+                  ]} />
         </div>
 
       </div>

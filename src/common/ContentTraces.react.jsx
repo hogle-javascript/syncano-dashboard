@@ -6,6 +6,7 @@ module.exports = React.createClass({
   displayName: 'ContentTraces',
 
   render() {
+  render: function() {
     return (
       <div className="content-group">
         <ListWithOptions {...this.props} list={this.props.list}/>

@@ -67,13 +67,13 @@ export default React.createClass({
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataViewDialog::handleToggle', arguments);
 
-    let genList = (list, fieldName, value) => {
+    let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter(n => n);
 
-      if (value) {
-        arr.push(fieldName);
+      if (val) {
+        arr.push(name);
       } else {
-        arr = arr.filter(n => n != fieldName);
+        arr = arr.filter(n => n !== name);
       }
 
       return arr.join(',');
@@ -101,10 +101,10 @@ export default React.createClass({
     console.info('DataViewDialog::renderFields', this.state.class);
 
     let fields = [
-        <div className='row' style={{marginBottom: 20}}>
-          <div className='col-flex-1'>Class Fields</div>
-          <div className='col-xs-8'>Expand</div>
-        </div>],
+      <div className='row' style={{marginBottom: 20}}>
+        <div className='col-flex-1'>Class Fields</div>
+        <div className='col-xs-8'>Expand</div>
+      </div>];
       _this = this;
 
     if (this.state.class) {
@@ -180,7 +180,7 @@ export default React.createClass({
       ];
 
     let fields = null,
-      options = null;
+    let options = null;
 
     if (this.state.class) {
       fields = this.renderFields();

@@ -1,7 +1,7 @@
-let React = require('react'),
-  mui = require('material-ui'),
+import React from 'react';
+import mui from 'material-ui';
 
-  FontIcon = mui.FontIcon;
+let FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
@@ -16,18 +16,14 @@ module.exports = React.createClass({
           metaListed += key + ': ' + this.props.meta[key] + '\n';
         }
       }
-      ;
-      for (let key in this.props.args) {
+
+      for (key in this.props.args) {
         if (this.props.args.hasOwnProperty(key)) {
           argsListed += key + ': ' + this.props.args[key] + '\n';
         }
       }
     }
-    ;
 
-    //if (this.props.args && this.props.meta) {
-    //
-    //}
     return (
       <div className="card-body">
         <div className="card-section">

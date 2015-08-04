@@ -50,8 +50,8 @@ export default {
       key = undefined;
     }
 
-    let constraints = this.validatorConstraints || {},
-      attributes = this.getValidatorAttributes || this.state;
+    let constraints = this.validatorConstraints || {};
+    let attributes = this.getValidatorAttributes || this.state;
 
     if (typeof constraints === 'function') {
       constraints = constraints.call(this);
@@ -84,8 +84,10 @@ export default {
 
   },
 
-  handleFormValidation(event) {
-    event ? event.preventDefault() : null;
+  handleFormValidation: function(event) {
+    if (event) {
+      event.preventDefault();
+    }
 
     // FormMixin compatibility
     if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {

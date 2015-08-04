@@ -21,14 +21,14 @@ export default Reflux.createStore({
   getInitialState() {
     let today = this.getToday();
     let allDates = this.getAllDates();
-    let x = ['x'].concat(allDates);
+    let xColumn  = ['x'].concat(allDates);
 
     return {
       isLoading: true,
       chart: {
         data: {
           x: 'x',
-          columns: [x],
+          columns: [xColumn],
           types: {},
           groups: [[]],
           colors: {
@@ -131,8 +131,8 @@ export default Reflux.createStore({
     }
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
-    _.forEach(usage.objects, usage => {
-      if (columns[usage.source] === undefined) {
+    _.forEach(usage.objects, _usage => {
+      if (columns[_usage.source] === undefined) {
         return;
       }
 

@@ -1,19 +1,19 @@
-var React = require('react'),
+var React         = require('react'),
 
-  ThemeManager = require('material-ui/lib/styles/theme-manager')(),
+    ThemeManager  = require('material-ui/lib/styles/theme-manager')(),
 
-  mui = require('material-ui'),
-  FontIcon = mui.FontIcon,
+    mui           = require('material-ui'),
+    FontIcon      = mui.FontIcon,
 
-  ListHeader = require('../common/Lists/ListHeader.react'),
-  ListItem = require('../common/Lists/ListItem.react'),
-  List = require('../common/Lists/List.react'),
-  Dropdown = require('../common/Dropdown/Dropdown.react'),
+    ListHeader    = require('../common/Lists/ListHeader.react'),
+    ListItem      = require('../common/Lists/ListItem.react'),
+    List          = require('../common/Lists/List.react'),
+    Dropdown      = require('../common/Dropdown/Dropdown.react'),
 
-  Item = require('../common/ColumnList/Item.react'),
-  Column = require('../common/ColumnList/ItemColumn.react'),
-  Header = require('../common/ColumnList/Header.react'),
-  ColNameDesc = require('../common/ColumnList/ColNameDesc.react');
+    Item          = require('../common/ColumnList/Item.react'),
+    Column        = require('../common/ColumnList/ItemColumn.react'),
+    Header        = require('../common/ColumnList/Header.react'),
+    ColNameDesc   = require('../common/ColumnList/ColNameDesc.react');
 
 
 require('./Examples.css');
@@ -27,32 +27,32 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext() {
+  getChildContext: function() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount() {
+  componentWillMount: function() {
     ThemeManager.setPalette({
       accent1Color: Colors.deepOrange500
     });
   },
 
-  getDefaultProps() {
+  getDefaultProps: function() {
   },
 
-  getInitialState() {
+  getInitialState: function() {
     return {
       checkingState: false,
       checkedItemNumber: 0
     }
   },
 
-  componentDidMount() {
+  componentDidMount: function() {
   },
 
-  handleIconClick(id, state) {
+  handleIconClick: function(id, state) {
     var checkedItemNumber;
     if (state) {
       checkedItemNumber = ++this.state.checkedItemNumber;
@@ -68,7 +68,7 @@ module.exports = React.createClass({
     console.log('checked', checkedItemNumber)
   },
 
-  render() {
+  render: function() {
     var dummyClick = function(action) {
       console.log('Click!', action);
     };
@@ -176,15 +176,14 @@ module.exports = React.createClass({
           <div className="content-group">
             <div style={listGroupCss}>
               <Header checkedItemsNumber={this.state.checkedItemNumber} columns={columns}>
-                <FontIcon className="synicon-account-multiple-plus" handleClick={dummyClick}/>
-                <FontIcon className="synicon-home" handleClick={dummyClick}/>
+                <FontIcon className="synicon-account-multiple-plus" handleClick={dummyClick} />
+                <FontIcon className="synicon-home" handleClick={dummyClick} />
               </Header>
 
               <List viewMode={list.viewMode}>
                 <Item key="1">
                   <Column grid="1">
-                    <CheckIcon id="some_id1" icon="notifications" background="blue" width='40px'
-                               handleClick={this.handleIconClick}/>
+                    <CheckIcon id="some_id1" icon="notifications" background="blue" width='40px' handleClick={this.handleIconClick}/>
                   </Column>
                   <Column grid="5">
                     <ColNameDesc name="My Codebox" description="Description of my codebox"/>
@@ -201,8 +200,7 @@ module.exports = React.createClass({
                 </Item>
                 <Item key="2">
                   <Column grid="1">
-                    <CheckIcon id="some_id2" checkingState={this.state.checkingState} icon="notifications"
-                               background="blue" width='40px' handleClick={this.handleIconClick}/>
+                    <CheckIcon id="some_id2" checkingState={this.state.checkingState} icon="notifications" background="blue" width='40px' handleClick={this.handleIconClick}/>
                   </Column>
                   <Column grid="5">
                     <ColNameDesc name="My Codebox" description="Description of my codebox"/>

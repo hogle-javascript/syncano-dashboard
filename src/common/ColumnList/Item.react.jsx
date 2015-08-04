@@ -10,7 +10,7 @@ export default Radium(React.createClass({
   mixins: [MUI.Mixins.StylePropable],
 
   getDefaultProps() {
-    zDepth: 1
+    return {zDepth: 1};
   },
 
   getStyles() {

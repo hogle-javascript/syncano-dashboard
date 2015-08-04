@@ -14,19 +14,14 @@ export default React.createClass({
     switch (cardType) {
       case 'AmericanExpress':
         return <AmericanExpress style={cardStyle}/>;
-        break;
       case 'DinersClub':
         return <DinersClub style={cardStyle}/>;
-        break;
       case 'Discover':
         return <Discover style={cardStyle}/>;
-        break;
       case 'JCB':
         return <JCB style={cardStyle}/>;
-        break;
       case 'MasterCard':
         return <MasterCard style={cardStyle}/>;
-        break;
       default:
         return <Visa style={cardStyle}/>;
     }

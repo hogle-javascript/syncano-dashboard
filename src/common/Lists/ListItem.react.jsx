@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
   handleItemMenuClick(action) {
     // We need to add here information about *item*
-    action['item'] = this.props.item;
+    action.item = this.props.item;
     this.props.handleItemMenuClick(action);
   },
 
@@ -68,8 +68,8 @@ module.exports = React.createClass({
     });
 
     if (this.state.animateInk) {
-      inkStyle['top'] = "50px";
-      inkStyle['left'] = "50px";
+      inkStyle.top = "50px";
+      inkStyle.left = "50px";
     }
 
     let dropdownComponent = null;

@@ -97,9 +97,8 @@ export default React.createClass({
       return this.state.secondInstance;
     } else if (activeGroup) {
       return activeGroup;
-    } else {
-      return null
     }
+    return null;
   },
 
   render() {

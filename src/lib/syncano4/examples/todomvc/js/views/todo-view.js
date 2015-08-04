@@ -1,7 +1,7 @@
 /*global Backbone, jQuery, _, ENTER_KEY, ESC_KEY */
 var app = app || {};
 
-(function ($) {
+(function($) {
 	'use strict';
 
 	// Todo Item View
@@ -29,14 +29,14 @@ var app = app || {};
 		// there's a one-to-one correspondence between a **Todo** and a
 		// **TodoView** in this app, we set a direct reference on the model for
 		// convenience.
-		initialize( ) {
+		initialize: function() {
 			this.listenTo(this.model, 'change', this.render);
 			this.listenTo(this.model, 'destroy', this.remove);
 			this.listenTo(this.model, 'visible', this.toggleVisible);
 		},
 
 		// Re-render the titles of the todo item.
-		render( ) {
+		render: function() {
 			// Backbone LocalStorage is adding `id` attribute instantly after
 			// creating a model.  This causes our TodoView to render twice. Once
 			// after creating a model and once on `id` change.  We want to
@@ -55,29 +55,29 @@ var app = app || {};
 			return this;
 		},
 
-		toggleVisible( ) {
+		toggleVisible: function() {
 			this.$el.toggleClass('hidden', this.isHidden());
 		},
 
-		isHidden( ) {
+		isHidden: function() {
 			return this.model.get('completed') ?
 				app.TodoFilter === 'active' :
 				app.TodoFilter === 'completed';
 		},
 
 		// Toggle the `"completed"` state of the model.
-		toggleCompleted( ) {
+		toggleCompleted: function() {
 			this.model.toggle();
 		},
 
 		// Switch this view into `"editing"` mode, displaying the input field.
-		edit( ) {
+		edit: function() {
 			this.$el.addClass('editing');
 			this.$input.focus();
 		},
 
 		// Close the `"editing"` mode, saving changes to the todo.
-		close( ) {
+		close: function() {
 			var value = this.$input.val();
 			var trimmedValue = value.trim();
 
@@ -108,7 +108,7 @@ var app = app || {};
 		},
 
 		// If you hit `enter`, we're through editing the item.
-		updateOnEnter( e) {
+		updateOnEnter: function(e) {
 			if (e.which === ENTER_KEY) {
 				this.close();
 			}
@@ -116,7 +116,7 @@ var app = app || {};
 
 		// If you're pressing `escape` we revert your change by simply leaving
 		// the `editing` state.
-		revertOnEscape( e) {
+		revertOnEscape: function(e) {
 			if (e.which === ESC_KEY) {
 				this.$el.removeClass('editing');
 				// Also reset the hidden input back to the original value.
@@ -125,7 +125,7 @@ var app = app || {};
 		},
 
 		// Remove the item, destroy the model from *localStorage* and delete its view.
-		clear( ) {
+		clear: function() {
 			this.model.destroy();
 		}
 	});

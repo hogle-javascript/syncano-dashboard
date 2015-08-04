@@ -51,8 +51,8 @@ export default React.createClass({
   },
 
   handleRun() {
-    let payloadErrors = this.refs.tracePanel.state.errors,
-      payloadIsValid = typeof payloadErrors.payloadValue === 'undefined' ? true : false;
+    let payloadErrors = this.refs.tracePanel.state.errors;
+    let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined' ? true : false;
     if (payloadIsValid) {
       Actions.runCodeBox({
         id: this.state.currentCodeBox.id,

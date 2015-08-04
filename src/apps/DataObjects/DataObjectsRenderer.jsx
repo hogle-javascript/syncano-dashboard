@@ -83,7 +83,7 @@ export default {
     return items.map((item, index) => {
       let row = {};
 
-      let columnsComponents = columns.map((column, index) => {
+      let columnsComponents = columns.map((column, i) => {
 
         if (!column.checked) {
           return;
@@ -104,11 +104,9 @@ export default {
             value = this.renderColumnDate(value.value);
           }
 
-        } else {
+        } else if (renderer)  {
           // Simple string or renderer
-          if (renderer) {
-            value = renderer(item[column.id])
-          }
+          value = renderer(item[column.id]);
         }
 
         if (typeof value === 'boolean' || typeof value === 'number') {
@@ -122,7 +120,7 @@ export default {
 
         return (
           <MUI.TableRowColumn
-            key={`${column.id}-${index}`}
+            key={`${column.id}-${i}`}
             style={{width: column.width}}>
             {value}
           </MUI.TableRowColumn>

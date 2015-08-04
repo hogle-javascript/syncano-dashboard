@@ -16,15 +16,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items: this.props.items,
-      isLoading: this.props.items ? false : true
+      items    : this.props.items,
+      isLoading: this.props.items === null
     };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.items ? false : true
+      items     : nextProps.items,
+      isLoading : nextProps.items === null
     })
   },
 

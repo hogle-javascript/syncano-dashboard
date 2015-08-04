@@ -278,12 +278,12 @@ export default Radium(React.createClass({
                 label='Cancel'
                 onTouchTap={this.handleCancel}/>
               <MUI.RaisedButton
-                ref='submit'
-                key='confirm'
-                label='Confirm'
-                disable={this.state.instance ? false : true}
-                primary={true}
-                onTouchTap={this.handleFormValidation}/>
+                ref        = 'submit'
+                key        = 'confirm'
+                label      = 'Confirm'
+                disable    = {this.state.instance === null}
+                primary    = {true}
+                onTouchTap = {this.handleFormValidation} />
             </div>
           </div>
         </Common.Container>

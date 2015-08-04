@@ -49,16 +49,15 @@ module.exports = React.createClass({
       );
     } else if ("payload" in this.props.item && this.props.item.payload.length === 0) {
       return false;
-    } else {
-      return (
-        <div
-          className={cssClasses}
-          onClick={this.onItemClick}>
-          <div className="accordion-list-item-content">
-            <div className="accordion-list-item-text">{this.props.item.displayName}</div>
-          </div>
-        </div>
-      );
     }
+    return (
+      <div
+        className = {cssClasses}
+        onClick   = {this.onItemClick}>
+        <div className="accordion-list-item-content">
+          <div className="accordion-list-item-text">{this.props.item.displayName}</div>
+        </div>
+      </div>
+    );
   }
 });
