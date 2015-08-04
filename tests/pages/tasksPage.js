@@ -1,4 +1,4 @@
-var channelsCommands = {
+var tasksCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
@@ -6,10 +6,10 @@ var channelsCommands = {
 };
 
 module.exports = {
-  commands: [channelsCommands],
+  commands: [tasksCommands],
   elements: {
-    channelListItem: {
-      selector: '//div[text()="channel_123"]',
+    scheduleListItem: {
+      selector: '//div[text()="schedule_123"]',
       locateStrategy: 'xpath'
     }
   }

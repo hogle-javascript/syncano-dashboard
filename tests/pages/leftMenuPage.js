@@ -23,6 +23,10 @@ module.exports = {
     channels: {
       selector: '//div[@tabindex="0"]//span[text()="Channels"]',
       locateStrategy: 'xpath'
+    },
+    tasks: {
+      selector: '//div[@tabindex="0"]//span[text()="Tasks"]',
+      locateStrategy: 'xpath'
     }
   }
 };
