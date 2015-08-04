@@ -71,8 +71,8 @@ export default React.createClass({
 
   handleSuccessfullValidation() {
     Actions.passwordSignIn({
-      email    : this.state.email,
-      password : this.state.password
+      email: this.state.email,
+      password: this.state.password
     });
   },
 
