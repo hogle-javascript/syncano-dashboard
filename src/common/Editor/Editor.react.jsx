@@ -54,8 +54,8 @@ module.exports = React.createClass({
   componentDidMount: function() {
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
-    this.editor.getSession().setMode('ace/mode/'+this.props.mode);
-    this.editor.setTheme('ace/theme/'+this.props.theme);
+    this.editor.getSession().setMode('ace/mode/' + this.props.mode);
+    this.editor.setTheme('ace/theme/' + this.props.theme);
     this.editor.setFontSize(this.props.fontSize);
     this.editor.on('change', this.onChange);
     this.editor.setValue(this.props.value);
@@ -74,8 +74,8 @@ module.exports = React.createClass({
 
   componentWillReceiveProps: function(nextProps) {
     this.editor = ace.edit(nextProps.name);
-    this.editor.getSession().setMode('ace/mode/'+nextProps.mode);
-    this.editor.setTheme('ace/theme/'+nextProps.theme);
+    this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
+    this.editor.setTheme('ace/theme/' + nextProps.theme);
     this.editor.setFontSize(nextProps.fontSize);
     this.editor.setOption('maxLines', nextProps.maxLines);
     this.editor.setOption('readOnly', nextProps.readOnly);

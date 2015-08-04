@@ -82,7 +82,7 @@ export default React.createClass({
               ref               = 'email'
               name              = 'email'
               fullWidth         = {true}
-              disabled          = {this.hasEditMode() ? true : false}
+              disabled          = {this.hasEditMode()}
               valueLink         = {this.linkState('email')}
               errorText         = {this.getValidationMessages('email').join(' ')}
               hintText          = 'Email of the administrator'

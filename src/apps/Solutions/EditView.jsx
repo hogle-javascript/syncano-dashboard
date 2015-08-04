@@ -46,7 +46,7 @@ export default React.createClass({
   componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
 
-    if (this.getParams().action == 'install') {
+    if (this.getParams().action === 'install') {
       this.handleInstallSolution();
     }
 

@@ -76,11 +76,11 @@ module.exports = React.createClass({
       return <DropdownNotifiItem
                items={this.props.items}
                isLoading={this.props.isLoading} />
-    } else {
-      return <MaterialDropdownItem
+    }
+
+    return <MaterialDropdownItem
                items         = {this.props.items}
                headerContent = {this.props.headerContent} />
-    }
   },
 
   renderIcon: function() {

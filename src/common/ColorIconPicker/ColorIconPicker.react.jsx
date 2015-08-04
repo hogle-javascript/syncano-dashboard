@@ -106,7 +106,7 @@ export default Radium(React.createClass({
                  className = {`synicon-${this.state.selectedIcon}`}
                  style     = {{color: 'white'}} />;
     }
-    
+
     return (
       <MUI.Paper
         id      = {color}

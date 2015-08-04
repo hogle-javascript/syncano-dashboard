@@ -55,7 +55,7 @@ export default Radium(React.createClass({
 
   toggleTrace(traceId) {
     console.info('CodeBoxesTraces::toggleTrace', traceId);
-    if (this.state.visibleTraceId == traceId) {
+    if (this.state.visibleTraceId === traceId) {
       this.setState({visibleTraceId: null});
     } else {
       this.setState({visibleTraceId: traceId});
@@ -87,7 +87,7 @@ export default Radium(React.createClass({
       }
     }[item.status];
 
-    if (item.id == this.state.visibleTraceId) {
+    if (item.id === this.state.visibleTraceId) {
       styles.traceResult = {
         maxHeight: '500px',
         marginBottom : 15,

@@ -88,7 +88,7 @@ module.exports = React.createClass({
                           label   = {item.buttonsText[1]}
                         />
                       </div>;
-          return(
+          return (
             <ListItem
               leftIcon = {icon}
               disabled = {true}

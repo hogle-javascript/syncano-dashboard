@@ -10,10 +10,6 @@ var React               = require('react'),
 
     DropdownMenuItem    = require('./DropdownMenuItem.react');
 
-
-
-
-
 module.exports = React.createClass({
 
   displayName: 'Dropdown',

@@ -43,11 +43,7 @@ export default React.createClass({
     Actions.createSolution({
       label       : this.state.label,
       description : this.state.description,
-      public      : this.state.public ? true : false
-      //metadata: {
-      //  color     : ColorStore.getRandomColorName(),
-      //  icon      : IconStore.getRandomIconPickerIcon()
-      //}
+      public      : this.state.public
     });
   },
 
@@ -88,7 +84,7 @@ export default React.createClass({
             ref               = 'label'
             name              = 'label'
             fullWidth         = {true}
-            disabled          = {this.hasEditMode() ? true : false}
+            disabled          = {this.hasEditMode()}
             valueLink         = {this.linkState('label')}
             errorText         = {this.getValidationMessages('label').join(' ')}
             hintText          = 'Short name for your Solution'
