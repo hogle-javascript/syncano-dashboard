@@ -101,7 +101,7 @@ export default React.createClass({
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
-      <Container>
+      <div>
         <CodeBoxDialog />
         {this.getDialogs()}
 
@@ -138,7 +138,7 @@ export default React.createClass({
           items={this.state.items}
           emptyItemHandleClick={this.showCodeBoxDialog}
           emptyItemContent="Create a CodeBox"/>
-      </Container>
+      </div>
     );
   }
 });

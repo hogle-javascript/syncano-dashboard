@@ -48,6 +48,10 @@ export default React.createClass({
     );
   },
 
+  handleBackClick() {
+    this.transitionTo('codeboxes', this.getParams());
+  },
+
   getStyles() {
     return {
       subTabsHeader: {
@@ -109,13 +113,42 @@ export default React.createClass({
   },
 
   render() {
-    let codeBoxLabel = this.state.currentCodeBox !== null ? 'CodeBox: ' + this.state.currentCodeBox.label : null;
+    let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
 
     return (
-      <Container.Profile headerText={codeBoxLabel}>
-        {this.renderTabs()}
-        <RouteHandler/>
-      </Container.Profile>
+      <div style={{margin: '65px auto', width: '80%'}}>
+        <MUI.Toolbar style={{
+          position: 'fixed',
+          top: 64,
+          right: 0,
+          paddingLeft: 256,
+          background: 'rgba(215,215,215,0.6)',
+          padding: '0px 32px 0 24px'}}>
+          <MUI.ToolbarGroup>
+            <MUI.IconButton
+              iconClassName="synicon-arrow-left"
+              tooltip="Go back to CodeBoxes list"
+              tooltipPosition="bottom-right"
+              onClick={this.handleBackClick}
+              touch={true}
+              style={{marginTop: 4}}
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup>
+            <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup float="right">
+          </MUI.ToolbarGroup>
+
+        </MUI.Toolbar>
+
+        <div style={{paddingTop: 32}}>
+          {this.renderTabs()}
+          <RouteHandler/>
+        </div>
+      </div>
     );
   }
 });
