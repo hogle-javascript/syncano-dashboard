@@ -25,8 +25,8 @@ export default Radium(React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func.isRequired,
-    muiTheme : React.PropTypes.object
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
   },
 
   componentDidMount() {
@@ -45,9 +45,9 @@ export default Radium(React.createClass({
 
   handleInstanceActive() {
     if (InstancesStore.getAllInstances()) {
-      let currentInstance     = SessionStore.instance,
-          instancesList       = InstancesStore.getAllInstances(true),
-          instanceActiveIndex = null;
+      let currentInstance = SessionStore.instance;
+      let instancesList = InstancesStore.getAllInstances(true);
+      let instanceActiveIndex = null;
 
       instancesList.some((event, index) => {
         if (event.name === currentInstance.name) {
@@ -63,16 +63,16 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       instanceToolbarGroup: {
-        display        : '-webkit-box; display: flex',
-        float          : 'none',
-        alignItems     : 'center',
-        justifyContent : 'center',
-        maxWidth       : 320,
-        width          : '100%',
-        marginLeft     : '-32px'
+        display: '-webkit-box; display: flex',
+        float: 'none',
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxWidth: 320,
+        width: '100%',
+        marginLeft: '-32px'
       },
       dropdownLabelUnderline: {
-        display        : 'none'
+        display: 'none'
       },
       dropdownLabelContainer: {
         display        : '-webkit-box; display: flex',
@@ -90,17 +90,17 @@ export default Radium(React.createClass({
         fontWeight     : 400
       },
       dropdownInstanceIcon: {
-        minWidth       : 32,
-        height         : 32,
-        fontSize       : 18,
-        lineHeight     : '20px',
-        display        : '-webkit-inline-flex; display: inline-flex',
-        alignItems     : 'center',
-        justifyContent : 'center',
-        borderRadius   : '50%',
-        color          : '#fff',
+        minWidth: 32,
+        height: 32,
+        fontSize: 18,
+        lineHeight: '20px',
+        display: '-webkit-inline-flex; display: inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        color: '#fff',
         backgroundColor: 'green',
-        margin         : '8px 16px 8px 0'
+        margin: '8px 16px 8px 0'
       },
       dropdownMenuItem: {
         height      : 'auto',
@@ -110,27 +110,27 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles        = this.getStyles(),
-        instance      = SessionStore.instance,
-        instancesList = InstancesStore.getAllInstances(true);
+    let styles = this.getStyles(),
+      instance = SessionStore.instance,
+      instancesList = InstancesStore.getAllInstances(true);
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
     let dropDownMenuItems = instancesList.map((item, index) => {
-    let iconBackground    = {
+      let iconBackground = {
           backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND
         },
-        icon             = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON,
-        iconClassName    = 'synicon-' + icon,
-        text             = <div style={styles.dropdownLabelContainer}>
-                             <MUI.FontIcon
-                               className = {iconClassName}
-                               style     = {MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)} />
+        icon = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON,
+        iconClassName = 'synicon-' + icon,
+        text = <div style={styles.dropdownLabelContainer}>
+          <MUI.FontIcon
+            className={iconClassName}
+            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
 
-                             {item.name}
-                           </div>;
+          {item.name}
+        </div>;
 
       return {
         payload: index + '',

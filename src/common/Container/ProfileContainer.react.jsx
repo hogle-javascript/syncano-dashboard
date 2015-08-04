@@ -10,15 +10,15 @@ export default React.createClass({
   getStyles() {
     return {
       container: {
-        marginTop    : 20,
+        marginTop : 20,
         marginBottom : 96,
-        marginLeft   : 300,
+        marginLeft : 300,
       },
       header: {
         paddingBottom : 48,
-        color         : 'rgba(0, 0, 0, 0.87)',
-        fontSize      : 20,
-        lineHeight    : '24px'
+        color : 'rgba(0, 0, 0, 0.87)',
+        fontSize : 20,
+        lineHeight : '24px'
       }
     }
   },
@@ -28,8 +28,8 @@ export default React.createClass({
 
     return (
       <div
-        className = "container"
-        style     = {styles.container}>
+        className="container"
+        style={styles.container}>
         <div className="row align-center">
           <div className="col-flex-1">
             <div>

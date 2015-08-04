@@ -1,17 +1,14 @@
-var React               = require('react'),
-    classNames          = require('classnames'),
-    OutsideClickHandler = require('react-outsideclickhandler'),
+let React = require('react'),
+  classNames = require('classnames'),
+  OutsideClickHandler = require('react-outsideclickhandler'),
 
-    Constants           = require('../../constants/Constants'),
+  Constants = require('../../constants/Constants'),
 
-    mui                 = require('material-ui'),
-    FontIcon            = mui.FontIcon,
-    Mixins              = require('../../mixins/mixins'),
+  mui = require('material-ui'),
+  FontIcon = mui.FontIcon,
+  Mixins = require('../../mixins/mixins'),
 
-    DropdownMenuItem    = require('./DropdownMenuItem.react');
-
-
-
+  DropdownMenuItem = require('./DropdownMenuItem.react');
 
 
 module.exports = React.createClass({
@@ -38,65 +35,65 @@ module.exports = React.createClass({
     iconStyle: React.PropTypes.object,
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       iconStyle: {
-        width  : "18px",
-        height : "18px",
-        fill   : "#FFF",
+        width: "18px",
+        height: "18px",
+        fill: "#FFF",
       }
     };
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       icon: this.props.icon || 'dots-vertical',
       isOpen: false,
     }
   },
 
-  toggleOpenClose: function (e) {
+  toggleOpenClose(e) {
     this.setState({isOpen: !this.state.isOpen});
   },
 
-  close: function () {
+  close() {
     this.setState({'isOpen': false});
   },
 
-  render: function () {
+  render() {
 
-    var cssClasses = classNames({
-      'dropdown-menu'         : true,
-      'dropdown-menu-visible' : this.state.isOpen,
+    let cssClasses = classNames({
+      'dropdown-menu': true,
+      'dropdown-menu-visible': this.state.isOpen,
     });
 
-    var headerContent;
+    let headerContent;
 
     if (this.props.headerContent) {
-      var headerIcon = <FontIcon
-                         className = {this.props.headerContent.icon || "synicon-account-circle"}
-                         style     = {{width: "60px", height: "60px", color: "#0091EA"}} />
+      let headerIcon = <FontIcon
+        className={this.props.headerContent.icon || "synicon-account-circle"}
+        style={{width: "60px", height: "60px", color: "#0091EA"}}/>
       headerContent =
-      <div className="account-group">
-        <div className="account-image">{headerIcon}</div>
-        <div className="account-text">
-          <div className="account-name">{this.props.headerContent.userFullName}</div>
-          <div className="account-email">{this.props.headerContent.userEmail}</div>
+        <div className="account-group">
+          <div className="account-image">{headerIcon}</div>
+          <div className="account-text">
+            <div className="account-name">{this.props.headerContent.userFullName}</div>
+            <div className="account-email">{this.props.headerContent.userEmail}</div>
+          </div>
         </div>
-      </div>
     }
 
-    var items = this.props.items.map(function (item, i) {
+    let items = this.props.items.map(function(item, i) {
       return <DropdownMenuItem key={item.name + i} action={item} handleItemClick={item.handleItemClick}/>
     }.bind(this));
 
     return (
-      <OutsideClickHandler onOutsideClick={this.close} >
+      <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
           <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
             <FontIcon
-              className = {"synicon-" + this.state.icon}
-              style     = {this.props.iconStyle} />
+              className={"synicon-" + this.state.icon}
+              style={this.props.iconStyle}/>
           </div>
           <div className={cssClasses}>
             <div className="dropdown-menu-section">

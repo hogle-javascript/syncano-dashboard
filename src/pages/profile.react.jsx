@@ -22,20 +22,20 @@ export default React.createClass({
       },
       tabs: {
         width: 600,
-        textAlign: 'left',
+        textAlign: 'left'
       },
       tab: {
         //textAlign: 'left',
         color: '#444',
-        fontSize: '1.1rem',
+        fontSize: '1.1rem'
       },
     }
   },
 
   getInitialState() {
     return {
-      selectedIndex : 0,
-      headerText    : 'Profile',
+      selectedIndex: 0,
+      headerText: 'Profile',
     };
   },
 
@@ -44,8 +44,8 @@ export default React.createClass({
 
     let activeView = this.getActiveView();
     this.setState({
-      selectedIndex : activeView.index,
-      headerText    : activeView.text,
+      selectedIndex: activeView.index,
+      headerText: activeView.text
     })
   },
 
@@ -73,16 +73,16 @@ export default React.createClass({
 
   menuItems() {
     return [
-      { type: MUI.MenuItem.Types.SUBHEADER, text: 'Main Settings' },
-      { route: 'profile-settings', text: 'Profile' },
-      { route: 'profile-authentication', text: 'Authentication' },
-      { route: 'profile-invitations', text: 'Invitations' },
+      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Main Settings'},
+      {route: 'profile-settings', text: 'Profile'},
+      {route: 'profile-authentication', text: 'Authentication'},
+      {route: 'profile-invitations', text: 'Invitations'},
 
-      { type: MUI.MenuItem.Types.SUBHEADER, text: 'Billing' },
-      { route: 'profile-billing-plan', text: 'Billing plan' },
-      { route: 'profile-billing-payment', text: 'Payment methods' },
-      { route: 'profile-billing-invoices', text: 'Invoices' },
-      { route: 'profile-billing-address', text: 'Billing address' },
+      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Billing'},
+      {route: 'profile-billing-plan', text: 'Billing plan'},
+      {route: 'profile-billing-payment', text: 'Payment methods'},
+      {route: 'profile-billing-invoices', text: 'Invoices'},
+      {route: 'profile-billing-address', text: 'Billing address'},
     ];
   },
 
@@ -91,10 +91,10 @@ export default React.createClass({
     return (
       <div>
         <MUI.LeftNav
-          ref           = "leftNav"
-          selectedIndex = {this.state.selectedIndex || 0}
-          style         = {{marginTop: 64}} menuItems={this.menuItems()}
-          onChange      = {this.handleTabActive} />
+          ref="leftNav"
+          selectedIndex={this.state.selectedIndex || 0}
+          style={{marginTop: 64}} menuItems={this.menuItems()}
+          onChange={this.handleTabActive}/>
 
         <Container.Profile headerText={this.state.headerText} style={{marginLeft: 304}}>
           <Router.RouteHandler />

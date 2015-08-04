@@ -8,8 +8,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      menuItems   : [],
-      user        : SessionStore.getUser({})
+      menuItems: [],
+      user: SessionStore.getUser({})
     }
   },
 

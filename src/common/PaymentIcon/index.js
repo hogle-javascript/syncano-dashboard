@@ -7,10 +7,10 @@ import MasterCard from './MasterCard.react';
 import Visa from './Visa.react';
 
 PaymentIcon.AmericanExpress = AmericanExpress;
-PaymentIcon.DinersClub      = DinersClub;
-PaymentIcon.Discover        = Discover;
-PaymentIcon.JCB             = JCB;
-PaymentIcon.MasterCard      = MasterCard;
-PaymentIcon.Visa            = Visa;
+PaymentIcon.DinersClub = DinersClub;
+PaymentIcon.Discover = Discover;
+PaymentIcon.JCB = JCB;
+PaymentIcon.MasterCard = MasterCard;
+PaymentIcon.Visa = Visa;
 
 export default PaymentIcon;

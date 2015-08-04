@@ -22,8 +22,8 @@ export default React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor : React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule']),
-    objectId  : React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
+    tracesFor: React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule']),
+    objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
   mixins: [
@@ -36,8 +36,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      tracesFor  : 'codebox',
-      showHeader : false
+      tracesFor: 'codebox',
+      showHeader: false
     }
   },
 
@@ -47,14 +47,14 @@ export default React.createClass({
 
   render() {
     let headerText = this.props.showHeader ? this.props.tracesFor.charAt(0).toUpperCase() +
-                     this.props.tracesFor.slice(1) + ': ' + this.props.objectId : null;
+    this.props.tracesFor.slice(1) + ': ' + this.props.objectId : null;
 
     return (
       <Container.Profile headerText={headerText}>
         <TracesList
-          tracesFor = {this.props.tracesFor}
-          name      = "Traces"
-          items     = {this.state.traces} />
+          tracesFor={this.props.tracesFor}
+          name="Traces"
+          items={this.state.traces}/>
       </Container.Profile>
     );
   }

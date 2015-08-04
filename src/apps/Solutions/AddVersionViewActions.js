@@ -1,67 +1,67 @@
 import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions({}, {
-  fetch             : {},
-  setInstance       : {},
-  setInstances      : {},
-  fetchInstanceData : {},
+  fetch: {},
+  setInstance: {},
+  setInstances: {},
+  fetchInstanceData: {},
 
   fetchInstances: {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Instances.list'
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Instances.list'
   },
   fetchInstance: {
-    asyncResult : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Instances.set'
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Instances.set'
   },
-  fetchClasses : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Classes.list'
+  fetchClasses: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Classes.list'
   },
-  fetchTriggers : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Triggers.list'
+  fetchTriggers: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Triggers.list'
   },
-  fetchSchedules : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Schedules.list'
+  fetchSchedules: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Schedules.list'
   },
-  fetchWebhooks : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Webhooks.list'
+  fetchWebhooks: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Webhooks.list'
   },
-  fetchCodeBoxes : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.CodeBoxes.list'
+  fetchCodeBoxes: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.CodeBoxes.list'
   },
-  fetchChannels : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Channels.list'
+  fetchChannels: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Channels.list'
   },
-  fetchDataViews : {
-    asyncResult : true,
-    loading     : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.DataViews.list'
+  fetchDataViews: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.DataViews.list'
   },
-  createVersion : {
-    asyncResult : true,
-    children    : ['completed', 'failure'],
-    method      : 'Syncano.Actions.Solutions.createVersion'
+  createVersion: {
+    asyncResult: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.Solutions.createVersion'
   },
 });

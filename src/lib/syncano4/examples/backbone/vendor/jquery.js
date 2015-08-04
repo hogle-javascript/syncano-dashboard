@@ -237,7 +237,7 @@ jQuery.fn = jQuery.prototype = {
 	splice: arr.splice
 };
 
-jQuery.extend = 
+jQuery.extend =
 /**
   * Description
   * @method extend
@@ -319,7 +319,7 @@ jQuery.extend({
 	 * Description
 	 * @method error
 	 * @param {} msg
-	 * @return 
+	 * @return
 	 */
 	error: function( msg ) {
 		throw new Error( msg );
@@ -328,7 +328,7 @@ jQuery.extend({
 	/**
 	 * Description
 	 * @method noop
-	 * @return 
+	 * @return
 	 */
 	noop: function() {},
 
@@ -428,7 +428,7 @@ jQuery.extend({
 	 * Description
 	 * @method globalEval
 	 * @param {} code
-	 * @return 
+	 * @return
 	 */
 	globalEval: function( code ) {
 		var script,
@@ -765,7 +765,7 @@ var Sizzle =
 /**
  * Description
  * @method unloadHandler
- * @return 
+ * @return
  */
 var i,
 	support,
@@ -1111,7 +1111,7 @@ function markFunction( fn ) {
  * Support testing using an element
  * @method assert
  * @param {Function} fn Passed the created div and expects a boolean result
- * @return 
+ * @return
  */
 function assert( fn ) {
 	var div = document.createElement("div");
@@ -1135,7 +1135,7 @@ function assert( fn ) {
  * @method addHandle
  * @param {String} attrs Pipe-separated list of attributes
  * @param {Function} handler The method that will be applied
- * @return 
+ * @return
  */
 function addHandle( attrs, handler ) {
 	var arr = attrs.split("|"),
@@ -1244,7 +1244,7 @@ support = Sizzle.support = {};
  * @param {Element|Object} elem An element or a document
  * @returns {Boolean} True iff elem is a non-HTML XML node
  */
-isXML = 
+isXML =
 /**
   * Description
   * @method isXML
@@ -1263,7 +1263,7 @@ isXML =
  * @param {Element|Object} [doc] An element or document object to use to set the document
  * @returns {Object} Returns the current document
  */
-setDocument = 
+setDocument =
 /**
   * Description
   * @method setDocument
@@ -1339,7 +1339,7 @@ setDocument =
 		 * Description
 		 * @param {} id
 		 * @param {} context
-		 * @return 
+		 * @return
 		 */
 		Expr.find["ID"] = function( id, context ) {
 			if ( typeof context.getElementById !== "undefined" && documentIsHTML ) {
@@ -1751,7 +1751,7 @@ Sizzle.attr = function( elem, name ) {
  * Description
  * @method error
  * @param {} msg
- * @return 
+ * @return
  */
 Sizzle.error = function( msg ) {
 	throw new Error( "Syntax error, unrecognized expression: " + msg );
@@ -1796,7 +1796,7 @@ Sizzle.uniqueSort = function( results ) {
  * Utility function for retrieving the text value of an array of DOM nodes
  * @param {Array|Element} elem
  */
-getText = 
+getText =
 /**
   * Description
   * @method getText
@@ -2429,13 +2429,13 @@ for ( i in { submit: true, reset: true } ) {
 /**
  * Description
  * @method setFilters
- * @return 
+ * @return
  */
 function setFilters() {}
 setFilters.prototype = Expr.filters = Expr.pseudos;
 Expr.setFilters = new setFilters();
 
-tokenize = 
+tokenize =
 /**
   * Description
   * @method tokenize
@@ -2939,7 +2939,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 		superMatcher;
 }
 
-compile = 
+compile =
 /**
   * Description
   * @method compile
@@ -2986,7 +2986,7 @@ compile =
  * @param {Array} [results]
  * @param {Array} [seed] A set of elements to match against
  */
-select = 
+select =
 /**
   * Description
   * @method select
@@ -3295,7 +3295,7 @@ var rootjQuery,
 	// Strict HTML recognition (#11290: must start with <)
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
 
-	init = 
+	init =
 /**
   * Description
   * @method init
@@ -3786,7 +3786,7 @@ jQuery.Callbacks = function( options ) {
 	 * Description
 	 * @method fire
 	 * @param {} data
-	 * @return 
+	 * @return
 	 */
 	var // Last fire value (for non-forgettable lists)
 		memory,
@@ -4219,7 +4219,7 @@ jQuery.extend({
 	 * Description
 	 * @method holdReady
 	 * @param {} hold
-	 * @return 
+	 * @return
 	 */
 	holdReady: function( hold ) {
 		if ( hold ) {
@@ -4234,7 +4234,7 @@ jQuery.extend({
 	 * Description
 	 * @method ready
 	 * @param {} wait
-	 * @return 
+	 * @return
 	 */
 	ready: function( wait ) {
 
@@ -4265,7 +4265,7 @@ jQuery.extend({
 /**
  * The ready event handler and self cleanup method
  * @method completed
- * @return 
+ * @return
  */
 function completed() {
 	document.removeEventListener( "DOMContentLoaded", completed, false );
@@ -4311,7 +4311,7 @@ jQuery.ready.promise();
 
 // Multifunctional method to get and set values of a collection
 // The value/s can optionally be executed if it's a function
-var access = 
+var access =
 /**
   * Description
   * @method access
@@ -4404,7 +4404,7 @@ jQuery.acceptData = function( owner ) {
 /**
  * Description
  * @method Data
- * @return 
+ * @return
  */
 function Data() {
 	// Support: Android<4,
@@ -4568,7 +4568,7 @@ Data.prototype = {
 	 * @method remove
 	 * @param {} owner
 	 * @param {} key
-	 * @return 
+	 * @return
 	 */
 	remove: function( owner, key ) {
 		var i, name, camel,
@@ -4623,7 +4623,7 @@ Data.prototype = {
 	 * Description
 	 * @method discard
 	 * @param {} owner
-	 * @return 
+	 * @return
 	 */
 	discard: function( owner ) {
 		if ( owner[ this.expando ] ) {
@@ -4715,7 +4715,7 @@ jQuery.extend({
 	 * @method removeData
 	 * @param {} elem
 	 * @param {} name
-	 * @return 
+	 * @return
 	 */
 	removeData: function( elem, name ) {
 		data_user.remove( elem, name );
@@ -4855,7 +4855,7 @@ jQuery.extend({
 	 * @param {} elem
 	 * @param {} type
 	 * @param {} data
-	 * @return 
+	 * @return
 	 */
 	queue: function( elem, type, data ) {
 		var queue;
@@ -4881,7 +4881,7 @@ jQuery.extend({
 	 * @method dequeue
 	 * @param {} elem
 	 * @param {} type
-	 * @return 
+	 * @return
 	 */
 	dequeue: function( elem, type ) {
 		type = type || "fx";
@@ -4889,7 +4889,7 @@ jQuery.extend({
 		/**
 		 * Description
 		 * @method next
-		 * @return 
+		 * @return
 		 */
 		var queue = jQuery.queue( elem, type ),
 			startLength = queue.length,
@@ -5001,7 +5001,7 @@ jQuery.fn.extend({
 		/**
 		 * Description
 		 * @method resolve
-		 * @return 
+		 * @return
 		 */
 		var tmp,
 			count = 1,
@@ -5111,7 +5111,7 @@ function returnFalse() {
 /**
  * Description
  * @method safeActiveElement
- * @return 
+ * @return
  */
 function safeActiveElement() {
 	try {
@@ -5135,7 +5135,7 @@ jQuery.event = {
 	 * @param {} handler
 	 * @param {} data
 	 * @param {} selector
-	 * @return 
+	 * @return
 	 */
 	add: function( elem, types, handler, data, selector ) {
 
@@ -5166,7 +5166,7 @@ jQuery.event = {
 			events = elemData.events = {};
 		}
 		if ( !(eventHandle = elemData.handle) ) {
-			eventHandle = 
+			eventHandle =
 /**
   * Description
   * @method handle
@@ -5258,7 +5258,7 @@ jQuery.event = {
 	 * @param {} handler
 	 * @param {} selector
 	 * @param {} mappedTypes
-	 * @return 
+	 * @return
 	 */
 	remove: function( elem, types, handler, selector, mappedTypes ) {
 
@@ -5705,7 +5705,7 @@ jQuery.event = {
 			/**
 			 * Description
 			 * @method trigger
-			 * @return 
+			 * @return
 			 */
 			trigger: function() {
 				if ( this !== safeActiveElement() && this.focus ) {
@@ -5719,7 +5719,7 @@ jQuery.event = {
 			/**
 			 * Description
 			 * @method trigger
-			 * @return 
+			 * @return
 			 */
 			trigger: function() {
 				if ( this === safeActiveElement() && this.blur ) {
@@ -5734,7 +5734,7 @@ jQuery.event = {
 			/**
 			 * Description
 			 * @method trigger
-			 * @return 
+			 * @return
 			 */
 			trigger: function() {
 				if ( this.type === "checkbox" && this.click && jQuery.nodeName( this, "input" ) ) {
@@ -5754,7 +5754,7 @@ jQuery.event = {
 			 * Description
 			 * @method postDispatch
 			 * @param {} event
-			 * @return 
+			 * @return
 			 */
 			postDispatch: function( event ) {
 
@@ -5774,7 +5774,7 @@ jQuery.event = {
 	 * @param {} elem
 	 * @param {} event
 	 * @param {} bubble
-	 * @return 
+	 * @return
 	 */
 	simulate: function( type, elem, event, bubble ) {
 		// Piggyback on a donor event to simulate a different one.
@@ -5806,7 +5806,7 @@ jQuery.event = {
  * @param {} elem
  * @param {} type
  * @param {} handle
- * @return 
+ * @return
  */
 jQuery.removeEvent = function( elem, type, handle ) {
 	if ( elem.removeEventListener ) {
@@ -5819,7 +5819,7 @@ jQuery.removeEvent = function( elem, type, handle ) {
  * @method Event
  * @param {} src
  * @param {} props
- * @return 
+ * @return
  */
 jQuery.Event = function( src, props ) {
 	// Allow instantiation without the 'new' keyword
@@ -5868,7 +5868,7 @@ jQuery.Event.prototype = {
 	/**
 	 * Description
 	 * @method preventDefault
-	 * @return 
+	 * @return
 	 */
 	preventDefault: function() {
 		var e = this.originalEvent;
@@ -5882,7 +5882,7 @@ jQuery.Event.prototype = {
 	/**
 	 * Description
 	 * @method stopPropagation
-	 * @return 
+	 * @return
 	 */
 	stopPropagation: function() {
 		var e = this.originalEvent;
@@ -5896,7 +5896,7 @@ jQuery.Event.prototype = {
 	/**
 	 * Description
 	 * @method stopImmediatePropagation
-	 * @return 
+	 * @return
 	 */
 	stopImmediatePropagation: function() {
 		var e = this.originalEvent;
@@ -5957,7 +5957,7 @@ if ( !support.focusinBubbles ) {
 		 * Description
 		 * @method handler
 		 * @param {} event
-		 * @return 
+		 * @return
 		 */
 		var handler = function( event ) {
 				jQuery.event.simulate( fix, event.target, jQuery.event.fix( event ), true );
@@ -5967,7 +5967,7 @@ if ( !support.focusinBubbles ) {
 			/**
 			 * Description
 			 * @method setup
-			 * @return 
+			 * @return
 			 */
 			setup: function() {
 				var doc = this.ownerDocument || this,
@@ -5981,7 +5981,7 @@ if ( !support.focusinBubbles ) {
 			/**
 			 * Description
 			 * @method teardown
-			 * @return 
+			 * @return
 			 */
 			teardown: function() {
 				var doc = this.ownerDocument || this,
@@ -6138,7 +6138,7 @@ jQuery.fn.extend({
 	 * @method triggerHandler
 	 * @param {} type
 	 * @param {} data
-	 * @return 
+	 * @return
 	 */
 	triggerHandler: function( type, data ) {
 		var elem = this[0];
@@ -6233,7 +6233,7 @@ function restoreScript( elem ) {
  * @method setGlobalEval
  * @param {} elems
  * @param {} refElements
- * @return 
+ * @return
  */
 function setGlobalEval( elems, refElements ) {
 	var i = 0,
@@ -6251,7 +6251,7 @@ function setGlobalEval( elems, refElements ) {
  * @method cloneCopyEvent
  * @param {} src
  * @param {} dest
- * @return 
+ * @return
  */
 function cloneCopyEvent( src, dest ) {
 	var i, l, type, pdataOld, pdataCur, udataOld, udataCur, events;
@@ -6310,7 +6310,7 @@ function getAll( context, tag ) {
  * @method fixInput
  * @param {} src
  * @param {} dest
- * @return 
+ * @return
  */
 function fixInput( src, dest ) {
 	var nodeName = dest.nodeName.toLowerCase();
@@ -6475,7 +6475,7 @@ jQuery.extend({
 	 * Description
 	 * @method cleanData
 	 * @param {} elems
-	 * @return 
+	 * @return
 	 */
 	cleanData: function( elems ) {
 		var data, elem, type, key,
@@ -7060,7 +7060,7 @@ function addGetHookIf( conditionFn, hookFn ) {
 	/**
 	 * Description
 	 * @method computePixelPositionAndBoxSizingReliable
-	 * @return 
+	 * @return
 	 */
 	function computePixelPositionAndBoxSizingReliable() {
 		div.style.cssText =
@@ -7406,7 +7406,7 @@ jQuery.extend({
 			 * @method get
 			 * @param {} elem
 			 * @param {} computed
-			 * @return 
+			 * @return
 			 */
 			get: function( elem, computed ) {
 				if ( computed ) {
@@ -7449,7 +7449,7 @@ jQuery.extend({
 	 * @param {} name
 	 * @param {} value
 	 * @param {} extra
-	 * @return 
+	 * @return
 	 */
 	style: function( elem, name, value, extra ) {
 
@@ -7562,7 +7562,7 @@ jQuery.each([ "height", "width" ], function( i, name ) {
 		 * @param {} elem
 		 * @param {} computed
 		 * @param {} extra
-		 * @return 
+		 * @return
 		 */
 		get: function( elem, computed, extra ) {
 			if ( computed ) {
@@ -7738,7 +7738,7 @@ Tween.prototype = {
 	 * @param {} end
 	 * @param {} easing
 	 * @param {} unit
-	 * @return 
+	 * @return
 	 */
 	init: function( elem, options, prop, end, easing, unit ) {
 		this.elem = elem;
@@ -7823,7 +7823,7 @@ Tween.propHooks = {
 		 * Description
 		 * @method set
 		 * @param {} tween
-		 * @return 
+		 * @return
 		 */
 		set: function( tween ) {
 			// Use step hook for back compat.
@@ -7847,7 +7847,7 @@ Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
 	 * Description
 	 * @method set
 	 * @param {} tween
-	 * @return 
+	 * @return
 	 */
 	set: function( tween ) {
 		if ( tween.elem.nodeType && tween.elem.parentNode ) {
@@ -7989,7 +7989,7 @@ function genFx( type, includeWidth ) {
  * @param {} value
  * @param {} prop
  * @param {} animation
- * @return 
+ * @return
  */
 function createTween( value, prop, animation ) {
 	var tween,
@@ -8011,7 +8011,7 @@ function createTween( value, prop, animation ) {
  * @param {} elem
  * @param {} props
  * @param {} opts
- * @return 
+ * @return
  */
 function defaultPrefilter( elem, props, opts ) {
 	/* jshint validthis: true */
@@ -8031,7 +8031,7 @@ function defaultPrefilter( elem, props, opts ) {
 			/**
 			 * Description
 			 * @method fire
-			 * @return 
+			 * @return
 			 */
 			hooks.empty.fire = function() {
 				if ( !hooks.unqueued ) {
@@ -8156,7 +8156,7 @@ function defaultPrefilter( elem, props, opts ) {
  * @method propFilter
  * @param {} props
  * @param {} specialEasing
- * @return 
+ * @return
  */
 function propFilter( props, specialEasing ) {
 	var index, name, easing, value, hooks;
@@ -8207,7 +8207,7 @@ function Animation( elem, properties, options ) {
 	/**
 	 * Description
 	 * @method tick
-	 * @return 
+	 * @return
 	 */
 	var result,
 		stopped,
@@ -8332,7 +8332,7 @@ jQuery.Animation = jQuery.extend( Animation, {
 	 * @method tweener
 	 * @param {} props
 	 * @param {} callback
-	 * @return 
+	 * @return
 	 */
 	tweener: function( props, callback ) {
 		if ( jQuery.isFunction( props ) ) {
@@ -8358,7 +8358,7 @@ jQuery.Animation = jQuery.extend( Animation, {
 	 * @method prefilter
 	 * @param {} callback
 	 * @param {} prepend
-	 * @return 
+	 * @return
 	 */
 	prefilter: function( callback, prepend ) {
 		if ( prepend ) {
@@ -8399,7 +8399,7 @@ jQuery.speed = function( speed, easing, fn ) {
 	/**
 	 * Description
 	 * @method complete
-	 * @return 
+	 * @return
 	 */
 	opt.complete = function() {
 		if ( jQuery.isFunction( opt.old ) ) {
@@ -8445,7 +8445,7 @@ jQuery.fn.extend({
 		/**
 		 * Description
 		 * @method doAnimation
-		 * @return 
+		 * @return
 		 */
 		var empty = jQuery.isEmptyObject( prop ),
 			optall = jQuery.speed( speed, easing, callback ),
@@ -8477,7 +8477,7 @@ jQuery.fn.extend({
 		 * Description
 		 * @method stopQueue
 		 * @param {} hooks
-		 * @return 
+		 * @return
 		 */
 		var stopQueue = function( hooks ) {
 			var stop = hooks.stop;
@@ -8620,7 +8620,7 @@ jQuery.timers = [];
 /**
  * Description
  * @method tick
- * @return 
+ * @return
  */
 jQuery.fx.tick = function() {
 	var timer,
@@ -8647,7 +8647,7 @@ jQuery.fx.tick = function() {
  * Description
  * @method timer
  * @param {} timer
- * @return 
+ * @return
  */
 jQuery.fx.timer = function( timer ) {
 	jQuery.timers.push( timer );
@@ -8663,7 +8663,7 @@ jQuery.fx.interval = 13;
 /**
  * Description
  * @method start
- * @return 
+ * @return
  */
 jQuery.fx.start = function() {
 	if ( !timerId ) {
@@ -8674,7 +8674,7 @@ jQuery.fx.start = function() {
 /**
  * Description
  * @method stop
- * @return 
+ * @return
  */
 jQuery.fx.stop = function() {
 	clearInterval( timerId );
@@ -8707,7 +8707,7 @@ jQuery.fn.delay = function( time, type ) {
 		/**
 		 * Description
 		 * @method stop
-		 * @return 
+		 * @return
 		 */
 		hooks.stop = function() {
 			clearTimeout( timeout );
@@ -8780,7 +8780,7 @@ jQuery.extend({
 	 * @param {} elem
 	 * @param {} name
 	 * @param {} value
-	 * @return 
+	 * @return
 	 */
 	attr: function( elem, name, value ) {
 		var hooks, ret,
@@ -8835,7 +8835,7 @@ jQuery.extend({
 	 * @method removeAttr
 	 * @param {} elem
 	 * @param {} value
-	 * @return 
+	 * @return
 	 */
 	removeAttr: function( elem, value ) {
 		var name, propName,
@@ -8864,7 +8864,7 @@ jQuery.extend({
 			 * @method set
 			 * @param {} elem
 			 * @param {} value
-			 * @return 
+			 * @return
 			 */
 			set: function( elem, value ) {
 				if ( !support.radioValue && value === "radio" &&
@@ -8969,7 +8969,7 @@ jQuery.extend({
 	 * @param {} elem
 	 * @param {} name
 	 * @param {} value
-	 * @return 
+	 * @return
 	 */
 	prop: function( elem, name, value ) {
 		var ret, hooks, notxml,
@@ -9401,7 +9401,7 @@ jQuery.each([ "radio", "checkbox" ], function() {
 		 * @method set
 		 * @param {} elem
 		 * @param {} value
-		 * @return 
+		 * @return
 		 */
 		set: function( elem, value ) {
 			if ( jQuery.isArray( value ) ) {
@@ -9704,7 +9704,7 @@ function ajaxExtend( target, src ) {
  * @param {} s
  * @param {} jqXHR
  * @param {} responses
- * @return 
+ * @return
  */
 function ajaxHandleResponses( s, jqXHR, responses ) {
 
@@ -10284,7 +10284,7 @@ jQuery.extend({
 		 * @param {} nativeStatusText
 		 * @param {} responses
 		 * @param {} headers
-		 * @return 
+		 * @return
 		 */
 		function done( status, nativeStatusText, responses, headers ) {
 			var isSuccess, success, error, response, modified,
@@ -10596,7 +10596,7 @@ var r20 = /%20/g,
  * @param {} obj
  * @param {} traditional
  * @param {} add
- * @return 
+ * @return
  */
 function buildParams( prefix, obj, traditional, add ) {
 	var name;
@@ -10641,7 +10641,7 @@ jQuery.param = function( a, traditional ) {
 	 * @method add
 	 * @param {} key
 	 * @param {} value
-	 * @return 
+	 * @return
 	 */
 	var prefix,
 		s = [],
@@ -10721,7 +10721,7 @@ jQuery.fn.extend({
 /**
  * Description
  * @method xhr
- * @return 
+ * @return
  */
 jQuery.ajaxSettings.xhr = function() {
 	try {
@@ -10765,7 +10765,7 @@ jQuery.ajaxTransport(function( options ) {
 			 * @method send
 			 * @param {} headers
 			 * @param {} complete
-			 * @return 
+			 * @return
 			 */
 			send: function( headers, complete ) {
 				var i,
@@ -10858,7 +10858,7 @@ jQuery.ajaxTransport(function( options ) {
 			/**
 			 * Description
 			 * @method abort
-			 * @return 
+			 * @return
 			 */
 			abort: function() {
 				if ( callback ) {
@@ -10914,7 +10914,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 			 * @method send
 			 * @param {} _
 			 * @param {} complete
-			 * @return 
+			 * @return
 			 */
 			send: function( _, complete ) {
 				script = jQuery("<script>").prop({
@@ -10926,7 +10926,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 					/**
 					 * Description
 					 * @param {} evt
-					 * @return 
+					 * @return
 					 */
 					callback = function( evt ) {
 						script.remove();
@@ -10941,7 +10941,7 @@ jQuery.ajaxTransport( "script", function( s ) {
 			/**
 			 * Description
 			 * @method abort
-			 * @return 
+			 * @return
 			 */
 			abort: function() {
 				if ( callback ) {
@@ -11017,13 +11017,13 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 		/**
 		 * Description
 		 * @method callbackName
-		 * @return 
+		 * @return
 		 */
 		window[ callbackName ] = function() {
 			responseContainer = arguments;
 		};
 
-		// Clean-up function (fires after converters)
+		// Clean-up function(fires after converters)
 		jqXHR.always(function() {
 			// Restore preexisting value
 			window[ callbackName ] = overwritten;
@@ -11213,7 +11213,7 @@ jQuery.offset = {
 	 * @param {} elem
 	 * @param {} options
 	 * @param {} i
-	 * @return 
+	 * @return
 	 */
 	setOffset: function( elem, options, i ) {
 		var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition,

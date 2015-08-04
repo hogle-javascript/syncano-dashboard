@@ -14,7 +14,7 @@ export default React.createClass({
 
   propTypes: {
     color: React.PropTypes.string,
-    icon : React.PropTypes.string,
+    icon: React.PropTypes.string,
     initialColor: React.PropTypes.string,
     initialIcon: React.PropTypes.string,
     handleClick: React.PropTypes.func
@@ -51,61 +51,62 @@ export default React.createClass({
 
   handleCancel() {
     this.setState({
-      errors: {}});
+      errors: {}
+    });
     this.dismiss();
   },
 
   handleChange(ColorIcon) {
     console.info('ColorIconPickerDialog::handleChange', ColorIcon);
     if (ColorIcon.color) {
-      this.setState({color:  ColorIcon.color});
+      this.setState({color: ColorIcon.color});
     }
     if (ColorIcon.icon) {
-      this.setState({icon:  ColorIcon.icon});
+      this.setState({icon: ColorIcon.icon});
     }
   },
 
   render() {
-    var dialogStandardActions = [
+    let dialogStandardActions = [
       {
-        text       : 'Cancel',
-        ref        : 'cancel',
-        onTouchTap : this.handleCancel
+        text: 'Cancel',
+        ref: 'cancel',
+        onTouchTap: this.handleCancel
       },
       {
-        text       : 'Confirm',
-        ref        : 'submit',
-        onTouchTap : this.handleSubmit
+        text: 'Confirm',
+        ref: 'submit',
+        onTouchTap: this.handleSubmit
       }
     ];
 
     return (
       <Common.Dialog
-        ref               = "dialog"
-        contentInnerStyle = {{paddingBottom: 24, padding: '0px'}}
-        actions           = {dialogStandardActions}
-      >
+        ref="dialog"
+        contentInnerStyle={{paddingBottom: 24, padding: '0px'}}
+        actions={dialogStandardActions}
+        >
         <MUI.Tabs>
           <MUI.Tab label="Colors">
             <div style={{height: 300, padding: '20px 20px 0'}}>
               <Common.ColorIconPicker
-                ref           = "color"
-                pickerType    = "color"
-                selectedIcon  = {this.state.icon}
-                selectedColor = {this.state.color}
-                handleChange  = {this.handleChange}
-              />
+                ref="color"
+                pickerType="color"
+                selectedIcon={this.state.icon}
+                selectedColor={this.state.color}
+                handleChange={this.handleChange}
+                />
             </div>
           </MUI.Tab>
           <MUI.Tab label="Icons">
             <div style={{height: 300, paddingTop: 20}}>
               <Common.ColorIconPicker
-                ref           = "icon"
-                pickerType    = "icon"
-                selectedColor = {this.state.color}
-                selectedIcon  = {this.state.icon}
-                handleChange  = {this.handleChange}
-              />
+                ref="icon"
+                pickerType="icon"
+                selectedColor={this.state.color}
+                selectedIcon={this.state.icon}
+                handleChange={this.handleChange}
+                />
             </div>
           </MUI.Tab>
         </MUI.Tabs>

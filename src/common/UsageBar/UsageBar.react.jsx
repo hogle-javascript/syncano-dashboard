@@ -1,5 +1,5 @@
-var React       = require('react');
-var classNames  = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./UsageBar.css');
 
@@ -12,24 +12,24 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var limitEnabled = this.props.billingProfile.hard_limit > 0;
-    var alertEnabled = this.props.billingProfile.soft_limit > 0;
-    var cssClasses = classNames({
+    let limitEnabled = this.props.billingProfile.hard_limit > 0;
+    let alertEnabled = this.props.billingProfile.soft_limit > 0;
+    let cssClasses = classNames({
       'usage-bar': true,
       'usage-bar-limit-enabled': limitEnabled,
       'usage-bar-alert-enabled': alertEnabled,
     });
-    var balance = '$' + this.props.billingProfile.balance.total;
-    var costBarStyle = {
+    let balance = '$' + this.props.billingProfile.balance.total;
+    let costBarStyle = {
       width: limitEnabled ? (this.props.billingProfile.balance.total / this.props.billingProfile.hard_limit) * 100 + "%" : "0%"
     };
-    var left;
+    let left;
     if (alertEnabled && limitEnabled) {
       left = (this.props.billingProfile.soft_limit / this.props.billingProfile.hard_limit) * 100 + "%"
     } else if (alertEnabled && !limitEnabled) {
       left = (this.props.billingProfile.soft_limit / this.props.billingProfile.hard_limit) * 100 + "%"
     }
-    var alertIndicatorStyle = {
+    let alertIndicatorStyle = {
       left: left
     };
     return (

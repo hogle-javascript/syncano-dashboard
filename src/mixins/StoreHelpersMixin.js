@@ -5,8 +5,8 @@ export default {
     }
     return list.map(function(item) {
       return {
-        payload : item[payloadArg],
-        text    : item[textArg]
+        payload: item[payloadArg],
+        text: item[textArg]
       }
     });
   },
@@ -16,8 +16,8 @@ export default {
     }
     return list.map(function(item) {
       return {
-        label : item[labelArg],
-        value : item[valueArg]
+        label: item[labelArg],
+        value: item[valueArg]
       }
     });
   },
@@ -27,8 +27,8 @@ export default {
     }
     return list.map(function(item) {
       return {
-        label : item,
-        value : item
+        label: item,
+        value: item
       }
     });
   },

@@ -1,38 +1,38 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
-    withDialog : true,
-    withCheck  : true
+    withDialog: true,
+    withCheck: true
   },
   {
-    fetch         : {},
-    setInstances  : {},
+    fetch: {},
+    setInstances: {},
 
     fetchInstances: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.list'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.list'
     },
     createInstance: {
-      asyncResult : true,
-      asyncForm   : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.create'
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.create'
     },
     updateInstance: {
-      asyncResult : true,
-      asyncForm   : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.update'
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.update'
     },
     removeInstances: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.remove'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.remove'
     }
   }
 );

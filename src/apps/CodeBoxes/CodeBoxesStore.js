@@ -14,33 +14,33 @@ export default Reflux.createStore({
   ],
 
   langMap: {
-    python : 'python',
-    nodejs : 'javascript',
-    ruby   : 'ruby',
-    golang : 'golang'
+    python: 'python',
+    nodejs: 'javascript',
+    ruby: 'ruby',
+    golang: 'golang'
   },
 
   runtimeColors: {
     nodejs: {color: '#80BD01', icon: 'language-javascript'},
     python: {color: '#4984B1', icon: 'language-python'},
     golang: {color: '#E0EBF5', icon: 'code-array'},
-    ruby:   {color: '#B21000', icon: 'code-array'}
+    ruby: {color: '#B21000', icon: 'code-array'}
   },
 
   getInitialState() {
     return {
-      items               : [],
+      items: [],
 
-      currentCodeBoxId    : null,
+      currentCodeBoxId: null,
 
-      AddDialogVisible    : true,
-      availableRuntimes   : null,
-      label               : '',
-      payload             : '{"112":111}',
-      description         : '',
+      AddDialogVisible: true,
+      availableRuntimes: null,
+      label: '',
+      payload: '{"112":111}',
+      description: '',
       selectedRuntimeIndex: 0,
-      traces              : [],
-      isLoading           : true
+      traces: [],
+      isLoading: true
     }
   },
 
@@ -80,8 +80,8 @@ export default Reflux.createStore({
   getCodeBoxesDropdown() {
     return this.data.items.map(item => {
       return {
-        payload : item.id,
-        text    : item.label
+        payload: item.id,
+        text: item.label
       }
     });
   },
@@ -173,7 +173,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxTraceCompleted(trace) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTrace');
-    if (trace.status == 'pending') {
+    if (trace.status === 'pending') {
       let CodeBoxId = this.data.currentCodeBoxId;
       setTimeout(() => {
         Actions.fetchCodeBoxTrace(CodeBoxId, trace.id)

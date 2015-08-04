@@ -11,8 +11,8 @@ import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
 
 export default Reflux.createStore({
-  listenables : ClassesActions,
-  mixins      : [
+  listenables: ClassesActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
   ],
@@ -45,16 +45,16 @@ export default Reflux.createStore({
   getClassesDropdown() {
     return this.data.items.map(item => {
       return {
-        payload : item.name,
-        text    : item.name
+        payload: item.name,
+        text: item.name
       }
     });
   },
 
   onGetClassByName(className) {
-    let  classObj = null;
+    let classObj = null;
     this.data.items.some(item => {
-      if (item.name == className) {
+      if (item.name === className) {
         classObj = item;
         return true;
       }
@@ -63,9 +63,9 @@ export default Reflux.createStore({
   },
 
   getClassFields(className) {
-    let  classObj = null;
+    let classObj = null;
     this.data.items.some(item => {
-      if (item.name == className) {
+      if (item.name === className) {
         classObj = item;
         return true;
       }
@@ -74,8 +74,8 @@ export default Reflux.createStore({
   },
 
   getClassRelationFields(className) {
-    let  allFields      = this.getClassFields(className),
-        relationFields = [];
+    let allFields = this.getClassFields(className),
+      relationFields = [];
 
     allFields.map(item => {
       if (item.type === 'reference') {
@@ -86,18 +86,18 @@ export default Reflux.createStore({
   },
 
   getClassOrderFieldsPayload(className) {
-    let  allFields      = this.getClassFields(className),
-        orderPayload = [];
+    let allFields = this.getClassFields(className),
+      orderPayload = [];
 
     allFields.map(item => {
       if (item.order_index) {
         orderPayload.push({
-          text    : item.name + ' (ascending)',
-          payload : item.name
+          text: item.name + ' (ascending)',
+          payload: item.name
         });
         orderPayload.push({
-          text    : item.name + ' (descending)',
-          payload : '-' + item.name
+          text: item.name + ' (descending)',
+          payload: '-' + item.name
         });
       }
     });
@@ -105,22 +105,22 @@ export default Reflux.createStore({
   },
 
   getCheckedItemIconColor() {
-    let  singleItem = this.getCheckedItem();
+    let singleItem = this.getCheckedItem();
 
     if (!singleItem) {
       return {
-        color : null,
-        icon  : null
+        color: null,
+        icon: null
       }
     }
     return {
-      color : singleItem.metadata ? singleItem.metadata.color : 'blue',
-      icon  : singleItem.metadata ? singleItem.metadata.icon : 'table-large'
+      color: singleItem.metadata ? singleItem.metadata.color : 'blue',
+      icon: singleItem.metadata ? singleItem.metadata.icon : 'table-large'
     };
   },
 
   setProtectedFromEditClasses(item) {
-    let  indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
+    let indexInProtectedFromEditArray = _.findIndex(Constans.PROTECTED_FROM_EDIT_CLASS_NAMES, {name: item.name});
 
     if (indexInProtectedFromEditArray > -1) {
       item.protectedFromEdit = Constans.PROTECTED_FROM_EDIT_CLASS_NAMES[indexInProtectedFromEditArray];

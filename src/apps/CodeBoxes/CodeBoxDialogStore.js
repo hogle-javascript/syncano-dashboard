@@ -8,8 +8,8 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './CodeBoxesActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
-  mixins      : [
+  listenables: Actions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
@@ -17,10 +17,10 @@ export default Reflux.createStore({
   getInitialState() {
     // jscs:disable
     return {
-      label                : null,
-      description          : null,
-      runtime_name         : '',
-      runtimes             : [
+      label: null,
+      description: null,
+      runtime_name: '',
+      runtimes: [
         {payload: '', text: 'Loading...'}
       ]
     };
@@ -32,7 +32,7 @@ export default Reflux.createStore({
   },
 
   setCodeBoxRuntimes(payload) {
-    var runtimes = Object.keys(payload).map(runtime => {
+    let runtimes = Object.keys(payload).map(runtime => {
       return {payload: runtime, text: runtime};
     });
     this.trigger({runtimes: runtimes});

@@ -6,8 +6,8 @@ export default React.createClass({
 
   displayName: 'Accordion',
 
-  render: function () {
-    var items = this.props.items.map(function (item) {
+  render() {
+    let items = this.props.items.map(function(item) {
       return <AccordionListItemPrimary {...this.props} key={item.id} item={item}/>
     }.bind(this));
     return (

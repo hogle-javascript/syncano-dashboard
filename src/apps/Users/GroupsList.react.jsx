@@ -28,15 +28,15 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -47,8 +47,8 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       list: {
-        paddingTop    : 0,
-        paddingBottom : 0
+        paddingTop: 0,
+        paddingBottom: 0
       },
       listItemChecked: {
         background: MUI.Styles.Colors.lightBlue50
@@ -57,54 +57,54 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let itemActive        = this.props.activeGroup && this.props.activeGroup.id === item.id,
-        styles            = this.getStyles(),
-        itemStyles        = itemActive ? styles.listItemChecked : {},
-        iconButtonElement = (
-          <MUI.IconButton
-            touch           = {true}
-            tooltipPosition = 'bottom-left'
-            iconClassName   = 'synicon-dots-vertical' />
-        ),
-        rightIconMenu = (
-          <MUI.IconMenu iconButtonElement={iconButtonElement}>
-            <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
-            <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
-            <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
-          </MUI.IconMenu>
-        );
+    let itemActive = this.props.activeGroup && this.props.activeGroup.id === item.id,
+      styles = this.getStyles(),
+      itemStyles = itemActive ? styles.listItemChecked : {},
+      iconButtonElement = (
+        <MUI.IconButton
+          touch={true}
+          tooltipPosition='bottom-left'
+          iconClassName='synicon-dots-vertical'/>
+      ),
+      rightIconMenu = (
+        <MUI.IconMenu iconButtonElement={iconButtonElement}>
+          <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
+          <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
+          <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
+        </MUI.IconMenu>
+      );
 
     return (
       <MUI.ListItem
-        key             = {item.id}
-        innerDivStyle   = {itemStyles}
-        onMouseDown     = {this.props.handleItemClick.bind(null, item)}
-        rightIconButton = {rightIconMenu}>
+        key={item.id}
+        innerDivStyle={itemStyles}
+        onMouseDown={this.props.handleItemClick.bind(null, item)}
+        rightIconButton={rightIconMenu}>
         {item.label}
       </MUI.ListItem>
     )
   },
 
   getList() {
-    let styles          = this.getStyles(),
-        items           = this.state.items,
-        itemsCount      = items.length,
-        indexOfListItem = itemsCount - 1,
-        listItems       = this.state.items.map((item, index) => {
-          if (index < indexOfListItem) {
-            return [
-              this.renderItem(item),
-              <MUI.ListDivider />
-            ];
-          }
-          return this.renderItem(item);
-        });
+    let styles = this.getStyles(),
+      items = this.state.items,
+      itemsCount = items.length,
+      indexOfListItem = itemsCount - 1,
+      listItems = this.state.items.map((item, index) => {
+        if (index < indexOfListItem) {
+          return [
+            this.renderItem(item),
+            <MUI.ListDivider />
+          ];
+        }
+        return this.renderItem(item);
+      });
 
     if (items.length > 0) {
       return (
         <MUI.List
-          style  = {styles.list}
-          zDepth = {1}>
+          style={styles.list}
+          zDepth={1}>
           {listItems}
         </MUI.List>
       );
@@ -121,7 +121,8 @@ export default Radium(React.createClass({
     return (
       <div>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.CheckIcon.Header
+            className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
         </Common.ColumnList.Header>
         <Common.Loading show={this.state.isLoading}>
           {this.getList()}

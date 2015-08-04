@@ -67,39 +67,41 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          key   : 'removeWebhookDialog',
-          ref   : 'removeWebhookDialog',
-          title : 'Delete a Webhook',
+          key: 'removeWebhookDialog',
+          ref: 'removeWebhookDialog',
+          title: 'Delete a Webhook',
           actions: [
             {
-              text    : 'Cancel',
-              onClick : this.handleCancel},
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
             {
-              text    : 'Confirm',
-              onClick : this.handleRemoveWebhooks}
+              text: 'Confirm',
+              onClick: this.handleRemoveWebhooks
+            }
           ],
-          modal    : true,
-          children : 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
+          modal: true,
+          children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
         }
       },
       {
         dialog: Common.Dialog,
         params: {
-          key:    'removeDataViewDialog',
-          ref:    'removeDataViewDialog',
-          title:  'Delete a DataView',
+          key: 'removeDataViewDialog',
+          ref: 'removeDataViewDialog',
+          title: 'Delete a DataView',
           actions: [
             {
-              text    : 'Cancel',
-              onClick : this.handleCancel
+              text: 'Cancel',
+              onClick: this.handleCancel
             },
             {
-              text    : 'Confrim',
-              onClick : this.handleRemoveDataViews
+              text: 'Confrim',
+              onClick: this.handleRemoveDataViews
             }
           ],
-          modal    : true,
-          children : 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' Data endpoints?'
+          modal: true,
+          children: 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' Data endpoints?'
         }
       }
     ]
@@ -150,12 +152,12 @@ export default React.createClass({
   },
 
   render() {
-    let checkedDataViews      = DataViewsStore.getNumberOfChecked(),
-        checkedWebhooks       = WebhooksStore.getNumberOfChecked(),
-        isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length,
-        isAnyWebhookSelected  = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length,
-        markedIcon            = 'synicon-checkbox-multiple-marked-outline',
-        blankIcon             = 'synicon-checkbox-multiple-blank-outline';
+    let checkedDataViews = DataViewsStore.getNumberOfChecked(),
+      checkedWebhooks = WebhooksStore.getNumberOfChecked(),
+      isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length,
+      isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length,
+      markedIcon = 'synicon-checkbox-multiple-marked-outline',
+      blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -166,71 +168,71 @@ export default React.createClass({
         <Common.Show if={checkedDataViews > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
-              iconClassName = {isAnyDataViewSelected ? markedIcon : blankIcon} />
+              label={isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
+              iconClassName={isAnyDataViewSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete a Data Endpoint"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'removeDataViewDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete a Data Endpoint"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeDataViewDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit a Data Endpoint"
-              mini          = {true}
-              disabled      = {checkedDataViews > 1}
-              onClick       = {this.showDataViewEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit a Data Endpoint"
+              mini={true}
+              disabled={checkedDataViews > 1}
+              onClick={this.showDataViewEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
-              iconClassName = {isAnyWebhookSelected ? markedIcon : blankIcon} />
+              label={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
-              label         = "Click here to delete a CodeBox Endpoint"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'removeWebhookDialog')}
-              iconClassName = "synicon-delete" />
+              label="Click here to delete a CodeBox Endpoint"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
+              iconClassName="synicon-delete"/>
             <Common.Fab.Item
-              label         = "Click here to edit a CodeBox Endpoint"
-              mini          = {true}
-              disabled      = {checkedDataViews > 1}
-              onClick       = {this.showWebhookEditDialog}
-              iconClassName = "synicon-pencil" />
+              label="Click here to edit a CodeBox Endpoint"
+              mini={true}
+              disabled={checkedDataViews > 1}
+              onClick={this.showWebhookEditDialog}
+              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to create a Data Endpoint"
-            onClick       = {this.showDataViewDialog}
-            iconClassName = "synicon-table" />
+            label="Click here to create a Data Endpoint"
+            onClick={this.showDataViewDialog}
+            iconClassName="synicon-table"/>
           <Common.Fab.Item
-            label         = "Click here to create a CodeBox Endpoint"
-            onClick       = {this.showWebhookDialog}
-            iconClassName = "synicon-arrow-up-bold" />
+            label="Click here to create a CodeBox Endpoint"
+            onClick={this.showWebhookDialog}
+            iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>
 
         <DataViewsList
-          name                 = "Data Endpoints"
-          checkItem            = {this.checkDataViewItem}
-          isLoading            = {this.state.dataviews.isLoading}
-          items                = {this.state.dataviews.items}
-          emptyItemHandleClick = {this.showDataViewDialog}
-          emptyItemContent     = "Create a DataView" />
+          name="Data Endpoints"
+          checkItem={this.checkDataViewItem}
+          isLoading={this.state.dataviews.isLoading}
+          items={this.state.dataviews.items}
+          emptyItemHandleClick={this.showDataViewDialog}
+          emptyItemContent="Create a DataView"/>
 
         <WebhooksList
-          name                 = "CodeBox Endpoints"
-          checkItem            = {this.checkWebhook}
-          isLoading            = {this.state.webhooks.isLoading}
-          items                = {this.state.webhooks.items}
-          emptyItemHandleClick = {this.showWebhookDialog}
-          emptyItemContent     = "Create a Webhook" />
+          name="CodeBox Endpoints"
+          checkItem={this.checkWebhook}
+          isLoading={this.state.webhooks.isLoading}
+          items={this.state.webhooks.items}
+          emptyItemHandleClick={this.showWebhookDialog}
+          emptyItemContent="Create a Webhook"/>
       </Container>
     );
   }

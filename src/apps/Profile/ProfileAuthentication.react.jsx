@@ -38,28 +38,28 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       content: {
-        padding         : '0px 0px 48px'
+        padding : '0px 0px 48px'
       },
       contentRow: {
-        display         : '-webkit-flex; display: flex',
-        alignItems      : 'center'
+        display: '-webkit-flex; display: flex',
+        alignItems: 'center'
       },
       accountKey: {
-        fontFamily      : 'monospace',
+        fontFamily : 'monospace'
       },
       form: {
-        //maxWidth        : 416
+        //maxWidth : 416
       },
       updateButton: {
-        height          : 36,
-        lineHeight      : '36px',
-        boxShadow       : 0
+        height: 36,
+        lineHeight: '36px',
+        boxShadow: 0
       },
-      updateButtonLabel : {
-        lineHeight      : '36px',
-        fontWeight      : 400,
-        paddingLeft     : 30,
-        paddingRight    : 30
+      updateButtonLabel: {
+        lineHeight: '36px',
+        fontWeight: 400,
+        paddingLeft: 30,
+        paddingRight: 30
       }
     }
   },
@@ -88,9 +88,9 @@ export default Radium(React.createClass({
             <div className="col-xs-10">
             <ZeroClipboard text={this.state.account_key}>
               <MUI.FlatButton
-                label   = "COPY"
-                primary = {true}
-                onClick = {this.handleCopyClick} />
+                label="COPY"
+                primary={true}
+                onClick={this.handleCopyClick}/>
             </ZeroClipboard>
             <MUI.FlatButton
               label   = "RESET"
@@ -99,8 +99,8 @@ export default Radium(React.createClass({
             </div>
           </div>
           <MUI.Snackbar
-            ref     = "snackbar"
-            message = "API key copied to the clipboard" />
+            ref="snackbar"
+            message="API key copied to the clipboard"/>
         </div>
         <div style={styles.content}>
           <div>Password settings</div>

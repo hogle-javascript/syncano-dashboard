@@ -1,6 +1,6 @@
-var DialogMixin = {
+export default {
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.debug('DialogMixin::componentWillUpdate');
 
     if (this.state._dialogVisible === nextState._dialogVisible) {
@@ -16,13 +16,13 @@ var DialogMixin = {
     }
   },
 
-  resetDialogState: function() {
+  resetDialogState() {
     if (typeof this.getInitialState === 'function') {
       this.replaceState(this.getInitialState());
     }
   },
 
-  handleCancel: function() {
+  handleCancel() {
     console.debug('DialogMixin::handleCancel');
 
     this.refs.dialog.dismiss();
@@ -31,7 +31,7 @@ var DialogMixin = {
     }
   },
 
-  handleSuccessfullValidation: function() {
+  handleSuccessfullValidation() {
     console.debug('DialogMixin::handleSuccessfullValidation');
 
     if (this.hasEditMode()) {
@@ -41,16 +41,13 @@ var DialogMixin = {
     } else if (typeof this.handleAddSubmit === 'function') {
       this.handleAddSubmit();
     }
-
   },
 
-  hasEditMode: function() {
+  hasEditMode() {
     return this.state._dialogMode === 'edit';
   },
 
-  hasAddMode: function() {
+  hasAddMode() {
     return this.state._dialogMode === 'add';
   }
 };
-
-module.exports = DialogMixin;

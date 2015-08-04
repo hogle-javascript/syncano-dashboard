@@ -15,15 +15,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items         : this.props.items,
-      selectedItems : this.props.selectedItems,
+      items: this.props.items,
+      selectedItems: this.props.selectedItems,
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items         : nextProps.items,
-      selectedItems : nextProps.selectedItems,
+      items: nextProps.items,
+      selectedItems: nextProps.selectedItems,
     })
   },
 
@@ -34,15 +34,15 @@ export default React.createClass({
   },
 
   render() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     let tags = this.state.items.map(item => {
       return (
         <MUI.ListItem
-          key           = {item.name}
-          primaryText   = {item.name}
-          innerDivStyle = {this.state.selectedItems.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
-          onTouchTap    = {this.handleOnTouchTap.bind(this, item.name)} />
+          key={item.name}
+          primaryText={item.name}
+          innerDivStyle={this.state.selectedItems.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
+          onTouchTap={this.handleOnTouchTap.bind(this, item.name)}/>
       )
     });
     return (

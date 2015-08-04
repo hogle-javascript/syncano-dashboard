@@ -2,67 +2,67 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck  : true,
-    withDialog : true
+    withCheck: true,
+    withDialog: true
   },
   {
-    fetch               : {},
-    setCodeBoxes        : {},
-    setCodeBoxTraces    : {},
-    setCodeBoxRuntimes  : {},
-    setCurrentCodeBoxId : {},
+    fetch: {},
+    setCodeBoxes: {},
+    setCodeBoxTraces: {},
+    setCodeBoxRuntimes: {},
+    setCurrentCodeBoxId: {},
 
     fetchCodeBoxes: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.list'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.list'
     },
     createCodeBox: {
-      asyncForm   : true,
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.create'
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.create'
 
     },
     updateCodeBox: {
-      asyncResult : true,
-      asyncForm   : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.update'
+      asyncResult: true,
+      asyncForm: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.update'
 
     },
     runCodeBox: {
       asyncResult: true,
-      loading    : true,
-      children   : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.run'
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.run'
 
     },
     removeCodeBoxes: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.remove'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.remove'
 
     },
     fetchCodeBoxTrace: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.getTrace'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.getTrace'
 
     },
     fetchCodeBoxTraces: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.listTraces'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.listTraces'
 
     },
     fetchCodeBoxRuntimes: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.CodeBoxes.listRuntimes'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.CodeBoxes.listRuntimes'
     }
   }
 );

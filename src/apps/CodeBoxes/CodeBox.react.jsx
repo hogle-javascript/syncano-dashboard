@@ -42,8 +42,8 @@ export default React.createClass({
   handleTabActive(tab) {
     this.transitionTo(tab.props.route,
       {
-        codeboxId    : this.state.currentCodeBox.id,
-        instanceName : this.getParams().instanceName
+        codeboxId: this.state.currentCodeBox.id,
+        instanceName: this.getParams().instanceName
       }
     );
   },
@@ -54,7 +54,7 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
-        padding     : '0 250px',
+        padding: '0 250px',
         borderBottom: '1px solid #DDDDDD'
       },
       tab: {
@@ -66,43 +66,43 @@ export default React.createClass({
   getTabsData() {
     return [
       {
-        label : 'Edit',
-        route : 'codebox-edit'
+        label: 'Edit',
+        route: 'codebox-edit'
       }, {
-        label : 'Config',
-        route : 'codebox-config'
+        label: 'Config',
+        route: 'codebox-config'
       }, {
-        label : 'Traces',
-        route : 'codebox-traces'
+        label: 'Traces',
+        route: 'codebox-traces'
       }
     ];
   },
 
   renderTabs() {
     let styles = this.getStyles(),
-        codeBox = this.state.currentCodeBox;
+      codeBox = this.state.currentCodeBox;
 
     if (codeBox !== null) {
       return (
         <MUI.Tabs
-          initialSelectedIndex  = {this.getActiveSubTabIndex()}
-          tabItemContainerStyle = {styles.subTabsHeader}
-          style                 = {styles.tabs}>
+          initialSelectedIndex={this.getActiveSubTabIndex()}
+          tabItemContainerStyle={styles.subTabsHeader}
+          style={styles.tabs}>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Edit"
-            route    = "codebox-edit"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Edit"
+            route="codebox-edit"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Config"
-            route    = "codebox-config"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Config"
+            route="codebox-config"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Traces"
-            route    = "codebox-traces"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Traces"
+            route="codebox-traces"
+            onActive={this.handleTabActive}/>
         </MUI.Tabs>
       );
     }

@@ -34,15 +34,15 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate: function(nextProps, nextState) {
+  componentWillUpdate(nextProps, nextState) {
     console.info('Channels::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     console.info('Channels::componentDidMount');
     ChannelsActions.fetch();
-    if (this.getParams().action == 'add') {
+    if (this.getParams().action === 'add') {
       // Show Add modal
       this.showChannelDialog();
     }
@@ -50,22 +50,22 @@ export default React.createClass({
   },
 
   // Dialogs config
-  initDialogs: function() {
-    var checkedChannels = ChannelsStore.getCheckedItems();
+  initDialogs() {
+    let checkedChannels = ChannelsStore.getCheckedItems();
 
     return [{
       dialog: Common.Dialog,
       params: {
-        ref     : 'deleteChannelDialog',
-        title   : 'Delete a Channel',
-        actions : [
+        ref: 'deleteChannelDialog',
+        title: 'Delete a Channel',
+        actions: [
           {
-            text    : 'Cancel',
-            onClick : this.handleCancel
+            text: 'Cancel',
+            onClick: this.handleCancel
           },
           {
-            text    : 'Confirm',
-            onClick : this.handleDelete
+            text: 'Confirm',
+            onClick: this.handleDelete
           }
         ],
         modal: true,
@@ -73,33 +73,33 @@ export default React.createClass({
           'Do you really want to delete ' + this.getDialogListLength(checkedChannels) + ' Channel(s)?',
           this.getDialogList(checkedChannels),
           <Common.Loading
-            type     = "linear"
-            position = "bottom"
-            show     = {this.state.isLoading}
-          />
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}
+            />
         ]
       }
     }]
   },
 
-  handleDelete: function() {
+  handleDelete() {
     console.info('Channels::handleDelete');
     ChannelsActions.removeChannels(ChannelsStore.getCheckedItems());
   },
 
-  showChannelDialog: function() {
+  showChannelDialog() {
     ChannelsActions.showDialog();
   },
 
-  showChannelEditDialog: function() {
+  showChannelEditDialog() {
     ChannelsActions.showDialog(ChannelsStore.getCheckedItem());
   },
 
-  render: function() {
-    var checkedItems         = ChannelsStore.getNumberOfChecked(),
-        isAnyChannelSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
-        markedIcon           = 'synicon-checkbox-multiple-marked-outline',
-        blankIcon            = 'synicon-checkbox-multiple-blank-outline';
+  render() {
+    let checkedItems = ChannelsStore.getNumberOfChecked(),
+      isAnyChannelSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
+      markedIcon = 'synicon-checkbox-multiple-marked-outline',
+      blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -110,40 +110,40 @@ export default React.createClass({
 
           <Common.Fab position="top">
             <Common.Fab.Item
-              label         = {isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini          = {true}
-              onClick       = {isAnyChannelSelected ? ChannelsActions.selectAll : ChannelsActions.uncheckAll}
-              iconClassName = {isAnyChannelSelected ? markedIcon : blankIcon}
-            />
+              label={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyChannelSelected ? ChannelsActions.selectAll : ChannelsActions.uncheckAll}
+              iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}
+              />
             <Common.Fab.Item
-              label         = "Click here to delete Channels"
-              mini          = {true}
-              onClick       = {this.showDialog.bind(null, 'deleteChannelDialog')}
-              iconClassName = "synicon-delete"
-            />
+              label="Click here to delete Channels"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'deleteChannelDialog')}
+              iconClassName="synicon-delete"
+              />
             <Common.Fab.Item
-              label         = "Click here to edit a Channel"
-              mini          = {true}
-              disabled      = {checkedItems > 1}
-              onClick       = {this.showChannelEditDialog}
-              iconClassName = "synicon-pencil"
-            />
+              label="Click here to edit a Channel"
+              mini={true}
+              disabled={checkedItems > 1}
+              onClick={this.showChannelEditDialog}
+              iconClassName="synicon-pencil"
+              />
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.Item
-            label         = "Click here to add a Channel"
-            onClick       = {this.showChannelDialog}
-            iconClassName = "synicon-plus"
-          />
+            label="Click here to add a Channel"
+            onClick={this.showChannelDialog}
+            iconClassName="synicon-plus"
+            />
         </Common.Fab>
         <ChannelsList
-          name                 = "Channels"
-          items                = {this.state.items}
-          emptyItemHandleClick = {this.showChannelDialog}
-          emptyItemContent     = "Create a Channel"
-        />
+          name="Channels"
+          items={this.state.items}
+          emptyItemHandleClick={this.showChannelDialog}
+          emptyItemContent="Create a Channel"
+          />
       </Container>
     );
   }

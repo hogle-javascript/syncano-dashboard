@@ -8,13 +8,13 @@ import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
 import HeaderStore from './HeaderStore';
 import InvitationsMenuItem from './InvitationsMenuItem.react';
 
-Header.Actions               = HeaderActions;
-Header.Store                 = HeaderStore;
-Header.Mixin                 = HeaderMixin;
-Header.Menu                  = HeaderMenu;
-Header.InstanceMenu          = HeaderInstanceMenu;
-Header.InstancesDropdown     = HeaderInstancesDropdown;
+Header.Actions = HeaderActions;
+Header.Store = HeaderStore;
+Header.Mixin = HeaderMixin;
+Header.Menu = HeaderMenu;
+Header.InstanceMenu = HeaderInstanceMenu;
+Header.InstancesDropdown = HeaderInstancesDropdown;
 Header.NotificationsDropdown = HeaderNotificationsDropdown;
-Header.InvitationsMenuItem   = InvitationsMenuItem;
+Header.InvitationsMenuItem = InvitationsMenuItem;
 
 export default Header;

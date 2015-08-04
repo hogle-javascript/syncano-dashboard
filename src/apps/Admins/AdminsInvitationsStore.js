@@ -9,8 +9,8 @@ import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 export default Reflux.createStore({
-  listenables : AdminsInvitationsActions,
-  mixins      : [
+  listenables: AdminsInvitationsActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.StoreForm,
     Mixins.StoreLoading,
@@ -19,8 +19,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items     : [],
-      isLoading : true
+      items: [],
+      isLoading: true
     }
   },
 

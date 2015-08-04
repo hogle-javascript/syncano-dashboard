@@ -1,18 +1,18 @@
-var React                = require("react"),
-    classNames           = require("classnames"),
-    OutsideClickHandler  = require("react-outsideclickhandler"),
-    mui                  = require("material-ui"),
+let React = require("react"),
+  classNames = require("classnames"),
+  OutsideClickHandler = require("react-outsideclickhandler"),
+  mui = require("material-ui"),
 
-    ProfileActions       = require("../../apps/Profile/ProfileActions"),
-    List                 = mui.List,
-    ListItem             = mui.ListItem,
-    ListDivider          = mui.ListDivider,
-    Avatar               = mui.Avatar,
-    FontIcon             = mui.FontIcon,
-    DropDownArrow        = require('material-ui/lib/svg-icons/navigation/arrow-drop-down'),
+  ProfileActions = require("../../apps/Profile/ProfileActions"),
+  List = mui.List,
+  ListItem = mui.ListItem,
+  ListDivider = mui.ListDivider,
+  Avatar = mui.Avatar,
+  FontIcon = mui.FontIcon,
+  DropDownArrow = require('material-ui/lib/svg-icons/navigation/arrow-drop-down'),
 
-    MaterialDropdownItem = require("./MaterialDropdownItem.react"),
-    DropdownNotifiItem   = require("./DropdownNotifiItem.react");
+  MaterialDropdownItem = require("./MaterialDropdownItem.react"),
+  DropdownNotifiItem = require("./DropdownNotifiItem.react");
 
 require("./Dropdown.sass");
 
@@ -21,14 +21,14 @@ module.exports = React.createClass({
   displayName: "MaterialDropdown",
 
   propTypes: {
-    type : React.PropTypes.string,
-    icon : React.PropTypes.string,
+    type: React.PropTypes.string,
+    icon: React.PropTypes.string,
     items: React.PropTypes.array,
     headerContent: React.PropTypes.shape({
-      userFullName       : React.PropTypes.string,
-      userEmail          : React.PropTypes.string,
-      handleItemClick    : React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable          : React.PropTypes.bool                   // is not defined function will not be triggered
+      userFullName: React.PropTypes.string,
+      userEmail: React.PropTypes.string,
+      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
+      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
     }),
     iconStyle: React.PropTypes.object,
     isLoading: React.PropTypes.bool
@@ -38,18 +38,18 @@ module.exports = React.createClass({
     return {
       icon: "dots-vertical",
       iconStyle: {
-        width  : "18px",
-        height : "18px",
-        fill   : "#FFF"
+        width: "18px",
+        height: "18px",
+        fill: "#FFF"
       },
-      type      : "normal-link",
-      clickable : true
+      type: "normal-link",
+      clickable: true
     }
   },
 
   getInitialState: function() {
     return {
-      isOpen : false
+      isOpen: false
     }
   },
 
@@ -74,28 +74,27 @@ module.exports = React.createClass({
   renderItems: function() {
     if (this.props.type === "notification") {
       return <DropdownNotifiItem
-               items={this.props.items}
-               isLoading={this.props.isLoading} />
-    } else {
-      return <MaterialDropdownItem
-               items         = {this.props.items}
-               headerContent = {this.props.headerContent} />
+        items={this.props.items}
+        isLoading={this.props.isLoading}/>
     }
+    return <MaterialDropdownItem
+      items={this.props.items}
+      headerContent={this.props.headerContent}/>
   },
 
   renderIcon: function() {
-    var notificationCountIcon = null;
+    let notificationCountIcon = null;
     if (this.props.type === "notification" && this.props.items.length > 0) {
-      var synIconName = this.props.items.length < 10 ? this.props.items.length : "9-plus";
+      let synIconName = this.props.items.length < 10 ? this.props.items.length : "9-plus";
       notificationCountIcon = <FontIcon
-                                className = {"synicon-numeric-" + synIconName + "-box" }
-                                style     = {{
-                                  padding  : "0 4px",
-                                  color    : "#ff3d00",
-                                  position : "absolute",
-                                  top      : "-14px",
-                                  right    : "-14px"
-                                }} />
+        className={"synicon-numeric-" + synIconName + "-box" }
+        style={{
+          padding  : "0 4px",
+          color    : "#ff3d00",
+          position : "absolute",
+          top      : "-14px",
+          right    : "-14px"
+        }}/>
     }
     //return(
     //  <div>
@@ -110,9 +109,9 @@ module.exports = React.createClass({
 
   render: function() {
 
-    var cssClasses = classNames({
-      "dropdown-menu"         : true,
-      "dropdown-menu-visible" : this.state.isOpen
+    let cssClasses = classNames({
+      "dropdown-menu": true,
+      "dropdown-menu-visible": this.state.isOpen
     });
 
     return (

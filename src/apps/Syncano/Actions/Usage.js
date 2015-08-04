@@ -1,4 +1,3 @@
-
 export default {
   listDailyUsage(params) {
     this.Connection
@@ -17,7 +16,7 @@ export default {
   },
 
   listTotalDailyUsage(params) {
-    params       = params || {};
+    params = params || {};
     params.total = true;
 
     this.Connection
@@ -28,7 +27,7 @@ export default {
   },
 
   listTotalHourlyUsage(params) {
-    params       = params || {};
+    params = params || {};
     params.total = true;
 
     this.Connection

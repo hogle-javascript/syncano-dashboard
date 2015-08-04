@@ -7,14 +7,14 @@ import MUI from 'material-ui';
 let Header = React.createClass({
   getDefaultProps() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.NAME
+      className: ColumnListConstans.DEFAULT_CLASSNAME.NAME
     }
   },
 
   getStyles() {
     return {
-      fontSize    : 20,
-      fontWeight  : 500
+      fontSize: 20,
+      fontWeight: 500
     }
   },
 
@@ -23,8 +23,8 @@ let Header = React.createClass({
 
     return (
       <div
-        className = {this.props.className}
-        style     = {styles}>
+        className={this.props.className}
+        style={styles}>
         {this.props.children}
       </div>
     )
@@ -41,29 +41,29 @@ export default Radium(React.createClass({
     hoverColor: React.PropTypes.string.isRequired
   },
 
-  statics :{
+  statics: {
     Header: Header
   },
 
   getDefaultProps() {
     return {
-      color      : 'rgba(0,0,0,.54)',
-      hoverColor : MUI.Styles.Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.NAME
+      color: 'rgba(0,0,0,.54)',
+      hoverColor: MUI.Styles.Colors.blue600,
+      className: ColumnListConstans.DEFAULT_CLASSNAME.NAME
     };
   },
 
   getStyles() {
     return {
-      display       : '-webkit-flex; display: flex',
-      flexDirection : 'row',
-      fontSize      : 12,
-      padding       : '16px 8px',
-      alignSelf     : 'center',
-      cursor        : 'pointer',
-      color         : this.state.color,
-      ':hover' : {
-        color : this.state.hoverColor
+      display: '-webkit-flex; display: flex',
+      flexDirection: 'row',
+      fontSize: 12,
+      padding: '16px 8px',
+      alignSelf: 'center',
+      cursor: 'pointer',
+      color: this.state.color,
+      ':hover': {
+        color: this.state.hoverColor
       }
     }
   },
@@ -73,8 +73,8 @@ export default Radium(React.createClass({
 
     return (
       <div
-        className   = {this.props.className}
-        style       = {styles}>
+        className={this.props.className}
+        style={styles}>
         {this.props.children}
       </div>
     );

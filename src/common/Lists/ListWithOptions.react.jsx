@@ -1,13 +1,13 @@
-var React               = require('react');
+let React = require('react');
 
-//var ViewActions         = require('../actions/ViewActions');
+//let ViewActions         = require('../actions/ViewActions');
 
-var Constants           = require('../../constants/Constants');
-var List                = require('./List.react');
-var Dropdown            = require('../Dropdown/Dropdown.react').Dropdown;
-var DropdownWithButtons = require('../Dropdown/DropdownWithButtons.react');
+let Constants = require('../../constants/Constants');
+let List = require('./List.react');
+let Dropdown = require('../Dropdown/Dropdown.react').Dropdown;
+let DropdownWithButtons = require('../Dropdown/DropdownWithButtons.react');
 
-var ContentHeader       = require('../ContentHeader.react');
+let ContentHeader = require('../ContentHeader.react');
 
 module.exports = React.createClass({
 
@@ -28,9 +28,9 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var dropdownVisible = this.props.dropdown === this.props.list.uuid;
-    var dropdown;
-    var heading;
+    let dropdownVisible = this.props.dropdown === this.props.list.uuid;
+    let dropdown;
+    let heading;
 
     //debugger;
     //if (this.props.list.contentType !== "instances") {
@@ -50,7 +50,7 @@ module.exports = React.createClass({
     return (
       <div className="list-group">
 
-        <List {...this.props} data={this.props.list.data} />
+        <List {...this.props} data={this.props.list.data}/>
       </div>
     );
   }

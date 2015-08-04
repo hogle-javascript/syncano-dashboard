@@ -13,10 +13,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items     : [],
-      objectId  : null,
-      tracesFor : null,
-      isLoading : true
+      items: [],
+      objectId: null,
+      tracesFor: null,
+      isLoading: true
     }
   },
 
@@ -38,10 +38,10 @@ export default Reflux.createStore({
 
   fetchTraces() {
     let fetch = {
-      codebox  : Actions.fetchCodeBoxTraces,
-      webhook  : Actions.fetchWebhookTraces,
-      trigger  : Actions.fetchTriggerTraces,
-      schedule : Actions.fetchScheduleTraces
+      codebox: Actions.fetchCodeBoxTraces,
+      webhook: Actions.fetchWebhookTraces,
+      trigger: Actions.fetchTriggerTraces,
+      schedule: Actions.fetchScheduleTraces
     };
 
     fetch[this.data.tracesFor](this.data.objectId);

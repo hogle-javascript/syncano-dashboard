@@ -8,20 +8,20 @@ export default CreateActions(
     fetch: {},
     setInvitations: {},
     fetchInvitations: {
-      asyncResult : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.AccountInvitations.list'
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.AccountInvitations.list'
     },
     acceptInvitations: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.AccountInvitations.accept'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.AccountInvitations.accept'
     },
     declineInvitations: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.AccountInvitations.decline'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.AccountInvitations.decline'
     }
   }
 );

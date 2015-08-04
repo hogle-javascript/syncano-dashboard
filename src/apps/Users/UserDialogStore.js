@@ -7,19 +7,19 @@ import Mixins from '../../mixins';
 import UsersActions from './UsersActions';
 
 export default Reflux.createStore({
-  listenables : UsersActions,
+  listenables: UsersActions,
 
-  mixins      : [
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      username  : null,
-      password  : null,
-      groups    : null,
-      isLoading : false
+      username: null,
+      password: null,
+      groups: null,
+      isLoading: false
     };
   },
 

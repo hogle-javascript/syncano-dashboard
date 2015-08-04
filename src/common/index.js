@@ -1,7 +1,6 @@
 import Accordion from './Accordion';
 import AvatarInitials from './AvatarInitials';
 import Button from './Button';
-import Calendar from './Calendar';
 import CheckIcon from './CheckIcon';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
@@ -12,7 +11,6 @@ import Dialog from './Dialog';
 import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
-import Field from './Field';
 import Icon from './Icon';
 import Label from './Label';
 import Lists from './Lists';
@@ -21,7 +19,6 @@ import Logo from './Logo';
 import Notification from './Notification';
 import ProgressBar from './ProgressBar';
 import Request from './Request';
-import Search from './Search';
 import Show from './Show';
 import Slider from './Slider';
 import SnackBar from './SnackBar';
@@ -44,7 +41,6 @@ export default {
   Accordion,
   AvatarInitials,
   Button,
-  Calendar,
   CheckIcon,
   Color,
   ColorIconPicker,
@@ -55,7 +51,6 @@ export default {
   Dropdown,
   Editor,
   Fab,
-  Field,
   Icon,
   Label,
   Lists,
@@ -64,7 +59,6 @@ export default {
   Notification,
   ProgressBar,
   Request,
-  Search,
   Show,
   Slider,
   SnackBar,
