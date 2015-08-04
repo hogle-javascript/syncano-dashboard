@@ -79,7 +79,7 @@ export default React.createClass({
         lineHeight : '1.5rem'
       },
       comment: {
-        fontSize     : '0.9em'
+        fontSize     : '0.9em',
       },
       explorerButton: {
         marginTop : 20
@@ -94,7 +94,7 @@ export default React.createClass({
         width: 10
       },
       legend: {
-        fontSize : '0.9rem'
+        fontSize : '0.9rem',
       }
     }
   },
@@ -467,7 +467,7 @@ export default React.createClass({
             <div classsName="col-md-3" style={{transform: 'translateY(-14px)'}}>
               <MUI.IconButton
                 iconClassName = "synicon-information-outline"
-                iconStyle     = {{color: MUI.Styles.Colors.blue500}}
+                iconStyle     = {{color: Common.Color.getColorByName('blue', 'xlight')}}
                 tooltip       = {toolTip} />
             </div>
             <div classsName="col-flex-1">

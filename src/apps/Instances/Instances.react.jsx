@@ -142,7 +142,7 @@ export default Radium(React.createClass({
         isCheckedInstanceShared = Store.isCheckedInstanceShared();
 
     return (
-      <Container id="instances">
+      <Container id="instances" style={{marginTop: 96}}>
         <InstanceDialog />
         {this.getDialogs()}
 

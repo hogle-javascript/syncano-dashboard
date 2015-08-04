@@ -41,7 +41,6 @@ export default React.createClass({
     return {
       menuContainer: {
         display         : '-webki-inline-flex; display: inline-flex',
-        alignSelf       : 'flex-end'
       },
       menu: {
         backgroundColor : 'transparent',
@@ -51,8 +50,6 @@ export default React.createClass({
         color           : this.context.muiTheme.palette.primary3Color,
         fontWeight      : 400,
         fontSize        : 17,
-        paddingLeft     : 10,
-        paddingRight    : 10
       }
     }
   },

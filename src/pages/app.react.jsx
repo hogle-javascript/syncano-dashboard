@@ -36,6 +36,8 @@ export default React.createClass({
   },
 
   componentWillMount() {
+    // TODO: MUI should deal with that, but for some reason it's not using contentFontFamily
+    ThemeManager.contentFontFamily = SyncanoTheme.contentFontFamily;
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
