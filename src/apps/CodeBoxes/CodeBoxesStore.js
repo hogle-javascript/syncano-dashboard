@@ -173,7 +173,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxTraceCompleted(trace) {
     console.debug('CodeBoxesStore::onFetchCodeBoxTrace');
-    if (trace.status == 'pending') {
+    if (trace.status === 'pending') {
       let CodeBoxId = this.data.currentCodeBoxId;
       setTimeout(() => {
         Actions.fetchCodeBoxTrace(CodeBoxId, trace.id)

@@ -42,7 +42,7 @@ export default React.createClass({
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
     Actions.fetch();
-    if (this.getParams().action == 'add') {
+    if (this.getParams().action === 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
     }
@@ -75,8 +75,7 @@ export default React.createClass({
           <Common.Loading
             type     = "linear"
             position = "bottom"
-            show     = {this.state.isLoading} 
-          />
+            show     = {this.state.isLoading} />
         ]
       }
     }]

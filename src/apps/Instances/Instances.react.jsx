@@ -80,7 +80,7 @@ export default Radium(React.createClass({
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
-    if (this.getParams().action == 'add') {
+    if (this.getParams().action === 'add') {
       // Show Add modal
       this.showDialog('addInstanceDialog');
     }

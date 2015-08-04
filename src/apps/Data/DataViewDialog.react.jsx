@@ -67,13 +67,13 @@ export default React.createClass({
   handleToggle(fieldsType, fieldName, event, value) {
     console.info('DataViewDialog::handleToggle', arguments);
 
-    let genList = (list, fieldName, value) => {
+    let genList = (list, name, val) => {
       let arr = list.replace(/ /g, '').split(',').filter(n => n);
 
-      if (value) {
-        arr.push(fieldName);
+      if (val) {
+        arr.push(name);
       } else {
-        arr = arr.filter(n => n != fieldName );
+        arr = arr.filter(n => n !== name);
       }
 
       return arr.join(',');
@@ -104,8 +104,7 @@ export default React.createClass({
       <div className='row' style={{marginBottom: 20}}>
         <div className='col-flex-1'>Class Fields</div>
         <div className='col-xs-8'>Expand</div>
-      </div>],
-        _this  = this;
+      </div>];
 
     if (this.state.class) {
       return fields.concat(ClassesStore.getClassFields(this.state.class).map(field => {
@@ -117,17 +116,17 @@ export default React.createClass({
                 name           = {field.name}
                 value          = {field.name}
                 label          = {field.name}
-                defaultToggled = {_this.isEnabled(_this.state.fields, field.name)}
-                onToggle       = {_this.handleToggle.bind(_this, 'showFields', field.name)}
+                defaultToggled = {this.isEnabled(this.state.fields, field.name)}
+                onToggle       = {this.handleToggle.bind(this, 'showFields', field.name)}
               />
             </div>
             <div className='col-xs-8'>
               <Common.Show if={field.type === 'reference'}>
                 <MUI.Checkbox
                   name           = "expand"
-                  defaultChecked = {_this.isEnabled(_this.state.expand, field.name)}
-                  disabled       = {!_this.isEnabled(_this.state.fields, field.name)}
-                  onCheck        = {_this.handleToggle.bind(_this, 'expandFields', field.name)}
+                  defaultChecked = {this.isEnabled(this.state.expand, field.name)}
+                  disabled       = {!this.isEnabled(this.state.fields, field.name)}
+                  onCheck        = {this.handleToggle.bind(this, 'expandFields', field.name)}
                 />
               </Common.Show>
             </div>

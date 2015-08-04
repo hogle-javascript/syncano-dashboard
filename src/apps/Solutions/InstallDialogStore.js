@@ -80,7 +80,7 @@ export default Reflux.createStore({
     console.debug('SolutionInstallDialogStore::setInstances');
     this.data.versions = Object.keys(versions).map(key => versions[key]);
     this.data.versions.reverse();
-    this.data.version = this.data.versions[0].id ;
+    this.data.version = this.data.versions[0].id;
     this.trigger(this.data);
   },
 

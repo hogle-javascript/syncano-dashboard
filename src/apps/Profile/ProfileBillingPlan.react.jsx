@@ -198,13 +198,12 @@ export default React.createClass({
             <div>Click <a onClick={this.handleShowPlanDialog}> here </a> to extend.</div>
           </div>
         )
-      } else {
-        return (
-          <div style={{marginTop: 10}}>
-            <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
-          </div>
-        )
       }
+      return (
+        <div style={{marginTop: 10}}>
+          <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
+        </div>
+      );
     };
 
     return (
@@ -377,8 +376,8 @@ export default React.createClass({
 
     if (plan === 'builder') {
       let limitsData = {
-        api : { included : '100 000' },
-        cbx : { included : '1 000' }
+        api: {included : '100 000'},
+        cbx: {included : '1 000'}
       };
       return (
         <div className = "col-md-12">
@@ -485,16 +484,15 @@ export default React.createClass({
             </div>
          </div>
         )
-      } else {
-        return (
-          <div className="row align-middle" style={{FlexDirection: 'column'}}>
-            <div key="productionComment" style={{width: '80%'}}>
-              You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-              Your new monthly fixed price will start from next billing period.
-            </div>
-          </div>
-        );
       }
+      return (
+        <div className="row align-middle" style={{FlexDirection: 'column'}}>
+          <div key="productionComment" style={{width: '80%'}}>
+            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+            Your new monthly fixed price will start from next billing period.
+          </div>
+        </div>
+      );
     }
   },
 

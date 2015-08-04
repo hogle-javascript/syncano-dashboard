@@ -54,7 +54,7 @@ export default Reflux.createStore({
   onGetClassByName(className) {
     let  classObj = null;
     this.data.items.some(item => {
-      if (item.name == className) {
+      if (item.name === className) {
         classObj = item;
         return true;
       }
@@ -65,7 +65,7 @@ export default Reflux.createStore({
   getClassFields(className) {
     let  classObj = null;
     this.data.items.some(item => {
-      if (item.name == className) {
+      if (item.name === className) {
         classObj = item;
         return true;
       }

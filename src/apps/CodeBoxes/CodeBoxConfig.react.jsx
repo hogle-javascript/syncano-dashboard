@@ -33,7 +33,7 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
-  getStyles () {
+  getStyles() {
     return {
       container: {
         margin   : '25px auto',
@@ -68,7 +68,7 @@ export default Radium(React.createClass({
     }
   },
 
-  render () {
+  render() {
     console.debug('CodeBoxConfig::render');
     let styles = this.getStyles();
 

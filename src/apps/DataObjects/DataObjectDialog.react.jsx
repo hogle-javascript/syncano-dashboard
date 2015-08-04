@@ -78,8 +78,7 @@ export default React.createClass({
             );
             params[item.name] = dateTime.toISOString();
           }
-        }
-        else {
+        } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
           if (fieldValue) {
             params[item.name] = fieldValue;

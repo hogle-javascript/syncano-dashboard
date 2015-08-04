@@ -134,8 +134,13 @@ export default React.createClass({
 
     fields.push(field);
 
-    this.refs.fieldOrder ? this.refs.fieldOrder.setChecked() : null;
-    this.refs.fieldFilter ? this.refs.fieldFilter.setChecked() : null;
+    if (this.refs.fieldOrder) {
+      this.refs.fieldOrder.setChecked();
+    }
+
+    if (this.refs.fieldFilter) {
+      this.refs.fieldFilter.setChecked();
+    }
 
     this.setState({
       fields      : fields,
@@ -207,12 +212,12 @@ export default React.createClass({
 
   hasFilter(fieldType) {
     let noFilterFields = ['file', 'text'];
-    return noFilterFields.indexOf(fieldType) < 0 ? true : false;
+    return noFilterFields.indexOf(fieldType) < 0;
   },
 
   hasOrder(fieldType) {
     let noOrderFields = ['file', 'text'];
-    return noOrderFields.indexOf(fieldType) < 0 ? true : false;
+    return noOrderFields.indexOf(fieldType) < 0;
   },
 
   render() {

@@ -216,7 +216,7 @@ export default Reflux.createStore({
     let checkedColumns = JSON.parse(settings);
 
     this.data.columns.map(column => {
-      column.checked = checkedColumns.indexOf(column.id) != -1;
+      column.checked = checkedColumns.indexOf(column.id) !== -1;
     });
 
     this.trigger(this.data);

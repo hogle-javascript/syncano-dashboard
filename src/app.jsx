@@ -44,10 +44,10 @@ Router.run(routes, function(Root, state) {
   var name  = 'app',
       names = state.routes
                 .map(route => route.name)
-                .filter(name => name !== undefined);
+                .filter(n => n !== undefined);
 
   if (names.length > 0) {
-    name = names[names.length-1];
+    name = names[names.length - 1];
   }
 
   analytics.page('Dashboard', {

@@ -64,7 +64,7 @@ export default React.createClass({
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
-    if (this.state.hovered ) {
+    if (this.state.hovered) {
       return {icon: 'checkbox-blank-outline', color: GREY};
     }
 
@@ -79,7 +79,7 @@ export default React.createClass({
     let iconState = this.getIconState(),
         icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon} />;
 
-    return(
+    return (
       <MUI.Avatar
         icon            = {icon}
         style           = {this.props.style}
