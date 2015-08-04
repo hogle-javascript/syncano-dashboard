@@ -54,11 +54,11 @@ module.exports = React.createClass({
     return [
       {
         label: 'Instances',
-        route: 'instances',
+        route: 'instances'
       },
       {
         label: 'Solutions',
-        route: 'solutions',
+        route: 'solutions'
       }
     ];
   },
@@ -144,12 +144,14 @@ module.exports = React.createClass({
                 toggleTagSelection={this.handleToggleTagSelection}/>
             </div>
             <div className="col-flex-1">
-              <Common.Solutions.List
-                items={this.state.items}
-                onInstall={this.handleInstallClick}
-                onSeeMore={this.handleSeeMoreClick}
-                onTagClick={this.handleTagClick}
-                />
+              <Common.Loading show={!this.state.items}>
+                <Common.Solutions.List
+                  items={this.state.items}
+                  onInstall={this.handleInstallClick}
+                  onSeeMore={this.handleSeeMoreClick}
+                  onTagClick={this.handleTagClick}
+                  />
+              </Common.Loading>
             </div>
           </div>
         </div>
