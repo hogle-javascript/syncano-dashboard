@@ -1,3 +1,4 @@
+var utils = require('../utils');
 
 var apiKeysCommands = {
   clickButton: function(button) {
@@ -35,7 +36,7 @@ module.exports = {
       selector: 'button span[data-reactid*="$submitLabel"]'
     },
     apiKeysTableRow: {
-      selector: '//div[text()="test_api_key_description"]',
+      selector: '//div[text()="' + utils.addSuffix('test_api_key_description') + '"]',
       locateStrategy: 'xpath'
     },
     selectApiKey: {
