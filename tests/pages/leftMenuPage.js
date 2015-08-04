@@ -15,6 +15,10 @@ module.exports = {
     codeBoxes: {
       selector: '//div[@tabindex="0"]//span[text()="CodeBoxes"]',
       locateStrategy: 'xpath'
+    },
+    users: {
+      selector: '//div[@tabindex="0"]//span[text()="Users"]',
+      locateStrategy: 'xpath'
     }
   }
 };
