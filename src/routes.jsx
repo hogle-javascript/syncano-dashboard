@@ -79,9 +79,14 @@ module.exports = (
       handler={Dashboard}
       path="/">
       <Route
+        name="instances"
+        handler={Instances}
+        path="instances"/>
+
+      <Route
         name="instance"
         handler={Instance}
-        path="instance/:instanceName">
+        path="instances/:instanceName">
 
         <DefaultRoute handler={Data}/>
 
