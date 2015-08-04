@@ -24,7 +24,7 @@ export default {
   },
 
   remove(ids) {
-    let promises = ids.map(id => this.Connection.Triggers.remove(id));
+    let promises = ids.map((id) => this.Connection.Triggers.remove(id));
 
     this.D.all(promises)
       .success(this.completed)
@@ -33,9 +33,9 @@ export default {
 
   listTraces(triggerId) {
     this.Connection
-        .Triggers
-        .traces(triggerId)
-        .then(this.completed)
-        .catch(this.failure);
+      .Triggers
+      .traces(triggerId)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

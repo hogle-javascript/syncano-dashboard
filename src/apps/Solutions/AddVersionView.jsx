@@ -43,12 +43,12 @@ export default Radium(React.createClass({
   headerMenuItems() {
     return [
       {
-        label  : 'Instances',
-        route  : 'instances'
+        label: 'Instances',
+        route: 'instances'
       },
       {
-        label : 'Solutions',
-        route : 'solutions'
+        label: 'Solutions',
+        route: 'solutions'
       }
     ];
   },
@@ -74,19 +74,19 @@ export default Radium(React.createClass({
 
   pkMap(section) {
     let map = {
-      views     : 'name',
-      classes   : 'name',
-      webhooks  : 'name',
-      channels  : 'name',
-      codeboxes : 'id',
-      triggers  : 'id',
-      schedules : 'id'
+      views: 'name',
+      classes: 'name',
+      webhooks: 'name',
+      channels: 'name',
+      codeboxes: 'id',
+      triggers: 'id',
+      schedules: 'id'
     };
     return map[section];
   },
 
   prepareExportSpec() {
-    let spec         = this.state.exportSpec;
+    let spec = this.state.exportSpec;
     let formatedSpec = {};
 
     Object.keys(spec).map(section => {
@@ -109,9 +109,9 @@ export default Radium(React.createClass({
 
   prepareVersionData() {
     return {
-      type        : this.state.type,
-      export_spec : JSON.stringify(this.prepareExportSpec()),
-      instance    : this.state.instance
+      type: this.state.type,
+      export_spec: JSON.stringify(this.prepareExportSpec()),
+      instance: this.state.instance
     }
   },
 
@@ -139,10 +139,10 @@ export default Radium(React.createClass({
 
     // TODO: move all the styles to getStyles()
     let sectionStyle = {
-      paddingTop    : 10,
-      paddingBottom : 20,
-      margin        : 1,
-      background    : '#F4F4F4'
+      paddingTop: 10,
+      paddingBottom: 20,
+      margin: 1,
+      background: '#F4F4F4'
     };
 
     let sectionTitleStyle = {
@@ -154,18 +154,18 @@ export default Radium(React.createClass({
     let checkboxes = data.map(item => {
       return (
         <div
-          key       = {`checkbox-${type}-${item[pk]}`}
-          className = "col-xs-35 col-md-17 col-lg-17"
-          style     = {{paddingRight: 10}}>
+          key={`checkbox-${type}-${item[pk]}`}
+          className="col-xs-35 col-md-17 col-lg-17"
+          style={{paddingRight: 10}}>
           <MUI.Checkbox
-            ref        = {`checkbox-${type}-${item[pk]}`}
-            iconStyle  = {{fill: '#4D4D4D'}}
-            labelStyle = {{color: '#4D4D4D'}}
-            name       = {item[pk]}
-            value      = {item[pk]}
-            label      = {item[labelPk].substring(0, 25)}
-            onCheck    = {this.handleOnCheck.bind(this, item[pk], type)}
-          />
+            ref={`checkbox-${type}-${item[pk]}`}
+            iconStyle={{fill: '#4D4D4D'}}
+            labelStyle={{color: '#4D4D4D'}}
+            name={item[pk]}
+            value={item[pk]}
+            label={item[labelPk].substring(0, 25)}
+            onCheck={this.handleOnCheck.bind(this, item[pk], type)}
+            />
         </div>
       )
     });
@@ -175,10 +175,10 @@ export default Radium(React.createClass({
         <div style={sectionTitleStyle}>{label}</div>
         <div style={sectionStyle}>
           <div className="row">
-              {checkboxes}
+            {checkboxes}
           </div>
         </div>
-     </div>
+      </div>
     )
   },
 
@@ -187,12 +187,13 @@ export default Radium(React.createClass({
       return;
     } else if (this.state.dataReady === 'loading') {
       return (
-          <Common.Loading key="loading" style={{marginTop: 30}} show={true} />
+        <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>
       )
     }
     return (
       <div key="info" style={{padding: 100, margin: '0 auto'}}>
-        <div style={{color: '#B8B8B8', width: 300, height: 27, lineHeight: '27px', fontSize: '1rem', verticalAlign: 'middle', textAlign: 'center'}}>
+        <div
+          style={{color: '#B8B8B8', width: 300, height: 27, lineHeight: '27px', fontSize: '1rem', verticalAlign: 'middle', textAlign: 'center'}}>
           Choose the Instance which you want to use to export new solution version.
         </div>
       </div>
@@ -206,16 +207,16 @@ export default Radium(React.createClass({
 
           <MUI.ToolbarGroup>
             <MUI.IconButton
-              iconClassName = "synicon-arrow-left"
-              onClick       = {this.handleBackClick}
-              touch         = {true}
-              style         = {{marginTop: 4}}
-              iconStyle     = {{color: 'rgba(0,0,0,.4)'}}
-            />
+              iconClassName="synicon-arrow-left"
+              onClick={this.handleBackClick}
+              touch={true}
+              style={{marginTop: 4}}
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}
+              />
           </MUI.ToolbarGroup>
 
           <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId} />
+            <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId}/>
           </MUI.ToolbarGroup>
 
           <MUI.ToolbarGroup float="right">
@@ -230,29 +231,29 @@ export default Radium(React.createClass({
             <div className='row'>
               <div className='col-lg-8'>
                 <MUI.SelectField
-                  ref               = 'type'
-                  name              = 'type'
-                  fullWidth         = {true}
-                  valueLink         = {this.linkState('type')}
-                  valueMember       = 'payload'
-                  displayMember     = 'text'
-                  floatingLabelText = 'Type'
-                  menuItems         =  {Store.getTypes()}
-                />
+                  ref='type'
+                  name='type'
+                  fullWidth={true}
+                  valueLink={this.linkState('type')}
+                  valueMember='payload'
+                  displayMember='text'
+                  floatingLabelText='Type'
+                  menuItems={Store.getTypes()}
+                  />
               </div>
               <div className='col-lg-26'>
                 <MUI.SelectField
-                  ref               = 'instance'
-                  name              = 'instance'
-                  onChange          = {this.handleInstanceChange}
-                  fullWidth         = {true}
-                  value             = {null}
-                  valueMember       = 'payload'
-                  displayMember     = 'text'
-                  floatingLabelText = 'Instances'
-                  errorText         = {this.getValidationMessages('instance').join(' ')}
-                  menuItems         = {Store.getInstancesDropdown()}
-                />
+                  ref='instance'
+                  name='instance'
+                  onChange={this.handleInstanceChange}
+                  fullWidth={true}
+                  value={null}
+                  valueMember='payload'
+                  displayMember='text'
+                  floatingLabelText='Instances'
+                  errorText={this.getValidationMessages('instance').join(' ')}
+                  menuItems={Store.getInstancesDropdown()}
+                  />
               </div>
             </div>
           </div>
@@ -260,33 +261,33 @@ export default Radium(React.createClass({
             {this.renderInfo()}
           </div>
           <div className="row" style={{marginTop: 30}}>
-             {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
-             {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-             {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'id', 'label', 'codeboxes')}
-             {this.renderCheckboxes('Webhooks', this.state.instanceData.webhooks, 'name', 'name', 'webhooks')}
-             {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
-             {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
-             {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
+            {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
+            {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
+            {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'id', 'label', 'codeboxes')}
+            {this.renderCheckboxes('Webhooks', this.state.instanceData.webhooks, 'name', 'name', 'webhooks')}
+            {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
+            {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
+            {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
           </div>
           <div className="row" style={{paddingTop: 30}}>
             <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
               <MUI.FlatButton
-                style      = {{marginRight: 10}}
-                ref        = 'cancel'
-                key        = 'cancel'
-                label      = 'Cancel'
-                onTouchTap = {this.handleCancel} />
+                style={{marginRight: 10}}
+                ref='cancel'
+                key='cancel'
+                label='Cancel'
+                onTouchTap={this.handleCancel}/>
               <MUI.RaisedButton
-                ref        = 'submit'
-                key        = 'confirm'
-                label      = 'Confirm'
-                disable    = {this.state.instance ? false : true}
-                primary    = {true}
-                onTouchTap = {this.handleFormValidation} />
+                ref='submit'
+                key='confirm'
+                label='Confirm'
+                disable={this.state.instance ? false : true}
+                primary={true}
+                onTouchTap={this.handleFormValidation}/>
             </div>
           </div>
         </Common.Container>
-    </div>
+      </div>
     );
   }
 }));

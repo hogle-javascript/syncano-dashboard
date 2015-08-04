@@ -1,23 +1,23 @@
-var React = require('react'),
-    mui   = require('material-ui'),
+let React = require('react'),
+  mui = require('material-ui'),
 
-    FontIcon = mui.FontIcon;
+  FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({
 
   displayName: "TraceResultWithMeta",
 
-  render: function () {
-    var metaListed = '';
-    var argsListed = '';
+  render() {
+    let metaListed = '';
+    let argsListed = '';
     if (this.props.args && this.props.meta) {
-      for (var key in this.props.meta) {
+      for (let key in this.props.meta) {
         if (this.props.meta.hasOwnProperty(key)) {
           metaListed += key + ': ' + this.props.meta[key] + '\n';
         }
       }
       ;
-      for (var key in this.props.args) {
+      for (let key in this.props.args) {
         if (this.props.args.hasOwnProperty(key)) {
           argsListed += key + ': ' + this.props.args[key] + '\n';
         }

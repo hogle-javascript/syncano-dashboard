@@ -8,7 +8,7 @@ let Header = React.createClass({
 
   getDefaultProps() {
     return {
-      className : ColumnListConstans.DEFAULT_CLASSNAME.ID
+      className: ColumnListConstans.DEFAULT_CLASSNAME.ID
     }
   },
 
@@ -26,39 +26,39 @@ export default Radium(React.createClass({
   displayName: 'ColumnID',
 
   propTypes: {
-    id          : React.PropTypes.string,
-    color       : React.PropTypes.string.isRequired,
-    handleClick : React.PropTypes.func
+    id: React.PropTypes.string,
+    color: React.PropTypes.string.isRequired,
+    handleClick: React.PropTypes.func
   },
 
-  statics :{
-    Header : Header
+  statics: {
+    Header: Header
   },
 
   getDefaultProps() {
     return {
-      color      : 'rgba(0,0,0,.54)',
-      hoverColor : MUI.Styles.Colors.blue600,
-      className  : ColumnListConstans.DEFAULT_CLASSNAME.ID
+      color: 'rgba(0,0,0,.54)',
+      hoverColor: MUI.Styles.Colors.blue600,
+      className: ColumnListConstans.DEFAULT_CLASSNAME.ID
     };
   },
 
   getInitialState() {
     return {
-      color      : this.props.color,
-      hoverColor : this.props.hoverColor
+      color: this.props.color,
+      hoverColor: this.props.hoverColor
     }
   },
 
   getStyles() {
     return {
-      display        : '-webkit-flex; display: flex',
-      flexDirection  : 'column',
-      fontSize       : '12px',
-      lineHeight     : '16px',
-      justifyContent : 'center',
-      padding        : '16px 8px',
-      color          : this.props.color
+      display: '-webkit-flex; display: flex',
+      flexDirection: 'column',
+      fontSize: '12px',
+      lineHeight: '16px',
+      justifyContent: 'center',
+      padding: '16px 8px',
+      color: this.props.color
     };
   },
 
@@ -71,8 +71,8 @@ export default Radium(React.createClass({
 
     return (
       <div
-        className = {this.props.className}
-        style     = {styles}>
+        className={this.props.className}
+        style={styles}>
         <span>{this.props.children}</span>
       </div>
     );

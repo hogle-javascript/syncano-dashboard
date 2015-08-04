@@ -1,22 +1,22 @@
 import Reflux from 'reflux';
 import _Connection from './Connection';
 
-let Connection     = _Connection.get();
+let Connection = _Connection.get();
 let SessionActions = Reflux.createActions({
-  login       : {},
-  logout      : {},
-  setToken    : {},
-  setRouter   : {},
-  setUser     : {},
-  setTheme    : {},
-  setInstance : {},
+  login: {},
+  logout: {},
+  setToken: {},
+  setRouter: {},
+  setUser: {},
+  setTheme: {},
+  setInstance: {},
   fetchUser: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   },
   fetchInstance: {
-    asyncResult : true,
-    children    : ['completed', 'failure']
+    asyncResult: true,
+    children: ['completed', 'failure']
   }
 });
 

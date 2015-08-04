@@ -1,9 +1,9 @@
-var React          = require('react'),
-    Router         = require('react-router'),
-    RouteHandler   = Router.RouteHandler,
+var React = require('react'),
+  Router = require('react-router'),
+  RouteHandler = Router.RouteHandler,
 
-    // Stores and Action
-    SessionActions = require('../apps/Session/SessionActions');
+// Stores and Action
+  SessionActions = require('../apps/Session/SessionActions');
 
 module.exports = React.createClass({
 
@@ -18,7 +18,7 @@ module.exports = React.createClass({
     router: React.PropTypes.func
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
     console.debug('Instance::componentWillMount');
     var params = this.getParams();
     if (params.instanceName) {
@@ -26,7 +26,7 @@ module.exports = React.createClass({
     }
   },
 
-  render: function() {
+  render: function () {
     return <RouteHandler />
   }
 

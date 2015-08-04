@@ -1,5 +1,5 @@
-var React = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 require('./Field.css');
 
@@ -11,9 +11,9 @@ module.exports = React.createClass({
     field: React.PropTypes.object.isRequired,
   },
 
-  render: function () {
-    var field = this.props.field;
-    var cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
+  render() {
+    let field = this.props.field;
+    let cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
       'field-group': true,
       'field-group-large-text': this.props.field.largeText,
     });

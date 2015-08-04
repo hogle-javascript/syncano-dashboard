@@ -1,7 +1,7 @@
-var React       = require('react');
-var classNames  = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
-//var ViewActions = require('../actions/ViewActions');
+//let ViewActions = require('../actions/ViewActions');
 
 require('./Field.css');
 
@@ -39,14 +39,17 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    var input;
+    let input;
     if (this.props.field.name === "schema" || this.props.field.name === "source") {
-      input = <textarea onChange={this.resizeHeight} className="field-input" ref="input" onKeyUp={this.handleKeyUp}>{this.props.field.value}</textarea>
+      input = <textarea onChange={this.resizeHeight} className="field-input" ref="input"
+                        onKeyUp={this.handleKeyUp}>{this.props.field.value}</textarea>
     } else {
-      input = <div className="field-input" ref="input" contentEditable onKeyUp={this.handleKeyUp}>{this.props.field.value}</div>
-    };
-    var field = this.props.field;
-    var cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
+      input = <div className="field-input" ref="input" contentEditable
+                   onKeyUp={this.handleKeyUp}>{this.props.field.value}</div>
+    }
+    ;
+    let field = this.props.field;
+    let cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
       'field-group': true,
       'field-group-large-text': this.props.field.largeText,
       'field-group-error': this.state.errorText,

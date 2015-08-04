@@ -13,11 +13,11 @@ export default Reflux.createStore({
 
   init() {
     this.connection = Connection.get();
-    this.token      = sessionStorage.getItem('token') || null;
-    this.user       = null;
-    this.instance   = null;
-    this.router     = null;
-    this.theme      = null;
+    this.token = sessionStorage.getItem('token') || null;
+    this.user = null;
+    this.instance = null;
+    this.router = null;
+    this.theme = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -87,7 +87,7 @@ export default Reflux.createStore({
     console.info('SessionStore::setInstance');
 
     // Let's go back to this topic later
-    //var colorName       = instance.metadata.color,
+    //let colorName       = instance.metadata.color,
     //    secondColorName = 'indigo';
     //
     //if (ColorStore.getColorByName(colorName)) {
@@ -136,13 +136,13 @@ export default Reflux.createStore({
 
   makePalette(mainColor, accentColor) {
     return {
-      primary1Color : Colors[mainColor + '700'],
-      primary2Color : Colors[mainColor + '500'],
-      primary3Color : Colors[mainColor + '100'],
+      primary1Color: Colors[mainColor + '700'],
+      primary2Color: Colors[mainColor + '500'],
+      primary3Color: Colors[mainColor + '100'],
 
-      accent1Color  : Colors[accentColor + '700'],
-      accent2Color  : Colors[accentColor + '300'],
-      accent3Color  : Colors[accentColor + '200']
+      accent1Color: Colors[accentColor + '700'],
+      accent2Color: Colors[accentColor + '300'],
+      accent3Color: Colors[accentColor + '200']
     }
   },
 
@@ -160,8 +160,8 @@ export default Reflux.createStore({
   },
 
   onLogout() {
-    this.token      = null;
-    this.user       = null;
+    this.token = null;
+    this.user = null;
     this.connection = Connection.reset();
 
     sessionStorage.removeItem('token');

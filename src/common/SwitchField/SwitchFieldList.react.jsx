@@ -1,5 +1,5 @@
-var React       = require('react');
-var SwitchField = require('./SwitchField.react');
+let React = require('react');
+let SwitchField = require('./SwitchField.react');
 
 require('./SwitchField.css');
 
@@ -14,17 +14,17 @@ module.exports = React.createClass({
   },
 
   getSwitchFields: function() {
-    var fields = this.props.fields.map(function(field){
-      return <SwitchField 
-               handleFieldLinkClick={this.props.handleFieldLinkClick}
-               handleSwitchClick={this.props.handleSwitchClick} 
-               key={field.name} 
-               ref={field.name}
-               toggled={field.enabled}
-               textEnabled={field.textEnabled}
-               textDisabled={field.textDisabled}
-               name={field.name}
-               heading={field.heading} />
+    let fields = this.props.fields.map(function(field) {
+      return <SwitchField
+        handleFieldLinkClick={this.props.handleFieldLinkClick}
+        handleSwitchClick={this.props.handleSwitchClick}
+        key={field.name}
+        ref={field.name}
+        toggled={field.enabled}
+        textEnabled={field.textEnabled}
+        textDisabled={field.textDisabled}
+        name={field.name}
+        heading={field.heading}/>
     }.bind(this));
     return fields;
   },

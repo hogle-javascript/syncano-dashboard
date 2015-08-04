@@ -5,33 +5,33 @@ export default CreateActions(
     withDialog: true
   },
   {
-    showDialogWithPreFetch : {},
-    setSolutionId          : {},
-    setInstances           : {},
-    setSolutionVersions    : {},
+    showDialogWithPreFetch: {},
+    setSolutionId: {},
+    setInstances: {},
+    setSolutionVersions: {},
 
-    fetchInstances : {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.list'
+    fetchInstances: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.list'
     },
-    fetchSolutionVersions : {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.listVersions'
+    fetchSolutionVersions: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.listVersions'
     },
     installSolution: {
-      asyncForm   : true,
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.install'
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.install'
     },
     createInstance: {
-      asyncResult : true,
-      asyncForm   : true,
-      loading     : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Instances.create'
+      asyncResult: true,
+      asyncForm: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.create'
     }
   }
 );

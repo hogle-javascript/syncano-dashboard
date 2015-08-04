@@ -67,6 +67,7 @@
     "valid-jsdoc": 2,
     "valid-typeof": 2,
     "no-unexpected-multiline": 2,
+    "no-warning-comments": 1,
 
     // Best Practices
     "accessor-pairs": 2,

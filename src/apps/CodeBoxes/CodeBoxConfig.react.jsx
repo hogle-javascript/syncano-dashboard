@@ -36,9 +36,9 @@ export default Radium(React.createClass({
   getStyles () {
     return {
       container: {
-        margin   : '25px auto',
-        width    : '100%',
-        maxWidth : '1140px'
+        margin: '25px auto',
+        width: '100%',
+        maxWidth: '1140px'
       }
     }
   },
@@ -49,8 +49,8 @@ export default Radium(React.createClass({
   },
 
   renderEditor() {
-    let config  = null,
-        codeBox = this.state.currentCodeBox;
+    let config = null,
+      codeBox = this.state.currentCodeBox;
 
     if (codeBox) {
       config = JSON.stringify(codeBox.config, null, 2);
@@ -58,11 +58,11 @@ export default Radium(React.createClass({
       return (
         <div>
           <Common.Editor
-            ref    = "editorConfig"
-            height = {300}
-            mode   = "javascript"
-            theme  = "github"
-            value  = {config} />
+            ref="editorConfig"
+            height={300}
+            mode="javascript"
+            theme="github"
+            value={config}/>
         </div>
       )
     }
@@ -76,10 +76,10 @@ export default Radium(React.createClass({
       <Container style={styles.container}>
         <Common.Fab position="top">
           <Common.Fab.Item
-            label         = "Click here to save CodeBox"
-            mini          = {true}
-            onClick       = {this.handleUpdate}
-            iconClassName = "synicon-content-save" />
+            label="Click here to save CodeBox"
+            mini={true}
+            onClick={this.handleUpdate}
+            iconClassName="synicon-content-save"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}

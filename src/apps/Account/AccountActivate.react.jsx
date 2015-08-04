@@ -22,7 +22,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    var params = this.getParams();
+    let params = this.getParams();
 
     Actions.activate({
       uid: params.uid,
@@ -30,7 +30,7 @@ export default React.createClass({
     });
   },
 
-  render: function() {
+  render() {
     return (
       <Container ref="loginPage">
         <div className="account-container__content__header">

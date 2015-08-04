@@ -19,23 +19,23 @@ export default React.createClass({
   },
 
   render() {
-    let styles    = this.getStyles(),
-        rootStyle = this.mergeAndPrefix(styles.root, this.props.style);
+    let styles = this.getStyles(),
+      rootStyle = this.mergeAndPrefix(styles.root, this.props.style);
 
     return (
       <div
-        className = "row"
-        style     = {rootStyle}>
+        className="row"
+        style={rootStyle}>
         <div className="col-md-24">
           <div className="row">
             <div
-              className = "col-flex-1"
-              style     = {styles.sectionTopic}>
+              className="col-flex-1"
+              style={styles.sectionTopic}>
               {this.props.title}
             </div>
             <div
-              className= "col-flex-1"
-              style    = {{color: '#9B9B9B', textAlign: 'right'}}>
+              className="col-flex-1"
+              style={{color: '#9B9B9B', textAlign: 'right'}}>
               suggestion based on usage: ${this.props.suggestion}
             </div>
           </div>
@@ -44,8 +44,8 @@ export default React.createClass({
           </div>
         </div>
         <div
-          className = "col-md-11"
-          style     = {{paddingLeft: 35}}>
+          className="col-md-11"
+          style={{paddingLeft: 35}}>
           {this.props.sliderSummary}
         </div>
       </div>

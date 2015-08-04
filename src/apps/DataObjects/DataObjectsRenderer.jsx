@@ -6,7 +6,7 @@ export default {
 
   columnsRenderers() {
     return {
-      'created_at' : this.renderColumnDate
+      'created_at': this.renderColumnDate
     }
   },
 
@@ -29,7 +29,7 @@ export default {
 
   renderReference(obj) {
     return (
-        <div>{obj.target + ': ' + obj.value}</div>
+      <div>{obj.target + ': ' + obj.value}</div>
     )
   },
 
@@ -40,14 +40,14 @@ export default {
 
   renderFile(obj) {
     return (
-        <MUI.IconButton
-          iconClassName = "synicon-download"
-          onClick       = {this.handleFileOnClick.bind(this, obj.value)} />
+      <MUI.IconButton
+        iconClassName="synicon-download"
+        onClick={this.handleFileOnClick.bind(this, obj.value)}/>
     )
   },
 
   // Header
-  renderTableHeader: function(classObj, columns) {
+  renderTableHeader(classObj, columns) {
     console.debug('ClassesStore::getTableHeader');
 
     // Initial columns
@@ -55,9 +55,9 @@ export default {
       if (item.checked) {
         return (
           <MUI.TableHeaderColumn
-            key        = {'header-column-' + index}
-            style      = {{width: item.width ? item.width : null, whiteSpace: 'normal', wordWrap: 'normal'}}
-            tooltip    = {item.tooltip} >
+            key={'header-column-' + index}
+            style={{width: item.width ? item.width : null, whiteSpace: 'normal', wordWrap: 'normal'}}
+            tooltip={item.tooltip}>
             {item.name}
           </MUI.TableHeaderColumn>
         );
@@ -67,9 +67,9 @@ export default {
     // TODO: select all doesn't work properly in material-ui
     return (
       <MUI.TableHeader
-        key              = 'header'
-        enableSelectAll  = {false}
-        displaySelectAll = {false}>
+        key='header'
+        enableSelectAll={false}
+        displaySelectAll={false}>
         <MUI.TableRow key='header-row'>
           {columnsComponents}
         </MUI.TableRow>
@@ -89,7 +89,7 @@ export default {
           return;
         }
 
-        let value    = item[column.id];
+        let value = item[column.id];
         let renderer = this.getColumnRenderer(column.id);
 
         if (value && typeof value === 'object') {
@@ -117,13 +117,13 @@ export default {
 
         row[column.id] = {
           content: <div>{value}</div>,
-          style: { width: column.width }
+          style: {width: column.width}
         };
 
         return (
           <MUI.TableRowColumn
-            key   = {`${column.id}-${index}`}
-            style = {{width: column.width}}>
+            key={`${column.id}-${index}`}
+            style={{width: column.width}}>
             {value}
           </MUI.TableRowColumn>
         );

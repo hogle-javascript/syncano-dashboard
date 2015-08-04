@@ -1,1 +1,4 @@
 src/lib
+src/segment.js
+src/stripe.js
+src/raven.js

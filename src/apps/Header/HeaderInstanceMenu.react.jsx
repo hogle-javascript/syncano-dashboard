@@ -14,35 +14,35 @@ export default React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func.isRequired
+    router: React.PropTypes.func.isRequired
   },
 
-  getStyles: function() {
+  getStyles() {
     return {
       color: '#fff',
       fill: '#fff'
     }
   },
 
-  handleApiKeysClick: function() {
+  handleApiKeysClick() {
     this.transitionTo('api-keys', {instanceName: this.context.router.getCurrentParams().instanceName});
   },
 
-  handleAdminsClick: function() {
+  handleAdminsClick() {
     this.transitionTo('admins', {instanceName: this.context.router.getCurrentParams().instanceName});
   },
 
-  renderMenuIcon: function() {
-    var styles = this.getStyles();
+  renderMenuIcon() {
+    let styles = this.getStyles();
 
     return (
       <MUI.IconButton
-        iconStyle     = {styles}
-        iconClassName = "synicon-cog" />
+        iconStyle={styles}
+        iconClassName="synicon-cog"/>
     )
   },
 
-  render: function() {
+  render() {
     return (
       <MUI.IconMenu iconButtonElement={this.renderMenuIcon()}>
         <MenuItem onClick={this.handleAdminsClick}>Admins</MenuItem>

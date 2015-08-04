@@ -1,24 +1,24 @@
-var React = require('react');
+let React = require('react');
 
-var Field = require('./Field.react');
-var FieldSelect = require('./FieldSelect.react');
-var FieldPassword = require('./FieldPassword.react');
-var FieldReadonly = require('./FieldReadonly.react');
-var FieldDatetime = require('./FieldDatetime.react');
+let Field = require('./Field.react');
+let FieldSelect = require('./FieldSelect.react');
+let FieldPassword = require('./FieldPassword.react');
+let FieldReadonly = require('./FieldReadonly.react');
+let FieldDatetime = require('./FieldDatetime.react');
 
 module.exports = React.createClass({
 
   displayName: 'FieldList',
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       errorFields: []
     }
   },
 
-  render: function () {
-    var fields = this.props.fields.map(function (field) {
-      var errorText = field.name in this.props.errorFields ? this.props.errorFields[field.name][0] : null;
+  render() {
+    let fields = this.props.fields.map(function(field) {
+      let errorText = field.name in this.props.errorFields ? this.props.errorFields[field.name][0] : null;
       if (field.type === "select") {
         return <FieldSelect {...this.props} key={field.name} field={field} ref={field.name} errorText={errorText}/>
       } else if (field.type === "password") {

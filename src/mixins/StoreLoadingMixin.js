@@ -1,17 +1,17 @@
-var StoreLoadingMixin = {
+export default {
 
-  setLoadingStates: function() {
+  setLoadingStates() {
     if (this.listenables) {
-      var arr = [].concat(this.listenables);
+      let arr = [].concat(this.listenables);
       arr.forEach(function(item) {
         this.setLoadingState(item);
       }.bind(this))
     }
   },
 
-  setLoadingState: function(listenable) {
-    for (var key in listenable) {
-      var action = listenable[key];
+  setLoadingState(listenable) {
+    for (let key in listenable) {
+      let action = listenable[key];
       if (action.asyncResult === true && action.loading === true) {
         this.listenTo(action, this.setToLoading);
         this.listenTo(action.completed, this.setToNotLoading);
@@ -20,7 +20,7 @@ var StoreLoadingMixin = {
     }
   },
 
-  setToLoading: function() {
+  setToLoading() {
     if (this.data.isLoading === true) {
       return;
     }
@@ -29,7 +29,7 @@ var StoreLoadingMixin = {
     this.trigger(this.data);
   },
 
-  setToNotLoading: function() {
+  setToNotLoading() {
     if (this.data.isLoading === false) {
       return;
     }
@@ -40,5 +40,3 @@ var StoreLoadingMixin = {
   }
 
 };
-
-module.exports = StoreLoadingMixin;

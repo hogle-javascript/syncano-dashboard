@@ -23,15 +23,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -43,19 +43,19 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.name}>
+        checked={item.checked}
+        key={item.name}>
         <Column.CheckIcon
-          id              = {item.name}
-          icon            = 'table'
-          background      = {MUI.Styles.Colors.blue500}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name}
+          icon='table'
+          background={MUI.Styles.Colors.blue500}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc className="col-xs-8">{item.description}</Column.Desc>
         <Column.Desc>{item.class}</Column.Desc>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },

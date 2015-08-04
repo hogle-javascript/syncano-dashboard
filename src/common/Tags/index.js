@@ -1,6 +1,6 @@
 import List from './List';
 
 let Tags = {};
-Tags.List  = List;
+Tags.List = List;
 
 export default Tags;

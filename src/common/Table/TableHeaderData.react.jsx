@@ -1,13 +1,13 @@
-var React       = require('react');
-var classNames  = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 module.exports = React.createClass({
 
   displayName: 'TableHeaderData',
 
   render: function() {
-    var content = this.props.children || this.props.data || (<em>undefined</em>);
-    var cssClasses = classNames({
+    let content = this.props.children || this.props.data || (<em>undefined</em>);
+    let cssClasses = classNames({
       'table-data': true,
       'table-header-data': true,
       'table-data-id': this.props.column.name === "id",

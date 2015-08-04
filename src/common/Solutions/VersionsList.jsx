@@ -8,7 +8,7 @@ import Loading from '../Loading';
 import Lists from '../Lists';
 
 // Shortcut
-let Column =  ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -16,15 +16,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items    : this.props.items,
+      items: this.props.items,
       isLoading: this.props.items ? false : true
     };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.items ? false : true
+      items: nextProps.items,
+      isLoading: nextProps.items ? false : true
     })
   },
 
@@ -47,9 +47,9 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ColumnList.Item
-        key          = {item.id}
-        id           = {item.id}
-        handleClick  = {this.handleItemClick} >
+        key={item.id}
+        id={item.id}
+        handleClick={this.handleItemClick}>
         <Column.Desc className="col-xs-5 col-md-5">
           <div style={{marginLeft: 10}}>
             <MUI.Avatar style={{fontSize: '1rem'}}>
@@ -58,7 +58,7 @@ export default React.createClass({
           </div>
         </Column.Desc>
 
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
 
         <Column.Desc>
           {item.type}
@@ -70,18 +70,18 @@ export default React.createClass({
 
         <Column.ID className="col-xs-4 col-md-4">
           <MUI.IconButton
-            iconClassName = "synicon-cloud-download"
-            tooltip       = "Download this Solution version file"
-            onClick       = {this.handleDownloadVersion.bind(this, item.data.url)}
-          />
+            iconClassName="synicon-cloud-download"
+            tooltip="Download this Solution version file"
+            onClick={this.handleDownloadVersion.bind(this, item.data.url)}
+            />
         </Column.ID>
 
         <Column.ID className="col-xs-4 col-md-4">
           <MUI.IconButton
-            iconClassName = "synicon-download"
-            tooltip       = "Install this Solution version"
-            onClick       = {this.handleInstallClick.bind(null, item.id)}
-          />
+            iconClassName="synicon-download"
+            tooltip="Install this Solution version"
+            onClick={this.handleInstallClick.bind(null, item.id)}
+            />
         </Column.ID>
 
       </ColumnList.Item>
@@ -102,7 +102,7 @@ export default React.createClass({
 
     return (
       <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
+        {this.props.emptyItemContent}
       </ColumnList.EmptyItem>
     )
   },

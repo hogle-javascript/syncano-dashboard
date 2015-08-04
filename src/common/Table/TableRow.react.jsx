@@ -1,18 +1,18 @@
-var React     = require('react'),
-    Moment    = require('moment'),
+let React = require('react'),
+  Moment = require('moment'),
 
-    Dropdown  = require('../Dropdown/Dropdown.react'),
-    TableData = require('./TableData.react');
+  Dropdown = require('../Dropdown/Dropdown.react'),
+  TableData = require('./TableData.react');
 
 module.exports = React.createClass({
 
   displayName: 'TableRow',
 
-  toggleDropdownMenu: function () {
+  toggleDropdownMenu() {
     ViewActions.showDropdown(this.props.item.uuid);
   },
 
-  handleDropdownMenuItemClick: function (action) {
+  handleDropdownMenuItemClick(action) {
     if (action === "delete") {
       ViewActions.showModalConfirmDeleteResource(this.props.item);
     } else if (action === "edit") {
@@ -20,13 +20,13 @@ module.exports = React.createClass({
     }
   },
 
-  render: function () {
-    var dropdown = this.props.dropdown;
-    var dropdownVisible = this.props.dropdown === this.props.item.uuid;
-    var columns = this.props.columns.filter(function (column, i) {
+  render() {
+    let dropdown = this.props.dropdown;
+    let dropdownVisible = this.props.dropdown === this.props.item.uuid;
+    let columns = this.props.columns.filter(function(column, i) {
       return column.selected;
-    }.bind(this)).map(function (column, i) {
-      var data = this.props.item[column.name];
+    }.bind(this)).map(function(column, i) {
+      let data = this.props.item[column.name];
       if (column.name === "created_at" || column.name === "updated_at") {
         data = Moment(this.props.item[column.name]).format('DD-MM-YYYY, h:mm:ss a');
       }
@@ -40,23 +40,23 @@ module.exports = React.createClass({
         data = this.props.item[column.name].toString();
       }
       return <TableData
-               {...this.props}
-               key={i} data={data}
-               column={column}/>
+        {...this.props}
+        key={i} data={data}
+        column={column}/>
     }.bind(this));
-    var optionsColumn = null;
+    let optionsColumn = null;
     if (!this.props.readOnly) {
-      var actions = ConfigStore.getConfig()[this.props.item.type].actions;
-      var optionsColumn = (
+      let actions = ConfigStore.getConfig()[this.props.item.type].actions;
+      let optionsColumn = (
         <TableData
           {...this.props}
           key="options"
           column={{"name":"options", "type":"options"}}>
           <Dropdown
-            actions            = {actions}
-            visible            = {dropdownVisible}
-            toggleDropdownMenu = {this.toggleDropdownMenu}
-            handleClick        = {this.handleDropdownMenuItemClick}/>
+            actions={actions}
+            visible={dropdownVisible}
+            toggleDropdownMenu={this.toggleDropdownMenu}
+            handleClick={this.handleDropdownMenuItemClick}/>
         </TableData>);
     }
     return (

@@ -17,12 +17,12 @@ export default React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func.isRequired,
-    muiTheme : React.PropTypes.object
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
   },
 
   getActiveMenuItemIndex() {
-    var index = 0;
+    let index = 0;
 
     this.state.menuItems.some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
@@ -40,39 +40,39 @@ export default React.createClass({
   getStyles() {
     return {
       menuContainer: {
-        display         : '-webki-inline-flex; display: inline-flex',
-        alignSelf       : 'flex-end'
+        display: '-webki-inline-flex; display: inline-flex',
+        alignSelf: 'flex-end'
       },
       menu: {
-        backgroundColor : 'transparent',
-        height          : 56
+        backgroundColor: 'transparent',
+        height: 56
       },
       menuItemStyles: {
-        color           : this.context.muiTheme.palette.primary3Color,
-        fontWeight      : 400,
-        fontSize        : 17,
-        paddingLeft     : 10,
-        paddingRight    : 10
+        color: this.context.muiTheme.palette.primary3Color,
+        fontWeight: 400,
+        fontSize: 17,
+        paddingLeft: 10,
+        paddingRight: 10
       }
     }
   },
 
   renderMenuItem(tab, index) {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <MUI.Tab
-        key      = {'menuItem-' + tab.route + '-' + index}
-        label    = {tab.label}
-        route    = {tab.route}
-        params   = {tab.params}
-        style    = {styles.menuItemStyles}
-        onActive = {this.handleTabActive} />
+        key={'menuItem-' + tab.route + '-' + index}
+        label={tab.label}
+        route={tab.route}
+        params={tab.params}
+        style={styles.menuItemStyles}
+        onActive={this.handleTabActive}/>
     )
   },
 
   render() {
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
     if (this.state.menuItems.length === 0) {
       return null
@@ -81,8 +81,8 @@ export default React.createClass({
     return (
       <div style={styles.menuContainer}>
         <MUI.Tabs
-          tabItemContainerStyle = {styles.menu}
-          initialSelectedIndex  = {this.getActiveMenuItemIndex()}>
+          tabItemContainerStyle={styles.menu}
+          initialSelectedIndex={this.getActiveMenuItemIndex()}>
           {this.state.menuItems.map(this.renderMenuItem)}
         </MUI.Tabs>
       </div>

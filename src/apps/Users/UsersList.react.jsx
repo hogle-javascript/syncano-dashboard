@@ -30,15 +30,15 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items     : this.props.items,
-      isLoading : this.props.isLoading
+      items: this.props.items,
+      isLoading: this.props.isLoading
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.isLoading
+      items: nextProps.items,
+      isLoading: nextProps.isLoading
     })
   },
 
@@ -89,20 +89,20 @@ export default React.createClass({
   renderItem(item) {
     return (
       <Common.ColumnList.Item
-        checked = {item.checked}
-        key     = {item.id}>
+        checked={item.checked}
+        key={item.id}>
         <Column.CheckIcon
-          id              = {item.id.toString()}
-          icon            = 'account'
-          background      = {MUI.Styles.Colors.blue500}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.id.toString()}
+          icon='account'
+          background={MUI.Styles.Colors.blue500}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.username}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
-        <Column.Date date={item.profile.updated_at} />
-        <Column.Date date={item.profile.created_at} />
+        <Column.Date date={item.profile.updated_at}/>
+        <Column.Date date={item.profile.created_at}/>
       </Common.ColumnList.Item>
     )
   },

@@ -27,8 +27,8 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      panelCollapsed : true,
-      payloadValue   : '{"abc": 123}'
+      panelCollapsed: true,
+      payloadValue: '{"abc": 123}'
     }
   },
 
@@ -38,11 +38,11 @@ export default Radium(React.createClass({
         JSON.parse(value);
         return null
       }
-      catch(err) {
+      catch (err) {
         return {
           format: {
-            pattern : '',
-            message : 'is not a valid JSON'
+            pattern: '',
+            message: 'is not a valid JSON'
           }
         }
       }
@@ -52,16 +52,16 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       payloadStyle: {
-        display         : 'flex',
-        flexDirection   : 'column',
-        padding         : '0px 10px 0px 10px',
-        backgroundColor : '#F1F1F1'
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '0px 10px 0px 10px',
+        backgroundColor: '#F1F1F1'
       },
       trace: {
-        backgroundColor : '#4C4A43',
-        color           : 'white',
-        height          : '200px',
-        padding         : 10
+        backgroundColor: '#4C4A43',
+        color: 'white',
+        height: '200px',
+        padding: 10
       }
     }
   },
@@ -74,44 +74,45 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles(),
-        unfoldIcon  = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
-        trace;
+      unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
+      trace;
 
     if (this.state.panelCollapsed) {
       trace = (
         <MUI.Paper
-          ref     = "trace"
-          rounded = {false}
-          zDepth  = {1}
-          style   = {styles.trace} >
+          ref="trace"
+          rounded={false}
+          zDepth={1}
+          style={styles.trace}>
           {this.props.trace}
         </MUI.Paper>
       );
     }
 
     return (
-      <MUI.Paper zDepth = {1}>
+      <MUI.Paper zDepth={1}>
         <MUI.Paper
-          zDepth = {1}
-          style  = {styles.payloadStyle}>
+          zDepth={1}
+          style={styles.payloadStyle}>
           <MUI.TextField
-            name              = 'payloadField'
-            ref               = 'payloadField'
-            valueLink         = {this.linkState('payloadValue')}
-            fullWidth         = {true}
-            hintText          = 'Type in your payload here e.g. {"my_argument": "test123}'
-            floatingLabelText = 'Payload'
-            onBlur            = {this.handleFormValidation}
-            errorText         = {this.getValidationMessages('payloadValue').join(' ')} />
-            <div
-              className = "editor-toolbar-unfold-button"
-              onClick   = {this.handleToggleClick} >
-              <MUI.FontIcon className={unfoldIcon}/>
-            </div>
+            name='payloadField'
+            ref='payloadField'
+            valueLink={this.linkState('payloadValue')}
+            fullWidth={true}
+            hintText='Type in your payload here e.g. {"my_argument": "test123}'
+            floatingLabelText='Payload'
+            onBlur={this.handleFormValidation}
+            errorText={this.getValidationMessages('payloadValue').join(' ')}/>
+
+          <div
+            className="editor-toolbar-unfold-button"
+            onClick={this.handleToggleClick}>
+            <MUI.FontIcon className={unfoldIcon}/>
+          </div>
         </MUI.Paper>
         <Loading
-          show = {this.props.loading}
-          type = 'linear' />
+          show={this.props.loading}
+          type='linear'/>
         {trace}
       </MUI.Paper>
     );

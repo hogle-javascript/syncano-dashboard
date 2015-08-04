@@ -53,12 +53,12 @@ module.exports = React.createClass({
   headerMenuItems() {
     return [
       {
-        label : 'Instances',
-        route : 'instances',
+        label: 'Instances',
+        route: 'instances',
       },
       {
-        label : 'Solutions',
-        route : 'solutions',
+        label: 'Solutions',
+        route: 'solutions',
       }
     ];
   },
@@ -70,8 +70,8 @@ module.exports = React.createClass({
   getStyles() {
     return {
       container: {
-        width  : '90%',
-        margin : '40px auto'
+        width: '90%',
+        margin: '40px auto'
       },
       sidebar: {
         minWidth: 230
@@ -110,46 +110,46 @@ module.exports = React.createClass({
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
             <Common.Fab.Item
-              label         = "Click here to create a Solution"
-              onClick       = {this.showSolutionDialog}
-              iconClassName = "synicon-plus"
-            />
+              label="Click here to create a Solution"
+              onClick={this.showSolutionDialog}
+              iconClassName="synicon-plus"
+              />
           </Common.Fab>
-       </Common.Show>
+        </Common.Show>
 
         <div style={styles.container}>
           <div className="row">
             <div style={styles.sidebar}>
               <MUI.List zDepth={1} className="vm-6-b">
                 <MUI.ListItem
-                  innerDivStyle = {!this.state.filter ? styles.listItemChecked : {}}
-                  primaryText   = "All solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, null)}
-                />
+                  innerDivStyle={!this.state.filter ? styles.listItemChecked : {}}
+                  primaryText="All solutions"
+                  onTouchTap={this.handleChangeFilter.bind(this, null)}
+                  />
                 <MUI.ListDivider />
                 <MUI.ListItem
-                  innerDivStyle = {this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
-                  primaryText   = "Favorite"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'starred_by_me')}
-                />
+                  innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
+                  primaryText="Favorite"
+                  onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}
+                  />
                 <MUI.ListItem
-                  innerDivStyle = {this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
-                  primaryText   = "My solutions"
-                  onTouchTap    = {this.handleChangeFilter.bind(this, 'created_by_me')}
-                />
+                  innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
+                  primaryText="My solutions"
+                  onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}
+                  />
               </MUI.List>
               <Common.Tags.List
-                items              = {this.state.tags}
-                selectedItems      = {this.state.selectedTags}
-                toggleTagSelection = {this.handleToggleTagSelection} />
+                items={this.state.tags}
+                selectedItems={this.state.selectedTags}
+                toggleTagSelection={this.handleToggleTagSelection}/>
             </div>
             <div className="col-flex-1">
               <Common.Solutions.List
-                items      = {this.state.items}
-                onInstall  = {this.handleInstallClick}
-                onSeeMore  = {this.handleSeeMoreClick}
-                onTagClick = {this.handleTagClick}
-              />
+                items={this.state.items}
+                onInstall={this.handleInstallClick}
+                onSeeMore={this.handleSeeMoreClick}
+                onTagClick={this.handleTagClick}
+                />
             </div>
           </div>
         </div>

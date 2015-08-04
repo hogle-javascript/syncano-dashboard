@@ -24,7 +24,7 @@ export default {
   },
 
   remove(schedules) {
-    let promises = schedules.map(schedule => {
+    let promises = schedules.map((schedule) => {
       return this.Connection.Schedules.remove(schedule.id);
     });
 
@@ -35,9 +35,9 @@ export default {
 
   listTraces(scheduleId) {
     this.Connection
-        .Schedules
-        .traces(scheduleId)
-        .then(this.completed)
-        .catch(this.failure);
+      .Schedules
+      .traces(scheduleId)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };

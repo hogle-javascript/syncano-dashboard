@@ -12,9 +12,9 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      email           : null,
-      password        : null,
-      confirmPassword : null
+      email: null,
+      password: null,
+      confirmPassword: null
     };
   },
 
@@ -59,8 +59,8 @@ export default Reflux.createStore({
 
   onPasswordResetCompleted() {
     this.trigger({
-      email    : null,
-      feedback : 'Check your inbox.'
+      email: null,
+      feedback: 'Check your inbox.'
     });
   },
 

@@ -28,8 +28,8 @@ export default Radium(React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func,
-    muiTheme : React.PropTypes.object
+    router: React.PropTypes.func,
+    muiTheme: React.PropTypes.object
   },
 
   componentDidMount() {
@@ -57,8 +57,8 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       icon: {
-        color    : MUI.Styles.Colors.white,
-        fontSize : 21
+        color: MUI.Styles.Colors.white,
+        fontSize: 21
       },
 
       notificationIcon: {
@@ -66,21 +66,21 @@ export default Radium(React.createClass({
       },
 
       resendEmailText: {
-        cursor     : "pointer",
-        color      : MUI.Styles.Colors.lightBlueA700
+        cursor: "pointer",
+        color: MUI.Styles.Colors.lightBlueA700
       },
       menuItem: {
-        whiteSpace    : 'normal',
-        lineHeight    : '24px',
-        color         : '#777',
-        minWidth      : '360px',
-        paddingTop    : '12px',
-        paddingBottom : '12px'
+        whiteSpace: 'normal',
+        lineHeight: '24px',
+        color: '#777',
+        minWidth: '360px',
+        paddingTop: '12px',
+        paddingBottom: '12px'
       },
       menu: {
-        maxHeight : '500px',
-        overflowY : 'auto',
-        border    : '1px solid #DDD'
+        maxHeight: '500px',
+        overflowY: 'auto',
+        border: '1px solid #DDD'
       }
     }
   },
@@ -89,57 +89,57 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't closing because of returned childrens in DIV tag
     if (this.state.accountInvitations.isLoading === true) {
-      return <Loading show={true} />
+      return <Loading show={true}/>
     }
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
         <MUI.FontIcon
-          className = 'synicon-information'
-          color     = {MUI.Styles.Colors.lightBlueA700}
-        />
+          className='synicon-information'
+          color={MUI.Styles.Colors.lightBlueA700}
+          />
       );
       return (
         <MenuItem
-          key         = "empty"
-          primaryText = "You dont't have any notifications"
-          disabled    = {true}
-          leftIcon    = {icon}
-          style       = {styles.menuItem}
-        />
+          key="empty"
+          primaryText="You dont't have any notifications"
+          disabled={true}
+          leftIcon={icon}
+          style={styles.menuItem}
+          />
       )
     }
 
     let notifications = this.state.accountInvitations.items.map(item => {
       let icon = (
-        <MUI.FontIcon
-          className = 'synicon-share-variant'
-          color     = {MUI.Styles.Colors.lightGreen500}
-        />
-      ),
-      content = (
-        <div>
-          <strong>{item.inviter + ' '}</strong>
+          <MUI.FontIcon
+            className='synicon-share-variant'
+            color={MUI.Styles.Colors.lightGreen500}
+            />
+        ),
+        content = (
+          <div>
+            <strong>{item.inviter + ' '}</strong>
             invited you to their instance
-          <strong>{' ' + item.instance}</strong>
-        </div>
-      ),
-      buttons = [
-        <MUI.FlatButton
-          onTouchTap = {this.handleAcceptInvitations.bind(this, [item])}
-          label      = 'Accept'
-          primary    = {true} />,
-        <MUI.FlatButton
-          onTouchTap = {this.handleDeclineInvitations.bind(this, [item])}
-          label      = 'Decline' />
-      ];
+            <strong>{' ' + item.instance}</strong>
+          </div>
+        ),
+        buttons = [
+          <MUI.FlatButton
+            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
+            label='Accept'
+            primary={true}/>,
+          <MUI.FlatButton
+            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
+            label='Decline'/>
+        ];
 
       return (
         <MenuItem
-          key      = {`invitation-${item.id}`}
-          disabled = {true}
-          leftIcon = {icon}
-          style    = {styles.menuItem}>
+          key={`invitation-${item.id}`}
+          disabled={true}
+          leftIcon={icon}
+          style={styles.menuItem}>
           {content}
           {buttons}
         </MenuItem>
@@ -148,21 +148,21 @@ export default Radium(React.createClass({
 
     if (!this.state.user.is_active) {
       let icon = (
-        <MUI.FontIcon
-          className = 'synicon-alert'
-          color     = {MUI.Styles.Colors.orange500} />
-      ),
+          <MUI.FontIcon
+            className='synicon-alert'
+            color={MUI.Styles.Colors.orange500}/>
+        ),
 
-      resendLink = (
-        <div style={this.getStyles().resendEmailText}>
-          Your email address is not yet verified. Click here to resend activation email.
-        </div>
-      );
+        resendLink = (
+          <div style={this.getStyles().resendEmailText}>
+            Your email address is not yet verified. Click here to resend activation email.
+          </div>
+        );
       notifications.push(
         <MenuItem
-          key      = "resend-link"
-          leftIcon = {icon}
-          style    = {styles.menuItem}>
+          key="resend-link"
+          leftIcon={icon}
+          style={styles.menuItem}>
           {resendLink}
         </MenuItem>
       )
@@ -172,10 +172,10 @@ export default Radium(React.createClass({
   },
 
   renderIcon() {
-    let notifications         = this.renderItems(),
-        notificationCountIcon = null,
-        iconClassName         = 'synicon-',
-        styles                = this.getStyles();
+    let notifications = this.renderItems(),
+      notificationCountIcon = null,
+      iconClassName = 'synicon-',
+      styles = this.getStyles();
 
     if (notifications.length > 0) {
       iconClassName += 'bell';
@@ -187,8 +187,8 @@ export default Radium(React.createClass({
       let synIconName = notifications.length < 10 ? notifications.length : '9-plus';
       notificationCountIcon = (
         <MUI.FontIcon
-          className = {'synicon-numeric-' + synIconName + '-box notification-count-icon'}
-          color     = {styles.notificationIcon.color} />
+          className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
+          color={styles.notificationIcon.color}/>
       )
     }
 
@@ -196,9 +196,9 @@ export default Radium(React.createClass({
       <div>
         {notificationCountIcon}
         <MUI.IconButton
-          iconStyle     = {styles.icon}
-          iconClassName = {iconClassName}
-          onClick       = {ProfileInvitationsActions.fetchInvitations} />
+          iconStyle={styles.icon}
+          iconClassName={iconClassName}
+          onClick={ProfileInvitationsActions.fetchInvitations}/>
       </div>
     )
   },
@@ -208,22 +208,22 @@ export default Radium(React.createClass({
     return (
       <div>
         <MUI.IconMenu
-          iconButtonElement = {this.renderIcon()}
-          onItemTouchTap    = {this.handleResendEmail}
-          autoWidth         = {false}
-          maxWidth          = '400px'
-          menuStyle         = {styles.menu}>
+          iconButtonElement={this.renderIcon()}
+          onItemTouchTap={this.handleResendEmail}
+          autoWidth={false}
+          maxWidth='400px'
+          menuStyle={styles.menu}>
           <MenuItem
-            key         = 'notificationDropdownHeader'
-            primaryText = 'Notifications'
-            disabled    = {true} />
+            key='notificationDropdownHeader'
+            primaryText='Notifications'
+            disabled={true}/>
           <MenuDivider />
-            {this.renderItems()}
+          {this.renderItems()}
         </MUI.IconMenu>
         <MUI.Snackbar
-          ref              = 'snackbar'
-          message          = 'Activation e-mail was send'
-          autoHideDuration = {3000} />
+          ref='snackbar'
+          message='Activation e-mail was send'
+          autoHideDuration={3000}/>
       </div>
     )
   }

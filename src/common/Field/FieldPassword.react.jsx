@@ -1,7 +1,7 @@
-var React = require('react');
-var classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
-//var ViewActions = require('../actions/ViewActions');
+//let ViewActions = require('../actions/ViewActions');
 
 require('./Field.css');
 
@@ -14,26 +14,26 @@ module.exports = React.createClass({
     handleKeyUp: React.PropTypes.func.isRequired,
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       errorText: null
     }
   },
 
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.errorText !== this.state.errorText) {
       this.setState({errorText: nextProps.errorText})
     }
   },
 
-  handleKeyUp: function () {
+  handleKeyUp() {
     ViewActions.clearError(this.props.field.name);
   },
 
-  render: function () {
-    var field = this.props.field;
+  render() {
+    let field = this.props.field;
     // TODO
-    var cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
+    let cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
       'field-group': true,
       'field-group-large-text': field.largeText,
       'field-group-error': this.state.errorText,

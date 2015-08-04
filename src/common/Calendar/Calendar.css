@@ -1,139 +1,139 @@
 .calendar-field {
-  width: 214px;
-  height: 194px;
-  background-color: white;
-  border: solid 1px #0091EA;
-  border-radius: 5px;
+    width: 214px;
+    height: 194px;
+    background-color: white;
+    border: solid 1px #0091EA;
+    border-radius: 5px;
 }
 
 .calendar-field-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(20px, 0);
-  transition: all 500ms;
-  position: absolute;
-  z-index: 99999;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(20px, 0);
+    transition: all 500ms;
+    position: absolute;
+    z-index: 99999;
 }
 
 .calendar-field-hidden {
-  visibility: hidden;
-  transform: translate(20px, -20px);
-  transition: all 500ms;
-  opacity: 0;
+    visibility: hidden;
+    transform: translate(20px, -20px);
+    transition: all 500ms;
+    opacity: 0;
 }
 
 .calendar-head {
-  display: flex;
-  justify-content: center;
-  font-size: 16px;
-  background-color: #0091EA;
-  color: #FAFAFA;
-  border-radius: 3px 3px 0 0;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    background-color: #0091EA;
+    color: #FAFAFA;
+    border-radius: 3px 3px 0 0;
 }
 
 .calendar-head-content {
-  margin: 5px;
-  display: flex;
-  align-items: center;
+    margin: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .calendar-head-date {
-  width: 180px;
-  display: flex;
-  justify-content: center;
+    width: 180px;
+    display: flex;
+    justify-content: center;
 }
 
 .calendar-head-content i:hover {
-  fill: red;
-  cursor: pointer;
+    fill: red;
+    cursor: pointer;
 }
 
 .calendar-days {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    text-align: center;
 }
 
 .calendar-day {
-  font-size: 12px;
-  display: flex;
-  flex-basis: 28px;
-  justify-content: center;
-  margin-left: 2px;
+    font-size: 12px;
+    display: flex;
+    flex-basis: 28px;
+    justify-content: center;
+    margin-left: 2px;
 }
 
 .calendar-day-other {
-  font-size: 12px;
-  color: #C6C6C6;
-  display: flex;
-  flex-basis: 28px;
-  justify-content: center;
-  margin-left: 2px;
+    font-size: 12px;
+    color: #C6C6C6;
+    display: flex;
+    flex-basis: 28px;
+    justify-content: center;
+    margin-left: 2px;
 }
 
 .calendar-day:hover, .calendar-day-other:hover {
-  cursor: pointer;
-  background-color: #FAFAFA;
-  outline: solid 1px #0091EA;
+    cursor: pointer;
+    background-color: #FAFAFA;
+    outline: solid 1px #0091EA;
 }
 
 .calendar-week {
-  display: flex;
-  justify-content: center;
-  margin: 5px auto 5px;
+    display: flex;
+    justify-content: center;
+    margin: 5px auto 5px;
 }
 
 .calendar-week-days {
-  font-size: 12px;
-  flex-grow: 1;
-  flex-basis: 28px;
-  display: flex;
-  justify-content: center;
+    font-size: 12px;
+    flex-grow: 1;
+    flex-basis: 28px;
+    display: flex;
+    justify-content: center;
 }
 
 .calendar-hours-field {
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
-  background-color: #0091EA;
-  color: #FAFAFA;
-  font-size: 14px;
-  border-radius: 0 0 3px 3px;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    background-color: #0091EA;
+    color: #FAFAFA;
+    font-size: 14px;
+    border-radius: 0 0 3px 3px;
 }
 
 .calendar-hours {
-  display: flex;
-  justify-content: center;
-  flex-grow: 3;
+    display: flex;
+    justify-content: center;
+    flex-grow: 3;
 }
 
 .calendar-timezone {
-  display: flex;
-  flex-grow: 2;
+    display: flex;
+    flex-grow: 2;
 }
 
 .calendar-change-hours i, .calendar-change-minutes i, .calendar-change-seconds i, .calendar-change-timezone i {
-  margin: 0 auto;
-  cursor: pointer;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
 .calendar-separator {
-  line-height: 50px;
-  vertical-align: center;
+    line-height: 50px;
+    vertical-align: center;
 }
 
 .calendar-input {
-  font-size: 16px;
-  width: 25px;
-  background-color: #0091EA;
-  border-style: none;
-  color: #FAFAFA;
-  text-align: center;
+    font-size: 16px;
+    width: 25px;
+    background-color: #0091EA;
+    border-style: none;
+    color: #FAFAFA;
+    text-align: center;
 }
 
 .calendar-input:focus {
-  background-color: #FAFAFA;
-  color: #0A0A0A;
-  border-style: none;
+    background-color: #FAFAFA;
+    color: #0A0A0A;
+    border-style: none;
 }

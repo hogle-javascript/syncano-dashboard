@@ -1,13 +1,13 @@
-var React         = require('react'),
-    Router        = require('react-router'),
-    RouteHandler  = Router.RouteHandler,
+var React = require('react'),
+  Router = require('react-router'),
+  RouteHandler = Router.RouteHandler,
 
-    // Stores and Action
-    SessionStore  = require('../apps/Session/SessionStore'),
-    AuthConstants = require('../apps/Account/AuthConstants'),
+// Stores and Action
+  SessionStore = require('../apps/Session/SessionStore'),
+  AuthConstants = require('../apps/Account/AuthConstants'),
 
-    // Components
-    Header        = require('../apps/Header/Header.react');
+// Components
+  Header = require('../apps/Header/Header.react');
 
 module.exports = React.createClass({
 
@@ -23,14 +23,14 @@ module.exports = React.createClass({
   },
 
   statics: {
-    willTransitionTo: function(transition) {
+    willTransitionTo: function (transition) {
       if (!SessionStore.isAuthenticated()) {
-        transition.redirect(AuthConstants.LOGIN_URL, {}, {'next' : transition.path});
+        transition.redirect(AuthConstants.LOGIN_URL, {}, {'next': transition.path});
       }
     }
   },
 
-  render: function() {
+  render: function () {
     return (
       <div>
         <Header />

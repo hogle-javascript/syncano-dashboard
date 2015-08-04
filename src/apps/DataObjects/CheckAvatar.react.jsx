@@ -8,22 +8,22 @@ export default React.createClass({
   displayName: 'ColumnAvatarCheck',
 
   propTypes: {
-    id              : React.PropTypes.string,
-    color           : React.PropTypes.string,
-    hoverColor      : React.PropTypes.string,
-    handleIconClick : React.PropTypes.func
+    id: React.PropTypes.string,
+    color: React.PropTypes.string,
+    hoverColor: React.PropTypes.string,
+    handleIconClick: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
-      color      : 'black',
-      hoverColor : MUI.Styles.Colors.blue600
+      color: 'black',
+      hoverColor: MUI.Styles.Colors.blue600
     }
   },
 
   getInitialState() {
     return {
-      checked : this.props.checked
+      checked: this.props.checked
     }
   },
 
@@ -64,7 +64,7 @@ export default React.createClass({
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
-    if (this.state.hovered ) {
+    if (this.state.hovered) {
       return {icon: 'checkbox-blank-outline', color: GREY};
     }
 
@@ -77,16 +77,16 @@ export default React.createClass({
 
     // Which icon to show?
     let iconState = this.getIconState(),
-        icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon} />;
+      icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
 
-    return(
+    return (
       <MUI.Avatar
-        icon            = {icon}
-        style           = {this.props.style}
-        backgroundColor = {iconState.color}
-        onClick         = {this.handleIconClick}
-        onMouseOver     = {this.handleMouseOver}
-        onMouseOut      = {this.handleMouseLeave} />
+        icon={icon}
+        style={this.props.style}
+        backgroundColor={iconState.color}
+        onClick={this.handleIconClick}
+        onMouseOver={this.handleMouseOver}
+        onMouseOut={this.handleMouseLeave}/>
     )
   }
 });

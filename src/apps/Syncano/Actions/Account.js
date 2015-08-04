@@ -28,8 +28,8 @@ export default {
     this.Connection
       .Accounts
       .create({
-        email    : payload.email,
-        password : payload.password
+        email: payload.email,
+        password: payload.password
       })
       .then(this.completed)
       .catch(this.failure);
@@ -57,9 +57,9 @@ export default {
       .then(auth => {
         this.Connection
           .socialConnect(
-            auth.network,
-            auth.authResponse.access_token
-          )
+          auth.network,
+          auth.authResponse.access_token
+        )
           .then(payload => {
             payload.network = network;
             return payload;

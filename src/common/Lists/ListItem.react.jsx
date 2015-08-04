@@ -1,10 +1,10 @@
-var React       = require('react'),
-    Moment      = require('moment'),
-    classNames  = require('classnames'),
-    mui         = require('material-ui'),
+let React = require('react'),
+  Moment = require('moment'),
+  classNames = require('classnames'),
+  mui = require('material-ui'),
 
-    FontIcon    = mui.FontIcon,
-    Dropdown    = require('../Dropdown/Dropdown.react');
+  FontIcon = mui.FontIcon,
+  Dropdown = require('../Dropdown/Dropdown.react');
 
 require('./Card.css');
 
@@ -21,10 +21,10 @@ module.exports = React.createClass({
     avatarStyle: React.PropTypes.oneOf(['user', 'icon'])
   },
 
-  getInitialState: function () {
+  getInitialState() {
 
-    var color = '#e2e2e2';
-    var icon = '';
+    let color = '#e2e2e2';
+    let icon = '';
     if (this.props.item.metadata) {
       color = this.props.item.metadata.color;
       icon = 'synicon-' + this.props.item.metadata.icon;
@@ -39,26 +39,26 @@ module.exports = React.createClass({
   },
 
 
-  handleItemMenuClick: function (action) {
+  handleItemMenuClick(action) {
     // We need to add here information about *item*
     action['item'] = this.props.item;
     this.props.handleItemMenuClick(action);
   },
 
-  render: function () {
+  render() {
 
-    var item = this.props.item;
+    let item = this.props.item;
 
-    var info = "Updated " + Moment(item.updated_at).fromNow();
+    let info = "Updated " + Moment(item.updated_at).fromNow();
 
-    var inkStyle = {
+    let inkStyle = {
       height: "200px",
       width: "200px",
       top: "0px",
       left: "0px"
     };
 
-    var cssClasses = classNames('list-item', 'list-item-' + this.props.style, {
+    let cssClasses = classNames('list-item', 'list-item-' + this.props.style, {
       'animate-ink': this.state.animateInk,
       'card': true,
       'card-view-cards': this.props.style === "cards",
@@ -72,14 +72,14 @@ module.exports = React.createClass({
       inkStyle['left'] = "50px";
     }
 
-    var dropdownComponent = null;
+    let dropdownComponent = null;
     if (this.props.actions) {
       dropdownComponent = <Dropdown
-        items           = {this.props.actions}
-        visible         = {this.props.dropdownVisible}
-        handleItemClick = {this.handleItemMenuClick}/>;
+        items={this.props.actions}
+        visible={this.props.dropdownVisible}
+        handleItemClick={this.handleItemMenuClick}/>;
     }
-    var style = null;
+    let style = null;
     if (this.props.style === "cards") {
       style = {
         backgroundColor: this.state.color
@@ -87,9 +87,9 @@ module.exports = React.createClass({
 
       return (
         <div
-          className = {cssClasses}
-          style     = {style}
-          onClick   = {this.handleCardClick}>
+          className={cssClasses}
+          style={style}
+          onClick={this.handleCardClick}>
           <div className="list-item-header card-header">
             <div className="list-item-details card-details">
               <div className="list-item-icon card-icon">
@@ -101,8 +101,8 @@ module.exports = React.createClass({
               </div>
             </div>
             <div
-              className = "ink"
-              style     = {inkStyle}></div>
+              className="ink"
+              style={inkStyle}></div>
             <div className="list-item-extras card-extras">
               {dropdownComponent}
             </div>
@@ -111,7 +111,7 @@ module.exports = React.createClass({
       );
     } else if (this.props.style === "stream") {
 
-      var iconStyle = {
+      let iconStyle = {
         width: '45px',
         height: '45px',
         'border-radius': '50%',
@@ -120,22 +120,22 @@ module.exports = React.createClass({
         backgroundColor: this.state.color
       };
 
-      var avatar;
+      let avatar;
       console.log('avatarStyle', this.props.avatarStyle);
       if (this.props.avatarStyle === "user") {
         console.log('avatarStyle', this.props.avatarStyle);
         avatar = <AvatarInitials text={this.props.item.name}/>;
       } else {
         avatar = <FontIcon
-                   className = {this.state.icon}
-                   style     = {iconStyle}/>;
+          className={this.state.icon}
+          style={iconStyle}/>;
       }
 
       return (
         <div className={cssClasses}>
           <div
-            className = "list-item-header card-header"
-            onClick   = {this.props.handleItemHeaderClick}>
+            className="list-item-header card-header"
+            onClick={this.props.handleItemHeaderClick}>
             <div className="list-item-details card-details-other">
               <div className="list-item-icon card-icon">
                 {avatar}

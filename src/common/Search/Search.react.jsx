@@ -1,7 +1,7 @@
-var React = require('react');
+let React = require('react');
 
-//var ViewActions = require('../actions/ViewActions');
-//var ServerActions = require('../actions/ServerActions');
+//let ViewActions = require('../actions/ViewActions');
+//let ServerActions = require('../actions/ServerActions');
 
 require('./Search.css');
 
@@ -14,10 +14,10 @@ module.exports = React.createClass({
   },
 
   handleKeyUp: function(e) {
-    var query = this.refs.input.getDOMNode().value;
+    let query = this.refs.input.getDOMNode().value;
     if (e.keyCode === 13) {
       if (query.indexOf('create instance') > -1) {
-        var instance = {
+        let instance = {
           name: query.split(' ')[2]
         };
         ServerActions.createInstance(instance);
@@ -33,7 +33,7 @@ module.exports = React.createClass({
       <div className="search">
         <div className="search-inner">
           <div className="search-input">
-            <input type="text" ref="input" onKeyUp={this.handleKeyUp} />
+            <input type="text" ref="input" onKeyUp={this.handleKeyUp}/>
           </div>
         </div>
       </div>

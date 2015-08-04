@@ -1,14 +1,14 @@
-var React       = require('react');
-var Moment      = require('moment');
-var classNames  = require('classnames');
+let React = require('react');
+let Moment = require('moment');
+let classNames = require('classnames');
 
 module.exports = React.createClass({
 
   displayName: 'TableData',
 
   render: function() {
-    var content = this.props.children || this.props.data;
-    var cssClasses = classNames({
+    let content = this.props.children || this.props.data;
+    let cssClasses = classNames({
       'table-data': true,
       'table-data-id': this.props.column.name === "id",
       'table-data-type': this.props.column.name === "type",

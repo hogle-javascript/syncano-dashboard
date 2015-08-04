@@ -1,4 +1,4 @@
-var allIcons = [
+let allIcons = [
   'accessibility',
   'account-multiple',
   'account-circle',
@@ -91,7 +91,7 @@ var allIcons = [
   'briefcase'
 ];
 
-var iconPickerIcons = [
+let iconPickerIcons = [
   'human',
   'account-multiple',
   'airplane',
@@ -134,7 +134,7 @@ var iconPickerIcons = [
   'briefcase'
 ];
 
-var IconStore = {
+let IconStore = {
 
   getAllIcons: function() {
     return allIcons;
@@ -145,9 +145,9 @@ var IconStore = {
   },
 
   getRandomIconPickerIcon: function() {
-    var icons         = this.getIconPickerIcons(),
-        iconsCount    = icons.length,
-        randomNumber = Math.floor((Math.random() * iconsCount));
+    let icons = this.getIconPickerIcons(),
+      iconsCount = icons.length,
+      randomNumber = Math.floor((Math.random() * iconsCount));
 
     return icons[randomNumber];
   },

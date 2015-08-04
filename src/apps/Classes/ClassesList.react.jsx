@@ -38,8 +38,8 @@ export default React.createClass({
     SessionStore.getRouter().transitionTo(
       'classes-data-objects',
       {
-        instanceName : SessionStore.getInstance().name,
-        className    : className
+        instanceName: SessionStore.getInstance().name,
+        className: className
       }
     );
     console.info('ClassesList::handleItemClick');
@@ -49,16 +49,16 @@ export default React.createClass({
 
     return (
       <Common.ColumnList.Item
-        key          = {item.name}
-        id           = {item.name}
-        checked      = {item.checked}
-        handleClick  = {this.handleItemClick.bind(null, item.name)} >
+        key={item.name}
+        id={item.name}
+        checked={item.checked}
+        handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
-          id              = {item.name.toString()}
-          icon            = {item.metadata ? item.metadata.icon : 'table-large'}
-          background      = {ColorStore.getColorByName(item.metadata ? item.metadata.color : 'blue')}
-          checked         = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name.toString()}
+          icon={item.metadata ? item.metadata.icon : 'table-large'}
+          background={ColorStore.getColorByName(item.metadata ? item.metadata.color : 'blue')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           {item.name}
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
@@ -72,7 +72,7 @@ export default React.createClass({
         <Column.ID className="col-xs-5 col-md-5">
           {item.objects_count}
         </Column.ID>
-        <Column.Date date={item.created_at} />
+        <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },
@@ -87,7 +87,7 @@ export default React.createClass({
     }
     return (
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
+        {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
     )
   },

@@ -1,9 +1,9 @@
-var React           = require('react'),
-    classNames      = require('classnames'),
+let React = require('react'),
+  classNames = require('classnames'),
 
-    mui             = require('material-ui'),
-    StylePropable   = mui.Mixins.StylePropable,
-    FontIcon        = mui.FontIcon;
+  mui = require('material-ui'),
+  StylePropable = mui.Mixins.StylePropable,
+  FontIcon = mui.FontIcon;
 
 require('./Notification.sass');
 
@@ -25,11 +25,11 @@ module.exports = React.createClass({
   },
 
   getStyles: function() {
-    var styles = {
-      fontSize      : 18,
-      lineHeight    : 1,
-      color         : 'inherit',
-      verticalAlign : 'middle'
+    let styles = {
+      fontSize: 18,
+      lineHeight: 1,
+      color: 'inherit',
+      verticalAlign: 'middle'
     };
 
     return this.mergeStyles(styles, this.props.style);
@@ -37,19 +37,19 @@ module.exports = React.createClass({
 
   render: function() {
 
-    var styles = this.getStyles();
+    let styles = this.getStyles();
 
-    var cssClasses  = classNames({
-      'notification'          : true,
-      'notification--info'    : this.props.type === 'info',
-      'notification--error'   : this.props.type === 'error',
-      'notification--warning' : this.props.type === 'warning'
+    let cssClasses = classNames({
+      'notification': true,
+      'notification--info': this.props.type === 'info',
+      'notification--error': this.props.type === 'error',
+      'notification--warning': this.props.type === 'warning'
     });
 
-    var iconClass   = classNames({
-      'information'           : this.props.type === 'info',
-      'alert-circle'          : this.props.type === 'error',
-      'alert'                 : this.props.type === 'warning'
+    let iconClass = classNames({
+      'information': this.props.type === 'info',
+      'alert-circle': this.props.type === 'error',
+      'alert': this.props.type === 'warning'
     });
 
     return (
@@ -57,8 +57,8 @@ module.exports = React.createClass({
         <div className="notification__content">
           <div className="notification__content__icon">
             <FontIcon
-              style     = {styles}
-              className = {"synicon-" + iconClass} />
+              style={styles}
+              className={"synicon-" + iconClass}/>
           </div>
           <div>{this.props.children}</div>
         </div>

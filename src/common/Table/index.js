@@ -5,10 +5,10 @@ import TableHeader from './TableHeader.react';
 import TableHeaderData from './TableHeaderData.react';
 import TableRow from './TableRow.react';
 
-Table.Body       = TableBody;
-Table.Data       = TableData;
-Table.Header     = TableHeader;
+Table.Body = TableBody;
+Table.Data = TableData;
+Table.Header = TableHeader;
 Table.HeaderData = TableHeaderData;
-Table.Row        = TableRow;
+Table.Row = TableRow;
 
 export default Table;

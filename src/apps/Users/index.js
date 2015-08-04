@@ -11,17 +11,17 @@ import GroupDialog from './GroupDialog.react';
 import GroupDialogStore from './GroupDialogStore';
 import GroupsList from './GroupsList.react';
 
-Users.Actions     = UsersActions;
-Users.Store       = UsersStore;
-Users.List        = UsersList;
-Users.Dialog      = UserDialog;
+Users.Actions = UsersActions;
+Users.Store = UsersStore;
+Users.List = UsersList;
+Users.Dialog = UserDialog;
 Users.DialogStore = UserDialogStore;
-Users.Groups      = {
-  Actions     : GroupsActions,
-  Store       : GroupsStore,
-  Dialog      : GroupDialog,
-  DialogStore : GroupDialogStore,
-  List        : GroupsList
+Users.Groups = {
+  Actions: GroupsActions,
+  Store: GroupsStore,
+  Dialog: GroupDialog,
+  DialogStore: GroupDialogStore,
+  List: GroupsList
 };
 
 export default Users;

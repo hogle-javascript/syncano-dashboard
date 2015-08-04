@@ -9,9 +9,9 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './EditViewActions';
 
 export default Reflux.createStore({
-  listenables : Actions,
+  listenables: Actions,
 
-  mixins      : [
+  mixins: [
     Mixins.StoreForm,
     Mixins.WaitForStore,
     Mixins.StoreHelpers
@@ -20,8 +20,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       item: {
-        stars_count : 0,
-        tags        : [],
+        stars_count: 0,
+        tags: [],
       },
       versions: null,
       isLoading: false
@@ -74,8 +74,8 @@ export default Reflux.createStore({
     this.data.versions = [];
 
     this.data.hasNextPage = versions.hasNextPage();
-    this.data.nextParams  = URL.parse(versions.next() || '', true).query;
-    this.data.prevParams  = URL.parse(versions.prev() || '', true).query;
+    this.data.nextParams = URL.parse(versions.next() || '', true).query;
+    this.data.prevParams = URL.parse(versions.prev() || '', true).query;
 
     let newItems = [];
     Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));

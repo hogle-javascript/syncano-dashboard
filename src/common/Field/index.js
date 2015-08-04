@@ -6,11 +6,11 @@ import FieldReadonly from './FieldReadonly.react';
 import FieldSelect from './FieldSelect.react';
 import FieldSelectOption from './FieldSelectOption.react';
 
-Field.Datetime     = FieldDatetime;
-Field.List         = FieldList;
-Field.Password     = FieldPassword;
-Field.Readonly     = FieldReadonly;
-Field.Select       = FieldSelect;
+Field.Datetime = FieldDatetime;
+Field.List = FieldList;
+Field.Password = FieldPassword;
+Field.Readonly = FieldReadonly;
+Field.Select = FieldSelect;
 Field.SelectOption = FieldSelectOption;
 
 export default Field;

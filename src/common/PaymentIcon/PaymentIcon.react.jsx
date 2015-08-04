@@ -11,7 +11,7 @@ export default React.createClass({
   displayName: 'PaymentIcon',
 
   getCardIcon(cardType = this.props.type, cardStyle = this.props.style) {
-    switch(cardType) {
+    switch (cardType) {
       case 'AmericanExpress':
         return <AmericanExpress style={cardStyle}/>;
         break;

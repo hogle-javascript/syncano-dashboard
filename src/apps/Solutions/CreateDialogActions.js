@@ -5,37 +5,37 @@ export default CreateActions(
     withDialog: true
   },
   {
-    fetch              : {},
-    setSolutions       : {},
-    setFilter          : {},
-    setTags            : {},
-    toggleTagSelection : {},
-    selectOneTag       : {},
+    fetch: {},
+    setSolutions: {},
+    setFilter: {},
+    setTags: {},
+    toggleTagSelection: {},
+    selectOneTag: {},
 
-    fetchSolutions : {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.list'
+    fetchSolutions: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.list'
     },
-    createSolution : {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.create'
+    createSolution: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.create'
     },
-    starSolution : {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.star'
+    starSolution: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.star'
     },
     unstarSolution: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.unstar'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.unstar'
     },
     fetchTags: {
-      asyncResult : true,
-      children    : ['completed', 'failure'],
-      method      : 'Syncano.Actions.Solutions.listTags'
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Solutions.listTags'
     }
   }
 );

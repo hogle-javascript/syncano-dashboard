@@ -36,8 +36,8 @@ export default Radium(React.createClass({
   ],
 
   contextTypes: {
-    router   : React.PropTypes.func.isRequired,
-    muiTheme : React.PropTypes.object
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
   },
 
   componentDidMount() {
@@ -65,14 +65,14 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       topToolbar: {
-        background : this.context.muiTheme.palette.primary1Color,
-        height     : 64,
-        padding    : '0 32px'
+        background: this.context.muiTheme.palette.primary1Color,
+        height: 64,
+        padding: '0 32px'
       },
       logotypeContainer: {
-        height     : '100%',
-        display    : 'flex',
-        alignItems : 'center'
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center'
       },
       logo: {
         width: 120
@@ -81,25 +81,25 @@ export default Radium(React.createClass({
         display: 'flex'
       },
       toolbarListItem: {
-        display    : 'inline-flex',
-        alignItems : 'center'
+        display: 'inline-flex',
+        alignItems: 'center'
       },
-      bottomToolbar : {
-        display     : 'flex',
-        fontSize    : 17,
-        fontWeight  : 500,
-        height      : 56,
-        background  : this.context.muiTheme.palette.primary2Color,
-        padding     : '0 32px'
+      bottomToolbar: {
+        display: 'flex',
+        fontSize: 17,
+        fontWeight: 500,
+        height: 56,
+        background: this.context.muiTheme.palette.primary2Color,
+        padding: '0 32px'
       },
       bottomToolbarGroup: {
-        display        : 'flex',
-        float          : 'none',
-        alignItems     : 'center',
-        justifyContent : 'center'
+        display: 'flex',
+        float: 'none',
+        alignItems: 'center',
+        justifyContent: 'center'
       },
       bottomToolbarGroupIcon: {
-        color          : '#fff'
+        color: '#fff'
       }
     }
   },
@@ -107,25 +107,25 @@ export default Radium(React.createClass({
   getDropdownItems() {
     return [{
       leftIcon: {
-        name  : 'synicon-credit-card',
-        style : {}
+        name: 'synicon-credit-card',
+        style: {}
       },
       content: {
-        text  : 'Billing',
-        style : {}
+        text: 'Billing',
+        style: {}
       },
       name: 'billing',
       handleItemClick: this.handleBillingClick
     }, {
       leftIcon: {
-        name  : 'synicon-power',
-        style : {
+        name: 'synicon-power',
+        style: {
           color: '#f50057'
         }
       },
       content: {
-        text  : 'Logout',
-        style : {
+        text: 'Logout',
+        style: {
           color: '#f50057'
         }
       },
@@ -137,16 +137,16 @@ export default Radium(React.createClass({
 
   getDropdownHeaderItems() {
     return {
-      userFullName    : this.state.user.first_name + ' ' + this.state.user.last_name,
-      userEmail       : this.state.user.email,
-      clickable       : true,
-      handleItemClick : this.handleAccountClick
+      userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
+      userEmail: this.state.user.email,
+      clickable: true,
+      handleItemClick: this.handleAccountClick
     }
   },
 
   render() {
-    let styles              = this.getStyles(),
-        currentInstance     = SessionStore.getInstance();
+    let styles = this.getStyles(),
+      currentInstance = SessionStore.getInstance();
 
     return (
       <div>
@@ -154,13 +154,13 @@ export default Radium(React.createClass({
           <MUI.ToolbarGroup style={styles.logotypeContainer}>
             <Router.Link to="app">
               <Common.Logo
-                style     = {styles.logo}
-                className = "logo-white" />
+                style={styles.logo}
+                className="logo-white"/>
             </Router.Link>
           </MUI.ToolbarGroup>
           <MUI.ToolbarGroup
-            float = "right"
-            style = {{height: '100%'}}>
+            float="right"
+            style={{height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
@@ -176,9 +176,9 @@ export default Radium(React.createClass({
               </li>
               <li>
                 <Common.Dropdown.Material
-                  items         = {this.getDropdownItems()}
-                  headerContent = {this.getDropdownHeaderItems()}
-                  iconStyle     = {styles.bottomToolbarGroupIcon}>
+                  items={this.getDropdownItems()}
+                  headerContent={this.getDropdownHeaderItems()}
+                  iconStyle={styles.bottomToolbarGroupIcon}>
                   Account
                 </Common.Dropdown.Material>
               </li>
@@ -192,8 +192,8 @@ export default Radium(React.createClass({
             </Common.Show>
 
             <MUI.ToolbarGroup
-              className = "col-flex-1"
-              style     = {styles.bottomToolbarGroup}>
+              className="col-flex-1"
+              style={styles.bottomToolbarGroup}>
               <HeaderMenu />
             </MUI.ToolbarGroup>
             <MUI.ToolbarGroup style={styles.bottomToolbarGroup}>

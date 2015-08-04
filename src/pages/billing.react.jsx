@@ -6,7 +6,7 @@ import HeaderMixin  from '../apps/Header/HeaderMixin';
 import MUI          from 'material-ui';
 import Container    from '../common/Container';
 
-let RouteHandler  = Router.RouteHandler;
+let RouteHandler = Router.RouteHandler;
 
 export default React.createClass({
 
@@ -62,8 +62,8 @@ export default React.createClass({
         backgroundColor: 'transparent'
       },
       tabs: {
-        padding      : '0 150px',
-        borderBottom : '1px solid #DDDDDD'
+        padding: '0 150px',
+        borderBottom: '1px solid #DDDDDD'
       },
       tab: {
         color: '#444'
@@ -96,31 +96,31 @@ export default React.createClass({
     return (
       <Container.Profile headerText='Billing'>
         <MUI.Tabs
-          ref                   = "tabs"
-          style                 = {styles.tabs}
-          initialSelectedIndex  = {this.getActiveSubTabIndex()}
-          tabItemContainerStyle = {styles.subTabsHeader}>
+          ref="tabs"
+          style={styles.tabs}
+          initialSelectedIndex={this.getActiveSubTabIndex()}
+          tabItemContainerStyle={styles.subTabsHeader}>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Billing plan"
-            route    = "profile-billing-plan"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Billing plan"
+            route="profile-billing-plan"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Payment methods"
-            route    = "profile-billing-payment"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Payment methods"
+            route="profile-billing-payment"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Invoices"
-            route    = "profile-billing-invoices"
-            onActive = {this.handleTabActive} />
+            style={styles.tab}
+            label="Invoices"
+            route="profile-billing-invoices"
+            onActive={this.handleTabActive}/>
           <MUI.Tab
-            style    = {styles.tab}
-            label    = "Billing address"
-            route    = "profile-billing-address"
-            onActive = {this.handleTabActive}
-          />
+            style={styles.tab}
+            label="Billing address"
+            route="profile-billing-address"
+            onActive={this.handleTabActive}
+            />
         </MUI.Tabs>
         <RouteHandler />
       </Container.Profile>

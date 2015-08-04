@@ -1,10 +1,10 @@
-var React      = require('react'),
-    classNames = require('classnames'),
-    mui        = require('material-ui'),
+let React = require('react'),
+  classNames = require('classnames'),
+  mui = require('material-ui'),
 
-    FontIcon   = mui.FontIcon,
-    Field      = mui.TextField,
-    Calendar   = require('../Calendar/Calendar.react');
+  FontIcon = mui.FontIcon,
+  Field = mui.TextField,
+  Calendar = require('../Calendar/Calendar.react');
 
 //require('./Field.css');
 
@@ -13,27 +13,27 @@ module.exports = React.createClass({
   displayName: 'FieldDatetime',
 
   propTypes: {
-    labelText  : React.PropTypes.string,
-    dateFormat : React.PropTypes.string,
-    fieldStyle : React.PropTypes.object
+    labelText: React.PropTypes.string,
+    dateFormat: React.PropTypes.string,
+    fieldStyle: React.PropTypes.object
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
-      labelText  : "Date",
-      dateFormat : "YYYY-MM-DDThh:mm:ss.uuuuuuZ",
-      iconColor  : "#0091EA",
-      fieldStyle : {width: "100%"}
+      labelText: "Date",
+      dateFormat: "YYYY-MM-DDThh:mm:ss.uuuuuuZ",
+      iconColor: "#0091EA",
+      fieldStyle: {width: "100%"}
     };
   },
 
-  getInitialState: function () {
+  getInitialState() {
     return {
       hidden: true
     };
   },
 
-  handleClick: function (e) {
+  handleClick(e) {
     this.setState({
       hidden: !this.state.hidden
     })
@@ -41,40 +41,41 @@ module.exports = React.createClass({
 
   getIconStyle: function() {
     return {
-      fill   : this.props.iconColor,
-      width  : "16px",
-      height : "16px",
-      cursor : "pointer"
+      fill: this.props.iconColor,
+      width: "16px",
+      height: "16px",
+      cursor: "pointer"
     }
   },
 
-  render: function () {
-    /*var field = this.props.field;
-    var cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
-      'field-group': false,
-      'field-group-large-text': this.props.field.largeText,
-    });*/
-    var calendarClasses = classNames({
-      "calendar-field-visible" : true,
-      "calendar-field-hidden"  : this.state.hidden
+  render() {
+    /*let field = this.props.field;
+     let cssClasses = classNames("field-group-" + field.name.split('_').join('-'), {
+     'field-group': false,
+     'field-group-large-text': this.props.field.largeText,
+     });*/
+    let calendarClasses = classNames({
+      "calendar-field-visible": true,
+      "calendar-field-hidden": this.state.hidden
     })
     return (
-      <div> 
+      <div>
         <Field
-          className         = "abc"
-          ref               = "input"
-          hintText          = {this.props.dateFormat}
-          floatingLabelText = {this.props.labelText}
-          style             = {this.props.fieldStyle} />
+          className="abc"
+          ref="input"
+          hintText={this.props.dateFormat}
+          floatingLabelText={this.props.labelText}
+          style={this.props.fieldStyle}/>
+
         <div
-          className = {calendarClasses}
-          ref       = "calendar">
+          className={calendarClasses}
+          ref="calendar">
           <Calendar inputField={this.refs.input}/>
         </div>
         <FontIcon
-          ref       = "icon"
-          className = "synicon-arrow-down"
-          onClick   = {this.handleClick} />
+          ref="icon"
+          className="synicon-arrow-down"
+          onClick={this.handleClick}/>
       </div>
     );
   }

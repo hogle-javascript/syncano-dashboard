@@ -4,7 +4,7 @@ module.exports = React.createClass({
 
   displayName: 'NotFound',
 
-  render: function () {
+  render() {
     return (
       <div>Not found</div>
     );

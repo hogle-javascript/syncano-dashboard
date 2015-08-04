@@ -13,8 +13,8 @@ import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';
 
 export default Reflux.createStore({
-  listenables : DataObjectsActions,
-  mixins      : [
+  listenables: DataObjectsActions,
+  mixins: [
     Mixins.CheckListStore,
     Mixins.StoreForm,
     Mixins.WaitForStore
@@ -22,64 +22,64 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items        : null,
-      isLoading    : false,
-      selectedRows : [],
-      columns      : [
+      items: null,
+      isLoading: false,
+      selectedRows: [],
+      columns: [
         {
-          id      : 'id',
-          name    : 'Id',
-          width   : 90,
-          tooltip : 'Built-in property: ID',
-          checked : true
+          id: 'id',
+          name: 'Id',
+          width: 90,
+          tooltip: 'Built-in property: ID',
+          checked: true
         },
         {
-          id      : 'revision',
-          name    : 'Rev',
-          width   : 20,
-          tooltip : 'Built-in property: Revision',
-          checked : true
+          id: 'revision',
+          name: 'Rev',
+          width: 20,
+          tooltip: 'Built-in property: Revision',
+          checked: true
         },
         {
-          id      : 'owner',
-          name    : 'Owner',
-          width   : 90,
-          checked : false
+          id: 'owner',
+          name: 'Owner',
+          width: 90,
+          checked: false
         },
         {
-          id      : 'group',
-          name    : 'Group',
-          width   : 90,
-          tooltip : 'Built-in property: Group',
-          checked : false
+          id: 'group',
+          name: 'Group',
+          width: 90,
+          tooltip: 'Built-in property: Group',
+          checked: false
         },
         {
-          id      : 'owner_permissions',
-          name    : 'Owner permissions',
-          width   : 90,
-          tooltip : 'Built-in property: Owner Permissions',
-          checked : false
+          id: 'owner_permissions',
+          name: 'Owner permissions',
+          width: 90,
+          tooltip: 'Built-in property: Owner Permissions',
+          checked: false
         },
         {
-          id      : 'group_permissions',
-          name    : 'Group permissions',
-          width   : 90,
-          tooltip : 'Built-in property: Group Permissions',
-          checked : false
+          id: 'group_permissions',
+          name: 'Group permissions',
+          width: 90,
+          tooltip: 'Built-in property: Group Permissions',
+          checked: false
         },
         {
-          id      : 'other_permissions',
-          name    : 'Other permissions',
-          width   : 90,
-          tooltip : 'Built-in property: Other Permissions',
-          checked : false
+          id: 'other_permissions',
+          name: 'Other permissions',
+          width: 90,
+          tooltip: 'Built-in property: Other Permissions',
+          checked: false
         },
         {
-          id      : 'created_at',
-          name    : 'Created',
-          width   : 120,
-          tooltip : 'Built-in property: Created At',
-          checked : true
+          id: 'created_at',
+          name: 'Created',
+          width: 120,
+          tooltip: 'Built-in property: Created At',
+          checked: true
         }
       ]
     };
@@ -142,10 +142,10 @@ export default Reflux.createStore({
     this.data.columns = this.getInitialState().columns;
     this.data.classObj.schema.map(item => {
       this.data.columns.push({
-        id      : item.name,
-        name    : item.name,
-        tooltip : 'Custom property: ' + item.name + ' (type: ' + item.type + ')',
-        checked : true
+        id: item.name,
+        name: item.name,
+        tooltip: 'Custom property: ' + item.name + ' (type: ' + item.type + ')',
+        checked: true
       })
     });
 
@@ -174,8 +174,8 @@ export default Reflux.createStore({
     console.debug('DataObjectsStore::setDataObjects');
 
     this.data.hasNextPage = items.hasNextPage();
-    this.data.nextParams  = new URI(items.next() || '').search(true);
-    this.data.prevParams  = new URI(items.prev() || '').search(true);
+    this.data.nextParams = new URI(items.next() || '').search(true);
+    this.data.prevParams = new URI(items.prev() || '').search(true);
 
     if (!this.data.items) {
       this.data.items = []
@@ -207,7 +207,7 @@ export default Reflux.createStore({
   updateFromLocalStorage() {
     console.debug('DataObjectsStore::updateFromLocalStorage');
     let className = this.getCurrentClassName(),
-        settings  = localStorage.getItem('dataobjects_checkedcolumns_' + className);
+      settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
 
     if (!settings) {
       return;

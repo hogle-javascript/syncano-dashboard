@@ -15,20 +15,20 @@ export default Reflux.createStore({
   ],
 
   langMap: {
-    python : 'python',
-    nodejs : 'javascript',
-    ruby   : 'ruby',
-    golang : 'golang'
+    python: 'python',
+    nodejs: 'javascript',
+    ruby: 'ruby',
+    golang: 'golang'
   },
 
   getInitialState() {
     return {
-      currentCodeBox  : null,
+      currentCodeBox: null,
 
-      traces          : [],
-      lastTraceResult : null,
-      lastTraceReady  : true,
-      isLoading       : true
+      traces: [],
+      lastTraceResult: null,
+      lastTraceReady: true,
+      isLoading: true
     }
   },
 

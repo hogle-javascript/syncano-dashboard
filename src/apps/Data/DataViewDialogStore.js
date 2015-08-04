@@ -9,26 +9,26 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 export default Reflux.createStore({
-  listenables : DataViewsActions,
-  mixins      : [
+  listenables: DataViewsActions,
+  mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
   ],
 
   getInitialState() {
     return {
-      label     : '',
-      crontab   : '',
-      codebox   : '',
-      class     : '',
-      page_size : 50,
-      fields    : '',
-      expand    : '',
-      classes : [
+      label: '',
+      crontab: '',
+      codebox: '',
+      class: '',
+      page_size: 50,
+      fields: '',
+      expand: '',
+      classes: [
         {payload: '', text: 'Loading...'}
       ],
-      expandFields : {},
-      showFields   : {}
+      expandFields: {},
+      showFields: {}
     };
   },
 

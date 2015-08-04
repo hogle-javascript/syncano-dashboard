@@ -10,7 +10,7 @@ import Common from '../../common';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
 let ColumnList = Common.ColumnList;
-let Column     = ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -32,16 +32,16 @@ export default React.createClass({
 
   renderListItem(invoice) {
     return (
-      <ColumnList.Item key = {invoice.id}>
+      <ColumnList.Item key={invoice.id}>
         <Column.Desc>{invoice.period}</Column.Desc>
         <Column.Desc>{invoice.id}</Column.Desc>
         <Column.Desc>{invoice.amount}</Column.Desc>
         <Column.Desc>{invoice.status}</Column.Desc>
         <Column.Desc>
           <MUI.FlatButton
-            label   = "VIEW"
-            primary = {true}
-            onClick = {this.handlePDFClick.bind(null, invoice)} />
+            label="VIEW"
+            primary={true}
+            onClick={this.handlePDFClick.bind(null, invoice)}/>
         </Column.Desc>
       </ColumnList.Item>
     );
@@ -52,8 +52,8 @@ export default React.createClass({
       <Common.Loading show={this.state.isLoading}>
         <Common.Show if={this.state.invoices.length < 1}>
           <EmptyContainer
-            icon = 'synicon-file-outline'
-            text = 'You have no invoices'/>
+            icon='synicon-file-outline'
+            text='You have no invoices'/>
         </Common.Show>
 
         <Common.Show if={this.state.invoices.length > 0}>

@@ -10,11 +10,11 @@ export default Radium(React.createClass({
   displayName: 'CheckIcon',
 
   propTypes: {
-    id          : React.PropTypes.string,
-    icon        : React.PropTypes.string,
-    checked     : React.PropTypes.bool,
-    checkable   : React.PropTypes.bool,
-    handleClick : React.PropTypes.func
+    id: React.PropTypes.string,
+    icon: React.PropTypes.string,
+    checked: React.PropTypes.bool,
+    checkable: React.PropTypes.bool,
+    handleClick: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -25,9 +25,9 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      hovered    : false,
-      checked    : this.props.checked,
-      background : this.props.background
+      hovered: false,
+      checked: this.props.checked,
+      background: this.props.background
     }
   },
 
@@ -63,69 +63,69 @@ export default Radium(React.createClass({
     // If icon is checked - background is grey and icon is 'check'
     if (this.state.checked) {
       return {
-        icon  : 'checkbox-marked-outline',
-        color : MUI.Styles.Colors.lightBlue500
+        icon: 'checkbox-marked-outline',
+        color: MUI.Styles.Colors.lightBlue500
       };
     }
 
     // If icon is hovered background is grey and icon is 'check_box_outline_blank'
     if (this.state.hovered) {
       return {
-        icon  : 'checkbox-blank-outline',
-        color : GREY
+        icon: 'checkbox-blank-outline',
+        color: GREY
       };
     }
 
     // Otherwise we have original colorful icon
     return {
-      icon  : this.props.icon,
-      color : this.props.background
+      icon: this.props.icon,
+      color: this.props.background
     };
   },
 
   getStyles() {
     return {
       icon: {
-        color      : '#fff',
-        display    : 'flex',
-        fontSize   : 22,
-        lineHeight : 1
+        color: '#fff',
+        display: 'flex',
+        fontSize: 22,
+        lineHeight: 1
       },
       background: {
-        margin         : '0 16px 0 8px',
-        height         : 40,
-        minWidth       : 40,
-        display        : 'flex',
-        justifyContent : 'center',
-        alignItems     : 'center'
+        margin: '0 16px 0 8px',
+        height: 40,
+        minWidth: 40,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       },
-      checkable : {
+      checkable: {
         cursor: 'pointer'
       }
     }
   },
 
   render() {
-    let styles          = this.getStyles(),
-        iconState       = this.getIconState(),
-        iconStyle       = styles.icon,
-        iconClass       = iconState.icon,
-        backgroundStyle = styles.background;
+    let styles = this.getStyles(),
+      iconState = this.getIconState(),
+      iconStyle = styles.icon,
+      iconClass = iconState.icon,
+      backgroundStyle = styles.background;
 
     // Background color based on current state
     backgroundStyle.backgroundColor = iconState.color;
 
     return (
       <MUI.Paper
-        zDepth       = {0}
-        circle       = {true}
-        style        = {[styles.background, this.props.checkable && styles.checkable]}
-        onMouseOver  = {this.props.checkable ? this.handleMouseOver : null}
-        onMouseLeave = {this.props.checkable ? this.handleMouseLeave : null}
-        onClick      = {this.props.checkable ? this.handleClick : null}>
+        zDepth={0}
+        circle={true}
+        style={[styles.background, this.props.checkable && styles.checkable]}
+        onMouseOver={this.props.checkable ? this.handleMouseOver : null}
+        onMouseLeave={this.props.checkable ? this.handleMouseLeave : null}
+        onClick={this.props.checkable ? this.handleClick : null}>
         <MUI.FontIcon
-          className = {`synicon-${iconClass}`}
-          style     = {iconStyle} />
+          className={`synicon-${iconClass}`}
+          style={iconStyle}/>
       </MUI.Paper>
     )
   }
