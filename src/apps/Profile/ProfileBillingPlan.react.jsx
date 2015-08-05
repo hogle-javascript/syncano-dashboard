@@ -26,7 +26,7 @@ export default Radium(React.createClass({
     React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialogs,
-    Mixins.IsLoading({attr: 'state.isReady'}),
+    Mixins.IsLoading(),
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],

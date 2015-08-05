@@ -40,6 +40,7 @@ export default Reflux.createStore({
     ])
       .then(() => {
         this.data.isReady = true;
+        this.data.isLoading = false;
         this.trigger(this.data);
       });
   },
