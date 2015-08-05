@@ -240,7 +240,7 @@ export default React.createClass({
     return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
   },
 
-  handleCancelClick() {
+  handleBackClick() {
     SessionStore.getRouter().transitionTo(
       'classes',
       {
@@ -250,6 +250,7 @@ export default React.createClass({
   },
 
   render() {
+    const title = this.hasEditMode() ? 'Edit Class' : 'Add Class';
     const submitLabel = this.hasEditMode() ? 'Update' : 'Add';
     const permissions = [
       {
@@ -269,10 +270,33 @@ export default React.createClass({
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
+        <MUI.Toolbar style={{
+            position: 'fixed',
+            top: 64,
+            right: 0,
+            paddingLeft: 256,
+            zIndex: 1,
+            background: 'rgb(215,215,215)',
+            padding: '0px 32px 0 24px'}}>
+          <MUI.ToolbarGroup>
+            <MUI.IconButton
+              iconClassName="synicon-arrow-left"
+              onClick={this.handleBackClick}
+              touch={true}
+              style={{marginTop: 4}}
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup>
+            <MUI.ToolbarTitle text={title} />
+          </MUI.ToolbarGroup>
+
+        </MUI.Toolbar>
         <form
           onSubmit={this.handleFormValidation}
           acceptCharset="UTF-8"
-          method="post">
+          method="post"
+          className="vp-4-t">
           <div className='row'>
             <div className='col-xs-8'>
               <MUI.TextField
@@ -422,10 +446,10 @@ export default React.createClass({
               className="raised-button"
               secondary={true}
               style={{margin: '0 8px 0 auto'}} />
-            <MUI.RaisedButton
+            <MUI.FlatButton
               label='Cancel'
               className="raised-button"
-              onClick={this.handleCancelClick}
+              onClick={this.handleBackClick}
               style={{margin: '0 8px 0 auto'}} />
           </div>
         </form>
