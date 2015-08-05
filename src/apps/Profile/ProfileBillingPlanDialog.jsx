@@ -242,8 +242,12 @@ export default React.createClass({
       return;
     }
     const defaultValue = 0;
-    const options = this.state.plan.options[type];
+    let options = this.state.plan.options[type];
     let selected = this.state[type + 'Selected'];
+
+    options = options.map((item) => {
+      return '$' + item;
+    });
 
     return (
       <Common.Slider
