@@ -9,7 +9,6 @@ import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
-import {isLoading} from '../../decorators';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -27,6 +26,7 @@ export default Radium(React.createClass({
     React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialogs,
+    Mixins.IsLoading({attr: 'state.isReady'}),
     Reflux.connect(Store),
     Reflux.connect(PlanDialogStore)
   ],
@@ -369,8 +369,7 @@ export default Radium(React.createClass({
     );
   },
 
-@isLoading({attr: 'state.isReady'})
-render() {
+renderLoaded() {
   let styles = this.getStyles();
 
   if (this.state.subscriptions.length === 0) {
