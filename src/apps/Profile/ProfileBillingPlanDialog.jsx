@@ -135,7 +135,7 @@ export default React.createClass({
         margin: 1,
         fontSize: '1.1em',
         fontWeight: 'bold',
-        textAlign: 'center',
+        textAlign: 'right',
         background: '#F2F2F2',
         verticalAlign: 'middle',
         lineHeight: '40px'
@@ -268,12 +268,12 @@ export default React.createClass({
   renderSliderSummary(info) {
     return (
       <div>
-        <div>
-          <div>{info.included.label}</div>
+        <div style={{paddingBottom: 8}}>
+          <div style={{paddingBottom: 8}}>{info.included.label}</div>
           <div><strong>{info.included.value}</strong></div>
         </div>
         <div>
-          <div>{info.overage.label}</div>
+          <div style={{paddingBottom: 8}}>{info.overage.label}</div>
           <div><strong>${info.overage.value}</strong></div>
         </div>
       </div>
@@ -339,7 +339,7 @@ export default React.createClass({
 
     let apiSliderSummary = this.renderSliderSummary({
         included: {
-          value: apiInfo.included,
+          value: parseInt(apiInfo.included).toLocaleString(),
           label: 'Total API calls'
         },
         overage: {
@@ -351,7 +351,7 @@ export default React.createClass({
 
     let cbxSliderSummary = this.renderSliderSummary({
         included: {
-          value: cbxInfo.included,
+          value: parseInt(cbxInfo.included).toLocaleString(),
           label: 'Total CodeBox runs'
         },
         overage: {
@@ -365,7 +365,7 @@ export default React.createClass({
       <Common.Loading show={this.state.isLoading}>
         <Common.Dialog
           ref="dialog"
-          contentStyle={{padding: 0}}
+          contentStyle={{maxWidth: 850, padding: 0}}
           onShow={this.handleDialogShow}
           openImmediately={this.props.openImmediately}
           actions={dialogCustomActions}
@@ -396,12 +396,12 @@ export default React.createClass({
                 <div style={styles.table}>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{apiInfo.included}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included).toLocaleString()}</div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{cbxInfo.included}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included).toLocaleString()}</div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                   </div>
                 </div>
