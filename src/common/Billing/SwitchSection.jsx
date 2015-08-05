@@ -77,12 +77,12 @@ export default Radium(React.createClass({
   render() {
     return (
       <div className="row align-center vp-3-t vp-3-b" >
-        <div className="col-flex-1" style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
+        <div style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
           <div>
             {this.renderLeftSide()}
           </div>
         </div>
-        <div  style={{width: 44, position: 'relative'}}>
+        <div style={{width: 44, position: 'relative'}}>
 
                <div style = {{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
                   <MUI.Toggle
@@ -90,11 +90,10 @@ export default Radium(React.createClass({
                     key="paid-commitment-toggle"
                     defaultToggled={true}
                     onToggle={this.handleCancelPlanDialog} />
-
             </div>
 
         </div>
-        <div className="col-flex-1" style={{marginLeft: 16, display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+        <div style={{marginLeft: 16, display: 'flex', alignItems: 'center', alignContent: 'center'}}>
           {this.renderRightSide()}
         </div>
       </div>

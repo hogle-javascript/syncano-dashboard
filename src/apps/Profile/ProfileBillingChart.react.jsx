@@ -44,7 +44,7 @@ export default Radium(React.createClass({
     return (
         <div
           ref="chart"
-          style={{paddingTop: 10, background: '#EBEBEB'}}
+          style={{paddingTop: 10, background: '#F5F5F5'}}
           className="col chart"/>
     );
   }

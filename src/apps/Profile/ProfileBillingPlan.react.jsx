@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Radium from 'radium';
 import Moment from 'moment';
 
 import Mixins from '../../mixins';
@@ -16,7 +17,7 @@ import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart.react';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ProfileBillingPlan',
 
@@ -77,8 +78,10 @@ export default React.createClass({
       },
       mainDesc: {
         fontSize: '1.5rem',
-        lineHeight: '1.5rem',
-        marginBottom: 8
+        marginBottom: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        display: 'flex'
       },
       comment: {
         fontSize: '0.9em'
@@ -164,9 +167,11 @@ export default React.createClass({
       return (
         <div>
           <div style={styles.mainDesc}>
-            Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
+            <div style={{lineHeight: '48px'}}>
+              Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
+            </div>
           </div>
-          <div style={{marginTop: 20}}>
+          <div>
             <Limits data={Store.getLimitsData('default', plan)}/>
           </div>
         </div>
@@ -180,10 +185,10 @@ export default React.createClass({
 
     if (plan === 'builder') {
       return (
-          <div>
-            If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
-            If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
-          </div>
+        <div>
+          If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
+          If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
+        </div>
       );
     } else if (plan === 'paid-commitment') {
 
@@ -202,29 +207,29 @@ export default React.createClass({
         return (
           <div>
 
-              <div style={styles.mainDesc}>
-                New plan <strong>${total}</strong>:
+            <div style={styles.mainDesc}>
+              <div style={{lineHeight: '48px'}}>New plan <strong>${total}</strong>:</div>
 
-                  <MUI.IconButton
-                  iconClassName="synicon-information-outline"
-                  iconStyle={{color: Common.Color.getColorByName('blue', 'light')}}
-                  tooltip={toolTip}/>
-
-              </div>
-
-              <div style={{marginTop: 20}}>
-                <Limits data={limitsData}/>
-              </div>
+              <MUI.IconButton
+                iconClassName="synicon-information-outline"
+                iconStyle={{color: Common.Color.getColorByName('blue', 'light')}}
+                tooltip={toolTip}/>
 
             </div>
+
+            <div>
+              <Limits data={limitsData}/>
+            </div>
+
+          </div>
 
         )
       }
       return (
-          <div>
-            You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
-            Your new monthly fixed price will start from next billing period.
-          </div>
+        <div>
+          You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
+          Your new monthly fixed price will start from next billing period.
+        </div>
       );
     }
   },
@@ -365,18 +370,18 @@ render() {
   let styles = this.getStyles();
 
   return (
-    <div style={{marginTop: 80}}>
+    <div>
       {this.getDialogs()}
       <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
-      <div style={{paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div style={{zIndex: 1, paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', maxWidth: '1140'}}>
+          <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
-              <div style={styles.mainDesc}>Your plan: <strong>{Store.getPlanName()}</strong></div>
+            <div style={styles.mainDesc}>Your plan: <strong>{Store.getPlanName()}</strong></div>
 
           </div>
-          <div style={{width: 360}}>
+          <div>
             <Common.Billing.SwitchSection
               plan={this.state.profile.subscription.plan}
               planCanceled={Store.isPlanCanceled()}
@@ -386,60 +391,64 @@ render() {
         </div>
       </div>
 
-      <div className="row vp-6-b">
+      <div style={{marginTop: 80}}>
 
-        <div className="col-flex-1">
-          <div style={{marginBottom: 24}}>
-            {this.renderMainDesc()}
+        <div className="row vp-6-b">
+
+          <div className="col-flex-1">
+            <div style={{marginBottom: 24}}>
+              {this.renderMainDesc()}
+            </div>
+
+            <div style={{marginBottom: 24}}>
+              {this.renderCommment()}
+            </div>
+
+            <div>
+              <Common.Billing.PlanExplorerButton
+                plan={this.state.profile.subscription.plan}
+                isNewSubscription={Store.isNewSubscription()}
+                onPlanDialog={this.handleShowPlanDialog}
+                onDeleteSubscription={this.handleDeleteSubscription}/>
+            </div>
+
           </div>
 
-          <div style={{marginBottom: 24}}>
-            {this.renderCommment()}
-          </div>
+          <div className="col-flex-1" style={{position: 'relative', background: '#F5F5F5', marginRight: 8}}>
 
-          <div>
-          <Common.Billing.PlanExplorerButton
-            plan={this.state.profile.subscription.plan}
-            isNewSubscription={Store.isNewSubscription()}
-            onPlanDialog={this.handleShowPlanDialog}
-            onDeleteSubscription={this.handleDeleteSubscription}/>
-          </div>
-
-        </div>
-
-        <div className="col-flex-1" style={{position: 'relative', background: '#EBEBEB', marginRight: 8}}>
-
-          <div style = {{position: 'absolute', width: '100%', top: '50%', transform: 'translateY(-50%)'}}>
-            {this.renderSummary()}
+            <div style={{position: 'absolute', width: '100%', top: '50%', transform: 'translateY(-50%)'}}>
+              {this.renderSummary()}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="row vp-2-b">
-        <div className="col-flex-1 vp-1-b" style={styles.heading}>
-          See how it works with your <strong>current usage</strong>:
+        <div className="row vp-2-b">
+          <div className="col-flex-1 vp-1-b" style={styles.heading}>
+            See how it works with your <strong>current usage</strong>:
+          </div>
         </div>
-      </div>
 
-      <div className="row vp-3-b">
-        <div className="col-flex-1">
-          <Common.Billing.ChartLegend profile={this.state.profile}/>
+        <div className="row vp-3-b">
+          <div className="col-flex-1">
+            <Common.Billing.ChartLegend profile={this.state.profile}/>
+          </div>
+          <div className="col-flex-1">
+
+          </div>
         </div>
-        <div className="col-flex-1">
 
+        <div className="row vp-5-b">
+          <div className="col-flex-1">
+            <Chart />
+          </div>
         </div>
+
+        {this.renderLimitsForm()}
+
       </div>
-
-      <div className="row vp-5-b">
-        <div className="col-flex-1">
-          <Chart />
-        </div>
-      </div>
-
-      {this.renderLimitsForm()}
-
     </div>
   );
-  }
-});
+}
+}));
+
 
