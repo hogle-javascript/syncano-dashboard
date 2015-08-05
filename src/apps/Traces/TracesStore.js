@@ -56,7 +56,7 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
-    this.data.items = Object.keys(tracesObj).map(item => tracesObj[item]);
+    this.data.items = Object.keys(tracesObj).sort().map(item => tracesObj[item]);
     this.data.isLoading = false;
     this.trigger(this.data);
   },
