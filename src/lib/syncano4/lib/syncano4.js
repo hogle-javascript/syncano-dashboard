@@ -3315,6 +3315,12 @@ var Syncano = (function() {
         callbackError('Missing request method');
       } else {
         params = params || {};
+        Object.keys(params).forEach(function(key) {
+          if (Array.isArray(params[key])) {
+            var arr = params[key];
+            params[key] = arr.join('&' + key + '=')
+          }
+        });
         var url = normalizeUrl(baseURL + method);
         var ajaxParams = {
           type: requestType,
