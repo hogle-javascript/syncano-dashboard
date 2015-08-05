@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['instance'],
+  tags: ['channels'],
   before: function(client) {
     var loginPage = client.page.loginPage();
     loginPage.goToLoginPage();
@@ -12,15 +12,14 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'Test Go to Instance View' : function(client) {
+  'User goes to Channels View' : function(client) {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
+    
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@channels');
 
-    var dataPage = client.page.dataPage();
-
-    client.pause(2000);
-    dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
-    dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
-
+    var channelsPage = client.page.channelsPage();
+    channelsPage.waitForElementPresent('@channelListItem');
   }
 };

@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['instance'],
+  tags: ['webhookTraces'],
   before: function(client) {
     var loginPage = client.page.loginPage();
     loginPage.goToLoginPage();
@@ -12,15 +12,16 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'Test Go to Instance View' : function(client) {
+  'User goes to Webhook Traces View' : function(client) {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
 
-    client.pause(2000);
-    dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
-    dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
+    dataPage.clickButton('@webhookListItem');
 
+    var webhookTracesPage = client.page.webhookTracesPage();
+
+    webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
   }
 };

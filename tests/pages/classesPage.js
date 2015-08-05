@@ -81,6 +81,10 @@ module.exports = {
       selector: '//div[@class="classes-list-container"]/div[2]',
       locateStrategy: 'xpath'
     },
+    userClassListItem: {
+      selector: '//div[text()="Class that holds profiles for users."]',
+      locateStrategy: 'xpath'
+    },
     selectClass: {
       selector: '//div[@class="classes-list-container"]//span[contains(@class, "synicon")]',
       locateStrategy: 'xpath'
