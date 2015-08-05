@@ -76,6 +76,9 @@ module.exports = React.createClass({
       sidebar: {
         minWidth: 230
       },
+      listItemChecked: {
+        background: MUI.Styles.Colors.lightBlue50
+      }
     }
   },
 
