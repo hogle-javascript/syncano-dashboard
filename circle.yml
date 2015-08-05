@@ -28,7 +28,7 @@ test:
     - npm run-script eslint
     - npm test
     - npm run-script codeclimate
-    - npm run-script nightwatch
+    # - npm run-script nightwatch
 
 deployment:
   production:
