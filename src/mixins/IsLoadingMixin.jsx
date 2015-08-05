@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import Loading from '../common/Loading';
+import Common from '../common';
 
 export default (options, props) => {
   props                   = props        || {};
@@ -22,7 +22,11 @@ export default (options, props) => {
     },
 
     renderLoadingComponent() {
-      return <Loading {...props} show = {true} />;
+      return (
+        <Common.Container.Loading>
+          <Common.Loading {...props} show = {true} />
+        </Common.Container.Loading>
+      )
     },
 
     renderIsLoading() {
