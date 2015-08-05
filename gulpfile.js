@@ -3,6 +3,7 @@ var gulp             = require('gulp'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
+    stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
     download         = require('gulp-download'),
@@ -93,7 +94,13 @@ gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
     });
 });
 
-gulp.task('revision', ['clean', 'webpack:build'], function() {
+gulp.task('stripDebug', ['clean', 'webpack:build'], function() {
+  gulp.src('./dist/js/app.js')
+    .pipe(stripDebug())
+    .pipe(gulp.dest('./dist/js'));
+});
+
+gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
   return gulp.src([
       './dist/**/*',
       '!./dist/index.html'
