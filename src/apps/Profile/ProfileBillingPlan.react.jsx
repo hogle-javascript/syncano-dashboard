@@ -8,6 +8,7 @@ import Store from './ProfileBillingPlanStore';
 import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
+import {isLoading} from '../../decorators';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -76,25 +77,15 @@ export default React.createClass({
       },
       mainDesc: {
         fontSize: '1.5rem',
-        lineHeight: '1.5rem'
+        lineHeight: '1.5rem',
+        marginBottom: 8
       },
       comment: {
-        fontSize: '0.9em',
+        fontSize: '0.9em'
       },
-      explorerButton: {
-        marginTop: 20
-      },
-      chartHeader: {
-        paddingTop: 50,
+
+      heading: {
         fontSize: '1.3em'
-      },
-      legendSquere: {
-        marginTop: 4,
-        height: 10,
-        width: 10
-      },
-      legend: {
-        fontSize : '0.9rem',
       }
     }
   },
@@ -124,10 +115,6 @@ export default React.createClass({
     }]
   },
 
-  isNewSubscription() {
-    return (this.state.subscriptions && this.state.subscriptions.length > 1);
-  },
-
   handleCancelCancelProductionPlan() {
     this.setupToggles();
     this.refs.cancelProductionPlan.dismiss();
@@ -135,7 +122,6 @@ export default React.createClass({
 
   handleShowCancelPlanDialog() {
     console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.refs['paid-commitment-toggle'].setToggled(false);
     this.showDialog('cancelProductionPlan')
   },
 
@@ -156,265 +142,32 @@ export default React.createClass({
     Actions.cancelNewPlan(this.state.subscriptions._items);
   },
 
-  renderSwitchPlan() {
-    if (!this.state.profile) {
-      return;
-    }
-
-    if (this.state.profile.subscription.plan === 'builder')
-      return (
-        <div className="row align-middle" style={{flexDirection: 'column'}}>
-          <div>Builder</div>
-          <div>
-            <MUI.Toggle
-              style={{marginTop: 10}}
-              ref="builder-toggle"
-              key="builder-toggle"
-              onToggle={this.handleShowPlanDialog}/>
-          </div>
-          <div style={{marginTop: 10}}>
-            <div>Launching your app?</div>
-            <a onClick={this.handleShowPlanDialog}>Switch to Production</a>
-          </div>
-          <div style={{marginTop: 10, fontSize: '1.1rem', padding: 5}}>
-            From <strong>$25</strong>/month
-          </div>
-          <div style={{marginTop: 10}}>
-            <div><a>Learn</a> when to flip the</div>
-            <div>switch to production.</div>
-          </div>
-        </div>
-      );
-    else if (this.state.profile.subscription.plan === 'free')
-      return;
-
-    let renderComment = () => {
-      if (Store.isPlanCanceled()) {
-        return (
-          <div style={{marginTop: 10, textAlign: 'center'}}>
-            <div>Your plan will expire on</div>
-            <div style={{color: 'red', padding: 3}}>
-              {Store.isPlanCanceled()}
-            </div>
-            <div>Click <a onClick={this.handleShowPlanDialog}> here </a> to extend.</div>
-          </div>
-        )
-      }
-      return (
-        <div style={{marginTop: 10}}>
-          <a onClick={this.handleShowCancelPlanDialog}>Cancel Production plan</a>
-        </div>
-      );
-    };
-
-    return (
-      <div className="row align-middle" style={{flexDirection: 'column'}}>
-        <div>Production</div>
-        <div>
-          <MUI.Toggle
-            style={{marginTop: 10}}
-            ref="paid-commitment-toggle"
-            key="paid-commitment-toggle"
-            defaultToggled={true}
-            onToggle={this.handleShowCancelPlanDialog}/>
-        </div>
-        {renderComment()}
-      </div>
-    )
-  },
-
-  renderExplorerButtonLabel() {
-    if (!this.state.profile) {
-      return;
-    }
-
-    let plan = this.state.profile.subscription.plan;
-
-    if (plan === 'builder') {
-      return 'Open Plans Explorer';
-    } else if (plan === 'paid-commitment') {
-      if (this.isNewSubscription()) {
-        return 'Change your next commitment';
-      }
-      return 'Upgrade your plan';
-    }
-  },
-
-  renderChartLegend() {
-    let styles = this.getStyles();
-
-    let subscription = this.state.profile.subscription;
-    let plan = subscription.plan;
-    let pricing = subscription.pricing;
-
-    let apiCallsStyle = _.extend({}, styles.legendSquere, {background: '#77D8F6'});
-    let cbxCallsStyle = _.extend({}, styles.legendSquere, {background: '#FFBC5A'});
-
-    let apiTotalIndex = _.findIndex(this.state.profile.balance, {source: 'API Call'});
-    let cbxTotalIndex = _.findIndex(this.state.profile.balance, {source: 'CodeBox Executions'});
-
-    let apiTotal = this.state.profile.balance[apiTotalIndex].quantity;
-    let cbxTotal = this.state.profile.balance[cbxTotalIndex].quantity;
-
-    let renderUsage = (type) => {
-      if (plan === 'paid-commitment') {
-        let usage = {
-          'api': parseFloat(apiTotal) / parseFloat(pricing.api.included) * 100,
-          'cbx': parseFloat(cbxTotal) / parseFloat(pricing.cbx.included) * 100,
-        };
-        return [
-          <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
-            <strong>{usage[type].toFixed(2)}%</strong>
-          </div>,
-          <div className="col-md-8">of plan usage</div>
-        ]
-      }
-    };
-
-    return (
-      <div style={{marginTop: 20}}>
-        <div className="row">
-
-          <div className="col-md-18">
-
-            <div className="row" style={styles.legend}>
-              <div className="col-xs-1">
-                <div style={apiCallsStyle}/>
-              </div>
-              <div className="col-flex-1">
-                <div className="row">
-                  <div className="col-md-8">API calls</div>
-                  <div className="col-md-8">this month: <strong>{apiTotal}</strong></div>
-                  {renderUsage('api')}
-                </div>
-              </div>
-            </div>
-            <div className="row" style={_.extend({}, {marginTop: 5}, styles.legend)}>
-              <div className="col-xs-1">
-                <div style={cbxCallsStyle}/>
-              </div>
-              <div className="col-flex-1">
-                <div className="row">
-                  <div className="col-md-8">CodeBox runs</div>
-                  <div className="col-md-8">this month: <strong>{cbxTotal}</strong></div>
-                  {renderUsage('cbx')}
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    )
-  },
-
-  renderChart() {
-    let styles = this.getStyles();
-    if (!this.state.profile) {
-      return;
-    }
-
-    return (
-      <div style={styles.chartHeader}>
-        See how it works with your <strong>current usage</strong>:
-        {this.renderChartLegend()}
-        <div style={{marginTop: 25}}>
-          <Chart />
-        </div>
-      </div>
-    )
-
-  },
-
-  renderExplorerButton() {
-    let styles = this.getStyles();
-
-    if (this.isNewSubscription()) {
-      return (
-        <div className="row align-middle" style={{flexDirection: 'column'}}>
-          <div style={styles.explorerButton}>
-            <MUI.FlatButton
-              primary={true}
-              label={'Cancel Change'}
-              onTouchTap={this.handleDeleteSubscription}
-              />
-            <MUI.FlatButton
-              primary={true}
-              style={{marginLeft: 15}}
-              label={'Upgrade'}
-              onTouchTap={this.handleShowPlanDialog}
-              />
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="row align-middle" style={{flexDirection: 'column'}}>
-        <div style={styles.explorerButton}>
-          <MUI.FlatButton
-            primary={true}
-            label={this.renderExplorerButtonLabel() || ''}
-            onTouchTap={this.handleShowPlanDialog}
-            />
-        </div>
-      </div>
-    )
-  },
-
   renderMainDesc() {
-    let styles = this.getStyles();
+    const styles = this.getStyles();
+    const plan = Store.getPlan();
 
-    if (!this.state.profile) {
-      return;
-    }
-
-    let plan = this.state.profile.subscription.plan;
     if (plan === 'free') {
       return 'You are on FREE (internal) plan - go away! and test billing using different account!';
     }
 
     if (plan === 'builder') {
-      let limitsData = {
-        api: {included : '100 000'},
-        cbx: {included : '1 000'}
-      };
       return (
-        <div className="col-md-12">
-          <div style={styles.mainDesc}>Your plan: <strong>Builder</strong></div>
-          <div style={{marginTop: 5}}>It does not cost you anything but there are limits:</div>
-          <div style={{marginTop: 20}}>
-            <Limits data={limitsData}/>
+        <div>
+          <div style={{marginBottom: 16}}>It does not cost you anything but there are limits:</div>
+          <div>
+            <Limits data={Store.getLimitsData('default', plan)}/>
           </div>
         </div>
       );
     } else if (plan === 'paid-commitment') {
 
-      let subscription = this.state.profile.subscription;
-      let commitment = subscription.commitment;
-      let pricing = subscription.pricing;
-      let total = parseInt(commitment.api) + parseInt(commitment.cbx);
-
-      let limitsData = {
-        api: {
-          included: pricing.api.included,
-          overage: pricing.api.overage
-        },
-        cbx: {
-          included: pricing.cbx.included,
-          overage: pricing.api.overage
-        }
-      };
-
       return (
-        <div
-          key="productionDesc-subs"
-          className="col-flex-1">
+        <div>
           <div style={styles.mainDesc}>
-            Current plan <strong>${total}</strong>:
+            Current plan <strong>${Store.getTotalPlanValue('default')}</strong>:
           </div>
           <div style={{marginTop: 20}}>
-            <Limits data={limitsData}/>
+            <Limits data={Store.getLimitsData('default', plan)}/>
           </div>
         </div>
       );
@@ -422,39 +175,22 @@ export default React.createClass({
   },
 
   renderCommment() {
-    let styles = this.getStyles();
-
-    if (!this.state.profile) {
-      return;
-    }
-
-    let plan = this.state.profile.subscription.plan;
+    const styles = this.getStyles();
+    const plan = Store.getPlan();
 
     if (plan === 'builder') {
       return (
-        <div className="row align-middle" style={{flexDirection: 'column'}}>
-          <div key="builderComment" style={{width: '80%'}}>
+          <div>
             If you exceed your limits you will not be subject to overage - just make sure you're in building mode.
             If we suspect abuse of our terms, we will advise you to switch to a <strong>Production plan</strong>.
           </div>
-        </div>
       );
     } else if (plan === 'paid-commitment') {
 
-      if (this.isNewSubscription()) {
-        let subscription = this.state.subscriptions._items[1];
-        let total = parseInt(subscription.commitment.api) + parseInt(subscription.commitment.cbx);
-
-        let limitsData = {
-          api: {
-            included: subscription.pricing.api.included,
-            overage: subscription.pricing.api.overage
-          },
-          cbx: {
-            included: subscription.pricing.cbx.included,
-            overage: subscription.pricing.api.overage
-          }
-        };
+      if (Store.isNewSubscription()) {
+        const subscription = this.state.subscriptions._items[1];
+        const total = Store.getTotalPlanValue(subscription);
+        const limitsData = Store.getLimitsData(subscription, plan);
 
         let toolTip = (
           <div style={{whiteSpace: 'normal', textAlign: 'left', width: 250}}>
@@ -464,33 +200,31 @@ export default React.createClass({
         );
 
         return (
-          <div className="row align-top">
-            <div classsName="col-md-3" style={{transform: 'translateY(-14px)'}}>
-              <MUI.IconButton
-                iconClassName="synicon-information-outline"
-                iconStyle={{color: Common.Color.getColorByName('blue', 'xlight')}}
-                tooltip={toolTip}/>
-            </div>
-            <div classsName="col-flex-1">
+          <div>
 
               <div style={styles.mainDesc}>
                 New plan <strong>${total}</strong>:
+
+                  <MUI.IconButton
+                  iconClassName="synicon-information-outline"
+                  iconStyle={{color: Common.Color.getColorByName('blue', 'light')}}
+                  tooltip={toolTip}/>
+
               </div>
+
               <div style={{marginTop: 20}}>
                 <Limits data={limitsData}/>
               </div>
 
             </div>
-          </div>
+
         )
       }
       return (
-        <div className="row align-middle" style={{flexDirection: 'column'}}>
-          <div key="productionComment" style={{width: '80%'}}>
+          <div>
             You can change your plan at any point and get the benefit of <strong>lower unit prices</strong>.
             Your new monthly fixed price will start from next billing period.
           </div>
-        </div>
       );
     }
   },
@@ -512,11 +246,8 @@ export default React.createClass({
   },
 
   renderLimitsForm() {
-    if (!this.state.profile) {
-      return;
-    }
-    let subscription = this.state.profile.subscription;
-    let plan = subscription.plan;
+    const styles = this.getStyles();
+    const plan = Store.getPlan();
 
     if (plan === 'builder' || plan === 'free') {
       return null;
@@ -530,73 +261,185 @@ export default React.createClass({
     );
 
     return (
-      <div className="row align-middle" style={{marginTop: 30, paddingLeft: 30}}>
-        <div className="col-md-5">
-          <MUI.TextField
-            ref               = "soft_limit"
-            valueLink         = {this.linkState('soft_limit')}
-            errorText         = {this.getValidationMessages('soft_limit').join(' ')}
-            name              = "soft_limit"
-            className         = "text-field"
-            floatingLabelText = "Soft Limit"
-            fullWidth         = {true} />
-        </div>
-        <div className="col-md-5">
-          <MUI.TextField
-            ref               = "hard_limit"
-            valueLink         = {this.linkState('hard_limit')}
-            errorText         = {this.getValidationMessages('hard_limit').join(' ')}
-            name              = "hard_limit"
-            className         = "text-field"
-            floatingLabelText = "Hard Limit"
-            fullWidth         = {true} />
-        </div>
-        <div className="col-md-4" style={{paddingRight: 0}}>
-          <MUI.FlatButton
-            primary    = {true}
-            label      = 'Set Limits'
-            disabled   = {(!this.state.hard_limit && !this.state.soft_limit)}
-            onTouchTap = {this.handleFormValidation} />
-        </div>
-        <div className="col-md-5" style={{paddingLeft: 0}}>
-          <MUI.IconButton
-            iconClassName = "synicon-information-outline"
-            iconStyle     = {{color: MUI.Styles.Colors.blue500}}
-            tooltip       = {toolTip} />
+      <div>
+        <div style={styles.heading}>Limits</div>
+        <div className="row align-middle">
+          <div className="col-md-5">
+            <MUI.TextField
+              ref="soft_limit"
+              valueLink={this.linkState('soft_limit')}
+              errorText={this.getValidationMessages('soft_limit').join(' ')}
+              name="soft_limit"
+              className="text-field"
+              floatingLabelText="Soft Limit"
+              fullWidth={true}/>
+          </div>
+          <div className="col-md-5">
+            <MUI.TextField
+              ref="hard_limit"
+              valueLink={this.linkState('hard_limit')}
+              errorText={this.getValidationMessages('hard_limit').join(' ')}
+              name="hard_limit"
+              className="text-field"
+              floatingLabelText="Hard Limit"
+              fullWidth={true}/>
+          </div>
+          <div className="col-md-4" style={{paddingRight: 0}}>
+            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <MUI.FlatButton
+                primary={true}
+                label='Set Limits'
+                disabled={(!this.state.hard_limit && !this.state.soft_limit)}
+                onTouchTap={this.handleFormValidation}/>
+            </div>
+          </div>
+          <div className="col-md-5" style={{paddingLeft: 0}}>
+            <MUI.IconButton
+              iconClassName="synicon-information-outline"
+              iconStyle={{color: MUI.Styles.Colors.blue500}}
+              tooltip={toolTip}/>
+          </div>
         </div>
       </div>
     )
   },
 
-  render() {
-    let styles = this.getStyles();
+  renderSummary() {
+    const plan = Store.getPlan();
+    const profile = this.state.profile;
 
-    return (
-      <Common.Loading show={this.state.isLoading}>
-        {this.getDialogs()}
-        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+    let coveredText = '';
+    if (plan === 'builder' || plan === 'free')
+      coveredText = 'Covered by Syncano';
+    else if (plan === 'paid-commitment') {
+      coveredText = `So far this month`;
+    }
 
-        <div className="row" style={styles.main}>
+    if (plan === 'builder' || plan === 'free') {
+      let totalIndex = _.findIndex(profile.balance, {source: 'Plan Fee'});
+      let amountTotal = profile.balance[totalIndex].quantity;
 
-          {this.renderMainDesc()}
+      return (
+        <div>
 
-          <div className="col-flex-1">
-            <div style={styles.comment}>
-              {this.renderCommment()}
+          <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+            {coveredText}
+          </div>
+
+          <div className="row align-middle" style={{marginTop: 25}}>
+            <div className="col-flex-1" style={{textAlign: 'center'}}>
+              <div style={{textDecoration: 'line-through', fontSize: '2rem'}}>${amountTotal}</div>
+              <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
-            {this.renderExplorerButton()}
           </div>
-          <div className="col-md-6">
-            {this.renderSwitchPlan()}
+
+        </div>
+      );
+    }
+
+    let covered = Store.getCovered();
+    let overage = Store.getOverage();
+    let amountTotal = overage.amount + covered.amount;
+    return (
+      <div>
+
+        <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
+          {coveredText}
+        </div>
+
+        <div className="row align-middle" style={{marginTop: 20}}>
+          <div className="col-flex-1" style={{textAlign: 'center'}}>
+            <div style={{fontSize: '2rem'}}>${amountTotal}</div>
+            <div style={{marginTop: 15, fontSize: '1rem'}}>
+              ${covered.amount} plan + ${overage.amount} overage
+            </div>
           </div>
         </div>
-        <div>
-          {this.renderChart()}
-        </div>
-        <div>
-          {this.renderLimitsForm()}
-        </div>
-      </Common.Loading>
+
+      </div>
     );
+  },
+
+@isLoading({attr: 'state.isReady'})
+render() {
+  let styles = this.getStyles();
+
+  return (
+    <div style={{marginTop: 80}}>
+      {this.getDialogs()}
+      <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+
+      <div style={{paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+
+              <div style={styles.mainDesc}>Your plan: <strong>{Store.getPlanName()}</strong></div>
+
+          </div>
+          <div style={{width: 360}}>
+            <Common.Billing.SwitchSection
+              plan={this.state.profile.subscription.plan}
+              planCanceled={Store.isPlanCanceled()}
+              onPlanDialog={this.handleShowPlanDialog}
+              onCancelPlanDialog={this.handleShowCancelPlanDialog}/>
+          </div>
+        </div>
+      </div>
+
+      <div className="row vp-6-b">
+
+        <div className="col-flex-1">
+          <div style={{marginBottom: 24}}>
+            {this.renderMainDesc()}
+          </div>
+
+          <div style={{marginBottom: 24}}>
+            {this.renderCommment()}
+          </div>
+
+          <div>
+          <Common.Billing.PlanExplorerButton
+            plan={this.state.profile.subscription.plan}
+            isNewSubscription={Store.isNewSubscription()}
+            onPlanDialog={this.handleShowPlanDialog}
+            onDeleteSubscription={this.handleDeleteSubscription}/>
+          </div>
+
+        </div>
+
+        <div className="col-flex-1" style={{position: 'relative', background: '#EBEBEB', marginRight: 8}}>
+
+          <div style = {{position: 'absolute', width: '100%', top: '50%', transform: 'translateY(-50%)'}}>
+            {this.renderSummary()}
+          </div>
+        </div>
+      </div>
+
+      <div className="row vp-2-b">
+        <div className="col-flex-1 vp-1-b" style={styles.heading}>
+          See how it works with your <strong>current usage</strong>:
+        </div>
+      </div>
+
+      <div className="row vp-3-b">
+        <div className="col-flex-1">
+          <Common.Billing.ChartLegend profile={this.state.profile}/>
+        </div>
+        <div className="col-flex-1">
+
+        </div>
+      </div>
+
+      <div className="row vp-5-b">
+        <div className="col-flex-1">
+          <Chart />
+        </div>
+      </div>
+
+      {this.renderLimitsForm()}
+
+    </div>
+  );
   }
 });
+

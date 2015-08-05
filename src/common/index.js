@@ -1,5 +1,6 @@
 import Accordion from './Accordion';
 import AvatarInitials from './AvatarInitials';
+import Billing from './Billing';
 import Button from './Button';
 import CheckIcon from './CheckIcon';
 import Color from './Color';
@@ -40,6 +41,7 @@ import SnackbarNotification from './SnackbarNotification';
 export default {
   Accordion,
   AvatarInitials,
+  Billing,
   Button,
   CheckIcon,
   Color,
