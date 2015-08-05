@@ -41,6 +41,7 @@ export default React.createClass({
         <MUI.ListItem
           key={item.name}
           primaryText={item.name}
+          rightAvatar={<div style={{marginTop: 12, color: 'grey'}}>{item.count}</div>}
           innerDivStyle={this.state.selectedItems.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
           onTouchTap={this.handleOnTouchTap.bind(this, item.name)}/>
       )
