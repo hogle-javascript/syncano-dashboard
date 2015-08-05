@@ -97,9 +97,10 @@ export default React.createClass({
                 valueLink={this.linkState('name')}
                 errorText={this.getValidationMessages('name').join(' ')}
                 name='name'
+                disabled={this.hasEditMode()}
                 fullWidth={true}
                 hintText='Short name for your Channel'
-                floatingLabelText='Label of a Channel'
+                floatingLabelText='Name of a Channel'
                 />
             </div>
             <div className="col-flex-1">
