@@ -17,6 +17,8 @@ import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
 import Chart from './ProfileBillingChart.react';
 
+import EmptyContainer from '../../common/Container/EmptyContainer.react';
+
 export default Radium(React.createClass({
 
   displayName: 'ProfileBillingPlan',
@@ -65,8 +67,9 @@ export default Radium(React.createClass({
 
     if (plan === 'builder') {
       this.refs.toggle.setToggled(false);
-    }
-    if (plan === 'paid-commitment') {
+    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
+      this.refs.toggle.setToggled(false);
+    } else if (plan === 'paid-commitment') {
       this.refs.toggle.setToggled(true);
     }
   },
@@ -369,6 +372,25 @@ export default Radium(React.createClass({
 @isLoading({attr: 'state.isReady'})
 render() {
   let styles = this.getStyles();
+
+  if (this.state.subscriptions.length === 0) {
+    return (
+      <div className="vp-5-t">
+        <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+        <EmptyContainer
+          icon="synicon-block-helper"
+          text="You don't have any active subscription."/>
+        <div style={{margin: '64px auto', textAlign: 'center'}}>
+          <MUI.RaisedButton
+            label="Subscribe"
+            labelStyle={styles.updateButtonLabel}
+            className="raised-button"
+            secondary={true}
+            onClick={this.handleShowPlanDialog} />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div>

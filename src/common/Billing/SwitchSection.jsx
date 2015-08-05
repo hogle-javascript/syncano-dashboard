@@ -47,10 +47,10 @@ export default Radium(React.createClass({
     if (this.props.planCanceled) {
       return (
         <div style={{textAlign: 'right'}}>
-          <div>Your plan will expire on</div>
-          <div style={{color: 'red'}}>
-            {this.props.planCanceled}
+          <div>
+            Your plan will expire on <span style={{color: 'red'}}>{this.props.planCanceled}</span>
           </div>
+
           <div>Click <a onClick={this.handlePlanDialog}> here </a> to extend.</div>
         </div>
       )
@@ -90,6 +90,12 @@ export default Radium(React.createClass({
       toggleHandler = this.props.onPlanDialog;
       defaultToggled = false;
     }
+
+    if (this.props.planCanceled) {
+      defaultToggled = false;
+      toggleHandler = this.props.onPlanDialog;
+    }
+
     return (
       <MUI.Toggle
         ref="toggle"
