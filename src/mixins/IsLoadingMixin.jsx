@@ -3,26 +3,46 @@ import _ from 'lodash';
 import Loading from '../common/Loading';
 
 export default (options, props) => {
-  props        = props        || {};
-  options      = options      || {};
-  options.attr = options.attr || 'state.isLoading';
-  options.show = options.show || [true, null, undefined];
+  props                   = props        || {};
+  options                 = options      || {};
+  options.attr            = options.attr || 'state.isLoading';
+  options.show            = options.show || [true, null, undefined];
+  options.overwriteRender = options.overwriteRender || true;
 
-  return {
+  let mixin = {
     componentDidMount() {
-      if (!_.isFunction(this.renderLoaded)) {
+      if (options.overwriteRender === true && !_.isFunction(this.renderLoaded)) {
         throw Error('invalid `renderLoaded` type');
       }
     },
 
-    render() {
+    isLoading() {
       let value = _.get(this, options.attr, false);
+      return _.indexOf(options.show, value) > -1;
+    },
 
-      if (_.indexOf(options.show, value) > -1) {
-        return <Loading {...props} show = {true} />
+    renderLoadingComponent() {
+      return <Loading {...props} show = {true} />;
+    },
+
+    renderIsLoading() {
+      if (this.isLoading()) {
+        if (_.isFunction(this.renderLoading)) {
+          return this.renderLoading();
+        }
+
+        return this.renderLoadingComponent();
       }
 
       return this.renderLoaded();
     }
   };
+
+  if (options.overwriteRender === true) {
+    mixin.render = function() {
+      return this.renderIsLoading();
+    }
+  }
+
+  return mixin;
 };

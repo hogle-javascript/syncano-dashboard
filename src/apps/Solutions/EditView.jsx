@@ -38,6 +38,7 @@ export default React.createClass({
     Router.Navigation,
 
     Mixins.Dialogs,
+    Mixins.IsLoading(),
     HeaderMixin,
 
     Reflux.connect(Store)
@@ -175,7 +176,7 @@ export default React.createClass({
     });
   },
 
-  render() {
+  renderLoaded() {
     let styles = this.getStyles();
     let item = this.state.item;
 
