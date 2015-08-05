@@ -33,7 +33,8 @@ export default Reflux.createStore({
 
   refreshData() {
     const router = SessionStore.getRouter();
-    if(router !== null) {
+
+    if (router !== null && router.getCurrentParams().className) {
       Actions.getClass(router.getCurrentParams().className);
     }
   },

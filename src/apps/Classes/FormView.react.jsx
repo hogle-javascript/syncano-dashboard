@@ -61,7 +61,7 @@ export default React.createClass({
   },
 
   setFields(schema) {
-    let fields=this.state.fields;
+    const fields = this.state.fields;
 
     schema.map(item => {
       fields.push({
@@ -78,25 +78,25 @@ export default React.createClass({
 
   getSchema() {
     return JSON.stringify(this.state.fields.map(item => {
-      let schema= {
+      const schema = {
         name: item.fieldName,
         type: item.fieldType,
         target: item.fieldTarget
       };
 
       if (item.fieldOrder) {
-        schema.order_index=item.fieldOrder;
+        schema.order_index = item.fieldOrder;
       }
 
       if (item.fieldFilter) {
-        schema.filter_index=item.fieldFilter;
+        schema.filter_index = item.fieldFilter;
       }
       return schema;
     }));
   },
 
   handleAddSubmit() {
-    let schema=this.getSchema();
+    const schema = this.getSchema();
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
@@ -130,23 +130,28 @@ export default React.createClass({
       return;
     }
 
-    let fields=this.state.fields;
+    const fields = this.state.fields;
 
-    let field={
-      fieldName   : this.state.fieldName,
-      fieldType   : this.state.fieldType,
-      fieldOrder  : this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
-      fieldFilter : this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
+    const field = {
+      fieldName: this.state.fieldName,
+      fieldType: this.state.fieldType,
+      fieldOrder: this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
+      fieldFilter: this.refs.fieldFilter ? this.refs.fieldFilter.isChecked() : null
     };
 
     if (this.state.fieldType === 'reference') {
-      field.fieldTarget=this.state.fieldTarget;
+      field.fieldTarget = this.state.fieldTarget;
     }
 
     fields.push(field);
 
-    this.refs.fieldOrder ? this.refs.fieldOrder.setChecked() : null;
-    this.refs.fieldFilter ? this.refs.fieldFilter.setChecked() : null;
+    if (this.refs.fieldOrder) {
+      this.refs.fieldOrder.setChecked()
+    }
+
+    if (this.refs.fieldFilter) {
+      this.refs.fieldFilter.setChecked()
+    }
 
     this.setState({
       fields: fields,
@@ -155,7 +160,7 @@ export default React.createClass({
   },
 
   handleRemoveField(item) {
-    const fields=[];
+    const fields = [];
 
     this.state.fields.map((field) => {
       if (field.fieldName !== item.fieldName) {
@@ -166,16 +171,17 @@ export default React.createClass({
   },
 
   handleOnCheck(item, event) {
-    let newFields=this.state.fields.map(field => {
+    let newFields = this.state.fields.map(field => {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
-          field.fieldOrder=event.target.checked;
+          field.fieldOrder = event.target.checked;
         } else if (event.target.name === 'filter') {
-          field.fieldFilter=event.target.checked;
+          field.fieldFilter = event.target.checked;
         }
       }
       return field;
     });
+
     this.setState({fields: newFields});
   },
 
@@ -215,15 +221,15 @@ export default React.createClass({
   },
 
   hasFilter(fieldType) {
-    const noFilterFields=['file', 'text'];
+    const noFilterFields = ['file', 'text'];
 
-    return noFilterFields.indexOf(fieldType) < 0 ? true : false;
+    return noFilterFields.indexOf(fieldType) < 0;
   },
 
   hasOrder(fieldType) {
-    const noOrderFields=['file', 'text'];
+    const noOrderFields = ['file', 'text'];
 
-    return noOrderFields.indexOf(fieldType) < 0 ? true : false;
+    return noOrderFields.indexOf(fieldType) < 0;
   },
 
   hasEditMode() {

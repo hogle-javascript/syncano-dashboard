@@ -19,7 +19,7 @@ export default React.createClass({
     console.debug('Classes::componentWillMount');
   },
 
-  renders() {
+  render() {
     return (
       <Router.RouteHandler />
     );
