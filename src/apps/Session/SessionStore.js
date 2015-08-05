@@ -176,11 +176,11 @@ export default Reflux.createStore({
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('invitationKey');
     this.removeInstance();
-    this.router.transitionTo('login');
     this.trigger(this);
 
     Raven.setUserContext();
     analytics.identify();
+    location.reload(true);
   },
 
   isAuthenticated() {
