@@ -36,7 +36,7 @@ export default React.createClass({
             <div
               className="col-flex-1"
               style={{color: '#9B9B9B', textAlign: 'right'}}>
-              suggestion based on usage: ${this.props.suggestion}
+              {this.props.suggestion ? `suggestion based on usage: ${this.props.suggestion}` : null}
             </div>
           </div>
           <div style={{marginTop: 10, padding: 10}}>

@@ -9,6 +9,7 @@ import StoreFormMixin from './StoreFormMixin';
 import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
+import IsLoadingMixin from './IsLoadingMixin';
 
 let Mixins = {};
 Mixins.ButtonAction = ButtonActionMixin;
@@ -22,5 +23,6 @@ Mixins.StoreForm = StoreFormMixin;
 Mixins.StoreLoading = StoreLoadingMixin;
 Mixins.WaitForStore = WaitForStoreMixin;
 Mixins.StoreHelpers = StoreHelpersMixin;
+Mixins.IsLoading = IsLoadingMixin;
 
 export default Mixins;
