@@ -380,14 +380,12 @@ export default React.createClass({
 
             <SliderSection
               title="API calls"
-              suggestion="60"
               slider={this.renderSlider('api')}
               sliderSummary={apiSliderSummary}
               />
             <SliderSection
               style={{paddingTop: 50}}
               title="CodeBox runs"
-              suggestion="100"
               slider={this.renderSlider('cbx')}
               sliderSummary={cbxSliderSummary}
               />

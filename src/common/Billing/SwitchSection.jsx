@@ -25,6 +25,11 @@ export default Radium(React.createClass({
     this.props.onCancelPlanDialog();
   },
 
+  handlePlanDialog() {
+    this.setToggled(true);
+    this.props.onPlanDialog()
+  },
+
   setToggled(value) {
     this.refs.toggle.setToggled(value);
   },
@@ -33,7 +38,7 @@ export default Radium(React.createClass({
     if (this.props.plan === 'builder') {
       return (
         <div style={{textAlign: 'right'}}>
-          <div>Builder</div>
+          <div style={{fontSize: '1.1rem', lineHeight: '1.1rem'}}><strong>Builder</strong></div>
           <div>We pick your bill</div>
         </div>
       )
@@ -46,7 +51,7 @@ export default Radium(React.createClass({
           <div style={{color: 'red'}}>
             {this.props.planCanceled}
           </div>
-          <div>Click <a onClick={this.props.onPlanDialog}> here </a> to extend.</div>
+          <div>Click <a onClick={this.handlePlanDialog}> here </a> to extend.</div>
         </div>
       )
     }
@@ -61,11 +66,11 @@ export default Radium(React.createClass({
     if (this.props.plan === 'builder') {
       return (
         <div>
-          <div style={{marginTop: 0, fontSize: '1.1rem', padding: 0}}>
+          <div style={{marginTop: 0, fontSize: '1.1rem', lineHeight: '1.1rem', padding: 0}}>
             From <strong>$25</strong>/month
           </div>
           <div style={{marginTop: 0}}>
-            <a onClick={this.props.onPlanDialog}>Switch to Production</a>
+            <a onClick={this.handlePlanDialog}>Switch to Production</a>
           </div>
         </div>
       )
@@ -77,22 +82,36 @@ export default Radium(React.createClass({
     )
   },
 
+  renderToggle() {
+    let toggleHandler = this.handleCancelPlanDialog;
+    let defaultToggled = true;
+
+    if (this.props.plan === 'builder') {
+      toggleHandler = this.props.onPlanDialog;
+      defaultToggled = false;
+    }
+    return (
+      <MUI.Toggle
+        ref="toggle"
+        defaultToggled={defaultToggled}
+        onToggle={toggleHandler}/>
+    )
+  },
+
   render() {
     return (
-      <div className="row align-center vp-3-t vp-3-b" >
-        <div style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
+      <div className="row align-center vp-3-t vp-3-b">
+        <div
+          style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
           <div>
             {this.renderLeftSide()}
           </div>
         </div>
         <div style={{width: 44, position: 'relative'}}>
 
-               <div style = {{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
-                  <MUI.Toggle
-                    ref="toggle"
-                    defaultToggled={true}
-                    onToggle={this.handleCancelPlanDialog} />
-            </div>
+          <div style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
+            {this.renderToggle()}
+          </div>
 
         </div>
         <div style={{marginLeft: 16, display: 'flex', alignItems: 'center', alignContent: 'center'}}>
