@@ -68,7 +68,7 @@ module.exports = {
       selector: 'input[name="description"]'
     },
     confirmButton: {
-      selector: 'button span[data-reactid*="$submitLabel"]'
+      selector: 'button[type="submit"]'
     },
     addButton: {
       selector: '//span[text()="Add"]',

@@ -250,7 +250,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Update' : 'Add';
+    const submitLabel = this.hasEditMode() ? 'Update' : 'Add';
     const permissions = [
       {
         text: 'none',
@@ -418,7 +418,7 @@ export default React.createClass({
           <div>
             <MUI.RaisedButton
               type="submit"
-              label={title}
+              label={submitLabel}
               className="raised-button"
               secondary={true}
               style={{margin: '0 8px 0 auto'}} />
