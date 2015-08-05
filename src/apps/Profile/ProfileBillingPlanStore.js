@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import D from 'd.js';
 
 import Mixins from '../../mixins';
 
@@ -15,6 +16,8 @@ export default Reflux.createStore({
     return {
       profile: null,
       usage: null,
+      subscriptions: null,
+      isReady: false,
       isLoading: true
     }
   },
@@ -29,26 +32,33 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ClassesStore::refreshData');
-    Actions.fetchBillingProfile();
-    Actions.fetchBillingUsage();
-    Actions.fetchBillingSubscriptions();
+
+    D.all([
+      Actions.fetchBillingProfile(),
+      Actions.fetchBillingUsage(),
+      Actions.fetchBillingSubscriptions()
+    ])
+      .then(() => {
+        this.data.isReady = true;
+        this.trigger(this.data);
+      });
   },
 
   setProfile(profile) {
     this.data.profile = profile;
     this.data.soft_limit = profile.soft_limit;
     this.data.hard_limit = profile.hard_limit;
-    this.trigger(this.data);
+    //this.trigger(this.data);
   },
 
   setUsage(usage) {
     this.data.usage = usage;
-    this.trigger(this.data);
+    //this.trigger(this.data);
   },
 
   setSubscriptions(subscriptions) {
     this.data.subscriptions = subscriptions;
-    this.trigger(this.data);
+    //this.trigger(this.data);
   },
 
   isPlanCanceled() {
@@ -56,6 +66,101 @@ export default Reflux.createStore({
       return false;
     }
     return this.data.subscriptions._items[0].end || false;
+  },
+
+  isNewSubscription() {
+    return (this.data.subscriptions && this.data.subscriptions.length > 1);
+  },
+
+  getBuilderLimits() {
+    return {
+      api: {included: '100 000'},
+      cbx: {included: '1 000'}
+    };
+  },
+
+  getPlan() {
+    return this.data.profile.subscription.plan;
+  },
+
+  getPlanName() {
+    const planDict = {
+      builder: 'Builder',
+      'paid-commitment': 'Production'
+    };
+
+    return planDict[this.getPlan()];
+  },
+
+
+  getLimitsData(subscription, plan) {
+    if (plan === 'builder') {
+      return this.getBuilderLimits();
+    }
+
+    let pricing = null;
+    if (!subscription || subscription === 'default') {
+      pricing = this.data.profile.subscription.pricing;
+    } else {
+      pricing = subscription.pricing;
+    }
+
+    return ({
+      api: {
+        included: pricing.api.included,
+        overage: pricing.api.overage
+      },
+      cbx: {
+        included: pricing.cbx.included,
+        overage: pricing.cbx.overage
+      }
+    })
+  },
+
+  getCovered() {
+    return _.reduce(this.data.profile.subscription.pricing, (r, v, k) => {
+      let amount = v.included * v.overage;
+      r.amount += amount;
+      r[k] = _.extend({}, v, {amount: amount});
+      return r;
+    }, {amount: 0});
+  },
+
+  getOverage() {
+    const covered = this.getCovered();
+    let usageAmount = {'api': 0, 'cbx': 0};
+    let columns = {'api': {}, 'cbx': {}};
+
+    _.forEach(this.data.usage.objects, _usage => {
+      if (columns[_usage.source] === undefined) {
+        return;
+      }
+
+      let amount = pricing[_usage.source].overage * _usage.value;
+      columns[_usage.source][_usage.date] = amount;
+      usageAmount[_usage.source] += amount;
+    });
+
+    return _.reduce(this.data.profile.subscription.pricing, (r, v, k) => {
+      let cover = covered[k];
+      let amount = (usageAmount[k] > cover.amount) ? usageAmount[k] - cover.amount : 0;
+      let included = _.round(amount / v.overage);
+
+      r.amount += amount;
+      r[k] = r[k] = _.extend({}, v, {amount, included});
+      return r;
+    }, {amount: 0});
+  },
+
+  getTotalPlanValue(subscription) {
+    let commitment = null;
+    if (!subscription || subscription === 'default') {
+      commitment = this.data.profile.subscription.commitment;
+    } else {
+      commitment = subscription.commitment;
+    }
+
+    return parseInt(commitment.api) + parseInt(commitment.cbx);
   },
 
   onFetchBillingProfileCompleted(payload) {
