@@ -273,7 +273,7 @@ export default Radium(React.createClass({
       <div>
         <div style={styles.heading}>Limits</div>
         <div className="row align-middle">
-          <div className="col-md-5">
+          <div className="col-md-8 col-lg-5">
             <MUI.TextField
               ref="soft_limit"
               valueLink={this.linkState('soft_limit')}
@@ -283,7 +283,7 @@ export default Radium(React.createClass({
               floatingLabelText="Soft Limit"
               fullWidth={true}/>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-8 col-lg-5">
             <MUI.TextField
               ref="hard_limit"
               valueLink={this.linkState('hard_limit')}
@@ -293,16 +293,12 @@ export default Radium(React.createClass({
               floatingLabelText="Hard Limit"
               fullWidth={true}/>
           </div>
-          <div className="col-md-4" style={{paddingRight: 0}}>
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <MUI.FlatButton
-                primary={true}
-                label='Set Limits'
-                disabled={(!this.state.hard_limit && !this.state.soft_limit)}
-                onTouchTap={this.handleFormValidation}/>
-            </div>
-          </div>
-          <div className="col-md-5" style={{paddingLeft: 0}}>
+          <div className="col-flex-1" style={{display: 'flex', alignItems: 'center'}}>
+            <MUI.FlatButton
+              primary={true}
+              label='Set Limits'
+              disabled={(!this.state.hard_limit && !this.state.soft_limit)}
+              onTouchTap={this.handleFormValidation}/>
             <MUI.IconButton
               iconClassName="synicon-information-outline"
               iconStyle={{color: MUI.Styles.Colors.blue500}}
