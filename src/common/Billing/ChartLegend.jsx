@@ -11,29 +11,29 @@ export default Radium(React.createClass({
   mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
-    profile: React.PropTypes.string,
+    profile: React.PropTypes.object,
     planCanceled: React.PropTypes.string,
     onPlanDialog: React.PropTypes.func,
-    onCancelPlanDialog: React.PropTypes.func,
+    onCancelPlanDialog: React.PropTypes.func
   },
 
   getInitialState() {
-    let profile = this.props.profile;
-    let subscription = profile.subscription;
+    const profile = this.props.profile;
+    const subscription = profile.subscription;
 
-    let apiTotalIndex = _.findIndex(profile.balance, {source: 'API Call'});
-    let cbxTotalIndex = _.findIndex(profile.balance, {source: 'CodeBox Executions'});
+    const apiTotalIndex = _.findIndex(profile.balance, {source: 'API Call'});
+    const cbxTotalIndex = _.findIndex(profile.balance, {source: 'CodeBox Executions'});
 
-    let apiTotal = profile.balance[apiTotalIndex].quantity;
-    let cbxTotal = profile.balance[cbxTotalIndex].quantity;
+    const apiTotal = profile.balance[apiTotalIndex].quantity;
+    const cbxTotal = profile.balance[cbxTotalIndex].quantity;
 
     return {
-      profile: profile,
-      subscription: subscription,
+      profile,
+      subscription,
+      apiTotal,
+      cbxTotal,
       pricing: subscription.pricing,
-      plan: subscription.plan,
-      apiTotal: apiTotal,
-      cbxTotal: cbxTotal
+      plan: subscription.plan
     }
   },
 
@@ -47,7 +47,6 @@ export default Radium(React.createClass({
       legend: {
         fontSize: '1rem'
       }
-
     };
 
     return this.mergeStyles(styles, this.props.style);
@@ -83,7 +82,7 @@ export default Radium(React.createClass({
                 <div className="row">
                   <div className="col-md-8">API calls</div>
                   <div className="col-md-10" style={{textAlign: 'right'}}>
-                    <strong>{this.state.apiTotal}</strong>    this month</div>
+                    <strong>{this.state.apiTotal}</strong>  this month</div>
                   {this.state.plan === 'paid-commitment' ? this.renderUsage('api') : null}
                 </div>
               </div>

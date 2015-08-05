@@ -17,6 +17,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 import Common from '../../common';
 // TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
+import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
 import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
@@ -120,6 +121,16 @@ export default Radium(React.createClass({
   },
 
   render() {
+    if (this.state.blocked) {
+      return (
+        <div className="row vp-5-t">
+          <EmptyContainer
+            icon='synicon-block-helper'
+            text={this.state.blocked}/>
+        </div>
+      )
+    }
+
     let checkedInstances = Store.getNumberOfChecked();
     let isAnyInstanceSelected =
       this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length);

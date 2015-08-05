@@ -22,8 +22,11 @@ export default Radium(React.createClass({
   },
 
   handleCancelPlanDialog() {
-    this.refs['paid-commitment-toggle'].setToggled(false);
     this.props.onCancelPlanDialog();
+  },
+
+  setToggled(value) {
+    this.refs.toggle.setToggled(value);
   },
 
   renderLeftSide() {
@@ -86,8 +89,7 @@ export default Radium(React.createClass({
 
                <div style = {{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
                   <MUI.Toggle
-                    ref="paid-commitment-toggle"
-                    key="paid-commitment-toggle"
+                    ref="toggle"
                     defaultToggled={true}
                     onToggle={this.handleCancelPlanDialog} />
             </div>

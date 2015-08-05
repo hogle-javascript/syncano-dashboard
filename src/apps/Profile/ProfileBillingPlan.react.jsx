@@ -61,11 +61,13 @@ export default Radium(React.createClass({
   },
 
   setupToggles() {
-    if (this.refs['builder-toggle'] && this.state.profile.subscription.plan === 'builder') {
-      this.refs['builder-toggle'].setToggled(false);
+    const plan = Store.getPlan();
+
+    if (plan === 'builder') {
+      this.refs.toggle.setToggled(false);
     }
-    if (this.refs['paid-commitment-toggle'] && this.state.profile.subscription.plan === 'paid-commitment') {
-      this.refs['paid-commitment-toggle'].setToggled(true);
+    if (plan === 'paid-commitment') {
+      this.refs.toggle.setToggled(true);
     }
   },
 
@@ -78,7 +80,6 @@ export default Radium(React.createClass({
       },
       mainDesc: {
         fontSize: '1.5rem',
-        marginBottom: 8,
         flexDirection: 'row',
         alignItems: 'center',
         display: 'flex'
@@ -378,11 +379,14 @@ render() {
         <div style={{display: 'flex', justifyContent: 'space-between', maxWidth: '1140'}}>
           <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
-            <div style={styles.mainDesc}>Your plan: <strong>{Store.getPlanName()}</strong></div>
+            <div style={styles.mainDesc}>
+              Your plan: <span style={{paddingLeft: 8}}><strong>{Store.getPlanName()}</strong></span>
+            </div>
 
           </div>
           <div>
             <Common.Billing.SwitchSection
+              ref="toggle"
               plan={this.state.profile.subscription.plan}
               planCanceled={Store.isPlanCanceled()}
               onPlanDialog={this.handleShowPlanDialog}

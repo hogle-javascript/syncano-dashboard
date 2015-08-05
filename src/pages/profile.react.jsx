@@ -25,10 +25,9 @@ export default React.createClass({
         textAlign: 'left'
       },
       tab: {
-        //textAlign: 'left',
         color: '#444',
         fontSize: '1.1rem'
-      },
+      }
     }
   },
 
@@ -39,8 +38,7 @@ export default React.createClass({
     };
   },
 
-  //componentWillReceiveProps(nextProps, nextState) {
-  componentWillMount(nextProps, nextState) {
+  componentWillMount() {
 
     let activeView = this.getActiveView();
     this.setState({
@@ -82,7 +80,7 @@ export default React.createClass({
       {route: 'profile-billing-plan', text: 'Billing plan'},
       {route: 'profile-billing-payment', text: 'Payment methods'},
       {route: 'profile-billing-invoices', text: 'Invoices'},
-      {route: 'profile-billing-address', text: 'Billing address'},
+      {route: 'profile-billing-address', text: 'Billing address'}
     ];
   },
 
