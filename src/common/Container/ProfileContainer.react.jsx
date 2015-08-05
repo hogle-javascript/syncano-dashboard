@@ -10,7 +10,7 @@ export default React.createClass({
   getStyles() {
     return {
       container: {
-        marginTop : 20,
+        marginTop : 96,
         marginBottom : 96,
         marginLeft : 300,
       },
