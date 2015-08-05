@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import URL from 'url';
+import D from 'd.js';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -24,7 +25,7 @@ export default Reflux.createStore({
         tags: [],
       },
       versions: null,
-      isLoading: false
+      isLoading: true
     }
   },
 
@@ -40,9 +41,16 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('SolutionsEditStore::refreshData');
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
-    Actions.fetchTags();
-    Actions.fetchSolution(solutionId);
-    Actions.fetchSolutionVersions(solutionId);
+
+    D.all([
+      Actions.fetchTags(),
+      Actions.fetchSolution(solutionId),
+      Actions.fetchSolutionVersions(solutionId)
+    ]).then(() => {
+      this.data.isLoading = false;
+      this.trigger(this.data);
+    });
+
   },
 
   getSolution() {

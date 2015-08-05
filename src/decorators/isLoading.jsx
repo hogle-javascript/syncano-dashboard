@@ -5,8 +5,10 @@ import {decorate} from './utils';
 
 function applyIsLoading(context, fn, args, config, options) {
   let attr  = config.attr || 'state.isLoading';
-  let show  = config.show || [false, null];
+  let show  = config.show || [true, null];
   let value = _.get(context, config.attr, false);
+
+  console.log('applyIsLoading');
 
   if (_.indexOf(show, value) > -1) {
     return <Loading {...options} show = {true} />
