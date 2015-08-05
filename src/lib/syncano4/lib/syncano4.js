@@ -3318,9 +3318,7 @@ var Syncano = (function() {
         Object.keys(params).forEach(function(key) {
           if (Array.isArray(params[key])) {
             var arr = params[key];
-            for (var item in arr) {
-              params[key] = arr.join('&' + key + '=')
-            }
+            params[key] = arr.join('&' + key + '=')
           }
         });
         var url = normalizeUrl(baseURL + method);
