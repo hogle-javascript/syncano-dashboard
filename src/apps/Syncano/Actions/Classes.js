@@ -7,6 +7,14 @@ export default {
       .catch(this.failure);
   },
 
+  get(className) {
+    this.Connection
+      .Classes
+      .get(className)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   create(payload) {
     this.Connection
       .Classes

@@ -125,7 +125,7 @@ export default Radium(React.createClass({
       this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length);
 
     return (
-      <Container id="instances" style={{marginTop: 96}}>
+      <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
         <InstanceDialog />
         {this.getDialogs()}
 

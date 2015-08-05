@@ -23,7 +23,7 @@ export default React.createClass({
     router: React.PropTypes.func
   },
 
-  getChildContext(){
+  getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };

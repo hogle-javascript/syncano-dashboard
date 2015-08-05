@@ -74,7 +74,7 @@ module.exports = React.createClass({
           style={{marginTop: 64, overflow: 'normal'}} menuItems={this.menuItems()}
           onChange={this.handleTabActive}/>
 
-        <div style={{marginTop: 96, marginLeft: 204}}>
+        <div style={{margin: '96px 104px 48px 304px'}}>
           <Router.RouteHandler />
         </div>
       </div>
