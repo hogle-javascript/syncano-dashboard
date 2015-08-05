@@ -25,9 +25,9 @@ module.exports = {
     classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString');
     classesPage.clickButton('@addButton');
     client.pause(1000);
-    classesPage.verify.elementPresent('@addClassModalTitle');
+    classesPage.verify.elementPresent('@addClassTitle');
     classesPage.clickButton('@confirmButton');
-    classesPage.isModalClosed('@addClassModalTitle');
+    classesPage.isModalClosed('@addClassTitle');
 
     classesPage.verify.elementPresent('@classTableRow');
     classesPage.verify.containsText('@classTableRow', 'nightwatch_test_class_description');
@@ -38,7 +38,7 @@ module.exports = {
     classesPage.clickButton('@editButton');
     classesPage.fillClassDescription('nightwatch_test_class_new_description');
     classesPage.clickButton('@confirmButton');
-    classesPage.isModalClosed('@editClassModalTitle');
+    classesPage.isModalClosed('@editClassTitle');
     client.pause(1000);
     classesPage.verify.elementPresent('@classTableRowDescription');
     classesPage.verify.containsText('@classTableRowDescription', 'nightwatch_test_class_new_description');

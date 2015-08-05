@@ -3,6 +3,7 @@ import Router from 'react-router';
 
 // Pages
 import App from './pages/app.react';
+import ClassesPage from './pages/classes.react';
 import Dashboard from './pages/dashboard.react';
 import Instance from './pages/instance.react';
 import ProfilePage from './pages/profile.react';
@@ -10,8 +11,9 @@ import CodeBoxesPage from './pages/codeBoxes.react';
 import NotFound from './pages/notfound.react';
 
 // Apps
-import Profile from './apps/Profile';
 import Account from './apps/Account';
+import Classes from './apps/Classes';
+import Profile from './apps/Profile';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
@@ -20,7 +22,6 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins.react';
 import ApiKeys from './apps/ApiKeys/ApiKeys.react';
-import Classes from './apps/Classes/Classes.react';
 import CodeBoxes from './apps/CodeBoxes';
 import DataObjects from './apps/DataObjects/DataObjects.react';
 import Data from './apps/Data';
@@ -124,14 +125,24 @@ module.exports = (
         {/* Classes */}
         <Route
           name="classes"
+          handler={ClassesPage}
           path="classes">
+
+          <Route
+            name="classes-add"
+            handler={Classes.FormView}
+            path="add" />
+
+          <Route
+            name    = "classes-edit"
+            handler = {Classes.FormView}
+            path    = ":className/edit" />
 
           {/* Classes - Data Objects */}
           <Route
             name="classes-data-objects"
             handler={DataObjects}
-            path=":className/objects"
-            />
+            path=":className/objects" />
 
           <DefaultRoute handler={Classes}/>
         </Route>

@@ -187,7 +187,7 @@ export default React.createClass({
 
     return (
 
-      <div className="row" style={{paddingTop: 24, 'height': '100%'}}>
+      <div className="row" style={{paddingTop: 48, 'height': '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
 

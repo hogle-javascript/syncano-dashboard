@@ -1,14 +1,17 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Router from 'react-router';
+
 
 // Utils
 import Mixins from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
-import ClassesActions from './ClassesActions';
-import ClassDialogStore from './ClassDialogStore';
+import SessionStore from '../Session/SessionStore';
 import ClassesStore from './ClassesStore';
+import Actions from './FormViewActions';
+import Store from './FormViewStore';
 
 // Components
 import MUI from 'material-ui';
@@ -16,12 +19,14 @@ import Common from '../../common';
 
 export default React.createClass({
 
-  displayName: 'ClassDialog',
+  displayName: 'FormView',
 
   mixins: [
+    Router.State,
+    Router.Navigation,
+
     React.addons.LinkedStateMixin,
-    Reflux.connect(ClassDialogStore),
-    Mixins.Dialog,
+    Reflux.connect(Store),
     Mixins.Form
   ],
 
@@ -40,6 +45,12 @@ export default React.createClass({
     }
   },
 
+  componentDidMount() {
+    if (this.hasEditMode()) {
+      Store.refreshData();
+    }
+  },
+
   getFieldTypes() {
     return Constants.fieldTypes.map(item => {
       return {
@@ -50,7 +61,7 @@ export default React.createClass({
   },
 
   setFields(schema) {
-    let fields = this.state.fields;
+    const fields = this.state.fields;
 
     schema.map(item => {
       fields.push({
@@ -67,7 +78,7 @@ export default React.createClass({
 
   getSchema() {
     return JSON.stringify(this.state.fields.map(item => {
-      let schema = {
+      const schema = {
         name: item.fieldName,
         type: item.fieldType,
         target: item.fieldTarget
@@ -85,14 +96,14 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    let schema = this.getSchema();
+    const schema = this.getSchema();
 
     if (schema.length < 1) {
       this.setState({feedback: 'You need to add at least one field!'});
       return;
     }
 
-    ClassesActions.createClass({
+    Actions.createClass({
       name: this.state.name,
       description: this.state.description,
       group: this.state.group,
@@ -103,7 +114,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    ClassesActions.updateClass(
+    Actions.updateClass(
       this.state.name, {
         description: this.state.description,
         group: this.state.group,
@@ -119,9 +130,9 @@ export default React.createClass({
       return;
     }
 
-    let fields = this.state.fields;
+    const fields = this.state.fields;
 
-    let field = {
+    const field = {
       fieldName: this.state.fieldName,
       fieldType: this.state.fieldType,
       fieldOrder: this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
@@ -135,11 +146,11 @@ export default React.createClass({
     fields.push(field);
 
     if (this.refs.fieldOrder) {
-      this.refs.fieldOrder.setChecked();
+      this.refs.fieldOrder.setChecked()
     }
 
     if (this.refs.fieldFilter) {
-      this.refs.fieldFilter.setChecked();
+      this.refs.fieldFilter.setChecked()
     }
 
     this.setState({
@@ -149,8 +160,9 @@ export default React.createClass({
   },
 
   handleRemoveField(item) {
-    let fields = [];
-    this.state.fields.map(field => {
+    const fields = [];
+
+    this.state.fields.map((field) => {
       if (field.fieldName !== item.fieldName) {
         fields.push(field);
       }
@@ -169,6 +181,7 @@ export default React.createClass({
       }
       return field;
     });
+
     this.setState({fields: newFields});
   },
 
@@ -176,34 +189,31 @@ export default React.createClass({
     return this.state.fields.map(item => {
 
       return (
-        <div key={item.fieldName} className='row'>
-          <span className='col-xs-8' style={{marginTop: 5}}>{item.fieldName}</span>
-          <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldType}</span>
-          <span className='col-xs-8' style={{paddingLeft: 15, marginTop: 5}}>{item.fieldTarget}</span>
-          <span className='col-xs-3' style={{paddingLeft: 15}}>
+        <div key={item.fieldName} className='row align-middle vm-1-b'>
+          <span className='col-xs-8'>{item.fieldName}</span>
+          <span className='col-xs-8'>{item.fieldType}</span>
+          <span className='col-xs-8'>{item.fieldTarget}</span>
+          <span className='col-xs-3'>
             <Common.Show if={this.hasFilter(item.fieldType)}>
               <MUI.Checkbox
-                style={{marginTop: 5}}
                 name="filter"
                 defaultChecked={item.fieldFilter}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
+                onCheck={this.handleOnCheck.bind(this, item)} />
             </Common.Show>
           </span>
-          <span className='col-xs-3' style={{paddingLeft: 15}}>
+          <span className='col-xs-3'>
             <Common.Show if={this.hasOrder(item.fieldType)}>
               <MUI.Checkbox
-                style={{marginTop: 5}}
                 name="order"
-                defaultChecked={item.fieldOrder}
-                onCheck={this.handleOnCheck.bind(this, item)}/>
+                defaultChecked ={item.fieldOrder}
+                onCheck={this.handleOnCheck.bind(this, item)} />
             </Common.Show>
           </span>
-          <span className='col-xs-5' style={{paddingLeft: 15}}>
+          <span className='col-xs-5'>
             <MUI.FlatButton
-              style={{marginTop: 5}}
               label='Remove'
               secondary={true}
-              onClick={this.handleRemoveField.bind(this, item)}/>
+              onClick={this.handleRemoveField.bind(this, item)} />
           </span>
         </div>
       )
@@ -211,32 +221,38 @@ export default React.createClass({
   },
 
   hasFilter(fieldType) {
-    let noFilterFields = ['file', 'text'];
+    const noFilterFields = ['file', 'text'];
+
     return noFilterFields.indexOf(fieldType) < 0;
   },
 
   hasOrder(fieldType) {
-    let noOrderFields = ['file', 'text'];
+    const noOrderFields = ['file', 'text'];
+
     return noOrderFields.indexOf(fieldType) < 0;
   },
 
-  render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = 'Confirm';
-    let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: {submitLabel},
-        onTouchTap: this.handleFormValidation
-      }
-    ];
+  hasEditMode() {
+    return this.getParams().className;
+  },
 
-    let permissions = [
+  handleSuccessfullValidation() {
+    return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
+  },
+
+  handleBackClick() {
+    SessionStore.getRouter().transitionTo(
+      'classes',
+      {
+        instanceName: SessionStore.getInstance().name
+      }
+    );
+  },
+
+  render() {
+    const title = this.hasEditMode() ? 'Update a Class' : 'Add a Class';
+    const submitLabel = this.hasEditMode() ? 'Update' : 'Add';
+    const permissions = [
       {
         text: 'none',
         payload: 'none'
@@ -251,18 +267,36 @@ export default React.createClass({
       }
     ];
 
+
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a Class'}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        {this.renderFormNotifications()}
+      <Common.Loading show={this.hasEditMode() && this.state.name === null}>
+        <MUI.Toolbar style={{
+            position: 'fixed',
+            top: 64,
+            right: 0,
+            paddingLeft: 256,
+            zIndex: 1,
+            background: 'rgb(215,215,215)',
+            padding: '0px 32px 0 24px'}}>
+          <MUI.ToolbarGroup>
+            <MUI.IconButton
+              iconClassName="synicon-arrow-left"
+              onClick={this.handleBackClick}
+              touch={true}
+              style={{marginTop: 4}}
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+          </MUI.ToolbarGroup>
+
+          <MUI.ToolbarGroup>
+            <MUI.ToolbarTitle text={title} />
+          </MUI.ToolbarGroup>
+
+        </MUI.Toolbar>
         <form
           onSubmit={this.handleFormValidation}
           acceptCharset="UTF-8"
-          method="post">
+          method="post"
+          className="vp-4-t">
           <div className='row'>
             <div className='col-xs-8'>
               <MUI.TextField
@@ -273,9 +307,9 @@ export default React.createClass({
                 valueLink={this.linkState('name')}
                 errorText={this.getValidationMessages('name').join(' ')}
                 hintText='Name of the Class'
-                floatingLabelText='Name'/>
+                floatingLabelText='Name' />
             </div>
-            <div className='col-xs-26' style={{paddingLeft: 15}}>
+            <div className='col-flex-1'>
               <MUI.TextField
                 ref='description'
                 name='description'
@@ -283,10 +317,10 @@ export default React.createClass({
                 valueLink={this.linkState('description')}
                 errorText={this.getValidationMessages('description').join(' ')}
                 hintText='Description of the Class'
-                floatingLabelText='Description'/>
+                floatingLabelText='Description' />
             </div>
           </div>
-          <div className="row">
+          <div className="row vm-4-b">
             <div className="col-flex-1">
               <MUI.TextField
                 ref='field-group'
@@ -295,7 +329,7 @@ export default React.createClass({
                 valueLink={this.linkState('group')}
                 errorText={this.getValidationMessages('group').join(' ')}
                 hintText='Group ID'
-                floatingLabelText='Group'/>
+                floatingLabelText='Group' />
             </div>
             <div className="col-flex-1">
               <MUI.SelectField
@@ -307,7 +341,7 @@ export default React.createClass({
                 valueLink={this.linkState('group_permissions')}
                 floatingLabelText='Group Permissions'
                 errorText={this.getValidationMessages('group_permissions').join(' ')}
-                menuItems={permissions}/>
+                menuItems={permissions} />
             </div>
             <div className="col-flex-1">
               <MUI.SelectField
@@ -319,31 +353,38 @@ export default React.createClass({
                 valueLink={this.linkState('other_permissions')}
                 floatingLabelText='Other Permissions'
                 errorText={this.getValidationMessages('other_permissions').join(' ')}
-                menuItems={permissions}/>
+                menuItems={permissions} />
             </div>
           </div>
-          <div style={{marginTop: 30}}>Schema</div>
-          {this.getValidationMessages('schema').join(' ')}
+          <div className="vm-2-b">
+            Schema
+            <Common.Show if={this.getValidationMessages('schema').length > 0}>
+              <Common.Notification
+                className="vm-1-t"
+                type='error'>{this.getValidationMessages('schema').join(' ')}
+              </Common.Notification>
+            </Common.Show>
+          </div>
           <div className='row'>
             <div className='col-xs-8'></div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}></div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}></div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>Filter</div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>Order</div>
-            <div className='col-xs-5' style={{paddingLeft: 15}}></div>
+            <div className='col-xs-8'></div>
+            <div className='col-xs-8'></div>
+            <div className='col-xs-3'>Filter</div>
+            <div className='col-xs-3'>Order</div>
+            <div className='col-xs-5'></div>
           </div>
-          <div className='row'>
+          <div className='row align-bottom vm-2-b'>
             <div className='col-xs-8'>
               <MUI.TextField
-                ref='fieldName'
-                name='fieldName'
-                fullWidth={true}
-                valueLink={this.linkState('fieldName')}
-                errorText={this.getValidationMessages('fieldName').join(' ')}
-                hintText='Name of the Field'
-                floatingLabelText='Name'/>
+               ref='fieldName'
+               name='fieldName'
+               fullWidth={true}
+               valueLink={this.linkState('fieldName')}
+               errorText={this.getValidationMessages('fieldName').join(' ')}
+               hintText='Name of the Field'
+               floatingLabelText='Name' />
             </div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}>
+            <div className='col-xs-8'>
               <MUI.SelectField
                 className='type-dropdown'
                 ref='fieldType'
@@ -354,9 +395,9 @@ export default React.createClass({
                 errorText={this.getValidationMessages('fieldType').join(' ')}
                 valueMember='payload'
                 displayMember='text'
-                menuItems={this.getFieldTypes()}/>
+                menuItems={this.getFieldTypes()} />
             </div>
-            <div className='col-xs-8' style={{paddingLeft: 15}}>
+            <div className='col-xs-8'>
               <Common.Show if={this.state.fieldType === 'reference'}>
                 <MUI.SelectField
                   ref='fieldTarget'
@@ -367,37 +408,52 @@ export default React.createClass({
                   errorText={this.getValidationMessages('fieldTarget').join(' ')}
                   valueMember='payload'
                   displayMember='text'
-                  menuItems={ClassesStore.getClassesDropdown()}/>
+                  menuItems={ClassesStore.getClassesDropdown()} />
               </Common.Show>
             </div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>
+            <div className='col-xs-3'>
               <Common.Show if={this.hasFilter(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginTop: 35}}
+                  style={{marginBottom: 10}}
                   ref="fieldFilter"
-                  name="filter"/>
+                  name ="filter" />
               </Common.Show>
             </div>
-            <div className='col-xs-3' style={{paddingLeft: 15}}>
+            <div className='col-xs-3'>
               <Common.Show if={this.hasOrder(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginTop: 35}}
+                  style={{marginBottom: 10}}
                   ref="fieldOrder"
-                  name="order"/>
+                  name ="order" />
               </Common.Show>
             </div>
-            <div className='col-xs-5' style={{paddingLeft: 15}}>
+            <div className='col-xs-5'>
               <MUI.FlatButton
-                style={{marginTop: 35}}
+                style={{marginBottom: 4}}
                 label='Add'
-                disabled={!this.state.fieldType || !this.state.fieldName}
+                disabled ={!this.state.fieldType || !this.state.fieldName}
                 secondary={true}
-                onClick={this.handleFieldAdd}/>
+                onClick={this.handleFieldAdd} />
             </div>
           </div>
-          <div style={{marginTop: 15}}>{this.renderSchemaFields()}</div>
+          <div className="vm-4-b">
+            {this.renderSchemaFields()}
+          </div>
+          <div>
+            <MUI.RaisedButton
+              type="submit"
+              label={submitLabel}
+              className="raised-button"
+              secondary={true}
+              style={{margin: '0 8px 0 auto'}} />
+            <MUI.FlatButton
+              label='Cancel'
+              className="raised-button"
+              onClick={this.handleBackClick}
+              style={{margin: '0 8px 0 auto'}} />
+          </div>
         </form>
-      </Common.Dialog>
+      </Common.Loading>
     );
   }
 });

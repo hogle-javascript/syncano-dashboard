@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions(
   {
-    withDialog: true,
-    withCheck: true
-  },
-  {
     setClasses: {},
     fetch: {},
     getClassByName: {},
@@ -14,6 +10,11 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Classes.list'
+    },
+    getClass: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Classes.get'
     },
     createClass: {
       asyncForm: true,

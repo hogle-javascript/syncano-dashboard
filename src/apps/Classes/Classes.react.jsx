@@ -19,7 +19,6 @@ import Container from '../../common/Container/Container.react';
 
 // Local components
 import ClassesList from './ClassesList.react';
-import ClassDialog from './ClassDialog.react';
 
 export default React.createClass({
 
@@ -48,7 +47,7 @@ export default React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
-      checkedClasses = ClassesStore.getCheckedItems();
+        checkedClasses = ClassesStore.getCheckedItems();
 
     return [{
       dialog: Common.ColorIconPicker.Dialog,
@@ -133,12 +132,17 @@ export default React.createClass({
     }
   },
 
-  showClassDialog() {
-    ClassesActions.showDialog();
+  redirectToAddClassView() {
+    this.context.router.transitionTo('classes-add', this.getParams());
   },
 
-  showClassEditDialog() {
-    ClassesActions.showDialog(ClassesStore.getCheckedItem());
+  redirectToEditClassView(className) {
+    let classNameParam = className || ClassesStore.getCheckedItem().name;
+
+    this.context.router.transitionTo('classes-edit', {
+      instanceName: this.getParams().instanceName,
+      className: classNameParam
+    });
   },
 
   isProtectedFromDelete(item) {
@@ -154,7 +158,6 @@ export default React.createClass({
 
     return (
       <Container>
-        <ClassDialog />
         {this.getDialogs()}
 
         <Common.Show if={checkedClassesCount > 0}>
@@ -174,7 +177,7 @@ export default React.createClass({
               label="Click here to edit Class"
               mini={true}
               disabled={checkedClassesCount > 1}
-              onClick={this.showClassEditDialog}
+              onClick={this.redirectToEditClassView.bind(null, null)}
               iconClassName="synicon-pencil"/>
             <Common.Fab.Item
               style={styles.fabListTopButton}
@@ -190,7 +193,7 @@ export default React.createClass({
         <Common.Fab>
           <Common.Fab.Item
             label="Click here to add a Class"
-            onClick={this.showClassDialog}
+            onClick={this.redirectToAddClassView}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 
@@ -198,7 +201,7 @@ export default React.createClass({
           name="Classes"
           items={this.state.items}
           checkItem={this.checkClassItem}
-          emptyItemHandleClick={this.showClassDialog}
+          emptyItemHandleClick={this.redirectToAddClassView}
           emptyItemContent="Create a Class"/>
       </Container>
     );
