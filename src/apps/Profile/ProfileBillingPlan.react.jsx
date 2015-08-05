@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import Moment from 'moment';
+import _ from 'lodash';
 
 import Mixins from '../../mixins';
 
@@ -314,15 +315,15 @@ export default Radium(React.createClass({
     const profile = this.state.profile;
 
     let coveredText = '';
-    if (plan === 'builder' || plan === 'free')
+    if (plan === 'builder' || plan === 'free') {
       coveredText = 'Covered by Syncano';
-    else if (plan === 'paid-commitment') {
+    } else if (plan === 'paid-commitment') {
       coveredText = `So far this month`;
     }
 
     if (plan === 'builder' || plan === 'free') {
-      let totalIndex = _.findIndex(profile.balance, {source: 'Plan Fee'});
-      let amountTotal = profile.balance[totalIndex].quantity;
+      const totalIndex = _.findIndex(profile.balance, {source: 'Plan Fee'});
+      const amountTotal = profile.balance[totalIndex].quantity;
 
       return (
         <div>
@@ -342,9 +343,10 @@ export default Radium(React.createClass({
       );
     }
 
-    let covered = Store.getCovered();
-    let overage = Store.getOverage();
-    let amountTotal = overage.amount + covered.amount;
+    const covered = _.round(Store.getCovered().amount, 0);
+    const overage = _.round(Store.getOverage().amount, 0);
+    const amountTotal = overage + covered;
+
     return (
       <div>
 
@@ -356,7 +358,7 @@ export default Radium(React.createClass({
           <div className="col-flex-1" style={{textAlign: 'center'}}>
             <div style={{fontSize: '2rem'}}>${amountTotal}</div>
             <div style={{marginTop: 15, fontSize: '1rem'}}>
-              ${covered.amount} plan + ${overage.amount} overage
+              ${covered} plan + ${overage} overage
             </div>
           </div>
         </div>
@@ -365,111 +367,113 @@ export default Radium(React.createClass({
     );
   },
 
-renderLoaded() {
-  let styles = this.getStyles();
+  renderLoaded() {
+    const styles = this.getStyles();
 
-  if (this.state.subscriptions.length === 0) {
+    if (this.state.subscriptions.length === 0) {
+      return (
+        <div className="vp-5-t">
+          <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+          <EmptyContainer
+            icon="synicon-block-helper"
+            text="You don't have any active subscription."/>
+
+          <div style={{margin: '64px auto', textAlign: 'center'}}>
+            <MUI.RaisedButton
+              label="Subscribe"
+              labelStyle={styles.updateButtonLabel}
+              className="raised-button"
+              secondary={true}
+              onClick={this.handleShowPlanDialog}/>
+          </div>
+        </div>
+      )
+    }
+
     return (
-      <div className="vp-5-t">
+      <div>
+        {this.getDialogs()}
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
-        <EmptyContainer
-          icon="synicon-block-helper"
-          text="You don't have any active subscription."/>
-        <div style={{margin: '64px auto', textAlign: 'center'}}>
-          <MUI.RaisedButton
-            label="Subscribe"
-            labelStyle={styles.updateButtonLabel}
-            className="raised-button"
-            secondary={true}
-            onClick={this.handleShowPlanDialog} />
-        </div>
-      </div>
-    )
-  }
 
-  return (
-    <div>
-      {this.getDialogs()}
-      <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
+        <div
+          style={{zIndex: 1, paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between', maxWidth: '1140'}}>
+            <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
 
-      <div style={{zIndex: 1, paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', maxWidth: '1140'}}>
-          <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+              <div style={styles.mainDesc}>
+                Your plan: <span style={{paddingLeft: 8}}><strong>{Store.getPlanName()}</strong></span>
+              </div>
 
-            <div style={styles.mainDesc}>
-              Your plan: <span style={{paddingLeft: 8}}><strong>{Store.getPlanName()}</strong></span>
             </div>
-
-          </div>
-          <div>
-            <Common.Billing.SwitchSection
-              ref="toggle"
-              plan={this.state.profile.subscription.plan}
-              planCanceled={Store.isPlanCanceled()}
-              onPlanDialog={this.handleShowPlanDialog}
-              onCancelPlanDialog={this.handleShowCancelPlanDialog}/>
-          </div>
-        </div>
-      </div>
-
-      <div style={{marginTop: 80}}>
-
-        <div className="row vp-6-b">
-
-          <div className="col-flex-1">
-            <div style={{marginBottom: 24}}>
-              {this.renderMainDesc()}
-            </div>
-
-            <div style={{marginBottom: 24}}>
-              {this.renderCommment()}
-            </div>
-
             <div>
-              <Common.Billing.PlanExplorerButton
+              <Common.Billing.SwitchSection
+                ref="toggle"
                 plan={this.state.profile.subscription.plan}
-                isNewSubscription={Store.isNewSubscription()}
+                planCanceled={Store.isPlanCanceled()}
                 onPlanDialog={this.handleShowPlanDialog}
-                onDeleteSubscription={this.handleDeleteSubscription}/>
-            </div>
-
-          </div>
-
-          <div className="col-flex-1" style={{position: 'relative', background: '#F5F5F5', marginRight: 8}}>
-
-            <div style={{position: 'absolute', width: '100%', top: '50%', transform: 'translateY(-50%)'}}>
-              {this.renderSummary()}
+                onCancelPlanDialog={this.handleShowCancelPlanDialog}/>
             </div>
           </div>
         </div>
 
-        <div className="row vp-2-b">
-          <div className="col-flex-1 vp-1-b" style={styles.heading}>
-            See how it works with your <strong>current usage</strong>:
+        <div style={{marginTop: 20}}>
+
+          <div className="row vp-6-b">
+
+            <div className="col-flex-1">
+              <div style={{marginBottom: 24}}>
+                {this.renderMainDesc()}
+              </div>
+
+              <div style={{marginBottom: 24}}>
+                {this.renderCommment()}
+              </div>
+
+              <div>
+                <Common.Billing.PlanExplorerButton
+                  plan={this.state.profile.subscription.plan}
+                  isNewSubscription={Store.isNewSubscription()}
+                  onPlanDialog={this.handleShowPlanDialog}
+                  onDeleteSubscription={this.handleDeleteSubscription}/>
+              </div>
+
+            </div>
+
+            <div className="col-flex-1" style={{position: 'relative', background: '#F5F5F5', marginRight: 8}}>
+
+              <div style={{position: 'absolute', width: '100%', top: '50%', transform: 'translateY(-50%)'}}>
+                {this.renderSummary()}
+              </div>
+            </div>
           </div>
+
+          <div className="row vp-2-b">
+            <div className="col-flex-1 vp-1-b" style={styles.heading}>
+              See how it works with your <strong>current usage</strong>:
+            </div>
+          </div>
+
+          <div className="row vp-3-b">
+            <div className="col-flex-1">
+              <Common.Billing.ChartLegend profile={this.state.profile}/>
+            </div>
+            <div className="col-flex-1">
+
+            </div>
+          </div>
+
+          <div className="row vp-5-b">
+            <div className="col-flex-1">
+              <Chart />
+            </div>
+          </div>
+
+          {this.renderLimitsForm()}
+
         </div>
-
-        <div className="row vp-3-b">
-          <div className="col-flex-1">
-            <Common.Billing.ChartLegend profile={this.state.profile}/>
-          </div>
-          <div className="col-flex-1">
-
-          </div>
-        </div>
-
-        <div className="row vp-5-b">
-          <div className="col-flex-1">
-            <Chart />
-          </div>
-        </div>
-
-        {this.renderLimitsForm()}
-
       </div>
-    </div>
-  );
-}
+    );
+  }
 }));
 
 
