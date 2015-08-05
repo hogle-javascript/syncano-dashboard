@@ -250,7 +250,7 @@ export default React.createClass({
   },
 
   render() {
-    const title = this.hasEditMode() ? 'Edit Class' : 'Add Class';
+    const title = this.hasEditMode() ? 'Update a Class' : 'Add a Class';
     const submitLabel = this.hasEditMode() ? 'Update' : 'Add';
     const permissions = [
       {

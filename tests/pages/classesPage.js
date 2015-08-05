@@ -100,12 +100,12 @@ module.exports = {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    addClassModalTitle: {
-      selector: '//h3[text()="Add a Class"]',
+    addClassTitle: {
+      selector: '//span[text()="Add a Class"]',
       locateStrategy: 'xpath'
     },
-    editClassModalTitle: {
-      selector: '//h3[text()="Update a Class"]',
+    editClassTitle: {
+      selector: '//span[text()="Update a Class"]',
       locateStrategy: 'xpath'
     },
     deleteClassModalTitle: {
