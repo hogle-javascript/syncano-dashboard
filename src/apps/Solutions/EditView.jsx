@@ -25,7 +25,6 @@ import AddVersionViewActions from './AddVersionViewActions';
 import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
-import {isLoading} from '../../decorators';
 
 import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
@@ -176,7 +175,6 @@ export default React.createClass({
     });
   },
 
-  @isLoading
   render() {
     let styles = this.getStyles();
     let item = this.state.item;

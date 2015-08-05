@@ -47,10 +47,10 @@ export default Reflux.createStore({
       Actions.fetchSolution(solutionId),
       Actions.fetchSolutionVersions(solutionId)
     ]).then(() => {
+      console.log('applyIsLoading::refreshData');
       this.data.isLoading = false;
       this.trigger(this.data);
     });
-
   },
 
   getSolution() {
