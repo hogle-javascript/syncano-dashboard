@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
@@ -55,7 +56,7 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
-    this.data.items = Object.keys(tracesObj).sort().map(item => tracesObj[item]);
+    this.data.items = _.chain(Object.keys(tracesObj)).map(item => tracesObj[item]).sortByOrder('id', 'desc').value();
     this.data.isLoading = false;
     this.trigger(this.data);
   },
