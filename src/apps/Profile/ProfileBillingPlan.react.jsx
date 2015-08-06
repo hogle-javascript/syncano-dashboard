@@ -455,7 +455,7 @@ export default Radium(React.createClass({
 
           <div className="row vp-3-b">
             <div className="col-flex-1">
-              <Common.Billing.ChartLegend profile={this.state.profile}/>
+              <Common.Billing.ChartLegend {...this.state.chartLegend} />
             </div>
             <div className="col-flex-1">
 

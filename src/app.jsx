@@ -55,12 +55,5 @@ Router.run(routes, function(Root, state) {
     path: state.pathname
   });
 
-  // Debug for segment
-  console.log('Router.run', analytics);
-  console.log('Router.run', {
-    Page: name,
-    path: state.pathname
-  });
-
   React.render(<Root/>, container);
 });

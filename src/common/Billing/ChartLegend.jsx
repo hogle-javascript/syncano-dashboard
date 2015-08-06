@@ -11,30 +11,20 @@ export default Radium(React.createClass({
   mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
-    profile: React.PropTypes.object,
-    planCanceled: React.PropTypes.string,
-    onPlanDialog: React.PropTypes.func,
-    onCancelPlanDialog: React.PropTypes.func
+    showPercents: React.PropTypes.bool,
+    rows: React.PropTypes.arrayOf(React.PropTypes.shape({
+      percent: React.PropTypes.number,
+      amount: React.PropTypes.number,
+      label: React.PropTypes.string,
+      styles: React.PropTypes.object
+    }))
   },
 
-  getInitialState() {
-    const profile = this.props.profile;
-    const subscription = profile.subscription;
-
-    const apiTotalIndex = _.findIndex(profile.balance, {source: 'API Call'});
-    const cbxTotalIndex = _.findIndex(profile.balance, {source: 'CodeBox Executions'});
-
-    const apiTotal = profile.balance[apiTotalIndex].quantity;
-    const cbxTotal = profile.balance[cbxTotalIndex].quantity;
-
+  getDefaultProps() {
     return {
-      profile,
-      subscription,
-      apiTotal,
-      cbxTotal,
-      pricing: subscription.pricing,
-      plan: subscription.plan
-    }
+      rows: [],
+      showUsage: false
+    };
   },
 
   getStyles() {
@@ -46,63 +36,58 @@ export default Radium(React.createClass({
       },
       legend: {
         fontSize: '1rem'
+      },
+      legendAmount: {
+        textAlign: 'right'
+      },
+      legendPercent: {
+        textAlign: 'right',
+        paddingRight: 0
       }
     };
 
     return this.mergeStyles(styles, this.props.style);
   },
 
-  renderUsage(factorName) {
-    let usage = {
-      'api': (parseFloat(this.state.apiTotal) / parseFloat(this.state.pricing.api.included) * 100).toFixed(2),
-      'cbx': (parseFloat(this.state.cbxTotal) / parseFloat(this.state.pricing.cbx.included) * 100).toFixed(2)
-    };
+  renderPercent(row) {
+    const styles = this.getStyles();
 
     return [
-      <div className="col-md-5" style={{textAlign: 'right', paddingRight: 0}}>
-        <strong>{usage[factorName]}%</strong>
+      <div className="col-md-5" style={styles.legendPercent}>
+        <strong>{row.percent}%</strong>
       </div>,
       <div className="col-md-8">of plan usage</div>
-    ]
+    ];
+  },
+
+  renderRow(row) {
+    let styles = this.getStyles();
+    row.styles = row.styles || {};
+
+    return (
+      <div className="row vp-1-b" style={styles.legend}>
+        <div className="col-xs-1">
+          <div style={_.extend({}, styles.legendSquere, row.styles)}/>
+        </div>
+        <div className="col-flex-1">
+          <div className="row">
+            <div className="col-md-8">{row.label}</div>
+            <div className="col-md-10" style={styles.legendAmount}>
+              <strong>{row.amount}</strong>  this month</div>
+              {this.props.showPercents ? this.renderPercent(row) : null}
+          </div>
+        </div>
+      </div>
+    );
   },
 
   render() {
-    let styles = this.getStyles();
-
     return (
-        <div className="row">
-
-          <div className="col-flex-1">
-
-            <div className="row vp-1-b" style={styles.legend}>
-              <div className="col-xs-1">
-                <div style={_.extend({}, styles.legendSquere, {background: '#77D8F6'})}/>
-              </div>
-              <div className="col-flex-1">
-                <div className="row">
-                  <div className="col-md-8">API calls</div>
-                  <div className="col-md-10" style={{textAlign: 'right'}}>
-                    <strong>{this.state.apiTotal}</strong>  this month</div>
-                  {this.state.plan === 'paid-commitment' ? this.renderUsage('api') : null}
-                </div>
-              </div>
-            </div>
-            <div className="row" style={styles.legend}>
-              <div className="col-xs-1">
-                <div style={_.extend({}, styles.legendSquere, {background: '#FFBC5A'})}/>
-              </div>
-              <div className="col-flex-1">
-                <div className="row">
-                  <div className="col-md-8">CodeBox runs</div>
-                  <div className="col-md-10" style={{textAlign: 'right'}}>
-                    <strong>{this.state.cbxTotal}</strong>  this month</div>
-                  {this.state.plan === 'paid-commitment' ? this.renderUsage('cbx') : null}
-                </div>
-              </div>
-            </div>
-
+      <div className="row">
+        <div className="col-flex-1">
+          {this.props.rows.map(this.renderRow)}
         </div>
       </div>
-    )
+    );
   }
 }));
