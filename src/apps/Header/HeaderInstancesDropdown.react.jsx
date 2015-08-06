@@ -35,11 +35,9 @@ export default Radium(React.createClass({
   },
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
-    let instanceName = menuItem.text._store.props.children[1];
-
     // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName).then(() => {
-      this.transitionTo('instance', {instanceName: instanceName});
+    SessionActions.fetchInstance(menuItem.payload).then(() => {
+      this.transitionTo('instance', {instanceName: menuItem.payload});
     });
   },
 
@@ -118,7 +116,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    let dropDownMenuItems = instancesList.map((item, index) => {
+    let dropDownMenuItems = instancesList.map((item) => {
       item.metadata       = item.metadata       || {};
       item.metadata.icon  = item.metadata.icon  || null;
       item.metadata.color = item.metadata.color || null;
@@ -137,7 +135,7 @@ export default Radium(React.createClass({
         </div>;
 
       return {
-        payload: index + '',
+        payload: item.name,
         text: text
       }
     });
