@@ -121,7 +121,7 @@ export default React.createClass({
           position: 'fixed',
           top: 64,
           right: 0,
-          zIndex: 8,
+          zIndex: 7,
           paddingLeft: 256,
           background: 'rgba(215,215,215,0.6)',
           padding: '0px 32px 0 24px'}}>
