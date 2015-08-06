@@ -82,6 +82,30 @@ export default Radium(React.createClass({
         paddingRight: 50,
         color: '#4A4A4A'
       },
+      planContainer: {
+        zIndex: 1,
+        position: 'fixed',
+        top: 64,
+        left: 0,
+        width: '100%',
+        background: '#EBEBEB'
+      },
+      planSubContainer: {
+        display: 'flex',
+        justifyContent: 'space-between'
+      },
+      planTitle: {
+        paddingLeft: 310,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      },
+      planTitleText: {
+        paddingLeft: 8
+      },
+      planToggle: {
+        paddingRight: 20
+      },
       mainDesc: {
         fontSize: '1.5rem',
         flexDirection: 'row',
@@ -396,16 +420,16 @@ export default Radium(React.createClass({
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
         <div
-          style={{zIndex: 1, paddingLeft: 256, position: 'fixed', top: 64, left: 0, width: '100%', background: '#EBEBEB'}}>
-          <div style={{display: 'flex', justifyContent: 'space-between', maxWidth: '1140'}}>
-            <div style={{paddingLeft: 52, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+            style={styles.planContainer}>
+          <div style={styles.planSubContainer}>
+            <div style={styles.planTitle}>
 
               <div style={styles.mainDesc}>
-                Your plan: <span style={{paddingLeft: 8}}><strong>{Store.getPlanName()}</strong></span>
+                Your plan: <span style={styles.planTitleText}><strong>{Store.getPlanName()}</strong></span>
               </div>
 
             </div>
-            <div>
+            <div style={styles.planToggle}>
               <Common.Billing.SwitchSection
                 ref="toggle"
                 plan={this.state.profile.subscription.plan}
