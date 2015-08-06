@@ -115,6 +115,7 @@ export default Radium(React.createClass({
 
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
+    this.setState({'welcomeShowed': true});
   },
 
   showInstanceEditDialog() {
@@ -141,7 +142,7 @@ export default Radium(React.createClass({
 
         <WelcomeDialog
           getStared={this.showInstanceDialog}
-          visible={this.state.items !== null && Store.getMyInstances().length === 0}/>
+          visible={this.state.items !== null && Store.getMyInstances().length === 0 && !this.state.welcomeShowed}/>
 
         <InstanceDialog />
         {this.getDialogs()}
