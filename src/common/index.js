@@ -29,6 +29,7 @@ import SocialAuthButtonsList from './SocialAuthButtonsList';
 import SwitchField from './SwitchField';
 import Tabs from './Tabs';
 import Tags from './Tags';
+import Tour from './Tour';
 import Trace from './Trace';
 import UsageBar from './UsageBar';
 import ContentHeader from './ContentHeader.react';
@@ -70,6 +71,7 @@ export default {
   SwitchField,
   Tabs,
   Tags,
+  Tour,
   Trace,
   UsageBar,
   ContentHeader,
