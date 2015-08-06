@@ -18,7 +18,11 @@ export default Reflux.createStore({
       usage: null,
       subscriptions: null,
       isReady: false,
-      isLoading: true
+      isLoading: true,
+      chartLegend: {
+        rows: [],
+        showPercents: false
+      }
     }
   },
 
