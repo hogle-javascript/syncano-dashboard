@@ -56,7 +56,7 @@ export default Radium(React.createClass({
       display: '-webkit-flex; display: flex',
       flexDirection: 'row',
       alignItems: 'center',
-      fontSize: 12,
+      fontSize: 13,
       lineHeight: '16px',
       padding: '16px 8px',
       wordBreak: 'break-all',
