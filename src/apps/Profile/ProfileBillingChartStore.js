@@ -117,7 +117,7 @@ export default Reflux.createStore({
     state.profile = profile;
 
     let subscription = profile.subscription || {};
-    let plan = subscription.plan || {};
+    let plan = subscription.plan || null;
     let pricing = subscription.pricing;
     let usageAmount = {'api': 0, 'cbx': 0};
     let columns = {'api': {}, 'cbx': {}};
