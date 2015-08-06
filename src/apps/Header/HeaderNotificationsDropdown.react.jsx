@@ -9,7 +9,7 @@ import ProfileInvitationsStore from '../Profile/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 
 import MUI from 'material-ui';
-import Loading from '../../common/Loading';
+import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -24,7 +24,8 @@ export default Radium(React.createClass({
     Reflux.connect(HeaderStore),
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
     Router.Navigation,
-    Router.State
+    Router.State,
+    SnackbarNotificationMixin
   ],
 
   contextTypes: {
@@ -51,7 +52,10 @@ export default Radium(React.createClass({
   handleResendEmail() {
     console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(this.state.user.email);
-    this.refs.snackbar.show();
+    this.setSnackbarNotification({
+      message: 'Activation e-mail was send',
+      autoHideDuration: 3000
+    });
   },
 
   getStyles() {
@@ -222,10 +226,6 @@ export default Radium(React.createClass({
           <MenuDivider />
           {this.renderItems()}
         </MUI.IconMenu>
-        <MUI.Snackbar
-          ref='snackbar'
-          message='Activation e-mail was send'
-          autoHideDuration={3000}/>
       </div>
     )
   }
