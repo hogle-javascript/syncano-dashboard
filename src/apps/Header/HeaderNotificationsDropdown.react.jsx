@@ -9,7 +9,7 @@ import ProfileInvitationsStore from '../Profile/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 
 import MUI from 'material-ui';
-import Loading from '../../common/Loading';
+import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
 import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -24,7 +24,8 @@ export default Radium(React.createClass({
     Reflux.connect(HeaderStore),
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
     Router.Navigation,
-    Router.State
+    Router.State,
+    SnackbarNotificationMixin
   ],
 
   contextTypes: {
@@ -51,7 +52,10 @@ export default Radium(React.createClass({
   handleResendEmail() {
     console.info('Header::handleResendEmail');
     AuthActions.resendActivationEmail(this.state.user.email);
-    this.refs.snackbar.show();
+    this.setSnackbarNotification({
+      message: 'Activation e-mail was send',
+      autoHideDuration: 3000
+    });
   },
 
   getStyles() {
@@ -75,9 +79,11 @@ export default Radium(React.createClass({
         color: '#777',
         minWidth: '360px',
         paddingTop: '12px',
-        paddingBottom: '12px'
+        paddingBottom: '12px',
+        position: 'relative'
       },
       menu: {
+        cursor: 'auto',
         maxHeight: '500px',
         overflowY: 'auto',
         border: '1px solid #DDD'
@@ -88,9 +94,9 @@ export default Radium(React.createClass({
   renderItems() {
     let styles = this.getStyles();
     // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't closing because of returned childrens in DIV tag
-    if (this.state.accountInvitations.isLoading === true) {
-      return <Loading show={true}/>
-    }
+    //if (this.state.accountInvitations.isLoading === true) {
+    //  return <Loading show={true}/>
+    //}
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
@@ -139,6 +145,7 @@ export default Radium(React.createClass({
           key={`invitation-${item.id}`}
           disabled={true}
           leftIcon={icon}
+          innerDivStyle={{opacity: 1}}
           style={styles.menuItem}>
           {content}
           {buttons}
@@ -220,10 +227,6 @@ export default Radium(React.createClass({
           <MenuDivider />
           {this.renderItems()}
         </MUI.IconMenu>
-        <MUI.Snackbar
-          ref='snackbar'
-          message='Activation e-mail was send'
-          autoHideDuration={3000}/>
       </div>
     )
   }

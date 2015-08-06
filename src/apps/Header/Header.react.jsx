@@ -179,7 +179,7 @@ export default Radium(React.createClass({
               style={styles.toolbarList}>
               <li style={styles.toolbarListItem}>
                 <a
-                  href="http://docs.syncano.com/v4.0"
+                  href="http://docs.syncano.com/"
                   target="_blank">
                   Docs
                 </a>

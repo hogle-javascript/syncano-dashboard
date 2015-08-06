@@ -3,8 +3,8 @@ import moment from 'moment';
 import d3 from 'd3';
 import _ from 'lodash';
 
-import SessionActions from '../Session/SessionActions';
 import Actions from './ProfileBillingChartActions';
+import PlanActions from './ProfileBillingPlanActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -117,7 +117,7 @@ export default Reflux.createStore({
     state.profile = profile;
 
     let subscription = profile.subscription || {};
-    let plan = subscription.plan || {};
+    let plan = subscription.plan || null;
     let pricing = subscription.pricing;
     let usageAmount = {'api': 0, 'cbx': 0};
     let columns = {'api': {}, 'cbx': {}};
@@ -164,13 +164,6 @@ export default Reflux.createStore({
       position: 'middle'
     });
 
-    // state.chart.regions.push({
-    //   axis: 'y',
-    //   start: 0,
-    //   end: state.covered.amount,
-    //   class: 'covered'
-    // });
-
     state.overage = _.reduce(pricing, (r, v, k) => {
       let covered = state.covered[k];
       let amount = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
@@ -188,6 +181,24 @@ export default Reflux.createStore({
     if (plan === 'builder' && _.last(state.chart.data.columns[1]) < 0.5 && _.last(state.chart.data.columns[2]) < 0.5) {
       state.chart.axis.y.max = 0.5;
     }
+
+    PlanActions.setChartLegend({
+      rows: [
+        {
+          percent: _.round((usageAmount.api / pricing.api.overage) / pricing.api.included * 100, 0),
+          amount: _.round(usageAmount.api / pricing.api.overage, 0),
+          label: 'API calls',
+          styles: {background: '#77D8F6'}
+        },
+        {
+          percent: _.round((usageAmount.cbx / pricing.cbx.overage) / pricing.cbx.included * 100, 0),
+          amount: _.round(usageAmount.cbx / pricing.cbx.overage, 0),
+          label: 'CodeBox runs',
+          styles: {background: '#FFBC5A'}
+        }
+      ],
+      showPercents: plan === 'paid-commitment'
+    });
 
     this.trigger(state);
   },

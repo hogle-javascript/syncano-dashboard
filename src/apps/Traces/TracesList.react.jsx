@@ -36,7 +36,7 @@ export default Radium(React.createClass({
         transition: 'max-height 450ms ease-out'
       },
       noTracesContainer: {
-        margin: '64px auto',
+        padding: '96px 0',
         textAlign: 'center'
       },
       noTracesIcon: {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let duration = item.status !== 'pending' ? item.duration + 'ms' : item.status;
+    let duration = item.duration !== null ? item.duration + 'ms' : 'not executed';
     let styles = this.getStyles();
     let status = {
       blocked: {
@@ -154,7 +154,6 @@ export default Radium(React.createClass({
 
     if (items.length > 0) {
       items = items.map(item => this.renderItem(item));
-      items.reverse();
       return items;
     }
 

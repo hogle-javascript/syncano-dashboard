@@ -81,6 +81,7 @@
     "react-inlinesvg": "patrykkopycinski/react-inlinesvg#build",
     "sass-loader": "~1.0.3",
     "style-loader": "^0.12.3",
+    "through2": "^2.0.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.10.5",
     "webpack-dev-server": "^1.10.1"

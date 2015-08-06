@@ -5,6 +5,7 @@ export default CreateActions(
   {
     fetch: {},
     setBillingPlan: {},
+    setChartLegend: {},
 
     fetchBillingProfile: {
       asyncResult: true,
@@ -51,6 +52,6 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Billing.cancelSubscriptions'
-    },
+    }
   }
 );

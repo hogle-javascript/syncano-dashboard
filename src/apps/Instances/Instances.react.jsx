@@ -21,6 +21,7 @@ import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
 import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
+import WelcomeDialog from './WelcomeDialog';
 
 require('./Instances.sass');
 
@@ -114,6 +115,7 @@ export default Radium(React.createClass({
 
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
+    this.setState({'welcomeShowed': true});
   },
 
   showInstanceEditDialog() {
@@ -137,6 +139,11 @@ export default Radium(React.createClass({
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
+
+        <WelcomeDialog
+          getStared={this.showInstanceDialog}
+          visible={this.state.items !== null && Store.getMyInstances().length === 0 && !this.state.welcomeShowed}/>
+
         <InstanceDialog />
         {this.getDialogs()}
 
@@ -170,6 +177,7 @@ export default Radium(React.createClass({
 
         <Common.Fab>
           <Common.Fab.Item
+            ref="addInstanceFab"
             label="Click here to add Instances"
             onClick={this.showInstanceDialog}
             iconClassName="synicon-plus"
@@ -177,6 +185,7 @@ export default Radium(React.createClass({
         </Common.Fab>
 
         <InstancesList
+          ref="myInstancesList"
           name="My instances"
           items={Store.getMyInstances()}
           listType="myInstances"
@@ -185,6 +194,7 @@ export default Radium(React.createClass({
           emptyItemContent="Create an instance"/>
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
+            ref="otherInstancesList"
             name="Shared with me"
             items={Store.getOtherInstances()}
             listType="sharedInstances"

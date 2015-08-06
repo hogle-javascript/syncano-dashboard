@@ -18,7 +18,11 @@ export default Reflux.createStore({
       usage: null,
       subscriptions: null,
       isReady: false,
-      isLoading: true
+      isLoading: true,
+      chartLegend: {
+        rows: [],
+        showPercents: false
+      }
     }
   },
 
@@ -197,5 +201,10 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
+  },
+
+  setChartLegend(payload) {
+    this.data.chartLegend = payload;
+    this.trigger(this.data);
   }
 });
