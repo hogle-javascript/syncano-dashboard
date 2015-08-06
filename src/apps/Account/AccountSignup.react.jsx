@@ -7,6 +7,7 @@ import FormMixin from '../../mixins/FormMixin';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
 import Store from './AuthStore';
 import Actions from './AuthActions';
 import Constants from './AuthConstants';
@@ -22,6 +23,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
+    Router.State,
     React.addons.LinkedStateMixin,
     FormMixin
   ],
@@ -57,6 +59,11 @@ export default React.createClass({
         next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
+    }
+
+    let invKey = this.getQuery().invitation_key || null;
+    if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
+      SessionActions.setInvitationFromUrl(invKey)
     }
   },
 
