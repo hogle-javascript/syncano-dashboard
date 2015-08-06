@@ -78,10 +78,10 @@ export default Radium(React.createClass({
             <div style={styles.text}>
               <MUI.Avatar size={80} src={'/img/fox.png'}/>
 
-              <div style={{paddingTop: 16, paddingBottom: 24, fontStyle: 'regular'}}>
+              <div style={{paddingTop: 16, paddingBottom: 24}}>
                 Welcome to your <strong>Syncano</strong> dashboard!
               </div>
-              <div>
+              <div style={{fontSize: '1.8rem'}}>
                 This is where the <strong>magic</strong> happens. Now get to work, you <strong>superstar</strong> you.
               </div>
             </div>
