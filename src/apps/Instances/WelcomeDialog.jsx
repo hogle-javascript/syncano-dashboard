@@ -14,16 +14,16 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      visible: nextProps.visible
-    })
-  },
-
   getInitialState() {
     return {
       visible: this.props.visible
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      visible: nextProps.visible
+    })
   },
 
   handleCloseDialog() {
