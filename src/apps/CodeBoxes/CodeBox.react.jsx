@@ -139,10 +139,6 @@ export default React.createClass({
           <MUI.ToolbarGroup>
             <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
           </MUI.ToolbarGroup>
-
-          <MUI.ToolbarGroup float="right">
-          </MUI.ToolbarGroup>
-
         </MUI.Toolbar>
 
         <div style={{margin: '65px auto', width: '80%'}}>
