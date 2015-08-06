@@ -170,7 +170,11 @@ export default Radium(React.createClass({
         </MUI.CardText>
 
         <div style={styles.cardFooter}>
-          <SolutionStar solution={item}/>
+          <SolutionStar
+            solution={item}
+            onUnstar={this.props.onUnstar}
+            onStar={this.props.onStar}
+            />
           <MUI.FlatButton
             label="SEE DETAILS"
             labelStyle={styles.seeDetailsButton}

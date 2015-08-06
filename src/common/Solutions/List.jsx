@@ -59,7 +59,9 @@ export default React.createClass({
             data={item}
             onInstall={this.props.onInstall}
             onSeeMore={this.props.onSeeMore}
-            onTagClick={this.props.onTagClick}/>
+            onTagClick={this.props.onTagClick}
+            onUnstar={this.props.onUnstar}
+            onStar={this.props.onStar}/>
         </div>
       )
     });
