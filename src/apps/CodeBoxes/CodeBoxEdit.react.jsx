@@ -59,7 +59,10 @@ export default React.createClass({
         payload: this.refs.tracePanel.refs.payloadField.getValue()
       });
     } else {
-      this.refs.snackbar.show();
+      this.setSnackbarNotification({
+        message: "Can't run CodeBox with invalid payload",
+        autoHideDuration: 3000
+      });
     }
   },
 
@@ -119,10 +122,6 @@ export default React.createClass({
         <Common.Loading show={this.state.isLoading}>
           {this.renderEditor()}
         </Common.Loading>
-        <MUI.Snackbar
-          message="Can't run CodeBox with invalid payload"
-          ref="snackbar"
-          autoHideDuration={3000}/>
       </Container>
     );
   }
