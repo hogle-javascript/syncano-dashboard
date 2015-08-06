@@ -48,6 +48,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
+    item.metadata = item.metadata || {};
+
     return (
       <Common.ColumnList.Item
         checked={item.checked}
