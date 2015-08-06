@@ -6,6 +6,7 @@ import Mixins from '../../mixins';
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
+import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import Actions from './InstancesActions';
 
 export default Reflux.createStore({
@@ -29,6 +30,7 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.listenToForms();
+    this.listenTo(ProfileInvitationsActions.fetchInvitations.completed, this.refreshData);
   },
 
   refreshData() {
