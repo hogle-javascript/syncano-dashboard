@@ -113,7 +113,7 @@ gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevisioned'], function() {
+gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function() {
   function replaceJsIfMap(filename) {
       if (filename.indexOf('.map') > -1) {
           return filename.replace('js/', '');
@@ -130,16 +130,16 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevision
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
-  var manifest = require('./' + paths.dist + '/rev-manifest.json'),
-      delPaths = Object.keys(manifest).map(function(path) {
-        return paths.dist + '/' + path;
-      });
+// gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
+//   var manifest = require('./' + paths.dist + '/rev-manifest.json'),
+//       delPaths = Object.keys(manifest).map(function(path) {
+//         return paths.dist + '/' + path;
+//       });
 
-  del(delPaths, cb);
-});
+//   del(delPaths, cb);
+// });
 
-gulp.task('revision:index', ['clean', 'clean:unrevisioned', 'revreplace'], function() {
+gulp.task('revision:index', ['clean', 'revreplace'], function() {
   return gulp.src('./dist/index.html')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
