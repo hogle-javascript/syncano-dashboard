@@ -116,11 +116,12 @@ export default React.createClass({
     let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
 
     return (
-      <div style={{margin: '65px auto', width: '80%'}}>
+      <div>
         <MUI.Toolbar style={{
           position: 'fixed',
           top: 64,
           right: 0,
+          zIndex: 8,
           paddingLeft: 256,
           background: 'rgba(215,215,215,0.6)',
           padding: '0px 32px 0 24px'}}>
@@ -144,9 +145,12 @@ export default React.createClass({
 
         </MUI.Toolbar>
 
-        <div style={{paddingTop: 32}}>
-          {this.renderTabs()}
-          <RouteHandler/>
+        <div style={{margin: '65px auto', width: '80%'}}>
+
+          <div style={{paddingTop: 32}}>
+            {this.renderTabs()}
+            <RouteHandler/>
+          </div>
         </div>
       </div>
     );
