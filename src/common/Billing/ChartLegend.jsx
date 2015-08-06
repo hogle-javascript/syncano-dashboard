@@ -16,7 +16,7 @@ export default Radium(React.createClass({
       percent: React.PropTypes.number,
       amount: React.PropTypes.number,
       label: React.PropTypes.string,
-      style: React.PropTypes.object
+      styles: React.PropTypes.object
     }))
   },
 

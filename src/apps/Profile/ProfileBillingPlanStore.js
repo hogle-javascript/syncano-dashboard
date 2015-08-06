@@ -201,5 +201,10 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
+  },
+
+  setChartLegend(payload) {
+    this.data.chartLegend = payload;
+    this.trigger(this.data);
   }
 });
