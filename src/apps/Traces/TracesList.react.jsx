@@ -36,7 +36,7 @@ export default Radium(React.createClass({
         transition: 'max-height 450ms ease-out'
       },
       noTracesContainer: {
-        margin: '64px auto',
+        padding: '96px 0',
         textAlign: 'center'
       },
       noTracesIcon: {
