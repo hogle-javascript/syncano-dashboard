@@ -141,6 +141,7 @@ export default Radium(React.createClass({
           key={`invitation-${item.id}`}
           disabled={true}
           leftIcon={icon}
+          innerDivStyle={{opacity: 1}}
           style={styles.menuItem}>
           {content}
           {buttons}
