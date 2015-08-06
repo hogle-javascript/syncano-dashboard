@@ -12,7 +12,7 @@ export default Reflux.createStore({
 
   init() {
     this.connection = Connection.get();
-    this.token = sessionStorage.getItem('token') || null;
+    this.token = localStorage.getItem('token') || null;
     this.user = null;
     this.instance = null;
     this.router = null;
@@ -53,7 +53,7 @@ export default Reflux.createStore({
 
   getInvitationFromUrl() {
     console.info('SessionStore::getInvitationFomUrl');
-    return sessionStorage.getItem('invitationKey');
+    return localStorage.getItem('invitationKey');
   },
 
   setToken(token) {
@@ -63,7 +63,7 @@ export default Reflux.createStore({
 
   setInvitationFromUrl(invitationKey) {
     console.info('SessionStore::setInvitationFomUrl');
-    sessionStorage.setItem('invitationKey', invitationKey);
+    localStorage.setItem('invitationKey', invitationKey);
   },
 
   setUser(user) {
@@ -79,7 +79,7 @@ export default Reflux.createStore({
     } else {
       this.token = user.account_key;
       this.connection.setApiKey(this.token);
-      sessionStorage.setItem('token', this.token);
+      localStorage.setItem('token', this.token);
     }
 
     Raven.setUserContext({
@@ -164,7 +164,7 @@ export default Reflux.createStore({
 
     this.token = payload.account_key;
     this.connection.setApiKey(this.token);
-    sessionStorage.setItem('token', this.token);
+    localStorage.setItem('token', this.token);
     SessionActions.setUser(payload);
   },
 
@@ -173,8 +173,8 @@ export default Reflux.createStore({
     this.user = null;
     this.connection = Connection.reset();
 
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('invitationKey');
+    localStorage.removeItem('token');
+    localStorage.removeItem('invitationKey');
     this.removeInstance();
     this.trigger(this);
 

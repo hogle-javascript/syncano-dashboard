@@ -1,5 +1,6 @@
 var gulp             = require('gulp'),
     fs               = require('fs'),
+    path             = require('path'),
     gutil            = require('gulp-util'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
@@ -15,6 +16,7 @@ var gulp             = require('gulp'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
+    through          = require('through2'),
     ENV              = process.env.NODE_ENV || 'development';
 
 var paths = {
@@ -111,7 +113,7 @@ gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevisioned'], function() {
+gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function() {
   function replaceJsIfMap(filename) {
       if (filename.indexOf('.map') > -1) {
           return filename.replace('js/', '');
@@ -128,16 +130,16 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision', 'clean:unrevision
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
-  var manifest = require('./' + paths.dist + '/rev-manifest.json'),
-      delPaths = Object.keys(manifest).map(function(path) {
-        return paths.dist + '/' + path;
-      });
+// gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
+//   var manifest = require('./' + paths.dist + '/rev-manifest.json'),
+//       delPaths = Object.keys(manifest).map(function(path) {
+//         return paths.dist + '/' + path;
+//       });
 
-  del(delPaths, cb);
-});
+//   del(delPaths, cb);
+// });
 
-gulp.task('revision:index', ['clean', 'clean:unrevisioned', 'revreplace'], function() {
+gulp.task('revision:index', ['clean', 'revreplace'], function() {
   return gulp.src('./dist/index.html')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
@@ -160,14 +162,32 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
   }
 
   var src       = ['./dist/**/*', '!./dist/rev-manifest.json'],
-      publisher = awspublish.create(aws),
-      headers   = {
-        'Cache-Control': 'max-age=315360000, no-transform, public'
-      };
+      publisher = awspublish.create(aws);
 
   return gulp.src(src)
     .pipe(awspublish.gzip())
-    .pipe(publisher.publish(headers))
+    .pipe(through.obj(function(file, enc, cb) {
+      // Do nothing if no contents
+      if (file.isNull()) return cb();
+
+      // streams not supported
+      if (file.isStream()) {
+        this.emit('error',
+          new gutil.PluginError('publish', 'Stream content is not supported'));
+        return cb();
+      }
+
+      // check if file.contents is a `Buffer`
+      if (file.isBuffer()) {
+        file.s3.headers['Cache-Control'] = 'max-age=315360000, no-transform, public';
+
+        if (path.basename(file.path).indexOf('index-') === 0) {
+          file.s3.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+        }
+        cb(null, file);
+      }
+    }))
+    .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
 });
