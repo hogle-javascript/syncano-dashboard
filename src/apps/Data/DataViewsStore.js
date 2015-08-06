@@ -29,6 +29,8 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+
+    this.listenTo(SessionActions.setInstance, this.refreshData);
   },
 
   getDataViews(empty) {
