@@ -16,11 +16,11 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
 
-    var instancePage = client.page.instancePage();
+    var dataPage = client.page.dataPage();
 
     client.pause(2000);
-    instancePage.expect.element('@instancesDropdown').to.be.present.after(5000);
-    instancePage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
+    dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
+    dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
 
   }
 };

@@ -155,8 +155,9 @@ export default Reflux.createStore({
     Actions.setInstances(items);
   },
 
-  onFetchInstancesFailure() {
+  onFetchInstancesFailure(result) {
     console.debug('InstancesStore::onFetchInstancesFailure');
+    this.data.blocked = result;
     this.trigger(this.data);
   },
 

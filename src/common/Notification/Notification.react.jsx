@@ -1,31 +1,30 @@
-let React = require('react'),
-  classNames = require('classnames'),
+import React from 'react';
+import classNames from 'classnames';
 
-  mui = require('material-ui'),
-  StylePropable = mui.Mixins.StylePropable,
-  FontIcon = mui.FontIcon;
+import MUI from 'material-ui';
 
 require('./Notification.sass');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Notification',
 
-  mixins: [StylePropable],
+  mixins: [MUI.Mixins.StylePropable],
 
   propTypes: {
+    style: React.PropTypes.string,
     type: React.PropTypes.string.isRequired,
     children: React.PropTypes.any.isRequired
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       type: 'info'
     };
   },
 
-  getStyles: function() {
-    let styles = {
+  getStyles() {
+    const styles = {
       fontSize: 18,
       lineHeight: 1,
       color: 'inherit',
@@ -35,18 +34,17 @@ module.exports = React.createClass({
     return this.mergeStyles(styles, this.props.style);
   },
 
-  render: function() {
+  render() {
+    const styles = this.getStyles();
 
-    let styles = this.getStyles();
-
-    let cssClasses = classNames({
+    const cssClasses = classNames({
       'notification': true,
       'notification--info': this.props.type === 'info',
       'notification--error': this.props.type === 'error',
       'notification--warning': this.props.type === 'warning'
-    });
+    }, this.props.className);
 
-    let iconClass = classNames({
+    const iconClass = classNames({
       'information': this.props.type === 'info',
       'alert-circle': this.props.type === 'error',
       'alert': this.props.type === 'warning'
@@ -56,9 +54,9 @@ module.exports = React.createClass({
       <div className={cssClasses}>
         <div className="notification__content">
           <div className="notification__content__icon">
-            <FontIcon
+            <MUI.FontIcon
               style={styles}
-              className={"synicon-" + iconClass}/>
+              className={`synicon-${iconClass}`} />
           </div>
           <div>{this.props.children}</div>
         </div>

@@ -44,7 +44,7 @@ export default Radium(React.createClass({
       stars_count: isStarred ? this.state.stars_count - 1 : this.state.stars_count + 1
     });
 
-    return isStarred ? this.props.unstar(solutionId) : this.props.star(solutionId);
+    return isStarred ? this.props.onUnstar(solutionId) : this.props.onStar(solutionId);
   },
 
   render() {

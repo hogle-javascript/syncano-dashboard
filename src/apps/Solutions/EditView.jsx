@@ -38,7 +38,7 @@ export default React.createClass({
     Router.Navigation,
 
     Mixins.Dialogs,
-    HeaderMixin,
+    Mixins.IsLoading(),
 
     Reflux.connect(Store)
   ],
@@ -104,19 +104,6 @@ export default React.createClass({
     SolutionEditActions.showDialog();
   },
 
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      },
-      {
-        label: 'Solutions',
-        route: 'solutions'
-      }
-    ];
-  },
-
   getStyles() {
     return {
       main: {
@@ -175,12 +162,12 @@ export default React.createClass({
     });
   },
 
-  render() {
+  renderLoaded() {
     let styles = this.getStyles();
     let item = this.state.item;
 
     return (
-      <Container id='solutions'>
+      <div>
         {this.getDialogs()}
 
         <InstallDialog />
@@ -194,7 +181,7 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <MUI.Toolbar style={{background: 'transparent', padding: '0px'}}>
+        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top:64, padding: '0px'}}>
           <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
             <MUI.FontIcon
               style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
@@ -217,103 +204,109 @@ export default React.createClass({
           </MUI.ToolbarGroup>
         </MUI.Toolbar>
 
-        <div className="container" style={{clear: 'both'}}>
+        <Container id='solutions' style={styles.main}>
 
-          <div className="row" style={styles.main}>
-            <div className="col-flex-1">
-              <div className="row">
-                <div style={{textAlign: 'left', fontSize: '1.5rem', lineHeight: '1.5rem'}}>
-                  {this.state.item.label}
-                </div>
-              </div>
-              <div
-                className="row vp-3-t" style={styles.description}>
-                {this.state.item.description}
-              </div>
+          <div className="container" style={{paddingTop: 24, clear: 'both'}}>
 
-              <Common.Show if={!this.isMySolution()}>
+            <div className="row" style={styles.main}>
+              <div className="col-flex-1">
                 <div className="row">
-                  <MUI.FontIcon
-                    style={styles.cardTextListIcon}
-                    className="synicon-tag"
-                    color="rgba(222, 222, 222, 0.54)"
-                    />
-                  {this.renderItemTags()}
-                </div>
-              </Common.Show>
-
-              <Common.Show if={this.isMySolution()}>
-                <div className="row vp-1-b">
-                  <div className="col-flex-1">
-                    <div className="vp-1-b">Tags</div>
-                    <Select
-                      value={Store.getItemTags()}
-                      delimiter=","
-                      multi={true}
-                      allowCreate={true}
-                      placeholder="Select tags"
-                      options={Store.getTagsOptions()}
-                      onChange={this.handleTagsListChange}/>
+                  <div style={{textAlign: 'left', fontSize: '1.5rem', lineHeight: '1.5rem'}}>
+                    {this.state.item.label}
                   </div>
                 </div>
-              </Common.Show>
+                <div
+                  className="row vp-3-t" style={styles.description}>
+                  {this.state.item.description}
+                </div>
 
-              <div className="row" style={{marginLeft: '-18px'}}>
-                <Common.SolutionStar
-                  solution={this.state.item}
-                  star={Actions.starSolution}
-                  unstar={Actions.unstarSolution}
-                  />
+                <Common.Show if={!this.isMySolution()}>
+                  <div className="row">
+                    <MUI.FontIcon
+                      style={styles.cardTextListIcon}
+                      className="synicon-tag"
+                      color="rgba(222, 222, 222, 0.54)"
+                      />
+                    {this.renderItemTags()}
+                  </div>
+                </Common.Show>
+
+                <Common.Show if={this.isMySolution()}>
+                  <div className="row vp-1-b">
+                    <div className="col-flex-1">
+                      <div className="vp-1-b">Tags</div>
+                      <Select
+                        value={Store.getItemTags()}
+                        delimiter=","
+                        multi={true}
+                        allowCreate={true}
+                        placeholder="Select tags"
+                        options={Store.getTagsOptions()}
+                        onChange={this.handleTagsListChange}/>
+                    </div>
+                  </div>
+                </Common.Show>
+
+                <div className="row" style={{marginLeft: '-18px'}}>
+                  <Common.SolutionStar
+                    solution={this.state.item}
+                    onStar={Actions.starSolution}
+                    onUnstar={Actions.unstarSolution}
+                    />
+                </div>
+
+                <div className="row vp-5-t align-left">
+
+                  <MUI.RaisedButton
+                    primary={true}
+                    disabled={this.state.versions && this.state.versions.length < 1}
+                    label='Install solution'
+                    onClick={this.handleInstallSolution}/>
+                </div>
+
               </div>
-
-              <div className="row vp-5-t align-left">
-
-                <MUI.RaisedButton
-                  primary={true}
-                  disabled={this.state.versions && this.state.versions.length < 1}
-                  label='Install solution'
-                  onClick={this.handleInstallSolution}/>
-              </div>
-
-            </div>
-            <div className="col-flex-1">
-              <div className="row">
-                <div className="col-flex-1">
-                  <div className="row align-right">
-                    <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
-                      <div>{item.author ? item.author.first_name : ''}</div>
-                      <div>{item.author ? item.author.last_name : ''}</div>
+              <div className="col-flex-1">
+                <div className="row">
+                  <div className="col-flex-1">
+                    <div className="row align-right">
+                      <div style={{textAlign: 'right', marginTop: 15, fontSize: '1.5rem', lineHeight: '1.5rem'}}>
+                        <div>{item.author ? item.author.first_name : ''}</div>
+                        <div>{item.author ? item.author.last_name : ''}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-8">
+                    <div className="row align-right">
+                      <MUI.Avatar
+                        size={70}
+                        src={item.author ? item.author.avatar_url : null}/>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-8">
-                  <div className="row align-right">
-                    <MUI.Avatar
-                      size={70}
-                      src={item.author ? item.author.avatar_url : null}/>
-                  </div>
-                </div>
+
               </div>
-
             </div>
+
+
+            <div style={styles.main}>
+              <Common.Show if={!this.isMySolution() && this.isNoVersions()}>
+                <div style={styles.main}>No versions.</div>
+              </Common.Show>
+
+              <Common.Show if={!this.isNoVersions() || this.isMySolution()}>
+                <Common.Solutions.VersionsList
+                  name="Versions"
+                  items={this.state.versions}
+                  onInstall={this.handleInstallSolution}
+                  emptyItemHandleClick={this.handleAddVersion}
+                  emptyItemContent="Add new Version"
+                  />
+              </Common.Show>
+            </div>
+
           </div>
-
-          <Common.Show if={!this.isMySolution() && this.isNoVersions()}>
-            <div style={styles.main}>No versions.</div>
-          </Common.Show>
-
-          <Common.Show if={!this.isNoVersions() || this.isMySolution()}>
-            <Common.Solutions.VersionsList
-              name="Versions"
-              items={this.state.versions}
-              onInstall={this.handleInstallSolution}
-              emptyItemHandleClick={this.handleAddVersion}
-              emptyItemContent="Add new Version"
-              />
-          </Common.Show>
-
-        </div>
-      </Container>
+        </Container>
+      </div>
     );
   }
 });

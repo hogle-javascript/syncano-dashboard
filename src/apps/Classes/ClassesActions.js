@@ -1,16 +1,14 @@
 import CreateActions from '../../utils/ActionsConstructor.js'
 
-export default CreateActions({
-    checkItem: {},
-    uncheckAll: {},
-    selectAll: {},
-
+export default CreateActions(
+  {
+    withDialog: true,
+    withCheck: true
+  },
+  {
     setClasses: {},
     fetch: {},
     getClassByName: {},
-
-    showDialog: {},
-    dismissDialog: {},
 
     fetchClasses: {
       asyncResult: true,

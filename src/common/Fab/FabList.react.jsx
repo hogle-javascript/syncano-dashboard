@@ -22,7 +22,7 @@ export default Radium(React.createClass({
   getStyles() {
     let styles = {
       position: 'fixed',
-      right: '2vw',
+      right: '24px',
       zIndex: 9,
       display: 'flex',
       flexDirection: 'column',

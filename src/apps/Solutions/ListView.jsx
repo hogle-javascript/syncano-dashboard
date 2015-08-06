@@ -50,32 +50,18 @@ module.exports = React.createClass({
     }
   },
 
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      },
-      {
-        label: 'Solutions',
-        route: 'solutions'
-      }
-    ];
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, tab.props.params);
-  },
-
   getStyles() {
     return {
       container: {
-        width : '90%',
-        margin : '96px auto'
+        width: '90%',
+        margin: '96px auto'
       },
       sidebar: {
         minWidth: 230
       },
+      listItemChecked: {
+        background: MUI.Styles.Colors.lightBlue50
+      }
     }
   },
 
@@ -98,6 +84,15 @@ module.exports = React.createClass({
   handleToggleTagSelection(name) {
     Actions.toggleTagSelection(name);
   },
+
+  handleUnstarClick(solutionId) {
+    Actions.unstarSolution(solutionId);
+  },
+
+  handleStarClick(solutionId) {
+    Actions.starSolution(solutionId);
+  },
+
 
   render() {
     let styles = this.getStyles();
@@ -150,7 +145,8 @@ module.exports = React.createClass({
                   onInstall={this.handleInstallClick}
                   onSeeMore={this.handleSeeMoreClick}
                   onTagClick={this.handleTagClick}
-                  />
+                  onUnstar={this.handleUnstarClick}
+                  onStar={this.handleStarClick}/>
               </Common.Loading>
             </div>
           </div>

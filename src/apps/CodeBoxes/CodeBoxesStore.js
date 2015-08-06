@@ -134,7 +134,7 @@ export default Reflux.createStore({
   },
 
   setCodeBoxTraces(items) {
-    this.data.traces = Object.keys(items).map(key => items[key]);
+    this.data.traces = Object.keys(items).sort().map(key => items[key]);
     this.trigger(this.data);
   },
 

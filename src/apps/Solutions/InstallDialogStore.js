@@ -34,7 +34,7 @@ export default Reflux.createStore({
   },
 
   refreshState() {
-    this.trigger(this)
+    this.trigger(this);
   },
 
   getVersionsDropdown() {

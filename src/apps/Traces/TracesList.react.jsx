@@ -63,6 +63,7 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
+    let duration = item.status !== 'pending' ? item.duration + 'ms' : item.status;
     let styles = this.getStyles();
     let status = {
       blocked: {
@@ -116,7 +117,7 @@ export default Radium(React.createClass({
             {item.status}
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
-          <Column.Desc>{item.duration}ms</Column.Desc>
+          <Column.Desc>{duration}</Column.Desc>
           <Column.Date
             date={item.executed_at}
             ifInvalid={item.status}/>
@@ -153,7 +154,6 @@ export default Radium(React.createClass({
 
     if (items.length > 0) {
       items = items.map(item => this.renderItem(item));
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }

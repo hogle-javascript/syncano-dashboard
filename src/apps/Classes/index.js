@@ -2,13 +2,13 @@ import Classes from './Classes.react';
 import ClassesStore from './ClassesStore';
 import ClassesList from './ClassesList.react';
 import ClassesActions from './ClassesActions';
-import ClassDialog from './ClassDialog.react';
-import ClassDialogStore from './ClassDialogStore';
+import FormView from './FormView.react';
+import FormViewStore from './FormViewStore';
 
 Classes.Actions = ClassesActions;
 Classes.Store = ClassesStore;
 Classes.List = ClassesList;
-Classes.Dialog = ClassDialog;
-Classes.DialogStore = ClassDialogStore;
+Classes.FormView = FormView;
+Classes.FormViewStore = FormViewStore;
 
 export default Classes;

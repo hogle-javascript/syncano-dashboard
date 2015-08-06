@@ -68,7 +68,7 @@ module.exports = {
       selector: 'input[name="description"]'
     },
     confirmButton: {
-      selector: 'button span[data-reactid*="$submitLabel"]'
+      selector: 'button[type="submit"]'
     },
     addButton: {
       selector: '//span[text()="Add"]',
@@ -79,6 +79,10 @@ module.exports = {
     },
     classTableRow: {
       selector: '//div[@class="classes-list-container"]/div[2]',
+      locateStrategy: 'xpath'
+    },
+    userClassListItem: {
+      selector: '//div[text()="Class that holds profiles for users."]',
       locateStrategy: 'xpath'
     },
     selectClass: {
@@ -100,12 +104,12 @@ module.exports = {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    addClassModalTitle: {
-      selector: '//h3[text()="Add a Class"]',
+    addClassTitle: {
+      selector: '//span[text()="Add a Class"]',
       locateStrategy: 'xpath'
     },
-    editClassModalTitle: {
-      selector: '//h3[text()="Update a Class"]',
+    editClassTitle: {
+      selector: '//span[text()="Update a Class"]',
       locateStrategy: 'xpath'
     },
     deleteClassModalTitle: {

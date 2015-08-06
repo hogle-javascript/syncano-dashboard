@@ -3,12 +3,12 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
+import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
-import {isLoading} from '../../decorators';
 
 import Common from '../../common';
 
@@ -21,7 +21,8 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    HeaderMixin
+    HeaderMixin,
+    Mixins.IsLoading({attr: 'state.items'})
   ],
 
   getInitialState() {
@@ -91,8 +92,7 @@ export default React.createClass({
     }
   },
 
-  @isLoading({attr: 'state.items'})
-  render() {
+  renderLoaded() {
     let styles = this.getStyles();
 
     return (
