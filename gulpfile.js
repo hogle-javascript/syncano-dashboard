@@ -173,7 +173,7 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
       // streams not supported
       if (file.isStream()) {
         this.emit('error',
-          new gutil.PluginError(PLUGIN_NAME, 'Stream content is not supported'));
+          new gutil.PluginError('publish', 'Stream content is not supported'));
         return cb();
       }
 
