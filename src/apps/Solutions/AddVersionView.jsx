@@ -218,11 +218,6 @@ export default Radium(React.createClass({
           <MUI.ToolbarGroup>
             <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId}/>
           </MUI.ToolbarGroup>
-
-          <MUI.ToolbarGroup float="right">
-
-          </MUI.ToolbarGroup>
-
         </MUI.Toolbar>
         <Common.Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
           <div style={{fontSize: '2rem', lineHeight: '2rem'}}>Add Version</div>
@@ -276,14 +271,14 @@ export default Radium(React.createClass({
                 ref='cancel'
                 key='cancel'
                 label='Cancel'
-                onTouchTap={this.handleCancel}/>
+                onTouchTap={this.handleBackClick}/>
               <MUI.RaisedButton
-                ref        = 'submit'
-                key        = 'confirm'
-                label      = 'Confirm'
-                disable    = {this.state.instance === null}
-                primary    = {true}
-                onTouchTap = {this.handleFormValidation} />
+                ref='submit'
+                key='confirm'
+                label='Confirm'
+                disable={this.state.instance === null}
+                primary={true}
+                onTouchTap={this.handleFormValidation} />
             </div>
           </div>
         </Common.Container>
