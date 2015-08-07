@@ -43,15 +43,38 @@ export default React.createClass({
     }
   },
 
+  getConfig() {
+    return {
+      webhook: {
+        route: 'data',
+        backLabel: 'Go back to Data Views'
+      },
+      codebox: {
+        route: 'codeboxes',
+        backLabel: 'Go back to CodeBoxes list'
+      },
+      trigger: {
+        route: 'data',
+        backLabel: 'Go back to Data Views'
+      },
+      schedule: {
+        route: 'data',
+        backLabel: 'Go back to Data Views'
+      }
+    }[this.props.tracesFor];
+  },
+
   componentDidMount() {
     Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
   },
 
   handleBackClick() {
-    this.transitionTo('data', this.getParams());
+    const config = this.getConfig();
+    this.transitionTo(config.route, this.getParams());
   },
 
   render() {
+    const config = this.getConfig();
     let headerText = this.props.showHeader ? this.props.tracesFor.charAt(0).toUpperCase() +
     this.props.tracesFor.slice(1) + ': ' + this.props.objectId : null;
 
@@ -68,7 +91,7 @@ export default React.createClass({
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
-              tooltip="Go back to Data Views"
+              tooltip={config.backLabel}
               tooltipPosition="bottom-right"
               onClick={this.handleBackClick}
               touch={true}
