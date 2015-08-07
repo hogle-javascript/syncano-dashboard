@@ -34,7 +34,11 @@ export default React.createClass({
     }
     return {
       number: {
-        presence: true
+        presence: true,
+        length: {maximum: 19},
+        numericality: {
+          onlyInteger: true
+        }
       },
       cvc: {
         presence: true,
@@ -55,7 +59,10 @@ export default React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThan: 0
+          greaterThanOrEqualTo: new Date().getFullYear()
+        },
+        length: {
+          is: 4
         }
       }
     }
