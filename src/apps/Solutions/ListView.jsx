@@ -117,9 +117,9 @@ module.exports = React.createClass({
             <div style={styles.sidebar}>
               <MUI.List zDepth={1} className="vm-6-b">
                 <MUI.ListItem
-                  innerDivStyle={!this.state.filter ? styles.listItemChecked : {}}
+                  innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
                   primaryText="All solutions"
-                  onTouchTap={this.handleChangeFilter.bind(this, null)}
+                  onTouchTap={this.handleChangeFilter.bind(this, 'public')}
                   />
                 <MUI.ListDivider />
                 <MUI.ListItem
