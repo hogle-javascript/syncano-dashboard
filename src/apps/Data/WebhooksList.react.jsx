@@ -70,7 +70,7 @@ export default React.createClass({
     if (item.public) {
       publicCell = (
         <div style={{marginLeft: '-14px'}}>
-          <ReactZeroClipboard text={SYNCANO_BASE_URL.slice(0, -1) + item.links['public-link']}>
+          <ReactZeroClipboard text={SYNCANO_BASE_URL.slice(0, - 1) + item.links['public-link']}>
             <MUI.IconButton
               iconClassName="synicon-link-variant"
               tooltip="Copy Webhook URL"
