@@ -185,7 +185,11 @@ export default Radium(React.createClass({
                 </a>
               </li>
               <li style={styles.toolbarListItem}>
-                <a href="mailto:support@syncano.com">Support</a>
+                <a
+                  href="http://www.syncano.com/support/"
+                  target="_blank">
+                  Support
+                </a>
               </li>
               <li style={styles.toolbarListItem}>
                 <a onClick={this.handleSolutionsClick}>Solutions</a>

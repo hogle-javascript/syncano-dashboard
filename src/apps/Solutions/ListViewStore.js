@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -21,7 +22,8 @@ export default Reflux.createStore({
       items: null,
       tags: [],
       selectedTags: [],
-      isLoading: false
+      isLoading: false,
+      filter: 'public'
     }
   },
 
@@ -46,15 +48,21 @@ export default Reflux.createStore({
       starred_by_me: this.data.filter === 'starred_by_me' || false
     };
 
-    if (this.data.selectedTags.length)
+    if (this.data.selectedTags.length) {
       payload.tags = this.data.selectedTags;
+    }
 
     Actions.fetchSolutions(payload);
+  },
+
+  getPublicSolutions(solutions = this.data.items) {
+    return _.filter(solutions, solution => solution.public === true);
   },
 
   setSolutions(solutions) {
     console.debug('SolutionsStore::setSolutions');
     this.data.items = this.saveListFromSyncano(solutions);
+    this.data.items = this.data.filter === 'public' ? this.getPublicSolutions() : this.data.items;
     this.trigger(this.data);
   },
 

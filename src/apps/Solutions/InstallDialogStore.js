@@ -140,7 +140,7 @@ export default Reflux.createStore({
     SessionStore.getRouter().transitionTo('instance', {instanceName: payload.instance});
     this.setSnackbarNotification({
       delay: true,
-      message: 'Solution installed successful',
+      message: 'Solution successfully installed',
       action: 'dismiss',
       onActionTouchTap() {
         this.refs.snackbar.dismiss();

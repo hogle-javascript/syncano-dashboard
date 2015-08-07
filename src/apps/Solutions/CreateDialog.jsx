@@ -21,7 +21,7 @@ export default React.createClass({
     Mixins.Dialog,
     Mixins.Form,
 
-    Reflux.connect(Store),
+    Reflux.connect(Store)
   ],
 
   validatorConstraints: {
@@ -81,14 +81,14 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-            ref               = 'label'
-            name              = 'label'
-            fullWidth         = {true}
-            disabled          = {this.hasEditMode()}
-            valueLink         = {this.linkState('label')}
-            errorText         = {this.getValidationMessages('label').join(' ')}
-            hintText          = 'Short name for your Solution'
-            floatingLabelText = 'Name' />
+            ref='label'
+            name='label'
+            fullWidth={true}
+            disabled={this.hasEditMode()}
+            valueLink={this.linkState('label')}
+            errorText={this.getValidationMessages('label').join(' ')}
+            hintText='Short name for your Solution'
+            floatingLabelText='Name' />
           <MUI.TextField
             ref='description'
             name='description'
