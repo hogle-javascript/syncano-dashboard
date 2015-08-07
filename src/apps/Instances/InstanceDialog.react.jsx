@@ -81,24 +81,33 @@ export default React.createClass({
         onShow={this.handleDialogShow}>
         <div>
           {this.renderFormNotifications()}
-          <MUI.TextField
-            ref="name"
-            name="name"
-            fullWidth={true}
-            disabled={true}
-            valueLink={this.linkState('name')}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Short name for your Instance"
-            floatingLabelText="Name"/>
-          <MUI.TextField
-            ref="description"
-            name="description"
-            fullWidth={true}
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join(' ')}
-            hintText="Multiline description of Instance (optional)"
-            floatingLabelText="Description"/>
+          <form
+            onSubmit={this.handleFormValidation}
+            acceptCharset="UTF-8"
+            method="post">
+            <MUI.TextField
+              ref="name"
+              name="name"
+              fullWidth={true}
+              disabled={true}
+              valueLink={this.linkState('name')}
+              errorText={this.getValidationMessages('name').join(' ')}
+              hintText="Short name for your Instance"
+              floatingLabelText="Name"/>
+            <MUI.TextField
+              ref="description"
+              name="description"
+              fullWidth={true}
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              hintText="Multiline description of Instance (optional)"
+              floatingLabelText="Description"/>
+          </form>
         </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
       </Common.Dialog>
     );
   }
