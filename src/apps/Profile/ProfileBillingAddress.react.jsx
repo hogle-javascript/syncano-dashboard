@@ -21,7 +21,7 @@ export default React.createClass({
   validatorConstraints: {
     company_name: {
       length: {maximum: 150},
-      presence: true,
+      presence: true
     },
     first_name: {
       length: {maximum: 35},
