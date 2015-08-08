@@ -38,7 +38,7 @@ export default Reflux.createStore({
 
   amIOwner(item) {
     if (item) {
-      return item.owner.email === SessionStore.getUser().email;
+      return item.owner.email === SessionStore.getUser({}).email;
     }
   },
 
