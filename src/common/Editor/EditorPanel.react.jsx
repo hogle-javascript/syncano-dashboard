@@ -1,3 +1,5 @@
+/*eslint no-catch-shadow:0*/
+
 import React from 'react';
 import Radium from 'radium';
 import classNames from 'classnames';

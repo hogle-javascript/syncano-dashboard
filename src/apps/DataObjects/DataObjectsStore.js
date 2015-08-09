@@ -162,7 +162,7 @@ export default Reflux.createStore({
   getColumn(columnId) {
     let column = null;
     this.data.columns.some(columnObj => {
-      if (column.id = columnId) {
+      if (column.id.toString() === columnId.toString()) {
         column = columnObj;
         return true;
       }
