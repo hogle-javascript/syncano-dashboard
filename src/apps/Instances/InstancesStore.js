@@ -45,8 +45,8 @@ export default Reflux.createStore({
   onCheckItem(checkId, state) {
     console.debug('InstancesStore::onCheckItem');
 
-    let item = this.getInstanceById(checkId),
-      checkedItems = this.getCheckedItems();
+    let item = this.getInstanceById(checkId);
+    let checkedItems = this.getCheckedItems();
 
     // Unchecking or no items checked
     if (!state || checkedItems.length === 0) {
@@ -56,8 +56,8 @@ export default Reflux.createStore({
     }
 
     // Checking if the item is from the same list as other checked
-    let newItemFromMyList = this.amIOwner(item),
-      otherItemFromMyList = this.amIOwner(checkedItems[0]);
+    let newItemFromMyList = this.amIOwner(item);
+    let otherItemFromMyList = this.amIOwner(checkedItems[0]);
 
     item.checked = state;
     if (!(newItemFromMyList && otherItemFromMyList)) {

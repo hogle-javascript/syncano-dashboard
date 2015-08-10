@@ -1,11 +1,12 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  Radium = require('radium'),
-  mui = require('material-ui'),
-  CircularProgress = mui.CircularProgress,
-  LinearProgress = mui.LinearProgress;
+import React from 'react';
+import classNames from 'classnames';
+import Radium from 'radium';
+import mui from 'material-ui';
 
-module.exports = Radium(React.createClass({
+let CircularProgress = mui.CircularProgress;
+let LinearProgress = mui.LinearProgress;
+
+export default Radium(React.createClass({
 
   displayName: 'Loading',
 

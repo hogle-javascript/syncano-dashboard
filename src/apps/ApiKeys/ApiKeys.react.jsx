@@ -116,8 +116,8 @@ export default React.createClass({
   },
 
   render() {
-    let checkedApiKeys = Store.getNumberOfChecked(),
-      isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
+    let checkedApiKeys = Store.getNumberOfChecked();
+    let isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
 
     return (
       <Container>

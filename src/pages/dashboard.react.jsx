@@ -1,15 +1,14 @@
-var React = require('react'),
-  Router = require('react-router'),
-  RouteHandler = Router.RouteHandler,
+import React from 'react';
+import Router from 'react-router';
 
 // Stores and Action
-  SessionStore = require('../apps/Session/SessionStore'),
-  AuthConstants = require('../apps/Account/AuthConstants'),
+import SessionStore from '../apps/Session/SessionStore';
+import AuthConstants from '../apps/Account/AuthConstants';
 
 // Components
-  Header = require('../apps/Header/Header.react');
+import Header from '../apps/Header/Header.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Dashboard',
 
@@ -34,7 +33,7 @@ module.exports = React.createClass({
     return (
       <div>
         <Header />
-        <RouteHandler />
+        <Router.RouteHandler />
       </div>
     );
   }

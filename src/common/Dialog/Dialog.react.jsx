@@ -39,9 +39,9 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      style = this.mergeAndPrefix(this.props.style, styles.style),
-      bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
+    let styles = this.getStyles();
+    let style = this.mergeAndPrefix(this.props.style, styles.style);
+    let bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
 
     return (
       <MUI.Dialog

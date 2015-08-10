@@ -64,9 +64,9 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let hasCard = !_.isEmpty(this.state.card),
-      showForm = !hasCard || this.state.showForm === true || this.state.show_form === true,
-      labelPrefix = hasCard ? 'Update' : 'Add';
+    let hasCard = !_.isEmpty(this.state.card);
+    let showForm = !hasCard || this.state.showForm === true || this.state.show_form === true;
+    let labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
         <Common.Loading show={this.state.isLoading}>
