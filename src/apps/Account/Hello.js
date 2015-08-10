@@ -10,6 +10,8 @@ options.redirect_uri = location.protocol + '//' + location.host;
 options.scope = 'email';
 options.oauth_proxy = OAUTH_PROXY_URL;
 
+options.display = 'page';
+
 hello.init(credentials, options);
 
 module.exports = hello;
