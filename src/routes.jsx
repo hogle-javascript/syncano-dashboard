@@ -25,7 +25,7 @@ import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import CodeBoxes from './apps/CodeBoxes';
 import DataObjects from './apps/DataObjects/DataObjects.react';
 import Data from './apps/Data';
-import Tasks from './apps/Tasks/Tasks.react';
+import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
 
@@ -190,9 +190,19 @@ module.exports = (
         {/* Tasks */}
         <Route
           name="tasks"
-          handler={Tasks}
           path="tasks"
-          />
+          >
+
+          {/* Schedule Traces */}
+          <Route
+            name='schedule-traces'
+            handler={Tasks.ScheduleTraces}
+            path='schedule/:scheduleId/traces'
+            />
+
+          <DefaultRoute handler={Tasks}/>
+
+        </Route>
 
         {/* Channels */}
         <Route

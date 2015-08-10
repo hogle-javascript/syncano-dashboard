@@ -58,8 +58,8 @@ export default React.createClass({
         backLabel: 'Go back to Data Views'
       },
       schedule: {
-        route: 'data',
-        backLabel: 'Go back to Data Views'
+        route: 'tasks',
+        backLabel: 'Go back to Tasks list'
       }
     }[this.props.tracesFor];
   },
@@ -75,8 +75,6 @@ export default React.createClass({
 
   render() {
     const config = this.getConfig();
-    let headerText = this.props.showHeader ? this.props.tracesFor.charAt(0).toUpperCase() +
-    this.props.tracesFor.slice(1) + ': ' + this.props.objectId : null;
 
     return (
       <div>
