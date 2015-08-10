@@ -31,7 +31,6 @@ var React                = require('react'),
     CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
     ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
     Label                = require('../common/Label/Label.react'),
-    ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
     Editor               = require('../common/Editor/Editor.react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
     FabList              = require('../common/Fab/FabList.react'),
@@ -40,7 +39,6 @@ var React                = require('react'),
     SwitchField          = require('../common/SwitchField/SwitchField.react'),
     SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
     SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
-    AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
     SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
     List                 = require('../common/Lists/List.react'),
     Trace                = require('../common/Trace/TraceResult.react'),
@@ -324,11 +322,6 @@ module.exports = React.createClass({
       value: ""
     };
 
-    var fieldSelectOption = {
-      displayName: "Option display name",
-      name: 5
-    };
-
     var columns = [
       {
         name: 'CodeBox',
@@ -484,13 +477,6 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ListItemEmpty</h2>
-          <ListItemEmpty
-            icon={"inbox"}
-            text={text}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>Editor</h2>
           <Editor
             source={source}
@@ -513,11 +499,6 @@ module.exports = React.createClass({
               <span><strong>2345</strong></span>
             </ColumnListItemColumn>
           </ColumnListItem>
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItemEmpty</h4>
-          <ListItemEmpty icon={"inbox"} text={text}/>
         </div>
 
         <div className="exampleBox">
@@ -557,19 +538,6 @@ module.exports = React.createClass({
           <h2>SelectField (Drop Down from material UI)</h2>
           <SelectField
             menuItems={fieldSelectMUI} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldSelectOption</h2>
-          <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
         </div>
 
         <div className="exampleBox">
@@ -640,11 +608,6 @@ module.exports = React.createClass({
             modal={modalState}>
             Based on JSON
           </Dialog>
-        </div>
-
-        <div className="exampleBox">
-          <h4>AvatarInitials</h4>
-          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">
