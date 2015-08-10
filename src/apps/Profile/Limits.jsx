@@ -19,8 +19,8 @@ export default React.createClass({
           <div>CodeBox runs</div>
         </div>
         <div className="col-md-9" style={{textAlign: 'right'}}>
-          <div><strong>{parseInt(this.props.data.api.included).toLocaleString()}/month</strong></div>
-          <div><strong>{parseInt(this.props.data.cbx.included).toLocaleString()}/month</strong></div>
+          <div><strong>{parseInt(this.props.data.api.included, 10).toLocaleString()}/month</strong></div>
+          <div><strong>{parseInt(this.props.data.cbx.included, 10).toLocaleString()}/month</strong></div>
         </div>
 
         <Show if={this.props.data.api.overage && this.props.data.cbx.overage}>
