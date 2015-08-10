@@ -30,7 +30,6 @@ let MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react');
 let CheckIcon            = require('../common/CheckIcon/CheckIcon.react');
 let ProgressBar          = require('../common/ProgressBar/ProgressBar.react');
 let Label                = require('../common/Label/Label.react');
-let ListItemEmpty        = require('../common/Lists/ListItemEmpty.react');
 let Editor               = require('../common/Editor/Editor.react');
 let EditorPanel          = require('../common/Editor/EditorPanel.react');
 let FabList              = require('../common/Fab/FabList.react');
@@ -39,7 +38,6 @@ let UsageBar             = require('../common/UsageBar/UsageBar.react');
 let SwitchField          = require('../common/SwitchField/SwitchField.react');
 let SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react');
 let SwitchInput          = require('../common/SwitchField/SwitchInput.react');
-let AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react');
 let SocialAuthButtonsList = require('../common/SocialAuthButtonsList');
 let List                 = require('../common/Lists/List.react');
 let Trace                = require('../common/Trace/TraceResult.react');
@@ -323,11 +321,6 @@ export default React.createClass({
       value: ""
     };
 
-    var fieldSelectOption = {
-      displayName: "Option display name",
-      name: 5
-    };
-
     var columns = [
       {
         name: 'CodeBox',
@@ -483,13 +476,6 @@ export default React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ListItemEmpty</h2>
-          <ListItemEmpty
-            icon={"inbox"}
-            text={text}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>Editor</h2>
           <Editor
             source={source}
@@ -512,11 +498,6 @@ export default React.createClass({
               <span><strong>2345</strong></span>
             </ColumnListItemColumn>
           </ColumnListItem>
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItemEmpty</h4>
-          <ListItemEmpty icon={"inbox"} text={text}/>
         </div>
 
         <div className="exampleBox">
@@ -556,19 +537,6 @@ export default React.createClass({
           <h2>SelectField (Drop Down from material UI)</h2>
           <SelectField
             menuItems={fieldSelectMUI} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldSelectOption</h2>
-          <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
         </div>
 
         <div className="exampleBox">
@@ -639,11 +607,6 @@ export default React.createClass({
             modal={modalState}>
             Based on JSON
           </Dialog>
-        </div>
-
-        <div className="exampleBox">
-          <h4>AvatarInitials</h4>
-          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">
