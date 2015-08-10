@@ -96,7 +96,7 @@ export default Radium(React.createClass({
         if (spec[section][item] === true) {
           let obj = {};
           if (pkName === 'id') {
-            item = parseInt(item);
+            item = parseInt(item, 10);
           }
           obj[pkName] = item;
           formatedSpec[section].push(obj);

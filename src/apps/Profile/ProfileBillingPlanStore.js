@@ -165,7 +165,7 @@ export default Reflux.createStore({
       commitment = subscription.commitment;
     }
 
-    return parseInt(commitment.api) + parseInt(commitment.cbx);
+    return parseInt(commitment.api, 10) + parseInt(commitment.cbx, 10);
   },
 
   onFetchBillingProfileCompleted(payload) {
