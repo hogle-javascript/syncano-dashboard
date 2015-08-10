@@ -17,6 +17,7 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
 
     dataPage.clickButton('@webhookListItem');
 

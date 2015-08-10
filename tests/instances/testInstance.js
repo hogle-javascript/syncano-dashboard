@@ -17,8 +17,9 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
 
-    client.pause(2000);
+    // client.pause(2000);
     dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
     dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
 
