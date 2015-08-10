@@ -1,10 +1,10 @@
-var React     = require('react'),
-    Moment    = require('moment'),
+import React from 'react';
+import Moment from 'moment';
 
-    Dropdown  = require('../Dropdown/Dropdown.react'),
-    TableData = require('./TableData.react');
+import Dropdown from '../Dropdown/Dropdown.react';
+import TableData from './TableData.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'TableRow',
 

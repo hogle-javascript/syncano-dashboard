@@ -73,7 +73,7 @@ export default Radium(React.createClass({
           <div className="row">
             <div className="col-md-8">{row.label}</div>
             <div className="col-md-10" style={styles.legendAmount}>
-              <strong>{parseInt(row.amount).toLocaleString()}</strong>  this month</div>
+              <strong>{parseInt(row.amount, 10).toLocaleString()}</strong>  this month</div>
               {this.props.showPercents ? this.renderPercent(row) : null}
           </div>
         </div>

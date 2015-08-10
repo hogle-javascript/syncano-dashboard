@@ -1,17 +1,17 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  OutsideClickHandler = require('react-outsideclickhandler'),
+let React = require('react');
+let classNames = require('classnames');
+let OutsideClickHandler = require('react-outsideclickhandler');
 
-  Constants = require('../../constants/Constants'),
+let Constants = require('../../constants/Constants');
 
-  mui = require('material-ui'),
-  FontIcon = mui.FontIcon,
-  Mixins = require('../../mixins/mixins'),
+let mui = require('material-ui');
+let FontIcon = mui.FontIcon;
+let Mixins = require('../../mixins/mixins');
 
-  DropdownMenuItem = require('./DropdownMenuItem.react');
+let DropdownMenuItem = require('./DropdownMenuItem.react');
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Dropdown',
 

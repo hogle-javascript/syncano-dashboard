@@ -1,7 +1,8 @@
-let Reflux = require('reflux'),
-  Syncano = require('../Session/Connection'),
-  Connection = Syncano.get(),
-  D = Syncano.D;
+import Reflux from 'reflux';
+import Syncano from '../Session/Connection';
+
+let Connection = Syncano.get();
+let D = Syncano.D;
 
 let ChannelsActions = Reflux.createActions({
   checkItem: {},
@@ -69,4 +70,4 @@ ChannelsActions.removeChannels.listen(function(names) {
     .error(this.failure);
 });
 
-module.exports = ChannelsActions;
+export default ChannelsActions;

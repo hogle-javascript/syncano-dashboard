@@ -62,8 +62,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      cardTypeIcon = this.props.card.brand ? this.getCardTypeIcon(this.props.card.brand) : null;
+    let styles = this.getStyles();
+    let cardTypeIcon = this.props.card.brand ? this.getCardTypeIcon(this.props.card.brand) : null;
 
     return (
       <div className="vm-6-b" style={styles.cardContainer}>

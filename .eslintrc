@@ -97,7 +97,6 @@
     //   "exceptions": ["-", "+"],
     //   "markers": ["=", "!"]
     // }],
-    // "one-var": 2,
     // "init-declarations": 2,
     // "react/wrap-multilines": [2, "never"],
     // "no-useless-call": 2,
@@ -111,10 +110,9 @@
     // "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
     // "no-extra-bind": 2,
     // "accessor-pairs": 2,
-    // "radix": 2,
+    "radix": 2,
     // "no-multi-spaces": 2,
     // "curly": [2, "multi-line"],
-    // "no-bitwise": 2,
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
@@ -179,7 +177,6 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "one-var": 1,
     "init-declarations": 1,
     "react/wrap-multilines": [1, "never"],
     "no-useless-call": 1,
@@ -193,10 +190,8 @@
     "id-length": [1, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
     "no-extra-bind": 1,
     "accessor-pairs": 1,
-    "radix": 1,
     "no-multi-spaces": 1,
     "curly": [1, "multi-line"],
-    "no-bitwise": 1,
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
     "react/no-did-update-set-state": 1,
@@ -323,6 +318,7 @@
     "space-return-throw-case": 2,
     "space-unary-ops": 2,
     "wrap-regex": 2,
+    "one-var": [2, "never"],
 
     // ECMAScript 6
     "arrow-spacing": [2, {"before": true, "after": true}],
@@ -340,6 +336,7 @@
     "max-depth": [1, 2],
     "max-params": [1, 4],
     "max-statements": [1, 4],
+    "no-bitwise": 2,
 
     // React
     "react/display-name": 0,

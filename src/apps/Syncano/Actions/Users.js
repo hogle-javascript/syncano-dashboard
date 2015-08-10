@@ -10,8 +10,8 @@ export default {
   },
 
   create(payload, groups) {
-    let userGroups = groups.newGroups ? groups.newGroups : null,
-      userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
+    let userGroups = groups.newGroups ? groups.newGroups : null;
+    let userGroupsArray = _.isArray(userGroups) ? userGroups : [userGroups];
 
     if (userGroups) {
       this.Connection
@@ -39,13 +39,13 @@ export default {
       .Users
       .update(id, payload)
       .success(() => {
-        let groupsId = groups.groups.map(group => group.id),
-          newGroupsId = groups.newGroups.map(group => group.id),
-          addedGroups = _.difference(newGroupsId, groupsId),
-          removedGroups = _.difference(groupsId, newGroupsId),
-          addUserToGroups = addedGroups.map(group => this.Connection.Users.addToGroup(id, group)),
-          removeUserFromGroups = removedGroups.map(group => this.Connection.Users.removeFromGroup(id, group)),
-          promises = removeUserFromGroups.concat(addUserToGroups);
+        let groupsId = groups.groups.map(group => group.id);
+        let newGroupsId = groups.newGroups.map(group => group.id);
+        let addedGroups = _.difference(newGroupsId, groupsId);
+        let removedGroups = _.difference(groupsId, newGroupsId);
+        let addUserToGroups = addedGroups.map(group => this.Connection.Users.addToGroup(id, group));
+        let removeUserFromGroups = removedGroups.map(group => this.Connection.Users.removeFromGroup(id, group));
+        let promises = removeUserFromGroups.concat(addUserToGroups);
 
         this.D.all(promises)
           .success(this.completed)

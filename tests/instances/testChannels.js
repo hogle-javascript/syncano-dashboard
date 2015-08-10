@@ -16,6 +16,9 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
     
+    var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
+    
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@channels');
 

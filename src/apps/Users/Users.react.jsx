@@ -176,11 +176,11 @@ export default React.createClass({
   },
 
   render() {
-    let checkedUsers = Store.getNumberOfChecked(),
-      isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length),
-      activeGroup = GroupsStore.getActiveGroup(),
-      markedIcon = 'synicon-checkbox-multiple-marked-outline',
-      blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let checkedUsers = Store.getNumberOfChecked();
+    let isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length);
+    let activeGroup = GroupsStore.getActiveGroup();
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>

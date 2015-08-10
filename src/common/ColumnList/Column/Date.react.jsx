@@ -56,12 +56,12 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      ifInvalid = this.props.ifInvalid || '',
-      date = Moment(this.props.date),
-      isValid = date.isValid(),
-      format = isValid ? date.format('DD/MM/YYYY') : ifInvalid,
-      lts = isValid ? date.format('LTS') : '';
+    let styles = this.getStyles();
+    let ifInvalid = this.props.ifInvalid || '';
+    let date = Moment(this.props.date);
+    let isValid = date.isValid();
+    let format = isValid ? date.format('DD/MM/YYYY') : ifInvalid;
+    let lts = isValid ? date.format('LTS') : '';
 
     return (
       <div
