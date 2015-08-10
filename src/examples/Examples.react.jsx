@@ -1,63 +1,62 @@
-var React                = require('react'),
-    mui                  = require('material-ui'),
-    gravatar             = require('gravatar'),
+let React                = require('react');
+let mui                  = require('material-ui');
+let gravatar             = require('gravatar');
 
-    ThemeManager         = new mui.Styles.ThemeManager(),
-    TextField            = mui.TextField,
-    DatePicker           = mui.DatePicker,
-    TimePicker           = mui.TimePicker,
-    Colors               = mui.Styles.Colors,
-    LinearProgress       = mui.LinearProgress,
-    Dialog               = mui.Dialog,
-    Snackbar             = mui.Snackbar,
-    FlatButton           = mui.FlatButton,
-    // List                 = mui.List,
-    ListItem             = mui.ListItem,
-    ListDivider          = mui.ListDivider,
-    Avatar               = mui.Avatar,
-    Toggle               = mui.Toggle,
-    IconButton           = mui.IconButton,
-    FontIcon             = mui.FontIcon,
-    IconMenu             = mui.IconMenu,
-    Menu                 = mui.Menu,       // this menu is from lib/menu/menu
-    MenuItem             = mui.MenuItem,   // this menu item is from lib/menu/menu-items
-    SelectField          = mui.SelectField,
-    ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-    MenuNew              = require('material-ui/lib/menus/menu'),
-    MenuItemNew          = require('material-ui/lib/menus/menu-item'),
+let ThemeManager         = new mui.Styles.ThemeManager();
+let TextField            = mui.TextField;
+let DatePicker           = mui.DatePicker;
+let TimePicker           = mui.TimePicker;
+let Colors               = mui.Styles.Colors;
+let LinearProgress       = mui.LinearProgress;
+let Dialog               = mui.Dialog;
+let Snackbar             = mui.Snackbar;
+let FlatButton           = mui.FlatButton;
+let ListItem             = mui.ListItem;
+let ListDivider          = mui.ListDivider;
+let Avatar               = mui.Avatar;
+let Toggle               = mui.Toggle;
+let IconButton           = mui.IconButton;
+let FontIcon             = mui.FontIcon;
+let IconMenu             = mui.IconMenu;
+let Menu                 = mui.Menu;       // this menu is from lib/menu/menu
+let MenuItem             = mui.MenuItem;   // this menu item is from lib/menu/menu-items
+let SelectField          = mui.SelectField;
+let ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right');
+let MenuNew              = require('material-ui/lib/menus/menu');
+let MenuItemNew          = require('material-ui/lib/menus/menu-item');
 
-    Dropdown             = require('../common/Dropdown/Dropdown.react'),
-    MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
-    CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
-    ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
-    Label                = require('../common/Label/Label.react'),
-    ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
-    Editor               = require('../common/Editor/Editor.react'),
-    EditorPanel          = require('../common/Editor/EditorPanel.react'),
-    FabList              = require('../common/Fab/FabList.react'),
-    UsageBar             = require('../common/UsageBar/UsageBar.react'),
+let Dropdown             = require('../common/Dropdown/Dropdown.react');
+let MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react');
+let CheckIcon            = require('../common/CheckIcon/CheckIcon.react');
+let ProgressBar          = require('../common/ProgressBar/ProgressBar.react');
+let Label                = require('../common/Label/Label.react');
+let ListItemEmpty        = require('../common/Lists/ListItemEmpty.react');
+let Editor               = require('../common/Editor/Editor.react');
+let EditorPanel          = require('../common/Editor/EditorPanel.react');
+let FabList              = require('../common/Fab/FabList.react');
+let UsageBar             = require('../common/UsageBar/UsageBar.react');
 
-    SwitchField          = require('../common/SwitchField/SwitchField.react'),
-    SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
-    SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
-    AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
-    SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
-    List                 = require('../common/Lists/List.react'),
-    Trace                = require('../common/Trace/TraceResult.react'),
-    TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
-    Loading              = require('../common/Loading/Loading.react'),
-    Slider               = require('../common/Slider/Slider.react'),
+let SwitchField          = require('../common/SwitchField/SwitchField.react');
+let SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react');
+let SwitchInput          = require('../common/SwitchField/SwitchInput.react');
+let AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react');
+let SocialAuthButtonsList = require('../common/SocialAuthButtonsList');
+let List                 = require('../common/Lists/List.react');
+let Trace                = require('../common/Trace/TraceResult.react');
+let TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react');
+let Loading              = require('../common/Loading/Loading.react');
+let Slider               = require('../common/Slider/Slider.react');
 
-    ColumnListItem       = require('../common/ColumnList/Item.react'),
-    ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
-    ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
+let ColumnListItem       = require('../common/ColumnList/Item.react');
+let ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react');
+let ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
 
 
 //var FlatButton = require('material-ui').FlatButton;
 
 require('./Examples.css');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Examples',
 

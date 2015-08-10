@@ -64,20 +64,20 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add',
-      submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm',
-      dialogStandardActions = [
-        {
-          ref: 'cancel',
-          text: 'Cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          ref: 'submit',
-          text: {submitLabel},
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+    let title = this.hasEditMode() ? 'Edit' : 'Add';
+    let submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm';
+    let dialogStandardActions = [
+      {
+        ref: 'cancel',
+        text: 'Cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        ref: 'submit',
+        text: {submitLabel},
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     return (
       <Common.Dialog

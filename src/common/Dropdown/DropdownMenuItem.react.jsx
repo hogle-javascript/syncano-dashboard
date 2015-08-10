@@ -1,5 +1,5 @@
-let React = require('react'),
-  classNames = require('classnames');
+let React = require('react');
+let classNames = require('classnames');
 
 module.exports = React.createClass({
 

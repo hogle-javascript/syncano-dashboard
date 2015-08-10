@@ -39,10 +39,10 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      initials,
-      colors = ColorStore.getAllColors(),
-      nameFragments = this.props.name.split(' ');
+    let styles = this.getStyles();
+    let initials = null;
+    let colors = ColorStore.getAllColors();
+    let nameFragments = this.props.name.split(' ');
 
     if (this.props.singleInitial || nameFragments.length === 1) {
       initials = this.props.name.charAt(0).toUpperCase();

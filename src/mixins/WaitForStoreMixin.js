@@ -24,9 +24,9 @@ export default {
       throw Error('At least two arguments are required: Action, Callback.');
     }
 
-    let args = [].splice.call(arguments, 0),
-      callback = args.pop(),
-      listenMethod = (args.length > 1) ? this.joinTrailing : this.listenTo;
+    let args = [].splice.call(arguments, 0);
+    let callback = args.pop();
+    let listenMethod = (args.length > 1) ? this.joinTrailing : this.listenTo;
 
     if (this.listenables) {
       let listenables = [].concat(this.listenables);

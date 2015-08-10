@@ -1,12 +1,11 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  mui = require('material-ui'),
+let React = require('react');
+let classNames = require('classnames');
+let mui = require('material-ui');
 
-  FontIcon = mui.FontIcon,
-  AccordionListItemSecondary = require('./AccordionListItemSecondary.react');
+let FontIcon = mui.FontIcon;
+let AccordionListItemSecondary = require('./AccordionListItemSecondary.react');
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AccordionListItemPrimary',
 

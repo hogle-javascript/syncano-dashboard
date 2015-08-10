@@ -1,10 +1,10 @@
-let React = require('react'),
-  Moment = require('moment'),
-  classNames = require('classnames'),
-  mui = require('material-ui'),
+let React = require('react');
+let Moment = require('moment');
+let classNames = require('classnames');
+let mui = require('material-ui');
 
-  FontIcon = mui.FontIcon,
-  Dropdown = require('../Dropdown/Dropdown.react');
+let FontIcon = mui.FontIcon;
+let Dropdown = require('../Dropdown/Dropdown.react');
 
 require('./Card.css');
 

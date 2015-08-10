@@ -1,7 +1,7 @@
-let React = require('react'),
-  Radium = require('radium');
+let React = require('react');
+let Radium = require('radium');
 
-module.exports = Radium(React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'ListHeader',
 

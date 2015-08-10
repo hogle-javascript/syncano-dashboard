@@ -64,8 +64,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let publicString = item.public.toString(),
-      publicCell = publicString;
+    let publicString = item.public.toString();
+    let publicCell = publicString;
 
     if (item.public) {
       publicCell = (

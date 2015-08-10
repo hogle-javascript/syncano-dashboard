@@ -19,8 +19,8 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      rootStyle = this.mergeAndPrefix(styles.root, this.props.style);
+    let styles = this.getStyles();
+    let rootStyle = this.mergeAndPrefix(styles.root, this.props.style);
 
     return (
       <div

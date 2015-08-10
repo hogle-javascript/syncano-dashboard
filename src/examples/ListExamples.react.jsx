@@ -1,25 +1,25 @@
-var React         = require('react'),
+let React         = require('react');
 
-    ThemeManager  = require('material-ui/lib/styles/theme-manager')(),
+let ThemeManager  = require('material-ui/lib/styles/theme-manager')();
 
-    mui           = require('material-ui'),
-    FontIcon      = mui.FontIcon,
+let mui           = require('material-ui');
+let FontIcon      = mui.FontIcon;
 
-    ListHeader    = require('../common/Lists/ListHeader.react'),
-    ListItem      = require('../common/Lists/ListItem.react'),
-    List          = require('../common/Lists/List.react'),
-    Dropdown      = require('../common/Dropdown/Dropdown.react'),
+let ListHeader    = require('../common/Lists/ListHeader.react');
+let ListItem      = require('../common/Lists/ListItem.react');
+let List          = require('../common/Lists/List.react');
+let Dropdown      = require('../common/Dropdown/Dropdown.react');
 
-    Item          = require('../common/ColumnList/Item.react'),
-    Column        = require('../common/ColumnList/ItemColumn.react'),
-    Header        = require('../common/ColumnList/Header.react'),
-    ColNameDesc   = require('../common/ColumnList/ColNameDesc.react');
+let Item          = require('../common/ColumnList/Item.react');
+let Column        = require('../common/ColumnList/ItemColumn.react');
+let Header        = require('../common/ColumnList/Header.react');
+let ColNameDesc   = require('../common/ColumnList/ColNameDesc.react');
 
 
 require('./Examples.css');
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Examples',
 

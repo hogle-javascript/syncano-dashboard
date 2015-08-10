@@ -68,9 +68,9 @@ export default Radium(React.createClass({
   },
 
   genIconItem(icon) {
-    let styles = this.getStyles().item,
-      zDepth = 0,
-      iconColor = '#000';
+    let styles = this.getStyles().item;
+    let zDepth = 0;
+    let iconColor = '#000';
 
     if (icon === this.state.selectedIcon) {
       zDepth = 3;
@@ -94,9 +94,9 @@ export default Radium(React.createClass({
   },
 
   genColorItem(color) {
-    let icon,
-      styles = this.getStyles().item,
-      zDepth = 0;
+    let icon = null;
+    let styles = this.getStyles().item;
+    let zDepth = 0;
 
     styles.background = ColorStore.getColorByName(color);
 
@@ -121,8 +121,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let items = null,
-      styles = this.getStyles();
+    let items = null;
+    let styles = this.getStyles();
 
     if (this.props.pickerType === 'color') {
       items = ColorStore.getColorPickerPalette().map(color => this.genColorItem(color));

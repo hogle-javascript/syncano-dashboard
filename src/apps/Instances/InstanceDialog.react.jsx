@@ -56,8 +56,8 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance',
-      dialogCustomActions = [
+    let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance';
+    let dialogCustomActions = [
         <MUI.FlatButton
           key="cancel"
           label="Cancel"

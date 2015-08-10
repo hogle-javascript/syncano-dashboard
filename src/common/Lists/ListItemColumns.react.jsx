@@ -1,16 +1,16 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  Moment = require('moment'),
-  mui = require('material-ui'),
+let React = require('react');
+let classNames = require('classnames');
+let Moment = require('moment');
+let mui = require('material-ui');
 
-  FontIcon = mui.FontIcon,
-  Dropdown = require('../Dropdown/Dropdown.react'),
+let FontIcon = mui.FontIcon;
+let Dropdown = require('../Dropdown/Dropdown.react');
 
-  ButtonExpandToggle = require('../Button/ButtonExpandToggle.react'),
+let ButtonExpandToggle = require('../Button/ButtonExpandToggle.react');
 
-  ProgressBar = require('../ProgressBar/ProgressBar.react'),
-  AvatarInitials = require('../AvatarInitials/AvatarInitials.react'),
-  TraceResult = require('../Trace/TraceResult.react');
+let ProgressBar = require('../ProgressBar/ProgressBar.react');
+let AvatarInitials = require('../AvatarInitials/AvatarInitials.react');
+let TraceResult = require('../Trace/TraceResult.react');
 
 //let ViewActions        = require('../actions/ViewActions');
 //let ServerActions      = require('../actions/ServerActions');

@@ -83,8 +83,8 @@ export default React.createClass({
   },
 
   renderTabs() {
-    let styles = this.getStyles(),
-      codeBox = this.state.currentCodeBox;
+    let styles = this.getStyles();
+    let codeBox = this.state.currentCodeBox;
 
     if (codeBox !== null) {
       return (

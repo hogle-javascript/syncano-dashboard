@@ -1,15 +1,15 @@
-let React = require('react'),
-  classNames = require('classnames'),
+let React = require('react');
+let classNames = require('classnames');
 
-  mui = require('material-ui'),
-  List = mui.List,
-  ListItem = mui.ListItem,
-  ListDivider = mui.ListDivider,
-  Avatar = mui.Avatar,
-  FontIcon = mui.FontIcon,
-  FlatButton = mui.FlatButton,
+let mui = require('material-ui');
+let List = mui.List;
+let ListItem = mui.ListItem;
+let ListDivider = mui.ListDivider;
+let Avatar = mui.Avatar;
+let FontIcon = mui.FontIcon;
+let FlatButton = mui.FlatButton;
 
-  Loading = require('../../common/Loading/Loading.react');
+let Loading = require('../../common/Loading/Loading.react');
 
 
 module.exports = React.createClass({
@@ -70,14 +70,14 @@ module.exports = React.createClass({
   },
 
   renderInvitationItems() {
-    let invitationItems = this.getInvitationItems(),
-      items = invitationItems.map(function(item) {
+    let invitationItems = this.getInvitationItems();
+    let items = invitationItems.map(function(item) {
 
         let icon = <FontIcon
             className={item.leftIcon.name || null}
             color={item.leftIcon.color}
-            />,
-          buttons = <div>
+            />;
+        let buttons = <div>
             <FlatButton
               onClick={item.handleAccept}
               label={item.buttonsText[0]}
@@ -110,8 +110,8 @@ module.exports = React.createClass({
   },
 
   renderNormalLinkItems() {
-    let linkItems = this.getLinkItems(),
-      items = linkItems.map(function(item, index) {
+    let linkItems = this.getLinkItems();
+    let items = linkItems.map(function(item, index) {
 
         let icon = <FontIcon
           className={item.leftIcon.name || null}

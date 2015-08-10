@@ -46,8 +46,8 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
-        checkedClasses = ClassesStore.getCheckedItems();
+    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
+    let checkedClasses = ClassesStore.getCheckedItems();
 
     return [{
       dialog: Common.ColorIconPicker.Dialog,
@@ -150,11 +150,11 @@ export default React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      checkedClasses = ClassesStore.getCheckedItems(),
-      checkedClassesCount = ClassesStore.getNumberOfChecked(),
-      isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length),
-      someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
+    let styles = this.getStyles();
+    let checkedClasses = ClassesStore.getCheckedItems();
+    let checkedClassesCount = ClassesStore.getNumberOfChecked();
+    let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
+    let someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
 
     return (
       <Container>
