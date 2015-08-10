@@ -1,5 +1,4 @@
 import Accordion from './Accordion';
-import AvatarInitials from './AvatarInitials';
 import Billing from './Billing';
 import Button from './Button';
 import CheckIcon from './CheckIcon';
@@ -33,7 +32,6 @@ import Tour from './Tour';
 import Trace from './Trace';
 import UsageBar from './UsageBar';
 import ContentHeader from './ContentHeader.react';
-import ContentTraces from './ContentTraces.react';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import UsageBar2 from './UsageBar.react';
@@ -41,7 +39,6 @@ import SnackbarNotification from './SnackbarNotification';
 
 export default {
   Accordion,
-  AvatarInitials,
   Billing,
   Button,
   CheckIcon,
@@ -75,7 +72,6 @@ export default {
   Trace,
   UsageBar,
   ContentHeader,
-  ContentTraces,
   Spacing,
   SyncanoTheme,
   UsageBar2,
