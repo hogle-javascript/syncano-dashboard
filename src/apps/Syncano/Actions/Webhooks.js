@@ -1,4 +1,12 @@
 export default {
+  get(webhookName) {
+    this.Connection
+      .WebHooks
+      .get(webhookName)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   create(payload) {
     this.Connection
       .WebHooks

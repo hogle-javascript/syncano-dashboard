@@ -73,6 +73,17 @@ export default React.createClass({
     this.transitionTo(config.route, this.getParams());
   },
 
+  renderToolbarTitle() {
+    let tracesFor = this.props.tracesFor === 'codebox' ? 'CodeBox' : this.props.tracesFor.charAt(0).toUpperCase() + this.props.tracesFor.slice(1);
+    let toolbarTitleText = this.state.currentObjectName ? `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})` : '';
+
+    return (
+      <MUI.ToolbarGroup>
+        <MUI.ToolbarTitle text={toolbarTitleText}/>
+      </MUI.ToolbarGroup>
+    )
+  },
+
   render() {
     const config = this.getConfig();
 
@@ -96,6 +107,8 @@ export default React.createClass({
               style={{marginTop: 4}}
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
+
+          {this.renderToolbarTitle()}
         </MUI.Toolbar>
         <TracesList
           tracesFor={this.props.tracesFor}

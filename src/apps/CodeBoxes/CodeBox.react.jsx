@@ -112,9 +112,19 @@ export default React.createClass({
     }
   },
 
-  render() {
-    let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
+  renderToolbarTitle() {
+    if (!this.isActive('codebox-traces')) {
+      let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
 
+      return (
+        <MUI.ToolbarGroup>
+          <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
+        </MUI.ToolbarGroup>
+      )
+    }
+  },
+
+  render() {
     return (
       <div>
         <MUI.Toolbar style={{
@@ -136,9 +146,7 @@ export default React.createClass({
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
 
-          <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
-          </MUI.ToolbarGroup>
+          {this.renderToolbarTitle()}
         </MUI.Toolbar>
 
         <div style={{margin: '65px auto', width: '80%'}}>
