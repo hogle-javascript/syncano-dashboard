@@ -115,10 +115,11 @@ export default React.createClass({
   renderToolbarTitle() {
     if (!this.isActive('codebox-traces')) {
       let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
+      let toolbarTitleText = this.state.currentCodeBox ? `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})` : '';
 
       return (
         <MUI.ToolbarGroup>
-          <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
+          <MUI.ToolbarTitle text={toolbarTitleText}/>
         </MUI.ToolbarGroup>
       )
     }
