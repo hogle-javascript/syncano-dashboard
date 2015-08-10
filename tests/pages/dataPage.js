@@ -17,6 +17,10 @@ module.exports = {
     webhookListItem: {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
+    },
+    dataListItem: {
+      selector: '//div[text()="data_view"]',
+      locateStrategy: 'xpath'
     }
   }
 };

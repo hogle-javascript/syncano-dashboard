@@ -68,6 +68,7 @@ module.exports = React.createClass({
     return (
       <div>
         <MUI.LeftNav
+          className="left-nav"
           ref="leftNav"
           header={this.renderInstanceDropdown()}
           selectedIndex={this.state.selectedIndex || 0}
