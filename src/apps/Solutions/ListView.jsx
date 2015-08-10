@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
   isFriend() {
     if (SessionStore.getUser()) {
-      let email = SessionStore.getUser().email;
+      let email = SessionStore.getUser({}).email;
       return (_.endsWith(email, 'syncano.com') || _.endsWith(email, 'chimeraprime.com'));
     }
   },
