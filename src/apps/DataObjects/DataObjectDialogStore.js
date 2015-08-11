@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import DataObjectsActions from './DataObjectsActions';
 import ChannelsStore from '../Channels/ChannelsStore';
 import ChannelsActions from '../Channels/ChannelsActions';

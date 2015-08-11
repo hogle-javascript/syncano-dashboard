@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Constans from '../../constants/Constants';
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';

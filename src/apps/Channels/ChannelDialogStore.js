@@ -4,7 +4,7 @@ let Reflux = require('reflux'),
   StoreFormMixin = require('../../mixins/StoreFormMixin'),
   DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
 
-//Stores & Actions
+// Stores & Actions
   SessionStore = require('../Session/SessionStore'),
   ChannelsActions = require('./ChannelsActions');
 

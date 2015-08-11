@@ -1,8 +1,6 @@
 let React = require('react'),
   mui = require('material-ui'),
 
-//let ViewActions = require('../actions/ViewActions');
-
   FontIcon = mui.FontIcon;
 
 module.exports = React.createClass({

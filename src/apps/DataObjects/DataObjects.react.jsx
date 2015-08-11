@@ -48,7 +48,7 @@ export default React.createClass({
     DataObjectsActions.fetch();
   },
 
-  //Dialogs config
+  // Dialogs config
   initDialogs() {
     return [{
       dialog: MUI.Dialog,

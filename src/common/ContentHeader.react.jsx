@@ -1,7 +1,5 @@
 let React = require('react');
 
-//let ViewActions         = require('../actions/ViewActions');
-
 let Dropdown = require('./Dropdown/Dropdown.react');
 let DropdownWithButtons = require('./Dropdown/DropdownWithButtons.react');
 

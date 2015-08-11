@@ -54,7 +54,7 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  //Dialogs config
+  // Dialogs config
   initDialogs() {
     return [{
       dialog: Common.Dialog,

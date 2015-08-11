@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import Constants from '../../constants/Constants';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';

@@ -12,11 +12,6 @@ let React = require('react'),
   AvatarInitials = require('../AvatarInitials/AvatarInitials.react'),
   TraceResult = require('../Trace/TraceResult.react');
 
-//let ViewActions        = require('../actions/ViewActions');
-//let ServerActions      = require('../actions/ServerActions');
-
-//require('./Card.css');
-
 module.exports = React.createClass({
 
   displayName: 'ListColumnsItem',

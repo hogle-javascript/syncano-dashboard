@@ -1,7 +1,5 @@
 let React = require('react');
 
-//let ViewActions         = require('../actions/ViewActions');
-
 let Constants = require('../../constants/Constants');
 let List = require('./List.react');
 let Dropdown = require('../Dropdown/Dropdown.react').Dropdown;

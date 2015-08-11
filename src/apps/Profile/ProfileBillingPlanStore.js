@@ -53,17 +53,14 @@ export default Reflux.createStore({
     this.data.profile = profile;
     this.data.soft_limit = profile.soft_limit;
     this.data.hard_limit = profile.hard_limit;
-    //this.trigger(this.data);
   },
 
   setUsage(usage) {
     this.data.usage = usage;
-    //this.trigger(this.data);
   },
 
   setSubscriptions(subscriptions) {
     this.data.subscriptions = subscriptions;
-    //this.trigger(this.data);
   },
 
   isPlanCanceled() {

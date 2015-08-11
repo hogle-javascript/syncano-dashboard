@@ -16,8 +16,8 @@ module.exports = React.createClass({
   displayName: 'Dropdown',
 
   mixins: [
-    //require('react-onclickoutside'),
-    //Mixins.toggleMenuMixin
+    // require('react-onclickoutside'),
+    // Mixins.toggleMenuMixin
   ],
 
   propTypes: {

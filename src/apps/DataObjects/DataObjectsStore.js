@@ -5,7 +5,7 @@ import URI from 'URIjs';
 import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
-//Stores & Actions
+// Stores & Actions
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
@@ -260,7 +260,7 @@ export default Reflux.createStore({
 
   onFetchDataObjects() {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    //this.data.isLoading = true;
+    // this.data.isLoading = true;
     this.trigger(this.data);
   },
 

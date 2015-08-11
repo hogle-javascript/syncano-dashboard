@@ -53,8 +53,6 @@ var React                = require('react'),
     ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
 
 
-//var FlatButton = require('material-ui').FlatButton;
-
 require('./Examples.css');
 
 module.exports = React.createClass({
@@ -349,7 +347,6 @@ module.exports = React.createClass({
       uuid: "groups",
       displayName: "Groups",
       isNavigationElement: true
-      //payload: this.state.groups,
     }];
 
     var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);

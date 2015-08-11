@@ -93,10 +93,10 @@
     // }],
     // "no-undefined": 1,
     // "no-invalid-this": 2,
-    // "spaced-comment": [2, "always",  {
-    //   "exceptions": ["-", "+"],
-    //   "markers": ["=", "!"]
-    // }],
+    "spaced-comment": [2, "always",  {
+       "exceptions": ["-", "+"],
+       "markers": ["=", "!"]
+    }],
     // "one-var": 2,
     // "init-declarations": 2,
     // "react/wrap-multilines": [2, "never"],
