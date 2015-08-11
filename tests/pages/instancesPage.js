@@ -43,7 +43,7 @@ module.exports = {
       selector: 'input[name=description]'
     },
     confirmButton: {
-      selector: '//*[@id="instances"]/div[2]/div[1]/div/div/div[2]/button[2]',
+      selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
     confirmDeleteButton: {

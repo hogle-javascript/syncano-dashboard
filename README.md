@@ -79,7 +79,7 @@ If you are ready just run dev servers:
     $ npm start
     $ npm run-script e2e-selenium
 
-start testing:
+and start testing:
 
     $ npm run-script e2e
 
