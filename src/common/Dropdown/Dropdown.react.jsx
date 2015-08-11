@@ -15,11 +15,6 @@ export default React.createClass({
 
   displayName: 'Dropdown',
 
-  mixins: [
-    // require('react-onclickoutside'),
-    // Mixins.toggleMenuMixin
-  ],
-
   propTypes: {
     icon: React.PropTypes.string,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
