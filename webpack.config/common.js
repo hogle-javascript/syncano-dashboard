@@ -61,6 +61,7 @@ module.exports = {
   },
   externals: {
     'analytics': 'analytics',
+    'hellojs': 'hello',
     'stripejs': 'Stripe'
   }
 };

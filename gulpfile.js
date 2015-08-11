@@ -26,6 +26,7 @@ var paths = {
   index: './src/assets/index.html',
   images: './src/assets/img/**/*',
   css: './src/assets/css/**/*',
+  js: './src/assets/js/**/*',
   fonts: './src/assets/fonts/**/*'
 };
 
@@ -54,6 +55,11 @@ gulp.task('copy:images', ['clean'], function() {
 gulp.task('copy:css', ['clean'], function() {
   return gulp.src(paths.css)
   .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('copy:js', ['clean'], function() {
+  return gulp.src(paths.js)
+  .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('copy:fonts', ['clean'], function() {
@@ -192,6 +198,7 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(cloudfront(aws));
 });
 
+<<<<<<< HEAD
 var chromedriverTypes = [
   'linux64',
   'linux32',
@@ -234,6 +241,7 @@ chromedriverTypes.map(function(type) {
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts']);
+gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
