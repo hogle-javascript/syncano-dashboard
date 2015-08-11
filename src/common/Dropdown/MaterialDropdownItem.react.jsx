@@ -56,7 +56,7 @@ export default React.createClass({
 
       let location = window.location;
       let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {d: 'blank'}, true);
+      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {default: 'blank'}, true);
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 

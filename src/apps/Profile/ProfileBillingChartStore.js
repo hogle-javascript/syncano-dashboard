@@ -70,9 +70,9 @@ export default Reflux.createStore({
         },
         tooltip: {
           format: {
-            title: d => {
-              let title = moment(d).format('MMM DD');
-              let date = moment(d).format(this.format);
+            title: input => {
+              let title = moment(input).format('MMM DD');
+              let date = moment(input).format(this.format);
               if (date > today) {
                 title = `Prediction for ${title}`;
               }
@@ -150,11 +150,11 @@ export default Reflux.createStore({
       state.chart.data.types[name] = 'area';
     });
 
-    state.covered = _.reduce(pricing, (r, v, k) => {
-      let amount = v.included * v.overage;
-      r.amount += amount;
-      r[k] = _.extend({}, v, {amount: amount});
-      return r;
+    state.covered = _.reduce(pricing, (result, value, key) => {
+      let amount = value.included * value.overage;
+      result.amount += amount;
+      result[key] = _.extend({}, value, {amount: amount});
+      return result;
     }, {amount: 0});
 
     state.covered.amount = _.round(state.covered.amount, 0);
@@ -164,14 +164,14 @@ export default Reflux.createStore({
       position: 'middle'
     });
 
-    state.overage = _.reduce(pricing, (r, v, k) => {
-      let covered = state.covered[k];
-      let amount = (usageAmount[k] > covered.amount) ? usageAmount[k] - covered.amount : 0;
-      let included = _.round(amount / v.overage);
+    state.overage = _.reduce(pricing, (result, value, key) => {
+      let covered = state.covered[key];
+      let amount = (usageAmount[key] > covered.amount) ? usageAmount[key] - covered.amount : 0;
+      let included = _.round(amount / value.overage);
 
-      r.amount += amount;
-      r[k] = r[k] = _.extend({}, v, {amount: amount, included: included});
-      return r;
+      result.amount += amount;
+      result[key] = result[key] = _.extend({}, value, {amount: amount, included: included});
+      return result;
     }, {amount: 0});
 
     if (plan !== 'builder' && _.last(state.chart.data.columns[1]) < 6 && _.last(state.chart.data.columns[2]) < 6) {
@@ -206,13 +206,13 @@ export default Reflux.createStore({
   fillBlanks(columns) {
     // We need to calculate median for predictions
     let today = this.getToday();
-    let medians = _.reduce(columns, (result, v, k) => {
-      result[k] = _.round(d3.median(_.values(v)) || 0);
+    let medians = _.reduce(columns, (result, value, key) => {
+      result[key] = _.round(d3.median(_.values(value)) || 0);
       return result;
     }, {});
 
     _.forEach(this.getAllDates(), date => {
-      _.forEach(columns, (v, source) => {
+      _.forEach(columns, (val, source) => {
         if (columns[source][date] === undefined) {
           columns[source][date] = 0;
         }
@@ -227,19 +227,19 @@ export default Reflux.createStore({
   },
 
   objectToArray(elements) {
-    _.forEach(elements, (v, k) => {
-      let keys = _.keys(v).sort();
-      elements[k] = _.reduce(keys, (r, key, index) => {
-        let prev = (index > 0) ? r[index - 1] : 0;
-        r.push(v[key] + prev);
-        return r;
+    _.forEach(elements, (val, elementKey) => {
+      let keys = _.keys(val).sort();
+      elements[elementKey] = _.reduce(keys, (result, key, index) => {
+        let prev = (index > 0) ? result[index - 1] : 0;
+        result.push(val[key] + prev);
+        return result;
       }, []);
     });
   },
 
   sumAncestors(elements) {
-    _.forEach(elements, (v, k) => {
-      elements[k] = _.reduce(v, (result, value, index) => {
+    _.forEach(elements, (val, key) => {
+      elements[key] = _.reduce(val, (result, value, index) => {
         value.value += (index > 0) ? result[index - 1].value : 0;
         result.push(value);
         return result;
