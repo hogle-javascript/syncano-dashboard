@@ -51,8 +51,7 @@ export default Radium(React.createClass({
         textAlign: 'center',
         fontSize: '2rem',
         lineHeight: '2.1rem',
-        height: 340,
-        WebkitHyphens: 'none'
+        height: 340
       },
       overlay: {
         position: 'fixed',
