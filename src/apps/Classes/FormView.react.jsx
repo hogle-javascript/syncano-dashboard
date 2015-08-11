@@ -407,7 +407,7 @@ export default React.createClass({
                   errorText={this.getValidationMessages('fieldTarget').join(' ')}
                   valueMember='payload'
                   displayMember='text'
-                  menuItems={ClassesStore.getClassesDropdown()} />
+                  menuItems={ClassesStore.getClassesDropdown(true)} />
               </Common.Show>
             </div>
             <div className='col-xs-3'>
