@@ -28,8 +28,7 @@ test:
     - npm run-script eslint
     - npm test
     - npm run-script codeclimate
-    - npm run-script e2e:
-      timeout: 900
+    - npm run-script e2e
 
 deployment:
   production:
