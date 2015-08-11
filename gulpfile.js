@@ -7,9 +7,6 @@ var gulp             = require('gulp'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
-    download         = require('gulp-download'),
-    unzip            = require('gulp-unzip'),
-    chmod            = require('gulp-chmod'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config'),
@@ -190,47 +187,6 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
-});
-
-var chromedriverTypes = [
-  'linux64',
-  'linux32',
-  'mac32',
-  'win32'
-];
-
-chromedriverTypes.map(function(type) {
-  gulp.task('nightwatch-setup:' + type, function(cb) {
-    if (fs.existsSync(paths.bin)) {
-      gutil.log('[nightwatch-setup]', '"' + paths.bin + '" already exists.')
-      return cb();
-    }
-    var zipFiles = paths.bin + '/**/*.zip',
-        urls     = [
-          'http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar',
-          'http://chromedriver.storage.googleapis.com/2.17/chromedriver_' + type + '.zip'
-        ];
-
-    download(urls)
-      .pipe(gulp.dest(paths.bin))
-      .on('finish', function() {
-        gulp.src(zipFiles)
-          .pipe(unzip())
-          .pipe(gulp.dest(paths.bin))
-          .on('finish', function() {
-            gulp.src(paths.bin + '/chromedriver')
-              .pipe(chmod({
-                owner: {read: true, write: true, execute: true},
-                group: {execute: true},
-                others: {execute: true}
-              }))
-              .pipe(gulp.dest(paths.bin))
-              .on('finish', function() {
-                del(zipFiles, cb);
-              });
-          });
-      });
-  });
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts']);

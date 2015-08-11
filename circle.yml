@@ -12,12 +12,12 @@ general:
 
 dependencies:
   post:
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - sudo dpkg -i google-chrome*.deb
     - npm run-script build
     - mv ./dist ./dist_e2e
-    - npm run-script nightwatch-setup
-    - npm run-script nightwatch-http-server:
+    - npm run-script e2e-setup
+    - npm run-script e2e-http-server:
+        background: true
+    - npm run-script e2e-selenium:
         background: true
 
   cache_directories:
@@ -28,7 +28,8 @@ test:
     - npm run-script eslint
     - npm test
     - npm run-script codeclimate
-    - npm run-script nightwatch
+    - npm run-script e2e:
+      timeout: 900
 
 deployment:
   production:
