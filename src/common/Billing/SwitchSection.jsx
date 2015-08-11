@@ -17,8 +17,30 @@ export default Radium(React.createClass({
   },
 
   getStyles() {
-    let styles = {};
-    return this.mergeStyles(styles, this.props.style);
+    return {
+      leftSide: {
+        marginRight: 8,
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        alignContent: 'center'
+      },
+      center: {
+        width: 44,
+        position: 'relative'
+      },
+      toggle: {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)'
+      },
+      rightSide: {
+        marginLeft: 16,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center'
+      }
+    }
   },
 
   handleCancelPlanDialog() {
@@ -105,22 +127,21 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
       <div className="row align-center vp-3-t vp-3-b">
-        <div
-          style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
+        <div style={styles.leftSide}>
           <div>
             {this.renderLeftSide()}
           </div>
         </div>
-        <div style={{width: 44, position: 'relative'}}>
-
-          <div style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
+        <div style={styles.center}>
+          <div style={styles.toggle}>
             {this.renderToggle()}
           </div>
-
         </div>
-        <div style={{marginLeft: 16, display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+        <div style={styles.rightSide}>
           {this.renderRightSide()}
         </div>
       </div>

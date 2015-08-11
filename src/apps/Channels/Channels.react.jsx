@@ -96,10 +96,10 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = ChannelsStore.getNumberOfChecked(),
-      isAnyChannelSelected = checkedItems >= 1 && checkedItems < (this.state.items.length),
-      markedIcon = 'synicon-checkbox-multiple-marked-outline',
-      blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let checkedItems = ChannelsStore.getNumberOfChecked();
+    let isAnyChannelSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>

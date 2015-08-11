@@ -133,9 +133,12 @@ export default Radium(React.createClass({
       )
     }
 
+    let instances = this.state.items;
+    let instancesCount = instances ? instances.length : 0;
     let checkedInstances = Store.getNumberOfChecked();
-    let isAnyInstanceSelected =
-      this.state.items !== null && checkedInstances >= 1 && checkedInstances < (this.state.items.length);
+    let isAnyInstanceSelected =  instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
@@ -153,7 +156,7 @@ export default Radium(React.createClass({
               label={isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyInstanceSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}/>
+              iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
               label="Click here to delete Instances"
               mini={true}

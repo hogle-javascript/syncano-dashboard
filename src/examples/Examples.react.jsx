@@ -34,7 +34,6 @@ var React                = require('react'),
     Editor               = require('../common/Editor/Editor.react'),
     EditorPanel          = require('../common/Editor/EditorPanel.react'),
     FabList              = require('../common/Fab/FabList.react'),
-    UsageBar             = require('../common/UsageBar/UsageBar.react'),
 
     SwitchField          = require('../common/SwitchField/SwitchField.react'),
     SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
@@ -608,11 +607,6 @@ module.exports = React.createClass({
             modal={modalState}>
             Based on JSON
           </Dialog>
-        </div>
-
-        <div className="exampleBox">
-          <h4>UsageBar</h4>
-          <UsageBar billingProfile={billingProfile}/>
         </div>
 
         <div className="exampleBox">

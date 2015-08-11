@@ -156,12 +156,12 @@ export default React.createClass({
   },
 
   render() {
-    let checkedSchedules = SchedulesStore.getNumberOfChecked(),
-      checkedTriggers = TriggersStore.getNumberOfChecked(),
-      isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length),
-      isAnyTriggerSelected = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length),
-      markedIcon = 'synicon-checkbox-multiple-marked-outline',
-      blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let checkedSchedules = SchedulesStore.getNumberOfChecked();
+    let checkedTriggers = TriggersStore.getNumberOfChecked();
+    let isAnyScheduleSelected = checkedSchedules >= 1 && checkedSchedules < (this.state.schedules.items.length);
+    let isAnyTriggerSelected = checkedTriggers >= 1 && checkedTriggers < (this.state.triggers.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
