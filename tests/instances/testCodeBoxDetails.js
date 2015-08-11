@@ -16,6 +16,9 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
     
+    var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
+
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@codeBoxes');
 
@@ -30,6 +33,9 @@ module.exports = {
     client.url(instancesPage.url);
     instancesPage.clickButton('@instancesTableRow');
     
+    var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
+
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@codeBoxes');
 
@@ -47,6 +53,9 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     client.url(instancesPage.url);
     instancesPage.clickButton('@instancesTableRow');
+    
+    var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItem');
     
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@codeBoxes');

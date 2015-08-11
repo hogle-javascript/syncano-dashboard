@@ -37,11 +37,11 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      icon = <MUI.FontIcon
+    let styles = this.getStyles();
+    let icon = <MUI.FontIcon
         className="synicon-plus"
-        style={styles.icon}/>,
-      leftAvatar = <MUI.Avatar
+        style={styles.icon}/>;
+    let leftAvatar = <MUI.Avatar
         icon={icon}
         style={styles.leftAvatar}/>;
 

@@ -46,11 +46,11 @@ export default React.createClass({
   handleAddSubmit() {
     let instanceName = null;
 
-    if (this.state.instance)
+    if (this.state.instance) {
       instanceName = this.state.instance;
-    else if (this.state.instances.length === 1)
+    } else if (this.state.instances.length === 1) {
       instanceName = this.state.instances[0].name;
-
+    }
     if (!instanceName) {
       instanceName = InstanceDialogStore.genUniqueName();
 

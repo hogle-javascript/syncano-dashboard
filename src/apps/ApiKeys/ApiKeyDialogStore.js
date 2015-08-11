@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({

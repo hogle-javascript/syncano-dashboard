@@ -1,6 +1,6 @@
 import React from 'react';
 
-//import ServerActions from '../actions/ServerActions';
+// import ServerActions from '../actions/ServerActions';
 
 import ButtonGroup from '../../common/Button/ButtonGroup.react';
 
@@ -25,7 +25,7 @@ export default React.createClass({
   },
 
   handleButtonClick(action) {
-    //ServerActions.respondToInvitation(action, this.props.invitation);
+  // ServerActions.respondToInvitation(action, this.props.invitation);
   },
 
   render() {

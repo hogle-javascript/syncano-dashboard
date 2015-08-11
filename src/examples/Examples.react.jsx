@@ -1,67 +1,62 @@
-var React                = require('react'),
-    mui                  = require('material-ui'),
-    gravatar             = require('gravatar'),
+let React                = require('react');
+let mui                  = require('material-ui');
+let gravatar             = require('gravatar');
 
-    ThemeManager         = new mui.Styles.ThemeManager(),
-    TextField            = mui.TextField,
-    DatePicker           = mui.DatePicker,
-    TimePicker           = mui.TimePicker,
-    Colors               = mui.Styles.Colors,
-    LinearProgress       = mui.LinearProgress,
-    Dialog               = mui.Dialog,
-    Snackbar             = mui.Snackbar,
-    FlatButton           = mui.FlatButton,
-    // List                 = mui.List,
-    ListItem             = mui.ListItem,
-    ListDivider          = mui.ListDivider,
-    Avatar               = mui.Avatar,
-    Toggle               = mui.Toggle,
-    IconButton           = mui.IconButton,
-    FontIcon             = mui.FontIcon,
-    IconMenu             = mui.IconMenu,
-    Menu                 = mui.Menu,       // this menu is from lib/menu/menu
-    MenuItem             = mui.MenuItem,   // this menu item is from lib/menu/menu-items
-    SelectField          = mui.SelectField,
-    ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right'),
-    MenuNew              = require('material-ui/lib/menus/menu'),
-    MenuItemNew          = require('material-ui/lib/menus/menu-item'),
+let ThemeManager         = new mui.Styles.ThemeManager();
+let TextField            = mui.TextField;
+let DatePicker           = mui.DatePicker;
+let TimePicker           = mui.TimePicker;
+let Colors               = mui.Styles.Colors;
+let LinearProgress       = mui.LinearProgress;
+let Dialog               = mui.Dialog;
+let Snackbar             = mui.Snackbar;
+let FlatButton           = mui.FlatButton;
+let ListItem             = mui.ListItem;
+let ListDivider          = mui.ListDivider;
+let Avatar               = mui.Avatar;
+let Toggle               = mui.Toggle;
+let IconButton           = mui.IconButton;
+let FontIcon             = mui.FontIcon;
+let IconMenu             = mui.IconMenu;
+let Menu                 = mui.Menu;       // this menu is from lib/menu/menu
+let MenuItem             = mui.MenuItem;   // this menu item is from lib/menu/menu-items
+let SelectField          = mui.SelectField;
+let ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right');
+let MenuNew              = require('material-ui/lib/menus/menu');
+let MenuItemNew          = require('material-ui/lib/menus/menu-item');
 
-    Dropdown             = require('../common/Dropdown/Dropdown.react'),
-    MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react'),
-    CheckIcon            = require('../common/CheckIcon/CheckIcon.react'),
-    ProgressBar          = require('../common/ProgressBar/ProgressBar.react'),
-    Label                = require('../common/Label/Label.react'),
-    ListItemEmpty        = require('../common/Lists/ListItemEmpty.react'),
-    Editor               = require('../common/Editor/Editor.react'),
-    EditorPanel          = require('../common/Editor/EditorPanel.react'),
-    FabList              = require('../common/Fab/FabList.react'),
-    UsageBar             = require('../common/UsageBar/UsageBar.react'),
+let Dropdown             = require('../common/Dropdown/Dropdown.react');
+let MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react');
+let CheckIcon            = require('../common/CheckIcon/CheckIcon.react');
+let ProgressBar          = require('../common/ProgressBar/ProgressBar.react');
+let Label                = require('../common/Label/Label.react');
+let Editor               = require('../common/Editor/Editor.react');
+let EditorPanel          = require('../common/Editor/EditorPanel.react');
+let FabList              = require('../common/Fab/FabList.react');
+let UsageBar             = require('../common/UsageBar/UsageBar.react');
 
-    SwitchField          = require('../common/SwitchField/SwitchField.react'),
-    SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react'),
-    SwitchInput          = require('../common/SwitchField/SwitchInput.react'),
-    AvatarInitials       = require('../common/AvatarInitials/AvatarInitials.react'),
-    SocialAuthButtonsList = require('../common/SocialAuthButtonsList'),
-    List                 = require('../common/Lists/List.react'),
-    Trace                = require('../common/Trace/TraceResult.react'),
-    TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react'),
-    Loading              = require('../common/Loading/Loading.react'),
-    Slider               = require('../common/Slider/Slider.react'),
+let SwitchField          = require('../common/SwitchField/SwitchField.react');
+let SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react');
+let SwitchInput          = require('../common/SwitchField/SwitchInput.react');
+let SocialAuthButtonsList = require('../common/SocialAuthButtonsList');
+let List                 = require('../common/Lists/List.react');
+let Trace                = require('../common/Trace/TraceResult.react');
+let TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react');
+let Loading              = require('../common/Loading/Loading.react');
+let Slider               = require('../common/Slider/Slider.react');
 
-    ColumnListItem       = require('../common/ColumnList/Item.react'),
-    ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react'),
-    ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
+let ColumnListItem       = require('../common/ColumnList/Item.react');
+let ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react');
+let ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
 
-
-//var FlatButton = require('material-ui').FlatButton;
 
 require('./Examples.css');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Examples',
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       errorText: null
     };
@@ -71,13 +66,13 @@ module.exports = React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount() {
     ThemeManager.setPalette({
       primary1Color: Colors.blueA700,
       primary2Color: Colors.lightBlueA700,
@@ -93,13 +88,13 @@ module.exports = React.createClass({
     });
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
   },
 
-  dummyDisplayError: function(e) {
+  dummyDisplayError(e) {
     if (e.target.value.length > 5) {
       this.setState({
         errorText: "(DummyError) This field is 5 chars only"
@@ -111,44 +106,44 @@ module.exports = React.createClass({
     }
   },
 
-  getDateNow: function() {
-    var date = new Date();
+  getDateNow() {
+    let date = new Date();
     return date;
   },
 
-  getDateFormat: function(date) {
-    var d = date.getDate();
-    var m = date.getMonth() + 1;
-    var y = date.getFullYear();
-    return d + '-' + m + '-' + y;
+  getDateFormat(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + '-' + month + '-' + year;
   },
 
-  logDate: function() {
+  logDate() {
     console.debug(this.refs.modifiedDatePicker.getDate())
   },
 
-  logTime: function() {
+  logTime() {
     console.debug(this.refs.modifiedTimePicker.getTime());
   },
 
-  getMinDate: function(minYear) {
-    var date = new Date();
+  getMinDate(minYear) {
+    let date = new Date();
     date.setFullYear(minYear);
     return date;
   },
 
-  getMaxDate: function(maxYear) {
+  getMaxDate(maxYear) {
     return new Date().setFullYear(maxYear);
   },
 
-  render: function() {
+  render() {
 
 
-    var dummyClick = function(action) {
+    let dummyClick = function(action) {
       console.log('Click!', action);
     };
 
-    var dropdownItems = [{
+    let dropdownItems = [{
       content: "Account",
       name: "account",
       handleItemClick: dummyClick
@@ -158,13 +153,13 @@ module.exports = React.createClass({
       handleItemClick: dummyClick
     }];
 
-    var dropdownHeader = {
+    let dropdownHeader = {
       icon: "synicon-account-circle",
       userFullName: "Name LastName",
       userEmail: "hubert.wesolowski@syncano.com",
     };
 
-    var actions = [{
+    let actions = [{
       displayName: 'Sort by name',
       name: 'sortByName'
     }, {
@@ -180,26 +175,26 @@ module.exports = React.createClass({
       iconType: 'view-module'
     }];
 
-    var text = "Dummy text";
+    let text = "Dummy text";
 
-    var item = {
+    let item = {
       name: "Dummy name",
       description: "Very long dummy description",
       metadata: {color: 'blue', icon: 'google'}
     };
 
-    var style = {
+    let style = {
       'color': 'red'
     };
 
-    var source = "import os\n" +
+    let source = "import os\n" +
       "import requests\n" +
       "\n" +
       "print 'hello world!\n";
 
-    var runtime = 'python';
+    let runtime = 'python';
 
-    var fabButtons = [
+    let fabButtons = [
       {
         name: "menuButton",
         label: "Menu button dummy label",
@@ -214,7 +209,7 @@ module.exports = React.createClass({
       }
     ];
 
-    var passwordField = {
+    let passwordField = {
       displayName: "Password",
       name: "password",
       largeText: false,
@@ -222,7 +217,7 @@ module.exports = React.createClass({
       color: '#FFC52D'
     };
 
-    var someField = {
+    let someField = {
       displayName: "Some Field",
       value: "Some readonly value",
       name: "somefield",
@@ -231,25 +226,25 @@ module.exports = React.createClass({
       color: '#FFC52D'
     };
 
-    var handleSnackbarClick = function() {
+    let handleSnackbarClick = function() {
       this.refs.snackbar.show()
     }.bind(this);
 
-    var handleSnackbarAction = function() {
+    let handleSnackbarAction = function() {
       console.log("Bum!");
     };
 
-    var dialogStandardActions = [
+    let dialogStandardActions = [
       {text: 'Cancel'},
       {text: 'Submit', onTouchTap: this._onDialogSubmit, ref: 'submit'}
     ];
 
-    var modalState = true;
-    var handleStandardDialogTouchTap = function() {
+    let modalState = true;
+    let handleStandardDialogTouchTap = function() {
       this.refs.standardDialog.show();
     }.bind(this);
 
-    var socialAuthButtons = [{
+    let socialAuthButtons = [{
       icon: 'github',
       text: 'Login with Github'
     }, {
@@ -260,7 +255,7 @@ module.exports = React.createClass({
       text: 'Login with Facebook'
     }];
 
-    var billingProfile = {
+    let billingProfile = {
       soft_limit: 3000,
       hard_limit: 5000,
       balance: {
@@ -268,7 +263,7 @@ module.exports = React.createClass({
       }
     };
 
-    var switchFields = [{
+    let switchFields = [{
         name: 'limit',
         enabled: true,
         heading: 'Limit',
@@ -282,9 +277,9 @@ module.exports = React.createClass({
         textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
       }];
 
-    var payload = '{test: "testvalue"}';
+    let payload = '{test: "testvalue"}';
 
-    var fieldSelect = {
+    let fieldSelect = {
       displayName: "Codebox",
       name: "codebox",
       options: [{
@@ -300,7 +295,7 @@ module.exports = React.createClass({
       type: "select"
     };
 
-    var fieldSelectMUI = [{
+    let fieldSelectMUI = [{
       payload: '1',
       text: 'Never'
     }, {
@@ -317,19 +312,14 @@ module.exports = React.createClass({
       text: 'Weekly'
     }];
 
-    var fieldDatetime = {
+    let fieldDatetime = {
       displayName: "Date",
       name: "date",
       type: "datetime",
       value: ""
     };
 
-    var fieldSelectOption = {
-      displayName: "Option display name",
-      name: 5
-    };
-
-    var columns = [
+    let columns = [
       {
         name: 'CodeBox',
         columnType: 'icon'
@@ -339,7 +329,7 @@ module.exports = React.createClass({
       }
     ];
 
-    var accordionItems = [{
+    let accordionItems = [{
       id: "allUsers",
       uuid: "allUsers",
       displayName: "All users",
@@ -349,12 +339,11 @@ module.exports = React.createClass({
       uuid: "groups",
       displayName: "Groups",
       isNavigationElement: true
-      //payload: this.state.groups,
     }];
 
-    var avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
+    let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
-    var notifications = [{
+    let notifications = [{
       type     : "normal-link",
       leftIcon : {
         name   : "synicon-alert",
@@ -372,7 +361,7 @@ module.exports = React.createClass({
     }, {
       type     : "invitation",
       leftIcon : {
-        name   : "synicon-share-variant",
+        name   : "synicon-share-letiant",
         style  : {
           color: "#8bc34a"
         }
@@ -387,7 +376,7 @@ module.exports = React.createClass({
       handleDecline : dummyClick.bind(this, [item])
     }];
 
-    var icon = <FontIcon className = "synicon-delete" />;
+    let icon = <FontIcon className = "synicon-delete" />;
 
     return (
 
@@ -484,13 +473,6 @@ module.exports = React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>ListItemEmpty</h2>
-          <ListItemEmpty
-            icon={"inbox"}
-            text={text}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>Editor</h2>
           <Editor
             source={source}
@@ -513,11 +495,6 @@ module.exports = React.createClass({
               <span><strong>2345</strong></span>
             </ColumnListItemColumn>
           </ColumnListItem>
-        </div>
-
-        <div className="exampleBox">
-          <h4>ListItemEmpty</h4>
-          <ListItemEmpty icon={"inbox"} text={text}/>
         </div>
 
         <div className="exampleBox">
@@ -557,19 +534,6 @@ module.exports = React.createClass({
           <h2>SelectField (Drop Down from material UI)</h2>
           <SelectField
             menuItems={fieldSelectMUI} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>FieldSelectOption</h2>
-          <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
-            <FieldSelectOption
-            option={fieldSelectOption}
-            handleClick={this.dummyClick} />
         </div>
 
         <div className="exampleBox">
@@ -640,11 +604,6 @@ module.exports = React.createClass({
             modal={modalState}>
             Based on JSON
           </Dialog>
-        </div>
-
-        <div className="exampleBox">
-          <h4>AvatarInitials</h4>
-          <AvatarInitials name="George R. R. Martin" />
         </div>
 
         <div className="exampleBox">

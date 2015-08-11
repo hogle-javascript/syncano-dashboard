@@ -64,7 +64,6 @@ export default Radium(React.createClass({
 
     return this.props.legendItems.map(function(item, i) {
       let position = i / (this.props.legendItems.length - 1) * 100 + '%';
-      //let isLastItem = i === this.props.legendItems.length - 1;
       let isLastItem = false;
       let isSelected = i === this.state.value;
 

@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import AdminsActions from './AdminsActions';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 

@@ -1,18 +1,18 @@
-let React = require("react"),
-  classNames = require("classnames"),
-  OutsideClickHandler = require("react-outsideclickhandler"),
-  mui = require("material-ui"),
+let React = require("react");
+let classNames = require("classnames");
+let OutsideClickHandler = require("react-outsideclickhandler");
+let mui = require("material-ui");
 
-  ProfileActions = require("../../apps/Profile/ProfileActions"),
-  List = mui.List,
-  ListItem = mui.ListItem,
-  ListDivider = mui.ListDivider,
-  Avatar = mui.Avatar,
-  FontIcon = mui.FontIcon,
-  DropDownArrow = require('material-ui/lib/svg-icons/navigation/arrow-drop-down'),
+let ProfileActions = require("../../apps/Profile/ProfileActions");
+let List = mui.List;
+let ListItem = mui.ListItem;
+let ListDivider = mui.ListDivider;
+let Avatar = mui.Avatar;
+let FontIcon = mui.FontIcon;
+let DropDownArrow = require('material-ui/lib/svg-icons/navigation/arrow-drop-down');
 
-  MaterialDropdownItem = require("./MaterialDropdownItem.react"),
-  DropdownNotifiItem = require("./DropdownNotifiItem.react");
+let MaterialDropdownItem = require("./MaterialDropdownItem.react");
+let DropdownNotifiItem = require("./DropdownNotifiItem.react");
 
 require("./Dropdown.sass");
 
@@ -96,15 +96,6 @@ module.exports = React.createClass({
           right    : "-14px"
         }}/>
     }
-    //return(
-    //  <div>
-    //    <FontIcon
-    //      className = {"synicon-" + this.props.icon}
-    //      style     = {this.props.iconStyle}
-    //    />
-    //    {notificationCountIcon}
-    //  </div>
-    //)
   },
 
   render: function() {

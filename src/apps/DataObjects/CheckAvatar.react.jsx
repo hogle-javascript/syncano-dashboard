@@ -74,10 +74,8 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-
-    // Which icon to show?
-    let iconState = this.getIconState(),
-      icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
+    let iconState = this.getIconState();
+    let icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
 
     return (
       <MUI.Avatar

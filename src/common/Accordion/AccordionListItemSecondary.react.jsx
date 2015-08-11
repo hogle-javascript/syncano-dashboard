@@ -1,10 +1,10 @@
-let React = require('react'),
-  classNames = require('classnames'),
+let React = require('react');
+let classNames = require('classnames');
 
-  Dropdown = require('../Dropdown/Dropdown.react');
+let Dropdown = require('../Dropdown/Dropdown.react');
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'AccordionListItemSecondary',
 
