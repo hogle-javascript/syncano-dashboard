@@ -9,9 +9,9 @@ export default {
         return key.slice(-3) === '500';
       });
 
-    uniqueColors.map(function(color) {
+    uniqueColors.map((color) => {
       color = color.slice(0, -3);
-      if (color !== ColorStore.syncanoThemeColorName) {
+      if (color !== this.syncanoThemeColorName) {
         colors.push(color);
       }
     });
