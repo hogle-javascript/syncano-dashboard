@@ -42,13 +42,22 @@ export default Reflux.createStore({
     return this.data.items;
   },
 
-  getClassesDropdown() {
-    return this.data.items.map(item => {
+  getClassesDropdown(addSelf = false) {
+    let items = this.data.items.map(item => {
       return {
         payload: item.name,
         text: item.name
       }
     });
+
+    if (addSelf === true) {
+      items.unshift({
+        payload: 'self',
+        text: 'self'
+      });
+    }
+
+    return items;
   },
 
   onGetClassByName(className) {
