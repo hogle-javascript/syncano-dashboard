@@ -26,7 +26,7 @@ export default React.createClass({
     var optionsColumn = null;
     var columns = this.props.columns.filter(function(column, i) {
       return column.selected;
-    }.bind(this)).map(function(column, i) {
+    }).map(function(column, i) {
       var data = this.props.item[column.name];
       if (column.name === "created_at" || column.name === "updated_at") {
         data = Moment(this.props.item[column.name]).format('DD-MM-YYYY, h:mm:ss a');
