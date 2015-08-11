@@ -111,10 +111,6 @@
     // "react/no-did-update-set-state": 2,
 
     // what we have
-    "spaced-comment": [2, "always",  {
-      "exceptions": ["-", "+"],
-      "markers": ["=", "!"]
-    }],
     "no-inline-comments": 1,
     "complexity": 1,
     "no-param-reassign": 1,
@@ -169,7 +165,7 @@
     }],
     "no-undefined": 1,
     "no-invalid-this": 1,
-    "spaced-comment": [1, "always",  {
+    "spaced-comment": [2, "always",  {
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
