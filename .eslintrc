@@ -92,10 +92,7 @@
     // }],
     // "no-undefined": 1,
     // "no-invalid-this": 2,
-    // "spaced-comment": [2, "always",  {
-    //   "exceptions": ["-", "+"],
-    //   "markers": ["=", "!"]
-    // }],
+
     // "init-declarations": 2,
     // "react/wrap-multilines": [2, "never"],
     // "no-useless-call": 2,
@@ -114,6 +111,10 @@
     // "react/no-did-update-set-state": 2,
 
     // what we have
+    "spaced-comment": [2, "always",  {
+      "exceptions": ["-", "+"],
+      "markers": ["=", "!"]
+    }],
     "no-inline-comments": 1,
     "complexity": 1,
     "no-param-reassign": 1,

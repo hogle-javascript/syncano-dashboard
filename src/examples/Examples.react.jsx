@@ -339,7 +339,6 @@ export default React.createClass({
       uuid: "groups",
       displayName: "Groups",
       isNavigationElement: true
-      //payload: this.state.groups,
     }];
 
     let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);

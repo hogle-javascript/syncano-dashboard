@@ -1,8 +1,5 @@
 let React = require('react');
 
-//let ViewActions   = require('../actions/ViewActions');
-//let ServerActions = require('../actions/ServerActions');
-
 require('./Snackbar.css');
 
 module.exports = React.createClass({
