@@ -65,26 +65,27 @@ and commit your changes.
 # E2E Testing
 
 We are using [nightwatchjs](http://nightwatchjs.org/) for e2e testing.
-**nightwatchjs** requires few binary files which can be installed via proper gulp command:
+**nightwatchjs** requires few binary files which can be installed via proper NPM command:
 
-    $ gulp nightwatch-setup:mac32
-    $ gulp nightwatch-setup:linux32
-    $ gulp nightwatch-setup:linux64
-    $ gulp nightwatch-setup:win32
+    $ npm run-script e2e-setup
 
 You'll also need to configure env variables for the tests to work locally:
-    
+
     $ export NIGHTWATCH_EMAIL="xx"
     $ export NIGHTWATCH_PASSWORD="xx"
 
-If you are ready just run dev server and start testing:
+If you are ready just run dev servers:
 
     $ npm start
-    $ npm run-script nightwatch
+    $ npm run-script e2e-selenium
+
+start testing:
+
+    $ npm run-script e2e
 
 
 If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` nightwatch line, so that it looks like this:
-    
+
     "nightwatch": "nightwatch --skiptags classes",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
