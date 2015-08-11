@@ -25,7 +25,7 @@ export default React.createClass({
   },
 
   handlePDFClick(invoice) {
-    let pdfUrl = SYNCANO_BASE_URL + invoice.links.pdf.replace('/', '');
+    let pdfUrl = SYNCANO_BASE_URL.slice(0, -1) + invoice.links.pdf;
     pdfUrl += '?api_key=' + SessionStore.getToken('');
     location.href = pdfUrl;
   },

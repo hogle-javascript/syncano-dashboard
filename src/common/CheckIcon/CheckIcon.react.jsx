@@ -104,11 +104,11 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      iconState = this.getIconState(),
-      iconStyle = styles.icon,
-      iconClass = iconState.icon,
-      backgroundStyle = styles.background;
+    let styles = this.getStyles();
+    let iconState = this.getIconState();
+    let iconStyle = styles.icon;
+    let iconClass = iconState.icon;
+    let backgroundStyle = styles.background;
 
     // Background color based on current state
     backgroundStyle.backgroundColor = iconState.color;

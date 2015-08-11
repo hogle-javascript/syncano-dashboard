@@ -44,7 +44,7 @@ export default Radium(React.createClass({
           attribute: 'soft_limit',
           message: 'Hard limit have to be higher then soft limit',
           comparator: (v1, v2) => {
-            return parseInt(v1) > parseInt(v2);
+            return parseInt(v1, 10) > parseInt(v2, 10);
           }
         },
         numericality: {

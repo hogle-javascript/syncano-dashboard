@@ -79,8 +79,8 @@ export default Reflux.createStore({
 
   getBuilderLimits() {
     return {
-      api: {included: '100 000'},
-      cbx: {included: '1 000'}
+      api: {included: '100000'},
+      cbx: {included: '1000'}
     };
   },
 
@@ -123,11 +123,11 @@ export default Reflux.createStore({
   },
 
   getCovered() {
-    return _.reduce(this.data.profile.subscription.pricing, (r, v, k) => {
-      let amount = v.included * v.overage;
-      r.amount += amount;
-      r[k] = _.extend({}, v, {amount: amount});
-      return r;
+    return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
+      let amount = value.included * value.overage;
+      result.amount += amount;
+      result[key] = _.extend({}, value, {amount: amount});
+      return result;
     }, {amount: 0});
   },
 
@@ -146,14 +146,14 @@ export default Reflux.createStore({
       usageAmount[_usage.source] += amount;
     });
 
-    return _.reduce(this.data.profile.subscription.pricing, (r, v, k) => {
-      let cover = covered[k];
-      let amount = (usageAmount[k] > cover.amount) ? usageAmount[k] - cover.amount : 0;
-      let included = _.round(amount / v.overage);
+    return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
+      let cover = covered[key];
+      let amount = (usageAmount[key] > cover.amount) ? usageAmount[key] - cover.amount : 0;
+      let included = _.round(amount / value.overage);
 
-      r.amount += amount;
-      r[k] = r[k] = _.extend({}, v, {amount, included});
-      return r;
+      result.amount += amount;
+      result[key] = result[key] = _.extend({}, value, {amount, included});
+      return result;
     }, {amount: 0});
   },
 
@@ -165,7 +165,7 @@ export default Reflux.createStore({
       commitment = subscription.commitment;
     }
 
-    return parseInt(commitment.api) + parseInt(commitment.cbx);
+    return parseInt(commitment.api, 10) + parseInt(commitment.cbx, 10);
   },
 
   onFetchBillingProfileCompleted(payload) {

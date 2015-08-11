@@ -17,7 +17,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       name: null,
-      description: null
+      description: null,
+      isLoading: false
     };
   },
 
@@ -56,10 +57,18 @@ export default Reflux.createStore({
     return adj + '-' + noun + '-' + rnd;
   },
 
+  onCreateInstance() {
+    this.trigger({isLoading: true});
+  },
+
   onCreateInstanceCompleted() {
     console.debug('InstanceDialogStore::onCreateInstanceCompleted');
     this.dismissDialog();
     InstancesActions.fetchInstances();
+  },
+
+  onUpdateInstance() {
+    this.trigger({isLoading: true});
   },
 
   onUpdateInstanceCompleted() {

@@ -49,3 +49,8 @@ var Stripe = {
     createToken: function () {}
   }
 };
+
+var hello = {
+  init: function() {},
+  login: function() {}
+};

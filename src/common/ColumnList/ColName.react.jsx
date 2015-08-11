@@ -1,10 +1,10 @@
-let React = require('react'),
+let React = require('react');
 
-  mui = require('material-ui'),
-  Colors = mui.Styles.Colors;
+let mui = require('material-ui');
+let Colors = mui.Styles.Colors;
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ColName',
 

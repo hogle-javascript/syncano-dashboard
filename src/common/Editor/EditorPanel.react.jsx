@@ -1,3 +1,5 @@
+/*eslint no-catch-shadow:0*/
+
 import React from 'react';
 import Radium from 'radium';
 import classNames from 'classnames';
@@ -72,9 +74,9 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less",
-      trace;
+    let styles = this.getStyles();
+    let unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less";
+    let trace = null;
 
     if (this.state.panelCollapsed) {
       trace = (

@@ -45,11 +45,11 @@ export default Radium(React.createClass({
   },
 
   renderSocialButtons() {
-    let styles = this.getStyles(),
-      socialNetworksCount = AuthConstants.SOCIAL_NETWORKS.length,
-      lastListItemIndex = socialNetworksCount - 1,
-      buttonLabel = this.props.mode === 'signup' ? 'Sign up with ' : 'Login with ',
-      buttons = [];
+    let styles = this.getStyles();
+    let socialNetworksCount = AuthConstants.SOCIAL_NETWORKS.length;
+    let lastListItemIndex = socialNetworksCount - 1;
+    let buttonLabel = this.props.mode === 'signup' ? 'Sign up with ' : 'Login with ';
+    let buttons = [];
 
     AuthConstants.SOCIAL_NETWORKS.map((network, index) => {
       buttons.push(

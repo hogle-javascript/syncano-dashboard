@@ -24,7 +24,7 @@ export default {
       } else if (checkId === item.name) {
         item.checked = state;
       }
-    }.bind(this));
+    });
     this.trigger(this.data);
   },
 

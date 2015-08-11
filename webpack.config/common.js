@@ -39,6 +39,7 @@ module.exports = {
     new webpack.DefinePlugin(plugin)
   ],
   module: {
+    preLoaders: [],
     loaders: [
       {test: /\.(svg)$/, loader: 'raw-loader'},
       {test: /\.js(|x)$/, exclude: /node_modules/, loader: 'babel'},
@@ -61,6 +62,7 @@ module.exports = {
   },
   externals: {
     'analytics': 'analytics',
+    'hellojs': 'hello',
     'stripejs': 'Stripe'
   }
 };

@@ -1,13 +1,11 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  mui = require('material-ui'),
+let React = require('react');
+let classNames = require('classnames');
+let mui = require('material-ui');
+let Constants = require('../../constants/Constants');
+let FontIcon = mui.FontIcon;
+let Mixins = require('../../mixins/mixins');
 
-  Constants = require('../../constants/Constants'),
-
-  FontIcon = mui.FontIcon,
-  Mixins = require('../../mixins/mixins');
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DropdownMenuButton',
 

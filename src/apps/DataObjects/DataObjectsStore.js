@@ -162,7 +162,7 @@ export default Reflux.createStore({
   getColumn(columnId) {
     let column = null;
     this.data.columns.some(columnObj => {
-      if (column.id = columnId) {
+      if (column.id.toString() === columnId.toString()) {
         column = columnObj;
         return true;
       }
@@ -206,8 +206,9 @@ export default Reflux.createStore({
 
   updateFromLocalStorage() {
     console.debug('DataObjectsStore::updateFromLocalStorage');
-    let className = this.getCurrentClassName(),
-      settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
+
+    let className = this.getCurrentClassName();
+    let settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
 
     if (!settings) {
       return;
@@ -288,6 +289,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
     this.refreshDataObjects();
   },
+
   onRemoveDataObjects() {
     this.data.isLoading = true;
     this.trigger(this.data);

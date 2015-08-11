@@ -49,8 +49,8 @@ export default Radium(React.createClass({
   },
 
   renderEditor() {
-    let config = null,
-      codeBox = this.state.currentCodeBox;
+    let config = null;
+    let codeBox = this.state.currentCodeBox;
 
     if (codeBox) {
       config = JSON.stringify(codeBox.config, null, 2);
