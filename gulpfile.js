@@ -207,8 +207,8 @@ chromedriverTypes.map(function(type) {
     }
     var zipFiles = paths.bin + '/**/*.zip',
         urls     = [
-          'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',
-          'http://chromedriver.storage.googleapis.com/2.16/chromedriver_' + type + '.zip'
+          'http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar',
+          'http://chromedriver.storage.googleapis.com/2.17/chromedriver_' + type + '.zip'
         ];
 
     download(urls)

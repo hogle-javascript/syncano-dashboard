@@ -97,7 +97,7 @@
     "eslint": "eslint src --quiet --ext .js --ext .jsx",
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "nightwatch-setup": "gulp nightwatch-setup:linux64",
-    "nightwatch": "nightwatch --skiptags classes,api_keys",
+    "nightwatch": "nightwatch --skiptags classes,api_keys --retries 3",
     "nightwatch-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key",
     "iconfont": "gulp iconfont"
   }
