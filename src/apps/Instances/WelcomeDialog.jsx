@@ -46,12 +46,13 @@ export default Radium(React.createClass({
       text: {
         backgroundImage: 'url(/img/bg.png)',
         backgroundColor: this.context.muiTheme.palette.primary1Color,
-        padding: 35,
+        padding: '35px 30px',
         width: '100%',
         textAlign: 'center',
         fontSize: '2rem',
         lineHeight: '2.1rem',
-        height: 340
+        height: 340,
+        WebkitHyphens: 'none'
       },
       overlay: {
         position: 'fixed',
