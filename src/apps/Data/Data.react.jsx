@@ -50,11 +50,6 @@ export default React.createClass({
     this.fetch();
   },
 
-  componentWillReceiveProps() {
-    console.info('Data::componentWillReceiveProps');
-    this.fetch();
-  },
-
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);

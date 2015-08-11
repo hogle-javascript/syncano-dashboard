@@ -25,13 +25,10 @@ export default Reflux.createStore({
 
   init() {
     this.data = this.getInitialState();
-    this.waitFor(
-      SessionActions.setUser,
+    this.joinTrailing(
       SessionActions.setInstance,
       this.refreshData
     );
-
-    this.listenTo(SessionActions.setInstance, this.refreshData);
   },
 
   setWebhooks(items) {
@@ -45,12 +42,6 @@ export default Reflux.createStore({
 
   refreshData() {
     WebhooksActions.fetchWebhooks();
-  },
-
-  onFetchWebhooks() {
-    console.debug('WebhooksStore::onFetchWebhooks');
-    this.data.isLoading = true;
-    this.trigger(this.data);
   },
 
   onFetchWebhooksCompleted(items) {
