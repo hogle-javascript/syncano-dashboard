@@ -72,12 +72,12 @@ export default React.createClass({
 
   showDataObjectEditDialog(cellNumber) {
     let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
-    dataObject = _.reduce(dataObject, (r, v, k) => {
-      if (_.isObject(v) && v.type === 'reference') {
-        v = v.value;
+    dataObject = _.reduce(dataObject, (result, val, key) => {
+      if (_.isObject(val) && val.type === 'reference') {
+        val = val.value;
       }
-      r[k] = v;
-      return r;
+      result[key] = val;
+      return result;
     }, {});
     DataObjectsActions.showDialog(dataObject);
   },

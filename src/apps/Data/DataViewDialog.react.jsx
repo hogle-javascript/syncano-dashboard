@@ -68,12 +68,12 @@ export default React.createClass({
     console.info('DataViewDialog::handleToggle', arguments);
 
     let genList = (list, name, val) => {
-      let arr = list.replace(/ /g, '').split(',').filter(n => n);
+      let arr = list.replace(/ /g, '').split(',').filter(listItem => listItem);
 
       if (val) {
         arr.push(name);
       } else {
-        arr = arr.filter(n => n !== name);
+        arr = arr.filter(arrItem => arrItem !== name);
       }
 
       return arr.join(',');
