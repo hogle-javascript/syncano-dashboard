@@ -1,6 +1,6 @@
 export default {
   headerMenuItems() {
-    var params = {
+    let params = {
       instanceName: this.getParams().instanceName
     };
 
@@ -36,6 +36,5 @@ export default {
         params
       }
     ];
-  },
-
+  }
 };
