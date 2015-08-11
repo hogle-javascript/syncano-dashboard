@@ -112,10 +112,10 @@ export default React.createClass({
   },
 
   getDateFormat(date) {
-    let d = date.getDate();
-    let m = date.getMonth() + 1;
-    let y = date.getFullYear();
-    return d + '-' + m + '-' + y;
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + '-' + month + '-' + year;
   },
 
   logDate() {

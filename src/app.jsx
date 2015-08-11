@@ -42,7 +42,7 @@ Router.run(routes, function(Root, state) {
   }
 
   let name  = 'app';
-  let names = state.routes.map(route => route.name).filter(n => n !== undefined);
+  let names = state.routes.map(route => route.name).filter(routeName => routeName !== undefined);
 
   if (names.length > 0) {
     name = names[names.length - 1];
