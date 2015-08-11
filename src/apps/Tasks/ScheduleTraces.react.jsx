@@ -15,7 +15,7 @@ import Traces from '../Traces';
 
 export default React.createClass({
 
-  displayName: 'WebhookTraces',
+  displayName: 'ScheduleTraces',
 
   mixins: [
     Router.State,
@@ -26,11 +26,11 @@ export default React.createClass({
   ],
 
   render() {
-    let webhookName = this.getParams().webhookName;
+    let scheduleId = this.getParams().scheduleId;
     return (
       <Traces
-        objectId={webhookName}
-        tracesFor='webhook'/>
+        objectId={scheduleId}
+        tracesFor='schedule'/>
     );
   }
 });

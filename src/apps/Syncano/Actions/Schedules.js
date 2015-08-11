@@ -7,6 +7,14 @@ export default {
       .catch(this.failure);
   },
 
+  get(scheduleId) {
+    this.Connection
+      .Schedules
+      .get(scheduleId)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   list() {
     this.Connection
       .Schedules

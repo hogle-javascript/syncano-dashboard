@@ -17,7 +17,8 @@ export default Reflux.createStore({
       items: [],
       objectId: null,
       tracesFor: null,
-      isLoading: true
+      isLoading: true,
+      currentObjectName: null
     }
   },
 
@@ -34,7 +35,19 @@ export default Reflux.createStore({
 
     if (SessionStore.instance && this.data.objectId) {
       this.fetchTraces();
+      this.fetchCurrentItem();
     }
+  },
+
+  fetchCurrentItem() {
+    let fetch = {
+      codebox: Actions.fetchCurrentCodeBox,
+      webhook: Actions.fetchCurrentWebhook,
+      trigger: Actions.fetchCurrentTrigger,
+      schedule: Actions.fetchCurrentSchedule
+    };
+
+    fetch[this.data.tracesFor](this.data.objectId);
   },
 
   fetchTraces() {
@@ -56,8 +69,15 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
+    console.debug('TracesStore::saveTraces');
     this.data.items = _.chain(Object.keys(tracesObj)).map(item => tracesObj[item]).sortByOrder('id', 'desc').value();
     this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  saveCurrentObj(currentObjName) {
+    console.debug('TracesStore::saveCurrentObj', currentObjName);
+    this.data.currentObjectName = currentObjName;
     this.trigger(this.data);
   },
 
@@ -79,6 +99,26 @@ export default Reflux.createStore({
   onFetchScheduleTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
+  },
+
+  onFetchCurrentCodeBoxCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
+  },
+
+  onFetchCurrentWebhookCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    this.saveCurrentObj(currentObj.name)
+  },
+  onFetchCurrentTriggerCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
+  },
+
+  onFetchCurrentScheduleCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
   }
+
 
 });
