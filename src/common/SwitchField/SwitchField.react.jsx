@@ -1,12 +1,12 @@
-let React = require('react'),
-  classNames = require('classnames'),
+let React = require('react');
+let classNames = require('classnames');
 
-  mui = require('material-ui'),
-  Toggle = mui.Toggle;
+let mui = require('material-ui');
+let Toggle = mui.Toggle;
 
 require('./SwitchField.css');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'SwitchField',
 

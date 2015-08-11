@@ -122,15 +122,15 @@ export default Radium(React.createClass({
             className='synicon-share-variant'
             color={MUI.Styles.Colors.lightGreen500}
             />
-        ),
-        content = (
+        );
+      let content = (
           <div>
             <strong>{item.inviter + ' '}</strong>
             invited you to their instance
             <strong>{' ' + item.instance}</strong>
           </div>
-        ),
-        buttons = [
+        );
+      let buttons = [
           <MUI.FlatButton
             onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
             label='Accept'
@@ -158,13 +158,14 @@ export default Radium(React.createClass({
           <MUI.FontIcon
             className='synicon-alert'
             color={MUI.Styles.Colors.orange500}/>
-        ),
+        );
 
-        resendLink = (
+      let resendLink = (
           <div style={this.getStyles().resendEmailText}>
             Your email address is not yet verified. Click here to resend activation email.
           </div>
         );
+
       notifications.push(
         <MenuItem
           key="resend-link"
@@ -179,10 +180,10 @@ export default Radium(React.createClass({
   },
 
   renderIcon() {
-    let notifications = this.renderItems(),
-      notificationCountIcon = null,
-      iconClassName = 'synicon-',
-      styles = this.getStyles();
+    let notifications = this.renderItems();
+    let notificationCountIcon = null;
+    let iconClassName = 'synicon-';
+    let styles = this.getStyles();
 
     if (notifications.length > 0) {
       iconClassName += 'bell';

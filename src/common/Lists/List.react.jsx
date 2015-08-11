@@ -1,18 +1,18 @@
-let React = require('react'),
-  classNames = require('classnames');
+import React from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'List',
 
-  propTypes: {},
+  propTypes: {
+    children: React.PropTypes.node
+  },
 
-  render: function() {
+  render() {
     return (
       <div>
         {this.props.children}
       </div>
     );
   }
-
 });

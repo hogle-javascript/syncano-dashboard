@@ -1,18 +1,17 @@
-let React = require('react'),
-  mui = require('material-ui'),
+let React = require('react');
+let mui = require('material-ui');
+let FontIcon = mui.FontIcon;
 
-  FontIcon = mui.FontIcon;
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DropdownMenuItemToggle',
 
-  handleClick: function(e) {
+  handleClick(e) {
     e.stopPropagation();
     this.props.handleClick(this.props.action.name);
   },
 
-  render: function() {
+  render() {
     let type = this.props.action.selected ? "synicon-checkbox-marked" : "synicon-checkbox-blank";
     return (
       <div

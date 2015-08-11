@@ -1,10 +1,10 @@
-var React     = require('react'),
-    Moment    = require('moment'),
+import React from 'react';
+import Moment from 'moment';
 
-    Dropdown  = require('../Dropdown/Dropdown.react'),
-    TableData = require('./TableData.react');
+import Dropdown from '../Dropdown/Dropdown.react';
+import TableData from './TableData.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'TableRow',
 
@@ -26,7 +26,7 @@ module.exports = React.createClass({
     var optionsColumn = null;
     var columns = this.props.columns.filter(function(column, i) {
       return column.selected;
-    }.bind(this)).map(function(column, i) {
+    }).map(function(column, i) {
       var data = this.props.item[column.name];
       if (column.name === "created_at" || column.name === "updated_at") {
         data = Moment(this.props.item[column.name]).format('DD-MM-YYYY, h:mm:ss a');

@@ -48,9 +48,9 @@ export default React.createClass({
   },
 
   renderHeaderContent() {
-    let styles = this.getStyles(),
-      headerContentProps = this.props.headerContent,
-      headerContentElement;
+    let styles = this.getStyles();
+    let headerContentProps = this.props.headerContent;
+    let headerContentElement;
 
     if (this.isHeaderNecessary()) {
 

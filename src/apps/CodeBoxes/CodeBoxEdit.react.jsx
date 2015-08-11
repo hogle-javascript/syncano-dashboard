@@ -75,10 +75,10 @@ export default React.createClass({
   },
 
   renderEditor() {
-    let styles = this.getStyles(),
-      source = null,
-      codeBox = this.state.currentCodeBox,
-      editorMode = 'python';
+    let styles = this.getStyles();
+    let source = null;
+    let codeBox = this.state.currentCodeBox;
+    let editorMode = 'python';
 
     if (codeBox) {
       source = codeBox.source;

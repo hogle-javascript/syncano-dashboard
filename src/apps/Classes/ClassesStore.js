@@ -74,8 +74,8 @@ export default Reflux.createStore({
   },
 
   getClassRelationFields(className) {
-    let allFields = this.getClassFields(className),
-      relationFields = [];
+    let allFields = this.getClassFields(className);
+    let relationFields = [];
 
     allFields.map(item => {
       if (item.type === 'reference') {
@@ -86,8 +86,8 @@ export default Reflux.createStore({
   },
 
   getClassOrderFieldsPayload(className) {
-    let allFields = this.getClassFields(className),
-      orderPayload = [];
+    let allFields = this.getClassFields(className);
+    let orderPayload = [];
 
     allFields.map(item => {
       if (item.order_index) {

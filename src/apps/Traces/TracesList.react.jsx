@@ -131,9 +131,9 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    let items = this.state.items || [],
-      styles = this.getStyles(),
-      tracesFor = {
+    let items = this.state.items || [];
+    let styles = this.getStyles();
+    let tracesFor = {
         codebox: {
           name: 'CodeBox',
           icon: 'synicon-package-variant'
