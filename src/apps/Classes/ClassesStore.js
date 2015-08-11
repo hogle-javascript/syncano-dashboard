@@ -147,6 +147,14 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onUpdateClass() {
+    this.data.isLoading = true;
+  },
+
+  onUpdateClassCompleted() {
+    this.refreshData();
+  },
+
   onFetchClasses() {
     this.data.isLoading = true;
     this.trigger(this.data);
