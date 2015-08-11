@@ -1,23 +1,22 @@
-let React = require('react'),
+import React from 'react';
+import mui from 'material-ui';
 
-  mui = require('material-ui'),
-  FontIcon = mui.FontIcon;
+let FontIcon = mui.FontIcon;
 
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'ListItemEmpty',
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       icon: 'cart',
       text: 'empty',
     }
   },
 
-  render: function() {
-
+  render() {
     console.log('Rendering EmptyList element');
+
     return (
       <div className="list-item list-item-empty">
         <div className="card-header">

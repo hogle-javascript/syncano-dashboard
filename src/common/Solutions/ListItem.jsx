@@ -83,7 +83,6 @@ export default Radium(React.createClass({
 
   handleTagClick(tag) {
     this.props.onTagClick(solutionId);
-    //SolutionsActions.selectOneTag.bind(null, tag)
   },
 
   isNoVersions() {
@@ -92,10 +91,10 @@ export default Radium(React.createClass({
   },
 
   renderVersion() {
-    let styles = this.getStyles(),
-      item = this.props.data,
-      name = null,
-      color = null;
+    let styles = this.getStyles();
+    let item = this.props.data;
+    let name = null;
+    let color = null;
 
     if (item.versions.stable) {
       name = `stable (${item.versions.stable})`;
@@ -136,8 +135,8 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let styles = this.getStyles(),
-      item = this.props.data;
+    let styles = this.getStyles();
+    let item = this.props.data;
 
     return (
       <MUI.Card>

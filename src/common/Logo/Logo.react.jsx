@@ -1,13 +1,13 @@
-let React = require('react'),
-  Isvg = require('react-inlinesvg');
+let React = require('react');
+let Isvg = require('react-inlinesvg');
 
 require('./Logo.sass');
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Logo',
 
-  render: function() {
+  render() {
     return (
       <Isvg
         wrapper={React.DOM.div}

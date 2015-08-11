@@ -68,12 +68,12 @@ export default React.createClass({
     console.info('DataViewDialog::handleToggle', arguments);
 
     let genList = (list, name, val) => {
-      let arr = list.replace(/ /g, '').split(',').filter(n => n);
+      let arr = list.replace(/ /g, '').split(',').filter(listItem => listItem);
 
       if (val) {
         arr.push(name);
       } else {
-        arr = arr.filter(n => n !== name);
+        arr = arr.filter(arrItem => arrItem !== name);
       }
 
       return arr.join(',');
@@ -164,20 +164,20 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add',
-      submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm',
-      dialogStandardActions = [
-        {
-          ref: 'cancel',
-          text: 'Cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          ref: 'submit',
-          text: {submitLabel},
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+    let title = this.hasEditMode() ? 'Edit' : 'Add';
+    let submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm';
+    let dialogStandardActions = [
+      {
+        ref: 'cancel',
+        text: 'Cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        ref: 'submit',
+        text: {submitLabel},
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     let fields = null;
     let options = null;

@@ -57,8 +57,8 @@ export default React.createClass({
   componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
-      let router = this.context.router,
-        next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let router = this.context.router;
+      let next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }

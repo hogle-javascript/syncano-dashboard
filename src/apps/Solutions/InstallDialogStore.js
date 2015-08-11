@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
@@ -85,8 +85,9 @@ export default Reflux.createStore({
   },
 
   getDefaultVersion() {
-    if (this.data.versions)
+    if (this.data.versions) {
       return this.data.versions[0].number;
+    }
   },
 
   onFetchInstancesCompleted(items) {

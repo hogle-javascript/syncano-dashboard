@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
+import InstancesActions from '../Instances/InstancesActions';
 import Actions from './ProfileInvitationsActions';
 
 export default Reflux.createStore({
@@ -59,6 +60,7 @@ export default Reflux.createStore({
   },
 
   onAcceptInvitationsCompleted() {
+    InstancesActions.fetch();
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

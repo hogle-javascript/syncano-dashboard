@@ -105,7 +105,7 @@ export default React.createClass({
             <MUI.SelectField
               ref="signal"
               name="signal"
-              hintText="Signal"
+              floatingLabelText="Signal"
               fullWidth={true}
               valueLink={this.linkState('signal')}
               errorText={this.getValidationMessages('signal').join(' ')}
@@ -115,7 +115,7 @@ export default React.createClass({
             <MUI.SelectField
               ref="class"
               name="class"
-              hintText="Class"
+              floatingLabelText="Class"
               fullWidth={true}
               valueLink={this.linkState('class')}
               errorText={this.getValidationMessages('class').join(' ')}
@@ -125,7 +125,7 @@ export default React.createClass({
             <MUI.SelectField
               ref="codebox"
               name="codebox"
-              hintText="CodeBox"
+              floatingLabelText="CodeBox"
               valueLink={this.linkState('codebox')}
               errorText={this.getValidationMessages('codebox').join(' ')}
               valueMember="payload"

@@ -5,7 +5,7 @@ export default {
     let dialogs = this.initDialogs();
     return dialogs.map(function(dialog) {
       return React.createElement(dialog.dialog, dialog.params);
-    }.bind(this))
+    })
   },
 
   showDialog(ref) {

@@ -15,10 +15,6 @@ export default React.createClass({
     router: React.PropTypes.func
   },
 
-  componentWillMount() {
-    console.debug('Classes::componentWillMount');
-  },
-
   render() {
     return (
       <Router.RouteHandler />

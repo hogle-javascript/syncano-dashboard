@@ -24,33 +24,65 @@ export default React.createClass({
       presence: true
     },
     first_name: {
-      length: {maximum: 35}
+      length: {maximum: 35},
+      format: {
+        pattern: /^([a-zA-Z]+)$/i,
+        message: 'can contain only alphabetical characters'
+      }
     },
     last_name: {
-      length: {maximum: 35}
+      length: {maximum: 35},
+      format: {
+        pattern: /^([a-zA-Z -]+)$/i,
+        message: 'can contain only alphabetical characters'
+      }
     },
     address_line1: {
       length: {maximum: 150},
-      presence: true
+      presence: true,
+      format: {
+        pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
+        message: 'is invalid'
+      }
     },
     address_line2: {
-      length: {maximum: 150}
+      length: {maximum: 150},
+      format: {
+        pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
+        message: 'is invalid'
+      }
     },
     address_city: {
       length: {maximum: 100},
-      presence: true
+      presence: true,
+      format: {
+        pattern: /^([a-zA-Z -]+)$/i,
+        message: 'can contain only alphabetical characters'
+      }
     },
     address_state: {
       length: {maximum: 100},
-      presence: true
+      presence: true,
+      format: {
+        pattern: /^([a-zA-Z -]+)$/i,
+        message: 'can contain only alphabetical characters'
+      }
     },
     address_zip: {
       length: {maximum: 10},
-      presence: true
+      presence: true,
+      format: {
+        pattern: /^([a-zA-Z0-9 -]+)$/i,
+        message: 'is invalid'
+      }
     },
     address_country: {
       length: {maximum: 35},
-      presence: true
+      presence: true,
+      format: {
+        pattern: /^([a-zA-Z -]+)$/i,
+        message: 'can contain only alphabetical characters'
+      }
     },
     tax_number: {
       length: {maximum: 50},

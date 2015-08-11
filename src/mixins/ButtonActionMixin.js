@@ -6,8 +6,8 @@ export default {
       buttons = buttons.call(this);
     }
 
-    let buttonConf = buttons[buttonName],
-      params = typeof buttonConf.params === 'function' ? buttonConf.params() : buttonConf.params;
+    let buttonConf = buttons[buttonName];
+    let params = typeof buttonConf.params === 'function' ? buttonConf.params() : buttonConf.params;
     buttonConf.action(params);
   },
 };

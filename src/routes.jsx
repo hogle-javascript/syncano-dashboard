@@ -31,7 +31,6 @@ import Channels from './apps/Channels/Channels.react';
 
 // Examples
 import Examples from './examples/Examples.react';
-import ListExamples from './examples/ListExamples.react';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -292,10 +291,6 @@ module.exports = (
     <Route
       name="examples"
       handler={Examples}
-      />
-    <Route
-      name="listsexamples"
-      handler={ListExamples}
       />
   </Route>
 );

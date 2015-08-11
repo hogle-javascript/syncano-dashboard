@@ -5,7 +5,7 @@ import URI from 'URIjs';
 import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
-//Stores & Actions
+// Stores & Actions
 import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
@@ -206,8 +206,9 @@ export default Reflux.createStore({
 
   updateFromLocalStorage() {
     console.debug('DataObjectsStore::updateFromLocalStorage');
-    let className = this.getCurrentClassName(),
-      settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
+
+    let className = this.getCurrentClassName();
+    let settings = localStorage.getItem('dataobjects_checkedcolumns_' + className);
 
     if (!settings) {
       return;
@@ -260,7 +261,7 @@ export default Reflux.createStore({
 
   onFetchDataObjects() {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    //this.data.isLoading = true;
+    // this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -288,6 +289,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
     this.refreshDataObjects();
   },
+
   onRemoveDataObjects() {
     this.data.isLoading = true;
     this.trigger(this.data);

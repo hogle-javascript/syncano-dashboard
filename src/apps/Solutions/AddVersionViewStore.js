@@ -4,7 +4,7 @@ import D from 'd.js';
 // Utils & Mixins
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 import Actions from './AddVersionViewActions';

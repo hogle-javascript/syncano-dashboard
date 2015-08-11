@@ -34,7 +34,11 @@ export default React.createClass({
     }
     return {
       number: {
-        presence: true
+        presence: true,
+        length: {maximum: 19},
+        numericality: {
+          onlyInteger: true
+        }
       },
       cvc: {
         presence: true,
@@ -55,7 +59,10 @@ export default React.createClass({
         presence: true,
         numericality: {
           onlyInteger: true,
-          greaterThan: 0
+          greaterThanOrEqualTo: new Date().getFullYear()
+        },
+        length: {
+          is: 4
         }
       }
     }
@@ -77,7 +84,7 @@ export default React.createClass({
     let apiTotal = this.getInfo('api').total;
     let cbxTotal = this.getInfo('cbx').total;
 
-    let total = parseInt(apiTotal) + parseInt(cbxTotal);
+    let total = parseInt(apiTotal, 10) + parseInt(cbxTotal, 10);
 
     let subscribe = () => {
       return Actions.subscribePlan(this.state.plan.name, {
@@ -324,7 +331,7 @@ export default React.createClass({
     let styles = this.getStyles();
     let apiInfo = this.getInfo('api');
     let cbxInfo = this.getInfo('cbx');
-    let sum = parseInt(apiInfo.total) + parseInt(cbxInfo.total);
+    let sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
 
     let dialogCustomActions = [
       <MUI.FlatButton
@@ -343,7 +350,7 @@ export default React.createClass({
 
     let apiSliderSummary = this.renderSliderSummary({
         included: {
-          value: parseInt(apiInfo.included).toLocaleString(),
+          value: parseInt(apiInfo.included, 10).toLocaleString(),
           label: 'Total API calls'
         },
         overage: {
@@ -355,7 +362,7 @@ export default React.createClass({
 
     let cbxSliderSummary = this.renderSliderSummary({
         included: {
-          value: parseInt(cbxInfo.included).toLocaleString(),
+          value: parseInt(cbxInfo.included, 10).toLocaleString(),
           label: 'Total CodeBox runs'
         },
         overage: {
@@ -400,12 +407,12 @@ export default React.createClass({
                 <div style={styles.table}>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included, 10).toLocaleString()}</div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included, 10).toLocaleString()}</div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import StoreFormMixin from '../../mixins/StoreFormMixin';
 import DialogStoreMixin from '../../mixins/DialogStoreMixin';
 
-//Stores & Actions
+// Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SolutionsActions from './CreateDialogActions';
 

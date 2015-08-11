@@ -13,9 +13,21 @@ config.entry.app.unshift(
 config.module.loaders[1].loaders = [
   'react-hot',
   config.module.loaders[1].loader
-]
+];
 
-delete config.module.loaders[1].loader
+config.module.preLoaders.push({
+  test: /\.js(|x)$/,
+  loader: 'eslint-loader',
+  exclude: /node_modules/
+});
+
+config.eslint = {
+  formatter: require('eslint-friendly-formatter'),
+  configFile: '.eslintrc',
+  quiet: true
+};
+
+delete config.module.loaders[1].loader;
 
 config.plugins.unshift(
   new webpack.HotModuleReplacementPlugin(),
