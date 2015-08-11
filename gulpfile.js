@@ -198,7 +198,6 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(cloudfront(aws));
 });
 
-<<<<<<< HEAD
 var chromedriverTypes = [
   'linux64',
   'linux32',
@@ -240,7 +239,6 @@ chromedriverTypes.map(function(type) {
   });
 });
 
-gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts']);
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
