@@ -362,8 +362,12 @@ export default Radium(React.createClass({
             {coveredText}
           </div>
 
-          <div className="row align-middle" style={{marginTop: 25}}>
-            <div className="col-flex-1" style={{textAlign: 'center'}}>
+          <div
+            className="row align-middle"
+            style={{marginTop: 25}}>
+            <div
+              className="col-flex-1"
+              style={{textAlign: 'center'}}>
               <div style={{textDecoration: 'line-through', fontSize: '2rem'}}>${amountTotal}</div>
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
@@ -384,8 +388,12 @@ export default Radium(React.createClass({
           {coveredText}
         </div>
 
-        <div className="row align-middle" style={{marginTop: 20}}>
-          <div className="col-flex-1" style={{textAlign: 'center'}}>
+        <div
+          className="row align-middle"
+          style={{marginTop: 20}}>
+          <div
+            className="col-flex-1"
+            style={{textAlign: 'center'}}>
             <div style={{fontSize: '2rem'}}>${amountTotal}</div>
             <div style={{marginTop: 15, fontSize: '1rem'}}>
               ${covered} plan + ${overage} overage
@@ -425,8 +433,7 @@ export default Radium(React.createClass({
         {this.getDialogs()}
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
-        <div
-            style={styles.planContainer}>
+        <div style={styles.planContainer}>
           <div style={styles.planSubContainer}>
             <div style={styles.planTitle}>
 
@@ -469,15 +476,21 @@ export default Radium(React.createClass({
 
             </div>
 
-            <div className="col-flex-1" style={styles.summary}>
-              <div className="vp-4" style={{alignSelf: 'center'}}>
+            <div
+              className="col-flex-1"
+              style={styles.summary}>
+              <div
+                className="vp-4"
+                style={{alignSelf: 'center'}}>
                 {this.renderSummary()}
               </div>
             </div>
           </div>
 
           <div className="row vp-2-b">
-            <div className="col-flex-1 vp-1-b" style={styles.heading}>
+            <div
+              className="col-flex-1 vp-1-b"
+              style={styles.heading}>
               See how it works with your <strong>current usage</strong>:
             </div>
           </div>

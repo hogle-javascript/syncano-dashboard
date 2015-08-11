@@ -6,7 +6,7 @@ import SessionActions from '../Session/SessionActions';
 import BillingPlanActions from './ProfileBillingPlanActions';
 import Actions from './ProfileBillingPlanDialogActions';
 
-module.exports = Reflux.createStore({
+export default Reflux.createStore({
   listenables: Actions,
   mixins: [
     Mixins.StoreForm,
