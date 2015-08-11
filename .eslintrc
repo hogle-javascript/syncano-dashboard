@@ -105,16 +105,12 @@
     // "accessor-pairs": 2,
     "radix": 2,
     // "no-multi-spaces": 2,
-    // "curly": [2, "multi-line"],
+    
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
 
     // what we have
-    "spaced-comment": [2, "always",  {
-      "exceptions": ["-", "+"],
-      "markers": ["=", "!"]
-    }],
     "no-inline-comments": 1,
     "complexity": 1,
     "no-param-reassign": 1,
@@ -169,7 +165,7 @@
     }],
     "no-undefined": 1,
     "no-invalid-this": 1,
-    "spaced-comment": [1, "always",  {
+    "spaced-comment": [2, "always",  {
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
@@ -187,10 +183,11 @@
     "no-extra-bind": 2,
     "accessor-pairs": 1,
     "no-multi-spaces": 1,
-    "curly": [1, "multi-line"],
+    "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
     "react/no-did-update-set-state": 1,
+
 
     // Strict
     "strict": [2, "never"],

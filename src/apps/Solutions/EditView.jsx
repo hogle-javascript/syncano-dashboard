@@ -148,9 +148,9 @@ export default React.createClass({
   renderItemTags() {
     let styles = this.getStyles();
 
-    if (this.state.item.tags && this.state.item.tags.length === 0)
+    if (this.state.item.tags && this.state.item.tags.length === 0) {
       return <div style={styles.tag}>no tags</div>;
-
+    }
     return this.state.item.tags.map(tag => {
       return (
         <div

@@ -85,8 +85,9 @@ export default Reflux.createStore({
   },
 
   getDefaultVersion() {
-    if (this.data.versions)
+    if (this.data.versions) {
       return this.data.versions[0].number;
+    }
   },
 
   onFetchInstancesCompleted(items) {
