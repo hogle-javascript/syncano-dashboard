@@ -187,11 +187,10 @@
     "no-extra-bind": 2,
     "accessor-pairs": 1,
     "no-multi-spaces": 1,
-    "curly": [1, "multi-line"],
+    "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
     "react/no-did-update-set-state": 1,
-    "curly": [2, "multi-line"],
 
 
     // Strict
