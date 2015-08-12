@@ -2,6 +2,7 @@ import 'babel-core/polyfill';
 import 'normalize.css';
 import './raven';
 import './stripe';
+import './segment';
 import './app.sass';
 
 import React from 'react';
@@ -10,7 +11,6 @@ import URI from 'URIjs';
 import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
-import analytics from './segment';
 
 let container  = document.getElementById('app');
 tapPlugin();
@@ -38,7 +38,7 @@ Router.run(routes, function(Root, state) {
   }
 
   if (state.query.distinct_id !== undefined) {
-    analytics.identify(state.query.distinct_id);
+    window.analytics.identify(state.query.distinct_id);
   }
 
   let name  = 'app';
@@ -48,7 +48,7 @@ Router.run(routes, function(Root, state) {
     name = names[names.length - 1];
   }
 
-  analytics.page('Dashboard', {
+  window.analytics.page('Dashboard', {
     Page: name,
     path: state.pathname
   });
