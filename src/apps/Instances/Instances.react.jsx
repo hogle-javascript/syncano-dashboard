@@ -14,6 +14,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 // TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
@@ -33,7 +34,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs,
+    Mixins.Dialogs
   ],
 
   // Dialogs config
@@ -84,6 +85,38 @@ export default Radium(React.createClass({
       this.showDialog('addInstanceDialog');
     }
     Store.fetch();
+
+    Actions.setTourConfig(this.getTourConfig())
+  },
+
+  getStyles() {
+    return {
+      tourHighlight: {
+        color: MUI.Styles.Colors.blue800
+      }
+    }
+  },
+
+  getTourConfig() {
+    const styles = this.getStyles();
+    return [{
+      node: React.findDOMNode(this.refs.myInstancesList),
+      text: <div>This screen is all about <strong style={styles.tourHighlight}>Instances</strong>. <br />
+        <strong style={styles.tourHighlight}>Instance</strong> is the space for your data.</div>,
+      radius: 200
+    },
+    {
+      node: React.findDOMNode(this.refs.addInstanceFab),
+      text: <div>Here you can add new <strong style={styles.tourHighlight}>Instance.</strong></div>,
+      radius: 95
+    },
+    {
+      node: document.getElementById('menu-solutions'),
+      text: <div>Go here to find <strong style={styles.tourHighlight}>Solution</strong> for you!</div>,
+      radius: 100,
+      top: -14,
+      left: 20
+    }]
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -122,6 +155,11 @@ export default Radium(React.createClass({
     InstanceDialogActions.showDialog(Store.getCheckedItem());
   },
 
+  onNextStep() {
+    Actions.setTourConfig(this.getTourConfig());
+    Actions.nextStep();
+  },
+
   render() {
     if (this.state.blocked) {
       return (
@@ -139,6 +177,21 @@ export default Radium(React.createClass({
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
+
+        <div style={{position: 'fixed', left: 10, bottom: 10}}>
+        <MUI.IconButton
+          iconClassName="synicon-help-circle"
+          onClick={this.onNextStep}
+          touch={true}
+          iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+        </div>
+
+        <Common.Tour
+          config={this.state.tourConfig}
+          currentStep={this.state.currentStep}
+          visible={this.state.isTourVisible}
+          onClick={this.onNextStep}
+          showDots={true} />
 
         <WelcomeDialog
           getStared={this.showInstanceDialog}

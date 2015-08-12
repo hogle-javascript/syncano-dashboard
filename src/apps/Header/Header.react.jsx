@@ -191,7 +191,7 @@ export default Radium(React.createClass({
                   Support
                 </a>
               </li>
-              <li style={styles.toolbarListItem}>
+              <li id="menu-solutions" style={styles.toolbarListItem}>
                 <a onClick={this.handleSolutionsClick}>Solutions</a>
               </li>
               <li>
