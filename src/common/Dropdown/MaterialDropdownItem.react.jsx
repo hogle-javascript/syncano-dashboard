@@ -6,6 +6,7 @@ import MUI from 'material-ui';
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
+  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -32,6 +33,10 @@ export default React.createClass({
     })
   },
 
+  getInitialState() {
+    return {gravatarUrl: null};
+  },
+
   isHeaderNecessary() {
     let headerContentProps = this.props.headerContent;
 
@@ -41,31 +46,36 @@ export default React.createClass({
   getStyles() {
     return {
       avatar: {
-        Transform: 'translateY(-50%)',
+        transform: 'translateY(-50%)',
         top: '50%'
       }
     }
   },
 
+  onAvatarError() {
+    this.setState({gravatarUrl: this.fallBackAvatar});
+  },
+
   renderHeaderContent() {
     let styles = this.getStyles();
     let headerContentProps = this.props.headerContent;
-    let headerContentElement;
+    let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
 
       let location = window.location;
-      let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {default: 'blank'}, true);
+      let gravatarUrl = this.state.gravatarUrl || Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
-      if (gravatarUrl.indexOf('blank')) {
-        gravatarUrl = fallBackAvatar;
-      }
       headerContentElement = (
         <MUI.ListItem
-          leftAvatar={<MUI.Avatar style={styles.avatar} src={gravatarUrl} />}
+          leftAvatar={
+            <MUI.Avatar
+              style={styles.avatar}
+              src={gravatarUrl}
+              onError={this.onAvatarError} />
+          }
           primaryText={primaryText}
           secondaryText={secondaryText}
           disableTouchTap={!headerContentProps.clickable}
