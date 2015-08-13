@@ -12,6 +12,7 @@ import Actions from './TracesActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
 // Local components
@@ -80,14 +81,7 @@ export default React.createClass({
 
     return (
       <div>
-        <MUI.Toolbar style={{
-          position: 'fixed',
-          top: 64,
-          right: 0,
-          zIndex: 8,
-          paddingLeft: 256,
-          background: 'rgba(215,215,215,0.6)',
-          padding: '0px 32px 0 24px'}}>
+        <Common.InnerToolbar>
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
@@ -98,7 +92,7 @@ export default React.createClass({
               style={{marginTop: 4}}
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
-        </MUI.Toolbar>
+        </Common.InnerToolbar>
         <TracesList
           tracesFor={this.props.tracesFor}
           name="Traces"
