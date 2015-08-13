@@ -32,6 +32,7 @@ export default React.createClass({
     if (this.state.card) {
       return;
     }
+
     return {
       number: {
         presence: true,
@@ -65,6 +66,19 @@ export default React.createClass({
           is: 4
         }
       }
+    }
+  },
+
+  getValidatorAttributes() {
+    if (this.state.card) {
+      return {};
+    }
+
+    return {
+      number: this.state.number || this.refs.number.getValue(),
+      cvc: this.state.cvc || this.refs.cvc.getValue(),
+      exp_month: this.state.exp_month || this.refs.exp_month.getValue(),
+      exp_year: this.state.exp_year || this.refs.exp_year.getValue()
     }
   },
 
