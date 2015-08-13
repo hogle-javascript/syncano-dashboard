@@ -3,6 +3,7 @@ import ScheduleDialogStore from './ScheduleDialogStore';
 import SchedulesActions from './SchedulesActions';
 import SchedulesList from './SchedulesList.react';
 import SchedulesStore from './SchedulesStore';
+import ScheduleTraces from './ScheduleTraces.react';
 import Tasks from './Tasks.react';
 import TriggerDialog from './TriggerDialog.react';
 import TriggerDialogStore from './TriggerDialogStore';
@@ -15,6 +16,7 @@ Tasks.ScheduleDialogStore = ScheduleDialogStore;
 Tasks.SchedulesActions = SchedulesActions;
 Tasks.SchedulesList = SchedulesList;
 Tasks.SchedulesStore = SchedulesStore;
+Tasks.ScheduleTraces = ScheduleTraces;
 
 Tasks.TriggersList = TriggersList;
 Tasks.TriggersStore = TriggersStore;
