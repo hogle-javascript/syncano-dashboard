@@ -62,7 +62,7 @@ export default Radium(React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.updateBillingCard(this.state);
+    Actions.updateBillingCard(this.getValidatorAttributes());
   },
 
   toggleForm(state) {

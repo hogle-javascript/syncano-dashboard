@@ -119,12 +119,8 @@ export default React.createClass({
     if (this.state.card) {
       subscribe().then(setLimits);
     } else {
-      Actions.updateCard({
-        cvc: this.state.cvc,
-        number: this.state.number,
-        exp_year: this.state.exp_year,
-        exp_month: this.state.exp_month
-      })
+      Actions
+        .updateCard(this.getValidatorAttributes())
         .then((payload) => {
           subscribe().then(
             setLimits
