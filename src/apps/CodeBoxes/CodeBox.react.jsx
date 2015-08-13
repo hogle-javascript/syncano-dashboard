@@ -121,6 +121,8 @@ export default React.createClass({
   },
 
   getToolbarTitleText() {
+    let codeBoxLabel = this.getCodeBoxLabel();
+
     if (this.state.currentCodeBox) {
       return `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`;
     }
@@ -129,7 +131,6 @@ export default React.createClass({
   },
 
   renderToolbarTitle() {
-    let codeBoxLabel = this.getCodeBoxLabel();
     let toolbarTitleText = this.getToolbarTitleText();
 
     if (!this.isActive('codebox-traces')) {

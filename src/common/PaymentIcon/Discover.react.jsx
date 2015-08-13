@@ -1,4 +1,4 @@
-/*eslint-disable */
+/* eslint-disable max-len */
 
 import React from 'react';
 import MUI from 'material-ui';

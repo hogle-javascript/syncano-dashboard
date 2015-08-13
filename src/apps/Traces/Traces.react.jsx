@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -100,10 +101,12 @@ export default Radium(React.createClass({
       return 'CodeBox';
     }
 
-    return this.props.tracesFor.charAt(0).toUpperCase() + this.props.tracesFor.slice(1);
+    return _.capitalize(this.props.tracesFor);
   },
 
   getToolbarTitleText() {
+    let tracesFor = this.getTracesFor();
+
     if (this.state.currentObjectName) {
       return `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})`;
     }
@@ -112,7 +115,6 @@ export default Radium(React.createClass({
   },
 
   renderToolbarTitle() {
-    let tracesFor = this.getTracesFor();
     let toolbarTitleText = this.getToolbarTitleText();
 
     return (
