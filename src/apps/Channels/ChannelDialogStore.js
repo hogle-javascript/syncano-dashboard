@@ -1,14 +1,14 @@
-let Reflux = require('reflux'),
+import Reflux from 'reflux';
 
 // Utils & Mixins
-  StoreFormMixin = require('../../mixins/StoreFormMixin'),
-  DialogStoreMixin = require('../../mixins/DialogStoreMixin'),
+import StoreFormMixin from '../../mixins/StoreFormMixin';
+import DialogStoreMixin from '../../mixins/DialogStoreMixin';
 
-//Stores & Actions
-  SessionStore = require('../Session/SessionStore'),
-  ChannelsActions = require('./ChannelsActions');
+// Stores & Actions
+import SessionStore from '../Session/SessionStore';
+import ChannelsActions from './ChannelsActions';
 
-let ChannelDialogStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: ChannelsActions,
   mixins: [
     StoreFormMixin,
@@ -49,5 +49,3 @@ let ChannelDialogStore = Reflux.createStore({
   }
 
 });
-
-module.exports = ChannelDialogStore;

@@ -277,6 +277,23 @@ export default React.createClass({
     this.setState(state);
   },
 
+  handleClearDateTime(name) {
+    this.refs[`fielddate-${name}`].setState({
+      date: undefined,
+      dialogDate: new Date()
+    });
+
+    let emptyTime = new Date();
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue("");
+    this.refs[`fieldtime-${name}`].setState({
+      time: emptyTime,
+      dialogTime: new Date()
+    });
+  },
+
   renderDropZone(item) {
     let dropZoneStyle = {
       height: 80,
@@ -354,6 +371,14 @@ export default React.createClass({
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
                     defaultTime={value || undefined}
+                    />
+                </div>
+                <div className="col-xs-5">
+                  <MUI.IconButton
+                    iconClassName="synicon-close"
+                    tooltip={`Clear ${item.name} field`}
+                    tooltipPosition="bottom-left"
+                    onClick={this.handleClearDateTime.bind(null, item.name)}
                     />
                 </div>
               </div>

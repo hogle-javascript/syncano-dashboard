@@ -8,32 +8,35 @@ var leftMenuCommands = {
 module.exports = {
   commands: [leftMenuCommands],
   elements: {
+    leftMenu: {
+      selector: '.left-nav'
+    },
     classes: {
-      selector: '//div[@tabindex="0"]//span[text()="Classes"]',
+      selector: '//div[@class="left-nav"]//span[text()="Classes"]',
       locateStrategy: 'xpath'
     },
     codeBoxes: {
-      selector: '//div[@tabindex="0"]//span[text()="CodeBoxes"]',
+      selector: '//div[@class="left-nav"]//span[text()="CodeBoxes"]',
       locateStrategy: 'xpath'
     },
     users: {
-      selector: '//div[@tabindex="0"]//span[text()="Users"]',
+      selector: '//div[@class="left-nav"]//span[text()="Users"]',
       locateStrategy: 'xpath'
     },
     channels: {
-      selector: '//div[@tabindex="0"]//span[text()="Channels"]',
+      selector: '//div[@class="left-nav"]//span[text()="Channels"]',
       locateStrategy: 'xpath'
     },
     tasks: {
-      selector: '//div[@tabindex="0"]//span[text()="Tasks"]',
+      selector: '//div[@class="left-nav"]//span[text()="Tasks"]',
       locateStrategy: 'xpath'
     },
     administrators: {
-      selector: '//div[@tabindex="0"]//span[text()="Administrators"]',
+      selector: '//div[@class="left-nav"]//span[text()="Administrators"]',
       locateStrategy: 'xpath'
     },
     apiKeys: {
-      selector: '//div[@tabindex="0"]//span[text()="API keys"]',
+      selector: '//div[@class="left-nav"]//span[text()="API keys"]',
       locateStrategy: 'xpath'
     }
   }

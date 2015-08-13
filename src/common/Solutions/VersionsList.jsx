@@ -40,8 +40,9 @@ export default React.createClass({
   },
 
   handleInstallClick(versionId) {
-    if (this.props.onInstall)
+    if (this.props.onInstall) {
       this.props.onInstall(versionId);
+    }
   },
 
   renderItem(item) {
@@ -97,9 +98,9 @@ export default React.createClass({
       return this.renderItem(item);
     });
 
-    if (items.length > 0)
+    if (items.length > 0) {
       return items;
-
+    }
     return (
       <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}

@@ -1,6 +1,5 @@
 import Reflux         from 'reflux';
 import Raven          from '../../raven';
-import analytics      from '../../segment';
 import Connection     from './Connection';
 import SessionActions from './SessionActions';
 
@@ -87,7 +86,7 @@ export default Reflux.createStore({
       id: user.id
     });
 
-    analytics.identify(user.email);
+    window.analytics.identify(user.email);
 
     this.trigger(this);
   },
@@ -96,12 +95,12 @@ export default Reflux.createStore({
     console.info('SessionStore::setInstance');
 
     // Let's go back to this topic later
-    //let colorName       = instance.metadata.color,
+    // let colorName       = instance.metadata.color,
     //    secondColorName = 'indigo';
     //
-    //if (ColorStore.getColorByName(colorName)) {
-    //  this.theme.setPalette(this.makePalette(colorName, secondColorName));
-    //}
+    // if (ColorStore.getColorByName(colorName)) {
+    //   this.theme.setPalette(this.makePalette(colorName, secondColorName));
+    // }
 
     this.instance = instance;
     this.trigger(this);
@@ -179,7 +178,7 @@ export default Reflux.createStore({
     this.trigger(this);
 
     Raven.setUserContext();
-    analytics.identify();
+    window.analytics.identify();
     location.reload(true);
   },
 

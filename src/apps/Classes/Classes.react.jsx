@@ -46,8 +46,8 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor(),
-        checkedClasses = ClassesStore.getCheckedItems();
+    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
+    let checkedClasses = ClassesStore.getCheckedItems();
 
     return [{
       dialog: Common.ColorIconPicker.Dialog,

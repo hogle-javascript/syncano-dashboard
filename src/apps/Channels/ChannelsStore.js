@@ -1,13 +1,13 @@
-let Reflux = require('reflux'),
+import Reflux from 'reflux';
 
-  CheckListStoreMixin = require('../../mixins/CheckListStoreMixin'),
-  StoreLoadingMixin = require('../../mixins/StoreLoadingMixin'),
-  WaitForStoreMixin = require('../../mixins/WaitForStoreMixin'),
+import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
+import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
+import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
-  SessionActions = require('../Session/SessionActions'),
-  ChannelsActions = require('./ChannelsActions');
+import SessionActions from '../Session/SessionActions';
+import ChannelsActions from './ChannelsActions';
 
-let ChannelsStore = Reflux.createStore({
+export default Reflux.createStore({
   listenables: ChannelsActions,
   mixins: [
     CheckListStoreMixin,
@@ -110,5 +110,3 @@ let ChannelsStore = Reflux.createStore({
   }
 
 });
-
-module.exports = ChannelsStore;

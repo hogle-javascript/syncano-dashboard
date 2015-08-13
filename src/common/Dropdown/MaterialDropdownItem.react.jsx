@@ -6,6 +6,7 @@ import MUI from 'material-ui';
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
+  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -32,6 +33,10 @@ export default React.createClass({
     })
   },
 
+  getInitialState() {
+    return {gravatarUrl: null};
+  },
+
   isHeaderNecessary() {
     let headerContentProps = this.props.headerContent;
 
@@ -41,31 +46,46 @@ export default React.createClass({
   getStyles() {
     return {
       avatar: {
-        Transform: 'translateY(-50%)',
+        transform: 'translateY(-50%)',
         top: '50%'
       }
     }
   },
 
+  onAvatarError() {
+    this.setState({gravatarUrl: this.fallBackAvatar});
+  },
+
+  getGravatarUrl() {
+    let headerContentProps = this.props.headerContent;
+
+    if (this.state.gravatarUrl) {
+      return this.state.gravatarUrl;
+    }
+
+    return Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
+  },
+
   renderHeaderContent() {
-    let styles = this.getStyles(),
-      headerContentProps = this.props.headerContent,
-      headerContentElement;
+    let styles = this.getStyles();
+    let headerContentProps = this.props.headerContent;
+    let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
 
       let location = window.location;
-      let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {d: 'blank'}, true);
+      let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
-      if (gravatarUrl.indexOf('blank')) {
-        gravatarUrl = fallBackAvatar;
-      }
       headerContentElement = (
         <MUI.ListItem
-          leftAvatar={<MUI.Avatar style={styles.avatar} src={gravatarUrl} />}
+          leftAvatar={
+            <MUI.Avatar
+              style={styles.avatar}
+              src={gravatarUrl}
+              onError={this.onAvatarError} />
+          }
           primaryText={primaryText}
           secondaryText={secondaryText}
           disableTouchTap={!headerContentProps.clickable}

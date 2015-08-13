@@ -50,8 +50,8 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    let activeGroup = GroupsStore.getActiveGroup(),
-      userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
+    let activeGroup = GroupsStore.getActiveGroup();
+    let userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
 
     UsersActions.createUser(
       {
@@ -102,26 +102,26 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add',
-      submitLabel = 'Confirm',
-      selectValueSource = this.getSelectValueSource(),
-      selectValue = '',
-      allGroups = GroupsStore.getGroups().map(group => {
-        group.value = group.id + '';
-        return group;
-      }),
-      dialogStandardActions = [
-        {
-          ref: 'cancel',
-          text: 'Cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          ref: 'submit',
-          text: {submitLabel},
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+    let title = this.hasEditMode() ? 'Edit' : 'Add';
+    let submitLabel = 'Confirm';
+    let selectValueSource = this.getSelectValueSource();
+    let selectValue = '';
+    let allGroups = GroupsStore.getGroups().map(group => {
+      group.value = group.id + '';
+      return group;
+    });
+    let dialogStandardActions = [
+      {
+        ref: 'cancel',
+        text: 'Cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        ref: 'submit',
+        text: {submitLabel},
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
       selectValue = selectValueSource.value.map(value => value.id).join(',');
@@ -143,7 +143,6 @@ export default React.createClass({
             method="post">
             <MUI.TextField
               ref='username'
-              name='username'
               fullWidth={true}
               valueLink={this.linkState('username')}
               errorText={this.getValidationMessages('username').join(' ')}
@@ -151,7 +150,6 @@ export default React.createClass({
               floatingLabelText='Username'/>
             <MUI.TextField
               ref='password'
-              name='password'
               type='password'
               fullWidth={true}
               valueLink={this.linkState('password')}

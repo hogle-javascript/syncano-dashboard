@@ -7,9 +7,6 @@ var gulp             = require('gulp'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
-    download         = require('gulp-download'),
-    unzip            = require('gulp-unzip'),
-    chmod            = require('gulp-chmod'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config'),
@@ -26,6 +23,7 @@ var paths = {
   index: './src/assets/index.html',
   images: './src/assets/img/**/*',
   css: './src/assets/css/**/*',
+  js: './src/assets/js/**/*',
   fonts: './src/assets/fonts/**/*'
 };
 
@@ -54,6 +52,11 @@ gulp.task('copy:images', ['clean'], function() {
 gulp.task('copy:css', ['clean'], function() {
   return gulp.src(paths.css)
   .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('copy:js', ['clean'], function() {
+  return gulp.src(paths.js)
+  .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('copy:fonts', ['clean'], function() {
@@ -192,48 +195,7 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(cloudfront(aws));
 });
 
-var chromedriverTypes = [
-  'linux64',
-  'linux32',
-  'mac32',
-  'win32'
-];
-
-chromedriverTypes.map(function(type) {
-  gulp.task('nightwatch-setup:' + type, function(cb) {
-    if (fs.existsSync(paths.bin)) {
-      gutil.log('[nightwatch-setup]', '"' + paths.bin + '" already exists.')
-      return cb();
-    }
-    var zipFiles = paths.bin + '/**/*.zip',
-        urls     = [
-          'http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar',
-          'http://chromedriver.storage.googleapis.com/2.16/chromedriver_' + type + '.zip'
-        ];
-
-    download(urls)
-      .pipe(gulp.dest(paths.bin))
-      .on('finish', function() {
-        gulp.src(zipFiles)
-          .pipe(unzip())
-          .pipe(gulp.dest(paths.bin))
-          .on('finish', function() {
-            gulp.src(paths.bin + '/chromedriver')
-              .pipe(chmod({
-                owner: {read: true, write: true, execute: true},
-                group: {execute: true},
-                others: {execute: true}
-              }))
-              .pipe(gulp.dest(paths.bin))
-              .on('finish', function() {
-                del(zipFiles, cb);
-              });
-          });
-      });
-  });
-});
-
-gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts']);
+gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);

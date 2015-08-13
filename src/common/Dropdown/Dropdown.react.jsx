@@ -1,24 +1,19 @@
-let React = require('react'),
-  classNames = require('classnames'),
-  OutsideClickHandler = require('react-outsideclickhandler'),
+let React = require('react');
+let classNames = require('classnames');
+let OutsideClickHandler = require('react-outsideclickhandler');
 
-  Constants = require('../../constants/Constants'),
+let Constants = require('../../constants/Constants');
 
-  mui = require('material-ui'),
-  FontIcon = mui.FontIcon,
-  Mixins = require('../../mixins/mixins'),
+let mui = require('material-ui');
+let FontIcon = mui.FontIcon;
+let Mixins = require('../../mixins/mixins');
 
-  DropdownMenuItem = require('./DropdownMenuItem.react');
+let DropdownMenuItem = require('./DropdownMenuItem.react');
 
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Dropdown',
-
-  mixins: [
-    //require('react-onclickoutside'),
-    //Mixins.toggleMenuMixin
-  ],
 
   propTypes: {
     icon: React.PropTypes.string,
@@ -40,7 +35,7 @@ module.exports = React.createClass({
       iconStyle: {
         width: "18px",
         height: "18px",
-        fill: "#FFF",
+        fill: "#FFF"
       }
     };
   },
@@ -48,7 +43,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       icon: this.props.icon || 'dots-vertical',
-      isOpen: false,
+      isOpen: false
     }
   },
 
@@ -85,7 +80,7 @@ module.exports = React.createClass({
 
     let items = this.props.items.map(function(item, i) {
       return <DropdownMenuItem key={item.name + i} action={item} handleItemClick={item.handleItemClick}/>
-    }.bind(this));
+    });
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>

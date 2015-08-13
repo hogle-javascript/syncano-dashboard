@@ -48,7 +48,7 @@ export default Radium(React.createClass({
         fontFamily : 'monospace'
       },
       form: {
-        //maxWidth : 416
+        // maxWidth : 416
       },
       updateButton: {
         height: 36,

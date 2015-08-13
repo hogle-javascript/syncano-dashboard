@@ -1,6 +1,5 @@
-var host, api;
-host = 'https://api.syncano.rocks';
-api = host + '/v1';
+let host = 'https://api.syncano.rocks';
+let api = host + '/v1';
 
 module.exports = {
 

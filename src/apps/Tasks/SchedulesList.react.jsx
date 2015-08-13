@@ -46,15 +46,24 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
+  handleItemClick(itemId) {
+    // Redirect to traces screen
+    this.transitionTo('schedule-traces', {
+      instanceName: this.getParams().instanceName,
+      scheduleId: itemId
+    });
+  },
+
   renderItem(item) {
     // TODO: move to store
-    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox),
-      codeBoxLabel = codeBox ? codeBox.label : '';
+    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
+    let codeBoxLabel = codeBox ? codeBox.label : '';
 
     return (
       <Common.ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.id}
+        handleClick={this.handleItemClick.bind(null, item.id)}>
         <Column.CheckIcon
           id={item.id.toString()}
           icon='camera-timer'

@@ -83,8 +83,8 @@ export default React.createClass({
   },
 
   renderTabs() {
-    let styles = this.getStyles(),
-      codeBox = this.state.currentCodeBox;
+    let styles = this.getStyles();
+    let codeBox = this.state.currentCodeBox;
 
     if (codeBox !== null) {
       return (
@@ -112,9 +112,36 @@ export default React.createClass({
     }
   },
 
-  render() {
-    let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
+  getCodeBoxLabel() {
+    if (this.state.currentCodeBox !== null) {
+      return this.state.currentCodeBox.label;
+    }
 
+    return null;
+  },
+
+  getToolbarTitleText() {
+    if (this.state.currentCodeBox) {
+      return `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`;
+    }
+
+    return '';
+  },
+
+  renderToolbarTitle() {
+    let codeBoxLabel = this.getCodeBoxLabel();
+    let toolbarTitleText = this.getToolbarTitleText();
+
+    if (!this.isActive('codebox-traces')) {
+      return (
+        <MUI.ToolbarGroup>
+          <MUI.ToolbarTitle text={toolbarTitleText}/>
+        </MUI.ToolbarGroup>
+      )
+    }
+  },
+
+  render() {
     return (
       <div>
         <MUI.Toolbar style={{
@@ -136,12 +163,10 @@ export default React.createClass({
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
 
-          <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
-          </MUI.ToolbarGroup>
+          {this.renderToolbarTitle()}
         </MUI.Toolbar>
 
-        <div style={{margin: '65px auto', width: '80%'}}>
+        <div style={{margin: '65px auto', width: '100%'}}>
 
           <div style={{paddingTop: 32}}>
             {this.renderTabs()}

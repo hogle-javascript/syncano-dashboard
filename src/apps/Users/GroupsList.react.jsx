@@ -57,16 +57,16 @@ export default Radium(React.createClass({
   },
 
   renderItem(item) {
-    let itemActive = this.props.activeGroup && this.props.activeGroup.id === item.id,
-      styles = this.getStyles(),
-      itemStyles = itemActive ? styles.listItemChecked : {},
-      iconButtonElement = (
+    let itemActive = this.props.activeGroup && this.props.activeGroup.id === item.id;
+    let styles = this.getStyles();
+    let itemStyles = itemActive ? styles.listItemChecked : {};
+    let iconButtonElement = (
         <MUI.IconButton
           touch={true}
           tooltipPosition='bottom-left'
           iconClassName='synicon-dots-vertical'/>
-      ),
-      rightIconMenu = (
+      );
+    let rightIconMenu = (
         <MUI.IconMenu iconButtonElement={iconButtonElement}>
           <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
           <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
@@ -86,11 +86,11 @@ export default Radium(React.createClass({
   },
 
   getList() {
-    let styles = this.getStyles(),
-      items = this.state.items,
-      itemsCount = items.length,
-      indexOfListItem = itemsCount - 1,
-      listItems = this.state.items.map((item, index) => {
+    let styles = this.getStyles();
+    let items = this.state.items;
+    let itemsCount = items.length;
+    let indexOfListItem = itemsCount - 1;
+    let listItems = this.state.items.map((item, index) => {
         if (index < indexOfListItem) {
           return [
             this.renderItem(item),

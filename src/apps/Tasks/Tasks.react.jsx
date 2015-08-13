@@ -58,8 +58,8 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedTriggers = TriggersStore.getCheckedItems(),
-      checkedSchedules = SchedulesStore.getCheckedItems();
+    let checkedTriggers = TriggersStore.getCheckedItems();
+    let checkedSchedules = SchedulesStore.getCheckedItems();
 
     return [
       {
