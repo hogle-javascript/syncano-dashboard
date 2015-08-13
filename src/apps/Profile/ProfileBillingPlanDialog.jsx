@@ -205,6 +205,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="number"
+              ref="number"
               fullWidth={true}
               valueLink={this.linkState('number')}
               errorText={this.getValidationMessages('number').join(' ')}
@@ -218,6 +219,7 @@ export default React.createClass({
           <div className="col-md-5">
             <MUI.TextField
               name="cvc"
+              ref="cvc"
               fullWidth={true}
               valueLink={this.linkState('cvc')}
               errorText={this.getValidationMessages('cvc').join(' ')}
@@ -229,6 +231,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_month"
+              ref="exp_month"
               fullWidth={true}
               valueLink={this.linkState('exp_month')}
               errorText={this.getValidationMessages('exp_month').join(' ')}
@@ -240,6 +243,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_year"
+              ref="exp_year"
               fullWidth={true}
               valueLink={this.linkState('exp_year')}
               errorText={this.getValidationMessages('exp_year').join(' ')}

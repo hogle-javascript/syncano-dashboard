@@ -90,6 +90,7 @@ export default Radium(React.createClass({
                 <div className="col-lg-20">
                   <MUI.TextField
                     name="number"
+                    ref="number"
                     fullWidth={true}
                     valueLink={this.linkState('number')}
                     errorText={this.getValidationMessages('number').join(' ')}
@@ -102,6 +103,7 @@ export default Radium(React.createClass({
                 <div className="col-lg-20">
                   <MUI.TextField
                     name="cvc"
+                    ref="cvc"
                     fullWidth={true}
                     valueLink={this.linkState('cvc')}
                     errorText={this.getValidationMessages('cvc').join(' ')}
@@ -116,6 +118,7 @@ export default Radium(React.createClass({
                     <div className="col-flex-1">
                       <MUI.TextField
                         name="exp_month"
+                        ref="exp_month"
                         size={2}
                         fullWidth={true}
                         valueLink={this.linkState('exp_month')}
@@ -127,6 +130,7 @@ export default Radium(React.createClass({
                     <div className="col-flex-1">
                       <MUI.TextField
                         name="exp_year"
+                        ref="exp_year"
                         size={4}
                         fullWidth={true}
                         valueLink={this.linkState('exp_year')}
