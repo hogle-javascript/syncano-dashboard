@@ -10,6 +10,7 @@ import TriggerDialogStore from './TriggerDialogStore';
 import TriggersActions from './TriggersActions';
 import TriggersList from './TriggersList.react';
 import TriggersStore from './TriggersStore';
+import TriggerTraces from './TriggerTraces.react';
 
 Tasks.ScheduleDialog = ScheduleDialog;
 Tasks.ScheduleDialogStore = ScheduleDialogStore;
@@ -24,5 +25,6 @@ Tasks.TriggersActions = TriggersActions;
 Tasks.TriggersActions = TriggersActions;
 Tasks.TriggerDialog = TriggerDialog;
 Tasks.TriggerDialogStore = TriggerDialogStore;
+Tasks.TriggerTraces = TriggerTraces;
 
 export default Tasks;

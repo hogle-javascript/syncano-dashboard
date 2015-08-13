@@ -6,6 +6,7 @@ import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
+import SessionActions from '../Session/SessionActions';
 import AuthStore from '../Account/AuthStore';
 import Actions from './TracesActions';
 
@@ -27,7 +28,10 @@ export default Reflux.createStore({
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.joinTrailing(
+        SessionActions.setInstance,
+        this.refreshData
+    );
   },
 
   refreshData() {
@@ -78,7 +82,7 @@ export default Reflux.createStore({
   saveCurrentObj(currentObjName) {
     console.debug('TracesStore::saveCurrentObj', currentObjName);
     this.data.currentObjectName = currentObjName;
-    this.trigger(this.data);
+    this.trigger({currentObjectName: currentObjName});
   },
 
   onFetchCodeBoxTracesCompleted(tracesObj) {
@@ -102,21 +106,21 @@ export default Reflux.createStore({
   },
 
   onFetchCurrentCodeBoxCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    console.debug('TracesStore::onFetchCurrentCodeBoxCompleted', currentObj);
     this.saveCurrentObj(currentObj.label)
   },
 
   onFetchCurrentWebhookCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    console.debug('TracesStore::onFetchCurrentWebhookCompleted', currentObj);
     this.saveCurrentObj(currentObj.name)
   },
   onFetchCurrentTriggerCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
     this.saveCurrentObj(currentObj.label)
   },
 
   onFetchCurrentScheduleCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentCodBoxCompleted', currentObj);
+    console.debug('TracesStore::onFetchCurrentScheduleCompleted', currentObj);
     this.saveCurrentObj(currentObj.label)
   }
 
