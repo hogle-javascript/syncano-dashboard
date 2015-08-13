@@ -41,8 +41,8 @@ export default React.createClass({
   ],
 
   fetch() {
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
+    DataViewsActions.fetchDataViews();
+    WebhooksActions.fetchWebhooks();
   },
 
   componentDidMount() {

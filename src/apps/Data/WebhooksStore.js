@@ -44,6 +44,13 @@ export default Reflux.createStore({
     WebhooksActions.fetchWebhooks();
   },
 
+  onFetchWebhooks() {
+    console.debug('DataViewsStore::onFetchDataViews');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+
   onFetchWebhooksCompleted(items) {
     console.debug('WebhooksStore::onFetchWebhooksCompleted');
     this.data.isLoading = false;

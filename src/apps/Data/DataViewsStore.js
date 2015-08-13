@@ -46,6 +46,13 @@ export default Reflux.createStore({
     DataViewsActions.fetchDataViews();
   },
 
+  onFetchDataViews() {
+    console.debug('DataViewsStore::onFetchDataViews');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+
   onFetchDataViewsCompleted(items) {
     console.debug('DataViewsStore::onFetchDataViewsCompleted');
     DataViewsActions.setDataViews(items);
