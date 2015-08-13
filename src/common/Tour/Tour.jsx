@@ -1,7 +1,7 @@
-var React = require('react');
-var _ = require('lodash');
+import React from 'react';
+import _ from 'lodash';
 
-var ReactTour = React.createClass({
+export default React.createClass({
 
   propTypes: {
     config: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -34,9 +34,9 @@ var ReactTour = React.createClass({
   },
 
   render() {
-    var {currentStep, config, visible, showDots} = this.props;
-    var ElementRect;
-    var classes = 'react-tour';
+    let {currentStep, config, visible, showDots} = this.props;
+    let ElementRect;
+    let classes = 'react-tour';
 
     if (!config) return null;
     if (!visible) classes += ' react-tour-hide';
@@ -66,7 +66,4 @@ var ReactTour = React.createClass({
       </div>
     );
   }
-
 });
-
-module.exports = ReactTour;

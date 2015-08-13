@@ -15,11 +15,6 @@ export default React.createClass({
 
   displayName: 'Dropdown',
 
-  mixins: [
-    //require('react-onclickoutside'),
-    //Mixins.toggleMenuMixin
-  ],
-
   propTypes: {
     icon: React.PropTypes.string,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -40,7 +35,7 @@ export default React.createClass({
       iconStyle: {
         width: "18px",
         height: "18px",
-        fill: "#FFF",
+        fill: "#FFF"
       }
     };
   },
@@ -48,7 +43,7 @@ export default React.createClass({
   getInitialState() {
     return {
       icon: this.props.icon || 'dots-vertical',
-      isOpen: false,
+      isOpen: false
     }
   },
 
@@ -85,7 +80,7 @@ export default React.createClass({
 
     let items = this.props.items.map(function(item, i) {
       return <DropdownMenuItem key={item.name + i} action={item} handleItemClick={item.handleItemClick}/>
-    }.bind(this));
+    });
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>

@@ -1,6 +1,6 @@
-var React = require('react');
+import React from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'NotFound',
 
@@ -9,5 +9,4 @@ module.exports = React.createClass({
       <div>Not found</div>
     );
   }
-
 });

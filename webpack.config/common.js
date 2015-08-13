@@ -61,7 +61,8 @@ module.exports = {
     extensions: ['', '.js', '.json', '.jsx', '.css', '.scss', '.sass', '.svg', '.styl']
   },
   externals: {
-    'analytics': 'analytics',
+    'analyticsjs': 'window.analytics',
+    'hellojs': 'hello',
     'stripejs': 'Stripe'
   }
 };

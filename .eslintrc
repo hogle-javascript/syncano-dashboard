@@ -42,7 +42,6 @@
     // "complexity": 2,
     // "no-param-reassign": 2,
     // "camelcase": 2,
-    // "no-var": 2,
     // "object-shorthand": 2,
     // "comma-dangle": [2, "never"],
     // "padded-blocks": [2, "never"],
@@ -93,10 +92,7 @@
     // }],
     // "no-undefined": 1,
     // "no-invalid-this": 2,
-    // "spaced-comment": [2, "always",  {
-    //   "exceptions": ["-", "+"],
-    //   "markers": ["=", "!"]
-    // }],
+
     // "init-declarations": 2,
     // "react/wrap-multilines": [2, "never"],
     // "no-useless-call": 2,
@@ -104,15 +100,12 @@
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
     // "no-undef": 2,
-    // "no-return-assign": 2,
     // "react/jsx-no-undef": 2,
     // "max-len": [2, 120],
-    // "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
-    // "no-extra-bind": 2,
     // "accessor-pairs": 2,
     "radix": 2,
     // "no-multi-spaces": 2,
-    // "curly": [2, "multi-line"],
+    
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
@@ -122,7 +115,6 @@
     "complexity": 1,
     "no-param-reassign": 1,
     "camelcase": 1,
-    "no-var": 1,
     "object-shorthand": 1,
     "comma-dangle": [1, "never"],
     "padded-blocks": [1, "never"],
@@ -173,7 +165,7 @@
     }],
     "no-undefined": 1,
     "no-invalid-this": 1,
-    "spaced-comment": [1, "always",  {
+    "spaced-comment": [2, "always",  {
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
@@ -184,17 +176,18 @@
     "consistent-return": 1,
     "react/no-multi-comp": 1,
     "no-undef": 1,
-    "no-return-assign": 1,
+    "no-return-assign": [2, "always"],
     "react/jsx-no-undef": 1,
     "max-len": [1, 120],
-    "id-length": [1, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
-    "no-extra-bind": 1,
+    "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
+    "no-extra-bind": 2,
     "accessor-pairs": 1,
     "no-multi-spaces": 1,
-    "curly": [1, "multi-line"],
+    "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
     "react/no-did-update-set-state": 1,
+
 
     // Strict
     "strict": [2, "never"],
@@ -327,6 +320,7 @@
     "no-class-assign": 2,
     "no-const-assign": 2,
     "no-this-before-super": 2,
+    "no-var": 2,
     "prefer-const": 1,
     "prefer-spread": 1,
     "prefer-reflect": 1,

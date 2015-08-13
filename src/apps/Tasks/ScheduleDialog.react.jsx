@@ -94,11 +94,11 @@ export default React.createClass({
               fullWidth={true}
               valueLink={this.linkState('label')}
               errorText={this.getValidationMessages('label').join(' ')}
-              hintText='Label of the schedule'/>
+              floatingLabelText='Label of the schedule'/>
             <MUI.SelectField
               ref='codebox'
               name='codebox'
-              hintText='CodeBox'
+              floatingLabelText='CodeBox'
               valueLink={this.linkState('codebox')}
               errorText={this.getValidationMessages('codebox').join(' ')}
               valueMember='payload'
@@ -108,7 +108,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='crontab'
               name='crontab'
-              hintText='CronTab'
+              floatingLabelText='CronTab'
               valueLink={this.linkState('crontab')}
               errorText={this.getValidationMessages('crontab').join(' ')}
               valueMember='payload'

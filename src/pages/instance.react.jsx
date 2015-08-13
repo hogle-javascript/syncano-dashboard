@@ -7,7 +7,7 @@ import SessionActions from '../apps/Session/SessionActions';
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Instance',
 
@@ -22,7 +22,7 @@ module.exports = React.createClass({
 
   componentWillMount() {
     console.debug('Instance::componentWillMount');
-    var params = this.getParams();
+    const params = this.getParams();
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
     }
@@ -31,7 +31,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       selectedIndex: 0,
-      headerText: 'Profile',
+      headerText: 'Profile'
     };
   },
 
@@ -64,7 +64,7 @@ module.exports = React.createClass({
     this.setState({headerText: obj.text, selectedIndex: index});
   },
 
-  render: function() {
+  render() {
     return (
       <div>
         <MUI.LeftNav
@@ -74,12 +74,10 @@ module.exports = React.createClass({
           selectedIndex={this.state.selectedIndex || 0}
           style={{marginTop: 64, overflow: 'normal'}} menuItems={this.menuItems()}
           onChange={this.handleTabActive}/>
-
         <div style={{margin: '96px 104px 48px 304px'}}>
           <Router.RouteHandler />
         </div>
       </div>
     );
   }
-
 });

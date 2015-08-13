@@ -9,7 +9,8 @@ export default {
     console.debug('WaitForStoreMixin::fetch', this._shouldFetch);
 
     if (this._shouldFetch === false) {
-      return this._shouldFetch = true;
+      this._shouldFetch = true;
+      return this._shouldFetch;
     }
 
     if (this._fetchCallback !== null) {

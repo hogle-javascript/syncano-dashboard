@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Constans from '../../constants/Constants';
 import Mixins from '../../mixins';
 
-//Stores & Actions
+// Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
@@ -42,13 +42,22 @@ export default Reflux.createStore({
     return this.data.items;
   },
 
-  getClassesDropdown() {
-    return this.data.items.map(item => {
+  getClassesDropdown(addSelf = false) {
+    let items = this.data.items.map(item => {
       return {
         payload: item.name,
         text: item.name
       }
     });
+
+    if (addSelf === true) {
+      items.unshift({
+        payload: 'self',
+        text: 'self'
+      });
+    }
+
+    return items;
   },
 
   onGetClassByName(className) {
@@ -145,6 +154,14 @@ export default Reflux.createStore({
     }
 
     this.trigger(this.data);
+  },
+
+  onUpdateClass() {
+    this.data.isLoading = true;
+  },
+
+  onUpdateClassCompleted() {
+    this.refreshData();
   },
 
   onFetchClasses() {

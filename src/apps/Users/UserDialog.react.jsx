@@ -143,7 +143,6 @@ export default React.createClass({
             method="post">
             <MUI.TextField
               ref='username'
-              name='username'
               fullWidth={true}
               valueLink={this.linkState('username')}
               errorText={this.getValidationMessages('username').join(' ')}
@@ -151,7 +150,6 @@ export default React.createClass({
               floatingLabelText='Username'/>
             <MUI.TextField
               ref='password'
-              name='password'
               type='password'
               fullWidth={true}
               valueLink={this.linkState('password')}

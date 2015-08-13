@@ -1,4 +1,4 @@
-/*eslint no-catch-shadow:0*/
+/* eslint no-catch-shadow:0 */
 
 import React from 'react';
 import Radium from 'radium';
