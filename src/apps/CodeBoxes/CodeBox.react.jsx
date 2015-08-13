@@ -143,7 +143,7 @@ export default React.createClass({
           {this.renderToolbarTitle()}
         </Common.InnerToolbar>
 
-        <div style={{margin: '65px auto', width: '80%'}}>
+        <div style={{margin: '65px auto', width: '100%'}}>
 
           <div style={{paddingTop: 32}}>
             {this.renderTabs()}

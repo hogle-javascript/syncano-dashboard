@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import Radium from 'radium';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -19,7 +20,7 @@ import Container from '../../common/Container/Container.react';
 import TracesList from './TracesList.react';
 
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Traces',
 
@@ -44,6 +45,18 @@ export default React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      list: {
+        position: 'relative',
+        top: '35px'
+      },
+      cBList: {
+        top: '-45px'
+      }
+    }
+  },
+
   getConfig() {
     return {
       webhook: {
@@ -55,8 +68,8 @@ export default React.createClass({
         backLabel: 'Go back to CodeBoxes list'
       },
       trigger: {
-        route: 'data',
-        backLabel: 'Go back to Data Views'
+        route: 'tasks',
+        backLabel: 'Go back to Tasks list'
       },
       schedule: {
         route: 'tasks',
@@ -86,6 +99,7 @@ export default React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const config = this.getConfig();
 
     return (
@@ -103,11 +117,13 @@ export default React.createClass({
           </MUI.ToolbarGroup>
           {this.renderToolbarTitle()}
         </Common.InnerToolbar>
-        <TracesList
-          tracesFor={this.props.tracesFor}
-          name="Traces"
-          items={this.state.traces}/>
+        <div style={[styles.list, this.isActive('codebox-traces') && styles.cBList]}>
+          <TracesList
+            tracesFor={this.props.tracesFor}
+            name="Traces"
+            items={this.state.traces}/>
+        </div>
       </div>
     );
   }
-});
+}));

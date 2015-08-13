@@ -199,6 +199,13 @@ module.exports = (
             path='schedule/:scheduleId/traces'
             />
 
+          {/* Trigger Traces */}
+          <Route
+              name='trigger-traces'
+              handler={Tasks.TriggerTraces}
+              path='trigger/:triggerId/traces'
+              />
+
           <DefaultRoute handler={Tasks}/>
 
         </Route>
