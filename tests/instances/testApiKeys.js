@@ -15,16 +15,6 @@ module.exports = {
     client.end();
   },
 
-  'Test Go to API Keys View' : function(client) {
-    var apiKeysPage = client.page.apiKeysPage();
-
-    var instance = client.globals.instanceName;
-    var url = apiKeysPage.url + instance + '/api_keys';
-    client.url(url);
-
-    apiKeysPage.expect.element('@addApiKeyButton').to.be.present.after(5000);
-  },
-
   'Test Add Api Key': function(client) {
     var apiKeysPage = client.page.apiKeysPage();
     var description = utils.addSuffix('test_api_key_description');
