@@ -111,26 +111,27 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
+    let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
-    let dropDownMenuItems = instancesList.map((item) => {
+    let dropDownMenuItems = instancesList.map(item => {
       item.metadata       = item.metadata       || {};
       item.metadata.icon  = item.metadata.icon  || null;
       item.metadata.color = item.metadata.color || null;
 
       let iconBackground = {
-        backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND
+        backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || defaultIconBackground
       };
-      let icon = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+      let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
       let text = <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
             style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
-
           {item.name}
         </div>;
 

@@ -172,8 +172,9 @@ export default React.createClass({
   render() {
     let checkedAdmins = Store.getNumberOfChecked();
     let checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
+    let pendingInvitationsCount = AdminsInvitationsStore.getPendingInvitations().length;
     let isAnyAdminSelected = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1);
-    let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
+    let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (pendingInvitationsCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 

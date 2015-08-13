@@ -118,6 +118,8 @@ export default React.createClass({
   render() {
     let checkedApiKeys = Store.getNumberOfChecked();
     let isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -130,7 +132,7 @@ export default React.createClass({
               label={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyApiKeySelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
+              iconClassName={isAnyApiKeySelected ? markedIcon : blankIcon}
               />
             <Common.Fab.Item
               label="Click here to delete API Keys"

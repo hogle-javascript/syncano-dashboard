@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -45,7 +46,7 @@ export default Radium(React.createClass({
   },
 
   getStyles() {
-    let styles = {
+    return {
       toolbar: {
         position: 'fixed',
         top: 64,
@@ -63,8 +64,6 @@ export default Radium(React.createClass({
        top: '-45px'
       }
     };
-
-    return styles;
   },
 
   getConfig() {
@@ -97,9 +96,26 @@ export default Radium(React.createClass({
     this.transitionTo(config.route, this.getParams());
   },
 
+  getTracesFor() {
+    if (this.props.tracesFor === 'codebox') {
+      return 'CodeBox';
+    }
+
+    return _.capitalize(this.props.tracesFor);
+  },
+
+  getToolbarTitleText() {
+    let tracesFor = this.getTracesFor();
+
+    if (this.state.currentObjectName) {
+      return `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})`;
+    }
+
+    return '';
+  },
+
   renderToolbarTitle() {
-    let tracesFor = this.props.tracesFor === 'codebox' ? 'CodeBox' : this.props.tracesFor.charAt(0).toUpperCase() + this.props.tracesFor.slice(1);
-    let toolbarTitleText = this.state.currentObjectName ? `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})` : '';
+    let toolbarTitleText = this.getToolbarTitleText();
 
     return (
       <MUI.ToolbarGroup>

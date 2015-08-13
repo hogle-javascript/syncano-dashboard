@@ -58,6 +58,31 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
+  getStyles() {
+    return {
+      sectionStyle: {
+        paddingTop: 10,
+        paddingBottom: 20,
+        margin: 1,
+        background: '#F4F4F4'
+      },
+      sectionTitleStyle: {
+        fontSize: '1.2rem',
+        marginTop: 15,
+        marginBottom: 10
+      },
+      info: {
+        color: '#B8B8B8',
+        width: 300,
+        height: 27,
+        lineHeight: '27px',
+        fontSize: '1rem',
+        verticalAlign: 'middle',
+        textAlign: 'center'
+      }
+    }
+  },
+
   handleBackClick() {
     this.context.router.transitionTo('solutions-edit', this.getParams());
   },
@@ -132,30 +157,17 @@ export default Radium(React.createClass({
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
+    const styles = this.getStyles();
 
     if (data.length === 0) {
       return null;
     }
 
-    // TODO: move all the styles to getStyles()
-    let sectionStyle = {
-      paddingTop: 10,
-      paddingBottom: 20,
-      margin: 1,
-      background: '#F4F4F4'
-    };
-
-    let sectionTitleStyle = {
-      fontSize: '1.2rem',
-      marginTop: 15,
-      marginBottom: 10
-    };
-
     let checkboxes = data.map(item => {
       return (
         <div
           key={`checkbox-${type}-${item[pk]}`}
-          className="col-xs-35 col-md-17 col-lg-17"
+          className="col-xs-35 col-md-17"
           style={{paddingRight: 10}}>
           <MUI.Checkbox
             ref={`checkbox-${type}-${item[pk]}`}
@@ -171,9 +183,9 @@ export default Radium(React.createClass({
     });
 
     return (
-      <div className="col-xs-35 col-md-35 col-lg-35">
-        <div style={sectionTitleStyle}>{label}</div>
-        <div style={sectionStyle}>
+      <div className="col-xs-35">
+        <div style={styles.sectionTitleStyle}>{label}</div>
+        <div style={styles.sectionStyle}>
           <div className="row">
             {checkboxes}
           </div>
@@ -183,6 +195,8 @@ export default Radium(React.createClass({
   },
 
   renderInfo() {
+    const styles = this.getStyles();
+
     if (this.state.dataReady === true) {
       return;
     } else if (this.state.dataReady === 'loading') {
@@ -192,8 +206,7 @@ export default Radium(React.createClass({
     }
     return (
       <div key="info" style={{padding: 100, margin: '0 auto'}}>
-        <div
-          style={{color: '#B8B8B8', width: 300, height: 27, lineHeight: '27px', fontSize: '1rem', verticalAlign: 'middle', textAlign: 'center'}}>
+        <div style={styles.info}>
           Choose the Instance which you want to use to export new solution version.
         </div>
       </div>

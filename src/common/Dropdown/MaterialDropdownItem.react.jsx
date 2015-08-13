@@ -56,6 +56,16 @@ export default React.createClass({
     this.setState({gravatarUrl: this.fallBackAvatar});
   },
 
+  getGravatarUrl() {
+    let headerContentProps = this.props.headerContent;
+
+    if (this.state.gravatarUrl) {
+      return this.state.gravatarUrl;
+    }
+
+    return Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
+  },
+
   renderHeaderContent() {
     let styles = this.getStyles();
     let headerContentProps = this.props.headerContent;
@@ -64,7 +74,7 @@ export default React.createClass({
     if (this.isHeaderNecessary()) {
 
       let location = window.location;
-      let gravatarUrl = this.state.gravatarUrl || Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
+      let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
