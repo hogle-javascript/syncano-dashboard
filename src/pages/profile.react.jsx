@@ -89,6 +89,7 @@ export default React.createClass({
     return (
       <div>
         <MUI.LeftNav
+          className="left-nav"
           ref="leftNav"
           selectedIndex={this.state.selectedIndex || 0}
           style={{marginTop: 64}} menuItems={this.menuItems()}

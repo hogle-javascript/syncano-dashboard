@@ -1,6 +1,7 @@
 module.exports = {
   tags: ['navigation'],
   before: function(client) {
+    console.log("Starting tests");
     var loginPage = client.page.loginPage();
     loginPage.goToLoginPage();
     loginPage.typeEmail();
@@ -12,10 +13,8 @@ module.exports = {
     client.end();
   },
   beforeEach: function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
-    topNavigationPage.clickButton('@syncanoLogo');
-
     var instancesPage = client.page.instancesPage();
+    instancesPage.navigate();
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
@@ -141,4 +140,87 @@ module.exports = {
     var solutionDetailsPage = client.page.solutionDetailsPage();
     solutionDetailsPage.waitForElementPresent('@installSolutionButton');
   },
+  'User goes to Account Profile View' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var profilePage = client.page.profilePage();
+    profilePage.waitForElementPresent('@updateButton')
+    client.pause(1000);
+  },
+  'User goes to Account Authentication View' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@authentication');
+
+    var authenticationPage = client.page.authenticationPage();
+    authenticationPage.waitForElementPresent('@accountKey');
+    client.pause(1000);
+  },
+  'User goes to Account Invitations View' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@invitations');
+
+    var invitationsPage = client.page.invitationsPage();
+    invitationsPage.waitForElementPresent('@emptyInvitationsView');
+    client.pause(1000);
+  },
+  'User goes to Billing Plan View' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@billingPlan');
+
+    var billingPlanPage = client.page.billingPlanPage();
+    billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
+    client.pause(1000);
+
+  },
+  'User goes to Payment methods view' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@paymentMethods');
+
+    var paymentMethodsPage = client.page.paymentMethodsPage();
+    paymentMethodsPage.waitForElementPresent('@addPaymentButton');
+    client.pause(1000);
+
+  },
+  'User goes to Invoices view' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@invoices');
+
+    var invoicesPage = client.page.invoicesPage();
+    invoicesPage.waitForElementPresent('@emptyInvoicesView');
+    client.pause(1000);
+  },
+  'User goes to Billing Address view' : function(client) {
+    var topNavigationPage = client.page.topNavigationPage();
+    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@accountDropdown');
+
+    var leftMenuPage = client.page.leftMenuPage();
+    leftMenuPage.clickButton('@billingAddress');
+
+    var billingAddressPage = client.page.billingAddressPage();
+    billingAddressPage.waitForElementPresent('@billingAddressTitle');
+    client.pause(1000);
+  }
 };

@@ -38,6 +38,30 @@ module.exports = {
     apiKeys: {
       selector: '//div[@class="left-nav"]//span[text()="API keys"]',
       locateStrategy: 'xpath'
+    },
+    authentication: {
+      selector: '//div[@class="left-nav"]//span[text()="Authentication"]',
+      locateStrategy: 'xpath'
+    },
+    invitations: {
+      selector: '//div[@class="left-nav"]//span[text()="Invitations"]',
+      locateStrategy: 'xpath'
+    },
+    billingPlan: {
+      selector: '//div[@class="left-nav"]//span[text()="Billing plan"]',
+      locateStrategy: 'xpath'
+    },
+    paymentMethods: {
+      selector: '//div[@class="left-nav"]//span[text()="Payment methods"]',
+      locateStrategy: 'xpath'
+    },
+    invoices: {
+      selector: '//div[@class="left-nav"]//span[text()="Invoices"]',
+      locateStrategy: 'xpath'
+    },
+    billingAddress: {
+      selector: '//div[@class="left-nav"]//span[text()="Billing address"]',
+      locateStrategy: 'xpath'
     }
   }
 };
