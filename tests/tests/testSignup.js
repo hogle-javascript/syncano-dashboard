@@ -1,7 +1,7 @@
 /* jshint expr: true */
 module.exports = {
   tags: ['signup'],
-  'Test': function(client) {
+  'User signs up': function(client) {
     var signupPage = client.page.signupPage();
     var slug = Date.now();
     signupPage.navigate();
