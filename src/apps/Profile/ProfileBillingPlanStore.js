@@ -16,6 +16,9 @@ export default Reflux.createStore({
     return {
       profile: null,
       usage: null,
+      overage: {
+        amount: 0
+      },
       subscriptions: null,
       isReady: false,
       isLoading: true,
@@ -128,30 +131,13 @@ export default Reflux.createStore({
     }, {amount: 0});
   },
 
+  setOverage(payload) {
+    this.data.overage = payload;
+    this.trigger(this.data);
+  },
+
   getOverage() {
-    const covered = this.getCovered();
-    let usageAmount = {'api': 0, 'cbx': 0};
-    let columns = {'api': {}, 'cbx': {}};
-
-    _.forEach(this.data.usage.objects, _usage => {
-      if (columns[_usage.source] === undefined) {
-        return;
-      }
-
-      let amount = pricing[_usage.source].overage * _usage.value;
-      columns[_usage.source][_usage.date] = amount;
-      usageAmount[_usage.source] += amount;
-    });
-
-    return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
-      let cover = covered[key];
-      let amount = (usageAmount[key] > cover.amount) ? usageAmount[key] - cover.amount : 0;
-      let included = _.round(amount / value.overage);
-
-      result.amount += amount;
-      result[key] = result[key] = _.extend({}, value, {amount, included});
-      return result;
-    }, {amount: 0});
+    return this.data.overage;
   },
 
   getTotalPlanValue(subscription) {
