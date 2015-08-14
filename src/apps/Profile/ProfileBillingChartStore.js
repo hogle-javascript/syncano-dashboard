@@ -182,6 +182,7 @@ export default Reflux.createStore({
       state.chart.axis.y.max = 0.5;
     }
 
+    PlanActions.setOverage(state.overage);
     PlanActions.setChartLegend({
       rows: [
         {

@@ -24,7 +24,7 @@ test:
   override:
     - npm run-script eslint
     - npm test
-    - npm run-script codeclimate
+    # - npm run-script codeclimate
     - npm run-script e2e
 
 deployment:
