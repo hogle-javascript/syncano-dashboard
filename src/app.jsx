@@ -1,5 +1,6 @@
 import 'babel-core/polyfill';
 import 'normalize.css';
+import './lib/localStoragePolyfill';
 import './raven';
 import './stripe';
 import './segment';
