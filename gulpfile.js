@@ -1,7 +1,9 @@
 var gulp             = require('gulp'),
     fs               = require('fs'),
     path             = require('path'),
+    async            = require('async'),
     gutil            = require('gulp-util'),
+    git              = require('gulp-git'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
     stripDebug       = require('gulp-strip-debug'),
@@ -193,6 +195,31 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
+});
+
+gulp.task('add-github-tag', function(cb) {
+  var version = 'v' + require('./package.json').version;
+
+  async.series([
+    function (callback) {
+      git.exec({args: 'config --global user.email "ci@circleci.com"'}, callback);
+    },
+
+    function (callback) {
+      git.exec({args: 'config --global user.name "CircleCI'}, callback);
+    },
+
+    function (callback) {
+      git.tag(version, '', callback);
+    },
+
+    function (callback) {
+      git.push('origin', version, callback);
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
