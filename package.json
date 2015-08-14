@@ -69,7 +69,7 @@
     "karma-sinon-chai": "^1.0.0",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.2.5",
-    "nightwatch": "^0.7.10",
+    "nightwatch": "0.7.9",
     "node-libcompass": "git://github.com/patrykkopycinski/node-libcompass.git",
     "node-libs-browser": ">= 0.5.2",
     "node-sass": "~3.2.0",
