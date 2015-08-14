@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -41,7 +42,6 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
-    Actions.fetch();
     if (this.getParams().action === 'add') {
       // Show Add modal
       this.showCodeBoxDialog();
@@ -49,9 +49,69 @@ export default React.createClass({
     Actions.fetch();
   },
 
+  getAssociatedCodeboxes(associatedWith) {
+    let checkedCodeboxes = Store.getCheckedItems();
+    let associatedCodeboxes = checkedCodeboxes.filter((codebox) => {
+      for (let i = 0; i < this.state[associatedWith].length; i++) {
+        if (codebox.id === this.state[associatedWith][i].codebox) {
+          codebox.associatedWith = this.state[associatedWith][i].label;
+          return true;
+        }
+      }
+    });
+    return associatedCodeboxes;
+  },
+
   // Dialogs config
   initDialogs() {
     let checkedCodeboxes = Store.getCheckedItems();
+    let codeboxesAssociatedWithSchedules = this.getAssociatedCodeboxes('schedules');
+    let codeboxesAssociatedWithTriggers = this.getAssociatedCodeboxes('triggers');
+    let codeboxesNotAssociated = _.difference(checkedCodeboxes, codeboxesAssociatedWithSchedules);
+      codeboxesNotAssociated = _.difference(codeboxesNotAssociated, codeboxesAssociatedWithTriggers);
+
+    if ((codeboxesAssociatedWithSchedules && codeboxesAssociatedWithSchedules.length > 0) ||
+        (codeboxesAssociatedWithTriggers && codeboxesAssociatedWithTriggers.length > 0)) {
+      let associatedWithSchedulesList = codeboxesAssociatedWithSchedules.length > 0 ?
+          <div>Associated with Schedules: {this.getDialogList(codeboxesAssociatedWithSchedules, 'label')}</div> :
+          null;
+      let associatedWithTriggersList = codeboxesAssociatedWithTriggers.length > 0 ?
+          <div>Associated with Triggers: {this.getDialogList(codeboxesAssociatedWithTriggers, 'label')}</div> :
+          null;
+      let notAssociatedList = codeboxesNotAssociated.length > 0 ?
+          <div>Not associated: {this.getDialogList(codeboxesNotAssociated, 'label')}</div> :
+          null;
+
+      return [{
+        dialog: Common.Dialog,
+        params: {
+          ref: 'deleteCodeBoxDialog',
+          title: 'Delete a CodeBox',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleDelete
+            }
+          ],
+          modal: true,
+          children: [
+            'Some of checked CodeBoxes are associated with Schedules or Triggers. Do you really want to delete ' +
+            checkedCodeboxes.length + ' CodeBox(es)?',
+            notAssociatedList,
+            associatedWithSchedulesList,
+            associatedWithTriggersList,
+            <Common.Loading
+                type="linear"
+                position="bottom"
+                show={this.state.isLoading}/>
+          ]
+        }
+      }]
+    }
 
     return [{
       dialog: Common.Dialog,
@@ -71,7 +131,7 @@ export default React.createClass({
         modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
-          this.getDialogList(checkedCodeboxes),
+          this.getDialogList(checkedCodeboxes, 'label'),
           <Common.Loading
             type="linear"
             position="bottom"

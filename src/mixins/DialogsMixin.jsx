@@ -18,7 +18,8 @@ export default {
 
   getDialogList(items, paramName) {
     let listItems = items.map(function(item) {
-      return <li>{item[paramName || 'name']}</li>;
+      let association = item.associatedWith ? ` (${item.associatedWith})` : '';
+      return <li>{item[paramName || 'name'] + association}</li>;
     });
 
     return <ul>{listItems}</ul>;

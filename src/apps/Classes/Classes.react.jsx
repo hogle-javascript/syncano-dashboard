@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -9,8 +10,8 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import ClassesActions from './ClassesActions';
-import ClassesStore from './ClassesStore';
+import Actions from './ClassesActions';
+import Store from './ClassesStore';
 
 // Components
 import MUI from 'material-ui';
@@ -28,7 +29,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ClassesStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -41,13 +42,65 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Classes::componentDidMount');
-    ClassesActions.fetch();
+    Actions.fetch();
+  },
+
+  getAssociatedClasses() {
+    let checkedClasses = Store.getCheckedItems();
+    let associatedClasses = checkedClasses.filter((klass) => {
+      for (let i = 0; i < this.state.triggers.length; i++) {
+        if (klass.name === this.state.triggers[i].class) {
+          klass.associatedWith = this.state.triggers[i].label;
+          return true;
+        }
+      }
+    });
+    return associatedClasses;
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
-    let checkedClasses = ClassesStore.getCheckedItems();
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let checkedClasses = Store.getCheckedItems();
+    let classesAssociatedWithTriggers = this.getAssociatedClasses();
+    let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+
+    if (classesAssociatedWithTriggers && classesAssociatedWithTriggers.length > 0) {
+      let associatedWithTriggersList =
+        <div>Associated with Triggers: {this.getDialogList(classesAssociatedWithTriggers)}</div>;
+      let notAssociatedList = classesNotAssociated.length > 0 ?
+        <div>Not associated: {this.getDialogList(classesNotAssociated)}</div> :
+        null;
+
+      return [{
+        dialog: Common.Dialog,
+        params: {
+          ref: 'deleteClassDialog',
+          title: 'Delete a Class',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleDelete
+            }
+          ],
+          modal: true,
+          children: [
+            'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
+            checkedClasses.length + ' Class(es)?',
+            notAssociatedList,
+            associatedWithTriggersList,
+            <Common.Loading
+                type="linear"
+                position="bottom"
+                show={this.state.isLoading}/>
+          ]
+        }
+      }]
+    }
 
     return [{
       dialog: Common.ColorIconPicker.Dialog,
@@ -93,29 +146,29 @@ export default React.createClass({
   handleChangePalette(color, icon) {
     console.info('Classes::handleChangePalette', color, icon);
 
-    ClassesActions.updateClass(
-      ClassesStore.getCheckedItem().name, {
+    Actions.updateClass(
+      Store.getCheckedItem().name, {
         metadata: JSON.stringify({
           color: color,
           icon: icon
         })
       }
     );
-    ClassesActions.uncheckAll()
+    Actions.uncheckAll()
   },
 
   handleDelete() {
     console.info('Classes::handleDelete');
-    ClassesActions.removeClasses(ClassesStore.getCheckedItems());
+    Actions.removeClasses(Store.getCheckedItems());
   },
 
   handleReset() {
     console.info('Classes::handleReset');
-    ClassesActions.resetClass(ClassesStore.getCheckedItem().id);
+    Actions.resetClass(Store.getCheckedItem().id);
   },
 
   checkClassItem(id, state) {
-    ClassesActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   getStyles() {
@@ -137,7 +190,7 @@ export default React.createClass({
   },
 
   redirectToEditClassView(className) {
-    let classNameParam = className || ClassesStore.getCheckedItem().name;
+    let classNameParam = className || Store.getCheckedItem().name;
 
     this.context.router.transitionTo('classes-edit', {
       instanceName: this.getParams().instanceName,
@@ -151,8 +204,8 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let checkedClasses = ClassesStore.getCheckedItems();
-    let checkedClassesCount = ClassesStore.getNumberOfChecked();
+    let checkedClasses = Store.getCheckedItems();
+    let checkedClassesCount = Store.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
     let someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -167,7 +220,7 @@ export default React.createClass({
             <Common.Fab.Item
               label={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
-              onClick={isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
+              onClick={isAnyAndNotAllClassSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyAndNotAllClassSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
               label="Click here to delete Classes"
