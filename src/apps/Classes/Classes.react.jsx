@@ -155,6 +155,8 @@ export default React.createClass({
     let checkedClassesCount = ClassesStore.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
     let someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -166,7 +168,7 @@ export default React.createClass({
               label={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
-              iconClassName={isAnyAndNotAllClassSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}/>
+              iconClassName={isAnyAndNotAllClassSelected ? markedIcon : blankIcon}/>
             <Common.Fab.Item
               label="Click here to delete Classes"
               mini={true}

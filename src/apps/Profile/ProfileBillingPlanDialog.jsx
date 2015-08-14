@@ -421,12 +421,16 @@ export default React.createClass({
                 <div style={styles.table}>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included, 10).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(apiInfo.included, 10).toLocaleString()}
+                    </div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included, 10).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(cbxInfo.included, 10).toLocaleString()}
+                    </div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                   </div>
                 </div>

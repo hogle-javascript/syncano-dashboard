@@ -12,6 +12,7 @@ import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
 import Icon from './Icon';
+import InnerToolbar from './InnerToolbar';
 import Label from './Label';
 import Lists from './Lists';
 import Loading from './Loading';
@@ -30,11 +31,9 @@ import Tabs from './Tabs';
 import Tags from './Tags';
 import Tour from './Tour';
 import Trace from './Trace';
-import UsageBar from './UsageBar';
 import ContentHeader from './ContentHeader.react';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
-import UsageBar2 from './UsageBar.react';
 import SnackbarNotification from './SnackbarNotification';
 
 export default {
@@ -52,6 +51,7 @@ export default {
   Editor,
   Fab,
   Icon,
+  InnerToolbar,
   Label,
   Lists,
   Loading,
@@ -70,10 +70,8 @@ export default {
   Tags,
   Tour,
   Trace,
-  UsageBar,
   ContentHeader,
   Spacing,
   SyncanoTheme,
-  UsageBar2,
   SnackbarNotification
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -13,6 +14,7 @@ import Actions from './TracesActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
 // Local components
@@ -45,26 +47,15 @@ export default Radium(React.createClass({
   },
 
   getStyles() {
-    let styles = {
-      toolbar: {
-        position: 'fixed',
-        top: 64,
-        right: 0,
-        zIndex: 8,
-        paddingLeft: 256,
-        background: 'rgba(215,215,215,0.6)',
-        padding: '0px 32px 0 24px'
-      },
+    return {
       list: {
         position: 'relative',
         top: '35px'
       },
       cBList: {
-       top: '-45px'
+        top: '-45px'
       }
-    };
-
-    return styles;
+    }
   },
 
   getConfig() {
@@ -97,9 +88,26 @@ export default Radium(React.createClass({
     this.transitionTo(config.route, this.getParams());
   },
 
+  getTracesFor() {
+    if (this.props.tracesFor === 'codebox') {
+      return 'CodeBox';
+    }
+
+    return _.capitalize(this.props.tracesFor);
+  },
+
+  getToolbarTitleText() {
+    let tracesFor = this.getTracesFor();
+
+    if (this.state.currentObjectName) {
+      return `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})`;
+    }
+
+    return '';
+  },
+
   renderToolbarTitle() {
-    let tracesFor = this.props.tracesFor === 'codebox' ? 'CodeBox' : this.props.tracesFor.charAt(0).toUpperCase() + this.props.tracesFor.slice(1);
-    let toolbarTitleText = this.state.currentObjectName ? `${tracesFor}: ${this.state.currentObjectName} (id: ${this.props.objectId})` : '';
+    let toolbarTitleText = this.getToolbarTitleText();
 
     return (
       <MUI.ToolbarGroup>
@@ -109,12 +117,12 @@ export default Radium(React.createClass({
   },
 
   render() {
-    const config = this.getConfig();
     const styles = this.getStyles();
+    const config = this.getConfig();
 
     return (
       <div>
-        <MUI.Toolbar style={styles.toolbar}>
+        <Common.InnerToolbar>
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
@@ -125,9 +133,8 @@ export default Radium(React.createClass({
               style={{marginTop: 4}}
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
-
           {this.renderToolbarTitle()}
-        </MUI.Toolbar>
+        </Common.InnerToolbar>
         <div style={[styles.list, this.isActive('codebox-traces') && styles.cBList]}>
           <TracesList
             tracesFor={this.props.tracesFor}

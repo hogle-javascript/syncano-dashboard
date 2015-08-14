@@ -269,14 +269,7 @@ export default React.createClass({
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
-        <MUI.Toolbar style={{
-            position: 'fixed',
-            top: 64,
-            right: 0,
-            paddingLeft: 256,
-            zIndex: 1,
-            background: 'rgb(215,215,215)',
-            padding: '0px 32px 0 24px'}}>
+        <Common.InnerToolbar>
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
@@ -290,7 +283,8 @@ export default React.createClass({
             <MUI.ToolbarTitle text={title} />
           </MUI.ToolbarGroup>
 
-        </MUI.Toolbar>
+        </Common.InnerToolbar>
+
         <form
           onSubmit={this.handleFormValidation}
           acceptCharset="UTF-8"
