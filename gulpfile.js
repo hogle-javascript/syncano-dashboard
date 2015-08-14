@@ -202,15 +202,15 @@ gulp.task('add-github-tag', function(cb) {
 
   async.series([
     function (callback) {
-      git.exec({args: 'config --global user.email "ci@circleci.com"'}, callback);
+      git.exec({args: 'config --global user.email \"ci@circleci.com\"'}, callback);
     },
 
     function (callback) {
-      git.exec({args: 'config --global user.name "CircleCI'}, callback);
+      git.exec({args: 'config --global user.name "CircleCI"'}, callback);
     },
 
     function (callback) {
-      git.tag(version, '', callback);
+      git.tag(version, 'Release ' + version, callback);
     },
 
     function (callback) {
