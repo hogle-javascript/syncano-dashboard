@@ -6,6 +6,7 @@ export default CreateActions(
     fetch: {},
     setBillingPlan: {},
     setChartLegend: {},
+    setOverage: {},
 
     fetchBillingProfile: {
       asyncResult: true,
