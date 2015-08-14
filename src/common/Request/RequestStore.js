@@ -14,7 +14,7 @@ let RequestStore = Reflux.createStore({
   },
 
   setErrorSnackbar(event) {
-    if (event.target.status >= 500 && event.target.status <= 599) {
+    if (event.target && event.target.status >= 500 && event.target.status <= 599) {
       SnackbarNotificationActions.set({
         message: 'Something went wrong',
         action: 'refresh',
