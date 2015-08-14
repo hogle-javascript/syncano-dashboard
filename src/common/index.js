@@ -31,11 +31,9 @@ import Tabs from './Tabs';
 import Tags from './Tags';
 import Tour from './Tour';
 import Trace from './Trace';
-import UsageBar from './UsageBar';
 import ContentHeader from './ContentHeader.react';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
-import UsageBar2 from './UsageBar.react';
 import SnackbarNotification from './SnackbarNotification';
 
 export default {
@@ -72,10 +70,8 @@ export default {
   Tags,
   Tour,
   Trace,
-  UsageBar,
   ContentHeader,
   Spacing,
   SyncanoTheme,
-  UsageBar2,
   SnackbarNotification
 };

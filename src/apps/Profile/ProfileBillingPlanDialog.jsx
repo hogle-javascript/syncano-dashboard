@@ -32,6 +32,7 @@ export default React.createClass({
     if (this.state.card) {
       return;
     }
+
     return {
       number: {
         presence: true,
@@ -65,6 +66,19 @@ export default React.createClass({
           is: 4
         }
       }
+    }
+  },
+
+  getValidatorAttributes() {
+    if (this.state.card) {
+      return {};
+    }
+
+    return {
+      number: this.state.number || this.refs.number.getValue(),
+      cvc: this.state.cvc || this.refs.cvc.getValue(),
+      exp_month: this.state.exp_month || this.refs.exp_month.getValue(),
+      exp_year: this.state.exp_year || this.refs.exp_year.getValue()
     }
   },
 
@@ -105,12 +119,8 @@ export default React.createClass({
     if (this.state.card) {
       subscribe().then(setLimits);
     } else {
-      Actions.updateCard({
-        cvc: this.state.cvc,
-        number: this.state.number,
-        exp_year: this.state.exp_year,
-        exp_month: this.state.exp_month
-      })
+      Actions
+        .updateCard(this.getValidatorAttributes())
         .then((payload) => {
           subscribe().then(
             setLimits
@@ -191,6 +201,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="number"
+              ref="number"
               fullWidth={true}
               valueLink={this.linkState('number')}
               errorText={this.getValidationMessages('number').join(' ')}
@@ -204,6 +215,7 @@ export default React.createClass({
           <div className="col-md-5">
             <MUI.TextField
               name="cvc"
+              ref="cvc"
               fullWidth={true}
               valueLink={this.linkState('cvc')}
               errorText={this.getValidationMessages('cvc').join(' ')}
@@ -215,6 +227,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_month"
+              ref="exp_month"
               fullWidth={true}
               valueLink={this.linkState('exp_month')}
               errorText={this.getValidationMessages('exp_month').join(' ')}
@@ -226,6 +239,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_year"
+              ref="exp_year"
               fullWidth={true}
               valueLink={this.linkState('exp_year')}
               errorText={this.getValidationMessages('exp_year').join(' ')}
@@ -407,12 +421,16 @@ export default React.createClass({
                 <div style={styles.table}>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included, 10).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(apiInfo.included, 10).toLocaleString()}
+                    </div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
                   <div className="row" style={styles.tableRow}>
                     <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included, 10).toLocaleString()}</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(cbxInfo.included, 10).toLocaleString()}
+                    </div>
                     <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                   </div>
                 </div>

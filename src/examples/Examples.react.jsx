@@ -33,7 +33,6 @@ let Label                = require('../common/Label/Label.react');
 let Editor               = require('../common/Editor/Editor.react');
 let EditorPanel          = require('../common/Editor/EditorPanel.react');
 let FabList              = require('../common/Fab/FabList.react');
-let UsageBar             = require('../common/UsageBar/UsageBar.react');
 
 let SwitchField          = require('../common/SwitchField/SwitchField.react');
 let SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react');
@@ -48,7 +47,6 @@ let Slider               = require('../common/Slider/Slider.react');
 let ColumnListItem       = require('../common/ColumnList/Item.react');
 let ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react');
 let ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
-
 
 require('./Examples.css');
 
@@ -604,11 +602,6 @@ export default React.createClass({
             modal={modalState}>
             Based on JSON
           </Dialog>
-        </div>
-
-        <div className="exampleBox">
-          <h4>UsageBar</h4>
-          <UsageBar billingProfile={billingProfile}/>
         </div>
 
         <div className="exampleBox">

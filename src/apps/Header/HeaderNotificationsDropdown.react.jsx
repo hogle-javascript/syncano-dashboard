@@ -93,9 +93,11 @@ export default Radium(React.createClass({
 
   renderItems() {
     let styles = this.getStyles();
-    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't closing because of returned childrens in DIV tag
+
+    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't
+    // closing because of returned childrens in DIV tag
     // if (this.state.accountInvitations.isLoading === true) {
-    //  return <Loading show={true}/>
+    //   return <Loading show={true}/>
     // }
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
