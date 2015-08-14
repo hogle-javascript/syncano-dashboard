@@ -12,6 +12,7 @@ import Dropdown from './Dropdown';
 import Editor from './Editor';
 import Fab from './Fab';
 import Icon from './Icon';
+import InnerToolbar from './InnerToolbar';
 import Label from './Label';
 import Lists from './Lists';
 import Loading from './Loading';
@@ -50,6 +51,7 @@ export default {
   Editor,
   Fab,
   Icon,
+  InnerToolbar,
   Label,
   Lists,
   Loading,
