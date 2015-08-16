@@ -106,9 +106,12 @@ export default Radium(React.createClass({
         backgroundColor: 'green',
         margin: '8px 16px 8px 0'
       },
+      dropdownMenu: {
+        maxHeight: 'calc(100vh - 80px)'
+      },
       dropdownMenuItem: {
         height      : 'auto',
-        paddingLeft : 16,
+        paddingLeft : 16
       }
     }
   },
@@ -153,6 +156,7 @@ export default Radium(React.createClass({
           ref="HeaderInstancesDropdown"
           className="instances-dropdown"
           style={{width: '100%'}}
+          menuStyle={styles.dropdownMenu}
           labelStyle={styles.dropdownLabel}
           underlineStyle={styles.dropdownLabelUnderline}
           menuItemStyle={styles.dropdownMenuItem}
