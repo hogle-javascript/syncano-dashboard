@@ -128,20 +128,20 @@ export default React.createClass({
 
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.ItemNew
+              tooltip={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyApiKeySelected ? markedIcon : blankIcon}
               />
-            <Common.Fab.Item
-              label="Click here to delete API Keys"
+            <Common.Fab.ItemNew
+              tooltip="Click here to delete API Keys"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteApiKeyDialog')}
               iconClassName="synicon-delete"
               />
-            <Common.Fab.Item
-              label="Click here to edit an API Key"
+            <Common.Fab.ItemNew
+              tooltip="Click here to edit an API Key"
               mini={true}
               disabled={checkedApiKeys > 1}
               onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
@@ -150,8 +150,8 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to add an API Key"
+          <Common.Fab.ItemNew
+            tooltip="Click here to add an API Key"
             onClick={this.showApiKeyDialog}
             iconClassName="synicon-plus"
             />

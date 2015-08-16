@@ -75,8 +75,8 @@ export default Radium(React.createClass({
     return (
       <Container style={styles.container}>
         <Common.Fab position="top">
-          <Common.Fab.Item
-            label="Click here to save CodeBox"
+          <Common.Fab.ItemNew
+            tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>
