@@ -1,6 +1,6 @@
 import React from 'react';
 
-import mui from 'material-ui';
+import MUI from 'material-ui';
 
 export default React.createClass({
 
@@ -16,7 +16,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       color: '#999',
-      hoverColor: MUI.Styes.Colors.blue600
+      hoverColor: MUI.Styles.Colors.blue600
     };
   },
 
