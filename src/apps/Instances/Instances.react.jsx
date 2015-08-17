@@ -33,7 +33,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs,
+    Mixins.Dialogs
   ],
 
   // Dialogs config

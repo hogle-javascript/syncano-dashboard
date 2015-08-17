@@ -163,6 +163,6 @@ export default Reflux.createStore({
     console.debug('SolutionsStore::onFetchTagsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
-  },
+  }
 
 });

@@ -73,7 +73,7 @@ export default Radium(React.createClass({
       topToolbar: {
         background : this.context.muiTheme.palette.primary1Color,
         height     : 64,
-        padding    : 0,
+        padding    : 0
       },
       logotypeContainer: {
         paddingLeft : 24,

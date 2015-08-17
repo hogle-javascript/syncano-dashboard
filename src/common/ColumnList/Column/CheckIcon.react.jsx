@@ -17,7 +17,7 @@ let Header = React.createClass({
   getStyles() {
     return {
       fontSize : 20,
-      fontWeight : 500,
+      fontWeight : 500
     }
   },
 

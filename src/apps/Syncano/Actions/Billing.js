@@ -65,7 +65,7 @@ export default {
         .subscribePlan(currentPlan.plan, {
           commitment: JSON.stringify({
             api: currentPlan.commitment.api,
-            cbx: currentPlan.commitment.cbx,
+            cbx: currentPlan.commitment.cbx
           })
         })
         .then(this.completed)

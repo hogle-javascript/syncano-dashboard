@@ -43,7 +43,6 @@
     // "no-param-reassign": 2,
     // "camelcase": 2,
     // "object-shorthand": 2,
-    // "comma-dangle": [2, "never"],
     // "padded-blocks": [2, "never"],
     // "vars-on-top": 2,
     // "quote-props": 2,
@@ -114,7 +113,6 @@
     "no-param-reassign": 1,
     "camelcase": 1,
     "object-shorthand": 1,
-    "comma-dangle": [1, "never"],
     "padded-blocks": [1, "never"],
     "vars-on-top": 1,
     "quote-props": 1,
@@ -189,6 +187,7 @@
     "strict": [2, "never"],
 
     // Possible Errors
+    "comma-dangle": [2, "never"],
     "no-cond-assign": [2, "always"],
     "no-console": 0,
     "no-constant-condition": 2,
