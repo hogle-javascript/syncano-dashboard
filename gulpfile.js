@@ -16,7 +16,8 @@ var gulp             = require('gulp'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
-    ENV              = process.env.NODE_ENV || 'development';
+    ENV              = process.env.NODE_ENV || 'development',
+    version          = 'v' + require('./package.json').version;
 
 var paths = {
   dist: './dist',
@@ -197,9 +198,29 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(cloudfront(aws));
 });
 
-gulp.task('add-github-tag', function(cb) {
-  var version = 'v' + require('./package.json').version;
+gulp.task('check-github-tag', function(cb) {
+  async.series([
+    function (callback) {
+      git.fetch('origin', '', {args: '--tags'}, callback);
+    },
 
+    function (callback) {
+      git.exec({args: 'tag -l "' + version + '"'}, function(err, stdout) {
+        if (err) return callback(err);
+        if (stdout.indexOf(version) > -1) {
+          return callback(new gutil.PluginError('check-github-tag', 'Version "' + version +'" already exists.'))
+        }
+
+        callback();
+      });
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('add-github-tag', function(cb) {
   async.series([
     function (callback) {
       git.exec({args: 'config --global user.email "ci@syncano.com"'}, callback);
