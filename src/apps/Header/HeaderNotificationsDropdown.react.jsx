@@ -134,14 +134,14 @@ export default Radium(React.createClass({
           </div>
         );
       let buttons = [
-          <MUI.FlatButton
-            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-            label='Accept'
-            primary={true}/>,
-          <MUI.FlatButton
-            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-            label='Decline'/>
-        ];
+        <MUI.FlatButton
+          onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
+          label='Accept'
+          primary={true}/>,
+        <MUI.FlatButton
+          onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
+          label='Decline'/>
+      ];
 
       return (
         <MenuItem

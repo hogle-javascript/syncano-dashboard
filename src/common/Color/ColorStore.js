@@ -5,9 +5,7 @@ export default {
 
   getColorPickerPalette() {
     let colors = [];
-    let uniqueColors = Object.keys(Colors).filter((key) => {
-        return key.slice(-3) === '500';
-      });
+    let uniqueColors = Object.keys(Colors).filter((key) => key.slice(-3) === '500');
 
     uniqueColors.map((color) => {
       color = color.slice(0, -3);

@@ -49,17 +49,18 @@ export default React.createClass({
     let checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
     let checkedClasses = ClassesStore.getCheckedItems();
 
-    return [{
-      dialog: Common.ColorIconPicker.Dialog,
-      params: {
-        key: 'pickColorIconDialog',
-        ref: 'pickColorIconDialog',
-        mode: 'add',
-        initialColor: checkedItemIconColor.color,
-        initialIcon: checkedItemIconColor.icon,
-        handleClick: this.handleChangePalette
-      }
-    },
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      },
       {
         dialog: Common.Dialog,
         params: {
@@ -87,7 +88,8 @@ export default React.createClass({
               />
           ]
         }
-      }]
+      }
+    ]
   },
 
   handleChangePalette(color, icon) {

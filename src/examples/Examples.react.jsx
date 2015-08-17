@@ -336,30 +336,29 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Material dropdown</h2>
           <div style={{
-                 display        : 'flex',
-                 float          : 'none',
-                 alignItems     : 'center',
-                 justifyContent : 'center'
-               }}>
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {notifications}
-              iconStyle = {{padding: "0 4px"}}
-              isLoading = {false} />
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
-              iconStyle = {{padding: "0 4px"}}
-              isLoading = {false} />
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
-              iconStyle = {{padding: "0 4px"}}
-              isLoading = {true} />
-            </div>
+            display: 'flex',
+            float: 'none',
+            alignItems: 'center',
+            justifyContent: 'center'}}>
+            <MaterialDropdown
+                type      = "notification"
+                icon      = {"bell"}
+                items     = {notifications}
+                iconStyle = {{padding: "0 4px"}}
+                isLoading = {false} />
+            <MaterialDropdown
+                type      = "notification"
+                icon      = {"bell"}
+                items     = {[]}
+                iconStyle = {{padding: "0 4px"}}
+                isLoading = {false} />
+            <MaterialDropdown
+                type      = "notification"
+                icon      = {"bell"}
+                items     = {[]}
+                iconStyle = {{padding: "0 4px"}}
+                isLoading = {true} />
+          </div>
         </div>
 
         <div className="exampleBox">
@@ -565,11 +564,11 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Menu (component build in progress)</h2>
           <MenuNew style ={{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}>
+            marginRight: 32,
+            marginBottom: 32,
+            float: 'left',
+            position: 'relative',
+            zIndex: 0}}>
             <MenuItemNew>Maps</MenuItemNew>
             <MenuItemNew>Books</MenuItemNew>
             <MenuItemNew>Flights</MenuItemNew>
@@ -588,14 +587,14 @@ export default React.createClass({
 
 
           <MenuNew
-            desktop = {true}
-            width   = {320}
-            style   = {{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}>
+            desktop={true}
+            width={320}
+            style={{
+              marginRight: 32,
+              marginBottom: 32,
+              float: 'left',
+              position: 'relative',
+              zIndex: 0}}>
             <MenuItemNew>Refresh</MenuItemNew>
             <MenuItemNew >Send Feedback More</MenuItemNew>
             <MenuItemNew checked={true}>Settings</MenuItemNew>
@@ -619,16 +618,16 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Menu</h2>
           <Menu style ={{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}
-                  menuItems={[
-                  {text: <MenuItem>ASDASD</MenuItem>},
-                  {text: <MenuItem>ASDASD</MenuItem>},
-                  {text: <MenuItem>ASDASD</MenuItem>}
-                  ]} />
+            marginRight: 32,
+            marginBottom: 32,
+            float: 'left',
+            position: 'relative',
+            zIndex: 0}}
+            menuItems={[
+              {text: <MenuItem>ASDASD</MenuItem>},
+              {text: <MenuItem>ASDASD</MenuItem>},
+              {text: <MenuItem>ASDASD</MenuItem>}
+            ]} />
         </div>
 
       </div>

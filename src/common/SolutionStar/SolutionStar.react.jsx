@@ -14,9 +14,9 @@ export default Radium(React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-     this.setState({
+    this.setState({
       stars_count: nextProps.solution.stars_count
-     })
+    })
   },
 
   getStyles() {
