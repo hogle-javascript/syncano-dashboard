@@ -31,7 +31,7 @@ let ChannelsActions = Reflux.createActions({
   removeChannels: {
     asyncResult: true,
     children: ['completed', 'failure']
-  },
+  }
 });
 
 ChannelsActions.fetchChannels.listen(function() {

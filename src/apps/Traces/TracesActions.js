@@ -48,5 +48,5 @@ export default CreateActions({}, {
     asyncResult: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Schedules.get'
-  },
+  }
 });

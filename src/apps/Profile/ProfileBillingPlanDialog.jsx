@@ -169,7 +169,7 @@ export default React.createClass({
         marginTop: 20,
         fontSize: '0.8em',
         color: '#9B9B9B'
-      },
+      }
     }
   },
 
