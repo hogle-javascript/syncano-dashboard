@@ -2,7 +2,7 @@ export default {
 
   setLoadingStates() {
     if (this.listenables) {
-      let arr = [].concat(this.listenables)
+      let arr = [].concat(this.listenables);
 
       arr.forEach(function(item) {
         this.setLoadingState(item);

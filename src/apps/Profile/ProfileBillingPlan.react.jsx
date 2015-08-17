@@ -487,7 +487,7 @@ export default Radium(React.createClass({
               </div>
             </div>
           </div>
-w
+
           <div className="row vp-2-b">
             <div
               className="col-flex-1 vp-1-b"
