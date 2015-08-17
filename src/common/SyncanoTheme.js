@@ -5,7 +5,7 @@ import Spacing from './Spacing';
 
 export default {
   spacing: Spacing,
-  contentFontFamily: 'Avenir',
+  contentFontFamily: 'Avenir, sans-serif',
   getPalette() {
     return {
       primary1Color: Colors.blue700,
