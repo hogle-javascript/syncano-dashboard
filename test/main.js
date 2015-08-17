@@ -148,7 +148,6 @@ import './common/Search/Search.react';
 import './common/Show/Show.react';
 import './common/SocialAuthButtonsList/SocialAuthButtonsList.react';
 import './common/Trace/TraceResult.react';
-import './common/Trace/TraceResultWithMeta.react';
 import './mixins/CheckListStoreMixin';
 import './mixins/DialogMixin';
 import './mixins/DialogsMixin';
