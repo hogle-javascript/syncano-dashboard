@@ -41,6 +41,7 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
       /^chrome:\/\//i,
       // Other plugins
       /127\.0\.0\.1:4001\/isrunning/i,  // Cacaoweb
+      /localhost/i,
       /webappstoolbarba\.texthelp\.com\//i,
       /metrics\.itunes\.apple\.com\.edgesuite\.net\//i
     ]
