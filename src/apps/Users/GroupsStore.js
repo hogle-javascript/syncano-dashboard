@@ -39,7 +39,7 @@ export default Reflux.createStore({
   setGroups(groups) {
     console.debug('GroupsStore::setGroups');
 
-    this.data.items = Object.keys(groups).map(key => groups[key]);
+    this.data.items = Object.keys(groups).map((key) => groups[key]);
     this.trigger(this.data);
   },
 

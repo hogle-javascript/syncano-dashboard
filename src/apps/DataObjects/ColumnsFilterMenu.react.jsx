@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   renderMenuItems() {
-    return this.state.columns.map(column => {
+    return this.state.columns.map((column) => {
       let checkbox = (
         <MUI.Checkbox
           checked={column.checked}

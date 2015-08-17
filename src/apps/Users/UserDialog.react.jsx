@@ -106,7 +106,7 @@ export default React.createClass({
     let submitLabel = 'Confirm';
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
-    let allGroups = GroupsStore.getGroups().map(group => {
+    let allGroups = GroupsStore.getGroups().map((group) => {
       group.value = group.id + '';
       return group;
     });
@@ -124,7 +124,7 @@ export default React.createClass({
     ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
-      selectValue = selectValueSource.value.map(value => value.id).join(',');
+      selectValue = selectValueSource.value.map((value) => value.id).join(',');
     } else if (selectValueSource && selectValueSource.value) {
       selectValue = selectValueSource.value;
     }

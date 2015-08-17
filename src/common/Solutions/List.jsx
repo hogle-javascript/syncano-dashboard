@@ -51,7 +51,7 @@ export default React.createClass({
       ];
     }
 
-    return this.props.items.map(item => {
+    return this.props.items.map((item) => {
       return (
         <div
           key={item.id}

@@ -115,11 +115,11 @@ export default Radium(React.createClass({
     let spec = this.state.exportSpec;
     let formatedSpec = {};
 
-    Object.keys(spec).map(section => {
+    Object.keys(spec).map((section) => {
       let pkName = this.pkMap(section);
 
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(item => {
+      Object.keys(spec[section]).map((item) => {
         if (spec[section][item] === true) {
           let obj = {};
 
@@ -166,7 +166,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    let checkboxes = data.map(item => {
+    let checkboxes = data.map((item) => {
       return (
         <div
           key={`checkbox-${type}-${item[pk]}`}

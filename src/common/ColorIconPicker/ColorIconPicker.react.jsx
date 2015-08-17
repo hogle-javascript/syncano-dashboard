@@ -125,9 +125,9 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     if (this.props.pickerType === 'color') {
-      items = ColorStore.getColorPickerPalette().map(color => this.genColorItem(color));
+      items = ColorStore.getColorPickerPalette().map((color) => this.genColorItem(color));
     } else {
-      items = IconStore.getIconPickerIcons().map(icon => this.genIconItem(icon));
+      items = IconStore.getIconPickerIcons().map((icon) => this.genIconItem(icon));
     }
 
     return (

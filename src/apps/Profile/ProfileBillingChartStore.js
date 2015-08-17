@@ -70,7 +70,7 @@ export default Reflux.createStore({
         },
         tooltip: {
           format: {
-            title: input => {
+            title: (input) => {
               let title = moment(input).format('MMM DD');
               let date = moment(input).format(this.format);
 
@@ -79,10 +79,10 @@ export default Reflux.createStore({
               }
               return title;
             },
-            name: name => {
+            name: (name) => {
               return {api: 'API calls', cbx: 'CodeBox runs'}[name];
             },
-            value: value => d3.format('$')(_.round(value, 5))
+            value: (value) => d3.format('$')(_.round(value, 5))
           }
         },
         regions: [{
@@ -132,7 +132,7 @@ export default Reflux.createStore({
     }
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
-    _.forEach(usage.objects, _usage => {
+    _.forEach(usage.objects, (_usage) => {
       if (columns[_usage.source] === undefined) {
         return;
       }
@@ -215,7 +215,7 @@ export default Reflux.createStore({
       return result;
     }, {});
 
-    _.forEach(this.getAllDates(), date => {
+    _.forEach(this.getAllDates(), (date) => {
       _.forEach(columns, (val, source) => {
         if (columns[source][date] === undefined) {
           columns[source][date] = 0;
@@ -267,9 +267,7 @@ export default Reflux.createStore({
     let {year, month} = this.getDate();
     let days = _.range(1, this.getNumberOfDays() + 1);
 
-    return _.map(days, day => {
-      return moment(new Date(year, month, day)).format(this.format);
-    });
+    return _.map(days, (day) => moment(new Date(year, month, day)).format(this.format));
   },
 
   getNumberOfDays() {

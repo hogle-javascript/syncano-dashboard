@@ -72,7 +72,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxTracesCompleted(traces) {
     console.debug('CodeBoxStore::onFetchCodeBoxTracesCompleted');
-    this.data.traces = Object.keys(traces).sort().map(key => traces[key]);
+    this.data.traces = Object.keys(traces).sort().map((key) => traces[key]);
     this.data.isLoading = false;
     this.getCodeBoxLastTraceResult();
   },
