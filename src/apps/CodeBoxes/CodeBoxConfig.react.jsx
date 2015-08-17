@@ -46,7 +46,7 @@ export default Radium(React.createClass({
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {config: config});
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
   },
 
   renderEditor() {

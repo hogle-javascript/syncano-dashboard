@@ -38,7 +38,7 @@ export default Reflux.createStore({
       channels = [{payload: '', text: 'No channels, add one first'}];
     }
 
-    this.trigger({channels: channels});
+    this.trigger({channels});
   },
 
   onCreateDataObjectCompleted() {

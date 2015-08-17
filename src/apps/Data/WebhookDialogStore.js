@@ -41,7 +41,7 @@ export default Reflux.createStore({
     if (codeboxes.length === 0) {
       codeboxes = [{payload: '', text: 'No CodeBoxes, add one first'}];
     }
-    this.trigger({codeboxes: codeboxes});
+    this.trigger({codeboxes});
   },
 
   onCreateWebhookCompleted() {

@@ -15,7 +15,7 @@ export default Radium(React.createClass({
     type: React.PropTypes.oneOf(['circular', 'linear'])
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       type: 'circular',
       size: 1,
@@ -23,7 +23,7 @@ export default Radium(React.createClass({
     }
   },
 
-  getStyles: function() {
+  getStyles() {
     let styles = {
       base: {
         display: 'flex',
@@ -49,7 +49,7 @@ export default Radium(React.createClass({
     }
   },
 
-  renderItem: function() {
+  renderItem() {
     if (this.props.show === false) {
       return this.props.children;
     }
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
       size={this.props.size}/>;
   },
 
-  render: function() {
+  render() {
     let styles = this.getStyles();
 
     return (

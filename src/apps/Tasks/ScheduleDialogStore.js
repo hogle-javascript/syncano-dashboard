@@ -66,7 +66,7 @@ export default Reflux.createStore({
       codeboxes = [{payload: '', text: 'No codeboxes, add one first'}];
     }
 
-    this.trigger({codeboxes: codeboxes});
+    this.trigger({codeboxes});
   },
 
   getCrontabDropdown() {

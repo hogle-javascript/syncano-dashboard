@@ -70,7 +70,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
     });

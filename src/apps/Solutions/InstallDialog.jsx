@@ -58,14 +58,14 @@ export default React.createClass({
         Actions.installSolution({
           solutionId: this.state.solutionId,
           versionId: this.state.version,
-          instanceName: instanceName
+          instanceName
         })
       });
     } else {
       Actions.installSolution({
         solutionId: this.state.solutionId,
         versionId: this.state.version,
-        instanceName: instanceName
+        instanceName
       });
     }
   },

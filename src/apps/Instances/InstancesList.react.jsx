@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   handleItemClick(instanceName) {
-    SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName: instanceName}));
+    SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
   },
 
   renderItem(item) {

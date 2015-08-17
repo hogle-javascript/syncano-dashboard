@@ -75,7 +75,7 @@ export default React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId: solutionId});
+    this.transitionTo('solutions-edit', {solutionId});
   },
 
   handleTagClick(tag) {

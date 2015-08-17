@@ -109,7 +109,7 @@ export default React.createClass({
       group: this.state.group,
       group_permissions: this.state.group_permissions,
       other_permissions: this.state.other_permissions,
-      schema: schema
+      schema
     });
   },
 
@@ -154,7 +154,7 @@ export default React.createClass({
     }
 
     this.setState({
-      fields: fields,
+      fields,
       fieldName: ''
     })
   },
@@ -167,7 +167,7 @@ export default React.createClass({
         fields.push(field);
       }
     });
-    this.setState({fields: fields});
+    this.setState({fields});
   },
 
   handleOnCheck(item, event) {

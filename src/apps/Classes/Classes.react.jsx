@@ -95,10 +95,7 @@ export default React.createClass({
 
     ClassesActions.updateClass(
       ClassesStore.getCheckedItem().name, {
-        metadata: JSON.stringify({
-          color: color,
-          icon: icon
-        })
+        metadata: JSON.stringify({color, icon})
       }
     );
     ClassesActions.uncheckAll()

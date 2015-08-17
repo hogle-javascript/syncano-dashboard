@@ -136,15 +136,15 @@ let iconPickerIcons = [
 
 export default {
 
-  getAllIcons: function() {
+  getAllIcons() {
     return allIcons;
   },
 
-  getIconPickerIcons: function() {
+  getIconPickerIcons() {
     return iconPickerIcons;
   },
 
-  getRandomIconPickerIcon: function() {
+  getRandomIconPickerIcon() {
     let icons = this.getIconPickerIcons();
     let iconsCount = icons.length;
     let randomNumber = Math.floor((Math.random() * iconsCount));
@@ -152,7 +152,7 @@ export default {
     return icons[randomNumber];
   },
 
-  contains: function(string) {
+  contains(string) {
     return allIcons.indexOf(string) !== -1;
   }
 

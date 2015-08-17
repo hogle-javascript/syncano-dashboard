@@ -18,7 +18,7 @@ export default Reflux.createStore({
 
     this.trigger({
       isLoading: false,
-      invoices: invoices
+      invoices
     });
   },
 

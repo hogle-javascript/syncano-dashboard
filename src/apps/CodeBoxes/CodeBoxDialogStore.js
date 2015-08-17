@@ -34,7 +34,7 @@ export default Reflux.createStore({
       return {payload: runtime, text: runtime};
     });
 
-    this.trigger({runtimes: runtimes});
+    this.trigger({runtimes});
   },
 
   onCreateCodeBoxCompleted(resp) {
