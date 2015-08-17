@@ -32,7 +32,6 @@ export default {
   },
 
   remove(ids) {
-
     let promises = ids.map(id => this.Connection.WebHooks.remove(id));
 
     this.D.all(promises)

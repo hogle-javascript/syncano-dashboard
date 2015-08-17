@@ -336,9 +336,7 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-
     if (DataObjectsStore.getCurrentClassObj()) {
-
       return DataObjectsStore.getCurrentClassObj().schema.map(item => {
         if (item.type === 'boolean') {
           return (
@@ -395,7 +393,6 @@ export default React.createClass({
         }
 
         if (item.type === 'file') {
-
           if (this.hasEditMode()) {
             if (this.state[item.name]) {
               let url = this.state[item.name].value;

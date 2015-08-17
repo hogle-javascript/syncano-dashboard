@@ -343,7 +343,6 @@ export default React.createClass({
   },
 
   render() {
-
     let styles = this.getStyles();
     let apiInfo = this.getInfo('api');
     let cbxInfo = this.getInfo('cbx');

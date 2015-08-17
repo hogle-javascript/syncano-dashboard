@@ -187,7 +187,6 @@ export default React.createClass({
 
   renderSchemaFields() {
     return this.state.fields.map(item => {
-
       return (
         <div key={item.fieldName} className='row align-middle vm-1-b'>
           <span className='col-xs-8'>{item.fieldName}</span>

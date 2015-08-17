@@ -224,10 +224,8 @@ export default Reflux.createStore({
         if (date > today) {
           columns[source][date] += medians[source];
         }
-
       });
     });
-
   },
 
   objectToArray(elements) {

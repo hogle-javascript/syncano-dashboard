@@ -44,7 +44,6 @@ export default React.createClass({
   },
 
   renderItem(item) {
-
     return (
       <Common.ColumnList.Item
         key={item.name}

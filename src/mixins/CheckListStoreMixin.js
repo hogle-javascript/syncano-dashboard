@@ -30,7 +30,6 @@ export default {
   },
 
   onUncheckAll() {
-
     this.data.items.forEach(function(item) {
       item.checked = false;
     });
