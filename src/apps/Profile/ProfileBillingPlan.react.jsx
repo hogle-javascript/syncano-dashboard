@@ -130,7 +130,6 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-
     return [{
       dialog: Common.Dialog,
       params: {
@@ -198,7 +197,6 @@ export default Radium(React.createClass({
         </div>
       );
     } else if (plan === 'paid-commitment') {
-
       return (
         <div>
           <div style={styles.mainDesc}>
@@ -226,7 +224,6 @@ export default Radium(React.createClass({
         </div>
       );
     } else if (plan === 'paid-commitment') {
-
       if (Store.isNewSubscription()) {
         const subscription = this.state.subscriptions._items[1];
         const total = Store.getTotalPlanValue(subscription);

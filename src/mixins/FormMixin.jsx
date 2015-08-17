@@ -81,7 +81,6 @@ export default {
     this.setState({
       errors: errors
     }, this._invokeCallback.bind(this, key, callback));
-
   },
 
   handleFormValidation: function(event) {

@@ -109,7 +109,6 @@ export default React.createClass({
   renderNormalLinkItems() {
     let linkItems = this.getLinkItems();
     let items = linkItems.map(function(item, index) {
-
       let icon = (
         <MUI.FontIcon
           className={item.leftIcon.name || null}

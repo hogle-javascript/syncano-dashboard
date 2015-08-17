@@ -62,7 +62,6 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-
     return [
       {
         dialog: Common.Dialog,

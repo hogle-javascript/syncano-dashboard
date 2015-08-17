@@ -32,7 +32,6 @@ export default Radium(React.createClass({
   },
 
   renderExplorerButtonLabel() {
-
     if (this.props.plan === 'builder') {
       return 'Open Plans Explorer';
     } else if (this.props.plan  === 'paid-commitment') {
@@ -44,7 +43,6 @@ export default Radium(React.createClass({
   },
 
   render() {
-
     let styles = this.getStyles();
 
     if (this.props.isNewSubscription) {

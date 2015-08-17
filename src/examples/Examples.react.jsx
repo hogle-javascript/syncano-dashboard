@@ -131,8 +131,6 @@ export default React.createClass({
   },
 
   render() {
-
-
     let dummyClick = function(action) {
       console.log('Click!', action);
     };

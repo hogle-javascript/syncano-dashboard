@@ -44,7 +44,6 @@ export default (options, actions) => {
       RefluxActions[key].listen(action.method);
       _.extend(RefluxActions[key], Context);
     }
-
   });
 
   return RefluxActions;
