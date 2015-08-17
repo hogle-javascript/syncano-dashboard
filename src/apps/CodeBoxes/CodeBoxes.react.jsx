@@ -107,17 +107,17 @@ export default React.createClass({
 
         <Common.Show if={checkedItems > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyCodeboxSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyCodeboxSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete CodeBoxes"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteCodeBoxDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit CodeBox"
               mini={true}
               disabled={checkedItems > 1}
@@ -127,7 +127,7 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to add CodeBox"
             onClick={this.showCodeBoxDialog}
             iconClassName="synicon-plus"/>

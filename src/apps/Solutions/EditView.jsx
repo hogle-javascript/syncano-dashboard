@@ -174,7 +174,7 @@ export default React.createClass({
 
         <Common.Show if={this.isMySolution()}>
           <Common.Fab>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to create Solution"
               onClick={this.handleAddVersion}
               iconClassName="synicon-plus"/>

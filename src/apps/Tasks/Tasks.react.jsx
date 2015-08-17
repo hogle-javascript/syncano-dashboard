@@ -171,17 +171,17 @@ export default React.createClass({
 
         <Common.Show if={checkedSchedules > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyScheduleSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyScheduleSelected ? SchedulesActions.selectAll : SchedulesActions.uncheckAll}
               iconClassName={isAnyScheduleSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Schedules"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeScheduleDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a Schedule"
               mini={true}
               disabled={checkedSchedules > 1}
@@ -192,17 +192,17 @@ export default React.createClass({
 
         <Common.Show if={checkedTriggers > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyTriggerSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
               iconClassName={isAnyTriggerSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Schedules"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeTriggerDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a Trigger"
               mini={true}
               disabled={checkedSchedules > 1}
@@ -212,11 +212,11 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a Schedule"
             onClick={this.showScheduleDialog}
             iconClassName="synicon-camera-timer"/>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a Trigger"
             onClick={this.showTriggerDialog}
             iconClassName="synicon-arrow-up-bold"/>

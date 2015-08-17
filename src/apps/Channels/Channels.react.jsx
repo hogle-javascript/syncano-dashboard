@@ -109,19 +109,19 @@ export default React.createClass({
         <Common.Show if={checkedItems > 0}>
 
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyChannelSelected ? ChannelsActions.selectAll : ChannelsActions.uncheckAll}
               iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}
               />
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Channels"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteChannelDialog')}
               iconClassName="synicon-delete"
               />
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a Channel"
               mini={true}
               disabled={checkedItems > 1}
@@ -132,7 +132,7 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to add a Channel"
             onClick={this.showChannelDialog}
             iconClassName="synicon-plus"

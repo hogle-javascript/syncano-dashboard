@@ -185,17 +185,17 @@ export default React.createClass({
 
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
               iconClassName={isAnyAdminSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Administrator"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit Admin"
               mini={true}
               disabled={checkedAdmins > 1}
@@ -206,17 +206,17 @@ export default React.createClass({
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
               iconClassName={isAnyAdminInvitationSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeInvitationDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to resend invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'resendInvitationDialog')}
@@ -225,7 +225,7 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to invite Admin"
             onClick={this.showAdminDialog}
             iconClassName="synicon-plus"/>

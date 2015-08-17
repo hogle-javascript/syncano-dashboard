@@ -128,17 +128,17 @@ export default React.createClass({
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to unselect all"
               mini={true}
               onClick={this.uncheckAll}
               iconClassName="synicon-checkbox-multiple-marked-outline"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to accept Invitations"
               mini={true}
               onClick={this.showDialog.bind(null, 'acceptInvitationsDialog')}
               iconClassName="synicon-check"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to decline Invitations"
               mini={true}
               onClick={this.showDialog.bind(null, 'declineInvitationsDialog')}

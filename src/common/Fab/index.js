@@ -1,8 +1,8 @@
 import FabList from './FabList.react';
 import FabListItem from './FabListItem.react';
-import FabListItemNew from './FabListItemNew.react';
+import FabListTooltipItem from './FabListTooltipItem.react';
 
 FabList.Item = FabListItem;
-FabList.ItemNew = FabListItemNew;
+FabList.TooltipItem = FabListTooltipItem;
 
 export default FabList;

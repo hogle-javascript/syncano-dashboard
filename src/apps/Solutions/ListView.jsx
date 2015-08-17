@@ -104,7 +104,7 @@ module.exports = React.createClass({
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to create a Solution"
               onClick={this.showSolutionDialog}
               iconClassName="synicon-plus"

@@ -167,17 +167,17 @@ export default React.createClass({
 
         <Common.Show if={checkedDataViews > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
               iconClassName={isAnyDataViewSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete a Data Endpoint"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeDataViewDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a Data Endpoint"
               mini={true}
               disabled={checkedDataViews > 1}
@@ -188,17 +188,17 @@ export default React.createClass({
 
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
               iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete a CodeBox Endpoint"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a CodeBox Endpoint"
               mini={true}
               disabled={checkedDataViews > 1}
@@ -208,11 +208,11 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a Data Endpoint"
             onClick={this.showDataViewDialog}
             iconClassName="synicon-table"/>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a CodeBox Endpoint"
             onClick={this.showWebhookDialog}
             iconClassName="synicon-arrow-up-bold"/>

@@ -190,17 +190,17 @@ export default React.createClass({
 
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
               mini={true}
               onClick={isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
               iconClassName={isAnyUserSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Users"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit a User"
               mini={true}
               disabled={checkedUsers > 1}
@@ -209,11 +209,11 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a User account"
             onClick={this.showUserDialog.bind(null, null)}
             iconClassName="synicon-account-plus"/>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to create a Group"
             onClick={this.showGroupDialog}
             iconClassName="synicon-account-multiple-plus"/>

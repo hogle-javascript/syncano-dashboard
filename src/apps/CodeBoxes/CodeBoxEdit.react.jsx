@@ -108,12 +108,12 @@ export default React.createClass({
     return (
       <Container style={styles.container}>
         <Common.Fab position="top">
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             tooltip="Click here to execute CodeBox"
             mini={true}
             onClick={this.handleRun}

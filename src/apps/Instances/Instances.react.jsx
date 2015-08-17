@@ -152,23 +152,23 @@ export default Radium(React.createClass({
 
         <Common.Show if={checkedInstances > 0}>
           <Common.Fab position="top">
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip={isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to delete Instances"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to edit Instance"
               mini={true}
               disabled={checkedInstances > 1}
               onClick={this.showInstanceEditDialog}
               iconClassName="synicon-pencil"/>
-            <Common.Fab.ItemNew
+            <Common.Fab.TooltipItem
               tooltip="Click here to customize Instances"
               secondary={true}
               mini={true}
@@ -179,7 +179,7 @@ export default Radium(React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.ItemNew
+          <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
             onClick={this.showInstanceDialog}
