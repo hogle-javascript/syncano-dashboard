@@ -91,7 +91,6 @@
     // "no-invalid-this": 2,
 
     // "init-declarations": 2,
-    // "react/wrap-multilines": [2, "never"],
     // "no-useless-call": 2,
     // "space-before-blocks": 2,
     // "consistent-return": 2,
@@ -163,7 +162,6 @@
       "markers": ["=", "!"]
     }],
     "init-declarations": 1,
-    "react/wrap-multilines": [1, "never"],
     "no-useless-call": 1,
     "space-before-blocks": 1,
     "consistent-return": 1,
@@ -346,6 +344,7 @@
     "react/require-extension": 1,
     "react/self-closing-comp": 2,
     "react/jsx-quotes" : 1,
-    "react/prop-types" : 1
+    "react/prop-types" : 1,
+    "react/wrap-multilines": [2, "never"]
   }
 }
