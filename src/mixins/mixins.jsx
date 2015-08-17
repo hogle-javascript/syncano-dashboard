@@ -1,4 +1,4 @@
-module.exports = {}
+module.exports = {};
 
 module.exports.toggleMenuMixin = {
 
@@ -10,6 +10,7 @@ module.exports.toggleMenuMixin = {
     e.stopPropagation();
 
     let state = {};
+
     state[name] = !this.state[name];
 
     this.setState(state);
@@ -17,6 +18,7 @@ module.exports.toggleMenuMixin = {
 
   clearMenuVisability() {
     let newState = {};
+
     this.state.toggleArgs.map(function(item) {
       newState[item] = false;
     });

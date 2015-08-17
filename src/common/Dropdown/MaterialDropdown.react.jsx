@@ -1,24 +1,19 @@
-let React = require("react");
-let classNames = require("classnames");
-let OutsideClickHandler = require("react-outsideclickhandler");
-let mui = require("material-ui");
+import React from 'react';
+import classNames from 'classnames';
+import OutsideClickHandler from 'react-outsideclickhandler';
+import MUI from 'material-ui';
 
-let ProfileActions = require("../../apps/Profile/ProfileActions");
-let List = mui.List;
-let ListItem = mui.ListItem;
-let ListDivider = mui.ListDivider;
-let Avatar = mui.Avatar;
-let FontIcon = mui.FontIcon;
-let DropDownArrow = require('material-ui/lib/svg-icons/navigation/arrow-drop-down');
+import ProfileActions from '../../apps/Profile/ProfileActions';
+import DropDownArrow from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
 
-let MaterialDropdownItem = require("./MaterialDropdownItem.react");
-let DropdownNotifiItem = require("./DropdownNotifiItem.react");
+import MaterialDropdownItem from './MaterialDropdownItem.react';
+import DropdownNotifiItem from './DropdownNotifiItem.react';
 
-require("./Dropdown.sass");
+require('./Dropdown.sass');
 
-module.exports = React.createClass({
+export default React.createClass({
 
-  displayName: "MaterialDropdown",
+  displayName: 'MaterialDropdown',
 
   propTypes: {
     type: React.PropTypes.string,
@@ -34,20 +29,20 @@ module.exports = React.createClass({
     isLoading: React.PropTypes.bool
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
-      icon: "dots-vertical",
+      icon: 'dots-vertical',
       iconStyle: {
-        width: "18px",
-        height: "18px",
-        fill: "#FFF"
+        width: '18px',
+        height: '18px',
+        fill: '#FFF'
       },
-      type: "normal-link",
+      type: 'normal-link',
       clickable: true
     }
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isOpen: false
     }
@@ -57,7 +52,7 @@ module.exports = React.createClass({
     this.setState(nextProps);
   },
 
-  toggleOpenClose: function() {
+  toggleOpenClose() {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
     }, function() {
@@ -67,48 +62,57 @@ module.exports = React.createClass({
     });
   },
 
-  close: function() {
-    this.setState({"isOpen": false});
+  close() {
+    this.setState({isOpen: false});
   },
 
-  renderItems: function() {
-    if (this.props.type === "notification") {
-      return <DropdownNotifiItem
+  renderItems() {
+    if (this.props.type === 'notification') {
+      return (
+        <DropdownNotifiItem
+          items={this.props.items}
+          isLoading={this.props.isLoading}/>
+      )
+    }
+    return (
+      <MaterialDropdownItem
         items={this.props.items}
-        isLoading={this.props.isLoading}/>
-    }
-    return <MaterialDropdownItem
-      items={this.props.items}
-      headerContent={this.props.headerContent}/>
+        headerContent={this.props.headerContent}/>
+    )
   },
 
-  renderIcon: function() {
+  renderIcon() {
     let notificationCountIcon = null;
-    if (this.props.type === "notification" && this.props.items.length > 0) {
-      let synIconName = this.props.items.length < 10 ? this.props.items.length : "9-plus";
-      notificationCountIcon = <FontIcon
-        className={"synicon-numeric-" + synIconName + "-box" }
-        style={{
-          padding  : "0 4px",
-          color    : "#ff3d00",
-          position : "absolute",
-          top      : "-14px",
-          right    : "-14px"
-        }}/>
+
+    if (this.props.type === 'notification' && this.props.items.length > 0) {
+      let synIconName = this.props.items.length < 10 ? this.props.items.length : '9-plus';
+
+      notificationCountIcon = (
+        <MUI.FontIcon
+          className={`synicon-numeric-${synIconName}-box`}
+          style={{
+            padding: '0 4px',
+            color: '#ff3d00',
+            position: 'absolute',
+            top: '-14px',
+            right: '-14px'
+          }}/>
+      );
     }
   },
 
-  render: function() {
-
+  render() {
     let cssClasses = classNames({
-      "dropdown-menu": true,
-      "dropdown-menu-visible": this.state.isOpen
+      'dropdown-menu': true,
+      'dropdown-menu-visible': this.state.isOpen
     });
 
     return (
       <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
-          <div className="dropdown-button clickable" onClick={this.toggleOpenClose}>
+          <div
+            className="dropdown-button clickable"
+            onClick={this.toggleOpenClose}>
             {this.props.children}
             {this.renderIcon()}
           </div>
@@ -121,5 +125,4 @@ module.exports = React.createClass({
       </OutsideClickHandler>
     );
   }
-
 });

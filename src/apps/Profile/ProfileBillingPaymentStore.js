@@ -38,6 +38,7 @@ export default Reflux.createStore({
 
   onUpdateBillingCardCompleted(payload) {
     let state = this.getInitialState();
+
     state.card = payload;
     state.isLoading = false;
     this.trigger(state);

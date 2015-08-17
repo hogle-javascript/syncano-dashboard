@@ -74,6 +74,7 @@ export default Reflux.createStore({
 
   getInstanceById(name) {
     let instance = null;
+
     this.data.items.some(item => {
       if (item.name.toString() === name.toString()) {
         instance = item;
@@ -85,6 +86,7 @@ export default Reflux.createStore({
 
   isCheckedInstanceShared() {
     let checkedItems = this.getCheckedItems();
+
     if (checkedItems) {
       return !this.amIOwner(checkedItems[0]);
     }

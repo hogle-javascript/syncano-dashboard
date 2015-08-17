@@ -73,6 +73,7 @@ export default Reflux.createStore({
             title: input => {
               let title = moment(input).format('MMM DD');
               let date = moment(input).format(this.format);
+
               if (date > today) {
                 title = `Prediction for ${title}`;
               }
@@ -137,6 +138,7 @@ export default Reflux.createStore({
       }
 
       let amount = pricing[_usage.source].overage * _usage.value;
+
       columns[_usage.source][_usage.date] = amount;
       usageAmount[_usage.source] += amount;
     });
@@ -152,6 +154,7 @@ export default Reflux.createStore({
 
     state.covered = _.reduce(pricing, (result, value, key) => {
       let amount = value.included * value.overage;
+
       result.amount += amount;
       result[key] = _.extend({}, value, {amount: amount});
       return result;
@@ -230,8 +233,10 @@ export default Reflux.createStore({
   objectToArray(elements) {
     _.forEach(elements, (val, elementKey) => {
       let keys = _.keys(val).sort();
+
       elements[elementKey] = _.reduce(keys, (result, key, index) => {
         let prev = (index > 0) ? result[index - 1] : 0;
+
         result.push(val[key] + prev);
         return result;
       }, []);
@@ -250,6 +255,7 @@ export default Reflux.createStore({
 
   getDate() {
     let today = new Date();
+
     today.year = today.getFullYear();
     today.month = today.getMonth();
     return today;
@@ -270,16 +276,19 @@ export default Reflux.createStore({
 
   getNumberOfDays() {
     let {year, month} = this.getDate();
+
     return new Date(year, month + 1, 0).getDate();
   },
 
   getStartDate() {
     let {year, month} = this.getDate();
+
     return moment(new Date(year, month, 1)).format(this.format);
   },
 
   getEndDate() {
     let {year, month} = this.getDate();
+
     return moment(new Date(year, month, this.getNumberOfDays())).format(this.format);
   }
 

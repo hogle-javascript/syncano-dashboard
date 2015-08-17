@@ -161,6 +161,7 @@ export default Reflux.createStore({
 
   getColumn(columnId) {
     let column = null;
+
     this.data.columns.some(columnObj => {
       if (column.id.toString() === columnId.toString()) {
         column = columnObj;
@@ -225,6 +226,7 @@ export default Reflux.createStore({
 
   updateLocalStorage() {
     let className = this.getCurrentClassName();
+
     localStorage.setItem('dataobjects_checkedcolumns_' + className, JSON.stringify(this.getCheckedColumnsIDs()));
   },
 
@@ -245,6 +247,7 @@ export default Reflux.createStore({
 
   getCheckedColumnsIDs() {
     let columns = [];
+
     this.data.columns.map(column => {
       if (column.checked) {
         columns.push(column.id);

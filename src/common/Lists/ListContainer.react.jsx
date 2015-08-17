@@ -17,6 +17,7 @@ export default React.createClass({
     const styles = {
       margin: '65px auto 65px 0'
     };
+
     return this.mergeStyles(styles, this.props.style);
   },
 

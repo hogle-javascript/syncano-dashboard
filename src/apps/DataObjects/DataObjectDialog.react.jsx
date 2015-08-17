@@ -34,6 +34,7 @@ export default React.createClass({
 
   validatorConstraints() {
     let validateObj = {};
+
     DataObjectsStore.getCurrentClassObj().schema.map(item => {
       if (item.type === 'integer') {
         validateObj[item.name] = {numericality: true}
@@ -76,16 +77,19 @@ export default React.createClass({
               time.getMinutes(),
               0
             );
+
             params[item.name] = dateTime.toISOString();
           }
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
+
           if (fieldValue) {
             params[item.name] = fieldValue;
           }
         }
       } else {
         let delFile = true;
+
         files.some(file => {
           if (file.name === item.name) {
             delFile = false;
@@ -108,6 +112,7 @@ export default React.createClass({
     DataObjectsStore.getCurrentClassObj().schema.map(item => {
       if (item.type === 'file') {
         let file = this.state['file-' + item.name];
+
         if (file) {
           fileFields.push({
             name: item.name,
@@ -262,6 +267,7 @@ export default React.createClass({
 
   onDrop(fieldName, files) {
     let state = {};
+
     state[fieldName] = files[0];
     this.setState(state);
   },
@@ -273,6 +279,7 @@ export default React.createClass({
 
   handleRemoveFile(name) {
     let state = {};
+
     state[name] = null;
     this.setState(state);
   },
@@ -284,6 +291,7 @@ export default React.createClass({
     });
 
     let emptyTime = new Date();
+
     emptyTime.setHours(0);
     emptyTime.setMinutes(0);
 
@@ -391,6 +399,7 @@ export default React.createClass({
           if (this.hasEditMode()) {
             if (this.state[item.name]) {
               let url = this.state[item.name].value;
+
               return (
                 <div key={'file-' + item.name}>
                   <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>

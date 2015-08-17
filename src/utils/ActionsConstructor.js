@@ -30,6 +30,7 @@ export default (options, actions) => {
   }
 
   let RefluxActions = Reflux.createActions(actions);
+
   _.forEach(actions, (action, key) => {
     if (_.isString(action.method)) {
       if (!_.has(Libraries, action.method)) {

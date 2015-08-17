@@ -47,7 +47,6 @@
     // "padded-blocks": [2, "never"],
     // "vars-on-top": 2,
     // "quote-props": 2,
-    // "newline-after-var": 2,
     // "eol-last": 2,
     // "quote-props": [2, "as-needed"],
     // "react/sort-comp": [2, {
@@ -119,7 +118,6 @@
     "padded-blocks": [1, "never"],
     "vars-on-top": 1,
     "quote-props": 1,
-    "newline-after-var": 1,
     "eol-last": 1,
     "quote-props": [1, "as-needed"],
     "react/sort-comp": [1, {
@@ -284,6 +282,7 @@
     "max-nested-callbacks": 2,
     "new-cap": [2, {"newIsCap": true, "capIsNew": false}],
     "new-parens": 2,
+    "newline-after-var": 2,
     "no-array-constructor": 2,
     "no-continue": 2,
     "no-lonely-if": 2,

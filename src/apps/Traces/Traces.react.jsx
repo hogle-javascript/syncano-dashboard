@@ -85,6 +85,7 @@ export default Radium(React.createClass({
 
   handleBackClick() {
     const config = this.getConfig();
+
     this.transitionTo(config.route, this.getParams());
   },
 

@@ -18,6 +18,7 @@ export default (options, props) => {
 
     isLoading() {
       let value = _.get(this, options.attr, false);
+
       return _.indexOf(options.show, value) > -1;
     },
 

@@ -64,6 +64,7 @@ export default Reflux.createStore({
     console.debug('GroupsStore::onSetActiveGroup');
 
     let isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
+
     this.data.activeGroup = isCurrentActiveGroup ? null : group;
     this.trigger(this.data);
   },

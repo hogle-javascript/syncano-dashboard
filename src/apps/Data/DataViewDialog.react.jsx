@@ -80,6 +80,7 @@ export default React.createClass({
     };
 
     let fields = '';
+
     if (fieldsType === 'showFields') {
       fields = genList(this.state.fields, fieldName, value);
       this.setState({fields: fields});

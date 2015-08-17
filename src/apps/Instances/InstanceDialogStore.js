@@ -54,6 +54,7 @@ export default Reflux.createStore({
     let rnd = Math.floor(Math.random() * 9000) + 1000;
     let noun = nouns[Math.floor(Math.random() * nouns.length)];
     let adj = adjs[Math.floor(Math.random() * adjs.length)];
+
     return adj + '-' + noun + '-' + rnd;
   },
 

@@ -4,7 +4,7 @@ import Router from 'react-router';
 // Stores and Action
 import CodeBoxesActions from '../apps/CodeBoxes/CodeBoxesActions';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Instance',
 

@@ -81,6 +81,7 @@ export default React.createClass({
     }
 
     let items = this.state.items.map(item => this.renderItem(item));
+
     items.reverse();
     return items;
   },

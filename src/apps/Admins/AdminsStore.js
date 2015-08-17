@@ -51,8 +51,9 @@ export default Reflux.createStore({
 
   onSelectAllAdmins() {
     console.debug('AdminsStore::onSelectAllAdmins');
-    this.data.items.forEach(item => {
+    this.data.items.forEach((item) => {
       let instanceOwnerId = SessionStore.getInstance().owner.id;
+
       if (item.id !== instanceOwnerId) {
         item.checked = true;
       }

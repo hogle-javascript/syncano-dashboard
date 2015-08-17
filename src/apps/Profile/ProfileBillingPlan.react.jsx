@@ -345,6 +345,7 @@ export default Radium(React.createClass({
     const profile = this.state.profile;
 
     let coveredText = '';
+
     if (plan === 'builder' || plan === 'free') {
       coveredText = 'Covered by Syncano';
     } else if (plan === 'paid-commitment') {
@@ -486,7 +487,7 @@ export default Radium(React.createClass({
               </div>
             </div>
           </div>
-
+w
           <div className="row vp-2-b">
             <div
               className="col-flex-1 vp-1-b"

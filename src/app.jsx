@@ -13,7 +13,8 @@ import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
 
-let container  = document.getElementById('app');
+let container = document.getElementById('app');
+
 tapPlugin();
 
 Router.run(routes, function(Root, state) {

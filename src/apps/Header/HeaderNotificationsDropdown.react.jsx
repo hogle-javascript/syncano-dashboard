@@ -107,6 +107,7 @@ export default Radium(React.createClass({
           color={MUI.Styles.Colors.lightBlueA700}
           />
       );
+
       return (
         <MenuItem
           key="empty"
@@ -195,6 +196,7 @@ export default Radium(React.createClass({
 
     if (notifications.length > 0) {
       let synIconName = notifications.length < 10 ? notifications.length : '9-plus';
+
       notificationCountIcon = (
         <MUI.FontIcon
           className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
@@ -215,6 +217,7 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
+
     return (
       <div>
         <MUI.IconMenu

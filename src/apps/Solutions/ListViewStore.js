@@ -78,6 +78,7 @@ export default Reflux.createStore({
 
   onToggleTagSelection(tag) {
     let i = this.data.selectedTags.indexOf(tag);
+
     if (i === -1) {
       this.data.selectedTags.push(tag);
     } else {

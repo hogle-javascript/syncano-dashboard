@@ -77,6 +77,7 @@ export default React.createClass({
   renderCustomFormNotifications() {
     let nonFormFields = ['classes'];
     let messages = [];
+
     Object.keys(this.state.errors).map((fieldName) => {
       if (nonFormFields.indexOf(fieldName) > -1) {
         this.state.errors[fieldName].map(error => {

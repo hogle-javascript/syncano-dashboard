@@ -107,6 +107,7 @@ export default Radium(React.createClass({
       triggers: 'id',
       schedules: 'id'
     };
+
     return map[section];
   },
 
@@ -116,10 +117,12 @@ export default Radium(React.createClass({
 
     Object.keys(spec).map(section => {
       let pkName = this.pkMap(section);
+
       formatedSpec[section] = [];
       Object.keys(spec[section]).map(item => {
         if (spec[section][item] === true) {
           let obj = {};
+
           if (pkName === 'id') {
             item = parseInt(item, 10);
           }
@@ -151,8 +154,8 @@ export default Radium(React.createClass({
 
   handleOnCheck(name, type, event, status) {
     let exportSpec = this.state.exportSpec;
-    exportSpec[type][name] = status;
 
+    exportSpec[type][name] = status;
     this.setState({exportSpec: exportSpec});
   },
 

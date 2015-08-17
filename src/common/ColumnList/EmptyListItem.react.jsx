@@ -33,6 +33,7 @@ export default Radium(React.createClass({
         transform: 'translateY(-50%)'
       }
     };
+
     return this.mergeStyles(styles, this.props.style);
   },
 

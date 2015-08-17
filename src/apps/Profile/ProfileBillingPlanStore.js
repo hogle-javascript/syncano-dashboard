@@ -104,6 +104,7 @@ export default Reflux.createStore({
     }
 
     let pricing = null;
+
     if (!subscription || subscription === 'default') {
       pricing = this.data.profile.subscription.pricing;
     } else {
@@ -125,6 +126,7 @@ export default Reflux.createStore({
   getCovered() {
     return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
       let amount = value.included * value.overage;
+
       result.amount += amount;
       result[key] = _.extend({}, value, {amount: amount});
       return result;
@@ -142,6 +144,7 @@ export default Reflux.createStore({
 
   getTotalPlanValue(subscription) {
     let commitment = null;
+
     if (!subscription || subscription === 'default') {
       commitment = this.data.profile.subscription.commitment;
     } else {

@@ -53,6 +53,7 @@ export default React.createClass({
   handleRun() {
     let payloadErrors = this.refs.tracePanel.state.errors;
     let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
+
     if (payloadIsValid) {
       Actions.runCodeBox({
         id: this.state.currentCodeBox.id,
@@ -68,6 +69,7 @@ export default React.createClass({
 
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
+
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
     this.setSnackbarNotification({
       message: 'Saving...'
@@ -105,6 +107,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
+
     return (
       <Container style={styles.container}>
         <Common.Fab position="top">

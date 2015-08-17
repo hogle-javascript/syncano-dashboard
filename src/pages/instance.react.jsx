@@ -23,6 +23,7 @@ export default React.createClass({
   componentWillMount() {
     console.debug('Instance::componentWillMount');
     const params = this.getParams();
+
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
     }

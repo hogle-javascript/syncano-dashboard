@@ -1,18 +1,9 @@
-let React = require('react');
-let classNames = require('classnames');
+import React from 'react';
 
-let mui = require('material-ui');
-let List = mui.List;
-let ListItem = mui.ListItem;
-let ListDivider = mui.ListDivider;
-let Avatar = mui.Avatar;
-let FontIcon = mui.FontIcon;
-let FlatButton = mui.FlatButton;
+import MUI from 'material-ui';
+import Loading from '../../common/Loading';
 
-let Loading = require('../../common/Loading/Loading.react');
-
-
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'DropdownNotifiItem',
 
@@ -43,27 +34,31 @@ module.exports = React.createClass({
         style: {}
       }
     };
-    let icon = <FontIcon
-      className={emptyItem.leftIcon.name}
-      color={emptyItem.leftIcon.color}/>;
+    let icon = (
+      <MUI.FontIcon
+        className={emptyItem.leftIcon.name}
+        color={emptyItem.leftIcon.color}/>
+    );
 
-    return <List
-      subheader={emptyItem.subheader}
-      subheaderStyle={emptyItem.subheaderStyle}>
-      <ListItem
-        key={emptyItem.name}
-        disableTouchTap={true}
-        leftIcon={icon}>
-               <span>
-               {emptyItem.content.text}
-               </span>
-      </ListItem>
-    </List>
+    return (
+      <MUI.List
+        subheader={emptyItem.subheader}
+        subheaderStyle={emptyItem.subheaderStyle}>
+        <MUI.ListItem
+          key={emptyItem.name}
+          disableTouchTap={true}
+          leftIcon={icon}>
+          <span>
+            {emptyItem.content.text}
+          </span>
+        </MUI.ListItem>
+      </MUI.List>
+    )
   },
 
-  getInvitationItems: function() {
+  getInvitationItems() {
     let invitationItems = this.props.items.filter(function(item, index) {
-      return item.type === "invitation";
+      return item.type === 'invitation';
     });
 
     return invitationItems;
@@ -72,36 +67,38 @@ module.exports = React.createClass({
   renderInvitationItems() {
     let invitationItems = this.getInvitationItems();
     let items = invitationItems.map(function(item) {
+      let icon = (
+        <MUI.FontIcon
+          className={item.leftIcon.name || null}
+          color={item.leftIcon.color}/>
+      );
 
-        let icon = <FontIcon
-            className={item.leftIcon.name || null}
-            color={item.leftIcon.color}
-            />;
-        let buttons = <div>
-            <FlatButton
-              onClick={item.handleAccept}
-              label={item.buttonsText[0]}
-              primary={true}
-              />
-            <FlatButton
-              onClick={item.handleDecline}
-              label={item.buttonsText[1]}
-              />
-          </div>;
-        return (
-          <ListItem
-            leftIcon={icon}
-            disabled={true}
-            >
-            {item.content.text}
-            {buttons}
-          </ListItem>
-        )
-      });
+      let buttons = (
+        <div>
+          <MUI.FlatButton
+            onClick={item.handleAccept}
+            label={item.buttonsText[0]}
+            primary={true}/>
+          <MUI.FlatButton
+            onClick={item.handleDecline}
+            label={item.buttonsText[1]}/>
+        </div>
+      );
+
+      return (
+        <MUI.ListItem
+          leftIcon={icon}
+          disabled={true}>
+          {item.content.text}
+          {buttons}
+        </MUI.ListItem>
+      )
+    });
+
     return items;
   },
 
-  getLinkItems: function() {
+  getLinkItems() {
     let linkItems = this.props.items.filter(function(item) {
       return item.type === "normal-link";
     });
@@ -113,26 +110,27 @@ module.exports = React.createClass({
     let linkItems = this.getLinkItems();
     let items = linkItems.map(function(item, index) {
 
-        let icon = <FontIcon
+      let icon = (
+        <MUI.FontIcon
           className={item.leftIcon.name || null}
-          color={item.leftIcon.color}
-          />;
+          color={item.leftIcon.color}/>
+      );
 
-        return (
-          <ListItem
-            disabled={true}
-            key={item.name + index}
-            leftIcon={icon}
-            secondaryText={item.content.secondaryText}
-            secondaryTextLines={item.content.secondaryTextLines || 1}
-            >
-            <span
-              style={item.content.style}>
-              {item.content.text}
-            </span>
-          </ListItem>
-        )
-      });
+      return (
+        <MUI.ListItem
+          disabled={true}
+          key={item.name + index}
+          leftIcon={icon}
+          secondaryText={item.content.secondaryText}
+          secondaryTextLines={item.content.secondaryTextLines || 1}>
+          <span
+            style={item.content.style}>
+            {item.content.text}
+          </span>
+        </MUI.ListItem>
+      )
+    });
+
     return items
   },
 
@@ -158,5 +156,4 @@ module.exports = React.createClass({
       </Loading>
     );
   }
-
 });

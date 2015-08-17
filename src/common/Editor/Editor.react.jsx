@@ -10,7 +10,7 @@ require('brace/mode/golang');
 require('brace/theme/tomorrow');
 
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: {
     mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang']),
     theme: React.PropTypes.string,
@@ -47,6 +47,7 @@ module.exports = React.createClass({
   },
   onChange: function() {
     let value = this.editor.getValue();
+
     if (this.props.onChange) {
       this.props.onChange(value);
     }
@@ -98,6 +99,7 @@ module.exports = React.createClass({
       width: this.props.width,
       height: this.props.height
     };
+
     return (<div id={this.props.name} onChange={this.onChange} style={divStyle}></div>);
   }
 });

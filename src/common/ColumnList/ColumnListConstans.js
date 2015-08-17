@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   DEFAULT_BACKGROUND: 'green',
   DEFAULT_ICON: 'folder',
   DEFAULT_CLASSNAME: {

@@ -87,6 +87,7 @@ export default Radium(React.createClass({
 
   isNoVersions() {
     let item = this.props.data;
+
     return (item && !item.versions.devel && !item.versions.stable);
   },
 

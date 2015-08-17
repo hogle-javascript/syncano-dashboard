@@ -121,6 +121,7 @@ export default {
 
     if (key === undefined) {
       let flattenErrors = [];
+
       for (let error in errors) {
         flattenErrors.push.apply(flattenErrors, errors[error]);
       }
@@ -138,6 +139,7 @@ export default {
 
   isInputDisabled(inputName) {
     let hasProtectedFromEditProperty = this.state.protectedFromEdit;
+
     if (hasProtectedFromEditProperty && hasProtectedFromEditProperty.fields) {
       return hasProtectedFromEditProperty.fields.indexOf(inputName) > -1;
     }
