@@ -92,6 +92,7 @@ export default React.createClass({
     return (
       <div>
         <MUI.LeftNav
+          className="left-nav"
           ref="leftNav"
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
           selectedIndex={this.state.selectedIndex || 0}
