@@ -82,7 +82,7 @@ export default Radium(React.createClass({
   },
 
   handleTagClick(tag) {
-    this.props.onTagClick(solutionId);
+    this.props.onTagClick(tag);
   },
 
   isNoVersions() {
