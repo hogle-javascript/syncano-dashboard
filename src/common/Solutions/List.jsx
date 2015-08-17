@@ -39,6 +39,7 @@ export default React.createClass({
 
   getListItems() {
     let styles = this.getStyles();
+
     if (this.props.items.length < 1) {
       return [
         <div style={styles.noItemsContainer}>

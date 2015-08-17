@@ -81,11 +81,13 @@ export default React.createClass({
   isMySolution() {
     let user = SessionStore.getUser();
     let author = this.state.item.author;
+
     return (user && author && user.id === author.id);
   },
 
   isNoVersions() {
     let item = this.state.item;
+
     return (item && item.versions && !item.versions.devel && !item.versions.stable);
   },
 

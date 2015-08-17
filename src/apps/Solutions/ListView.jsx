@@ -22,7 +22,7 @@ import CreateDialog from './CreateDialog';
 import InstallDialogActions from './InstallDialogActions';
 import InstallDialog from './InstallDialog';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Solutions',
 
@@ -46,6 +46,7 @@ module.exports = React.createClass({
   isFriend() {
     if (SessionStore.getUser()) {
       let email = SessionStore.getUser({}).email;
+
       return (_.endsWith(email, 'syncano.com') || _.endsWith(email, 'chimeraprime.com'));
     }
   },

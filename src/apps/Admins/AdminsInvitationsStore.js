@@ -58,8 +58,8 @@ export default Reflux.createStore({
     console.debug('AdminsInvitationsStore::getPendingInvitations');
 
     let isInvitationPending = (element) => element.state === 'new';
-
     let pendingInvitations = this.data.items.filter(isInvitationPending);
+
     return pendingInvitations;
   },
 

@@ -8,6 +8,7 @@ export default {
     let checkedFilter = function(item) {
       return item.checked === true;
     };
+
     return this.data.items.filter(checkedFilter).length;
   },
 
@@ -46,6 +47,7 @@ export default {
   getCheckedItem() {
     // Looking for the first 'checked' item
     let checkedItem = null;
+
     if (this.data.items === null) {
       return checkedItem;
     }
@@ -67,6 +69,6 @@ export default {
     return this.data.items.filter(function(item) {
       return item.checked;
     });
-  },
+  }
 
 };

@@ -72,7 +72,6 @@ export default React.createClass({
     let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
-
       let location = window.location;
       let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
@@ -102,9 +101,12 @@ export default React.createClass({
 
   renderItems() {
     let items = this.props.items.map((item, index) => {
-      let icon = <MUI.FontIcon
-        className={item.leftIcon.name || null}
-        style={item.leftIcon.style}/>;
+      let icon = (
+        <MUI.FontIcon
+          className={item.leftIcon.name || null}
+          style={item.leftIcon.style}/>
+      );
+
       return (
         <MUI.List
           key={item.name + index}
@@ -122,7 +124,8 @@ export default React.createClass({
         </MUI.List>
       )
     });
-    return items
+
+    return items;
   },
 
   render() {

@@ -16,6 +16,7 @@ export default {
         .catch(this.failure);
     } else {
       let promises = items.map(item => this.Connection.AccountInvitations.accept(item.key));
+
       this.D.all(promises)
         .success(this.completed)
         .error(this.failure);

@@ -68,9 +68,7 @@ export default Reflux.createStore({
   },
 
   getEditorMode(codeBox) {
-    // jscs:disable
     return this.langMap[codeBox.runtime_name];
-    // jscs:enable
   },
 
   getRuntimeColorIcon(runtime) {
@@ -92,6 +90,7 @@ export default Reflux.createStore({
     }
 
     let currentItem = null;
+
     this.data.items.some(item => {
       if (item.id.toString() === this.data.currentCodeBoxId.toString()) {
         currentItem = item;
@@ -103,6 +102,7 @@ export default Reflux.createStore({
 
   getCodeBoxById(id) {
     let codeBox = null;
+
     this.data.items.some(item => {
       if (item.id.toString() === id.toString()) {
         codeBox = item;
@@ -114,6 +114,7 @@ export default Reflux.createStore({
 
   getCodeBoxIndex(id) {
     let codeBoxIndex = null;
+
     this.data.items.some((item, index) => {
       if (item.id.toString() === id.toString()) {
         codeBoxIndex = index;
@@ -175,6 +176,7 @@ export default Reflux.createStore({
     console.debug('CodeBoxesStore::onFetchCodeBoxTrace');
     if (trace.status === 'pending') {
       let CodeBoxId = this.data.currentCodeBoxId;
+
       setTimeout(() => {
         Actions.fetchCodeBoxTrace(CodeBoxId, trace.id)
       }, 300);

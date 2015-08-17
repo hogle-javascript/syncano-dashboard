@@ -27,6 +27,7 @@ export default React.createClass({
 
   render() {
     let scheduleId = this.getParams().scheduleId;
+
     return (
       <Traces
         objectId={scheduleId}

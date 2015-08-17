@@ -15,6 +15,7 @@ export default React.createClass({
     let styles = {
       marginBottom: 50
     };
+
     return this.mergeStyles(styles, this.props.style);
   },
 
@@ -24,8 +25,7 @@ export default React.createClass({
     return (
       <div
         id={this.props.id}
-        style={styles}
-        >
+        style={styles}>
         {this.props.children}
       </div>
     );

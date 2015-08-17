@@ -254,6 +254,7 @@ export default React.createClass({
 
   onSliderChange(type, event, value) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },
@@ -286,6 +287,7 @@ export default React.createClass({
 
   handleSliderLabelsClick(value, type) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },

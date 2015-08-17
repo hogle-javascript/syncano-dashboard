@@ -40,6 +40,7 @@ export default Radium(React.createClass({
         bottom: 0
       }
     };
+
     if (this.props.show) {
       return [styles.base,
         this.props.position === 'top' && styles.top,

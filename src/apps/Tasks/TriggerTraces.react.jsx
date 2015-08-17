@@ -27,6 +27,7 @@ export default React.createClass({
 
   render() {
     let triggerId = this.getParams().triggerId;
+
     return (
       <Traces
         objectId={triggerId}

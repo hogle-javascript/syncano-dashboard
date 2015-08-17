@@ -20,6 +20,7 @@ export default React.createClass({
     let styles = {
       marginBottom: 50
     };
+
     return this.mergeStyles(styles, this.props.style);
   },
 

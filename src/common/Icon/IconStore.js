@@ -134,7 +134,7 @@ let iconPickerIcons = [
   'briefcase'
 ];
 
-let IconStore = {
+export default {
 
   getAllIcons: function() {
     return allIcons;
@@ -157,5 +157,3 @@ let IconStore = {
   }
 
 };
-
-module.exports = IconStore;

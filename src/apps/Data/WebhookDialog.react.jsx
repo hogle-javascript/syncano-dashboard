@@ -59,6 +59,7 @@ export default React.createClass({
 
   handleToogle(event, status) {
     let state = {};
+
     state[event.target.name] = status;
     this.setState(state);
   },
