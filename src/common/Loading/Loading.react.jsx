@@ -1,10 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 import Radium from 'radium';
-import mui from 'material-ui';
-
-let CircularProgress = mui.CircularProgress;
-let LinearProgress = mui.LinearProgress;
+import MUI from 'material-ui';
 
 export default Radium(React.createClass({
 
@@ -55,12 +51,14 @@ export default Radium(React.createClass({
     }
 
     if (this.props.type === 'linear') {
-      return <LinearProgress mode='indeterminate'/>;
+      return <MUI.LinearProgress mode='indeterminate'/>;
     }
 
-    return <CircularProgress
-      mode='indeterminate'
-      size={this.props.size}/>;
+    return (
+      <MUI.CircularProgress
+        mode='indeterminate'
+        size={this.props.size}/>
+    )
   },
 
   render() {
@@ -72,5 +70,4 @@ export default Radium(React.createClass({
       </div>
     )
   }
-
 }));

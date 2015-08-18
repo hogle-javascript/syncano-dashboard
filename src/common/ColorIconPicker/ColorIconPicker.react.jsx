@@ -102,9 +102,11 @@ export default Radium(React.createClass({
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon = <MUI.FontIcon
-        className={`synicon-${this.state.selectedIcon}`}
-        style={{color: 'white'}}/>;
+      icon = (
+        <MUI.FontIcon
+          className={`synicon-${this.state.selectedIcon}`}
+          style={{color: 'white'}}/>
+      );
     }
 
     return (

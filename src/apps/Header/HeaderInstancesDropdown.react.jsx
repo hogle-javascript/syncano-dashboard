@@ -137,12 +137,14 @@ export default Radium(React.createClass({
       };
       let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
-      let text = <div style={styles.dropdownLabelContainer}>
+      let text = (
+        <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
             style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
           {item.name}
-        </div>;
+        </div>
+      );
 
       return {
         payload: item.name,
