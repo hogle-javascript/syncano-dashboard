@@ -68,12 +68,12 @@ export default React.createClass({
     console.info('DataViewDialog::handleToggle', arguments);
 
     let genList = (list, name, val) => {
-      let arr = list.replace(/ /g, '').split(',').filter(listItem => listItem);
+      let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
 
       if (val) {
         arr.push(name);
       } else {
-        arr = arr.filter(arrItem => arrItem !== name);
+        arr = arr.filter((arrItem) => arrItem !== name);
       }
 
       return arr.join(',');
@@ -109,7 +109,7 @@ export default React.createClass({
     ];
 
     if (this.state.class) {
-      return fields.concat(ClassesStore.getClassFields(this.state.class).map(field => {
+      return fields.concat(ClassesStore.getClassFields(this.state.class).map((field) => {
         return (
           <div className='row'>
             <div className='col-flex-1'>

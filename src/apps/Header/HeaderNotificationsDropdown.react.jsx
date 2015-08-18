@@ -119,7 +119,7 @@ export default Radium(React.createClass({
       )
     }
 
-    let notifications = this.state.accountInvitations.items.map(item => {
+    let notifications = this.state.accountInvitations.items.map((item) => {
       let icon = (
           <MUI.FontIcon
             className='synicon-share-variant'

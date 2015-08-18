@@ -30,7 +30,7 @@ export default Reflux.createStore({
   },
 
   setCodeBoxRuntimes(payload) {
-    let runtimes = Object.keys(payload).map(runtime => {
+    let runtimes = Object.keys(payload).map((runtime) => {
       return {payload: runtime, text: runtime};
     });
 

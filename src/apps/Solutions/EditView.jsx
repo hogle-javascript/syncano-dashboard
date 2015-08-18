@@ -141,9 +141,7 @@ export default React.createClass({
 
   handleTagsListChange(tagsString, tagsArray) {
     Actions.updateSolution(this.state.item.id, {
-      tags: tagsArray.map(item => {
-        return item.value
-      })
+      tags: tagsArray.map((item) => item.value)
     });
   },
 
@@ -153,7 +151,7 @@ export default React.createClass({
     if (this.state.item.tags && this.state.item.tags.length === 0) {
       return <div style={styles.tag}>no tags</div>;
     }
-    return this.state.item.tags.map(tag => {
+    return this.state.item.tags.map((tag) => {
       return (
         <div
           key={tag}

@@ -75,7 +75,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

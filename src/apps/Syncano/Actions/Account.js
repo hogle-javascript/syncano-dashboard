@@ -54,13 +54,13 @@ export default {
   socialLogin(network) {
     Hello
       .login(network)
-      .then(auth => {
+      .then((auth) => {
         this.Connection
           .socialConnect(
           auth.network,
           auth.authResponse.access_token
         )
-          .then(payload => {
+          .then((payload) => {
             payload.network = network;
             return payload;
           })

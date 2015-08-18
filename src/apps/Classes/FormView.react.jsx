@@ -52,7 +52,7 @@ export default React.createClass({
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map(item => {
+    return Constants.fieldTypes.map((item) => {
       return {
         payload: item,
         text: item
@@ -63,7 +63,7 @@ export default React.createClass({
   setFields(schema) {
     const fields = this.state.fields;
 
-    schema.map(item => {
+    schema.map((item) => {
       fields.push({
         fieldName: item.name,
         fieldType: item.type,
@@ -77,7 +77,7 @@ export default React.createClass({
   },
 
   getSchema() {
-    return JSON.stringify(this.state.fields.map(item => {
+    return JSON.stringify(this.state.fields.map((item) => {
       const schema = {
         name: item.fieldName,
         type: item.fieldType,
@@ -171,7 +171,7 @@ export default React.createClass({
   },
 
   handleOnCheck(item, event) {
-    let newFields = this.state.fields.map(field => {
+    let newFields = this.state.fields.map((field) => {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
           field.fieldOrder = event.target.checked;
@@ -186,7 +186,7 @@ export default React.createClass({
   },
 
   renderSchemaFields() {
-    return this.state.fields.map(item => {
+    return this.state.fields.map((item) => {
       return (
         <div key={item.fieldName} className='row align-middle vm-1-b'>
           <span className='col-xs-8'>{item.fieldName}</span>
