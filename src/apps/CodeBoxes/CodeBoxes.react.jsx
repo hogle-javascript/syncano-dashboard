@@ -52,13 +52,17 @@ export default React.createClass({
   getAssociatedCodeboxes(associatedWith) {
     let checkedCodeboxes = Store.getCheckedItems();
     let associatedCodeboxes = checkedCodeboxes.filter((codebox) => {
-      for (let i = 0; i < this.state[associatedWith].length; i++) {
-        if (codebox.id === this.state[associatedWith][i].codebox) {
-          codebox.associatedWith = this.state[associatedWith][i].label;
+      codebox[associatedWith] = [];
+      let associatedItems = this.state[associatedWith].filter((item) => {
+        if (codebox.id === item.codebox) {
+          codebox[associatedWith].push(item.label);
           return true;
         }
-      }
+      });
+
+      return associatedItems.length > 0;
     });
+
     return associatedCodeboxes;
   },
 
@@ -68,18 +72,25 @@ export default React.createClass({
     let codeboxesAssociatedWithSchedules = this.getAssociatedCodeboxes('schedules');
     let codeboxesAssociatedWithTriggers = this.getAssociatedCodeboxes('triggers');
     let codeboxesNotAssociated = _.difference(checkedCodeboxes, codeboxesAssociatedWithSchedules);
-      codeboxesNotAssociated = _.difference(codeboxesNotAssociated, codeboxesAssociatedWithTriggers);
+
+    codeboxesNotAssociated = _.difference(codeboxesNotAssociated, codeboxesAssociatedWithTriggers);
 
     if ((codeboxesAssociatedWithSchedules && codeboxesAssociatedWithSchedules.length > 0) ||
         (codeboxesAssociatedWithTriggers && codeboxesAssociatedWithTriggers.length > 0)) {
       let associatedWithSchedulesList = codeboxesAssociatedWithSchedules.length > 0 ?
-          <div>Associated with Schedules: {this.getDialogList(codeboxesAssociatedWithSchedules, 'label')}</div> :
+          <div>
+            Associated with Schedules: {this.getDialogList(codeboxesAssociatedWithSchedules, 'label', 'schedules')}
+          </div> :
           null;
       let associatedWithTriggersList = codeboxesAssociatedWithTriggers.length > 0 ?
-          <div>Associated with Triggers: {this.getDialogList(codeboxesAssociatedWithTriggers, 'label')}</div> :
+          <div>
+            Associated with Triggers: {this.getDialogList(codeboxesAssociatedWithTriggers, 'label', 'triggers')}
+          </div> :
           null;
       let notAssociatedList = codeboxesNotAssociated.length > 0 ?
-          <div>Not associated: {this.getDialogList(codeboxesNotAssociated, 'label')}</div> :
+          <div>
+            Not associated: {this.getDialogList(codeboxesNotAssociated, 'label')}
+          </div> :
           null;
 
       return [{

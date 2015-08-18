@@ -44,7 +44,6 @@ export default Reflux.createStore({
       this.data.isLoading = false;
       this.trigger(this.data);
     })
-
   },
 
   getItems() {
@@ -192,7 +191,7 @@ export default Reflux.createStore({
 
   setTriggers(items) {
     console.debug('ClassesStore::setTriggers');
-    this.data.triggers = Object.keys(items).map(key => items[key]);
+    this.data.triggers = Object.keys(items).map((key) => items[key]);
   },
 
   onRemoveClassesCompleted() {

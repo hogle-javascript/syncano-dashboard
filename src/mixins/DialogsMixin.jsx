@@ -17,9 +17,21 @@ export default {
     return items.length
   },
 
-  getDialogList(items, paramName) {
+  getDialogList(items, paramName, associationFor) {
     let listItems = items.map((item) => {
-      let association = item.associatedWith ? ` (${item.associatedWith})` : '';
+      let isAssociated = (item.triggers && item.triggers.length > 0) ||
+          (item.schedules && item.schedules.length > 0);
+      let triggersAssociation = item.triggers ? ` (${item.triggers.join(', ')})` : '';
+      let schedulesAssociation = item.schedules ? ` (${item.schedules.join(', ')})` : '';
+      let association = '';
+
+      if (isAssociated && associationFor === 'triggers') {
+        association = triggersAssociation;
+      }
+
+      if (isAssociated && associationFor === 'schedules') {
+        association = schedulesAssociation;
+      }
 
       return <li>{item[paramName || 'name'] + association}</li>;
     });

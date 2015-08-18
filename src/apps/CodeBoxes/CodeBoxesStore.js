@@ -163,7 +163,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxesCompleted(codeboxes) {
     console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    this.setCodeBoxes(codeboxes, 'items');
+    Actions.setCodeBoxes(codeboxes, 'items');
   },
 
   onFetchTriggersCompleted(triggers) {
