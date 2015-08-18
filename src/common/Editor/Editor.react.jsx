@@ -27,7 +27,7 @@ export default React.createClass({
     highlightActiveLine: React.PropTypes.bool,
     showPrintMargin: React.PropTypes.bool
   },
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       name: 'brace-editor',
       mode: '',
@@ -45,14 +45,14 @@ export default React.createClass({
       showPrintMargin: true
     };
   },
-  onChange: function() {
+  onChange() {
     let value = this.editor.getValue();
 
     if (this.props.onChange) {
       this.props.onChange(value);
     }
   },
-  componentDidMount: function() {
+  componentDidMount() {
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
     this.editor.getSession().setMode('ace/mode/' + this.props.mode);
@@ -73,7 +73,7 @@ export default React.createClass({
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.editor = ace.edit(nextProps.name);
     this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
     this.editor.setTheme('ace/theme/' + nextProps.theme);
@@ -94,7 +94,7 @@ export default React.createClass({
     this.editor.clearSelection();
   },
 
-  render: function() {
+  render() {
     let divStyle = {
       width: this.props.width,
       height: this.props.height

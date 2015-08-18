@@ -37,7 +37,7 @@ export default React.createClass({
       'classes-data-objects',
       {
         instanceName: SessionStore.getInstance().name,
-        className: className
+        className
       }
     );
     console.info('ClassesList::handleItemClick');

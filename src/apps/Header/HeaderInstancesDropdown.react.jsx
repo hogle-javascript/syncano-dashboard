@@ -146,7 +146,7 @@ export default Radium(React.createClass({
 
       return {
         payload: item.name,
-        text: text
+        text
       }
     });
 

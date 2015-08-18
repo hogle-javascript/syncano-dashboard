@@ -45,7 +45,7 @@ export default React.createClass({
       }
     });
 
-    return {index: index, text: text};
+    return {index, text};
   },
 
   getStyles() {

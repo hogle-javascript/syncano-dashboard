@@ -144,7 +144,7 @@ export default Radium(React.createClass({
   },
 
   handleSubmit(type) {
-    this.setState({type: type});
+    this.setState({type});
     this.handleFormValidation();
   },
 
@@ -156,7 +156,7 @@ export default Radium(React.createClass({
     let exportSpec = this.state.exportSpec;
 
     exportSpec[type][name] = status;
-    this.setState({exportSpec: exportSpec});
+    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {

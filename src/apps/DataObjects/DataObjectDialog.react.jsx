@@ -116,7 +116,7 @@ export default React.createClass({
         if (file) {
           fileFields.push({
             name: item.name,
-            file: file
+            file
           })
         }
       }
