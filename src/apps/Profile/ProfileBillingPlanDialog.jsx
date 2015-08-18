@@ -111,8 +111,8 @@ export default React.createClass({
 
     let setLimits = () => {
       return Actions.updateBillingProfile({
-        hard_limit: total * 3,
-        soft_limit: total * 1.5
+        hard_limit: parseInt(total * 3, 10),
+        soft_limit: parseInt(total * 1.5, 10)
       });
     };
 
