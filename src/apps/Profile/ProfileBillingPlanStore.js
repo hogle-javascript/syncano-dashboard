@@ -205,6 +205,10 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
+  onUpdateBillingProfileCompleted(payload) {
+    this.setProfile(payload);
+  },
+
   setChartLegend(payload) {
     this.data.chartLegend = payload;
     this.trigger(this.data);
