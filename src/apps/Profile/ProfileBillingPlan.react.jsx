@@ -377,8 +377,8 @@ export default Radium(React.createClass({
       );
     }
 
-    const covered = _.round(Store.getCovered().amount, 0);
-    const overage = _.round(Store.getOverage().amount, 0);
+    const covered = _.round(Store.getCovered().amount, 2);
+    const overage = _.round(Store.getOverage().amount, 2);
     const amountTotal = overage + covered;
 
     return (
