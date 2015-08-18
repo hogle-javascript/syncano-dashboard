@@ -65,10 +65,12 @@ export default React.createClass({
         if (item.type === 'boolean') {
           params[item.name] = this.state[item.name];
         } else if (item.type === 'datetime') {
-          let date = this.refs['fielddate-' + item.name].getDate();
-          let time = this.refs['fieldtime-' + item.name].getTime();
+          let date = this.refs[`fielddate-${item.name}`].getDate();
+          let time = this.refs[`fieldtime-${item.name}`].getTime();
 
-          if (date) {
+          params[item.name] = null;
+
+          if (date && this.state[`fielddate-${item.name}`] !== null) {
             let dateTime = new Date(
               date.getFullYear(),
               date.getMonth(),
@@ -285,19 +287,20 @@ export default React.createClass({
   },
 
   handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
     this.refs[`fielddate-${name}`].setState({
       date: undefined,
       dialogDate: new Date()
     });
 
-    let emptyTime = new Date();
-
-    emptyTime.setHours(0);
-    emptyTime.setMinutes(0);
-
     this.refs[`fieldtime-${name}`].refs.input.setValue("");
     this.refs[`fieldtime-${name}`].setState({
-      time: emptyTime,
+      time: undefined,
       dialogTime: new Date()
     });
   },
