@@ -106,9 +106,12 @@ export default Radium(React.createClass({
         backgroundColor: 'green',
         margin: '8px 16px 8px 0'
       },
+      dropdownMenu: {
+        maxHeight: 'calc(100vh - 80px)'
+      },
       dropdownMenuItem: {
         height      : 'auto',
-        paddingLeft : 16,
+        paddingLeft : 16
       }
     }
   },
@@ -124,7 +127,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    let dropDownMenuItems = instancesList.map(item => {
+    let dropDownMenuItems = instancesList.map((item) => {
       item.metadata       = item.metadata       || {};
       item.metadata.icon  = item.metadata.icon  || null;
       item.metadata.color = item.metadata.color || null;
@@ -134,16 +137,18 @@ export default Radium(React.createClass({
       };
       let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
-      let text = <div style={styles.dropdownLabelContainer}>
+      let text = (
+        <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
             style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
           {item.name}
-        </div>;
+        </div>
+      );
 
       return {
         payload: item.name,
-        text: text
+        text
       }
     });
 
@@ -153,6 +158,7 @@ export default Radium(React.createClass({
           ref="HeaderInstancesDropdown"
           className="instances-dropdown"
           style={{width: '100%'}}
+          menuStyle={styles.dropdownMenu}
           labelStyle={styles.dropdownLabel}
           underlineStyle={styles.dropdownLabelUnderline}
           menuItemStyle={styles.dropdownMenuItem}

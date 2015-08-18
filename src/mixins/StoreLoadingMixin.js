@@ -3,6 +3,7 @@ export default {
   setLoadingStates() {
     if (this.listenables) {
       let arr = [].concat(this.listenables);
+
       arr.forEach(function(item) {
         this.setLoadingState(item);
       }.bind(this))
@@ -12,6 +13,7 @@ export default {
   setLoadingState(listenable) {
     for (let key in listenable) {
       let action = listenable[key];
+
       if (action.asyncResult === true && action.loading === true) {
         this.listenTo(action, this.setToLoading);
         this.listenTo(action.completed, this.setToNotLoading);

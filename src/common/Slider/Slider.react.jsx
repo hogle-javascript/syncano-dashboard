@@ -48,6 +48,7 @@ export default Radium(React.createClass({
 
   renderLegend() {
     let styles = this.getStyles().container;
+
     return (
       <div style={styles}>
         {this.renderLegendItems()}

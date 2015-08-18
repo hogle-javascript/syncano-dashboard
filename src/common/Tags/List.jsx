@@ -16,14 +16,14 @@ export default React.createClass({
   getInitialState() {
     return {
       items: this.props.items,
-      selectedItems: this.props.selectedItems,
+      selectedItems: this.props.selectedItems
     }
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
-      selectedItems: nextProps.selectedItems,
+      selectedItems: nextProps.selectedItems
     })
   },
 
@@ -35,8 +35,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-
-    let tags = this.state.items.map(item => {
+    let tags = this.state.items.map((item) => {
       return (
         <MUI.ListItem
           key={item.name}
@@ -46,8 +45,11 @@ export default React.createClass({
           onTouchTap={this.handleOnTouchTap.bind(this, item.name)}/>
       )
     });
+
     return (
-      <MUI.List zDepth={1} subheader="Tags">
+      <MUI.List
+        zDepth={1}
+        subheader="Tags">
         {tags}
       </MUI.List>
     );

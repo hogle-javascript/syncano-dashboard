@@ -60,6 +60,7 @@ export default Reflux.createStore({
 
   acceptInvitationFromUrl() {
     let invKey = SessionStore.getInvitationFromUrl();
+
     if (invKey) {
       ProfileInvitationsActions.acceptInvitations(invKey);
     }

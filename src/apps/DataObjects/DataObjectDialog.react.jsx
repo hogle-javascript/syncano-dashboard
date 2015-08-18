@@ -34,7 +34,8 @@ export default React.createClass({
 
   validatorConstraints() {
     let validateObj = {};
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'integer') {
         validateObj[item.name] = {numericality: true}
       } else if (item.type === 'text') {
@@ -59,15 +60,17 @@ export default React.createClass({
     let files = this.getFileFields();
 
     // All "dynamic" fields
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
           params[item.name] = this.state[item.name];
         } else if (item.type === 'datetime') {
-          let date = this.refs['fielddate-' + item.name].getDate();
-          let time = this.refs['fieldtime-' + item.name].getTime();
+          let date = this.refs[`fielddate-${item.name}`].getDate();
+          let time = this.refs[`fieldtime-${item.name}`].getTime();
 
-          if (date) {
+          params[item.name] = null;
+
+          if (date && this.state[`fielddate-${item.name}`] !== null) {
             let dateTime = new Date(
               date.getFullYear(),
               date.getMonth(),
@@ -76,17 +79,20 @@ export default React.createClass({
               time.getMinutes(),
               0
             );
+
             params[item.name] = dateTime.toISOString();
           }
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
+
           if (fieldValue) {
             params[item.name] = fieldValue;
           }
         }
       } else {
         let delFile = true;
-        files.some(file => {
+
+        files.some((file) => {
           if (file.name === item.name) {
             delFile = false;
             return true;
@@ -105,13 +111,14 @@ export default React.createClass({
     let fileFields = [];
 
     // Searching for files
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'file') {
         let file = this.state['file-' + item.name];
+
         if (file) {
           fileFields.push({
             name: item.name,
-            file: file
+            file
           })
         }
       }
@@ -262,6 +269,7 @@ export default React.createClass({
 
   onDrop(fieldName, files) {
     let state = {};
+
     state[fieldName] = files[0];
     this.setState(state);
   },
@@ -273,23 +281,26 @@ export default React.createClass({
 
   handleRemoveFile(name) {
     let state = {};
+
     state[name] = null;
     this.setState(state);
   },
 
   handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
     this.refs[`fielddate-${name}`].setState({
       date: undefined,
       dialogDate: new Date()
     });
 
-    let emptyTime = new Date();
-    emptyTime.setHours(0);
-    emptyTime.setMinutes(0);
-
     this.refs[`fieldtime-${name}`].refs.input.setValue("");
     this.refs[`fieldtime-${name}`].setState({
-      time: emptyTime,
+      time: undefined,
       dialogTime: new Date()
     });
   },
@@ -328,10 +339,8 @@ export default React.createClass({
   },
 
   renderCustomFields() {
-
     if (DataObjectsStore.getCurrentClassObj()) {
-
-      return DataObjectsStore.getCurrentClassObj().schema.map(item => {
+      return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField
@@ -387,10 +396,10 @@ export default React.createClass({
         }
 
         if (item.type === 'file') {
-
           if (this.hasEditMode()) {
             if (this.state[item.name]) {
               let url = this.state[item.name].value;
+
               return (
                 <div key={'file-' + item.name}>
                   <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>

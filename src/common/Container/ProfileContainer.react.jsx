@@ -12,7 +12,7 @@ export default React.createClass({
       container: {
         marginTop : 96,
         marginBottom : 96,
-        marginLeft : 300,
+        marginLeft : 300
       },
       header: {
         paddingBottom : 48,

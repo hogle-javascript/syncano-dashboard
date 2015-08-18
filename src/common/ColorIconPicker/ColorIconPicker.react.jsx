@@ -102,9 +102,11 @@ export default Radium(React.createClass({
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
-      icon = <MUI.FontIcon
-        className={`synicon-${this.state.selectedIcon}`}
-        style={{color: 'white'}}/>;
+      icon = (
+        <MUI.FontIcon
+          className={`synicon-${this.state.selectedIcon}`}
+          style={{color: 'white'}}/>
+      );
     }
 
     return (
@@ -125,9 +127,9 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     if (this.props.pickerType === 'color') {
-      items = ColorStore.getColorPickerPalette().map(color => this.genColorItem(color));
+      items = ColorStore.getColorPickerPalette().map((color) => this.genColorItem(color));
     } else {
-      items = IconStore.getIconPickerIcons().map(icon => this.genIconItem(icon));
+      items = IconStore.getIconPickerIcons().map((icon) => this.genIconItem(icon));
     }
 
     return (

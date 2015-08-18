@@ -24,9 +24,8 @@ export default {
     this.Connection
       .DataObjects
       .create(payload.className, payload.params)
-      .then(createdItem => {
-
-        let promises = payload.fileFields.map(file => {
+      .then((createdItem) => {
+        let promises = payload.fileFields.map((file) => {
           return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file)
         });
 
@@ -40,9 +39,8 @@ export default {
     this.Connection
       .DataObjects
       .update(payload.className, payload.params)
-      .then(updatedItem => {
-
-        let promises = payload.fileFields.map(file => {
+      .then((updatedItem) => {
+        let promises = payload.fileFields.map((file) => {
           return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
         });
 
@@ -53,9 +51,7 @@ export default {
   },
 
   remove(className, dataobjects) {
-    let promises = dataobjects.map(dataobject => {
-      return this.Connection.DataObjects.remove(className, dataobject)
-    });
+    let promises = dataobjects.map((dataobject) => this.Connection.DataObjects.remove(className, dataobject));
 
     this.D.all(promises)
       .success(this.completed)

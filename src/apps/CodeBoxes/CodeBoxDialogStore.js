@@ -15,7 +15,6 @@ export default Reflux.createStore({
   ],
 
   getInitialState() {
-    // jscs:disable
     return {
       label: null,
       description: null,
@@ -24,7 +23,6 @@ export default Reflux.createStore({
         {payload: '', text: 'Loading...'}
       ]
     };
-    // jscs:enable
   },
 
   init() {
@@ -32,10 +30,11 @@ export default Reflux.createStore({
   },
 
   setCodeBoxRuntimes(payload) {
-    let runtimes = Object.keys(payload).map(runtime => {
+    let runtimes = Object.keys(payload).map((runtime) => {
       return {payload: runtime, text: runtime};
     });
-    this.trigger({runtimes: runtimes});
+
+    this.trigger({runtimes});
   },
 
   onCreateCodeBoxCompleted(resp) {

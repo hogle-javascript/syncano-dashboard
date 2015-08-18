@@ -94,7 +94,7 @@ export default React.createClass({
       return;
     }
 
-    let items = this.state.items.map(item => {
+    let items = this.state.items.map((item) => {
       return this.renderItem(item);
     });
 

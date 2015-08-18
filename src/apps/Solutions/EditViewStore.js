@@ -22,7 +22,7 @@ export default Reflux.createStore({
     return {
       item: {
         stars_count: 0,
-        tags: [],
+        tags: []
       },
       versions: null,
       isLoading: true
@@ -86,7 +86,8 @@ export default Reflux.createStore({
     this.data.prevParams = URL.parse(versions.prev() || '', true).query;
 
     let newItems = [];
-    Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
+
+    Object.keys(versions).map((key) => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
 
@@ -162,6 +163,6 @@ export default Reflux.createStore({
     console.debug('SolutionsStore::onFetchTagsFailure');
     this.data.isLoading = false;
     this.trigger(this.data);
-  },
+  }
 
 });

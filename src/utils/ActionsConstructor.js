@@ -30,6 +30,7 @@ export default (options, actions) => {
   }
 
   let RefluxActions = Reflux.createActions(actions);
+
   _.forEach(actions, (action, key) => {
     if (_.isString(action.method)) {
       if (!_.has(Libraries, action.method)) {
@@ -43,7 +44,6 @@ export default (options, actions) => {
       RefluxActions[key].listen(action.method);
       _.extend(RefluxActions[key], Context);
     }
-
   });
 
   return RefluxActions;

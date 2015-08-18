@@ -23,7 +23,6 @@ export default Reflux.createStore({
     if (Session.isReady()) {
       this.trigger({user: Session.getUser()});
     }
-
   },
 
   onSetMenuItems(payload) {

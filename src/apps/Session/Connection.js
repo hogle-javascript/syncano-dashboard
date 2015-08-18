@@ -3,7 +3,7 @@ import Syncano from '../../lib/syncano4';
 let connection = new Syncano(undefined, SYNCANO_BASE_URL);
 
 export default {
-  Syncano: Syncano,
+  Syncano,
   Deferred: connection.Deferred,
   D: connection.Deferred,
 

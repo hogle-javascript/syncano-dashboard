@@ -70,18 +70,19 @@ export default Reflux.createStore({
         },
         tooltip: {
           format: {
-            title: input => {
+            title: (input) => {
               let title = moment(input).format('MMM DD');
               let date = moment(input).format(this.format);
+
               if (date > today) {
                 title = `Prediction for ${title}`;
               }
               return title;
             },
-            name: name => {
+            name: (name) => {
               return {api: 'API calls', cbx: 'CodeBox runs'}[name];
             },
-            value: value => d3.format('$')(_.round(value, 5))
+            value: (value) => d3.format('$')(_.round(value, 5))
           }
         },
         regions: [{
@@ -131,12 +132,13 @@ export default Reflux.createStore({
     }
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
-    _.forEach(usage.objects, _usage => {
+    _.forEach(usage.objects, (_usage) => {
       if (columns[_usage.source] === undefined) {
         return;
       }
 
       let amount = pricing[_usage.source].overage * _usage.value;
+
       columns[_usage.source][_usage.date] = amount;
       usageAmount[_usage.source] += amount;
     });
@@ -152,8 +154,9 @@ export default Reflux.createStore({
 
     state.covered = _.reduce(pricing, (result, value, key) => {
       let amount = value.included * value.overage;
+
       result.amount += amount;
-      result[key] = _.extend({}, value, {amount: amount});
+      result[key] = _.extend({}, value, {amount});
       return result;
     }, {amount: 0});
 
@@ -170,7 +173,7 @@ export default Reflux.createStore({
       let included = _.round(amount / value.overage);
 
       result.amount += amount;
-      result[key] = result[key] = _.extend({}, value, {amount: amount, included: included});
+      result[key] = result[key] = _.extend({}, value, {amount, included});
       return result;
     }, {amount: 0});
 
@@ -212,7 +215,7 @@ export default Reflux.createStore({
       return result;
     }, {});
 
-    _.forEach(this.getAllDates(), date => {
+    _.forEach(this.getAllDates(), (date) => {
       _.forEach(columns, (val, source) => {
         if (columns[source][date] === undefined) {
           columns[source][date] = 0;
@@ -221,17 +224,17 @@ export default Reflux.createStore({
         if (date > today) {
           columns[source][date] += medians[source];
         }
-
       });
     });
-
   },
 
   objectToArray(elements) {
     _.forEach(elements, (val, elementKey) => {
       let keys = _.keys(val).sort();
+
       elements[elementKey] = _.reduce(keys, (result, key, index) => {
         let prev = (index > 0) ? result[index - 1] : 0;
+
         result.push(val[key] + prev);
         return result;
       }, []);
@@ -250,6 +253,7 @@ export default Reflux.createStore({
 
   getDate() {
     let today = new Date();
+
     today.year = today.getFullYear();
     today.month = today.getMonth();
     return today;
@@ -263,23 +267,24 @@ export default Reflux.createStore({
     let {year, month} = this.getDate();
     let days = _.range(1, this.getNumberOfDays() + 1);
 
-    return _.map(days, day => {
-      return moment(new Date(year, month, day)).format(this.format);
-    });
+    return _.map(days, (day) => moment(new Date(year, month, day)).format(this.format));
   },
 
   getNumberOfDays() {
     let {year, month} = this.getDate();
+
     return new Date(year, month + 1, 0).getDate();
   },
 
   getStartDate() {
     let {year, month} = this.getDate();
+
     return moment(new Date(year, month, 1)).format(this.format);
   },
 
   getEndDate() {
     let {year, month} = this.getDate();
+
     return moment(new Date(year, month, this.getNumberOfDays())).format(this.format);
   }
 

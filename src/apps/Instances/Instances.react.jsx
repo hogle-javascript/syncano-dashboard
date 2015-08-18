@@ -33,7 +33,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs,
+    Mixins.Dialogs
   ],
 
   // Dialogs config
@@ -152,24 +152,24 @@ export default Radium(React.createClass({
 
         <Common.Show if={checkedInstances > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Instances"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Instances"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit Instance"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit Instance"
               mini={true}
               disabled={checkedInstances > 1}
               onClick={this.showInstanceEditDialog}
               iconClassName="synicon-pencil"/>
-            <Common.Fab.Item
-              label="Click here to customize Instances"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to customize Instances"
               secondary={true}
               mini={true}
               disabled={checkedInstances > 1}
@@ -179,12 +179,11 @@ export default Radium(React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
+          <Common.Fab.TooltipItem
             ref="addInstanceFab"
-            label="Click here to add Instances"
+            tooltip="Click here to add Instances"
             onClick={this.showInstanceDialog}
-            iconClassName="synicon-plus"
-            />
+            iconClassName="synicon-plus"/>
         </Common.Fab>
 
         <InstancesList

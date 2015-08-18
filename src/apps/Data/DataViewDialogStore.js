@@ -45,7 +45,7 @@ export default Reflux.createStore({
       classes = [{payload: '', text: 'No classes, add one first'}];
     }
 
-    this.trigger({classes: classes});
+    this.trigger({classes});
   },
 
   getCrontabDropdown() {

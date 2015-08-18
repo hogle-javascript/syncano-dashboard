@@ -61,7 +61,7 @@ export default Reflux.createStore({
 
     item.checked = state;
     if (!(newItemFromMyList && otherItemFromMyList)) {
-      this.data.items.forEach(existingItem => {
+      this.data.items.forEach((existingItem) => {
         // Uncheck all other then new one
         if (item.name !== existingItem.name) {
           existingItem.checked = false;
@@ -74,7 +74,8 @@ export default Reflux.createStore({
 
   getInstanceById(name) {
     let instance = null;
-    this.data.items.some(item => {
+
+    this.data.items.some((item) => {
       if (item.name.toString() === name.toString()) {
         instance = item;
         return true;
@@ -85,6 +86,7 @@ export default Reflux.createStore({
 
   isCheckedInstanceShared() {
     let checkedItems = this.getCheckedItems();
+
     if (checkedItems) {
       return !this.amIOwner(checkedItems[0]);
     }
@@ -131,7 +133,7 @@ export default Reflux.createStore({
   },
 
   getInstancesDropdown() {
-    return this.data.items.map(item => {
+    return this.data.items.map((item) => {
       return {
         payload: item.name,
         text: item.name
@@ -141,7 +143,7 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
-    this.data.items = Object.keys(instances).map(key => instances[key]);
+    this.data.items = Object.keys(instances).map((key) => instances[key]);
     this.trigger(this.data);
   },
 

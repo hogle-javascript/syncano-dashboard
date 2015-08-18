@@ -107,6 +107,7 @@ export default Radium(React.createClass({
       triggers: 'id',
       schedules: 'id'
     };
+
     return map[section];
   },
 
@@ -114,12 +115,14 @@ export default Radium(React.createClass({
     let spec = this.state.exportSpec;
     let formatedSpec = {};
 
-    Object.keys(spec).map(section => {
+    Object.keys(spec).map((section) => {
       let pkName = this.pkMap(section);
+
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(item => {
+      Object.keys(spec[section]).map((item) => {
         if (spec[section][item] === true) {
           let obj = {};
+
           if (pkName === 'id') {
             item = parseInt(item, 10);
           }
@@ -141,7 +144,7 @@ export default Radium(React.createClass({
   },
 
   handleSubmit(type) {
-    this.setState({type: type});
+    this.setState({type});
     this.handleFormValidation();
   },
 
@@ -151,9 +154,9 @@ export default Radium(React.createClass({
 
   handleOnCheck(name, type, event, status) {
     let exportSpec = this.state.exportSpec;
-    exportSpec[type][name] = status;
 
-    this.setState({exportSpec: exportSpec});
+    exportSpec[type][name] = status;
+    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
@@ -163,7 +166,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    let checkboxes = data.map(item => {
+    let checkboxes = data.map((item) => {
       return (
         <div
           key={`checkbox-${type}-${item[pk]}`}

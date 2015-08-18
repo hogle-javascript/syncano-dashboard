@@ -3,7 +3,8 @@ import React from 'react';
 export default {
   getDialogs() {
     let dialogs = this.initDialogs();
-    return dialogs.map(function(dialog) {
+
+    return dialogs.map((dialog) => {
       return React.createElement(dialog.dialog, dialog.params);
     })
   },
@@ -17,8 +18,9 @@ export default {
   },
 
   getDialogList(items, paramName) {
-    let listItems = items.map(function(item) {
+    let listItems = items.map((item) => {
       let association = item.associatedWith ? ` (${item.associatedWith})` : '';
+
       return <li>{item[paramName || 'name'] + association}</li>;
     });
 
@@ -27,9 +29,9 @@ export default {
 
   hideDialogs(hideDialogsFlag) {
     if (hideDialogsFlag) {
-      return this.initDialogs().map(function(dialogConf) {
+      return this.initDialogs().map((dialogConf) => {
         this.refs[dialogConf.params.ref].dismiss();
-      }.bind(this))
+      });
     }
   }
 

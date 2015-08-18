@@ -36,6 +36,7 @@ export default React.createClass({
 
   handleSuccessfullValidation() {
     let params = this.getParams();
+
     Actions.passwordResetConfirm({
       new_password: this.state.password,
       uid: params.uid,

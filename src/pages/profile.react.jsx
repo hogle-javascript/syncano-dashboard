@@ -45,7 +45,7 @@ export default React.createClass({
       }
     });
 
-    return {index: index, text: text};
+    return {index, text};
   },
 
   getStyles() {
@@ -92,6 +92,7 @@ export default React.createClass({
     return (
       <div>
         <MUI.LeftNav
+          className="left-nav"
           ref="leftNav"
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
           selectedIndex={this.state.selectedIndex || 0}

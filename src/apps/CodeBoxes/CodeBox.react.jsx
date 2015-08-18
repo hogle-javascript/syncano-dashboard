@@ -30,6 +30,7 @@ export default React.createClass({
 
   getActiveSubTabIndex() {
     let index = 0;
+
     this.getTabsData().some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;

@@ -130,7 +130,6 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-
     return [{
       dialog: Common.Dialog,
       params: {
@@ -198,7 +197,6 @@ export default Radium(React.createClass({
         </div>
       );
     } else if (plan === 'paid-commitment') {
-
       return (
         <div>
           <div style={styles.mainDesc}>
@@ -226,7 +224,6 @@ export default Radium(React.createClass({
         </div>
       );
     } else if (plan === 'paid-commitment') {
-
       if (Store.isNewSubscription()) {
         const subscription = this.state.subscriptions._items[1];
         const total = Store.getTotalPlanValue(subscription);
@@ -345,6 +342,7 @@ export default Radium(React.createClass({
     const profile = this.state.profile;
 
     let coveredText = '';
+
     if (plan === 'builder' || plan === 'free') {
       coveredText = 'Covered by Syncano';
     } else if (plan === 'paid-commitment') {
@@ -377,8 +375,8 @@ export default Radium(React.createClass({
       );
     }
 
-    const covered = _.round(Store.getCovered().amount, 0);
-    const overage = _.round(Store.getOverage().amount, 0);
+    const covered = _.round(Store.getCovered().amount, 2);
+    const overage = _.round(Store.getOverage().amount, 2);
     const amountTotal = overage + covered;
 
     return (

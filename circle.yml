@@ -24,15 +24,16 @@ test:
   override:
     - npm run-script eslint
     - npm test
-    # - npm run-script codeclimate
     - npm run-script e2e
 
 deployment:
   production:
     branch: master
     commands:
+      - NODE_ENV=production npm run-script check-github-tag
       - NODE_ENV=production npm run-script publish
       - NODE_ENV=production npm run-script clean
+      - NODE_ENV=production npm run-script add-github-tag
   staging:
     branch: devel
     commands:

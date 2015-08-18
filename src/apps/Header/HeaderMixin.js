@@ -24,9 +24,7 @@ export default {
 
     // We want to have just one render here
     if (hasMenuItems) {
-      HeaderActions.set({
-        menuItems: menuItems
-      });
+      HeaderActions.set({menuItems});
     } else if (hasMenuItems) {
       HeaderActions.setMenuItems(menuItems);
     }

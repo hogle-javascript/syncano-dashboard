@@ -55,6 +55,7 @@ export default React.createClass({
         }
       }
     });
+
     return associatedClasses;
   },
 
@@ -148,12 +149,8 @@ export default React.createClass({
 
     Actions.updateClass(
       Store.getCheckedItem().name, {
-        metadata: JSON.stringify({
-          color: color,
-          icon: icon
-        })
-      }
-    );
+        metadata: JSON.stringify({color, icon})
+      });
     Actions.uncheckAll()
   },
 
@@ -217,26 +214,26 @@ export default React.createClass({
 
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAndNotAllClassSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyAndNotAllClassSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Classes"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Classes"
               mini={true}
               disabled={someClassIsProtectedFromDelete}
               onClick={this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit Class"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit Class"
               mini={true}
               disabled={checkedClassesCount > 1}
               onClick={this.redirectToEditClassView.bind(null, null)}
               iconClassName="synicon-pencil"/>
-            <Common.Fab.Item
+            <Common.Fab.TooltipItem
               style={styles.fabListTopButton}
-              label="Click here to customize Class"
+              tooltip="Click here to customize Class"
               secondary={true}
               mini={true}
               disabled={checkedClassesCount > 1}
@@ -246,8 +243,8 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to add a Class"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to add a Class"
             onClick={this.redirectToAddClassView}
             iconClassName="synicon-plus"/>
         </Common.Fab>

@@ -13,14 +13,15 @@ import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
 
-let container  = document.getElementById('app');
+let container = document.getElementById('app');
+
 tapPlugin();
 
-Router.run(routes, function(Root, state) {
-  let uri         = new URI();
+Router.run(routes, (Root, state) => {
+  let uri = new URI();
   let originalUri = uri.normalize().toString();
-  let pathname    = decodeURIComponent(state.pathname).replace('//', '/');
-  let query       = _.extend({}, uri.search(true), state.query);
+  let pathname = decodeURIComponent(state.pathname).replace('//', '/');
+  let query = _.extend({}, uri.search(true), state.query);
 
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {
@@ -42,8 +43,8 @@ Router.run(routes, function(Root, state) {
     window.analytics.identify(state.query.distinct_id);
   }
 
-  let name  = 'app';
-  let names = state.routes.map(route => route.name).filter(routeName => routeName !== undefined);
+  let name = 'app';
+  let names = state.routes.map((route) => route.name).filter((routeName) => routeName !== undefined);
 
   if (names.length > 0) {
     name = names[names.length - 1];

@@ -37,7 +37,7 @@ const Redirect = Router.Redirect;
 const NotFoundRoute = Router.NotFoundRoute;
 const DefaultRoute = Router.DefaultRoute;
 
-module.exports = (
+export default (
   <Route
     name="app"
     handler={App}

@@ -14,13 +14,11 @@ export default Reflux.createStore({
   ],
 
   getInitialState() {
-    // jscs:disable
     return {
       description: null,
       ignore_acl: false,
       allow_user_create: false
     };
-    // jscs:enable
   },
 
   init() {

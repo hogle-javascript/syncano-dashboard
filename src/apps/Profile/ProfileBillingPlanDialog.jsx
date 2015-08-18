@@ -111,8 +111,8 @@ export default React.createClass({
 
     let setLimits = () => {
       return Actions.updateBillingProfile({
-        hard_limit: total * 3,
-        soft_limit: total * 1.5
+        hard_limit: parseInt(total * 3, 10),
+        soft_limit: parseInt(total * 1.5, 10)
       });
     };
 
@@ -169,7 +169,7 @@ export default React.createClass({
         marginTop: 20,
         fontSize: '0.8em',
         color: '#9B9B9B'
-      },
+      }
     }
   },
 
@@ -254,6 +254,7 @@ export default React.createClass({
 
   onSliderChange(type, event, value) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },
@@ -286,6 +287,7 @@ export default React.createClass({
 
   handleSliderLabelsClick(value, type) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },
@@ -341,7 +343,6 @@ export default React.createClass({
   },
 
   render() {
-
     let styles = this.getStyles();
     let apiInfo = this.getInfo('api');
     let cbxInfo = this.getInfo('cbx');

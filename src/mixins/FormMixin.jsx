@@ -78,13 +78,10 @@ export default {
       validate(attributes, constraints)
     );
 
-    this.setState({
-      errors: errors
-    }, this._invokeCallback.bind(this, key, callback));
-
+    this.setState({errors}, this._invokeCallback.bind(this, key, callback));
   },
 
-  handleFormValidation: function(event) {
+  handleFormValidation(event) {
     if (event) {
       event.preventDefault();
     }
@@ -121,6 +118,7 @@ export default {
 
     if (key === undefined) {
       let flattenErrors = [];
+
       for (let error in errors) {
         flattenErrors.push.apply(flattenErrors, errors[error]);
       }
@@ -138,6 +136,7 @@ export default {
 
   isInputDisabled(inputName) {
     let hasProtectedFromEditProperty = this.state.protectedFromEdit;
+
     if (hasProtectedFromEditProperty && hasProtectedFromEditProperty.fields) {
       return hasProtectedFromEditProperty.fields.indexOf(inputName) > -1;
     }
