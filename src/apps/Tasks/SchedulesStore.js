@@ -39,7 +39,7 @@ export default Reflux.createStore({
 
   setSchedules(items) {
     console.debug('SchedulesStore::setSchedules');
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 

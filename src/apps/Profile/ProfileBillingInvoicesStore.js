@@ -14,11 +14,10 @@ export default Reflux.createStore({
   onFetchInvoicesCompleted(invoices) {
     console.debug('ProfileBillingInvoicesStore::onFetchInvoicesCompleted');
 
-    invoices = Object.keys(invoices).map(key => invoices[key]);
-
+    invoices = Object.keys(invoices).map((key) => invoices[key]);
     this.trigger({
       isLoading: false,
-      invoices: invoices
+      invoices
     });
   },
 

@@ -128,7 +128,7 @@ export default Reflux.createStore({
       let amount = value.included * value.overage;
 
       result.amount += amount;
-      result[key] = _.extend({}, value, {amount: amount});
+      result[key] = _.extend({}, value, {amount});
       return result;
     }, {amount: 0});
   },

@@ -76,7 +76,7 @@ export default Reflux.createStore({
   },
 
   getCodeBoxesDropdown() {
-    return this.data.items.map(item => {
+    return this.data.items.map((item) => {
       return {
         payload: item.id,
         text: item.label
@@ -91,7 +91,7 @@ export default Reflux.createStore({
 
     let currentItem = null;
 
-    this.data.items.some(item => {
+    this.data.items.some((item) => {
       if (item.id.toString() === this.data.currentCodeBoxId.toString()) {
         currentItem = item;
         return true;
@@ -103,7 +103,7 @@ export default Reflux.createStore({
   getCodeBoxById(id) {
     let codeBox = null;
 
-    this.data.items.some(item => {
+    this.data.items.some((item) => {
       if (item.id.toString() === id.toString()) {
         codeBox = item;
         return true;
@@ -130,12 +130,12 @@ export default Reflux.createStore({
   },
 
   setCodeBoxes(items) {
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 
   setCodeBoxTraces(items) {
-    this.data.traces = Object.keys(items).sort().map(key => items[key]);
+    this.data.traces = Object.keys(items).sort().map((key) => items[key]);
     this.trigger(this.data);
   },
 

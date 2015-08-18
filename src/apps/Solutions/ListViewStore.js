@@ -56,7 +56,7 @@ export default Reflux.createStore({
   },
 
   getPublicSolutions(solutions = this.data.items) {
-    return _.filter(solutions, solution => solution.public === true);
+    return _.filter(solutions, (solution) => solution.public === true);
   },
 
   setSolutions(solutions) {
@@ -140,5 +140,4 @@ export default Reflux.createStore({
     this.trigger(this.data);
     this.refreshData();
   }
-
 });

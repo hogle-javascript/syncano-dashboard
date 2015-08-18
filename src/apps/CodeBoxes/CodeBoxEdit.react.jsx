@@ -70,7 +70,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {source: source});
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
     });
@@ -111,13 +111,13 @@ export default React.createClass({
     return (
       <Container style={styles.container}>
         <Common.Fab position="top">
-          <Common.Fab.Item
-            label="Click here to save CodeBox"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>
-          <Common.Fab.Item
-            label="Click here to execute CodeBox"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to execute CodeBox"
             mini={true}
             onClick={this.handleRun}
             iconClassName="synicon-play"/>

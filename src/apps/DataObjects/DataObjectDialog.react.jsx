@@ -35,7 +35,7 @@ export default React.createClass({
   validatorConstraints() {
     let validateObj = {};
 
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'integer') {
         validateObj[item.name] = {numericality: true}
       } else if (item.type === 'text') {
@@ -60,7 +60,7 @@ export default React.createClass({
     let files = this.getFileFields();
 
     // All "dynamic" fields
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
           params[item.name] = this.state[item.name];
@@ -90,7 +90,7 @@ export default React.createClass({
       } else {
         let delFile = true;
 
-        files.some(file => {
+        files.some((file) => {
           if (file.name === item.name) {
             delFile = false;
             return true;
@@ -109,14 +109,14 @@ export default React.createClass({
     let fileFields = [];
 
     // Searching for files
-    DataObjectsStore.getCurrentClassObj().schema.map(item => {
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'file') {
         let file = this.state['file-' + item.name];
 
         if (file) {
           fileFields.push({
             name: item.name,
-            file: file
+            file
           })
         }
       }
@@ -337,7 +337,7 @@ export default React.createClass({
 
   renderCustomFields() {
     if (DataObjectsStore.getCurrentClassObj()) {
-      return DataObjectsStore.getCurrentClassObj().schema.map(item => {
+      return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
           return (
             <MUI.SelectField

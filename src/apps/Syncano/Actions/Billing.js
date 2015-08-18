@@ -91,9 +91,7 @@ export default {
   },
 
   cancelSubscriptions(ids) {
-    let promises = ids.map(id => {
-      this.Connection.Billing.cancelSubscription(id);
-    });
+    let promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
 
     this.D.all(promises)
       .success(this.completed)

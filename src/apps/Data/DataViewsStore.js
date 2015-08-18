@@ -36,7 +36,7 @@ export default Reflux.createStore({
 
   setDataViews(items) {
     console.debug('DataViewsStore::setDataViews');
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.data.isLoading = false;
     this.trigger(this.data);
   },

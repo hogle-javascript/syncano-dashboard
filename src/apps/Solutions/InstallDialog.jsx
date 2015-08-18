@@ -58,14 +58,14 @@ export default React.createClass({
         Actions.installSolution({
           solutionId: this.state.solutionId,
           versionId: this.state.version,
-          instanceName: instanceName
+          instanceName
         })
       });
     } else {
       Actions.installSolution({
         solutionId: this.state.solutionId,
         versionId: this.state.version,
-        instanceName: instanceName
+        instanceName
       });
     }
   },
@@ -80,8 +80,8 @@ export default React.createClass({
 
     Object.keys(this.state.errors).map((fieldName) => {
       if (nonFormFields.indexOf(fieldName) > -1) {
-        this.state.errors[fieldName].map(error => {
-          Object.keys(error).map(key => {
+        this.state.errors[fieldName].map((error) => {
+          Object.keys(error).map((key) => {
             messages.push(error[key]);
           });
         });

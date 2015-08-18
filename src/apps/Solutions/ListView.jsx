@@ -75,7 +75,7 @@ export default React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId: solutionId});
+    this.transitionTo('solutions-edit', {solutionId});
   },
 
   handleTagClick(tag) {
@@ -105,8 +105,8 @@ export default React.createClass({
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
-            <Common.Fab.Item
-              label="Click here to create a Solution"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to create a Solution"
               onClick={this.showSolutionDialog}
               iconClassName="synicon-plus"
               />
