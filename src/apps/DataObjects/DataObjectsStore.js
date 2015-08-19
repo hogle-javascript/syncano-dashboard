@@ -262,7 +262,7 @@ export default Reflux.createStore({
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
-  onFetchDataObjects() {
+  onFetchDataObjects(items) {
     console.debug('DataObjectsStore::onFetchDataObjects');
     // this.data.isLoading = true;
     this.trigger(this.data);
@@ -301,6 +301,7 @@ export default Reflux.createStore({
   onRemoveDataObjectsCompleted() {
     this.data.hideDialogs = true;
     this.data.selectedRows = null;
+    this.data.isLoading = false;
     this.trigger(this.data);
     this.refreshDataObjects();
   }

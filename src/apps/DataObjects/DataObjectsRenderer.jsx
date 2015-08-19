@@ -81,7 +81,7 @@ export default {
   renderTableData(items, columns, selectedRows) {
     return items.map((item, index) => {
       let row = {};
-      let selected = selectedRows.indexOf(index) > -1;
+      let selected = (selectedRows || []).indexOf(index) > -1;
       let columnsComponents = columns.map((column, i) => {
         if (!column.checked) {
           return;
