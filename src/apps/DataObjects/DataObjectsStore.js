@@ -198,7 +198,7 @@ export default Reflux.createStore({
 
   // Table stuff
   renderTableData() {
-    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns);
+    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns, this.data.selectedRows);
   },
 
   renderTableHeader() {
