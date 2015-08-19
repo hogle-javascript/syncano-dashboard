@@ -28,7 +28,7 @@ export default {
   },
 
   remove(names) {
-    names.map(name => {
+    names.map((name) => {
       this.Connection
         .ApiKeys
         .remove(name)

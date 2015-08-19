@@ -27,9 +27,9 @@ export default React.createClass({
 
   render() {
     let webhookName = this.getParams().webhookName;
+
     return (
       <Traces
-        showHeader={true}
         objectId={webhookName}
         tracesFor='webhook'/>
     );

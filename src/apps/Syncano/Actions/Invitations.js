@@ -16,9 +16,7 @@ export default {
   },
 
   remove(items) {
-    let promises = items.map(item => {
-      return this.Connection.Invitations.remove(item.id);
-    });
+    let promises = items.map((item) => this.Connection.Invitations.remove(item.id));
 
     this.D.all(promises)
       .success(this.completed)
@@ -26,9 +24,7 @@ export default {
   },
 
   resend(items) {
-    let promises = items.map(item => {
-      return this.Connection.Invitations.resend(item.id);
-    });
+    let promises = items.map((item) => this.Connection.Invitations.resend(item.id));
 
     this.D.all(promises)
       .success(this.completed)

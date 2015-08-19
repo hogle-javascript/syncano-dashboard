@@ -81,11 +81,13 @@ export default React.createClass({
   isMySolution() {
     let user = SessionStore.getUser();
     let author = this.state.item.author;
+
     return (user && author && user.id === author.id);
   },
 
   isNoVersions() {
     let item = this.state.item;
+
     return (item && item.versions && !item.versions.devel && !item.versions.stable);
   },
 
@@ -139,9 +141,7 @@ export default React.createClass({
 
   handleTagsListChange(tagsString, tagsArray) {
     Actions.updateSolution(this.state.item.id, {
-      tags: tagsArray.map(item => {
-        return item.value
-      })
+      tags: tagsArray.map((item) => item.value)
     });
   },
 
@@ -151,7 +151,7 @@ export default React.createClass({
     if (this.state.item.tags && this.state.item.tags.length === 0) {
       return <div style={styles.tag}>no tags</div>;
     }
-    return this.state.item.tags.map(tag => {
+    return this.state.item.tags.map((tag) => {
       return (
         <div
           key={tag}
@@ -174,8 +174,8 @@ export default React.createClass({
 
         <Common.Show if={this.isMySolution()}>
           <Common.Fab>
-            <Common.Fab.Item
-              label="Click here to create Solution"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to create Solution"
               onClick={this.handleAddVersion}
               iconClassName="synicon-plus"/>
           </Common.Fab>

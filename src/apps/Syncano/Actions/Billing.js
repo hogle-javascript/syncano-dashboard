@@ -65,7 +65,7 @@ export default {
         .subscribePlan(currentPlan.plan, {
           commitment: JSON.stringify({
             api: currentPlan.commitment.api,
-            cbx: currentPlan.commitment.cbx,
+            cbx: currentPlan.commitment.cbx
           })
         })
         .then(this.completed)
@@ -91,9 +91,7 @@ export default {
   },
 
   cancelSubscriptions(ids) {
-    let promises = ids.map(id => {
-      this.Connection.Billing.cancelSubscription(id);
-    });
+    let promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
 
     this.D.all(promises)
       .success(this.completed)

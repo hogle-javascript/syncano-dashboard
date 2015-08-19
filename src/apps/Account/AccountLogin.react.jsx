@@ -64,6 +64,7 @@ export default React.createClass({
     }
 
     let invKey = this.getQuery().invitation_key || null;
+
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
       SessionActions.setInvitationFromUrl(invKey)
     }
@@ -134,7 +135,9 @@ export default React.createClass({
             <li><p><Link to="password-reset">Forgot password?</Link></p></li>
             <li><p>Don't have an account?<Link to="signup"> Sign up here</Link></p></li>
           </ul>
-          <p className="vm-4-t vm-0-b">If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a></p>
+          <p className="vm-4-t vm-0-b">
+            If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
+          </p>
         </div>
       </Container>
     );

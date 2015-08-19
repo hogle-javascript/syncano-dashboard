@@ -41,7 +41,11 @@ export default React.createClass({
     if (!config) return null;
     if (!visible) classes += ' react-tour-hide';
 
-    ElementRect = config[currentStep] ? config[currentStep].node.getBoundingClientRect() : config[0].node.getBoundingClientRect();
+    if (config[currentStep].node.getBoundingClientRect()) {
+      ElementRect = config[currentStep];
+    } else {
+      ElementRect = config[0].node.getBoundingClientRect();
+    }
 
     return (
       <div className={classes}>
@@ -57,7 +61,9 @@ export default React.createClass({
             {showDots && (
               <div className='react-tour-dots'>
                 {config.map((el, index) => {
-                  return <div className={'react-tour-dots-single' + (currentStep >= index ? ' active' : '')} key={index} />;
+                  return (
+                    <div className={'react-tour-dots-single' + (currentStep >= index ? ' active' : '')} key={index} />
+                  )
                 })}
               </div>
             )}

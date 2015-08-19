@@ -12,6 +12,7 @@ export default CreateActions(
     setCurrentClassObj: {},
     setSelectedRows: {},
     getIDsFromTable: {},
+    clearStore: {},
 
     fetchCurrentClassObj: {
       asyncResult: true,

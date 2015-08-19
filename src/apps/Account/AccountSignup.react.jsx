@@ -62,6 +62,7 @@ export default React.createClass({
     }
 
     let invKey = this.getQuery().invitation_key || null;
+
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
       SessionActions.setInvitationFromUrl(invKey)
     }
@@ -74,12 +75,18 @@ export default React.createClass({
     });
   },
 
-  render() {
-    let bottomContent = <p className="vm-0-b text--center">By signing up you agree to our <a
-      href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>;
-
+  getBottomContent() {
     return (
-      <Container bottomContent={bottomContent}>
+      <p className="vm-0-b text--center">
+        By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
+        Terms of Use and Privacy Policy</a>.
+      </p>
+    )
+  },
+
+  render() {
+    return (
+      <Container bottomContent={this.getBottomContent()}>
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>

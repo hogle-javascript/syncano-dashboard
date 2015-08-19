@@ -25,30 +25,21 @@ let ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-d
 let MenuNew              = require('material-ui/lib/menus/menu');
 let MenuItemNew          = require('material-ui/lib/menus/menu-item');
 
-let Dropdown             = require('../common/Dropdown/Dropdown.react');
 let MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react');
 let CheckIcon            = require('../common/CheckIcon/CheckIcon.react');
-let ProgressBar          = require('../common/ProgressBar/ProgressBar.react');
-let Label                = require('../common/Label/Label.react');
 let Editor               = require('../common/Editor/Editor.react');
 let EditorPanel          = require('../common/Editor/EditorPanel.react');
 let FabList              = require('../common/Fab/FabList.react');
-let UsageBar             = require('../common/UsageBar/UsageBar.react');
 
-let SwitchField          = require('../common/SwitchField/SwitchField.react');
-let SwitchFieldList      = require('../common/SwitchField/SwitchFieldList.react');
-let SwitchInput          = require('../common/SwitchField/SwitchInput.react');
 let SocialAuthButtonsList = require('../common/SocialAuthButtonsList');
 let List                 = require('../common/Lists/List.react');
 let Trace                = require('../common/Trace/TraceResult.react');
-let TraceResultWithMeta  = require('../common/Trace/TraceResultWithMeta.react');
 let Loading              = require('../common/Loading/Loading.react');
 let Slider               = require('../common/Slider/Slider.react');
 
 let ColumnListItem       = require('../common/ColumnList/Item.react');
 let ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react');
 let ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
-
 
 require('./Examples.css');
 
@@ -108,6 +99,7 @@ export default React.createClass({
 
   getDateNow() {
     let date = new Date();
+
     return date;
   },
 
@@ -115,6 +107,7 @@ export default React.createClass({
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
+
     return day + '-' + month + '-' + year;
   },
 
@@ -128,6 +121,7 @@ export default React.createClass({
 
   getMinDate(minYear) {
     let date = new Date();
+
     date.setFullYear(minYear);
     return date;
   },
@@ -137,26 +131,8 @@ export default React.createClass({
   },
 
   render() {
-
-
     let dummyClick = function(action) {
       console.log('Click!', action);
-    };
-
-    let dropdownItems = [{
-      content: "Account",
-      name: "account",
-      handleItemClick: dummyClick
-    }, {
-      content: "Logout",
-      name: "logout",
-      handleItemClick: dummyClick
-    }];
-
-    let dropdownHeader = {
-      icon: "synicon-account-circle",
-      userFullName: "Name LastName",
-      userEmail: "hubert.wesolowski@syncano.com",
     };
 
     let actions = [{
@@ -263,20 +239,6 @@ export default React.createClass({
       }
     };
 
-    let switchFields = [{
-        name: 'limit',
-        enabled: true,
-        heading: 'Limit',
-        textEnabled: 'Hard limit is currently enabled. Your account will stop working when the limit is reached.',
-        textDisabled: 'Hard limit is currently disabled. Your account will stop working when the limit is reached.',
-      }, {
-        name: 'alert',
-        enabled: false,
-        heading: 'Alert',
-        textEnabled: 'Alert is currently enabled. Your account will stop working when the limit is reached.',
-        textDisabled: 'Alert is currently disabled. Your account will stop working when the limit is reached.',
-      }];
-
     let payload = '{test: "testvalue"}';
 
     let fieldSelect = {
@@ -329,18 +291,6 @@ export default React.createClass({
       }
     ];
 
-    let accordionItems = [{
-      id: "allUsers",
-      uuid: "allUsers",
-      displayName: "All users",
-      isNavigationElement: true
-    }, {
-      id: "groups",
-      uuid: "groups",
-      displayName: "Groups",
-      isNavigationElement: true
-    }];
-
     let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
     let notifications = [{
@@ -382,13 +332,6 @@ export default React.createClass({
 
       <div className="examplesContainer">
         <h4>Examples</h4>
-
-        <div className="exampleBox">
-          <h2>Dropdown</h2>
-          <Dropdown
-              items={dropdownItems}
-              headerContent={dropdownHeader} />
-        </div>
 
         <div className="exampleBox">
           <h2>Material dropdown</h2>
@@ -463,16 +406,6 @@ export default React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>ProgressBar</h4>
-          <ProgressBar visible={true}/>
-        </div>
-
-        <div className="exampleBox">
-          <h4>Label</h4>
-          <Label text={text}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>Editor</h2>
           <Editor
             source={source}
@@ -542,33 +475,6 @@ export default React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h2>SwitchFieldList</h2>
-          <SwitchFieldList
-            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
-            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
-            fields={switchFields} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>SwitchField</h2>
-          <SwitchField
-            handleSwitchClick={dummyClick.bind(this, "handleSwitchCilck")}
-            handleFieldLinkClick={dummyClick.bind(this, "handleFieldLinkClick")}
-            name="react skills"
-            heading="React skills"
-            toggled={true}
-            textEnabled="Dummy text enabled"
-            textDisabled="dummy text disabled" />
-        </div>
-
-        <div className="exampleBox">
-          <h2>SwitchInput</h2>
-          <SwitchInput
-            handleClick={dummyClick.bind(this, "handleClick")}
-            enabled={true} />
-        </div>
-
-        <div className="exampleBox">
           <h2>Toggle (Material UI)</h2>
           <Toggle
             name="ToggleButton"
@@ -607,21 +513,8 @@ export default React.createClass({
         </div>
 
         <div className="exampleBox">
-          <h4>UsageBar</h4>
-          <UsageBar billingProfile={billingProfile}/>
-        </div>
-
-        <div className="exampleBox">
           <h2>Trace</h2>
           <Trace result={"Some not very long result: " + source} />
-        </div>
-
-        <div className="exampleBox">
-          <h2>TraceResultWithMeta</h2>
-          <TraceResultWithMeta
-            meta={{'test': 'Some meta'}}
-            args={{'arg1': 'Arg1', 'arg2': 'Arg2'}}
-            result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">

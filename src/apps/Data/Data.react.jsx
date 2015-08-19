@@ -50,11 +50,6 @@ export default React.createClass({
     this.fetch();
   },
 
-  componentWillReceiveProps() {
-    console.info('Data::componentWillReceiveProps');
-    this.fetch();
-  },
-
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
@@ -62,7 +57,6 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-
     return [
       {
         dialog: Common.Dialog,
@@ -167,18 +161,18 @@ export default React.createClass({
 
         <Common.Show if={checkedDataViews > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
               iconClassName={isAnyDataViewSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete a Data Endpoint"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete a Data Endpoint"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeDataViewDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit a Data Endpoint"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit a Data Endpoint"
               mini={true}
               disabled={checkedDataViews > 1}
               onClick={this.showDataViewEditDialog}
@@ -188,18 +182,18 @@ export default React.createClass({
 
         <Common.Show if={checkedWebhooks > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
               iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete a CodeBox Endpoint"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete a CodeBox Endpoint"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit a CodeBox Endpoint"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit a CodeBox Endpoint"
               mini={true}
               disabled={checkedDataViews > 1}
               onClick={this.showWebhookEditDialog}
@@ -208,12 +202,12 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to create a Data Endpoint"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to create a Data Endpoint"
             onClick={this.showDataViewDialog}
             iconClassName="synicon-table"/>
-          <Common.Fab.Item
-            label="Click here to create a CodeBox Endpoint"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to create a CodeBox Endpoint"
             onClick={this.showWebhookDialog}
             iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>

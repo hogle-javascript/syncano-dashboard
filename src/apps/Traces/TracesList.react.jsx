@@ -153,7 +153,7 @@ export default Radium(React.createClass({
       };
 
     if (items.length > 0) {
-      items = items.map(item => this.renderItem(item));
+      items = items.map((item) => this.renderItem(item));
       return items;
     }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import OutsideClickHandler from 'react-outsideclickhandler';
 
 import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
@@ -32,6 +33,10 @@ export default Radium(React.createClass({
   componentDidMount() {
     console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
+  },
+
+  handleOutsideClick() {
+    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
   },
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
@@ -73,19 +78,20 @@ export default Radium(React.createClass({
         display: 'none'
       },
       dropdownLabelContainer: {
-        display        : '-webkit-box; display: flex',
-        alignItems     : 'center',
+        display: '-webkit-box; display: flex',
+        alignItems: 'center',
+        overflow: 'hidden'
       },
       dropdownLabel: {
-        WebkitBoxFlex  : '1',
-        flex           : '1',
-        whiteSpace     : 'nowrap',
-        textOverflow   : 'ellipsis',
-        overflow       : 'hidden',
-        paddingRight   : 40,
-        paddingLeft    : 0,
-        color          : 'black',
-        fontWeight     : 400
+        WebkitBoxFlex: '1',
+        flex: '1',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        paddingRight: 40,
+        paddingLeft: 0,
+        color: 'black',
+        fontWeight: 400
       },
       dropdownInstanceIcon: {
         minWidth: 32,
@@ -100,9 +106,12 @@ export default Radium(React.createClass({
         backgroundColor: 'green',
         margin: '8px 16px 8px 0'
       },
+      dropdownMenu: {
+        maxHeight: 'calc(100vh - 80px)'
+      },
       dropdownMenuItem: {
         height      : 'auto',
-        paddingLeft : 16,
+        paddingLeft : 16
       }
     }
   },
@@ -111,6 +120,8 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
+    let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
@@ -122,34 +133,39 @@ export default Radium(React.createClass({
       item.metadata.color = item.metadata.color || null;
 
       let iconBackground = {
-        backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND
+        backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || defaultIconBackground
       };
-      let icon = item.metadata.icon ? item.metadata.icon : Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+      let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
-      let text = <div style={styles.dropdownLabelContainer}>
+      let text = (
+        <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
             style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
-
           {item.name}
-        </div>;
+        </div>
+      );
 
       return {
         payload: item.name,
-        text: text
+        text
       }
     });
 
     return (
-      <MUI.DropDownMenu
-        className      = "instances-dropdown"
-        style          = {{width: '100%'}}
-        labelStyle     = {styles.dropdownLabel}
-        underlineStyle = {styles.dropdownLabelUnderline}
-        menuItemStyle  = {styles.dropdownMenuItem}
-        menuItems      = {dropDownMenuItems}
-        onChange       = {this.handleDropdownItemClick}
-        selectedIndex  = {this.handleInstanceActive()} />
+      <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>
+        <MUI.DropDownMenu
+          ref="HeaderInstancesDropdown"
+          className="instances-dropdown"
+          style={{width: '100%'}}
+          menuStyle={styles.dropdownMenu}
+          labelStyle={styles.dropdownLabel}
+          underlineStyle={styles.dropdownLabelUnderline}
+          menuItemStyle={styles.dropdownMenuItem}
+          menuItems={dropDownMenuItems}
+          onChange={this.handleDropdownItemClick}
+          selectedIndex={this.handleInstanceActive()} />
+      </OutsideClickHandler>
     )
   }
 }));

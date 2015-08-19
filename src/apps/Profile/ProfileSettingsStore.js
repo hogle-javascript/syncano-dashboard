@@ -12,11 +12,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     let user = SessionStore.getUser({});
+
     return {
-      // jscs:disable
       firstName: user.first_name,
       lastName: user.last_name,
-      // jscs:enable
       email: user.email
     }
   },
@@ -31,11 +30,10 @@ export default Reflux.createStore({
     console.debug('ProfileSettingsStore:checkSession');
     if (Session.isReady()) {
       let user = SessionStore.getUser({});
+
       this.trigger({
-        // jscs:disable
         firstName: user.first_name,
         lastName: user.last_name,
-        // jscs:enable
         email: user.email
       });
     }

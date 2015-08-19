@@ -22,9 +22,7 @@ export default {
   },
 
   remove(names) {
-    let promises = names.map(id => {
-      this.Connection.Channels.remove(id);
-    });
+    let promises = names.map((id) => this.Connection.Channels.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

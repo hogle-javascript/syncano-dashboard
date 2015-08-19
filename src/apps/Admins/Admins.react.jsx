@@ -172,8 +172,9 @@ export default React.createClass({
   render() {
     let checkedAdmins = Store.getNumberOfChecked();
     let checkedInvitations = AdminsInvitationsStore.getNumberOfChecked();
+    let pendingInvitationsCount = AdminsInvitationsStore.getPendingInvitations().length;
     let isAnyAdminSelected = checkedAdmins >= 1 && checkedAdmins < (this.state.admins.items.length - 1);
-    let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (AdminsInvitationsStore.getPendingInvitations().length);
+    let isAnyAdminInvitationSelected = checkedInvitations >= 1 && checkedInvitations < (pendingInvitationsCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
@@ -184,18 +185,18 @@ export default React.createClass({
 
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
               iconClassName={isAnyAdminSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Administrator"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Administrator"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit Admin"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit Admin"
               mini={true}
               disabled={checkedAdmins > 1}
               onClick={this.showAdminEditDialog}
@@ -205,18 +206,18 @@ export default React.createClass({
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
               iconClassName={isAnyAdminInvitationSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Invitation"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeInvitationDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to resend invitation"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to resend invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'resendInvitationDialog')}
               iconClassName="synicon-backup-restore"/>
@@ -224,8 +225,8 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to invite Admin"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to invite Admin"
             onClick={this.showAdminDialog}
             iconClassName="synicon-plus"/>
         </Common.Fab>

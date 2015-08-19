@@ -78,13 +78,11 @@ export default {
   },
 
   // Table Body
-  renderTableData(items, columns) {
-
+  renderTableData(items, columns, selectedRows) {
     return items.map((item, index) => {
       let row = {};
-
+      let selected = (selectedRows || []).indexOf(index) > -1;
       let columnsComponents = columns.map((column, i) => {
-
         if (!column.checked) {
           return;
         }
@@ -93,7 +91,6 @@ export default {
         let renderer = this.getColumnRenderer(column.id);
 
         if (value && typeof value === 'object') {
-
           if (value.type === 'reference') {
             value = this.renderReference(value);
           }
@@ -103,8 +100,7 @@ export default {
           if (value.type === 'datetime') {
             value = this.renderColumnDate(value.value);
           }
-
-        } else if (renderer)  {
+        } else if (renderer) {
           // Simple string or renderer
           value = renderer(item[column.id]);
         }
@@ -128,12 +124,10 @@ export default {
       });
 
       return (
-        <MUI.TableRow key={'row-' + index}>
+        <MUI.TableRow key={'row-' + index} selected={selected}>
           {columnsComponents}
         </MUI.TableRow>
       );
-
     });
   }
-
 };

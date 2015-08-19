@@ -5,8 +5,8 @@ import Spacing from './Spacing';
 
 export default {
   spacing: Spacing,
-  contentFontFamily: 'Avenir LT W01_35 Light1475496',
-  getPalette: function() {
+  contentFontFamily: 'Avenir, sans-serif',
+  getPalette() {
     return {
       primary1Color: Colors.blue700,
       primary2Color: Colors.blue500,
@@ -22,7 +22,7 @@ export default {
       disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
     };
   },
-  getComponentThemes: function(palette) {
+  getComponentThemes(palette) {
     return {
       flatButton: {
         primaryTextColor: palette.primary1Color,
@@ -33,7 +33,7 @@ export default {
       },
       floatingActionButton: {
         color: Colors.pinkA200
-      },
+      }
     };
   }
 };

@@ -62,6 +62,7 @@ export default Radium(React.createClass({
 
   renderRow(row) {
     let styles = this.getStyles();
+
     row.styles = row.styles || {};
 
     return (

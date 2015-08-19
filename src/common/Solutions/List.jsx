@@ -39,6 +39,7 @@ export default React.createClass({
 
   getListItems() {
     let styles = this.getStyles();
+
     if (this.props.items.length < 1) {
       return [
         <div style={styles.noItemsContainer}>
@@ -50,7 +51,7 @@ export default React.createClass({
       ];
     }
 
-    return this.props.items.map(item => {
+    return this.props.items.map((item) => {
       return (
         <div
           key={item.id}

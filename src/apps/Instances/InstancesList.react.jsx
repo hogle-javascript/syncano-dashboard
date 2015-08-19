@@ -43,8 +43,7 @@ export default React.createClass({
   },
 
   handleItemClick(instanceName) {
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName: instanceName});
+    SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
   },
 
   renderItem(item) {
@@ -80,7 +79,8 @@ export default React.createClass({
       )
     }
 
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
+
     items.reverse();
     return items;
   },

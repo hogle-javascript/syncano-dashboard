@@ -28,29 +28,44 @@ export default Radium(React.createClass({
         alignItems: 'center',
         justifyContent: 'center'
       },
-      leftAvatar: {
+      avatar: {
         top: '50%',
         transform: 'translateY(-50%)'
       }
     };
+
     return this.mergeStyles(styles, this.props.style);
+  },
+
+  getIcon() {
+    let styles = this.getStyles();
+
+    return (
+      <MUI.FontIcon
+        className="synicon-plus"
+        style={styles.icon}/>
+    )
+  },
+
+  getAvatar() {
+    let styles = this.getStyles();
+
+    return (
+      <MUI.Avatar
+        icon={this.getIcon()}
+        style={styles.avatar}/>
+    )
   },
 
   render() {
     let styles = this.getStyles();
-    let icon = <MUI.FontIcon
-        className="synicon-plus"
-        style={styles.icon}/>;
-    let leftAvatar = <MUI.Avatar
-        icon={icon}
-        style={styles.leftAvatar}/>;
 
     return (
       <MUI.ListItem
         className="empty-list-item"
         onTouchTap={this.props.handleClick}
         style={styles.listItem}
-        leftAvatar={leftAvatar}>
+        leftAvatar={this.getAvatar()}>
         {this.props.children}
       </MUI.ListItem>
     )

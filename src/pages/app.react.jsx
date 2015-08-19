@@ -1,11 +1,11 @@
-import React                                 from 'react';
-import Router                                from 'react-router';
-import SessionActions                        from '../apps/Session/SessionActions';
-import SessionStore                          from '../apps/Session/SessionStore';
-import mui                                   from 'material-ui';
+import React from 'react';
+import Router from 'react-router';
+import SessionActions from '../apps/Session/SessionActions';
+import SessionStore from '../apps/Session/SessionStore';
+import MUI from 'material-ui';
 import {SyncanoTheme, SnackbarNotification}  from './../common';
 
-let ThemeManager = new mui.Styles.ThemeManager();
+let ThemeManager = new MUI.Styles.ThemeManager();
 
 export default React.createClass({
 
@@ -36,14 +36,12 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    // TODO: MUI should deal with that, but for some reason it's not using contentFontFamily
-    ThemeManager.contentFontFamily = SyncanoTheme.contentFontFamily;
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
   },
 
-  render(){
+  render() {
     return (
       <div>
         <Router.RouteHandler/>

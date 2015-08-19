@@ -1,4 +1,3 @@
-import ButtonActionMixin from './ButtonActionMixin';
 import DialogMixin from './DialogMixin';
 import DialogStoreMixin from './DialogStoreMixin';
 import DialogsMixin from './DialogsMixin';
@@ -12,7 +11,7 @@ import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
 
 let Mixins = {};
-Mixins.ButtonAction = ButtonActionMixin;
+
 Mixins.Dialog = DialogMixin;
 Mixins.Dialogs = DialogsMixin;
 Mixins.DialogStore = DialogStoreMixin;

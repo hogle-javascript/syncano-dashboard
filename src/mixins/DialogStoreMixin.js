@@ -1,6 +1,6 @@
-let objectAssign = require('object-assign');
+import objectAssign from 'object-assign';
 
-let DialogStoreMixin = {
+export default {
 
   getInitialState() {
     return this.getInitialDialogState();
@@ -20,7 +20,7 @@ let DialogStoreMixin = {
     if (instance !== undefined) {
       state = objectAssign(state, instance, {_dialogMode: 'edit'});
     } else if (secondInstance !== undefined) {
-      state = objectAssign(state, {secondInstance: secondInstance});
+      state = objectAssign(state, {secondInstance});
     }
 
     this.trigger(state);
@@ -31,5 +31,3 @@ let DialogStoreMixin = {
     this.trigger(this.getInitialDialogState());
   }
 };
-
-module.exports = DialogStoreMixin;

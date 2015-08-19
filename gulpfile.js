@@ -1,7 +1,9 @@
 var gulp             = require('gulp'),
     fs               = require('fs'),
     path             = require('path'),
+    async            = require('async'),
     gutil            = require('gulp-util'),
+    git              = require('gulp-git'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
     stripDebug       = require('gulp-strip-debug'),
@@ -14,7 +16,8 @@ var gulp             = require('gulp'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
-    ENV              = process.env.NODE_ENV || 'development';
+    ENV              = process.env.NODE_ENV || 'development',
+    version          = 'v' + require('./package.json').version;
 
 var paths = {
   dist: './dist',
@@ -193,6 +196,51 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
+});
+
+gulp.task('check-github-tag', function(cb) {
+  async.series([
+    function (callback) {
+      git.fetch('origin', '', {args: '--tags'}, callback);
+    },
+
+    function (callback) {
+      git.exec({args: 'tag -l "' + version + '"'}, function(err, stdout) {
+        if (err) return callback(err);
+        if (stdout.indexOf(version) > -1) {
+          return callback(new gutil.PluginError('check-github-tag', 'Version "' + version +'" already exists.'))
+        }
+
+        callback();
+      });
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('add-github-tag', function(cb) {
+  async.series([
+    function (callback) {
+      git.exec({args: 'config --global user.email "ci@syncano.com"'}, callback);
+    },
+
+    function (callback) {
+      git.exec({args: 'config --global user.name "CI"'}, callback);
+    },
+
+    function (callback) {
+      git.tag(version, 'Release ' + version, callback);
+    },
+
+    function (callback) {
+      git.push('origin', version, callback);
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);

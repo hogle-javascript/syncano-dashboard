@@ -95,10 +95,7 @@ export default React.createClass({
 
     ClassesActions.updateClass(
       ClassesStore.getCheckedItem().name, {
-        metadata: JSON.stringify({
-          color: color,
-          icon: icon
-        })
+        metadata: JSON.stringify({color, icon})
       }
     );
     ClassesActions.uncheckAll()
@@ -155,6 +152,8 @@ export default React.createClass({
     let checkedClassesCount = ClassesStore.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
     let someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -162,26 +161,26 @@ export default React.createClass({
 
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
-              iconClassName={isAnyAndNotAllClassSelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}/>
-            <Common.Fab.Item
-              label="Click here to delete Classes"
+              iconClassName={isAnyAndNotAllClassSelected ? markedIcon : blankIcon}/>
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Classes"
               mini={true}
               disabled={someClassIsProtectedFromDelete}
               onClick={this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit Class"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit Class"
               mini={true}
               disabled={checkedClassesCount > 1}
               onClick={this.redirectToEditClassView.bind(null, null)}
               iconClassName="synicon-pencil"/>
-            <Common.Fab.Item
+            <Common.Fab.TooltipItem
               style={styles.fabListTopButton}
-              label="Click here to customize Class"
+              tooltip="Click here to customize Class"
               secondary={true}
               mini={true}
               disabled={checkedClassesCount > 1}
@@ -191,8 +190,8 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to add a Class"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to add a Class"
             onClick={this.redirectToAddClassView}
             iconClassName="synicon-plus"/>
         </Common.Fab>

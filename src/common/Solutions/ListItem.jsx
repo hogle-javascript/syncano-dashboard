@@ -82,11 +82,12 @@ export default Radium(React.createClass({
   },
 
   handleTagClick(tag) {
-    this.props.onTagClick(solutionId);
+    this.props.onTagClick(tag);
   },
 
   isNoVersions() {
     let item = this.props.data;
+
     return (item && !item.versions.devel && !item.versions.stable);
   },
 
@@ -122,7 +123,7 @@ export default Radium(React.createClass({
       return <div style={styles.tag}>no tags</div>;
     }
 
-    return this.props.data.tags.map(tag => {
+    return this.props.data.tags.map((tag) => {
       return (
         <a
           key={tag}

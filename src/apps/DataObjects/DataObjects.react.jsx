@@ -48,6 +48,10 @@ export default React.createClass({
     DataObjectsActions.fetch();
   },
 
+  componentWillUnmount() {
+    DataObjectsActions.clearStore();
+  },
+
   // Dialogs config
   initDialogs() {
     return [{
@@ -72,6 +76,7 @@ export default React.createClass({
 
   showDataObjectEditDialog(cellNumber) {
     let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
+
     dataObject = _.reduce(dataObject, (result, val, key) => {
       if (_.isObject(val) && val.type === 'reference') {
         val = val.value;
@@ -192,13 +197,7 @@ export default React.createClass({
         <DataObjectDialog />
 
         <div className="col-flex-1">
-          <MUI.Toolbar style={{
-            position: 'fixed',
-            top: 64,
-            right: 0,
-            paddingLeft: 256,
-            background: 'rgba(215,215,215,0.6)',
-            padding: '0px 32px 0 24px'}}>
+          <Common.InnerToolbar>
             <MUI.ToolbarGroup>
               <MUI.IconButton
                 iconClassName="synicon-arrow-left"
@@ -234,7 +233,7 @@ export default React.createClass({
 
             </MUI.ToolbarGroup>
 
-          </MUI.Toolbar>
+          </Common.InnerToolbar>
 
           <div style={{clear: 'both', height: '100%'}}>
             <Common.Show if={this.state.isLoading}>
