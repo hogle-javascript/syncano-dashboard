@@ -94,7 +94,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveChannelsCompleted(payload) {
+  onRemoveChannelsCompleted() {
     console.debug('ChannelsStore::onRemoveChannelsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();

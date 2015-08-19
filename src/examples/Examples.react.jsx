@@ -31,7 +31,6 @@ let Editor               = require('../common/Editor/Editor.react');
 let EditorPanel          = require('../common/Editor/EditorPanel.react');
 let FabList              = require('../common/Fab/FabList.react');
 
-let SocialAuthButtonsList = require('../common/SocialAuthButtonsList');
 let List                 = require('../common/Lists/List.react');
 let Trace                = require('../common/Trace/TraceResult.react');
 let Loading              = require('../common/Loading/Loading.react');
@@ -135,32 +134,10 @@ export default React.createClass({
       console.log('Click!', action);
     };
 
-    let actions = [{
-      displayName: 'Sort by name',
-      name: 'sortByName'
-    }, {
-      displayName: 'Sort by date',
-      name: 'sortByDate'
-    }, {
-      displayName: 'Switch to list view',
-      name: 'switchToListView',
-      iconType: 'view-stream'
-    }, {
-      displayName: 'Switch to card view',
-      name: 'switchToCardView',
-      iconType: 'view-module'
-    }];
-
-    let text = "Dummy text";
-
     let item = {
       name: "Dummy name",
       description: "Very long dummy description",
       metadata: {color: 'blue', icon: 'google'}
-    };
-
-    let style = {
-      'color': 'red'
     };
 
     let source = "import os\n" +
@@ -185,23 +162,6 @@ export default React.createClass({
       }
     ];
 
-    let passwordField = {
-      displayName: "Password",
-      name: "password",
-      largeText: false,
-      fieldGroup: 'menu',
-      color: '#FFC52D'
-    };
-
-    let someField = {
-      displayName: "Some Field",
-      value: "Some readonly value",
-      name: "somefield",
-      largeText: false,
-      fieldGroup: 'menu',
-      color: '#FFC52D'
-    };
-
     let handleSnackbarClick = function() {
       this.refs.snackbar.show()
     }.bind(this);
@@ -220,42 +180,7 @@ export default React.createClass({
       this.refs.standardDialog.show();
     }.bind(this);
 
-    let socialAuthButtons = [{
-      icon: 'github',
-      text: 'Login with Github'
-    }, {
-      icon: 'google',
-      text: 'Login with Google'
-    }, {
-      icon: 'facebook',
-      text: 'Login with Facebook'
-    }];
-
-    let billingProfile = {
-      soft_limit: 3000,
-      hard_limit: 5000,
-      balance: {
-        total: 4000
-      }
-    };
-
     let payload = '{test: "testvalue"}';
-
-    let fieldSelect = {
-      displayName: "Codebox",
-      name: "codebox",
-      options: [{
-        displayName: "CodeBox1",
-        name: 1
-      }, {
-        displayName: "CodeBox2",
-        name: 2
-      }, {
-        displayName: "CodeBox3",
-        name: 3
-      }],
-      type: "select"
-    };
 
     let fieldSelectMUI = [{
       payload: '1',
@@ -273,23 +198,6 @@ export default React.createClass({
       payload: '5',
       text: 'Weekly'
     }];
-
-    let fieldDatetime = {
-      displayName: "Date",
-      name: "date",
-      type: "datetime",
-      value: ""
-    };
-
-    let columns = [
-      {
-        name: 'CodeBox',
-        columnType: 'icon'
-      }, {
-        name: 'ID',
-        columnType: 'integer'
-      }
-    ];
 
     let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 

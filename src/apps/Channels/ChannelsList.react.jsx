@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import ChannelsActions from './ChannelsActions';
 import ChannelsStore from './ChannelsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -35,9 +33,6 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     ChannelsActions.checkItem(id, state);
-  },
-
-  handleItemClick(itemId) {
   },
 
   renderItem(item) {

@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -28,7 +26,7 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillReceiveProps(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
     this.setState({items: nextProps.items})
   },
 

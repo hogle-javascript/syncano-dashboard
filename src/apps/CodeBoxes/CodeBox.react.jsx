@@ -6,11 +6,9 @@ import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 import Store from './CodeBoxStore';
-import Actions from './CodeBoxActions';
 
 import MUI from 'material-ui';
 import Common from '../../common';
-import Container from '../../common/Container';
 
 let RouteHandler = Router.RouteHandler;
 

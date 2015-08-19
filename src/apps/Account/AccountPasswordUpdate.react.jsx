@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 import Store from './AuthStore';
-import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 import MUI from 'material-ui';
