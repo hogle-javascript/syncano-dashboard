@@ -1,5 +1,4 @@
 import React       from 'react';
-import classNames  from 'classnames';
 
 import MUI         from 'material-ui';
 
@@ -39,7 +38,7 @@ export default React.createClass({
     this.setState({checked: newProps.checked});
   },
 
-  handleIconClick(event) {
+  handleIconClick() {
     console.info('ColumnAvatarCheck:handleClick');
     this.props.handleIconClick(this.props.id, !this.state.checked)
   },

@@ -95,7 +95,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchSolution(solution) {
+  onFetchSolution() {
     console.debug('SolutionsEditStore::onFetchSolutions');
     this.data.isLoading = true;
     this.trigger(this.data);

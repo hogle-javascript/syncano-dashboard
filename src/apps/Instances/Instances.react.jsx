@@ -5,7 +5,6 @@ import Radium from 'radium';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';

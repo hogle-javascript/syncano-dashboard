@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';

@@ -4,11 +4,9 @@ import Router from 'react-router';
 import Radium from 'radium';
 import OutsideClickHandler from 'react-outsideclickhandler';
 
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import InstancesActions from '../Instances/InstancesActions';
 import InstancesStore from '../Instances/InstancesStore';
 
 import MUI from 'material-ui';
