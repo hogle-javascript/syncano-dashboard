@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +12,6 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 

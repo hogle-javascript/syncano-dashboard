@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Radium from 'radium';
-import classNames from 'classnames';
 
 // Utils
 import FormMixin from '../../mixins/FormMixin';
@@ -75,7 +74,6 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less";
     let trace = null;
 
     if (this.state.panelCollapsed) {

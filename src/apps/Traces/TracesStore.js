@@ -1,13 +1,9 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-// Utils & Mixins
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import AuthStore from '../Account/AuthStore';
 import Actions from './TracesActions';
 
 export default Reflux.createStore({
