@@ -301,7 +301,6 @@ export default Reflux.createStore({
   onRemoveDataObjectsCompleted() {
     this.data.hideDialogs = true;
     this.data.selectedRows = null;
-    this.data.isLoading = false;
     this.trigger(this.data);
     this.refreshDataObjects();
   }
