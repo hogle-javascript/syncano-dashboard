@@ -140,19 +140,27 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataViewDialog::renderOrderBy', this.state.class);
+    let orderField = <div style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
+    let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+
+    if (orderFields.lenght > 0) {
+      orderField = (
+        <MUI.SelectField
+          ref="order_by"
+          name="order_by"
+          floatingLabelText="Order by"
+          fullWidth={true}
+          valueLink={this.linkState('order_by')}
+          errorText={this.getValidationMessages('class').join(' ')}
+          valueMember="payload"
+          displayMember="text"
+          menuItems={orderFields} />
+      );
+    }
 
     return [
       <div>Response options</div>,
-      <MUI.SelectField
-        ref="order_by"
-        name="order_by"
-        floatingLabelText="Order by"
-        fullWidth={true}
-        valueLink={this.linkState('order_by')}
-        errorText={this.getValidationMessages('class').join(' ')}
-        valueMember="payload"
-        displayMember="text"
-        menuItems={ClassesStore.getClassOrderFieldsPayload(this.state.class)}/>,
+      orderField,
       <MUI.TextField
         ref='page_size'
         name='page_size'
