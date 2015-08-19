@@ -63,7 +63,16 @@ export default React.createClass({
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
-          params[item.name] = this.state[item.name];
+          switch (this.state[item.name]) {
+            case 'true':
+              params[item.name] = true;
+              break;
+            case 'false':
+              params[item.name] = false;
+              break;
+            default:
+              return null;
+          }
         } else if (item.type === 'datetime') {
           let date = this.refs[`fielddate-${item.name}`].getDate();
           let time = this.refs[`fieldtime-${item.name}`].getTime();
@@ -342,6 +351,12 @@ export default React.createClass({
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
+          // TODO: Add this item when backend will be ready for 'null' value {text: 'Blank', payload: 'null'}
+          let menuItems = [
+            {text: 'True', payload: 'true'},
+            {text: 'False', payload: 'false'}
+          ];
+
           return (
             <MUI.SelectField
               key={'field-' + item.name}
@@ -353,7 +368,7 @@ export default React.createClass({
               displayMember="text"
               floatingLabelText={'Value of ' + item.name}
               errorText={this.getValidationMessages(item.name).join(' ')}
-              menuItems={[{text: 'True', payload: true}, {text: 'False', payload: false}]}/>
+              menuItems={menuItems}/>
           )
         }
 
