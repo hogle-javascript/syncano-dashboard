@@ -48,6 +48,10 @@ export default React.createClass({
     DataObjectsActions.fetch();
   },
 
+  componentWillUnmount() {
+    DataObjectsActions.clearStore();
+  },
+
   // Dialogs config
   initDialogs() {
     return [{

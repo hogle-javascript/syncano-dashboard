@@ -303,5 +303,9 @@ export default Reflux.createStore({
     this.data.selectedRows = null;
     this.trigger(this.data);
     this.refreshDataObjects();
+  },
+
+  clearStore() {
+    this.data = this.getInitialState();
   }
 });
