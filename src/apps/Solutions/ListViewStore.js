@@ -38,8 +38,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SolutionsStore::refreshData');
-    this.refreshSolutions();
-    Actions.fetchTags();
+    Actions.fetchTags().then(this.refreshSolutions);
   },
 
   refreshSolutions() {
@@ -68,7 +67,6 @@ export default Reflux.createStore({
 
   setTags(tags) {
     this.data.tags = this.saveListFromSyncano(tags);
-    this.trigger(this.data);
   },
 
   onSelectOneTag(tag) {
@@ -93,12 +91,6 @@ export default Reflux.createStore({
     this.refreshSolutions();
   },
 
-  onFetchSolutions(solutions) {
-    console.debug('SolutionsStore::onFetchSolutions');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
   onFetchSolutionsCompleted(items) {
     console.debug('SolutionsStore::onFetchSolutionsCompleted');
     this.data.isLoading = false;
@@ -108,12 +100,6 @@ export default Reflux.createStore({
   onFetchSolutionsFailure() {
     console.debug('SolutionsStore::onFetchSolutionsFailure');
     this.data.isLoading = false;
-    this.trigger(this.data);
-  },
-
-  onFetchTags() {
-    console.debug('SolutionsStore::onFetchTags');
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -131,13 +117,11 @@ export default Reflux.createStore({
 
   onUnstarSolutionCompleted() {
     console.debug('SolutionsStore::onUnstarSolutionCompleted');
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onStarSolutionCompleted() {
     console.debug('SolutionsStore::onStarSolutionCompleted');
-    this.trigger(this.data);
     this.refreshData();
   }
 });
