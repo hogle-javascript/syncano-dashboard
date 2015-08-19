@@ -29,11 +29,17 @@ export default React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      selectedIndex: 0,
-      headerText: 'Profile'
-    };
+  getActiveTabIndex() {
+    let index = 1;
+
+    this.menuItems().some((item, i) => {
+      if (item.route && this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    });
+
+    return index;
   },
 
   getStyles() {
@@ -94,7 +100,7 @@ export default React.createClass({
           ref="leftNav"
           header={this.renderInstanceDropdown()}
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
-          selectedIndex={this.state.selectedIndex || 0}
+          selectedIndex={this.getActiveTabIndex()}
           style={styles.leftNav}
           menuItems={this.menuItems()}
           onChange={this.handleTabActive}/>
