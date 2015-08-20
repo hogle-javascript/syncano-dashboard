@@ -8,10 +8,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import EditViewActions from './EditViewActions';
-import EditViewStore from './EditViewStore';
-
 import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import MUI from 'material-ui';
 import Common from '../../common';
 
 export default React.createClass({

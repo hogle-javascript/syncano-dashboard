@@ -1,13 +1,10 @@
 import 'd3';
 import 'c3/c3.css';
 import c3 from 'c3';
-import _ from 'lodash';
 
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-
-import Common from '../../common';
 
 import Actions from './ProfileBillingChartActions';
 import Store from './ProfileBillingChartStore';
@@ -27,7 +24,7 @@ export default Radium(React.createClass({
     });
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     console.log('ProfileBillingChart::componentDidUpdate');
 
     if (this.state.isLoading === true || this.chart !== undefined) {

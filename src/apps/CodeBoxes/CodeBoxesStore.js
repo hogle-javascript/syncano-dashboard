@@ -145,7 +145,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveCodeBoxesCompleted(payload) {
+  onRemoveCodeBoxesCompleted() {
     console.debug('CodeBoxesStore::onRemoveCodeBoxesCompleted');
     this.data.hideDialogs = true;
     this.refreshData();

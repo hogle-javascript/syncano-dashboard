@@ -7,14 +7,11 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
-import Container from '../../common/Container/Container.react';
 
 // Local components
 import CodeBoxesList from './CodeBoxesList.react';

@@ -8,7 +8,6 @@ import Mixins from '../../mixins';
 import WebhooksActions from './WebhooksActions';
 import WebhookDialogStore from './WebhookDialogStore';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
-import ClassesActions from '../Classes/ClassesActions';
 
 // Components
 import MUI from 'material-ui';

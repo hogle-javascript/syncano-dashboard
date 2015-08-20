@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import Constants from '../../constants/Constants';
 import SessionActions from '../Session/SessionActions';
 import DataViewsActions from './DataViewsActions';
 

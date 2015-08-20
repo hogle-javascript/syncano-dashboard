@@ -10,11 +10,9 @@ import DataObjectsActions from './DataObjectsActions';
 import DataObjectDialogStore from './DataObjectDialogStore';
 import DataObjectsStore from './DataObjectsStore';
 import ChannelsActions from '../Channels/ChannelsActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import MUI from 'material-ui';
-import Common from '../../common';
 
 export default React.createClass({
 

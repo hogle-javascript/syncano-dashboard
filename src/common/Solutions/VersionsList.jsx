@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 
 // Components
 import MUI from 'material-ui';
@@ -29,12 +28,6 @@ export default React.createClass({
   },
 
   // List
-  handleItemIconClick(id, state) {
-  },
-
-  handleItemClick(className) {
-  },
-
   handleDownloadVersion(url) {
     window.open(url, '_blank');
   },

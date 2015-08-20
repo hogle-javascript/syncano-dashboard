@@ -4,11 +4,9 @@ import Radium from 'radium';
 import Router from 'react-router';
 
 // Stores & Actions
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import InstancesActions from '../Instances/InstancesActions';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
@@ -16,10 +14,7 @@ import MUI from 'material-ui';
 import Common from '../../common';
 import Logo from '../../common/Logo/Logo.react';
 
-import HeaderMenu from './HeaderMenu.react';
-import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
-import HeaderInstanceMenu from './HeaderInstanceMenu.react';
 
 require('./Header.sass');
 
@@ -159,7 +154,6 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let currentInstance = SessionStore.getInstance();
 
     return (
       <div style={styles.main}>

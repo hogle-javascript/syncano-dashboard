@@ -4,13 +4,11 @@ import Radium from 'radium';
 import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
-import HeaderMixin from '../Header/HeaderMixin';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
 import MUI from 'material-ui';
-import Container from '../../common/Container';
 
 export default Radium(React.createClass({
 

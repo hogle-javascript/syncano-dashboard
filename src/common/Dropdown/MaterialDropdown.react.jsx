@@ -1,10 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import OutsideClickHandler from 'react-outsideclickhandler';
-import MUI from 'material-ui';
-
-import ProfileActions from '../../apps/Profile/ProfileActions';
-import DropDownArrow from 'material-ui/lib/svg-icons/navigation/arrow-drop-down';
 
 import MaterialDropdownItem from './MaterialDropdownItem.react';
 import DropdownNotifiItem from './DropdownNotifiItem.react';
@@ -81,26 +77,6 @@ export default React.createClass({
     )
   },
 
-  renderIcon() {
-    let notificationCountIcon = null;
-
-    if (this.props.type === 'notification' && this.props.items.length > 0) {
-      let synIconName = this.props.items.length < 10 ? this.props.items.length : '9-plus';
-
-      notificationCountIcon = (
-        <MUI.FontIcon
-          className={`synicon-numeric-${synIconName}-box`}
-          style={{
-            padding: '0 4px',
-            color: '#ff3d00',
-            position: 'absolute',
-            top: '-14px',
-            right: '-14px'
-          }}/>
-      );
-    }
-  },
-
   render() {
     let cssClasses = classNames({
       'dropdown-menu': true,
@@ -114,7 +90,6 @@ export default React.createClass({
             className="dropdown-button clickable"
             onClick={this.toggleOpenClose}>
             {this.props.children}
-            {this.renderIcon()}
           </div>
           <div className={cssClasses}>
             <div className="dropdown-menu-section">

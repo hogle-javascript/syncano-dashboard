@@ -57,7 +57,7 @@ export default React.createClass({
   },
 
   getInvitationItems() {
-    let invitationItems = this.props.items.filter(function(item, index) {
+    let invitationItems = this.props.items.filter(function(item) {
       return item.type === 'invitation';
     });
 
