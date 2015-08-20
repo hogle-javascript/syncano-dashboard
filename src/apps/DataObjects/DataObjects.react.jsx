@@ -83,6 +83,9 @@ export default React.createClass({
       if (_.isObject(val) && val.type === 'reference') {
         val = val.value;
       }
+      if (_.isBoolean(val)) {
+        val = val.toString();
+      }
       result[key] = val;
       return result;
     }, {});
