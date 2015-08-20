@@ -16,6 +16,10 @@ export default Radium(React.createClass({
     onCancelPlanDialog: React.PropTypes.func
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   getStyles() {
     return {
       leftSide: {
@@ -39,6 +43,16 @@ export default Radium(React.createClass({
         display: 'flex',
         alignItems: 'center',
         alignContent: 'center'
+      },
+      cancelPlanLink: {
+        color: '#444',
+        cursor: 'pointer',
+        ':hover': {
+          color: this.context.muiTheme.palette.primary1Color
+        }
+      },
+      activePlan: {
+        color: this.context.muiTheme.palette.primary1Color
       }
     }
   },
@@ -57,6 +71,8 @@ export default Radium(React.createClass({
   },
 
   renderLeftSide() {
+    const styles = this.getStyles();
+
     if (this.props.plan === 'builder') {
       return (
         <div style={{textAlign: 'right'}}>
@@ -78,13 +94,15 @@ export default Radium(React.createClass({
       )
     }
     return (
-      <div>
-        <a onClick={this.handleCancelPlanDialog}>Cancel Production plan</a>
+      <div style={styles.cancelPlanLink}>
+        <span onClick={this.handleCancelPlanDialog}>Cancel Production plan</span>
       </div>
     );
   },
 
   renderRightSide() {
+    const styles = this.getStyles();
+
     if (this.props.plan === 'builder') {
       return (
         <div>
@@ -98,7 +116,7 @@ export default Radium(React.createClass({
       )
     }
     return (
-      <div>
+      <div style={[this.props.planCanceled === false && styles.activePlan]}>
         Production
       </div>
     )
