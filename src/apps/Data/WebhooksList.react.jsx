@@ -42,20 +42,25 @@ export default React.createClass({
     });
   },
 
-  renderItem(item) {
-    let publicString = item.public.toString();
+  renderCopyLinkIcon(item) {
     let link = item.public ? item.links['public-link'] : item.links.run;
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + link;
-    let publicCell = (
-        <div style={{marginLeft: '-14px'}}>
-          <ReactZeroClipboard text={webhookLink}>
-            <MUI.IconButton
-                iconClassName="synicon-link-variant"
-                tooltip="Copy Webhook URL"
-                onClick={this.handleURLClick}/>
-          </ReactZeroClipboard>
-        </div>
+
+    return (
+      <div>
+        <ReactZeroClipboard text={webhookLink}>
+          <MUI.IconButton
+            iconClassName="synicon-link-variant"
+            tooltip="Copy Webhook URL"
+            onClick={this.handleURLClick}/>
+        </ReactZeroClipboard>
+      </div>
     );
+  },
+
+  renderItem(item) {
+    let publicString = item.public.toString();
+    let copyLinkIcon = this.renderCopyLinkIcon(item);
 
     return (
       <Common.ColumnList.Item
@@ -75,7 +80,7 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
         <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
-        <Column.Desc className="col-xs-2">{publicCell}</Column.Desc>
+        <Column.Desc className="col-xs-2">{copyLinkIcon}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
