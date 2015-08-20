@@ -71,7 +71,7 @@ export default React.createClass({
               params[item.name] = false;
               break;
             default:
-              throw new Error("Unexpected value. Only 'true' or 'false' values are available");
+              delete params[item.name];
           }
         } else if (item.type === 'datetime') {
           let date = this.refs[`fielddate-${item.name}`].getDate();
