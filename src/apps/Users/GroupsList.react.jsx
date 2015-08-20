@@ -1,15 +1,9 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
 import HeaderMixin from'../Header/HeaderMixin';
-
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import Actions from './GroupsActions';
-import Store from './GroupsStore';
 
 // Components
 import MUI from 'material-ui';

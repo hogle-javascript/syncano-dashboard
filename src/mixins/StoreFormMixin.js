@@ -1,5 +1,3 @@
-let objectAssign = require('object-assign');
-
 // TODO: add some options like: exclude, ignore, prefix etc
 export default {
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 import Mixins from '../../mixins';
 
@@ -121,7 +120,7 @@ export default React.createClass({
     } else {
       Actions
         .updateCard(this.getValidatorAttributes())
-        .then((payload) => {
+        .then(() => {
           subscribe().then(
             setLimits
           )

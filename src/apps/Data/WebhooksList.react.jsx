@@ -1,16 +1,9 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Actions from './WebhooksActions';
-import Store from './WebhooksStore';
 
 // Components
 import MUI from 'material-ui';

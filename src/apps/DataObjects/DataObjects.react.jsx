@@ -5,15 +5,17 @@ import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
+// Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';
 import DataObjectsStore from './DataObjectsStore';
 
+// Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
+// Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu.react';
 import DataObjectDialog from './DataObjectDialog.react';
 
@@ -80,6 +82,9 @@ export default React.createClass({
     dataObject = _.reduce(dataObject, (result, val, key) => {
       if (_.isObject(val) && val.type === 'reference') {
         val = val.value;
+      }
+      if (_.isBoolean(val)) {
+        val = val.toString();
       }
       result[key] = val;
       return result;

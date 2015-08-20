@@ -32,7 +32,8 @@ export default {
         this.D.all(promises)
           .success(this.completed)
           .error(this.failure);
-      });
+      })
+      .catch(this.failure);
   },
 
   update(payload) {
@@ -47,7 +48,8 @@ export default {
         this.D.all(promises)
           .success(this.completed)
           .error(this.failure);
-      });
+      })
+      .catch(this.failure);
   },
 
   remove(className, dataobjects) {

@@ -6,8 +6,6 @@ import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';

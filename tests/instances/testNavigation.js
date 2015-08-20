@@ -1,3 +1,6 @@
+var Utils = require('nightwatch/lib/util/utils.js');
+
+
 module.exports = {
   tags: ['navigation'],
   before: function(client) {
@@ -20,6 +23,19 @@ module.exports = {
     var dataPage = client.page.dataPage();
     dataPage.waitForElementPresent('@dataListItem');
   },
+
+  afterEach: function(client, done) {
+    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
+      done();
+      return;
+    }
+
+    var name = client.currentTest.name;
+    var timestamp = client.currentTest.timestamp;
+    var fileNamePath = Utils.getScreenshotFileName('_navigation/' + client.currentTest.name, client.options.screenshotsPath);
+    client.saveScreenshot(fileNamePath, done);
+  },
+
   'User goes to Administrators View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@administrators');
@@ -27,7 +43,7 @@ module.exports = {
     var administratorsPage = client.page.administratorsPage();
     administratorsPage.waitForElementPresent('@administratorsListItem');
   },
-  'User goes to API Keys View' : function(client) {   
+  'User goes to API Keys View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@apiKeys');
 
@@ -41,7 +57,7 @@ module.exports = {
     var channelsPage = client.page.channelsPage();
     channelsPage.waitForElementPresent('@channelListItem');
   },
-    'User goes to Classes View' : function(client) {  
+    'User goes to Classes View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@classes');
 

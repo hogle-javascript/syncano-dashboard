@@ -5,9 +5,7 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import SessionActions from '../Session/SessionActions';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
-import InstancesActions from '../Instances/InstancesActions';
 
 import Actions from './InstallDialogActions';
 

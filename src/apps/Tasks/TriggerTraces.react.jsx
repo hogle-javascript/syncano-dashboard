@@ -8,7 +8,6 @@ import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 // Stores & Actions
 import Store from '../Traces/TracesStore';
-import Actions from '../Traces/TracesActions';
 
 // Components
 import Traces from '../Traces';

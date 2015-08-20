@@ -80,10 +80,6 @@
     //     "beforeColon": false,
     //     "afterColon": true
     // }],
-    // "no-unused-vars": [2, {
-    //   "vars": "local",
-    //   "args": "after-used"
-    // }],
     // "no-undefined": 1,
     // "no-invalid-this": 2,
 
@@ -144,7 +140,7 @@
       "beforeColon": false,
       "afterColon": true
     }],
-    "no-unused-vars": [1, {
+    "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
     }],

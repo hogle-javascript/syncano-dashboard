@@ -3,8 +3,6 @@ import Radium from 'radium';
 import Moment from 'moment';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'material-ui';
-
 let Header = React.createClass({
 
   getDefaultProps() {

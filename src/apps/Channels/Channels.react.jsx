@@ -7,12 +7,10 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore     from '../Session/SessionStore';
 import ChannelsActions from './ChannelsActions';
 import ChannelsStore   from './ChannelsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 

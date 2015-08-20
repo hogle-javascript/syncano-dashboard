@@ -72,7 +72,6 @@ export default React.createClass({
     let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
-      let location = window.location;
       let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;

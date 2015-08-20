@@ -52,7 +52,7 @@ export default React.createClass({
     }
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let router = this.context.router;

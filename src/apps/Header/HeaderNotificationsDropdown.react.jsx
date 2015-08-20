@@ -11,7 +11,6 @@ import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import MUI from 'material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
-import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import MenuDivider from 'material-ui/lib/menus/menu-divider';
 

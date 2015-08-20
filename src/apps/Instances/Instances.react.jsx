@@ -5,7 +5,6 @@ import Radium from 'radium';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -144,8 +143,8 @@ export default Radium(React.createClass({
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
 
         <WelcomeDialog
-          getStared={this.showInstanceDialog}
-          visible={this.state.items !== null && Store.getMyInstances().length === 0 && !this.state.welcomeShowed}/>
+          getStarted={this.showInstanceDialog}
+          visible={this.state.items !== null && Store.getAllInstances().length === 0 && !this.state.welcomeShowed}/>
 
         <InstanceDialog />
         {this.getDialogs()}

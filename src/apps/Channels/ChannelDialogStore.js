@@ -5,7 +5,6 @@ import StoreFormMixin from '../../mixins/StoreFormMixin';
 import DialogStoreMixin from '../../mixins/DialogStoreMixin';
 
 // Stores & Actions
-import SessionStore from '../Session/SessionStore';
 import ChannelsActions from './ChannelsActions';
 
 export default Reflux.createStore({
@@ -31,7 +30,7 @@ export default Reflux.createStore({
     this.listenToForms();
   },
 
-  onCreateChannelCompleted(resp) {
+  onCreateChannelCompleted() {
     console.debug('ChannelsStore::onCreateChannelCompleted');
     this.dismissDialog();
     ChannelsActions.fetch();

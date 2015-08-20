@@ -9,13 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Actions from './AdminsActions';
 import Store from './AdminsStore';
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 

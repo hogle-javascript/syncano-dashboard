@@ -5,7 +5,6 @@ import Router from 'react-router';
 import Store from './AuthStore';
 import Actions from './AuthActions';
 
-import MUI from 'material-ui';
 import Container from '../../common/Container/AccountContainer.react';
 
 export default React.createClass({
