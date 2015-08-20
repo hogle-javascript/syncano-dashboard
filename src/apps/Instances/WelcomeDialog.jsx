@@ -1,7 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-
 import MUI from 'material-ui';
 
 export default Radium(React.createClass({
@@ -26,7 +25,7 @@ export default Radium(React.createClass({
 
   handleCloseDialog() {
     this.setState({visible: false});
-    this.props.getStared();
+    this.props.getStarted();
   },
 
   getStyles() {
@@ -36,9 +35,10 @@ export default Radium(React.createClass({
       },
       paper: {
         position: 'fixed',
-        top: 200,
+        top: '50%',
         width: 400,
-        transform: 'translateX(-50%)', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        left: '50%',
         zIndex: 1020
       },
       text: {
