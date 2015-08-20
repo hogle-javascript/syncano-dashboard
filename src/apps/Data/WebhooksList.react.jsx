@@ -1,3 +1,5 @@
+/* global SYNCANO_BASE_URL */
+
 import React from 'react';
 import Router from 'react-router';
 import ReactZeroClipboard from 'react-zeroclipboard';

@@ -16,6 +16,8 @@ import Common from '../../common';
 
 require('react-select/dist/default.css');
 
+let _ = ('lodash');
+
 export default React.createClass({
 
   displayName: 'UserDialog',

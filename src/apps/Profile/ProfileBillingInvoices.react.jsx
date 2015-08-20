@@ -1,3 +1,5 @@
+/* global SYNCANO_BASE_URL */
+
 import React from 'react';
 import Reflux from 'reflux';
 

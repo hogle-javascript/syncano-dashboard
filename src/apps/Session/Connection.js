@@ -1,3 +1,5 @@
+/* global SYNCANO_BASE_URL */
+
 import Syncano from '../../lib/syncano4';
 
 let connection = new Syncano(null, SYNCANO_BASE_URL);
