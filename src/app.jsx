@@ -39,12 +39,12 @@ Router.run(routes, (Root, state) => {
     return;
   }
 
-  if (state.query.distinct_id !== undefined) {
+  if (typeof state.query.distinct_id !== 'undefined') {
     window.analytics.identify(state.query.distinct_id);
   }
 
   let name = 'app';
-  let names = state.routes.map((route) => route.name).filter((routeName) => routeName !== undefined);
+  let names = state.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
 
   if (names.length > 0) {
     name = names[names.length - 1];

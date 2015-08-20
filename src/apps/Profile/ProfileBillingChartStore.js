@@ -133,7 +133,7 @@ export default Reflux.createStore({
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
     _.forEach(usage.objects, (_usage) => {
-      if (columns[_usage.source] === undefined) {
+      if (typeof columns[_usage.source] === 'undefined') {
         return;
       }
 
@@ -217,7 +217,7 @@ export default Reflux.createStore({
 
     _.forEach(this.getAllDates(), (date) => {
       _.forEach(columns, (val, source) => {
-        if (columns[source][date] === undefined) {
+        if (typeof columns[source][date] === 'undefined') {
           columns[source][date] = 0;
         }
 

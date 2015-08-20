@@ -49,15 +49,15 @@ export default {
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
     } else {
-      if (payload.non_field_errors !== undefined) {
+      if (typeof payload.non_field_errors !== 'undefined') {
         state.errors.feedback = payload.non_field_errors.join(' ');
       }
 
-      if (payload.__all__ !== undefined) {
+      if (typeof payload.__all__ !== 'undefined') {
         state.errors.feedback = payload.__all__.join(' ');
       }
 
-      if (payload.message !== undefined) {
+      if (typeof payload.message !== 'undefined') {
         state.errors.feedback = payload.message;
       }
 

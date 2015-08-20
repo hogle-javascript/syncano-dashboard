@@ -114,7 +114,7 @@ export default React.createClass({
 
   handleCellClick(cellNumber, cellName) {
     console.info('DataObjects::handleCellClick', arguments);
-    if (cellName !== undefined && cellName !== 0) {
+    if (typeof cellName !== 'undefined' && cellName !== 0) {
       this.showDataObjectEditDialog(cellNumber);
     }
   },

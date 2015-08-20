@@ -284,6 +284,10 @@ export default React.createClass({
     this.setState(state);
   },
 
+  getUndefined() {
+    return
+  },
+
   handleClearDateTime(name) {
     let state = {};
 
@@ -292,13 +296,13 @@ export default React.createClass({
     this.setState(state);
 
     this.refs[`fielddate-${name}`].setState({
-      date: undefined,
+      date: this.getUndefined(),
       dialogDate: new Date()
     });
 
     this.refs[`fieldtime-${name}`].refs.input.setValue("");
     this.refs[`fieldtime-${name}`].setState({
-      time: undefined,
+      time: this.getUndefined(),
       dialogTime: new Date()
     });
   },
@@ -356,7 +360,7 @@ export default React.createClass({
         }
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ? new Date(this.state[item.name].value) : null;
+          let value = this.state[item.name] ? new Date(this.state[item.name].value) : this.getUndefined();
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -370,14 +374,14 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    defaultDate={value || undefined}
+                    defaultDate={value || this.getUndefined()}
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    defaultTime={value || undefined}
+                    defaultTime={value || this.getUndefined()}
                     />
                 </div>
                 <div className="col-xs-5">

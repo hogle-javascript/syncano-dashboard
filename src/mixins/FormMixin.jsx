@@ -21,7 +21,7 @@ export default {
   },
 
   renderFormErrorFeedback() {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
+    if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
       return;
     }
 
@@ -29,7 +29,7 @@ export default {
   },
 
   renderFormFeedback() {
-    if (!this.state.feedback || this.state.feedback === undefined) {
+    if (!this.state.feedback || typeof this.state.feedback === 'undefined') {
       return
     }
 
@@ -47,7 +47,7 @@ export default {
   validate(key, callback) {
     if (typeof key === 'function') {
       callback = key;
-      key = undefined;
+      key = null;
     }
 
     let constraints = this.validatorConstraints || {};
@@ -62,7 +62,7 @@ export default {
     }
 
     // f***ing js
-    if (key !== undefined) {
+    if (key !== null) {
       let keyConstraints = {};
       let keyAttributes  = {};
 
@@ -74,7 +74,7 @@ export default {
 
     let errors = objectAssign(
       {},
-      (key !== undefined) ? this.state.errors : {},
+      (key !== null) ? this.state.errors : {},
       validate(attributes, constraints)
     );
 
@@ -87,16 +87,16 @@ export default {
     }
 
     // FormMixin compatibility
-    if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {
+    if (typeof this.state.canSubmit !== 'undefined' && this.state.canSubmit === false) {
       return;
     }
 
     this.validate(function(isValid, errors) {
       if (isValid === true) {
-        if (this.handleSuccessfullValidation !== undefined) {
+        if (typeof this.handleSuccessfullValidation !== 'undefined') {
           this.handleSuccessfullValidation.call(this)
         }
-      } else if (this.handleFailedValidation !== undefined) {
+      } else if (typeof this.handleFailedValidation !== 'undefined') {
         this.handleFailedValidation.call(this, errors);
       }
     }.bind(this));
@@ -116,7 +116,7 @@ export default {
       return [];
     }
 
-    if (key === undefined) {
+    if (typeof key === 'undefined') {
       let flattenErrors = [];
 
       for (let error in errors) {
@@ -144,7 +144,7 @@ export default {
   },
 
   isValid(key) {
-    return this.state.errors[key] === undefined || this.state.errors[key] === null;
+    return typeof this.state.errors[key] === 'undefined' || this.state.errors[key] === null;
   },
 
   _invokeCallback(key, callback) {
@@ -152,7 +152,7 @@ export default {
       return;
     }
 
-    if (key !== undefined) {
+    if (typeof key !== 'undefined') {
       callback(this.isValid(key), this.state.errors[key]);
     } else {
       callback(Object.keys(this.state.errors).length === 0, this.state.errors);

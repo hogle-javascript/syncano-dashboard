@@ -89,7 +89,7 @@ export default React.createClass({
   },
 
   showUserDialog(group) {
-    Actions.showDialog(undefined, group);
+    Actions.showDialog(null, group);
   },
 
   showUserEditDialog() {
