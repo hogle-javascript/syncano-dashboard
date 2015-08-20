@@ -475,7 +475,7 @@ export default Radium(React.createClass({
             </div>
 
             <div
-              className="col-flex-1"
+              className="col-md-14"
               style={styles.summary}>
               <div
                 className="vp-4"
