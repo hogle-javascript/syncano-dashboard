@@ -6,7 +6,7 @@ export default (options, props) => {
   props                   = props        || {};
   options                 = options      || {};
   options.attr            = options.attr || 'state.isLoading';
-  options.show            = options.show || [true, null, undefined];
+  options.show            = options.show || [true, null];
   options.overwriteRender = options.overwriteRender || true;
 
   let mixin = {
@@ -18,8 +18,9 @@ export default (options, props) => {
 
     isLoading() {
       let value = _.get(this, options.attr, false);
+      let status = _.indexOf(options.show, value) > -1 || typeof value === 'undefined';
 
-      return _.indexOf(options.show, value) > -1;
+      return status;
     },
 
     renderLoadingComponent() {

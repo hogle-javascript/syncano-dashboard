@@ -50,7 +50,7 @@ export default Radium(React.createClass({
   getCardTypeIcon(cardType) {
     let styles = this.getStyles();
 
-    if (cardType === undefined) {
+    if (typeof cardType === 'undefined') {
       return true;
     }
 

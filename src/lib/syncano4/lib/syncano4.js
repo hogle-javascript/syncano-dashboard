@@ -345,9 +345,9 @@ var Syncano = (function() {
    * @param {object|string} [param] - either name of the instance to connect to or object with instance attribute
    */
   function Syncano(param, _baseUrl) {
-    if (typeof param === 'string') {
+    if (param && typeof param === 'string') {
       tempInstance = param;
-    } else if (typeof param === 'object' && typeof param.instance === 'string') {
+    } else if (param && typeof param === 'object' && typeof param.instance === 'string') {
       tempInstance = param.instance;
     }
 

@@ -11,7 +11,7 @@ let Context = {
 };
 
 export default (options, actions) => {
-  if (actions === undefined) {
+  if (typeof actions === 'undefined') {
     actions = options;
     options = null;
   }

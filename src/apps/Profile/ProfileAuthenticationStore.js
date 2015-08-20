@@ -15,7 +15,7 @@ export default Reflux.createStore({
     let account_key = SessionStore.getUser({}).account_key;
 
     return {
-      isLoading: account_key === undefined,
+      isLoading: typeof account_key === 'undefined',
       account_key
     }
   },

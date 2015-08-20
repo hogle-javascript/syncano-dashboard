@@ -62,7 +62,7 @@ export default React.createClass({
   renderItemGroups(groups) {
     let styles = this.getStyles();
 
-    if (groups === undefined) {
+    if (typeof groups === 'undefined') {
       return
     }
 

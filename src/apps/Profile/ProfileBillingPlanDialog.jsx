@@ -173,7 +173,7 @@ export default React.createClass({
   },
 
   renderCard() {
-    if (this.state.card === undefined) {
+    if (typeof this.state.card === 'undefined') {
       return <Common.Loading show={true}/>
     }
 
@@ -275,7 +275,7 @@ export default React.createClass({
         key={type + 'Slider'}
         ref={type + 'Slider'}
         name={type + 'Slider'}
-        value={selected !== undefined ? selected : defaultValue}
+        value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
         optionClick={this.handleSliderLabelsClick}
