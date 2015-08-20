@@ -1,8 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
 
-import HeaderMixin from '../apps/Header/HeaderMixin';
-
 import MUI from 'material-ui';
 import Container from '../common/Container';
 

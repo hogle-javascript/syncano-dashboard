@@ -6,8 +6,6 @@ import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';
@@ -198,7 +196,7 @@ export default Reflux.createStore({
 
   // Table stuff
   renderTableData() {
-    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns);
+    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns, this.data.selectedRows);
   },
 
   renderTableHeader() {
@@ -303,5 +301,9 @@ export default Reflux.createStore({
     this.data.selectedRows = null;
     this.trigger(this.data);
     this.refreshDataObjects();
+  },
+
+  clearStore() {
+    this.data = this.getInitialState();
   }
 });

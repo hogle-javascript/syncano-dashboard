@@ -2,14 +2,11 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import FormMixin from '../../mixins/FormMixin';
-import HeaderMixin from '../Header/HeaderMixin';
 
-import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
 import MUI from 'material-ui';
-import Container from '../../common/Container/ProfileContainer.react';
 
 export default React.createClass({
 

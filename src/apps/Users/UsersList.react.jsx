@@ -1,18 +1,10 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Store from './UsersStore';
-import Actions from './UsersActions';
-
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;

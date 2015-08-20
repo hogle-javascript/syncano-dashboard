@@ -7,7 +7,6 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import GroupsActions from './GroupsActions';
 import GroupDialogStore from './GroupDialogStore';
-import GroupsStore from './GroupsStore';
 
 // Components
 import MUI from 'material-ui';

@@ -5,28 +5,21 @@ import Select from 'react-select';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import InstancesActions from '../Instances/InstancesActions';
 import SessionStore from '../Session/SessionStore';
 
 import Actions from './EditViewActions';
 import Store from './EditViewStore';
 
-import InstallDialogStore from './InstallDialogStore';
 import InstallDialogActions from './InstallDialogActions';
-
-import AddVersionViewStore from './AddVersionViewStore';
-import AddVersionViewActions from './AddVersionViewActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
-import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
 
 export default React.createClass({
@@ -98,7 +91,7 @@ export default React.createClass({
     );
   },
 
-  handleInstallSolution(versionId) {
+  handleInstallSolution() {
     InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 

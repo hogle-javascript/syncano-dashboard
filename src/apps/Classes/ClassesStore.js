@@ -8,7 +8,6 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './ClassesActions';
 
 export default Reflux.createStore({

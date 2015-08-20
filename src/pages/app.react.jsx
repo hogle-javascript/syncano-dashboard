@@ -29,7 +29,7 @@ export default React.createClass({
     };
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate() {
     if (this.getParams().instanceName === undefined) {
       SessionStore.removeInstance();
     }

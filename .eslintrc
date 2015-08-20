@@ -80,10 +80,6 @@
     //     "beforeColon": false,
     //     "afterColon": true
     // }],
-    // "no-unused-vars": [2, {
-    //   "vars": "local",
-    //   "args": "after-used"
-    // }],
     // "no-undefined": 1,
     // "no-invalid-this": 2,
 
@@ -144,7 +140,7 @@
       "beforeColon": false,
       "afterColon": true
     }],
-    "no-unused-vars": [1, {
+    "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
     }],
@@ -161,7 +157,7 @@
     "no-undef": 1,
     "no-return-assign": [2, "always"],
     "react/jsx-no-undef": 1,
-    "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "D", "e"]}],
+    "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "accessor-pairs": 1,
     "no-multi-spaces": 1,

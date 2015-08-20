@@ -2,7 +2,6 @@ import React from 'react';
 import Router from 'react-router';
 import Reflux from 'reflux';
 
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 
 import MUI from 'material-ui';

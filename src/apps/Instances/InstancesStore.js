@@ -147,7 +147,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchInstances(instances) {
+  onFetchInstances() {
     console.debug('InstancesStore::onFetchInstances');
     this.trigger(this.data);
   },

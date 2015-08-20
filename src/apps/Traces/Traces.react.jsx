@@ -15,7 +15,6 @@ import Actions from './TracesActions';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
-import Container from '../../common/Container/Container.react';
 
 // Local components
 import TracesList from './TracesList.react';

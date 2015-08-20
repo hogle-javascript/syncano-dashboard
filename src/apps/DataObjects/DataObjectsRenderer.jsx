@@ -78,9 +78,10 @@ export default {
   },
 
   // Table Body
-  renderTableData(items, columns) {
+  renderTableData(items, columns, selectedRows) {
     return items.map((item, index) => {
       let row = {};
+      let selected = (selectedRows || []).indexOf(index) > -1;
       let columnsComponents = columns.map((column, i) => {
         if (!column.checked) {
           return;
@@ -123,7 +124,7 @@ export default {
       });
 
       return (
-        <MUI.TableRow key={'row-' + index}>
+        <MUI.TableRow key={'row-' + index} selected={selected}>
           {columnsComponents}
         </MUI.TableRow>
       );
