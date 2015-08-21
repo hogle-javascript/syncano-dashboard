@@ -16,7 +16,7 @@ import Common from '../../common';
 
 require('react-select/dist/default.css');
 
-let _ = ('lodash');
+import _ from 'lodash';
 
 export default React.createClass({
 

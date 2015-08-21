@@ -15,7 +15,8 @@
     "OAUTH_PROXY_URL": true,
     "SENTRY_DSN": true,
     "ANALYTICS_WRITE_KEY": true,
-    "STRIPE_PUBLISHABLE_KEY": true
+    "STRIPE_PUBLISHABLE_KEY": true,
+    "SYNCANO_BASE_URL": true
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
