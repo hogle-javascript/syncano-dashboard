@@ -476,7 +476,7 @@ export default React.createClass({
     ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref='dialog'
         title={title}
         onShow={this.handleDialogShow}
@@ -498,7 +498,7 @@ export default React.createClass({
           type="linear"
           position="bottom"
           show={this.state.isLoading} />
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });
