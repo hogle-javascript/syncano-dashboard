@@ -4,7 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -27,12 +27,17 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
   componentDidMount() {
     Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
   },
 
   getStyles() {

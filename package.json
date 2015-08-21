@@ -19,6 +19,7 @@
     "lodash": "^3.10.1",
     "material-ui": "Syncano/material-ui#build",
     "moment": "^2.10.6",
+    "mousetrap": "^1.5.3",
     "normalize.css": "^3.0.3",
     "object-assign": "^3.0.0",
     "radium": "0.13.0",
