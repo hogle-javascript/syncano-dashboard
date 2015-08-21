@@ -93,7 +93,7 @@
     "publish": "gulp publish",
     "clean": "gulp clean",
     "eslint": "eslint src --quiet --ext .js --ext .jsx",
-    "e2e": "nightwatch --skiptags classes,api_keys,administrators,channels,codeBoxes,dataObjects,instance,tasks,users,webhookTraces --suiteRetries 2",
+    "e2e": "nightwatch --skiptags classes,api_keys,administrators,channels,codeBoxes,dataObjects,instance,tasks,users,webhookTraces",
     "e2e-setup": "selenium-standalone install",
     "e2e-selenium": "selenium-standalone start",
     "e2e-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key",
