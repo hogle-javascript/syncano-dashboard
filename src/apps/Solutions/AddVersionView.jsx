@@ -254,7 +254,7 @@ export default Radium(React.createClass({
                   name='instance'
                   onChange={this.handleInstanceChange}
                   fullWidth={true}
-                  value={null}
+                  value={this.state.instance}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
