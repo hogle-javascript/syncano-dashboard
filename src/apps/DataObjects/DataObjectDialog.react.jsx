@@ -13,13 +13,13 @@ import ChannelsActions from '../Channels/ChannelsActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
   displayName: 'DataObjectDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
     Mixins.Form,
     Mixins.Dialog
@@ -301,7 +301,7 @@ export default React.createClass({
     this.setState(state);
 
     this.refs[`fielddate-${name}`].setState({
-      date: undefined,
+      date: undefined, // eslint-disable-line no-undefined
       dialogDate: new Date()
     });
 
@@ -312,7 +312,7 @@ export default React.createClass({
 
     this.refs[`fieldtime-${name}`].refs.input.setValue("");
     this.refs[`fieldtime-${name}`].setState({
-      time: undefined,
+      time: undefined, // eslint-disable-line no-undefined
       dialogTime: new Date()
     });
   },
@@ -376,7 +376,9 @@ export default React.createClass({
         }
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ? new Date(this.state[item.name].value) : null;
+          let value = this.state[item.name] ?
+            new Date(this.state[item.name].value) :
+            undefined; // eslint-disable-line no-undefined
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -390,14 +392,14 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    defaultDate={value || undefined}
+                    defaultDate={value || undefined} // eslint-disable-line no-undefined
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    defaultTime={value || undefined}
+                    defaultTime={value || undefined} // eslint-disable-line no-undefined
                     />
                 </div>
                 <div className="col-xs-5">
@@ -495,6 +497,10 @@ export default React.createClass({
             </div>
           </div>
         </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
       </MUI.Dialog>
     );
   }

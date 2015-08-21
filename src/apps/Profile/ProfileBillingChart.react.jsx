@@ -27,7 +27,7 @@ export default Radium(React.createClass({
   componentDidUpdate() {
     console.log('ProfileBillingChart::componentDidUpdate');
 
-    if (this.state.isLoading === true || this.chart !== undefined) {
+    if (this.state.isLoading === true || typeof this.chart !== 'undefined') {
       return;
     }
 

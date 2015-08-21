@@ -26,7 +26,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -70,19 +69,11 @@ export default React.createClass({
     }
   },
 
-  // TODO: find better way how to grab values for DOM
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignIn({
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
+      email: data.email,
+      password: data.password
     });
-  },
-
-  getValidatorAttributes() {
-    return {
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
-    }
   },
 
   render() {

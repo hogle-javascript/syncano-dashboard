@@ -35,7 +35,7 @@ export default {
       for (let i = 0; i < listenables.length; i++) {
         let listenable = listenables[i];
 
-        if (listenable.fetch !== undefined) {
+        if (typeof listenable.fetch !== 'undefined') {
           args.push(listenable.fetch);
         }
       }

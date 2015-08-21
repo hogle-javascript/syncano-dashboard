@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Select from 'react-select';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -21,7 +22,6 @@ export default React.createClass({
   displayName: 'UserDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form,
     Mixins.Dialog

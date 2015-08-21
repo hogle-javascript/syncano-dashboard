@@ -16,8 +16,6 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 
@@ -73,11 +71,13 @@ export default React.createClass({
       return {};
     }
 
+    let data = this.getFormAttributes();
+
     return {
-      number: this.state.number || this.refs.number.getValue(),
-      cvc: this.state.cvc || this.refs.cvc.getValue(),
-      exp_month: this.state.exp_month || this.refs.exp_month.getValue(),
-      exp_year: this.state.exp_year || this.refs.exp_year.getValue()
+      number: data.number,
+      cvc: data.cvc,
+      exp_month: data.exp_month,
+      exp_year: data.exp_year
     }
   },
 
@@ -173,7 +173,7 @@ export default React.createClass({
   },
 
   renderCard() {
-    if (this.state.card === undefined) {
+    if (typeof this.state.card === 'undefined') {
       return <Common.Loading show={true}/>
     }
 
@@ -275,7 +275,7 @@ export default React.createClass({
         key={type + 'Slider'}
         ref={type + 'Slider'}
         name={type + 'Slider'}
-        value={selected !== undefined ? selected : defaultValue}
+        value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
         optionClick={this.handleSliderLabelsClick}

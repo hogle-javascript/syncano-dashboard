@@ -20,7 +20,6 @@ export default Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Router.State,
     Router.Navigation,
 
@@ -254,7 +253,7 @@ export default Radium(React.createClass({
                   name='instance'
                   onChange={this.handleInstanceChange}
                   fullWidth={true}
-                  value={null}
+                  value={this.state.instance}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
