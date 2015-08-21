@@ -47,48 +47,46 @@ export default React.createClass({
   },
 
   getAssociatedCodeboxes(associatedWith) {
-    let checkedCodeboxes = Store.getCheckedItems();
-    let associatedCodeboxes = checkedCodeboxes.filter((codebox) => {
-      codebox[associatedWith] = [];
-      let associatedItems = this.state[associatedWith].filter((item) => {
-        if (codebox.id === item.codebox) {
-          codebox[associatedWith].push(item.label);
-          return true;
-        }
-      });
+    let checkedCodeBoxes = Store.getCheckedItems();
 
-      return associatedItems.length > 0;
+    let associatedCodeBoxes = checkedCodeBoxes.filter((codeBox) => {
+      console.error(associatedWith, _.pluck(_.filter(this.state[associatedWith], 'codebox', codeBox.id), 'label'))
+      codeBox[associatedWith] = _.pluck(_.filter(this.state[associatedWith], 'codebox', codeBox.id), 'label');
+      return codeBox[associatedWith].length > 0;
     });
 
-    return associatedCodeboxes;
+    if (associatedCodeBoxes.length > 0) {
+      return associatedCodeBoxes;
+    }
+
+    return null;
   },
 
   // Dialogs config
   initDialogs() {
     let checkedCodeboxes = Store.getCheckedItems();
-    let codeboxesAssociatedWithSchedules = this.getAssociatedCodeboxes('schedules');
     let codeboxesAssociatedWithTriggers = this.getAssociatedCodeboxes('triggers');
+    let codeboxesAssociatedWithSchedules = this.getAssociatedCodeboxes('schedules');
     let codeboxesNotAssociated = _.difference(checkedCodeboxes, codeboxesAssociatedWithSchedules);
 
     codeboxesNotAssociated = _.difference(codeboxesNotAssociated, codeboxesAssociatedWithTriggers);
 
-    if ((codeboxesAssociatedWithSchedules && codeboxesAssociatedWithSchedules.length > 0) ||
-        (codeboxesAssociatedWithTriggers && codeboxesAssociatedWithTriggers.length > 0)) {
-      let associatedWithSchedulesList = codeboxesAssociatedWithSchedules.length > 0 ?
-          <div>
-            Associated with Schedules: {this.getDialogList(codeboxesAssociatedWithSchedules, 'label', 'schedules')}
-          </div> :
-          null;
-      let associatedWithTriggersList = codeboxesAssociatedWithTriggers.length > 0 ?
-          <div>
-            Associated with Triggers: {this.getDialogList(codeboxesAssociatedWithTriggers, 'label', 'triggers')}
-          </div> :
-          null;
-      let notAssociatedList = codeboxesNotAssociated.length > 0 ?
-          <div>
-            Not associated: {this.getDialogList(codeboxesNotAssociated, 'label')}
-          </div> :
-          null;
+    if (codeboxesAssociatedWithSchedules || codeboxesAssociatedWithTriggers) {
+      let associatedWithSchedulesList = (
+        <div>
+          Associated with Schedules: {this.getDialogList(codeboxesAssociatedWithSchedules, 'label', 'schedules')}
+        </div>
+      );
+      let associatedWithTriggersList = (
+        <div>
+          Associated with Triggers: {this.getDialogList(codeboxesAssociatedWithTriggers, 'label', 'triggers')}
+        </div>
+      );
+      let notAssociatedList = (
+        <div>
+          Not associated: {this.getDialogList(codeboxesNotAssociated, 'label')}
+        </div>
+      );
 
       return [{
         dialog: Common.Dialog,

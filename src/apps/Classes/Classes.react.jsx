@@ -44,19 +44,17 @@ export default React.createClass({
 
   getAssociatedClasses() {
     let checkedClasses = Store.getCheckedItems();
-    let associatedClasses = checkedClasses.filter((klass) => {
-      klass.triggers = [];
-      let associatedItems = this.state.triggers.filter((item) => {
-        if (klass.name === item.class) {
-          klass.triggers.push(item.label);
-          return true;
-        }
-      });
 
-      return associatedItems.length > 0;
+    let associatedClasses = checkedClasses.filter((checkedClass) => {
+      checkedClass.triggers = _.pluck(_.filter(this.state.triggers, 'class', checkedClass.name), 'label');
+      return checkedClass.triggers.length > 0;
     });
 
-    return associatedClasses;
+    if (associatedClasses.length > 0) {
+      return associatedClasses;
+    }
+
+    return null;
   },
 
   // Dialogs config
@@ -66,17 +64,17 @@ export default React.createClass({
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
 
-    if (classesAssociatedWithTriggers && classesAssociatedWithTriggers.length > 0) {
-      let associatedWithTriggersList = classesAssociatedWithTriggers.length > 0 ?
+    if (classesAssociatedWithTriggers) {
+      let associatedWithTriggersList = (
         <div>
-            Associated with Triggers: {this.getDialogList(classesAssociatedWithTriggers, 'name', 'triggers')}
-        </div> :
-        null;
-      let notAssociatedList = classesNotAssociated.length > 0 ?
+          Associated with Triggers: {this.getDialogList(classesAssociatedWithTriggers, 'name', 'triggers')}
+        </div>
+      );
+      let notAssociatedList = (
         <div>
           Not associated: {this.getDialogList(classesNotAssociated)}
-        </div> :
-        null;
+        </div>
+      );
 
       return [{
         dialog: Common.Dialog,
