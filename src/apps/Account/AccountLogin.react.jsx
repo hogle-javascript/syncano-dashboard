@@ -69,10 +69,10 @@ export default React.createClass({
     }
   },
 
-  handleSuccessfullValidation(attributes) {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignIn({
-      email: attributes.email,
-      password: attributes.password
+      email: data.email,
+      password: data.password
     });
   },
 

@@ -71,11 +71,13 @@ export default React.createClass({
       return {};
     }
 
+    let data = this.getFormAttributes();
+
     return {
-      number: this.state.number || this.refs.number.getValue(),
-      cvc: this.state.cvc || this.refs.cvc.getValue(),
-      exp_month: this.state.exp_month || this.refs.exp_month.getValue(),
-      exp_year: this.state.exp_year || this.refs.exp_year.getValue()
+      number: data.number,
+      cvc: data.cvc,
+      exp_month: data.exp_month,
+      exp_year: data.exp_year
     }
   },
 

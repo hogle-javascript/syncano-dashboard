@@ -64,19 +64,10 @@ export default {
       return this.state;
     }
 
-    let domAttributes = _.reduce(this.state._formLinkedKeys, (result, key) => {
-      let attr = this.refs[key];
-      let value = null;
-
-      if (_.isEmpty(attr)) {
-        return result;
-      }
-
-      if (_.isFunction(attr.getValue)) {
-        value = attr.getValue();
-      } else {
-        value = React.findDOMNode(attr).value;
-      }
+    let attributes = _.reduce(this.state._formLinkedKeys, (result, key) => {
+      let ref = this.refs[key];
+      let state = this.state[key];
+      let value = (_.isEmpty(ref)) ? state : (state || ref.getValue());
 
       if (!_.isEmpty(value)) {
         result[key] = value;
@@ -85,7 +76,7 @@ export default {
       return result;
     }, {});
 
-    return _.defaults({}, domAttributes, this.state);
+    return _.defaults(attributes, this.state);
   },
 
   validate(key, callback) {
