@@ -69,19 +69,11 @@ export default React.createClass({
     }
   },
 
-  // TODO: find better way how to grab values for DOM
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(attributes) {
     Actions.passwordSignIn({
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
+      email: attributes.email,
+      password: attributes.password
     });
-  },
-
-  getValidatorAttributes() {
-    return {
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
-    }
   },
 
   render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactLink from 'react/lib/ReactLink';
 import ReactStateSetters from 'react/lib/ReactStateSetters';
-import objectAssign from 'object-assign';
+import _ from 'lodash';
 import validate from 'validate.js';
 
 import Notification from '../common/Notification/Notification.react';
@@ -11,6 +11,11 @@ validate.moment = require('moment');
 
 export default {
   linkState(key) {
+    // We don't want to call render here
+    if (_.indexOf(this.state._formLinkedKeys, key) === -1) {
+      this.state._formLinkedKeys.push(key);
+    }
+
     return new ReactLink(
       this.state[key],
       ReactStateSetters.createStateKeySetter(this, key)
@@ -23,6 +28,7 @@ export default {
 
   getInitialFormState() {
     return {
+      _formLinkedKeys: [],
       errors: {},
       feedback: null,
       canSubmit: true
@@ -53,20 +59,49 @@ export default {
     this.setState(this.getInitialFormState());
   },
 
+  getFormAttributes() {
+    if (_.size(this.state._formLinkedKeys) === 0) {
+      return this.state;
+    }
+
+    let domAttributes = _.reduce(this.state._formLinkedKeys, (result, key) => {
+      let attr = this.refs[key];
+      let value = null;
+
+      if (_.isEmpty(attr)) {
+        return result;
+      }
+
+      if (_.isFunction(attr.getValue)) {
+        value = attr.getValue();
+      } else {
+        value = React.findDOMNode(attr).value;
+      }
+
+      if (!_.isEmpty(value)) {
+        result[key] = value;
+      }
+
+      return result;
+    }, {});
+
+    return _.defaults({}, domAttributes, this.state);
+  },
+
   validate(key, callback) {
     if (typeof key === 'function') {
       callback = key;
       key = null;
     }
 
-    let constraints = this.validatorConstraints || {};
-    let attributes = this.getValidatorAttributes || this.state;
+    let constraints = _.get(this, 'validatorConstraints', {});
+    let attributes = _.get(this, 'getValidatorAttributes', this.getFormAttributes());
 
-    if (typeof constraints === 'function') {
+    if (_.isFunction(constraints)) {
       constraints = constraints.call(this);
     }
 
-    if (typeof attributes === 'function') {
+    if (_.isFunction(attributes)) {
       attributes = attributes.call(this);
     }
 
@@ -81,7 +116,7 @@ export default {
       attributes = keyAttributes;
     }
 
-    let errors = objectAssign(
+    let errors = _.assign(
       {},
       (key !== null) ? this.state.errors : {},
       validate(attributes, constraints)
@@ -95,46 +130,42 @@ export default {
       event.preventDefault();
     }
 
-    // FormMixin compatibility
     if (typeof this.state.canSubmit !== 'undefined' && this.state.canSubmit === false) {
       return;
     }
 
-    this.validate(function(isValid, errors) {
+    this.validate((isValid, errors) => {
       if (isValid === true) {
-        if (typeof this.handleSuccessfullValidation !== 'undefined') {
-          this.handleSuccessfullValidation.call(this)
+        if (_.isFunction(this.handleSuccessfullValidation)) {
+          this.handleSuccessfullValidation.call(this, this.getFormAttributes())
         }
-      } else if (typeof this.handleFailedValidation !== 'undefined') {
+      } else if (_.isFunction(this.handleFailedValidation)) {
         this.handleFailedValidation.call(this, errors);
       }
-    }.bind(this));
+    });
   },
 
   handleValidation(key, callback) {
-    return function(event) {
-      event.preventDefault();
+    return (event) => {
+      if (event) {
+        event.preventDefault();
+      }
       this.validate(key, callback);
-    }.bind(this);
+    };
   },
 
-  getValidationMessages(key) {
+  getValidationMessages(key = null) {
     let errors = this.state.errors || {};
 
-    if (Object.keys(errors).length === 0) {
+    if (_.size(errors) === 0) {
       return [];
     }
 
-    if (typeof key === 'undefined') {
-      let flattenErrors = [];
-
-      for (let error in errors) {
-        flattenErrors.push.apply(flattenErrors, errors[error]);
-      }
-      return flattenErrors;
+    if (key === null) {
+      return _.reduce(errors, (result, value) => result.concat(value), []);
     }
 
-    return errors[key] ? errors[key] : [];
+    return _.get(errors, key, []);
   },
 
   clearValidations() {
@@ -152,20 +183,19 @@ export default {
     return false;
   },
 
-  isValid(key) {
-    return typeof this.state.errors[key] === 'undefined' || this.state.errors[key] === null;
+  isValid(key = null) {
+    if (key === null) {
+      return _.size(this.state.errors) === 0;
+    }
+    return _.isEmpty(this.state.errors[key]);
   },
 
-  _invokeCallback(key, callback) {
-    if (typeof callback !== 'function') {
+  _invokeCallback(key = null, callback = null) {
+    if (!_.isFunction(callback)) {
       return;
     }
 
-    if (typeof key !== 'undefined') {
-      callback(this.isValid(key), this.state.errors[key]);
-    } else {
-      callback(Object.keys(this.state.errors).length === 0, this.state.errors);
-    }
+    callback(this.isValid(key), (key !== null) ? this.state.errors[key] : this.state.errors);
   }
 
 };
