@@ -50,10 +50,12 @@ Router.run(routes, (Root, state) => {
     name = names[names.length - 1];
   }
 
-  window.analytics.page('Dashboard', {
-    Page: name,
-    path: state.pathname
-  });
+  if (name === 'login' || name === 'signup') {
+    window.analytics.page(`Dashboard ${_.capitalize(name)}`);
+  } else {
+    window.analytics.page('Dashboard', {Page: name});
+  }
+
 
   React.render(<Root/>, container);
 });
