@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Select from 'react-select';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -15,8 +16,6 @@ import MUI from 'material-ui';
 import Common from '../../common';
 
 require('react-select/dist/default.css');
-
-import _ from 'lodash';
 
 export default React.createClass({
 
