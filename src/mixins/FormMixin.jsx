@@ -44,9 +44,12 @@ export default {
     this.setState(this.getInitialFormState());
   },
 
-  validate(...args) {
-    let key = null;
-    let callback = null;
+  validate(key, callback) {
+    if (typeof key === 'function') {
+      callback = key; // eslint-disable-line no-param-reassign
+      key = null; // eslint-disable-line no-param-reassign
+    }
+
     let constraints = this.validatorConstraints || {};
     let attributes = this.getValidatorAttributes || this.state;
 
