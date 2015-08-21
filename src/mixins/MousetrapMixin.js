@@ -16,7 +16,7 @@ export default {
       this.mousetrapBindings.splice(index, 1);
     }
 
-    Mousetrap.unbind(binding);
+    Mousetrap.unbind(key);
   },
 
   unbindAllShortcuts() {
