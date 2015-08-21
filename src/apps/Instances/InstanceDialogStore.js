@@ -68,6 +68,10 @@ export default Reflux.createStore({
     InstancesActions.fetchInstances();
   },
 
+  onCreateInstanceFailure() {
+    this.trigger({isLoading: false});
+  },
+
   onUpdateInstance() {
     this.trigger({isLoading: true});
   },
@@ -76,5 +80,9 @@ export default Reflux.createStore({
     console.debug('InstanceDialogStore::onUpdateInstanceCompleted');
     this.dismissDialog();
     InstancesActions.fetchInstances();
+  },
+
+  onUpdateInstanceFailure() {
+    this.trigger({isLoading: false});
   }
 });

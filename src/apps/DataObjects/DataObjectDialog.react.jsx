@@ -15,6 +15,7 @@ import ChannelsActions from '../Channels/ChannelsActions';
 
 // Components
 import MUI from 'material-ui';
+import Common from '../../common';
 
 export default React.createClass({
 
@@ -492,6 +493,10 @@ export default React.createClass({
             </div>
           </div>
         </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
       </MUI.Dialog>
     );
   }
