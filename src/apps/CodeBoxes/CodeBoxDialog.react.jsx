@@ -17,7 +17,6 @@ export default React.createClass({
   displayName: 'CodeBoxDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form

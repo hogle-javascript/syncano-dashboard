@@ -26,14 +26,19 @@ export default React.createClass({
     React.addons.LinkedStateMixin,
 
     Reflux.connect(Store),
-    Mixins.InstanceTabs,
     Mixins.Dialogs,
     HeaderMixin,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
   componentDidMount() {
     Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
   },
 
   getStyles() {

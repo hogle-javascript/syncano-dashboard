@@ -95,10 +95,6 @@ export default React.createClass({
     InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 
-  showCreateDialog() {
-    SolutionEditActions.showDialog();
-  },
-
   getStyles() {
     return {
       main: {
