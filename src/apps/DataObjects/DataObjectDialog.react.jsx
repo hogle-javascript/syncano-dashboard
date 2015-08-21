@@ -180,13 +180,15 @@ export default React.createClass({
               name='field-channel'
               fullWidth={true}
               disabled={true}
-              floatingLabelText={this.state.channel || 'no channel'}/>
+              value={this.state.channel || 'no channel'}
+              floatingLabelText='Channel'/>
             <MUI.TextField
               ref='field-channel_room'
               name='field-channel_room'
               fullWidth={true}
               disabled={true}
-              floatingLabelText={this.state.channel_room || 'no channel'}/>
+              value={this.state.channel_room || 'no channel'}
+              floatingLabelText='Channel Room'/>
           </div>
         )
       }
