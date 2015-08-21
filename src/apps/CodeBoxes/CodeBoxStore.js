@@ -106,6 +106,7 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted() {
     this.dismissSnackbarNotification();
+    this.refreshData();
   },
 
   onUpdateCodeBoxFailure() {
