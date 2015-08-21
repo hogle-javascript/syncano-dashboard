@@ -38,10 +38,8 @@ export default React.createClass({
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
 
-    if (!nextState.selectedRows) {
-      if (this.refs.table) {
-        this.refs.table.setState({selectedRows: []});
-      }
+    if (!nextState.selectedRows && this.refs.table) {
+      this.refs.table.setState({selectedRows: []});
     }
   },
 
@@ -136,7 +134,7 @@ export default React.createClass({
           showRowHover={true}
           onCellClick={this.handleCellClick}
           onRowSelection={this.handleRowSelection}
-          >
+          tableWrapperStyle={{overflow: 'visible'}}>
           {tableHeader}
           <MUI.TableBody
             deselectOnClickaway={this.state.deselectOnClickaway}
@@ -182,21 +180,14 @@ export default React.createClass({
 
   render() {
     let table = null;
-
-    if (this.state.items) {
-      table = this.renderTable();
-    } else {
-      table = <Common.Loading visible={true}/>;
-    }
-
     let selectedMessageText = null;
+
+    table = this.state.items ? this.renderTable() : <Common.Loading visible={true}/>;
 
     if (this.state.selectedRows && this.state.selectedRows.length > 0) {
       selectedMessageText = 'selected: ' + this.state.selectedRows.length;
     }
-
     return (
-
       <div className="row" style={{paddingTop: 48, 'height': '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
