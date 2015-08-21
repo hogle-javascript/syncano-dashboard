@@ -44,12 +44,9 @@ export default {
     this.setState(this.getInitialFormState());
   },
 
-  validate(key, callback) {
-    if (typeof key === 'function') {
-      callback = key;
-      key = null;
-    }
-
+  validate(...args) {
+    let key = null;
+    let callback = null;
     let constraints = this.validatorConstraints || {};
     let attributes = this.getValidatorAttributes || this.state;
 

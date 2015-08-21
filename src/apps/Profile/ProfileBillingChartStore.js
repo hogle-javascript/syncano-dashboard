@@ -108,10 +108,9 @@ export default Reflux.createStore({
     };
   },
 
-  prepareChartData(profile, usage) {
-    profile = _.first(profile);
-    usage = _.first(usage);
-
+  prepareChartData(joinProfiles, joinUsages) {
+    let profile = _.first(joinProfiles);
+    let usage = _.first(joinUsages);
     let state = this.getInitialState();
 
     state.isLoading = false;

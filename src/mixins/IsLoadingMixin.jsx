@@ -2,9 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Common from '../common';
 
-export default (options, props) => {
-  props                   = props        || {};
-  options                 = options      || {};
+export default (options = {}, props = {}) => {
   options.attr            = options.attr || 'state.isLoading';
   options.show            = options.show || [true, null];
   options.overwriteRender = options.overwriteRender || true;

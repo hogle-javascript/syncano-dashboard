@@ -25,7 +25,7 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.remove'
-    },
+    }
   },
   {
     withCheck: true,
