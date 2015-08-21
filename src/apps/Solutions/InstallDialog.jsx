@@ -19,8 +19,6 @@ export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 

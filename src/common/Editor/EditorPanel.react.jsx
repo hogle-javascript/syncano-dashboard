@@ -17,7 +17,6 @@ export default Radium(React.createClass({
   displayName: 'EditorPanel',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 

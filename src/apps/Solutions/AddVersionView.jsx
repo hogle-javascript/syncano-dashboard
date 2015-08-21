@@ -20,7 +20,6 @@ export default Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Router.State,
     Router.Navigation,
 

@@ -18,7 +18,6 @@ export default React.createClass({
   displayName: 'ChannelDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(ChannelDialogStore),
     Mixins.Dialog,
     Mixins.Form

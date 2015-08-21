@@ -24,7 +24,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -68,10 +67,10 @@ export default React.createClass({
     }
   },
 
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignUp({
-      email: this.state.email,
-      password: this.state.password
+      email: data.email,
+      password: data.password
     });
   },
 

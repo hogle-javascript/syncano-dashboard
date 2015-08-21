@@ -20,7 +20,6 @@ export default React.createClass({
   displayName: 'DataObjectDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
     Mixins.Form,
     Mixins.Dialog

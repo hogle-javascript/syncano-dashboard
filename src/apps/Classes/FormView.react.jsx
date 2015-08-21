@@ -25,7 +25,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form
   ],
