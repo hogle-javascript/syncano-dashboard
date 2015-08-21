@@ -40,7 +40,6 @@
     // "complexity": [1, 2],
     // "no-inline-comments": 2,
     // "complexity": 2,
-    // "no-param-reassign": 2,
     // "camelcase": 2,
     // "vars-on-top": 2,
     // "quote-props": 2,
@@ -99,7 +98,6 @@
     // what we have
     "no-inline-comments": 1,
     "complexity": 1,
-    "no-param-reassign": 1,
     "camelcase": 1,
     "vars-on-top": 1,
     "quote-props": 1,
@@ -228,6 +226,7 @@
     "no-new": 2,
     "no-octal-escape": 2,
     "no-octal": 2,
+    "no-param-reassign": [2, {"props": false}],
     "no-process-env": 2,
     "no-proto": 2,
     "no-redeclare": 2,

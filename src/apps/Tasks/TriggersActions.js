@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck: true,
-    withDialog: true
-  },
-  {
     fetch: {},
     setTriggers: {},
     createTrigger: {
@@ -29,5 +25,10 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Triggers.remove'
-    }
-  });
+    },
+  },
+  {
+    withCheck: true,
+    withDialog: true
+  }
+);
