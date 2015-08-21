@@ -16,8 +16,6 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 

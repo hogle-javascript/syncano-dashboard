@@ -21,7 +21,6 @@ export default React.createClass({
   displayName: 'UserDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form,
     Mixins.Dialog

@@ -16,7 +16,6 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
     Mixins.Form
   ],
 

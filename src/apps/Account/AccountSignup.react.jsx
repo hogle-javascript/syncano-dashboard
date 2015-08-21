@@ -24,7 +24,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 

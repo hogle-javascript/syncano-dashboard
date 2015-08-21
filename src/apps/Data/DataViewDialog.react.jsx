@@ -20,7 +20,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(DataViewDialogStore),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],

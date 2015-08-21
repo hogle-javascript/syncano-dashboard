@@ -17,7 +17,6 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form,
 

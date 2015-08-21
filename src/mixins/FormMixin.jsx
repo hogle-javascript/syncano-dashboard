@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactLink from 'react/lib/ReactLink';
+import ReactStateSetters from 'react/lib/ReactStateSetters';
 import objectAssign from 'object-assign';
 import validate from 'validate.js';
 
@@ -6,7 +8,14 @@ import Notification from '../common/Notification/Notification.react';
 
 validate.moment = require('moment');
 
+
 export default {
+  linkState(key) {
+    return new ReactLink(
+      this.state[key],
+      ReactStateSetters.createStateKeySetter(this, key)
+    );
+  },
 
   getInitialState() {
     return this.getInitialFormState();
@@ -25,7 +34,7 @@ export default {
       return;
     }
 
-    return <Notification type='error'>{this.state.errors.feedback}</Notification>;
+    return <Notification type="error">{this.state.errors.feedback}</Notification>;
   },
 
   renderFormFeedback() {
