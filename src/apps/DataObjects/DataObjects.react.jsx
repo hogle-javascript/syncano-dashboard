@@ -80,13 +80,16 @@ export default React.createClass({
     let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
 
     dataObject = _.reduce(dataObject, (result, val, key) => {
-      if (_.isObject(val) && val.type === 'reference') {
-        val = val.value;
+      let value = val;
+
+      if (_.isObject(value) && value.type === 'reference') {
+        value = value.value;
       }
-      if (_.isBoolean(val)) {
-        val = val.toString();
+      if (_.isBoolean(value)) {
+        value = value.toString();
       }
-      result[key] = val;
+
+      result[key] = value;
       return result;
     }, {});
     DataObjectsActions.showDialog(dataObject);

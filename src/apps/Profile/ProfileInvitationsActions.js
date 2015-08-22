@@ -2,9 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions(
   {
-    withCheck: true
-  },
-  {
     fetch: {},
     setInvitations: {},
     fetchInvitations: {
@@ -23,5 +20,8 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.AccountInvitations.decline'
     }
+  },
+  {
+    withCheck: true
   }
 );

@@ -10,9 +10,10 @@ export default {
       });
 
     uniqueColors.map((color) => {
-      color = color.slice(0, -3);
-      if (color !== this.syncanoThemeColorName) {
-        colors.push(color);
+      let colorSlice = color.slice(0, -3);
+
+      if (colorSlice !== this.syncanoThemeColorName) {
+        colors.push(colorSlice);
       }
     });
 
