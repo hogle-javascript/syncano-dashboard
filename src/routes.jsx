@@ -2,13 +2,13 @@ import React from 'react';
 import Router from 'react-router';
 
 // Pages
-import App from './pages/app.react';
+import AppPage from './pages/app.react';
 import ClassesPage from './pages/classes.react';
-import Dashboard from './pages/dashboard.react';
-import Instance from './pages/instance.react';
+import DashboardPage from './pages/dashboard.react';
+import InstancePage from './pages/instance.react';
 import ProfilePage from './pages/profile.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
-import NotFound from './pages/notfound.react';
+import NotFoundPage from './pages/notfound.react';
 
 // Apps
 import Account from './apps/Account';
@@ -40,10 +40,10 @@ const DefaultRoute = Router.DefaultRoute;
 export default (
   <Route
     name="app"
-    handler={App}
+    handler={AppPage}
     path="/"
     >
-    <NotFoundRoute handler={NotFound}/>
+    <NotFoundRoute handler={NotFoundPage}/>
     <Route
       name="login"
       handler={Account.Login}
@@ -76,7 +76,7 @@ export default (
     {/* Dashboard */}
     <Route
       name="dashboard"
-      handler={Dashboard}
+      handler={DashboardPage}
       path="/">
       <Route
         name="instances"
@@ -85,10 +85,10 @@ export default (
 
       <Route
         name="instance"
-        handler={Instance}
+        handler={InstancePage}
         path="instances/:instanceName">
 
-        <DefaultRoute handler={Data}/>
+        <Redirect from="/instances/:instanceName" to="data" />
 
         {/* Data */}
         <Route
