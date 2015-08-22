@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 // TODO: add some options like: exclude, ignore, prefix etc
 export default {
 
@@ -20,16 +22,14 @@ export default {
   },
 
   listenToForm(listenable) {
-    for (let key in listenable) {
-      let action = listenable[key];
-
+    _.forEach(listenable, (action) => {
       if (action.asyncResult === true && action.asyncForm === true) {
         // TODO: add more checks
         this.listenTo(action, this.handleForm);
         this.listenTo(action.completed, this.handleFormCompleted);
         this.listenTo(action.failure, this.handleFormFailure);
       }
-    }
+    });
   },
 
   handleForm() {
@@ -61,9 +61,9 @@ export default {
         state.errors.feedback = payload.message;
       }
 
-      for (let field in payload) {
-        state.errors[field] = [].concat(payload[field]);
-      }
+      _.forEach(payload, (errors, field) => {
+        state.errors[field] = [].concat(errors);
+      });
     }
 
     this.trigger(state);
