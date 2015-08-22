@@ -150,7 +150,7 @@ export default React.createClass({
           floatingLabelText="Order by"
           fullWidth={true}
           valueLink={this.linkState('order_by')}
-          errorText={this.getValidationMessages('class').join(' ')}
+          errorText={this.getValidationMessages('order_by').join(' ')}
           valueMember="payload"
           displayMember="text"
           menuItems={orderFields} />
