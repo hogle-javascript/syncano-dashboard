@@ -55,7 +55,7 @@ export default React.createClass({
   // Dialogs config
   initDialogs() {
     return [{
-      dialog: MUI.Dialog,
+      dialog: Common.Dialog,
       params: {
         key: 'deleteDataObjectDialog',
         ref: 'deleteDataObjectDialog',
