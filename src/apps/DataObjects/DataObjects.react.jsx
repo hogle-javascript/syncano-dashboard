@@ -8,8 +8,8 @@ import Mixins from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
-import DataObjectsActions from './DataObjectsActions';
-import DataObjectsStore from './DataObjectsStore';
+import Actions from './DataObjectsActions';
+import Store from './DataObjectsStore';
 
 // Components
 import MUI from 'material-ui';
@@ -27,7 +27,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(DataObjectsStore),
+    Reflux.connect(Store),
     Mixins.Header,
     Mixins.Dialogs,
     Mixins.InstanceTabs
@@ -38,20 +38,18 @@ export default React.createClass({
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
 
-    if (!nextState.selectedRows) {
-      if (this.refs.table) {
-        this.refs.table.setState({selectedRows: []});
-      }
+    if (!nextState.selectedRows && this.refs.table) {
+      this.refs.table.setState({selectedRows: []});
     }
   },
 
   componentDidMount() {
     console.info('DataObjects::componentDidMount');
-    DataObjectsActions.fetch();
+    Actions.fetch();
   },
 
   componentWillUnmount() {
-    DataObjectsActions.clearStore();
+    Actions.clearStore();
   },
 
   // Dialogs config
@@ -67,17 +65,17 @@ export default React.createClass({
           {text: 'Confirm', onClick: this.handleDelete}
         ],
         modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' Data Object(s)?'
+        children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }]
   },
 
   showDataObjectDialog() {
-    DataObjectsActions.showDialog();
+    Actions.showDialog();
   },
 
   showDataObjectEditDialog(cellNumber) {
-    let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
+    let dataObject = Store.getSelectedRowObj(cellNumber);
 
     dataObject = _.reduce(dataObject, (result, val, key) => {
       let value = val;
@@ -92,12 +90,12 @@ export default React.createClass({
       result[key] = value;
       return result;
     }, {});
-    DataObjectsActions.showDialog(dataObject);
+    Actions.showDialog(dataObject);
   },
 
   handleDelete() {
     console.info('DataObjects::handleDelete');
-    DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
+    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
   },
 
   handleRowSelection(selectedRows) {
@@ -106,12 +104,12 @@ export default React.createClass({
 
     // Writing to the store
     if (selectedRows === 'all') {
-      rowsSelection = DataObjectsStore.getItems().map((item, index) => {
+      rowsSelection = Store.getItems().map((item, index) => {
         return index
       })
     }
 
-    DataObjectsActions.setSelectedRows(rowsSelection);
+    Actions.setSelectedRows(rowsSelection);
   },
 
   handleSelectAll(selectAll) {
@@ -127,8 +125,8 @@ export default React.createClass({
 
   renderTable() {
     console.info('DataObjects::renderTable');
-    let tableData = DataObjectsStore.renderTableData();
-    let tableHeader = DataObjectsStore.renderTableHeader(this.handleSelectAll);
+    let tableData = Store.renderTableData();
+    let tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
       <div>
@@ -139,7 +137,7 @@ export default React.createClass({
           showRowHover={true}
           onCellClick={this.handleCellClick}
           onRowSelection={this.handleRowSelection}
-          >
+          tableWrapperStyle={{overflow: 'visible'}}>
           {tableHeader}
           <MUI.TableBody
             deselectOnClickaway={this.state.deselectOnClickaway}
@@ -168,7 +166,7 @@ export default React.createClass({
   },
 
   handleMoreRows() {
-    DataObjectsActions.subFetchDataObjects({
+    Actions.subFetchDataObjects({
       className: this.state.classObj.name,
       params: this.state.nextParams
     });
@@ -184,22 +182,10 @@ export default React.createClass({
   },
 
   render() {
-    let table = null;
-
-    if (this.state.items) {
-      table = this.renderTable();
-    } else {
-      table = <Common.Loading visible={true}/>;
-    }
-
-    let selectedMessageText = null;
-
-    if (this.state.selectedRows && this.state.selectedRows.length > 0) {
-      selectedMessageText = 'selected: ' + this.state.selectedRows.length;
-    }
+    let table = this.state.items ? this.renderTable() : <Common.Loading visible={true}/>;
+    let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
 
     return (
-
       <div className="row" style={{paddingTop: 48, 'height': '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
@@ -236,8 +222,8 @@ export default React.createClass({
                 onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
               <ColumnsFilterMenu
-                columns={DataObjectsStore.getTableColumns()}
-                checkToggleColumn={DataObjectsActions.checkToggleColumn}/>
+                columns={Store.getTableColumns()}
+                checkToggleColumn={Actions.checkToggleColumn}/>
 
             </MUI.ToolbarGroup>
 
