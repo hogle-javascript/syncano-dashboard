@@ -22,7 +22,7 @@ import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
 import WelcomeDialog from './WelcomeDialog';
 
-require('./Instances.sass');
+import './Instances.sass';
 
 export default Radium(React.createClass({
   displayName: 'Instances',

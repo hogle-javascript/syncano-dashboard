@@ -16,7 +16,7 @@ import Logo from '../../common/Logo/Logo.react';
 
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
 
-require('./Header.sass');
+import './Header.sass';
 
 export default Radium(React.createClass({
 

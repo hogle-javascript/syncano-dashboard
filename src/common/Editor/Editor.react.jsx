@@ -1,13 +1,13 @@
 // Port from react-ace
 
-let ace = require('brace');
-let React = require('react');
+import React from 'react';
+import ace from 'brace';
 
-require('brace/mode/python');
-require('brace/mode/javascript');
-require('brace/mode/ruby');
-require('brace/mode/golang');
-require('brace/theme/tomorrow');
+import 'brace/mode/python';
+import 'brace/mode/javascript';
+import 'brace/mode/ruby';
+import 'brace/mode/golang';
+import 'brace/theme/tomorrow';
 
 
 export default React.createClass({

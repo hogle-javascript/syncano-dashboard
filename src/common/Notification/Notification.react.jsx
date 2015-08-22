@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import MUI from 'material-ui';
 
-require('./Notification.sass');
+import './Notification.sass';
 
 export default React.createClass({
 
