@@ -57,7 +57,7 @@ export default React.createClass({
   dummyDisplayError(e) {
     if (e.target.value.length > 5) {
       this.setState({
-        errorText: "(DummyError) This field is 5 chars only"
+        errorText: '(DummyError) This field is 5 chars only'
       })
     } else {
       this.setState({
@@ -105,28 +105,29 @@ export default React.createClass({
     };
 
     let item = {
-      name: "Dummy name",
-      description: "Very long dummy description",
+      name: 'Dummy name',
+      description: 'Very long dummy description',
       metadata: {color: 'blue', icon: 'google'}
     };
 
-    let source = "import os\n" +
-      "import requests\n" +
-      "\n" +
-      "print 'hello world!\n";
+    let source =
+      `import os
+       import requests
+
+       print 'hello world!`;
 
     let runtime = 'python';
 
     let fabButtons = [
       {
-        name: "menuButton",
-        label: "Menu button dummy label",
+        name: 'menuButton',
+        label: 'Menu button dummy label',
         icon: 'menu',
         color: '#FFC52D'
       },
       {
-        name: "plusButton",
-        label: "Plus button dummy label",
+        name: 'plusButton',
+        label: 'Plus button dummy label',
         icon: 'plus',
         color: 'red'
       }
@@ -137,7 +138,7 @@ export default React.createClass({
     };
 
     let handleSnackbarAction = () => {
-      console.log("Bum!");
+      console.log('Bum!');
     };
 
     let dialogStandardActions = [
@@ -169,37 +170,37 @@ export default React.createClass({
       text: 'Weekly'
     }];
 
-    let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
+    let avatarUrl = gravatar.url('hubert.wesolowski@syncano.com', {}, true);
 
     let notifications = [{
-      type     : "normal-link",
+      type     : 'normal-link',
       leftIcon : {
-        name   : "synicon-alert",
+        name   : 'synicon-alert',
         style  : {
-          color: "#ff9800"
+          color: '#ff9800'
         }
       },
       content: {
-        text          : "You email address is not yet verified.",
-        secondaryText : "Resend activation email",
+        text          : 'You email address is not yet verified.',
+        secondaryText : 'Resend activation email',
         style         : {}
       },
-      name            : "activation",
+      name            : 'activation',
       handleLinkClick : dummyClick
     }, {
-      type     : "invitation",
+      type     : 'invitation',
       leftIcon : {
-        name   : "synicon-share-letiant",
+        name   : 'synicon-share-letiant',
         style  : {
-          color: "#8bc34a"
+          color: '#8bc34a'
         }
       },
       content  : {
         text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
         style  : {}
       },
-      buttonsText   : ["Accept", "Decline"],
-      name          : "billing",
+      buttonsText   : ['Accept', 'Decline'],
+      name          : 'billing',
       handleAccept  : dummyClick.bind(this, [item]),
       handleDecline : dummyClick.bind(this, [item])
     }];
@@ -223,19 +224,19 @@ export default React.createClass({
               type      = "notification"
               icon      = {"bell"}
               items     = {notifications}
-              iconStyle = {{padding: "0 4px"}}
+              iconStyle = {{padding: '0 4px'}}
               isLoading = {false} />
           <Common.Dropdown.Material
               type      = "notification"
               icon      = {"bell"}
               items     = {[]}
-              iconStyle = {{padding: "0 4px"}}
+              iconStyle = {{padding: '0 4px'}}
               isLoading = {false} />
           <Common.Dropdown.Material
               type      = "notification"
               icon      = {"bell"}
               items     = {[]}
-              iconStyle = {{padding: "0 4px"}}
+              iconStyle = {{padding: '0 4px'}}
               isLoading = {true} />
             </div>
         </div>
@@ -338,7 +339,7 @@ export default React.createClass({
             onChange={this.dummyDisplayError}
             floatingLabelText="Your name"
             fullWidth={true}
-            style={{borderBottomColor: "0091EA"}} />
+            style={{borderBottomColor: '0091EA'}} />
         </div>
 
         <div className="exampleBox">
@@ -357,7 +358,7 @@ export default React.createClass({
             name="ToggleButton"
             value="ValueToggle"
             label="tempomat"
-            onToggle={dummyClick.bind(this, "Mui Toggle")} />
+            onToggle={dummyClick.bind(this, 'Mui Toggle')} />
           </div>
 
         <div className="exampleBox">
@@ -391,7 +392,7 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>Trace</h2>
-          <Common.Trace.Result result={"Some not very long result: " + source} />
+          <Common.Trace.Result result={`Some not very long result: ${source}`} />
         </div>
 
         <div className="exampleBox">
@@ -431,7 +432,7 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>Slider</h2>
-          <Common.Slider legendItems={["$0", "$30", "$100", "$400", "$1000", "$2000"]}/>
+          <Common.Slider legendItems={['$0', '$30', '$100', '$400', '$1000', '$2000']}/>
         </div>
 
         <div className="exampleBox">

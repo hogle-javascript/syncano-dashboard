@@ -63,13 +63,11 @@ export default Radium(React.createClass({
         color: MUI.Styles.Colors.white,
         fontSize: 21
       },
-
       notificationIcon: {
         color: '#ff3d00'
       },
-
       resendEmailText: {
-        cursor: "pointer",
+        cursor: 'pointer',
         color: MUI.Styles.Colors.lightBlueA700
       },
       menuItem: {
