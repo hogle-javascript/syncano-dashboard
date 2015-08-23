@@ -74,10 +74,6 @@
     // "quotes": [2, "single", "avoid-escape"],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
-    // "key-spacing": [2, {
-    //     "beforeColon": false,
-    //     "afterColon": true
-    // }],
     // "no-invalid-this": 2,
 
     // "no-useless-call": 2,
@@ -95,7 +91,6 @@
     "complexity": 1,
     "camelcase": 1,
     "vars-on-top": 1,
-    "quote-props": 1,
     "quote-props": [1, "as-needed"],
     "react/sort-comp": [1, {
       "order": [
@@ -125,11 +120,6 @@
     }],
     "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
-    "no-warning-comments": 1,
-    "key-spacing": [1, {
-      "beforeColon": false,
-      "afterColon": true
-    }],
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -254,6 +244,10 @@
     "func-names": 1,
     "func-style": 0,
     "id-match": 2,
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
     "lines-around-comment": 2,
     "linebreak-style": 2,
     "max-nested-callbacks": 2,
