@@ -86,7 +86,7 @@ export default React.createClass({
           modal: true,
           children: [
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
+            this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
               position="bottom"
@@ -107,7 +107,7 @@ export default React.createClass({
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
+            this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
               position="bottom"

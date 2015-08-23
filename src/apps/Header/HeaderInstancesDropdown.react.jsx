@@ -108,8 +108,8 @@ export default Radium(React.createClass({
         maxHeight: 'calc(100vh - 80px)'
       },
       dropdownMenuItem: {
-        height      : 'auto',
-        paddingLeft : 16
+        height: 'auto',
+        paddingLeft: 16
       }
     }
   },

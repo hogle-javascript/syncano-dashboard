@@ -72,17 +72,12 @@
     // "quotes": [2, "single", "avoid-escape"],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
-    // "key-spacing": [2, {
-    //     "beforeColon": false,
-    //     "afterColon": true
-    // }],
     // "no-invalid-this": 2,
 
     // "no-useless-call": 2,
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
     // "react/jsx-no-undef": 2,
-    // "accessor-pairs": 2,
     "radix": 2,
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
@@ -121,11 +116,6 @@
     }],
     "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
-    "no-warning-comments": 1,
-    "key-spacing": [1, {
-      "beforeColon": false,
-      "afterColon": true
-    }],
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -144,8 +134,6 @@
     "react/jsx-no-undef": 1,
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
-    "accessor-pairs": 1,
-    "no-multi-spaces": 2,
     "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
@@ -187,6 +175,7 @@
     "no-warning-comments": 1,
 
     // Best Practices
+    "accessor-pairs": 2,
     "block-scoped-var": 2,
     "default-case": 2,
     "dot-notation": 2,
@@ -208,6 +197,7 @@
     "no-labels": 2,
     "no-lone-blocks": 2,
     "no-loop-func": 2,
+    "no-multi-spaces": 2,
     "no-multi-str": 2,
     "no-native-reassign": 2,
     "no-new-func": 2,
@@ -250,6 +240,10 @@
     "func-names": 1,
     "func-style": 0,
     "id-match": 2,
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
     "lines-around-comment": 2,
     "linebreak-style": 2,
     "max-nested-callbacks": 2,
