@@ -79,7 +79,6 @@
     //     "beforeColon": false,
     //     "afterColon": true
     // }],
-    // "no-invalid-this": 2,
 
     // "init-declarations": 2,
     // "no-useless-call": 2,
@@ -140,7 +139,6 @@
       "args": "after-used"
     }],
     "no-undefined": 2,
-    "no-invalid-this": 1,
     "spaced-comment": [2, "always",  {
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
@@ -214,6 +212,7 @@
     "no-fallthrough": 2,
     "no-floating-decimal": 2,
     "no-implied-eval": 2,
+    "no-invalid-this": 2,
     "no-iterator": 2,
     "no-labels": 2,
     "no-lone-blocks": 2,
