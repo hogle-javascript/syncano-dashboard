@@ -74,18 +74,14 @@
     // "quotes": [2, "single", "avoid-escape"],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
-    // "no-plusplus": 2,
     // "no-invalid-this": 2,
 
-    // "init-declarations": 2,
     // "no-useless-call": 2,
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
     // "react/jsx-no-undef": 2,
     // "accessor-pairs": 2,
     "radix": 2,
-    // "no-multi-spaces": 2,
-
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
@@ -124,7 +120,6 @@
     }],
     "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
-    "no-plusplus": 1,
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -135,7 +130,6 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "init-declarations": 1,
     "no-useless-call": 1,
     "consistent-return": 1,
     "react/no-multi-comp": 1,
@@ -145,7 +139,7 @@
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "accessor-pairs": 1,
-    "no-multi-spaces": 1,
+    "no-multi-spaces": 2,
     "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
@@ -230,6 +224,7 @@
     "yoda": 2,
 
     // Variables
+    "init-declarations": 2,
     "no-catch-shadow": 2,
     "no-delete-var": 2,
     "no-label-var": 2,
@@ -308,6 +303,7 @@
     "max-params": [1, 4],
     "max-statements": [1, 4],
     "no-bitwise": 2,
+    "no-plusplus": 2,
 
     // React
     "react/display-name": 0,

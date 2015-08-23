@@ -126,8 +126,8 @@ export default Radium(React.createClass({
     }
 
     let dropDownMenuItems = instancesList.map((item) => {
-      item.metadata       = item.metadata       || {};
-      item.metadata.icon  = item.metadata.icon  || null;
+      item.metadata = item.metadata || {};
+      item.metadata.icon = item.metadata.icon || null;
       item.metadata.color = item.metadata.color || null;
 
       let iconBackground = {
