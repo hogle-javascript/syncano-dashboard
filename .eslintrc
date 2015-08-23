@@ -80,7 +80,6 @@
     // }],
     // "no-invalid-this": 2,
 
-    // "init-declarations": 2,
     // "no-useless-call": 2,
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
@@ -141,7 +140,6 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "init-declarations": 1,
     "no-useless-call": 1,
     "consistent-return": 1,
     "react/no-multi-comp": 1,
@@ -236,6 +234,7 @@
     "yoda": 2,
 
     // Variables
+    "init-declarations": 2,
     "no-catch-shadow": 2,
     "no-delete-var": 2,
     "no-label-var": 2,
