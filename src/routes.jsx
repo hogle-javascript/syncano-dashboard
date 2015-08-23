@@ -133,9 +133,9 @@ export default (
             path="add" />
 
           <Route
-            name    = "classes-edit"
+            name = "classes-edit"
             handler = {Classes.FormView}
-            path    = ":className/edit" />
+            path = ":className/edit" />
 
           {/* Classes - Data Objects */}
           <Route

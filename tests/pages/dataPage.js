@@ -21,6 +21,10 @@ module.exports = {
     dataListItem: {
       selector: '//div[text()="data_view"]',
       locateStrategy: 'xpath'
+    },
+    dataListItemTitle: {
+      selector: '//div[text()="Data Endpoints"]',
+      locateStrategy: 'xpath'
     }
   }
 };
