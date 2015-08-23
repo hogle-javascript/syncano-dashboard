@@ -170,7 +170,7 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top:64, padding: '0px'}}>
+        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
           <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
             <MUI.FontIcon
               style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}

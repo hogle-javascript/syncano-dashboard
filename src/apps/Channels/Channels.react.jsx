@@ -8,7 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import ChannelsActions from './ChannelsActions';
-import ChannelsStore   from './ChannelsStore';
+import ChannelsStore from './ChannelsStore';
 
 // Components
 import Common from '../../common';
