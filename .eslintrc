@@ -43,8 +43,6 @@
     // "complexity": 2,
     // "camelcase": 2,
     // "vars-on-top": 2,
-    // "quote-props": 2,
-    // "quote-props": [2, "as-needed"],
     // "react/sort-comp": [2, {
     //   "order": [
     //     "displayName",
@@ -95,8 +93,6 @@
     "complexity": 1,
     "camelcase": 1,
     "vars-on-top": 1,
-    "quote-props": 1,
-    "quote-props": [1, "as-needed"],
     "react/sort-comp": [1, {
       "order": [
         "displayName",
@@ -276,6 +272,7 @@
     "operator-assignment": 2,
     "operator-linebreak": 2,
     "padded-blocks": [2, "never"],
+    "quote-props": [2, "as-needed"],
     "semi-spacing": [2, {"before": false, "after": true}],
     "sort-vars": 0,
     "space-after-keywords": 2,

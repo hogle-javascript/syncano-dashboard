@@ -114,7 +114,7 @@ export default Radium(React.createClass({
 
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
-    this.setState({'welcomeShowed': true});
+    this.setState({welcomeShowed: true});
   },
 
   showInstanceEditDialog() {
