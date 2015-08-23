@@ -1,4 +1,4 @@
-import Reflux           from 'reflux';
+import Reflux from 'reflux';
 
 // Utils & Mixins
 import Mixins from '../../mixins';

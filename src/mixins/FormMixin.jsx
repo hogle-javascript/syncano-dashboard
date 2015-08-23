@@ -99,7 +99,7 @@ export default {
     // f***ing js
     if (key !== null) {
       let keyConstraints = {};
-      let keyAttributes  = {};
+      let keyAttributes = {};
 
       keyConstraints[key] = constraints[key];
       constraints = keyConstraints;

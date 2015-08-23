@@ -88,8 +88,6 @@
     // "react/jsx-no-undef": 2,
     // "accessor-pairs": 2,
     "radix": 2,
-    // "no-multi-spaces": 2,
-
     // "no-implicit-coercion": 2,
     // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
@@ -155,7 +153,7 @@
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "accessor-pairs": 1,
-    "no-multi-spaces": 1,
+    "no-multi-spaces": 2,
     "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
     "react/no-did-mount-set-state": [1, "allow-in-func"],
