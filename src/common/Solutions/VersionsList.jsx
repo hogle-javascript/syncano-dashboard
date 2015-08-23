@@ -84,7 +84,7 @@ export default React.createClass({
 
   getList() {
     if (this.state.items === null) {
-      return;
+      return true;
     }
 
     let items = this.state.items.map((item) => {

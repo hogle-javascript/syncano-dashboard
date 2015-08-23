@@ -176,7 +176,7 @@ export default Radium(React.createClass({
         </Common.ColumnList.Header>
       )
     }
-    return;
+    return true;
   },
 
   render() {
