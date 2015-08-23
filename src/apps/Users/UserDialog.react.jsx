@@ -107,7 +107,7 @@ export default React.createClass({
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
     let allGroups = GroupsStore.getGroups().map((group) => {
-      group.value = group.id + '';
+      group.value = String(group.id);
       return group;
     });
     let dialogStandardActions = [
