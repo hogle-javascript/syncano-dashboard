@@ -35,14 +35,14 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       content: {
-        padding : '0px 0px 48px'
+        padding: '0px 0px 48px'
       },
       contentRow: {
         display: '-webkit-flex; display: flex',
         alignItems: 'center'
       },
       accountKey: {
-        fontFamily : 'monospace'
+        fontFamily: 'monospace'
       },
       form: {
         // maxWidth : 416

@@ -172,36 +172,36 @@ export default React.createClass({
     let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
     let notifications = [{
-      type     : "normal-link",
-      leftIcon : {
-        name   : "synicon-alert",
-        style  : {
+      type: "normal-link",
+      leftIcon: {
+        name: "synicon-alert",
+        style: {
           color: "#ff9800"
         }
       },
       content: {
-        text          : "You email address is not yet verified.",
-        secondaryText : "Resend activation email",
-        style         : {}
+        text: "You email address is not yet verified.",
+        secondaryText: "Resend activation email",
+        style: {}
       },
-      name            : "activation",
-      handleLinkClick : dummyClick
+      name: "activation",
+      handleLinkClick: dummyClick
     }, {
-      type     : "invitation",
-      leftIcon : {
-        name   : "synicon-share-letiant",
-        style  : {
+      type: "invitation",
+      leftIcon: {
+        name: "synicon-share-letiant",
+        style: {
           color: "#8bc34a"
         }
       },
-      content  : {
-        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
-        style  : {}
+      content: {
+        text: <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
+        style: {}
       },
-      buttonsText   : ["Accept", "Decline"],
-      name          : "billing",
-      handleAccept  : dummyClick.bind(this, [item]),
-      handleDecline : dummyClick.bind(this, [item])
+      buttonsText: ["Accept", "Decline"],
+      name: "billing",
+      handleAccept: dummyClick.bind(this, [item]),
+      handleDecline: dummyClick.bind(this, [item])
     }];
 
     let icon = <MUI.FontIcon className = "synicon-delete" />;
@@ -214,10 +214,10 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Material dropdown</h2>
           <div style={{
-                 display        : 'flex',
-                 float          : 'none',
-                 alignItems     : 'center',
-                 justifyContent : 'center'
+                 display: 'flex',
+                 float: 'none',
+                 alignItems: 'center',
+                 justifyContent: 'center'
                }}>
           <Common.Dropdown.Material
               type      = "notification"
