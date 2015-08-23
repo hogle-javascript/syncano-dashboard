@@ -86,7 +86,6 @@
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
     // "react/jsx-no-undef": 2,
-    // "accessor-pairs": 2,
     "radix": 2,
     // "no-multi-spaces": 2,
 
@@ -154,7 +153,6 @@
     "react/jsx-no-undef": 1,
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
-    "accessor-pairs": 1,
     "no-multi-spaces": 1,
     "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
@@ -197,6 +195,7 @@
     "no-warning-comments": 1,
 
     // Best Practices
+    "accessor-pairs": 2,
     "block-scoped-var": 2,
     "default-case": 2,
     "dot-notation": 2,
