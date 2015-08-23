@@ -42,7 +42,6 @@
     // "no-inline-comments": 2,
     // "complexity": 2,
     // "camelcase": 2,
-    // "vars-on-top": 2,
     // "quote-props": 2,
     // "quote-props": [2, "as-needed"],
     // "react/sort-comp": [2, {
@@ -89,7 +88,6 @@
     "no-inline-comments": 1,
     "complexity": 1,
     "camelcase": 1,
-    "vars-on-top": 1,
     "quote-props": [1, "as-needed"],
     "react/sort-comp": [1, {
       "order": [
@@ -219,6 +217,7 @@
     "no-unused-expressions": 2,
     "no-void": 2,
     "no-with": 2,
+    "vars-on-top": 2,
     "wrap-iife": [2, "any"],
     "yoda": 2,
 
