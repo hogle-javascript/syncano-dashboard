@@ -214,27 +214,27 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Material dropdown</h2>
           <div style={{
-                 display        : 'flex',
-                 float          : 'none',
-                 alignItems     : 'center',
+                 display : 'flex',
+                 float : 'none',
+                 alignItems : 'center',
                  justifyContent : 'center'
                }}>
           <Common.Dropdown.Material
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {notifications}
+              type = "notification"
+              icon = {"bell"}
+              items = {notifications}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {false} />
           <Common.Dropdown.Material
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
+              type = "notification"
+              icon = {"bell"}
+              items = {[]}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {false} />
           <Common.Dropdown.Material
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
+              type = "notification"
+              icon = {"bell"}
+              items = {[]}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {true} />
             </div>
@@ -273,9 +273,9 @@ export default React.createClass({
         <div className="exampleBox">
           <h4>Icon 1</h4>
           <MUI.FontIcon
-            className  = "synicon-bell"
-            color      = "#0091EA"
-            hoverColor = "#1a237e"  />
+            className = "synicon-bell"
+            color = "#0091EA"
+            hoverColor = "#1a237e" />
         </div>
 
         <div className="exampleBox">
@@ -378,7 +378,7 @@ export default React.createClass({
           <h2>material-ui Dialog</h2>
           <MUI.FlatButton
             label="Bum!"
-            onClick={handleStandardDialogTouchTap}  />
+            onClick={handleStandardDialogTouchTap} />
           <MUI.Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
@@ -397,8 +397,8 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Loading</h2>
           <Common.Loading
-            type    = "linear"
-            show    = {true} />
+            type = "linear"
+            show = {true} />
           <Common.Loading show={true}/>
         </div>
 
@@ -407,16 +407,16 @@ export default React.createClass({
           <MUI.DatePicker hintText="Portrait Dialog" />
           <MUI.DatePicker
             hintText = "Landscape Dialog"
-            mode     = "landscape" />
+            mode = "landscape" />
           <MUI.DatePicker
-            maxDate          = {this.getMaxDate(2020)}
-            minDate          = {this.getMinDate(1990)}
-            formatDate       = {this.getDateFormat}
-            defaultDate      = {this.getDateNow()}
-            ref              = "modifiedDatePicker"
-            hintText         = "Ranged Date Picker"
+            maxDate = {this.getMaxDate(2020)}
+            minDate = {this.getMinDate(1990)}
+            formatDate = {this.getDateFormat}
+            defaultDate = {this.getDateNow()}
+            ref = "modifiedDatePicker"
+            hintText = "Ranged Date Picker"
             showYearSelector = {true}
-            onChange         = {this.logDate} />
+            onChange = {this.logDate} />
         </div>
 
         <div className="exampleBox">
@@ -424,8 +424,8 @@ export default React.createClass({
           <MUI.TimePicker
             format="ampm" />
           <MUI.TimePicker
-            ref      = "modifiedTimePicker"
-            format   = "24hr"
+            ref = "modifiedTimePicker"
+            format = "24hr"
             onChange = {this.logTime}/>
         </div>
 
@@ -456,7 +456,7 @@ export default React.createClass({
           <MUI.IconMenu iconButtonElement={<MUI.IconButton>{icon}</MUI.IconButton>} openDirection="top-right">
             <MenuItemNew
               insetChildren = {true}
-              leftIcon      = {icon}>Refresh</MenuItemNew>
+              leftIcon = {icon}>Refresh</MenuItemNew>
             <MenuItemNew>Send Feedback More</MenuItemNew>
             <MenuItemNew checked={true}>Settings</MenuItemNew>
             <MenuItemNew checked={true}>Help</MenuItemNew>
@@ -466,8 +466,8 @@ export default React.createClass({
 
           <MenuNew
             desktop = {true}
-            width   = {320}
-            style   = {{
+            width = {320}
+            style = {{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
