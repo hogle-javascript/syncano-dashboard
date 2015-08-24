@@ -101,6 +101,7 @@
     "codeclimate": "codeclimate-test-reporter < coverage/lcov.info",
     "iconfont": "gulp iconfont",
     "add-github-tag": "gulp add-github-tag",
-    "check-github-tag": "gulp check-github-tag"
+    "check-github-tag": "gulp check-github-tag",
+    "changelog": "gulp changelog"
   }
 }

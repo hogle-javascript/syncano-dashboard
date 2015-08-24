@@ -2,6 +2,7 @@ var gulp             = require('gulp'),
     fs               = require('fs'),
     path             = require('path'),
     async            = require('async'),
+    _                = require('lodash'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
@@ -239,6 +240,48 @@ gulp.task('add-github-tag', function(cb) {
     }
   ], function(err) {
     if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('changelog', function(cb) {
+  async.waterfall([
+    function (callback) {
+      // Fetch tags from origin
+      git.fetch('origin', '', {args: '--tags'}, callback);
+    },
+
+    function (callback) {
+      // Grab list of tags
+      git.exec({args: 'tag --sort=-refname'}, function(err, stdout) {
+        if (err) return callback(err);
+        var tags = stdout.split('\n').slice(0, 2);
+        callback(null, tags[1], tags[0]);
+      });
+    },
+
+    function(start, end, callback) {
+      var range = start + '...' + end;
+      var command = 'log ' + range + ' --grep="[[:alpha:]{5, 10}][-][[:digit:]]" --oneline --pretty=format:"%s"';
+      var regex = /[A-Za-z]{5,10}-[\d]+/gm;
+      git.exec({args: command}, function(err, stdout) {
+        if (err) return callback(err);
+        callback(null, _.uniq(stdout.match(regex)), end);
+      });
+    }
+  ], function(err, tickets, tag) {
+    if (err) throw err;
+
+    console.log('\n\nChangelog for version:', tag + ':\n');
+
+    tickets.sort();
+    _.forEach(tickets, function(ticket) {
+      if (_.startsWith(ticket, 'SYN')) {
+        console.log(_.padRight(ticket, 15), 'https://syncano.aha.io/features/' + ticket);
+      } else {
+        console.log(ticket);
+      }
+    });
     cb();
   });
 });
