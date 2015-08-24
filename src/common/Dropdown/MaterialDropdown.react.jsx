@@ -18,9 +18,7 @@ export default React.createClass({
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      // if "clickable" props is defined as false or
       handleItemClick: React.PropTypes.func,
-      // is not defined function will not be triggered
       clickable: React.PropTypes.bool
     }),
     iconStyle: React.PropTypes.object,

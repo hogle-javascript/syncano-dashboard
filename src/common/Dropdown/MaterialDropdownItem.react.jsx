@@ -21,19 +21,14 @@ export default React.createClass({
         style: React.PropTypes.object
       }),
       secondaryText: React.PropTypes.string,
-      // Content to view as item can be any object too
       secondaryTextLines: React.PropTypes.number,
-      // name for DropdownMenuItems keys
       name: React.PropTypes.string,
-      // function to call after DropdownMenuItem click
       handleItemClick: React.PropTypes.func
     })),
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      // if "clickable" props is defined as false or
       handleItemClick: React.PropTypes.func,
-      // is not defined function will not be triggered
       clickable: React.PropTypes.bool
     })
   },
