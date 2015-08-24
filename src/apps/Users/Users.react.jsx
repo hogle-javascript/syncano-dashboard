@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +12,6 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -91,7 +89,7 @@ export default React.createClass({
   },
 
   showUserDialog(group) {
-    Actions.showDialog(undefined, group);
+    Actions.showDialog(undefined, group); // eslint-disable-line no-undefined
   },
 
   showUserEditDialog() {
@@ -190,18 +188,18 @@ export default React.createClass({
 
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyUserSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
               iconClassName={isAnyUserSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Users"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Users"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit a User"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit a User"
               mini={true}
               disabled={checkedUsers > 1}
               onClick={this.showUserEditDialog}
@@ -209,12 +207,12 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to create a User account"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to create a User account"
             onClick={this.showUserDialog.bind(null, null)}
             iconClassName="synicon-account-plus"/>
-          <Common.Fab.Item
-            label="Click here to create a Group"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to create a Group"
             onClick={this.showGroupDialog}
             iconClassName="synicon-account-multiple-plus"/>
         </Common.Fab>

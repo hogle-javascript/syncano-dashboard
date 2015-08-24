@@ -1,18 +1,15 @@
 import 'd3';
 import 'c3/c3.css';
 import c3 from 'c3';
-import _ from 'lodash';
 
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 
-import Common from '../../common';
-
 import Actions from './ProfileBillingChartActions';
 import Store from './ProfileBillingChartStore';
 
-require('./ProfileBillingChart.css');
+import './ProfileBillingChart.css';
 
 export default Radium(React.createClass({
   mixins: [Reflux.connect(Store)],
@@ -27,10 +24,10 @@ export default Radium(React.createClass({
     });
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     console.log('ProfileBillingChart::componentDidUpdate');
 
-    if (this.state.isLoading === true || this.chart !== undefined) {
+    if (this.state.isLoading === true || typeof this.chart !== 'undefined') {
       return;
     }
 
@@ -46,7 +43,8 @@ export default Radium(React.createClass({
       <div style={{paddingTop: 16, paddingBottom: 8, paddingRight: 10, background: '#F5F5F5'}}>
         <div
           ref="chart"
-          className="col chart"/>
+          className="col chart">
+        </div>
       </div>
     );
   }

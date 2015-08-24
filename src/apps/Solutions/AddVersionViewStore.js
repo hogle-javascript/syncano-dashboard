@@ -34,6 +34,7 @@ export default Reflux.createStore({
       name: null,
       type: 'devel',
       description: null,
+      instance: null,
       instances: null,
       instanceData: {
         views: [],

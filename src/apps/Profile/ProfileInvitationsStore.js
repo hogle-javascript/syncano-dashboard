@@ -40,7 +40,7 @@ export default Reflux.createStore({
   },
 
   setInvitations(items) {
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 

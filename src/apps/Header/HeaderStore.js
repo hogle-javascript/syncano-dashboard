@@ -40,7 +40,7 @@ export default Reflux.createStore({
     this.trigger(payload);
   },
 
-  onClear(payload) {
+  onClear() {
     console.debug('HeaderStore::onClear');
     this.trigger({
       menuItems: []

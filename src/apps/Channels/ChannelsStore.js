@@ -28,16 +28,16 @@ export default Reflux.createStore({
 
   channelPermissions: [
     {
-      'text': 'none',
-      'payload': 'none'
+      text: 'none',
+      payload: 'none'
     },
     {
-      'text': 'subscribe',
-      'payload': 'subscribe'
+      text: 'subscribe',
+      payload: 'subscribe'
     },
     {
-      'text': 'publish',
-      'payload': 'publish'
+      text: 'publish',
+      payload: 'publish'
     }
   ],
 
@@ -94,7 +94,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveChannelsCompleted(payload) {
+  onRemoveChannelsCompleted() {
     console.debug('ChannelsStore::onRemoveChannelsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();

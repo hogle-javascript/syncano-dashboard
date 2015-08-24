@@ -5,9 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import GroupsActions from './GroupsActions';
-import GroupDialogStore from './GroupDialogStore';
-import GroupsStore from './GroupsStore';
+import Actions from './GroupsActions';
+import Store from './GroupDialogStore';
 
 // Components
 import MUI from 'material-ui';
@@ -18,8 +17,7 @@ export default React.createClass({
   displayName: 'GroupDialog',
 
   mixins: [
-    Reflux.connect(GroupDialogStore),
-    React.addons.LinkedStateMixin,
+    Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -31,18 +29,17 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    GroupsActions.createGroup(this.state.label);
+    Actions.createGroup(this.state.label);
   },
 
   handleEditSubmit() {
-    GroupsActions.updateGroup(this.state.id, {
+    Actions.updateGroup(this.state.id, {
       label: this.state.label
     });
   },
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm';
     let dialogStandardActions = [
       {
         ref: 'cancel',
@@ -51,7 +48,7 @@ export default React.createClass({
       },
       {
         ref: 'submit',
-        text: {submitLabel},
+        text: 'Confirm',
         onTouchTap: this.handleFormValidation
       }
     ];
@@ -59,7 +56,7 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref="dialog"
-        title={title + " a Group"}
+        title={`${title} a Group`}
         openImmediately={this.props.openImmediately}
         actions={dialogStandardActions}
         onDismiss={this.resetDialogState}>

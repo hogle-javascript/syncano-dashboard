@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import Constants from '../../constants/Constants';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';
 import SchedulesActions from './SchedulesActions';
@@ -39,7 +38,7 @@ export default Reflux.createStore({
 
   setSchedules(items) {
     console.debug('SchedulesStore::setSchedules');
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 

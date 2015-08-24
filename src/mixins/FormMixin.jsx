@@ -1,12 +1,26 @@
 import React from 'react';
-import objectAssign from 'object-assign';
+import ReactLink from 'react/lib/ReactLink';
+import ReactStateSetters from 'react/lib/ReactStateSetters';
+import _ from 'lodash';
 import validate from 'validate.js';
 
 import Notification from '../common/Notification/Notification.react';
 
 validate.moment = require('moment');
 
+
 export default {
+  linkState(key) {
+    // We don't want to call render here
+    if (_.indexOf(this.state._formLinkedKeys, key) === -1) {
+      this.state._formLinkedKeys.push(key);
+    }
+
+    return new ReactLink(
+      this.state[key],
+      ReactStateSetters.createStateKeySetter(this, key)
+    );
+  },
 
   getInitialState() {
     return this.getInitialFormState();
@@ -14,6 +28,7 @@ export default {
 
   getInitialFormState() {
     return {
+      _formLinkedKeys: [],
       errors: {},
       feedback: null,
       canSubmit: true
@@ -21,16 +36,16 @@ export default {
   },
 
   renderFormErrorFeedback() {
-    if (!this.state.errors || this.state.errors.feedback === undefined) {
-      return;
+    if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
+      return true;
     }
 
-    return <Notification type='error'>{this.state.errors.feedback}</Notification>;
+    return <Notification type="error">{this.state.errors.feedback}</Notification>;
   },
 
   renderFormFeedback() {
-    if (!this.state.feedback || this.state.feedback === undefined) {
-      return
+    if (!this.state.feedback || typeof this.state.feedback === 'undefined') {
+      return true;
     }
 
     return <Notification>{this.state.feedback}</Notification>;
@@ -44,27 +59,47 @@ export default {
     this.setState(this.getInitialFormState());
   },
 
-  validate(key, callback) {
-    if (typeof key === 'function') {
-      callback = key;
-      key = undefined;
+  getFormAttributes() {
+    if (_.size(this.state._formLinkedKeys) === 0) {
+      return this.state;
     }
 
-    let constraints = this.validatorConstraints || {};
-    let attributes = this.getValidatorAttributes || this.state;
+    let attributes = _.reduce(this.state._formLinkedKeys, (result, key) => {
+      let ref = this.refs[key];
+      let state = this.state[key];
+      let value = (_.isEmpty(ref)) ? state : (state || ref.getValue());
 
-    if (typeof constraints === 'function') {
+      if (!_.isEmpty(value)) {
+        result[key] = value;
+      }
+
+      return result;
+    }, {});
+
+    return _.defaults(attributes, this.state);
+  },
+
+  validate(key, callback) {
+    if (typeof key === 'function') {
+      callback = key; // eslint-disable-line no-param-reassign
+      key = null; // eslint-disable-line no-param-reassign
+    }
+
+    let constraints = _.get(this, 'validatorConstraints', {});
+    let attributes = _.get(this, 'getValidatorAttributes', this.getFormAttributes());
+
+    if (_.isFunction(constraints)) {
       constraints = constraints.call(this);
     }
 
-    if (typeof attributes === 'function') {
+    if (_.isFunction(attributes)) {
       attributes = attributes.call(this);
     }
 
     // f***ing js
-    if (key !== undefined) {
+    if (key !== null) {
       let keyConstraints = {};
-      let keyAttributes  = {};
+      let keyAttributes = {};
 
       keyConstraints[key] = constraints[key];
       constraints = keyConstraints;
@@ -72,62 +107,56 @@ export default {
       attributes = keyAttributes;
     }
 
-    let errors = objectAssign(
+    let errors = _.assign(
       {},
-      (key !== undefined) ? this.state.errors : {},
+      (key !== null) ? this.state.errors : {},
       validate(attributes, constraints)
     );
 
-    this.setState({
-      errors: errors
-    }, this._invokeCallback.bind(this, key, callback));
+    this.setState({errors}, this._invokeCallback.bind(this, key, callback));
   },
 
-  handleFormValidation: function(event) {
+  handleFormValidation(event) {
     if (event) {
       event.preventDefault();
     }
 
-    // FormMixin compatibility
-    if (this.state.canSubmit !== undefined && this.state.canSubmit === false) {
+    if (typeof this.state.canSubmit !== 'undefined' && this.state.canSubmit === false) {
       return;
     }
 
-    this.validate(function(isValid, errors) {
+    this.validate((isValid, errors) => {
       if (isValid === true) {
-        if (this.handleSuccessfullValidation !== undefined) {
-          this.handleSuccessfullValidation.call(this)
+        if (_.isFunction(this.handleSuccessfullValidation)) {
+          this.handleSuccessfullValidation.call(this, this.getFormAttributes())
         }
-      } else if (this.handleFailedValidation !== undefined) {
+      } else if (_.isFunction(this.handleFailedValidation)) {
         this.handleFailedValidation.call(this, errors);
       }
-    }.bind(this));
+    });
   },
 
   handleValidation(key, callback) {
-    return function(event) {
-      event.preventDefault();
+    return (event) => {
+      if (event) {
+        event.preventDefault();
+      }
       this.validate(key, callback);
-    }.bind(this);
+    };
   },
 
-  getValidationMessages(key) {
+  getValidationMessages(key = null) {
     let errors = this.state.errors || {};
 
-    if (Object.keys(errors).length === 0) {
+    if (_.size(errors) === 0) {
       return [];
     }
 
-    if (key === undefined) {
-      let flattenErrors = [];
-
-      for (let error in errors) {
-        flattenErrors.push.apply(flattenErrors, errors[error]);
-      }
-      return flattenErrors;
+    if (key === null) {
+      return _.reduce(errors, (result, value) => result.concat(value), []);
     }
 
-    return errors[key] ? errors[key] : [];
+    return _.get(errors, key, []);
   },
 
   clearValidations() {
@@ -145,20 +174,19 @@ export default {
     return false;
   },
 
-  isValid(key) {
-    return this.state.errors[key] === undefined || this.state.errors[key] === null;
+  isValid(key = null) {
+    if (key === null) {
+      return _.size(this.state.errors) === 0;
+    }
+    return _.isEmpty(this.state.errors[key]);
   },
 
-  _invokeCallback(key, callback) {
-    if (typeof callback !== 'function') {
+  _invokeCallback(key = null, callback = null) {
+    if (!_.isFunction(callback)) {
       return;
     }
 
-    if (key !== undefined) {
-      callback(this.isValid(key), this.state.errors[key]);
-    } else {
-      callback(Object.keys(this.state.errors).length === 0, this.state.errors);
-    }
+    callback(this.isValid(key), (key !== null) ? this.state.errors[key] : this.state.errors);
   }
 
 };

@@ -24,7 +24,7 @@ export default {
   },
 
   remove(ids) {
-    let promises = ids.map(id => this.Connection.Groups.remove(id));
+    let promises = ids.map((id) => this.Connection.Groups.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

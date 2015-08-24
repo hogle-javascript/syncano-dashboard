@@ -2,14 +2,11 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import FormMixin from '../../mixins/FormMixin';
-import HeaderMixin from '../Header/HeaderMixin';
 
-import SessionStore from '../Session/SessionStore';
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
 import MUI from 'material-ui';
-import Container from '../../common/Container/ProfileContainer.react';
 
 export default React.createClass({
 
@@ -17,7 +14,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -33,10 +29,10 @@ export default React.createClass({
   getStyles() {
     return {
       content: {
-        padding : '0 0 48px'
+        padding: '0 0 48px'
       },
       form: {
-        maxWidth : 416
+        maxWidth: 416
       },
       updateButton: {
         height: 36,

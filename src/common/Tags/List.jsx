@@ -35,8 +35,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-
-    let tags = this.state.items.map(item => {
+    let tags = this.state.items.map((item) => {
       return (
         <MUI.ListItem
           key={item.name}

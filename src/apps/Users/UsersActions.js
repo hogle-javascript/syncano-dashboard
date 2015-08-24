@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions(
   {
-    withCheck: true,
-    withDialog: true
-  },
-  {
     fetch: {},
     setUsers: {},
     fetchUsers: {
@@ -52,4 +48,9 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Users.listUserGroups'
     }
-  });
+  },
+  {
+    withCheck: true,
+    withDialog: true
+  }
+);

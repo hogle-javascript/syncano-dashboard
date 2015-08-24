@@ -8,9 +8,10 @@ export default {
     let uniqueColors = Object.keys(Colors).filter((key) => key.slice(-3) === '500');
 
     uniqueColors.map((color) => {
-      color = color.slice(0, -3);
-      if (color !== this.syncanoThemeColorName) {
-        colors.push(color);
+      let colorSlice = color.slice(0, -3);
+
+      if (colorSlice !== this.syncanoThemeColorName) {
+        colors.push(colorSlice);
       }
     });
 

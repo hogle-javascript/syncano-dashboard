@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import Constants from '../../constants/Constants';
 import SessionActions from '../Session/SessionActions';
 import DataViewsActions from './DataViewsActions';
 
@@ -36,7 +35,7 @@ export default Reflux.createStore({
 
   setDataViews(items) {
     console.debug('DataViewsStore::setDataViews');
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.data.isLoading = false;
     this.trigger(this.data);
   },

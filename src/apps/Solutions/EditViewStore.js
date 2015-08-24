@@ -87,7 +87,7 @@ export default Reflux.createStore({
 
     let newItems = [];
 
-    Object.keys(versions).map(key => newItems.splice(0, 0, versions[key]));
+    Object.keys(versions).map((key) => newItems.splice(0, 0, versions[key]));
 
     this.data.versions = this.data.versions.concat(newItems);
 
@@ -95,7 +95,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchSolution(solution) {
+  onFetchSolution() {
     console.debug('SolutionsEditStore::onFetchSolutions');
     this.data.isLoading = true;
     this.trigger(this.data);

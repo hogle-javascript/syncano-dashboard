@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 import Mixins from '../../mixins';
 
@@ -17,8 +16,6 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 
@@ -30,7 +27,7 @@ export default React.createClass({
 
   validatorConstraints() {
     if (this.state.card) {
-      return;
+      return true;
     }
 
     return {
@@ -74,11 +71,13 @@ export default React.createClass({
       return {};
     }
 
+    let data = this.getFormAttributes();
+
     return {
-      number: this.state.number || this.refs.number.getValue(),
-      cvc: this.state.cvc || this.refs.cvc.getValue(),
-      exp_month: this.state.exp_month || this.refs.exp_month.getValue(),
-      exp_year: this.state.exp_year || this.refs.exp_year.getValue()
+      number: data.number,
+      cvc: data.cvc,
+      exp_month: data.exp_month,
+      exp_year: data.exp_year
     }
   },
 
@@ -111,8 +110,8 @@ export default React.createClass({
 
     let setLimits = () => {
       return Actions.updateBillingProfile({
-        hard_limit: total * 3,
-        soft_limit: total * 1.5
+        hard_limit: parseInt(total * 3, 10),
+        soft_limit: parseInt(total * 1.5, 10)
       });
     };
 
@@ -121,7 +120,7 @@ export default React.createClass({
     } else {
       Actions
         .updateCard(this.getValidatorAttributes())
-        .then((payload) => {
+        .then(() => {
           subscribe().then(
             setLimits
           )
@@ -174,7 +173,7 @@ export default React.createClass({
   },
 
   renderCard() {
-    if (this.state.card === undefined) {
+    if (typeof this.state.card === 'undefined') {
       return <Common.Loading show={true}/>
     }
 
@@ -261,7 +260,7 @@ export default React.createClass({
 
   renderSlider(type) {
     if (!this.state.plan) {
-      return;
+      return true;
     }
     const defaultValue = 0;
     let options = this.state.plan.options[type];
@@ -276,7 +275,7 @@ export default React.createClass({
         key={type + 'Slider'}
         ref={type + 'Slider'}
         name={type + 'Slider'}
-        value={selected !== undefined ? selected : defaultValue}
+        value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
         optionClick={this.handleSliderLabelsClick}

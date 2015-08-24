@@ -17,10 +17,10 @@ export default {
     console.debug('DialogStoreMixin::showDialog');
     let state = {_dialogVisible: true};
 
-    if (instance !== undefined) {
+    if (typeof instance !== 'undefined') {
       state = objectAssign(state, instance, {_dialogMode: 'edit'});
-    } else if (secondInstance !== undefined) {
-      state = objectAssign(state, {secondInstance: secondInstance});
+    } else if (typeof secondInstance !== 'undefined') {
+      state = objectAssign(state, {secondInstance});
     }
 
     this.trigger(state);

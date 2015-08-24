@@ -15,7 +15,8 @@ export default Radium(React.createClass({
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      stars_count: nextProps.solution.stars_count
+      stars_count: nextProps.solution.stars_count,
+      starred_by_me: nextProps.solution.starred_by_me
     })
   },
 

@@ -5,7 +5,6 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 export default Reflux.createStore({
@@ -41,16 +40,14 @@ export default Reflux.createStore({
   },
 
   selectAllAdminsInvitations() {
-    this.getPendingInvitations().forEach(item => {
-      item.checked = true;
-    });
+    this.getPendingInvitations().forEach((item) => item.checked = true);
     this.trigger(this.data);
   },
 
   setInvitations(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
 
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 
@@ -63,13 +60,13 @@ export default Reflux.createStore({
     return pendingInvitations;
   },
 
-  onFetchInvitations(items) {
+  onFetchInvitations() {
     this.trigger(this.data);
   },
 
   onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
-    this.data.items = Object.keys(items).map(item => items[item]);
+    this.data.items = Object.keys(items).map((item) => items[item]);
     this.trigger(this.data);
     AdminsInvitationsActions.setInvitations(items);
   },

@@ -4,8 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';
 import WebhooksActions from './WebhooksActions';
 
@@ -32,7 +30,7 @@ export default Reflux.createStore({
   },
 
   setWebhooks(items) {
-    this.data.items = Object.keys(items).map(item => items[item]);
+    this.data.items = Object.keys(items).map((item) => items[item]);
     this.trigger(this.data);
   },
 

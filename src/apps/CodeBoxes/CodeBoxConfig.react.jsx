@@ -46,7 +46,7 @@ export default Radium(React.createClass({
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {config: config});
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
   },
 
   renderEditor() {
@@ -76,8 +76,8 @@ export default Radium(React.createClass({
     return (
       <Container style={styles.container}>
         <Common.Fab position="top">
-          <Common.Fab.Item
-            label="Click here to save CodeBox"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>

@@ -19,7 +19,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(AdminDialogStore),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],

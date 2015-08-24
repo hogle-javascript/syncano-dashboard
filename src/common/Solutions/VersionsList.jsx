@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 
 // Components
 import MUI from 'material-ui';
@@ -16,25 +15,19 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      items    : this.props.items,
+      items: this.props.items,
       isLoading: this.props.items === null
     };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      items     : nextProps.items,
-      isLoading : nextProps.items === null
+      items: nextProps.items,
+      isLoading: nextProps.items === null
     })
   },
 
   // List
-  handleItemIconClick(id, state) {
-  },
-
-  handleItemClick(className) {
-  },
-
   handleDownloadVersion(url) {
     window.open(url, '_blank');
   },
@@ -91,10 +84,10 @@ export default React.createClass({
 
   getList() {
     if (this.state.items === null) {
-      return;
+      return true;
     }
 
-    let items = this.state.items.map(item => {
+    let items = this.state.items.map((item) => {
       return this.renderItem(item);
     });
 

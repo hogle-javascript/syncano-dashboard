@@ -31,7 +31,7 @@ export default Radium(React.createClass({
   },
 
   statics: {
-    Header: Header
+    Header
   },
 
   getDefaultProps() {

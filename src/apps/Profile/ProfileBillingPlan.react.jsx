@@ -24,7 +24,6 @@ export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialogs,
     Mixins.IsLoading(),
@@ -375,8 +374,8 @@ export default Radium(React.createClass({
       );
     }
 
-    const covered = _.round(Store.getCovered().amount, 0);
-    const overage = _.round(Store.getOverage().amount, 0);
+    const covered = _.round(Store.getCovered().amount, 2);
+    const overage = _.round(Store.getOverage().amount, 2);
     const amountTotal = overage + covered;
 
     return (
@@ -475,7 +474,7 @@ export default Radium(React.createClass({
             </div>
 
             <div
-              className="col-flex-1"
+              className="col-md-14"
               style={styles.summary}>
               <div
                 className="vp-4"

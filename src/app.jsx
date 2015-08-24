@@ -17,11 +17,11 @@ let container = document.getElementById('app');
 
 tapPlugin();
 
-Router.run(routes, function(Root, state) {
-  let uri         = new URI();
+Router.run(routes, (Root, state) => {
+  let uri = new URI();
   let originalUri = uri.normalize().toString();
-  let pathname    = decodeURIComponent(state.pathname).replace('//', '/');
-  let query       = _.extend({}, uri.search(true), state.query);
+  let pathname = decodeURIComponent(state.pathname).replace('//', '/');
+  let query = _.extend({}, uri.search(true), state.query);
 
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {
@@ -39,21 +39,23 @@ Router.run(routes, function(Root, state) {
     return;
   }
 
-  if (state.query.distinct_id !== undefined) {
+  if (typeof state.query.distinct_id !== 'undefined') {
     window.analytics.identify(state.query.distinct_id);
   }
 
-  let name  = 'app';
-  let names = state.routes.map(route => route.name).filter(routeName => routeName !== undefined);
+  let name = 'app';
+  let names = state.routes.map((route) => route.name).filter((routeName) => typeof routeName !== 'undefined');
 
   if (names.length > 0) {
     name = names[names.length - 1];
   }
 
-  window.analytics.page('Dashboard', {
-    Page: name,
-    path: state.pathname
-  });
+  if (name === 'login' || name === 'signup') {
+    window.analytics.page(`Dashboard ${_.capitalize(name)}`);
+  } else {
+    window.analytics.page('Dashboard', {Page: name});
+  }
+
 
   React.render(<Root/>, container);
 });

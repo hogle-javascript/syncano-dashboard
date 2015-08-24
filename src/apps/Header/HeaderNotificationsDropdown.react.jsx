@@ -11,7 +11,6 @@ import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import MUI from 'material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
-import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import MenuDivider from 'material-ui/lib/menus/menu-divider';
 
@@ -64,13 +63,11 @@ export default Radium(React.createClass({
         color: MUI.Styles.Colors.white,
         fontSize: 21
       },
-
       notificationIcon: {
         color: '#ff3d00'
       },
-
       resendEmailText: {
-        cursor: "pointer",
+        cursor: 'pointer',
         color: MUI.Styles.Colors.lightBlueA700
       },
       menuItem: {
@@ -119,7 +116,7 @@ export default Radium(React.createClass({
       )
     }
 
-    let notifications = this.state.accountInvitations.items.map(item => {
+    let notifications = this.state.accountInvitations.items.map((item) => {
       let icon = (
           <MUI.FontIcon
             className='synicon-share-variant'

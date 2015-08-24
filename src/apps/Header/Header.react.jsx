@@ -4,11 +4,9 @@ import Radium from 'radium';
 import Router from 'react-router';
 
 // Stores & Actions
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import InstancesActions from '../Instances/InstancesActions';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
@@ -16,12 +14,9 @@ import MUI from 'material-ui';
 import Common from '../../common';
 import Logo from '../../common/Logo/Logo.react';
 
-import HeaderMenu from './HeaderMenu.react';
-import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
-import HeaderInstanceMenu from './HeaderInstanceMenu.react';
 
-require('./Header.sass');
+import './Header.sass';
 
 export default Radium(React.createClass({
 
@@ -71,15 +66,15 @@ export default Radium(React.createClass({
         zIndex: 8
       },
       topToolbar: {
-        background : this.context.muiTheme.palette.primary1Color,
-        height     : 64,
-        padding    : 0
+        background: this.context.muiTheme.palette.primary1Color,
+        height: 64,
+        padding: 0
       },
       logotypeContainer: {
-        paddingLeft : 24,
-        height      : '100%',
-        display     : 'flex',
-        alignItems  : 'center'
+        paddingLeft: 24,
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center'
       },
       logo: {
         width: 120
@@ -89,9 +84,9 @@ export default Radium(React.createClass({
         display: 'flex'
       },
       toolbarListItem: {
-        display    : 'inline-flex',
-        alignItems : 'center',
-        cursor     : 'pointer'
+        display: 'inline-flex',
+        alignItems: 'center',
+        cursor: 'pointer'
       },
       bottomToolbar: {
         display: 'flex',
@@ -159,7 +154,6 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let currentInstance = SessionStore.getInstance();
 
     return (
       <div style={styles.main}>

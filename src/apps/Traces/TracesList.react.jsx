@@ -7,9 +7,6 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
-import SessionActions from '../Session/SessionActions';
-import Actions from './TracesActions';
 import Store from './TracesStore';
 
 import MUI from 'material-ui';
@@ -153,7 +150,7 @@ export default Radium(React.createClass({
     };
 
     if (items.length > 0) {
-      items = items.map(item => this.renderItem(item));
+      items = items.map((item) => this.renderItem(item));
       return items;
     }
 
@@ -179,7 +176,7 @@ export default Radium(React.createClass({
         </Common.ColumnList.Header>
       )
     }
-    return;
+    return true;
   },
 
   render() {

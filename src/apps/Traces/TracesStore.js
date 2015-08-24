@@ -1,13 +1,9 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-// Utils & Mixins
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
-import AuthStore from '../Account/AuthStore';
 import Actions from './TracesActions';
 
 export default Reflux.createStore({
@@ -74,7 +70,7 @@ export default Reflux.createStore({
 
   saveTraces(tracesObj) {
     console.debug('TracesStore::saveTraces');
-    this.data.items = _.chain(Object.keys(tracesObj)).map(item => tracesObj[item]).sortByOrder('id', 'desc').value();
+    this.data.items = _.chain(Object.keys(tracesObj)).map((item) => tracesObj[item]).sortByOrder('id', 'desc').value();
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -123,6 +119,4 @@ export default Reflux.createStore({
     console.debug('TracesStore::onFetchCurrentScheduleCompleted', currentObj);
     this.saveCurrentObj(currentObj.label)
   }
-
-
 });

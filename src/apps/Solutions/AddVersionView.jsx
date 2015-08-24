@@ -8,10 +8,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import EditViewActions from './EditViewActions';
-import EditViewStore from './EditViewStore';
-
 import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
@@ -24,7 +20,6 @@ export default Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Router.State,
     Router.Navigation,
 
@@ -115,18 +110,15 @@ export default Radium(React.createClass({
     let spec = this.state.exportSpec;
     let formatedSpec = {};
 
-    Object.keys(spec).map(section => {
+    Object.keys(spec).map((section) => {
       let pkName = this.pkMap(section);
 
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(item => {
+      Object.keys(spec[section]).map((item) => {
         if (spec[section][item] === true) {
           let obj = {};
 
-          if (pkName === 'id') {
-            item = parseInt(item, 10);
-          }
-          obj[pkName] = item;
+          obj[pkName] = (pkName === 'id') ? parseInt(item, 10) : item;
           formatedSpec[section].push(obj);
         }
       })
@@ -144,7 +136,7 @@ export default Radium(React.createClass({
   },
 
   handleSubmit(type) {
-    this.setState({type: type});
+    this.setState({type});
     this.handleFormValidation();
   },
 
@@ -156,7 +148,7 @@ export default Radium(React.createClass({
     let exportSpec = this.state.exportSpec;
 
     exportSpec[type][name] = status;
-    this.setState({exportSpec: exportSpec});
+    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
@@ -166,7 +158,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    let checkboxes = data.map(item => {
+    let checkboxes = data.map((item) => {
       return (
         <div
           key={`checkbox-${type}-${item[pk]}`}
@@ -201,7 +193,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     if (this.state.dataReady === true) {
-      return;
+      return true;
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>
@@ -258,7 +250,7 @@ export default Radium(React.createClass({
                   name='instance'
                   onChange={this.handleInstanceChange}
                   fullWidth={true}
-                  value={null}
+                  value={this.state.instance}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'

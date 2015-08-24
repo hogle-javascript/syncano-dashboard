@@ -24,7 +24,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -52,11 +51,11 @@ export default React.createClass({
     }
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let router = this.context.router;
-      let next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
@@ -68,19 +67,25 @@ export default React.createClass({
     }
   },
 
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignUp({
-      email: this.state.email,
-      password: this.state.password
+      email: data.email,
+      password: data.password
     });
   },
 
-  render() {
-    let bottomContent = <p className="vm-0-b text--center">By signing up you agree to our <a
-      href="http://www.syncano.com/terms-of-service/" target="_blank"> Terms of Use and Privacy Policy</a>.</p>;
-
+  getBottomContent() {
     return (
-      <Container bottomContent={bottomContent}>
+      <p className="vm-0-b text--center">
+        By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
+        Terms of Use and Privacy Policy</a>.
+      </p>
+    )
+  },
+
+  render() {
+    return (
+      <Container bottomContent={this.getBottomContent()}>
         <div className="account-container__content__header vm-3-b">
           <p className="vm-2-b">Start Building Now</p>
           <small>

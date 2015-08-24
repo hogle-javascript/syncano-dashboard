@@ -7,7 +7,6 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
 
 export default Reflux.createStore({
@@ -43,7 +42,7 @@ export default Reflux.createStore({
   },
 
   getClassesDropdown(addSelf = false) {
-    let items = this.data.items.map(item => {
+    let items = this.data.items.map((item) => {
       return {
         payload: item.name,
         text: item.name
@@ -63,7 +62,7 @@ export default Reflux.createStore({
   onGetClassByName(className) {
     let classObj = null;
 
-    this.data.items.some(item => {
+    this.data.items.some((item) => {
       if (item.name === className) {
         classObj = item;
         return true;
@@ -75,7 +74,7 @@ export default Reflux.createStore({
   getClassFields(className) {
     let classObj = null;
 
-    this.data.items.some(item => {
+    this.data.items.some((item) => {
       if (item.name === className) {
         classObj = item;
         return true;
@@ -88,7 +87,7 @@ export default Reflux.createStore({
     let allFields = this.getClassFields(className);
     let relationFields = [];
 
-    allFields.map(item => {
+    allFields.map((item) => {
       if (item.type === 'reference') {
         relationFields.push(item);
       }
@@ -100,7 +99,7 @@ export default Reflux.createStore({
     let allFields = this.getClassFields(className);
     let orderPayload = [];
 
-    allFields.map(item => {
+    allFields.map((item) => {
       if (item.order_index) {
         orderPayload.push({
           text: item.name + ' (ascending)',
@@ -148,7 +147,7 @@ export default Reflux.createStore({
   },
 
   setClasses(items) {
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
 
     if (this.data.items.length > 0) {
       this.data.items = this.data.items.map(this.setProtectedFromDeleteClasses);

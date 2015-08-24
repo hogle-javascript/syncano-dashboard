@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
 import ClassesStore from './ClassesStore';
 
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -37,7 +35,7 @@ export default React.createClass({
       'classes-data-objects',
       {
         instanceName: SessionStore.getInstance().name,
-        className: className
+        className
       }
     );
     console.info('ClassesList::handleItemClick');
@@ -75,7 +73,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

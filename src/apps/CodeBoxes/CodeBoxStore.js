@@ -58,6 +58,11 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRunCodeBoxWithUpdateCompleted() {
+    console.debug('CdeBoxStore::onRunCodeBoxWithUpdateCompleted');
+    this.refreshData();
+  },
+
   getEditorMode() {
     return this.langMap[this.data.currentCodeBox.runtime_name];
   },
@@ -72,7 +77,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxTracesCompleted(traces) {
     console.debug('CodeBoxStore::onFetchCodeBoxTracesCompleted');
-    this.data.traces = Object.keys(traces).sort().map(key => traces[key]);
+    this.data.traces = Object.keys(traces).sort().map((key) => traces[key]);
     this.data.isLoading = false;
     this.getCodeBoxLastTraceResult();
   },
@@ -106,6 +111,7 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted() {
     this.dismissSnackbarNotification();
+    this.refreshData();
   },
 
   onUpdateCodeBoxFailure() {

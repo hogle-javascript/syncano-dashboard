@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Radium from 'radium';
-import classNames from 'classnames';
 
 // Utils
 import FormMixin from '../../mixins/FormMixin';
@@ -11,14 +10,13 @@ import FormMixin from '../../mixins/FormMixin';
 import MUI from 'material-ui';
 import Loading from '../../common/Loading';
 
-require('./Editor.css');
+import './Editor.css';
 
 export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -75,7 +73,6 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less";
     let trace = null;
 
     if (this.state.panelCollapsed) {

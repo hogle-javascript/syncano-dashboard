@@ -12,7 +12,6 @@ import Actions from './CodeBoxActions';
 
 // Components
 import Traces from '../Traces';
-import Container from '../../common/Container';
 
 export default React.createClass({
 

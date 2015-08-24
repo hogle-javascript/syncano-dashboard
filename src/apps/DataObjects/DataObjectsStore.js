@@ -6,8 +6,6 @@ import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';
@@ -140,7 +138,7 @@ export default Reflux.createStore({
 
     // Update columns from Class
     this.data.columns = this.getInitialState().columns;
-    this.data.classObj.schema.map(item => {
+    this.data.classObj.schema.map((item) => {
       this.data.columns.push({
         id: item.name,
         name: item.name,
@@ -162,7 +160,7 @@ export default Reflux.createStore({
   getColumn(columnId) {
     let column = null;
 
-    this.data.columns.some(columnObj => {
+    this.data.columns.some((columnObj) => {
       if (column.id.toString() === columnId.toString()) {
         column = columnObj;
         return true;
@@ -184,7 +182,7 @@ export default Reflux.createStore({
 
     let newItems = [];
 
-    Object.keys(items).map(key => newItems.splice(0, 0, items[key]));
+    Object.keys(items).map((key) => newItems.splice(0, 0, items[key]));
 
     this.data.items = this.data.items.concat(newItems);
     this.data.isLoading = false;
@@ -193,12 +191,12 @@ export default Reflux.createStore({
 
   // We know number of selected rows, now we need to get ID of the objects
   getIDsFromTable() {
-    return this.data.selectedRows.map(rowNumber => this.data.items[rowNumber].id);
+    return this.data.selectedRows.map((rowNumber) => this.data.items[rowNumber].id);
   },
 
   // Table stuff
   renderTableData() {
-    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns);
+    return DataObjectsRenderer.renderTableData(this.data.items, this.data.columns, this.data.selectedRows);
   },
 
   renderTableHeader() {
@@ -217,7 +215,7 @@ export default Reflux.createStore({
 
     let checkedColumns = JSON.parse(settings);
 
-    this.data.columns.map(column => {
+    this.data.columns.map((column) => {
       column.checked = checkedColumns.indexOf(column.id) !== -1;
     });
 
@@ -232,7 +230,7 @@ export default Reflux.createStore({
 
   checkToggleColumn(columnId) {
     console.debug('DataObjectsStore::checkToggleColumn', columnId);
-    this.data.columns.map(item => {
+    this.data.columns.map((item) => {
       if (columnId === item.id) {
         item.checked = !item.checked
       }
@@ -248,7 +246,7 @@ export default Reflux.createStore({
   getCheckedColumnsIDs() {
     let columns = [];
 
-    this.data.columns.map(column => {
+    this.data.columns.map((column) => {
       if (column.checked) {
         columns.push(column.id);
       }
@@ -303,5 +301,9 @@ export default Reflux.createStore({
     this.data.selectedRows = null;
     this.trigger(this.data);
     this.refreshDataObjects();
+  },
+
+  clearStore() {
+    this.data = this.getInitialState();
   }
 });

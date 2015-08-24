@@ -5,11 +5,11 @@ import SnackbarNotificationActions from '../SnackbarNotification/SnackbarNotific
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,
 
-  onCompleted(event, method, url) {
+  onCompleted(event) {
     this.setErrorSnackbar(event);
   },
 
-  onError(event, method, url) {
+  onError(event) {
     this.setErrorSnackbar(event);
   },
 

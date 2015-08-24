@@ -1,16 +1,13 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -58,8 +55,7 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked={item.checked}
-        key={item.id}
-        >
+        key={item.id}>
         <Common.ColumnList.Column.CheckIcon
           className="col-xs-25 col-md-20"
           id={item.id.toString()}
@@ -67,12 +63,11 @@ export default React.createClass({
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}
-          checkable={!isOwner}
-          >
+          checkable={!isOwner}>
           <div>
             <div>{item.email}</div>
             <div style={styles.ownerLabel}>
-              {isOwner ? "Owner (cannot be edited)" : null}
+              {isOwner ? 'Owner (cannot be edited)' : null}
             </div>
           </div>
         </Common.ColumnList.Column.CheckIcon>
@@ -86,7 +81,7 @@ export default React.createClass({
     let items = this.state.items || [];
 
     if (items.length > 0) {
-      items = this.state.items.map(item => this.renderItem(item));
+      items = items.map((item) => this.renderItem(item));
 
       return items;
     }

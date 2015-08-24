@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
@@ -110,7 +109,7 @@ export default React.createClass({
   },
 
   renderList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -128,18 +127,18 @@ export default React.createClass({
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label="Click here to unselect all"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to unselect all"
               mini={true}
               onClick={this.uncheckAll}
               iconClassName="synicon-checkbox-multiple-marked-outline"/>
-            <Common.Fab.Item
-              label="Click here to accept Invitations"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to accept Invitations"
               mini={true}
               onClick={this.showDialog.bind(null, 'acceptInvitationsDialog')}
               iconClassName="synicon-check"/>
-            <Common.Fab.Item
-              label="Click here to decline Invitations"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to decline Invitations"
               mini={true}
               onClick={this.showDialog.bind(null, 'declineInvitationsDialog')}
               iconClassName="synicon-delete"/>

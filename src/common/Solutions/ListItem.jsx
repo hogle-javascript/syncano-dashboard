@@ -123,7 +123,7 @@ export default Radium(React.createClass({
       return <div style={styles.tag}>no tags</div>;
     }
 
-    return this.props.data.tags.map(tag => {
+    return this.props.data.tags.map((tag) => {
       return (
         <a
           key={tag}

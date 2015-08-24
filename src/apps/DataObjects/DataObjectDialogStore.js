@@ -17,8 +17,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      username: null,
-      password: null,
+      isLoading: false,
       channels: [
         {payload: '', text: 'Loading...'}
       ]
@@ -38,7 +37,11 @@ export default Reflux.createStore({
       channels = [{payload: '', text: 'No channels, add one first'}];
     }
 
-    this.trigger({channels: channels});
+    this.trigger({channels});
+  },
+
+  onCreateDataObject() {
+    this.trigger({isLoading: true});
   },
 
   onCreateDataObjectCompleted() {
@@ -46,8 +49,20 @@ export default Reflux.createStore({
     this.dismissDialog();
   },
 
+  onCreateDataObjectFailure() {
+    this.trigger({isLoading: false});
+  },
+
+  onUpdateDataObject() {
+    this.trigger({isLoading: true});
+  },
+
   onUpdateDataObjectCompleted() {
     console.debug('DataObjectDialogStore::onUpdateDataObjectCompleted');
     this.dismissDialog();
+  },
+
+  onUpdateDataObjectFailure() {
+    this.trigger({isLoading: false});
   }
 });

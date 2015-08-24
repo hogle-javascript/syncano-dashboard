@@ -9,13 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Actions from './AdminsActions';
 import Store from './AdminsStore';
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -89,7 +86,7 @@ export default React.createClass({
           modal: true,
           children: [
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
+            this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
               position="bottom"
@@ -110,7 +107,7 @@ export default React.createClass({
           modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
+            this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
               position="bottom"
@@ -185,18 +182,18 @@ export default React.createClass({
 
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAdminSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminSelected ? this.selectAllAdmins : this.uncheckAll}
               iconClassName={isAnyAdminSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Administrator"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Administrator"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to edit Admin"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit Admin"
               mini={true}
               disabled={checkedAdmins > 1}
               onClick={this.showAdminEditDialog}
@@ -206,18 +203,18 @@ export default React.createClass({
 
         <Common.Show if={checkedInvitations > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyAdminInvitationSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyAdminInvitationSelected ? this.selectAllAdminsInvitations : this.uncheckAll}
               iconClassName={isAnyAdminInvitationSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.Item
-              label="Click here to delete Invitation"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeInvitationDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.Item
-              label="Click here to resend invitation"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to resend invitation"
               mini={true}
               onClick={this.showDialog.bind(null, 'resendInvitationDialog')}
               iconClassName="synicon-backup-restore"/>
@@ -225,8 +222,8 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to invite Admin"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to invite Admin"
             onClick={this.showAdminDialog}
             iconClassName="synicon-plus"/>
         </Common.Fab>
