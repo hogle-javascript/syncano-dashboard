@@ -1,10 +1,10 @@
-import Reflux         from 'reflux';
-import Raven          from '../../raven';
-import Connection     from './Connection';
+import Reflux from 'reflux';
+import Raven from '../../raven';
+import Connection from './Connection';
 import SessionActions from './SessionActions';
 
-import Colors         from 'material-ui/lib/styles/colors';
-import SyncanoTheme   from '../../common/SyncanoTheme';
+import Colors from 'material-ui/lib/styles/colors';
+import SyncanoTheme from '../../common/SyncanoTheme';
 
 export default Reflux.createStore({
   listenables: SessionActions,
