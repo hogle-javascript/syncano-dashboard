@@ -22,7 +22,7 @@ import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
 import WelcomeDialog from './WelcomeDialog';
 
-require('./Instances.sass');
+import './Instances.sass';
 
 export default Radium(React.createClass({
   displayName: 'Instances',
@@ -135,7 +135,7 @@ export default Radium(React.createClass({
     let instances = this.state.items;
     let instancesCount = instances ? instances.length : 0;
     let checkedInstances = Store.getNumberOfChecked();
-    let isAnyInstanceSelected =  instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
+    let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 

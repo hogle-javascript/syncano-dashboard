@@ -15,7 +15,7 @@ import GroupsStore from './GroupsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-require('react-select/dist/default.css');
+import 'react-select/dist/default.css';
 
 export default React.createClass({
 

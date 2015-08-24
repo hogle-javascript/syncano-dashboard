@@ -41,9 +41,7 @@
     // "complexity": [1, 2],
     // "no-inline-comments": 2,
     // "complexity": 2,
-    // "no-param-reassign": 2,
     // "camelcase": 2,
-    // "vars-on-top": 2,
     // "quote-props": 2,
     // "quote-props": [2, "as-needed"],
     // "react/sort-comp": [2, {
@@ -75,34 +73,19 @@
     // "quotes": [2, "single", "avoid-escape"],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
-    // "no-plusplus": 2,
-    // "guard-for-in": 2,
-    // "key-spacing": [2, {
-    //     "beforeColon": false,
-    //     "afterColon": true
-    // }],
     // "no-invalid-this": 2,
 
-    // "init-declarations": 2,
     // "no-useless-call": 2,
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
-    // "react/jsx-no-undef": 2,
-    // "accessor-pairs": 2,
     "radix": 2,
-    // "no-multi-spaces": 2,
-
     // "no-implicit-coercion": 2,
-    // "react/no-did-mount-set-state": [2, "allow-in-func"],
     // "react/no-did-update-set-state": 2,
 
     // what we have
     "no-inline-comments": 1,
     "complexity": 1,
-    "no-param-reassign": 1,
     "camelcase": 1,
-    "vars-on-top": 1,
-    "quote-props": 1,
     "quote-props": [1, "as-needed"],
     "react/sort-comp": [1, {
       "order": [
@@ -132,13 +115,6 @@
     }],
     "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
-    "no-warning-comments": 1,
-    "no-plusplus": 1,
-    "guard-for-in": 1,
-    "key-spacing": [1, {
-      "beforeColon": false,
-      "afterColon": true
-    }],
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -149,20 +125,15 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "init-declarations": 1,
     "no-useless-call": 1,
     "consistent-return": 1,
     "react/no-multi-comp": 1,
     "no-undef": 2,
     "no-return-assign": [2, "always"],
-    "react/jsx-no-undef": 1,
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
-    "accessor-pairs": 1,
-    "no-multi-spaces": 1,
     "curly": [2, "multi-line"],
     "no-implicit-coercion": 1,
-    "react/no-did-mount-set-state": [1, "allow-in-func"],
     "react/no-did-update-set-state": 1,
 
 
@@ -201,11 +172,13 @@
     "no-warning-comments": 1,
 
     // Best Practices
+    "accessor-pairs": 2,
     "block-scoped-var": 2,
     "default-case": 2,
     "dot-notation": 2,
     "dot-location": 0,
     "eqeqeq": 2,
+    "guard-for-in": 2,
     "no-alert": 2,
     "no-caller": 2,
     "no-div-regex": 2,
@@ -221,6 +194,7 @@
     "no-labels": 2,
     "no-lone-blocks": 2,
     "no-loop-func": 2,
+    "no-multi-spaces": 2,
     "no-multi-str": 2,
     "no-native-reassign": 2,
     "no-new-func": 2,
@@ -228,6 +202,7 @@
     "no-new": 2,
     "no-octal-escape": 2,
     "no-octal": 2,
+    "no-param-reassign": [2, {"props": false}],
     "no-process-env": 2,
     "no-proto": 2,
     "no-redeclare": 2,
@@ -238,10 +213,12 @@
     "no-unused-expressions": 2,
     "no-void": 2,
     "no-with": 2,
+    "vars-on-top": 2,
     "wrap-iife": [2, "any"],
     "yoda": 2,
 
     // Variables
+    "init-declarations": 2,
     "no-catch-shadow": 2,
     "no-delete-var": 2,
     "no-label-var": 2,
@@ -261,6 +238,10 @@
     "func-names": 1,
     "func-style": 0,
     "id-match": 2,
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }],
     "lines-around-comment": 2,
     "linebreak-style": 2,
     "max-nested-callbacks": 2,
@@ -316,6 +297,7 @@
     "max-params": [1, 4],
     "max-statements": [1, 4],
     "no-bitwise": 2,
+    "no-plusplus": 2,
 
     // React
     "react/display-name": 0,
@@ -329,6 +311,8 @@
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
     "react/no-danger": 1,
+    "react/no-did-mount-set-state": [2, "allow-in-func"],
+    "react/jsx-no-undef": 2,
     "react/no-unknown-property": 2,
     "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,

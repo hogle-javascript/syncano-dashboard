@@ -1,46 +1,16 @@
-let React                = require('react');
-let mui                  = require('material-ui');
-let gravatar             = require('gravatar');
+import React from 'react';
+import gravatar from 'gravatar';
 
-let ThemeManager         = new mui.Styles.ThemeManager();
-let TextField            = mui.TextField;
-let DatePicker           = mui.DatePicker;
-let TimePicker           = mui.TimePicker;
-let Colors               = mui.Styles.Colors;
-let LinearProgress       = mui.LinearProgress;
-let Dialog               = mui.Dialog;
-let Snackbar             = mui.Snackbar;
-let FlatButton           = mui.FlatButton;
-let ListItem             = mui.ListItem;
-let ListDivider          = mui.ListDivider;
-let Avatar               = mui.Avatar;
-let Toggle               = mui.Toggle;
-let IconButton           = mui.IconButton;
-let FontIcon             = mui.FontIcon;
-let IconMenu             = mui.IconMenu;
-let Menu                 = mui.Menu;       // this menu is from lib/menu/menu
-let MenuItem             = mui.MenuItem;   // this menu item is from lib/menu/menu-items
-let SelectField          = mui.SelectField;
-let ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right');
-let MenuNew              = require('material-ui/lib/menus/menu');
-let MenuItemNew          = require('material-ui/lib/menus/menu-item');
+import MUI from 'material-ui';
+import ArrowDropRight from 'material-ui/lib/svg-icons/navigation-arrow-drop-right';
+import MenuNew from 'material-ui/lib/menus/menu';
+import MenuItemNew from 'material-ui/lib/menus/menu-item';
+import Common from '../common';
 
-let MaterialDropdown     = require('../common/Dropdown/MaterialDropdown.react');
-let CheckIcon            = require('../common/CheckIcon/CheckIcon.react');
-let Editor               = require('../common/Editor/Editor.react');
-let EditorPanel          = require('../common/Editor/EditorPanel.react');
-let FabList              = require('../common/Fab/FabList.react');
+let ThemeManager = new MUI.Styles.ThemeManager();
+let Colors = MUI.Styles.Colors;
 
-let List                 = require('../common/Lists/List.react');
-let Trace                = require('../common/Trace/TraceResult.react');
-let Loading              = require('../common/Loading/Loading.react');
-let Slider               = require('../common/Slider/Slider.react');
-
-let ColumnListItem       = require('../common/ColumnList/Item.react');
-let ColumnListItemColumn = require('../common/ColumnList/ItemColumn.react');
-let ColumnNameDesc       = require('../common/ColumnList/ColNameDesc.react');
-
-require('./Examples.css');
+import './Examples.css';
 
 export default React.createClass({
 
@@ -130,7 +100,7 @@ export default React.createClass({
   },
 
   render() {
-    let dummyClick = function(action) {
+    let dummyClick = (action) => {
       console.log('Click!', action);
     };
 
@@ -162,11 +132,11 @@ export default React.createClass({
       }
     ];
 
-    let handleSnackbarClick = function() {
+    let handleSnackbarClick = () => {
       this.refs.snackbar.show()
-    }.bind(this);
+    };
 
-    let handleSnackbarAction = function() {
+    let handleSnackbarAction = () => {
       console.log("Bum!");
     };
 
@@ -176,9 +146,9 @@ export default React.createClass({
     ];
 
     let modalState = true;
-    let handleStandardDialogTouchTap = function() {
+    let handleStandardDialogTouchTap = () => {
       this.refs.standardDialog.show();
-    }.bind(this);
+    };
 
     let payload = '{test: "testvalue"}';
 
@@ -202,39 +172,39 @@ export default React.createClass({
     let avatarUrl = gravatar.url("hubert.wesolowski@syncano.com", {}, true);
 
     let notifications = [{
-      type     : "normal-link",
-      leftIcon : {
-        name   : "synicon-alert",
-        style  : {
+      type: "normal-link",
+      leftIcon: {
+        name: "synicon-alert",
+        style: {
           color: "#ff9800"
         }
       },
       content: {
-        text          : "You email address is not yet verified.",
-        secondaryText : "Resend activation email",
-        style         : {}
+        text: "You email address is not yet verified.",
+        secondaryText: "Resend activation email",
+        style: {}
       },
-      name            : "activation",
-      handleLinkClick : dummyClick
+      name: "activation",
+      handleLinkClick: dummyClick
     }, {
-      type     : "invitation",
-      leftIcon : {
-        name   : "synicon-share-letiant",
-        style  : {
+      type: "invitation",
+      leftIcon: {
+        name: "synicon-share-letiant",
+        style: {
           color: "#8bc34a"
         }
       },
-      content  : {
-        text   : <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
-        style  : {}
+      content: {
+        text: <div><b>Somebody</b><span> invited you to his instance </span><b>Kolaborecka Puwucatu</b></div>,
+        style: {}
       },
-      buttonsText   : ["Accept", "Decline"],
-      name          : "billing",
-      handleAccept  : dummyClick.bind(this, [item]),
-      handleDecline : dummyClick.bind(this, [item])
+      buttonsText: ["Accept", "Decline"],
+      name: "billing",
+      handleAccept: dummyClick.bind(this, [item]),
+      handleDecline: dummyClick.bind(this, [item])
     }];
 
-    let icon = <FontIcon className = "synicon-delete" />;
+    let icon = <MUI.FontIcon className = "synicon-delete" />;
 
     return (
 
@@ -244,27 +214,27 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Material dropdown</h2>
           <div style={{
-                 display        : 'flex',
-                 float          : 'none',
-                 alignItems     : 'center',
-                 justifyContent : 'center'
+                 display: 'flex',
+                 float: 'none',
+                 alignItems: 'center',
+                 justifyContent: 'center'
                }}>
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {notifications}
+          <Common.Dropdown.Material
+              type = "notification"
+              icon = {"bell"}
+              items = {notifications}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {false} />
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
+          <Common.Dropdown.Material
+              type = "notification"
+              icon = {"bell"}
+              items = {[]}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {false} />
-          <MaterialDropdown
-              type      = "notification"
-              icon      = {"bell"}
-              items     = {[]}
+          <Common.Dropdown.Material
+              type = "notification"
+              icon = {"bell"}
+              items = {[]}
               iconStyle = {{padding: "0 4px"}}
               isLoading = {true} />
             </div>
@@ -272,21 +242,21 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h4>Material List items</h4>
-          <List>
-            <ListItem
-              leftAvatar={<Avatar src={avatarUrl} />}
+          <Common.Lists.List>
+            <MUI.ListItem
+              leftAvatar={<MUI.Avatar src={avatarUrl} />}
               secondaryText="email@domain.com"
               secondaryTextLines={1}
-              onClick={dummyClick} >
+              onClick={dummyClick}>
               Name LastName
-            </ListItem>
-            <ListItem leftIcon={<FontIcon className="synicon-heart" />}>Item with left icon</ListItem>
-            <ListItem rightIcon={<FontIcon className="synicon-heart" />}>item with right icon</ListItem>
-            <ListDivider />
-            <ListItem leftAvatar={<Avatar src={avatarUrl} />}>item with gravatar</ListItem>
-            <ListItem>item empty</ListItem>
-            <ListItem
-              leftAvatar={<Avatar src={avatarUrl} />}
+            </MUI.ListItem>
+            <MUI.ListItem leftIcon={<MUI.FontIcon className="synicon-heart" />}>Item with left icon</MUI.ListItem>
+            <MUI.ListItem rightIcon={<MUI.FontIcon className="synicon-heart" />}>item with right icon</MUI.ListItem>
+            <MUI.ListDivider />
+            <MUI.ListItem leftAvatar={<MUI.Avatar src={avatarUrl} />}>item with gravatar</MUI.ListItem>
+            <MUI.ListItem>item empty</MUI.ListItem>
+            <MUI.ListItem
+              leftAvatar={<MUI.Avatar src={avatarUrl} />}
               secondaryText={
                 <p>
                   <span style={{color: Colors.darkBlack}}>Brunch this weekend?</span><br/>
@@ -295,52 +265,52 @@ export default React.createClass({
                 </p>
               }
               secondaryTextLines={2} >item with gravatar and text
-            </ListItem>
-            <ListDivider inset={true} />
-          </List>
+            </MUI.ListItem>
+            <MUI.ListDivider inset={true} />
+          </Common.Lists.List>
         </div>
 
         <div className="exampleBox">
           <h4>Icon 1</h4>
-          <FontIcon
-            className  = "synicon-bell"
-            color      = "#0091EA"
-            hoverColor = "#1a237e"  />
+          <MUI.FontIcon
+            className = "synicon-bell"
+            color = "#0091EA"
+            hoverColor = "#1a237e" />
         </div>
 
         <div className="exampleBox">
           <h4>CheckIcon</h4>
-          <CheckIcon icon="beta" background="blue" />
+          <Common.CheckIcon icon="beta" background="blue" />
         </div>
 
         <div className="exampleBox">
           <h2>Editor</h2>
-          <Editor
+          <Common.Editor
             source={source}
             runtime={runtime}/>
           <h4>ListColumnItem </h4>
-          <ColumnListItem>
-            <ColumnListItemColumn grid="1">
-              <CheckIcon icon="notifications" background="blue" width='40px' />
-            </ColumnListItemColumn>
-            <ColumnListItemColumn grid="5">
-              <ColumnNameDesc name="My Codebox" description="Description of my codebox" />
-            </ColumnListItemColumn>
-            <ColumnListItemColumn grid="2">
+          <Common.ColumnList.Item>
+            <Common.ColumnList.ItemColumn grid="1">
+              <Common.CheckIcon icon="notifications" background="blue" width='40px' />
+            </Common.ColumnList.ItemColumn>
+            <Common.ColumnList.ItemColumn grid="5">
+              <Common.ColumnList.ColNameDesc name="My Codebox" description="Description of my codebox" />
+            </Common.ColumnList.ItemColumn>
+            <Common.ColumnList.ItemColumn grid="2">
               <span><strong>2345</strong></span>
-            </ColumnListItemColumn>
-            <ColumnListItemColumn grid="2">
+            </Common.ColumnList.ItemColumn>
+            <Common.ColumnList.ItemColumn grid="2">
               <span><strong>2345</strong></span>
-            </ColumnListItemColumn>
-            <ColumnListItemColumn grid="2">
+            </Common.ColumnList.ItemColumn>
+            <Common.ColumnList.ItemColumn grid="2">
               <span><strong>2345</strong></span>
-            </ColumnListItemColumn>
-          </ColumnListItem>
+            </Common.ColumnList.ItemColumn>
+          </Common.ColumnList.Item>
         </div>
 
         <div className="exampleBox">
           <h4>Editor</h4>
-          <Editor
+          <Common.Editor
             mode="python"
             theme="github"
             onChange={dummyClick}
@@ -350,19 +320,19 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>EditorPanel</h2>
-          <EditorPanel trace={source} payload={payload}/>
+          <Common.Editor.Panel trace={source} payload={payload}/>
         </div>
 
         <div className="exampleBox">
           <h2>FabList</h2>
-          <FabList
+          <Common.Fab
             buttons={fabButtons}
             handleFABClick={dummyClick}/>
         </div>
 
         <div className="exampleBox">
           <h4>Field (material UI)</h4>
-          <TextField
+          <MUI.TextField
             hintText="(Hint text) Your name - 5 chars only"
             errorText={this.state.errorText}
             onChange={this.dummyDisplayError}
@@ -373,18 +343,17 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>SelectField (Drop Down from material UI)</h2>
-          <SelectField
-            menuItems={fieldSelectMUI} />
+          <MUI.SelectField menuItems={fieldSelectMUI} />
         </div>
 
         <div className="exampleBox">
           <h2>material-ui</h2>
-          <LinearProgress mode="indeterminate" />
+          <MUI.LinearProgress mode="indeterminate" />
         </div>
 
         <div className="exampleBox">
           <h2>Toggle (Material UI)</h2>
-          <Toggle
+          <MUI.Toggle
             name="ToggleButton"
             value="ValueToggle"
             label="tempomat"
@@ -394,11 +363,11 @@ export default React.createClass({
         <div className="exampleBox">
           <h4>material-ui - Snackbar</h4>
 
-          <FlatButton
+          <MUI.FlatButton
             onClick={handleSnackbarClick}
             label="Bum!"/>
 
-          <Snackbar
+          <MUI.Snackbar
             ref="snackbar"
             message="Bum! Bum! Bum!"
             action="undo"
@@ -407,67 +376,67 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>material-ui Dialog</h2>
-          <FlatButton
+          <MUI.FlatButton
             label="Bum!"
-            onClick={handleStandardDialogTouchTap}  />
-          <Dialog
+            onClick={handleStandardDialogTouchTap} />
+          <MUI.Dialog
             ref="standardDialog"
             title="Dialog With Standard Actions"
             actions={dialogStandardActions}
             actionFocus="submit"
             modal={modalState}>
             Based on JSON
-          </Dialog>
+          </MUI.Dialog>
         </div>
 
         <div className="exampleBox">
           <h2>Trace</h2>
-          <Trace result={"Some not very long result: " + source} />
+          <Common.Trace.Result result={"Some not very long result: " + source} />
         </div>
 
         <div className="exampleBox">
           <h2>Loading</h2>
-          <Loading
-            type    = "linear"
-            show    = {true} />
-          <Loading show={true}/>
+          <Common.Loading
+            type = "linear"
+            show = {true} />
+          <Common.Loading show={true}/>
         </div>
 
         <div className="exampleBox">
           <h2>DatePicker</h2>
-          <DatePicker hintText="Portrait Dialog" />
-          <DatePicker
+          <MUI.DatePicker hintText="Portrait Dialog" />
+          <MUI.DatePicker
             hintText = "Landscape Dialog"
-            mode     = "landscape" />
-          <DatePicker
-            maxDate          = {this.getMaxDate(2020)}
-            minDate          = {this.getMinDate(1990)}
-            formatDate       = {this.getDateFormat}
-            defaultDate      = {this.getDateNow()}
-            ref              = "modifiedDatePicker"
-            hintText         = "Ranged Date Picker"
+            mode = "landscape" />
+          <MUI.DatePicker
+            maxDate = {this.getMaxDate(2020)}
+            minDate = {this.getMinDate(1990)}
+            formatDate = {this.getDateFormat}
+            defaultDate = {this.getDateNow()}
+            ref = "modifiedDatePicker"
+            hintText = "Ranged Date Picker"
             showYearSelector = {true}
-            onChange         = {this.logDate} />
+            onChange = {this.logDate} />
         </div>
 
         <div className="exampleBox">
           <h2>TimePicker</h2>
-          <TimePicker
+          <MUI.TimePicker
             format="ampm" />
-          <TimePicker
-            ref      = "modifiedTimePicker"
-            format   = "24hr"
+          <MUI.TimePicker
+            ref = "modifiedTimePicker"
+            format = "24hr"
             onChange = {this.logTime}/>
         </div>
 
         <div className="exampleBox">
           <h2>Slider</h2>
-          <Slider legendItems={["$0", "$30", "$100", "$400", "$1000", "$2000"]}/>
+          <Common.Slider legendItems={["$0", "$30", "$100", "$400", "$1000", "$2000"]}/>
         </div>
 
         <div className="exampleBox">
           <h2>Slider</h2>
-          <mui.Slider step={0.1}/>
+          <MUI.Slider step={0.1}/>
         </div>
 
         <div className="exampleBox">
@@ -484,21 +453,21 @@ export default React.createClass({
             <MenuItemNew>Apps</MenuItemNew>
           </MenuNew>
 
-          <IconMenu iconButtonElement={<IconButton>{icon}</IconButton>} openDirection="top-right">
+          <MUI.IconMenu iconButtonElement={<MUI.IconButton>{icon}</MUI.IconButton>} openDirection="top-right">
             <MenuItemNew
               insetChildren = {true}
-              leftIcon      = {icon}>Refresh</MenuItemNew>
+              leftIcon = {icon}>Refresh</MenuItemNew>
             <MenuItemNew>Send Feedback More</MenuItemNew>
             <MenuItemNew checked={true}>Settings</MenuItemNew>
             <MenuItemNew checked={true}>Help</MenuItemNew>
             <MenuItemNew>Sign out</MenuItemNew>
-          </IconMenu>
+          </MUI.IconMenu>
 
 
           <MenuNew
             desktop = {true}
-            width   = {320}
-            style   = {{
+            width = {320}
+            style = {{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
@@ -526,16 +495,16 @@ export default React.createClass({
 
         <div className="exampleBox">
           <h2>Menu</h2>
-          <Menu style ={{
+          <MUI.Menu style ={{
                   marginRight: 32,
                   marginBottom: 32,
                   float: 'left',
                   position: 'relative',
                   zIndex: 0}}
                   menuItems={[
-                  {text: <MenuItem>ASDASD</MenuItem>},
-                  {text: <MenuItem>ASDASD</MenuItem>},
-                  {text: <MenuItem>ASDASD</MenuItem>}
+                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
+                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
+                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>}
                   ]} />
         </div>
 

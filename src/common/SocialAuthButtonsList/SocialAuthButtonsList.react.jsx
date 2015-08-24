@@ -59,7 +59,7 @@ export default Radium(React.createClass({
           primaryText={buttonLabel + network}
           onTouchTap={this.handleSocialSignup.bind(null, network)}
           leftIcon={<MUI.FontIcon
-                         style     = {styles.listItemIcon}
+                         style = {styles.listItemIcon}
                          className = {`synicon-${network}`}
                          />}
           />

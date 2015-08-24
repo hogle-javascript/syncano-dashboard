@@ -9,7 +9,7 @@ import Radium from 'radium';
 import Actions from './ProfileBillingChartActions';
 import Store from './ProfileBillingChartStore';
 
-require('./ProfileBillingChart.css');
+import './ProfileBillingChart.css';
 
 export default Radium(React.createClass({
   mixins: [Reflux.connect(Store)],
@@ -43,7 +43,8 @@ export default Radium(React.createClass({
       <div style={{paddingTop: 16, paddingBottom: 8, paddingRight: 10, background: '#F5F5F5'}}>
         <div
           ref="chart"
-          className="col chart"/>
+          className="col chart">
+        </div>
       </div>
     );
   }
