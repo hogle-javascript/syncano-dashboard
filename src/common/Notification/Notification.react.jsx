@@ -38,16 +38,16 @@ export default React.createClass({
     const styles = this.getStyles();
 
     const cssClasses = classNames({
-      'notification': true, // eslint-disable-line quote-props
+      notification: true,
       'notification--info': this.props.type === 'info',
       'notification--error': this.props.type === 'error',
       'notification--warning': this.props.type === 'warning'
     }, this.props.className);
 
     const iconClass = classNames({
-      'information': this.props.type === 'info', // eslint-disable-line quote-props
+      information: this.props.type === 'info',
       'alert-circle': this.props.type === 'error',
-      'alert': this.props.type === 'warning' // eslint-disable-line quote-props
+      alert: this.props.type === 'warning'
     });
 
     return (
