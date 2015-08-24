@@ -81,8 +81,10 @@ export default {
 
   validate(key, callback) {
     if (typeof key === 'function') {
-      callback = key; // eslint-disable-line no-param-reassign
-      key = null; // eslint-disable-line no-param-reassign
+      /* eslint-disable */
+      callback = key;
+      key = null;
+      /* eslint-enable */
     }
 
     let constraints = _.get(this, 'validatorConstraints', {});
@@ -96,7 +98,6 @@ export default {
       attributes = attributes.call(this);
     }
 
-    // f***ing js
     if (key !== null) {
       let keyConstraints = {};
       let keyAttributes = {};

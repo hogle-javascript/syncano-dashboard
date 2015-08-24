@@ -89,7 +89,9 @@ export default React.createClass({
   },
 
   showUserDialog(group) {
-    Actions.showDialog(undefined, group); // eslint-disable-line no-undefined
+    /* eslint-disable */
+    Actions.showDialog(undefined, group);
+    /* eslint-enable */
   },
 
   showUserEditDialog() {
