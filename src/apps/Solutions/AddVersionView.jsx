@@ -244,7 +244,7 @@ export default Radium(React.createClass({
                   menuItems={Store.getTypes()}
                   />
               </div>
-              <div className='col-lg-26'>
+              <div className='col-flex-1'>
                 <MUI.SelectField
                   ref='instance'
                   name='instance'
@@ -254,9 +254,9 @@ export default Radium(React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
+                  menuItemStyle={{overflow: 'hidden', textOverflow: 'ellipsis'}}
                   errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()}
-                  />
+                  menuItems={Store.getInstancesDropdown()}/>
               </div>
             </div>
           </div>
