@@ -3,8 +3,8 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
-import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -26,6 +26,7 @@ export default React.createClass({
     React.addons.LinkedStateMixin,
 
     Reflux.connect(Store),
+    Mixins.Dialogs,
     HeaderMixin,
     Mixins.InstanceTabs,
     Mixins.Mousetrap,
@@ -54,11 +55,64 @@ export default React.createClass({
     }
   },
 
-  handleRun() {
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        ref: 'runUnsavedCodeBox',
+        title: 'Unsaved CodeBox',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Save',
+            onClick: this.handleConfirm
+          }
+        ],
+        modal: true,
+        children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
+      }
+    }]
+  },
+
+  checkIsSaved() {
+    let initialCodeBoxSource = this.state.currentCodeBox.source;
+    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+
+    if (initialCodeBoxSource === currentCodeBoxSource) {
+      this.handleRun();
+    } else {
+      this.showDialog('runUnsavedCodeBox');
+    }
+  },
+
+  isPayloadValid() {
     let payloadErrors = this.refs.tracePanel.state.errors;
     let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
 
-    if (payloadIsValid) {
+    return payloadIsValid;
+  },
+
+  handleConfirm() {
+    let source = this.refs.editorSource.editor.getValue();
+    let payload = this.refs.tracePanel.refs.payloadField.getValue();
+
+    if (this.isPayloadValid()) {
+      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload})
+      this.hideDialogs(true);
+    } else {
+      this.hideDialogs(true);
+      this.setSnackbarNotification({
+        message: "Can't run CodeBox with invalid payload",
+        autoHideDuration: 3000
+      });
+    }
+  },
+
+  handleRun() {
+    if (this.isPayloadValid()) {
       Actions.runCodeBox({
         id: this.state.currentCodeBox.id,
         payload: this.refs.tracePanel.refs.payloadField.getValue()
@@ -114,6 +168,7 @@ export default React.createClass({
 
     return (
       <Container style={styles.container}>
+        {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"
@@ -123,7 +178,7 @@ export default React.createClass({
           <Common.Fab.TooltipItem
             tooltip="Click here to execute CodeBox"
             mini={true}
-            onClick={this.handleRun}
+            onClick={this.checkIsSaved}
             iconClassName="synicon-play"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>

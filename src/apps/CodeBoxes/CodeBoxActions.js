@@ -6,6 +6,13 @@ export default CreateActions({
   setCurrentCodeBox: {},
   fetch: {},
 
+  runCodeBoxWithUpdate: {
+    asyncResult: true,
+    loading: true,
+    children: ['completed', 'failure'],
+    method: 'Syncano.Actions.CodeBoxes.runWithUpdate'
+  },
+
   fetchCodeBox: {
     asyncResult: true,
     loading: true,
@@ -19,6 +26,7 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.CodeBoxes.update'
   },
+
   runCodeBox: {
     asyncResult: true,
     loading: true,
