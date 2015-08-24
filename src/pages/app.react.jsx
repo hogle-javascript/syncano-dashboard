@@ -3,7 +3,7 @@ import Router from 'react-router';
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import MUI from 'material-ui';
-import {SyncanoTheme, SnackbarNotification}  from './../common';
+import {SyncanoTheme, SnackbarNotification} from './../common';
 
 let ThemeManager = new MUI.Styles.ThemeManager();
 

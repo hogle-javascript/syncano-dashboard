@@ -21,7 +21,12 @@ module.exports = {
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: 'button[label="Click here to add an API Key"]'
+      selector: '//span[@class="synicon-plus"]',
+      locateStrategy: 'xpath'
+    },
+    apiKeysListName: {
+      selector: '//div[text()="API Keys"]',
+      locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
       selector: 'input[name="description"]'

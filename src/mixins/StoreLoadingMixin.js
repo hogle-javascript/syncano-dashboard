@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
 
   setLoadingStates() {
@@ -11,15 +13,13 @@ export default {
   },
 
   setLoadingState(listenable) {
-    for (let key in listenable) {
-      let action = listenable[key];
-
+    _.forEach(listenable, (action) => {
       if (action.asyncResult === true && action.loading === true) {
         this.listenTo(action, this.setToLoading);
         this.listenTo(action.completed, this.setToNotLoading);
         this.listenTo(action.failure, this.setToNotLoading);
       }
-    }
+    });
   },
 
   setToLoading() {

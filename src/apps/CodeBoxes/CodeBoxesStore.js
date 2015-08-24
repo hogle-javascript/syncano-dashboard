@@ -22,10 +22,10 @@ export default Reflux.createStore({
   },
 
   runtimeColors: {
-    nodejs: {color: '#80BD01', icon: 'language-javascript'},
+    nodejs: {color: '#80BD01', icon: 'language-nodejs'},
     python: {color: '#4984B1', icon: 'language-python'},
-    golang: {color: '#E0EBF5', icon: 'code-array'},
-    ruby: {color: '#B21000', icon: 'code-array'}
+    golang: {color: '#FFC107', icon: 'language-golang'},
+    ruby: {color: '#B21000', icon: 'language-ruby'}
   },
 
   getInitialState() {
