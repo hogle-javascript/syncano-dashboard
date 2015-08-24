@@ -42,7 +42,7 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let objectsCount = item.objects_count <= 1000 ? item.objects_count : `~ ${item.objects_count}`;
+    let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
 
     return (
       <Common.ColumnList.Item
