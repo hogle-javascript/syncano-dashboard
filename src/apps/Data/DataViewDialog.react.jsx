@@ -41,7 +41,7 @@ export default React.createClass({
   handleAddSubmit() {
     DataViewsActions.createDataView({
       name: this.state.name,
-      'class': this.state.class,
+      class: this.state.class,
       description: this.state.description,
       order_by: this.state.order_by,
       page_size: this.state.page_size,
@@ -53,7 +53,7 @@ export default React.createClass({
   handleEditSubmit() {
     DataViewsActions.updateDataView(
       this.state.name, {
-        'class': this.state.class,
+        class: this.state.class,
         description: this.state.description,
         order_by: this.state.order_by,
         page_size: this.state.page_size,

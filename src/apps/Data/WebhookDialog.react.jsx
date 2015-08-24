@@ -42,7 +42,7 @@ export default React.createClass({
       name: this.state.name,
       codebox: this.state.codebox,
       description: this.state.description,
-      'public': this.state.public
+      public: this.state.public
     });
   },
 
@@ -51,7 +51,7 @@ export default React.createClass({
       this.state.name, {
         codebox: this.state.codebox,
         description: this.state.description,
-        'public': this.state.public
+        public: this.state.public
       });
   },
 
