@@ -41,14 +41,14 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
-        message: 'is invalid'
+        message: '^Address is invalid. '
       }
     },
     address_line2: {
       length: {maximum: 150},
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
-        message: 'is invalid'
+        message: '^Address is invalid'
       }
     },
     address_city: {
@@ -56,7 +56,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
-        message: 'can contain only alphabetical characters'
+        message: '^City can contain only alphabetical characters'
       }
     },
     address_state: {
@@ -64,7 +64,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
-        message: 'can contain only alphabetical characters'
+        message: '^ State can contain only alphabetical characters'
       }
     },
     address_zip: {
@@ -72,7 +72,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z0-9 -]+)$/i,
-        message: 'is invalid'
+        message: '^Zip code is invalid'
       }
     },
     address_country: {
@@ -80,7 +80,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
-        message: 'can contain only alphabetical characters'
+        message: '^ Country can contain only alphabetical characters'
       }
     },
     tax_number: {
