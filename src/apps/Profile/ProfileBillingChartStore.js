@@ -21,7 +21,7 @@ export default Reflux.createStore({
   getInitialState() {
     let today = this.getToday();
     let allDates = this.getAllDates();
-    let xColumn  = ['x'].concat(allDates);
+    let xColumn = ['x'].concat(allDates);
 
     return {
       isLoading: true,

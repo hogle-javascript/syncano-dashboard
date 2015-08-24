@@ -15,9 +15,7 @@ export default {
     if (this.listenables) {
       let arr = [].concat(this.listenables);
 
-      for (let i = 0; i < arr.length; i++) {
-        this.listenToForm(arr[i]);
-      }
+      _.forEach(arr, this.listenToForm);
     }
   },
 

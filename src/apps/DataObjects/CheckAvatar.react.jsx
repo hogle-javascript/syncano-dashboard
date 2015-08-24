@@ -1,6 +1,6 @@
-import React       from 'react';
+import React from 'react';
 
-import MUI         from 'material-ui';
+import MUI from 'material-ui';
 
 export default React.createClass({
 

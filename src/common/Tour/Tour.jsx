@@ -33,19 +33,47 @@ export default React.createClass({
     this.forceUpdate();
   },
 
+  getElementRect() {
+    let {currentStep, config} = this.props;
+
+    if (config[currentStep].node.getBoundingClientRect()) {
+      return config[currentStep];
+    }
+
+    return config[0].node.getBoundingClientRect();
+  },
+
+  renderStepText() {
+    let {currentStep, config} = this.props;
+
+    return config[currentStep] ? config[currentStep].text : config[0].text;
+  },
+
+  renderDots() {
+    let {currentStep, config, showDots} = this.props;
+
+    if (showDots) {
+      return (
+        <div className='react-tour-dots'>
+          {config.map((el, index) => {
+            return (
+              <div className={'react-tour-dots-single' + (currentStep >= index ? ' active' : '')} key={index}></div>
+            )
+          })}
+        </div>
+      )
+    }
+
+    return true;
+  },
+
   render() {
-    let {currentStep, config, visible, showDots} = this.props;
-    let ElementRect;
+    let {config, visible} = this.props;
+    let ElementRect = this.getElementRect();
     let classes = 'react-tour';
 
     if (!config) return null;
     if (!visible) classes += ' react-tour-hide';
-
-    if (config[currentStep].node.getBoundingClientRect()) {
-      ElementRect = config[currentStep];
-    } else {
-      ElementRect = config[0].node.getBoundingClientRect();
-    }
 
     return (
       <div className={classes}>
@@ -56,17 +84,8 @@ export default React.createClass({
           width: parseInt(ElementRect.width + 40, 10)
         }}>
           <div className='react-tour-focus-text'>
-            {config[currentStep] ? config[currentStep].text : config[0].text}
-
-            {showDots && (
-              <div className='react-tour-dots'>
-                {config.map((el, index) => {
-                  return (
-                    <div className={'react-tour-dots-single' + (currentStep >= index ? ' active' : '')} key={index} />
-                  )
-                })}
-              </div>
-            )}
+            {this.renderStepText()}
+            {this.renderDots()}
           </div>
         </div>
       </div>
