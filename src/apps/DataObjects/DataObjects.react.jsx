@@ -186,7 +186,7 @@ export default React.createClass({
     let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
 
     return (
-      <div className="row" style={{paddingTop: 48, 'height': '100%'}}>
+      <div className="row" style={{paddingTop: 48, height: '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
 

@@ -6,7 +6,7 @@ export default {
 
   columnsRenderers() {
     return {
-      'created_at': this.renderColumnDate
+      created_at: this.renderColumnDate
     }
   },
 

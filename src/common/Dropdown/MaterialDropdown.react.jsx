@@ -51,7 +51,7 @@ export default React.createClass({
   toggleOpenClose() {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
-    }, function() {
+    }, () => {
       if (this.state.isOpen && this.props.handleOnClick) {
         this.props.handleOnClick()
       }

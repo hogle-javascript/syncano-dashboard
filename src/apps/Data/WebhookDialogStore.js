@@ -19,7 +19,7 @@ export default Reflux.createStore({
     return {
       label: '',
       signal: '',
-      'class': '',
+      class: '',
       codeboxes: [
         {
           payload: '',

@@ -28,16 +28,16 @@ export default Reflux.createStore({
 
   channelPermissions: [
     {
-      'text': 'none',
-      'payload': 'none'
+      text: 'none',
+      payload: 'none'
     },
     {
-      'text': 'subscribe',
-      'payload': 'subscribe'
+      text: 'subscribe',
+      payload: 'subscribe'
     },
     {
-      'text': 'publish',
-      'payload': 'publish'
+      text: 'publish',
+      payload: 'publish'
     }
   ],
 

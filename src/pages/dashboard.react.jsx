@@ -24,7 +24,7 @@ export default React.createClass({
   statics: {
     willTransitionTo(transition) {
       if (!SessionStore.isAuthenticated()) {
-        transition.redirect(AuthConstants.LOGIN_URL, {}, {'next': transition.path});
+        transition.redirect(AuthConstants.LOGIN_URL, {}, {next: transition.path});
       }
     }
   },
