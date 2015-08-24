@@ -64,7 +64,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
-        message: '^ State can contain only alphabetical characters'
+        message: '^State can contain only alphabetical characters'
       }
     },
     address_zip: {
@@ -80,7 +80,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
-        message: '^ Country can contain only alphabetical characters'
+        message: '^Country can contain only alphabetical characters'
       }
     },
     tax_number: {
