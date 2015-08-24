@@ -10,14 +10,13 @@ import FormMixin from '../../mixins/FormMixin';
 import MUI from 'material-ui';
 import Loading from '../../common/Loading';
 
-require('./Editor.css');
+import './Editor.css';
 
 export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 

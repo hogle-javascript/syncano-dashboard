@@ -2,9 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions(
   {
-    withDialog: true
-  },
-  {
     showDialogWithPreFetch: {},
     setSolutionId: {},
     setInstances: {},
@@ -33,5 +30,8 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Instances.create'
     }
+  },
+  {
+    withDialog: true
   }
 );

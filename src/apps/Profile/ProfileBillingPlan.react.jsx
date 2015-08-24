@@ -24,7 +24,6 @@ export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialogs,
     Mixins.IsLoading(),

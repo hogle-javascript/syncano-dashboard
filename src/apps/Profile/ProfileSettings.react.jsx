@@ -14,7 +14,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -30,10 +29,10 @@ export default React.createClass({
   getStyles() {
     return {
       content: {
-        padding : '0 0 48px'
+        padding: '0 0 48px'
       },
       form: {
-        maxWidth : 416
+        maxWidth: 416
       },
       updateButton: {
         height: 36,

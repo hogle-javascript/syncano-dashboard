@@ -16,7 +16,6 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -36,14 +35,14 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       content: {
-        padding : '0px 0px 48px'
+        padding: '0px 0px 48px'
       },
       contentRow: {
         display: '-webkit-flex; display: flex',
         alignItems: 'center'
       },
       accountKey: {
-        fontFamily : 'monospace'
+        fontFamily: 'monospace'
       },
       form: {
         // maxWidth : 416
@@ -91,7 +90,7 @@ export default Radium(React.createClass({
                 onClick={this.handleCopyClick}/>
             </ZeroClipboard>
             <MUI.FlatButton
-              label   = "RESET"
+              label = "RESET"
               primary = {true}
               onClick = {this.handleResetClick} />
             </div>
@@ -106,50 +105,50 @@ export default Radium(React.createClass({
           <div className="row" style={styles.contentRow}>
             <div className="col-md-15">
               <form
-                style         = {styles.form}
-                onSubmit      = {this.handleFormValidation}
+                style = {styles.form}
+                onSubmit = {this.handleFormValidation}
                 acceptCharset = "UTF-8"
-                method        = "post">
+                method = "post">
                 <MUI.TextField
-                  ref               = "currentPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('currentPassword')}
-                  errorText         = {this.getValidationMessages('currentPassword').join(' ')}
-                  name              = "currentPassword"
+                  ref = "currentPassword"
+                  type = "password"
+                  valueLink = {this.linkState('currentPassword')}
+                  errorText = {this.getValidationMessages('currentPassword').join(' ')}
+                  name = "currentPassword"
                   floatingLabelText = "Current password"
-                  className         = "text-field"
-                  autoComplete      = "currentPassword"
-                  hintText          = "Current password"
-                  fullWidth         = {true} />
+                  className = "text-field"
+                  autoComplete = "currentPassword"
+                  hintText = "Current password"
+                  fullWidth = {true} />
                 <MUI.TextField
-                  ref               = "newPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('newPassword')}
-                  errorText         = {this.getValidationMessages('newPassword').join(' ')}
-                  name              = "newPassword"
+                  ref = "newPassword"
+                  type = "password"
+                  valueLink = {this.linkState('newPassword')}
+                  errorText = {this.getValidationMessages('newPassword').join(' ')}
+                  name = "newPassword"
                   floatingLabelText = "New password"
-                  className         = "text-field"
-                  autoComplete      = "newPassword"
-                  hintText          = "New password"
-                  fullWidth         = {true} />
+                  className = "text-field"
+                  autoComplete = "newPassword"
+                  hintText = "New password"
+                  fullWidth = {true} />
                 <MUI.TextField
-                  ref               = "confirmNewPassword"
-                  type              = "password"
-                  valueLink         = {this.linkState('confirmNewPassword')}
-                  errorText         = {this.getValidationMessages('confirmNewPassword').join(' ')}
-                  name              = "confirmNewPassword"
+                  ref = "confirmNewPassword"
+                  type = "password"
+                  valueLink = {this.linkState('confirmNewPassword')}
+                  errorText = {this.getValidationMessages('confirmNewPassword').join(' ')}
+                  name = "confirmNewPassword"
                   floatingLabelText = "Confirm new password"
-                  className         = "text-field vm-6-b"
-                  autoComplete      = "confirmNewPassword"
-                  hintText          = "Confirm new password"
-                  fullWidth         = {true} />
+                  className = "text-field vm-6-b"
+                  autoComplete = "confirmNewPassword"
+                  hintText = "Confirm new password"
+                  fullWidth = {true} />
                 <MUI.RaisedButton
-                  type       = "submit"
-                  label      = "Update"
-                  style      = {styles.updateButton}
+                  type = "submit"
+                  label = "Update"
+                  style = {styles.updateButton}
                   labelStyle = {styles.updateButtonLabel}
-                  className  = "raised-button"
-                  secondary  = {true} />
+                  className = "raised-button"
+                  secondary = {true} />
               </form>
             </div>
           </div>

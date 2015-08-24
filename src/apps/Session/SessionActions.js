@@ -1,8 +1,6 @@
 import CreateActions from '../../utils/ActionsConstructor.js'
 
-export default CreateActions(
-  {},
-  {
+export default CreateActions({
   login: {},
   logout: {},
   setToken: {},
