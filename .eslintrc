@@ -70,7 +70,6 @@
     //     "render"
     //   ]
     // }],
-    // "quotes": [2, "single", "avoid-escape"],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
     // "no-invalid-this": 2,
@@ -112,7 +111,6 @@
         "render"
       ]
     }],
-    "quotes": [1, "single", "avoid-escape"],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     "no-unused-vars": [2, {
       "vars": "local",
@@ -263,6 +261,7 @@
     "operator-assignment": 2,
     "operator-linebreak": 2,
     "padded-blocks": [2, "never"],
+    "quotes": [2, "single", "avoid-escape"],
     "semi-spacing": [2, {"before": false, "after": true}],
     "sort-vars": 0,
     "space-after-keywords": 2,
