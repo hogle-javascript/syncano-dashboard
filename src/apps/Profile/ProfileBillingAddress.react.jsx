@@ -41,7 +41,7 @@ export default React.createClass({
       presence: true,
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
-        message: '^Address is invalid. '
+        message: '^Address is invalid'
       }
     },
     address_line2: {
