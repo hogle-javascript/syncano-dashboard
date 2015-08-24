@@ -5,7 +5,7 @@ import MUI from 'material-ui';
 
 export default React.createClass({
 
-  displayName: 'MaterialDropdwonItem',
+  displayName: 'MaterialDropdownItem',
   fallBackAvatar: `${location.protocol}`,
 
   propTypes: {
