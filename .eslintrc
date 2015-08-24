@@ -72,12 +72,9 @@
     // }],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
-    // "no-invalid-this": 2,
-
     // "no-useless-call": 2,
     // "consistent-return": 2,
     // "react/no-multi-comp": 2,
-    "radix": 2,
     // "react/no-did-update-set-state": 2,
 
     // what we have
@@ -117,7 +114,6 @@
       "args": "after-used"
     }],
     "no-undefined": 2,
-    "no-invalid-this": 1,
     "spaced-comment": [2, "always",  {
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
@@ -187,6 +183,7 @@
     "no-floating-decimal": 2,
     "no-implicit-coercion": 2,
     "no-implied-eval": 2,
+    "no-invalid-this": 2,
     "no-iterator": 2,
     "no-labels": 2,
     "no-lone-blocks": 2,
@@ -210,6 +207,7 @@
     "no-unused-expressions": 2,
     "no-void": 2,
     "no-with": 2,
+    "radix": 2,
     "vars-on-top": 2,
     "wrap-iife": [2, "any"],
     "yoda": 2,
