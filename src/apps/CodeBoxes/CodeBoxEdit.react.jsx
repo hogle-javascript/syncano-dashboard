@@ -88,16 +88,31 @@ export default React.createClass({
     }
   },
 
-  handleConfirm() {
-    this.handleUpdate(this.handleRun);
-    this.hideDialogs(true);
-  },
-
-  handleRun() {
+  isPayloadValid() {
     let payloadErrors = this.refs.tracePanel.state.errors;
     let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
 
-    if (payloadIsValid) {
+    return payloadIsValid;
+  },
+
+  handleConfirm() {
+    let source = this.refs.editorSource.editor.getValue();
+    let payload = this.refs.tracePanel.refs.payloadField.getValue();
+
+    if (this.isPayloadValid()) {
+      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload})
+      this.hideDialogs(true);
+    } else {
+      this.hideDialogs(true);
+      this.setSnackbarNotification({
+        message: "Can't run CodeBox with invalid payload",
+        autoHideDuration: 3000
+      });
+    }
+  },
+
+  handleRun() {
+    if (this.isPayloadValid()) {
       Actions.runCodeBox({
         id: this.state.currentCodeBox.id,
         payload: this.refs.tracePanel.refs.payloadField.getValue()
@@ -110,10 +125,10 @@ export default React.createClass({
     }
   },
 
-  handleUpdate(callback) {
+  handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {source}).then(callback);
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
     });

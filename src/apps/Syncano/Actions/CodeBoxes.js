@@ -21,6 +21,19 @@ export default {
       .catch(this.failure);
   },
 
+  runWithUpdate(codeboxId, updateParams, payload) {
+    this.Connection
+      .CodeBoxes.update(codeboxId, updateParams)
+      .then(
+      this.Connection
+        .CodeBoxes
+        .run(codeboxId, payload)
+        .then(this.completed)
+        .catch(this.failure)
+    )
+    .catch(this.failure);
+  },
+
   list() {
     this.Connection
       .CodeBoxes
