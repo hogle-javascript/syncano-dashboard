@@ -97,7 +97,7 @@
     // "react/no-did-update-set-state": 2,
 
     // what we have
-    "no-inline-comments": 1,
+    "no-inline-comments": 2,
     "complexity": 1,
     "no-param-reassign": 1,
     "camelcase": 1,

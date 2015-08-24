@@ -6,7 +6,7 @@ import MUI from 'material-ui';
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
-  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
+  fallBackAvatar: `${location.protocol}`,
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -21,15 +21,20 @@ export default React.createClass({
         style: React.PropTypes.object
       }),
       secondaryText: React.PropTypes.string,
-      secondaryTextLines: React.PropTypes.number,                // Content to view as item can be any object too
-      name: React.PropTypes.string,     // name for DropdownMenuItems kys
-      handleItemClick: React.PropTypes.func        // function to call after DropdownMenuItem click
+      // Content to view as item can be any object too
+      secondaryTextLines: React.PropTypes.number,
+      // name for DropdownMenuItems keys
+      name: React.PropTypes.string,
+      // function to call after DropdownMenuItem click
+      handleItemClick: React.PropTypes.func
     })),
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      // if "clickable" props is defined as false or
+      handleItemClick: React.PropTypes.func,
+      // is not defined function will not be triggered
+      clickable: React.PropTypes.bool
     })
   },
 

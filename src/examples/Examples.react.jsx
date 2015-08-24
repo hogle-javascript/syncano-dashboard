@@ -18,8 +18,10 @@ let Toggle               = mui.Toggle;
 let IconButton           = mui.IconButton;
 let FontIcon             = mui.FontIcon;
 let IconMenu             = mui.IconMenu;
-let Menu                 = mui.Menu;       // this menu is from lib/menu/menu
-let MenuItem             = mui.MenuItem;   // this menu item is from lib/menu/menu-items
+// this menu is from lib/menu/menu
+let Menu                 = mui.Menu;
+// this menu item is from lib/menu/menu-items
+let MenuItem             = mui.MenuItem;
 let SelectField          = mui.SelectField;
 let ArrowDropRight       = require('material-ui/lib/svg-icons/navigation-arrow-drop-right');
 let MenuNew              = require('material-ui/lib/menus/menu');
