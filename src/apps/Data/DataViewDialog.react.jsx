@@ -92,7 +92,7 @@ export default React.createClass({
 
   isEnabled(list, field) {
     if (!list) {
-      return;
+      return false;
     }
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },

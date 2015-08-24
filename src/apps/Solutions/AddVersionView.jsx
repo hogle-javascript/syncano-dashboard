@@ -193,7 +193,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     if (this.state.dataReady === true) {
-      return;
+      return true;
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>

@@ -71,7 +71,6 @@
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
     // "no-useless-call": 2,
-    // "consistent-return": 2,
     // "react/no-multi-comp": 2,
     // "react/no-did-update-set-state": 2,
 
@@ -116,7 +115,6 @@
       "markers": ["=", "!"]
     }],
     "no-useless-call": 1,
-    "consistent-return": 1,
     "react/no-multi-comp": 1,
     "no-undef": 2,
     "no-return-assign": [2, "always"],
@@ -163,6 +161,7 @@
     // Best Practices
     "accessor-pairs": 2,
     "block-scoped-var": 2,
+    "consistent-return": 2,
     "default-case": 2,
     "dot-notation": 2,
     "dot-location": 0,

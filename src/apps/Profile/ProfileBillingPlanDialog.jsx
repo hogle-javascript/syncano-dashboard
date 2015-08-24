@@ -27,7 +27,7 @@ export default React.createClass({
 
   validatorConstraints() {
     if (this.state.card) {
-      return;
+      return true;
     }
 
     return {
@@ -260,7 +260,7 @@ export default React.createClass({
 
   renderSlider(type) {
     if (!this.state.plan) {
-      return;
+      return true;
     }
     const defaultValue = 0;
     let options = this.state.plan.options[type];
