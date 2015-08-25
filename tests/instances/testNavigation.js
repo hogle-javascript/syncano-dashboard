@@ -128,13 +128,13 @@ module.exports = {
     var usersPage = client.page.usersPage();
     usersPage.waitForElementPresent('@user');
   },
-  'User goes to Webhook Traces View' : function(client) {
-    var dataPage = client.page.dataPage();
-    dataPage.clickButton('@webhookListItem');
-
-    var webhookTracesPage = client.page.webhookTracesPage();
-    webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
-  },
+  // 'User goes to Webhook Traces View' : function(client) {
+  //   var dataPage = client.page.dataPage();
+  //   dataPage.clickButton('@webhookListItem');
+  //
+  //   var webhookTracesPage = client.page.webhookTracesPage();
+  //   webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
+  // },
   'User goes to Solutions View' : function(client) {
     var topNavigationPage = client.page.topNavigationPage();
     topNavigationPage.clickButton('@solutions');
