@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
+import Filesize from 'filesize';
 
 // Utils
 import Mixins from '../../mixins';
@@ -328,7 +329,7 @@ export default React.createClass({
     let description = file ? file.name : null;
 
     if (description) {
-      description = description + ' (' + file.size + ' bytes)'
+      description = description + ' (' + Filesize(file.size) + ')'
     }
     return (
       <div
