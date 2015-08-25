@@ -89,7 +89,7 @@ export default (
         handler={InstancePage}
         path="instances/:instanceName">
 
-        <Redirect from="/instances/:instanceName" to="data" />
+        <Redirect from="/instances/:instanceName" to="classes" />
 
         {/* Data */}
         <Route
