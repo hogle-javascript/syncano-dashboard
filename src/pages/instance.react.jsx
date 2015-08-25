@@ -11,14 +11,14 @@ export default React.createClass({
 
   displayName: 'Instance',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   componentWillMount() {
     console.debug('Instance::componentWillMount');
@@ -61,6 +61,11 @@ export default React.createClass({
     }
   },
 
+  handleTabActive(event, index, obj) {
+    this.transitionTo(obj.route, this.getParams());
+    this.setState({headerText: obj.text, selectedIndex: index});
+  },
+
   menuItems() {
     return [
       {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
@@ -79,15 +84,10 @@ export default React.createClass({
 
   renderInstanceDropdown() {
     return (
-      <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown />
-      </div>
+    <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
+      <HeaderInstancesDropdown />
+    </div>
     )
-  },
-
-  handleTabActive(event, index, obj) {
-    this.transitionTo(obj.route, this.getParams());
-    this.setState({headerText: obj.text, selectedIndex: index});
   },
 
   render() {

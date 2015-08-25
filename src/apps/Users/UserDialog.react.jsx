@@ -27,26 +27,23 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  validatorConstraints() {
-    let addFormConstraints = {
-      username: {
-        presence: true
-      },
-      password: {
-        presence: true
-      }
-    };
-    let editFormmConstraints = {
-      username: {
-        presence: true
-      }
-    };
-
-    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
-  },
-
   componentWillUnmount() {
     GroupsStore.resetActiveGroup();
+  },
+
+  getSelectValueSource() {
+    let activeGroup = GroupsStore.getActiveGroup();
+
+    if (this.state.newUserGroups) {
+      return this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      return this.linkState('groups');
+    } else if (this.state.secondInstance && this.state.secondInstance.value) {
+      return this.state.secondInstance;
+    } else if (activeGroup) {
+      return activeGroup;
+    }
+    return null;
   },
 
   handleAddSubmit() {
@@ -86,19 +83,22 @@ export default React.createClass({
     })
   },
 
-  getSelectValueSource() {
-    let activeGroup = GroupsStore.getActiveGroup();
+  validatorConstraints() {
+    let addFormConstraints = {
+      username: {
+        presence: true
+      },
+      password: {
+        presence: true
+      }
+    };
+    let editFormmConstraints = {
+      username: {
+        presence: true
+      }
+    };
 
-    if (this.state.newUserGroups) {
-      return this.linkState('newUserGroups');
-    } else if (this.state.groups) {
-      return this.linkState('groups');
-    } else if (this.state.secondInstance && this.state.secondInstance.value) {
-      return this.state.secondInstance;
-    } else if (activeGroup) {
-      return activeGroup;
-    }
-    return null;
+    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
   },
 
   render() {

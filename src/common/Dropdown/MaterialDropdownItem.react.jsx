@@ -6,7 +6,11 @@ import MUI from 'material-ui';
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
+
+  /* eslint-disable react/sort-comp */
   fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
+
+  /* eslint-enable react/sort-comp */
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -37,12 +41,6 @@ export default React.createClass({
     return {gravatarUrl: null};
   },
 
-  isHeaderNecessary() {
-    let headerContentProps = this.props.headerContent;
-
-    return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
-  },
-
   getStyles() {
     return {
       avatar: {
@@ -50,10 +48,6 @@ export default React.createClass({
         top: '50%'
       }
     }
-  },
-
-  onAvatarError() {
-    this.setState({gravatarUrl: this.fallBackAvatar});
   },
 
   getGravatarUrl() {
@@ -64,6 +58,16 @@ export default React.createClass({
     }
 
     return Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
+  },
+
+  onAvatarError() {
+    this.setState({gravatarUrl: this.fallBackAvatar});
+  },
+
+  isHeaderNecessary() {
+    let headerContentProps = this.props.headerContent;
+
+    return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
   },
 
   renderHeaderContent() {

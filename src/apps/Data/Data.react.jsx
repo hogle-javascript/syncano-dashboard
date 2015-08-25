@@ -37,11 +37,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  fetch() {
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
-  },
-
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
@@ -50,6 +45,55 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
+  },
+
+  handleRemoveWebhooks() {
+    console.info('Data::handleDelete');
+    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
+  },
+
+  handleRemoveDataViews() {
+    console.info('Data::handleRemoveDataViews');
+    DataViewsActions.removeDataViews(DataViewsStore.getCheckedItems());
+  },
+
+  uncheckAll() {
+    console.info('Data::uncheckAll');
+    DataViewsActions.uncheckAll();
+    WebhooksActions.uncheckAll();
+  },
+
+  showDataViewDialog() {
+    DataViewsActions.showDialog();
+  },
+
+  showDataViewEditDialog() {
+    DataViewsActions.showDialog(DataViewsStore.getCheckedItem());
+  },
+
+  showWebhookDialog() {
+    WebhooksActions.showDialog();
+  },
+
+  showWebhookEditDialog() {
+    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
+  },
+
+  checkDataViewItem(id, state) {
+    console.info('Data::checkDataViewItem');
+    DataViewsActions.checkItem(id, state);
+    WebhooksActions.uncheckAll();
+  },
+
+  checkWebhook(id, state) {
+    console.info('Data::checkWebhook');
+    WebhooksActions.checkItem(id, state);
+    DataViewsActions.uncheckAll();
+  },
+
+  fetch() {
+    DataViewsActions.fetch();
+    WebhooksActions.fetch();
   },
 
   // Dialogs config
@@ -96,50 +140,6 @@ export default React.createClass({
         }
       }
     ]
-  },
-
-  handleRemoveWebhooks() {
-    console.info('Data::handleDelete');
-    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
-  },
-
-  handleRemoveDataViews() {
-    console.info('Data::handleRemoveDataViews');
-    DataViewsActions.removeDataViews(DataViewsStore.getCheckedItems());
-  },
-
-  uncheckAll() {
-    console.info('Data::uncheckAll');
-    DataViewsActions.uncheckAll();
-    WebhooksActions.uncheckAll();
-  },
-
-  showDataViewDialog() {
-    DataViewsActions.showDialog();
-  },
-
-  showDataViewEditDialog() {
-    DataViewsActions.showDialog(DataViewsStore.getCheckedItem());
-  },
-
-  showWebhookDialog() {
-    WebhooksActions.showDialog();
-  },
-
-  showWebhookEditDialog() {
-    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
-  },
-
-  checkDataViewItem(id, state) {
-    console.info('Data::checkDataViewItem');
-    DataViewsActions.checkItem(id, state);
-    WebhooksActions.uncheckAll();
-  },
-
-  checkWebhook(id, state) {
-    console.info('Data::checkWebhook');
-    WebhooksActions.checkItem(id, state);
-    DataViewsActions.uncheckAll();
   },
 
   render() {

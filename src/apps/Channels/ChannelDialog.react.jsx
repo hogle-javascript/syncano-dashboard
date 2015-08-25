@@ -23,15 +23,6 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    type: {
-      presence: true
-    }
-  },
-
   getParams() {
     return {
       name: this.state.name,
@@ -61,6 +52,15 @@ export default React.createClass({
 
     state[event.target.name] = status;
     this.setState(state);
+  },
+
+  validatorConstraints: {
+    name: {
+      presence: true
+    },
+    type: {
+      presence: true
+    }
   },
 
   render() {

@@ -34,24 +34,9 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  showSolutionDialog() {
-    CreateDialogActions.showDialog();
-  },
-
   componentDidMount() {
     console.info('Solutions::componentWillMount');
     Actions.fetch();
-  },
-
-  isFriend() {
-    if (SessionStore.getUser()) {
-      let email = SessionStore.getUser({}).email;
-      let endings = ['syncano.rocks', 'syncano.io', 'chimeraprime.com'];
-
-      return _.some(endings, (ending) => _.endsWith(email, ending))
-    }
-
-    return false;
   },
 
   getStyles() {
@@ -67,6 +52,17 @@ export default React.createClass({
         background: MUI.Styles.Colors.lightBlue50
       }
     }
+  },
+
+  isFriend() {
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending))
+    }
+
+    return false;
   },
 
   handleChangeFilter(filter) {
@@ -97,6 +93,9 @@ export default React.createClass({
     Actions.starSolution(solutionId);
   },
 
+  showSolutionDialog() {
+    CreateDialogActions.showDialog();
+  },
 
   render() {
     let styles = this.getStyles();

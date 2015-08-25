@@ -32,14 +32,28 @@ export default React.createClass({
     HeaderMixin
   ],
 
+  componentDidMount() {
+    console.info('ApiKeys::componentWillMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('ApiKeys::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount() {
-    console.info('ApiKeys::componentWillMount');
-    Actions.fetch();
+  handleDelete() {
+    console.info('ApiKeys::handleDelete');
+    Actions.removeApiKeys(Store.getCheckedItems());
+  },
+
+  handleReset() {
+    console.info('ApiKeys::handleReset');
+    Actions.resetApiKey(Store.getCheckedItem().id);
+  },
+
+  showApiKeyDialog() {
+    Actions.showDialog();
   },
 
   // Dialogs config
@@ -96,20 +110,6 @@ export default React.createClass({
         ]
       }
     }]
-  },
-
-  handleDelete() {
-    console.info('ApiKeys::handleDelete');
-    Actions.removeApiKeys(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('ApiKeys::handleReset');
-    Actions.resetApiKey(Store.getCheckedItem().id);
-  },
-
-  showApiKeyDialog() {
-    Actions.showDialog();
   },
 
   render() {

@@ -16,35 +16,19 @@ export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
-  mixins: [
-    FormMixin
-  ],
-
   propTypes: {
     trace: React.PropTypes.string,
     loading: React.PropTypes.bool
   },
 
+  mixins: [
+    FormMixin
+  ],
+
   getInitialState() {
     return {
       panelCollapsed: true,
       payloadValue: '{"abc": 123}'
-    }
-  },
-
-  validatorConstraints: {
-    payloadValue: (value) => {
-      try {
-        JSON.parse(value);
-        return null
-      } catch (err) {
-        return {
-          format: {
-            pattern: '',
-            message: 'is not a valid JSON'
-          }
-        }
-      }
     }
   },
 
@@ -65,10 +49,20 @@ export default Radium(React.createClass({
     }
   },
 
-  handleToggleClick() {
-    this.setState({
-      panelCollapsed: !this.state.panelCollapsed
-    });
+  validatorConstraints: {
+    payloadValue: (value) => {
+      try {
+        JSON.parse(value);
+        return null
+      } catch (err) {
+        return {
+          format: {
+            pattern: '',
+            message: 'is not a valid JSON'
+          }
+        }
+      }
+    }
   },
 
   render() {

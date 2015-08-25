@@ -21,27 +21,15 @@ export default React.createClass({
 
   displayName: 'AccountSignup',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
     FormMixin
   ],
-
-  validatorConstraints: {
-    email: {
-      presence: true,
-      email: {
-        message: '^Invalid email address'
-      }
-    },
-    password: {
-      presence: true
-    }
-  },
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   statics: {
     willTransitionTo(transition) {
@@ -67,6 +55,15 @@ export default React.createClass({
     }
   },
 
+  getBottomContent() {
+    return (
+    <p className="vm-0-b text--center">
+      By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
+      Terms of Use and Privacy Policy</a>.
+    </p>
+    )
+  },
+
   handleSuccessfullValidation(data) {
     Actions.passwordSignUp({
       email: data.email,
@@ -74,13 +71,16 @@ export default React.createClass({
     });
   },
 
-  getBottomContent() {
-    return (
-      <p className="vm-0-b text--center">
-        By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
-        Terms of Use and Privacy Policy</a>.
-      </p>
-    )
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: {
+        message: '^Invalid email address'
+      }
+    },
+    password: {
+      presence: true
+    }
   },
 
   render() {

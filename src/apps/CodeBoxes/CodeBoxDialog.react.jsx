@@ -22,15 +22,6 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  validatorConstraints: {
-    label: {
-      presence: true
-    },
-    runtime_name: {
-      presence: true
-    }
-  },
-
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
     Actions.fetchCodeBoxRuntimes();
@@ -51,6 +42,16 @@ export default React.createClass({
       runtime_name: this.state.runtime_name
     });
   },
+
+  validatorConstraints: {
+    label: {
+      presence: true
+    },
+    runtime_name: {
+      presence: true
+    }
+  },
+
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';

@@ -5,14 +5,6 @@ export default React.createClass({
 
   displayName: 'TagsList',
 
-  getStyles() {
-    return {
-      listItemChecked: {
-        background: MUI.Styles.Colors.lightBlue50
-      }
-    }
-  },
-
   getInitialState() {
     return {
       items: this.props.items,
@@ -25,6 +17,14 @@ export default React.createClass({
       items: nextProps.items,
       selectedItems: nextProps.selectedItems
     })
+  },
+
+  getStyles() {
+    return {
+      listItemChecked: {
+        background: MUI.Styles.Colors.lightBlue50
+      }
+    }
   },
 
   handleOnTouchTap(name) {

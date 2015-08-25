@@ -24,13 +24,11 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    class: {
-      presence: true
+  isEnabled(list, field) {
+    if (!list) {
+      return false;
     }
+    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
   handleDialogShow() {
@@ -90,11 +88,13 @@ export default React.createClass({
     }
   },
 
-  isEnabled(list, field) {
-    if (!list) {
-      return false;
+  validatorConstraints: {
+    name: {
+      presence: true
+    },
+    class: {
+      presence: true
     }
-    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
   renderFields() {

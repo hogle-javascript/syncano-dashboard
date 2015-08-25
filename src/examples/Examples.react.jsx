@@ -16,12 +16,6 @@ export default React.createClass({
 
   displayName: 'Examples',
 
-  getInitialState() {
-    return {
-      errorText: null
-    };
-  },
-
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -29,6 +23,12 @@ export default React.createClass({
   getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
+  getInitialState() {
+    return {
+      errorText: null
     };
   },
 
@@ -48,24 +48,6 @@ export default React.createClass({
     });
   },
 
-  getDefaultProps() {
-  },
-
-  componentDidMount() {
-  },
-
-  dummyDisplayError(e) {
-    if (e.target.value.length > 5) {
-      this.setState({
-        errorText: '(DummyError) This field is 5 chars only'
-      })
-    } else {
-      this.setState({
-        errorText: null
-      })
-    }
-  },
-
   getDateNow() {
     let date = new Date();
 
@@ -80,14 +62,6 @@ export default React.createClass({
     return day + '-' + month + '-' + year;
   },
 
-  logDate() {
-    console.debug(this.refs.modifiedDatePicker.getDate())
-  },
-
-  logTime() {
-    console.debug(this.refs.modifiedTimePicker.getTime());
-  },
-
   getMinDate(minYear) {
     let date = new Date();
 
@@ -97,6 +71,26 @@ export default React.createClass({
 
   getMaxDate(maxYear) {
     return new Date().setFullYear(maxYear);
+  },
+
+  dummyDisplayError(e) {
+    if (e.target.value.length > 5) {
+      this.setState({
+        errorText: '(DummyError) This field is 5 chars only'
+      })
+    } else {
+      this.setState({
+        errorText: null
+      })
+    }
+  },
+
+  logDate() {
+    console.debug(this.refs.modifiedDatePicker.getDate())
+  },
+
+  logTime() {
+    console.debug(this.refs.modifiedTimePicker.getTime());
   },
 
   render() {

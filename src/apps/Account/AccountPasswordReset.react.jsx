@@ -24,6 +24,10 @@ export default React.createClass({
     FormMixin
   ],
 
+  handleSuccessfullValidation() {
+    Actions.passwordReset(this.state.email);
+  },
+
   validatorConstraints: {
     email: {
       presence: true,
@@ -31,10 +35,6 @@ export default React.createClass({
         message: '^Invalid email address'
       }
     }
-  },
-
-  handleSuccessfullValidation() {
-    Actions.passwordReset(this.state.email);
   },
 
   render() {

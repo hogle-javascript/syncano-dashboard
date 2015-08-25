@@ -32,11 +32,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Channels::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Channels::componentDidMount');
     ChannelsActions.fetch();
@@ -45,6 +40,24 @@ export default React.createClass({
       this.showChannelDialog();
     }
     ChannelsActions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Channels::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
+
+  handleDelete() {
+    console.info('Channels::handleDelete');
+    ChannelsActions.removeChannels(ChannelsStore.getCheckedItems());
+  },
+
+  showChannelDialog() {
+    ChannelsActions.showDialog();
+  },
+
+  showChannelEditDialog() {
+    ChannelsActions.showDialog(ChannelsStore.getCheckedItem());
   },
 
   // Dialogs config
@@ -74,23 +87,10 @@ export default React.createClass({
             type="linear"
             position="bottom"
             show={this.state.isLoading}
-            />
+          />
         ]
       }
     }]
-  },
-
-  handleDelete() {
-    console.info('Channels::handleDelete');
-    ChannelsActions.removeChannels(ChannelsStore.getCheckedItems());
-  },
-
-  showChannelDialog() {
-    ChannelsActions.showDialog();
-  },
-
-  showChannelEditDialog() {
-    ChannelsActions.showDialog(ChannelsStore.getCheckedItem());
   },
 
   render() {

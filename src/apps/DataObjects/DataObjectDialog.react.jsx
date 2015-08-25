@@ -26,24 +26,6 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
-  },
-
-  validatorConstraints() {
-    let validateObj = {};
-
-    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
-      if (item.type === 'integer') {
-        validateObj[item.name] = {numericality: true}
-      } else if (item.type === 'text') {
-        validateObj[item.name] = {length: {maximum: 32000}}
-      }
-    });
-    return validateObj;
-  },
-
   getParams() {
     let params = {
       id: this.state.id,
@@ -135,6 +117,18 @@ export default React.createClass({
     return fileFields;
   },
 
+  onDrop(fieldName, files) {
+    let state = {};
+
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
+
   handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
@@ -149,6 +143,50 @@ export default React.createClass({
       params: this.getParams(),
       fileFields: this.getFileFields()
     })
+  },
+
+  handleFileOnClick(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile(name) {
+    let state = {};
+
+    state[name] = null;
+    this.setState(state);
+  },
+
+  handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
+    this.refs[`fielddate-${name}`].setState({
+      date: undefined, // eslint-disable-line no-undefined
+      dialogDate: new Date()
+    });
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
+    this.refs[`fieldtime-${name}`].setState({
+      time: undefined, // eslint-disable-line no-undefined
+      dialogTime: new Date()
+    });
+  },
+
+  validatorConstraints() {
+    let validateObj = {};
+
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
+      if (item.type === 'integer') {
+        validateObj[item.name] = {numericality: true}
+      } else if (item.type === 'text') {
+        validateObj[item.name] = {length: {maximum: 32000}}
+      }
+    });
+    return validateObj;
   },
 
   renderBuiltinFields() {
@@ -275,44 +313,6 @@ export default React.createClass({
         </div>
       </div>
     )
-  },
-
-  onDrop(fieldName, files) {
-    let state = {};
-
-    state[fieldName] = files[0];
-    this.setState(state);
-  },
-
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
-    window.open(value, '_blank')
-  },
-
-  handleRemoveFile(name) {
-    let state = {};
-
-    state[name] = null;
-    this.setState(state);
-  },
-
-  handleClearDateTime(name) {
-    let state = {};
-
-    state[`fielddate-${name}`] = null;
-    state[`fieldtime-${name}`] = null;
-    this.setState(state);
-
-    this.refs[`fielddate-${name}`].setState({
-      date: undefined, // eslint-disable-line no-undefined
-      dialogDate: new Date()
-    });
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue('');
-    this.refs[`fieldtime-${name}`].setState({
-      time: undefined, // eslint-disable-line no-undefined
-      dialogTime: new Date()
-    });
   },
 
   renderDropZone(item) {

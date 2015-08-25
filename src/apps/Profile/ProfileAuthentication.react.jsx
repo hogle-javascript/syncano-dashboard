@@ -19,19 +19,6 @@ export default Radium(React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    currentPassword: {
-      presence: true
-    },
-    newPassword: {
-      presence: true
-    },
-    confirmNewPassword: {
-      presence: true,
-      equality: 'newPassword'
-    }
-  },
-
   getStyles() {
     return {
       content: {
@@ -71,6 +58,19 @@ export default Radium(React.createClass({
 
   handleSuccessfullValidation() {
     Actions.changePassword(this.state);
+  },
+
+  validatorConstraints: {
+    currentPassword: {
+      presence: true
+    },
+    newPassword: {
+      presence: true
+    },
+    confirmNewPassword: {
+      presence: true,
+      equality: 'newPassword'
+    }
   },
 
   render() {

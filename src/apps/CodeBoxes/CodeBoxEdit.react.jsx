@@ -55,39 +55,6 @@ export default React.createClass({
     }
   },
 
-  initDialogs() {
-    return [{
-      dialog: Common.Dialog,
-      params: {
-        ref: 'runUnsavedCodeBox',
-        title: 'Unsaved CodeBox',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel
-          },
-          {
-            text: 'Save',
-            onClick: this.handleConfirm
-          }
-        ],
-        modal: true,
-        children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
-      }
-    }]
-  },
-
-  checkIsSaved() {
-    let initialCodeBoxSource = this.state.currentCodeBox.source;
-    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
-
-    if (initialCodeBoxSource === currentCodeBoxSource) {
-      this.handleRun();
-    } else {
-      this.showDialog('runUnsavedCodeBox');
-    }
-  },
-
   isPayloadValid() {
     let payloadErrors = this.refs.tracePanel.state.errors;
     let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
@@ -132,6 +99,39 @@ export default React.createClass({
     this.setSnackbarNotification({
       message: 'Saving...'
     });
+  },
+
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        ref: 'runUnsavedCodeBox',
+        title: 'Unsaved CodeBox',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Save',
+            onClick: this.handleConfirm
+          }
+        ],
+        modal: true,
+        children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
+      }
+    }]
+  },
+
+  checkIsSaved() {
+    let initialCodeBoxSource = this.state.currentCodeBox.source;
+    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+
+    if (initialCodeBoxSource === currentCodeBoxSource) {
+      this.handleRun();
+    } else {
+      this.showDialog('runUnsavedCodeBox');
+    }
   },
 
   renderEditor() {

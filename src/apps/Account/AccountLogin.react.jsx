@@ -23,27 +23,15 @@ export default React.createClass({
 
   displayName: 'AccountLogin',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
     FormMixin
   ],
-
-  validatorConstraints: {
-    email: {
-      presence: true,
-      email: {
-        message: '^Invalid email address'
-      }
-    },
-    password: {
-      presence: true
-    }
-  },
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   statics: {
     willTransitionTo(transition) {
@@ -74,6 +62,18 @@ export default React.createClass({
       email: data.email,
       password: data.password
     });
+  },
+
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: {
+        message: '^Invalid email address'
+      }
+    },
+    password: {
+      presence: true
+    }
   },
 
   render() {

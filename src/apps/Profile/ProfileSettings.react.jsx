@@ -17,15 +17,6 @@ export default React.createClass({
     FormMixin
   ],
 
-  validatorConstraints: {
-    firstName: {
-      presence: true
-    },
-    lastName: {
-      presence: true
-    }
-  },
-
   getStyles() {
     return {
       content: {
@@ -50,6 +41,15 @@ export default React.createClass({
 
   handleSuccessfullValidation() {
     Actions.updateSettings(this.state);
+  },
+
+  validatorConstraints: {
+    firstName: {
+      presence: true
+    },
+    lastName: {
+      presence: true
+    }
   },
 
   render() {

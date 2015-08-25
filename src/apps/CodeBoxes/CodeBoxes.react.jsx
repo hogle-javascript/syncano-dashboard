@@ -31,11 +31,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('CodeBoxes::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
     Actions.fetch();
@@ -44,6 +39,24 @@ export default React.createClass({
       this.showCodeBoxDialog();
     }
     Actions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('CodeBoxes::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
+
+  handleDelete() {
+    console.info('CodeBoxes::handleDelete');
+    Actions.removeCodeBoxes(Store.getCheckedItems());
+  },
+
+  showCodeBoxDialog() {
+    Actions.showDialog();
+  },
+
+  showCodeBoxEditDialog() {
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
@@ -76,19 +89,6 @@ export default React.createClass({
         ]
       }
     }]
-  },
-
-  handleDelete() {
-    console.info('CodeBoxes::handleDelete');
-    Actions.removeCodeBoxes(Store.getCheckedItems());
-  },
-
-  showCodeBoxDialog() {
-    Actions.showDialog();
-  },
-
-  showCodeBoxEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
   },
 
   render() {

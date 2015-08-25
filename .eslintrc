@@ -42,32 +42,6 @@
     // "no-inline-comments": 2,
     // "complexity": 2,
     // "camelcase": 2,
-    // "react/sort-comp": [2, {
-    //   "order": [
-    //     "displayName",
-    //     "propTypes",
-    //     "contextTypes",
-    //     "childContextTypes",
-    //     "mixins",
-    //     "statics",
-    //     "defaultProps",
-    //     "constructor",
-    //     "getDefaultProps",
-    //     "getInitialState",
-    //     "getChildContext",
-    //     "componentWillMount",
-    //     "componentDidMount",
-    //     "componentWillReceiveProps",
-    //     "shouldComponentUpdate",
-    //     "componentWillUpdate",
-    //     "componentDidUpdate",
-    //     "componentWillUnmount",
-    //     "/^on.+$/",
-    //     "/^get.+$/",
-    //     "/^render.+$/",
-    //     "render"
-    //   ]
-    // }],
     // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
     // "no-useless-call": 2,
@@ -78,30 +52,45 @@
     "no-inline-comments": 1,
     "complexity": 1,
     "camelcase": 1,
-    "react/sort-comp": [1, {
+    "react/sort-comp": [2, {
+      "groups": {
+        "lifecycle": [
+          "displayName",
+          "propTypes",
+          "contextTypes",
+          "childContextTypes",
+          "mixins",
+          "statics",
+          "defaultProps",
+          "constructor",
+          "getDefaultProps",
+          "getInitialState",
+          "getChildContext",
+          "componentWillMount",
+          "componentDidMount",
+          "componentWillReceiveProps",
+          "shouldComponentUpdate",
+          "componentWillUpdate",
+          "componentDidUpdate",
+          "componentWillUnmount"
+        ],
+        "syncano": [
+          "/^get.+$/",
+          "/^on.+$/",
+          "/^is.+$/",
+          "/^has.+$/",
+          "/^handle.+$/"
+        ],
+        "rendering": [
+          "/^render.+$/",
+          "render"
+        ]
+      },
       "order": [
-        "displayName",
-        "propTypes",
-        "contextTypes",
-        "childContextTypes",
-        "mixins",
-        "statics",
-        "defaultProps",
-        "constructor",
-        "getDefaultProps",
-        "getInitialState",
-        "getChildContext",
-        "componentWillMount",
-        "componentDidMount",
-        "componentWillReceiveProps",
-        "shouldComponentUpdate",
-        "componentWillUpdate",
-        "componentDidUpdate",
-        "componentWillUnmount",
-        "/^on.+$/",
-        "/^get.+$/",
-        "/^render.+$/",
-        "render"
+        "lifecycle",
+        "syncano",
+        "everything-else",
+        "rendering"
       ]
     }],
     "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],

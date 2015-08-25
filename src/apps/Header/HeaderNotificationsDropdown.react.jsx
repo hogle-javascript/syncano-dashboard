@@ -19,6 +19,11 @@ export default Radium(React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',
 
+  contextTypes: {
+    router: React.PropTypes.func,
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
@@ -27,34 +32,8 @@ export default Radium(React.createClass({
     SnackbarNotificationMixin
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     ProfileInvitationsActions.fetch();
-  },
-
-  handleAcceptInvitations(items) {
-    console.info('Header::handleAcceptInvitations');
-    ProfileInvitationsActions.acceptInvitations(items);
-    event.stopPropagation();
-  },
-
-  handleDeclineInvitations(items) {
-    console.info('Header::handleDeclineInvitations');
-    ProfileInvitationsActions.declineInvitations(items);
-    event.stopPropagation();
-  },
-
-  handleResendEmail() {
-    console.info('Header::handleResendEmail');
-    AuthActions.resendActivationEmail(this.state.user.email);
-    this.setSnackbarNotification({
-      message: 'Activation e-mail was send',
-      autoHideDuration: 3000
-    });
   },
 
   getStyles() {
@@ -86,6 +65,27 @@ export default Radium(React.createClass({
         border: '1px solid #DDD'
       }
     }
+  },
+
+  handleAcceptInvitations(items) {
+    console.info('Header::handleAcceptInvitations');
+    ProfileInvitationsActions.acceptInvitations(items);
+    event.stopPropagation();
+  },
+
+  handleDeclineInvitations(items) {
+    console.info('Header::handleDeclineInvitations');
+    ProfileInvitationsActions.declineInvitations(items);
+    event.stopPropagation();
+  },
+
+  handleResendEmail() {
+    console.info('Header::handleResendEmail');
+    AuthActions.resendActivationEmail(this.state.user.email);
+    this.setSnackbarNotification({
+      message: 'Activation e-mail was send',
+      autoHideDuration: 3000
+    });
   },
 
   renderItems() {

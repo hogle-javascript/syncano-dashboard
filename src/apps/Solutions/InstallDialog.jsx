@@ -28,15 +28,6 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  validatorConstraints: {
-    instance: {
-      presence: true
-    },
-    version: {
-      presence: true
-    }
-  },
-
   handleEditSubmit() {
     console.debug('SolutionInstallDialog::handleEditSubmit');
   },
@@ -70,6 +61,15 @@ export default React.createClass({
 
   handleDialogShow() {
     console.debug('SolutionInstallDialog::handleDialogShow');
+  },
+
+  validatorConstraints: {
+    instance: {
+      presence: true
+    },
+    version: {
+      presence: true
+    }
   },
 
   renderCustomFormNotifications() {

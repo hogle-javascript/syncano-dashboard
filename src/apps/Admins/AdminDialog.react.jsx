@@ -23,18 +23,6 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  validatorConstraints: {
-    email: {
-      presence: true,
-      email: {
-        message: '^Invalid email address'
-      }
-    },
-    role: {
-      presence: true
-    }
-  },
-
   handleAddSubmit() {
     AdminsInvitationsActions.createInvitation({
       email: this.state.email,
@@ -46,6 +34,18 @@ export default React.createClass({
     AdminsActions.updateAdmin(this.state.id, {
       role: this.state.role
     });
+  },
+
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: {
+        message: '^Invalid email address'
+      }
+    },
+    role: {
+      presence: true
+    }
   },
 
   render() {
