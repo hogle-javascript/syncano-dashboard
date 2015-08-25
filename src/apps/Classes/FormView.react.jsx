@@ -35,15 +35,6 @@ export default React.createClass({
     }
   },
 
-  componentDidUpdate() {
-    if (!this.state.schemaInitialized && this.state.schema) {
-      this.setFields(this.state.schema);
-      this.setState({
-        schemaInitialized: true
-      });
-    }
-  },
-
   componentDidMount() {
     if (this.hasEditMode()) {
       Store.refreshData();
