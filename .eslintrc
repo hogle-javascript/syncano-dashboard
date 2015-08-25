@@ -68,14 +68,13 @@
     //     "render"
     //   ]
     // }],
-    // "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     // "no-warning-comments": 2,
     // "no-useless-call": 2,
     // "react/no-multi-comp": 2,
     // "react/no-did-update-set-state": 2,
 
     // what we have
-    "no-inline-comments": 1,
+    "no-inline-comments": 2,
     "complexity": 1,
     "camelcase": 1,
     "react/sort-comp": [1, {
@@ -104,7 +103,6 @@
         "render"
       ]
     }],
-    "indent": [1, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     "no-unused-vars": [2, {
       "vars": "local",
       "args": "after-used"
@@ -229,6 +227,7 @@
     "func-names": 1,
     "func-style": 0,
     "id-match": 2,
+    "indent": [2, 2, {"SwitchCase": 1, "VariableDeclarator": 1}],
     "key-spacing": [2, {
       "beforeColon": false,
       "afterColon": true

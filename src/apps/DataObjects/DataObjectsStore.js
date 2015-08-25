@@ -256,13 +256,13 @@ export default Reflux.createStore({
 
   onFetchCurrentClassObjCompleted(classObj) {
     console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
-    this.data.classObj = classObj; // TODO why, why?
+    // TODO why, why?
+    this.data.classObj = classObj;
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
   onFetchDataObjects() {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    // this.data.isLoading = true;
     this.trigger(this.data);
   },
 
