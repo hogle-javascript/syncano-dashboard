@@ -74,7 +74,7 @@
     // "react/no-did-update-set-state": 2,
 
     // what we have
-    "no-inline-comments": 1,
+    "no-inline-comments": 2,
     "complexity": 1,
     "camelcase": 1,
     "react/sort-comp": [1, {
