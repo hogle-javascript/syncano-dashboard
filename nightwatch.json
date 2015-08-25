@@ -7,8 +7,8 @@
   "globals_path" : "tests/globals.js",
 
   "selenium" : {
-    "start_process" : false,
-    "server_path" : "",
+    "start_process" : true,
+    "server_path" : "./node_modules/selenium-standalone/.selenium/selenium-server/2.47.1-server.jar",
     "log_path" : "./reports/",
     "host" : "127.0.0.1",
     "port" : 4444,
