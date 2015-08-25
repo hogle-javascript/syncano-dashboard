@@ -42,6 +42,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
+    let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
+
     return (
       <Common.ColumnList.Item
         key={item.name}
@@ -65,7 +67,7 @@ export default React.createClass({
           </div>
         </Column.Desc>
         <Column.ID className="col-xs-4 col-md-4">
-          {item.objects_count}
+          {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
