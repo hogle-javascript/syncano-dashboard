@@ -50,22 +50,6 @@ export default React.createClass({
     });
   },
 
-  setFields(schema) {
-    const fields = this.state.fields;
-
-    schema.map((item) => {
-      fields.push({
-        fieldName: item.name,
-        fieldType: item.type,
-        fieldTarget: item.target,
-        fieldOrder: item.order_index,
-        fieldFilter: item.filter_index
-      });
-    });
-
-    return fields;
-  },
-
   getSchema() {
     return JSON.stringify(this.state.fields.map((item) => {
       const schema = {
