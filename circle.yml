@@ -9,15 +9,17 @@ general:
   artifacts:
     - "coverage/"
     - "reports/"
+    - "logs/"
 
 dependencies:
   post:
     - npm run-script build
     - mv ./dist ./dist_e2e
+    - mkdir -p logs
     - npm run-script e2e-setup
-    - npm run-script e2e-http-server:
+    - npm run-script e2e-http-server > ./logs/http-server.log:
         background: true
-    - npm run-script e2e-selenium:
+    - npm run-script e2e-selenium 2> ./logs/selenium.log:
         background: true
 
 test:
