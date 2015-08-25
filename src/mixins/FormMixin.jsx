@@ -64,10 +64,24 @@ export default {
       return this.state;
     }
 
+    let refMethods = [
+      'getValue',
+      'getDate',
+      'getTime',
+      'isChecked'
+    ];
+
     let attributes = _.reduce(this.state._formLinkedKeys, (result, key) => {
       let ref = this.refs[key];
-      let state = this.state[key];
-      let value = (_.isEmpty(ref)) ? state : (state || ref.getValue());
+      let value = this.state[key];
+
+      if (!_.isEmpty(ref)) {
+        let methodName = _.find(refMethods, (name) => _.isFunction(ref[name]));
+
+        if (methodName) {
+          value = value || ref[methodName]();
+        }
+      }
 
       if (!_.isEmpty(value)) {
         result[key] = value;
