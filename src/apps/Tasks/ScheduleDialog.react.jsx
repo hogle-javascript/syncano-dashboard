@@ -61,17 +61,17 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-        {
-          ref: 'cancel',
-          text: 'Cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          ref: 'submit',
-          text: 'Confirm',
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+      {
+        ref: 'cancel',
+        text: 'Cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        ref: 'submit',
+        text: 'Confirm',
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     return (
       <Common.Dialog

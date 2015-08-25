@@ -89,14 +89,14 @@ export default Radium(React.createClass({
     let itemsCount = items.length;
     let indexOfListItem = itemsCount - 1;
     let listItems = this.state.items.map((item, index) => {
-        if (index < indexOfListItem) {
-          return [
-            this.renderItem(item),
-            <MUI.ListDivider />
-          ];
-        }
-        return this.renderItem(item);
-      });
+      if (index < indexOfListItem) {
+        return [
+          this.renderItem(item),
+          <MUI.ListDivider />
+        ];
+      }
+      return this.renderItem(item);
+    });
 
     if (!_.isEmpty(items)) {
       return (
