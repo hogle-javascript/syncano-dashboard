@@ -129,10 +129,10 @@ export default {
     this.validate((isValid, errors) => {
       if (isValid === true) {
         if (_.isFunction(this.handleSuccessfullValidation)) {
-          this.handleSuccessfullValidation.call(this, this.getFormAttributes())
+          this.handleSuccessfullValidation(this.getFormAttributes())
         }
       } else if (_.isFunction(this.handleFailedValidation)) {
-        this.handleFailedValidation.call(this, errors);
+        this.handleFailedValidation(errors);
       }
     });
   },
