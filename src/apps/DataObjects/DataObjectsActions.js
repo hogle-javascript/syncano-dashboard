@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck: true,
-    withDialog: true
-  },
-  {
     checkToggleColumn: {},
     fetch: {},
     setDataObjects: {},
@@ -48,5 +44,9 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.DataObjects.remove'
     }
+  },
+  {
+    withCheck: true,
+    withDialog: true
   }
 );

@@ -4,7 +4,7 @@ import Router from 'react-router';
 import MUI from 'material-ui';
 import Common from '../';
 
-require('./AccountContainer.sass');
+import './AccountContainer.sass';
 
 export default React.createClass({
 

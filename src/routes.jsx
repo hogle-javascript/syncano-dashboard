@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Router from 'react-router';
 
@@ -88,7 +89,7 @@ export default (
         handler={InstancePage}
         path="instances/:instanceName">
 
-        <Redirect from="/instances/:instanceName" to="classes" />
+        <Redirect from="/instances/:instanceName" to="data" />
 
         {/* Data */}
         <Route
@@ -133,9 +134,9 @@ export default (
             path="add" />
 
           <Route
-            name    = "classes-edit"
+            name = "classes-edit"
             handler = {Classes.FormView}
-            path    = ":className/edit" />
+            path = ":className/edit" />
 
           {/* Classes - Data Objects */}
           <Route
@@ -311,3 +312,4 @@ export default (
       />
   </Route>
 );
+

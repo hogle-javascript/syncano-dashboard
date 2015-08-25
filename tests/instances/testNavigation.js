@@ -48,7 +48,7 @@ module.exports = {
     leftMenuPage.clickButton('@apiKeys');
 
     var apiKeysPage = client.page.apiKeysPage();
-    apiKeysPage.expect.element('@addApiKeyButton').to.be.present.after(5000);
+    apiKeysPage.waitForElementPresent('@apiKeysListName');
   },
   'User goes to Channels View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
@@ -112,10 +112,7 @@ module.exports = {
   },
   'User goes to Data View' : function(client) {
     var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
-
-    dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
-    dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
+    dataPage.waitForElementPresent('@dataListItemTitle');
   },
   'User goes to Tasks View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();

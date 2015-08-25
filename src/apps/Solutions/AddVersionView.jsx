@@ -118,10 +118,7 @@ export default Radium(React.createClass({
         if (spec[section][item] === true) {
           let obj = {};
 
-          if (pkName === 'id') {
-            item = parseInt(item, 10);
-          }
-          obj[pkName] = item;
+          obj[pkName] = (pkName === 'id') ? parseInt(item, 10) : item;
           formatedSpec[section].push(obj);
         }
       })
@@ -196,7 +193,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     if (this.state.dataReady === true) {
-      return;
+      return true;
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>

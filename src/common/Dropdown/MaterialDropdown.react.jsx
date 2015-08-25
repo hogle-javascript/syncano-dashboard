@@ -5,7 +5,7 @@ import OutsideClickHandler from 'react-outsideclickhandler';
 import MaterialDropdownItem from './MaterialDropdownItem.react';
 import DropdownNotifiItem from './DropdownNotifiItem.react';
 
-require('./Dropdown.sass');
+import './Dropdown.sass';
 
 export default React.createClass({
 
@@ -18,8 +18,8 @@ export default React.createClass({
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      handleItemClick: React.PropTypes.func,
+      clickable: React.PropTypes.bool
     }),
     iconStyle: React.PropTypes.object,
     isLoading: React.PropTypes.bool
@@ -51,7 +51,7 @@ export default React.createClass({
   toggleOpenClose() {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
-    }, function() {
+    }, () => {
       if (this.state.isOpen && this.props.handleOnClick) {
         this.props.handleOnClick()
       }

@@ -1,6 +1,6 @@
-import React       from 'react';
+import React from 'react';
 
-import MUI         from 'material-ui';
+import MUI from 'material-ui';
 
 export default React.createClass({
 
@@ -15,7 +15,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      color: 'black',
+      color: '#000',
       hoverColor: MUI.Styles.Colors.blue600
     }
   },
@@ -71,14 +71,23 @@ export default React.createClass({
     return {icon: this.props.icon, color: this.props.background};
   },
 
-  render() {
+  renderIcon() {
     let styles = this.getStyles();
     let iconState = this.getIconState();
-    let icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
+
+    return (
+      <MUI.FontIcon
+        className={`synicon-${iconState.icon}`}
+        style={styles.icon}/>
+    )
+  },
+
+  render() {
+    let iconState = this.getIconState();
 
     return (
       <MUI.Avatar
-        icon={icon}
+        icon={this.renderIcon()}
         style={this.props.style}
         backgroundColor={iconState.color}
         onClick={this.handleIconClick}

@@ -87,7 +87,7 @@ export default React.createClass({
               valueLink={this.linkState('label')}
               errorText={this.getValidationMessages('label').join(' ')}
               name='label'
-              style={{width:500}}
+              style={{width: 500}}
               hintText='Short name for your CodeBox'
               floatingLabelText='Label of a CodeBox'/>
             <MUI.TextField
@@ -95,7 +95,7 @@ export default React.createClass({
               name='description'
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              style={{width:500}}
+              style={{width: 500}}
               className='text-field'
               multiLine={true}
               hintText='Multiline CodeBox description (optional)'

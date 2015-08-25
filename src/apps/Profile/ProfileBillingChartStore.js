@@ -21,7 +21,7 @@ export default Reflux.createStore({
   getInitialState() {
     let today = this.getToday();
     let allDates = this.getAllDates();
-    let xColumn  = ['x'].concat(allDates);
+    let xColumn = ['x'].concat(allDates);
 
     return {
       isLoading: true,
@@ -108,10 +108,9 @@ export default Reflux.createStore({
     };
   },
 
-  prepareChartData(profile, usage) {
-    profile = _.first(profile);
-    usage = _.first(usage);
-
+  prepareChartData(joinProfiles, joinUsages) {
+    let profile = _.first(joinProfiles);
+    let usage = _.first(joinUsages);
     let state = this.getInitialState();
 
     state.isLoading = false;
@@ -120,8 +119,8 @@ export default Reflux.createStore({
     let subscription = profile.subscription || {};
     let plan = subscription.plan || null;
     let pricing = subscription.pricing;
-    let usageAmount = {'api': 0, 'cbx': 0};
-    let columns = {'api': {}, 'cbx': {}};
+    let usageAmount = {api: 0, cbx: 0};
+    let columns = {api: {}, cbx: {}};
 
     if (_.isEmpty(pricing)) {
       // $5.25

@@ -89,7 +89,9 @@ export default React.createClass({
   },
 
   showUserDialog(group) {
-    Actions.showDialog(undefined, group); // eslint-disable-line no-undefined
+    /* eslint-disable */
+    Actions.showDialog(undefined, group);
+    /* eslint-enable */
   },
 
   showUserEditDialog() {
@@ -189,7 +191,7 @@ export default React.createClass({
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem
-              tooltip={isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
+              tooltip={isAnyUserSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
               iconClassName={isAnyUserSelected ? markedIcon : blankIcon}/>

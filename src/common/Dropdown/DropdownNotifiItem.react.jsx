@@ -13,24 +13,24 @@ export default React.createClass({
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string.isRequired,
       userEmail: React.PropTypes.string.isRequired,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      handleItemClick: React.PropTypes.func,
+      clickable: React.PropTypes.bool
     })
   },
 
   renderEmptyNotification() {
     let emptyItem = {
-      subheader: "Notifications",
+      subheader: 'Notifications',
       subheaderStyle: {
-        borderBottom: "1px solid #EAEAEA"
+        borderBottom: '1px solid #EAEAEA'
       },
-      name: "empty-notification",
+      name: 'empty-notification',
       leftIcon: {
-        name: "synicon-information",
-        color: "#0091EA"
+        name: 'synicon-information',
+        color: '#0091EA'
       },
       content: {
-        text: "You don't have any notifications",
+        text: `You don't have any notifications`,
         style: {}
       }
     };
@@ -57,16 +57,14 @@ export default React.createClass({
   },
 
   getInvitationItems() {
-    let invitationItems = this.props.items.filter(function(item) {
-      return item.type === 'invitation';
-    });
+    let invitationItems = this.props.items.filter((item) => item.type === 'invitation');
 
     return invitationItems;
   },
 
   renderInvitationItems() {
     let invitationItems = this.getInvitationItems();
-    let items = invitationItems.map(function(item) {
+    let items = invitationItems.map((item) => {
       let icon = (
         <MUI.FontIcon
           className={item.leftIcon.name || null}
@@ -99,16 +97,14 @@ export default React.createClass({
   },
 
   getLinkItems() {
-    let linkItems = this.props.items.filter(function(item) {
-      return item.type === "normal-link";
-    });
+    let linkItems = this.props.items.filter((item) => item.type === 'normal-link');
 
     return linkItems;
   },
 
   renderNormalLinkItems() {
     let linkItems = this.getLinkItems();
-    let items = linkItems.map(function(item, index) {
+    let items = linkItems.map((item, index) => {
       let icon = (
         <MUI.FontIcon
           className={item.leftIcon.name || null}

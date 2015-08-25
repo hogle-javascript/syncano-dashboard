@@ -27,7 +27,7 @@ export default React.createClass({
 
   validatorConstraints() {
     if (this.state.card) {
-      return;
+      return true;
     }
 
     return {
@@ -260,7 +260,7 @@ export default React.createClass({
 
   renderSlider(type) {
     if (!this.state.plan) {
-      return;
+      return true;
     }
     const defaultValue = 0;
     let options = this.state.plan.options[type];
@@ -362,7 +362,8 @@ export default React.createClass({
         ref="submit"/>
     ];
 
-    let apiSliderSummary = this.renderSliderSummary({
+    let apiSliderSummary = this.renderSliderSummary(
+      {
         included: {
           value: parseInt(apiInfo.included, 10).toLocaleString(),
           label: 'Total API calls'
@@ -374,7 +375,8 @@ export default React.createClass({
       }
     );
 
-    let cbxSliderSummary = this.renderSliderSummary({
+    let cbxSliderSummary = this.renderSliderSummary(
+      {
         included: {
           value: parseInt(cbxInfo.included, 10).toLocaleString(),
           label: 'Total CodeBox runs'

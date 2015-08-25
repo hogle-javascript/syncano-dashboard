@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
+import Filesize from 'filesize';
 
 // Utils
 import Mixins from '../../mixins';
@@ -303,13 +304,17 @@ export default React.createClass({
     this.setState(state);
 
     this.refs[`fielddate-${name}`].setState({
-      date: undefined, // eslint-disable-line no-undefined
+      /* eslint-disable */
+      date: undefined,
+      /* eslint-enable */
       dialogDate: new Date()
     });
 
-    this.refs[`fieldtime-${name}`].refs.input.setValue("");
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
     this.refs[`fieldtime-${name}`].setState({
-      time: undefined, // eslint-disable-line no-undefined
+      /* eslint-disable */
+      time: undefined,
+      /* eslint-enable */
       dialogTime: new Date()
     });
   },
@@ -328,7 +333,7 @@ export default React.createClass({
     let description = file ? file.name : null;
 
     if (description) {
-      description = description + ' (' + file.size + ' bytes)'
+      description = description + ' (' + Filesize(file.size) + ')'
     }
     return (
       <div
@@ -375,7 +380,9 @@ export default React.createClass({
         if (item.type === 'datetime') {
           let value = this.state[item.name] ?
             new Date(this.state[item.name].value) :
-            undefined; // eslint-disable-line no-undefined
+            /* eslint-disable */
+            undefined;
+            /* eslint-enable */
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -389,14 +396,18 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    defaultDate={value || undefined} // eslint-disable-line no-undefined
+                    /* eslint-disable */
+                    defaultDate={value || undefined}
+                    /* eslint-enable */
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    defaultTime={value || undefined} // eslint-disable-line no-undefined
+                    /* eslint-disable */
+                    defaultTime={value || undefined}
+                    /* eslint-enable */
                     />
                 </div>
                 <div className="col-xs-5">
@@ -476,7 +487,7 @@ export default React.createClass({
     ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref='dialog'
         title={title}
         onShow={this.handleDialogShow}
@@ -498,7 +509,7 @@ export default React.createClass({
           type="linear"
           position="bottom"
           show={this.state.isLoading} />
-      </MUI.Dialog>
+      </Common.Dialog>
     );
   }
 });

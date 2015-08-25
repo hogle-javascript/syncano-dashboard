@@ -40,9 +40,9 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createSolution({
-      label       : this.state.label,
-      description : this.state.description,
-      public      : this.state.public
+      label: this.state.label,
+      description: this.state.description,
+      public: this.state.public
     });
   },
 

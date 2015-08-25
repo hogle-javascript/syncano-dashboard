@@ -63,13 +63,11 @@ export default Radium(React.createClass({
         color: MUI.Styles.Colors.white,
         fontSize: 21
       },
-
       notificationIcon: {
         color: '#ff3d00'
       },
-
       resendEmailText: {
-        cursor: "pointer",
+        cursor: 'pointer',
         color: MUI.Styles.Colors.lightBlueA700
       },
       menuItem: {
@@ -133,14 +131,14 @@ export default Radium(React.createClass({
           </div>
         );
       let buttons = [
-          <MUI.FlatButton
-            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-            label='Accept'
-            primary={true}/>,
-          <MUI.FlatButton
-            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-            label='Decline'/>
-        ];
+        <MUI.FlatButton
+          onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
+          label='Accept'
+          primary={true}/>,
+        <MUI.FlatButton
+          onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
+          label='Decline'/>
+      ];
 
       return (
         <MenuItem

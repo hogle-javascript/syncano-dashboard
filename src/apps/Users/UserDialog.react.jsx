@@ -15,7 +15,7 @@ import GroupsStore from './GroupsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-require('react-select/dist/default.css');
+import 'react-select/dist/default.css';
 
 export default React.createClass({
 
@@ -107,7 +107,7 @@ export default React.createClass({
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
     let allGroups = GroupsStore.getGroups().map((group) => {
-      group.value = group.id + '';
+      group.value = group.id.toString();
       return group;
     });
     let dialogStandardActions = [

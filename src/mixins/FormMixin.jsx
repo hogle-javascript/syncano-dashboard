@@ -37,7 +37,7 @@ export default {
 
   renderFormErrorFeedback() {
     if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
-      return;
+      return true;
     }
 
     return <Notification type="error">{this.state.errors.feedback}</Notification>;
@@ -45,7 +45,7 @@ export default {
 
   renderFormFeedback() {
     if (!this.state.feedback || typeof this.state.feedback === 'undefined') {
-      return
+      return true;
     }
 
     return <Notification>{this.state.feedback}</Notification>;
@@ -81,8 +81,10 @@ export default {
 
   validate(key, callback) {
     if (typeof key === 'function') {
+      /* eslint-disable */
       callback = key;
       key = null;
+      /* eslint-enable */
     }
 
     let constraints = _.get(this, 'validatorConstraints', {});
@@ -96,10 +98,9 @@ export default {
       attributes = attributes.call(this);
     }
 
-    // f***ing js
     if (key !== null) {
       let keyConstraints = {};
-      let keyAttributes  = {};
+      let keyAttributes = {};
 
       keyConstraints[key] = constraints[key];
       constraints = keyConstraints;

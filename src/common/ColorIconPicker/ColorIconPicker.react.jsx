@@ -57,14 +57,14 @@ export default Radium(React.createClass({
     console.info('IconPicker::handleSetColor', event.target.id);
     event.preventDefault();
     this.setState({selectedColor: event.target.id});
-    this.props.handleChange({'color': event.target.id});
+    this.props.handleChange({color: event.target.id});
   },
 
   handleSetIcon(event) {
     console.info('IconPicker::handleSetIcon', event.target.id);
     event.preventDefault();
     this.setState({selectedIcon: event.target.id});
-    this.props.handleChange({'icon': event.target.id});
+    this.props.handleChange({icon: event.target.id});
   },
 
   genIconItem(icon) {

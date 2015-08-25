@@ -63,7 +63,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     if (typeof groups === 'undefined') {
-      return
+      return true;
     }
 
     if (groups.length === 0) {
