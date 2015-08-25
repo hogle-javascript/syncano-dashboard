@@ -165,13 +165,21 @@ export default React.createClass({
     this.setState(state);
 
     this.refs[`fielddate-${name}`].setState({
-      date: undefined, // eslint-disable-line no-undefined
+
+      /* eslint-disable no-undefined */
+      date: undefined,
+
+      /* eslint-enable no-undefined */
       dialogDate: new Date()
     });
 
     this.refs[`fieldtime-${name}`].refs.input.setValue('');
     this.refs[`fieldtime-${name}`].setState({
-      time: undefined, // eslint-disable-line no-undefined
+
+      /* eslint-disable no-undefined */
+      time: undefined,
+
+      /* eslint-enable no-undefined */
       dialogTime: new Date()
     });
   },
@@ -376,7 +384,9 @@ export default React.createClass({
         if (item.type === 'datetime') {
           let value = this.state[item.name] ?
             new Date(this.state[item.name].value) :
-            undefined; // eslint-disable-line no-undefined
+            /* eslint-disable */
+            undefined;
+            /* eslint-enable */
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -390,14 +400,18 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    defaultDate={value || undefined} // eslint-disable-line no-undefined
+                    /* eslint-disable */
+                    defaultDate={value || undefined}
+                    /* eslint-enable */
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    defaultTime={value || undefined} // eslint-disable-line no-undefined
+                    /* eslint-disable */
+                    defaultTime={value || undefined}
+                    /* eslint-enable */
                     />
                 </div>
                 <div className="col-xs-5">

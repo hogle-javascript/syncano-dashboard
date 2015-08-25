@@ -51,8 +51,28 @@ export default Reflux.createStore({
     });
   },
 
+  onSubscribePlan() {
+    this.trigger({isLoading: true});
+  },
+
   onSubscribePlanCompleted() {
     this.dismissDialog();
     BillingPlanActions.fetch();
+  },
+
+  onSubscribePlanFailure() {
+    this.trigger({isLoading: false});
+  },
+
+  onUpdateCard() {
+    this.trigger({isLoading: true});
+  },
+
+  onUpdateCardFailure() {
+    this.trigger({isLoading: false});
+  },
+
+  onUpdateBillingProfileFailure() {
+    this.trigger({isLoading: false});
   }
 });

@@ -57,18 +57,18 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance';
     let dialogCustomActions = [
-        <MUI.FlatButton
-          key="cancel"
-          label="Cancel"
-          onTouchTap={this.handleCancel}
-          ref="cancel"/>,
-        <MUI.FlatButton
-          key="confirm"
-          label="Confirm"
-          primary={true}
-          onTouchTap={this.handleFormValidation}
-          ref="submit"/>
-      ];
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.handleFormValidation}
+        ref="submit"/>
+    ];
 
     return (
       <Common.Dialog

@@ -209,11 +209,11 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Material dropdown</h2>
           <div style={{
-                 display: 'flex',
-                 float: 'none',
-                 alignItems: 'center',
-                 justifyContent: 'center'
-               }}>
+            display: 'flex',
+            float: 'none',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
           <Common.Dropdown.Material
               type = "notification"
               icon = {"bell"}
@@ -437,11 +437,11 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Menu (component build in progress)</h2>
           <MenuNew style ={{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}>
+            marginRight: 32,
+            marginBottom: 32,
+            float: 'left',
+            position: 'relative',
+            zIndex: 0}}>
             <MenuItemNew>Maps</MenuItemNew>
             <MenuItemNew>Books</MenuItemNew>
             <MenuItemNew>Flights</MenuItemNew>
@@ -463,11 +463,11 @@ export default React.createClass({
             desktop = {true}
             width = {320}
             style = {{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}>
+              marginRight: 32,
+              marginBottom: 32,
+              float: 'left',
+              position: 'relative',
+              zIndex: 0}}>
             <MenuItemNew>Refresh</MenuItemNew>
             <MenuItemNew >Send Feedback More</MenuItemNew>
             <MenuItemNew checked={true}>Settings</MenuItemNew>
@@ -491,20 +491,18 @@ export default React.createClass({
         <div className="exampleBox">
           <h2>Menu</h2>
           <MUI.Menu style ={{
-                  marginRight: 32,
-                  marginBottom: 32,
-                  float: 'left',
-                  position: 'relative',
-                  zIndex: 0}}
-                  menuItems={[
-                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
-                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
-                  {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>}
-                  ]} />
+            marginRight: 32,
+            marginBottom: 32,
+            float: 'left',
+            position: 'relative',
+            zIndex: 0}}
+            menuItems={[
+              {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
+              {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>},
+              {text: <MUI.MenuItem>ASDASD</MUI.MenuItem>}
+            ]} />
         </div>
-
       </div>
     );
   }
-
 });

@@ -95,9 +95,9 @@ export default React.createClass({
   handleBackClick() {
     SessionStore.getRouter().transitionTo(
     'classes',
-    {
-      instanceName: SessionStore.getInstance().name
-    }
+      {
+        instanceName: SessionStore.getInstance().name
+      }
     );
   },
 
