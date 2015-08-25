@@ -74,19 +74,18 @@ You'll also need to configure env variables for the tests to work locally:
     $ export NIGHTWATCH_EMAIL="xx"
     $ export NIGHTWATCH_PASSWORD="xx"
 
-If you are ready just run dev servers:
+If you are ready just run dev server:
 
     $ npm start
-    $ npm run-script e2e-selenium
 
 and start testing:
 
     $ npm run-script e2e
 
 
-If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` nightwatch line, so that it looks like this:
+If part of the tests fail for some reason, you can temporarily disable them by `--skiptags` argument. So if, for instance classes tests fail, you can modify `package.json` e2e line, so that it looks like this:
 
-    "nightwatch": "nightwatch --skiptags classes",
+    "e2e": "nightwatch --skiptags classes",
 
 Tests will continue to run but the classes tests will be skipped. Refer to the test files for the appropriate tag name.
 
