@@ -82,18 +82,18 @@ export default React.createClass({
     };
     let icon = (
     <MUI.FontIcon
-    className={emptyItem.leftIcon.name}
-    color={emptyItem.leftIcon.color}/>
+      className={emptyItem.leftIcon.name}
+      color={emptyItem.leftIcon.color}/>
     );
 
     return (
     <MUI.List
-    subheader={emptyItem.subheader}
-    subheaderStyle={emptyItem.subheaderStyle}>
+      subheader={emptyItem.subheader}
+      subheaderStyle={emptyItem.subheaderStyle}>
       <MUI.ListItem
-      key={emptyItem.name}
-      disableTouchTap={true}
-      leftIcon={icon}>
+        key={emptyItem.name}
+        disableTouchTap={true}
+        leftIcon={icon}>
           <span>
             {emptyItem.content.text}
           </span>

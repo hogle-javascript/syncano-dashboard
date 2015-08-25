@@ -84,9 +84,9 @@ export default React.createClass({
 
   renderInstanceDropdown() {
     return (
-    <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-      <HeaderInstancesDropdown />
-    </div>
+      <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
+        <HeaderInstancesDropdown />
+      </div>
     )
   },
 

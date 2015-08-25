@@ -27,25 +27,6 @@ export default React.createClass({
     })
   },
 
-  getList() {
-    if (this.state.items === null) {
-      return true;
-    }
-
-    let items = this.state.items.map((item) => {
-      return this.renderItem(item);
-    });
-
-    if (items.length > 0) {
-      return items;
-    }
-    return (
-    <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-      {this.props.emptyItemContent}
-    </ColumnList.EmptyItem>
-    )
-  },
-
   // List
   handleDownloadVersion(url) {
     window.open(url, '_blank');
@@ -101,6 +82,25 @@ export default React.createClass({
     )
   },
 
+  renderList() {
+    if (this.state.items === null) {
+      return true;
+    }
+
+    let items = this.state.items.map((item) => {
+      return this.renderItem(item);
+    });
+
+    if (items.length > 0) {
+      return items;
+    }
+    return (
+    <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+      {this.props.emptyItemContent}
+    </ColumnList.EmptyItem>
+    )
+  },
+
   render() {
     return (
       <Lists.Container>
@@ -133,7 +133,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List>
           <Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Loading>
         </Lists.List>
       </Lists.Container>
