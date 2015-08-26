@@ -72,7 +72,7 @@ module.exports = {
     tasksPage.navigate();
     tasksPage.clickButton('@selectTriggerTableRow');
     tasksPage.clickButton('@editButton');
-    tasksPage.waitForElementPresent('@confirm');
+    tasksPage.waitForElementVisible('@confirm');
     tasksPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate');
     tasksPage.waitForElementNotVisible('@addTriggerModalSignalUpdate')
     tasksPage.clickButton('@confirm');
