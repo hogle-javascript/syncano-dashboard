@@ -8,10 +8,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import EditViewActions from './EditViewActions';
-import EditViewStore from './EditViewStore';
-
 import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
@@ -24,7 +20,6 @@ export default Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Router.State,
     Router.Navigation,
 
@@ -58,6 +53,31 @@ export default Radium(React.createClass({
     Actions.fetch();
   },
 
+  getStyles() {
+    return {
+      sectionStyle: {
+        paddingTop: 10,
+        paddingBottom: 20,
+        margin: 1,
+        background: '#F4F4F4'
+      },
+      sectionTitleStyle: {
+        fontSize: '1.2rem',
+        marginTop: 15,
+        marginBottom: 10
+      },
+      info: {
+        color: '#B8B8B8',
+        width: 300,
+        height: 27,
+        lineHeight: '27px',
+        fontSize: '1rem',
+        verticalAlign: 'middle',
+        textAlign: 'center'
+      }
+    }
+  },
+
   handleBackClick() {
     this.context.router.transitionTo('solutions-edit', this.getParams());
   },
@@ -82,6 +102,7 @@ export default Radium(React.createClass({
       triggers: 'id',
       schedules: 'id'
     };
+
     return map[section];
   },
 
@@ -89,16 +110,15 @@ export default Radium(React.createClass({
     let spec = this.state.exportSpec;
     let formatedSpec = {};
 
-    Object.keys(spec).map(section => {
+    Object.keys(spec).map((section) => {
       let pkName = this.pkMap(section);
+
       formatedSpec[section] = [];
-      Object.keys(spec[section]).map(item => {
+      Object.keys(spec[section]).map((item) => {
         if (spec[section][item] === true) {
           let obj = {};
-          if (pkName === 'id') {
-            item = parseInt(item, 10);
-          }
-          obj[pkName] = item;
+
+          obj[pkName] = (pkName === 'id') ? parseInt(item, 10) : item;
           formatedSpec[section].push(obj);
         }
       })
@@ -116,7 +136,7 @@ export default Radium(React.createClass({
   },
 
   handleSubmit(type) {
-    this.setState({type: type});
+    this.setState({type});
     this.handleFormValidation();
   },
 
@@ -126,36 +146,23 @@ export default Radium(React.createClass({
 
   handleOnCheck(name, type, event, status) {
     let exportSpec = this.state.exportSpec;
-    exportSpec[type][name] = status;
 
-    this.setState({exportSpec: exportSpec});
+    exportSpec[type][name] = status;
+    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
+    const styles = this.getStyles();
 
     if (data.length === 0) {
       return null;
     }
 
-    // TODO: move all the styles to getStyles()
-    let sectionStyle = {
-      paddingTop: 10,
-      paddingBottom: 20,
-      margin: 1,
-      background: '#F4F4F4'
-    };
-
-    let sectionTitleStyle = {
-      fontSize: '1.2rem',
-      marginTop: 15,
-      marginBottom: 10
-    };
-
-    let checkboxes = data.map(item => {
+    let checkboxes = data.map((item) => {
       return (
         <div
           key={`checkbox-${type}-${item[pk]}`}
-          className="col-xs-35 col-md-17 col-lg-17"
+          className="col-xs-35 col-md-17"
           style={{paddingRight: 10}}>
           <MUI.Checkbox
             ref={`checkbox-${type}-${item[pk]}`}
@@ -171,9 +178,9 @@ export default Radium(React.createClass({
     });
 
     return (
-      <div className="col-xs-35 col-md-35 col-lg-35">
-        <div style={sectionTitleStyle}>{label}</div>
-        <div style={sectionStyle}>
+      <div className="col-xs-35">
+        <div style={styles.sectionTitleStyle}>{label}</div>
+        <div style={styles.sectionStyle}>
           <div className="row">
             {checkboxes}
           </div>
@@ -183,8 +190,10 @@ export default Radium(React.createClass({
   },
 
   renderInfo() {
+    const styles = this.getStyles();
+
     if (this.state.dataReady === true) {
-      return;
+      return true;
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>
@@ -192,8 +201,7 @@ export default Radium(React.createClass({
     }
     return (
       <div key="info" style={{padding: 100, margin: '0 auto'}}>
-        <div
-          style={{color: '#B8B8B8', width: 300, height: 27, lineHeight: '27px', fontSize: '1rem', verticalAlign: 'middle', textAlign: 'center'}}>
+        <div style={styles.info}>
           Choose the Instance which you want to use to export new solution version.
         </div>
       </div>
@@ -242,7 +250,7 @@ export default Radium(React.createClass({
                   name='instance'
                   onChange={this.handleInstanceChange}
                   fullWidth={true}
-                  value={null}
+                  value={this.state.instance}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'

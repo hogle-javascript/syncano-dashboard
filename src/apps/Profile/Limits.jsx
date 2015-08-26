@@ -5,13 +5,7 @@ export default React.createClass({
 
   displayName: 'Limits',
 
-  getStyles() {
-    return {}
-  },
-
   render() {
-    let styles = this.getStyles();
-
     return (
       <div className="row">
         <div className="col-md-9" style={{whiteSpace: 'nowrap'}}>

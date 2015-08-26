@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
 
   init() {
@@ -31,12 +33,12 @@ export default {
 
     if (this.listenables) {
       let listenables = [].concat(this.listenables);
-      for (let i = 0; i < listenables.length; i++) {
-        let listenable = listenables[i];
-        if (listenable.fetch !== undefined) {
+
+      _.forEach(listenables, (listenable) => {
+        if (!_.isUndefined(listenable.fetch)) {
           args.push(listenable.fetch);
         }
-      }
+      });
     }
 
     this._fetchCallback = callback;

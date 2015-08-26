@@ -17,7 +17,6 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form,
 
@@ -41,14 +40,15 @@ export default React.createClass({
 
   handleAddSubmit() {
     Actions.createSolution({
-      label       : this.state.label,
-      description : this.state.description,
-      public      : this.state.public
+      label: this.state.label,
+      description: this.state.description,
+      public: this.state.public
     });
   },
 
   handleToogle(event, status) {
     let state = {};
+
     state[event.target.name] = status;
     this.setState(state);
   },

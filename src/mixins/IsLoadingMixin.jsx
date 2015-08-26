@@ -2,11 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import Common from '../common';
 
-export default (options, props) => {
-  props                   = props        || {};
-  options                 = options      || {};
-  options.attr            = options.attr || 'state.isLoading';
-  options.show            = options.show || [true, null, undefined];
+export default (options = {}, props = {}) => {
+  options.attr = options.attr || 'state.isLoading';
+  options.show = options.show || [true, null];
   options.overwriteRender = options.overwriteRender || true;
 
   let mixin = {
@@ -18,7 +16,9 @@ export default (options, props) => {
 
     isLoading() {
       let value = _.get(this, options.attr, false);
-      return _.indexOf(options.show, value) > -1;
+      let status = _.indexOf(options.show, value) > -1 || typeof value === 'undefined';
+
+      return status;
     },
 
     renderLoadingComponent() {

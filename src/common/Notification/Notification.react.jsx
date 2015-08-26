@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import MUI from 'material-ui';
 
-require('./Notification.sass');
+import './Notification.sass';
 
 export default React.createClass({
 
@@ -38,16 +38,16 @@ export default React.createClass({
     const styles = this.getStyles();
 
     const cssClasses = classNames({
-      'notification': true,
+      notification: true,
       'notification--info': this.props.type === 'info',
       'notification--error': this.props.type === 'error',
       'notification--warning': this.props.type === 'warning'
     }, this.props.className);
 
     const iconClass = classNames({
-      'information': this.props.type === 'info',
+      information: this.props.type === 'info',
       'alert-circle': this.props.type === 'error',
-      'alert': this.props.type === 'warning'
+      alert: this.props.type === 'warning'
     });
 
     return (

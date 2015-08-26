@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   renderMenuItems() {
-    return this.state.columns.map(column => {
+    return this.state.columns.map((column) => {
       let checkbox = (
         <MUI.Checkbox
           checked={column.checked}
@@ -57,6 +57,7 @@ export default React.createClass({
       <MUI.IconMenu
         closeOnItemTouchTap={false}
         iconButtonElement={mainIcon}
+        maxHeight="calc(100vh - 90px)"
         openDirection="bottom-left">
         {this.renderMenuItems()}
       </MUI.IconMenu>

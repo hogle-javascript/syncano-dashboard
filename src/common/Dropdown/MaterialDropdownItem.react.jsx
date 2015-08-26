@@ -5,7 +5,8 @@ import MUI from 'material-ui';
 
 export default React.createClass({
 
-  displayName: 'MaterialDropdwonItem',
+  displayName: 'MaterialDropdownItem',
+  fallBackAvatar: `${location.protocol}`,
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -20,16 +21,20 @@ export default React.createClass({
         style: React.PropTypes.object
       }),
       secondaryText: React.PropTypes.string,
-      secondaryTextLines: React.PropTypes.number,                // Content to view as item can be any object too
-      name: React.PropTypes.string,     // name for DropdownMenuItems kys
-      handleItemClick: React.PropTypes.func        // function to call after DropdownMenuItem click
+      secondaryTextLines: React.PropTypes.number,
+      name: React.PropTypes.string,
+      handleItemClick: React.PropTypes.func
     })),
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      handleItemClick: React.PropTypes.func,
+      clickable: React.PropTypes.bool
     })
+  },
+
+  getInitialState() {
+    return {gravatarUrl: null};
   },
 
   isHeaderNecessary() {
@@ -41,31 +46,44 @@ export default React.createClass({
   getStyles() {
     return {
       avatar: {
-        Transform: 'translateY(-50%)',
+        transform: 'translateY(-50%)',
         top: '50%'
       }
     }
   },
 
+  onAvatarError() {
+    this.setState({gravatarUrl: this.fallBackAvatar});
+  },
+
+  getGravatarUrl() {
+    let headerContentProps = this.props.headerContent;
+
+    if (this.state.gravatarUrl) {
+      return this.state.gravatarUrl;
+    }
+
+    return Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
+  },
+
   renderHeaderContent() {
     let styles = this.getStyles();
     let headerContentProps = this.props.headerContent;
-    let headerContentElement;
+    let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
-
-      let location = window.location;
-      let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
-      let gravatarUrl = Gravatar.url(headerContentProps.userEmail, {default: 'blank'}, true);
+      let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
-      if (gravatarUrl.indexOf('blank')) {
-        gravatarUrl = fallBackAvatar;
-      }
       headerContentElement = (
         <MUI.ListItem
-          leftAvatar={<MUI.Avatar style={styles.avatar} src={gravatarUrl} />}
+          leftAvatar={
+            <MUI.Avatar
+              style={styles.avatar}
+              src={gravatarUrl}
+              onError={this.onAvatarError} />
+          }
           primaryText={primaryText}
           secondaryText={secondaryText}
           disableTouchTap={!headerContentProps.clickable}
@@ -82,9 +100,12 @@ export default React.createClass({
 
   renderItems() {
     let items = this.props.items.map((item, index) => {
-      let icon = <MUI.FontIcon
-        className={item.leftIcon.name || null}
-        style={item.leftIcon.style}/>;
+      let icon = (
+        <MUI.FontIcon
+          className={item.leftIcon.name || null}
+          style={item.leftIcon.style}/>
+      );
+
       return (
         <MUI.List
           key={item.name + index}
@@ -102,7 +123,8 @@ export default React.createClass({
         </MUI.List>
       )
     });
-    return items
+
+    return items;
   },
 
   render() {

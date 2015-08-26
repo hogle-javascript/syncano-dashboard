@@ -11,7 +11,6 @@ import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 import MUI from 'material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
-import Menu from 'material-ui/lib/menus/menu';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import MenuDivider from 'material-ui/lib/menus/menu-divider';
 
@@ -64,13 +63,11 @@ export default Radium(React.createClass({
         color: MUI.Styles.Colors.white,
         fontSize: 21
       },
-
       notificationIcon: {
         color: '#ff3d00'
       },
-
       resendEmailText: {
-        cursor: "pointer",
+        cursor: 'pointer',
         color: MUI.Styles.Colors.lightBlueA700
       },
       menuItem: {
@@ -93,9 +90,11 @@ export default Radium(React.createClass({
 
   renderItems() {
     let styles = this.getStyles();
-    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't closing because of returned childrens in DIV tag
+
+    // TODO is Loading is used here like this because of behaviour of MenuItem. When MenuItem is clicked dropdown isn't
+    // closing because of returned childrens in DIV tag
     // if (this.state.accountInvitations.isLoading === true) {
-    //  return <Loading show={true}/>
+    //   return <Loading show={true}/>
     // }
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
@@ -105,6 +104,7 @@ export default Radium(React.createClass({
           color={MUI.Styles.Colors.lightBlueA700}
           />
       );
+
       return (
         <MenuItem
           key="empty"
@@ -116,7 +116,7 @@ export default Radium(React.createClass({
       )
     }
 
-    let notifications = this.state.accountInvitations.items.map(item => {
+    let notifications = this.state.accountInvitations.items.map((item) => {
       let icon = (
           <MUI.FontIcon
             className='synicon-share-variant'
@@ -131,14 +131,14 @@ export default Radium(React.createClass({
           </div>
         );
       let buttons = [
-          <MUI.FlatButton
-            onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-            label='Accept'
-            primary={true}/>,
-          <MUI.FlatButton
-            onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-            label='Decline'/>
-        ];
+        <MUI.FlatButton
+          onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
+          label='Accept'
+          primary={true}/>,
+        <MUI.FlatButton
+          onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
+          label='Decline'/>
+      ];
 
       return (
         <MenuItem
@@ -193,6 +193,7 @@ export default Radium(React.createClass({
 
     if (notifications.length > 0) {
       let synIconName = notifications.length < 10 ? notifications.length : '9-plus';
+
       notificationCountIcon = (
         <MUI.FontIcon
           className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
@@ -213,6 +214,7 @@ export default Radium(React.createClass({
 
   render() {
     let styles = this.getStyles();
+
     return (
       <div>
         <MUI.IconMenu

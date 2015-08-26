@@ -1,6 +1,6 @@
 module.exports = {
   tags: ['terms'],
-  'Test': function(client) {
+  'User Goes to terms of use page': function(client) {
     var signupPage = client.page.signupPage();
     signupPage.navigate();
     signupPage.clickTermsOfUseLink();

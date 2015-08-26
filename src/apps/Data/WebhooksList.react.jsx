@@ -1,16 +1,9 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Actions from './WebhooksActions';
-import Store from './WebhooksStore';
 
 // Components
 import MUI from 'material-ui';
@@ -27,20 +20,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation
   ],
-
-  getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    })
-  },
 
   // List
   handleItemIconClick(id, state) {
@@ -63,22 +42,25 @@ export default React.createClass({
     });
   },
 
+  renderCopyLinkIcon(item) {
+    let link = item.public ? item.links['public-link'] : item.links.run;
+    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + link;
+
+    return (
+      <div>
+        <ReactZeroClipboard text={webhookLink}>
+          <MUI.IconButton
+            iconClassName="synicon-link-variant"
+            tooltip="Copy Webhook URL"
+            onClick={this.handleURLClick}/>
+        </ReactZeroClipboard>
+      </div>
+    );
+  },
+
   renderItem(item) {
     let publicString = item.public.toString();
-    let publicCell = publicString;
-
-    if (item.public) {
-      publicCell = (
-        <div style={{marginLeft: '-14px'}}>
-          <ReactZeroClipboard text={SYNCANO_BASE_URL.slice(0, -1) + item.links['public-link']}>
-            <MUI.IconButton
-              iconClassName="synicon-link-variant"
-              tooltip="Copy Webhook URL"
-              onClick={this.handleURLClick}/>
-          </ReactZeroClipboard>
-        </div>
-      )
-    }
+    let copyLinkIcon = this.renderCopyLinkIcon(item);
 
     return (
       <Common.ColumnList.Item
@@ -96,15 +78,16 @@ export default React.createClass({
           {item.name}
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5">{item.codebox}</Column.Desc>
-        <Column.Desc className="col-xs-4">{publicCell}</Column.Desc>
+        <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
+        <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
+        <Column.Desc className="col-xs-2">{copyLinkIcon}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
     )
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.props.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -125,12 +108,13 @@ export default React.createClass({
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
-          <Column.Desc.Header className="col-xs-5">CodeBox ID</Column.Desc.Header>
-          <Column.Key.Header className="col-xs-4">Public</Column.Key.Header>
+          <Column.Desc.Header className="col-xs-4">CodeBox ID</Column.Desc.Header>
+          <Column.Key.Header className="col-xs-3">Public</Column.Key.Header>
+          <Column.Key.Header className="col-xs-2">URL</Column.Key.Header>
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.getList()}
           </Common.Loading>
         </Common.Lists.List>

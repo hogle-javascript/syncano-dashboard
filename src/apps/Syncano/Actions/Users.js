@@ -17,8 +17,8 @@ export default {
       this.Connection
         .Users
         .create(payload)
-        .then(user => {
-          let addUserToGroups = userGroupsArray.map(group => this.Connection.Users.addToGroup(user.id, group.id));
+        .then((user) => {
+          let addUserToGroups = userGroupsArray.map((group) => this.Connection.Users.addToGroup(user.id, group.id));
 
           this.D.all(addUserToGroups)
             .success(this.completed)
@@ -39,12 +39,12 @@ export default {
       .Users
       .update(id, payload)
       .success(() => {
-        let groupsId = groups.groups.map(group => group.id);
-        let newGroupsId = groups.newGroups.map(group => group.id);
+        let groupsId = groups.groups.map((group) => group.id);
+        let newGroupsId = groups.newGroups.map((group) => group.id);
         let addedGroups = _.difference(newGroupsId, groupsId);
         let removedGroups = _.difference(groupsId, newGroupsId);
-        let addUserToGroups = addedGroups.map(group => this.Connection.Users.addToGroup(id, group));
-        let removeUserFromGroups = removedGroups.map(group => this.Connection.Users.removeFromGroup(id, group));
+        let addUserToGroups = addedGroups.map((group) => this.Connection.Users.addToGroup(id, group));
+        let removeUserFromGroups = removedGroups.map((group) => this.Connection.Users.removeFromGroup(id, group));
         let promises = removeUserFromGroups.concat(addUserToGroups);
 
         this.D.all(promises)
@@ -55,7 +55,7 @@ export default {
   },
 
   remove(users) {
-    let promises = users.map(user => this.Connection.Users.remove(user.id));
+    let promises = users.map((user) => this.Connection.Users.remove(user.id));
 
     this.D.all(promises)
       .success(this.completed)

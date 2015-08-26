@@ -4,15 +4,12 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import ChannelsActions from './ChannelsActions';
 import ChannelsStore from './ChannelsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -36,9 +33,6 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     ChannelsActions.checkItem(id, state);
-  },
-
-  handleItemClick(itemId) {
   },
 
   renderItem(item) {

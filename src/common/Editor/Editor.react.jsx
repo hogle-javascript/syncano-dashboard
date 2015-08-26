@@ -1,16 +1,16 @@
 // Port from react-ace
 
-let ace = require('brace');
-let React = require('react');
+import React from 'react';
+import ace from 'brace';
 
-require('brace/mode/python');
-require('brace/mode/javascript');
-require('brace/mode/ruby');
-require('brace/mode/golang');
-require('brace/theme/tomorrow');
+import 'brace/mode/python';
+import 'brace/mode/javascript';
+import 'brace/mode/ruby';
+import 'brace/mode/golang';
+import 'brace/theme/tomorrow';
 
 
-module.exports = React.createClass({
+export default React.createClass({
   propTypes: {
     mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang']),
     theme: React.PropTypes.string,
@@ -27,7 +27,7 @@ module.exports = React.createClass({
     highlightActiveLine: React.PropTypes.bool,
     showPrintMargin: React.PropTypes.bool
   },
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       name: 'brace-editor',
       mode: '',
@@ -45,13 +45,14 @@ module.exports = React.createClass({
       showPrintMargin: true
     };
   },
-  onChange: function() {
+  onChange() {
     let value = this.editor.getValue();
+
     if (this.props.onChange) {
       this.props.onChange(value);
     }
   },
-  componentDidMount: function() {
+  componentDidMount() {
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
     this.editor.getSession().setMode('ace/mode/' + this.props.mode);
@@ -72,7 +73,7 @@ module.exports = React.createClass({
     }
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.editor = ace.edit(nextProps.name);
     this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
     this.editor.setTheme('ace/theme/' + nextProps.theme);
@@ -93,11 +94,12 @@ module.exports = React.createClass({
     this.editor.clearSelection();
   },
 
-  render: function() {
+  render() {
     let divStyle = {
       width: this.props.width,
       height: this.props.height
     };
+
     return (<div id={this.props.name} onChange={this.onChange} style={divStyle}></div>);
   }
 });

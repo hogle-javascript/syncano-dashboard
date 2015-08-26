@@ -8,7 +8,6 @@ import Mixins from '../../mixins';
 import WebhooksActions from './WebhooksActions';
 import WebhookDialogStore from './WebhookDialogStore';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
-import ClassesActions from '../Classes/ClassesActions';
 
 // Components
 import MUI from 'material-ui';
@@ -20,7 +19,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(WebhookDialogStore),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -44,7 +42,7 @@ export default React.createClass({
       name: this.state.name,
       codebox: this.state.codebox,
       description: this.state.description,
-      'public': this.state.public
+      public: this.state.public
     });
   },
 
@@ -53,12 +51,13 @@ export default React.createClass({
       this.state.name, {
         codebox: this.state.codebox,
         description: this.state.description,
-        'public': this.state.public
+        public: this.state.public
       });
   },
 
   handleToogle(event, status) {
     let state = {};
+
     state[event.target.name] = status;
     this.setState(state);
   },

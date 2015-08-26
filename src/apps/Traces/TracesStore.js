@@ -1,12 +1,9 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-// Utils & Mixins
-import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import AuthStore from '../Account/AuthStore';
+import SessionActions from '../Session/SessionActions';
 import Actions from './TracesActions';
 
 export default Reflux.createStore({
@@ -17,7 +14,8 @@ export default Reflux.createStore({
       items: [],
       objectId: null,
       tracesFor: null,
-      isLoading: true
+      isLoading: true,
+      currentObjectName: null
     }
   },
 
@@ -26,7 +24,10 @@ export default Reflux.createStore({
 
     // We want to know when we are ready to download data for this store,
     // it depends on instance we working on
-    this.listenTo(SessionStore, this.refreshData);
+    this.joinTrailing(
+        SessionActions.setInstance,
+        this.refreshData
+    );
   },
 
   refreshData() {
@@ -34,7 +35,19 @@ export default Reflux.createStore({
 
     if (SessionStore.instance && this.data.objectId) {
       this.fetchTraces();
+      this.fetchCurrentItem();
     }
+  },
+
+  fetchCurrentItem() {
+    let fetch = {
+      codebox: Actions.fetchCurrentCodeBox,
+      webhook: Actions.fetchCurrentWebhook,
+      trigger: Actions.fetchCurrentTrigger,
+      schedule: Actions.fetchCurrentSchedule
+    };
+
+    fetch[this.data.tracesFor](this.data.objectId);
   },
 
   fetchTraces() {
@@ -56,9 +69,16 @@ export default Reflux.createStore({
   },
 
   saveTraces(tracesObj) {
-    this.data.items = _.chain(Object.keys(tracesObj)).map(item => tracesObj[item]).sortByOrder('id', 'desc').value();
+    console.debug('TracesStore::saveTraces');
+    this.data.items = _.chain(Object.keys(tracesObj)).map((item) => tracesObj[item]).sortByOrder('id', 'desc').value();
     this.data.isLoading = false;
     this.trigger(this.data);
+  },
+
+  saveCurrentObj(currentObjName) {
+    console.debug('TracesStore::saveCurrentObj', currentObjName);
+    this.data.currentObjectName = currentObjName;
+    this.trigger({currentObjectName: currentObjName});
   },
 
   onFetchCodeBoxTracesCompleted(tracesObj) {
@@ -79,6 +99,24 @@ export default Reflux.createStore({
   onFetchScheduleTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
-  }
+  },
 
+  onFetchCurrentCodeBoxCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodeBoxCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
+  },
+
+  onFetchCurrentWebhookCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentWebhookCompleted', currentObj);
+    this.saveCurrentObj(currentObj.name)
+  },
+  onFetchCurrentTriggerCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
+  },
+
+  onFetchCurrentScheduleCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentScheduleCompleted', currentObj);
+    this.saveCurrentObj(currentObj.label)
+  }
 });

@@ -134,17 +134,17 @@ let iconPickerIcons = [
   'briefcase'
 ];
 
-let IconStore = {
+export default {
 
-  getAllIcons: function() {
+  getAllIcons() {
     return allIcons;
   },
 
-  getIconPickerIcons: function() {
+  getIconPickerIcons() {
     return iconPickerIcons;
   },
 
-  getRandomIconPickerIcon: function() {
+  getRandomIconPickerIcon() {
     let icons = this.getIconPickerIcons();
     let iconsCount = icons.length;
     let randomNumber = Math.floor((Math.random() * iconsCount));
@@ -152,10 +152,8 @@ let IconStore = {
     return icons[randomNumber];
   },
 
-  contains: function(string) {
+  contains(string) {
     return allIcons.indexOf(string) !== -1;
   }
 
 };
-
-module.exports = IconStore;

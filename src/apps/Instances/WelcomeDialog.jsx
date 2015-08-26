@@ -1,10 +1,7 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Radium from 'radium';
 
-
 import MUI from 'material-ui';
-import Common from '../../common';
 
 export default Radium(React.createClass({
 
@@ -28,7 +25,7 @@ export default Radium(React.createClass({
 
   handleCloseDialog() {
     this.setState({visible: false});
-    this.props.getStared();
+    this.props.getStarted();
   },
 
   getStyles() {
@@ -38,9 +35,10 @@ export default Radium(React.createClass({
       },
       paper: {
         position: 'fixed',
-        top: 200,
+        top: '50%',
         width: 400,
-        transform: 'translateX(-50%)', left: '50%',
+        transform: 'translate(-50%, -50%)',
+        left: '50%',
         zIndex: 1020
       },
       text: {
@@ -68,9 +66,10 @@ export default Radium(React.createClass({
 
   render() {
     const styles = this.getStyles();
+
     return (
       <div style={styles.main}>
-        <div style={styles.overlay}/>
+        <div style={styles.overlay}></div>
         <MUI.Paper
           ref="dialog"
           style={styles.paper}>

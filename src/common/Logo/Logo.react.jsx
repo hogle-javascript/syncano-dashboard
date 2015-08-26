@@ -1,7 +1,7 @@
-let React = require('react');
-let Isvg = require('react-inlinesvg');
+import React from 'react';
+import Isvg from 'react-inlinesvg';
 
-require('./Logo.sass');
+import './Logo.sass';
 
 export default React.createClass({
 

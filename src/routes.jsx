@@ -1,14 +1,15 @@
+/* eslint-disable */
 import React from 'react';
 import Router from 'react-router';
 
 // Pages
-import App from './pages/app.react';
+import AppPage from './pages/app.react';
 import ClassesPage from './pages/classes.react';
-import Dashboard from './pages/dashboard.react';
-import Instance from './pages/instance.react';
+import DashboardPage from './pages/dashboard.react';
+import InstancePage from './pages/instance.react';
 import ProfilePage from './pages/profile.react';
 import CodeBoxesPage from './pages/codeBoxes.react';
-import NotFound from './pages/notfound.react';
+import NotFoundPage from './pages/notfound.react';
 
 // Apps
 import Account from './apps/Account';
@@ -25,7 +26,7 @@ import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import CodeBoxes from './apps/CodeBoxes';
 import DataObjects from './apps/DataObjects/DataObjects.react';
 import Data from './apps/Data';
-import Tasks from './apps/Tasks/Tasks.react';
+import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
 
@@ -37,13 +38,13 @@ const Redirect = Router.Redirect;
 const NotFoundRoute = Router.NotFoundRoute;
 const DefaultRoute = Router.DefaultRoute;
 
-module.exports = (
+export default (
   <Route
     name="app"
-    handler={App}
+    handler={AppPage}
     path="/"
     >
-    <NotFoundRoute handler={NotFound}/>
+    <NotFoundRoute handler={NotFoundPage}/>
     <Route
       name="login"
       handler={Account.Login}
@@ -76,7 +77,7 @@ module.exports = (
     {/* Dashboard */}
     <Route
       name="dashboard"
-      handler={Dashboard}
+      handler={DashboardPage}
       path="/">
       <Route
         name="instances"
@@ -85,10 +86,10 @@ module.exports = (
 
       <Route
         name="instance"
-        handler={Instance}
+        handler={InstancePage}
         path="instances/:instanceName">
 
-        <DefaultRoute handler={Data}/>
+        <Redirect from="/instances/:instanceName" to="classes" />
 
         {/* Data */}
         <Route
@@ -133,9 +134,9 @@ module.exports = (
             path="add" />
 
           <Route
-            name    = "classes-edit"
+            name = "classes-edit"
             handler = {Classes.FormView}
-            path    = ":className/edit" />
+            path = ":className/edit" />
 
           {/* Classes - Data Objects */}
           <Route
@@ -189,9 +190,26 @@ module.exports = (
         {/* Tasks */}
         <Route
           name="tasks"
-          handler={Tasks}
           path="tasks"
-          />
+          >
+
+          {/* Schedule Traces */}
+          <Route
+            name='schedule-traces'
+            handler={Tasks.ScheduleTraces}
+            path='schedule/:scheduleId/traces'
+            />
+
+          {/* Trigger Traces */}
+          <Route
+              name='trigger-traces'
+              handler={Tasks.TriggerTraces}
+              path='trigger/:triggerId/traces'
+              />
+
+          <DefaultRoute handler={Tasks}/>
+
+        </Route>
 
         {/* Channels */}
         <Route
@@ -294,3 +312,4 @@ module.exports = (
       />
   </Route>
 );
+

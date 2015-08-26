@@ -26,7 +26,6 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
 
@@ -58,21 +57,22 @@ export default React.createClass({
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let router = this.context.router;
-      let next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
 
     let invKey = this.getQuery().invitation_key || null;
+
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
       SessionActions.setInvitationFromUrl(invKey)
     }
   },
 
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignIn({
-      email: this.state.email,
-      password: this.state.password
+      email: data.email,
+      password: data.password
     });
   },
 
@@ -126,7 +126,9 @@ export default React.createClass({
             <li><p><Link to="password-reset">Forgot password?</Link></p></li>
             <li><p>Don't have an account?<Link to="signup"> Sign up here</Link></p></li>
           </ul>
-          <p className="vm-4-t vm-0-b">If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a></p>
+          <p className="vm-4-t vm-0-b">
+            If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
+          </p>
         </div>
       </Container>
     );

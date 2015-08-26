@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -51,8 +49,7 @@ export default React.createClass({
           icon='key'
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
-          handleIconClick={this.handleItemIconClick}
-          >
+          handleIconClick={this.handleItemIconClick}>
           {item.description}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
@@ -67,7 +64,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

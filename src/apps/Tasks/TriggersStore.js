@@ -35,7 +35,7 @@ export default Reflux.createStore({
   },
 
   setTriggers(items) {
-    this.data.items = Object.keys(items).map(item => items[item]);
+    this.data.items = Object.keys(items).map((item) => items[item]);
     this.trigger(this.data);
   },
 

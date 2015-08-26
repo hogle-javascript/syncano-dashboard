@@ -7,9 +7,6 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
-import SessionActions from '../Session/SessionActions';
-import Actions from './TracesActions';
 import Store from './TracesStore';
 
 import MUI from 'material-ui';
@@ -134,26 +131,26 @@ export default Radium(React.createClass({
     let items = this.state.items || [];
     let styles = this.getStyles();
     let tracesFor = {
-        codebox: {
-          name: 'CodeBox',
-          icon: 'synicon-package-variant'
-        },
-        webhook: {
-          name: 'Webhook',
-          icon: 'synicon-arrow-up-bold'
-        },
-        trigger: {
-          name: 'Trigger',
-          icon: 'synicon-arrow-up-bold'
-        },
-        schedule: {
-          name: 'Schedule',
-          icon: 'synicon-camera-timer'
-        }
-      };
+      codebox: {
+        name: 'CodeBox',
+        icon: 'synicon-package-variant'
+      },
+      webhook: {
+        name: 'Webhook',
+        icon: 'synicon-arrow-up-bold'
+      },
+      trigger: {
+        name: 'Trigger',
+        icon: 'synicon-arrow-up-bold'
+      },
+      schedule: {
+        name: 'Schedule',
+        icon: 'synicon-camera-timer'
+      }
+    };
 
     if (items.length > 0) {
-      items = items.map(item => this.renderItem(item));
+      items = items.map((item) => this.renderItem(item));
       return items;
     }
 
@@ -179,7 +176,7 @@ export default Radium(React.createClass({
         </Common.ColumnList.Header>
       )
     }
-    return;
+    return true;
   },
 
   render() {

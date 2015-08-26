@@ -22,7 +22,7 @@ import CreateDialog from './CreateDialog';
 import InstallDialogActions from './InstallDialogActions';
 import InstallDialog from './InstallDialog';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   displayName: 'Solutions',
 
@@ -46,8 +46,12 @@ module.exports = React.createClass({
   isFriend() {
     if (SessionStore.getUser()) {
       let email = SessionStore.getUser({}).email;
-      return (_.endsWith(email, 'syncano.com') || _.endsWith(email, 'chimeraprime.com'));
+      let endings = ['syncano.rocks', 'syncano.io', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending))
     }
+
+    return false;
   },
 
   getStyles() {
@@ -74,7 +78,7 @@ module.exports = React.createClass({
   },
 
   handleSeeMoreClick(solutionId) {
-    this.transitionTo('solutions-edit', {solutionId: solutionId});
+    this.transitionTo('solutions-edit', {solutionId});
   },
 
   handleTagClick(tag) {
@@ -104,8 +108,8 @@ module.exports = React.createClass({
 
         <Common.Show if={this.isFriend()}>
           <Common.Fab>
-            <Common.Fab.Item
-              label="Click here to create a Solution"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to create a Solution"
               onClick={this.showSolutionDialog}
               iconClassName="synicon-plus"
               />

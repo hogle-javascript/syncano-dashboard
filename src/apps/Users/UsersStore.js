@@ -40,16 +40,18 @@ export default Reflux.createStore({
     let activeGroup = GroupsStore.getActiveGroup();
 
     if (activeGroup) {
-      GroupsActions.fetchGroupUsers(activeGroup.id).then(payload => this.setUsers(payload));
+      GroupsActions.fetchGroupUsers(activeGroup.id).then((payload) => this.setUsers(payload));
     } else {
-      UsersActions.fetchUsers().then(payload => this.setUsers(payload));
+      UsersActions.fetchUsers().then((payload) => this.setUsers(payload));
     }
   },
 
   setUsers(users) {
     let usersArray = users._items ? users._items : users;
 
-    this.data.items = Object.keys(usersArray).map(key => usersArray[key].user ? usersArray[key].user : usersArray[key]);
+    this.data.items = Object.keys(usersArray).map((key) => {
+      return usersArray[key].user ? usersArray[key].user : usersArray[key]
+    });
     this.trigger(this.data);
   },
 

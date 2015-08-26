@@ -1,12 +1,10 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -20,20 +18,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation
   ],
-
-  getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    })
-  },
 
   // List
   handleItemIconClick(id, state) {
@@ -61,7 +45,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.props.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!
@@ -86,7 +70,7 @@ export default React.createClass({
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.getList()}
           </Common.Loading>
         </Common.Lists.List>

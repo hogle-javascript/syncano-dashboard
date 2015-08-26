@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Select from 'react-select';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -14,14 +15,13 @@ import GroupsStore from './GroupsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-require('react-select/dist/default.css');
+import 'react-select/dist/default.css';
 
 export default React.createClass({
 
   displayName: 'UserDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form,
     Mixins.Dialog
@@ -106,8 +106,8 @@ export default React.createClass({
     let submitLabel = 'Confirm';
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
-    let allGroups = GroupsStore.getGroups().map(group => {
-      group.value = group.id + '';
+    let allGroups = GroupsStore.getGroups().map((group) => {
+      group.value = group.id.toString();
       return group;
     });
     let dialogStandardActions = [
@@ -124,7 +124,7 @@ export default React.createClass({
     ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
-      selectValue = selectValueSource.value.map(value => value.id).join(',');
+      selectValue = selectValueSource.value.map((value) => value.id).join(',');
     } else if (selectValueSource && selectValueSource.value) {
       selectValue = selectValueSource.value;
     }

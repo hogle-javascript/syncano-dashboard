@@ -21,6 +21,19 @@ export default {
       .catch(this.failure);
   },
 
+  runWithUpdate(codeboxId, updateParams, payload) {
+    this.Connection
+      .CodeBoxes.update(codeboxId, updateParams)
+      .then(
+      this.Connection
+        .CodeBoxes
+        .run(codeboxId, payload)
+        .then(this.completed)
+        .catch(this.failure)
+    )
+    .catch(this.failure);
+  },
+
   list() {
     this.Connection
       .CodeBoxes
@@ -42,7 +55,7 @@ export default {
   },
 
   remove(ids) {
-    let promises = ids.map(id => this.Connection.CodeBoxes.remove(id));
+    let promises = ids.map((id) => this.Connection.CodeBoxes.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

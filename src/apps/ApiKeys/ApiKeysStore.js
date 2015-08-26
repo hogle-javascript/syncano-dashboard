@@ -40,7 +40,7 @@ export default Reflux.createStore({
   setApiKeys(items) {
     console.debug('AdminsStore::setApiKeys');
 
-    this.data.items = Object.keys(items).map(key => items[key]);
+    this.data.items = Object.keys(items).map((key) => items[key]);
     this.trigger(this.data);
   },
 

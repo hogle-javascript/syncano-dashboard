@@ -18,7 +18,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -41,6 +40,7 @@ export default React.createClass({
 
   handleToogle(event, status) {
     let state = {};
+
     state[event.target.name] = status;
     this.setState(state);
   },
@@ -49,17 +49,17 @@ export default React.createClass({
     let title = this.hasEditMode() ? 'Edit' : 'Generate';
     let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
     let dialogStandardActions = [
-        {
-          text: 'Cancel',
-          ref: 'cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          text: {submitLabel},
-          ref: 'submit',
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+      {
+        text: 'Cancel',
+        ref: 'cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        text: {submitLabel},
+        ref: 'submit',
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     return (
       <Common.Dialog

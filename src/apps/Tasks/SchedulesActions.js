@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck: true,
-    withDialog: true
-  },
-  {
     fetch: {},
     setSchedules: {},
     fetchSchedules: {
@@ -30,5 +26,9 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Schedules.remove'
     }
+  },
+  {
+    withCheck: true,
+    withDialog: true
   }
 );

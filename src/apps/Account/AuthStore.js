@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import analytics from '../../segment';
 import StoreFormMixin from '../../mixins/StoreFormMixin';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -48,8 +47,9 @@ export default Reflux.createStore({
   },
 
   onPasswordSignUpCompleted(payload) {
-    analytics.track('Sign up Dashboard', {
-      authBackend: 'password'
+    window.analytics.track('Sign up Dashboard', {
+      authBackend: 'password',
+      email: payload.email
     });
     this.onPasswordSignInCompleted(payload);
   },
@@ -61,6 +61,7 @@ export default Reflux.createStore({
 
   acceptInvitationFromUrl() {
     let invKey = SessionStore.getInvitationFromUrl();
+
     if (invKey) {
       ProfileInvitationsActions.acceptInvitations(invKey);
     }
@@ -86,8 +87,9 @@ export default Reflux.createStore({
 
   onSocialLoginCompleted(payload) {
     console.debug('AuthStore::onSocialLoginCompleted', payload);
-    analytics.track('Sign up Dashboard', {
-      authBackend: payload.network
+    window.analytics.track('Sign up Dashboard', {
+      authBackend: payload.network,
+      email: payload.email
     });
     this.onPasswordSignInCompleted(payload);
   }

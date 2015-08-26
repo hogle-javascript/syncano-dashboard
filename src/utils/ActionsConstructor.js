@@ -10,14 +10,7 @@ let Context = {
   D: Connection.D
 };
 
-export default (options, actions) => {
-  if (actions === undefined) {
-    actions = options;
-    options = null;
-  }
-
-  options = options || {};
-
+export default (actions = {}, options = {withDialog: false, withCheck: false}) => {
   if (options.withDialog) {
     actions.showDialog = {};
     actions.dismissDialog = {};
@@ -30,6 +23,7 @@ export default (options, actions) => {
   }
 
   let RefluxActions = Reflux.createActions(actions);
+
   _.forEach(actions, (action, key) => {
     if (_.isString(action.method)) {
       if (!_.has(Libraries, action.method)) {
@@ -43,7 +37,6 @@ export default (options, actions) => {
       RefluxActions[key].listen(action.method);
       _.extend(RefluxActions[key], Context);
     }
-
   });
 
   return RefluxActions;

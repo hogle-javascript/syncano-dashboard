@@ -15,8 +15,7 @@ export default {
       .catch(this.failure);
   },
 
-  listTotalDailyUsage(params) {
-    params = params || {};
+  listTotalDailyUsage(params = {}) {
     params.total = true;
 
     this.Connection
@@ -26,8 +25,7 @@ export default {
       .catch(this.failure);
   },
 
-  listTotalHourlyUsage(params) {
-    params = params || {};
+  listTotalHourlyUsage(params = {}) {
     params.total = true;
 
     this.Connection

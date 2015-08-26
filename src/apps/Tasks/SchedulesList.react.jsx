@@ -1,18 +1,13 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Store from './SchedulesStore';
-import Actions from './SchedulesActions';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -46,6 +41,14 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
+  handleItemClick(itemId) {
+    // Redirect to traces screen
+    this.transitionTo('schedule-traces', {
+      instanceName: this.getParams().instanceName,
+      scheduleId: itemId
+    });
+  },
+
   renderItem(item) {
     // TODO: move to store
     let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
@@ -54,7 +57,8 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.id}
+        handleClick={this.handleItemClick.bind(null, item.id)}>
         <Column.CheckIcon
           id={item.id.toString()}
           icon='camera-timer'
@@ -73,7 +77,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       // TODO: Fix this dirty hack, that should be done in store by sorting!

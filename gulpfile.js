@@ -1,7 +1,10 @@
 var gulp             = require('gulp'),
     fs               = require('fs'),
     path             = require('path'),
+    async            = require('async'),
+    _                = require('lodash'),
     gutil            = require('gulp-util'),
+    git              = require('gulp-git'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
     stripDebug       = require('gulp-strip-debug'),
@@ -14,7 +17,8 @@ var gulp             = require('gulp'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
-    ENV              = process.env.NODE_ENV || 'development';
+    ENV              = process.env.NODE_ENV || 'development',
+    version          = 'v' + require('./package.json').version;
 
 var paths = {
   dist: './dist',
@@ -193,6 +197,93 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
     .pipe(publisher.publish())
     .pipe(awspublish.reporter())
     .pipe(cloudfront(aws));
+});
+
+gulp.task('check-github-tag', function(cb) {
+  async.series([
+    function (callback) {
+      git.fetch('origin', '', {args: '--tags'}, callback);
+    },
+
+    function (callback) {
+      git.exec({args: 'tag -l "' + version + '"'}, function(err, stdout) {
+        if (err) return callback(err);
+        if (stdout.indexOf(version) > -1) {
+          return callback(new gutil.PluginError('check-github-tag', 'Version "' + version +'" already exists.'))
+        }
+
+        callback();
+      });
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('add-github-tag', function(cb) {
+  async.series([
+    function (callback) {
+      git.exec({args: 'config --global user.email "ci@syncano.com"'}, callback);
+    },
+
+    function (callback) {
+      git.exec({args: 'config --global user.name "CI"'}, callback);
+    },
+
+    function (callback) {
+      git.tag(version, 'Release ' + version, callback);
+    },
+
+    function (callback) {
+      git.push('origin', version, callback);
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('changelog', function(cb) {
+  async.waterfall([
+    function (callback) {
+      // Fetch tags from origin
+      git.fetch('origin', '', {args: '--tags'}, callback);
+    },
+
+    function (callback) {
+      // Grab list of tags
+      git.exec({args: 'tag --sort=-refname'}, function(err, stdout) {
+        if (err) return callback(err);
+        var tags = stdout.split('\n').slice(0, 2);
+        callback(null, tags[1], tags[0]);
+      });
+    },
+
+    function(start, end, callback) {
+      var range = start + '...' + end;
+      var command = 'log ' + range + ' --grep="[[:alpha:]{5, 10}][-][[:digit:]]" --oneline --pretty=format:"%s"';
+      var regex = /[A-Za-z]{5,10}-[\d]+/gm;
+      git.exec({args: command}, function(err, stdout) {
+        if (err) return callback(err);
+        callback(null, _.uniq(stdout.match(regex)), end);
+      });
+    }
+  ], function(err, tickets, tag) {
+    if (err) throw err;
+
+    console.log('\n\nChangelog for version:', tag + ':\n');
+
+    tickets.sort();
+    _.forEach(tickets, function(ticket) {
+      if (_.startsWith(ticket, 'SYN')) {
+        console.log(_.padRight(ticket, 15), 'https://syncano.aha.io/features/' + ticket);
+      } else {
+        console.log(ticket);
+      }
+    });
+    cb();
+  });
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);

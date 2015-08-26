@@ -19,8 +19,6 @@ export default React.createClass({
   displayName: 'SolutionInstallDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 
@@ -58,14 +56,14 @@ export default React.createClass({
         Actions.installSolution({
           solutionId: this.state.solutionId,
           versionId: this.state.version,
-          instanceName: instanceName
+          instanceName
         })
       });
     } else {
       Actions.installSolution({
         solutionId: this.state.solutionId,
         versionId: this.state.version,
-        instanceName: instanceName
+        instanceName
       });
     }
   },
@@ -77,10 +75,11 @@ export default React.createClass({
   renderCustomFormNotifications() {
     let nonFormFields = ['classes'];
     let messages = [];
+
     Object.keys(this.state.errors).map((fieldName) => {
       if (nonFormFields.indexOf(fieldName) > -1) {
-        this.state.errors[fieldName].map(error => {
-          Object.keys(error).map(key => {
+        this.state.errors[fieldName].map((error) => {
+          Object.keys(error).map((key) => {
             messages.push(error[key]);
           });
         });

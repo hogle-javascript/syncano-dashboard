@@ -1,6 +1,6 @@
 import CreateActions from '../../utils/ActionsConstructor.js'
 
-export default CreateActions({}, {
+export default CreateActions({
   fetch: {},
   setInstance: {},
   setInstances: {},
@@ -63,5 +63,5 @@ export default CreateActions({}, {
     asyncResult: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Solutions.createVersion'
-  },
+  }
 });

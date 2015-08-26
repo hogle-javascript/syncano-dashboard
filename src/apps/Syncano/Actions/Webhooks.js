@@ -1,4 +1,12 @@
 export default {
+  get(webhookName) {
+    this.Connection
+      .WebHooks
+      .get(webhookName)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   create(payload) {
     this.Connection
       .WebHooks
@@ -24,8 +32,7 @@ export default {
   },
 
   remove(ids) {
-
-    let promises = ids.map(id => this.Connection.WebHooks.remove(id));
+    let promises = ids.map((id) => this.Connection.WebHooks.remove(id));
 
     this.D.all(promises)
       .success(this.completed)

@@ -25,7 +25,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form
   ],
@@ -52,7 +51,7 @@ export default React.createClass({
   },
 
   getFieldTypes() {
-    return Constants.fieldTypes.map(item => {
+    return Constants.fieldTypes.map((item) => {
       return {
         payload: item,
         text: item
@@ -63,7 +62,7 @@ export default React.createClass({
   setFields(schema) {
     const fields = this.state.fields;
 
-    schema.map(item => {
+    schema.map((item) => {
       fields.push({
         fieldName: item.name,
         fieldType: item.type,
@@ -77,7 +76,7 @@ export default React.createClass({
   },
 
   getSchema() {
-    return JSON.stringify(this.state.fields.map(item => {
+    return JSON.stringify(this.state.fields.map((item) => {
       const schema = {
         name: item.fieldName,
         type: item.fieldType,
@@ -109,7 +108,7 @@ export default React.createClass({
       group: this.state.group,
       group_permissions: this.state.group_permissions,
       other_permissions: this.state.other_permissions,
-      schema: schema
+      schema
     });
   },
 
@@ -154,7 +153,7 @@ export default React.createClass({
     }
 
     this.setState({
-      fields: fields,
+      fields,
       fieldName: ''
     })
   },
@@ -167,11 +166,11 @@ export default React.createClass({
         fields.push(field);
       }
     });
-    this.setState({fields: fields});
+    this.setState({fields});
   },
 
   handleOnCheck(item, event) {
-    let newFields = this.state.fields.map(field => {
+    let newFields = this.state.fields.map((field) => {
       if (field.fieldName === item.fieldName) {
         if (event.target.name === 'order') {
           field.fieldOrder = event.target.checked;
@@ -186,8 +185,7 @@ export default React.createClass({
   },
 
   renderSchemaFields() {
-    return this.state.fields.map(item => {
-
+    return this.state.fields.map((item) => {
       return (
         <div key={item.fieldName} className='row align-middle vm-1-b'>
           <span className='col-xs-8'>{item.fieldName}</span>
@@ -269,14 +267,7 @@ export default React.createClass({
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
-        <MUI.Toolbar style={{
-            position: 'fixed',
-            top: 64,
-            right: 0,
-            paddingLeft: 256,
-            zIndex: 1,
-            background: 'rgb(215,215,215)',
-            padding: '0px 32px 0 24px'}}>
+        <Common.InnerToolbar>
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
@@ -290,7 +281,8 @@ export default React.createClass({
             <MUI.ToolbarTitle text={title} />
           </MUI.ToolbarGroup>
 
-        </MUI.Toolbar>
+        </Common.InnerToolbar>
+
         <form
           onSubmit={this.handleFormValidation}
           acceptCharset="UTF-8"

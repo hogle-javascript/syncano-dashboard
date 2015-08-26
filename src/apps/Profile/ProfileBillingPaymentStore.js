@@ -1,4 +1,4 @@
-import Reflux         from 'reflux';
+import Reflux from 'reflux';
 
 import StoreFormMixin from '../../mixins/StoreFormMixin';
 
@@ -38,6 +38,7 @@ export default Reflux.createStore({
 
   onUpdateBillingCardCompleted(payload) {
     let state = this.getInitialState();
+
     state.card = payload;
     state.isLoading = false;
     this.trigger(state);

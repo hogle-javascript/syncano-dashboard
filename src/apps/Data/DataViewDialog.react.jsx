@@ -20,7 +20,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(DataViewDialogStore),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -42,7 +41,7 @@ export default React.createClass({
   handleAddSubmit() {
     DataViewsActions.createDataView({
       name: this.state.name,
-      'class': this.state.class,
+      class: this.state.class,
       description: this.state.description,
       order_by: this.state.order_by,
       page_size: this.state.page_size,
@@ -54,7 +53,7 @@ export default React.createClass({
   handleEditSubmit() {
     DataViewsActions.updateDataView(
       this.state.name, {
-        'class': this.state.class,
+        class: this.state.class,
         description: this.state.description,
         order_by: this.state.order_by,
         page_size: this.state.page_size,
@@ -68,21 +67,22 @@ export default React.createClass({
     console.info('DataViewDialog::handleToggle', arguments);
 
     let genList = (list, name, val) => {
-      let arr = list.replace(/ /g, '').split(',').filter(listItem => listItem);
+      let arr = list.replace(/ /g, '').split(',').filter((listItem) => listItem);
 
       if (val) {
         arr.push(name);
       } else {
-        arr = arr.filter(arrItem => arrItem !== name);
+        arr = arr.filter((arrItem) => arrItem !== name);
       }
 
       return arr.join(',');
     };
 
     let fields = '';
+
     if (fieldsType === 'showFields') {
       fields = genList(this.state.fields, fieldName, value);
-      this.setState({fields: fields});
+      this.setState({fields});
     }
     if (fieldsType === 'expandFields') {
       fields = genList(this.state.expand, fieldName, value);
@@ -92,7 +92,7 @@ export default React.createClass({
 
   isEnabled(list, field) {
     if (!list) {
-      return;
+      return false;
     }
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
@@ -108,7 +108,7 @@ export default React.createClass({
     ];
 
     if (this.state.class) {
-      return fields.concat(ClassesStore.getClassFields(this.state.class).map(field => {
+      return fields.concat(ClassesStore.getClassFields(this.state.class).map((field) => {
         return (
           <div className='row'>
             <div className='col-flex-1'>
@@ -139,19 +139,27 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataViewDialog::renderOrderBy', this.state.class);
+    let orderField = <div style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
+    let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
+
+    if (orderFields.lenght > 0) {
+      orderField = (
+        <MUI.SelectField
+          ref="order_by"
+          name="order_by"
+          floatingLabelText="Order by"
+          fullWidth={true}
+          valueLink={this.linkState('order_by')}
+          errorText={this.getValidationMessages('order_by').join(' ')}
+          valueMember="payload"
+          displayMember="text"
+          menuItems={orderFields} />
+      );
+    }
 
     return [
       <div>Response options</div>,
-      <MUI.SelectField
-        ref="order_by"
-        name="order_by"
-        floatingLabelText="Order by"
-        fullWidth={true}
-        valueLink={this.linkState('order_by')}
-        errorText={this.getValidationMessages('class').join(' ')}
-        valueMember="payload"
-        displayMember="text"
-        menuItems={ClassesStore.getClassOrderFieldsPayload(this.state.class)}/>,
+      orderField,
       <MUI.TextField
         ref='page_size'
         name='page_size'

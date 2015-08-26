@@ -6,8 +6,6 @@ import Mixins from '../../mixins';
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './GroupsActions';
-import UsersActions from './UsersActions';
-import UsersStore from './UsersStore';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -39,7 +37,7 @@ export default Reflux.createStore({
   setGroups(groups) {
     console.debug('GroupsStore::setGroups');
 
-    this.data.items = Object.keys(groups).map(key => groups[key]);
+    this.data.items = Object.keys(groups).map((key) => groups[key]);
     this.trigger(this.data);
   },
 
@@ -64,11 +62,12 @@ export default Reflux.createStore({
     console.debug('GroupsStore::onSetActiveGroup');
 
     let isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
+
     this.data.activeGroup = isCurrentActiveGroup ? null : group;
     this.trigger(this.data);
   },
 
-  onFetchGroups(items) {
+  onFetchGroups() {
     console.debug('GroupsStore::onFetchGroups');
     this.trigger(this.data);
   },
@@ -78,7 +77,7 @@ export default Reflux.createStore({
     Actions.setGroups(items);
   },
 
-  onRemoveGroupsCompleted(payload) {
+  onRemoveGroupsCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

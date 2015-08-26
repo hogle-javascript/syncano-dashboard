@@ -1,7 +1,7 @@
 let host = 'https://api.syncano.rocks';
 let api = host + '/v1';
 
-module.exports = {
+export default {
 
   HOST: host,
   API: api,

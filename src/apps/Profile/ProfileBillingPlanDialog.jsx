@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 import Mixins from '../../mixins';
 
@@ -17,8 +16,6 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
-
     Router.State,
     Router.Navigation,
 
@@ -30,8 +27,9 @@ export default React.createClass({
 
   validatorConstraints() {
     if (this.state.card) {
-      return;
+      return true;
     }
+
     return {
       number: {
         presence: true,
@@ -68,6 +66,21 @@ export default React.createClass({
     }
   },
 
+  getValidatorAttributes() {
+    if (this.state.card) {
+      return {};
+    }
+
+    let data = this.getFormAttributes();
+
+    return {
+      number: data.number,
+      cvc: data.cvc,
+      exp_month: data.exp_month,
+      exp_year: data.exp_year
+    }
+  },
+
   handleDialogShow() {
     console.debug('ProfileBillingPlanDialog::handleDialogShow');
     Actions.fetchBillingPlans();
@@ -97,21 +110,17 @@ export default React.createClass({
 
     let setLimits = () => {
       return Actions.updateBillingProfile({
-        hard_limit: total * 3,
-        soft_limit: total * 1.5
+        hard_limit: parseInt(total * 3, 10),
+        soft_limit: parseInt(total * 1.5, 10)
       });
     };
 
     if (this.state.card) {
       subscribe().then(setLimits);
     } else {
-      Actions.updateCard({
-        cvc: this.state.cvc,
-        number: this.state.number,
-        exp_year: this.state.exp_year,
-        exp_month: this.state.exp_month
-      })
-        .then((payload) => {
+      Actions
+        .updateCard(this.getValidatorAttributes())
+        .then(() => {
           subscribe().then(
             setLimits
           )
@@ -159,12 +168,12 @@ export default React.createClass({
         marginTop: 20,
         fontSize: '0.8em',
         color: '#9B9B9B'
-      },
+      }
     }
   },
 
   renderCard() {
-    if (this.state.card === undefined) {
+    if (typeof this.state.card === 'undefined') {
       return <Common.Loading show={true}/>
     }
 
@@ -191,6 +200,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="number"
+              ref="number"
               fullWidth={true}
               valueLink={this.linkState('number')}
               errorText={this.getValidationMessages('number').join(' ')}
@@ -204,6 +214,7 @@ export default React.createClass({
           <div className="col-md-5">
             <MUI.TextField
               name="cvc"
+              ref="cvc"
               fullWidth={true}
               valueLink={this.linkState('cvc')}
               errorText={this.getValidationMessages('cvc').join(' ')}
@@ -215,6 +226,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_month"
+              ref="exp_month"
               fullWidth={true}
               valueLink={this.linkState('exp_month')}
               errorText={this.getValidationMessages('exp_month').join(' ')}
@@ -226,6 +238,7 @@ export default React.createClass({
           <div className="col-flex-1">
             <MUI.TextField
               name="exp_year"
+              ref="exp_year"
               fullWidth={true}
               valueLink={this.linkState('exp_year')}
               errorText={this.getValidationMessages('exp_year').join(' ')}
@@ -240,13 +253,14 @@ export default React.createClass({
 
   onSliderChange(type, event, value) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },
 
   renderSlider(type) {
     if (!this.state.plan) {
-      return;
+      return true;
     }
     const defaultValue = 0;
     let options = this.state.plan.options[type];
@@ -261,7 +275,7 @@ export default React.createClass({
         key={type + 'Slider'}
         ref={type + 'Slider'}
         name={type + 'Slider'}
-        value={selected !== undefined ? selected : defaultValue}
+        value={typeof selected !== 'undefined' ? selected : defaultValue}
         type={type}
         legendItems={options}
         optionClick={this.handleSliderLabelsClick}
@@ -272,6 +286,7 @@ export default React.createClass({
 
   handleSliderLabelsClick(value, type) {
     let newState = {};
+
     newState[type + 'Selected'] = value;
     this.setState(newState);
   },
@@ -327,7 +342,6 @@ export default React.createClass({
   },
 
   render() {
-
     let styles = this.getStyles();
     let apiInfo = this.getInfo('api');
     let cbxInfo = this.getInfo('cbx');
@@ -348,7 +362,8 @@ export default React.createClass({
         ref="submit"/>
     ];
 
-    let apiSliderSummary = this.renderSliderSummary({
+    let apiSliderSummary = this.renderSliderSummary(
+      {
         included: {
           value: parseInt(apiInfo.included, 10).toLocaleString(),
           label: 'Total API calls'
@@ -360,7 +375,8 @@ export default React.createClass({
       }
     );
 
-    let cbxSliderSummary = this.renderSliderSummary({
+    let cbxSliderSummary = this.renderSliderSummary(
+      {
         included: {
           value: parseInt(cbxInfo.included, 10).toLocaleString(),
           label: 'Total CodeBox runs'
@@ -373,72 +389,78 @@ export default React.createClass({
     );
 
     return (
-      <Common.Loading show={this.state.isLoading}>
-        <Common.Dialog
-          ref="dialog"
-          contentStyle={{maxWidth: 850, padding: 0}}
-          onShow={this.handleDialogShow}
-          openImmediately={this.props.openImmediately}
-          actions={dialogCustomActions}
-          onDismiss={this.handleDismiss}
-          >
-          <div>
-            <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-            <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
-          </div>
-          <div style={{paddingTop: 34}}>
-            {this.renderFormNotifications()}
+      <Common.Dialog
+        ref="dialog"
+        contentStyle={{maxWidth: 850, padding: 0}}
+        onShow={this.handleDialogShow}
+        openImmediately={this.props.openImmediately}
+        actions={dialogCustomActions}
+        onDismiss={this.handleDismiss}
+        >
+        <div>
+          <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
+          <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
+        </div>
+        <div style={{paddingTop: 34}}>
+          {this.renderFormNotifications()}
 
-            <SliderSection
-              title="API calls"
-              slider={this.renderSlider('api')}
-              sliderSummary={apiSliderSummary}
-              />
-            <SliderSection
-              style={{paddingTop: 50}}
-              title="CodeBox runs"
-              slider={this.renderSlider('cbx')}
-              sliderSummary={cbxSliderSummary}
-              />
+          <SliderSection
+            title="API calls"
+            slider={this.renderSlider('api')}
+            sliderSummary={apiSliderSummary}
+            />
+          <SliderSection
+            style={{paddingTop: 50}}
+            title="CodeBox runs"
+            slider={this.renderSlider('cbx')}
+            sliderSummary={cbxSliderSummary}
+            />
 
-            <div className="row" style={{marginTop: 40}}>
-              <div className="col-md-24">
-                <div style={styles.sectionTopic}>Summary</div>
-                <div style={styles.table}>
-                  <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(apiInfo.included, 10).toLocaleString()}</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
+          <div className="row" style={{marginTop: 40}}>
+            <div className="col-md-24">
+              <div style={styles.sectionTopic}>Summary</div>
+              <div style={styles.table}>
+                <div className="row" style={styles.tableRow}>
+                  <div className="col-flex-1">API calls</div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>
+                    {parseInt(apiInfo.included, 10).toLocaleString()}
                   </div>
-                  <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>{parseInt(cbxInfo.included, 10).toLocaleString()}</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
-                  </div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                 </div>
-                <div style={{marginTop: 30}}>
-                  {this.renderCard()}
+                <div className="row" style={styles.tableRow}>
+                  <div className="col-flex-1">CodeBox runs</div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>
+                    {parseInt(cbxInfo.included, 10).toLocaleString()}
+                  </div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                 </div>
               </div>
-              <div className="col-md-11" style={{paddingLeft: 35}}>
+              <div style={{marginTop: 30}}>
+                {this.renderCard()}
+              </div>
+            </div>
+            <div className="col-md-11" style={{paddingLeft: 35}}>
 
-                <div style={styles.sectionTopic}>New plan:</div>
-                <div style={{marginTop: 20, background: '#CBEDA5'}}>
+              <div style={styles.sectionTopic}>New plan:</div>
+              <div style={{marginTop: 20, background: '#CBEDA5'}}>
 
-                  <div style={styles.sectionTotalSummary}>
-                    <div><strong>${sum}</strong>/month</div>
-                    <div>+ overage</div>
-                  </div>
+                <div style={styles.sectionTotalSummary}>
+                  <div><strong>${sum}</strong>/month</div>
+                  <div>+ overage</div>
                 </div>
-                <div style={styles.sectionComment}>
-                  The new monthly price and overage rate will begin at the start of the next billing period.
-                  Your card will be charged on the 1st of every month.
-                </div>
+              </div>
+              <div style={styles.sectionComment}>
+                The new monthly price and overage rate will begin at the start of the next billing period.
+                Your card will be charged on the 1st of every month.
               </div>
             </div>
           </div>
-        </Common.Dialog>
-      </Common.Loading>
+        </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading}/>
+      </Common.Dialog>
     );
   }
 });

@@ -1,7 +1,6 @@
-let React = require('react');
+import React from 'react';
 
-let mui = require('material-ui');
-let Colors = mui.Styles.Colors;
+import MUI from 'material-ui';
 
 export default React.createClass({
 
@@ -16,10 +15,10 @@ export default React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       color: '#999',
-      hoverColor: Colors.blue600
+      hoverColor: MUI.Styles.Colors.blue600
     };
   },
 
@@ -31,11 +30,11 @@ export default React.createClass({
   },
 
   handleMouseOver() {
-    this.setState({'color': this.props.hoverColor})
+    this.setState({color: this.props.hoverColor})
   },
 
   handleMouseLeave() {
-    this.setState({'color': this.props.color})
+    this.setState({color: this.props.color})
   },
 
   handleClick() {
@@ -43,7 +42,6 @@ export default React.createClass({
   },
 
   render() {
-
     return (
       <div
         style={{color: this.state.color}}

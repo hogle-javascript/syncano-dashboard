@@ -7,6 +7,14 @@ export default {
       .catch(this.failure);
   },
 
+  get(triggerId) {
+    this.Connection
+      .Triggers
+      .get(triggerId)
+      .then(this.completed)
+      .catch(this.failure)
+  },
+
   list() {
     this.Connection
       .Triggers

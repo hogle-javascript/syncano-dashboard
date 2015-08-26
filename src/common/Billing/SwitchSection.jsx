@@ -16,9 +16,45 @@ export default Radium(React.createClass({
     onCancelPlanDialog: React.PropTypes.func
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   getStyles() {
-    let styles = {};
-    return this.mergeStyles(styles, this.props.style);
+    return {
+      leftSide: {
+        marginRight: 8,
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        alignContent: 'center'
+      },
+      center: {
+        width: 44,
+        position: 'relative'
+      },
+      toggle: {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)'
+      },
+      rightSide: {
+        marginLeft: 16,
+        display: 'flex',
+        alignItems: 'center',
+        alignContent: 'center'
+      },
+      cancelPlanLink: {
+        color: '#444',
+        cursor: 'pointer',
+        ':hover': {
+          color: this.context.muiTheme.palette.primary1Color
+        }
+      },
+      activePlan: {
+        color: this.context.muiTheme.palette.primary1Color
+      }
+    }
   },
 
   handleCancelPlanDialog() {
@@ -35,6 +71,8 @@ export default Radium(React.createClass({
   },
 
   renderLeftSide() {
+    const styles = this.getStyles();
+
     if (this.props.plan === 'builder') {
       return (
         <div style={{textAlign: 'right'}}>
@@ -56,13 +94,15 @@ export default Radium(React.createClass({
       )
     }
     return (
-      <div>
-        <a onClick={this.handleCancelPlanDialog}>Cancel Production plan</a>
+      <div style={styles.cancelPlanLink}>
+        <span onClick={this.handleCancelPlanDialog}>Cancel Production plan</span>
       </div>
     );
   },
 
   renderRightSide() {
+    const styles = this.getStyles();
+
     if (this.props.plan === 'builder') {
       return (
         <div>
@@ -76,7 +116,7 @@ export default Radium(React.createClass({
       )
     }
     return (
-      <div>
+      <div style={[this.props.planCanceled === false && styles.activePlan]}>
         Production
       </div>
     )
@@ -105,22 +145,21 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
       <div className="row align-center vp-3-t vp-3-b">
-        <div
-          style={{marginRight: 8, display: 'flex', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center'}}>
+        <div style={styles.leftSide}>
           <div>
             {this.renderLeftSide()}
           </div>
         </div>
-        <div style={{width: 44, position: 'relative'}}>
-
-          <div style={{position: 'absolute', top: '50%', transform: 'translateY(-50%)'}}>
+        <div style={styles.center}>
+          <div style={styles.toggle}>
             {this.renderToggle()}
           </div>
-
         </div>
-        <div style={{marginLeft: 16, display: 'flex', alignItems: 'center', alignContent: 'center'}}>
+        <div style={styles.rightSide}>
           {this.renderRightSide()}
         </div>
       </div>

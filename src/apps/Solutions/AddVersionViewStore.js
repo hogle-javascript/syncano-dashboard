@@ -34,6 +34,7 @@ export default Reflux.createStore({
       name: null,
       type: 'devel',
       description: null,
+      instance: null,
       instances: null,
       instanceData: {
         views: [],
@@ -42,7 +43,7 @@ export default Reflux.createStore({
         codeboxes: [],
         triggers: [],
         schedules: [],
-        channels: [],
+        channels: []
 
       },
       exportSpec: {
@@ -52,7 +53,7 @@ export default Reflux.createStore({
         codeboxes: {},
         triggers: {},
         schedules: {},
-        channels: {},
+        channels: {}
       }
     };
   },
@@ -114,7 +115,7 @@ export default Reflux.createStore({
       Actions.fetchTriggers(),
       Actions.fetchCodeBoxes(),
       Actions.fetchSchedules(),
-      Actions.fetchChannels(),
+      Actions.fetchChannels()
     ])
       .then(this.setInstanceData);
   },
@@ -159,7 +160,7 @@ export default Reflux.createStore({
   onFetchInstancesCompleted(instances) {
     console.debug('SolutionVersionDialogStore::onFetchInstancesCompleted');
     Actions.setInstances(instances);
-  },
+  }
 
 });
 

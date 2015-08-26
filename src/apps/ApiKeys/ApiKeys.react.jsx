@@ -7,13 +7,10 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -118,6 +115,8 @@ export default React.createClass({
   render() {
     let checkedApiKeys = Store.getNumberOfChecked();
     let isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
@@ -126,20 +125,20 @@ export default React.createClass({
 
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyApiKeySelected ? 'synicon-checkbox-multiple-marked-outline' : 'synicon-checkbox-multiple-blank-outline'}
+              iconClassName={isAnyApiKeySelected ? markedIcon : blankIcon}
               />
-            <Common.Fab.Item
-              label="Click here to delete API Keys"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete API Keys"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteApiKeyDialog')}
               iconClassName="synicon-delete"
               />
-            <Common.Fab.Item
-              label="Click here to edit an API Key"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit an API Key"
               mini={true}
               disabled={checkedApiKeys > 1}
               onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
@@ -148,8 +147,8 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to add an API Key"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to add an API Key"
             onClick={this.showApiKeyDialog}
             iconClassName="synicon-plus"
             />

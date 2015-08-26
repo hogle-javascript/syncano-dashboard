@@ -5,16 +5,16 @@ import SnackbarNotificationActions from '../SnackbarNotification/SnackbarNotific
 let RequestStore = Reflux.createStore({
   listenables: RequestActions,
 
-  onCompleted(event, method, url) {
+  onCompleted(event) {
     this.setErrorSnackbar(event);
   },
 
-  onError(event, method, url) {
+  onError(event) {
     this.setErrorSnackbar(event);
   },
 
   setErrorSnackbar(event) {
-    if (event.target.status >= 500 && event.target.status <= 599) {
+    if (event.target && event.target.status >= 500 && event.target.status <= 599) {
       SnackbarNotificationActions.set({
         message: 'Something went wrong',
         action: 'refresh',

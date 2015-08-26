@@ -6,10 +6,9 @@ import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
 
 import Store from './CodeBoxStore';
-import Actions from './CodeBoxActions';
 
 import MUI from 'material-ui';
-import Container from '../../common/Container';
+import Common from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 
@@ -29,6 +28,7 @@ export default React.createClass({
 
   getActiveSubTabIndex() {
     let index = 0;
+
     this.getTabsData().some((item, i) => {
       if (this.isActive(item.route, item.params, item.query)) {
         index = i;
@@ -112,19 +112,40 @@ export default React.createClass({
     }
   },
 
-  render() {
-    let codeBoxLabel = this.state.currentCodeBox !== null ? this.state.currentCodeBox.label : null;
+  getCodeBoxLabel() {
+    if (this.state.currentCodeBox !== null) {
+      return this.state.currentCodeBox.label;
+    }
 
+    return null;
+  },
+
+  getToolbarTitleText() {
+    let codeBoxLabel = this.getCodeBoxLabel();
+
+    if (this.state.currentCodeBox) {
+      return `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`;
+    }
+
+    return '';
+  },
+
+  renderToolbarTitle() {
+    let toolbarTitleText = this.getToolbarTitleText();
+
+    if (!this.isActive('codebox-traces')) {
+      return (
+        <MUI.ToolbarGroup>
+          <MUI.ToolbarTitle text={toolbarTitleText}/>
+        </MUI.ToolbarGroup>
+      )
+    }
+  },
+
+  render() {
     return (
       <div>
-        <MUI.Toolbar style={{
-          position: 'fixed',
-          top: 64,
-          right: 0,
-          zIndex: 7,
-          paddingLeft: 256,
-          background: 'rgba(215,215,215,0.6)',
-          padding: '0px 32px 0 24px'}}>
+        <Common.InnerToolbar>
           <MUI.ToolbarGroup>
             <MUI.IconButton
               iconClassName="synicon-arrow-left"
@@ -135,13 +156,10 @@ export default React.createClass({
               style={{marginTop: 4}}
               iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
+          {this.renderToolbarTitle()}
+        </Common.InnerToolbar>
 
-          <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={`CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`}/>
-          </MUI.ToolbarGroup>
-        </MUI.Toolbar>
-
-        <div style={{margin: '65px auto', width: '80%'}}>
+        <div style={{margin: '65px auto', width: '100%'}}>
 
           <div style={{paddingTop: 32}}>
             {this.renderTabs()}

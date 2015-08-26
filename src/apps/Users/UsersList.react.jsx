@@ -1,19 +1,10 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import ButtonActionMixin from '../../mixins/ButtonActionMixin';
-
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Store from './UsersStore';
-import Actions from './UsersActions';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -71,15 +62,15 @@ export default React.createClass({
   renderItemGroups(groups) {
     let styles = this.getStyles();
 
-    if (groups === undefined) {
-      return
+    if (typeof groups === 'undefined') {
+      return true;
     }
 
     if (groups.length === 0) {
       return 'No group';
     }
 
-    let itemGroups = groups.map(group => <li style={styles.groupsListItem}>{group.label}</li>);
+    let itemGroups = groups.map((group) => <li style={styles.groupsListItem}>{group.label}</li>);
 
     return (
       <ul style={styles.groupsList}>{itemGroups}</ul>
@@ -108,7 +99,7 @@ export default React.createClass({
   },
 
   getList() {
-    let items = this.state.items.map(item => this.renderItem(item));
+    let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       return items;

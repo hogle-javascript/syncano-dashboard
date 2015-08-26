@@ -1039,8 +1039,6 @@ hello.utils.extend(hello.utils, {
 		return true;
 	},
 
-	//jscs:disable
-
 	/*!
 	 **  Thenable -- Embeddable Minimum Strictly-Compliant Promises/A+ 1.1.1 Thenable
 	 **  Copyright (c) 2013-2014 Ralf S. Engelschall <http://engelschall.com>
@@ -1214,8 +1212,6 @@ hello.utils.extend(hello.utils, {
 		/*  export API  */
 		return api;
 	})(),
-
-	//jscs:enable
 
 	// Event
 	// A contructor superclass for adding event menthods, on, off, emit.

@@ -1,7 +1,7 @@
-let objectAssign = require('object-assign');
+import _ from 'lodash';
 
 // TODO: add some options like: exclude, ignore, prefix etc
-let StoreFormMixin = {
+export default {
 
   getInitialFormState() {
     return {
@@ -14,22 +14,20 @@ let StoreFormMixin = {
   listenToForms() {
     if (this.listenables) {
       let arr = [].concat(this.listenables);
-      for (let i = 0; i < arr.length; i++) {
-        this.listenToForm(arr[i]);
-      }
+
+      _.forEach(arr, this.listenToForm);
     }
   },
 
   listenToForm(listenable) {
-    for (let key in listenable) {
-      let action = listenable[key];
+    _.forEach(listenable, (action) => {
       if (action.asyncResult === true && action.asyncForm === true) {
         // TODO: add more checks
         this.listenTo(action, this.handleForm);
         this.listenTo(action.completed, this.handleFormCompleted);
         this.listenTo(action.failure, this.handleFormFailure);
       }
-    }
+    });
   },
 
   handleForm() {
@@ -49,27 +47,23 @@ let StoreFormMixin = {
     if (typeof payload === 'string') {
       state.errors.feedback = payload;
     } else {
-      // jscs:disable
-      if (payload.non_field_errors !== undefined) {
+      if (typeof payload.non_field_errors !== 'undefined') {
         state.errors.feedback = payload.non_field_errors.join(' ');
       }
 
-      if (payload.__all__ !== undefined) {
+      if (typeof payload.__all__ !== 'undefined') {
         state.errors.feedback = payload.__all__.join(' ');
       }
 
-      if (payload.message !== undefined) {
+      if (typeof payload.message !== 'undefined') {
         state.errors.feedback = payload.message;
       }
-      // jscs:enable
 
-      for (let field in payload) {
-        state.errors[field] = [].concat(payload[field]);
-      }
+      _.forEach(payload, (errors, field) => {
+        state.errors[field] = [].concat(errors);
+      });
     }
 
     this.trigger(state);
   }
 };
-
-module.exports = StoreFormMixin;

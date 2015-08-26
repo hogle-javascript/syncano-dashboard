@@ -1,5 +1,7 @@
 import Reflux from 'reflux';
+import moment from 'moment';
 import D from 'd.js';
+import _ from 'lodash';
 
 import Mixins from '../../mixins';
 
@@ -16,6 +18,9 @@ export default Reflux.createStore({
     return {
       profile: null,
       usage: null,
+      overage: {
+        amount: 0
+      },
       subscriptions: null,
       isReady: false,
       isLoading: true,
@@ -101,6 +106,7 @@ export default Reflux.createStore({
     }
 
     let pricing = null;
+
     if (!subscription || subscription === 'default') {
       pricing = this.data.profile.subscription.pricing;
     } else {
@@ -120,42 +126,41 @@ export default Reflux.createStore({
   },
 
   getCovered() {
-    return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
+    let subscription = this.data.profile.subscription;
+    let today = new Date();
+    let desiredStart = moment(new Date(today.getFullYear(), today.getMonth(), 1));
+    let start = moment(subscription.start);
+    let covered = _.reduce(subscription.pricing, (result, value, key) => {
       let amount = value.included * value.overage;
+
       result.amount += amount;
-      result[key] = _.extend({}, value, {amount: amount});
+      result[key] = _.extend({}, value, {amount});
       return result;
     }, {amount: 0});
+
+    if (start.isAfter(desiredStart, 'day') && start.isSame(desiredStart, 'month')) {
+      let currentDate = start.get('date') - 1;
+      let endDate = start.date(0).get('date');
+      let diff = endDate - currentDate;
+
+      covered.amount *= diff / endDate;
+    }
+
+    return covered;
+  },
+
+  setOverage(payload) {
+    this.data.overage = payload;
+    this.trigger(this.data);
   },
 
   getOverage() {
-    const covered = this.getCovered();
-    let usageAmount = {'api': 0, 'cbx': 0};
-    let columns = {'api': {}, 'cbx': {}};
-
-    _.forEach(this.data.usage.objects, _usage => {
-      if (columns[_usage.source] === undefined) {
-        return;
-      }
-
-      let amount = pricing[_usage.source].overage * _usage.value;
-      columns[_usage.source][_usage.date] = amount;
-      usageAmount[_usage.source] += amount;
-    });
-
-    return _.reduce(this.data.profile.subscription.pricing, (result, value, key) => {
-      let cover = covered[key];
-      let amount = (usageAmount[key] > cover.amount) ? usageAmount[key] - cover.amount : 0;
-      let included = _.round(amount / value.overage);
-
-      result.amount += amount;
-      result[key] = result[key] = _.extend({}, value, {amount, included});
-      return result;
-    }, {amount: 0});
+    return this.data.overage;
   },
 
   getTotalPlanValue(subscription) {
     let commitment = null;
+
     if (!subscription || subscription === 'default') {
       commitment = this.data.profile.subscription.commitment;
     } else {
@@ -180,7 +185,7 @@ export default Reflux.createStore({
     this.setSubscriptions(payload);
   },
 
-  onCancelSubscriptionsCompleted(payload) {
+  onCancelSubscriptionsCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.trigger(this.data);
@@ -198,6 +203,10 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
+  },
+
+  onUpdateBillingProfileCompleted(payload) {
+    this.setProfile(payload);
   },
 
   setChartLegend(payload) {

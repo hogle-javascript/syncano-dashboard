@@ -18,8 +18,16 @@ module.exports = {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
+    classListItem: {
+      selector: '//div[text()="user_profile"]',
+      locateStrategy: 'xpath'
+    },
     dataListItem: {
       selector: '//div[text()="data_view"]',
+      locateStrategy: 'xpath'
+    },
+    dataListItemTitle: {
+      selector: '//div[text()="Data Endpoints"]',
       locateStrategy: 'xpath'
     }
   }

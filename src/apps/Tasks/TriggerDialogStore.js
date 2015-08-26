@@ -36,7 +36,7 @@ export default Reflux.createStore({
     return {
       label: null,
       signal: '',
-      'class': '',
+      class: '',
       classes: [
         {payload: '', text: 'Loading...'}
       ],

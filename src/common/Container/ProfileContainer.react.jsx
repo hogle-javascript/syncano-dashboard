@@ -1,6 +1,5 @@
 import React from 'react';
 
-import MUI from 'material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -10,15 +9,15 @@ export default React.createClass({
   getStyles() {
     return {
       container: {
-        marginTop : 96,
-        marginBottom : 96,
-        marginLeft : 300,
+        marginTop: 96,
+        marginBottom: 96,
+        marginLeft: 300
       },
       header: {
-        paddingBottom : 48,
-        color : 'rgba(0, 0, 0, 0.87)',
-        fontSize : 20,
-        lineHeight : '24px'
+        paddingBottom: 48,
+        color: 'rgba(0, 0, 0, 0.87)',
+        fontSize: 20,
+        lineHeight: '24px'
       }
     }
   },

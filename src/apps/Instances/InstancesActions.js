@@ -1,9 +1,6 @@
 import CreateActions from '../../utils/ActionsConstructor.js';
 
-export default CreateActions({
-    withDialog: true,
-    withCheck: true
-  },
+export default CreateActions(
   {
     fetch: {},
     setInstances: {},
@@ -36,5 +33,9 @@ export default CreateActions({
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Instances.remove'
     }
+  },
+  {
+    withDialog: true,
+    withCheck: true
   }
 );

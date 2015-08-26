@@ -1,34 +1,38 @@
-module.exports = {}
+const mixins = {};
 
-module.exports.toggleMenuMixin = {
-
-  handleClickOutside(evt) {
+const toggleMenuMixin = {
+  handleClickOutside() {
     this.clearMenuVisability();
   },
 
-  toggleMenu(name, e) {
-    e.stopPropagation();
+  toggleMenu(name, event) {
+    event.stopPropagation();
 
     let state = {};
-    state[name] = !this.state[name];
 
+    state[name] = !this.state[name];
     this.setState(state);
   },
 
   clearMenuVisability() {
     let newState = {};
-    this.state.toggleArgs.map(function(item) {
+
+    this.state.toggleArgs.map((item) => {
       newState[item] = false;
     });
     this.setState(newState);
   }
-}
+};
 
 
-module.exports.dropdownClickMixin = {
-
-  handleClick(e) {
+const dropdownClickMixin = {
+  handleClick(event) {
     this.props.handleClick(this.props.action.name);
-    e.stopPropagation();
-  },
-}
+    event.stopPropagation();
+  }
+};
+
+mixins.toggleMenuMixin = toggleMenuMixin;
+mixins.dropdownClickMixin = dropdownClickMixin;
+
+export default mixins;

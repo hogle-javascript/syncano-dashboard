@@ -23,22 +23,48 @@ export default React.createClass({
   componentWillMount() {
     console.debug('Instance::componentWillMount');
     const params = this.getParams();
+
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
     }
   },
 
-  getInitialState() {
+  getActiveTabIndex() {
+    let index = 1;
+
+    this.menuItems().some((item, i) => {
+      if (item.route && this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    });
+
+    return index;
+  },
+
+  getStyles() {
     return {
-      selectedIndex: 0,
-      headerText: 'Profile'
-    };
+      leftNav: {
+        paddingTop: 64,
+        zIndex: 7,
+        overflow: 'visible'
+      },
+      menuItemStyleSubheader: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 12,
+        paddingTop: 4,
+        fontWeight: 800
+      },
+      content: {
+        margin: '96px 104px 48px 304px'
+      }
+    }
   },
 
   menuItems() {
     return [
       {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
-      {route: 'data', text: 'Data'},
+      // {route: 'data', text: 'Data'},
       {route: 'classes', text: 'Classes'},
       {route: 'codeboxes', text: 'CodeBoxes'},
       {route: 'users', text: 'Users'},
@@ -47,7 +73,7 @@ export default React.createClass({
 
       {type: MUI.MenuItem.Types.SUBHEADER, text: 'Settings'},
       {route: 'admins', text: 'Administrators'},
-      {route: 'api-keys', text: 'API keys'},
+      {route: 'api-keys', text: 'API keys'}
     ];
   },
 
@@ -65,16 +91,21 @@ export default React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
+
     return (
       <div>
         <MUI.LeftNav
           className="left-nav"
           ref="leftNav"
           header={this.renderInstanceDropdown()}
-          selectedIndex={this.state.selectedIndex || 0}
-          style={{marginTop: 64, overflow: 'normal'}} menuItems={this.menuItems()}
+          menuItemStyleSubheader={styles.menuItemStyleSubheader}
+          selectedIndex={this.getActiveTabIndex()}
+          style={styles.leftNav}
+          menuItems={this.menuItems()}
           onChange={this.handleTabActive}/>
-        <div style={{margin: '96px 104px 48px 304px'}}>
+
+        <div style={styles.content}>
           <Router.RouteHandler />
         </div>
       </div>

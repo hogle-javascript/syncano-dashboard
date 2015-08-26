@@ -7,12 +7,10 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore     from '../Session/SessionStore';
 import ChannelsActions from './ChannelsActions';
-import ChannelsStore   from './ChannelsStore';
+import ChannelsStore from './ChannelsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -109,20 +107,20 @@ export default React.createClass({
         <Common.Show if={checkedItems > 0}>
 
           <Common.Fab position="top">
-            <Common.Fab.Item
-              label={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
+            <Common.Fab.TooltipItem
+              tooltip={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyChannelSelected ? ChannelsActions.selectAll : ChannelsActions.uncheckAll}
               iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}
               />
-            <Common.Fab.Item
-              label="Click here to delete Channels"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete Channels"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteChannelDialog')}
               iconClassName="synicon-delete"
               />
-            <Common.Fab.Item
-              label="Click here to edit a Channel"
+            <Common.Fab.TooltipItem
+              tooltip="Click here to edit a Channel"
               mini={true}
               disabled={checkedItems > 1}
               onClick={this.showChannelEditDialog}
@@ -132,8 +130,8 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
-          <Common.Fab.Item
-            label="Click here to add a Channel"
+          <Common.Fab.TooltipItem
+            tooltip="Click here to add a Channel"
             onClick={this.showChannelDialog}
             iconClassName="synicon-plus"
             />

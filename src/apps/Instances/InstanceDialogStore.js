@@ -1,4 +1,4 @@
-import Reflux           from 'reflux';
+import Reflux from 'reflux';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -54,6 +54,7 @@ export default Reflux.createStore({
     let rnd = Math.floor(Math.random() * 9000) + 1000;
     let noun = nouns[Math.floor(Math.random() * nouns.length)];
     let adj = adjs[Math.floor(Math.random() * adjs.length)];
+
     return adj + '-' + noun + '-' + rnd;
   },
 
@@ -67,6 +68,10 @@ export default Reflux.createStore({
     InstancesActions.fetchInstances();
   },
 
+  onCreateInstanceFailure() {
+    this.trigger({isLoading: false});
+  },
+
   onUpdateInstance() {
     this.trigger({isLoading: true});
   },
@@ -75,5 +80,9 @@ export default Reflux.createStore({
     console.debug('InstanceDialogStore::onUpdateInstanceCompleted');
     this.dismissDialog();
     InstancesActions.fetchInstances();
+  },
+
+  onUpdateInstanceFailure() {
+    this.trigger({isLoading: false});
   }
 });

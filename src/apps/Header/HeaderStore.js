@@ -23,7 +23,6 @@ export default Reflux.createStore({
     if (Session.isReady()) {
       this.trigger({user: Session.getUser()});
     }
-
   },
 
   onSetMenuItems(payload) {
@@ -41,7 +40,7 @@ export default Reflux.createStore({
     this.trigger(payload);
   },
 
-  onClear(payload) {
+  onClear() {
     console.debug('HeaderStore::onClear');
     this.trigger({
       menuItems: []
