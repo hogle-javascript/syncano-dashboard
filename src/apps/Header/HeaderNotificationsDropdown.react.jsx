@@ -36,7 +36,7 @@ export default Radium(React.createClass({
     ProfileInvitationsActions.fetch();
   },
 
-  isLastInvitation() {
+  hasLastInvitation() {
     if (this.state.accountInvitations.items.length <= 1) {
       this.refs.headerNotificationDropdown.close();
     }
@@ -46,14 +46,14 @@ export default Radium(React.createClass({
     console.info('Header::handleAcceptInvitations');
     ProfileInvitationsActions.acceptInvitations(items);
     event.stopPropagation();
-    this.isLastInvitation();
+    this.hasLastInvitation();
   },
 
   handleDeclineInvitations(items) {
     console.info('Header::handleDeclineInvitations');
     ProfileInvitationsActions.declineInvitations(items);
     event.stopPropagation();
-    this.isLastInvitation();
+    this.hasLastInvitation();
   },
 
   handleResendEmail() {
