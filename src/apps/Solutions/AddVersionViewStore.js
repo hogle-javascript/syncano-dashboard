@@ -82,7 +82,7 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('AddVersionViewStore::setInstances');
-    this.data.instances = Object.keys(instances).map((key) => instances[key]);
+    this.data.instances = _.map(_.keys(instances), (key) => instances[key]);
     this.trigger(this.data);
   },
 
@@ -94,7 +94,7 @@ export default Reflux.createStore({
     }
 
     return _.map(instances, (instance) => {
-      let instanceText = `${instance.name}`;
+      let instanceText = instance.name;
 
       if (instance.description) {
         instanceText += ` (${instance.description})`;
