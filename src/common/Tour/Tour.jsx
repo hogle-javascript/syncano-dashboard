@@ -39,7 +39,7 @@ export default Radium(React.createClass({
         fontSize: '2em',
         lineHeight: '1.5em',
         color: '#fff',
-        textShadow: 'rgba(0, 0, 0, 0.17) 0 1px 0, rgba(0, 0, 0, 0.17) 0 1px 8px',
+        textShadow: 'rgba(0, 0, 0, 0.17) 0 1px 0, rgba(0, 0, 0, 0.17) 0 1px 8px'
       },
       overlayHidden: {
         position: 'fixed',
@@ -93,35 +93,45 @@ export default Radium(React.createClass({
     window.removeEventListener('resize', this.throttledOnWindowResize);
   },
 
+  getDotStyle(currentStep, index) {
+    const styles = this.getStyles();
+
+    return [styles.dotSingle, (currentStep >= index ? styles.dotSingleActive : null)];
+  },
+
   onWindowResize() {
     this.forceUpdate();
   },
 
-  handleOnClick(event) {
+  handleOnClick() {
     this.props.onClick()
   },
 
   render() {
     const styles = this.getStyles();
     let {currentStep, config, visible, showDots} = this.props;
-    let ElementRect;
+    let ElementRect = config[0].node.getBoundingClientRect();
     let classes = 'react-tour';
 
     if (!config) return null;
     if (!visible) classes += ' react-tour-hide';
 
-    ElementRect = config[currentStep] ? config[currentStep].node.getBoundingClientRect() : config[0].node.getBoundingClientRect();
+    if (config[currentStep]) {
+      ElementRect = config[currentStep].node.getBoundingClientRect()
+    }
 
     if (!config[currentStep]) {
       return <div />
     }
 
     let additionalLeft = 0;
+
     if (config[currentStep].left) {
       additionalLeft = config[currentStep].left;
     }
 
     let additionalTop = 0;
+
     if (config[currentStep].top) {
       additionalTop = config[currentStep].top;
     }
@@ -145,12 +155,12 @@ export default Radium(React.createClass({
             {showDots && (
               <div style={styles.dots}>
                 {config.map((el, index) => {
-                  return <div style={[styles.dotSingle, (currentStep >= index ? styles.dotSingleActive : null)]} key={index} />;
+                  return <div style={this.getDotStyle(currentStep, index)} key={index} />;
                 })}
               </div>
             )}
             <MUI.RaisedButton
-              label={currentStep === config.length - 1 ? "End tour" : 'Next'}
+              label={currentStep === config.length - 1 ? 'End tour' : 'Next'}
               labelStyle={{fontSize: '16px'}}
               fullWidth={false}
               style={{boxShadow: 'none', height: '48px'}}

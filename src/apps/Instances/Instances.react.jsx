@@ -98,6 +98,7 @@ export default Radium(React.createClass({
 
   getTourConfig() {
     const styles = this.getStyles();
+
     return [{
       node: React.findDOMNode(this.refs.myInstancesList),
       text: <div>This screen is all about <strong style={styles.tourHighlight}>Instances</strong>. <br />
