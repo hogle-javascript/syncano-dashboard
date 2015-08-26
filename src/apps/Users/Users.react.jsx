@@ -33,6 +33,7 @@ export default React.createClass({
     Reflux.connect(GroupsStore, 'groups'),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
+    Mixins.Limits,
     HeaderMixin
   ],
 
@@ -184,6 +185,7 @@ export default React.createClass({
 
     return (
       <Container>
+        {this.renderNotification('groups')}
         {this.getDialogs()}
         <UserDialog />
         <GroupDialog />
@@ -215,7 +217,7 @@ export default React.createClass({
             iconClassName="synicon-account-plus"/>
           <Common.Fab.TooltipItem
             tooltip="Click here to create a Group"
-            onClick={this.showGroupDialog}
+            onClick={this.checkObjectsCount.bind(null, 'groups', this.showGroupDialog)}
             iconClassName="synicon-account-multiple-plus"/>
         </Common.Fab>
         <Common.Lists.Container className="row">
