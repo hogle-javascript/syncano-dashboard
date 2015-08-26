@@ -17,6 +17,8 @@ var gulp             = require('gulp'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
+    google           = require('googleapis'),
+    googleAuth       = require('google-auth-library'),
     ENV              = process.env.NODE_ENV || 'development',
     version          = 'v' + require('./package.json').version;
 
@@ -282,6 +284,39 @@ gulp.task('changelog', function(cb) {
         console.log(ticket);
       }
     });
+    cb();
+  });
+});
+
+gulp.task('upload-screenshots', function(cb) {
+  var clientId = process.env.GD_CLIENT_ID;
+  var clientSecret = process.env.GD_CLIENT_SECRET;
+  var clientToken = process.env.GD_CLIENT_TOKEN;
+
+  if (!clientId) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
+  }
+
+  if (!clientSecret) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
+  }
+
+  // if (!clientToken) {
+  //   throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_TOKEN" env variable is required');
+  // }
+
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+  oauth2Client.setCredentials({
+    access_token: 'ya29.2gFMvLddt9QB-2vDFIA2vn0DGH71tVTNYbknf12xPo4zBkxLpY18bIV5Bt1-_dDBnA7L',
+    token_type: 'Bearer',
+    refresh_token: '1/zo6xCZdkzvkAnwPtj6GbnnuqEnu3uRRtHWUm4bJQi7A',
+    expiry_date: 1440513379139
+  });
+
+  var service = google.drive({version: 'v2', auth: oauth2Client});
+  service.files.list({auth: oauth2Client}, function(err, response) {
+    console.log(err, response);
     cb();
   });
 });

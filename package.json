@@ -104,6 +104,7 @@
     "iconfont": "gulp iconfont",
     "add-github-tag": "gulp add-github-tag",
     "check-github-tag": "gulp check-github-tag",
-    "changelog": "gulp changelog"
+    "changelog": "gulp changelog",
+    "upload-screenshots": "gulp upload-screenshots"
   }
 }
