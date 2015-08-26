@@ -13,17 +13,14 @@ export default {
   getLimit(objectsName) {
     let limits = {
       instances: 16,
-      classes: 32,
-      groups: 32
+      classes: 32
     };
 
     return limits[objectsName];
   },
 
   checkObjectsCount(objectsName, addItemFunc) {
-    let items = this.state.items || this.state[objectsName].items;
-
-    if (items.length >= this.getLimit(objectsName)) {
+    if (this.state.items.length >= this.getLimit(objectsName)) {
       this.setState({
         notification: true
       }, () => {
