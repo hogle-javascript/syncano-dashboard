@@ -183,7 +183,6 @@ export default React.createClass({
   },
 
   renderSchemaFields() {
-    console.log('renderSchemaFields', this.state);
     return this.state.fields.map((item) => {
       return (
         <div key={item.fieldName} className='row align-middle vm-1-b'>
@@ -263,7 +262,6 @@ export default React.createClass({
       }
     ];
 
-    console.log(this.state);
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
         <Common.InnerToolbar>
