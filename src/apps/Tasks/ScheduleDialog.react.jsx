@@ -61,16 +61,18 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: 'Confirm',
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.handleFormValidation}
+        ref="submit"/>
     ];
 
     return (

@@ -227,69 +227,75 @@ export default Radium(React.createClass({
             <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId}/>
           </MUI.ToolbarGroup>
         </MUI.Toolbar>
-        <Common.Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
-          <div style={{fontSize: '2rem', lineHeight: '2rem'}}>Add Version</div>
-          <div style={{marginTop: 40}}>
-            {this.renderFormNotifications()}
-            <div className='row'>
-              <div className='col-lg-8'>
-                <MUI.SelectField
-                  ref='type'
-                  name='type'
-                  fullWidth={true}
-                  valueLink={this.linkState('type')}
-                  valueMember='payload'
-                  displayMember='text'
-                  floatingLabelText='Type'
-                  menuItems={Store.getTypes()}
-                  />
+          <form
+            onSubmit={this.handleFormValidation}
+            acceptCharset="UTF-8"
+            method="post">
+            <Common.Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
+              <div style={{fontSize: '2rem', lineHeight: '2rem'}}>Add Version</div>
+              <div style={{marginTop: 40}}>
+                {this.renderFormNotifications()}
+                <div className='row'>
+                  <div className='col-lg-8'>
+                    <MUI.SelectField
+                      ref='type'
+                      name='type'
+                      fullWidth={true}
+                      valueLink={this.linkState('type')}
+                      valueMember='payload'
+                      displayMember='text'
+                      floatingLabelText='Type'
+                      menuItems={Store.getTypes()}
+                      />
+                  </div>
+                  <div className='col-lg-26'>
+                    <MUI.SelectField
+                      ref='instance'
+                      name='instance'
+                      onChange={this.handleInstanceChange}
+                      fullWidth={true}
+                      value={this.state.instance}
+                      valueMember='payload'
+                      displayMember='text'
+                      floatingLabelText='Instances'
+                      errorText={this.getValidationMessages('instance').join(' ')}
+                      menuItems={Store.getInstancesDropdown()}
+                      />
+                  </div>
+                </div>
               </div>
-              <div className='col-lg-26'>
-                <MUI.SelectField
-                  ref='instance'
-                  name='instance'
-                  onChange={this.handleInstanceChange}
-                  fullWidth={true}
-                  value={this.state.instance}
-                  valueMember='payload'
-                  displayMember='text'
-                  floatingLabelText='Instances'
-                  errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()}
-                  />
+              <div className="row">
+                {this.renderInfo()}
               </div>
-            </div>
-          </div>
-          <div className="row">
-            {this.renderInfo()}
-          </div>
-          <div className="row" style={{marginTop: 30}}>
-            {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
-            {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-            {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'id', 'label', 'codeboxes')}
-            {this.renderCheckboxes('Webhooks', this.state.instanceData.webhooks, 'name', 'name', 'webhooks')}
-            {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
-            {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
-            {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
-          </div>
-          <div className="row" style={{paddingTop: 30}}>
-            <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
-              <MUI.FlatButton
-                style={{marginRight: 10}}
-                ref='cancel'
-                key='cancel'
-                label='Cancel'
-                onTouchTap={this.handleBackClick}/>
-              <MUI.RaisedButton
-                ref='submit'
-                key='confirm'
-                label='Confirm'
-                disable={this.state.instance === null}
-                primary={true}
-                onTouchTap={this.handleFormValidation} />
-            </div>
-          </div>
-        </Common.Container>
+              <div className="row" style={{marginTop: 30}}>
+                {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
+                {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
+                {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'id', 'label', 'codeboxes')}
+                {this.renderCheckboxes('Webhooks', this.state.instanceData.webhooks, 'name', 'name', 'webhooks')}
+                {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
+                {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
+                {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}
+              </div>
+              <div className="row" style={{paddingTop: 30}}>
+                <div className="col-flex-1" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <MUI.FlatButton
+                    style={{marginRight: 10}}
+                    ref='cancel'
+                    key='cancel'
+                    label='Cancel'
+                    onTouchTap={this.handleBackClick}/>
+                  <MUI.RaisedButton
+                    ref='submit'
+                    key='confirm'
+                    label='Confirm'
+                    type='submit'
+                    disable={this.state.instance === null}
+                    primary={true}
+                    onTouchTap={this.handleFormValidation} />
+                </div>
+              </div>
+            </Common.Container>
+          </form>
       </div>
     );
   }

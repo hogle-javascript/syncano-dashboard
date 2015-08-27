@@ -298,40 +298,47 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <div style={styles.heading}>Limits</div>
-        <div className="row align-middle">
-          <div className="col-md-8 col-lg-5">
-            <MUI.TextField
-              ref="soft_limit"
-              valueLink={this.linkState('soft_limit')}
-              errorText={this.getValidationMessages('soft_limit').join(' ')}
-              name="soft_limit"
-              className="text-field"
-              floatingLabelText="Soft Limit"
-              fullWidth={true}/>
+        {this.renderFormNotifications()}
+        <form
+          onSubmit={this.handleFormValidation}
+          method="post"
+          acceptCharset="UTF-8">
+         <div style={styles.heading}>Limits</div>
+          <div className="row align-middle">
+            <div className="col-md-8 col-lg-5">
+              <MUI.TextField
+                ref="soft_limit"
+                valueLink={this.linkState('soft_limit')}
+                errorText={this.getValidationMessages('soft_limit').join(' ')}
+                name="soft_limit"
+                className="text-field"
+                floatingLabelText="Soft Limit"
+                fullWidth={true}/>
+            </div>
+            <div className="col-md-8 col-lg-5">
+              <MUI.TextField
+                ref="hard_limit"
+                valueLink={this.linkState('hard_limit')}
+                errorText={this.getValidationMessages('hard_limit').join(' ')}
+                name="hard_limit"
+                className="text-field"
+                floatingLabelText="Hard Limit"
+                fullWidth={true}/>
+            </div>
+            <div className="col-flex-1" style={{display: 'flex', alignItems: 'center'}}>
+              <MUI.FlatButton
+                type="submit"
+                primary={true}
+                label='Set Limits'
+                disabled={(!this.state.hard_limit && !this.state.soft_limit)}
+                onTouchTap={this.handleFormValidation}/>
+              <MUI.IconButton
+                iconClassName="synicon-information-outline"
+                iconStyle={{color: MUI.Styles.Colors.blue500}}
+                tooltip={toolTip}/>
+            </div>
           </div>
-          <div className="col-md-8 col-lg-5">
-            <MUI.TextField
-              ref="hard_limit"
-              valueLink={this.linkState('hard_limit')}
-              errorText={this.getValidationMessages('hard_limit').join(' ')}
-              name="hard_limit"
-              className="text-field"
-              floatingLabelText="Hard Limit"
-              fullWidth={true}/>
-          </div>
-          <div className="col-flex-1" style={{display: 'flex', alignItems: 'center'}}>
-            <MUI.FlatButton
-              primary={true}
-              label='Set Limits'
-              disabled={(!this.state.hard_limit && !this.state.soft_limit)}
-              onTouchTap={this.handleFormValidation}/>
-            <MUI.IconButton
-              iconClassName="synicon-information-outline"
-              iconStyle={{color: MUI.Styles.Colors.blue500}}
-              tooltip={toolTip}/>
-          </div>
-        </div>
+        </form>
       </div>
     )
   },

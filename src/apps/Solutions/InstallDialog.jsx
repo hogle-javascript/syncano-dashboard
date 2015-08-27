@@ -131,6 +131,7 @@ export default React.createClass({
         label='Cancel'
         onTouchTap={this.handleCancel}/>,
       <MUI.FlatButton
+        type='submit'
         ref='submit'
         key='confirm'
         label='Confirm'
@@ -139,37 +140,42 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        ref="dialog"
-        title={title}
-        openImmediately={this.props.openImmediately}
-        actions={dialogCustomActions}
-        onShow={this.handleDialogShow}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          {this.renderCustomFormNotifications()}
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset="UTF-8"
+        method="post">
+        <Common.Dialog
+          ref="dialog"
+          title={title}
+          openImmediately={this.props.openImmediately}
+          actions={dialogCustomActions}
+          onShow={this.handleDialogShow}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
+            {this.renderCustomFormNotifications()}
 
-          <div className='row'>
-            <div className='col-flex-1'>
-              {this.renderInstanceField()}
+            <div className='row'>
+              <div className='col-flex-1'>
+                {this.renderInstanceField()}
+              </div>
             </div>
-          </div>
 
-          <Common.Show if={!this.state.hideVersionPicker}>
-            <MUI.SelectField
-              ref='version'
-              name='version'
-              fullWidth={true}
-              valueLink={this.linkState('version')}
-              valueMember='payload'
-              displayMember='text'
-              floatingLabelText='Version'
-              errorText={this.getValidationMessages('version').join(' ')}
-              menuItems={Store.getVersionsDropdown()}/>
-          </Common.Show>
-        </div>
-      </Common.Dialog>
+            <Common.Show if={!this.state.hideVersionPicker}>
+              <MUI.SelectField
+                ref='version'
+                name='version'
+                fullWidth={true}
+                valueLink={this.linkState('version')}
+                valueMember='payload'
+                displayMember='text'
+                floatingLabelText='Version'
+                errorText={this.getValidationMessages('version').join(' ')}
+                menuItems={Store.getVersionsDropdown()}/>
+            </Common.Show>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });

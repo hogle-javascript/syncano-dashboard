@@ -472,44 +472,50 @@ export default React.createClass({
     let editTitle = 'Edit a Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
     let addTitle = 'Add a Data Object';
     let title = this.hasEditMode() ? editTitle : addTitle;
-    let submitLabel = 'Confirm';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: {submitLabel},
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.handleFormValidation}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title}
-        onShow={this.handleDialogShow}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <div className="row">
-            <div className="col-xs-20">
-              {this.renderBuiltinFields()}
-            </div>
-            <div className="col-xs-15" style={{paddingLeft: 15}}>
-              <div>Class fields</div>
-              {this.renderCustomFields()}
-            </div>
+      <form
+        onSubmit={this.handleFormValidation}
+        method="post"
+        acceptCharset="UTF-8">
+        <Common.Dialog
+          ref='dialog'
+          title={title}
+          onShow={this.handleDialogShow}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
+              <div className="row">
+                <div className="col-xs-20">
+                  {this.renderBuiltinFields()}
+                </div>
+                <div className="col-xs-15" style={{paddingLeft: 15}}>
+                  <div>Class fields</div>
+                  {this.renderCustomFields()}
+                </div>
+              </div>
           </div>
-        </div>
-        <Common.Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
-      </Common.Dialog>
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        </Common.Dialog>
+      </form>
     );
   }
 });
