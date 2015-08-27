@@ -19,7 +19,7 @@ export default {
     return limits[objectsName];
   },
 
-  checkObjectsCount(objectsName, addItemFunc) {
+  checkObjectsCount(objectsName, addCallback) {
     if (this.state.items.length >= this.getLimit(objectsName)) {
       this.setState({
         notification: true
@@ -31,7 +31,7 @@ export default {
         }, 5000)
       })
     } else {
-      addItemFunc();
+      addCallback();
     }
   },
 
