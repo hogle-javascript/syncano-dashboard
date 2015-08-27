@@ -35,15 +35,6 @@ export default React.createClass({
     }
   },
 
-  componentDidUpdate() {
-    if (!this.state.schemaInitialized && this.state.schema) {
-      this.setFields(this.state.schema);
-      this.setState({
-        schemaInitialized: true
-      });
-    }
-  },
-
   componentDidMount() {
     if (this.hasEditMode()) {
       Store.refreshData();
@@ -57,22 +48,6 @@ export default React.createClass({
         text: item
       }
     });
-  },
-
-  setFields(schema) {
-    const fields = this.state.fields;
-
-    schema.map((item) => {
-      fields.push({
-        fieldName: item.name,
-        fieldType: item.type,
-        fieldTarget: item.target,
-        fieldOrder: item.order_index,
-        fieldFilter: item.filter_index
-      });
-    });
-
-    return fields;
   },
 
   getSchema() {

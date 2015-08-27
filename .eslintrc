@@ -70,7 +70,6 @@
     // }],
     // "no-warning-comments": 2,
     // "react/no-multi-comp": 2,
-    // "react/no-did-update-set-state": 2,
 
     // what we have
     "no-inline-comments": 2,
@@ -117,7 +116,7 @@
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "curly": [2, "multi-line"],
-    "react/no-did-update-set-state": 1,
+    "react/no-did-update-set-state": 2,
 
 
     // Strict

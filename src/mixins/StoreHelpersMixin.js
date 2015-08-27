@@ -3,7 +3,7 @@ export default {
     if (!list) {
       return [{payload: '', text: 'Loading...'}];
     }
-    return list.map(function(item) {
+    return list.map((item) => {
       return {
         payload: item[payloadArg],
         text: item[textArg]
@@ -14,7 +14,7 @@ export default {
     if (!list) {
       return [];
     }
-    return list.map(function(item) {
+    return list.map((item) => {
       return {
         label: item[labelArg],
         value: item[valueArg]
@@ -25,7 +25,7 @@ export default {
     if (!list) {
       return [];
     }
-    return list.map(function(item) {
+    return list.map((item) => {
       return {
         label: item,
         value: item
