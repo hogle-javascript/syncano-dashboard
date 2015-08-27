@@ -43,9 +43,7 @@
     // "complexity": 2,
     // "camelcase": 2,
     // "no-warning-comments": 2,
-    // "no-useless-call": 2,
     // "react/no-multi-comp": 2,
-    // "react/no-did-update-set-state": 2,
 
     // what we have
     "no-inline-comments": 2,
@@ -101,14 +99,13 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "no-useless-call": 1,
     "react/no-multi-comp": 1,
     "no-undef": 2,
     "no-return-assign": [2, "always"],
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "curly": [2, "multi-line"],
-    "react/no-did-update-set-state": 1,
+    "react/no-did-update-set-state": 2,
 
 
     // Strict
@@ -188,6 +185,7 @@
     "no-sequences": 2,
     "no-throw-literal": 2,
     "no-unused-expressions": 2,
+    "no-useless-call": 2,
     "no-void": 2,
     "no-with": 2,
     "radix": 2,

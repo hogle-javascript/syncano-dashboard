@@ -39,6 +39,17 @@ export default React.createClass({
     Actions.fetch();
   },
 
+  isFriend() {
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending))
+    }
+
+    return false;
+  },
+
   getStyles() {
     return {
       container: {
