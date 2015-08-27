@@ -74,6 +74,10 @@ export default Radium(React.createClass({
         fontSize: '1rem',
         verticalAlign: 'middle',
         textAlign: 'center'
+      },
+      instancesDropdownItem: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }
     }
   },
@@ -209,6 +213,8 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
       <div>
         <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
@@ -244,7 +250,7 @@ export default Radium(React.createClass({
                   menuItems={Store.getTypes()}
                   />
               </div>
-              <div className='col-lg-26'>
+              <div className='col-flex-1'>
                 <MUI.SelectField
                   ref='instance'
                   name='instance'
@@ -254,9 +260,9 @@ export default Radium(React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
+                  menuItemStyle={styles.instancesDropdownItem}
                   errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()}
-                  />
+                  menuItems={Store.getInstancesDropdown()}/>
               </div>
             </div>
           </div>
