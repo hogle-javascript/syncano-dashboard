@@ -29,6 +29,12 @@ export default Radium(React.createClass({
     Reflux.connect(Store)
   ],
 
+  validatorConstraints: {
+    instance: {
+      presence: true
+    }
+  },
+
   componentWillMount() {
     Actions.fetchInstances();
     Actions.fetch();
@@ -91,12 +97,6 @@ export default Radium(React.createClass({
 
     exportSpec[type][name] = status;
     this.setState({exportSpec});
-  },
-
-  validatorConstraints: {
-    instance: {
-      presence: true
-    }
   },
 
   headerMenuItems() {

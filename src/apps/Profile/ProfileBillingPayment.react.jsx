@@ -19,26 +19,6 @@ export default Radium(React.createClass({
     Mixins.Form
   ],
 
-  componentDidMount() {
-    Actions.fetchBillingCard();
-  },
-
-  handleSuccessfullValidation(data) {
-    Actions.updateBillingCard({
-      number: data.number,
-      cvc: data.cvc,
-      exp_month: data.exp_month,
-      exp_year: data.exp_year
-    });
-  },
-
-  toggleForm(state) {
-    this.setState({
-      showForm: state,
-      show_form: state
-    });
-  },
-
   validatorConstraints: {
     number: {
       presence: true
@@ -65,6 +45,26 @@ export default Radium(React.createClass({
         greaterThan: 0
       }
     }
+  },
+
+  componentDidMount() {
+    Actions.fetchBillingCard();
+  },
+
+  handleSuccessfullValidation(data) {
+    Actions.updateBillingCard({
+      number: data.number,
+      cvc: data.cvc,
+      exp_month: data.exp_month,
+      exp_year: data.exp_year
+    });
+  },
+
+  toggleForm(state) {
+    this.setState({
+      showForm: state,
+      show_form: state
+    });
   },
 
   render() {

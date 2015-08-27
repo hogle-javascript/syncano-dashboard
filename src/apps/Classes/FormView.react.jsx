@@ -29,9 +29,9 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  componentDidMount() {
-    if (this.hasEditMode()) {
-      Store.refreshData();
+  validatorConstraints: {
+    name: {
+      presence: true
     }
   },
 
@@ -202,12 +202,6 @@ export default React.createClass({
     });
 
     return fields;
-  },
-
-  validatorConstraints: {
-    name: {
-      presence: true
-    }
   },
 
   renderSchemaFields() {

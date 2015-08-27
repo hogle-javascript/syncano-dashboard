@@ -27,6 +27,24 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
+  validatorConstraints() {
+    let addFormConstraints = {
+      username: {
+        presence: true
+      },
+      password: {
+        presence: true
+      }
+    };
+    let editFormmConstraints = {
+      username: {
+        presence: true
+      }
+    };
+
+    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
+  },
+
   componentWillUnmount() {
     GroupsStore.resetActiveGroup();
   },
@@ -81,24 +99,6 @@ export default React.createClass({
     this.setState({
       newUserGroups: selectedGroups
     })
-  },
-
-  validatorConstraints() {
-    let addFormConstraints = {
-      username: {
-        presence: true
-      },
-      password: {
-        presence: true
-      }
-    };
-    let editFormmConstraints = {
-      username: {
-        presence: true
-      }
-    };
-
-    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
   },
 
   render() {

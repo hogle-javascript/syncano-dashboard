@@ -23,6 +23,15 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    name: {
+      presence: true
+    },
+    codebox: {
+      presence: true
+    }
+  },
+
   handleDialogShow() {
     console.info('WebhookDialog::handleDialogShow');
     CodeBoxesActions.fetch();
@@ -51,15 +60,6 @@ export default React.createClass({
 
     state[event.target.name] = status;
     this.setState(state);
-  },
-
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    codebox: {
-      presence: true
-    }
   },
 
   render() {

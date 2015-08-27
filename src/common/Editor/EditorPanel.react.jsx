@@ -25,6 +25,22 @@ export default Radium(React.createClass({
     FormMixin
   ],
 
+  validatorConstraints: {
+    payloadValue: (value) => {
+      try {
+        JSON.parse(value);
+        return null
+      } catch (err) {
+        return {
+          format: {
+            pattern: '',
+            message: 'is not a valid JSON'
+          }
+        }
+      }
+    }
+  },
+
   getInitialState() {
     return {
       panelCollapsed: true,
@@ -45,22 +61,6 @@ export default Radium(React.createClass({
         color: 'white',
         height: '200px',
         padding: 10
-      }
-    }
-  },
-
-  validatorConstraints: {
-    payloadValue: (value) => {
-      try {
-        JSON.parse(value);
-        return null
-      } catch (err) {
-        return {
-          format: {
-            pattern: '',
-            message: 'is not a valid JSON'
-          }
-        }
       }
     }
   },

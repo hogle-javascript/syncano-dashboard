@@ -19,6 +19,15 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    name: {
+      presence: true,
+      length: {
+        minimum: 5
+      }
+    }
+  },
+
   handleDialogShow() {
     if (!this.hasEditMode()) {
       this.setState({
@@ -43,15 +52,6 @@ export default React.createClass({
         icon: Common.Icon.Store.getRandomIconPickerIcon()
       }
     });
-  },
-
-  validatorConstraints: {
-    name: {
-      presence: true,
-      length: {
-        minimum: 5
-      }
-    }
   },
 
   render() {

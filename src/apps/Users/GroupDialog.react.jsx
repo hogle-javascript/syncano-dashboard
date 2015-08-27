@@ -22,6 +22,12 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    label: {
+      presence: true
+    }
+  },
+
   handleAddSubmit() {
     Actions.createGroup(this.state.label);
   },
@@ -30,12 +36,6 @@ export default React.createClass({
     Actions.updateGroup(this.state.id, {
       label: this.state.label
     });
-  },
-
-  validatorConstraints: {
-    label: {
-      presence: true
-    }
   },
 
   render() {

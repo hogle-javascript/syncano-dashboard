@@ -24,6 +24,21 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    label: {
+      presence: true
+    },
+    signal: {
+      presence: true
+    },
+    class: {
+      presence: true
+    },
+    codebox: {
+      presence: true
+    }
+  },
+
   handleDialogShow() {
     console.info('TriggerDialog::handleDialogShow');
     CodeBoxesActions.fetch();
@@ -47,21 +62,6 @@ export default React.createClass({
         class: this.state.class,
         signal: this.state.signal
       });
-  },
-
-  validatorConstraints: {
-    label: {
-      presence: true
-    },
-    signal: {
-      presence: true
-    },
-    class: {
-      presence: true
-    },
-    codebox: {
-      presence: true
-    }
   },
 
   render() {

@@ -58,6 +58,7 @@
           "childContextTypes",
           "mixins",
           "statics",
+          "validatorConstraints",
           "defaultProps",
           "constructor",
           "getDefaultProps",

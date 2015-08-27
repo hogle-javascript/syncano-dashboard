@@ -23,6 +23,18 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    label: {
+      presence: true
+    },
+    codebox: {
+      presence: true
+    },
+    crontab: {
+      presence: true
+    }
+  },
+
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
     CodeBoxesActions.fetch();
@@ -44,18 +56,6 @@ export default React.createClass({
         codebox: this.state.codebox
       }
     );
-  },
-
-  validatorConstraints: {
-    label: {
-      presence: true
-    },
-    codebox: {
-      presence: true
-    },
-    crontab: {
-      presence: true
-    }
   },
 
   render() {

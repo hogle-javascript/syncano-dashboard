@@ -23,6 +23,15 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
+  validatorConstraints: {
+    label: {
+      presence: true,
+      length: {
+        minimum: 5
+      }
+    }
+  },
+
   handleEditSubmit() {
     Actions.updateSolution({
       description: this.state.description
@@ -42,15 +51,6 @@ export default React.createClass({
 
     state[event.target.name] = status;
     this.setState(state);
-  },
-
-  validatorConstraints: {
-    label: {
-      presence: true,
-      length: {
-        minimum: 5
-      }
-    }
   },
 
   render() {

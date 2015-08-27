@@ -24,6 +24,15 @@ export default React.createClass({
     Mixins.Form
   ],
 
+  validatorConstraints: {
+    name: {
+      presence: true
+    },
+    class: {
+      presence: true
+    }
+  },
+
   isEnabled(list, field) {
     if (!list) {
       return false;
@@ -85,15 +94,6 @@ export default React.createClass({
     if (fieldsType === 'expandFields') {
       fields = genList(this.state.expand, fieldName, value);
       this.setState({expand: fields});
-    }
-  },
-
-  validatorConstraints: {
-    name: {
-      presence: true
-    },
-    class: {
-      presence: true
     }
   },
 

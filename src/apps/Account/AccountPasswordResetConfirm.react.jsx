@@ -23,16 +23,6 @@ export default React.createClass({
     FormMixin
   ],
 
-  handleSuccessfullValidation() {
-    let params = this.getParams();
-
-    Actions.passwordResetConfirm({
-      new_password: this.state.password,
-      uid: params.uid,
-      token: params.token
-    });
-  },
-
   validatorConstraints: {
     password: {
       presence: true
@@ -41,6 +31,16 @@ export default React.createClass({
       presence: true,
       equality: 'password'
     }
+  },
+
+  handleSuccessfullValidation() {
+    let params = this.getParams();
+
+    Actions.passwordResetConfirm({
+      new_password: this.state.password,
+      uid: params.uid,
+      token: params.token
+    });
   },
 
   render() {

@@ -39,6 +39,18 @@ export default React.createClass({
     }
   },
 
+  validatorConstraints: {
+    email: {
+      presence: true,
+      email: {
+        message: '^Invalid email address'
+      }
+    },
+    password: {
+      presence: true
+    }
+  },
+
   componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
@@ -69,18 +81,6 @@ export default React.createClass({
       email: data.email,
       password: data.password
     });
-  },
-
-  validatorConstraints: {
-    email: {
-      presence: true,
-      email: {
-        message: '^Invalid email address'
-      }
-    },
-    password: {
-      presence: true
-    }
   },
 
   render() {

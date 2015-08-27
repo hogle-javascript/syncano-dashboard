@@ -17,14 +17,6 @@ export default React.createClass({
     FormMixin
   ],
 
-  componentDidMount() {
-    Actions.fetchBillingProfile();
-  },
-
-  handleSuccessfullValidation() {
-    Actions.updateBillingProfile(this.state);
-  },
-
   validatorConstraints: {
     company_name: {
       length: {maximum: 150},
@@ -95,6 +87,14 @@ export default React.createClass({
       length: {maximum: 50},
       presence: true
     }
+  },
+
+  componentDidMount() {
+    Actions.fetchBillingProfile();
+  },
+
+  handleSuccessfullValidation() {
+    Actions.updateBillingProfile(this.state);
   },
 
   render() {

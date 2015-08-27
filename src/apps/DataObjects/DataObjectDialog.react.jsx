@@ -26,6 +26,19 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
+  validatorConstraints() {
+    let validateObj = {};
+
+    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
+      if (item.type === 'integer') {
+        validateObj[item.name] = {numericality: true}
+      } else if (item.type === 'text') {
+        validateObj[item.name] = {length: {maximum: 32000}}
+      }
+    });
+    return validateObj;
+  },
+
   getParams() {
     let params = {
       id: this.state.id,
@@ -182,19 +195,6 @@ export default React.createClass({
       /* eslint-enable no-undefined */
       dialogTime: new Date()
     });
-  },
-
-  validatorConstraints() {
-    let validateObj = {};
-
-    DataObjectsStore.getCurrentClassObj().schema.map((item) => {
-      if (item.type === 'integer') {
-        validateObj[item.name] = {numericality: true}
-      } else if (item.type === 'text') {
-        validateObj[item.name] = {length: {maximum: 32000}}
-      }
-    });
-    return validateObj;
   },
 
   renderBuiltinFields() {

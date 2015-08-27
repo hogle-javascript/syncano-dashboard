@@ -25,6 +25,47 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
+  validatorConstraints() {
+    if (this.state.card) {
+      return true;
+    }
+
+    return {
+      number: {
+        presence: true,
+        length: {maximum: 19},
+        numericality: {
+          onlyInteger: true
+        }
+      },
+      cvc: {
+        presence: true,
+        numericality: {
+          onlyInteger: true,
+          greaterThan: 0
+        }
+      },
+      exp_month: {
+        presence: true,
+        numericality: {
+          onlyInteger: true,
+          greaterThan: 0,
+          lessThanOrEqualTo: 12
+        }
+      },
+      exp_year: {
+        presence: true,
+        numericality: {
+          onlyInteger: true,
+          greaterThanOrEqualTo: new Date().getFullYear()
+        },
+        length: {
+          is: 4
+        }
+      }
+    }
+  },
+
   getValidatorAttributes() {
     if (this.state.card) {
       return {};
@@ -177,47 +218,6 @@ export default React.createClass({
     this.resetDialogState();
     if (typeof this.props.onDismiss === 'function') {
       this.props.onDismiss()
-    }
-  },
-
-  validatorConstraints() {
-    if (this.state.card) {
-      return true;
-    }
-
-    return {
-      number: {
-        presence: true,
-        length: {maximum: 19},
-        numericality: {
-          onlyInteger: true
-        }
-      },
-      cvc: {
-        presence: true,
-        numericality: {
-          onlyInteger: true,
-          greaterThan: 0
-        }
-      },
-      exp_month: {
-        presence: true,
-        numericality: {
-          onlyInteger: true,
-          greaterThan: 0,
-          lessThanOrEqualTo: 12
-        }
-      },
-      exp_year: {
-        presence: true,
-        numericality: {
-          onlyInteger: true,
-          greaterThanOrEqualTo: new Date().getFullYear()
-        },
-        length: {
-          is: 4
-        }
-      }
     }
   },
 
