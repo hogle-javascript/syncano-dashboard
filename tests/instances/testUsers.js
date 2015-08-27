@@ -60,11 +60,12 @@ module.exports = {
     usersPage.waitForElementVisible('@groupEditButton');
     usersPage.waitForElementVisible('@userList')
     usersPage.clickButton('@selectUserTableRow');
+    client.pause(1000);
     usersPage.clickButton('@deleteButton');
     client.pause(1000);
     usersPage.waitForElementPresent('@deleteUserModalTitle');
     client.pause(1000);
     usersPage.clickButton('@confirm');
-    usersPage.waitForElementNotPresent('@selectUserTableRow');
+    usersPage.waitForElementNotPresent('@userTableRow');
   }
 }
