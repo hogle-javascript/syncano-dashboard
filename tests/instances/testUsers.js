@@ -9,7 +9,6 @@ module.exports = {
     loginPage.typePassword();
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
-
   },
   after: function(client) {
     client.end();
@@ -62,6 +61,7 @@ module.exports = {
     usersPage.waitForElementVisible('@userList')
     usersPage.clickButton('@selectUserTableRow');
     usersPage.clickButton('@deleteButton');
+    client.pause(1000);
     usersPage.waitForElementPresent('@deleteUserModalTitle');
     client.pause(1000);
     usersPage.clickButton('@confirm');
