@@ -36,16 +36,24 @@ export default Radium(React.createClass({
     ProfileInvitationsActions.fetch();
   },
 
+  hasLastInvitation() {
+    if (this.state.accountInvitations.items.length <= 1) {
+      this.refs.headerNotificationDropdown.close();
+    }
+  },
+
   handleAcceptInvitations(items) {
     console.info('Header::handleAcceptInvitations');
     ProfileInvitationsActions.acceptInvitations(items);
     event.stopPropagation();
+    this.hasLastInvitation();
   },
 
   handleDeclineInvitations(items) {
     console.info('Header::handleDeclineInvitations');
     ProfileInvitationsActions.declineInvitations(items);
     event.stopPropagation();
+    this.hasLastInvitation();
   },
 
   handleResendEmail() {
@@ -218,6 +226,7 @@ export default Radium(React.createClass({
     return (
       <div>
         <MUI.IconMenu
+          ref='headerNotificationDropdown'
           iconButtonElement={this.renderIcon()}
           onItemTouchTap={this.handleResendEmail}
           autoWidth={false}
