@@ -56,8 +56,6 @@ export default React.createClass({
       other_permissions: this.state.other_permissions
     };
 
-    let files = this.getFileFields();
-
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
@@ -97,18 +95,8 @@ export default React.createClass({
             params[item.name] = fieldValue;
           }
         }
-      } else {
-        let delFile = true;
-
-        files.some((file) => {
-          if (file.name === item.name) {
-            delFile = false;
-            return true;
-          }
-        });
-        if (delFile) {
-          params[item.name] = null;
-        }
+      } else if (this.state[item.name] === null) {
+        params[item.name] = null;
       }
     });
 
