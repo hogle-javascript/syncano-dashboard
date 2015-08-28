@@ -12,8 +12,9 @@ general:
 
 test:
   override:
-    - "./test.sh":
-      parallel: true
+    - ./test.sh:
+        parallel: true
+        timeout: 300
 
 deployment:
   production:
