@@ -11,8 +11,9 @@ function run_e2e_tests {
     mv ./dist ./dist_e2e
     npm run-script e2e-setup
     nohup npm run-script e2e-http-server &
-    wait
+    sleep 5
     npm run-script e2e
+    rm -rf ./dist_e2e
 }
 
 case "$CIRCLE_NODE_INDEX" in
