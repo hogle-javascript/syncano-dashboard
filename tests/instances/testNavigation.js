@@ -21,7 +21,7 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@classListItem');
+    dataPage.waitForElementPresent('@dataListItem');
   },
 
   afterEach: function(client, done) {
@@ -110,10 +110,10 @@ module.exports = {
     var dataObjectsPage = client.page.dataObjectsPage();
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  // 'User goes to Data View' : function(client) {
-  //   var dataPage = client.page.dataPage();
-  //   dataPage.waitForElementPresent('@dataListItemTitle');
-  // },
+  'User goes to Data View' : function(client) {
+    var dataPage = client.page.dataPage();
+    dataPage.waitForElementPresent('@dataListItemTitle');
+  },
   'User goes to Tasks View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@tasks');
@@ -128,13 +128,13 @@ module.exports = {
     var usersPage = client.page.usersPage();
     usersPage.waitForElementPresent('@user');
   },
-  // 'User goes to Webhook Traces View' : function(client) {
-  //   var dataPage = client.page.dataPage();
-  //   dataPage.clickButton('@webhookListItem');
-  //
-  //   var webhookTracesPage = client.page.webhookTracesPage();
-  //   webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
-  // },
+  'User goes to Webhook Traces View' : function(client) {
+    var dataPage = client.page.dataPage();
+    dataPage.clickButton('@webhookListItem');
+
+    var webhookTracesPage = client.page.webhookTracesPage();
+    webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
+  },
   'User goes to Solutions View' : function(client) {
     var topNavigationPage = client.page.topNavigationPage();
     topNavigationPage.clickButton('@solutions');

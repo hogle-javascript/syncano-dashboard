@@ -69,6 +69,9 @@ export default React.createClass({
             case 'false':
               params[item.name] = false;
               break;
+            case 'null':
+              params[item.name] = null;
+              break;
             default:
               delete params[item.name];
           }
@@ -356,10 +359,10 @@ export default React.createClass({
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
-          // TODO: Add this item when backend will be ready for 'null' value {text: 'Blank', payload: 'null'}
           let menuItems = [
             {text: 'True', payload: 'true'},
-            {text: 'False', payload: 'false'}
+            {text: 'False', payload: 'false'},
+            {text: 'Blank', payload: 'null'}
           ];
 
           return (

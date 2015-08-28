@@ -46,7 +46,7 @@ export default React.createClass({
   isFriend() {
     if (SessionStore.getUser()) {
       let email = SessionStore.getUser({}).email;
-      let endings = ['syncano.rocks', 'syncano.io', 'chimeraprime.com'];
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
 
       return _.some(endings, (ending) => _.endsWith(email, ending))
     }

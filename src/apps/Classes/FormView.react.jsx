@@ -35,18 +35,16 @@ export default React.createClass({
     }
   },
 
-  componentDidUpdate() {
-    if (!this.state.schemaInitialized && this.state.schema) {
-      this.setFields(this.state.schema);
-      this.setState({
-        schemaInitialized: true
-      });
-    }
-  },
-
   componentDidMount() {
     if (this.hasEditMode()) {
       Store.refreshData();
+    }
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!nextState.schemaInitialized && nextState.schema) {
+      this.setFields(nextState.schema);
+      nextState.schemaInitialized = true;
     }
   },
 
@@ -57,22 +55,6 @@ export default React.createClass({
         text: item
       }
     });
-  },
-
-  setFields(schema) {
-    const fields = this.state.fields;
-
-    schema.map((item) => {
-      fields.push({
-        fieldName: item.name,
-        fieldType: item.type,
-        fieldTarget: item.target,
-        fieldOrder: item.order_index,
-        fieldFilter: item.filter_index
-      });
-    });
-
-    return fields;
   },
 
   getSchema() {
@@ -92,6 +74,22 @@ export default React.createClass({
       }
       return schema;
     }));
+  },
+
+  setFields(schema) {
+    const fields = this.state.fields;
+
+    schema.map((item) => {
+      fields.push({
+        fieldName: item.name,
+        fieldType: item.type,
+        fieldTarget: item.target,
+        fieldOrder: item.order_index,
+        fieldFilter: item.filter_index
+      });
+    });
+
+    return fields;
   },
 
   handleAddSubmit() {
@@ -263,7 +261,6 @@ export default React.createClass({
         payload: 'create_objects'
       }
     ];
-
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
