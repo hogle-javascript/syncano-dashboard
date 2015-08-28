@@ -12,7 +12,7 @@ general:
 
 test:
   override:
-    - ./test.sh:
+    - "./test.sh":
       parallel: true
 
 deployment:
