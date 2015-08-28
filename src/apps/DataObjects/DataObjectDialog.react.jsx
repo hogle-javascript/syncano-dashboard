@@ -96,9 +96,7 @@ export default React.createClass({
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
 
-          if (fieldValue) {
-            params[item.name] = fieldValue;
-          }
+          params[item.name] = fieldValue || null;
         }
       } else {
         let delFile = true;
