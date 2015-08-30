@@ -90,7 +90,6 @@ export default React.createClass({
     let items = this.props.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
