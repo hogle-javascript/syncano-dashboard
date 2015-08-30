@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
 
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -65,6 +66,11 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem >Add User</MenuItem>
+          <MenuItem >Edit Group</MenuItem>
+          <MenuItem >Delete</MenuItem>
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -102,6 +108,7 @@ export default React.createClass({
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.Desc.Header>Description</Column.Desc.Header>
           <Column.Date.Header>Created</Column.Date.Header>
+          <Column.Menu.Header></Column.Menu.Header>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
           {this.getList()}
