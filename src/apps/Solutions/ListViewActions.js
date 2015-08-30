@@ -8,6 +8,7 @@ export default CreateActions({
   setFilter: {},
   setTags: {},
   toggleTagSelection: {},
+  resetTagsSelection: {},
   selectOneTag: {},
 
   fetchSolutions: {
