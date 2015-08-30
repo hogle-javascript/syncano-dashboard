@@ -8,6 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
+import InstanceDialogActions from './InstanceDialogActions';
 
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
@@ -46,6 +47,10 @@ export default React.createClass({
     SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
   },
 
+  showInstanceEditDialog(instance) {
+    InstanceDialogActions.showDialog(instance);
+  },
+
   renderItem(item) {
     item.metadata = item.metadata || {};
 
@@ -67,9 +72,7 @@ export default React.createClass({
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
         <Column.Menu>
-          <MenuItem >Add User</MenuItem>
-          <MenuItem >Edit Group</MenuItem>
-          <MenuItem >Delete</MenuItem>
+          <MenuItem onTouchTap={this.showInstanceEditDialog.bind(this, item)}>Edit an Instance</MenuItem>
         </Column.Menu>
       </Common.ColumnList.Item>
     )

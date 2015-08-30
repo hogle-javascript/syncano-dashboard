@@ -120,7 +120,7 @@ export default Radium(React.createClass({
         style={[styles.background, this.props.checkable && styles.checkable]}
         onMouseOver={this.props.checkable ? this.handleMouseOver : null}
         onMouseLeave={this.props.checkable ? this.handleMouseLeave : null}
-        onClick={this.props.checkable ? this.handleClick : null}>
+        onTouchTap={this.props.checkable ? this.handleClick : null}>
         <MUI.FontIcon
           className={`synicon-${iconClass}`}
           style={iconStyle}/>

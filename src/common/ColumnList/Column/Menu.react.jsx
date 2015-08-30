@@ -8,7 +8,7 @@ let Header = React.createClass({
 
   getDefaultProps() {
     return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
+      className: ColumnListConstans.DEFAULT_CLASSNAME.MENU
     }
   },
 
@@ -40,7 +40,7 @@ export default Radium(React.createClass({
     return {
       color: 'rgba(0,0,0,.54)',
       hoverColor: MUI.Styles.Colors.blue600,
-      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
+      className: ColumnListConstans.DEFAULT_CLASSNAME.MENU
     };
   },
 
@@ -79,9 +79,6 @@ export default Radium(React.createClass({
   },
 
   handleTouchTap(event) {
-    console.error(event);
-
-    event.preventDefault();
     event.stopPropagation();
   },
 
@@ -94,8 +91,6 @@ export default Radium(React.createClass({
         style={styles}>
         <MUI.IconMenu
           onTouchTap={this.handleTouchTap}
-          onMouseUp={this.handleTouchTap}
-          onMouseEnter={this.handleTouchTap}
           iconButtonElement={this.renderItemIconMenuButton()}>
           {this.props.children}
         </MUI.IconMenu>

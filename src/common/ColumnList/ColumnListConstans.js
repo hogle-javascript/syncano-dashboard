@@ -8,6 +8,7 @@ export default {
     ICON_NAME: 'col-xs-10',
     ID: 'col-xs-2',
     KEY: 'col-flex-1',
+    MENU: 'col-menu',
     NAME: 'col-xs-8',
     TEXT: 'col-xs-4'
   }

@@ -117,10 +117,6 @@ export default Radium(React.createClass({
     this.setState({welcomeShowed: true});
   },
 
-  showInstanceEditDialog() {
-    InstanceDialogActions.showDialog(Store.getCheckedItem());
-  },
-
   render() {
     if (this.state.blocked) {
       return (
@@ -161,12 +157,6 @@ export default Radium(React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Instance"
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showInstanceEditDialog}
-              iconClassName="synicon-pencil"/>
             <Common.Fab.TooltipItem
               tooltip="Click here to customize Instances"
               secondary={true}
