@@ -89,4 +89,4 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
-}
+};
