@@ -68,7 +68,6 @@
     //     "render"
     //   ]
     // }],
-    // "no-warning-comments": 2,
     // "react/no-multi-comp": 2,
 
     // what we have
@@ -151,7 +150,6 @@
     "valid-jsdoc": 2,
     "valid-typeof": 2,
     "no-unexpected-multiline": 2,
-    "no-warning-comments": 1,
 
     // Best Practices
     "accessor-pairs": 2,
@@ -198,6 +196,7 @@
     "no-unused-expressions": 2,
     "no-useless-call": 2,
     "no-void": 2,
+    "no-warning-comments": 2,
     "no-with": 2,
     "radix": 2,
     "vars-on-top": 2,

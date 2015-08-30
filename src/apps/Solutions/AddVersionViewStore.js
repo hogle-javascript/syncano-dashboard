@@ -166,7 +166,6 @@ export default Reflux.createStore({
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    // TODO: Create some smart mixin for router actions in stores
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       SessionStore.getRouter().getCurrentParams()
