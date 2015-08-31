@@ -23,11 +23,6 @@ export default Radium(React.createClass({
     })
   },
 
-  handleCloseDialog() {
-    this.setState({visible: false});
-    this.props.getStarted();
-  },
-
   getStyles() {
     return {
       main: {
@@ -62,6 +57,11 @@ export default Radium(React.createClass({
       }
 
     }
+  },
+
+  handleCloseDialog() {
+    this.setState({visible: false});
+    this.props.getStarted();
   },
 
   render() {

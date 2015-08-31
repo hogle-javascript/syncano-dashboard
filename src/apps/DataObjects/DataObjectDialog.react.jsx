@@ -26,11 +26,6 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
-  },
-
   validatorConstraints() {
     let validateObj = {};
 
@@ -124,6 +119,18 @@ export default React.createClass({
     return fileFields;
   },
 
+  onDrop(fieldName, files) {
+    let state = {};
+
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
+
   handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
@@ -138,6 +145,45 @@ export default React.createClass({
       params: this.getParams(),
       fileFields: this.getFileFields()
     })
+  },
+
+  handleFileOnClick(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile(name) {
+    let state = {};
+
+    state[name] = null;
+    this.setState(state);
+  },
+
+  handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
+    this.refs[`fielddate-${name}`].setState({
+
+      /* eslint-disable no-undefined */
+      date: undefined,
+
+      /* eslint-enable no-undefined */
+      dialogDate: new Date()
+    });
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
+    this.refs[`fieldtime-${name}`].setState({
+
+      /* eslint-disable no-undefined */
+      time: undefined,
+
+      /* eslint-enable no-undefined */
+      dialogTime: new Date()
+    });
   },
 
   renderBuiltinFields() {
@@ -266,53 +312,6 @@ export default React.createClass({
     )
   },
 
-  onDrop(fieldName, files) {
-    let state = {};
-
-    state[fieldName] = files[0];
-    this.setState(state);
-  },
-
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
-    window.open(value, '_blank')
-  },
-
-  handleRemoveFile(name) {
-    let state = {};
-
-    state[name] = null;
-    this.setState(state);
-  },
-
-  handleClearDateTime(name) {
-    let state = {};
-
-    state[`fielddate-${name}`] = null;
-    state[`fieldtime-${name}`] = null;
-    this.setState(state);
-
-    this.refs[`fielddate-${name}`].setState({
-      /* eslint-disable */
-      date: undefined,
-      /* eslint-enable */
-      dialogDate: new Date()
-    });
-
-    let emptyTime = new Date();
-
-    emptyTime.setHours(0);
-    emptyTime.setMinutes(0);
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue('');
-    this.refs[`fieldtime-${name}`].setState({
-      /* eslint-disable */
-      time: undefined,
-      /* eslint-enable */
-      dialogTime: new Date()
-    });
-  },
-
   renderDropZone(item) {
     let dropZoneStyle = {
       height: 80,
@@ -372,11 +371,11 @@ export default React.createClass({
         }
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ?
-            new Date(this.state[item.name].value) :
-            /* eslint-disable */
-            undefined;
-            /* eslint-enable */
+          /* eslint-disable */
+          let value = this.state[item.name]
+            ? new Date(this.state[item.name].value)
+            : undefined;
+          /* eslint-enable */
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (

@@ -7,8 +7,6 @@ export default Radium(React.createClass({
 
   displayName: 'SwitchSection',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     plan: React.PropTypes.string,
     planCanceled: React.PropTypes.string,
@@ -19,6 +17,8 @@ export default Radium(React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     return {

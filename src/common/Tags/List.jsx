@@ -8,6 +8,13 @@ export default React.createClass({
 
   displayName: 'TagsList',
 
+  getInitialState() {
+    return {
+      items: this.props.items,
+      selectedItems: this.props.selectedItems
+    }
+  },
+
   getStyles() {
     return {
       listItemChecked: {

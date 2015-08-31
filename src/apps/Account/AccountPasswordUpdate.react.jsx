@@ -12,15 +12,15 @@ export default React.createClass({
 
   displayName: 'AccountPasswordUpdate',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   getStyles() {
     return {

@@ -29,10 +29,6 @@ export default React.createClass({
     window.removeEventListener('resize', this.throttledOnWindowResize);
   },
 
-  onWindowResize() {
-    this.forceUpdate();
-  },
-
   getElementRect() {
     let {currentStep, config} = this.props;
 
@@ -41,6 +37,10 @@ export default React.createClass({
     }
 
     return config[0].node.getBoundingClientRect();
+  },
+
+  onWindowResize() {
+    this.forceUpdate();
   },
 
   renderStepText() {

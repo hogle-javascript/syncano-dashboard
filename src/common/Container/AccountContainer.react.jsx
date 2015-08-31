@@ -10,11 +10,11 @@ export default React.createClass({
 
   displayName: 'AccountContainer',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.object
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {

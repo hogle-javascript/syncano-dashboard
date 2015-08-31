@@ -7,16 +7,16 @@ export default Radium(React.createClass({
 
   displayName: 'FABList',
 
+  propTypes: {
+    position: React.PropTypes.string.isRequired
+  },
+
   mixins: [MUI.Mixins.StylePropable],
 
   getDefaultProps() {
     return {
       position: 'bottom'
     }
-  },
-
-  propTypes: {
-    position: React.PropTypes.string.isRequired
   },
 
   getStyles() {

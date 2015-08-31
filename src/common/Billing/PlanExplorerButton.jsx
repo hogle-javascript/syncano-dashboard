@@ -7,14 +7,14 @@ export default Radium(React.createClass({
 
   displayName: 'PlanExplorerButton',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     plan: React.PropTypes.string,
     isNewSubscription: React.PropTypes.bool,
     onDeleteSubscription: React.PropTypes.func,
     onPlanDialog: React.PropTypes.func
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {
