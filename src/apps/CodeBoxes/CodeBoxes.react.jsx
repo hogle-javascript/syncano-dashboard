@@ -32,11 +32,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('CodeBoxes::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
     if (this.getParams().action === 'add') {
@@ -44,6 +39,11 @@ export default React.createClass({
       this.showCodeBoxDialog();
     }
     Actions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('CodeBoxes::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   getAssociatedCodeboxes(associatedWith) {
@@ -80,10 +80,23 @@ export default React.createClass({
         <div>
           Not associated: {this.getDialogList(associatedItems, 'label')}
         </div>
-      )
+      );
     }
 
     return list[associationsFor];
+  },
+
+  handleDelete() {
+    console.info('CodeBoxes::handleDelete');
+    Actions.removeCodeBoxes(Store.getCheckedItems());
+  },
+
+  showCodeBoxDialog() {
+    Actions.showDialog();
+  },
+
+  showCodeBoxEditDialog() {
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
@@ -156,19 +169,6 @@ export default React.createClass({
         ]
       }
     }]
-  },
-
-  handleDelete() {
-    console.info('CodeBoxes::handleDelete');
-    Actions.removeCodeBoxes(Store.getCheckedItems());
-  },
-
-  showCodeBoxDialog() {
-    Actions.showDialog();
-  },
-
-  showCodeBoxEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
   },
 
   render() {

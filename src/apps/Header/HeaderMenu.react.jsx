@@ -10,15 +10,15 @@ export default React.createClass({
 
   displayName: 'HeaderMenu',
 
-  mixins: [
-    Reflux.connect(HeaderStore),
-    Router.State
-  ],
-
   contextTypes: {
     router: React.PropTypes.func.isRequired,
     muiTheme: React.PropTypes.object
   },
+
+  mixins: [
+    Reflux.connect(HeaderStore),
+    Router.State
+  ],
 
   getActiveMenuItemIndex() {
     let index = 0;
@@ -30,10 +30,6 @@ export default React.createClass({
       }
     });
     return index;
-  },
-
-  handleTabActive(tab) {
-    this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
   getStyles() {
@@ -51,6 +47,10 @@ export default React.createClass({
         fontSize: 17
       }
     }
+  },
+
+  handleTabActive(tab) {
+    this.context.router.transitionTo(tab.props.route, tab.props.params);
   },
 
   renderMenuItem(tab, index) {

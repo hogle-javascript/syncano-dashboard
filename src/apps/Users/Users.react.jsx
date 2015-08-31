@@ -36,15 +36,15 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Users::componentWillUpdate');
-    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Users::componentDidMount');
     Actions.fetch();
     GroupsActions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Users::componentWillUpdate');
+    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
   handleRemoveGroups() {
@@ -55,6 +55,15 @@ export default React.createClass({
   handleRemoveUsers() {
     console.info('Users::handleRemoveUsers');
     Actions.removeUsers(Store.getCheckedItems());
+  },
+
+  handleGroupClick(group) {
+    GroupsActions.setActiveGroup(group);
+  },
+
+  handleCancelGroupsDialog() {
+    this.uncheckAllGroups();
+    this.refs.removeGroupDialog.dismiss();
   },
 
   uncheckAllUsers() {
@@ -109,15 +118,6 @@ export default React.createClass({
   showGroupDeleteDialog(group) {
     group.checked = true;
     this.showDialog('removeGroupDialog');
-  },
-
-  handleGroupClick(group) {
-    GroupsActions.setActiveGroup(group);
-  },
-
-  handleCancelGroupsDialog() {
-    this.uncheckAllGroups();
-    this.refs.removeGroupDialog.dismiss();
   },
 
   initDialogs() {

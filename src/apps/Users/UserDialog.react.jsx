@@ -49,6 +49,21 @@ export default React.createClass({
     GroupsStore.resetActiveGroup();
   },
 
+  getSelectValueSource() {
+    let activeGroup = GroupsStore.getActiveGroup();
+
+    if (this.state.newUserGroups) {
+      return this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      return this.linkState('groups');
+    } else if (this.state.secondInstance && this.state.secondInstance.value) {
+      return this.state.secondInstance;
+    } else if (activeGroup) {
+      return activeGroup;
+    }
+    return null;
+  },
+
   handleAddSubmit() {
     let activeGroup = GroupsStore.getActiveGroup();
     let userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
@@ -84,21 +99,6 @@ export default React.createClass({
     this.setState({
       newUserGroups: selectedGroups
     })
-  },
-
-  getSelectValueSource() {
-    let activeGroup = GroupsStore.getActiveGroup();
-
-    if (this.state.newUserGroups) {
-      return this.linkState('newUserGroups');
-    } else if (this.state.groups) {
-      return this.linkState('groups');
-    } else if (this.state.secondInstance && this.state.secondInstance.value) {
-      return this.state.secondInstance;
-    } else if (activeGroup) {
-      return activeGroup;
-    }
-    return null;
   },
 
   render() {

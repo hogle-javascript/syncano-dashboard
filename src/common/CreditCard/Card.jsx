@@ -8,11 +8,11 @@ export default Radium(React.createClass({
 
   displayName: 'Card',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     handleClick: React.PropTypes.func
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     return {

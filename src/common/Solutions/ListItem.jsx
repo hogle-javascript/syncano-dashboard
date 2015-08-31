@@ -73,6 +73,12 @@ export default Radium(React.createClass({
     }
   },
 
+  isNoVersions() {
+    let item = this.props.data;
+
+    return (item && !item.versions.devel && !item.versions.stable);
+  },
+
   handleSeeMoreClick(solutionId) {
     this.props.onSeeMore(solutionId);
   },
@@ -83,12 +89,6 @@ export default Radium(React.createClass({
 
   handleTagClick(tag) {
     this.props.onTagClick(tag);
-  },
-
-  isNoVersions() {
-    let item = this.props.data;
-
-    return (item && !item.versions.devel && !item.versions.stable);
   },
 
   renderVersion() {

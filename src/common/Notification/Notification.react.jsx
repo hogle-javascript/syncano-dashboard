@@ -9,13 +9,13 @@ export default React.createClass({
 
   displayName: 'Notification',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.string,
     type: React.PropTypes.string.isRequired,
     children: React.PropTypes.any.isRequired
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getDefaultProps() {
     return {
