@@ -292,12 +292,14 @@ export default React.createClass({
     state[`fieldtime-${name}`] = null;
     this.setState(state);
 
+    /* eslint-disable no-undefined */
+
     this.refs[`fielddate-${name}`].setState({
-      /* eslint-disable */
       date: undefined,
-      /* eslint-enable */
       dialogDate: new Date()
     });
+
+    /* eslint-enable no-undefined */
 
     let emptyTime = new Date();
 
@@ -305,12 +307,15 @@ export default React.createClass({
     emptyTime.setMinutes(0);
 
     this.refs[`fieldtime-${name}`].refs.input.setValue('');
+
+    /* eslint-disable no-undefined */
+
     this.refs[`fieldtime-${name}`].setState({
-      /* eslint-disable */
       time: undefined,
-      /* eslint-enable */
       dialogTime: new Date()
     });
+
+    /* eslint-enable no-undefined */
   },
 
   renderDropZone(item) {
@@ -371,12 +376,15 @@ export default React.createClass({
           )
         }
 
+        /* eslint-disable no-undefined */
+
         if (item.type === 'datetime') {
-          /* eslint-disable */
           let value = this.state[item.name]
             ? new Date(this.state[item.name].value)
             : undefined;
-          /* eslint-enable */
+
+          /* eslint-enable no-undefined*/
+
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -390,18 +398,26 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    /* eslint-disable */
+
+                    /* eslint-disable no-undefined */
+
                     defaultDate={value || undefined}
-                    /* eslint-enable */
+
+                    /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    /* eslint-disable */
+
+                    /* eslint-disable no-undefined */
+
                     defaultTime={value || undefined}
-                    /* eslint-enable */
+
+                    /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-xs-5">

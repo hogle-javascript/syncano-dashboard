@@ -60,22 +60,28 @@ export default React.createClass({
   getAssociationsList(associationsFor, associatedItems) {
     let hasItems = associatedItems.length > 0;
     let list = {
-      schedules: hasItems
-        ? <div>
-            Associated with Schedules: {this.getDialogList(associatedItems, 'label', associationsFor)}
-          </div>
-        : null,
-      triggers: hasItems
-        ? <div>
-            Associated with Triggers: {this.getDialogList(associatedItems, 'label', associationsFor)}
-          </div>
-        : null,
-      notAssociated: hasItems
-        ? <div>
-            Not associated: {this.getDialogList(associatedItems, 'label')}
-          </div>
-        : null
+      schedules: null,
+      triggers: null,
+      notAssociated: null
     };
+
+    if (hasItems) {
+      list.schedules = (
+        <div>
+          Associated with Schedules: {this.getDialogList(associatedItems, 'label', associationsFor)}
+        </div>
+      );
+      list.triggers = (
+        <div>
+          Associated with Triggers: {this.getDialogList(associatedItems, 'label', associationsFor)}
+        </div>
+      );
+      list.notAssociated = (
+        <div>
+          Not associated: {this.getDialogList(associatedItems, 'label')}
+        </div>
+      )
+    }
 
     return list[associationsFor];
   },
