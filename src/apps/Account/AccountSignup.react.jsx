@@ -21,12 +21,23 @@ export default React.createClass({
 
   displayName: 'AccountSignup',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
+
+  statics: {
+    willTransitionTo(transition) {
+      if (SessionStore.isAuthenticated()) {
+        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
+      }
+    }
+  },
 
   validatorConstraints: {
     email: {
@@ -40,23 +51,11 @@ export default React.createClass({
     }
   },
 
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  statics: {
-    willTransitionTo(transition) {
-      if (SessionStore.isAuthenticated()) {
-        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
-      }
-    }
-  },
-
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let router = this.context.router;
-      let next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
@@ -68,20 +67,20 @@ export default React.createClass({
     }
   },
 
-  handleSuccessfullValidation() {
-    Actions.passwordSignUp({
-      email: this.state.email,
-      password: this.state.password
-    });
-  },
-
   getBottomContent() {
     return (
-      <p className="vm-0-b text--center">
-        By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
-        Terms of Use and Privacy Policy</a>.
-      </p>
+    <p className="vm-0-b text--center">
+      By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
+      Terms of Use and Privacy Policy</a>.
+    </p>
     )
+  },
+
+  handleSuccessfullValidation(data) {
+    Actions.passwordSignUp({
+      email: data.email,
+      password: data.password
+    });
   },
 
   render() {

@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 import Router from 'react-router';
 
 import Store from './AuthStore';
-import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 import MUI from 'material-ui';
@@ -13,15 +12,15 @@ export default React.createClass({
 
   displayName: 'AccountPasswordUpdate',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   getStyles() {
     return {

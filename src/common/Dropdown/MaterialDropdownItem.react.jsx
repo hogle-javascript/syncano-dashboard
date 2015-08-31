@@ -6,7 +6,11 @@ import MUI from 'material-ui';
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
+
+  /* eslint-disable react/sort-comp */
   fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
+
+  /* eslint-enable react/sort-comp */
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -21,26 +25,20 @@ export default React.createClass({
         style: React.PropTypes.object
       }),
       secondaryText: React.PropTypes.string,
-      secondaryTextLines: React.PropTypes.number,                // Content to view as item can be any object too
-      name: React.PropTypes.string,     // name for DropdownMenuItems kys
-      handleItemClick: React.PropTypes.func        // function to call after DropdownMenuItem click
+      secondaryTextLines: React.PropTypes.number,
+      name: React.PropTypes.string,
+      handleItemClick: React.PropTypes.func
     })),
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      handleItemClick: React.PropTypes.func,
+      clickable: React.PropTypes.bool
     })
   },
 
   getInitialState() {
     return {gravatarUrl: null};
-  },
-
-  isHeaderNecessary() {
-    let headerContentProps = this.props.headerContent;
-
-    return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
   },
 
   getStyles() {
@@ -50,10 +48,6 @@ export default React.createClass({
         top: '50%'
       }
     }
-  },
-
-  onAvatarError() {
-    this.setState({gravatarUrl: this.fallBackAvatar});
   },
 
   getGravatarUrl() {
@@ -66,13 +60,22 @@ export default React.createClass({
     return Gravatar.url(headerContentProps.userEmail, {default: this.fallBackAvatar}, true);
   },
 
+  onAvatarError() {
+    this.setState({gravatarUrl: this.fallBackAvatar});
+  },
+
+  isHeaderNecessary() {
+    let headerContentProps = this.props.headerContent;
+
+    return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
+  },
+
   renderHeaderContent() {
     let styles = this.getStyles();
     let headerContentProps = this.props.headerContent;
     let headerContentElement = null;
 
     if (this.isHeaderNecessary()) {
-      let location = window.location;
       let gravatarUrl = this.getGravatarUrl();
       let primaryText = headerContentProps.userFullName || headerContentProps.userEmail;
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;

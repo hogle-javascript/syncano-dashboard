@@ -6,8 +6,6 @@ import Mixins from '../../mixins';
 import DataObjectsRenderer from './DataObjectsRenderer';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import ClassesStore from '../Classes/ClassesStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import DataObjectsActions from './DataObjectsActions';
@@ -94,7 +92,6 @@ export default Reflux.createStore({
     );
     this.listenToForms();
 
-    // TODO why not setCurrentClassObj why?
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
@@ -258,13 +255,12 @@ export default Reflux.createStore({
 
   onFetchCurrentClassObjCompleted(classObj) {
     console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
-    this.data.classObj = classObj; // TODO why, why?
+    this.data.classObj = classObj;
     DataObjectsActions.setCurrentClassObj(classObj);
   },
 
   onFetchDataObjects() {
     console.debug('DataObjectsStore::onFetchDataObjects');
-    // this.data.isLoading = true;
     this.trigger(this.data);
   },
 

@@ -3,7 +3,6 @@ import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import Actions from './ProfileInvitationsActions';
@@ -25,6 +24,26 @@ export default React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs
   ],
+
+  componentDidMount() {
+    console.info('ProfileInvitations::componentDidMount');
+    Actions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('ProfileInvitations::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
+
+  handleAccept() {
+    console.info('ProfileInvitations::handleAccept');
+    Actions.acceptInvitations(Store.getCheckedItems());
+  },
+
+  handleDecline() {
+    console.info('ProfileInvitations::handleDecline');
+    Actions.declineInvitations(Store.getCheckedItems());
+  },
 
   initDialogs() {
     let checked = Store.getCheckedItems().length;
@@ -59,16 +78,6 @@ export default React.createClass({
     ]
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('ProfileInvitations::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
-  componentDidMount() {
-    console.info('ProfileInvitations::componentDidMount');
-    Actions.fetch();
-  },
-
   uncheckAll() {
     console.info('ProfileInvitations::uncheckAll');
     Actions.uncheckAll();
@@ -77,16 +86,6 @@ export default React.createClass({
   checkItem(id, state) {
     console.info('ProfileInvitations::checkItem');
     Actions.checkItem(id, state);
-  },
-
-  handleAccept() {
-    console.info('ProfileInvitations::handleAccept');
-    Actions.acceptInvitations(Store.getCheckedItems());
-  },
-
-  handleDecline() {
-    console.info('ProfileInvitations::handleDecline');
-    Actions.declineInvitations(Store.getCheckedItems());
   },
 
   renderItem(item) {
@@ -113,7 +112,6 @@ export default React.createClass({
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }

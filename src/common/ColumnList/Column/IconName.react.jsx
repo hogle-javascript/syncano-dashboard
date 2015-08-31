@@ -63,6 +63,10 @@ export default Radium(React.createClass({
     }
   },
 
+  componentWillReceiveProps(newProps) {
+    this.setState({checked: newProps.checked});
+  },
+
   getStyles() {
     return {
       container: {
@@ -94,10 +98,6 @@ export default Radium(React.createClass({
         background: this.props.background
       }
     };
-  },
-
-  componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
   },
 
   handleIconClick(id, state) {

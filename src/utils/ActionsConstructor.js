@@ -10,14 +10,7 @@ let Context = {
   D: Connection.D
 };
 
-export default (options, actions) => {
-  if (actions === undefined) {
-    actions = options;
-    options = null;
-  }
-
-  options = options || {};
-
+export default (actions = {}, options = {withDialog: false, withCheck: false}) => {
   if (options.withDialog) {
     actions.showDialog = {};
     actions.dismissDialog = {};

@@ -1,10 +1,10 @@
-import Reflux         from 'reflux';
-import Raven          from '../../raven';
-import Connection     from './Connection';
+import Reflux from 'reflux';
+import Raven from '../../raven';
+import Connection from './Connection';
 import SessionActions from './SessionActions';
 
-import Colors         from 'material-ui/lib/styles/colors';
-import SyncanoTheme   from '../../common/SyncanoTheme';
+import Colors from 'material-ui/lib/styles/colors';
+import SyncanoTheme from '../../common/SyncanoTheme';
 
 export default Reflux.createStore({
   listenables: SessionActions,
@@ -67,13 +67,13 @@ export default Reflux.createStore({
 
   setUser(user) {
     console.info('SessionStore::setUser');
-    if (user === undefined) {
+    if (typeof user === 'undefined') {
       return;
     }
 
     this.user = user;
 
-    if (this.user.account_key === undefined) {
+    if (typeof this.user.account_key === 'undefined') {
       this.user.account_key = this.token;
     } else {
       this.token = user.account_key;
@@ -157,7 +157,7 @@ export default Reflux.createStore({
   onLogin(payload) {
     console.info('SessionStore::onLogin');
 
-    if (payload === undefined || payload.account_key === undefined) {
+    if (typeof payload === 'undefined' || typeof payload.account_key === 'undefined') {
       return;
     }
 

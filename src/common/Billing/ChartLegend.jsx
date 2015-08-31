@@ -8,8 +8,6 @@ export default Radium(React.createClass({
 
   displayName: 'ChartLegend',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     showPercents: React.PropTypes.bool,
     rows: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -19,6 +17,8 @@ export default Radium(React.createClass({
       styles: React.PropTypes.object
     }))
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getDefaultProps() {
     return {

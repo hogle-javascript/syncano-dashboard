@@ -23,12 +23,23 @@ export default React.createClass({
 
   displayName: 'AccountLogin',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
-    React.addons.LinkedStateMixin,
     FormMixin
   ],
+
+  statics: {
+    willTransitionTo(transition) {
+      if (SessionStore.isAuthenticated()) {
+        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
+      }
+    }
+  },
 
   validatorConstraints: {
     email: {
@@ -42,23 +53,11 @@ export default React.createClass({
     }
   },
 
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  statics: {
-    willTransitionTo(transition) {
-      if (SessionStore.isAuthenticated()) {
-        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
-      }
-    }
-  },
-
   componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
       let router = this.context.router;
-      let next   = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
 
       router.replaceWith(next);
     }
@@ -70,19 +69,11 @@ export default React.createClass({
     }
   },
 
-  // TODO: find better way how to grab values for DOM
-  handleSuccessfullValidation() {
+  handleSuccessfullValidation(data) {
     Actions.passwordSignIn({
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
+      email: data.email,
+      password: data.password
     });
-  },
-
-  getValidatorAttributes() {
-    return {
-      email: this.state.email || this.refs.email.getValue(),
-      password: this.state.password || this.refs.password.getValue()
-    }
   },
 
   render() {

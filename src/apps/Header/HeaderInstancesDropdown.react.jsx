@@ -4,11 +4,9 @@ import Router from 'react-router';
 import Radium from 'radium';
 import OutsideClickHandler from 'react-outsideclickhandler';
 
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import InstancesActions from '../Instances/InstancesActions';
 import InstancesStore from '../Instances/InstancesStore';
 
 import MUI from 'material-ui';
@@ -18,6 +16,11 @@ export default Radium(React.createClass({
 
   displayName: 'HeaderInstancesDropdown',
 
+  contextTypes: {
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
@@ -25,42 +28,9 @@ export default Radium(React.createClass({
     Router.State
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func.isRequired,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
-  },
-
-  handleOutsideClick() {
-    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
-  },
-
-  handleDropdownItemClick(event, selectedIndex, menuItem) {
-    // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload).then(() => {
-      this.transitionTo('instance', {instanceName: menuItem.payload});
-    });
-  },
-
-  handleInstanceActive() {
-    if (InstancesStore.getAllInstances()) {
-      let currentInstance = SessionStore.instance;
-      let instancesList = InstancesStore.getAllInstances(true);
-      let instanceActiveIndex = null;
-
-      instancesList.some((event, index) => {
-        if (event.name === currentInstance.name) {
-          instanceActiveIndex = index;
-          return true;
-        }
-      });
-
-      return instanceActiveIndex;
-    }
   },
 
   getStyles() {
@@ -110,9 +80,37 @@ export default Radium(React.createClass({
         maxHeight: 'calc(100vh - 80px)'
       },
       dropdownMenuItem: {
-        height      : 'auto',
-        paddingLeft : 16
+        height: 'auto',
+        paddingLeft: 16
       }
+    }
+  },
+
+  handleOutsideClick() {
+    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
+  },
+
+  handleDropdownItemClick(event, selectedIndex, menuItem) {
+    // Redirect to main instance screen
+    SessionActions.fetchInstance(menuItem.payload).then(() => {
+      this.transitionTo('instance', {instanceName: menuItem.payload});
+    });
+  },
+
+  handleInstanceActive() {
+    if (InstancesStore.getAllInstances()) {
+      let currentInstance = SessionStore.instance;
+      let instancesList = InstancesStore.getAllInstances(true);
+      let instanceActiveIndex = null;
+
+      instancesList.some((event, index) => {
+        if (event.name === currentInstance.name) {
+          instanceActiveIndex = index;
+          return true;
+        }
+      });
+
+      return instanceActiveIndex;
     }
   },
 
@@ -128,8 +126,8 @@ export default Radium(React.createClass({
     }
 
     let dropDownMenuItems = instancesList.map((item) => {
-      item.metadata       = item.metadata       || {};
-      item.metadata.icon  = item.metadata.icon  || null;
+      item.metadata = item.metadata || {};
+      item.metadata.icon = item.metadata.icon || null;
       item.metadata.color = item.metadata.color || null;
 
       let iconBackground = {

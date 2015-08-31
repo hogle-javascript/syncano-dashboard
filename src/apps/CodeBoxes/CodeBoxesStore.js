@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import D from 'd.js';
 
 import Mixins from '../../mixins';
 
@@ -21,15 +22,17 @@ export default Reflux.createStore({
   },
 
   runtimeColors: {
-    nodejs: {color: '#80BD01', icon: 'language-javascript'},
+    nodejs: {color: '#80BD01', icon: 'language-nodejs'},
     python: {color: '#4984B1', icon: 'language-python'},
-    golang: {color: '#E0EBF5', icon: 'code-array'},
-    ruby: {color: '#B21000', icon: 'code-array'}
+    golang: {color: '#FFC107', icon: 'language-golang'},
+    ruby: {color: '#B21000', icon: 'language-ruby'}
   },
 
   getInitialState() {
     return {
       items: [],
+      triggers: [],
+      schedules: [],
 
       currentCodeBoxId: null,
 
@@ -126,7 +129,14 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('CodeBoxesStore::refreshData');
-    Actions.fetchCodeBoxes();
+    D.all([
+      Actions.fetchCodeBoxes(),
+      Actions.fetchTriggers(),
+      Actions.fetchSchedules()
+    ]).then(() => {
+      this.data.isLoading = false;
+      this.trigger(this.data);
+    })
   },
 
   setCodeBoxes(items) {
@@ -145,20 +155,29 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onRemoveCodeBoxesCompleted(payload) {
+  onRemoveCodeBoxesCompleted() {
     console.debug('CodeBoxesStore::onRemoveCodeBoxesCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
   },
 
-  onFetchCodeBoxes() {
-    console.debug('CodeBoxesStore::onFetchCodeBoxes');
-    this.trigger(this.data);
+  onFetchCodeBoxesCompleted(codeboxes) {
+    console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
+    Actions.setCodeBoxes(codeboxes, 'items');
   },
 
-  onFetchCodeBoxesCompleted(items) {
-    console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    Actions.setCodeBoxes(items);
+  onFetchTriggersCompleted(triggers) {
+    console.debug('CodeBoxesStore::onFetchTriggersCompleted');
+    this.setItems(triggers, 'triggers')
+  },
+
+  onFetchSchedulesCompleted(schedules) {
+    console.debug('CodeBoxesStore::onFetchSchedulesCompleted');
+    this.setItems(schedules, 'schedules')
+  },
+
+  setItems(items, itemsType) {
+    this.data[itemsType] = Object.keys(items).map((key) => items[key]);
   },
 
   onRunCodeBox() {

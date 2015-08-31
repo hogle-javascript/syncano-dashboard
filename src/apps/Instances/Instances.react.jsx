@@ -5,7 +5,6 @@ import Radium from 'radium';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
@@ -15,7 +14,6 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import Common from '../../common';
-// TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
@@ -23,7 +21,7 @@ import InstancesList from './InstancesList.react';
 import InstanceDialog from './InstanceDialog.react';
 import WelcomeDialog from './WelcomeDialog';
 
-require('./Instances.sass');
+import './Instances.sass';
 
 export default Radium(React.createClass({
   displayName: 'Instances',
@@ -35,47 +33,6 @@ export default Radium(React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs
   ],
-
-  // Dialogs config
-  initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteInstanceDialog',
-          ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleDelete}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
-            this.getDialogList(checkedInstances),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-              />
-          ]
-        }
-      }]
-  },
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
@@ -113,9 +70,49 @@ export default Radium(React.createClass({
     this.transitionTo('instance', {instanceName});
   },
 
+  // Dialogs config
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let checkedInstances = Store.getCheckedItems();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteInstanceDialog',
+          ref: 'deleteInstanceDialog',
+          title: 'Delete an Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDelete}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            this.getDialogList(checkedInstances),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          ]
+        }
+      }]
+  },
+
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
-    this.setState({'welcomeShowed': true});
+    this.setState({welcomeShowed: true});
   },
 
   showInstanceEditDialog() {
@@ -136,7 +133,7 @@ export default Radium(React.createClass({
     let instances = this.state.items;
     let instancesCount = instances ? instances.length : 0;
     let checkedInstances = Store.getNumberOfChecked();
-    let isAnyInstanceSelected =  instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
+    let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
@@ -144,8 +141,8 @@ export default Radium(React.createClass({
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
 
         <WelcomeDialog
-          getStared={this.showInstanceDialog}
-          visible={this.state.items !== null && Store.getMyInstances().length === 0 && !this.state.welcomeShowed}/>
+          getStarted={this.showInstanceDialog}
+          visible={this.state.items !== null && Store.getAllInstances().length === 0 && !this.state.welcomeShowed}/>
 
         <InstanceDialog />
         {this.getDialogs()}

@@ -1,18 +1,10 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
-// Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Store from './UsersStore';
-import Actions from './UsersActions';
-
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -41,11 +33,6 @@ export default React.createClass({
     })
   },
 
-  // List
-  handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
-  },
-
   getStyles() {
     return {
       groupsList: {
@@ -67,11 +54,16 @@ export default React.createClass({
     }
   },
 
+  // List
+  handleItemIconClick(id, state) {
+    this.props.checkItem(id, state);
+  },
+
   renderItemGroups(groups) {
     let styles = this.getStyles();
 
-    if (groups === undefined) {
-      return
+    if (typeof groups === 'undefined') {
+      return true;
     }
 
     if (groups.length === 0) {
@@ -106,7 +98,7 @@ export default React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
@@ -132,7 +124,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
       </div>

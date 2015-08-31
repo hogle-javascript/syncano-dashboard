@@ -101,9 +101,7 @@ export default Reflux.createStore({
     return !this.amIOwner(item);
   },
 
-  getAllInstances(reversed) {
-    reversed = reversed || false;
-
+  getAllInstances(reversed = false) {
     if (this.data.items === null) {
       return this.data.items;
     }
@@ -147,7 +145,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchInstances(instances) {
+  onFetchInstances() {
     console.debug('InstancesStore::onFetchInstances');
     this.trigger(this.data);
   },

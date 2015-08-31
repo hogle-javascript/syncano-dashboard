@@ -25,7 +25,6 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form
   ],
@@ -36,18 +35,16 @@ export default React.createClass({
     }
   },
 
-  componentDidUpdate() {
-    if (!this.state.schemaInitialized && this.state.schema) {
-      this.setFields(this.state.schema);
-      this.setState({
-        schemaInitialized: true
-      });
-    }
-  },
-
   componentDidMount() {
     if (this.hasEditMode()) {
       Store.refreshData();
+    }
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    if (!nextState.schemaInitialized && nextState.schema) {
+      this.setFields(nextState.schema);
+      nextState.schemaInitialized = true;
     }
   },
 
@@ -58,22 +55,6 @@ export default React.createClass({
         text: item
       }
     });
-  },
-
-  setFields(schema) {
-    const fields = this.state.fields;
-
-    schema.map((item) => {
-      fields.push({
-        fieldName: item.name,
-        fieldType: item.type,
-        fieldTarget: item.target,
-        fieldOrder: item.order_index,
-        fieldFilter: item.filter_index
-      });
-    });
-
-    return fields;
   },
 
   getSchema() {
@@ -93,6 +74,36 @@ export default React.createClass({
       }
       return schema;
     }));
+  },
+
+
+  hasFilter(fieldType) {
+    const noFilterFields = ['file', 'text'];
+
+    return noFilterFields.indexOf(fieldType) < 0;
+  },
+
+  hasOrder(fieldType) {
+    const noOrderFields = ['file', 'text'];
+
+    return noOrderFields.indexOf(fieldType) < 0;
+  },
+
+  hasEditMode() {
+    return this.getParams().className;
+  },
+
+  handleSuccessfullValidation() {
+    return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
+  },
+
+  handleBackClick() {
+    SessionStore.getRouter().transitionTo(
+      'classes',
+      {
+        instanceName: SessionStore.getInstance().name
+      }
+    );
   },
 
   handleAddSubmit() {
@@ -185,6 +196,22 @@ export default React.createClass({
     this.setState({fields: newFields});
   },
 
+  setFields(schema) {
+    const fields = this.state.fields;
+
+    schema.map((item) => {
+      fields.push({
+        fieldName: item.name,
+        fieldType: item.type,
+        fieldTarget: item.target,
+        fieldOrder: item.order_index,
+        fieldFilter: item.filter_index
+      });
+    });
+
+    return fields;
+  },
+
   renderSchemaFields() {
     return this.state.fields.map((item) => {
       return (
@@ -219,35 +246,6 @@ export default React.createClass({
     });
   },
 
-  hasFilter(fieldType) {
-    const noFilterFields = ['file', 'text'];
-
-    return noFilterFields.indexOf(fieldType) < 0;
-  },
-
-  hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text'];
-
-    return noOrderFields.indexOf(fieldType) < 0;
-  },
-
-  hasEditMode() {
-    return this.getParams().className;
-  },
-
-  handleSuccessfullValidation() {
-    return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
-  },
-
-  handleBackClick() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      {
-        instanceName: SessionStore.getInstance().name
-      }
-    );
-  },
-
   render() {
     const title = this.hasEditMode() ? 'Update a Class' : 'Add a Class';
     const permissions = [
@@ -264,7 +262,6 @@ export default React.createClass({
         payload: 'create_objects'
       }
     ];
-
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>

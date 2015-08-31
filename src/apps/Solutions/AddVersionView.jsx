@@ -8,10 +8,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import EditViewActions from './EditViewActions';
-import EditViewStore from './EditViewStore';
-
 import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
@@ -24,7 +20,6 @@ export default Radium(React.createClass({
   displayName: 'AddVersionView',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Router.State,
     Router.Navigation,
 
@@ -38,19 +33,6 @@ export default Radium(React.createClass({
     instance: {
       presence: true
     }
-  },
-
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      },
-      {
-        label: 'Solutions',
-        route: 'solutions'
-      }
-    ];
   },
 
   componentWillMount() {
@@ -79,6 +61,17 @@ export default Radium(React.createClass({
         fontSize: '1rem',
         verticalAlign: 'middle',
         textAlign: 'center'
+      },
+      instanceDropdowInputLabel: {
+        overflow: 'hidden',
+        maxHeight: '100%',
+        paddingRight: 30,
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      },
+      instancesDropdownItem: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }
     }
   },
@@ -95,6 +88,35 @@ export default Radium(React.createClass({
 
   handleInstanceChange(event, index, obj) {
     Actions.setInstance(obj.payload)
+  },
+
+  handleSubmit(type) {
+    this.setState({type});
+    this.handleFormValidation();
+  },
+
+  handleAddSubmit() {
+    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
+  },
+
+  handleOnCheck(name, type, event, status) {
+    let exportSpec = this.state.exportSpec;
+
+    exportSpec[type][name] = status;
+    this.setState({exportSpec});
+  },
+
+  headerMenuItems() {
+    return [
+      {
+        label: 'Instances',
+        route: 'instances'
+      },
+      {
+        label: 'Solutions',
+        route: 'solutions'
+      }
+    ];
   },
 
   pkMap(section) {
@@ -123,10 +145,7 @@ export default Radium(React.createClass({
         if (spec[section][item] === true) {
           let obj = {};
 
-          if (pkName === 'id') {
-            item = parseInt(item, 10);
-          }
-          obj[pkName] = item;
+          obj[pkName] = (pkName === 'id') ? parseInt(item, 10) : item;
           formatedSpec[section].push(obj);
         }
       })
@@ -141,22 +160,6 @@ export default Radium(React.createClass({
       export_spec: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     }
-  },
-
-  handleSubmit(type) {
-    this.setState({type});
-    this.handleFormValidation();
-  },
-
-  handleAddSubmit() {
-    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
-  },
-
-  handleOnCheck(name, type, event, status) {
-    let exportSpec = this.state.exportSpec;
-
-    exportSpec[type][name] = status;
-    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
@@ -201,7 +204,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     if (this.state.dataReady === true) {
-      return;
+      return true;
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>
@@ -217,6 +220,8 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
       <div>
         <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
@@ -252,19 +257,20 @@ export default Radium(React.createClass({
                   menuItems={Store.getTypes()}
                   />
               </div>
-              <div className='col-lg-26'>
+              <div className='col-flex-1'>
                 <MUI.SelectField
                   ref='instance'
                   name='instance'
                   onChange={this.handleInstanceChange}
                   fullWidth={true}
-                  value={null}
+                  value={this.state.instance}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
+                  labelStyle={styles.instanceDropdowInputLabel}
+                  menuItemStyle={styles.instancesDropdownItem}
                   errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()}
-                  />
+                  menuItems={Store.getInstancesDropdown()}/>
               </div>
             </div>
           </div>

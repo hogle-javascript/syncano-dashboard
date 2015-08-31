@@ -5,21 +5,20 @@ import Router from 'react-router';
 import Store from './AuthStore';
 import Actions from './AuthActions';
 
-import MUI from 'material-ui';
 import Container from '../../common/Container/AccountContainer.react';
 
 export default React.createClass({
 
   displayName: 'AccountActivate',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   componentDidMount() {
     let params = this.getParams();

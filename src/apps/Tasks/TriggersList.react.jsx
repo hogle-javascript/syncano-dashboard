@@ -1,18 +1,13 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
-import Actions from './TriggersActions';
-import Store from './TriggersStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -55,7 +50,6 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    // TODO: move to store
     let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
     let codeBoxLabel = codeBox ? codeBox.label : '';
 
@@ -81,11 +75,10 @@ export default React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
@@ -110,7 +103,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
       </Common.Lists.Container>

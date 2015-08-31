@@ -11,14 +11,14 @@ export default React.createClass({
 
   displayName: 'Instance',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   componentWillMount() {
     console.debug('Instance::componentWillMount');
@@ -29,11 +29,17 @@ export default React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      selectedIndex: 0,
-      headerText: 'Profile'
-    };
+  getActiveTabIndex() {
+    let index = 1;
+
+    this.menuItems().some((item, i) => {
+      if (item.route && this.isActive(item.route, item.params, item.query)) {
+        index = i;
+        return true;
+      }
+    });
+
+    return index;
   },
 
   getStyles() {
@@ -55,10 +61,15 @@ export default React.createClass({
     }
   },
 
+  handleTabActive(event, index, obj) {
+    this.transitionTo(obj.route, this.getParams());
+    this.setState({headerText: obj.text, selectedIndex: index});
+  },
+
   menuItems() {
     return [
       {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
-      {route: 'data', text: 'Data'},
+      {route: 'webhooks', text: 'Webhooks'},
       {route: 'classes', text: 'Classes'},
       {route: 'codeboxes', text: 'CodeBoxes'},
       {route: 'users', text: 'Users'},
@@ -79,11 +90,6 @@ export default React.createClass({
     )
   },
 
-  handleTabActive(event, index, obj) {
-    this.transitionTo(obj.route, this.getParams());
-    this.setState({headerText: obj.text, selectedIndex: index});
-  },
-
   render() {
     const styles = this.getStyles();
 
@@ -94,7 +100,7 @@ export default React.createClass({
           ref="leftNav"
           header={this.renderInstanceDropdown()}
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
-          selectedIndex={this.state.selectedIndex || 0}
+          selectedIndex={this.getActiveTabIndex()}
           style={styles.leftNav}
           menuItems={this.menuItems()}
           onChange={this.handleTabActive}/>

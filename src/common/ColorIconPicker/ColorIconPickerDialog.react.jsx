@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -8,10 +7,6 @@ export default React.createClass({
 
   displayName: 'ColorIconPickerDialog',
 
-  mixins: [
-    React.addons.LinkedStateMixin
-  ],
-
   propTypes: {
     color: React.PropTypes.string,
     icon: React.PropTypes.string,
@@ -19,6 +14,10 @@ export default React.createClass({
     initialIcon: React.PropTypes.string,
     handleClick: React.PropTypes.func
   },
+
+  mixins: [
+    React.addons.LinkedStateMixin
+  ],
 
   getInitialState() {
     return {
@@ -33,14 +32,6 @@ export default React.createClass({
       color: nextProps.initialColor,
       icon: nextProps.initialIcon
     })
-  },
-
-  show() {
-    this.refs.dialog.show();
-  },
-
-  dismiss() {
-    this.refs.dialog.dismiss();
   },
 
   handleSubmit() {
@@ -64,6 +55,14 @@ export default React.createClass({
     if (ColorIcon.icon) {
       this.setState({icon: ColorIcon.icon});
     }
+  },
+
+  show() {
+    this.refs.dialog.show();
+  },
+
+  dismiss() {
+    this.refs.dialog.dismiss();
   },
 
   render() {

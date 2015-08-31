@@ -4,17 +4,17 @@ import Router from 'react-router';
 import MUI from 'material-ui';
 import Common from '../';
 
-require('./AccountContainer.sass');
+import './AccountContainer.sass';
 
 export default React.createClass({
 
   displayName: 'AccountContainer',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.object
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {

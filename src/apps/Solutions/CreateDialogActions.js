@@ -2,9 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions(
   {
-    withDialog: true
-  },
-  {
     fetch: {},
     setSolutions: {},
     setFilter: {},
@@ -37,5 +34,8 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Solutions.listTags'
     }
+  },
+  {
+    withDialog: true
   }
 );

@@ -4,9 +4,9 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import WebhooksActions   from './WebhooksActions';
-import CodeBoxesActions  from '../CodeBoxes/CodeBoxesActions';
-import CodeBoxesStore    from '../CodeBoxes/CodeBoxesStore';
+import WebhooksActions from './WebhooksActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 export default Reflux.createStore({
   listenables: WebhooksActions,
@@ -19,7 +19,7 @@ export default Reflux.createStore({
     return {
       label: '',
       signal: '',
-      'class': '',
+      class: '',
       codeboxes: [
         {
           payload: '',

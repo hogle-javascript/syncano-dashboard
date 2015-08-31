@@ -16,8 +16,8 @@ let Header = React.createClass({
 
   getStyles() {
     return {
-      fontSize : 20,
-      fontWeight : 500
+      fontSize: 20,
+      fontWeight: 500
     }
   },
 
@@ -66,6 +66,10 @@ export default Radium(React.createClass({
     }
   },
 
+  componentWillReceiveProps(newProps) {
+    this.setState({checked: newProps.checked});
+  },
+
   getStyles() {
     return {
       container: {
@@ -93,10 +97,6 @@ export default Radium(React.createClass({
         }
       }
     }
-  },
-
-  componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
   },
 
   handleIconClick(id, state) {

@@ -46,18 +46,12 @@ export default Radium(React.createClass({
     }
   },
 
-  renderLegend() {
-    let styles = this.getStyles().container;
-
-    return (
-      <div style={styles}>
-        {this.renderLegendItems()}
-      </div>
-    )
-  },
-
   handleOptionsClick(i, type) {
     this.props.optionClick(i, type);
+  },
+
+  handleChange(event, value) {
+    this.props.onChange(this.props.type, event, value);
   },
 
   renderLegendItems() {
@@ -85,8 +79,14 @@ export default Radium(React.createClass({
     }.bind(this));
   },
 
-  handleChange(event, value) {
-    this.props.onChange(this.props.type, event, value);
+  renderLegend() {
+    let styles = this.getStyles().container;
+
+    return (
+    <div style={styles}>
+      {this.renderLegendItems()}
+    </div>
+    )
   },
 
   render() {

@@ -185,7 +185,7 @@ export default Reflux.createStore({
     this.setSubscriptions(payload);
   },
 
-  onCancelSubscriptionsCompleted(payload) {
+  onCancelSubscriptionsCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.trigger(this.data);

@@ -12,9 +12,9 @@ export default React.createClass({
 
   getCardIcon(cardType = this.props.type, cardStyle = this.props.style) {
     switch (cardType) {
-      case 'AmericanExpress':
+      case 'American Express':
         return <AmericanExpress style={cardStyle}/>;
-      case 'DinersClub':
+      case 'Diners Club':
         return <DinersClub style={cardStyle}/>;
       case 'Discover':
         return <Discover style={cardStyle}/>;

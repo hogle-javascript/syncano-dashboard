@@ -19,7 +19,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(ScheduleDialogStore),
-    React.addons.LinkedStateMixin,
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -62,17 +61,17 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-        {
-          ref: 'cancel',
-          text: 'Cancel',
-          onTouchTap: this.handleCancel
-        },
-        {
-          ref: 'submit',
-          text: 'Confirm',
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+      {
+        ref: 'cancel',
+        text: 'Cancel',
+        onTouchTap: this.handleCancel
+      },
+      {
+        ref: 'submit',
+        text: 'Confirm',
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     return (
       <Common.Dialog
@@ -98,6 +97,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='codebox'
               name='codebox'
+              className='codebox-dropdown'
               floatingLabelText='CodeBox'
               valueLink={this.linkState('codebox')}
               errorText={this.getValidationMessages('codebox').join(' ')}
@@ -108,6 +108,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='crontab'
               name='crontab'
+              className='crontab-dropdown'
               floatingLabelText='CronTab'
               valueLink={this.linkState('crontab')}
               errorText={this.getValidationMessages('crontab').join(' ')}

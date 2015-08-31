@@ -5,28 +5,21 @@ import Select from 'react-select';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import InstancesActions from '../Instances/InstancesActions';
 import SessionStore from '../Session/SessionStore';
 
 import Actions from './EditViewActions';
 import Store from './EditViewStore';
 
-import InstallDialogStore from './InstallDialogStore';
 import InstallDialogActions from './InstallDialogActions';
-
-import AddVersionViewStore from './AddVersionViewStore';
-import AddVersionViewActions from './AddVersionViewActions';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
-import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
 
 export default React.createClass({
@@ -98,12 +91,8 @@ export default React.createClass({
     );
   },
 
-  handleInstallSolution(versionId) {
+  handleInstallSolution() {
     InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
-  },
-
-  showCreateDialog() {
-    SolutionEditActions.showDialog();
   },
 
   getStyles() {
@@ -181,7 +170,7 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top:64, padding: '0px'}}>
+        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
           <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
             <MUI.FontIcon
               style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}

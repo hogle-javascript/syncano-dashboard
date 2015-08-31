@@ -1,3 +1,6 @@
+var Utils = require('nightwatch/lib/util/utils.js');
+
+
 module.exports = {
   tags: ['navigation'],
   before: function(client) {
@@ -18,8 +21,21 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
+    dataPage.waitForElementPresent('@webhookListItem');
   },
+
+  afterEach: function(client, done) {
+    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
+      done();
+      return;
+    }
+
+    var name = client.currentTest.name;
+    var timestamp = client.currentTest.timestamp;
+    var fileNamePath = Utils.getScreenshotFileName('_navigation/' + client.currentTest.name, client.options.screenshotsPath);
+    client.saveScreenshot(fileNamePath, done);
+  },
+
   'User goes to Administrators View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@administrators');
@@ -27,12 +43,12 @@ module.exports = {
     var administratorsPage = client.page.administratorsPage();
     administratorsPage.waitForElementPresent('@administratorsListItem');
   },
-  'User goes to API Keys View' : function(client) {   
+  'User goes to API Keys View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@apiKeys');
 
     var apiKeysPage = client.page.apiKeysPage();
-    apiKeysPage.expect.element('@addApiKeyButton').to.be.present.after(5000);
+    apiKeysPage.waitForElementPresent('@apiKeysListName');
   },
   'User goes to Channels View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
@@ -41,7 +57,7 @@ module.exports = {
     var channelsPage = client.page.channelsPage();
     channelsPage.waitForElementPresent('@channelListItem');
   },
-    'User goes to Classes View' : function(client) {  
+    'User goes to Classes View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@classes');
 
@@ -94,13 +110,10 @@ module.exports = {
     var dataObjectsPage = client.page.dataObjectsPage();
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  'User goes to Data View' : function(client) {
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
-
-    dataPage.expect.element('@instancesDropdown').to.be.present.after(5000);
-    dataPage.expect.element('@instancesDropdown').to.contain.text('enter_this_instance_now');
-  },
+  // 'User goes to Data View' : function(client) {
+  //   var dataPage = client.page.dataPage();
+  //   dataPage.waitForElementPresent('@dataListItemTitle');
+  // },
   'User goes to Tasks View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@tasks');

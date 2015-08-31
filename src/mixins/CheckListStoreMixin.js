@@ -14,15 +14,12 @@ export default {
 
   onCheckItem(checkId, state) {
     console.debug('CheckListStoreMixin::onCheckItem');
-    checkId = checkId.toString();
-
     this.data.items.forEach(function(item) {
-      // TODO: If item don't have id we are checking name, we should consider name->id in js lib
       if (item.id) {
-        if (checkId === item.id.toString()) {
+        if (checkId.toString() === item.id.toString()) {
           item.checked = state;
         }
-      } else if (checkId === item.name) {
+      } else if (checkId.toString() === item.name) {
         item.checked = state;
       }
     });

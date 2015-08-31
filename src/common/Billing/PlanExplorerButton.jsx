@@ -7,14 +7,14 @@ export default Radium(React.createClass({
 
   displayName: 'PlanExplorerButton',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     plan: React.PropTypes.string,
     isNewSubscription: React.PropTypes.bool,
     onDeleteSubscription: React.PropTypes.func,
     onPlanDialog: React.PropTypes.func
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {
@@ -34,7 +34,7 @@ export default Radium(React.createClass({
   renderExplorerButtonLabel() {
     if (this.props.plan === 'builder') {
       return 'Open Plans Explorer';
-    } else if (this.props.plan  === 'paid-commitment') {
+    } else if (this.props.plan === 'paid-commitment') {
       if (this.props.isNewSubscription) {
         return 'Change your next commitment';
       }

@@ -4,7 +4,7 @@ export default {
     console.debug('DialogMixin::componentWillUpdate');
 
     if (this.state._dialogVisible === nextState._dialogVisible) {
-      return;
+      return true;
     }
 
     if (nextState._dialogVisible === false) {

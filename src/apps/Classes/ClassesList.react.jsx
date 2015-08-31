@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import ClassesActions from './ClassesActions';
 import ClassesStore from './ClassesStore';
 
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -44,6 +42,8 @@ export default React.createClass({
   },
 
   renderItem(item) {
+    let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
+
     return (
       <Common.ColumnList.Item
         key={item.name}
@@ -67,18 +67,17 @@ export default React.createClass({
           </div>
         </Column.Desc>
         <Column.ID className="col-xs-4 col-md-4">
-          {item.objects_count}
+          {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
@@ -102,7 +101,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
       </Common.Lists.Container>

@@ -5,11 +5,11 @@ export default React.createClass({
 
   displayName: 'Dialog',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     handleClick: React.PropTypes.func
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getDefaultProps() {
     return {

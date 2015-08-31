@@ -1,7 +1,6 @@
 import React from 'react';
 
-import MUI   from 'material-ui';
-import Show  from '../../common/Show/Show.react';
+import MUI from 'material-ui';
 
 export default React.createClass({
 

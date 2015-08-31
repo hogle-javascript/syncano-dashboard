@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars, no-inline-comments */
+
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
@@ -7,15 +9,12 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import DataViewsActions from './DataViewsActions';
 import DataViewsStore from './DataViewsStore';
 import WebhooksActions from './WebhooksActions';
 import WebhooksStore from './WebhooksStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -40,11 +39,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  fetch() {
-    DataViewsActions.fetch();
-    WebhooksActions.fetch();
-  },
-
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
@@ -53,6 +47,55 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
+  },
+
+  handleRemoveWebhooks() {
+    console.info('Data::handleDelete');
+    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
+  },
+
+  handleRemoveDataViews() {
+    console.info('Data::handleRemoveDataViews');
+    DataViewsActions.removeDataViews(DataViewsStore.getCheckedItems());
+  },
+
+  uncheckAll() {
+    console.info('Data::uncheckAll');
+    DataViewsActions.uncheckAll();
+    WebhooksActions.uncheckAll();
+  },
+
+  showDataViewDialog() {
+    DataViewsActions.showDialog();
+  },
+
+  showDataViewEditDialog() {
+    DataViewsActions.showDialog(DataViewsStore.getCheckedItem());
+  },
+
+  showWebhookDialog() {
+    WebhooksActions.showDialog();
+  },
+
+  showWebhookEditDialog() {
+    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
+  },
+
+  checkDataViewItem(id, state) {
+    console.info('Data::checkDataViewItem');
+    DataViewsActions.checkItem(id, state);
+    WebhooksActions.uncheckAll();
+  },
+
+  checkWebhook(id, state) {
+    console.info('Data::checkWebhook');
+    WebhooksActions.checkItem(id, state);
+    DataViewsActions.uncheckAll();
+  },
+
+  fetch() {
+    DataViewsActions.fetch();
+    WebhooksActions.fetch();
   },
 
   // Dialogs config
@@ -99,50 +142,6 @@ export default React.createClass({
         }
       }
     ]
-  },
-
-  handleRemoveWebhooks() {
-    console.info('Data::handleDelete');
-    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
-  },
-
-  handleRemoveDataViews() {
-    console.info('Data::handleRemoveDataViews');
-    DataViewsActions.removeDataViews(DataViewsStore.getCheckedItems());
-  },
-
-  uncheckAll() {
-    console.info('Data::uncheckAll');
-    DataViewsActions.uncheckAll();
-    WebhooksActions.uncheckAll();
-  },
-
-  showDataViewDialog() {
-    DataViewsActions.showDialog();
-  },
-
-  showDataViewEditDialog() {
-    DataViewsActions.showDialog(DataViewsStore.getCheckedItem());
-  },
-
-  showWebhookDialog() {
-    WebhooksActions.showDialog();
-  },
-
-  showWebhookEditDialog() {
-    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
-  },
-
-  checkDataViewItem(id, state) {
-    console.info('Data::checkDataViewItem');
-    DataViewsActions.checkItem(id, state);
-    WebhooksActions.uncheckAll();
-  },
-
-  checkWebhook(id, state) {
-    console.info('Data::checkWebhook');
-    WebhooksActions.checkItem(id, state);
-    DataViewsActions.uncheckAll();
   },
 
   render() {
@@ -202,16 +201,19 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
+          {/*
           <Common.Fab.TooltipItem
             tooltip="Click here to create a Data Endpoint"
             onClick={this.showDataViewDialog}
             iconClassName="synicon-table"/>
+          */}
           <Common.Fab.TooltipItem
             tooltip="Click here to create a CodeBox Endpoint"
             onClick={this.showWebhookDialog}
             iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>
 
+        {/*
         <DataViewsList
           name="Data Endpoints"
           checkItem={this.checkDataViewItem}
@@ -219,6 +221,7 @@ export default React.createClass({
           items={this.state.dataviews.items}
           emptyItemHandleClick={this.showDataViewDialog}
           emptyItemContent="Create a DataView"/>
+         */}
 
         <WebhooksList
           name="CodeBox Endpoints"

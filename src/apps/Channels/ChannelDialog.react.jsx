@@ -18,7 +18,6 @@ export default React.createClass({
   displayName: 'ChannelDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(ChannelDialogStore),
     Mixins.Dialog,
     Mixins.Form
@@ -66,18 +65,17 @@ export default React.createClass({
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm';
     let dialogStandardActions = [
-        {
-          text: 'Cancel',
-          ref: 'cancel',
-          onTouchTap: this.handleCancel
-        }, {
-          text: submitLabel,
-          ref: 'submit',
-          onTouchTap: this.handleFormValidation
-        }
-      ];
+      {
+        text: 'Cancel',
+        ref: 'cancel',
+        onTouchTap: this.handleCancel
+      }, {
+        text: 'Confirm',
+        ref: 'submit',
+        onTouchTap: this.handleFormValidation
+      }
+    ];
 
     return (
       <Common.Dialog
@@ -125,7 +123,6 @@ export default React.createClass({
             valueMember='payload'
             displayMember='text'
             fullWidth={true}
-            selectedIndex={0}
             menuItems={ChannelsStore.getChannelTypesDropdown()}
             />
 
@@ -152,7 +149,6 @@ export default React.createClass({
                 valueMember='payload'
                 displayMember='text'
                 fullWidth={true}
-                selectedIndex={0}
                 menuItems={ChannelsStore.getChannelPermissionsDropdown()}
                 />
             </div>
@@ -166,7 +162,6 @@ export default React.createClass({
                 valueMember='payload'
                 displayMember='text'
                 fullWidth={true}
-                selectedIndex={0}
                 menuItems={ChannelsStore.getChannelPermissionsDropdown()}
                 />
             </div>

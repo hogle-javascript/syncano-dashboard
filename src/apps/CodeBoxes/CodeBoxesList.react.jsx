@@ -6,12 +6,10 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
 import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -28,7 +26,7 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillReceiveProps(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
     this.setState({items: nextProps.items})
   },
 
@@ -70,11 +68,10 @@ export default React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
@@ -97,7 +94,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
       </Common.Lists.Container>

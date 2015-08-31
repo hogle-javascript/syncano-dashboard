@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Moment from 'moment';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +12,6 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -38,15 +36,15 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Users::componentWillUpdate');
-    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Users::componentDidMount');
     Actions.fetch();
     GroupsActions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Users::componentWillUpdate');
+    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
   },
 
   handleRemoveGroups() {
@@ -57,6 +55,15 @@ export default React.createClass({
   handleRemoveUsers() {
     console.info('Users::handleRemoveUsers');
     Actions.removeUsers(Store.getCheckedItems());
+  },
+
+  handleGroupClick(group) {
+    GroupsActions.setActiveGroup(group);
+  },
+
+  handleCancelGroupsDialog() {
+    this.uncheckAllGroups();
+    this.refs.removeGroupDialog.dismiss();
   },
 
   uncheckAllUsers() {
@@ -91,7 +98,9 @@ export default React.createClass({
   },
 
   showUserDialog(group) {
+    /* eslint-disable */
     Actions.showDialog(undefined, group);
+    /* eslint-enable */
   },
 
   showUserEditDialog() {
@@ -109,15 +118,6 @@ export default React.createClass({
   showGroupDeleteDialog(group) {
     group.checked = true;
     this.showDialog('removeGroupDialog');
-  },
-
-  handleGroupClick(group) {
-    GroupsActions.setActiveGroup(group);
-  },
-
-  handleCancelGroupsDialog() {
-    this.uncheckAllGroups();
-    this.refs.removeGroupDialog.dismiss();
   },
 
   initDialogs() {
@@ -191,7 +191,7 @@ export default React.createClass({
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem
-              tooltip={isAnyUserSelected ? "Click here to select all" : "Click here to unselect all"}
+              tooltip={isAnyUserSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
               iconClassName={isAnyUserSelected ? markedIcon : blankIcon}/>

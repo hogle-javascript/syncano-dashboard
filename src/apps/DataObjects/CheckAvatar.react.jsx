@@ -1,7 +1,6 @@
-import React       from 'react';
-import classNames  from 'classnames';
+import React from 'react';
 
-import MUI         from 'material-ui';
+import MUI from 'material-ui';
 
 export default React.createClass({
 
@@ -16,7 +15,7 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      color: 'black',
+      color: '#000',
       hoverColor: MUI.Styles.Colors.blue600
     }
   },
@@ -27,32 +26,16 @@ export default React.createClass({
     }
   },
 
+  componentWillReceiveProps(newProps) {
+    this.setState({checked: newProps.checked});
+  },
+
   getStyles() {
     return {
       icon: {
         margin: 0
       }
     };
-  },
-
-  componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
-  },
-
-  handleIconClick(event) {
-    console.info('ColumnAvatarCheck:handleClick');
-    this.props.handleIconClick(this.props.id, !this.state.checked)
-  },
-
-  handleMouseOver() {
-    this.setState({
-      hovered: true
-    });
-  },
-  handleMouseLeave() {
-    this.setState({
-      hovered: false
-    });
   },
 
   getIconState() {
@@ -72,14 +55,39 @@ export default React.createClass({
     return {icon: this.props.icon, color: this.props.background};
   },
 
-  render() {
+  handleIconClick() {
+    console.info('ColumnAvatarCheck:handleClick');
+    this.props.handleIconClick(this.props.id, !this.state.checked)
+  },
+
+  handleMouseOver() {
+    this.setState({
+      hovered: true
+    });
+  },
+  handleMouseLeave() {
+    this.setState({
+      hovered: false
+    });
+  },
+
+  renderIcon() {
     let styles = this.getStyles();
     let iconState = this.getIconState();
-    let icon = <MUI.FontIcon className={"synicon-" + iconState.icon} style={styles.icon}/>;
+
+    return (
+      <MUI.FontIcon
+        className={`synicon-${iconState.icon}`}
+        style={styles.icon}/>
+    )
+  },
+
+  render() {
+    let iconState = this.getIconState();
 
     return (
       <MUI.Avatar
-        icon={icon}
+        icon={this.renderIcon()}
         style={this.props.style}
         backgroundColor={iconState.color}
         onClick={this.handleIconClick}

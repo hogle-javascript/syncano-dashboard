@@ -15,7 +15,6 @@ import Actions from './TracesActions';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
-import Container from '../../common/Container/Container.react';
 
 // Local components
 import TracesList from './TracesList.react';
@@ -46,6 +45,10 @@ export default Radium(React.createClass({
     }
   },
 
+  componentDidMount() {
+    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+  },
+
   getStyles() {
     return {
       list: {
@@ -61,7 +64,7 @@ export default Radium(React.createClass({
   getConfig() {
     return {
       webhook: {
-        route: 'data',
+        route: 'webhooks',
         backLabel: 'Go back to Data Views'
       },
       codebox: {
@@ -77,16 +80,6 @@ export default Radium(React.createClass({
         backLabel: 'Go back to Tasks list'
       }
     }[this.props.tracesFor];
-  },
-
-  componentDidMount() {
-    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
-  },
-
-  handleBackClick() {
-    const config = this.getConfig();
-
-    this.transitionTo(config.route, this.getParams());
   },
 
   getTracesFor() {
@@ -105,6 +98,12 @@ export default Radium(React.createClass({
     }
 
     return '';
+  },
+
+  handleBackClick() {
+    const config = this.getConfig();
+
+    this.transitionTo(config.route, this.getParams());
   },
 
   renderToolbarTitle() {

@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import _ from 'lodash';
+import D from 'd.js';
 
 // Utils & Mixins
 import Constans from '../../constants/Constants';
@@ -7,11 +8,10 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
-import ClassesActions from './ClassesActions';
+import Actions from './ClassesActions';
 
 export default Reflux.createStore({
-  listenables: ClassesActions,
+  listenables: Actions,
   mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
@@ -20,6 +20,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      triggers: [],
       isLoading: true
     }
   },
@@ -35,7 +36,13 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('ClassesStore::refreshData');
-    ClassesActions.fetchClasses();
+    D.all([
+      Actions.fetchClasses(),
+      Actions.fetchTriggers()
+    ]).then(() => {
+      this.data.isLoading = false;
+      this.trigger(this.data);
+    })
   },
 
   getItems() {
@@ -173,11 +180,21 @@ export default Reflux.createStore({
 
   onFetchClassesCompleted(items) {
     console.debug('ClassesStore::onFetchClassesCompleted');
-    this.data.isLoading = false;
-    ClassesActions.setClasses(items);
+    Actions.setClasses(items);
+  },
+
+  onFetchTriggersCompleted(items) {
+    console.debug('ClassesStore::onFetchTriggersCompleted');
+    this.setTriggers(items);
+  },
+
+  setTriggers(items) {
+    console.debug('ClassesStore::setTriggers');
+    this.data.triggers = Object.keys(items).map((key) => items[key]);
   },
 
   onRemoveClassesCompleted() {
+    console.debug('ClassesStore::onRemoveClassesCompleted');
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

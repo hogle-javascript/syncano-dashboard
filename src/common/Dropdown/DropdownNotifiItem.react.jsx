@@ -13,60 +13,26 @@ export default React.createClass({
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string.isRequired,
       userEmail: React.PropTypes.string.isRequired,
-      handleItemClick: React.PropTypes.func,                  // if "clickable" props is defined as false or
-      clickable: React.PropTypes.bool                   // is not defined function will not be triggered
+      handleItemClick: React.PropTypes.func,
+      clickable: React.PropTypes.bool
     })
   },
 
-  renderEmptyNotification() {
-    let emptyItem = {
-      subheader: "Notifications",
-      subheaderStyle: {
-        borderBottom: "1px solid #EAEAEA"
-      },
-      name: "empty-notification",
-      leftIcon: {
-        name: "synicon-information",
-        color: "#0091EA"
-      },
-      content: {
-        text: "You don't have any notifications",
-        style: {}
-      }
-    };
-    let icon = (
-      <MUI.FontIcon
-        className={emptyItem.leftIcon.name}
-        color={emptyItem.leftIcon.color}/>
-    );
-
-    return (
-      <MUI.List
-        subheader={emptyItem.subheader}
-        subheaderStyle={emptyItem.subheaderStyle}>
-        <MUI.ListItem
-          key={emptyItem.name}
-          disableTouchTap={true}
-          leftIcon={icon}>
-          <span>
-            {emptyItem.content.text}
-          </span>
-        </MUI.ListItem>
-      </MUI.List>
-    )
-  },
-
   getInvitationItems() {
-    let invitationItems = this.props.items.filter(function(item, index) {
-      return item.type === 'invitation';
-    });
+    let invitationItems = this.props.items.filter((item) => item.type === 'invitation');
 
     return invitationItems;
   },
 
+  getLinkItems() {
+    let linkItems = this.props.items.filter((item) => item.type === 'normal-link');
+
+    return linkItems;
+  },
+
   renderInvitationItems() {
     let invitationItems = this.getInvitationItems();
-    let items = invitationItems.map(function(item) {
+    let items = invitationItems.map((item) => {
       let icon = (
         <MUI.FontIcon
           className={item.leftIcon.name || null}
@@ -98,17 +64,47 @@ export default React.createClass({
     return items;
   },
 
-  getLinkItems() {
-    let linkItems = this.props.items.filter(function(item) {
-      return item.type === "normal-link";
-    });
+  renderEmptyNotification() {
+    let emptyItem = {
+      subheader: 'Notifications',
+      subheaderStyle: {
+        borderBottom: '1px solid #EAEAEA'
+      },
+      name: 'empty-notification',
+      leftIcon: {
+        name: 'synicon-information',
+        color: '#0091EA'
+      },
+      content: {
+        text: `You don't have any notifications`,
+        style: {}
+      }
+    };
+    let icon = (
+    <MUI.FontIcon
+      className={emptyItem.leftIcon.name}
+      color={emptyItem.leftIcon.color}/>
+    );
 
-    return linkItems;
+    return (
+    <MUI.List
+      subheader={emptyItem.subheader}
+      subheaderStyle={emptyItem.subheaderStyle}>
+      <MUI.ListItem
+        key={emptyItem.name}
+        disableTouchTap={true}
+        leftIcon={icon}>
+          <span>
+            {emptyItem.content.text}
+          </span>
+      </MUI.ListItem>
+    </MUI.List>
+    )
   },
 
   renderNormalLinkItems() {
     let linkItems = this.getLinkItems();
-    let items = linkItems.map(function(item, index) {
+    let items = linkItems.map((item, index) => {
       let icon = (
         <MUI.FontIcon
           className={item.leftIcon.name || null}

@@ -5,7 +5,6 @@ import _ from 'lodash';
 import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './ListViewActions';
 
 export default Reflux.createStore({
@@ -83,6 +82,11 @@ export default Reflux.createStore({
       this.data.selectedTags.splice(i, 1);
     }
 
+    this.refreshSolutions();
+  },
+
+  onResetTagsSelection() {
+    this.data.selectedTags = [];
     this.refreshSolutions();
   },
 

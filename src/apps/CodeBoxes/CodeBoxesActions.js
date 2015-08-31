@@ -2,10 +2,6 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
-    withCheck: true,
-    withDialog: true
-  },
-  {
     fetch: {},
     setCodeBoxes: {},
     setCodeBoxTraces: {},
@@ -17,6 +13,16 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CodeBoxes.list'
+    },
+    fetchTriggers: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Triggers.list'
+    },
+    fetchSchedules: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Schedules.list'
     },
     createCodeBox: {
       asyncForm: true,
@@ -64,5 +70,9 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CodeBoxes.listRuntimes'
     }
+  },
+  {
+    withCheck: true,
+    withDialog: true
   }
 );

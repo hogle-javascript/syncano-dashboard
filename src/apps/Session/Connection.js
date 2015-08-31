@@ -1,6 +1,6 @@
 import Syncano from '../../lib/syncano4';
 
-let connection = new Syncano(undefined, SYNCANO_BASE_URL);
+let connection = new Syncano(null, SYNCANO_BASE_URL);
 
 export default {
   Syncano,
@@ -16,7 +16,7 @@ export default {
   },
 
   reset() {
-    connection = new Syncano(undefined, SYNCANO_BASE_URL);
+    connection = new Syncano(null, SYNCANO_BASE_URL);
     connection.setApiKey(null);
     return connection;
   }

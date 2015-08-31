@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Select from 'react-select';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -14,14 +15,13 @@ import GroupsStore from './GroupsStore';
 import MUI from 'material-ui';
 import Common from '../../common';
 
-require('react-select/dist/default.css');
+import 'react-select/dist/default.css';
 
 export default React.createClass({
 
   displayName: 'UserDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(Store),
     Mixins.Form,
     Mixins.Dialog
@@ -47,6 +47,21 @@ export default React.createClass({
 
   componentWillUnmount() {
     GroupsStore.resetActiveGroup();
+  },
+
+  getSelectValueSource() {
+    let activeGroup = GroupsStore.getActiveGroup();
+
+    if (this.state.newUserGroups) {
+      return this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      return this.linkState('groups');
+    } else if (this.state.secondInstance && this.state.secondInstance.value) {
+      return this.state.secondInstance;
+    } else if (activeGroup) {
+      return activeGroup;
+    }
+    return null;
   },
 
   handleAddSubmit() {
@@ -86,28 +101,13 @@ export default React.createClass({
     })
   },
 
-  getSelectValueSource() {
-    let activeGroup = GroupsStore.getActiveGroup();
-
-    if (this.state.newUserGroups) {
-      return this.linkState('newUserGroups');
-    } else if (this.state.groups) {
-      return this.linkState('groups');
-    } else if (this.state.secondInstance && this.state.secondInstance.value) {
-      return this.state.secondInstance;
-    } else if (activeGroup) {
-      return activeGroup;
-    }
-    return null;
-  },
-
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
     let submitLabel = 'Confirm';
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
     let allGroups = GroupsStore.getGroups().map((group) => {
-      group.value = group.id + '';
+      group.value = group.id.toString();
       return group;
     });
     let dialogStandardActions = [

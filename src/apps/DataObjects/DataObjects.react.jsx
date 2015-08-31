@@ -5,15 +5,17 @@ import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
-import HeaderMixin from '../Header/HeaderMixin';
 
+// Stores and Actions
 import SessionStore from '../Session/SessionStore';
-import DataObjectsActions from './DataObjectsActions';
-import DataObjectsStore from './DataObjectsStore';
+import Actions from './DataObjectsActions';
+import Store from './DataObjectsStore';
 
+// Components
 import MUI from 'material-ui';
 import Common from '../../common';
 
+// Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu.react';
 import DataObjectDialog from './DataObjectDialog.react';
 
@@ -25,71 +27,34 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(DataObjectsStore),
+    Reflux.connect(Store),
     Mixins.Header,
     Mixins.Dialogs,
     Mixins.InstanceTabs
   ],
+
+  componentDidMount() {
+    console.info('DataObjects::componentDidMount');
+    Actions.fetch();
+  },
 
   componentWillUpdate(nextProps, nextState) {
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
     this.hideDialogs(nextState.hideDialogs);
 
-    if (!nextState.selectedRows) {
-      if (this.refs.table) {
-        this.refs.table.setState({selectedRows: []});
-      }
+    if (!nextState.selectedRows && this.refs.table) {
+      this.refs.table.setState({selectedRows: []});
     }
   },
 
-  componentDidMount() {
-    console.info('DataObjects::componentDidMount');
-    DataObjectsActions.fetch();
-  },
-
   componentWillUnmount() {
-    DataObjectsActions.clearStore();
-  },
-
-  // Dialogs config
-  initDialogs() {
-    return [{
-      dialog: MUI.Dialog,
-      params: {
-        key: 'deleteDataObjectDialog',
-        ref: 'deleteDataObjectDialog',
-        title: 'Delete a Data Object',
-        actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
-          {text: 'Confirm', onClick: this.handleDelete}
-        ],
-        modal: true,
-        children: 'Do you really want to delete ' + DataObjectsStore.getSelectedRowsLength() + ' Data Object(s)?'
-      }
-    }]
-  },
-
-  showDataObjectDialog() {
-    DataObjectsActions.showDialog();
-  },
-
-  showDataObjectEditDialog(cellNumber) {
-    let dataObject = DataObjectsStore.getSelectedRowObj(cellNumber);
-
-    dataObject = _.reduce(dataObject, (result, val, key) => {
-      if (_.isObject(val) && val.type === 'reference') {
-        val = val.value;
-      }
-      result[key] = val;
-      return result;
-    }, {});
-    DataObjectsActions.showDialog(dataObject);
+    Actions.clearStore();
   },
 
   handleDelete() {
     console.info('DataObjects::handleDelete');
-    DataObjectsActions.removeDataObjects(this.state.classObj.name, DataObjectsStore.getIDsFromTable());
+    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
   },
 
   handleRowSelection(selectedRows) {
@@ -98,12 +63,12 @@ export default React.createClass({
 
     // Writing to the store
     if (selectedRows === 'all') {
-      rowsSelection = DataObjectsStore.getItems().map((item, index) => {
+      rowsSelection = Store.getItems().map((item, index) => {
         return index
       })
     }
 
-    DataObjectsActions.setSelectedRows(rowsSelection);
+    Actions.setSelectedRows(rowsSelection);
   },
 
   handleSelectAll(selectAll) {
@@ -112,55 +77,13 @@ export default React.createClass({
 
   handleCellClick(cellNumber, cellName) {
     console.info('DataObjects::handleCellClick', arguments);
-    if (cellName !== undefined && cellName !== 0) {
+    if (typeof cellName !== 'undefined' && cellName !== 0) {
       this.showDataObjectEditDialog(cellNumber);
     }
   },
 
-  renderTable() {
-    console.info('DataObjects::renderTable');
-    let tableData = DataObjectsStore.renderTableData();
-    let tableHeader = DataObjectsStore.renderTableHeader(this.handleSelectAll);
-
-    return (
-      <div>
-        <MUI.Table
-          ref="table"
-          multiSelectable={true}
-          deselectOnClickaway={false}
-          showRowHover={true}
-          onCellClick={this.handleCellClick}
-          onRowSelection={this.handleRowSelection}
-          >
-          {tableHeader}
-          <MUI.TableBody
-            deselectOnClickaway={this.state.deselectOnClickaway}
-            showRowHover={true}
-            stripedRows={false}>
-            {tableData}
-          </MUI.TableBody>
-        </MUI.Table>
-
-        <div
-          className="row align-center"
-          style={{margin: 50}}>
-          <div>Loaded {tableData.length} Data Objects</div>
-        </div>
-        <Common.Show if={this.state.hasNextPage}>
-          <div
-            className="row align-center"
-            style={{margin: 50}}>
-            <MUI.RaisedButton
-              label="Load more"
-              onClick={this.handleMoreRows}/>
-          </div>
-        </Common.Show>
-      </div>
-    )
-  },
-
   handleMoreRows() {
-    DataObjectsActions.subFetchDataObjects({
+    Actions.subFetchDataObjects({
       className: this.state.classObj.name,
       params: this.state.nextParams
     });
@@ -175,24 +98,95 @@ export default React.createClass({
     );
   },
 
-  render() {
-    let table = null;
+  // Dialogs config
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteDataObjectDialog',
+        ref: 'deleteDataObjectDialog',
+        title: 'Delete a Data Object',
+        actions: [
+          {text: 'Cancel', onClick: this.handleCancel},
+          {text: 'Confirm', onClick: this.handleDelete}
+        ],
+        modal: true,
+        children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
+      }
+    }]
+  },
 
-    if (this.state.items) {
-      table = this.renderTable();
-    } else {
-      table = <Common.Loading visible={true}/>;
-    }
+  showDataObjectDialog() {
+    Actions.showDialog();
+  },
 
-    let selectedMessageText = null;
+  showDataObjectEditDialog(cellNumber) {
+    let dataObject = Store.getSelectedRowObj(cellNumber);
 
-    if (this.state.selectedRows && this.state.selectedRows.length > 0) {
-      selectedMessageText = 'selected: ' + this.state.selectedRows.length;
-    }
+    dataObject = _.reduce(dataObject, (result, val, key) => {
+      let value = val;
+
+      if (_.isObject(value) && value.type === 'reference') {
+        value = value.value;
+      }
+      if (_.isBoolean(value)) {
+        value = value.toString();
+      }
+
+      result[key] = value;
+      return result;
+    }, {});
+    Actions.showDialog(dataObject);
+  },
+
+  renderTable() {
+    console.info('DataObjects::renderTable');
+    let tableData = Store.renderTableData();
+    let tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
+    <div>
+      <MUI.Table
+        ref="table"
+        multiSelectable={true}
+        deselectOnClickaway={false}
+        showRowHover={true}
+        onCellClick={this.handleCellClick}
+        onRowSelection={this.handleRowSelection}
+        tableWrapperStyle={{overflow: 'visible'}}>
+        {tableHeader}
+        <MUI.TableBody
+          deselectOnClickaway={this.state.deselectOnClickaway}
+          showRowHover={true}
+          stripedRows={false}>
+          {tableData}
+        </MUI.TableBody>
+      </MUI.Table>
 
-      <div className="row" style={{paddingTop: 48, 'height': '100%'}}>
+      <div
+        className="row align-center"
+        style={{margin: 50}}>
+        <div>Loaded {tableData.length} Data Objects</div>
+      </div>
+      <Common.Show if={this.state.hasNextPage}>
+        <div
+          className="row align-center"
+          style={{margin: 50}}>
+          <MUI.RaisedButton
+            label="Load more"
+            onClick={this.handleMoreRows}/>
+        </div>
+      </Common.Show>
+    </div>
+    )
+  },
+
+  render() {
+    let table = this.state.items ? this.renderTable() : <Common.Loading visible={true}/>;
+    let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
+
+    return (
+      <div className="row" style={{paddingTop: 48, height: '100%'}}>
         {this.getDialogs()}
         <DataObjectDialog />
 
@@ -224,12 +218,12 @@ export default React.createClass({
                 style={{fontSize: 25, marginTop: 5}}
                 iconClassName="synicon-delete"
                 tooltip="Delete Data Objects"
-                disabled={!(this.state.selectedRows)}
+                disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
                 onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
               <ColumnsFilterMenu
-                columns={DataObjectsStore.getTableColumns()}
-                checkToggleColumn={DataObjectsActions.checkToggleColumn}/>
+                columns={Store.getTableColumns()}
+                checkToggleColumn={Actions.checkToggleColumn}/>
 
             </MUI.ToolbarGroup>
 

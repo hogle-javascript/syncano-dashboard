@@ -7,9 +7,6 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
-import SessionActions from '../Session/SessionActions';
-import Actions from './TracesActions';
 import Store from './TracesStore';
 
 import MUI from 'material-ui';
@@ -130,27 +127,27 @@ export default Radium(React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items || [];
     let styles = this.getStyles();
     let tracesFor = {
-        codebox: {
-          name: 'CodeBox',
-          icon: 'synicon-package-variant'
-        },
-        webhook: {
-          name: 'Webhook',
-          icon: 'synicon-arrow-up-bold'
-        },
-        trigger: {
-          name: 'Trigger',
-          icon: 'synicon-arrow-up-bold'
-        },
-        schedule: {
-          name: 'Schedule',
-          icon: 'synicon-camera-timer'
-        }
-      };
+      codebox: {
+        name: 'CodeBox',
+        icon: 'synicon-package-variant'
+      },
+      webhook: {
+        name: 'Webhook',
+        icon: 'synicon-arrow-up-bold'
+      },
+      trigger: {
+        name: 'Trigger',
+        icon: 'synicon-arrow-up-bold'
+      },
+      schedule: {
+        name: 'Schedule',
+        icon: 'synicon-camera-timer'
+      }
+    };
 
     if (items.length > 0) {
       items = items.map((item) => this.renderItem(item));
@@ -168,7 +165,7 @@ export default Radium(React.createClass({
     ];
   },
 
-  getHeader() {
+  renderHeader() {
     if (this.state.items.length > 0) {
       return (
         <Common.ColumnList.Header>
@@ -179,16 +176,16 @@ export default Radium(React.createClass({
         </Common.ColumnList.Header>
       )
     }
-    return;
+    return true;
   },
 
   render() {
     return (
       <Common.Lists.Container>
         <Common.Loading show={this.state.isLoading}>
-          {this.getHeader()}
+          {this.renderHeader()}
           <Common.Lists.List>
-            {this.getList()}
+            {this.renderList()}
           </Common.Lists.List>
         </Common.Loading>
       </Common.Lists.Container>

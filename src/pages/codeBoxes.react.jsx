@@ -8,14 +8,14 @@ export default React.createClass({
 
   displayName: 'Instance',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   componentDidMount() {
     console.debug('Instance::componentDidMount');

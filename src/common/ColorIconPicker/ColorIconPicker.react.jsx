@@ -17,6 +17,21 @@ export default Radium(React.createClass({
     handleChange: React.PropTypes.func
   },
 
+  getInitialState() {
+    return {
+      selectedColor: this.props.selectedColor,
+      selectedIcon: this.props.selectedIcon
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    console.info('ColorIconPicker::componentWillReceiveProps');
+    this.setState({
+      selectedColor: nextProps.selectedColor,
+      selectedIcon: nextProps.selectedIcon
+    })
+  },
+
   getStyles() {
     return {
       container: {
@@ -38,33 +53,18 @@ export default Radium(React.createClass({
     }
   },
 
-  getInitialState() {
-    return {
-      selectedColor: this.props.selectedColor,
-      selectedIcon: this.props.selectedIcon
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    console.info('ColorIconPicker::componentWillReceiveProps');
-    this.setState({
-      selectedColor: nextProps.selectedColor,
-      selectedIcon: nextProps.selectedIcon
-    })
-  },
-
   handleSetColor(event) {
     console.info('IconPicker::handleSetColor', event.target.id);
     event.preventDefault();
     this.setState({selectedColor: event.target.id});
-    this.props.handleChange({'color': event.target.id});
+    this.props.handleChange({color: event.target.id});
   },
 
   handleSetIcon(event) {
     console.info('IconPicker::handleSetIcon', event.target.id);
     event.preventDefault();
     this.setState({selectedIcon: event.target.id});
-    this.props.handleChange({'icon': event.target.id});
+    this.props.handleChange({icon: event.target.id});
   },
 
   genIconItem(icon) {

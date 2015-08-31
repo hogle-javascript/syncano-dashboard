@@ -7,8 +7,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import SchedulesActions from './SchedulesActions';
 import SchedulesStore from './SchedulesStore';
 import TriggersActions from './TriggersActions';
@@ -17,7 +15,6 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -42,18 +39,28 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Tasks::componentWillUpdate');
-    // Merging "hideDialogs
-    this.hideDialogs(nextState.schedules.hideDialogs || nextState.triggers.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Tasks::componentDidMount');
     ClassesActions.fetch();
     CodeBoxesActions.fetch();
     SchedulesActions.fetch();
     TriggersActions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Tasks::componentWillUpdate');
+    // Merging "hideDialogs
+    this.hideDialogs(nextState.schedules.hideDialogs || nextState.triggers.hideDialogs);
+  },
+
+  handleRemoveTriggers() {
+    console.info('Tasks::handleDelete');
+    TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
+  },
+
+  handleRemoveSchedules() {
+    console.info('Tasks::handleRemoveSchedules');
+    SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   // Dialogs config
@@ -109,16 +116,6 @@ export default React.createClass({
         }
       }
     ]
-  },
-
-  handleRemoveTriggers() {
-    console.info('Tasks::handleDelete');
-    TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
-  },
-
-  handleRemoveSchedules() {
-    console.info('Tasks::handleRemoveSchedules');
-    SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   uncheckAll() {

@@ -9,13 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Actions from './AdminsActions';
 import Store from './AdminsStore';
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -38,87 +35,15 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Admins::componentWillUpdate');
-    // Merging "hideDialogs"
-    this.hideDialogs(nextState.admins.hideDialogs || nextState.invitations.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Admins::componentDidMount');
     Actions.fetch();
   },
 
-  // Dialogs config
-  initDialogs() {
-    let checkedAdmins = Store.getCheckedItems();
-    let checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteAdminDialog',
-          ref: 'deleteAdminDialog',
-          title: 'Remove an Administrator',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleDeleteAdmin}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
-            this.getDialogList(checkedAdmins, 'email'),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.admins.isLoading}/>
-          ]
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          title: 'Resend an Invitation',
-          key: 'resendInvitationDialog',
-          ref: 'resendInvitationDialog',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleResendInvitation}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.invitations.isLoading}/>
-          ]
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          title: 'Delete an Invitation',
-          key: 'removeInvitationDialog',
-          ref: 'removeInvitationDialog',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleRemoveInvitation}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
-            this.getDialogList(checkedAdminsInvitations),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.invitations.isLoading}/>
-          ]
-        }
-      }
-    ]
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Admins::componentWillUpdate');
+    // Merging "hideDialogs"
+    this.hideDialogs(nextState.admins.hideDialogs || nextState.invitations.hideDialogs);
   },
 
   handleDeleteAdmin() {
@@ -167,6 +92,78 @@ export default React.createClass({
 
   showAdminEditDialog() {
     Actions.showDialog(Store.getCheckedItem());
+  },
+
+  // Dialogs config
+  initDialogs() {
+    let checkedAdmins = Store.getCheckedItems();
+    let checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
+
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteAdminDialog',
+          ref: 'deleteAdminDialog',
+          title: 'Remove an Administrator',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDeleteAdmin}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            this.getDialogList(checkedAdmins, 'email'),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.admins.isLoading}/>
+          ]
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          title: 'Resend an Invitation',
+          key: 'resendInvitationDialog',
+          ref: 'resendInvitationDialog',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleResendInvitation}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations, 'email'),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.invitations.isLoading}/>
+          ]
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          title: 'Delete an Invitation',
+          key: 'removeInvitationDialog',
+          ref: 'removeInvitationDialog',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleRemoveInvitation}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            this.getDialogList(checkedAdminsInvitations, 'email'),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.invitations.isLoading}/>
+          ]
+        }
+      }
+    ]
   },
 
   render() {

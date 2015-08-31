@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
+import Filesize from 'filesize';
 
 // Utils
 import Mixins from '../../mixins';
@@ -10,7 +11,6 @@ import DataObjectsActions from './DataObjectsActions';
 import DataObjectDialogStore from './DataObjectDialogStore';
 import DataObjectsStore from './DataObjectsStore';
 import ChannelsActions from '../Channels/ChannelsActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import MUI from 'material-ui';
@@ -21,16 +21,10 @@ export default React.createClass({
   displayName: 'DataObjectDialog',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Reflux.connect(DataObjectDialogStore),
     Mixins.Form,
     Mixins.Dialog
   ],
-
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
-  },
 
   validatorConstraints() {
     let validateObj = {};
@@ -57,13 +51,23 @@ export default React.createClass({
       other_permissions: this.state.other_permissions
     };
 
-    let files = this.getFileFields();
-
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
         if (item.type === 'boolean') {
-          params[item.name] = this.state[item.name];
+          switch (this.state[item.name]) {
+            case 'true':
+              params[item.name] = true;
+              break;
+            case 'false':
+              params[item.name] = false;
+              break;
+            case 'null':
+              params[item.name] = null;
+              break;
+            default:
+              delete params[item.name];
+          }
         } else if (item.type === 'datetime') {
           let date = this.refs[`fielddate-${item.name}`].getDate();
           let time = this.refs[`fieldtime-${item.name}`].getTime();
@@ -85,22 +89,10 @@ export default React.createClass({
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
 
-          if (fieldValue) {
-            params[item.name] = fieldValue;
-          }
+          params[item.name] = fieldValue || null;
         }
-      } else {
-        let delFile = true;
-
-        files.some((file) => {
-          if (file.name === item.name) {
-            delFile = false;
-            return true;
-          }
-        });
-        if (delFile) {
-          params[item.name] = null;
-        }
+      } else if (this.state[item.name] === null) {
+        params[item.name] = null;
       }
     });
 
@@ -127,6 +119,18 @@ export default React.createClass({
     return fileFields;
   },
 
+  onDrop(fieldName, files) {
+    let state = {};
+
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
+
   handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
@@ -141,6 +145,51 @@ export default React.createClass({
       params: this.getParams(),
       fileFields: this.getFileFields()
     })
+  },
+
+  handleFileOnClick(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile(name) {
+    let state = {};
+
+    state[name] = null;
+    this.setState(state);
+  },
+
+  handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fielddate-${name}`].setState({
+      date: undefined,
+      dialogDate: new Date()
+    });
+
+    /* eslint-enable no-undefined */
+
+    let emptyTime = new Date();
+
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fieldtime-${name}`].setState({
+      time: undefined,
+      dialogTime: new Date()
+    });
+
+    /* eslint-enable no-undefined */
   },
 
   renderBuiltinFields() {
@@ -172,13 +221,15 @@ export default React.createClass({
               name='field-channel'
               fullWidth={true}
               disabled={true}
-              floatingLabelText={this.state.channel || 'no channel'}/>
+              value={this.state.channel || 'no channel'}
+              floatingLabelText='Channel'/>
             <MUI.TextField
               ref='field-channel_room'
               name='field-channel_room'
               fullWidth={true}
               disabled={true}
-              floatingLabelText={this.state.channel_room || 'no channel'}/>
+              value={this.state.channel_room || 'no channel'}
+              floatingLabelText='Channel Room'/>
           </div>
         )
       }
@@ -267,44 +318,6 @@ export default React.createClass({
     )
   },
 
-  onDrop(fieldName, files) {
-    let state = {};
-
-    state[fieldName] = files[0];
-    this.setState(state);
-  },
-
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
-    window.open(value, '_blank')
-  },
-
-  handleRemoveFile(name) {
-    let state = {};
-
-    state[name] = null;
-    this.setState(state);
-  },
-
-  handleClearDateTime(name) {
-    let state = {};
-
-    state[`fielddate-${name}`] = null;
-    state[`fieldtime-${name}`] = null;
-    this.setState(state);
-
-    this.refs[`fielddate-${name}`].setState({
-      date: undefined,
-      dialogDate: new Date()
-    });
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue("");
-    this.refs[`fieldtime-${name}`].setState({
-      time: undefined,
-      dialogTime: new Date()
-    });
-  },
-
   renderDropZone(item) {
     let dropZoneStyle = {
       height: 80,
@@ -319,7 +332,7 @@ export default React.createClass({
     let description = file ? file.name : null;
 
     if (description) {
-      description = description + ' (' + file.size + ' bytes)'
+      description = description + ' (' + Filesize(file.size) + ')'
     }
     return (
       <div
@@ -342,6 +355,12 @@ export default React.createClass({
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
+          let menuItems = [
+            {text: 'True', payload: 'true'},
+            {text: 'False', payload: 'false'},
+            {text: 'Blank', payload: 'null'}
+          ];
+
           return (
             <MUI.SelectField
               key={'field-' + item.name}
@@ -353,12 +372,19 @@ export default React.createClass({
               displayMember="text"
               floatingLabelText={'Value of ' + item.name}
               errorText={this.getValidationMessages(item.name).join(' ')}
-              menuItems={[{text: 'True', payload: true}, {text: 'False', payload: false}]}/>
+              menuItems={menuItems}/>
           )
         }
 
+        /* eslint-disable no-undefined */
+
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ? new Date(this.state[item.name].value) : null;
+          let value = this.state[item.name]
+            ? new Date(this.state[item.name].value)
+            : undefined;
+
+          /* eslint-enable no-undefined*/
+
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -372,14 +398,26 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
+
+                    /* eslint-disable no-undefined */
+
                     defaultDate={value || undefined}
+
+                    /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
+
+                    /* eslint-disable no-undefined */
+
                     defaultTime={value || undefined}
+
+                    /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-xs-5">
@@ -459,7 +497,7 @@ export default React.createClass({
     ];
 
     return (
-      <MUI.Dialog
+      <Common.Dialog
         ref='dialog'
         title={title}
         onShow={this.handleDialogShow}
@@ -477,7 +515,11 @@ export default React.createClass({
             </div>
           </div>
         </div>
-      </MUI.Dialog>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
+      </Common.Dialog>
     );
   }
 });

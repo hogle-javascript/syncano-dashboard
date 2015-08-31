@@ -7,13 +7,10 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -35,14 +32,28 @@ export default React.createClass({
     HeaderMixin
   ],
 
+  componentDidMount() {
+    console.info('ApiKeys::componentWillMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('ApiKeys::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount() {
-    console.info('ApiKeys::componentWillMount');
-    Actions.fetch();
+  handleDelete() {
+    console.info('ApiKeys::handleDelete');
+    Actions.removeApiKeys(Store.getCheckedItems());
+  },
+
+  handleReset() {
+    console.info('ApiKeys::handleReset');
+    Actions.resetApiKey(Store.getCheckedItems());
+  },
+
+  showApiKeyDialog() {
+    Actions.showDialog();
   },
 
   // Dialogs config
@@ -66,7 +77,7 @@ export default React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to reset this API key?',
+          'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
           <Common.Loading
             type="linear"
             position="bottom"
@@ -101,20 +112,6 @@ export default React.createClass({
     }]
   },
 
-  handleDelete() {
-    console.info('ApiKeys::handleDelete');
-    Actions.removeApiKeys(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('ApiKeys::handleReset');
-    Actions.resetApiKey(Store.getCheckedItem().id);
-  },
-
-  showApiKeyDialog() {
-    Actions.showDialog();
-  },
-
   render() {
     let checkedApiKeys = Store.getNumberOfChecked();
     let isAnyApiKeySelected = checkedApiKeys >= 1 && checkedApiKeys < (this.state.items.length);
@@ -141,9 +138,8 @@ export default React.createClass({
               iconClassName="synicon-delete"
               />
             <Common.Fab.TooltipItem
-              tooltip="Click here to edit an API Key"
+              tooltip="Click here to reset an API Key"
               mini={true}
-              disabled={checkedApiKeys > 1}
               onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
               iconClassName="synicon-backup-restore"
               />

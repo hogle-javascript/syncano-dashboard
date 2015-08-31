@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import ServerActions from '../actions/ServerActions';
-
 import ButtonGroup from '../../common/Button/ButtonGroup.react';
 
 export default React.createClass({
@@ -24,10 +22,6 @@ export default React.createClass({
     }
   },
 
-  handleButtonClick(action) {
-  // ServerActions.respondToInvitation(action, this.props.invitation);
-  },
-
   render() {
     return (
       <div className="invitations-menu-item">
@@ -35,9 +29,7 @@ export default React.createClass({
           You're invited by <b>{this.props.invitation.inviter}</b> to the instance
           <b>{this.props.invitation.instance}</b>.
         </div>
-        <ButtonGroup
-          buttons={this.props.buttons}
-          handleClick={this.handleButtonClick}/>
+        <ButtonGroup buttons={this.props.buttons} />
       </div>
     );
   }

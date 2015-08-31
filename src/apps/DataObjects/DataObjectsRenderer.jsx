@@ -6,7 +6,7 @@ export default {
 
   columnsRenderers() {
     return {
-      'created_at': this.renderColumnDate
+      created_at: this.renderColumnDate
     }
   },
 
@@ -64,7 +64,6 @@ export default {
       }
     });
 
-    // TODO: select all doesn't work properly in material-ui
     return (
       <MUI.TableHeader
         key='header'
@@ -84,7 +83,7 @@ export default {
       let selected = (selectedRows || []).indexOf(index) > -1;
       let columnsComponents = columns.map((column, i) => {
         if (!column.checked) {
-          return;
+          return false;
         }
 
         let value = item[column.id];

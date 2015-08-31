@@ -21,7 +21,7 @@ export default Reflux.createStore({
   getInitialState() {
     let today = this.getToday();
     let allDates = this.getAllDates();
-    let xColumn  = ['x'].concat(allDates);
+    let xColumn = ['x'].concat(allDates);
 
     return {
       isLoading: true,
@@ -108,10 +108,9 @@ export default Reflux.createStore({
     };
   },
 
-  prepareChartData(profile, usage) {
-    profile = _.first(profile);
-    usage = _.first(usage);
-
+  prepareChartData(joinProfiles, joinUsages) {
+    let profile = _.first(joinProfiles);
+    let usage = _.first(joinUsages);
     let state = this.getInitialState();
 
     state.isLoading = false;
@@ -120,8 +119,8 @@ export default Reflux.createStore({
     let subscription = profile.subscription || {};
     let plan = subscription.plan || null;
     let pricing = subscription.pricing;
-    let usageAmount = {'api': 0, 'cbx': 0};
-    let columns = {'api': {}, 'cbx': {}};
+    let usageAmount = {api: 0, cbx: 0};
+    let columns = {api: {}, cbx: {}};
 
     if (_.isEmpty(pricing)) {
       // $5.25
@@ -133,7 +132,7 @@ export default Reflux.createStore({
 
     // Map array to nested object e.g {source: {date: value}} -> {'api': {'2015-01-01': 0.0000200}}
     _.forEach(usage.objects, (_usage) => {
-      if (columns[_usage.source] === undefined) {
+      if (typeof columns[_usage.source] === 'undefined') {
         return;
       }
 
@@ -217,7 +216,7 @@ export default Reflux.createStore({
 
     _.forEach(this.getAllDates(), (date) => {
       _.forEach(columns, (val, source) => {
-        if (columns[source][date] === undefined) {
+        if (typeof columns[source][date] === 'undefined') {
           columns[source][date] = 0;
         }
 

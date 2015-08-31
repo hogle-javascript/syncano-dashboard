@@ -18,7 +18,7 @@ export default React.createClass({
       return;
     }
 
-    if (this.state.snackbar.delay !== undefined) {
+    if (typeof this.state.snackbar.delay !== 'undefined') {
       delete this.state.snackbar.delay;
       return;
     }
@@ -63,7 +63,7 @@ export default React.createClass({
         message={snackbar.message}
         action={snackbar.action}
         autoHideDuration={snackbar.autoHideDuration}
-        onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : undefined}
+        onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : null}
         openOnMount={snackbar.openOnMount}
         style={snackbar.style}/>
     )

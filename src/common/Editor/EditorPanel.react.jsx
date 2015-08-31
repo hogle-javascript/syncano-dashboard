@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Radium from 'radium';
-import classNames from 'classnames';
 
 // Utils
 import FormMixin from '../../mixins/FormMixin';
@@ -11,28 +10,20 @@ import FormMixin from '../../mixins/FormMixin';
 import MUI from 'material-ui';
 import Loading from '../../common/Loading';
 
-require('./Editor.css');
+import './Editor.css';
 
 export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
-
-  mixins: [
-    React.addons.LinkedStateMixin,
-    FormMixin
-  ],
 
   propTypes: {
     trace: React.PropTypes.string,
     loading: React.PropTypes.bool
   },
 
-  getInitialState() {
-    return {
-      panelCollapsed: true,
-      payloadValue: '{"abc": 123}'
-    }
-  },
+  mixins: [
+    FormMixin
+  ],
 
   validatorConstraints: {
     payloadValue: (value) => {
@@ -50,6 +41,13 @@ export default Radium(React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      panelCollapsed: true,
+      payloadValue: '{"abc": 123}'
+    }
+  },
+
   getStyles() {
     return {
       payloadStyle: {
@@ -62,20 +60,14 @@ export default Radium(React.createClass({
         backgroundColor: '#4C4A43',
         color: 'white',
         height: '200px',
-        padding: 10
+        padding: 10,
+        whiteSpace: 'pre'
       }
     }
   },
 
-  handleToggleClick() {
-    this.setState({
-      panelCollapsed: !this.state.panelCollapsed
-    });
-  },
-
   render() {
     let styles = this.getStyles();
-    let unfoldIcon = this.state.panelCollapsed ? "synicon-unfold-more" : "synicon-unfold-less";
     let trace = null;
 
     if (this.state.panelCollapsed) {

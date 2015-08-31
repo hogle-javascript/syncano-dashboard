@@ -4,8 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';
 import WebhooksActions from './WebhooksActions';
 

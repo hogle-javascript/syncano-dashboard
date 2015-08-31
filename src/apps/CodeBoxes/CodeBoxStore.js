@@ -58,6 +58,11 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRunCodeBoxWithUpdateCompleted() {
+    console.debug('CdeBoxStore::onRunCodeBoxWithUpdateCompleted');
+    this.refreshData();
+  },
+
   getEditorMode() {
     return this.langMap[this.data.currentCodeBox.runtime_name];
   },
@@ -106,6 +111,7 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted() {
     this.dismissSnackbarNotification();
+    this.refreshData();
   },
 
   onUpdateCodeBoxFailure() {

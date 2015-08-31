@@ -4,11 +4,9 @@ import Radium from 'radium';
 import Router from 'react-router';
 
 // Stores & Actions
-import HeaderActions from './HeaderActions';
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import InstancesActions from '../Instances/InstancesActions';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
@@ -16,16 +14,18 @@ import MUI from 'material-ui';
 import Common from '../../common';
 import Logo from '../../common/Logo/Logo.react';
 
-import HeaderMenu from './HeaderMenu.react';
-import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
-import HeaderInstanceMenu from './HeaderInstanceMenu.react';
 
-require('./Header.sass');
+import './Header.sass';
 
 export default Radium(React.createClass({
 
   displayName: 'Header',
+
+  contextTypes: {
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
+  },
 
   mixins: [
     Reflux.connect(HeaderStore),
@@ -35,31 +35,8 @@ export default Radium(React.createClass({
     MUI.Mixins.StylePropable
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func.isRequired,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     SessionStore.getInstance();
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, tab.props.params);
-  },
-
-  handleAccountClick(event) {
-    this.transitionTo('profile-settings');
-    event.stopPropagation();
-  },
-
-  handleLogout() {
-    SessionActions.logout();
-  },
-
-  handleBillingClick(event) {
-    this.transitionTo('profile-billing-plan');
-    event.stopPropagation();
   },
 
   getStyles() {
@@ -71,15 +48,15 @@ export default Radium(React.createClass({
         zIndex: 8
       },
       topToolbar: {
-        background : this.context.muiTheme.palette.primary1Color,
-        height     : 64,
-        padding    : 0
+        background: this.context.muiTheme.palette.primary1Color,
+        height: 64,
+        padding: 0
       },
       logotypeContainer: {
-        paddingLeft : 24,
-        height      : '100%',
-        display     : 'flex',
-        alignItems  : 'center'
+        paddingLeft: 24,
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center'
       },
       logo: {
         width: 120
@@ -89,9 +66,9 @@ export default Radium(React.createClass({
         display: 'flex'
       },
       toolbarListItem: {
-        display    : 'inline-flex',
-        alignItems : 'center',
-        cursor     : 'pointer'
+        display: 'inline-flex',
+        alignItems: 'center',
+        cursor: 'pointer'
       },
       bottomToolbar: {
         display: 'flex',
@@ -153,13 +130,30 @@ export default Radium(React.createClass({
     }
   },
 
+  handleTabActive(tab) {
+    this.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick(event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout() {
+    SessionActions.logout();
+  },
+
+  handleBillingClick(event) {
+    this.transitionTo('profile-billing-plan');
+    event.stopPropagation();
+  },
+
   handleSolutionsClick() {
     this.transitionTo('solutions');
   },
 
   render() {
     let styles = this.getStyles();
-    let currentInstance = SessionStore.getInstance();
 
     return (
       <div style={styles.main}>

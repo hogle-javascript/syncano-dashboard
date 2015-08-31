@@ -24,7 +24,6 @@ export default Radium(React.createClass({
   displayName: 'ProfileBillingPlan',
 
   mixins: [
-    React.addons.LinkedStateMixin,
     Mixins.Form,
     Mixins.Dialogs,
     Mixins.IsLoading(),
@@ -138,16 +137,16 @@ export default Radium(React.createClass({
         title: 'Cancel Production Plan',
         actions: [
           {
-            text: 'Cancel',
+            text: 'No, I want to keep my plan.',
             onClick: this.handleCancelCancelProductionPlan
           },
           {
-            text: 'Confirm',
+            text: 'Yes, I want to cancel.',
             onClick: this.handleCancelProductionPlan
           }
         ],
         modal: true,
-        children: ['Are you sure you want to cancel Production plan?']
+        children: ['Are you sure you want to cancel your Production plan?']
       }
     }]
   },
@@ -475,7 +474,7 @@ export default Radium(React.createClass({
             </div>
 
             <div
-              className="col-flex-1"
+              className="col-md-14"
               style={styles.summary}>
               <div
                 className="vp-4"
