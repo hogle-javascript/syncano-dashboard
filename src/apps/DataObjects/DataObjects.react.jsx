@@ -218,7 +218,7 @@ export default React.createClass({
                 style={{fontSize: 25, marginTop: 5}}
                 iconClassName="synicon-delete"
                 tooltip="Delete Data Objects"
-                disabled={this.state.selectedRows.length < 1}
+                disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
                 onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
               <ColumnsFilterMenu
