@@ -50,7 +50,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addScheduleModalCodeBox: {
-      selector: '//form/div[2]',
+      selector: '//div[@class="codebox-dropdown"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCodeBoxName: {
@@ -58,7 +58,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
-      selector: '//form/div[3]',
+      selector: '//div[@class="crontab-dropdown"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTabName: {
@@ -104,7 +104,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignal: {
-      selector: '//form/div[2]',
+      selector: '//div[@class="signal-dropdown"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalCreate: {
@@ -112,7 +112,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addTriggerModalClass: {
-      selector: '//form/div[3]',
+      selector: '//div[@class="class-dropdown"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalClassName: {
@@ -120,7 +120,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addTriggerModalCodeBox: {
-      selector: '//form/div[4]',
+      selector: '//div[@class="codebox-dropdown"]',
       locateStrategy: 'xpath'
     },
     triggerTableRow: {
