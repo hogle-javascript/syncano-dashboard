@@ -372,11 +372,11 @@ export default React.createClass({
         }
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ?
-            new Date(this.state[item.name].value) :
-            /* eslint-disable */
-            undefined;
-            /* eslint-enable */
+          /* eslint-disable */
+          let value = this.state[item.name]
+            ? new Date(this.state[item.name].value)
+            : undefined;
+          /* eslint-enable */
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
