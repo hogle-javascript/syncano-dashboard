@@ -42,6 +42,10 @@ module.exports = {
       selector: '//span[@class="synicon-delete"]',
       locateStrategy: 'xpath'
     },
+    deleteDataObjectButtonDisabled: {
+      selector: '//button[@disabled]//span[@class="synicon-delete"]',
+      locateStrategy: 'xpath'
+    },
     stringFieldTableRow: {
       selector: '//td[text()="' + utils.addSuffix('string') + '"]',
       locateStrategy: 'xpath'
