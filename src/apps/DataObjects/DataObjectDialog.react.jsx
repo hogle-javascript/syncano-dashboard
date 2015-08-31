@@ -26,11 +26,6 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
-  },
-
   validatorConstraints() {
     let validateObj = {};
 
@@ -124,6 +119,18 @@ export default React.createClass({
     return fileFields;
   },
 
+  onDrop(fieldName, files) {
+    let state = {};
+
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
+
   handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
@@ -138,6 +145,51 @@ export default React.createClass({
       params: this.getParams(),
       fileFields: this.getFileFields()
     })
+  },
+
+  handleFileOnClick(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile(name) {
+    let state = {};
+
+    state[name] = null;
+    this.setState(state);
+  },
+
+  handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fielddate-${name}`].setState({
+      date: undefined,
+      dialogDate: new Date()
+    });
+
+    /* eslint-enable no-undefined */
+
+    let emptyTime = new Date();
+
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fieldtime-${name}`].setState({
+      time: undefined,
+      dialogTime: new Date()
+    });
+
+    /* eslint-enable no-undefined */
   },
 
   renderBuiltinFields() {
@@ -264,58 +316,6 @@ export default React.createClass({
         </div>
       </div>
     )
-  },
-
-  onDrop(fieldName, files) {
-    let state = {};
-
-    state[fieldName] = files[0];
-    this.setState(state);
-  },
-
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
-    window.open(value, '_blank')
-  },
-
-  handleRemoveFile(name) {
-    let state = {};
-
-    state[name] = null;
-    this.setState(state);
-  },
-
-  handleClearDateTime(name) {
-    let state = {};
-
-    state[`fielddate-${name}`] = null;
-    state[`fieldtime-${name}`] = null;
-    this.setState(state);
-
-    /* eslint-disable no-undefined */
-
-    this.refs[`fielddate-${name}`].setState({
-      date: undefined,
-      dialogDate: new Date()
-    });
-
-    /* eslint-enable no-undefined */
-
-    let emptyTime = new Date();
-
-    emptyTime.setHours(0);
-    emptyTime.setMinutes(0);
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue('');
-
-    /* eslint-disable no-undefined */
-
-    this.refs[`fieldtime-${name}`].setState({
-      time: undefined,
-      dialogTime: new Date()
-    });
-
-    /* eslint-enable no-undefined */
   },
 
   renderDropZone(item) {

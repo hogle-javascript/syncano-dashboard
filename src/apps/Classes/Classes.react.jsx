@@ -32,14 +32,28 @@ export default React.createClass({
     HeaderMixin
   ],
 
+  componentDidMount() {
+    console.info('Classes::componentDidMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('Classes::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  componentDidMount() {
-    console.info('Classes::componentDidMount');
-    Actions.fetch();
+  getStyles() {
+    return {
+      fabListTop: {
+        top: 200
+      },
+      fabListTopButton: {
+        margin: '5px 0'
+      },
+      fabListBottom: {
+        bottom: 100
+      }
+    }
   },
 
   getAssociatedClasses() {
@@ -74,6 +88,48 @@ export default React.createClass({
     }
 
     return list[associationsFor];
+  },
+
+  isProtectedFromDelete(item) {
+    return item.protectedFromDelete;
+  },
+
+  handleChangePalette(color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+
+    Actions.updateClass(
+      Store.getCheckedItem().name, {
+        metadata: JSON.stringify({color, icon})
+      }
+    );
+    Actions.uncheckAll()
+  },
+
+  handleDelete() {
+    console.info('Classes::handleDelete');
+    Actions.removeClasses(Store.getCheckedItems());
+  },
+
+  handleReset() {
+    console.info('Classes::handleReset');
+    Actions.resetClass(Store.getCheckedItem().id);
+  },
+
+  checkClassItem(id, state) {
+    Actions.checkItem(id, state);
+  },
+
+  redirectToAddClassView() {
+    this.context.router.transitionTo('classes-add', this.getParams());
+  },
+
+  redirectToEditClassView(className) {
+    let classNameParam = className || Store.getCheckedItem().name;
+
+    this.context.router.transitionTo('classes-edit', {
+      instanceName: this.getParams().instanceName,
+      className: classNameParam
+    });
   },
 
   // Dialogs config
@@ -153,66 +209,11 @@ export default React.createClass({
               type="linear"
               position="bottom"
               show={this.state.isLoading}
-              />
+            />
           ]
         }
       }
     ]
-  },
-
-  handleChangePalette(color, icon) {
-    console.info('Classes::handleChangePalette', color, icon);
-
-    Actions.updateClass(
-      Store.getCheckedItem().name, {
-        metadata: JSON.stringify({color, icon})
-      });
-    Actions.uncheckAll()
-  },
-
-  handleDelete() {
-    console.info('Classes::handleDelete');
-    Actions.removeClasses(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('Classes::handleReset');
-    Actions.resetClass(Store.getCheckedItem().id);
-  },
-
-  checkClassItem(id, state) {
-    Actions.checkItem(id, state);
-  },
-
-  getStyles() {
-    return {
-      fabListTop: {
-        top: 200
-      },
-      fabListTopButton: {
-        margin: '5px 0'
-      },
-      fabListBottom: {
-        bottom: 100
-      }
-    }
-  },
-
-  redirectToAddClassView() {
-    this.context.router.transitionTo('classes-add', this.getParams());
-  },
-
-  redirectToEditClassView(className) {
-    let classNameParam = className || Store.getCheckedItem().name;
-
-    this.context.router.transitionTo('classes-edit', {
-      instanceName: this.getParams().instanceName,
-      className: classNameParam
-    });
-  },
-
-  isProtectedFromDelete(item) {
-    return item.protectedFromDelete;
   },
 
   render() {

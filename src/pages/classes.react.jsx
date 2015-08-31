@@ -6,14 +6,14 @@ export default React.createClass({
 
   displayName: 'Classes',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   render() {
     return (

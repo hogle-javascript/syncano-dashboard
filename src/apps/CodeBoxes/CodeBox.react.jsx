@@ -39,19 +39,6 @@ export default React.createClass({
     return index;
   },
 
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route,
-      {
-        codeboxId: this.state.currentCodeBox.id,
-        instanceName: this.getParams().instanceName
-      }
-    );
-  },
-
-  handleBackClick() {
-    this.transitionTo('codeboxes', this.getParams());
-  },
-
   getStyles() {
     return {
       subTabsHeader: {
@@ -82,6 +69,37 @@ export default React.createClass({
     ];
   },
 
+  getCodeBoxLabel() {
+    if (this.state.currentCodeBox !== null) {
+      return this.state.currentCodeBox.label;
+    }
+
+    return null;
+  },
+
+  getToolbarTitleText() {
+    let codeBoxLabel = this.getCodeBoxLabel();
+
+    if (this.state.currentCodeBox) {
+      return `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`;
+    }
+
+    return '';
+  },
+
+  handleTabActive(tab) {
+    this.transitionTo(tab.props.route,
+      {
+        codeboxId: this.state.currentCodeBox.id,
+        instanceName: this.getParams().instanceName
+      }
+    );
+  },
+
+  handleBackClick() {
+    this.transitionTo('codeboxes', this.getParams());
+  },
+
   renderTabs() {
     let styles = this.getStyles();
     let codeBox = this.state.currentCodeBox;
@@ -110,24 +128,6 @@ export default React.createClass({
         </MUI.Tabs>
       );
     }
-  },
-
-  getCodeBoxLabel() {
-    if (this.state.currentCodeBox !== null) {
-      return this.state.currentCodeBox.label;
-    }
-
-    return null;
-  },
-
-  getToolbarTitleText() {
-    let codeBoxLabel = this.getCodeBoxLabel();
-
-    if (this.state.currentCodeBox) {
-      return `CodeBox: ${codeBoxLabel} (id: ${this.getParams().codeboxId})`;
-    }
-
-    return '';
   },
 
   renderToolbarTitle() {

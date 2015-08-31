@@ -22,6 +22,11 @@ export default Radium(React.createClass({
 
   displayName: 'Header',
 
+  contextTypes: {
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
@@ -30,31 +35,8 @@ export default Radium(React.createClass({
     MUI.Mixins.StylePropable
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func.isRequired,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     SessionStore.getInstance();
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, tab.props.params);
-  },
-
-  handleAccountClick(event) {
-    this.transitionTo('profile-settings');
-    event.stopPropagation();
-  },
-
-  handleLogout() {
-    SessionActions.logout();
-  },
-
-  handleBillingClick(event) {
-    this.transitionTo('profile-billing-plan');
-    event.stopPropagation();
   },
 
   getStyles() {
@@ -146,6 +128,24 @@ export default Radium(React.createClass({
       clickable: true,
       handleItemClick: this.handleAccountClick
     }
+  },
+
+  handleTabActive(tab) {
+    this.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick(event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout() {
+    SessionActions.logout();
+  },
+
+  handleBillingClick(event) {
+    this.transitionTo('profile-billing-plan');
+    event.stopPropagation();
   },
 
   handleSolutionsClick() {

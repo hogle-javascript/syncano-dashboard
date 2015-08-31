@@ -33,6 +33,13 @@ export default React.createClass({
     }
   },
 
+  isEnabled(list, field) {
+    if (!list) {
+      return false;
+    }
+    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
+  },
+
   handleDialogShow() {
     console.info('DataViewDialog::handleDialogShow');
     ClassesActions.fetch();
@@ -88,13 +95,6 @@ export default React.createClass({
       fields = genList(this.state.expand, fieldName, value);
       this.setState({expand: fields});
     }
-  },
-
-  isEnabled(list, field) {
-    if (!list) {
-      return false;
-    }
-    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
   renderFields() {

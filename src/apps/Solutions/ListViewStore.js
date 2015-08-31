@@ -85,6 +85,11 @@ export default Reflux.createStore({
     this.refreshSolutions();
   },
 
+  onResetTagsSelection() {
+    this.data.selectedTags = [];
+    this.refreshSolutions();
+  },
+
   onSetFilter(filter) {
     this.data.filter = filter;
     this.refreshSolutions();

@@ -7,8 +7,6 @@ export default Radium(React.createClass({
 
   displayName: 'RoundIcon',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     id: React.PropTypes.string,
     icon: React.PropTypes.string,
@@ -16,11 +14,7 @@ export default Radium(React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  handleClick() {
-    if (this.props.handleClick) {
-      this.props.handleClick(this.props.id);
-    }
-  },
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {
@@ -35,6 +29,12 @@ export default Radium(React.createClass({
     };
 
     return this.mergeStyles(styles, this.props.style);
+  },
+
+  handleClick() {
+    if (this.props.handleClick) {
+      this.props.handleClick(this.props.id);
+    }
   },
 
   render() {

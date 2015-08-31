@@ -34,24 +34,9 @@ export default React.createClass({
     Reflux.connect(Store)
   ],
 
-  showSolutionDialog() {
-    CreateDialogActions.showDialog();
-  },
-
   componentDidMount() {
     console.info('Solutions::componentWillMount');
     Actions.fetch();
-  },
-
-  isFriend() {
-    if (SessionStore.getUser()) {
-      let email = SessionStore.getUser({}).email;
-      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
-
-      return _.some(endings, (ending) => _.endsWith(email, ending))
-    }
-
-    return false;
   },
 
   getStyles() {
@@ -67,6 +52,17 @@ export default React.createClass({
         background: MUI.Styles.Colors.lightBlue50
       }
     }
+  },
+
+  isFriend() {
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending))
+    }
+
+    return false;
   },
 
   handleChangeFilter(filter) {
@@ -85,6 +81,10 @@ export default React.createClass({
     Actions.selectOneTag(tag);
   },
 
+  handleResetTagsSelection() {
+    Actions.resetTagsSelection();
+  },
+
   handleToggleTagSelection(name) {
     Actions.toggleTagSelection(name);
   },
@@ -97,6 +97,9 @@ export default React.createClass({
     Actions.starSolution(solutionId);
   },
 
+  showSolutionDialog() {
+    CreateDialogActions.showDialog();
+  },
 
   render() {
     let styles = this.getStyles();
@@ -123,24 +126,22 @@ export default React.createClass({
                 <MUI.ListItem
                   innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
                   primaryText="All solutions"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'public')}
-                  />
+                  onTouchTap={this.handleChangeFilter.bind(this, 'public')}/>
                 <MUI.ListDivider />
                 <MUI.ListItem
                   innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
                   primaryText="Favorite"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}
-                  />
+                  onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}/>
                 <MUI.ListItem
                   innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
                   primaryText="My solutions"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}
-                  />
+                  onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}/>
               </MUI.List>
               <Common.Tags.List
                 items={this.state.tags}
                 selectedItems={this.state.selectedTags}
-                toggleTagSelection={this.handleToggleTagSelection}/>
+                toggleTagSelection={this.handleToggleTagSelection}
+                resetTagsSelection={this.handleResetTagsSelection}/>
             </div>
             <div className="col-flex-1">
               <Common.Loading show={!this.state.items}>

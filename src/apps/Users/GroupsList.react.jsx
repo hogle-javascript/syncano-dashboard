@@ -83,7 +83,7 @@ export default Radium(React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let styles = this.getStyles();
     let items = this.state.items;
     let itemsCount = items.length;
@@ -123,7 +123,7 @@ export default Radium(React.createClass({
             className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
         </Common.ColumnList.Header>
         <Common.Loading show={this.state.isLoading}>
-          {this.getList()}
+          {this.renderList()}
         </Common.Loading>
       </div>
     );

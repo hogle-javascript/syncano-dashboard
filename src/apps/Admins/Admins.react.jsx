@@ -35,15 +35,63 @@ export default React.createClass({
     HeaderMixin
   ],
 
+  componentDidMount() {
+    console.info('Admins::componentDidMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('Admins::componentWillUpdate');
     // Merging "hideDialogs"
     this.hideDialogs(nextState.admins.hideDialogs || nextState.invitations.hideDialogs);
   },
 
-  componentDidMount() {
-    console.info('Admins::componentDidMount');
-    Actions.fetch();
+  handleDeleteAdmin() {
+    console.info('Admins::handleDelete');
+    Actions.removeAdmins(Store.getCheckedItems());
+  },
+
+  handleResendInvitation() {
+    console.info('Admins::handleResendInvitation');
+    AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
+  },
+  handleRemoveInvitation() {
+    console.info('Admins::handleRemoveInvitation');
+    AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());
+  },
+
+  uncheckAll() {
+    console.info('Admins::uncheckAll');
+    Actions.uncheckAll();
+    AdminsInvitationsActions.uncheckAll();
+  },
+
+  selectAllAdmins() {
+    console.info('Admins::selectAllAdmins');
+    Actions.selectAllAdmins();
+  },
+
+  selectAllAdminsInvitations() {
+    console.info('Admins::selectAllAdminsInvitations');
+    AdminsInvitationsStore.selectAllAdminsInvitations();
+  },
+
+  checkAdminItem(id, state) {
+    AdminsInvitationsActions.uncheckAll();
+    Actions.checkItem(id, state);
+  },
+
+  checkInvitationItem(id, state) {
+    Actions.uncheckAll();
+    AdminsInvitationsActions.checkItem(id, state);
+  },
+
+  showAdminDialog() {
+    Actions.showDialog();
+  },
+
+  showAdminEditDialog() {
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
@@ -116,54 +164,6 @@ export default React.createClass({
         }
       }
     ]
-  },
-
-  handleDeleteAdmin() {
-    console.info('Admins::handleDelete');
-    Actions.removeAdmins(Store.getCheckedItems());
-  },
-
-  handleResendInvitation() {
-    console.info('Admins::handleResendInvitation');
-    AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
-  },
-  handleRemoveInvitation() {
-    console.info('Admins::handleRemoveInvitation');
-    AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());
-  },
-
-  uncheckAll() {
-    console.info('Admins::uncheckAll');
-    Actions.uncheckAll();
-    AdminsInvitationsActions.uncheckAll();
-  },
-
-  selectAllAdmins() {
-    console.info('Admins::selectAllAdmins');
-    Actions.selectAllAdmins();
-  },
-
-  selectAllAdminsInvitations() {
-    console.info('Admins::selectAllAdminsInvitations');
-    AdminsInvitationsStore.selectAllAdminsInvitations();
-  },
-
-  checkAdminItem(id, state) {
-    AdminsInvitationsActions.uncheckAll();
-    Actions.checkItem(id, state);
-  },
-
-  checkInvitationItem(id, state) {
-    Actions.uncheckAll();
-    AdminsInvitationsActions.checkItem(id, state);
-  },
-
-  showAdminDialog() {
-    Actions.showDialog();
-  },
-
-  showAdminEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
   },
 
   render() {
