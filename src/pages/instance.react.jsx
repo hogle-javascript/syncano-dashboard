@@ -69,7 +69,7 @@ export default React.createClass({
   menuItems() {
     return [
       {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
-      {route: 'data', text: 'Data'},
+      {route: 'webhooks', text: 'Webhooks'},
       {route: 'classes', text: 'Classes'},
       {route: 'codeboxes', text: 'CodeBoxes'},
       {route: 'users', text: 'Users'},

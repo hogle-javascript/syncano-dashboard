@@ -1,6 +1,5 @@
 import _ from 'lodash';
 
-// TODO: add some options like: exclude, ignore, prefix etc
 export default {
 
   getInitialFormState() {
@@ -22,7 +21,6 @@ export default {
   listenToForm(listenable) {
     _.forEach(listenable, (action) => {
       if (action.asyncResult === true && action.asyncForm === true) {
-        // TODO: add more checks
         this.listenTo(action, this.handleForm);
         this.listenTo(action.completed, this.handleFormCompleted);
         this.listenTo(action.failure, this.handleFormFailure);

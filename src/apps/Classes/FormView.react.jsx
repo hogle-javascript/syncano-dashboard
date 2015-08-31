@@ -41,6 +41,13 @@ export default React.createClass({
     }
   },
 
+  componentWillUpdate(nextProps, nextState) {
+    if (!nextState.schemaInitialized && nextState.schema) {
+      this.setFields(nextState.schema);
+      nextState.schemaInitialized = true;
+    }
+  },
+
   getFieldTypes() {
     return Constants.fieldTypes.map((item) => {
       return {
@@ -69,6 +76,7 @@ export default React.createClass({
     }));
   },
 
+
   hasFilter(fieldType) {
     const noFilterFields = ['file', 'text'];
 
@@ -91,7 +99,7 @@ export default React.createClass({
 
   handleBackClick() {
     SessionStore.getRouter().transitionTo(
-    'classes',
+      'classes',
       {
         instanceName: SessionStore.getInstance().name
       }
@@ -254,7 +262,6 @@ export default React.createClass({
         payload: 'create_objects'
       }
     ];
-
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>

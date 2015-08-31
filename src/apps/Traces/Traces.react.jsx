@@ -64,7 +64,7 @@ export default Radium(React.createClass({
   getConfig() {
     return {
       webhook: {
-        route: 'data',
+        route: 'webhooks',
         backLabel: 'Go back to Data Views'
       },
       codebox: {

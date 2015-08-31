@@ -14,7 +14,6 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import Common from '../../common';
-// TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 

@@ -21,7 +21,7 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
 
     var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
+    dataPage.waitForElementPresent('@webhookListItem');
   },
 
   afterEach: function(client, done) {
@@ -110,10 +110,10 @@ module.exports = {
     var dataObjectsPage = client.page.dataObjectsPage();
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  'User goes to Data View' : function(client) {
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItemTitle');
-  },
+  // 'User goes to Data View' : function(client) {
+  //   var dataPage = client.page.dataPage();
+  //   dataPage.waitForElementPresent('@dataListItemTitle');
+  // },
   'User goes to Tasks View' : function(client) {
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@tasks');
