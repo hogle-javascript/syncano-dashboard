@@ -7,7 +7,7 @@ config.profile  = false;
 config.devtool  = 'source-map';
 config.progress = false;
 config.plugins  = config.plugins.concat(
-  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.io/'"}),
+  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.io/'", SYNCANO_DOMAIN: "'dashboard.syncano.io'"}),
   new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('production')}}),
   new webpack.optimize.OccurenceOrderPlugin(true),
   new webpack.optimize.DedupePlugin(),

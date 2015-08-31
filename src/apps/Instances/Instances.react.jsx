@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
+import Cookies from 'js-cookie';
 
 // Utils
 import Mixins from '../../mixins';
@@ -112,7 +113,7 @@ export default Radium(React.createClass({
 
   showInstanceDialog() {
     InstanceDialogActions.showDialog();
-    this.setState({welcomeShowed: true});
+    Cookies.set('welcomeShowed', 'true', {expires: 365, domain: SYNCANO_DOMAIN});
   },
 
   showInstanceEditDialog() {
@@ -142,7 +143,7 @@ export default Radium(React.createClass({
 
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
-          visible={this.state.items !== null && Store.getAllInstances().length === 0 && !this.state.welcomeShowed}/>
+          visible={this.state.items !== null && Store.getAllInstances().length === 0 && !Cookies.get('welcomeShowed')}/>
 
         <InstanceDialog />
         {this.getDialogs()}
