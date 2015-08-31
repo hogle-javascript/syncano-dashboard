@@ -63,7 +63,7 @@ export default React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to reset this API key?',
+          'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
           <Common.Loading
             type="linear"
             position="bottom"
@@ -105,7 +105,7 @@ export default React.createClass({
 
   handleReset() {
     console.info('ApiKeys::handleReset');
-    Actions.resetApiKey(Store.getCheckedItem().id);
+    Actions.resetApiKey(Store.getCheckedItems());
   },
 
   showApiKeyDialog() {
@@ -138,9 +138,8 @@ export default React.createClass({
               iconClassName="synicon-delete"
               />
             <Common.Fab.TooltipItem
-              tooltip="Click here to edit an API Key"
+              tooltip="Click here to reset an API Key"
               mini={true}
-              disabled={checkedApiKeys > 1}
               onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
               iconClassName="synicon-backup-restore"
               />

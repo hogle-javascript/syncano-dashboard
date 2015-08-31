@@ -75,6 +75,13 @@ export default Radium(React.createClass({
         verticalAlign: 'middle',
         textAlign: 'center'
       },
+      instanceDropdowInputLabel: {
+        overflow: 'hidden',
+        maxHeight: '100%',
+        paddingRight: 30,
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      },
       instancesDropdownItem: {
         overflow: 'hidden',
         textOverflow: 'ellipsis'
@@ -260,6 +267,7 @@ export default Radium(React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
+                  labelStyle={styles.instanceDropdowInputLabel}
                   menuItemStyle={styles.instancesDropdownItem}
                   errorText={this.getValidationMessages('instance').join(' ')}
                   menuItems={Store.getInstancesDropdown()}/>

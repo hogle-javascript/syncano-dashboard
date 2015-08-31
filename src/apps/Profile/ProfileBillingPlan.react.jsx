@@ -137,16 +137,16 @@ export default Radium(React.createClass({
         title: 'Cancel Production Plan',
         actions: [
           {
-            text: 'Cancel',
+            text: 'No, I want to keep my plan.',
             onClick: this.handleCancelCancelProductionPlan
           },
           {
-            text: 'Confirm',
+            text: 'Yes, I want to cancel.',
             onClick: this.handleCancelProductionPlan
           }
         ],
         modal: true,
-        children: ['Are you sure you want to cancel Production plan?']
+        children: ['Are you sure you want to cancel your Production plan?']
       }
     }]
   },

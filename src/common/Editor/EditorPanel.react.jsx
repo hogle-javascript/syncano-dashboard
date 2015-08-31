@@ -60,7 +60,8 @@ export default Radium(React.createClass({
         backgroundColor: '#4C4A43',
         color: 'white',
         height: '200px',
-        padding: 10
+        padding: 10,
+        whiteSpace: 'pre'
       }
     }
   },
