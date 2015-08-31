@@ -138,12 +138,40 @@ export default React.createClass({
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+    let deleteDialog = {
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteClassDialog',
+        ref: 'deleteClassDialog',
+        title: 'Delete a Class',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}
+          />
+        ]
+      }
+    };
 
     if (classesAssociatedWithTriggers) {
       let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
       let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
-      return [{
+      deleteDialog = {
         dialog: Common.Dialog,
         params: {
           ref: 'deleteClassDialog',
@@ -170,7 +198,7 @@ export default React.createClass({
                 show={this.state.isLoading}/>
           ]
         }
-      }]
+      }
     }
 
     return [
@@ -185,34 +213,7 @@ export default React.createClass({
           handleClick: this.handleChangePalette
         }
       },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteClassDialog',
-          ref: 'deleteClassDialog',
-          title: 'Delete a Class',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleDelete
-            }
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
-            this.getDialogList(checkedClasses),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-            />
-          ]
-        }
-      }
+      deleteDialog
     ]
   },
 
