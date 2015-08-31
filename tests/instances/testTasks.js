@@ -34,11 +34,11 @@ module.exports = {
     tasksPage.navigate();
     tasksPage.clickButton('@selectScheduleTableRow');
     tasksPage.clickButton('@editButton');
-    tasksPage.waitForElementPresent('@editScheduleModalTitle');
+    tasksPage.waitForElementVisible('@editScheduleModalTitle');
     tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes');
     tasksPage.waitForElementNotVisible('@addScheduleModalCronTabName')
     tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementPresent('@cronTabScheduleTableRow');
+    tasksPage.waitForElementVisible('@cronTabScheduleTableRow');
   },
   'Administrator deletes a Schedule' : function(client) {
     const tasksPage = client.page.tasksPage();
@@ -89,4 +89,4 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
-}
+};

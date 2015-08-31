@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars, no-inline-comments */
+
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
@@ -199,16 +201,19 @@ export default React.createClass({
         </Common.Show>
 
         <Common.Fab>
+          {/*
           <Common.Fab.TooltipItem
             tooltip="Click here to create a Data Endpoint"
             onClick={this.showDataViewDialog}
             iconClassName="synicon-table"/>
+          */}
           <Common.Fab.TooltipItem
             tooltip="Click here to create a CodeBox Endpoint"
             onClick={this.showWebhookDialog}
             iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>
 
+        {/*
         <DataViewsList
           name="Data Endpoints"
           checkItem={this.checkDataViewItem}
@@ -216,6 +221,7 @@ export default React.createClass({
           items={this.state.dataviews.items}
           emptyItemHandleClick={this.showDataViewDialog}
           emptyItemContent="Create a DataView"/>
+         */}
 
         <WebhooksList
           name="CodeBox Endpoints"

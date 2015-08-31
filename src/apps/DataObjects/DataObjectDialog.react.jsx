@@ -56,8 +56,6 @@ export default React.createClass({
       other_permissions: this.state.other_permissions
     };
 
-    let files = this.getFileFields();
-
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
@@ -96,22 +94,10 @@ export default React.createClass({
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
 
-          if (fieldValue) {
-            params[item.name] = fieldValue;
-          }
+          params[item.name] = fieldValue || null;
         }
-      } else {
-        let delFile = true;
-
-        files.some((file) => {
-          if (file.name === item.name) {
-            delFile = false;
-            return true;
-          }
-        });
-        if (delFile) {
-          params[item.name] = null;
-        }
+      } else if (this.state[item.name] === null) {
+        params[item.name] = null;
       }
     });
 
@@ -312,6 +298,11 @@ export default React.createClass({
       /* eslint-enable */
       dialogDate: new Date()
     });
+
+    let emptyTime = new Date();
+
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
 
     this.refs[`fieldtime-${name}`].refs.input.setValue('');
     this.refs[`fieldtime-${name}`].setState({
