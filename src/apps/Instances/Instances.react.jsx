@@ -143,7 +143,7 @@ export default Radium(React.createClass({
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
 
-        {this.renderNotification('instances')}
+        {this.renderLimitNotification('instances')}
 
         <WelcomeDialog
           getStarted={this.showInstanceDialog}

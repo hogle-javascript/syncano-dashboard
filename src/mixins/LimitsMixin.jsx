@@ -6,7 +6,7 @@ export default {
 
   getInitialState() {
     return {
-      notification: null
+      limitNotification: null
     }
   },
 
@@ -22,11 +22,11 @@ export default {
   checkObjectsCount(objectsName, addCallback) {
     if (this.state.items.length >= this.getLimit(objectsName)) {
       this.setState({
-        notification: true
+        limitNotification: true
       }, () => {
         setTimeout(() => {
           this.setState({
-            notification: null
+            limitNotification: null
           })
         }, 5000)
       })
@@ -35,8 +35,8 @@ export default {
     }
   },
 
-  renderNotification(objectsName) {
-    if (this.state.notification) {
+  renderLimitNotification(objectsName) {
+    if (this.state.limitNotification) {
       return (
       <Notification type='error'>
         Maximum {objectsName} count exceeded. You can have maximum {this.getLimit(objectsName)} {objectsName}.

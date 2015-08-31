@@ -224,7 +224,7 @@ export default React.createClass({
       <Container>
         {this.getDialogs()}
 
-        {this.renderNotification('classes')}
+        {this.renderLimitNotification('classes')}
 
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
