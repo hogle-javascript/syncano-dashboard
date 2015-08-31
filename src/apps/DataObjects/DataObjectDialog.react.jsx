@@ -313,6 +313,11 @@ export default React.createClass({
       dialogDate: new Date()
     });
 
+    let emptyTime = new Date();
+
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
+
     this.refs[`fieldtime-${name}`].refs.input.setValue('');
     this.refs[`fieldtime-${name}`].setState({
       /* eslint-disable */
