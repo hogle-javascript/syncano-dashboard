@@ -142,7 +142,7 @@ export default React.createClass({
     let orderField = <div style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
 
-    if (orderFields.lenght > 0) {
+    if (orderFields.length > 0) {
       orderField = (
         <MUI.SelectField
           ref="order_by"

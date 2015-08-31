@@ -14,6 +14,16 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.CodeBoxes.list'
     },
+    fetchTriggers: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Triggers.list'
+    },
+    fetchSchedules: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Schedules.list'
+    },
     createCodeBox: {
       asyncForm: true,
       asyncResult: true,

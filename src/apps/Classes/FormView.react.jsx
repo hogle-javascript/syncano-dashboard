@@ -41,6 +41,13 @@ export default React.createClass({
     }
   },
 
+  componentWillUpdate(nextProps, nextState) {
+    if (!nextState.schemaInitialized && nextState.schema) {
+      this.setFields(nextState.schema);
+      nextState.schemaInitialized = true;
+    }
+  },
+
   getFieldTypes() {
     return Constants.fieldTypes.map((item) => {
       return {
@@ -67,6 +74,22 @@ export default React.createClass({
       }
       return schema;
     }));
+  },
+
+  setFields(schema) {
+    const fields = this.state.fields;
+
+    schema.map((item) => {
+      fields.push({
+        fieldName: item.name,
+        fieldType: item.type,
+        fieldTarget: item.target,
+        fieldOrder: item.order_index,
+        fieldFilter: item.filter_index
+      });
+    });
+
+    return fields;
   },
 
   handleAddSubmit() {
@@ -238,7 +261,6 @@ export default React.createClass({
         payload: 'create_objects'
       }
     ];
-
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>

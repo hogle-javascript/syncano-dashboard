@@ -11,6 +11,11 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Classes.list'
     },
+    fetchTriggers: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Triggers.list'
+    },
     createClass: {
       asyncForm: true,
       asyncResult: true,

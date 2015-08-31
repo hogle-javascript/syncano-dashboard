@@ -99,6 +99,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='codebox'
               name='codebox'
+              className='codebox-dropdown'
               floatingLabelText='CodeBox'
               valueLink={this.linkState('codebox')}
               errorText={this.getValidationMessages('codebox').join(' ')}
@@ -109,6 +110,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='crontab'
               name='crontab'
+              className='crontab-dropdown'
               floatingLabelText='CronTab'
               valueLink={this.linkState('crontab')}
               errorText={this.getValidationMessages('crontab').join(' ')}

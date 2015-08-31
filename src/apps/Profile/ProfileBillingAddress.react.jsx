@@ -37,47 +37,65 @@ export default React.createClass({
       }
     },
     address_line1: {
-      length: {maximum: 150},
-      presence: true,
+      length: {
+        maximum: 150,
+        message: '^Address is too long (maximum is 150 characters)'
+      },
+      presence: {message: "^Address can't be blank"},
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
         message: '^Address is invalid'
       }
     },
     address_line2: {
-      length: {maximum: 150},
+      length: {
+        maximum: 150,
+        message: '^Address is too long (maximum is 150 characters)'
+      },
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
         message: '^Address is invalid'
       }
     },
     address_city: {
-      length: {maximum: 100},
-      presence: true,
+      length: {
+        maximum: 100,
+        message: '^City is too long (maximum is 100 characters)'
+      },
+      presence: {message: "^City can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^City can contain only alphabetical characters'
       }
     },
     address_state: {
-      length: {maximum: 100},
-      presence: true,
+      length: {
+        maximum: 100,
+        message: '^State  is too long (maximum is 100 characters)'
+      },
+      presence: {message: "^State can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^State can contain only alphabetical characters'
       }
     },
     address_zip: {
-      length: {maximum: 10},
-      presence: true,
+      length: {
+        maximum: 10,
+        message: '^Zip code is too long (maximum is 10 characters)'
+      },
+      presence: {message: "^Zip code can't be blank"},
       format: {
         pattern: /^([a-zA-Z0-9 -]+)$/i,
         message: '^Zip code is invalid'
       }
     },
     address_country: {
-      length: {maximum: 35},
-      presence: true,
+      length: {
+        maximum: 35,
+        message: '^Country is too long (maximum is 35 characters)'
+      },
+      presence: {message: "^Country can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^Country can contain only alphabetical characters'
