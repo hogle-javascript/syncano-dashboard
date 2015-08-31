@@ -41,7 +41,7 @@ module.exports = {
     dataObjectsPage.navigate();
     dataObjectsPage.waitForElementVisible('@stringFieldEditedTableRow')
     dataObjectsPage.clickCheckbox('@selectDataObjectTableRow');
-    dataObjectsPage.waitForElementNotVisible('@deleteDataObjectButtonDisabled')
+    dataObjectsPage.waitForElementNotPresent('@deleteDataObjectButtonDisabled')
     dataObjectsPage.clickButton('@deleteDataObjectButton');
     client.pause(1000);
     dataObjectsPage.clickButton('@confirm');
