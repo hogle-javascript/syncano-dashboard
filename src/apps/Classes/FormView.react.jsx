@@ -76,20 +76,34 @@ export default React.createClass({
     }));
   },
 
-  setFields(schema) {
-    const fields = this.state.fields;
 
-    schema.map((item) => {
-      fields.push({
-        fieldName: item.name,
-        fieldType: item.type,
-        fieldTarget: item.target,
-        fieldOrder: item.order_index,
-        fieldFilter: item.filter_index
-      });
-    });
+  hasFilter(fieldType) {
+    const noFilterFields = ['file', 'text'];
 
-    return fields;
+    return noFilterFields.indexOf(fieldType) < 0;
+  },
+
+  hasOrder(fieldType) {
+    const noOrderFields = ['file', 'text'];
+
+    return noOrderFields.indexOf(fieldType) < 0;
+  },
+
+  hasEditMode() {
+    return this.getParams().className;
+  },
+
+  handleSuccessfullValidation() {
+    return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
+  },
+
+  handleBackClick() {
+    SessionStore.getRouter().transitionTo(
+      'classes',
+      {
+        instanceName: SessionStore.getInstance().name
+      }
+    );
   },
 
   handleAddSubmit() {
@@ -182,6 +196,22 @@ export default React.createClass({
     this.setState({fields: newFields});
   },
 
+  setFields(schema) {
+    const fields = this.state.fields;
+
+    schema.map((item) => {
+      fields.push({
+        fieldName: item.name,
+        fieldType: item.type,
+        fieldTarget: item.target,
+        fieldOrder: item.order_index,
+        fieldFilter: item.filter_index
+      });
+    });
+
+    return fields;
+  },
+
   renderSchemaFields() {
     return this.state.fields.map((item) => {
       return (
@@ -214,35 +244,6 @@ export default React.createClass({
         </div>
       )
     });
-  },
-
-  hasFilter(fieldType) {
-    const noFilterFields = ['file', 'text'];
-
-    return noFilterFields.indexOf(fieldType) < 0;
-  },
-
-  hasOrder(fieldType) {
-    const noOrderFields = ['file', 'text'];
-
-    return noOrderFields.indexOf(fieldType) < 0;
-  },
-
-  hasEditMode() {
-    return this.getParams().className;
-  },
-
-  handleSuccessfullValidation() {
-    return this.hasEditMode() ? this.handleEditSubmit() : this.handleAddSubmit();
-  },
-
-  handleBackClick() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      {
-        instanceName: SessionStore.getInstance().name
-      }
-    );
   },
 
   render() {

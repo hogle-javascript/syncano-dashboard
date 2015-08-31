@@ -18,48 +18,16 @@ export default React.createClass({
     })
   },
 
-  renderEmptyNotification() {
-    let emptyItem = {
-      subheader: 'Notifications',
-      subheaderStyle: {
-        borderBottom: '1px solid #EAEAEA'
-      },
-      name: 'empty-notification',
-      leftIcon: {
-        name: 'synicon-information',
-        color: '#0091EA'
-      },
-      content: {
-        text: `You don't have any notifications`,
-        style: {}
-      }
-    };
-    let icon = (
-      <MUI.FontIcon
-        className={emptyItem.leftIcon.name}
-        color={emptyItem.leftIcon.color}/>
-    );
-
-    return (
-      <MUI.List
-        subheader={emptyItem.subheader}
-        subheaderStyle={emptyItem.subheaderStyle}>
-        <MUI.ListItem
-          key={emptyItem.name}
-          disableTouchTap={true}
-          leftIcon={icon}>
-          <span>
-            {emptyItem.content.text}
-          </span>
-        </MUI.ListItem>
-      </MUI.List>
-    )
-  },
-
   getInvitationItems() {
     let invitationItems = this.props.items.filter((item) => item.type === 'invitation');
 
     return invitationItems;
+  },
+
+  getLinkItems() {
+    let linkItems = this.props.items.filter((item) => item.type === 'normal-link');
+
+    return linkItems;
   },
 
   renderInvitationItems() {
@@ -96,10 +64,42 @@ export default React.createClass({
     return items;
   },
 
-  getLinkItems() {
-    let linkItems = this.props.items.filter((item) => item.type === 'normal-link');
+  renderEmptyNotification() {
+    let emptyItem = {
+      subheader: 'Notifications',
+      subheaderStyle: {
+        borderBottom: '1px solid #EAEAEA'
+      },
+      name: 'empty-notification',
+      leftIcon: {
+        name: 'synicon-information',
+        color: '#0091EA'
+      },
+      content: {
+        text: `You don't have any notifications`,
+        style: {}
+      }
+    };
+    let icon = (
+    <MUI.FontIcon
+      className={emptyItem.leftIcon.name}
+      color={emptyItem.leftIcon.color}/>
+    );
 
-    return linkItems;
+    return (
+    <MUI.List
+      subheader={emptyItem.subheader}
+      subheaderStyle={emptyItem.subheaderStyle}>
+      <MUI.ListItem
+        key={emptyItem.name}
+        disableTouchTap={true}
+        leftIcon={icon}>
+          <span>
+            {emptyItem.content.text}
+          </span>
+      </MUI.ListItem>
+    </MUI.List>
+    )
   },
 
   renderNormalLinkItems() {

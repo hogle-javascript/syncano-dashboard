@@ -5,11 +5,11 @@ export default React.createClass({
 
   displayName: 'Container',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.object
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     let styles = {

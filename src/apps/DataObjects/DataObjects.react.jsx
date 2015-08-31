@@ -33,6 +33,11 @@ export default React.createClass({
     Mixins.InstanceTabs
   ],
 
+  componentDidMount() {
+    console.info('DataObjects::componentDidMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('DataObjects::componentWillUpdate');
     // Merging "hideDialogs
@@ -43,13 +48,54 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('DataObjects::componentDidMount');
-    Actions.fetch();
-  },
-
   componentWillUnmount() {
     Actions.clearStore();
+  },
+
+  handleDelete() {
+    console.info('DataObjects::handleDelete');
+    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
+  },
+
+  handleRowSelection(selectedRows) {
+    console.info('DataObjects::handleRowSelection', arguments);
+    let rowsSelection = selectedRows;
+
+    // Writing to the store
+    if (selectedRows === 'all') {
+      rowsSelection = Store.getItems().map((item, index) => {
+        return index
+      })
+    }
+
+    Actions.setSelectedRows(rowsSelection);
+  },
+
+  handleSelectAll(selectAll) {
+    console.info('DataObjects::handleSelectAll', selectAll);
+  },
+
+  handleCellClick(cellNumber, cellName) {
+    console.info('DataObjects::handleCellClick', arguments);
+    if (typeof cellName !== 'undefined' && cellName !== 0) {
+      this.showDataObjectEditDialog(cellNumber);
+    }
+  },
+
+  handleMoreRows() {
+    Actions.subFetchDataObjects({
+      className: this.state.classObj.name,
+      params: this.state.nextParams
+    });
+  },
+
+  handleBackClick() {
+    SessionStore.getRouter().transitionTo(
+      'classes',
+      {
+        instanceName: SessionStore.getInstance().name
+      }
+    );
   },
 
   // Dialogs config
@@ -93,92 +139,46 @@ export default React.createClass({
     Actions.showDialog(dataObject);
   },
 
-  handleDelete() {
-    console.info('DataObjects::handleDelete');
-    Actions.removeDataObjects(this.state.classObj.name, Store.getIDsFromTable());
-  },
-
-  handleRowSelection(selectedRows) {
-    console.info('DataObjects::handleRowSelection', arguments);
-    let rowsSelection = selectedRows;
-
-    // Writing to the store
-    if (selectedRows === 'all') {
-      rowsSelection = Store.getItems().map((item, index) => {
-        return index
-      })
-    }
-
-    Actions.setSelectedRows(rowsSelection);
-  },
-
-  handleSelectAll(selectAll) {
-    console.info('DataObjects::handleSelectAll', selectAll);
-  },
-
-  handleCellClick(cellNumber, cellName) {
-    console.info('DataObjects::handleCellClick', arguments);
-    if (typeof cellName !== 'undefined' && cellName !== 0) {
-      this.showDataObjectEditDialog(cellNumber);
-    }
-  },
-
   renderTable() {
     console.info('DataObjects::renderTable');
     let tableData = Store.renderTableData();
     let tableHeader = Store.renderTableHeader(this.handleSelectAll);
 
     return (
-      <div>
-        <MUI.Table
-          ref="table"
-          multiSelectable={true}
-          deselectOnClickaway={false}
+    <div>
+      <MUI.Table
+        ref="table"
+        multiSelectable={true}
+        deselectOnClickaway={false}
+        showRowHover={true}
+        onCellClick={this.handleCellClick}
+        onRowSelection={this.handleRowSelection}
+        tableWrapperStyle={{overflow: 'visible'}}>
+        {tableHeader}
+        <MUI.TableBody
+          deselectOnClickaway={this.state.deselectOnClickaway}
           showRowHover={true}
-          onCellClick={this.handleCellClick}
-          onRowSelection={this.handleRowSelection}
-          tableWrapperStyle={{overflow: 'visible'}}>
-          {tableHeader}
-          <MUI.TableBody
-            deselectOnClickaway={this.state.deselectOnClickaway}
-            showRowHover={true}
-            stripedRows={false}>
-            {tableData}
-          </MUI.TableBody>
-        </MUI.Table>
+          stripedRows={false}>
+          {tableData}
+        </MUI.TableBody>
+      </MUI.Table>
 
+      <div
+        className="row align-center"
+        style={{margin: 50}}>
+        <div>Loaded {tableData.length} Data Objects</div>
+      </div>
+      <Common.Show if={this.state.hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
-          <div>Loaded {tableData.length} Data Objects</div>
+          <MUI.RaisedButton
+            label="Load more"
+            onClick={this.handleMoreRows}/>
         </div>
-        <Common.Show if={this.state.hasNextPage}>
-          <div
-            className="row align-center"
-            style={{margin: 50}}>
-            <MUI.RaisedButton
-              label="Load more"
-              onClick={this.handleMoreRows}/>
-          </div>
-        </Common.Show>
-      </div>
+      </Common.Show>
+    </div>
     )
-  },
-
-  handleMoreRows() {
-    Actions.subFetchDataObjects({
-      className: this.state.classObj.name,
-      params: this.state.nextParams
-    });
-  },
-
-  handleBackClick() {
-    SessionStore.getRouter().transitionTo(
-      'classes',
-      {
-        instanceName: SessionStore.getInstance().name
-      }
-    );
   },
 
   render() {
@@ -218,7 +218,7 @@ export default React.createClass({
                 style={{fontSize: 25, marginTop: 5}}
                 iconClassName="synicon-delete"
                 tooltip="Delete Data Objects"
-                disabled={this.state.selectedRows.length < 1}
+                disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
                 onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
               <ColumnsFilterMenu

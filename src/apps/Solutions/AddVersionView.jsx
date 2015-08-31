@@ -35,19 +35,6 @@ export default Radium(React.createClass({
     }
   },
 
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      },
-      {
-        label: 'Solutions',
-        route: 'solutions'
-      }
-    ];
-  },
-
   componentWillMount() {
     Actions.fetchInstances();
     Actions.fetch();
@@ -103,6 +90,35 @@ export default Radium(React.createClass({
     Actions.setInstance(obj.payload)
   },
 
+  handleSubmit(type) {
+    this.setState({type});
+    this.handleFormValidation();
+  },
+
+  handleAddSubmit() {
+    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
+  },
+
+  handleOnCheck(name, type, event, status) {
+    let exportSpec = this.state.exportSpec;
+
+    exportSpec[type][name] = status;
+    this.setState({exportSpec});
+  },
+
+  headerMenuItems() {
+    return [
+      {
+        label: 'Instances',
+        route: 'instances'
+      },
+      {
+        label: 'Solutions',
+        route: 'solutions'
+      }
+    ];
+  },
+
   pkMap(section) {
     let map = {
       views: 'name',
@@ -144,22 +160,6 @@ export default Radium(React.createClass({
       export_spec: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     }
-  },
-
-  handleSubmit(type) {
-    this.setState({type});
-    this.handleFormValidation();
-  },
-
-  handleAddSubmit() {
-    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
-  },
-
-  handleOnCheck(name, type, event, status) {
-    let exportSpec = this.state.exportSpec;
-
-    exportSpec[type][name] = status;
-    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {

@@ -22,8 +22,6 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  validatorConstraints: {},
-
   handleDialogShow() {
     console.info('ApiKeyDialog::handleDialogHide');
     this.refs.ignore_acl.setToggled(this.state.allow_user_create);

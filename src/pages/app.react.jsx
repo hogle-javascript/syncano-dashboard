@@ -11,17 +11,17 @@ export default React.createClass({
 
   displayName: 'App',
 
-  mixins: [
-    Router.State
-  ],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
 
-  contextTypes: {
-    router: React.PropTypes.func
-  },
+  mixins: [
+    Router.State
+  ],
 
   getChildContext() {
     return {
@@ -29,16 +29,16 @@ export default React.createClass({
     };
   },
 
-  componentWillUpdate() {
-    if (typeof this.getParams().instanceName === 'undefined') {
-      SessionStore.removeInstance();
-    }
-  },
-
   componentWillMount() {
     SessionActions.setRouter(this.context.router);
     SessionActions.setTheme(ThemeManager);
     ThemeManager.setTheme(SyncanoTheme);
+  },
+
+  componentWillUpdate() {
+    if (typeof this.getParams().instanceName === 'undefined') {
+      SessionStore.removeInstance();
+    }
   },
 
   render() {

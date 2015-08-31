@@ -11,14 +11,14 @@ export default React.createClass({
 
   displayName: 'AccountActivate',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   componentDidMount() {
     let params = this.getParams();

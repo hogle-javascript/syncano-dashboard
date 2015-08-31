@@ -32,11 +32,6 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('CodeBoxes::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('CodeBoxes::componentDidMount');
     if (this.getParams().action === 'add') {
@@ -44,6 +39,11 @@ export default React.createClass({
       this.showCodeBoxDialog();
     }
     Actions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('CodeBoxes::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
   },
 
   getAssociatedCodeboxes(associatedWith) {
@@ -60,24 +60,43 @@ export default React.createClass({
   getAssociationsList(associationsFor, associatedItems) {
     let hasItems = associatedItems.length > 0;
     let list = {
-      schedules: hasItems
-        ? <div>
-            Associated with Schedules: {this.getDialogList(associatedItems, 'label', associationsFor)}
-          </div>
-        : null,
-      triggers: hasItems
-        ? <div>
-            Associated with Triggers: {this.getDialogList(associatedItems, 'label', associationsFor)}
-          </div>
-        : null,
-      notAssociated: hasItems
-        ? <div>
-            Not associated: {this.getDialogList(associatedItems, 'label')}
-          </div>
-        : null
+      schedules: null,
+      triggers: null,
+      notAssociated: null
     };
 
+    if (hasItems) {
+      list.schedules = (
+        <div>
+          Associated with Schedules: {this.getDialogList(associatedItems, 'label', associationsFor)}
+        </div>
+      );
+      list.triggers = (
+        <div>
+          Associated with Triggers: {this.getDialogList(associatedItems, 'label', associationsFor)}
+        </div>
+      );
+      list.notAssociated = (
+        <div>
+          Not associated: {this.getDialogList(associatedItems, 'label')}
+        </div>
+      );
+    }
+
     return list[associationsFor];
+  },
+
+  handleDelete() {
+    console.info('CodeBoxes::handleDelete');
+    Actions.removeCodeBoxes(Store.getCheckedItems());
+  },
+
+  showCodeBoxDialog() {
+    Actions.showDialog();
+  },
+
+  showCodeBoxEditDialog() {
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
@@ -150,19 +169,6 @@ export default React.createClass({
         ]
       }
     }]
-  },
-
-  handleDelete() {
-    console.info('CodeBoxes::handleDelete');
-    Actions.removeCodeBoxes(Store.getCheckedItems());
-  },
-
-  showCodeBoxDialog() {
-    Actions.showDialog();
-  },
-
-  showCodeBoxEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
   },
 
   render() {

@@ -16,6 +16,11 @@ export default Radium(React.createClass({
 
   displayName: 'HeaderInstancesDropdown',
 
+  contextTypes: {
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
@@ -23,42 +28,9 @@ export default Radium(React.createClass({
     Router.State
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func.isRequired,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     console.info('HeaderInstancesDropdown::componentDidMount');
     InstancesStore.fetch();
-  },
-
-  handleOutsideClick() {
-    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
-  },
-
-  handleDropdownItemClick(event, selectedIndex, menuItem) {
-    // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload).then(() => {
-      this.transitionTo('instance', {instanceName: menuItem.payload});
-    });
-  },
-
-  handleInstanceActive() {
-    if (InstancesStore.getAllInstances()) {
-      let currentInstance = SessionStore.instance;
-      let instancesList = InstancesStore.getAllInstances(true);
-      let instanceActiveIndex = null;
-
-      instancesList.some((event, index) => {
-        if (event.name === currentInstance.name) {
-          instanceActiveIndex = index;
-          return true;
-        }
-      });
-
-      return instanceActiveIndex;
-    }
   },
 
   getStyles() {
@@ -111,6 +83,34 @@ export default Radium(React.createClass({
         height: 'auto',
         paddingLeft: 16
       }
+    }
+  },
+
+  handleOutsideClick() {
+    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
+  },
+
+  handleDropdownItemClick(event, selectedIndex, menuItem) {
+    // Redirect to main instance screen
+    SessionActions.fetchInstance(menuItem.payload).then(() => {
+      this.transitionTo('instance', {instanceName: menuItem.payload});
+    });
+  },
+
+  handleInstanceActive() {
+    if (InstancesStore.getAllInstances()) {
+      let currentInstance = SessionStore.instance;
+      let instancesList = InstancesStore.getAllInstances(true);
+      let instanceActiveIndex = null;
+
+      instancesList.some((event, index) => {
+        if (event.name === currentInstance.name) {
+          instanceActiveIndex = index;
+          return true;
+        }
+      });
+
+      return instanceActiveIndex;
     }
   },
 
