@@ -127,7 +127,7 @@ export default Radium(React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items || [];
     let styles = this.getStyles();
     let tracesFor = {
@@ -165,7 +165,7 @@ export default Radium(React.createClass({
     ];
   },
 
-  getHeader() {
+  renderHeader() {
     if (this.state.items.length > 0) {
       return (
         <Common.ColumnList.Header>
@@ -183,9 +183,9 @@ export default Radium(React.createClass({
     return (
       <Common.Lists.Container>
         <Common.Loading show={this.state.isLoading}>
-          {this.getHeader()}
+          {this.renderHeader()}
           <Common.Lists.List>
-            {this.getList()}
+            {this.renderList()}
           </Common.Lists.List>
         </Common.Loading>
       </Common.Lists.Container>

@@ -81,6 +81,85 @@ export default React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      main: {
+        marginTop: 50,
+        fontColor: '#4A4A4A'
+      },
+      sectionTopic: {
+        fontSize: '1.3em'
+      },
+      table: {
+        marginTop: 20
+      },
+      tableRow: {
+        height: 40,
+        textAlign: 'left',
+        lineHeight: '40px',
+        verticalAlign: 'middle'
+      },
+      tableColumnSummary: {
+        height: 40,
+        margin: 1,
+        fontSize: '1.1em',
+        fontWeight: 'bold',
+        textAlign: 'right',
+        background: '#F2F2F2',
+        verticalAlign: 'middle',
+        lineHeight: '40px'
+      },
+      sectionTotalSummary: {
+        marginTop: 20,
+        height: 80,
+        fontSize: '1.4em',
+        lineHeight: '1.4em',
+        background: '#CBEDA5',
+        padding: 14
+      },
+      sectionComment: {
+        marginTop: 20,
+        fontSize: '0.8em',
+        color: '#9B9B9B'
+      }
+    }
+  },
+
+  getInfo(type) {
+    let info = {
+      included: 0,
+      overage: 0,
+      total: 0
+    };
+
+    if (!this.state.plan) {
+      return info;
+    }
+
+    let pricing = this.state.plan.pricing[type];
+    let options = this.state.plan.options[type];
+    let sliderValue = this.state[type + 'Selected'];
+
+    if (!sliderValue) {
+      info = pricing[Object.keys(pricing)[0]];
+      info.total = Object.keys(pricing)[0];
+      return info;
+    }
+
+    let value = String(parseFloat(sliderValue));
+
+    info = pricing[options[value]];
+    info.total = options[value];
+    return info;
+  },
+
+  onSliderChange(type, event, value) {
+    let newState = {};
+
+    newState[type + 'Selected'] = value;
+    this.setState(newState);
+  },
+
   handleDialogShow() {
     console.debug('ProfileBillingPlanDialog::handleDialogShow');
     Actions.fetchBillingPlans();
@@ -128,47 +207,17 @@ export default React.createClass({
     }
   },
 
-  getStyles() {
-    return {
-      main: {
-        marginTop: 50,
-        fontColor: '#4A4A4A'
-      },
-      sectionTopic: {
-        fontSize: '1.3em'
-      },
-      table: {
-        marginTop: 20
-      },
-      tableRow: {
-        height: 40,
-        textAlign: 'left',
-        lineHeight: '40px',
-        verticalAlign: 'middle'
-      },
-      tableColumnSummary: {
-        height: 40,
-        margin: 1,
-        fontSize: '1.1em',
-        fontWeight: 'bold',
-        textAlign: 'right',
-        background: '#F2F2F2',
-        verticalAlign: 'middle',
-        lineHeight: '40px'
-      },
-      sectionTotalSummary: {
-        marginTop: 20,
-        height: 80,
-        fontSize: '1.4em',
-        lineHeight: '1.4em',
-        background: '#CBEDA5',
-        padding: 14
-      },
-      sectionComment: {
-        marginTop: 20,
-        fontSize: '0.8em',
-        color: '#9B9B9B'
-      }
+  handleSliderLabelsClick(value, type) {
+    let newState = {};
+
+    newState[type + 'Selected'] = value;
+    this.setState(newState);
+  },
+
+  handleDismiss() {
+    this.resetDialogState();
+    if (typeof this.props.onDismiss === 'function') {
+      this.props.onDismiss()
     }
   },
 
@@ -179,83 +228,76 @@ export default React.createClass({
 
     if (this.state.card) {
       return (
-        <div>
-          <div style={this.getStyles().sectionTopic}>Credit card info:</div>
-          <div className="row" style={{marginTop: 20, height: 110}}>
-            <div className="col-md-18">
-              <Common.CreditCard card={this.state.card}/>
-            </div>
-            <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
-              Want to use a different method of payment?
-              Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
-            </div>
-          </div>
-        </div>
-      )
-    }
-    return (
       <div>
-        <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
-        <div className="row">
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="number"
-              ref="number"
-              fullWidth={true}
-              valueLink={this.linkState('number')}
-              errorText={this.getValidationMessages('number').join(' ')}
-              hintText="Card Number"
-              floatingLabelText="Card Number"
-              dataStripe="number"/>
+        <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+        <div className="row" style={{marginTop: 20, height: 110}}>
+          <div className="col-md-18">
+            <Common.CreditCard card={this.state.card}/>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-5">
-            <MUI.TextField
-              name="cvc"
-              ref="cvc"
-              fullWidth={true}
-              valueLink={this.linkState('cvc')}
-              errorText={this.getValidationMessages('cvc').join(' ')}
-              hintText="CVC"
-              floatingLabelText="CVC"
-              dataStripe="cvc"/>
-          </div>
-
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="exp_month"
-              ref="exp_month"
-              fullWidth={true}
-              valueLink={this.linkState('exp_month')}
-              errorText={this.getValidationMessages('exp_month').join(' ')}
-              hintText="MM"
-              floatingLabelText="Expiration month (MM)"
-              dataStripe="exp-month"/>
-          </div>
-
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="exp_year"
-              ref="exp_year"
-              fullWidth={true}
-              valueLink={this.linkState('exp_year')}
-              errorText={this.getValidationMessages('exp_year').join(' ')}
-              hintText="YYYY"
-              floatingLabelText="Expiration year (YYYY)"
-              dataStripe="exp-year"/>
+          <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
+            Want to use a different method of payment?
+            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
           </div>
         </div>
       </div>
+      )
+    }
+    return (
+    <div>
+      <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
+      <div className="row">
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="number"
+            ref="number"
+            fullWidth={true}
+            valueLink={this.linkState('number')}
+            errorText={this.getValidationMessages('number').join(' ')}
+            hintText="Card Number"
+            floatingLabelText="Card Number"
+            dataStripe="number"/>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-md-5">
+          <MUI.TextField
+            name="cvc"
+            ref="cvc"
+            fullWidth={true}
+            valueLink={this.linkState('cvc')}
+            errorText={this.getValidationMessages('cvc').join(' ')}
+            hintText="CVC"
+            floatingLabelText="CVC"
+            dataStripe="cvc"/>
+        </div>
+
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="exp_month"
+            ref="exp_month"
+            fullWidth={true}
+            valueLink={this.linkState('exp_month')}
+            errorText={this.getValidationMessages('exp_month').join(' ')}
+            hintText="MM"
+            floatingLabelText="Expiration month (MM)"
+            dataStripe="exp-month"/>
+        </div>
+
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="exp_year"
+            ref="exp_year"
+            fullWidth={true}
+            valueLink={this.linkState('exp_year')}
+            errorText={this.getValidationMessages('exp_year').join(' ')}
+            hintText="YYYY"
+            floatingLabelText="Expiration year (YYYY)"
+            dataStripe="exp-year"/>
+        </div>
+      </div>
+    </div>
     )
-  },
-
-  onSliderChange(type, event, value) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
   },
 
   renderSlider(type) {
@@ -271,74 +313,32 @@ export default React.createClass({
     });
 
     return (
-      <Common.Slider
-        key={type + 'Slider'}
-        ref={type + 'Slider'}
-        name={type + 'Slider'}
-        value={typeof selected !== 'undefined' ? selected : defaultValue}
-        type={type}
-        legendItems={options}
-        optionClick={this.handleSliderLabelsClick}
-        onChange={this.onSliderChange}
-        />
+    <Common.Slider
+      key={type + 'Slider'}
+      ref={type + 'Slider'}
+      name={type + 'Slider'}
+      value={typeof selected !== 'undefined' ? selected : defaultValue}
+      type={type}
+      legendItems={options}
+      optionClick={this.handleSliderLabelsClick}
+      onChange={this.onSliderChange}
+    />
     )
-  },
-
-  handleSliderLabelsClick(value, type) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
   },
 
   renderSliderSummary(info) {
     return (
-      <div>
-        <div style={{paddingBottom: 8}}>
-          <div style={{paddingBottom: 8}}>{info.included.label}</div>
-          <div><strong>{info.included.value}</strong></div>
-        </div>
-        <div>
-          <div style={{paddingBottom: 8}}>{info.overage.label}</div>
-          <div><strong>${info.overage.value}</strong></div>
-        </div>
+    <div>
+      <div style={{paddingBottom: 8}}>
+        <div style={{paddingBottom: 8}}>{info.included.label}</div>
+        <div><strong>{info.included.value}</strong></div>
       </div>
+      <div>
+        <div style={{paddingBottom: 8}}>{info.overage.label}</div>
+        <div><strong>${info.overage.value}</strong></div>
+      </div>
+    </div>
     )
-  },
-
-  getInfo(type) {
-    let info = {
-      included: 0,
-      overage: 0,
-      total: 0
-    };
-
-    if (!this.state.plan) {
-      return info;
-    }
-
-    let pricing = this.state.plan.pricing[type];
-    let options = this.state.plan.options[type];
-    let sliderValue = this.state[type + 'Selected'];
-
-    if (!sliderValue) {
-      info = pricing[Object.keys(pricing)[0]];
-      info.total = Object.keys(pricing)[0];
-      return info;
-    }
-
-    let value = String(parseFloat(sliderValue));
-
-    info = pricing[options[value]];
-    info.total = options[value];
-    return info;
-  },
-
-  handleDismiss() {
-    this.resetDialogState();
-    if (typeof this.props.onDismiss === 'function') {
-      this.props.onDismiss()
-    }
   },
 
   render() {

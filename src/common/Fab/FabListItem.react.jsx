@@ -7,11 +7,11 @@ export default Radium(React.createClass({
 
   displayName: 'FABListItem',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     handleClick: React.PropTypes.func
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     return {

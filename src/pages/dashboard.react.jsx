@@ -12,14 +12,14 @@ export default React.createClass({
 
   displayName: 'Dashboard',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Router.State,
     Router.Navigation
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
 
   statics: {
     willTransitionTo(transition) {

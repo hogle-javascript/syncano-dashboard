@@ -33,6 +33,7 @@ export default React.createClass({
     }
   },
 
+
   handleSuccessfullValidation() {
     Actions.passwordReset(this.state.email);
   },

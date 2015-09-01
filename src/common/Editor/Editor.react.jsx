@@ -11,6 +11,7 @@ import 'brace/theme/tomorrow';
 
 
 export default React.createClass({
+
   propTypes: {
     mode: React.PropTypes.oneOf(['python', 'javascript', 'ruby', 'golang']),
     theme: React.PropTypes.string,
@@ -27,6 +28,7 @@ export default React.createClass({
     highlightActiveLine: React.PropTypes.bool,
     showPrintMargin: React.PropTypes.bool
   },
+
   getDefaultProps() {
     return {
       name: 'brace-editor',
@@ -45,13 +47,7 @@ export default React.createClass({
       showPrintMargin: true
     };
   },
-  onChange() {
-    let value = this.editor.getValue();
 
-    if (this.props.onChange) {
-      this.props.onChange(value);
-    }
-  },
   componentDidMount() {
     this.editor = ace.edit(this.props.name);
     this.editor.$blockScrolling = Infinity;
@@ -92,6 +88,14 @@ export default React.createClass({
     }
 
     this.editor.clearSelection();
+  },
+
+  onChange() {
+    let value = this.editor.getValue();
+
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
   },
 
   render() {

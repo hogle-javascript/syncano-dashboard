@@ -1,5 +1,6 @@
 import Reflux from 'reflux';
 import D from 'd.js';
+import _ from 'lodash';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -81,14 +82,29 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('AddVersionViewStore::setInstances');
-    this.data.instances = Object.keys(instances).map(function(key) {
-      return instances[key];
-    });
+    this.data.instances = _.map(_.keys(instances), (key) => instances[key]);
     this.trigger(this.data);
   },
 
   getInstancesDropdown() {
-    return this.getDropdown(this.data.instances, 'name', 'name');
+    let instances = this.data.instances;
+
+    if (!instances) {
+      return [{payload: '', text: 'Loading...'}];
+    }
+
+    return _.map(instances, (instance) => {
+      let instanceText = instance.name;
+
+      if (instance.description) {
+        instanceText += ` (${instance.description})`;
+      }
+
+      return {
+        payload: instance.name,
+        text: instanceText
+      }
+    });
   },
 
   setInstance(instance) {
@@ -150,7 +166,6 @@ export default Reflux.createStore({
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    // TODO: Create some smart mixin for router actions in stores
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       SessionStore.getRouter().getCurrentParams()

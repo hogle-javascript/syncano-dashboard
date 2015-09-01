@@ -14,7 +14,6 @@ import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
 import Common from '../../common';
-// TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
@@ -34,47 +33,6 @@ export default Radium(React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs
   ],
-
-  // Dialogs config
-  initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteInstanceDialog',
-          ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleDelete}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
-            this.getDialogList(checkedInstances),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-              />
-          ]
-        }
-      }]
-  },
 
   componentDidMount() {
     console.info('Instances::componentDidMount');
@@ -110,6 +68,46 @@ export default Radium(React.createClass({
     // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName});
+  },
+
+  // Dialogs config
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let checkedInstances = Store.getCheckedItems();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteInstanceDialog',
+          ref: 'deleteInstanceDialog',
+          title: 'Delete an Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDelete}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            this.getDialogList(checkedInstances),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          ]
+        }
+      }]
   },
 
   showInstanceDialog() {

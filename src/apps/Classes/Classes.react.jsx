@@ -1,14 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import ClassesActions from './ClassesActions';
-import ClassesStore from './ClassesStore';
+import Actions from './ClassesActions';
+import Store from './ClassesStore';
 
 // Components
 import Common from '../../common';
@@ -25,93 +26,20 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ClassesStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
   ],
 
+  componentDidMount() {
+    console.info('Classes::componentDidMount');
+    Actions.fetch();
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.info('Classes::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
-  },
-
-  componentDidMount() {
-    console.info('Classes::componentDidMount');
-    ClassesActions.fetch();
-  },
-
-  // Dialogs config
-  initDialogs() {
-    let checkedItemIconColor = ClassesStore.getCheckedItemIconColor();
-    let checkedClasses = ClassesStore.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteClassDialog',
-          ref: 'deleteClassDialog',
-          title: 'Delete a Class',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleDelete
-            }
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
-            this.getDialogList(checkedClasses),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-              />
-          ]
-        }
-      }
-    ]
-  },
-
-  handleChangePalette(color, icon) {
-    console.info('Classes::handleChangePalette', color, icon);
-
-    ClassesActions.updateClass(
-      ClassesStore.getCheckedItem().name, {
-        metadata: JSON.stringify({color, icon})
-      }
-    );
-    ClassesActions.uncheckAll()
-  },
-
-  handleDelete() {
-    console.info('Classes::handleDelete');
-    ClassesActions.removeClasses(ClassesStore.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('Classes::handleReset');
-    ClassesActions.resetClass(ClassesStore.getCheckedItem().id);
-  },
-
-  checkClassItem(id, state) {
-    ClassesActions.checkItem(id, state);
   },
 
   getStyles() {
@@ -128,12 +56,75 @@ export default React.createClass({
     }
   },
 
+  getAssociatedClasses() {
+    let checkedClasses = Store.getCheckedItems();
+
+    let associatedClasses = _.filter(checkedClasses, (checkedClass) => {
+      checkedClass.triggers = _.pluck(_.filter(this.state.triggers, 'class', checkedClass.name), 'label');
+      return checkedClass.triggers.length > 0;
+    });
+
+    return associatedClasses;
+  },
+
+  getAssociationsList(associationsFor, associatedItems) {
+    let hasItems = associatedItems.length > 0;
+    let list = {
+      triggers: null,
+      notAssociated: null
+    };
+
+    if (hasItems) {
+      list.triggers = (
+        <div>
+          Associated with Triggers: {this.getDialogList(associatedItems, 'name', associationsFor)}
+        </div>
+      );
+      list.notAssociated = (
+        <div>
+          Not associated: {this.getDialogList(associatedItems, 'name')}
+        </div>
+      )
+    }
+
+    return list[associationsFor];
+  },
+
+  isProtectedFromDelete(item) {
+    return item.protectedFromDelete;
+  },
+
+  handleChangePalette(color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+
+    Actions.updateClass(
+      Store.getCheckedItem().name, {
+        metadata: JSON.stringify({color, icon})
+      }
+    );
+    Actions.uncheckAll()
+  },
+
+  handleDelete() {
+    console.info('Classes::handleDelete');
+    Actions.removeClasses(Store.getCheckedItems());
+  },
+
+  handleReset() {
+    console.info('Classes::handleReset');
+    Actions.resetClass(Store.getCheckedItem().id);
+  },
+
+  checkClassItem(id, state) {
+    Actions.checkItem(id, state);
+  },
+
   redirectToAddClassView() {
     this.context.router.transitionTo('classes-add', this.getParams());
   },
 
   redirectToEditClassView(className) {
-    let classNameParam = className || ClassesStore.getCheckedItem().name;
+    let classNameParam = className || Store.getCheckedItem().name;
 
     this.context.router.transitionTo('classes-edit', {
       instanceName: this.getParams().instanceName,
@@ -141,14 +132,95 @@ export default React.createClass({
     });
   },
 
-  isProtectedFromDelete(item) {
-    return item.protectedFromDelete;
+  // Dialogs config
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let checkedClasses = Store.getCheckedItems();
+    let classesAssociatedWithTriggers = this.getAssociatedClasses();
+    let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+    let deleteDialog = {
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteClassDialog',
+        ref: 'deleteClassDialog',
+        title: 'Delete a Class',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}
+          />
+        ]
+      }
+    };
+
+    if (classesAssociatedWithTriggers) {
+      let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
+      let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
+
+      deleteDialog = {
+        dialog: Common.Dialog,
+        params: {
+          ref: 'deleteClassDialog',
+          title: 'Delete a Class',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleDelete
+            }
+          ],
+          modal: true,
+          children: [
+            'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
+            checkedClasses.length + ' Class(es)?',
+            notAssociatedList,
+            associatedWithTriggersList,
+            <Common.Loading
+                type="linear"
+                position="bottom"
+                show={this.state.isLoading}/>
+          ]
+        }
+      }
+    }
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      },
+      deleteDialog
+    ]
   },
 
   render() {
     let styles = this.getStyles();
-    let checkedClasses = ClassesStore.getCheckedItems();
-    let checkedClassesCount = ClassesStore.getNumberOfChecked();
+    let checkedClasses = Store.getCheckedItems();
+    let checkedClassesCount = Store.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
     let someClassIsProtectedFromDelete = checkedClasses.some(this.isProtectedFromDelete);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -163,7 +235,7 @@ export default React.createClass({
             <Common.Fab.TooltipItem
               tooltip={isAnyAndNotAllClassSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
-              onClick={isAnyAndNotAllClassSelected ? ClassesActions.selectAll : ClassesActions.uncheckAll}
+              onClick={isAnyAndNotAllClassSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyAndNotAllClassSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
               tooltip="Click here to delete Classes"

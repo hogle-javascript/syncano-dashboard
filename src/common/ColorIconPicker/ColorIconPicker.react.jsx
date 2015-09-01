@@ -17,6 +17,21 @@ export default Radium(React.createClass({
     handleChange: React.PropTypes.func
   },
 
+  getInitialState() {
+    return {
+      selectedColor: this.props.selectedColor,
+      selectedIcon: this.props.selectedIcon
+    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    console.info('ColorIconPicker::componentWillReceiveProps');
+    this.setState({
+      selectedColor: nextProps.selectedColor,
+      selectedIcon: nextProps.selectedIcon
+    })
+  },
+
   getStyles() {
     return {
       container: {
@@ -36,21 +51,6 @@ export default Radium(React.createClass({
         alignItems: 'center'
       }
     }
-  },
-
-  getInitialState() {
-    return {
-      selectedColor: this.props.selectedColor,
-      selectedIcon: this.props.selectedIcon
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    console.info('ColorIconPicker::componentWillReceiveProps');
-    this.setState({
-      selectedColor: nextProps.selectedColor,
-      selectedIcon: nextProps.selectedIcon
-    })
   },
 
   handleSetColor(event) {
