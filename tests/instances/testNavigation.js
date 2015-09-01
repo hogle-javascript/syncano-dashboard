@@ -1,4 +1,4 @@
-var Utils = require('nightwatch/lib/util/utils.js');
+var path = require('path');
 
 
 module.exports = {
@@ -30,7 +30,8 @@ module.exports = {
       return;
     }
 
-    var fileNamePath = Utils.getScreenshotFileName('_navigation/' + client.currentTest.name, client.options.screenshotsPath);
+    var prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
+    var fileNamePath = path.resolve(path.join(client.options.screenshotsPath, prefix + '.png'))
     client.saveScreenshot(fileNamePath, done);
   },
 
