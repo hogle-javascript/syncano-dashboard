@@ -330,8 +330,7 @@ export default Radium(React.createClass({
                 type="submit"
                 primary={true}
                 label='Set Limits'
-                disabled={(!this.state.hard_limit && !this.state.soft_limit)}
-                onTouchTap={this.handleFormValidation}/>
+                disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
               <MUI.IconButton
                 iconClassName="synicon-information-outline"
                 iconStyle={{color: MUI.Styles.Colors.blue500}}

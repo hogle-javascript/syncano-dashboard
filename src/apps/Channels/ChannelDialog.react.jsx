@@ -76,7 +76,6 @@ export default React.createClass({
         key="confirm"
         label="Confirm"
         primary={true}
-        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
@@ -91,9 +90,7 @@ export default React.createClass({
           actions={dialogStandardActions}
           onDismiss={this.resetDialogState}
           onShow={this.handleDialogShow}
-          contentStyle={{padding: '8px 0 0 0'}}
-          >
-
+          contentStyle={{padding: '8px 0 0 0'}}>
           <div>
             {this.renderFormNotifications()}
 

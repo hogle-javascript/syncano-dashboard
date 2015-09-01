@@ -308,8 +308,7 @@ export default Radium(React.createClass({
                   label='Confirm'
                   type='submit'
                   disable={this.state.instance === null}
-                  primary={true}
-                  onTouchTap={this.handleFormValidation} />
+                  primary={true} />
               </div>
             </div>
           </Common.Container>

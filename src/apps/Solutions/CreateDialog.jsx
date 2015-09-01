@@ -60,16 +60,13 @@ export default React.createClass({
         key="cancel"
         label="Cancel"
         onTouchTap={this.handleCancel}
-        ref="cancel"
-        />,
+        ref="cancel"/>,
       <MUI.FlatButton
         type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
-        onTouchTap={this.handleFormValidation}
-        ref="submit"
-        />
+        ref="submit"/>
     ];
 
     return (

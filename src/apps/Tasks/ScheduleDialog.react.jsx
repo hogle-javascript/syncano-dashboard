@@ -71,7 +71,6 @@ export default React.createClass({
         key="confirm"
         label="Confirm"
         primary={true}
-        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
