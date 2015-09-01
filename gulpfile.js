@@ -317,6 +317,8 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
+  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
   oauth2Client.setCredentials({
@@ -329,39 +331,81 @@ gulp.task('upload-screenshots', function(cb) {
   var drive = google.drive({version: 'v2', auth: oauth2Client});
 
   async.waterfall([
-    function (callback) {
+    function(callback) {
+      // Get list of files to upload
+      var screenshots = './reports/screenshots/_navigation/';
+      var files = fs.readdirSync(screenshots);
+      var driveObjects = files.map(function(file) {
+        return {
+          path: path.join(screenshots, file),
+          title: file,
+          delete: []
+        };
+      });
+
+      callback(null, driveObjects);
+    },
+    function(files, callback) {
+      // Check which files should be deleted
+      async.map(files, function(file, mapCallback) {
+        drive.files.list({
+          q: "title = '" + file.title + "' and '" + latestFolder + "' in parents"
+        }, function(err, response) {
+          if (err) return mapCallback(err);
+          file.delete = response.items.map(function(item) {
+            return item.id;
+          });
+          mapCallback(null, file);
+        });
+      }, callback);
+    },
+    function(files, callback) {
+      // Delete files
+      var ids = _.reduce(files, function(result, file) {
+        if (file.delete.length === 0) {
+          return result;
+        }
+        return result.concat(_.map(file.delete, function(id) {
+          return {fileId: id};
+        }));
+      }, []);
+
+      async.each(ids, drive.files.delete, function(err) {
+        if (err) return callback(err);
+        callback(null, files);
+      });
+    },
+    function(files, callback) {
       // Create InVision/#{version} folder
       drive.files.insert({
         resource: {
           title: version,
           mimeType: 'application/vnd.google-apps.folder',
-          parents: [{id: '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg'}]
+          parents: [{id: invisionFolder}]
         }
-      }, function(err, response) {
+      }, function(err, folder) {
         if (err) return callback(err);
-        callback(null, response);
+        callback(null, files, folder);
       });
     },
-    function(folder, callback) {
-      // Get list of files
-      var screenshots = './reports/screenshots/_navigation/';
-      var files = fs.readdirSync(screenshots);
+    function(files, folder, callback) {
+      // Insert files
       var driveObjects = files.map(function(file) {
         return {
           resource: {
-            title: file,
+            title: file.title,
             mimeType: 'image/png',
-            parents: [{id: folder.id}]
+            parents: [{id: folder.id}, {id: latestFolder}]
           },
           media: {
             mimeType: 'image/png',
-            body: fs.createReadStream(path.join(screenshots, file))
+            body: fs.createReadStream(file.path)
           }
         };
       });
 
       async.each(driveObjects, drive.files.insert, callback);
-    },
+    }
   ], function(err) {
     if (err) throw err;
     cb();
