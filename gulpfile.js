@@ -295,6 +295,11 @@ gulp.task('upload-screenshots', function(cb) {
   var clientSecret = process.env.GD_CLIENT_SECRET;
   var access_token = process.env.GD_ACCESS_TOKEN;
   var refresh_token = process.env.GD_REFRESH_TOKEN;
+  var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
+
+  if (process.env.CI && nodeIndex.toString() !== '1') {
+    return cb();
+  }
 
   if (!clientId) {
     throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
