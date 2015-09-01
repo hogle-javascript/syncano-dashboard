@@ -31,7 +31,7 @@ module.exports = {
     }
 
     var prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    var fileNamePath = path.resolve(path.join(client.options.screenshotsPath, prefix + '.png'))
+    var fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', prefix + '.png'))
     client.saveScreenshot(fileNamePath, done);
   },
 
