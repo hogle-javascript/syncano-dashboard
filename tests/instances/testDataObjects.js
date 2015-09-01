@@ -28,7 +28,6 @@ module.exports = {
     const dataObjectsPage = client.page.dataObjectsPage();
     const edited = utils.addSuffix('string') + 'edited';
 
-    console.log(edited)
     dataObjectsPage.navigate();
     dataObjectsPage.clickButton('@stringFieldTableRow');
     dataObjectsPage.fillInputField('@stringField', edited);
