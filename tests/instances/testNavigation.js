@@ -30,8 +30,6 @@ module.exports = {
       return;
     }
 
-    var name = client.currentTest.name;
-    var timestamp = client.currentTest.timestamp;
     var fileNamePath = Utils.getScreenshotFileName('_navigation/' + client.currentTest.name, client.options.screenshotsPath);
     client.saveScreenshot(fileNamePath, done);
   },
