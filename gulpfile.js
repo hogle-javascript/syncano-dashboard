@@ -255,10 +255,10 @@ gulp.task('changelog', function(cb) {
 
     function (callback) {
       // Grab list of tags
-      git.exec({args: 'tag --sort=-refname'}, function(err, stdout) {
+      git.exec({args: 'tag'}, function(err, stdout) {
         if (err) return callback(err);
-        var tags = stdout.split('\n').slice(0, 2);
-        callback(null, tags[1], tags[0]);
+        var tags = stdout.split('\n').slice(-3);
+        callback(null, tags[0], tags[1]);
       });
     },
 
