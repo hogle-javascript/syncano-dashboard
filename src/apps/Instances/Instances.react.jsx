@@ -2,13 +2,13 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
-import Cookies from 'js-cookie';
 
 // Utils
 import Mixins from '../../mixins';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
@@ -114,8 +114,10 @@ export default Radium(React.createClass({
   },
 
   showInstanceDialog() {
+    let userEmail = SessionStore.getUser().email;
+
     InstanceDialogActions.showDialog();
-    Cookies.set('welcomeShowed', 'true', {expires: 365, domain: SYNCANO_DOMAIN});
+    localStorage.setItem(`welcomeShowed${userEmail}`, true);
   },
 
   showInstanceEditDialog() {
@@ -139,6 +141,10 @@ export default Radium(React.createClass({
     let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : '';
+    let shouldShowWelcomeDialog = this.state.items !== null &&
+      Store.getAllInstances().length === 0 &&
+      !localStorage.getItem(`welcomeShowed${userEmail}`);
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
@@ -147,7 +153,7 @@ export default Radium(React.createClass({
 
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
-          visible={this.state.items !== null && Store.getAllInstances().length === 0 && !Cookies.get('welcomeShowed')}/>
+          visible={shouldShowWelcomeDialog}/>
 
         <InstanceDialog />
         {this.getDialogs()}
