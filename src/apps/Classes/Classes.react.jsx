@@ -29,6 +29,7 @@ export default React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
+    Mixins.Limits,
     HeaderMixin
   ],
 
@@ -138,12 +139,40 @@ export default React.createClass({
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+    let deleteDialog = {
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteClassDialog',
+        ref: 'deleteClassDialog',
+        title: 'Delete a Class',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}
+          />
+        ]
+      }
+    };
 
     if (classesAssociatedWithTriggers) {
       let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
       let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
-      return [{
+      deleteDialog = {
         dialog: Common.Dialog,
         params: {
           ref: 'deleteClassDialog',
@@ -170,7 +199,7 @@ export default React.createClass({
                 show={this.state.isLoading}/>
           ]
         }
-      }]
+      }
     }
 
     return [
@@ -185,34 +214,7 @@ export default React.createClass({
           handleClick: this.handleChangePalette
         }
       },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteClassDialog',
-          ref: 'deleteClassDialog',
-          title: 'Delete a Class',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleDelete
-            }
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
-            this.getDialogList(checkedClasses),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}
-            />
-          ]
-        }
-      }
+      deleteDialog
     ]
   },
 
@@ -228,6 +230,8 @@ export default React.createClass({
     return (
       <Container>
         {this.getDialogs()}
+
+        {this.renderLimitNotification('classes')}
 
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
@@ -262,7 +266,7 @@ export default React.createClass({
         <Common.Fab>
           <Common.Fab.TooltipItem
             tooltip="Click here to add a Class"
-            onClick={this.redirectToAddClassView}
+            onClick={this.checkObjectsCount.bind(null, 'classes', this.redirectToAddClassView)}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 

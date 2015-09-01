@@ -399,11 +399,11 @@ export default React.createClass({
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
 
-                    /* eslint-disable no-undefined */
+                  /* eslint-disable no-undefined */
 
                     defaultDate={value || undefined}
 
-                    /* eslint-enable no-undefined */
+                  /* eslint-enable no-undefined */
 
                     />
                 </div>
@@ -412,11 +412,11 @@ export default React.createClass({
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
 
-                    /* eslint-disable no-undefined */
+                  /* eslint-disable no-undefined */
 
                     defaultTime={value || undefined}
 
-                    /* eslint-enable no-undefined */
+                  /* eslint-enable no-undefined */
 
                     />
                 </div>
