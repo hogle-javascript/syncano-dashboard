@@ -1,4 +1,5 @@
 const utils = require('../utils');
+const globals = require('../globals');
 
 const usersCommands = {
   clickButton: function(button) {
@@ -13,7 +14,7 @@ const usersCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/users',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/users',
   commands: [usersCommands],
   elements: {
     user: {
