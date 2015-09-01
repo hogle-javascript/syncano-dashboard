@@ -18,6 +18,8 @@ var gulp             = require('gulp'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
+    google           = require('googleapis'),
+    googleAuth       = require('google-auth-library'),
     ENV              = process.env.NODE_ENV || 'development',
     version          = 'v' + require('./package.json').version;
 
@@ -284,6 +286,84 @@ gulp.task('changelog', function(cb) {
         console.log(ticket);
       }
     });
+    cb();
+  });
+});
+
+gulp.task('upload-screenshots', function(cb) {
+  var clientId = process.env.GD_CLIENT_ID;
+  var clientSecret = process.env.GD_CLIENT_SECRET;
+  var access_token = process.env.GD_ACCESS_TOKEN;
+  var refresh_token = process.env.GD_REFRESH_TOKEN;
+  var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
+
+  if (process.env.CI && nodeIndex.toString() !== '1') {
+    return cb();
+  }
+
+  if (!clientId) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
+  }
+
+  if (!clientSecret) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
+  }
+
+  if (!access_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_ACCESS_TOKEN" env variable is required');
+  }
+
+  if (!refresh_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
+  }
+
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+  oauth2Client.setCredentials({
+    access_token: access_token,
+    refresh_token: refresh_token,
+    token_type: 'Bearer',
+    expiry_date: 1440513379139
+  });
+
+  var drive = google.drive({version: 'v2', auth: oauth2Client});
+
+  async.waterfall([
+    function (callback) {
+      // Create InVision/#{version} folder
+      drive.files.insert({
+        resource: {
+          title: version,
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: [{id: '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg'}]
+        }
+      }, function(err, response) {
+        if (err) return callback(err);
+        callback(null, response);
+      });
+    },
+    function(folder, callback) {
+      // Get list of files
+      var screenshots = './reports/screenshots/_navigation/';
+      var files = fs.readdirSync(screenshots);
+      var driveObjects = files.map(function(file) {
+        return {
+          resource: {
+            title: file,
+            mimeType: 'image/png',
+            parents: [{id: folder.id}]
+          },
+          media: {
+            mimeType: 'image/png',
+            body: fs.createReadStream(path.join(screenshots, file))
+          }
+        };
+      });
+
+      async.each(driveObjects, drive.files.insert, callback);
+    },
+  ], function(err) {
+    if (err) throw err;
     cb();
   });
 });

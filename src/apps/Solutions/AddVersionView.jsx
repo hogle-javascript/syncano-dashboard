@@ -90,6 +90,10 @@ export default Radium(React.createClass({
     Actions.setInstance(obj.payload)
   },
 
+  handleTypeChange(event, index, type) {
+    Actions.setType(type.payload);
+  },
+
   handleSubmit(type) {
     this.setState({type});
     this.handleFormValidation();
@@ -254,12 +258,12 @@ export default Radium(React.createClass({
                     ref='type'
                     name='type'
                     fullWidth={true}
-                    valueLink={this.linkState('type')}
+                    onChange={this.handleTypeChange}
+                    value={this.state.type}
                     valueMember='payload'
                     displayMember='text'
                     floatingLabelText='Type'
-                    menuItems={Store.getTypes()}
-                    />
+                    menuItems={Store.getTypes()}/>
                 </div>
                 <div className='col-flex-1'>
                   <MUI.SelectField
