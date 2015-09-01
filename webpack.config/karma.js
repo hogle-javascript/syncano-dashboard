@@ -8,7 +8,7 @@ config.module.postLoaders = [{
 }];
 
 config.plugins.unshift(
-  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.rocks/'", SYNCANO_DOMAIN: "'dashboard.syncano.rocks'"})
+  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.rocks/'", SYNCANO_DOMAIN: "null"})
 );
 
 module.exports = config;

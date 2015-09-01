@@ -32,7 +32,7 @@ delete config.module.loaders[1].loader;
 config.plugins.unshift(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoErrorsPlugin(),
-  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.rocks/'", SYNCANO_DOMAIN: "'dashboard.syncano.rocks'"})
+  new webpack.DefinePlugin({SYNCANO_BASE_URL: "'https://api.syncano.rocks/'", SYNCANO_DOMAIN: "null"})
 );
 
 config.devServer = {
