@@ -293,7 +293,8 @@ gulp.task('changelog', function(cb) {
 gulp.task('upload-screenshots', function(cb) {
   var clientId = process.env.GD_CLIENT_ID;
   var clientSecret = process.env.GD_CLIENT_SECRET;
-  var clientToken = process.env.GD_CLIENT_TOKEN;
+  var access_token = process.env.GD_ACCESS_TOKEN;
+  var refresh_token = process.env.GD_REFRESH_TOKEN;
 
   if (!clientId) {
     throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
@@ -303,22 +304,61 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
   }
 
-  // if (!clientToken) {
-  //   throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_TOKEN" env variable is required');
-  // }
+  if (!access_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_ACCESS_TOKEN" env variable is required');
+  }
+
+  if (!refresh_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
+  }
 
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
   oauth2Client.setCredentials({
-    access_token: 'ya29.2gFMvLddt9QB-2vDFIA2vn0DGH71tVTNYbknf12xPo4zBkxLpY18bIV5Bt1-_dDBnA7L',
+    access_token: access_token,
+    refresh_token: refresh_token,
     token_type: 'Bearer',
-    refresh_token: '1/zo6xCZdkzvkAnwPtj6GbnnuqEnu3uRRtHWUm4bJQi7A',
     expiry_date: 1440513379139
   });
 
-  var service = google.drive({version: 'v2', auth: oauth2Client});
-  service.files.list({auth: oauth2Client}, function(err, response) {
-    console.log(err, response);
+  var drive = google.drive({version: 'v2', auth: oauth2Client});
+
+  async.waterfall([
+    function (callback) {
+      // Create InVision/#{version} folder
+      drive.files.insert({
+        resource: {
+          title: version,
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: [{id: '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg'}]
+        }
+      }, function(err, response) {
+        if (err) return callback(err);
+        callback(null, response);
+      });
+    },
+    function(folder, callback) {
+      // Get list of files
+      var screenshots = './reports/screenshots/_navigation/';
+      var files = fs.readdirSync(screenshots);
+      var driveObjects = files.map(function(file) {
+        return {
+          resource: {
+            title: file,
+            mimeType: 'image/png',
+            parents: [{id: folder.id}]
+          },
+          media: {
+            mimeType: 'image/png',
+            body: fs.createReadStream(path.join(screenshots, file))
+          }
+        };
+      });
+
+      async.each(driveObjects, drive.files.insert, callback);
+    },
+  ], function(err) {
+    if (err) throw err;
     cb();
   });
 });
