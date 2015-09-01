@@ -383,7 +383,7 @@ export default React.createClass({
             ? new Date(this.state[item.name].value)
             : undefined;
 
-          /* eslint-enable no-undefined*/
+        /* eslint-enable no-undefined*/
 
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
@@ -399,11 +399,11 @@ export default React.createClass({
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
 
-                    /* eslint-disable no-undefined */
+                  /* eslint-disable no-undefined */
 
                     defaultDate={value || undefined}
 
-                    /* eslint-enable no-undefined */
+                  /* eslint-enable no-undefined */
 
                     />
                 </div>
@@ -412,11 +412,11 @@ export default React.createClass({
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
 
-                    /* eslint-disable no-undefined */
+                  /* eslint-disable no-undefined */
 
                     defaultTime={value || undefined}
 
-                    /* eslint-enable no-undefined */
+                  /* eslint-enable no-undefined */
 
                     />
                 </div>
