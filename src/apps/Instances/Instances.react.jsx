@@ -32,7 +32,8 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs
+    Mixins.Dialogs,
+    Mixins.Limits
   ],
 
   componentDidMount() {
@@ -108,7 +109,8 @@ export default Radium(React.createClass({
               show={this.state.isLoading} />
           ]
         }
-      }]
+      }
+    ]
   },
 
   showInstanceDialog() {
@@ -140,6 +142,8 @@ export default Radium(React.createClass({
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
+
+        {this.renderLimitNotification('instances')}
 
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
@@ -180,7 +184,7 @@ export default Radium(React.createClass({
           <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
-            onClick={this.showInstanceDialog}
+            onClick={this.checkObjectsCount.bind(null, 'instances', this.showInstanceDialog)}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 
