@@ -70,20 +70,19 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a CodeBox'}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}
-        onShow={this.handleDialogShow}
-        contentStyle={{padding: '8px 0 0 0'}}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset='UTF-8'
-            method='post'
-            >
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset='UTF-8'
+        method='post'>
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' a CodeBox'}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}
+          onShow={this.handleDialogShow}
+          contentStyle={{padding: '8px 0 0 0'}}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='label'
               valueLink={this.linkState('label')}
@@ -112,13 +111,13 @@ export default React.createClass({
               displayMember='text'
               fullWidth={true}
               menuItems={this.state.runtimes}/>
-          </form>
-        </div>
-        <Common.Loading
-          type='linear'
-          position='bottom'
-          show={this.state.isLoading}/>
-      </Common.Dialog>
+          </div>
+          <Common.Loading
+            type='linear'
+            position='bottom'
+            show={this.state.isLoading}/>
+        </Common.Dialog>
+      </form>
     );
   }
 });

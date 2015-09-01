@@ -297,13 +297,13 @@ export default Radium(React.createClass({
     );
 
     return (
-      <div>
-        {this.renderFormNotifications()}
-        <form
-          onSubmit={this.handleFormValidation}
-          method="post"
-          acceptCharset="UTF-8">
-         <div style={styles.heading}>Limits</div>
+      <form
+        onSubmit={this.handleFormValidation}
+        method="post"
+        acceptCharset="UTF-8">
+        <div>
+          {this.renderFormNotifications()}
+          <div style={styles.heading}>Limits</div>
           <div className="row align-middle">
             <div className="col-md-8 col-lg-5">
               <MUI.TextField
@@ -338,8 +338,8 @@ export default Radium(React.createClass({
                 tooltip={toolTip}/>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     )
   },
 

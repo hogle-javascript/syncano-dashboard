@@ -67,18 +67,18 @@ export default React.createClass({
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' an Administrator'}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset='UTF-8'
-            method='post'>
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset='UTF-8'
+        method='post'>
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' an Administrator'}
+          openImmediately={this.props.openImmediately}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='email'
               name='email'
@@ -100,9 +100,9 @@ export default React.createClass({
               style={{width: '50%'}}
               errorText={this.getValidationMessages('role').join(' ')}
               menuItems={AdminDialogStore.getRoles()}/>
-          </form>
-        </div>
-      </Common.Dialog>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });
