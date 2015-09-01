@@ -134,6 +134,7 @@ export default Radium(React.createClass({
 
     let instances = this.state.items;
     let instancesCount = instances ? instances.length : 0;
+    let myInstances = Store.getMyInstances();
     let checkedInstances = Store.getNumberOfChecked();
     let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -183,7 +184,7 @@ export default Radium(React.createClass({
           <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
-            onClick={this.checkObjectsCount.bind(null, 'instances', this.showInstanceDialog)}
+            onClick={this.checkObjectsCount.bind(null, myInstances, 'instances', this.showInstanceDialog)}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 
