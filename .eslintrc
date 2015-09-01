@@ -38,16 +38,10 @@
   },
   "rules": {
     // what we want
-    // "complexity": [1, 2],
-    // "no-inline-comments": 2,
-    // "complexity": 2,
-    // "camelcase": 2,
     // "react/no-multi-comp": 2,
 
     // what we have
     "no-inline-comments": 2,
-    "complexity": 1,
-    "camelcase": 1,
     "react/sort-comp": [2, {
       "groups": {
         "lifecycle": [
@@ -144,6 +138,7 @@
     // Best Practices
     "accessor-pairs": 2,
     "block-scoped-var": 2,
+    "complexity": [2, 10],
     "consistent-return": 2,
     "default-case": 2,
     "dot-notation": 2,
@@ -206,6 +201,7 @@
     // Stylistic Issues
     "array-bracket-spacing": [2, "never"],
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "camelcase": 1,
     "comma-spacing": [2, {"before": false, "after": true}],
     "comma-style": [2, "last"],
     "computed-property-spacing": [2, "never"],
