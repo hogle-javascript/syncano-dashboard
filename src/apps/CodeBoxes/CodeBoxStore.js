@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import D from 'd.js';
 
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
@@ -44,13 +43,8 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('CodeBoxStore::refreshData');
-    D.all([
-      Actions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId),
-      Actions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId)
-    ]).then(() => {
-      console.log('applyIsLoading::refreshData');
-      this.data.isLoading = false;
-    })
+    Actions.fetchCodeBox(SessionStore.getRouter().getCurrentParams().codeboxId);
+    Actions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
   getCurrentCodeBox() {
@@ -61,6 +55,7 @@ export default Reflux.createStore({
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
     this.data.currentCodeBox = codeBox;
+    this.trigger(this.data);
   },
 
   onRunCodeBoxWithUpdateCompleted() {
