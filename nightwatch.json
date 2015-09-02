@@ -32,7 +32,10 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        "chromeOptions" : {
+         "args" : ["start-fullscreen"]
+        }
       },
       "exclude": "utils.js"
     },

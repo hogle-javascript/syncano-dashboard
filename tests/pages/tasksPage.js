@@ -1,4 +1,6 @@
 const utils = require('../utils');
+const globals = require('../globals');
+
 const tasksCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button)
@@ -18,7 +20,7 @@ const tasksCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/tasks',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
   commands: [tasksCommands],
   elements: {
     confirm: {
