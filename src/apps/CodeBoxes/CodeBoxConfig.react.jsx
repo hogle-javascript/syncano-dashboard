@@ -5,7 +5,8 @@ import Radium from 'radium';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -26,7 +27,9 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    UnsavedDataMixin,
+    Mixins.Dialogs,
+    Mixins.InstanceTabs
   ],
 
   componentDidMount() {
@@ -49,6 +52,28 @@ export default Radium(React.createClass({
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
   },
 
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        ref: 'unsavedCodeBoxWarn',
+        title: 'Unsaved CodeBox config',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Save and leave',
+            onClick: this.handleSaveAndLeave
+          }
+        ],
+        modal: true,
+        children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
+      }
+    }]
+  },
+
   renderEditor() {
     let config = null;
     let codeBox = this.state.currentCodeBox;
@@ -57,14 +82,14 @@ export default Radium(React.createClass({
       config = JSON.stringify(codeBox.config, null, 2);
 
       return (
-        <div>
-          <Common.Editor
-            ref="editorConfig"
-            height={300}
-            mode="javascript"
-            theme="github"
-            value={config}/>
-        </div>
+      <div>
+        <Common.Editor
+        ref="editorConfig"
+        height={300}
+        mode="javascript"
+        theme="github"
+        value={config}/>
+      </div>
       )
     }
   },
@@ -75,6 +100,7 @@ export default Radium(React.createClass({
 
     return (
       <Container style={styles.container}>
+        {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"
