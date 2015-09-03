@@ -106,6 +106,7 @@
     "add-github-tag": "gulp add-github-tag",
     "check-github-tag": "gulp check-github-tag",
     "changelog": "gulp changelog",
-    "upload-screenshots": "gulp upload-screenshots"
+    "upload-screenshots": "gulp upload-screenshots",
+    "s3-cleanup": "gulp s3-cleanup"
   }
 }
