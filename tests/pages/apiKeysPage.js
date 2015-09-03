@@ -24,8 +24,8 @@ module.exports = {
       selector: '//span[@class="synicon-plus"]',
       locateStrategy: 'xpath'
     },
-    apiKeysListName: {
-      selector: '//div[text()="API Keys"]',
+    apiKeysListItem: {
+      selector: '//div[@class="api-keys-list"]//div[text()="api_key"]',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
@@ -54,6 +54,6 @@ module.exports = {
     confirmDeleteButton: {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
-    },
+    }
   }
 };

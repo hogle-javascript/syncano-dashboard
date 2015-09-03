@@ -82,6 +82,10 @@ module.exports = {
       selector: '//div[@class="classes-list-container"]/div[2]',
       locateStrategy: 'xpath'
     },
+    userProfileClassName: {
+      selector: '//div[@class="classes-list-container"]//div[text()="user_profile"]',
+      locateStrategy: 'xpath'
+    },
     userClassListItem: {
       selector: '//div[text()="Class that holds profiles for users."]',
       locateStrategy: 'xpath'

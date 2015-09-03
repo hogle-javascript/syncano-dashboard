@@ -1,8 +1,8 @@
-var solutionsCommands = {
+const solutionsCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
-  },
+  }
 };
 
 module.exports = {
@@ -13,6 +13,10 @@ module.exports = {
     },
     solutionDetails: {
       selector: '//button//span[text()="SEE DETAILS"]',
+      locateStrategy: 'xpath'
+    },
+    solutionAvatars: {
+      selector: '//div[@class="row"]//img',
       locateStrategy: 'xpath'
     }
   }
