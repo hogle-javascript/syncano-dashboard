@@ -5,8 +5,7 @@ import Radium from 'radium';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
-
+import Mixins from '../../mixins';
 // Stores and Actions
 import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
@@ -14,6 +13,8 @@ import Store from './CodeBoxStore';
 // Components
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
+
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default Radium(React.createClass({
 
@@ -26,11 +27,27 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
+    SnackbarNotificationMixin
   ],
 
   componentDidMount() {
     Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
+  },
+
+  componentWillUpdate() {
+    if (this.refs.editorConfig) {
+      let textareaClassName = this.refs.editorConfig.getDOMNode().firstElementChild.className;
+
+      if (textareaClassName.indexOf('mousetrap') === -1) {
+        this.refs.editorConfig.getDOMNode().firstElementChild.className += ' mousetrap'
+      }
+    }
   },
 
   getStyles() {
@@ -47,6 +64,9 @@ export default Radium(React.createClass({
     let config = this.refs.editorConfig.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+    this.setSnackbarNotification({
+      message: 'Saving...'
+    });
   },
 
   renderEditor() {
