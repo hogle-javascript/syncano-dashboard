@@ -418,7 +418,7 @@ gulp.task('upload-screenshots', function(cb) {
 gulp.task('s3-cleanup', function(cb) {
   var s3Client = new AWS.S3();
   var params = {bucket: 'dashboard-syncano-rocks'};
-  var pattern = /(.*)-[a-f0-9]{10}\.[a-z]{2,4}$/gi
+  var pattern = /(.*)-[a-f0-9]{10}\.[a-z0-9]{2,5}$/gi
 
   if (ENV === 'production') {
     params.bucket = 'dashboard-syncano-io'
