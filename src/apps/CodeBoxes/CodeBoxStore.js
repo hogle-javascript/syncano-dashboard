@@ -109,7 +109,9 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onUpdateCodeBoxCompleted() {
+  onUpdateCodeBoxCompleted(codeBox) {
+    this.data.currentCodeBox = codeBox;
+    this.trigger(this.data);
     this.dismissSnackbarNotification();
     this.refreshData();
   },

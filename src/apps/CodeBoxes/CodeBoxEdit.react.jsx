@@ -5,6 +5,7 @@ import Router from 'react-router';
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -28,6 +29,7 @@ export default React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs,
     HeaderMixin,
+    UnsavedDataMixin,
     Mixins.InstanceTabs,
     Mixins.Mousetrap,
     SnackbarNotificationMixin
@@ -60,6 +62,13 @@ export default React.createClass({
     let payloadIsValid = typeof payloadErrors.payloadValue === 'undefined';
 
     return payloadIsValid;
+  },
+
+  isSaved() {
+    let initialCodeBoxSource = this.state.currentCodeBox.source;
+    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+
+    return initialCodeBoxSource === currentCodeBoxSource;
   },
 
   handleConfirm() {
@@ -120,14 +129,30 @@ export default React.createClass({
         modal: true,
         children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
       }
+    },
+    {
+      dialog: Common.Dialog,
+      params: {
+        ref: 'unsavedDataWarn',
+        title: 'Unsaved CodeBox source',
+        actions: [
+          {
+            text: 'Just leave',
+            onClick: this._handleContinueTransition
+          },
+          {
+            text: 'Continue editing',
+            onClick: this.handleCancel
+          }
+        ],
+        modal: true,
+        children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
+      }
     }]
   },
 
-  checkIsSaved() {
-    let initialCodeBoxSource = this.state.currentCodeBox.source;
-    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
-
-    if (initialCodeBoxSource === currentCodeBoxSource) {
+  shouldCodeBoxRun() {
+    if (this.isSaved()) {
       this.handleRun();
     } else {
       this.showDialog('runUnsavedCodeBox');
@@ -178,7 +203,7 @@ export default React.createClass({
           <Common.Fab.TooltipItem
             tooltip="Click here to execute CodeBox"
             mini={true}
-            onClick={this.checkIsSaved}
+            onClick={this.shouldCodeBoxRun}
             iconClassName="synicon-play"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>
