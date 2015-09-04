@@ -3,6 +3,7 @@ var gulp             = require('gulp'),
     path             = require('path'),
     async            = require('async'),
     _                = require('lodash'),
+    AWS              = require('aws-sdk'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
@@ -11,9 +12,11 @@ var gulp             = require('gulp'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
+    moment           = require('moment'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config'),
+    listKeys         = require('./s3ListKeys'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
@@ -410,6 +413,61 @@ gulp.task('upload-screenshots', function(cb) {
     if (err) throw err;
     cb();
   });
+});
+
+gulp.task('s3-cleanup', function(cb) {
+  var s3Client = new AWS.S3();
+  var params = {bucket: 'dashboard-syncano-rocks'};
+  var pattern = /(.*)-[a-f0-9]{10}\.[a-z0-9]{2,5}$/gi
+
+  if (ENV === 'production') {
+    params.bucket = 'dashboard-syncano-io'
+  }
+
+  listKeys(s3Client, params, function (err, keys) {
+    if (err) throw err;
+
+    // group keys
+    var versionedKeys = _.reduce(keys, function(result, key) {
+      var matches = pattern.exec(key.Key);
+      if (matches) {
+        var prefix = matches[1];
+        key.LastModified = moment(key.LastModified).unix();
+        result[prefix] = result[prefix] || [];
+        result[prefix].push(key);
+      }
+      return result;
+    }, {});
+
+    // filter keys
+    var keysToDelete = _.reduce(versionedKeys, function(result, keys, prefix) {
+      if (keys.length > 3) {
+        var toDelete = _.pluck(_.sortBy(keys, 'LastModified'), 'Key');
+        return result.concat(_.map(toDelete.slice(0, toDelete.length-3), function(key) {
+          return {Key: key};
+        }));
+      }
+      return result;
+    }, []);
+
+    if (keysToDelete.length === 0) {
+      return cb();
+    }
+
+    s3Client.deleteObjects({
+      Bucket: params.bucket,
+      Delete: {Objects: keysToDelete}
+    }, function(err, data) {
+      if (err) throw err;
+      _.forEach(data, function(keys, type) {
+        _.forEach(keys, function(key) {
+          gutil.log(gutil.colors.red('[' + type + ']'), key.Key);
+        });
+      });
+      cb();
+    });
+  });
+
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
