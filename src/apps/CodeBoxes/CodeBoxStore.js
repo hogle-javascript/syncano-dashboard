@@ -89,6 +89,7 @@ export default Reflux.createStore({
 
   getCodeBoxLastTraceResult() {
     console.debug('CodeBoxStore::getCodeBoxLastTraceResult');
+    this.data.lastTraceResult = null;
     if (this.data.traces.length > 0) {
       let lastTrace = this.data.traces[this.data.traces.length - 1];
 
@@ -98,10 +99,9 @@ export default Reflux.createStore({
           this.fetchTraces()
         }, 300);
       } else {
+        this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';
         if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
-        } else {
-          this.data.lastTraceResult = lastTrace.result.stdout;
         }
         this.data.lastTraceReady = true;
       }

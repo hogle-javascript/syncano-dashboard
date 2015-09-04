@@ -51,6 +51,10 @@ module.exports = {
     tagsJs: {
       selector: '//span[@class="synicon-tag"]/following-sibling::a[text()="js"]',
       locateStrategy: 'xpath'
+    },
+    solutionAvatars: {
+      selector: '//div[@class="row"]//img',
+      locateStrategy: 'xpath'
     }
   }
 };

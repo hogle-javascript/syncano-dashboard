@@ -80,7 +80,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="api-keys-list">
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.ID.Header>ID</Column.ID.Header>
