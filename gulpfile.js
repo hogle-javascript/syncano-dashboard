@@ -418,7 +418,7 @@ gulp.task('upload-screenshots', function(cb) {
 gulp.task('s3-cleanup', function(cb) {
   var s3Client = new AWS.S3();
   var params = {bucket: 'dashboard-syncano-rocks'};
-  var pattern = /(.*)-[a-f0-9]{10}\.[a-z0-9]{2,5}$/gi
+  var pattern = /(.*)-[a-f0-9]{10}.*(\.[a-z0-9]{2,5})$/gi
 
   if (ENV === 'production') {
     params.bucket = 'dashboard-syncano-io'
@@ -431,8 +431,8 @@ gulp.task('s3-cleanup', function(cb) {
     var versionedKeys = _.reduce(keys, function(result, key) {
       var matches = pattern.exec(key.Key);
       if (matches) {
-        var prefix = matches[1];
-        key.LastModified = moment(key.LastModified).unix();
+        var prefix = matches[1] + matches[2];
+        key.timestamp = moment(key.LastModified).unix();
         result[prefix] = result[prefix] || [];
         result[prefix].push(key);
       }
@@ -442,7 +442,7 @@ gulp.task('s3-cleanup', function(cb) {
     // filter keys
     var keysToDelete = _.reduce(versionedKeys, function(result, keys, prefix) {
       if (keys.length > 3) {
-        var toDelete = _.pluck(_.sortBy(keys, 'LastModified'), 'Key');
+        var toDelete = _.pluck(_.sortBy(keys, 'timestamp'), 'Key');
         return result.concat(_.map(toDelete.slice(0, toDelete.length-3), function(key) {
           return {Key: key};
         }));
