@@ -64,6 +64,13 @@ export default React.createClass({
     return payloadIsValid;
   },
 
+  isSaved() {
+    let initialCodeBoxSource = this.state.currentCodeBox.source;
+    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+
+    return initialCodeBoxSource === currentCodeBoxSource;
+  },
+
   handleConfirm() {
     let source = this.refs.editorSource.editor.getValue();
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
@@ -130,12 +137,12 @@ export default React.createClass({
         title: 'Unsaved CodeBox source',
         actions: [
           {
-            text: 'Cancel',
-            onClick: this.handleCancel
+            text: 'Just leave',
+            onClick: this.handleContinueTransition
           },
           {
-            text: 'Save and leave',
-            onClick: this.handleSaveAndLeave
+            text: 'Continue editing',
+            onClick: this.handleCancel
           }
         ],
         modal: true,

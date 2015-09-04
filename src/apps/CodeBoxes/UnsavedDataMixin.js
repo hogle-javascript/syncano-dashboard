@@ -1,10 +1,19 @@
-import Actions from './CodeBoxActions';
+import _ from 'lodash';
 
 export default {
 
+  componentDidMount() {
+    if (!_.isFunction(this.isSaved)) {
+      throw Error('invalid `isSaved` type. Expected type: function');
+    }
+    if (!_.isFunction(this.initDialogs)) {
+      throw Error('invalid `initDialogs` type. Expected type: function');
+    }
+  },
+
   statics: {
     willTransitionFrom(transition, component) {
-      if (!component.isSaved()) {
+      if (!component.isSaved() && !component.state.ignoreUnsavedChanges) {
         transition.abort();
         component.showDialog('unsavedCodeBoxWarn');
         component.state.interuptedTransitionPath = transition.path
@@ -12,33 +21,17 @@ export default {
     }
   },
 
-  handleSaveAndLeave() {
-    let unsavedData = {};
-
-    if (this.isActive('codebox-config')) {
-      unsavedData = {config: this.refs.editorConfig.editor.getValue()};
-    } else {
-      unsavedData = {source: this.refs.editorSource.editor.getValue()};
+  getInitialState() {
+    return {
+      ignoreUnsavedChanges: false
     }
-
-    Actions.updateCodeBox(this.state.currentCodeBox.id, unsavedData).then(() => {
-      this.transitionTo(this.state.interuptedTransitionPath);
-      this.hideDialogs(true);
-    })
   },
 
-  isSaved() {
-    let initialCodeBoxData = null;
-    let currentCodeBoxData = null;
-
-    if (this.isActive('codebox-config')) {
-      initialCodeBoxData = JSON.stringify(this.state.currentCodeBox.config, null, 2);
-      currentCodeBoxData = this.refs.editorConfig.editor.getValue();
-    } else {
-      initialCodeBoxData = this.state.currentCodeBox.source;
-      currentCodeBoxData = this.refs.editorSource.editor.getValue();
-    }
-
-    return initialCodeBoxData === currentCodeBoxData;
+  handleContinueTransition() {
+    this.setState({
+      ignoreUnsavedChanges: true
+    });
+    this.transitionTo(this.state.interuptedTransitionPath);
+    this.hideDialogs(true);
   }
 };

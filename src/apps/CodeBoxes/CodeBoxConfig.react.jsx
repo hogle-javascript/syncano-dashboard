@@ -46,6 +46,13 @@ export default Radium(React.createClass({
     }
   },
 
+  isSaved() {
+    let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
+    let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
+
+    return initialCodeBoxConfig === currentCodeBoxConfig;
+  },
+
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
 
@@ -60,12 +67,12 @@ export default Radium(React.createClass({
         title: 'Unsaved CodeBox config',
         actions: [
           {
-            text: 'Cancel',
-            onClick: this.handleCancel
+            text: 'Just leave',
+            onClick: this.handleContinueTransition
           },
           {
-            text: 'Save and leave',
-            onClick: this.handleSaveAndLeave
+            text: 'Continue editing',
+            onClick: this.handleCancel
           }
         ],
         modal: true,
