@@ -133,12 +133,12 @@ export default React.createClass({
     {
       dialog: Common.Dialog,
       params: {
-        ref: 'unsavedCodeBoxWarn',
+        ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
         actions: [
           {
             text: 'Just leave',
-            onClick: this.handleContinueTransition
+            onClick: this._handleContinueTransition
           },
           {
             text: 'Continue editing',

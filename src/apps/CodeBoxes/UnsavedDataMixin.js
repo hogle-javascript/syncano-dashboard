@@ -13,25 +13,25 @@ export default {
 
   statics: {
     willTransitionFrom(transition, component) {
-      if (!component.isSaved() && !component.state.ignoreUnsavedChanges) {
+      if (!component.isSaved() && !component.state._ignoreUnsavedData) {
         transition.abort();
-        component.showDialog('unsavedCodeBoxWarn');
-        component.state.interuptedTransitionPath = transition.path
+        component.showDialog('unsavedDataWarn');
+        component.state._interuptedTransitionPath = transition.path
       }
     }
   },
 
   getInitialState() {
     return {
-      ignoreUnsavedChanges: false
+      _ignoreUnsavedData: false
     }
   },
 
-  handleContinueTransition() {
+  _handleContinueTransition() {
     this.setState({
-      ignoreUnsavedChanges: true
+      _ignoreUnsavedData: true
     });
-    this.transitionTo(this.state.interuptedTransitionPath);
+    this.transitionTo(this.state._interuptedTransitionPath);
     this.hideDialogs(true);
   }
 };

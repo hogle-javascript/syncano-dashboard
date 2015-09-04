@@ -63,12 +63,12 @@ export default Radium(React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        ref: 'unsavedCodeBoxWarn',
+        ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox config',
         actions: [
           {
             text: 'Just leave',
-            onClick: this.handleContinueTransition
+            onClick: this._handleContinueTransition
           },
           {
             text: 'Continue editing',
