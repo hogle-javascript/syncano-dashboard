@@ -39,18 +39,28 @@ export default React.createClass({
     HeaderMixin
   ],
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Tasks::componentWillUpdate');
-    // Merging "hideDialogs
-    this.hideDialogs(nextState.schedules.hideDialogs || nextState.triggers.hideDialogs);
-  },
-
   componentDidMount() {
     console.info('Tasks::componentDidMount');
     ClassesActions.fetch();
     CodeBoxesActions.fetch();
     SchedulesActions.fetch();
     TriggersActions.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Tasks::componentWillUpdate');
+    // Merging "hideDialogs
+    this.hideDialogs(nextState.schedules.hideDialogs || nextState.triggers.hideDialogs);
+  },
+
+  handleRemoveTriggers() {
+    console.info('Tasks::handleDelete');
+    TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
+  },
+
+  handleRemoveSchedules() {
+    console.info('Tasks::handleRemoveSchedules');
+    SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   // Dialogs config
@@ -106,16 +116,6 @@ export default React.createClass({
         }
       }
     ]
-  },
-
-  handleRemoveTriggers() {
-    console.info('Tasks::handleDelete');
-    TriggersActions.removeTriggers(TriggersStore.getCheckedItems());
-  },
-
-  handleRemoveSchedules() {
-    console.info('Tasks::handleRemoveSchedules');
-    SchedulesActions.removeSchedules(SchedulesStore.getCheckedItems());
   },
 
   uncheckAll() {

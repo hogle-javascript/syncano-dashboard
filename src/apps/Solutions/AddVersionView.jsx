@@ -35,19 +35,6 @@ export default Radium(React.createClass({
     }
   },
 
-  headerMenuItems() {
-    return [
-      {
-        label: 'Instances',
-        route: 'instances'
-      },
-      {
-        label: 'Solutions',
-        route: 'solutions'
-      }
-    ];
-  },
-
   componentWillMount() {
     Actions.fetchInstances();
     Actions.fetch();
@@ -74,6 +61,17 @@ export default Radium(React.createClass({
         fontSize: '1rem',
         verticalAlign: 'middle',
         textAlign: 'center'
+      },
+      instanceDropdowInputLabel: {
+        overflow: 'hidden',
+        maxHeight: '100%',
+        paddingRight: 30,
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+      },
+      instancesDropdownItem: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }
     }
   },
@@ -90,6 +88,39 @@ export default Radium(React.createClass({
 
   handleInstanceChange(event, index, obj) {
     Actions.setInstance(obj.payload)
+  },
+
+  handleTypeChange(event, index, type) {
+    Actions.setType(type.payload);
+  },
+
+  handleSubmit(type) {
+    this.setState({type});
+    this.handleFormValidation();
+  },
+
+  handleAddSubmit() {
+    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
+  },
+
+  handleOnCheck(name, type, event, status) {
+    let exportSpec = this.state.exportSpec;
+
+    exportSpec[type][name] = status;
+    this.setState({exportSpec});
+  },
+
+  headerMenuItems() {
+    return [
+      {
+        label: 'Instances',
+        route: 'instances'
+      },
+      {
+        label: 'Solutions',
+        route: 'solutions'
+      }
+    ];
   },
 
   pkMap(section) {
@@ -133,22 +164,6 @@ export default Radium(React.createClass({
       export_spec: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
     }
-  },
-
-  handleSubmit(type) {
-    this.setState({type});
-    this.handleFormValidation();
-  },
-
-  handleAddSubmit() {
-    Actions.createVersion(this.getParams().solutionId, this.prepareVersionData());
-  },
-
-  handleOnCheck(name, type, event, status) {
-    let exportSpec = this.state.exportSpec;
-
-    exportSpec[type][name] = status;
-    this.setState({exportSpec});
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
@@ -209,6 +224,8 @@ export default Radium(React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+
     return (
       <div>
         <MUI.Toolbar style={{background: 'transparent', padding: '0px 32px 0 24px'}}>
@@ -219,8 +236,7 @@ export default Radium(React.createClass({
               onClick={this.handleBackClick}
               touch={true}
               style={{marginTop: 4}}
-              iconStyle={{color: 'rgba(0,0,0,.4)'}}
-              />
+              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
           </MUI.ToolbarGroup>
 
           <MUI.ToolbarGroup>
@@ -237,14 +253,14 @@ export default Radium(React.createClass({
                   ref='type'
                   name='type'
                   fullWidth={true}
-                  valueLink={this.linkState('type')}
+                  onChange={this.handleTypeChange}
+                  value={this.state.type}
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Type'
-                  menuItems={Store.getTypes()}
-                  />
+                  menuItems={Store.getTypes()}/>
               </div>
-              <div className='col-lg-26'>
+              <div className='col-flex-1'>
                 <MUI.SelectField
                   ref='instance'
                   name='instance'
@@ -254,9 +270,10 @@ export default Radium(React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   floatingLabelText='Instances'
+                  labelStyle={styles.instanceDropdowInputLabel}
+                  menuItemStyle={styles.instancesDropdownItem}
                   errorText={this.getValidationMessages('instance').join(' ')}
-                  menuItems={Store.getInstancesDropdown()}
-                  />
+                  menuItems={Store.getInstancesDropdown()}/>
               </div>
             </div>
           </div>

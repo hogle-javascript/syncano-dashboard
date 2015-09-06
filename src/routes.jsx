@@ -89,12 +89,12 @@ export default (
         handler={InstancePage}
         path="instances/:instanceName">
 
-        <Redirect from="/instances/:instanceName" to="classes" />
+        <Redirect from="/instances/:instanceName" to="webhooks" />
 
         {/* Data */}
         <Route
-          name="data"
-          path="data"
+          name="webhooks"
+          path="webhooks"
           >
 
           {/* Webhook Traces */}

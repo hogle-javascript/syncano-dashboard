@@ -17,7 +17,6 @@ import Header from '../Header'
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
-// TODO: Why I can't reach it via Common?
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
 
@@ -35,8 +34,46 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs
+    Mixins.Dialogs,
+    Mixins.Limits
   ],
+
+  componentDidMount() {
+    console.info('Instances::componentDidMount');
+    if (this.getParams().action === 'add') {
+      // Show Add modal
+      this.showDialog('addInstanceDialog');
+    }
+    Store.fetch();
+    Actions.setTourConfig(this.getTourConfig())
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Instances::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
+
+  handleChangePalette(color, icon) {
+    console.info('Instances::handleChangePalette', color, icon);
+
+    Actions.updateInstance(
+      Store.getCheckedItem().name, {
+        metadata: JSON.stringify({color, icon})
+      }
+    );
+    Actions.uncheckAll()
+  },
+
+  handleDelete() {
+    console.info('Instances::handleDelete');
+    Actions.removeInstances(Store.getCheckedItems());
+  },
+
+  handleItemClick(instanceName) {
+    // Redirect to main instance screen
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
+  },
 
   // Dialogs config
   initDialogs() {
@@ -72,22 +109,10 @@ export default Radium(React.createClass({
             <Common.Loading
               type="linear"
               position="bottom"
-              show={this.state.isLoading}
-              />
+              show={this.state.isLoading} />
           ]
         }
       }]
-  },
-
-  componentDidMount() {
-    console.info('Instances::componentDidMount');
-    if (this.getParams().action === 'add') {
-      // Show Add modal
-      this.showDialog('addInstanceDialog');
-    }
-    Store.fetch();
-
-    Actions.setTourConfig(this.getTourConfig())
   },
 
   getStyles() {
@@ -181,19 +206,7 @@ export default Radium(React.createClass({
       Store.getCheckedItem().name, {
         metadata: JSON.stringify({color, icon})
       }
-    );
-    Actions.uncheckAll()
-  },
-
-  handleDelete() {
-    console.info('Instances::handleDelete');
-    Actions.removeInstances(Store.getCheckedItems());
-  },
-
-  handleItemClick(instanceName) {
-    // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
+    ]
   },
 
   showInstanceDialog() {
@@ -246,6 +259,8 @@ export default Radium(React.createClass({
           onClick={this.onNextStep}
           showDots={true} />
 
+        {this.renderLimitNotification('instances')}
+
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
           visible={this.state.items !== null && Store.getAllInstances().length === 0 && !this.state.welcomeShowed}/>
@@ -285,7 +300,7 @@ export default Radium(React.createClass({
           <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
-            onClick={this.showInstanceDialog}
+            onClick={this.checkObjectsCount.bind(null, 'instances', this.showInstanceDialog)}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 

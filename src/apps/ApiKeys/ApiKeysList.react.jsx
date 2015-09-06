@@ -63,11 +63,10 @@ export default React.createClass({
     )
   },
 
-  getList() {
+  renderList() {
     let items = this.state.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
-      // TODO: Fix this dirty hack, that should be done in store by sorting!
       items.reverse();
       return items;
     }
@@ -81,7 +80,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="api-keys-list">
         <Common.ColumnList.Header>
           <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
           <Column.ID.Header>ID</Column.ID.Header>
@@ -91,7 +90,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
-            {this.getList()}
+            {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
       </Common.Lists.Container>

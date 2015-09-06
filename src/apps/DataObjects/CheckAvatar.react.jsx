@@ -26,32 +26,16 @@ export default React.createClass({
     }
   },
 
+  componentWillReceiveProps(newProps) {
+    this.setState({checked: newProps.checked});
+  },
+
   getStyles() {
     return {
       icon: {
         margin: 0
       }
     };
-  },
-
-  componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
-  },
-
-  handleIconClick() {
-    console.info('ColumnAvatarCheck:handleClick');
-    this.props.handleIconClick(this.props.id, !this.state.checked)
-  },
-
-  handleMouseOver() {
-    this.setState({
-      hovered: true
-    });
-  },
-  handleMouseLeave() {
-    this.setState({
-      hovered: false
-    });
   },
 
   getIconState() {
@@ -69,6 +53,22 @@ export default React.createClass({
 
     // Otherwise we have original colorful icon
     return {icon: this.props.icon, color: this.props.background};
+  },
+
+  handleIconClick() {
+    console.info('ColumnAvatarCheck:handleClick');
+    this.props.handleIconClick(this.props.id, !this.state.checked)
+  },
+
+  handleMouseOver() {
+    this.setState({
+      hovered: true
+    });
+  },
+  handleMouseLeave() {
+    this.setState({
+      hovered: false
+    });
   },
 
   renderIcon() {

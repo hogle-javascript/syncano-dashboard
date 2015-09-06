@@ -6,12 +6,12 @@ export default React.createClass({
 
   displayName: 'ListContainer',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.object,
     className: React.PropTypes.string
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     const styles = {

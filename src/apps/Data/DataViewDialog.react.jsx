@@ -33,6 +33,13 @@ export default React.createClass({
     }
   },
 
+  isEnabled(list, field) {
+    if (!list) {
+      return false;
+    }
+    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
+  },
+
   handleDialogShow() {
     console.info('DataViewDialog::handleDialogShow');
     ClassesActions.fetch();
@@ -90,13 +97,6 @@ export default React.createClass({
     }
   },
 
-  isEnabled(list, field) {
-    if (!list) {
-      return false;
-    }
-    return list.replace(/ /g, '').split(',').indexOf(field) > -1;
-  },
-
   renderFields() {
     console.info('DataViewDialog::renderFields', this.state.class);
 
@@ -142,7 +142,7 @@ export default React.createClass({
     let orderField = <div style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
 
-    if (orderFields.lenght > 0) {
+    if (orderFields.length > 0) {
       orderField = (
         <MUI.SelectField
           ref="order_by"

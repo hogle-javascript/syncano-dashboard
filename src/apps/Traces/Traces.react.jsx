@@ -45,6 +45,10 @@ export default Radium(React.createClass({
     }
   },
 
+  componentDidMount() {
+    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
+  },
+
   getStyles() {
     return {
       list: {
@@ -60,7 +64,7 @@ export default Radium(React.createClass({
   getConfig() {
     return {
       webhook: {
-        route: 'data',
+        route: 'webhooks',
         backLabel: 'Go back to Data Views'
       },
       codebox: {
@@ -76,16 +80,6 @@ export default Radium(React.createClass({
         backLabel: 'Go back to Tasks list'
       }
     }[this.props.tracesFor];
-  },
-
-  componentDidMount() {
-    Actions.setCurrentObjectId(this.props.objectId, this.props.tracesFor);
-  },
-
-  handleBackClick() {
-    const config = this.getConfig();
-
-    this.transitionTo(config.route, this.getParams());
   },
 
   getTracesFor() {
@@ -104,6 +98,12 @@ export default Radium(React.createClass({
     }
 
     return '';
+  },
+
+  handleBackClick() {
+    const config = this.getConfig();
+
+    this.transitionTo(config.route, this.getParams());
   },
 
   renderToolbarTitle() {

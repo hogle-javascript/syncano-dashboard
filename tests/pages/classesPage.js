@@ -1,3 +1,4 @@
+const globals = require('../globals');
 
 var classesCommands = {
   clickFAB: function() {
@@ -40,7 +41,7 @@ var classesCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/classes',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
     fab: {
@@ -79,6 +80,10 @@ module.exports = {
     },
     classTableRow: {
       selector: '//div[@class="classes-list-container"]/div[2]',
+      locateStrategy: 'xpath'
+    },
+    userProfileClassName: {
+      selector: '//div[@class="classes-list-container"]//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     userClassListItem: {

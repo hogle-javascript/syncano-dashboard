@@ -38,68 +38,50 @@
   },
   "rules": {
     // what we want
-    // "complexity": [1, 2],
-    // "no-inline-comments": 2,
-    // "complexity": 2,
-    // "camelcase": 2,
-    // "react/sort-comp": [2, {
-    //   "order": [
-    //     "displayName",
-    //     "propTypes",
-    //     "contextTypes",
-    //     "childContextTypes",
-    //     "mixins",
-    //     "statics",
-    //     "defaultProps",
-    //     "constructor",
-    //     "getDefaultProps",
-    //     "getInitialState",
-    //     "getChildContext",
-    //     "componentWillMount",
-    //     "componentDidMount",
-    //     "componentWillReceiveProps",
-    //     "shouldComponentUpdate",
-    //     "componentWillUpdate",
-    //     "componentDidUpdate",
-    //     "componentWillUnmount",
-    //     "/^on.+$/",
-    //     "/^get.+$/",
-    //     "/^render.+$/",
-    //     "render"
-    //   ]
-    // }],
-    // "no-warning-comments": 2,
     // "react/no-multi-comp": 2,
-    // "react/no-did-update-set-state": 2,
 
     // what we have
     "no-inline-comments": 2,
-    "complexity": 1,
-    "camelcase": 1,
-    "react/sort-comp": [1, {
+    "react/sort-comp": [2, {
+      "groups": {
+        "lifecycle": [
+          "displayName",
+          "propTypes",
+          "contextTypes",
+          "childContextTypes",
+          "mixins",
+          "statics",
+          "validatorConstraints",
+          "defaultProps",
+          "constructor",
+          "getDefaultProps",
+          "getInitialState",
+          "getChildContext",
+          "componentWillMount",
+          "componentDidMount",
+          "componentWillReceiveProps",
+          "shouldComponentUpdate",
+          "componentWillUpdate",
+          "componentDidUpdate",
+          "componentWillUnmount"
+        ],
+        "syncano": [
+          "/^get.+$/",
+          "/^on.+$/",
+          "/^is.+$/",
+          "/^has.+$/",
+          "/^handle.+$/"
+        ],
+        "rendering": [
+          "/^render.+$/",
+          "render"
+        ]
+      },
       "order": [
-        "displayName",
-        "propTypes",
-        "contextTypes",
-        "childContextTypes",
-        "mixins",
-        "statics",
-        "defaultProps",
-        "constructor",
-        "getDefaultProps",
-        "getInitialState",
-        "getChildContext",
-        "componentWillMount",
-        "componentDidMount",
-        "componentWillReceiveProps",
-        "shouldComponentUpdate",
-        "componentWillUpdate",
-        "componentDidUpdate",
-        "componentWillUnmount",
-        "/^on.+$/",
-        "/^get.+$/",
-        "/^render.+$/",
-        "render"
+        "lifecycle",
+        "syncano",
+        "everything-else",
+        "rendering"
       ]
     }],
     "no-unused-vars": [2, {
@@ -117,7 +99,7 @@
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],
     "no-extra-bind": 2,
     "curly": [2, "multi-line"],
-    "react/no-did-update-set-state": 1,
+    "react/no-did-update-set-state": 2,
 
 
     // Strict
@@ -152,11 +134,11 @@
     "valid-jsdoc": 2,
     "valid-typeof": 2,
     "no-unexpected-multiline": 2,
-    "no-warning-comments": 1,
 
     // Best Practices
     "accessor-pairs": 2,
     "block-scoped-var": 2,
+    "complexity": [2, 10],
     "consistent-return": 2,
     "default-case": 2,
     "dot-notation": 2,
@@ -199,6 +181,7 @@
     "no-unused-expressions": 2,
     "no-useless-call": 2,
     "no-void": 2,
+    "no-warning-comments": 2,
     "no-with": 2,
     "radix": 2,
     "vars-on-top": 2,
@@ -218,6 +201,7 @@
     // Stylistic Issues
     "array-bracket-spacing": [2, "never"],
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "camelcase": 1,
     "comma-spacing": [2, {"before": false, "after": true}],
     "comma-style": [2, "last"],
     "computed-property-spacing": [2, "never"],

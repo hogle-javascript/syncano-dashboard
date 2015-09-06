@@ -1,6 +1,7 @@
-var utils = require('../utils');
+const utils = require('../utils');
+const globals = require('../globals');
 
-var usersCommands = {
+const usersCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
@@ -9,11 +10,11 @@ var usersCommands = {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
-  },
+  }
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/users',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/users',
   commands: [usersCommands],
   elements: {
     user: {
@@ -50,7 +51,7 @@ module.exports = {
     },
     deleteButton: {
       selector: '//span[@class="synicon-delete"]',
-      locateStrategy: 'xpath'      
+      locateStrategy: 'xpath'
     },
     deleteUserModalTitle: {
       selector: '//h3[text()="Delete a User"]',
@@ -74,15 +75,23 @@ module.exports = {
     },
     groupTableRowDropdown: {
       selector: '//span[text()="' + utils.addSuffix('group') + '"]/following-sibling::div/button',
-      locateStrategy: 'xpath'      
+      locateStrategy: 'xpath'
     },
     deleteButtonDropdown: {
       selector: '//span[text()="Delete"]',
-      locateStrategy: 'xpath'      
+      locateStrategy: 'xpath'
     },
     deleteGroupModalTitle: {
       selector: '//h3[text()="Delete a Group"]',
-      locateStrategy: 'xpath'  
+      locateStrategy: 'xpath'
+    },
+    groupEditButton: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    userList: {
+      selector: '//div[@class="col-lg-27"]//div[@class="col-xs-10"]',
+      locateStrategy: 'xpath'
     }
   }
 };

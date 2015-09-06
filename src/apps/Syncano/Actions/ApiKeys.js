@@ -1,3 +1,5 @@
+import D from 'd.js';
+
 export default {
   list() {
     this.Connection
@@ -37,11 +39,11 @@ export default {
     });
   },
 
-  reset(id) {
-    this.Connection
-      .ApiKeys
-      .reset(id)
-      .then(this.completed)
-      .catch(this.failure);
+  reset(apiKeys) {
+    let promises = apiKeys.map((apiKey) => this.Connection.ApiKeys.reset(apiKey.id));
+
+    D.all(promises)
+      .success(this.completed)
+      .error(this.failure);
   }
 };

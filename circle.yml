@@ -10,19 +10,11 @@ general:
     - "coverage/"
     - "reports/"
 
-dependencies:
-  post:
-    - npm run-script build
-    - mv ./dist ./dist_e2e
-    - npm run-script e2e-setup
-    - npm run-script e2e-http-server:
-        background: true
-
 test:
   override:
-    - npm run-script eslint
-    - npm test
-    - npm run-script e2e
+    - ./test.sh:
+        parallel: true
+        timeout: 300
 
 deployment:
   production:
@@ -33,8 +25,11 @@ deployment:
       - NODE_ENV=production npm run-script clean
       - NODE_ENV=production npm run-script add-github-tag
       - NODE_ENV=production npm run-script changelog
+      - NODE_ENV=production npm run-script upload-screenshots
+      - NODE_ENV=production npm run-script s3-cleanup
   staging:
     branch: devel
     commands:
       - npm run-script publish
       - npm run-script clean
+      - npm run-script s3-cleanup

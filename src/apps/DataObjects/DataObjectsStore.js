@@ -92,7 +92,6 @@ export default Reflux.createStore({
     );
     this.listenToForms();
 
-    // TODO why not setCurrentClassObj why?
     this.listenTo(DataObjectsActions.setCurrentClassObj, this.refreshDataObjects);
   },
 
@@ -256,7 +255,6 @@ export default Reflux.createStore({
 
   onFetchCurrentClassObjCompleted(classObj) {
     console.debug('DataObjectsStore::onFetchCurrentClassObjCompleted');
-    // TODO why, why?
     this.data.classObj = classObj;
     DataObjectsActions.setCurrentClassObj(classObj);
   },

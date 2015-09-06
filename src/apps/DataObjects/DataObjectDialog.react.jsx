@@ -26,11 +26,6 @@ export default React.createClass({
     Mixins.Dialog
   ],
 
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
-  },
-
   validatorConstraints() {
     let validateObj = {};
 
@@ -56,8 +51,6 @@ export default React.createClass({
       other_permissions: this.state.other_permissions
     };
 
-    let files = this.getFileFields();
-
     // All "dynamic" fields
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type !== 'file') {
@@ -68,6 +61,9 @@ export default React.createClass({
               break;
             case 'false':
               params[item.name] = false;
+              break;
+            case 'null':
+              params[item.name] = null;
               break;
             default:
               delete params[item.name];
@@ -93,22 +89,10 @@ export default React.createClass({
         } else {
           let fieldValue = this.refs['field-' + item.name].getValue();
 
-          if (fieldValue) {
-            params[item.name] = fieldValue;
-          }
+          params[item.name] = fieldValue || null;
         }
-      } else {
-        let delFile = true;
-
-        files.some((file) => {
-          if (file.name === item.name) {
-            delFile = false;
-            return true;
-          }
-        });
-        if (delFile) {
-          params[item.name] = null;
-        }
+      } else if (this.state[item.name] === null) {
+        params[item.name] = null;
       }
     });
 
@@ -135,6 +119,18 @@ export default React.createClass({
     return fileFields;
   },
 
+  onDrop(fieldName, files) {
+    let state = {};
+
+    state[fieldName] = files[0];
+    this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
+  },
+
   handleAddSubmit() {
     DataObjectsActions.createDataObject({
       className: DataObjectsStore.getCurrentClassName(),
@@ -149,6 +145,51 @@ export default React.createClass({
       params: this.getParams(),
       fileFields: this.getFileFields()
     })
+  },
+
+  handleFileOnClick(value, event) {
+    event.stopPropagation();
+    window.open(value, '_blank')
+  },
+
+  handleRemoveFile(name) {
+    let state = {};
+
+    state[name] = null;
+    this.setState(state);
+  },
+
+  handleClearDateTime(name) {
+    let state = {};
+
+    state[`fielddate-${name}`] = null;
+    state[`fieldtime-${name}`] = null;
+    this.setState(state);
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fielddate-${name}`].setState({
+      date: undefined,
+      dialogDate: new Date()
+    });
+
+    /* eslint-enable no-undefined */
+
+    let emptyTime = new Date();
+
+    emptyTime.setHours(0);
+    emptyTime.setMinutes(0);
+
+    this.refs[`fieldtime-${name}`].refs.input.setValue('');
+
+    /* eslint-disable no-undefined */
+
+    this.refs[`fieldtime-${name}`].setState({
+      time: undefined,
+      dialogTime: new Date()
+    });
+
+    /* eslint-enable no-undefined */
   },
 
   renderBuiltinFields() {
@@ -277,48 +318,6 @@ export default React.createClass({
     )
   },
 
-  onDrop(fieldName, files) {
-    let state = {};
-
-    state[fieldName] = files[0];
-    this.setState(state);
-  },
-
-  handleFileOnClick(value, event) {
-    event.stopPropagation();
-    window.open(value, '_blank')
-  },
-
-  handleRemoveFile(name) {
-    let state = {};
-
-    state[name] = null;
-    this.setState(state);
-  },
-
-  handleClearDateTime(name) {
-    let state = {};
-
-    state[`fielddate-${name}`] = null;
-    state[`fieldtime-${name}`] = null;
-    this.setState(state);
-
-    this.refs[`fielddate-${name}`].setState({
-      /* eslint-disable */
-      date: undefined,
-      /* eslint-enable */
-      dialogDate: new Date()
-    });
-
-    this.refs[`fieldtime-${name}`].refs.input.setValue('');
-    this.refs[`fieldtime-${name}`].setState({
-      /* eslint-disable */
-      time: undefined,
-      /* eslint-enable */
-      dialogTime: new Date()
-    });
-  },
-
   renderDropZone(item) {
     let dropZoneStyle = {
       height: 80,
@@ -356,10 +355,10 @@ export default React.createClass({
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
-          // TODO: Add this item when backend will be ready for 'null' value {text: 'Blank', payload: 'null'}
           let menuItems = [
             {text: 'True', payload: 'true'},
-            {text: 'False', payload: 'false'}
+            {text: 'False', payload: 'false'},
+            {text: 'Blank', payload: 'null'}
           ];
 
           return (
@@ -377,12 +376,15 @@ export default React.createClass({
           )
         }
 
+        /* eslint-disable no-undefined */
+
         if (item.type === 'datetime') {
-          let value = this.state[item.name] ?
-            new Date(this.state[item.name].value) :
-            /* eslint-disable */
-            undefined;
-            /* eslint-enable */
+          let value = this.state[item.name]
+            ? new Date(this.state[item.name].value)
+            : undefined;
+
+        /* eslint-enable no-undefined*/
+
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
@@ -396,18 +398,26 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    /* eslint-disable */
+
+                  /* eslint-disable no-undefined */
+
                     defaultDate={value || undefined}
-                    /* eslint-enable */
+
+                  /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-                    /* eslint-disable */
+
+                  /* eslint-disable no-undefined */
+
                     defaultTime={value || undefined}
-                    /* eslint-enable */
+
+                  /* eslint-enable no-undefined */
+
                     />
                 </div>
                 <div className="col-xs-5">
