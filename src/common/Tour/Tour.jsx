@@ -104,12 +104,20 @@ export default Radium(React.createClass({
   },
 
   handleOnClick() {
+    let {currentStep, config} = this.props;
+
+    if (config[currentStep] && config[currentStep].run) {
+      config[currentStep].run();
+    }
     this.props.onClick()
   },
 
   render() {
     const styles = this.getStyles();
     let {currentStep, config, visible, showDots} = this.props;
+
+    if (!config) return null;
+
     let ElementRect = config[0].node.getBoundingClientRect();
     let classes = 'react-tour';
 
@@ -118,6 +126,10 @@ export default Radium(React.createClass({
 
     if (config[currentStep]) {
       ElementRect = config[currentStep].node.getBoundingClientRect()
+    }
+
+    if (config[currentStep] && config[currentStep].run) {
+      config[currentStep].run();
     }
 
     if (!config[currentStep]) {

@@ -12,6 +12,8 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
+import Header from '../Header'
+
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -91,7 +93,15 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       tourHighlight: {
-        color: MUI.Styles.Colors.blue800
+        color: MUI.Styles.Colors.blue500
+      },
+      secondLine: {
+        marginTop: 16,
+        fontSize: '0.8em',
+        lineHeight: '1.5em'
+      },
+      link: {
+        color: MUI.Styles.Colors.blue500
       }
     }
   },
@@ -99,20 +109,60 @@ export default Radium(React.createClass({
   getTourConfig() {
     const styles = this.getStyles();
 
+    let toggleAccountMenu = function() {
+      Header.Actions.toggleAccountMenu();
+    };
+
     return [{
       node: React.findDOMNode(this.refs.myInstancesList),
-      text: <div>This screen is all about <strong style={styles.tourHighlight}>Instances</strong>. <br />
-        <strong style={styles.tourHighlight}>Instance</strong> is the space for your data.</div>,
+      text: <div>All your <strong style={styles.tourHighlight}>Instances</strong> will be listed here.<br />
+              <div style={styles.secondLine}>
+                Instance is a place for all of your
+                data and all of your code. Every time you start a new app - we recommend creating
+                a new Instance.
+              </div>
+            </div>,
       radius: 200
     },
     {
       node: React.findDOMNode(this.refs.addInstanceFab),
-      text: <div>Here you can add new <strong style={styles.tourHighlight}>Instance.</strong></div>,
+      text: <div>You can add a new <strong style={styles.tourHighlight}>Instance</strong> by clicking here
+              <div style={styles.secondLine}>
+                You will see a similar button placed in same screen corner, on other views as well - you will
+                use it to add new items in Classes, CodeBoxes, Schedules, Triggers, Webhooks, Users, Groups and Channels
+              </div>
+            </div>,
       radius: 95
     },
     {
+      node: document.getElementById('menu-account'),
+      text: <div>
+              Use this link to go into your <strong style={styles.tourHighlight}>Account</strong> settings
+              <div style={styles.secondLine}>
+                Your profile, authentication info and pending invitations list) or Billing information (your billing
+                plan, payment methods or list of invoices).
+              </div>
+            </div>,
+      radius: 350,
+      top: -20,
+      left: -180,
+      run: toggleAccountMenu
+    },
+    {
       node: document.getElementById('menu-solutions'),
-      text: <div>Go here to find <strong style={styles.tourHighlight}>Solution</strong> for you!</div>,
+      text:
+        <div>
+          Use this link to go into <strong style={styles.tourHighlight}>Solutions</strong> listing<br />
+          Browse and install existing Solutions or create a new one.
+          <div style={styles.secondLine}>
+            Solutions are Syncano app templates made by other users and are a great way to speed up the development
+            process of your app.
+          </div>
+          <div style={styles.secondLine}>
+            Read more on Solutions
+            in <a style={styles.link} href="http://docs.syncano.com/docs/solutions">our docs</a>.
+          </div>
+        </div>,
       radius: 100,
       top: -14,
       left: 20
