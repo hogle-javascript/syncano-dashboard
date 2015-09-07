@@ -3,7 +3,8 @@ const utils = require('../utils');
 module.exports = {
   tags: ['administrators'],
   before: function(client) {
-    var loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
+
     loginPage.goToLoginPage();
     loginPage.typeEmail();
     loginPage.typePassword();
@@ -14,17 +15,28 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'User adds Administrator' : function(client) {
+  'User adds an Administrator' : function(client) {
     const email = utils.addSuffix('admin') + '@gmail.com';
-    const administratorsPage = client.page.administratorsPage();
+    const adminsPage = client.page.adminsPage();
 
-    administratorsPage.navigate();
-    administratorsPage.waitForElementPresent('@administratorsListItem');
-    administratorsPage.clickButton('@addAdministratorButton');
-    administratorsPage.waitForElementPresent('@addAdministratorModalTitle');
-    administratorsPage.fillInputField('@addAdministratorModalEmailInput', email);
-    administratorsPage.selectFromDropdown('@addAdministratorModalRoleDropdown', '@addAdministratorModalRoleDropdownRead');
-    administratorsPage.clickButton('@confirmButton');
-    administratorsPage.waitForElementPresent('@administratorTableRow');
+    adminsPage.navigate();
+    adminsPage.waitForElementPresent('@adminsListItem');
+    adminsPage.clickButton('@addAdminButton');
+    adminsPage.waitForElementPresent('@addAdminModalTitle');
+    adminsPage.fillInputField('@addAdminModalEmailInput', email);
+    adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
+    adminsPage.clickButton('@confirmButton');
+    adminsPage.waitForElementPresent('@adminTableRow');
+  },
+  'User deletes an Administrator' : function(client) {
+    const adminsPage = client.page.adminsPage();
+
+    adminsPage.navigate();
+    adminsPage.clickButton('@selectAdminTableRow');
+    adminsPage.clickButton('@deleteButton');
+    adminsPage.waitForElementPresent('@deleteAdminModalTitle');
+    client.pause(1000);
+    adminsPage.clickButton('@confirmButton');
+    adminsPage.waitForElementNotPresent('@selectAdminTableRow');
   }
 };
