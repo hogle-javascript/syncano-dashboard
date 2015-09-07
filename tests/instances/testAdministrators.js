@@ -1,3 +1,5 @@
+const utils = require('../utils');
+
 module.exports = {
   tags: ['administrators'],
   before: function(client) {
@@ -12,17 +14,17 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'User goes to Administrators View' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
-    
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@webhookListItem');
+  'User adds Administrator' : function(client) {
+    const email = utils.addSuffix('admin') + '@gmail.com';
+    const administratorsPage = client.page.administratorsPage();
 
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@administrators');
-
-    var administratorsPage = client.page.administratorsPage();
+    administratorsPage.navigate();
     administratorsPage.waitForElementPresent('@administratorsListItem');
+    administratorsPage.clickButton('@addAdministratorButton');
+    administratorsPage.waitForElementPresent('@addAdministratorModalTitle');
+    administratorsPage.fillInputField('@addAdministratorModalEmailInput', email);
+    administratorsPage.selectFromDropdown('@addAdministratorModalRoleDropdown', '@addAdministratorModalRoleDropdownRead');
+    administratorsPage.clickButton('@confirmButton');
+    administratorsPage.waitForElementPresent('@administratorTableRow');
   }
 };
