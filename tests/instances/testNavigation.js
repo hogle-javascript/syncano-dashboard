@@ -39,10 +39,10 @@ module.exports = {
 
   'User goes to Administrators View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
-    const administratorsPage = client.page.administratorsPage();
+    const adminsPage = client.page.adminsPage();
 
     leftMenuPage.clickButton('@administrators');
-    administratorsPage.waitForElementPresent('@administratorsListItem');
+    adminsPage.waitForElementPresent('@adminsListItem');
   },
   'User goes to API Keys View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
