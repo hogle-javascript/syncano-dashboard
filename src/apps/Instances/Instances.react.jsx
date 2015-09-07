@@ -53,68 +53,6 @@ export default Radium(React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Instances::handleChangePalette', color, icon);
-
-    Actions.updateInstance(
-      Store.getCheckedItem().name, {
-        metadata: JSON.stringify({color, icon})
-      }
-    );
-    Actions.uncheckAll()
-  },
-
-  handleDelete() {
-    console.info('Instances::handleDelete');
-    Actions.removeInstances(Store.getCheckedItems());
-  },
-
-  handleItemClick(instanceName) {
-    // Redirect to main instance screen
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
-  },
-
-  // Dialogs config
-  initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteInstanceDialog',
-          ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Confirm', onClick: this.handleDelete}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
-            this.getDialogList(checkedInstances),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading} />
-          ]
-        }
-      }]
-  },
-
   getStyles() {
     return {
       tourHighlight: {
@@ -194,9 +132,9 @@ export default Radium(React.createClass({
     }]
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Instances::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+  onNextStep() {
+    Actions.setTourConfig(this.getTourConfig());
+    Actions.nextStep();
   },
 
   handleChangePalette(color, icon) {
@@ -206,7 +144,59 @@ export default Radium(React.createClass({
       Store.getCheckedItem().name, {
         metadata: JSON.stringify({color, icon})
       }
-    ]
+    );
+    Actions.uncheckAll()
+  },
+
+  handleDelete() {
+    console.info('Instances::handleDelete');
+    Actions.removeInstances(Store.getCheckedItems());
+  },
+
+  handleItemClick(instanceName) {
+    // Redirect to main instance screen
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
+  },
+
+  // Dialogs config
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let checkedInstances = Store.getCheckedItems();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteInstanceDialog',
+          ref: 'deleteInstanceDialog',
+          title: 'Delete an Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDelete}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            this.getDialogList(checkedInstances),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          ]
+        }
+      }]
   },
 
   showInstanceDialog() {
@@ -216,11 +206,6 @@ export default Radium(React.createClass({
 
   showInstanceEditDialog() {
     InstanceDialogActions.showDialog(Store.getCheckedItem());
-  },
-
-  onNextStep() {
-    Actions.setTourConfig(this.getTourConfig());
-    Actions.nextStep();
   },
 
   render() {

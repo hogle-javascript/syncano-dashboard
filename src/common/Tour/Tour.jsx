@@ -23,8 +23,17 @@ export default Radium(React.createClass({
     };
   },
 
+  componentDidMount() {
+    this.throttledOnWindowResize = _.throttle(this.onWindowResize, 64);
+    window.addEventListener('resize', this.throttledOnWindowResize);
+  },
+
   componentWillReceiveProps(nextProps) {
     this.setState(nextProps);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.throttledOnWindowResize);
   },
 
   getStyles() {
@@ -58,7 +67,7 @@ export default Radium(React.createClass({
         left: 0,
         opacity: 1,
         zIndex: 5000,
-        transition: 'opacity .3s'
+        transition: 'opacity .2s'
       },
       dots: {
         textAlign: 'center'
@@ -78,19 +87,10 @@ export default Radium(React.createClass({
         position: 'fixed',
         borderRadius: '50%',
         boxShadow: '0 0 0 200vmax rgba(128, 128, 128, 0.5)',
-        transition: 'height .4s, width .4s, top .4s, left .4s',
+        transition: 'height .2s, width .2s, top .2s, left .2s',
         zIndex: 1000
       }
     };
-  },
-
-  componentDidMount() {
-    this.throttledOnWindowResize = _.throttle(this.onWindowResize, 64);
-    window.addEventListener('resize', this.throttledOnWindowResize);
-  },
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.throttledOnWindowResize);
   },
 
   getDotStyle(currentStep, index) {
@@ -103,51 +103,45 @@ export default Radium(React.createClass({
     this.forceUpdate();
   },
 
-  handleOnClick() {
+  handleRun() {
     let {currentStep, config} = this.props;
 
     if (config[currentStep] && config[currentStep].run) {
       config[currentStep].run();
     }
-    this.props.onClick()
+  },
+
+  handleOnClick() {
+    this.handleRun();
+    this.props.onClick();
   },
 
   render() {
     const styles = this.getStyles();
     let {currentStep, config, visible, showDots} = this.props;
-
-    if (!config) return null;
-
-    let ElementRect = config[0].node.getBoundingClientRect();
+    let additionalLeft = 0;
+    let additionalTop = 0;
     let classes = 'react-tour';
 
     if (!config) return null;
+
     if (!visible) classes += ' react-tour-hide';
-
-    if (config[currentStep]) {
-      ElementRect = config[currentStep].node.getBoundingClientRect()
-    }
-
-    if (config[currentStep] && config[currentStep].run) {
-      config[currentStep].run();
-    }
 
     if (!config[currentStep]) {
       return <div />
     }
 
-    let additionalLeft = 0;
-
     if (config[currentStep].left) {
       additionalLeft = config[currentStep].left;
     }
-
-    let additionalTop = 0;
 
     if (config[currentStep].top) {
       additionalTop = config[currentStep].top;
     }
 
+    this.handleRun();
+
+    let ElementRect = config[currentStep].node.getBoundingClientRect();
     let top = parseInt(ElementRect.top - 20 + additionalTop, 10);
     let left = parseInt(ElementRect.left - 20 + additionalLeft, 10);
     let height = parseInt(config[currentStep].radius, 10);
