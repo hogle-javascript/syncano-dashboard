@@ -37,6 +37,6 @@ module.exports = {
     adminsPage.waitForElementVisible('@deleteAdminModalTitle');
     client.pause(1000);
     adminsPage.clickButton('@confirmButton');
-    adminsPage.waitForElementNotVisible('@selectAdminTableRow');
+    adminsPage.waitForElementNotPresent('@selectAdminTableRow');
   }
 };
