@@ -37,6 +37,7 @@ module.exports = {
     usersPage.waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
     usersPage.clickButton('@confirm');
+    usersPage.waitForElementVisible('@groupList')
     usersPage.waitForElementNotPresent('@groupTableRowDropdown');
   }
   // 'Administrator adds a User' : function(client) {
