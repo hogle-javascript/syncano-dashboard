@@ -6,34 +6,6 @@ import MUI from 'material-ui';
 
 import CheckIcon from '../../../common/CheckIcon/CheckIcon.react';
 
-let Header = React.createClass({
-
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON
-    }
-  },
-
-  getStyles() {
-    return {
-      fontSize: 20,
-      fontWeight: 500
-    }
-  },
-
-  render() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        className={this.props.className}
-        style={styles}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
   displayName: 'ColumnCheckIcon',
@@ -45,10 +17,6 @@ export default Radium(React.createClass({
     checkable: React.PropTypes.bool,
     handleIconClick: React.PropTypes.func,
     handleNameClick: React.PropTypes.func
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {
