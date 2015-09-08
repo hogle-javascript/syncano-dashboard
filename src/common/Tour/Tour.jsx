@@ -40,9 +40,9 @@ export default Radium(React.createClass({
     return {
       focusText: {
         position: 'fixed',
-        top: '40%',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        top: '30%',
+        left: '40%',
+        transform: 'translateX(-40%)',
         textAlign: 'center',
         padding: '1em',
         fontSize: '2em',

@@ -72,9 +72,9 @@ export default Radium(React.createClass({
   getTourConfig() {
     const styles = this.getStyles();
 
-    let toggleAccountMenu = function() {
+    function toggleAccountMenu() {
       Header.Actions.toggleAccountMenu();
-    };
+    }
 
     return [{
       node: React.findDOMNode(this.refs.myInstancesList),
