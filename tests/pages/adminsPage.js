@@ -56,11 +56,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     adminTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('admin') + '@gmail.com' + '"]',
+      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]',
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('admin') + '@gmail.com' + '"]/../../preceding-sibling::div',
+      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]/../../preceding-sibling::div',
       locateStrategy: 'xpath'
     },
     deleteAdminModalTitle: {
