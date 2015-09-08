@@ -87,7 +87,8 @@ export default Radium(React.createClass({
   },
 
   handleInstanceChange(event, index, obj) {
-    Actions.setInstance(obj.payload)
+    Actions.setInstance(obj.payload);
+    Actions.clearExportSpec();
   },
 
   handleTypeChange(event, index, type) {

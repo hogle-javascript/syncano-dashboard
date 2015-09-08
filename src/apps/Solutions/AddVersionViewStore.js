@@ -76,6 +76,11 @@ export default Reflux.createStore({
     Actions.fetchInstances();
   },
 
+  onClearExportSpec() {
+    console.debug('AddVersionViewStore::onClearExportSpec');
+    this.data.exportSpec = this.getInitialState().exportSpec;
+  },
+
   getTypes() {
     return this.types;
   },
