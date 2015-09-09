@@ -12,6 +12,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -53,6 +54,15 @@ export default React.createClass({
       tracePanel: {
         marginTop: 30,
         height: 300
+      },
+      durationSummary: {
+        marginTop: 8
+      },
+      statusSummaryFailed: {
+        color: MUI.Styles.Colors.red400
+      },
+      statusSummarySuccess: {
+        color: MUI.Styles.Colors.green400
       }
     }
   },
@@ -164,6 +174,14 @@ export default React.createClass({
     let source = null;
     let codeBox = this.state.currentCodeBox;
     let editorMode = 'python';
+    let traceStyle =
+      this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
+
+    let lastTraceStatus = null;
+
+    if (this.state.lastTraceStatus) {
+      lastTraceStatus = this.state.lastTraceStatus[0].toUpperCase() + this.state.lastTraceStatus.slice(1);
+    }
 
     if (codeBox) {
       source = codeBox.source;
@@ -182,6 +200,10 @@ export default React.createClass({
               ref="tracePanel"
               trace={this.state.lastTraceResult}
               loading={!this.state.lastTraceReady}/>
+            <div style={styles.durationSummary}>
+              Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
+              duration: {this.state.lastTraceDuration}ms
+            </div>
           </div>
         </div>
       )
