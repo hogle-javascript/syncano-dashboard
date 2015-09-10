@@ -119,6 +119,14 @@ export default React.createClass({
     return fileFields;
   },
 
+  getEmptyDefaultTime(value) {
+    if (value) {
+      return false;
+    }
+
+    return true;
+  },
+
   onDrop(fieldName, files) {
     let state = {};
 
@@ -398,27 +406,14 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-
-                  /* eslint-disable no-undefined */
-
-                    defaultDate={value || undefined}
-
-                  /* eslint-enable no-undefined */
-
-                    />
+                    defaultDate={value} />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-
-                  /* eslint-disable no-undefined */
-
-                    defaultTime={value || undefined}
-
-                  /* eslint-enable no-undefined */
-
-                    />
+                    defaultTime={value}
+                    emptyDefaultTime={this.getEmptyDefaultTime(value)} />
                 </div>
                 <div className="col-xs-5">
                   <MUI.IconButton
