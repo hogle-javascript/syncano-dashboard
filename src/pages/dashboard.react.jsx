@@ -29,11 +29,28 @@ export default React.createClass({
     }
   },
 
+  renderMagneticConversionPixel() {
+    if (SessionStore.getSignUpMode()) {
+      SessionStore.removeSignUpMode();
+
+      return (
+        <div
+          dangerouslySetInnerHTML={{__html: `
+            <script type="text/javascript" src="//magnetic.t.domdex.com/23447/pix.js?t=c&for=syncano"></script>
+            <noscript>
+            <img src="//magnetic.t.domdex.com/23447/pix.gif?t=c&for=syncano" width="1" height="1" style="display:none;">
+            </noscript>`}}>
+        </div>
+      )
+    }
+  },
+
   render() {
     return (
       <div>
         <Header />
         <Router.RouteHandler />
+        {this.renderMagneticConversionPixel()}
       </div>
     );
   }

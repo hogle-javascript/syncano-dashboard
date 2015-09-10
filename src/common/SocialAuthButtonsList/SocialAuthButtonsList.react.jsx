@@ -1,8 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'material-ui';
+
+import SessionStore from '../../apps/Session/SessionStore';
 import AuthActions from '../../apps/Account/AuthActions';
 import AuthConstants from '../../apps/Account/AuthConstants';
+
+import MUI from 'material-ui';
 
 export default Radium(React.createClass({
 
@@ -41,6 +44,8 @@ export default Radium(React.createClass({
   },
 
   handleSocialSignup(network) {
+    SessionStore.setSignUpMode();
+
     AuthActions.socialLogin(network)
   },
 
