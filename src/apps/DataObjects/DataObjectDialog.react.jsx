@@ -78,7 +78,7 @@ export default React.createClass({
             let dateTime = new Date(
               date.getFullYear(),
               date.getMonth(),
-              date.getDay(),
+              date.getDate(),
               time.getHours(),
               time.getMinutes(),
               0
