@@ -22,11 +22,11 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-    <div
-      className={this.props.className}
-      style={styles}>
-      {this.props.children}
-    </div>
+      <div
+        className={this.props.className}
+        style={styles}>
+        {this.props.children}
+      </div>
     )
   }
 });

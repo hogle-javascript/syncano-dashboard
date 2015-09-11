@@ -116,7 +116,11 @@ export default React.createClass({
     return (
       <div>
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON">
+            {this.props.name}
+          </Column.ColumnHeader>
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Desc.Header>Groups</Column.Desc.Header>
           <Column.Date.Header>Updated</Column.Date.Header>

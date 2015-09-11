@@ -99,7 +99,11 @@ export default React.createClass({
     return (
       <Common.Lists.Container className='instances-list-container'>
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON">
+            {this.props.name}
+          </Column.ColumnHeader>
           <Column.Desc.Header>Description</Column.Desc.Header>
           <Column.Date.Header>Created</Column.Date.Header>
         </Common.ColumnList.Header>

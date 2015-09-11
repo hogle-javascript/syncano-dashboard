@@ -105,7 +105,11 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON">
+            {this.props.name}
+          </Column.ColumnHeader>
           <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
           <Column.Desc.Header className="col-xs-4">CodeBox ID</Column.Desc.Header>
           <Column.Key.Header className="col-xs-3">Public</Column.Key.Header>

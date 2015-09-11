@@ -154,7 +154,11 @@ export default React.createClass({
           <Common.Show if={this.state.items.length > 0}>
             <Common.Lists.Container>
               <Common.ColumnList.Header>
-                <Column.CheckIcon.Header>Invitations</Column.CheckIcon.Header>
+                <Column.ColumnHeader
+                  primary={true}
+                  columnName="CHECK_ICON">
+                  Invitations
+                </Column.ColumnHeader>
                 <Column.Desc.Header>From</Column.Desc.Header>
                 <Column.Desc.Header>Role</Column.Desc.Header>
                 <Column.Date.Header>Created</Column.Date.Header>

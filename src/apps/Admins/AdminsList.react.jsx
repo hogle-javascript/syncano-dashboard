@@ -96,9 +96,12 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header className="col-xs-25 col-md-20">
+          <Common.ColumnList.Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON"
+            className="col-xs-25 col-md-20">
             {this.props.name}
-          </Common.ColumnList.Column.CheckIcon.Header>
+          </Common.ColumnList.Column.ColumnHeader>
           <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
           <Common.ColumnList.Column.Date.Header>Created</Common.ColumnList.Column.Date.Header>
         </Common.ColumnList.Header>

@@ -82,7 +82,11 @@ export default React.createClass({
     return (
       <Common.Lists.Container className="api-keys-list">
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
+          <Column.ColumnHeader
+            columnName="CHECK_ICON"
+            primary={true}>
+            {this.props.name}
+          </Column.ColumnHeader>
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Key.Header>Key</Column.Key.Header>
           <Column.Text.Header>Permissions</Column.Text.Header>
