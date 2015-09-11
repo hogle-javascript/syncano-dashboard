@@ -121,7 +121,7 @@ export default React.createClass({
             columnName="CHECK_ICON">
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.ID.Header>ID</Column.ID.Header>
+          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>

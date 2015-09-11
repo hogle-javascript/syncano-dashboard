@@ -98,13 +98,21 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
-          <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-3 col-md-3">
+            Group
+          </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
             className="col-xs-6">
             Permissions
           </Column.ColumnHeader>
-          <Column.ID.Header className="col-xs-4 col-md-4">Objects</Column.ID.Header>
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4 col-md-4">
+            Objects
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>

@@ -119,17 +119,23 @@ export default React.createClass({
             Type
           </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-5 col-md-5">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-5 col-md-5">
             Installations
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-4 col-md-4">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4 col-md-4">
             Download
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-4 col-md-4">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4 col-md-4">
             Install
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
 
         </ColumnList.Header>

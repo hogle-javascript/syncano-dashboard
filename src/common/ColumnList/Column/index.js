@@ -6,11 +6,7 @@ import Key from './Key.react';
 import Name from './Name.react';
 import Text from './Text.react';
 import ID from './ID.react';
-import IDHeader from './IDHeader.react';
 import ColumnHeader from './ColumnHeader.react';
-
-ID.Header = IDHeader;
-
 
 export default {
   CheckIcon,
