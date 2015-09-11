@@ -171,7 +171,7 @@ export default Radium(React.createClass({
         <Common.ColumnList.Header>
           <Column.IconName.Header>{this.props.name}</Column.IconName.Header>
           <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Desc.Header>Duration</Column.Desc.Header>
+          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
         </Common.ColumnList.Header>
       )

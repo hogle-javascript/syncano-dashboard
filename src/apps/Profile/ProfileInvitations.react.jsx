@@ -159,8 +159,8 @@ export default React.createClass({
                   columnName="CHECK_ICON">
                   Invitations
                 </Column.ColumnHeader>
-                <Column.Desc.Header>From</Column.Desc.Header>
-                <Column.Desc.Header>Role</Column.Desc.Header>
+                <Column.ColumnHeader columnName="DESC">From</Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
               </Common.ColumnList.Header>
               <Common.Lists.List>

@@ -89,10 +89,22 @@ export default React.createClass({
             columnName="CHECK_ICON">
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.Desc.Header>Description</Column.Desc.Header>
-          <Column.Desc.Header className="col-xs-5">Permissions</Column.Desc.Header>
-          <Column.Desc.Header className="col-xs-5">Type</Column.Desc.Header>
-          <Column.Desc.Header className="col-xs-5">Custom publish</Column.Desc.Header>
+          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-5">
+            Permissions
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-5">
+            Type
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-5">
+            Custom publish
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>

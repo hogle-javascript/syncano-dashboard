@@ -104,7 +104,7 @@ export default React.createClass({
             columnName="CHECK_ICON">
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.Desc.Header>Description</Column.Desc.Header>
+          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>

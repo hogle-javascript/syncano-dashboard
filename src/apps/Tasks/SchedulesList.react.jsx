@@ -100,8 +100,12 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Desc.Header className="col-sm-6">CodeBox</Column.Desc.Header>
-          <Column.Desc.Header>Crontab</Column.Desc.Header>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-sm-6">
+            CodeBox
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Crontab</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Next run</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>

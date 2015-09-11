@@ -97,9 +97,13 @@ export default React.createClass({
             columnName="CHECK_ICON">
             {this.props.name}
           </Column.ColumnHeader>
-          <Column.Desc.Header>Description</Column.Desc.Header>
+          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
-          <Column.Desc.Header className="col-xs-6">Permissions</Column.Desc.Header>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-6">
+            Permissions
+          </Column.ColumnHeader>
           <Column.ID.Header className="col-xs-4 col-md-4">Objects</Column.ID.Header>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>

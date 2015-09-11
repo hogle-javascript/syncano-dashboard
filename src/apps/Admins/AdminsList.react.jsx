@@ -102,7 +102,7 @@ export default React.createClass({
             className="col-xs-25 col-md-20">
             {this.props.name}
           </Common.ColumnList.Column.ColumnHeader>
-          <Common.ColumnList.Column.Desc.Header>Role</Common.ColumnList.Column.Desc.Header>
+          <Common.ColumnList.Column.ColumnHeader columnName="DESC">Role</Common.ColumnList.Column.ColumnHeader>
           <Common.ColumnList.Column.ColumnHeader columnName="DATE">Created</Common.ColumnList.Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
