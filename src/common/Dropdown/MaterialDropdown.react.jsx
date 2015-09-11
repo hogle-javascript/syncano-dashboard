@@ -15,6 +15,7 @@ export default React.createClass({
     type: React.PropTypes.string,
     icon: React.PropTypes.string,
     items: React.PropTypes.array,
+    isOpen: React.PropTypes.bool,
     headerContent: React.PropTypes.shape({
       userFullName: React.PropTypes.string,
       userEmail: React.PropTypes.string,
@@ -40,7 +41,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false
+      isOpen: this.props.isOpen
     }
   },
 

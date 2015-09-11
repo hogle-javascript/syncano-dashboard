@@ -3,6 +3,7 @@ var gulp             = require('gulp'),
     path             = require('path'),
     async            = require('async'),
     _                = require('lodash'),
+    AWS              = require('aws-sdk'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
@@ -11,9 +12,11 @@ var gulp             = require('gulp'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
+    moment           = require('moment'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config'),
+    listKeys         = require('./s3ListKeys'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
@@ -317,6 +320,8 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
+  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
   oauth2Client.setCredentials({
@@ -329,43 +334,140 @@ gulp.task('upload-screenshots', function(cb) {
   var drive = google.drive({version: 'v2', auth: oauth2Client});
 
   async.waterfall([
-    function (callback) {
+    function(callback) {
+      // Get list of files to upload
+      var screenshots = './reports/screenshots/_navigation/';
+      var files = fs.readdirSync(screenshots);
+      var driveObjects = files.map(function(file) {
+        return {
+          path: path.join(screenshots, file),
+          title: file,
+          delete: []
+        };
+      });
+
+      callback(null, driveObjects);
+    },
+    function(files, callback) {
+      // Check which files should be deleted
+      async.map(files, function(file, mapCallback) {
+        drive.files.list({
+          q: "title = '" + file.title + "' and '" + latestFolder + "' in parents"
+        }, function(err, response) {
+          if (err) return mapCallback(err);
+          file.delete = response.items.map(function(item) {
+            return item.id;
+          });
+          mapCallback(null, file);
+        });
+      }, callback);
+    },
+    function(files, callback) {
+      // Delete files
+      var ids = _.reduce(files, function(result, file) {
+        if (file.delete.length === 0) {
+          return result;
+        }
+        return result.concat(_.map(file.delete, function(id) {
+          return {fileId: id};
+        }));
+      }, []);
+
+      async.each(ids, drive.files.delete, function(err) {
+        if (err) return callback(err);
+        callback(null, files);
+      });
+    },
+    function(files, callback) {
       // Create InVision/#{version} folder
       drive.files.insert({
         resource: {
           title: version,
           mimeType: 'application/vnd.google-apps.folder',
-          parents: [{id: '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg'}]
+          parents: [{id: invisionFolder}]
         }
-      }, function(err, response) {
+      }, function(err, folder) {
         if (err) return callback(err);
-        callback(null, response);
+        callback(null, files, folder);
       });
     },
-    function(folder, callback) {
-      // Get list of files
-      var screenshots = './reports/screenshots/_navigation/';
-      var files = fs.readdirSync(screenshots);
+    function(files, folder, callback) {
+      // Insert files
       var driveObjects = files.map(function(file) {
         return {
           resource: {
-            title: file,
+            title: file.title,
             mimeType: 'image/png',
-            parents: [{id: folder.id}]
+            parents: [{id: folder.id}, {id: latestFolder}]
           },
           media: {
             mimeType: 'image/png',
-            body: fs.createReadStream(path.join(screenshots, file))
+            body: fs.createReadStream(file.path)
           }
         };
       });
 
       async.each(driveObjects, drive.files.insert, callback);
-    },
+    }
   ], function(err) {
     if (err) throw err;
     cb();
   });
+});
+
+gulp.task('s3-cleanup', function(cb) {
+  var s3Client = new AWS.S3();
+  var params = {bucket: 'dashboard-syncano-rocks'};
+  var pattern = /(.*)-[a-f0-9]{10}.*(\.[a-z0-9]{2,5})$/gi
+
+  if (ENV === 'production') {
+    params.bucket = 'dashboard-syncano-io'
+  }
+
+  listKeys(s3Client, params, function (err, keys) {
+    if (err) throw err;
+
+    // group keys
+    var versionedKeys = _.reduce(keys, function(result, key) {
+      var matches = pattern.exec(key.Key);
+      if (matches) {
+        var prefix = matches[1] + matches[2];
+        key.timestamp = moment(key.LastModified).unix();
+        result[prefix] = result[prefix] || [];
+        result[prefix].push(key);
+      }
+      return result;
+    }, {});
+
+    // filter keys
+    var keysToDelete = _.reduce(versionedKeys, function(result, keys, prefix) {
+      if (keys.length > 3) {
+        var toDelete = _.pluck(_.sortBy(keys, 'timestamp'), 'Key');
+        return result.concat(_.map(toDelete.slice(0, toDelete.length-3), function(key) {
+          return {Key: key};
+        }));
+      }
+      return result;
+    }, []);
+
+    if (keysToDelete.length === 0) {
+      return cb();
+    }
+
+    s3Client.deleteObjects({
+      Bucket: params.bucket,
+      Delete: {Objects: keysToDelete}
+    }, function(err, data) {
+      if (err) throw err;
+      _.forEach(data, function(keys, type) {
+        _.forEach(keys, function(key) {
+          gutil.log(gutil.colors.red('[' + type + ']'), key.Key);
+        });
+      });
+      cb();
+    });
+  });
+
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
