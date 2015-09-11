@@ -19,8 +19,8 @@ export default {
     return limits[objectsName];
   },
 
-  checkObjectsCount(objectsName, addCallback) {
-    if (this.state.items.length >= this.getLimit(objectsName)) {
+  checkObjectsCount(items, objectsName, addCallback) {
+    if (items.length >= this.getLimit(objectsName)) {
       this.setState({
         limitNotification: true
       }, () => {
