@@ -104,8 +104,7 @@ export default React.createClass({
                   disabled={this.hasEditMode()}
                   fullWidth={true}
                   hintText='Short name for your Channel'
-                  floatingLabelText='Name of a Channel'
-                  />
+                  floatingLabelText='Name of a Channel' />
               </div>
               <div className="col-flex-1">
                 <MUI.TextField
@@ -115,8 +114,7 @@ export default React.createClass({
                   errorText={this.getValidationMessages('description').join(' ')}
                   fullWidth={true}
                   hintText='Description of a Channel (optional)'
-                  floatingLabelText='Description of a Channel'
-                  />
+                  floatingLabelText='Description of a Channel' />
               </div>
             </div>
             <MUI.SelectField
@@ -128,8 +126,7 @@ export default React.createClass({
               valueMember='payload'
               displayMember='text'
               fullWidth={true}
-              menuItems={ChannelsStore.getChannelTypesDropdown()}
-              />
+              menuItems={ChannelsStore.getChannelTypesDropdown()} />
 
             <div style={{marginTop: 40}}>Permissions</div>
             <div className="row">
@@ -141,8 +138,7 @@ export default React.createClass({
                   valueLink={this.linkState('group')}
                   errorText={this.getValidationMessages('group').join(' ')}
                   hintText='ID of the Group'
-                  floatingLabelText='Group (ID)'
-                  />
+                  floatingLabelText='Group (ID)' />
               </div>
               <div className="col-flex-1">
                 <MUI.SelectField
@@ -154,8 +150,7 @@ export default React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   fullWidth={true}
-                  menuItems={ChannelsStore.getChannelPermissionsDropdown()}
-                  />
+                  menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
               </div>
               <div className="col-flex-1">
                 <MUI.SelectField
@@ -167,8 +162,7 @@ export default React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   fullWidth={true}
-                  menuItems={ChannelsStore.getChannelPermissionsDropdown()}
-                  />
+                  menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
               </div>
             </div>
             <MUI.Toggle
@@ -177,14 +171,12 @@ export default React.createClass({
               defaultToggled={this.state.custom_publish}
               onToggle={this.handleToogle}
               style={{marginTop: 20}}
-              label='Custom publishing in this channel?'
-              />
+              label='Custom publishing in this channel?' />
           </div>
           <Common.Loading
             type='linear'
             position='bottom'
-            show={this.state.isLoading}
-            />
+            show={this.state.isLoading} />
         </Common.Dialog>
       </form>
     );

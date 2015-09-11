@@ -245,7 +245,7 @@ export default Radium(React.createClass({
             </MUI.ToolbarGroup>
 
             <MUI.ToolbarGroup>
-              <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId}/>
+              <MUI.ToolbarTitle text={'Solution: ' + this.getParams().solutionId} />
             </MUI.ToolbarGroup>
           </MUI.Toolbar>
           <Common.Container style={{width: '80%', margin: '65px auto', maxWidth: 800}}>
@@ -263,7 +263,7 @@ export default Radium(React.createClass({
                     valueMember='payload'
                     displayMember='text'
                     floatingLabelText='Type'
-                    menuItems={Store.getTypes()}/>
+                    menuItems={Store.getTypes()} />
                 </div>
                 <div className='col-flex-1'>
                   <MUI.SelectField
@@ -278,7 +278,7 @@ export default Radium(React.createClass({
                     labelStyle={styles.instanceDropdowInputLabel}
                     menuItemStyle={styles.instancesDropdownItem}
                     errorText={this.getValidationMessages('instance').join(' ')}
-                    menuItems={Store.getInstancesDropdown()}/>
+                    menuItems={Store.getInstancesDropdown()} />
                 </div>
               </div>
             </div>
@@ -301,7 +301,7 @@ export default Radium(React.createClass({
                   ref='cancel'
                   key='cancel'
                   label='Cancel'
-                  onTouchTap={this.handleBackClick}/>
+                  onTouchTap={this.handleBackClick} />
                 <MUI.RaisedButton
                   ref='submit'
                   key='confirm'

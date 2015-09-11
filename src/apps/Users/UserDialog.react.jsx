@@ -141,33 +141,33 @@ export default React.createClass({
           onDismiss={this.resetDialogState}>
           <div>
             {this.renderFormNotifications()}
-              <MUI.TextField
-                ref='username'
-                fullWidth={true}
-                valueLink={this.linkState('username')}
-                errorText={this.getValidationMessages('username').join(' ')}
-                hintText='Username'
-                floatingLabelText='Username'/>
-              <MUI.TextField
-                ref='password'
-                type='password'
-                fullWidth={true}
-                valueLink={this.linkState('password')}
-                errorText={this.getValidationMessages('password').join(' ')}
-                hintText='User password'
-                floatingLabelText='Password'
-                className='vm-4-b'/>
-              <Select
-                name='group'
-                multi={true}
-                value={selectValue}
-                placeholder='User groups'
-                options={allGroups}
-                onChange={this.handleSelectFieldChange}/>
+            <MUI.TextField
+              ref='username'
+              fullWidth={true}
+              valueLink={this.linkState('username')}
+              errorText={this.getValidationMessages('username').join(' ')}
+              hintText='Username'
+              floatingLabelText='Username' />
+            <MUI.TextField
+              ref='password'
+              type='password'
+              fullWidth={true}
+              valueLink={this.linkState('password')}
+              errorText={this.getValidationMessages('password').join(' ')}
+              hintText='User password'
+              floatingLabelText='Password'
+              className='vm-4-b' />
+            <Select
+              name='group'
+              multi={true}
+              value={selectValue}
+              placeholder='User groups'
+              options={allGroups}
+              onChange={this.handleSelectFieldChange} />
             <Common.Loading
               type="linear"
               position="bottom"
-              show={this.state.isLoading}/>
+              show={this.state.isLoading} />
           </div>
         </Common.Dialog>
       </form>

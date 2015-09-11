@@ -399,8 +399,7 @@ export default React.createClass({
           onShow={this.handleDialogShow}
           openImmediately={this.props.openImmediately}
           actions={dialogCustomActions}
-          onDismiss={this.handleDismiss}
-          >
+          onDismiss={this.handleDismiss}>
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
             <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
@@ -411,14 +410,12 @@ export default React.createClass({
             <SliderSection
               title="API calls"
               slider={this.renderSlider('api')}
-              sliderSummary={apiSliderSummary}
-              />
+              sliderSummary={apiSliderSummary} />
             <SliderSection
               style={{paddingTop: 50}}
               title="CodeBox runs"
               slider={this.renderSlider('cbx')}
-              sliderSummary={cbxSliderSummary}
-              />
+              sliderSummary={cbxSliderSummary} />
 
             <div className="row" style={{marginTop: 40}}>
               <div className="col-md-24">

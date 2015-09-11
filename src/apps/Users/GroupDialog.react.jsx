@@ -67,14 +67,14 @@ export default React.createClass({
           onDismiss={this.resetDialogState}>
           <div>
             {this.renderFormNotifications()}
-              <MUI.TextField
-                ref="label"
-                label="label"
-                fullWidth={true}
-                valueLink={this.linkState('label')}
-                errorText={this.getValidationMessages('label').join(' ')}
-                hintText="Name of the group"
-                floatingLabelText="Group Name"/>
+            <MUI.TextField
+              ref="label"
+              label="label"
+              fullWidth={true}
+              valueLink={this.linkState('label')}
+              errorText={this.getValidationMessages('label').join(' ')}
+              hintText="Name of the group"
+              floatingLabelText="Group Name"/>
             <Common.Loading
               type="linear"
               position="bottom"
