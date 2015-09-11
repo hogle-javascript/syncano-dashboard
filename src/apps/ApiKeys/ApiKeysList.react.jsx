@@ -88,7 +88,7 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Key.Header>Key</Column.Key.Header>
+          <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
           <Column.Text.Header>Permissions</Column.Text.Header>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>

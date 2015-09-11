@@ -6,13 +6,11 @@ import Key from './Key.react';
 import Name from './Name.react';
 import Text from './Text.react';
 import ID from './ID.react';
-import KeyHeader from './KeyHeader.react';
 import NameHeader from './NameHeader.react';
 import TextHeader from './TextHeader.react';
 import IDHeader from './IDHeader.react';
 import ColumnHeader from './ColumnHeader.react';
 
-Key.Header = KeyHeader;
 Name.Header = NameHeader;
 Text.Header = TextHeader;
 ID.Header = IDHeader;

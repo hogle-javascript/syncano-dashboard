@@ -120,8 +120,16 @@ export default React.createClass({
             className="col-xs-4">
             CodeBox ID
           </Column.ColumnHeader>
-          <Column.Key.Header className="col-xs-3">Public</Column.Key.Header>
-          <Column.Key.Header className="col-xs-2">URL</Column.Key.Header>
+          <Column.ColumnHeader
+            columnName="KEY"
+            className="col-xs-3">
+            Public
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="KEY"
+            className="col-xs-2">
+            URL
+          </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
