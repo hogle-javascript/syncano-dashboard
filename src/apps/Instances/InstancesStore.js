@@ -18,7 +18,10 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: null
+      items: null,
+      isTourVisible: false,
+      reactTourConfig: null,
+      currentStep: -1
     }
   },
 
@@ -142,6 +145,28 @@ export default Reflux.createStore({
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map((key) => instances[key]);
+    this.trigger(this.data);
+  },
+
+  onSetTourConfig(config) {
+    this.data.tourConfig = config;
+  },
+
+  onNextStep() {
+    let {currentStep, tourConfig, isTourVisible} = this.data;
+
+    if (currentStep + 1 < tourConfig.length) {
+      currentStep = (currentStep + 1) % tourConfig.length;
+      isTourVisible = true;
+    } else if (isTourVisible) {
+      isTourVisible = false;
+    } else {
+      currentStep = 0;
+      isTourVisible = true;
+    }
+
+    this.data.currentStep = currentStep;
+    this.data.isTourVisible = isTourVisible;
     this.trigger(this.data);
   },
 

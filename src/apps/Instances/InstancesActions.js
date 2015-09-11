@@ -4,6 +4,8 @@ export default CreateActions(
   {
     fetch: {},
     setInstances: {},
+    setTourConfig: {},
+    nextStep: {},
 
     fetchInstances: {
       asyncResult: true,
