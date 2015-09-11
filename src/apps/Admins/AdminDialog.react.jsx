@@ -89,6 +89,7 @@ export default React.createClass({
               floatingLabelText='Email'/>
 
             <MUI.SelectField
+              className="invite-admin-dropdown"
               ref='role'
               name='role'
               autoWidth={true}
