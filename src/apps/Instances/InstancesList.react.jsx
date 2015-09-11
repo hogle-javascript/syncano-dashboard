@@ -105,7 +105,7 @@ export default React.createClass({
             {this.props.name}
           </Column.ColumnHeader>
           <Column.Desc.Header>Description</Column.Desc.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
           {this.getList()}

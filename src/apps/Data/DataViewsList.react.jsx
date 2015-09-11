@@ -70,7 +70,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.Desc.Header className="col-flex-1">Description</Column.Desc.Header>
           <Column.Desc.Header className="col-xs-9">Class</Column.Desc.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

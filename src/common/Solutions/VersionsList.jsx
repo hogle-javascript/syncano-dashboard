@@ -109,9 +109,9 @@ export default React.createClass({
             <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
           </Column.Desc.Header>
 
-          <Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">
             Created
-          </Column.Date.Header>
+          </Column.ColumnHeader>
 
           <Column.Desc.Header>
             Type

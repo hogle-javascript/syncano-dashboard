@@ -101,7 +101,7 @@ export default React.createClass({
           <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
           <Column.Desc.Header className="col-xs-6">Permissions</Column.Desc.Header>
           <Column.ID.Header className="col-xs-4 col-md-4">Objects</Column.ID.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

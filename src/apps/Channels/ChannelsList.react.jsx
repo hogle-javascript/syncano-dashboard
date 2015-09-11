@@ -93,7 +93,7 @@ export default React.createClass({
           <Column.Desc.Header className="col-xs-5">Permissions</Column.Desc.Header>
           <Column.Desc.Header className="col-xs-5">Type</Column.Desc.Header>
           <Column.Desc.Header className="col-xs-5">Custom publish</Column.Desc.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

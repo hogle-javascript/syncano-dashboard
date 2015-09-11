@@ -90,7 +90,7 @@ export default React.createClass({
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Key.Header>Key</Column.Key.Header>
           <Column.Text.Header>Permissions</Column.Text.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

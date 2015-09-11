@@ -102,8 +102,8 @@ export default React.createClass({
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Desc.Header className="col-sm-6">CodeBox</Column.Desc.Header>
           <Column.Desc.Header>Crontab</Column.Desc.Header>
-          <Column.Date.Header>Next run</Column.Date.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Next run</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

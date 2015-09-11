@@ -103,7 +103,7 @@ export default React.createClass({
           <Column.Desc.Header className="col-sm-6">CodeBox</Column.Desc.Header>
           <Column.Desc.Header className="col-sm-6">Class</Column.Desc.Header>
           <Column.Desc.Header>Signal</Column.Desc.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

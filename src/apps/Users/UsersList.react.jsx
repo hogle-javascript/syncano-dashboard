@@ -123,8 +123,8 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ID.Header>ID</Column.ID.Header>
           <Column.Desc.Header>Groups</Column.Desc.Header>
-          <Column.Date.Header>Updated</Column.Date.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

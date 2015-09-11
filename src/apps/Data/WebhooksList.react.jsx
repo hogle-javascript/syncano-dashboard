@@ -114,7 +114,7 @@ export default React.createClass({
           <Column.Desc.Header className="col-xs-4">CodeBox ID</Column.Desc.Header>
           <Column.Key.Header className="col-xs-3">Public</Column.Key.Header>
           <Column.Key.Header className="col-xs-2">URL</Column.Key.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

@@ -161,7 +161,7 @@ export default React.createClass({
                 </Column.ColumnHeader>
                 <Column.Desc.Header>From</Column.Desc.Header>
                 <Column.Desc.Header>Role</Column.Desc.Header>
-                <Column.Date.Header>Created</Column.Date.Header>
+                <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
               </Common.ColumnList.Header>
               <Common.Lists.List>
                 {this.renderList()}
