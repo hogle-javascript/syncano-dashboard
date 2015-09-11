@@ -26,10 +26,10 @@ module.exports = {
   },
 
   afterEach: function(client, done) {
-    // if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
-    //  done();
-    //  return;
-    // }
+    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
+      done();
+      return;
+    }
 
     const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
     const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', prefix + '.png'))

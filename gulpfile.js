@@ -293,132 +293,197 @@ gulp.task('changelog', function(cb) {
   });
 });
 
-gulp.task('upload-screenshots', function() {
+gulp.task('upload-screenshots', function(cb) {
   var clientId = process.env.GD_CLIENT_ID;
   var clientSecret = process.env.GD_CLIENT_SECRET;
   var access_token = process.env.GD_ACCESS_TOKEN;
   var refresh_token = process.env.GD_REFRESH_TOKEN;
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
-  console.log('GD_CLIENT_ID', process.env.GD_CLIENT_ID);
-  console.log('GD_CLIENT_SECRET', process.env.GD_CLIENT_SECRET);
-  console.log('GD_ACCESS_TOKEN', process.env.GD_ACCESS_TOKEN);
-  console.log('GD_REFRESH_TOKEN', process.env.GD_REFRESH_TOKEN);
-  console.log('CIRCLE_NODE_INDEX', process.env.CIRCLE_NODE_INDEX);
-  //
-  //if (process.env.CI && nodeIndex.toString() !== '1') {
-  //  return cb();
-  //}
-  //
-  //if (!clientId) {
-  //  throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
-  //}
-  //
-  //if (!clientSecret) {
-  //  throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
-  //}
-  //
-  //if (!access_token) {
-  //  throw new gutil.PluginError('upload-screenshots', '"GD_ACCESS_TOKEN" env variable is required');
-  //}
-  //
-  //if (!refresh_token) {
-  //  throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
-  //}
-  //
-  //var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
-  //var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
-  //var auth = new googleAuth();
-  //var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
-  //oauth2Client.setCredentials({
-  //  access_token: access_token,
-  //  refresh_token: refresh_token,
-  //  token_type: 'Bearer',
-  //  expiry_date: 1440513379139
-  //});
-  //
-  //var drive = google.drive({version: 'v2', auth: oauth2Client});
-  //
-  //async.waterfall([
-  //  function(callback) {
-  //    // Get list of files to upload
-  //    var screenshots = './reports/screenshots/_navigation/';
-  //    var files = fs.readdirSync(screenshots);
-  //    var driveObjects = files.map(function(file) {
-  //      return {
-  //        path: path.join(screenshots, file),
-  //        title: file,
-  //        delete: []
-  //      };
-  //    });
-  //
-  //    callback(null, driveObjects);
-  //  },
-  //  function(files, callback) {
-  //    // Check which files should be deleted
-  //    async.map(files, function(file, mapCallback) {
-  //      drive.files.list({
-  //        q: "title = '" + file.title + "' and '" + latestFolder + "' in parents"
-  //      }, function(err, response) {
-  //        if (err) return mapCallback(err);
-  //        file.delete = response.items.map(function(item) {
-  //          return item.id;
-  //        });
-  //        mapCallback(null, file);
-  //      });
-  //    }, callback);
-  //  },
-  //  function(files, callback) {
-  //    // Delete files
-  //    var ids = _.reduce(files, function(result, file) {
-  //      if (file.delete.length === 0) {
-  //        return result;
-  //      }
-  //      return result.concat(_.map(file.delete, function(id) {
-  //        return {fileId: id};
-  //      }));
-  //    }, []);
-  //
-  //    async.each(ids, drive.files.delete, function(err) {
-  //      if (err) return callback(err);
-  //      callback(null, files);
-  //    });
-  //  },
-  //  function(files, callback) {
-  //    // Create InVision/#{version} folder
-  //    drive.files.insert({
-  //      resource: {
-  //        title: version,
-  //        mimeType: 'application/vnd.google-apps.folder',
-  //        parents: [{id: invisionFolder}]
-  //      }
-  //    }, function(err, folder) {
-  //      if (err) return callback(err);
-  //      callback(null, files, folder);
-  //    });
-  //  },
-  //  function(files, folder, callback) {
-  //    // Insert files
-  //    var driveObjects = files.map(function(file) {
-  //      return {
-  //        resource: {
-  //          title: file.title,
-  //          mimeType: 'image/png',
-  //          parents: [{id: folder.id}, {id: latestFolder}]
-  //        },
-  //        media: {
-  //          mimeType: 'image/png',
-  //          body: fs.createReadStream(file.path)
-  //        }
-  //      };
-  //    });
-  //
-  //    async.each(driveObjects, drive.files.insert, callback);
-  //  }
-  //], function(err) {
-  //  if (err) throw err;
-  //  cb();
-  //});
+  if (process.env.CI && nodeIndex.toString() !== '1') {
+    return cb();
+  }
+
+  if (!clientId) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
+  }
+
+  if (!clientSecret) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
+  }
+
+  if (!access_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_ACCESS_TOKEN" env variable is required');
+  }
+
+  if (!refresh_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
+  }
+
+  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+  oauth2Client.setCredentials({
+    access_token: access_token,
+    refresh_token: refresh_token,
+    token_type: 'Bearer',
+    expiry_date: 1440513379139
+  });
+
+  var drive = google.drive({version: 'v2', auth: oauth2Client});
+
+  async.waterfall([
+    function(callback) {
+      // If actual version folder exist get it otherwise create it and get it
+      drive.files.list({
+        q: "fullText contains '" + version + "' and '" + invisionFolder + "' in parents and trashed = false"
+      }, function(err, response) {
+        if (err) return callback(err);
+        if (response.items.length < 1) {
+          drive.files.insert({
+            resource: {
+              title: version,
+              mimeType: 'application/vnd.google-apps.folder',
+              parents: [{id: invisionFolder}]
+            }
+          }, function(err, folder) {
+            if (err) return callback(err);
+            callback(null, folder);
+          });
+        } else {
+          var folder = response.items[0];
+          callback(null, folder)
+        }
+      });
+    },
+    function(folder, callback) {
+      // Get list of files from disc, GoogleDrive latest and version folder
+      async.parallel({
+        localFilesList: function(callback) {
+          var screenshots = './reports/screenshots/_navigation/';
+          var files = fs.readdirSync(screenshots);
+          var localFilesList = _.map(_.filter(files, function(file) {
+            return _.includes(file, '.png')
+          }), function(file) {
+            return {
+              path: path.join(screenshots, file),
+              title: file
+            };
+          });
+
+          callback(null, localFilesList);
+        },
+        latestFolderFilesList: function(callback) {
+          var latestFolderFilesList = [];
+
+          drive.files.list({
+            q: "'" + latestFolder + "' in parents and trashed = false"
+          }, function(err, response) {
+            if (err) return callback(err);
+            latestFolderFilesList = _.map(response.items, function(item) {
+              return {
+                title: item.title,
+                modifiedDate: item.modifiedDate,
+                version: item.version,
+                id: item.id
+              }
+            });
+
+            callback(null, latestFolderFilesList);
+          });
+        },
+        versionFolderFilesList: function(callback) {
+          var versionFolderFilesList = [];
+
+          drive.files.list({
+            q: "'" + folder.id + "' in parents and trashed = false"
+          }, function(err, response) {
+            if (err) return callback(err);
+            versionFolderFilesList = _.map(response.items, function(item) {
+              return {
+                title: item.title,
+                modifiedDate: item.modifiedDate,
+                version: item.version,
+                id: item.id
+              }
+            });
+
+            callback(null, versionFolderFilesList);
+          });
+        }
+      }, function(err, filesLists) {
+        if (err) return callback(err);
+        callback(null, filesLists, folder)
+      });
+    },
+    function(_files, folder,  callback) {
+      // Check which files should be deleted
+      var files = _files;
+      files.filesToDeleteList = [];
+
+      function filterFiles(filesToFilter) {
+        var filteredFiles = _.filter(filesToFilter, function(latestFile) {
+          return _.some(files.localFilesList, 'title', latestFile.title);
+        });
+
+        return filteredFiles;
+      }
+
+      files.filesToDeleteList = files.filesToDeleteList.concat(filterFiles(files.latestFolderFilesList));
+      files.filesToDeleteList = files.filesToDeleteList.concat(filterFiles(files.versionFolderFilesList));
+
+      callback(null, files, folder);
+    },
+    function(files, folder, callback) {
+      // Delete files
+      var ids = _.map(files.filesToDeleteList, function(file) {
+        return {fileId: file.id}
+      });
+
+      async.each(ids, drive.files.delete, function(err) {
+        if (err) return callback(err);
+        callback(null, files, folder);
+      });
+    },
+    function(files, folder, callback) {
+      // Insert files
+      function mapDriveObjects(folderId) {
+        var objects = files.localFilesList.map(function(file) {
+          return {
+            resource: {
+              title: file.title,
+              mimeType: 'image/png',
+              parents: [{id: folderId}]
+            },
+            media: {
+              mimeType: 'image/png',
+              body: fs.createReadStream(file.path)
+            }
+          };
+        });
+        return objects;
+      }
+
+      var latestDriveObjects = mapDriveObjects(latestFolder);
+      var versionDriveObjects = mapDriveObjects(folder.id);
+
+      async.parallel([
+        function() {
+          async.each(latestDriveObjects, drive.files.insert);
+        },
+        function() {
+          async.each(versionDriveObjects, drive.files.insert)
+        }
+      ], function() {
+        callback();
+      });
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
 });
 
 gulp.task('s3-cleanup', function(cb) {
