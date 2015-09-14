@@ -81,6 +81,85 @@ export default React.createClass({
     }
   },
 
+  getStyles() {
+    return {
+      main: {
+        marginTop: 50,
+        fontColor: '#4A4A4A'
+      },
+      sectionTopic: {
+        fontSize: '1.3em'
+      },
+      table: {
+        marginTop: 20
+      },
+      tableRow: {
+        height: 40,
+        textAlign: 'left',
+        lineHeight: '40px',
+        verticalAlign: 'middle'
+      },
+      tableColumnSummary: {
+        height: 40,
+        margin: 1,
+        fontSize: '1.1em',
+        fontWeight: 'bold',
+        textAlign: 'right',
+        background: '#F2F2F2',
+        verticalAlign: 'middle',
+        lineHeight: '40px'
+      },
+      sectionTotalSummary: {
+        marginTop: 20,
+        height: 80,
+        fontSize: '1.4em',
+        lineHeight: '1.4em',
+        background: '#CBEDA5',
+        padding: 14
+      },
+      sectionComment: {
+        marginTop: 20,
+        fontSize: '0.8em',
+        color: '#9B9B9B'
+      }
+    }
+  },
+
+  getInfo(type) {
+    let info = {
+      included: 0,
+      overage: 0,
+      total: 0
+    };
+
+    if (!this.state.plan) {
+      return info;
+    }
+
+    let pricing = this.state.plan.pricing[type];
+    let options = this.state.plan.options[type];
+    let sliderValue = this.state[type + 'Selected'];
+
+    if (!sliderValue) {
+      info = pricing[Object.keys(pricing)[0]];
+      info.total = Object.keys(pricing)[0];
+      return info;
+    }
+
+    let value = String(parseFloat(sliderValue));
+
+    info = pricing[options[value]];
+    info.total = options[value];
+    return info;
+  },
+
+  onSliderChange(type, event, value) {
+    let newState = {};
+
+    newState[type + 'Selected'] = value;
+    this.setState(newState);
+  },
+
   handleDialogShow() {
     console.debug('ProfileBillingPlanDialog::handleDialogShow');
     Actions.fetchBillingPlans();
@@ -128,47 +207,17 @@ export default React.createClass({
     }
   },
 
-  getStyles() {
-    return {
-      main: {
-        marginTop: 50,
-        fontColor: '#4A4A4A'
-      },
-      sectionTopic: {
-        fontSize: '1.3em'
-      },
-      table: {
-        marginTop: 20
-      },
-      tableRow: {
-        height: 40,
-        textAlign: 'left',
-        lineHeight: '40px',
-        verticalAlign: 'middle'
-      },
-      tableColumnSummary: {
-        height: 40,
-        margin: 1,
-        fontSize: '1.1em',
-        fontWeight: 'bold',
-        textAlign: 'right',
-        background: '#F2F2F2',
-        verticalAlign: 'middle',
-        lineHeight: '40px'
-      },
-      sectionTotalSummary: {
-        marginTop: 20,
-        height: 80,
-        fontSize: '1.4em',
-        lineHeight: '1.4em',
-        background: '#CBEDA5',
-        padding: 14
-      },
-      sectionComment: {
-        marginTop: 20,
-        fontSize: '0.8em',
-        color: '#9B9B9B'
-      }
+  handleSliderLabelsClick(value, type) {
+    let newState = {};
+
+    newState[type + 'Selected'] = value;
+    this.setState(newState);
+  },
+
+  handleDismiss() {
+    this.resetDialogState();
+    if (typeof this.props.onDismiss === 'function') {
+      this.props.onDismiss()
     }
   },
 
@@ -179,83 +228,76 @@ export default React.createClass({
 
     if (this.state.card) {
       return (
-        <div>
-          <div style={this.getStyles().sectionTopic}>Credit card info:</div>
-          <div className="row" style={{marginTop: 20, height: 110}}>
-            <div className="col-md-18">
-              <Common.CreditCard card={this.state.card}/>
-            </div>
-            <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
-              Want to use a different method of payment?
-              Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
-            </div>
-          </div>
-        </div>
-      )
-    }
-    return (
       <div>
-        <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
-        <div className="row">
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="number"
-              ref="number"
-              fullWidth={true}
-              valueLink={this.linkState('number')}
-              errorText={this.getValidationMessages('number').join(' ')}
-              hintText="Card Number"
-              floatingLabelText="Card Number"
-              dataStripe="number"/>
+        <div style={this.getStyles().sectionTopic}>Credit card info:</div>
+        <div className="row" style={{marginTop: 20, height: 110}}>
+          <div className="col-md-18">
+            <Common.CreditCard card={this.state.card}/>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-5">
-            <MUI.TextField
-              name="cvc"
-              ref="cvc"
-              fullWidth={true}
-              valueLink={this.linkState('cvc')}
-              errorText={this.getValidationMessages('cvc').join(' ')}
-              hintText="CVC"
-              floatingLabelText="CVC"
-              dataStripe="cvc"/>
-          </div>
-
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="exp_month"
-              ref="exp_month"
-              fullWidth={true}
-              valueLink={this.linkState('exp_month')}
-              errorText={this.getValidationMessages('exp_month').join(' ')}
-              hintText="MM"
-              floatingLabelText="Expiration month (MM)"
-              dataStripe="exp-month"/>
-          </div>
-
-          <div className="col-flex-1">
-            <MUI.TextField
-              name="exp_year"
-              ref="exp_year"
-              fullWidth={true}
-              valueLink={this.linkState('exp_year')}
-              errorText={this.getValidationMessages('exp_year').join(' ')}
-              hintText="YYYY"
-              floatingLabelText="Expiration year (YYYY)"
-              dataStripe="exp-year"/>
+          <div className="col-md-14" style={{color: '#9B9B9B', fontSize: '0.8em'}}>
+            Want to use a different method of payment?
+            Update your card <a onClick={this.transitionTo.bind(this, 'profile-billing-payment')}>here</a>.
           </div>
         </div>
       </div>
+      )
+    }
+    return (
+    <div>
+      <div style={this.getStyles().sectionTopic}>Enter your credit card info:</div>
+      <div className="row">
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="number"
+            ref="number"
+            fullWidth={true}
+            valueLink={this.linkState('number')}
+            errorText={this.getValidationMessages('number').join(' ')}
+            hintText="Card Number"
+            floatingLabelText="Card Number"
+            dataStripe="number"/>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-md-5">
+          <MUI.TextField
+            name="cvc"
+            ref="cvc"
+            fullWidth={true}
+            valueLink={this.linkState('cvc')}
+            errorText={this.getValidationMessages('cvc').join(' ')}
+            hintText="CVC"
+            floatingLabelText="CVC"
+            dataStripe="cvc"/>
+        </div>
+
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="exp_month"
+            ref="exp_month"
+            fullWidth={true}
+            valueLink={this.linkState('exp_month')}
+            errorText={this.getValidationMessages('exp_month').join(' ')}
+            hintText="MM"
+            floatingLabelText="Expiration month (MM)"
+            dataStripe="exp-month"/>
+        </div>
+
+        <div className="col-flex-1">
+          <MUI.TextField
+            name="exp_year"
+            ref="exp_year"
+            fullWidth={true}
+            valueLink={this.linkState('exp_year')}
+            errorText={this.getValidationMessages('exp_year').join(' ')}
+            hintText="YYYY"
+            floatingLabelText="Expiration year (YYYY)"
+            dataStripe="exp-year"/>
+        </div>
+      </div>
+    </div>
     )
-  },
-
-  onSliderChange(type, event, value) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
   },
 
   renderSlider(type) {
@@ -271,74 +313,32 @@ export default React.createClass({
     });
 
     return (
-      <Common.Slider
-        key={type + 'Slider'}
-        ref={type + 'Slider'}
-        name={type + 'Slider'}
-        value={typeof selected !== 'undefined' ? selected : defaultValue}
-        type={type}
-        legendItems={options}
-        optionClick={this.handleSliderLabelsClick}
-        onChange={this.onSliderChange}
-        />
+    <Common.Slider
+      key={type + 'Slider'}
+      ref={type + 'Slider'}
+      name={type + 'Slider'}
+      value={typeof selected !== 'undefined' ? selected : defaultValue}
+      type={type}
+      legendItems={options}
+      optionClick={this.handleSliderLabelsClick}
+      onChange={this.onSliderChange}
+    />
     )
-  },
-
-  handleSliderLabelsClick(value, type) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
   },
 
   renderSliderSummary(info) {
     return (
-      <div>
-        <div style={{paddingBottom: 8}}>
-          <div style={{paddingBottom: 8}}>{info.included.label}</div>
-          <div><strong>{info.included.value}</strong></div>
-        </div>
-        <div>
-          <div style={{paddingBottom: 8}}>{info.overage.label}</div>
-          <div><strong>${info.overage.value}</strong></div>
-        </div>
+    <div>
+      <div style={{paddingBottom: 8}}>
+        <div style={{paddingBottom: 8}}>{info.included.label}</div>
+        <div><strong>{info.included.value}</strong></div>
       </div>
+      <div>
+        <div style={{paddingBottom: 8}}>{info.overage.label}</div>
+        <div><strong>${info.overage.value}</strong></div>
+      </div>
+    </div>
     )
-  },
-
-  getInfo(type) {
-    let info = {
-      included: 0,
-      overage: 0,
-      total: 0
-    };
-
-    if (!this.state.plan) {
-      return info;
-    }
-
-    let pricing = this.state.plan.pricing[type];
-    let options = this.state.plan.options[type];
-    let sliderValue = this.state[type + 'Selected'];
-
-    if (!sliderValue) {
-      info = pricing[Object.keys(pricing)[0]];
-      info.total = Object.keys(pricing)[0];
-      return info;
-    }
-
-    let value = String(parseFloat(sliderValue));
-
-    info = pricing[options[value]];
-    info.total = options[value];
-    return info;
-  },
-
-  handleDismiss() {
-    this.resetDialogState();
-    if (typeof this.props.onDismiss === 'function') {
-      this.props.onDismiss()
-    }
   },
 
   render() {
@@ -355,10 +355,10 @@ export default React.createClass({
         ref="cancel"/>,
 
       <MUI.FlatButton
+        type='submit'
         key="confirm"
         label="Confirm"
         primary={true}
-        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
@@ -389,78 +389,80 @@ export default React.createClass({
     );
 
     return (
-      <Common.Dialog
-        ref="dialog"
-        contentStyle={{maxWidth: 850, padding: 0}}
-        onShow={this.handleDialogShow}
-        openImmediately={this.props.openImmediately}
-        actions={dialogCustomActions}
-        onDismiss={this.handleDismiss}
-        >
-        <div>
-          <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-          <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
-        </div>
-        <div style={{paddingTop: 34}}>
-          {this.renderFormNotifications()}
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset="UTF-8"
+        method="post">
+        <Common.Dialog
+          ref="dialog"
+          contentStyle={{maxWidth: 850, padding: 0}}
+          onShow={this.handleDialogShow}
+          openImmediately={this.props.openImmediately}
+          actions={dialogCustomActions}
+          onDismiss={this.handleDismiss}>
+          <div>
+            <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
+            <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
+          </div>
+          <div style={{paddingTop: 34}}>
+            {this.renderFormNotifications()}
 
-          <SliderSection
-            title="API calls"
-            slider={this.renderSlider('api')}
-            sliderSummary={apiSliderSummary}
-            />
-          <SliderSection
-            style={{paddingTop: 50}}
-            title="CodeBox runs"
-            slider={this.renderSlider('cbx')}
-            sliderSummary={cbxSliderSummary}
-            />
+            <SliderSection
+              title="API calls"
+              slider={this.renderSlider('api')}
+              sliderSummary={apiSliderSummary} />
+            <SliderSection
+              style={{paddingTop: 50}}
+              title="CodeBox runs"
+              slider={this.renderSlider('cbx')}
+              sliderSummary={cbxSliderSummary} />
 
-          <div className="row" style={{marginTop: 40}}>
-            <div className="col-md-24">
-              <div style={styles.sectionTopic}>Summary</div>
-              <div style={styles.table}>
-                <div className="row" style={styles.tableRow}>
-                  <div className="col-flex-1">API calls</div>
-                  <div className="col-md-10" style={styles.tableColumnSummary}>
-                    {parseInt(apiInfo.included, 10).toLocaleString()}
+            <div className="row" style={{marginTop: 40}}>
+              <div className="col-md-24">
+                <div style={styles.sectionTopic}>Summary</div>
+                <div style={styles.table}>
+                  <div className="row" style={styles.tableRow}>
+                    <div className="col-flex-1">API calls</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(apiInfo.included, 10).toLocaleString()}
+                    </div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                   </div>
-                  <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
-                </div>
-                <div className="row" style={styles.tableRow}>
-                  <div className="col-flex-1">CodeBox runs</div>
-                  <div className="col-md-10" style={styles.tableColumnSummary}>
-                    {parseInt(cbxInfo.included, 10).toLocaleString()}
+                  <div className="row" style={styles.tableRow}>
+                    <div className="col-flex-1">CodeBox runs</div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>
+                      {parseInt(cbxInfo.included, 10).toLocaleString()}
+                    </div>
+                    <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                   </div>
-                  <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
+                </div>
+                <div style={{marginTop: 30}}>
+                  {this.renderCard()}
                 </div>
               </div>
-              <div style={{marginTop: 30}}>
-                {this.renderCard()}
-              </div>
-            </div>
-            <div className="col-md-11" style={{paddingLeft: 35}}>
+              <div className="col-md-11" style={{paddingLeft: 35}}>
 
-              <div style={styles.sectionTopic}>New plan:</div>
-              <div style={{marginTop: 20, background: '#CBEDA5'}}>
+                <div style={styles.sectionTopic}>New plan:</div>
+                <div style={{marginTop: 20, background: '#CBEDA5'}}>
 
-                <div style={styles.sectionTotalSummary}>
-                  <div><strong>${sum}</strong>/month</div>
-                  <div>+ overage</div>
+                  <div style={styles.sectionTotalSummary}>
+                    <div><strong>${sum}</strong>/month</div>
+                    <div>+ overage</div>
+                  </div>
                 </div>
-              </div>
-              <div style={styles.sectionComment}>
-                The new monthly price and overage rate will begin at the start of the next billing period.
-                Your card will be charged on the 1st of every month.
+                <div style={styles.sectionComment}>
+                  The new monthly price and overage rate will begin at the start of the next billing period.
+                  Your card will be charged on the 1st of every month.
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <Common.Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading}/>
-      </Common.Dialog>
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
+        </Common.Dialog>
+      </form>
     );
   }
 });

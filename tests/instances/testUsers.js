@@ -37,35 +37,36 @@ module.exports = {
     usersPage.waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
     usersPage.clickButton('@confirm');
+    usersPage.waitForElementVisible('@groupList')
     usersPage.waitForElementNotPresent('@groupTableRowDropdown');
-  },
-  'Administrator adds a User' : function(client) {
-    const usersPage = client.page.usersPage();
-    const suffix = utils.addSuffix('user');
-
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList')
-    usersPage.clickButton('@addUserButton');
-    usersPage.waitForElementPresent('@addUserModalTitle');
-    usersPage.fillInputField('@username', suffix);
-    usersPage.fillInputField('@password', suffix);
-    usersPage.clickButton('@confirm');
-    usersPage.waitForElementPresent('@userTableRow');
-  },
-  'Administrator deletes a User' : function(client) {
-    const usersPage = client.page.usersPage();
-
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList')
-    usersPage.clickButton('@selectUserTableRow');
-    client.pause(1000);
-    usersPage.clickButton('@deleteButton');
-    client.pause(1000);
-    usersPage.waitForElementPresent('@deleteUserModalTitle');
-    client.pause(1000);
-    usersPage.clickButton('@confirm');
-    usersPage.waitForElementNotPresent('@userTableRow');
   }
+  // 'Administrator adds a User' : function(client) {
+  //   const usersPage = client.page.usersPage();
+  //   const suffix = utils.addSuffix('user');
+
+  //   usersPage.navigate();
+  //   usersPage.waitForElementVisible('@groupEditButton');
+  //   usersPage.waitForElementVisible('@userList')
+  //   usersPage.clickButton('@addUserButton');
+  //   usersPage.waitForElementPresent('@addUserModalTitle');
+  //   usersPage.fillInputField('@username', suffix);
+  //   usersPage.fillInputField('@password', suffix);
+  //   usersPage.clickButton('@confirm');
+  //   usersPage.waitForElementPresent('@userTableRow');
+  // },
+  // 'Administrator deletes a User' : function(client) {
+  //   const usersPage = client.page.usersPage();
+
+  //   usersPage.navigate();
+  //   usersPage.waitForElementVisible('@groupEditButton');
+  //   usersPage.waitForElementVisible('@userList')
+  //   usersPage.clickButton('@selectUserTableRow');
+  //   client.pause(1000);
+  //   usersPage.clickButton('@deleteButton');
+  //   client.pause(1000);
+  //   usersPage.waitForElementPresent('@deleteUserModalTitle');
+  //   client.pause(1000);
+  //   usersPage.clickButton('@confirm');
+  //   usersPage.waitForElementNotPresent('@userTableRow');
+  // }
 }

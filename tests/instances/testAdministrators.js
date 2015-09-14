@@ -1,7 +1,10 @@
+const utils = require('../utils');
+
 module.exports = {
   tags: ['administrators'],
   before: function(client) {
-    var loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
+
     loginPage.goToLoginPage();
     loginPage.typeEmail();
     loginPage.typePassword();
@@ -12,17 +15,28 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'User goes to Administrators View' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
-    
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
+  'User adds an Administrator' : function(client) {
+    const email = utils.addSuffix('admin') + '@syncano.com';
+    const adminsPage = client.page.adminsPage();
 
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@administrators');
+    adminsPage.navigate();
+    adminsPage.waitForElementVisible('@adminsListItem');
+    adminsPage.clickButton('@addAdminButton');
+    adminsPage.waitForElementVisible('@addAdminModalTitle');
+    adminsPage.fillInputField('@addAdminModalEmailInput', email);
+    adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
+    adminsPage.clickButton('@confirmButton');
+    adminsPage.waitForElementVisible('@adminTableRow');
+  },
+  'User deletes an Administrator' : function(client) {
+    const adminsPage = client.page.adminsPage();
 
-    var administratorsPage = client.page.administratorsPage();
-    administratorsPage.waitForElementPresent('@administratorsListItem');
+    adminsPage.navigate();
+    adminsPage.clickButton('@selectAdminTableRow');
+    adminsPage.clickButton('@deleteButton');
+    adminsPage.waitForElementVisible('@deleteAdminModalTitle');
+    client.pause(1000);
+    adminsPage.clickButton('@confirmButton');
+    adminsPage.waitForElementNotPresent('@selectAdminTableRow');
   }
 };

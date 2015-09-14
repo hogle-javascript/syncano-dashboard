@@ -16,21 +16,14 @@ export default Radium(React.createClass({
 
   displayName: 'EditorPanel',
 
-  mixins: [
-    FormMixin
-  ],
-
   propTypes: {
     trace: React.PropTypes.string,
     loading: React.PropTypes.bool
   },
 
-  getInitialState() {
-    return {
-      panelCollapsed: true,
-      payloadValue: '{"abc": 123}'
-    }
-  },
+  mixins: [
+    FormMixin
+  ],
 
   validatorConstraints: {
     payloadValue: (value) => {
@@ -48,6 +41,13 @@ export default Radium(React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      panelCollapsed: true,
+      payloadValue: '{"abc": 123}'
+    }
+  },
+
   getStyles() {
     return {
       payloadStyle: {
@@ -60,15 +60,10 @@ export default Radium(React.createClass({
         backgroundColor: '#4C4A43',
         color: 'white',
         height: '200px',
-        padding: 10
+        padding: 10,
+        whiteSpace: 'pre'
       }
     }
-  },
-
-  handleToggleClick() {
-    this.setState({
-      panelCollapsed: !this.state.panelCollapsed
-    });
   },
 
   render() {

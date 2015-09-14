@@ -27,6 +27,8 @@ export default Reflux.createStore({
 
       traces: [],
       lastTraceResult: null,
+      lastTraceStatus: null,
+      lastTraceDuration: null,
       lastTraceReady: true,
       isLoading: true
     }
@@ -77,7 +79,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxTracesCompleted(traces) {
     console.debug('CodeBoxStore::onFetchCodeBoxTracesCompleted');
-    this.data.traces = Object.keys(traces).sort().map((key) => traces[key]);
+    this.data.traces = traces._items;
     this.data.isLoading = false;
     this.getCodeBoxLastTraceResult();
   },
@@ -88,9 +90,10 @@ export default Reflux.createStore({
   },
 
   getCodeBoxLastTraceResult() {
-    console.debug('CodeBoxStore::getCodeBoxLastTraceResult');
+    console.debug('CodeBoxStore::getCodeBoxLastTraceResult', this.data.traces);
+    this.data.lastTraceResult = null;
     if (this.data.traces.length > 0) {
-      let lastTrace = this.data.traces[this.data.traces.length - 1];
+      let lastTrace = this.data.traces[0];
 
       if (lastTrace.status === 'pending') {
         this.data.lastTraceReady = false;
@@ -98,18 +101,21 @@ export default Reflux.createStore({
           this.fetchTraces()
         }, 300);
       } else {
+        this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';
         if (lastTrace.result.stderr !== '') {
           this.data.lastTraceResult = lastTrace.result.stderr;
-        } else {
-          this.data.lastTraceResult = lastTrace.result.stdout;
         }
+        this.data.lastTraceStatus = lastTrace.status;
+        this.data.lastTraceDuration = lastTrace.duration;
         this.data.lastTraceReady = true;
       }
     }
     this.trigger(this.data);
   },
 
-  onUpdateCodeBoxCompleted() {
+  onUpdateCodeBoxCompleted(codeBox) {
+    this.data.currentCodeBox = codeBox;
+    this.trigger(this.data);
     this.dismissSnackbarNotification();
     this.refreshData();
   },

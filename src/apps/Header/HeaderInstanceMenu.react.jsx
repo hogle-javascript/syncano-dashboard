@@ -8,14 +8,14 @@ export default React.createClass({
 
   displayName: 'HeaderInstanceMenu',
 
+  contextTypes: {
+    router: React.PropTypes.func.isRequired
+  },
+
   mixins: [
     Router.Navigation,
     Router.State
   ],
-
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
 
   getStyles() {
     return {

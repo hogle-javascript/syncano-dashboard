@@ -49,6 +49,21 @@ export default React.createClass({
     GroupsStore.resetActiveGroup();
   },
 
+  getSelectValueSource() {
+    let activeGroup = GroupsStore.getActiveGroup();
+
+    if (this.state.newUserGroups) {
+      return this.linkState('newUserGroups');
+    } else if (this.state.groups) {
+      return this.linkState('groups');
+    } else if (this.state.secondInstance && this.state.secondInstance.value) {
+      return this.state.secondInstance;
+    } else if (activeGroup) {
+      return activeGroup;
+    }
+    return null;
+  },
+
   handleAddSubmit() {
     let activeGroup = GroupsStore.getActiveGroup();
     let userGroups = this.state.newUserGroups || this.state.secondInstance || activeGroup;
@@ -86,24 +101,8 @@ export default React.createClass({
     })
   },
 
-  getSelectValueSource() {
-    let activeGroup = GroupsStore.getActiveGroup();
-
-    if (this.state.newUserGroups) {
-      return this.linkState('newUserGroups');
-    } else if (this.state.groups) {
-      return this.linkState('groups');
-    } else if (this.state.secondInstance && this.state.secondInstance.value) {
-      return this.state.secondInstance;
-    } else if (activeGroup) {
-      return activeGroup;
-    }
-    return null;
-  },
-
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = 'Confirm';
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
     let allGroups = GroupsStore.getGroups().map((group) => {
@@ -111,16 +110,17 @@ export default React.createClass({
       return group;
     });
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: {submitLabel},
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     if (selectValueSource && _.isArray(selectValueSource.value)) {
@@ -130,24 +130,24 @@ export default React.createClass({
     }
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a User'}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset="UTF-8"
-            method="post">
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset="UTF-8"
+        method="post">
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' a User'}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='username'
               fullWidth={true}
               valueLink={this.linkState('username')}
               errorText={this.getValidationMessages('username').join(' ')}
               hintText='Username'
-              floatingLabelText='Username'/>
+              floatingLabelText='Username' />
             <MUI.TextField
               ref='password'
               type='password'
@@ -156,21 +156,21 @@ export default React.createClass({
               errorText={this.getValidationMessages('password').join(' ')}
               hintText='User password'
               floatingLabelText='Password'
-              className='vm-4-b'/>
+              className='vm-4-b' />
             <Select
               name='group'
               multi={true}
               value={selectValue}
               placeholder='User groups'
               options={allGroups}
-              onChange={this.handleSelectFieldChange}/>
-          </form>
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
-        </div>
-      </Common.Dialog>
+              onChange={this.handleSelectFieldChange} />
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });

@@ -3,20 +3,26 @@ var gulp             = require('gulp'),
     path             = require('path'),
     async            = require('async'),
     _                = require('lodash'),
+    AWS              = require('aws-sdk'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
     revReplace       = require('gulp-rev-replace'),
+    revOverride      = require('gulp-rev-css-url'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
     del              = require('del'),
+    moment           = require('moment'),
     webpack          = require('webpack'),
     WebpackDevServer = require('webpack-dev-server'),
     webpackConfig    = require('./webpack.config'),
+    listKeys         = require('./s3ListKeys'),
     awspublish       = require('gulp-awspublish'),
     iconfont         = require('gulp-iconfont'),
     iconfontCss      = require('gulp-iconfont-css'),
     through          = require('through2'),
+    google           = require('googleapis'),
+    googleAuth       = require('google-auth-library'),
     ENV              = process.env.NODE_ENV || 'development',
     version          = 'v' + require('./package.json').version;
 
@@ -115,12 +121,13 @@ gulp.task('revision', ['clean', 'webpack:build', 'stripDebug'], function() {
       '!./dist/index.html'
     ])
     .pipe(rev())
+    .pipe(revOverride())
     .pipe(gulp.dest(paths.dist))
     .pipe(rev.manifest())
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function() {
+gulp.task('revreplace', ['clean', 'webpack:build', 'clean:unrevisioned', 'revision'], function() {
   function replaceJsIfMap(filename) {
       if (filename.indexOf('.map') > -1) {
           return filename.replace('js/', '');
@@ -137,16 +144,16 @@ gulp.task('revreplace', ['clean', 'webpack:build', 'revision'], function() {
     .pipe(gulp.dest(paths.dist));
 });
 
-// gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
-//   var manifest = require('./' + paths.dist + '/rev-manifest.json'),
-//       delPaths = Object.keys(manifest).map(function(path) {
-//         return paths.dist + '/' + path;
-//       });
+gulp.task('clean:unrevisioned', ['clean', 'webpack:build', 'revision'], function(cb) {
+  var manifest = require('./' + paths.dist + '/rev-manifest.json'),
+      delPaths = Object.keys(manifest).map(function(path) {
+        return paths.dist + '/' + path;
+      });
 
-//   del(delPaths, cb);
-// });
+  del(delPaths, cb);
+});
 
-gulp.task('revision:index', ['clean', 'revreplace'], function() {
+gulp.task('revision:index', ['clean', 'clean:unrevisioned', 'revreplace'], function() {
   return gulp.src('./dist/index.html')
     .pipe(rev())
     .pipe(gulp.dest(paths.dist))
@@ -253,10 +260,10 @@ gulp.task('changelog', function(cb) {
 
     function (callback) {
       // Grab list of tags
-      git.exec({args: 'tag --sort=-refname'}, function(err, stdout) {
+      git.exec({args: 'tag'}, function(err, stdout) {
         if (err) return callback(err);
-        var tags = stdout.split('\n').slice(0, 2);
-        callback(null, tags[1], tags[0]);
+        var tags = stdout.split('\n').slice(-3);
+        callback(null, tags[0], tags[1]);
       });
     },
 
@@ -284,6 +291,183 @@ gulp.task('changelog', function(cb) {
     });
     cb();
   });
+});
+
+gulp.task('upload-screenshots', function(cb) {
+  var clientId = process.env.GD_CLIENT_ID;
+  var clientSecret = process.env.GD_CLIENT_SECRET;
+  var access_token = process.env.GD_ACCESS_TOKEN;
+  var refresh_token = process.env.GD_REFRESH_TOKEN;
+  var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
+
+  if (process.env.CI && nodeIndex.toString() !== '1') {
+    return cb();
+  }
+
+  if (!clientId) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
+  }
+
+  if (!clientSecret) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_SECRET" env variable is required');
+  }
+
+  if (!access_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_ACCESS_TOKEN" env variable is required');
+  }
+
+  if (!refresh_token) {
+    throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
+  }
+
+  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+  oauth2Client.setCredentials({
+    access_token: access_token,
+    refresh_token: refresh_token,
+    token_type: 'Bearer',
+    expiry_date: 1440513379139
+  });
+
+  var drive = google.drive({version: 'v2', auth: oauth2Client});
+
+  async.waterfall([
+    function(callback) {
+      // Get list of files to upload
+      var screenshots = './reports/screenshots/_navigation/';
+      var files = fs.readdirSync(screenshots);
+      var driveObjects = files.map(function(file) {
+        return {
+          path: path.join(screenshots, file),
+          title: file,
+          delete: []
+        };
+      });
+
+      callback(null, driveObjects);
+    },
+    function(files, callback) {
+      // Check which files should be deleted
+      async.map(files, function(file, mapCallback) {
+        drive.files.list({
+          q: "title = '" + file.title + "' and '" + latestFolder + "' in parents"
+        }, function(err, response) {
+          if (err) return mapCallback(err);
+          file.delete = response.items.map(function(item) {
+            return item.id;
+          });
+          mapCallback(null, file);
+        });
+      }, callback);
+    },
+    function(files, callback) {
+      // Delete files
+      var ids = _.reduce(files, function(result, file) {
+        if (file.delete.length === 0) {
+          return result;
+        }
+        return result.concat(_.map(file.delete, function(id) {
+          return {fileId: id};
+        }));
+      }, []);
+
+      async.each(ids, drive.files.delete, function(err) {
+        if (err) return callback(err);
+        callback(null, files);
+      });
+    },
+    function(files, callback) {
+      // Create InVision/#{version} folder
+      drive.files.insert({
+        resource: {
+          title: version,
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: [{id: invisionFolder}]
+        }
+      }, function(err, folder) {
+        if (err) return callback(err);
+        callback(null, files, folder);
+      });
+    },
+    function(files, folder, callback) {
+      // Insert files
+      var driveObjects = files.map(function(file) {
+        return {
+          resource: {
+            title: file.title,
+            mimeType: 'image/png',
+            parents: [{id: folder.id}, {id: latestFolder}]
+          },
+          media: {
+            mimeType: 'image/png',
+            body: fs.createReadStream(file.path)
+          }
+        };
+      });
+
+      async.each(driveObjects, drive.files.insert, callback);
+    }
+  ], function(err) {
+    if (err) throw err;
+    cb();
+  });
+});
+
+gulp.task('s3-cleanup', function(cb) {
+  var s3Client = new AWS.S3();
+  var params = {bucket: 'dashboard-syncano-rocks'};
+  var pattern = /(.*)-[a-f0-9]{10}.*(\.[a-z0-9]{2,5})$/gi
+
+  if (ENV === 'production') {
+    params.bucket = 'dashboard-syncano-io'
+  }
+
+  listKeys(s3Client, params, function (err, keys) {
+    if (err) throw err;
+
+    // group keys
+    var versionedKeys = _.reduce(keys, function(result, key) {
+      var matches = pattern.exec(key.Key);
+      if (matches) {
+        var prefix = matches[1] + matches[2];
+        key.timestamp = moment(key.LastModified).unix();
+        result[prefix] = result[prefix] || [];
+        result[prefix].push(key);
+      }
+      return result;
+    }, {});
+
+    // filter keys
+    var keysToDelete = _.reduce(versionedKeys, function(result, keys, prefix) {
+      if (keys.length > 3) {
+        var toDelete = _.pluck(_.sortBy(keys, 'timestamp'), 'Key');
+        return result.concat(_.map(toDelete.slice(0, toDelete.length-3), function(key) {
+          return {Key: key};
+        }));
+      }
+      return result;
+    }, []);
+
+    if (keysToDelete.length === 0) {
+      return cb();
+    }
+
+    s3Client.deleteObjects({
+      Bucket: params.bucket,
+      Delete: {Objects: keysToDelete}
+    }, function(err, data) {
+      if (err) throw err;
+      _.forEach(data, function(keys, type) {
+        _.forEach(keys, function(key) {
+          gutil.log(gutil.colors.red('[' + type + ']'), key.Key);
+        });
+      });
+      cb();
+    });
+  });
+
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);

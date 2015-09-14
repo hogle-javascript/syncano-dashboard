@@ -107,11 +107,17 @@ export default Reflux.createStore({
     });
   },
 
+  setType(type) {
+    this.data.type = type;
+    this.trigger(this.data);
+  },
+
   setInstance(instance) {
     this.data.instance = instance;
     Actions.fetchInstance(instance)
       .then(Actions.fetchInstanceData);
   },
+
   setInstanceData() {
     this.data.dataReady = true;
     this.trigger(this.data);
@@ -166,7 +172,6 @@ export default Reflux.createStore({
 
   onCreateVersionCompleted() {
     console.debug('AddVersionViewStore::onCreateSolutionCompleted');
-    // TODO: Create some smart mixin for router actions in stores
     SessionStore.getRouter().transitionTo(
       'solutions-edit',
       SessionStore.getRouter().getCurrentParams()

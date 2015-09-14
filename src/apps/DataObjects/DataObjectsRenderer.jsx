@@ -64,7 +64,6 @@ export default {
       }
     });
 
-    // TODO: select all doesn't work properly in material-ui
     return (
       <MUI.TableHeader
         key='header'

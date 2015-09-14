@@ -22,6 +22,11 @@ export default Radium(React.createClass({
 
   displayName: 'Header',
 
+  contextTypes: {
+    router: React.PropTypes.func.isRequired,
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
@@ -30,31 +35,8 @@ export default Radium(React.createClass({
     MUI.Mixins.StylePropable
   ],
 
-  contextTypes: {
-    router: React.PropTypes.func.isRequired,
-    muiTheme: React.PropTypes.object
-  },
-
   componentDidMount() {
     SessionStore.getInstance();
-  },
-
-  handleTabActive(tab) {
-    this.transitionTo(tab.props.route, tab.props.params);
-  },
-
-  handleAccountClick(event) {
-    this.transitionTo('profile-settings');
-    event.stopPropagation();
-  },
-
-  handleLogout() {
-    SessionActions.logout();
-  },
-
-  handleBillingClick(event) {
-    this.transitionTo('profile-billing-plan');
-    event.stopPropagation();
   },
 
   getStyles() {
@@ -148,6 +130,24 @@ export default Radium(React.createClass({
     }
   },
 
+  handleTabActive(tab) {
+    this.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleAccountClick(event) {
+    this.transitionTo('profile-settings');
+    event.stopPropagation();
+  },
+
+  handleLogout() {
+    SessionActions.logout();
+  },
+
+  handleBillingClick(event) {
+    this.transitionTo('profile-billing-plan');
+    event.stopPropagation();
+  },
+
   handleSolutionsClick() {
     this.transitionTo('solutions');
   },
@@ -185,18 +185,23 @@ export default Radium(React.createClass({
                   Support
                 </a>
               </li>
-              <li style={styles.toolbarListItem}>
+              <li
+                id="menu-solutions"
+                style={styles.toolbarListItem}>
                 <a onClick={this.handleSolutionsClick}>Solutions</a>
               </li>
-              <li>
+              <li id="menu-account">
                 <Common.Dropdown.Material
                   items={this.getDropdownItems()}
+                  isOpen={this.state.expandAccountMenu}
                   headerContent={this.getDropdownHeaderItems()}
                   iconStyle={styles.bottomToolbarGroupIcon}>
                   Account
                 </Common.Dropdown.Material>
               </li>
-              <li style={styles.toolbarListItem}>
+              <li
+                id="menu-notifications"
+                style={styles.toolbarListItem}>
                 <HeaderNotificationsDropdown />
               </li>
             </ul>

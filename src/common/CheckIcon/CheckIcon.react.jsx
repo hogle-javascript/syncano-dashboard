@@ -33,28 +33,6 @@ export default Radium(React.createClass({
     this.setState({checked: newProps.checked})
   },
 
-  handleClick(event) {
-    event.stopPropagation();
-    if (this.props.handleClick) {
-      this.props.handleClick(this.props.id, !this.state.checked);
-    }
-
-    this.setState({
-      checked: !this.state.checked
-    });
-  },
-
-  handleMouseOver() {
-    this.setState({
-      hovered: true
-    });
-  },
-  handleMouseLeave() {
-    this.setState({
-      hovered: false
-    });
-  },
-
   getIconState() {
     let GREY = 'rgba(0,0,0,0.2)';
 
@@ -101,6 +79,29 @@ export default Radium(React.createClass({
         cursor: 'pointer'
       }
     }
+  },
+
+  handleClick(event) {
+    event.stopPropagation();
+    if (this.props.handleClick) {
+      this.props.handleClick(this.props.id, !this.state.checked);
+    }
+
+    this.setState({
+      checked: !this.state.checked
+    });
+  },
+
+  handleMouseOver() {
+    this.setState({
+      hovered: true
+    });
+  },
+
+  handleMouseLeave() {
+    this.setState({
+      hovered: false
+    });
   },
 
   render() {

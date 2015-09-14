@@ -23,11 +23,23 @@ export default React.createClass({
 
   displayName: 'AccountLogin',
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   mixins: [
     Reflux.connect(Store),
     Router.State,
     FormMixin
   ],
+
+  statics: {
+    willTransitionTo(transition) {
+      if (SessionStore.isAuthenticated()) {
+        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
+      }
+    }
+  },
 
   validatorConstraints: {
     email: {
@@ -38,18 +50,6 @@ export default React.createClass({
     },
     password: {
       presence: true
-    }
-  },
-
-  contextTypes: {
-    router: React.PropTypes.func
-  },
-
-  statics: {
-    willTransitionTo(transition) {
-      if (SessionStore.isAuthenticated()) {
-        transition.redirect(Constants.LOGIN_REDIRECT_PATH, {}, {});
-      }
     }
   },
 

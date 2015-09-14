@@ -5,13 +5,13 @@ export default React.createClass({
 
   displayName: 'EmptyContainer',
 
-  mixins: [MUI.Mixins.StylePropable],
-
   propTypes: {
     style: React.PropTypes.object,
     icon: React.PropTypes.string,
     text: React.PropTypes.string
   },
+
+  mixins: [MUI.Mixins.StylePropable],
 
   getStyles() {
     return {

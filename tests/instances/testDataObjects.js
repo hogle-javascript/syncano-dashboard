@@ -1,31 +1,49 @@
+const utils = require('../utils');
+
 module.exports = {
   tags: ['dataObjects'],
   before: function(client) {
-    var loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
+
     loginPage.goToLoginPage();
     loginPage.typeEmail();
     loginPage.typePassword();
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
-
   },
   after: function(client) {
     client.end();
   },
-  'User goes to Data Objects View' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
-    
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@dataListItem');
-    
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@classes');
+  'Administrator adds a Data Object' : function(client) {
+    const dataObjectsPage = client.page.dataObjectsPage();
+    const string = utils.addSuffix('string');
 
-    var classesPage = client.page.classesPage();
-    classesPage.clickButton('@userClassListItem');
+    dataObjectsPage.navigate();
+    dataObjectsPage.clickButton('@addDataObjectButton');
+    dataObjectsPage.fillInputField('@stringField', string);
+    dataObjectsPage.clickButton('@confirm');
+    dataObjectsPage.waitForElementVisible('@stringFieldTableRow');
+  },
+  'Administrator edits a Data Object' : function(client) {
+    const dataObjectsPage = client.page.dataObjectsPage();
+    const edited = utils.addSuffix('string') + 'edited';
 
-    var dataObjectsPage = client.page.dataObjectsPage();
-    dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
+    dataObjectsPage.navigate();
+    dataObjectsPage.clickButton('@stringFieldTableRow');
+    dataObjectsPage.fillInputField('@stringField', edited);
+    dataObjectsPage.clickButton('@confirm');
+    dataObjectsPage.waitForElementVisible('@stringFieldEditedTableRow');
+  },
+  'Administrator deletes a Data Object' : function(client) {
+    const dataObjectsPage = client.page.dataObjectsPage();
+
+    dataObjectsPage.navigate();
+    dataObjectsPage.waitForElementVisible('@stringFieldEditedTableRow')
+    dataObjectsPage.clickCheckbox('@selectDataObjectTableRow');
+    dataObjectsPage.waitForElementNotPresent('@deleteDataObjectButtonDisabled')
+    dataObjectsPage.clickButton('@deleteDataObjectButton');
+    client.pause(1000);
+    dataObjectsPage.clickButton('@confirm');
+    dataObjectsPage.waitForElementNotVisible('@selectDataObjectTableRow');
   }
-};
+}

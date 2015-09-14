@@ -25,8 +25,11 @@ deployment:
       - NODE_ENV=production npm run-script clean
       - NODE_ENV=production npm run-script add-github-tag
       - NODE_ENV=production npm run-script changelog
+      - NODE_ENV=production npm run-script upload-screenshots
+      - NODE_ENV=production npm run-script s3-cleanup
   staging:
     branch: devel
     commands:
       - npm run-script publish
       - npm run-script clean
+      - npm run-script s3-cleanup
