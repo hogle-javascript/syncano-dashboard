@@ -44,16 +44,6 @@ export default Radium(React.createClass({
     });
   },
 
-  componentWillUpdate() {
-    if (this.refs.editorConfig) {
-      let textareaClassName = this.refs.editorConfig.getDOMNode().firstElementChild.className;
-
-      if (textareaClassName.indexOf('mousetrap') === -1) {
-        this.refs.editorConfig.getDOMNode().firstElementChild.className += ' mousetrap'
-      }
-    }
-  },
-
   getStyles() {
     return {
       container: {
