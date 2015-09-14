@@ -48,7 +48,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdown: {
-      selector: '//form/div[2]/div',
+      selector: '//div[@class="invite-admin-dropdown"]',
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {

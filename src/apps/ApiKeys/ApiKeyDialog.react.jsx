@@ -47,32 +47,33 @@ export default React.createClass({
     let title = this.hasEditMode() ? 'Edit' : 'Generate';
     let submitLabel = this.hasEditMode() ? 'Save changes' : 'Confirm';
     let dialogStandardActions = [
-      {
-        text: 'Cancel',
-        ref: 'cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        text: {submitLabel},
-        ref: 'submit',
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label={submitLabel}
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' an API Key'}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onShow={this.handleDialogShow}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset='UTF-8'
-            method='post'>
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset='UTF-8'
+        method='post'>
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' an API Key'}
+          openImmediately={this.props.openImmediately}
+          actions={dialogStandardActions}
+          onShow={this.handleDialogShow}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='description'
               name='description'
@@ -92,9 +93,9 @@ export default React.createClass({
               onToggle={this.handleToogle}
               style={{marginTop: 20}}
               label='User registration?'/>
-          </form>
-        </div>
-      </Common.Dialog>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });
