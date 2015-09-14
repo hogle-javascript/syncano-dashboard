@@ -5,7 +5,9 @@ import Radium from 'radium';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
+
 // Stores and Actions
 import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
@@ -27,9 +29,11 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    Mixins.InstanceTabs,
+    SnackbarNotificationMixin,
+    UnsavedDataMixin,
     Mixins.Mousetrap,
-    SnackbarNotificationMixin
+    Mixins.Dialogs,
+    Mixins.InstanceTabs
   ],
 
   componentDidMount() {
@@ -60,6 +64,13 @@ export default Radium(React.createClass({
     }
   },
 
+  isSaved() {
+    let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
+    let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
+
+    return initialCodeBoxConfig === currentCodeBoxConfig;
+  },
+
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
 
@@ -67,6 +78,28 @@ export default Radium(React.createClass({
     this.setSnackbarNotification({
       message: 'Saving...'
     });
+  },
+
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        ref: 'unsavedDataWarn',
+        title: 'Unsaved CodeBox config',
+        actions: [
+          {
+            text: 'Just leave',
+            onClick: this._handleContinueTransition
+          },
+          {
+            text: 'Continue editing',
+            onClick: this.handleCancel
+          }
+        ],
+        modal: true,
+        children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
+      }
+    }]
   },
 
   renderEditor() {
@@ -95,6 +128,7 @@ export default Radium(React.createClass({
 
     return (
       <Container style={styles.container}>
+        {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"

@@ -4,5 +4,6 @@ export default CreateActions({
   set: {},
   setMenuItems: {},
   clear: {},
-  clearMenuItems: {}
+  clearMenuItems: {},
+  toggleAccountMenu: {}
 });

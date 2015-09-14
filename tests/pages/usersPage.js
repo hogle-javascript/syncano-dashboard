@@ -92,6 +92,10 @@ module.exports = {
     userList: {
       selector: '//div[@class="col-lg-27"]//div[@class="col-xs-10"]',
       locateStrategy: 'xpath'
+    },
+    groupList: {
+      selector: '//div[@class="col-lg-8"]/div/div[2]',
+      locateStrategy: 'xpath'
     }
   }
 };

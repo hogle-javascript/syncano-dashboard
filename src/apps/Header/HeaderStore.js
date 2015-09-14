@@ -9,11 +9,13 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       menuItems: [],
-      user: SessionStore.getUser({})
+      user: SessionStore.getUser({}),
+      expandAccountMenu: false
     }
   },
 
   init() {
+    this.data = this.getInitialState();
     this.listenTo(SessionStore, this.refreshData);
   },
 
@@ -45,5 +47,11 @@ export default Reflux.createStore({
     this.trigger({
       menuItems: []
     });
+  },
+
+  onToggleAccountMenu() {
+    console.debug('HeaderStore::onToggleAccountMenu');
+    this.data.expandAccountMenu = !this.data.expandAccountMenu;
+    this.trigger({expandAccountMenu: this.data.expandAccountMenu});
   }
 });

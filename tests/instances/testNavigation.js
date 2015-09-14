@@ -1,11 +1,12 @@
-var path = require('path');
+const path = require('path');
 
 
 module.exports = {
   tags: ['navigation'],
   before: function(client) {
-    console.log("Starting tests");
-    var loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
+
+    console.log('Starting tests');
     loginPage.goToLoginPage();
     loginPage.typeEmail();
     loginPage.typePassword();
@@ -16,11 +17,11 @@ module.exports = {
     client.end();
   },
   beforeEach: function(client) {
-    var instancesPage = client.page.instancesPage();
+    const instancesPage = client.page.instancesPage();
+    const dataPage = client.page.dataPage();
+
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableRow');
-
-    var dataPage = client.page.dataPage();
     dataPage.waitForElementPresent('@webhookListItem');
   },
 
@@ -30,208 +31,195 @@ module.exports = {
       return;
     }
 
-    var prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    var fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', prefix + '.png'))
+    const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
+    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', prefix + '.png'))
+
     client.saveScreenshot(fileNamePath, done);
   },
 
   'User goes to Administrators View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@administrators');
+    const leftMenuPage = client.page.leftMenuPage();
+    const adminsPage = client.page.adminsPage();
 
-    var administratorsPage = client.page.administratorsPage();
-    administratorsPage.waitForElementPresent('@administratorsListItem');
+    leftMenuPage.clickButton('@administrators');
+    adminsPage.waitForElementPresent('@adminsListItem');
   },
   'User goes to API Keys View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@apiKeys');
+    const leftMenuPage = client.page.leftMenuPage();
+    const apiKeysPage = client.page.apiKeysPage();
 
-    var apiKeysPage = client.page.apiKeysPage();
-    apiKeysPage.waitForElementPresent('@apiKeysListName');
+    leftMenuPage.clickButton('@apiKeys');
+    apiKeysPage.waitForElementPresent('@apiKeysListItem');
   },
   'User goes to Channels View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@channels');
+    const leftMenuPage = client.page.leftMenuPage();
+    const channelsPage = client.page.channelsPage();
 
-    var channelsPage = client.page.channelsPage();
+    leftMenuPage.clickButton('@channels');
     channelsPage.waitForElementPresent('@channelListItem');
   },
-    'User goes to Classes View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
+  'User goes to Classes View' : function(client) {
+    const leftMenuPage = client.page.leftMenuPage();
+    const classesPage = client.page.classesPage();
+
     leftMenuPage.clickButton('@classes');
-
-    var classesPage = client.page.classesPage();
-    classesPage.waitForElementPresent('@classTableRow');
+    classesPage.waitForElementPresent('@userProfileClassName');
   },
-    'User goes to CodeBox edit view' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
+  'User goes to CodeBox edit view' : function(client) {
+    const leftMenuPage = client.page.leftMenuPage();
+    const codeBoxesPage = client.page.codeBoxesPage();
+    const codeBoxEditPage = client.page.codeBoxEditPage();
+
     leftMenuPage.clickButton('@codeBoxes');
-
-    var codeBoxesPage = client.page.codeBoxesPage();
     codeBoxesPage.clickButton('@codeBoxListItem');
-
-    var codeBoxEditPage = client.page.codeBoxEditPage();
     codeBoxEditPage.waitForElementPresent('@codeBoxEditView');
   },
   'User goes to CodeBox config view' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const codeBoxesPage = client.page.codeBoxesPage();
+    const codeBoxEditPage = client.page.codeBoxEditPage();
+
     leftMenuPage.clickButton('@codeBoxes');
-
-    var codeBoxesPage = client.page.codeBoxesPage();
     codeBoxesPage.clickButton('@codeBoxListItem');
-
-    var codeBoxEditPage = client.page.codeBoxEditPage();
     codeBoxEditPage.clickButton('@config');
-
     codeBoxEditPage.waitForElementPresent('@configEmpty');
     codeBoxEditPage.verify.containsText('@configEmpty', '{');
-
   },
   'User goes to CodeBox traces view' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const codeBoxesPage = client.page.codeBoxesPage();
+    const codeBoxEditPage = client.page.codeBoxEditPage();
+
     leftMenuPage.clickButton('@codeBoxes');
-
-    var codeBoxesPage = client.page.codeBoxesPage();
     codeBoxesPage.clickButton('@codeBoxListItem');
-
-    var codeBoxEditPage = client.page.codeBoxEditPage();
     codeBoxEditPage.clickButton('@traces');
-
     codeBoxEditPage.waitForElementPresent('@tracesEmpty');
   },
   'User goes to Data Objects View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const classesPage = client.page.classesPage();
+    const dataObjectsPage = client.page.dataObjectsPage();
+
     leftMenuPage.clickButton('@classes');
-
-    var classesPage = client.page.classesPage();
     classesPage.clickButton('@userClassListItem');
-
-    var dataObjectsPage = client.page.dataObjectsPage();
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  // 'User goes to Data View' : function(client) {
-  //   var dataPage = client.page.dataPage();
-  //   dataPage.waitForElementPresent('@dataListItemTitle');
-  // },
-  'User goes to Tasks View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@tasks');
+  'User goes to Webhooks View' : function(client) {
+    const dataPage = client.page.dataPage();
 
-    var tasksPage = client.page.tasksPage();
+    dataPage.waitForElementPresent('@webhookListItem');
+  },
+  'User goes to Tasks View' : function(client) {
+    const leftMenuPage = client.page.leftMenuPage();
+    const tasksPage = client.page.tasksPage();
+
+    leftMenuPage.clickButton('@tasks');
     tasksPage.waitForElementPresent('@scheduleListItem');
   },
   'User goes to Users View' : function(client) {
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@users');
+    const leftMenuPage = client.page.leftMenuPage();
+    const usersPage = client.page.usersPage();
 
-    var usersPage = client.page.usersPage();
+    leftMenuPage.clickButton('@users');
     usersPage.waitForElementPresent('@user');
   },
   'User goes to Webhook Traces View' : function(client) {
-    var dataPage = client.page.dataPage();
-    dataPage.clickButton('@webhookListItem');
+    const dataPage = client.page.dataPage();
+    const webhookTracesPage = client.page.webhookTracesPage();
 
-    var webhookTracesPage = client.page.webhookTracesPage();
+    dataPage.clickButton('@webhookListItem');
     webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
   },
   'User goes to Solutions View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
-    topNavigationPage.clickButton('@solutions');
+    const topNavigationPage = client.page.topNavigationPage();
+    const solutionsPage = client.page.solutionsPage();
 
-    var solutionsPage = client.page.solutionsPage();
-    solutionsPage.waitForElementPresent('@solutionsView');
+    topNavigationPage.clickButton('@solutions');
+    solutionsPage.waitForElementPresent('@solutionDetails');
+    solutionsPage.waitForElementVisible('@solutionAvatars');
   },
   'User goes to Solution Details View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
-    topNavigationPage.clickButton('@solutions');
+    const topNavigationPage = client.page.topNavigationPage();
+    const solutionsPage = client.page.solutionsPage();
+    const solutionDetailsPage = client.page.solutionDetailsPage();
 
-    var solutionsPage = client.page.solutionsPage();
+    topNavigationPage.clickButton('@solutions');
     solutionsPage.waitForElementPresent('@solutionsView');
     solutionsPage.clickButton('@solutionDetails');
-
-    var solutionDetailsPage = client.page.solutionDetailsPage();
     solutionDetailsPage.waitForElementPresent('@installSolutionButton');
   },
   'User goes to Account Profile View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const profilePage = client.page.profilePage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var profilePage = client.page.profilePage();
     profilePage.waitForElementPresent('@updateButton')
     client.pause(1000);
   },
   'User goes to Account Authentication View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const authenticationPage = client.page.authenticationPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@authentication');
-
-    var authenticationPage = client.page.authenticationPage();
     authenticationPage.waitForElementPresent('@accountKey');
     client.pause(1000);
   },
   'User goes to Account Invitations View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const invitationsPage = client.page.invitationsPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@invitations');
-
-    var invitationsPage = client.page.invitationsPage();
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
     client.pause(1000);
   },
   'User goes to Billing Plan View' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const billingPlanPage = client.page.billingPlanPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@billingPlan');
-
-    var billingPlanPage = client.page.billingPlanPage();
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
     client.pause(1000);
-
   },
   'User goes to Payment methods view' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const paymentMethodsPage = client.page.paymentMethodsPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@paymentMethods');
-
-    var paymentMethodsPage = client.page.paymentMethodsPage();
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
     client.pause(1000);
-
   },
   'User goes to Invoices view' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const invoicesPage = client.page.invoicesPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@invoices');
-
-    var invoicesPage = client.page.invoicesPage();
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
     client.pause(1000);
   },
   'User goes to Billing Address view' : function(client) {
-    var topNavigationPage = client.page.topNavigationPage();
+    const topNavigationPage = client.page.topNavigationPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const billingAddressPage = client.page.billingAddressPage();
+
     topNavigationPage.clickButton('@account');
     topNavigationPage.clickButton('@accountDropdown');
-
-    var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@billingAddress');
-
-    var billingAddressPage = client.page.billingAddressPage();
     billingAddressPage.waitForElementPresent('@billingAddressTitle');
     client.pause(1000);
   }

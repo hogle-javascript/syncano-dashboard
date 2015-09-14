@@ -266,7 +266,7 @@ export default React.createClass({
         <Common.Fab>
           <Common.Fab.TooltipItem
             tooltip="Click here to add a Class"
-            onClick={this.checkObjectsCount.bind(null, 'classes', this.redirectToAddClassView)}
+            onClick={this.checkObjectsCount.bind(null, this.state.items, 'classes', this.redirectToAddClassView)}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 

@@ -5,7 +5,7 @@ module.exports = {
     const slug = Date.now();
 
     signupPage.navigate();
-    signupPage.setValue('@emailInput', 'syncano.bot+' + slug + '@gmail.com');
+    signupPage.setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com');
     signupPage.setValue('@passInput', slug);
     signupPage.clickSubmitButton();
   },

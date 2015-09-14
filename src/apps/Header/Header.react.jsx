@@ -185,18 +185,23 @@ export default Radium(React.createClass({
                   Support
                 </a>
               </li>
-              <li style={styles.toolbarListItem}>
+              <li
+                id="menu-solutions"
+                style={styles.toolbarListItem}>
                 <a onClick={this.handleSolutionsClick}>Solutions</a>
               </li>
-              <li>
+              <li id="menu-account">
                 <Common.Dropdown.Material
                   items={this.getDropdownItems()}
+                  isOpen={this.state.expandAccountMenu}
                   headerContent={this.getDropdownHeaderItems()}
                   iconStyle={styles.bottomToolbarGroupIcon}>
                   Account
                 </Common.Dropdown.Material>
               </li>
-              <li style={styles.toolbarListItem}>
+              <li
+                id="menu-notifications"
+                style={styles.toolbarListItem}>
                 <HeaderNotificationsDropdown />
               </li>
             </ul>
