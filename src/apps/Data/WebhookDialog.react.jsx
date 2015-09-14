@@ -111,6 +111,7 @@ export default React.createClass({
               hintText="Description of the WebHook"
               floatingLabelText="Description"/>
             <MUI.SelectField
+              className="codebox-dropdown"
               ref="codebox"
               name="codebox"
               floatingLabelText="CodeBox"
