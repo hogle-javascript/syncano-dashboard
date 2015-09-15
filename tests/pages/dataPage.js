@@ -37,6 +37,10 @@ module.exports = {
       selector: '//span[@class="synicon-delete"]',
       locateStrategy: 'xpath'
     },
+    editButton: {
+      selector: '//span[@class="synicon-pencil"]',
+      locateStrategy: 'xpath'
+    },
     addWebhookButton: {
       selector: '.synicon-arrow-up-bold'
     },
@@ -45,7 +49,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addWebhookModalTitle: {
-      selector: '//h3[text()="Add a CodeBox Endpoint"]',
+      selector: '//h3[text()="Add a Webhook"]',
       locateStrategy: 'xpath'
     },
     addWebhookModalNameInput: {
@@ -72,8 +76,16 @@ module.exports = {
       selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../div[1]/span',
       locateStrategy: 'xpath'
     },
+    webhookTableRowDescription: {
+      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../following-sibling::div[1]',
+      locateStrategy: 'xpath'
+    },
     deleteWebhookModalTitle: {
       selector: '//h3[text()="Delete a Webhook"]',
+      locateStrategy: 'xpath'
+    },
+    editWebhookModalTitle: {
+      selector: '//h3[text()="Edit a Webhook"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {
