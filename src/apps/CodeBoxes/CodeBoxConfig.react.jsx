@@ -16,6 +16,8 @@ import Store from './CodeBoxStore';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
+
 export default Radium(React.createClass({
 
   displayName: 'CodeBoxConfig',
@@ -27,13 +29,19 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
+    SnackbarNotificationMixin,
     UnsavedDataMixin,
+    Mixins.Mousetrap,
     Mixins.Dialogs,
     Mixins.InstanceTabs
   ],
 
   componentDidMount() {
     Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
   },
 
   getStyles() {
@@ -57,6 +65,9 @@ export default Radium(React.createClass({
     let config = this.refs.editorConfig.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+    this.setSnackbarNotification({
+      message: 'Saving...'
+    });
   },
 
   initDialogs() {
@@ -89,14 +100,14 @@ export default Radium(React.createClass({
       config = JSON.stringify(codeBox.config, null, 2);
 
       return (
-      <div>
-        <Common.Editor
-        ref="editorConfig"
-        height={300}
-        mode="javascript"
-        theme="github"
-        value={config}/>
-      </div>
+        <div>
+          <Common.Editor
+            ref="editorConfig"
+            height={300}
+            mode="javascript"
+            theme="github"
+            value={config}/>
+        </div>
       )
     }
   },
