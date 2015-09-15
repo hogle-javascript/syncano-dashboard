@@ -385,8 +385,6 @@ gulp.task('upload-screenshots', function(cb) {
             latestFolderFilesList = _.map(response.items, function(item) {
               return {
                 title: item.title,
-                modifiedDate: item.modifiedDate,
-                version: item.version,
                 id: item.id
               }
             });
@@ -404,8 +402,6 @@ gulp.task('upload-screenshots', function(cb) {
             versionFolderFilesList = _.map(response.items, function(item) {
               return {
                 title: item.title,
-                modifiedDate: item.modifiedDate,
-                version: item.version,
                 id: item.id
               }
             });
@@ -419,38 +415,61 @@ gulp.task('upload-screenshots', function(cb) {
       });
     },
     function(_files, folder,  callback) {
-      // Check which files should be deleted
+      // Check which files should be updated and which should be inserted
       var files = _files;
-      files.filesToDeleteList = [];
+      files.filesToUpdateList = [];
 
-      function filterFiles(filesToFilter) {
-        var filteredFiles = _.filter(filesToFilter, function(latestFile) {
-          return _.some(files.localFilesList, 'title', latestFile.title);
+      function getFilesToUpdate(filesToFilter) {
+        var filteredFiles = _.filter(filesToFilter, function(remoteFile) {
+          return _.some(files.localFilesList, function(localFile) {
+            if (localFile.title === remoteFile.title) {
+              remoteFile.updateMediaPath = localFile.path;
+              return true;
+            }
+
+            return false;
+          });
         });
 
         return filteredFiles;
       }
 
-      files.filesToDeleteList = files.filesToDeleteList.concat(filterFiles(files.latestFolderFilesList));
-      files.filesToDeleteList = files.filesToDeleteList.concat(filterFiles(files.versionFolderFilesList));
+      function getNewFiles(filesToFilter) {
+        var newFiles = _.reject(files.localFilesList, function(remoteFile) {
+          return _.some(filesToFilter, 'title', remoteFile.title);
+        });
+
+        return newFiles;
+      }
+
+      files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.latestFolderFilesList));
+      files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.versionFolderFilesList));
+      files.newFilesForLatest = getNewFiles(files.latestFolderFilesList);
+      files.newFilesForVersion = getNewFiles(files.versionFolderFilesList);
 
       callback(null, files, folder);
     },
     function(files, folder, callback) {
-      // Delete files
-      var ids = _.map(files.filesToDeleteList, function(file) {
-        return {fileId: file.id}
+      // Update files
+      var fileObjects = _.map(files.filesToUpdateList, function(file) {
+        return {
+          fileId: file.id,
+          media: {
+            mimeType: 'image/png',
+            body: fs.readFileSync(file.updateMediaPath)
+          }
+        }
       });
 
-      async.each(ids, drive.files.delete, function(err) {
+      async.each(fileObjects, drive.files.update, function(err) {
         if (err) return callback(err);
         callback(null, files, folder);
       });
     },
     function(files, folder, callback) {
-      // Insert files
-      function mapDriveObjects(folderId) {
-        var objects = files.localFilesList.map(function(file) {
+      // Insert new files
+      function mapDriveObjects(newFiles, folderId) {
+        var objects = newFiles.map(function(file) {
           return {
             resource: {
               title: file.title,
@@ -466,8 +485,8 @@ gulp.task('upload-screenshots', function(cb) {
         return objects;
       }
 
-      var latestDriveObjects = mapDriveObjects(latestFolder);
-      var versionDriveObjects = mapDriveObjects(folder.id);
+      var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
+      var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
 
       async.parallel([
         function() {
