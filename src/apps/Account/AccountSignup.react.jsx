@@ -77,6 +77,8 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation(data) {
+    SessionStore.setSignUpMode();
+
     Actions.passwordSignUp({
       email: data.email,
       password: data.password
