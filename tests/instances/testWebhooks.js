@@ -32,6 +32,7 @@ module.exports = {
     const dataPage = client.page.dataPage();
 
     dataPage.navigate();
+    dataPage.waitForElementVisible('@webhookListItem');
     dataPage.clickButton('@selectWebhookTableRow');
     dataPage.clickButton('@editButton');
     dataPage.waitForElementVisible('@editWebhookModalTitle');
@@ -45,6 +46,7 @@ module.exports = {
     const dataPage = client.page.dataPage();
 
     dataPage.navigate();
+    dataPage.waitForElementVisible('@webhookListItem');
     dataPage.clickButton('@selectWebhookTableRow');
     dataPage.clickButton('@deleteButton');
     dataPage.waitForElementVisible('@deleteWebhookModalTitle');
