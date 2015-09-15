@@ -44,16 +44,6 @@ export default React.createClass({
     });
   },
 
-  componentWillUpdate() {
-    if (this.refs.editorSource) {
-      let textareaClassName = this.refs.editorSource.getDOMNode().firstElementChild.className;
-
-      if (textareaClassName.indexOf('mousetrap') === -1) {
-        this.refs.editorSource.getDOMNode().firstElementChild.className += ' mousetrap'
-      }
-    }
-  },
-
   getStyles() {
     return {
       container: {
