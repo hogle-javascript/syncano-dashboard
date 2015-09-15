@@ -8,6 +8,12 @@ import AuthConstants from '../apps/Account/AuthConstants';
 // Components
 import Header from '../apps/Header/Header.react';
 
+/* eslint-disable no-process-env */
+
+let ENV = process.env.NODE_ENV || 'development';
+
+/* eslint-enable */
+
 export default React.createClass({
 
   displayName: 'Dashboard',
@@ -30,7 +36,7 @@ export default React.createClass({
   },
 
   renderMagneticConversionPixel() {
-    if (SessionStore.getSignUpMode()) {
+    if (SessionStore.getSignUpMode() && ENV === 'production') {
       SessionStore.removeSignUpMode();
 
       return (
