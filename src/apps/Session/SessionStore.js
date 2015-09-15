@@ -80,7 +80,11 @@ export default Reflux.createStore({
       _.extend(analyticsIdentifyObject, analyticsIdentifyCampaign);
     }
 
-    window.analytics.identify(analyticsIdentifyObject);
+    if (this.signUpMode) {
+      window.analytics.identify(analyticsIdentifyObject)
+    } else {
+      window.analytics.identify(user.email)
+    }
   },
 
   setToken(token) {
