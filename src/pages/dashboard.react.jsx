@@ -8,6 +8,12 @@ import AuthConstants from '../apps/Account/AuthConstants';
 // Components
 import Header from '../apps/Header/Header.react';
 
+/* eslint-disable no-process-env */
+
+let ENV = process.env.NODE_ENV || 'development';
+
+/* eslint-enable */
+
 export default React.createClass({
 
   displayName: 'Dashboard',
@@ -29,11 +35,28 @@ export default React.createClass({
     }
   },
 
+  renderMagneticConversionPixel() {
+    if (SessionStore.getSignUpMode() && ENV === 'production') {
+      SessionStore.removeSignUpMode();
+
+      return (
+        <div
+          dangerouslySetInnerHTML={{__html: `
+            <script type="text/javascript" src="//magnetic.t.domdex.com/23447/pix.js?t=c&for=syncano"></script>
+            <noscript>
+            <img src="//magnetic.t.domdex.com/23447/pix.gif?t=c&for=syncano" width="1" height="1" style="display:none;">
+            </noscript>`}}>
+        </div>
+      )
+    }
+  },
+
   render() {
     return (
       <div>
         <Header />
         <Router.RouteHandler />
+        {this.renderMagneticConversionPixel()}
       </div>
     );
   }

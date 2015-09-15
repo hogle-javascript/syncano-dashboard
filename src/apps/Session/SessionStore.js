@@ -18,6 +18,7 @@ export default Reflux.createStore({
     this.instance = null;
     this.router = null;
     this.theme = null;
+    this.signUpMode = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -46,6 +47,10 @@ export default Reflux.createStore({
 
   getRouter(empty) {
     return this.router || empty || null;
+  },
+
+  getSignUpMode() {
+    return this.signUpMode;
   },
 
   getTheme(empty) {
@@ -133,6 +138,10 @@ export default Reflux.createStore({
     this.router = router;
   },
 
+  setSignUpMode() {
+    this.signUpMode = true;
+  },
+
   setTheme(theme) {
     console.info('SessionStore::setTheme');
     this.theme = theme;
@@ -162,6 +171,10 @@ export default Reflux.createStore({
     if (this.theme) {
       this.theme.setTheme(SyncanoTheme);
     }
+  },
+
+  removeSignUpMode() {
+    this.signUpMode = null;
   },
 
   makePalette(mainColor, accentColor) {
