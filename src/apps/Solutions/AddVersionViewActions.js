@@ -5,6 +5,7 @@ export default CreateActions({
   setType: {},
   setInstance: {},
   setInstances: {},
+  clearExportSpec: {},
   fetchInstanceData: {},
 
   fetchInstances: {
