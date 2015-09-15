@@ -85,7 +85,7 @@ export default React.createClass({
         acceptCharset="UTF-8">
         <Common.Dialog
           ref='dialog'
-          title={title + ' a CodeBox Endpoint'}
+          title={title + ' a Webhook'}
           openImmediately={this.props.openImmediately}
           actions={dialogStandardActions}
           onShow={this.handleDialogShow}
@@ -100,7 +100,7 @@ export default React.createClass({
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText="Name of the WebHook"
+              hintText="Name of the Webhook"
               floatingLabelText="Name"/>
             <MUI.TextField
               ref="description"
@@ -108,7 +108,7 @@ export default React.createClass({
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText="Description of the WebHook"
+              hintText="Description of the Webhook"
               floatingLabelText="Description"/>
             <MUI.SelectField
               className="codebox-dropdown"
@@ -127,7 +127,7 @@ export default React.createClass({
               onToggle={this.handleToogle}
               style={{marginTop: 20}}
               defaultToggled={this.state.public}
-              label='Make this WebHook public?'/>
+              label='Make this Webhook public?'/>
           </div>
         </Common.Dialog>
       </form>
