@@ -50,7 +50,7 @@ export default Reflux.createStore({
   },
 
   onFetchInvitationsCompleted(items) {
-    console.debug('ProfileInvitationsStore::onGetInstanesCompleted');
+    console.debug('ProfileInvitationsStore::onFetchInvitationsCompleted');
     Actions.setInvitations(items);
   },
 
