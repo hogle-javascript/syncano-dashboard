@@ -47,6 +47,7 @@ export default Reflux.createStore({
   },
 
   onPasswordSignUpCompleted(payload) {
+    window.analytics.alias(payload.email);
     window.analytics.track('Sign up Dashboard', {
       authBackend: 'password',
       email: payload.email
@@ -87,6 +88,7 @@ export default Reflux.createStore({
 
   onSocialLoginCompleted(payload) {
     console.debug('AuthStore::onSocialLoginCompleted', payload);
+    window.analytics.alias(payload.email);
     window.analytics.track('Sign up Dashboard', {
       authBackend: payload.network,
       email: payload.email
