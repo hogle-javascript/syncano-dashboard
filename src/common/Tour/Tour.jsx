@@ -57,7 +57,8 @@ export default Radium(React.createClass({
         height: '100%',
         width: '100%',
         opacity: 0,
-        zIndex: -5
+        zIndex: -5,
+        display: 'none'
       },
       overlayVisible: {
         position: 'fixed',
@@ -67,7 +68,8 @@ export default Radium(React.createClass({
         left: 0,
         opacity: 1,
         zIndex: 5000,
-        transition: 'opacity .2s'
+        transition: 'opacity .2s',
+        display: 'block'
       },
       dots: {
         textAlign: 'center'
