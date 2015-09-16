@@ -88,7 +88,7 @@ export default Radium(React.createClass({
       tourFocus: {
         position: 'fixed',
         borderRadius: '50%',
-        boxShadow: '0 0 0 200vmax rgba(128, 128, 128, 0.5)',
+        boxShadow: '0 0 0 130vmax rgba(128, 128, 128, 0.5)',
         transition: 'height .2s, width .2s, top .2s, left .2s',
         zIndex: 1000
       }
