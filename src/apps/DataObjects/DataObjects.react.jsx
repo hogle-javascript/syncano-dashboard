@@ -153,7 +153,7 @@ export default React.createClass({
         showRowHover={true}
         onCellClick={this.handleCellClick}
         onRowSelection={this.handleRowSelection}
-        tableWrapperStyle={{overflow: 'visible'}}>
+        tableWrapperStyle={{minHeight: '120px'}}>
         {tableHeader}
         <MUI.TableBody
           deselectOnClickaway={this.state.deselectOnClickaway}
