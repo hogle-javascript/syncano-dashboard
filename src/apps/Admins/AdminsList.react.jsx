@@ -94,7 +94,7 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="admin-list">
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.CheckIcon.Header className="col-xs-25 col-md-20">
             {this.props.name}
