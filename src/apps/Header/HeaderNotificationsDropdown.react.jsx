@@ -13,6 +13,7 @@ import SnackbarNotificationMixin from '../../common/SnackbarNotification/Snackba
 
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import MenuDivider from 'material-ui/lib/menus/menu-divider';
+import Loading from '../../common/Loading';
 
 
 export default Radium(React.createClass({
@@ -53,7 +54,7 @@ export default Radium(React.createClass({
         whiteSpace: 'normal',
         lineHeight: '24px',
         color: '#777',
-        minWidth: '360px',
+        minWidth: '400px',
         paddingTop: '12px',
         paddingBottom: '12px',
         position: 'relative'
@@ -62,7 +63,8 @@ export default Radium(React.createClass({
         cursor: 'auto',
         maxHeight: '500px',
         overflowY: 'auto',
-        border: '1px solid #DDD'
+        border: '1px solid #DDD',
+        minWidth: '400px'
       }
     }
   },
@@ -96,12 +98,13 @@ export default Radium(React.createClass({
     });
   },
 
+  handleNotificationsIconClick() {
+    console.info('Header::handleNotificationsIconClick');
+    ProfileInvitationsActions.fetchInvitations();
+  },
+
   renderItems() {
     let styles = this.getStyles();
-
-    // if (this.state.accountInvitations.isLoading === true) {
-    //   return <Loading show={true}/>
-    // }
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
@@ -114,7 +117,7 @@ export default Radium(React.createClass({
       return (
         <MenuItem
           key="empty"
-          primaryText="You dont't have any notifications"
+          primaryText="You don't have any notifications"
           disabled={true}
           leftIcon={icon}
           style={styles.menuItem}
@@ -213,7 +216,7 @@ export default Radium(React.createClass({
         <MUI.IconButton
           iconStyle={styles.icon}
           iconClassName={iconClassName}
-          onClick={ProfileInvitationsActions.fetchInvitations}/>
+          onTouchTap={this.handleNotificationsIconClick}/>
       </div>
     )
   },
@@ -235,7 +238,9 @@ export default Radium(React.createClass({
             primaryText='Notifications'
             disabled={true}/>
           <MenuDivider />
-          {this.renderItems()}
+          <Loading show={this.state.accountInvitations.isLoading}>
+            {this.renderItems()}
+          </Loading>
         </MUI.IconMenu>
       </div>
     )

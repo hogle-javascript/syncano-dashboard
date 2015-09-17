@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import FormMixin from '../../mixins/FormMixin';
 
@@ -19,8 +20,7 @@ export default React.createClass({
 
   validatorConstraints: {
     company_name: {
-      length: {maximum: 150},
-      presence: true
+      length: {maximum: 150}
     },
     first_name: {
       length: {maximum: 35},
@@ -41,7 +41,6 @@ export default React.createClass({
         maximum: 150,
         message: '^Address is too long (maximum is 150 characters)'
       },
-      presence: {message: "^Address can't be blank"},
       format: {
         pattern: /^([a-zA-Z0-9 ,./\\-]+)$/i,
         message: '^Address is invalid'
@@ -62,7 +61,6 @@ export default React.createClass({
         maximum: 100,
         message: '^City is too long (maximum is 100 characters)'
       },
-      presence: {message: "^City can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^City can contain only alphabetical characters'
@@ -73,7 +71,6 @@ export default React.createClass({
         maximum: 100,
         message: '^State  is too long (maximum is 100 characters)'
       },
-      presence: {message: "^State can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^State can contain only alphabetical characters'
@@ -84,7 +81,6 @@ export default React.createClass({
         maximum: 10,
         message: '^Zip code is too long (maximum is 10 characters)'
       },
-      presence: {message: "^Zip code can't be blank"},
       format: {
         pattern: /^([a-zA-Z0-9 -]+)$/i,
         message: '^Zip code is invalid'
@@ -95,15 +91,13 @@ export default React.createClass({
         maximum: 35,
         message: '^Country is too long (maximum is 35 characters)'
       },
-      presence: {message: "^Country can't be blank"},
       format: {
         pattern: /^([a-zA-Z -]+)$/i,
         message: '^Country can contain only alphabetical characters'
       }
     },
     tax_number: {
-      length: {maximum: 50},
-      presence: true
+      length: {maximum: 50}
     }
   },
 
@@ -112,7 +106,9 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.updateBillingProfile(this.state);
+    let params = _.omit(this.state, '_formLinkedKeys');
+
+    Actions.updateBillingProfile(params);
   },
 
   render() {

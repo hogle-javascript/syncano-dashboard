@@ -1,5 +1,8 @@
+const globals = require('../globals');
+const utils = require('../utils');
 
-var classesCommands = {
+
+const classesCommands = {
   clickFAB: function() {
     return this.waitForElementVisible('@fab', 1000)
       .click('@fab')
@@ -33,14 +36,11 @@ var classesCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button)
       .click(button);
-  },
-  isModalClosed: function(element) {
-    return this.waitForElementNotPresent(element);
-  },
+  }
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/classes',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
     fab: {
@@ -78,7 +78,11 @@ module.exports = {
       selector: '.synicon-pencil'
     },
     classTableRow: {
-      selector: '//div[@class="classes-list-container"]/div[2]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]',
+      locateStrategy: 'xpath'
+    },
+    userProfileClassName: {
+      selector: '//div[@class="classes-list-container"]//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     userClassListItem: {
@@ -86,15 +90,15 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     selectClass: {
-      selector: '//div[@class="classes-list-container"]//span[contains(@class, "synicon")]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../div[1]/span',
       locateStrategy: 'xpath'
     },
     classTableRowDescription: {
-      selector: '//div[@class="classes-list-container"]/div[2]//div[@class="col-flex-1"]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../following-sibling::div[1]',
       locateStrategy: 'xpath'
     },
     classTableName: {
-      selector: '//div[@class="classes-list-container"]/div[2]//div[@class="col-xs-10"]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]',
       locateStrategy: 'xpath'
     },
     deleteButton: {

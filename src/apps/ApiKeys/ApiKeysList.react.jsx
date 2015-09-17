@@ -80,13 +80,17 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="api-keys-list">
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
-          <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Key.Header>Key</Column.Key.Header>
-          <Column.Text.Header>Permissions</Column.Text.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader
+            columnName="CHECK_ICON"
+            primary={true}>
+            {this.props.name}
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

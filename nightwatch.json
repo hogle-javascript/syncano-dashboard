@@ -32,7 +32,10 @@
       "desiredCapabilities": {
         "browserName": "chrome",
         "javascriptEnabled": true,
-        "acceptSslCerts": true
+        "acceptSslCerts": true,
+        "chromeOptions" : {
+         "args" : ["window-position=0,0", "window-size=1280,1024"]
+        }
       },
       "exclude": "utils.js"
     },

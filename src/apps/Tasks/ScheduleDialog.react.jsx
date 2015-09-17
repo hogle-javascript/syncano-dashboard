@@ -61,32 +61,33 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: 'Confirm',
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a Schedule'}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onShow={this.handleDialogShow}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset='UTF-8'
-            method='post'>
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset='UTF-8'
+        method='post'>
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' a Schedule'}
+          openImmediately={this.props.openImmediately}
+          actions={dialogStandardActions}
+          onShow={this.handleDialogShow}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='label'
               name='label'
@@ -116,9 +117,9 @@ export default React.createClass({
               displayMember='text'
               fullWidth={true}
               menuItems={ScheduleDialogStore.getCrontabDropdown()}/>
-          </form>
-        </div>
-      </Common.Dialog>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });

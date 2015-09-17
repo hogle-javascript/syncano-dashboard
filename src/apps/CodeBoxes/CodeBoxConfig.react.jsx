@@ -5,7 +5,8 @@ import Radium from 'radium';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -14,6 +15,8 @@ import Store from './CodeBoxStore';
 // Components
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
+
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default Radium(React.createClass({
 
@@ -26,11 +29,19 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    InstanceTabsMixin
+    SnackbarNotificationMixin,
+    UnsavedDataMixin,
+    Mixins.Mousetrap,
+    Mixins.Dialogs,
+    Mixins.InstanceTabs
   ],
 
   componentDidMount() {
     Actions.fetch();
+    this.bindShortcut(['command+s', 'ctrl+s'], () => {
+      this.handleUpdate();
+      return false;
+    });
   },
 
   getStyles() {
@@ -43,10 +54,42 @@ export default Radium(React.createClass({
     }
   },
 
+  isSaved() {
+    let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
+    let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
+
+    return initialCodeBoxConfig === currentCodeBoxConfig;
+  },
+
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+    this.setSnackbarNotification({
+      message: 'Saving...'
+    });
+  },
+
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        ref: 'unsavedDataWarn',
+        title: 'Unsaved CodeBox config',
+        actions: [
+          {
+            text: 'Just leave',
+            onClick: this._handleContinueTransition
+          },
+          {
+            text: 'Continue editing',
+            onClick: this.handleCancel
+          }
+        ],
+        modal: true,
+        children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
+      }
+    }]
   },
 
   renderEditor() {
@@ -75,6 +118,7 @@ export default Radium(React.createClass({
 
     return (
       <Container style={styles.container}>
+        {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"

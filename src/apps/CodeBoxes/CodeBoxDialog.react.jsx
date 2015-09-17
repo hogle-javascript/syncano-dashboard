@@ -54,34 +54,34 @@ export default React.createClass({
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = this.hasEditMode() ? 'Confrim' : 'Confirm';
     let dialogStandardActions = [
-      {
-        text: 'Cancel',
-        ref: 'cancel',
-        onTouchTap: this.handleCancel
-      }, {
-        text: submitLabel,
-        ref: 'submit',
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a CodeBox'}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}
-        onShow={this.handleDialogShow}
-        contentStyle={{padding: '8px 0 0 0'}}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset='UTF-8'
-            method='post'
-            >
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset='UTF-8'
+        method='post'>
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' a CodeBox'}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}
+          onShow={this.handleDialogShow}
+          contentStyle={{padding: '8px 0 0 0'}}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref='label'
               valueLink={this.linkState('label')}
@@ -110,13 +110,13 @@ export default React.createClass({
               displayMember='text'
               fullWidth={true}
               menuItems={this.state.runtimes}/>
-          </form>
-        </div>
-        <Common.Loading
-          type='linear'
-          position='bottom'
-          show={this.state.isLoading}/>
-      </Common.Dialog>
+          </div>
+          <Common.Loading
+            type='linear'
+            position='bottom'
+            show={this.state.isLoading}/>
+        </Common.Dialog>
+      </form>
     );
   }
 });

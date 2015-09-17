@@ -87,10 +87,14 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
-          <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Desc.Header>Description</Column.Desc.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON">
+            {this.props.name}
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

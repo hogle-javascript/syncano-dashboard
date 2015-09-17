@@ -63,27 +63,27 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
+        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
-        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref="dialog"
-        title={title}
-        openImmediately={this.props.openImmediately}
-        actions={dialogCustomActions}
-        onDismiss={this.resetDialogState}
-        onShow={this.handleDialogShow}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset="UTF-8"
-            method="post">
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset="UTF-8"
+        method="post">
+        <Common.Dialog
+          ref="dialog"
+          title={title}
+          openImmediately={this.props.openImmediately}
+          actions={dialogCustomActions}
+          onDismiss={this.resetDialogState}
+          onShow={this.handleDialogShow}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref="name"
               name="name"
@@ -101,13 +101,13 @@ export default React.createClass({
               errorText={this.getValidationMessages('description').join(' ')}
               hintText="Multiline description of Instance (optional)"
               floatingLabelText="Description"/>
-          </form>
-        </div>
-        <Common.Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
-      </Common.Dialog>
+          </div>
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        </Common.Dialog>
+      </form>
     );
   }
 });

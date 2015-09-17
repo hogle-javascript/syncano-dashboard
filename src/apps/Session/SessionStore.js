@@ -1,6 +1,8 @@
 import Reflux from 'reflux';
 import Raven from '../../raven';
 import Connection from './Connection';
+import _ from 'lodash';
+
 import SessionActions from './SessionActions';
 
 import Colors from 'material-ui/lib/styles/colors';
@@ -16,6 +18,7 @@ export default Reflux.createStore({
     this.instance = null;
     this.router = null;
     this.theme = null;
+    this.signUpMode = null;
 
     if (this.isAuthenticated() && !this.user) {
       SessionActions.fetchUser(this.token);
@@ -46,6 +49,10 @@ export default Reflux.createStore({
     return this.router || empty || null;
   },
 
+  getSignUpMode() {
+    return this.signUpMode;
+  },
+
   getTheme(empty) {
     return this.theme || empty || null;
   },
@@ -53,6 +60,31 @@ export default Reflux.createStore({
   getInvitationFromUrl() {
     console.info('SessionStore::getInvitationFomUrl');
     return localStorage.getItem('invitationKey');
+  },
+
+  setAnalyticsIdentifying(user) {
+    let currentQuery = this.getRouter() ? this.getRouter().getCurrentQuery() : {};
+    let analyticsIdentifyObject = {
+      email: user.email,
+      'Auth backend': user.network ? user.network : 'password'
+    };
+    let analyticsIdentifyCampaign = {
+      'UTM Campaign': currentQuery.utm_campaign,
+      'UTM Content': currentQuery.utm_content,
+      'UTM Medium': currentQuery.utm_medium,
+      'UTM Source': currentQuery.utm_source,
+      'UTM Term': currentQuery.utm_term
+    };
+
+    if (!_.isUndefined(currentQuery.utm_campaign)) {
+      _.extend(analyticsIdentifyObject, analyticsIdentifyCampaign);
+    }
+
+    if (this.signUpMode) {
+      window.analytics.identify(analyticsIdentifyObject)
+    } else {
+      window.analytics.identify(user.email)
+    }
   },
 
   setToken(token) {
@@ -86,8 +118,7 @@ export default Reflux.createStore({
       id: user.id
     });
 
-    window.analytics.identify(user.email);
-
+    this.setAnalyticsIdentifying(user);
     this.trigger(this);
   },
 
@@ -109,6 +140,10 @@ export default Reflux.createStore({
   setRouter(router) {
     console.info('SessionStore::setRouter');
     this.router = router;
+  },
+
+  setSignUpMode() {
+    this.signUpMode = true;
   },
 
   setTheme(theme) {
@@ -140,6 +175,10 @@ export default Reflux.createStore({
     if (this.theme) {
       this.theme.setTheme(SyncanoTheme);
     }
+  },
+
+  removeSignUpMode() {
+    this.signUpMode = null;
   },
 
   makePalette(mainColor, accentColor) {

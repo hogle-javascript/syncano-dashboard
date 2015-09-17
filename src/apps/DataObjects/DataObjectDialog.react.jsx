@@ -78,7 +78,7 @@ export default React.createClass({
             let dateTime = new Date(
               date.getFullYear(),
               date.getMonth(),
-              date.getDay(),
+              date.getDate(),
               time.getHours(),
               time.getMinutes(),
               0
@@ -117,6 +117,14 @@ export default React.createClass({
     });
 
     return fileFields;
+  },
+
+  getEmptyDefaultTime(value) {
+    if (value) {
+      return false;
+    }
+
+    return true;
   },
 
   onDrop(fieldName, files) {
@@ -383,7 +391,7 @@ export default React.createClass({
             ? new Date(this.state[item.name].value)
             : undefined;
 
-          /* eslint-enable no-undefined*/
+        /* eslint-enable no-undefined*/
 
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
@@ -398,27 +406,14 @@ export default React.createClass({
                     ref={'fielddate-' + item.name}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-
-                    /* eslint-disable no-undefined */
-
-                    defaultDate={value || undefined}
-
-                    /* eslint-enable no-undefined */
-
-                    />
+                    defaultDate={value} />
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={'fieldtime-' + item.name}
                     style={{width: '100%'}}
-
-                    /* eslint-disable no-undefined */
-
-                    defaultTime={value || undefined}
-
-                    /* eslint-enable no-undefined */
-
-                    />
+                    defaultTime={value}
+                    emptyDefaultTime={this.getEmptyDefaultTime(value)} />
                 </div>
                 <div className="col-xs-5">
                   <MUI.IconButton
@@ -482,44 +477,49 @@ export default React.createClass({
     let editTitle = 'Edit a Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
     let addTitle = 'Add a Data Object';
     let title = this.hasEditMode() ? editTitle : addTitle;
-    let submitLabel = 'Confirm';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: {submitLabel},
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title}
-        onShow={this.handleDialogShow}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <div className="row">
-            <div className="col-xs-20">
-              {this.renderBuiltinFields()}
-            </div>
-            <div className="col-xs-15" style={{paddingLeft: 15}}>
-              <div>Class fields</div>
-              {this.renderCustomFields()}
-            </div>
+      <form
+        onSubmit={this.handleFormValidation}
+        method="post"
+        acceptCharset="UTF-8">
+        <Common.Dialog
+          ref='dialog'
+          title={title}
+          onShow={this.handleDialogShow}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
+              <div className="row">
+                <div className="col-xs-20">
+                  {this.renderBuiltinFields()}
+                </div>
+                <div className="col-xs-15" style={{paddingLeft: 15}}>
+                  <div>Class fields</div>
+                  {this.renderCustomFields()}
+                </div>
+              </div>
           </div>
-        </div>
-        <Common.Loading
-          type="linear"
-          position="bottom"
-          show={this.state.isLoading} />
-      </Common.Dialog>
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        </Common.Dialog>
+      </form>
     );
   }
 });

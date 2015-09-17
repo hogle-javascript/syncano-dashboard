@@ -1,4 +1,6 @@
 const utils = require('../utils');
+const globals = require('../globals');
+
 const dataObjectsCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button)
@@ -18,7 +20,7 @@ const dataObjectsCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/enter_this_instance_now/classes/class/objects',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes/class/objects',
   commands: [dataObjectsCommands],
   elements: {
     instancesDropdown: {

@@ -154,10 +154,14 @@ export default React.createClass({
           <Common.Show if={this.state.items.length > 0}>
             <Common.Lists.Container>
               <Common.ColumnList.Header>
-                <Column.CheckIcon.Header>Invitations</Column.CheckIcon.Header>
-                <Column.Desc.Header>From</Column.Desc.Header>
-                <Column.Desc.Header>Role</Column.Desc.Header>
-                <Column.Date.Header>Created</Column.Date.Header>
+                <Column.ColumnHeader
+                  primary={true}
+                  columnName="CHECK_ICON">
+                  Invitations
+                </Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DESC">From</Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
+                <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
               </Common.ColumnList.Header>
               <Common.Lists.List>
                 {this.renderList()}

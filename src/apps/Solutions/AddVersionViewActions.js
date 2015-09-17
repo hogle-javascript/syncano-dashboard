@@ -2,8 +2,10 @@ import CreateActions from '../../utils/ActionsConstructor.js'
 
 export default CreateActions({
   fetch: {},
+  setType: {},
   setInstance: {},
   setInstances: {},
+  clearExportSpec: {},
   fetchInstanceData: {},
 
   fetchInstances: {

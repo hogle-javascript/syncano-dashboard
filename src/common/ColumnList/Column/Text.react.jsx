@@ -4,22 +4,6 @@ import ColumnListConstans from '../ColumnListConstans';
 
 import MUI from 'material-ui';
 
-let Header = React.createClass({
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.TEXT
-    }
-  },
-
-  render() {
-    return (
-      <div className={this.props.className}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
   displayName: 'ColumnText',
@@ -28,10 +12,6 @@ export default Radium(React.createClass({
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     handleClick: React.PropTypes.func
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {

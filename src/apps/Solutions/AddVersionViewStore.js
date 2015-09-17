@@ -76,6 +76,11 @@ export default Reflux.createStore({
     Actions.fetchInstances();
   },
 
+  onClearExportSpec() {
+    console.debug('AddVersionViewStore::onClearExportSpec');
+    this.data.exportSpec = this.getInitialState().exportSpec;
+  },
+
   getTypes() {
     return this.types;
   },
@@ -107,11 +112,17 @@ export default Reflux.createStore({
     });
   },
 
+  setType(type) {
+    this.data.type = type;
+    this.trigger(this.data);
+  },
+
   setInstance(instance) {
     this.data.instance = instance;
     Actions.fetchInstance(instance)
       .then(Actions.fetchInstanceData);
   },
+
   setInstanceData() {
     this.data.dataReady = true;
     this.trigger(this.data);
