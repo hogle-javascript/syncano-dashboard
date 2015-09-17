@@ -139,9 +139,9 @@ export default Reflux.createStore({
     }, {amount: 0});
 
     if (start.isAfter(desiredStart, 'day') && start.isSame(desiredStart, 'month')) {
-      let currentDate = start.get('date') - 1;
-      let endDate = start.date(0).get('date');
-      let diff = endDate - currentDate;
+      let currentDate = start.get('date');
+      let endDate = moment(start._i, 'YYYY-MM-DD').daysInMonth();
+      let diff = endDate - currentDate + 1;
 
       covered.amount *= diff / endDate;
     }
