@@ -4,6 +4,8 @@ import Radium from 'radium';
 
 import MUI from 'material-ui';
 
+import './Tour.css';
+
 export default Radium(React.createClass({
 
   propTypes: {
@@ -88,7 +90,7 @@ export default Radium(React.createClass({
       tourFocus: {
         position: 'fixed',
         borderRadius: '50%',
-        boxShadow: '0 0 0 130vmax rgba(128, 128, 128, 0.5)',
+        boxShadow: '0 0 0 200vmax rgba(128, 128, 128, 0.5)',
         transition: 'height .2s, width .2s, top .2s, left .2s',
         zIndex: 1000
       }
@@ -151,12 +153,14 @@ export default Radium(React.createClass({
 
     return (
       <div onClick={this.handleOnClick} style={visible ? styles.overlayVisible : styles.overlayHidden}>
-        <div style={[{
-          top,
-          left,
-          height,
-          width
-        }, styles.tourFocus]}>
+        <div
+          className="tour-focus"
+          style={[{
+            top,
+            left,
+            height,
+            width
+          }, styles.tourFocus]}>
           <div style={styles.focusText}>
             {config[currentStep] ? config[currentStep].text : config[0].text}
 
