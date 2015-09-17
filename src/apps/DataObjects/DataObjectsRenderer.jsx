@@ -1,5 +1,7 @@
 import React from 'react';
 import Moment from 'moment';
+import _ from 'lodash';
+
 import MUI from 'material-ui';
 
 export default {
@@ -56,7 +58,11 @@ export default {
         return (
           <MUI.TableHeaderColumn
             key={'header-column-' + index}
-            style={{width: item.width ? item.width : null, whiteSpace: 'normal', wordWrap: 'normal'}}
+            style={{
+              width: item.width ? item.width : 100,
+              whiteSpace: 'normal',
+              wordWrap: 'normal'
+            }}
             tooltip={item.tooltip}>
             {item.name}
           </MUI.TableHeaderColumn>
@@ -79,7 +85,6 @@ export default {
   // Table Body
   renderTableData(items, columns, selectedRows) {
     return items.map((item, index) => {
-      let row = {};
       let selected = (selectedRows || []).indexOf(index) > -1;
       let columnsComponents = columns.map((column, i) => {
         if (!column.checked) {
@@ -87,36 +92,34 @@ export default {
         }
 
         let value = item[column.id];
+        let valueIsObject = _.isObject(value);
         let renderer = this.getColumnRenderer(column.id);
 
-        if (value && typeof value === 'object') {
-          if (value.type === 'reference') {
-            value = this.renderReference(value);
-          }
-          if (value.type === 'file') {
-            value = this.renderFile(value);
-          }
-          if (value.type === 'datetime') {
-            value = this.renderColumnDate(value.value);
-          }
-        } else if (renderer) {
+        if (valueIsObject && value.type === 'reference') {
+          value = this.renderReference(value);
+        }
+
+        if (valueIsObject && value.type === 'file') {
+          value = this.renderFile(value);
+        }
+
+        if (valueIsObject && value.type === 'datetime') {
+          value = this.renderColumnDate(value.value);
+        }
+
+        if (renderer) {
           // Simple string or renderer
           value = renderer(item[column.id]);
         }
 
-        if (typeof value === 'boolean' || typeof value === 'number') {
+        if (_.isBoolean(value) || _.isNumber(value)) {
           value = value !== null ? value.toString() : value;
         }
-
-        row[column.id] = {
-          content: <div>{value}</div>,
-          style: {width: column.width}
-        };
 
         return (
           <MUI.TableRowColumn
             key={`${column.id}-${i}`}
-            style={{width: column.width}}>
+            style={{width: column.width ? column.width : 100}}>
             {value}
           </MUI.TableRowColumn>
         );
