@@ -63,7 +63,7 @@ export default Reflux.createStore({
   },
 
   setAnalyticsIdentifying(user) {
-    let currentQuery = this.getRouter().getCurrentQuery();
+    let currentQuery = this.getRouter() ? this.getRouter().getCurrentQuery() : {};
     let analyticsIdentifyObject = {
       email: user.email,
       'Auth backend': user.network ? user.network : 'password'
