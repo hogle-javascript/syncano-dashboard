@@ -37,6 +37,14 @@ export default {
       .error(this.failure);
   },
 
+  removeShared(instanceName, adminId) {
+    this.Connection
+      .Instances
+      .removeShared(instanceName, adminId)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+
   set(name) {
     this.Connection
       .setInstance(name)

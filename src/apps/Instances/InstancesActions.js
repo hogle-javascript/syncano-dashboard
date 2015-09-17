@@ -32,6 +32,12 @@ export default CreateActions(
       loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Instances.remove'
+    },
+    removeSharedInstance: {
+      asyncResult: true,
+      loading: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.Instances.removeShared'
     }
   },
   {

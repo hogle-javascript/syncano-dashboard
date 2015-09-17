@@ -191,6 +191,11 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
+  onRemoveSharedInstanceCompleted() {
+    this.data.hideDialogs = true;
+    this.refreshData();
+  },
+
   onUpdateInstanceCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();

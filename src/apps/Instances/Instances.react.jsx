@@ -154,6 +154,11 @@ export default Radium(React.createClass({
     Actions.removeInstances(Store.getCheckedItems());
   },
 
+  handleDeleteShared() {
+    console.info('Instances::handleDeleteShared');
+    Actions.removeSharedInstance(Store.getCheckedItems()[0], SessionStore.getUser().id);
+  },
+
   handleItemClick(instanceName) {
     // Redirect to main instance screen
     SessionActions.fetchInstance(instanceName);
@@ -197,7 +202,29 @@ export default Radium(React.createClass({
               show={this.state.isLoading} />
           ]
         }
-      }]
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteSharedInstanceDialog',
+          ref: 'deleteSharedInstanceDialog',
+          title: 'Delete shared Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDeleteShared}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            this.getDialogList(checkedInstances),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          ]
+        }
+      }
+    ]
   },
 
   showInstanceDialog() {
@@ -209,6 +236,26 @@ export default Radium(React.createClass({
 
   showInstanceEditDialog() {
     InstanceDialogActions.showDialog(Store.getCheckedItem());
+  },
+
+  renderDeleteFabButton() {
+    if (Store.isCheckedInstanceShared()) {
+      return (
+        <Common.Fab.TooltipItem
+          tooltip="Click here to leave Instance"
+          mini={true}
+          onClick={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}
+          iconClassName="synicon-delete"/>
+      )
+    }
+
+    return (
+      <Common.Fab.TooltipItem
+        tooltip="Click here to delete Instances"
+        mini={true}
+        onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
+        iconClassName="synicon-delete"/>
+    )
   },
 
   render() {
@@ -268,11 +315,7 @@ export default Radium(React.createClass({
               mini={true}
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to delete Instances"
-              mini={true}
-              onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
-              iconClassName="synicon-delete"/>
+            {this.renderDeleteFabButton()}
             <Common.Fab.TooltipItem
               tooltip="Click here to edit Instance"
               mini={true}
