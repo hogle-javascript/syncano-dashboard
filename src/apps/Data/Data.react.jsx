@@ -187,12 +187,12 @@ export default React.createClass({
               onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
               iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
-              tooltip="Click here to delete a CodeBox Endpoint"
+              tooltip="Click here to delete a Webhook"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
               iconClassName="synicon-delete"/>
             <Common.Fab.TooltipItem
-              tooltip="Click here to edit a CodeBox Endpoint"
+              tooltip="Click here to edit a Webhook"
               mini={true}
               disabled={checkedDataViews > 1}
               onClick={this.showWebhookEditDialog}
@@ -224,7 +224,7 @@ export default React.createClass({
          */}
 
         <WebhooksList
-          name="CodeBox Endpoints"
+          name="Webhooks"
           checkItem={this.checkWebhook}
           isLoading={this.state.webhooks.isLoading}
           items={this.state.webhooks.items}

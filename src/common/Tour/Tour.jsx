@@ -57,7 +57,8 @@ export default Radium(React.createClass({
         height: '100%',
         width: '100%',
         opacity: 0,
-        zIndex: -5
+        zIndex: -5,
+        display: 'none'
       },
       overlayVisible: {
         position: 'fixed',
@@ -67,7 +68,8 @@ export default Radium(React.createClass({
         left: 0,
         opacity: 1,
         zIndex: 5000,
-        transition: 'opacity .2s'
+        transition: 'opacity .2s',
+        display: 'block'
       },
       dots: {
         textAlign: 'center'
@@ -86,7 +88,7 @@ export default Radium(React.createClass({
       tourFocus: {
         position: 'fixed',
         borderRadius: '50%',
-        boxShadow: '0 0 0 200vmax rgba(128, 128, 128, 0.5)',
+        boxShadow: '0 0 0 130vmax rgba(128, 128, 128, 0.5)',
         transition: 'height .2s, width .2s, top .2s, left .2s',
         zIndex: 1000
       }

@@ -64,6 +64,12 @@ export default React.createClass({
 
     this.editor.clearSelection();
 
+    let textArea = document.getElementsByClassName('ace_text-input')[0];
+
+    if (textArea.className.indexOf('mousetrap') === -1) {
+      textArea.className += ' mousetrap';
+    }
+
     if (this.props.onLoad) {
       this.props.onLoad(this.editor);
     }

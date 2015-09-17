@@ -64,67 +64,73 @@ export default React.createClass({
 
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
-    let submitLabel = this.hasEditMode() ? 'Confirm' : 'Confirm';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: {submitLabel},
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref='dialog'
-        title={title + ' a CodeBox Endpoint'}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onShow={this.handleDialogShow}
-        onDismiss={this.resetDialogState}
-        modal={true}>
-        <div>
-          {this.renderFormNotifications()}
-          <MUI.TextField
-            ref="name"
-            name="name"
-            fullWidth={true}
-            disabled={this.hasEditMode()}
-            valueLink={this.linkState('name')}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Name of the WebHook"
-            floatingLabelText="Name"/>
-          <MUI.TextField
-            ref="description"
-            name="description"
-            fullWidth={true}
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join(' ')}
-            hintText="Description of the WebHook"
-            floatingLabelText="Description"/>
-          <MUI.SelectField
-            ref="codebox"
-            name="codebox"
-            floatingLabelText="CodeBox"
-            valueLink={this.linkState('codebox')}
-            errorText={this.getValidationMessages('codebox').join(' ')}
-            valueMember="payload"
-            displayMember="text"
-            fullWidth={true}
-            menuItems={this.state.codeboxes}/>
-          <MUI.Toggle
-            ref='public'
-            name='public'
-            onToggle={this.handleToogle}
-            style={{marginTop: 20}}
-            defaultToggled={this.state.public}
-            label='Make this WebHook public?'/>
-        </div>
-      </Common.Dialog>
+      <form
+        onSubmit={this.handleFormValidation}
+        method="post"
+        acceptCharset="UTF-8">
+        <Common.Dialog
+          ref='dialog'
+          title={title + ' a Webhook'}
+          openImmediately={this.props.openImmediately}
+          actions={dialogStandardActions}
+          onShow={this.handleDialogShow}
+          onDismiss={this.resetDialogState}
+          modal={true}>
+          <div>
+            {this.renderFormNotifications()}
+            <MUI.TextField
+              ref="name"
+              name="name"
+              fullWidth={true}
+              disabled={this.hasEditMode()}
+              valueLink={this.linkState('name')}
+              errorText={this.getValidationMessages('name').join(' ')}
+              hintText="Name of the Webhook"
+              floatingLabelText="Name"/>
+            <MUI.TextField
+              ref="description"
+              name="description"
+              fullWidth={true}
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              hintText="Description of the Webhook"
+              floatingLabelText="Description"/>
+            <MUI.SelectField
+              className="codebox-dropdown"
+              ref="codebox"
+              name="codebox"
+              floatingLabelText="CodeBox"
+              valueLink={this.linkState('codebox')}
+              errorText={this.getValidationMessages('codebox').join(' ')}
+              valueMember="payload"
+              displayMember="text"
+              fullWidth={true}
+              menuItems={this.state.codeboxes}/>
+            <MUI.Toggle
+              ref='public'
+              name='public'
+              onToggle={this.handleToogle}
+              style={{marginTop: 20}}
+              defaultToggled={this.state.public}
+              label='Make this Webhook public?'/>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });

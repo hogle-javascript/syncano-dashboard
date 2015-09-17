@@ -41,31 +41,32 @@ export default React.createClass({
   render() {
     let title = this.hasEditMode() ? 'Edit' : 'Add';
     let dialogStandardActions = [
-      {
-        ref: 'cancel',
-        text: 'Cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        ref: 'submit',
-        text: 'Confirm',
-        onTouchTap: this.handleFormValidation
-      }
+      <MUI.FlatButton
+        key="cancel"
+        label="Cancel"
+        onTouchTap={this.handleCancel}
+        ref="cancel"/>,
+      <MUI.FlatButton
+        type="submit"
+        key="confirm"
+        label="Confirm"
+        primary={true}
+        ref="submit"/>
     ];
 
     return (
-      <Common.Dialog
-        ref="dialog"
-        title={`${title} a Group`}
-        openImmediately={this.props.openImmediately}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
-        <div>
-          {this.renderFormNotifications()}
-          <form
-            onSubmit={this.handleFormValidation}
-            acceptCharset="UTF-8"
-            method="post">
+      <form
+        onSubmit={this.handleFormValidation}
+        acceptCharset="UTF-8"
+        method="post">
+        <Common.Dialog
+          ref="dialog"
+          title={`${title} a Group`}
+          openImmediately={this.props.openImmediately}
+          actions={dialogStandardActions}
+          onDismiss={this.resetDialogState}>
+          <div>
+            {this.renderFormNotifications()}
             <MUI.TextField
               ref="label"
               label="label"
@@ -74,13 +75,13 @@ export default React.createClass({
               errorText={this.getValidationMessages('label').join(' ')}
               hintText="Name of the group"
               floatingLabelText="Group Name"/>
-          </form>
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
-        </div>
-      </Common.Dialog>
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading}/>
+          </div>
+        </Common.Dialog>
+      </form>
     );
   }
 });
