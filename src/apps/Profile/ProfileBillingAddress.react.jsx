@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import FormMixin from '../../mixins/FormMixin';
 
@@ -105,7 +106,9 @@ export default React.createClass({
   },
 
   handleSuccessfullValidation() {
-    Actions.updateBillingProfile(this.state);
+    let params = _.omit(this.state, '_formLinkedKeys');
+
+    Actions.updateBillingProfile(params);
   },
 
   render() {
