@@ -107,7 +107,7 @@ export default React.createClass({
         <ColumnList.Header>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-5 col-md-5">
+            className="col-xs-5">
             <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
           </Column.ColumnHeader>
 
@@ -121,19 +121,19 @@ export default React.createClass({
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-5 col-md-5">
+            className="col-xs-5">
             Installations
           </Column.ColumnHeader>
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4 col-md-4">
+            className="col-xs-4">
             Download
           </Column.ColumnHeader>
 
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4 col-md-4">
+            className="col-xs-4">
             Install
           </Column.ColumnHeader>
 

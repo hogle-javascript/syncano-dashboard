@@ -100,7 +100,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-3 col-md-3">
+            className="col-xs-3">
             Group
           </Column.ColumnHeader>
           <Column.ColumnHeader
@@ -110,7 +110,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="ID"
-            className="col-xs-4 col-md-4">
+            className="col-xs-4">
             Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
