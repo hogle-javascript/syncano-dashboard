@@ -37,10 +37,6 @@
     "jsx": true
   },
   "rules": {
-    // what we want
-    // "react/no-multi-comp": 2,
-
-    // what we have
     "no-inline-comments": 2,
     "react/sort-comp": [2, {
       "groups": {
@@ -93,7 +89,7 @@
       "exceptions": ["-", "+"],
       "markers": ["=", "!"]
     }],
-    "react/no-multi-comp": 1,
+    "react/no-multi-comp": 2,
     "no-undef": 2,
     "no-return-assign": [2, "always"],
     "id-length": [2, {"min": 2, "exceptions": ["x", "y", "z", "i", "n", "D", "e", "_"]}],

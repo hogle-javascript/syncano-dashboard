@@ -3,23 +3,6 @@ import Radium from 'radium';
 import Moment from 'moment';
 import ColumnListConstans from '../ColumnListConstans';
 
-let Header = React.createClass({
-
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.DATE
-    }
-  },
-
-  render() {
-    return (
-      <div className={this.props.className}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
   displayName: 'ColumnDate',
@@ -28,10 +11,6 @@ export default Radium(React.createClass({
     color: React.PropTypes.string,
     date: React.PropTypes.string,
     ifInvalid: React.PropTypes.string
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {

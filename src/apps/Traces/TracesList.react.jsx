@@ -169,10 +169,10 @@ export default Radium(React.createClass({
     if (this.state.items.length > 0) {
       return (
         <Common.ColumnList.Header>
-          <Column.IconName.Header>{this.props.name}</Column.IconName.Header>
-          <Column.ID.Header>ID</Column.ID.Header>
-          <Column.Desc.Header>Duration</Column.Desc.Header>
-          <Column.Date.Header>Executed</Column.Date.Header>
+          <Column.ColumnHeader primary={true} columnName="ICON_NAME">{this.props.name}</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
         </Common.ColumnList.Header>
       )
     }
