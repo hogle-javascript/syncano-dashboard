@@ -301,7 +301,7 @@ gulp.task('upload-screenshots', function(cb) {
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
   if (process.env.CI && nodeIndex.toString() !== '1') {
-    gutil.log('Exit!', process.env.CI, nodeIndex);
+    gutil.log('Exit');
     return cb();
   }
 
@@ -321,8 +321,8 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
-  var invisionFolder = '0B-nLxpmereQIUTBqaTVGVE9iT3c'; //'0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
-  var latestFolder = '0B-nLxpmereQIdUdVNmxkeHN0UTg'; //'0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
 
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
@@ -459,55 +459,65 @@ gulp.task('upload-screenshots', function(cb) {
     },
     function(files, folder, callback) {
       // Update files
-      gutil.log('Updating files...');
-      var fileObjects = _.map(files.filesToUpdateList, function(file) {
-        return {
-          fileId: file.id,
-          media: {
-            mimeType: 'image/png',
-            body: fs.readFileSync(file.updateMediaPath)
+      if (files.filesToUpdateList.length > 0) {
+        gutil.log('Updating files...');
+        var fileObjects = _.map(files.filesToUpdateList, function(file) {
+          return {
+            fileId: file.id,
+            media: {
+              mimeType: 'image/png',
+              body: fs.readFileSync(file.updateMediaPath)
+            }
           }
-        }
-      });
+        });
 
-      async.each(fileObjects, drive.files.update, function(err) {
-        if (err) return callback(err);
+        async.each(fileObjects, drive.files.update, function(err) {
+          if (err) return callback(err);
+          callback(null, files, folder);
+        });
+      } else {
+        gutil.log('No files to update.');
         callback(null, files, folder);
-      });
+      }
     },
     function(files, folder, callback) {
       // Insert new files
-      gutil.log('Uploading new files...');
-      function mapDriveObjects(newFiles, folderId) {
-        var objects = newFiles.map(function(file) {
-          return {
-            resource: {
-              title: file.title,
-              mimeType: 'image/png',
-              parents: [{id: folderId}]
-            },
-            media: {
-              mimeType: 'image/png',
-              body: fs.createReadStream(file.path)
-            }
-          };
-        });
-        return objects;
-      }
-
-      var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
-      var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
-
-      async.parallel([
-        function() {
-          async.each(latestDriveObjects, drive.files.insert);
-        },
-        function() {
-          async.each(versionDriveObjects, drive.files.insert)
+      if (files.newFilesForLatest.length > 0 || files.newFilesForVersion.length > 0) {
+        gutil.log('Uploading new files...');
+        function mapDriveObjects(newFiles, folderId) {
+          var objects = newFiles.map(function(file) {
+            return {
+              resource: {
+                title: file.title,
+                mimeType: 'image/png',
+                parents: [{id: folderId}]
+              },
+              media: {
+                mimeType: 'image/png',
+                body: fs.createReadStream(file.path)
+              }
+            };
+          });
+          return objects;
         }
-      ], function() {
+
+        var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
+        var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
+
+        async.parallel([
+          function() {
+            async.each(latestDriveObjects, drive.files.insert);
+          },
+          function() {
+            async.each(versionDriveObjects, drive.files.insert)
+          }
+        ], function() {
+          callback();
+        });
+      } else {
+        gutil.log('No new files to upload.');
         callback();
-      });
+      }
     }
   ], function(err) {
     if (err) throw err;
