@@ -32,4 +32,5 @@ deployment:
     commands:
       - npm run-script publish
       - npm run-script clean
+      - npm run-script upload-screenshots
       - npm run-script s3-cleanup
