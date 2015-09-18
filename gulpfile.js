@@ -301,6 +301,7 @@ gulp.task('upload-screenshots', function(cb) {
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
   if (process.env.CI && nodeIndex.toString() !== '1') {
+    gutil.log('Exit!')
     return cb();
   }
 
