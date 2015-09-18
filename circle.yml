@@ -36,4 +36,5 @@ deployment:
   screenshots:
     branch: SYNGUI-1624
     commands:
-      - npm run-script upload-screenshots
+      - npm run-script upload-screenshots:
+        parallel: true
