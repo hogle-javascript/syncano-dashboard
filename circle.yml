@@ -35,5 +35,5 @@ deployment:
       - npm run-script s3-cleanup
   screenshots:
     branch: SYNGUI-1624
-      commands:
+    commands:
       - npm run-script upload-screenshots
