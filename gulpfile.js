@@ -342,6 +342,7 @@ gulp.task('upload-screenshots', function(cb) {
       }, function(err, response) {
         if (err) return callback(err);
         if (response.items.length < 1) {
+          console.log('Creating version folder...');
           drive.files.insert({
             resource: {
               title: version,
@@ -353,6 +354,7 @@ gulp.task('upload-screenshots', function(cb) {
             callback(null, folder);
           });
         } else {
+          console.log('Saving version folder ID...');
           var folder = response.items[0];
           callback(null, folder)
         }
@@ -362,6 +364,7 @@ gulp.task('upload-screenshots', function(cb) {
       // Get list of files from disc, GoogleDrive latest and version folder
       async.parallel({
         localFilesList: function(callback) {
+          console.log('Creating screenshots list...');
           var screenshots = './reports/screenshots/_navigation/';
           var files = fs.readdirSync(screenshots);
           var localFilesList = _.map(_.filter(files, function(file) {
@@ -376,6 +379,7 @@ gulp.task('upload-screenshots', function(cb) {
           callback(null, localFilesList);
         },
         latestFolderFilesList: function(callback) {
+          console.log('Creating latest folder screenshots list...');
           var latestFolderFilesList = [];
 
           drive.files.list({
@@ -393,6 +397,7 @@ gulp.task('upload-screenshots', function(cb) {
           });
         },
         versionFolderFilesList: function(callback) {
+          console.log('Creating version folder screenshots list...');
           var versionFolderFilesList = [];
 
           drive.files.list({
@@ -442,8 +447,10 @@ gulp.task('upload-screenshots', function(cb) {
         return newFiles;
       }
 
+      console.log('Creating list of files to update...');
       files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.latestFolderFilesList));
       files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.versionFolderFilesList));
+      console.log('Creating list of new files...');
       files.newFilesForLatest = getNewFiles(files.latestFolderFilesList);
       files.newFilesForVersion = getNewFiles(files.versionFolderFilesList);
 
@@ -451,6 +458,7 @@ gulp.task('upload-screenshots', function(cb) {
     },
     function(files, folder, callback) {
       // Update files
+      console.log('Updating files...');
       var fileObjects = _.map(files.filesToUpdateList, function(file) {
         return {
           fileId: file.id,
@@ -468,6 +476,7 @@ gulp.task('upload-screenshots', function(cb) {
     },
     function(files, folder, callback) {
       // Insert new files
+      console.log('Uploading new files...');
       function mapDriveObjects(newFiles, folderId) {
         var objects = newFiles.map(function(file) {
           return {
