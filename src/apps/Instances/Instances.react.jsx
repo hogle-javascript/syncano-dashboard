@@ -103,7 +103,7 @@ export default Radium(React.createClass({
       text: <div>
               Use this link to go into your <strong style={styles.tourHighlight}>Account</strong> settings
               <div style={styles.secondLine}>
-                Your profile, authentication info and pending invitations list) or Billing information (your billing
+                Your profile, authentication info and pending invitations list or Billing information (your billing
                 plan, payment methods or list of invoices).
               </div>
             </div>,
@@ -124,7 +124,7 @@ export default Radium(React.createClass({
           </div>
           <div style={styles.secondLine}>
             Read more on Solutions
-            in <a style={styles.link} href="http://docs.syncano.com/docs/solutions">our docs</a>.
+            in <a style={styles.link} href="http://docs.syncano.com/docs/solutions" target="_blank">our docs</a>.
           </div>
         </div>,
       radius: 100,

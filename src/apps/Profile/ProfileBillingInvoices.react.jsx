@@ -60,11 +60,11 @@ export default React.createClass({
         <Common.Show if={this.state.invoices.length > 0}>
           <Common.Lists.Container style={{width: '100%', margin: '65px 0px 0px 0px'}}>
             <Common.ColumnList.Header>
-              <Column.Desc.Header>Period</Column.Desc.Header>
-              <Column.Desc.Header>Invoice ID</Column.Desc.Header>
-              <Column.Desc.Header>Amount</Column.Desc.Header>
-              <Column.Desc.Header>Status</Column.Desc.Header>
-              <Column.Desc.Header>Action</Column.Desc.Header>
+              <Column.ColumnHeader columnName="DESC">Period</Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">Invoice ID</Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">Amount</Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">Status</Column.ColumnHeader>
+              <Column.ColumnHeader columnName="DESC">Action</Column.ColumnHeader>
             </Common.ColumnList.Header>
             <Common.Lists.List>
               {this.state.invoices.map(this.renderListItem)}

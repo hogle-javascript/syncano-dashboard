@@ -4,33 +4,6 @@ import ColumnListConstans from '../ColumnListConstans';
 
 import MUI from 'material-ui';
 
-let Header = React.createClass({
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.NAME
-    }
-  },
-
-  getStyles() {
-    return {
-      fontSize: 20,
-      fontWeight: 500
-    }
-  },
-
-  render() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        className={this.props.className}
-        style={styles}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
   displayName: 'ColumnName',
@@ -39,10 +12,6 @@ export default Radium(React.createClass({
     id: React.PropTypes.string,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {

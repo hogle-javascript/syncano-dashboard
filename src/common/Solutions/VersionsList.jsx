@@ -105,29 +105,37 @@ export default React.createClass({
     return (
       <Lists.Container>
         <ColumnList.Header>
-          <Column.Desc.Header className="col-xs-5 col-md-5">
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-5">
             <span style={{fontSize: '1.2rem'}}>{this.props.name}</span>
-          </Column.Desc.Header>
+          </Column.ColumnHeader>
 
-          <Column.Date.Header>
+          <Column.ColumnHeader columnName="DATE">
             Created
-          </Column.Date.Header>
+          </Column.ColumnHeader>
 
-          <Column.Desc.Header>
+          <Column.ColumnHeader columnName="DESC">
             Type
-          </Column.Desc.Header>
+          </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-5 col-md-5">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-5">
             Installations
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-4 col-md-4">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4">
             Download
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
-          <Column.ID.Header className="col-xs-4 col-md-4">
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4">
             Install
-          </Column.ID.Header>
+          </Column.ColumnHeader>
 
 
         </ColumnList.Header>

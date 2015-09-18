@@ -34,7 +34,7 @@
         "javascriptEnabled": true,
         "acceptSslCerts": true,
         "chromeOptions" : {
-         "args" : ["start-fullscreen"]
+         "args" : ["window-position=0,0", "window-size=1280,1024"]
         }
       },
       "exclude": "utils.js"

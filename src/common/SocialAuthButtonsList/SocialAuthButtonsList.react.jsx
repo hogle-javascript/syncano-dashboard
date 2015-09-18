@@ -45,7 +45,6 @@ export default Radium(React.createClass({
 
   handleSocialSignup(network) {
     SessionStore.setSignUpMode();
-
     AuthActions.socialLogin(network)
   },
 
