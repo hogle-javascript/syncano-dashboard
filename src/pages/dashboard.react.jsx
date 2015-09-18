@@ -7,6 +7,7 @@ import AuthConstants from '../apps/Account/AuthConstants';
 
 // Components
 import Header from '../apps/Header/Header.react';
+import MagneticPixel from '../common/MagneticPixel';
 
 /* eslint-disable no-process-env */
 
@@ -40,13 +41,7 @@ export default React.createClass({
       SessionStore.removeSignUpMode();
 
       return (
-        <div
-          dangerouslySetInnerHTML={{__html: `
-            <script type="text/javascript" src="//magnetic.t.domdex.com/23447/pix.js?t=c&for=syncano"></script>
-            <noscript>
-            <img src="//magnetic.t.domdex.com/23447/pix.gif?t=c&for=syncano" width="1" height="1" style="display:none;">
-            </noscript>`}}>
-        </div>
+        <MagneticPixel />
       )
     }
   },
