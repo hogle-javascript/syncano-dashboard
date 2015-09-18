@@ -320,8 +320,8 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
-  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
-  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+  var invisionFolder = '0B-nLxpmereQIUTBqaTVGVE9iT3c'; //'0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIdUdVNmxkeHN0UTg'; //'0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
 
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
