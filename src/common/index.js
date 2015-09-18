@@ -14,6 +14,7 @@ import InnerToolbar from './InnerToolbar';
 import Lists from './Lists';
 import Loading from './Loading';
 import Logo from './Logo';
+import MagneticPixel from './MagneticPixel';
 import Notification from './Notification';
 import Request from './Request';
 import Show from './Show';
@@ -45,6 +46,7 @@ export default {
   Lists,
   Loading,
   Logo,
+  MagneticPixel,
   Notification,
   Request,
   Show,

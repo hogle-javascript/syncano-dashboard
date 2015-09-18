@@ -83,6 +83,7 @@
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.2.9",
     "react-inlinesvg": "patrykkopycinski/react-inlinesvg#build",
+    "react-script-loader": "0.0.1",
     "sass-loader": "~2.0.1",
     "selenium-standalone": "^4.5.3",
     "style-loader": "^0.12.3",
