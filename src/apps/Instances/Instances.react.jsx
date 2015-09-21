@@ -239,7 +239,7 @@ export default Radium(React.createClass({
   },
 
   renderDeleteFabButton() {
-    if (Store.isCheckedInstanceShared()) {
+    if (Store.isSharedInstanceChecked()) {
       return (
         <Common.Fab.TooltipItem
           tooltip="Click here to leave Instance"

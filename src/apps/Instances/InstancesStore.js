@@ -87,7 +87,7 @@ export default Reflux.createStore({
     return instance;
   },
 
-  isCheckedInstanceShared() {
+  isSharedInstanceChecked() {
     let checkedItems = this.getCheckedItems();
 
     if (checkedItems) {

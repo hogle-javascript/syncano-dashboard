@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   list() {
     this.Connection
@@ -28,19 +30,15 @@ export default {
   },
 
   remove(names) {
-    let promises = names.map((name) => {
-      return this.Connection.Instances.remove(name);
-    });
+    let promises = _.map(names, this.Connection.Instances.remove);
 
     this.D.all(promises)
       .success(this.completed)
       .error(this.failure);
   },
 
-  removeShared(instanceNames, adminId) {
-    let promises = instanceNames.map((instanceName) => {
-      return this.Connection.Instances.removeShared(instanceName, adminId);
-    });
+  removeShared(names, adminId) {
+    let promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
 
     this.D.all(promises)
       .success(this.completed)
