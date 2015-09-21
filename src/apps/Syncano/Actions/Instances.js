@@ -37,12 +37,14 @@ export default {
       .error(this.failure);
   },
 
-  removeShared(instanceName, adminId) {
-    this.Connection
-      .Instances
-      .removeShared(instanceName, adminId)
-      .then(this.completed)
-      .catch(this.failure);
+  removeShared(instanceNames, adminId) {
+    let promises = instanceNames.map((instanceName) => {
+      return this.Connection.Instances.removeShared(instanceName, adminId);
+    });
+
+    this.D.all(promises)
+      .success(this.completed)
+      .error(this.failure);
   },
 
   set(name) {

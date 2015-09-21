@@ -156,7 +156,7 @@ export default Radium(React.createClass({
 
   handleDeleteShared() {
     console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(Store.getCheckedItems()[0], SessionStore.getUser().id);
+    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
   },
 
   handleItemClick(instanceName) {

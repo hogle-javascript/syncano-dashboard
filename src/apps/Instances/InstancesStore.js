@@ -63,7 +63,7 @@ export default Reflux.createStore({
     let otherItemFromMyList = this.amIOwner(checkedItems[0]);
 
     item.checked = state;
-    if (!(newItemFromMyList && otherItemFromMyList)) {
+    if ((!newItemFromMyList && otherItemFromMyList) || (newItemFromMyList && !otherItemFromMyList)) {
       this.data.items.forEach((existingItem) => {
         // Uncheck all other then new one
         if (item.name !== existingItem.name) {
