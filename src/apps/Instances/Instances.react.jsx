@@ -317,12 +317,6 @@ export default Radium(React.createClass({
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
             <Common.Fab.TooltipItem
-              tooltip="Click here to edit Instance"
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showInstanceEditDialog}
-              iconClassName="synicon-pencil"/>
-            <Common.Fab.TooltipItem
               tooltip="Click here to customize Instances"
               secondary={true}
               mini={true}
