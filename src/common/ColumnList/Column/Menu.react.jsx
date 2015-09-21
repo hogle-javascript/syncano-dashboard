@@ -2,6 +2,8 @@ import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
+import Actions from './MenuActions';
+
 import MUI from 'material-ui';
 
 export default Radium(React.createClass({
@@ -10,6 +12,7 @@ export default Radium(React.createClass({
 
   propTypes: {
     id: React.PropTypes.string,
+    item: React.PropTypes.object,
     color: React.PropTypes.string.isRequired,
     hoverColor: React.PropTypes.string.isRequired,
     handleClick: React.PropTypes.func
@@ -50,6 +53,7 @@ export default Radium(React.createClass({
 
   handleTouchTap(event) {
     event.stopPropagation();
+    Actions.setItem(this.props.item);
   },
 
   renderItemIconMenuButton() {

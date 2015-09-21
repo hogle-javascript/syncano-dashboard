@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
+import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
@@ -7,8 +8,11 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
+import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
+import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
 
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
@@ -20,9 +24,11 @@ export default React.createClass({
   displayName: 'InstancesList',
 
   mixins: [
+    Reflux.connect(ColumnMenuStore, 'columnMenu'),
     Router.State,
     Router.Navigation,
     HeaderMixin,
+    Mixins.Dialogs,
     Mixins.IsLoading({attr: 'state.items'})
   ],
 
@@ -51,7 +57,67 @@ export default React.createClass({
     InstanceDialogActions.showDialog(instance);
   },
 
+  handleDeleteInstance(instanceName) {
+    console.info('InstancesList::handleDeleteInstance');
+    Actions.removeInstances(instanceName);
+    this.hideDialogs('deleteInstanceDialog');
+  },
+
+  handleDeleteSharedInstance(instanceName) {
+    console.info('InstancesList::handleDeleteSharedInstance');
+    Actions.removeSharedInstance(instanceName, SessionStore.getUser().id);
+    this.hideDialogs('deleteSharedInstanceDialog');
+  },
+
+  initDialogs() {
+    let clickedInstanceName = this.state.columnMenu.item ? this.state.columnMenu.item.name : null;
+
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteInstanceDialog',
+          ref: 'deleteInstanceDialog',
+          title: 'Delete an Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDeleteInstance.bind(null, clickedInstanceName)}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete Instance ' + clickedInstanceName + '?',
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading} />
+          ]
+        }
+      },
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteSharedInstanceDialog',
+          ref: 'deleteSharedInstanceDialog',
+          title: 'Leave a shared Instance',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Confirm', onClick: this.handleDeleteSharedInstance.bind(null, clickedInstanceName)}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to leave Instance ' + clickedInstanceName + '?',
+            <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+          ]
+        }
+      }]
+  },
+
   renderItem(item) {
+    let dialogRef = Store.amIOwner(item) ? 'deleteInstanceDialog' : 'deleteSharedInstanceDialog';
+
     item.metadata = item.metadata || {};
 
     return (
@@ -71,8 +137,13 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu>
-          <MenuItem onTouchTap={this.showInstanceEditDialog.bind(this, item)}>Edit an Instance</MenuItem>
+        <Column.Menu item={item}>
+          <MenuItem onTouchTap={this.showInstanceEditDialog.bind(this, item)}>
+            Edit an Instance
+          </MenuItem>
+          <MenuItem onTouchTap={this.showDialog.bind(null, dialogRef)}>
+            Delete an Instance
+          </MenuItem>
         </Column.Menu>
       </Common.ColumnList.Item>
     )
@@ -107,6 +178,7 @@ export default React.createClass({
 
     return (
       <Common.Lists.Container className='instances-list-container'>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
