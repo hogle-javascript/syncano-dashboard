@@ -10,7 +10,6 @@ module.exports = {
     loginPage.typePassword();
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
-
   },
   after: function(client) {
     client.end();
@@ -26,7 +25,7 @@ module.exports = {
     adminsPage.fillInputField('@addAdminModalEmailInput', email);
     adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
     adminsPage.clickButton('@confirmButton');
-    adminsPage.waitForElementVisible('@adminTableRow');
+    adminsPage.waitForElementVisible('@adminEmailTableRow');
   },
   'User deletes an Administrator' : function(client) {
     const adminsPage = client.page.adminsPage();
@@ -37,6 +36,7 @@ module.exports = {
     adminsPage.waitForElementVisible('@deleteAdminModalTitle');
     client.pause(1000);
     adminsPage.clickButton('@confirmButton');
-    adminsPage.waitForElementNotPresent('@selectAdminTableRow');
+    adminsPage.waitForElementVisible('@adminTableRow')
+    adminsPage.waitForElementNotPresent('@adminEmailTableRow');
   }
 };

@@ -5,34 +5,13 @@ import ColumnListConstans from '../ColumnListConstans';
 
 import MUI from 'material-ui';
 
-let Header = React.createClass({
-
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.KEY
-    }
-  },
-
-  render() {
-    return (
-      <div className={this.props.className}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
-  displayName: 'ColumnID',
+  displayName: 'ColumnKey',
 
   propTypes: {
     id: React.PropTypes.string,
     handleClick: React.PropTypes.func
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {

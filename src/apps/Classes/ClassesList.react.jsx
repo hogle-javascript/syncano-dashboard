@@ -92,12 +92,28 @@ export default React.createClass({
     return (
       <Common.Lists.Container className="classes-list-container">
         <Common.ColumnList.Header>
-          <Column.CheckIcon.Header>{this.props.name}</Column.CheckIcon.Header>
-          <Column.Desc.Header>Description</Column.Desc.Header>
-          <Column.ID.Header className="col-xs-3 col-md-3">Group</Column.ID.Header>
-          <Column.Desc.Header className="col-xs-6">Permissions</Column.Desc.Header>
-          <Column.ID.Header className="col-xs-4 col-md-4">Objects</Column.ID.Header>
-          <Column.Date.Header>Created</Column.Date.Header>
+          <Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON">
+            {this.props.name}
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-3">
+            Group
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-6">
+            Permissions
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="ID"
+            className="col-xs-4">
+            Objects
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

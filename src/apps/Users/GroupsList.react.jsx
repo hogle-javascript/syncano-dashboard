@@ -119,8 +119,12 @@ export default Radium(React.createClass({
     return (
       <div>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.CheckIcon.Header
-            className="col-flex-1">{this.props.name}</Common.ColumnList.Column.CheckIcon.Header>
+          <Common.ColumnList.Column.ColumnHeader
+            primary={true}
+            columnName="CHECK_ICON"
+            className="col-flex-1">
+            {this.props.name}
+          </Common.ColumnList.Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Loading show={this.state.isLoading}>
           {this.renderList()}

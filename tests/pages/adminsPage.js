@@ -55,12 +55,16 @@ module.exports = {
       selector: '//form//div[@tabindex="0"]//span[text()="read"]',
       locateStrategy: 'xpath'
     },
-    adminTableRow: {
+    adminEmailTableRow: {
       selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]',
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
       selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]/../../preceding-sibling::div',
+      locateStrategy: 'xpath'
+    },
+    adminTableRow: {
+      selector: '//div[@class="admin-list"][2]/div[2]',
       locateStrategy: 'xpath'
     },
     deleteAdminModalTitle: {

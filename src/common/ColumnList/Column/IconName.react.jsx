@@ -4,38 +4,9 @@ import ColumnListConstans from '../ColumnListConstans';
 
 import MUI from 'material-ui';
 
-let Header = React.createClass({
-
-  getDefaultProps() {
-    return {
-      className: ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
-    }
-  },
-
-  getStyles() {
-    return {
-      fontSize: 20,
-      fontWeight: 500,
-      paddingLeft: 16
-    }
-  },
-
-  render() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        className={this.props.className}
-        style={styles}>
-        {this.props.children}
-      </div>
-    )
-  }
-});
-
 export default Radium(React.createClass({
 
-  displayName: 'ColumnCheckIcon',
+  displayName: 'ColumnIconName',
 
   propTypes: {
     id: React.PropTypes.string,
@@ -43,10 +14,6 @@ export default Radium(React.createClass({
     hoverColor: React.PropTypes.string,
     handleIconClick: React.PropTypes.func,
     handleNameClick: React.PropTypes.func
-  },
-
-  statics: {
-    Header
   },
 
   getDefaultProps() {
