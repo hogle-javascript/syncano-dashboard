@@ -47,9 +47,14 @@ Router.run(routes, (Root, state) => {
   }
 
   if (name === 'login' || name === 'signup') {
-    window.analytics.page(`Dashboard ${_.capitalize(name)}`);
+    window.analytics.page(`Dashboard ${_.capitalize(name)}`, {
+      path: state.pathname
+    });
   } else {
-    window.analytics.page('Dashboard', {Page: name});
+    window.analytics.page('Dashboard', {
+      Page: name,
+      path: state.pathname
+    });
   }
 
 
