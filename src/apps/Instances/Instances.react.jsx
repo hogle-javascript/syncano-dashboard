@@ -13,7 +13,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
-// import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
+import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
 
 import Header from '../Header'
 
@@ -178,6 +178,7 @@ export default Radium(React.createClass({
 
   handleCancel(ref) {
     this.hideDialogs(ref);
+    ColumnMenuActions.clearClickedItem();
   },
 
   handleItemClick(instanceName) {

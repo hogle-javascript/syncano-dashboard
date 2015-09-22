@@ -53,7 +53,6 @@ export default Radium(React.createClass({
 
   handleTouchTap(event) {
     event.stopPropagation();
-    Actions.clearClickedItem();
     Actions.setClickedItem(this.props.item);
   },
 
