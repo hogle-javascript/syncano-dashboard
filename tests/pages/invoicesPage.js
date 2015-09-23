@@ -1,7 +1,7 @@
 module.exports = {
   elements: {
     emptyInvoicesView: {
-      selector: '//span[@class="synicon-file-outline"]',
+      selector: '//div[@class="invoices-list"]',
       locateStrategy: 'xpath'
     }
   }
