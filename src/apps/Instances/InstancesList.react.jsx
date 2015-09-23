@@ -65,6 +65,7 @@ export default React.createClass({
 
   renderItem(item) {
     let dialogRef = Store.amIOwner(item) ? 'deleteInstanceDialog' : 'deleteSharedInstanceDialog';
+    let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
 
     item.metadata = item.metadata || {};
 
@@ -91,7 +92,7 @@ export default React.createClass({
             primaryText="Edit an Instance" />
           <MenuItem
             onTouchTap={this.showInstanceDeleteDialog.bind(this, dialogRef)}
-            primaryText="Delete an Instance" />
+            primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>
     )

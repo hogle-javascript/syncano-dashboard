@@ -18,12 +18,14 @@ export default Reflux.createStore({
 
   onSetClickedItem(item) {
     console.debug('MenuStore::onSetClickedItem');
-    this.trigger({item});
+    this.data.item = item;
+    this.trigger(this.data);
   },
 
   onClearClickedItem() {
     console.debug('MenuStore::onClearClickedItem');
-    this.trigger({item: null})
+    this.data.item = null;
+    this.trigger(this.data)
   },
 
   getClickedItem() {

@@ -146,6 +146,10 @@ export default Radium(React.createClass({
     }]
   },
 
+  getInstancesToDelete() {
+    return this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
+  },
+
   onNextStep() {
     Actions.setTourConfig(this.getTourConfig());
     Actions.nextStep();
@@ -163,17 +167,13 @@ export default Radium(React.createClass({
   },
 
   handleDelete() {
-    let instancesToDelete = this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
-
     console.info('Instances::handleDelete');
-    Actions.removeInstances(instancesToDelete);
+    Actions.removeInstances(this.getInstancesToDelete());
   },
 
   handleDeleteShared() {
-    let instancesToDelete = this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
-
     console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(instancesToDelete, SessionStore.getUser().id);
+    Actions.removeSharedInstance(this.getInstancesToDelete(), SessionStore.getUser().id);
   },
 
   handleCancel(ref) {
@@ -190,7 +190,7 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
+    let checkedInstances = this.getInstancesToDelete();
 
     return [
       {
