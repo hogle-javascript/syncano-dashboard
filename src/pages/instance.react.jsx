@@ -61,24 +61,67 @@ export default React.createClass({
     }
   },
 
-  handleTabActive(event, index, obj) {
-    this.transitionTo(obj.route, this.getParams());
-    this.setState({headerText: obj.text, selectedIndex: index});
+  getMenuItemHref(route) {
+    return this.makeHref(route, this.getParams());
   },
 
   menuItems() {
     return [
-      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'},
-      {route: 'webhooks', text: 'Webhooks'},
-      {route: 'classes', text: 'Classes'},
-      {route: 'codeboxes', text: 'CodeBoxes'},
-      {route: 'users', text: 'Users'},
-      {route: 'channels', text: 'Channels'},
-      {route: 'tasks', text: 'Tasks'},
-
-      {type: MUI.MenuItem.Types.SUBHEADER, text: 'Settings'},
-      {route: 'admins', text: 'Administrators'},
-      {route: 'api-keys', text: 'API keys'}
+      {
+        type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'webhooks',
+        payload: this.getMenuItemHref('webhooks'),
+        text: 'Webhooks'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'classes',
+        payload: this.getMenuItemHref('classes'),
+        text: 'Classes'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'codeboxes',
+        payload: this.getMenuItemHref('codeboxes'),
+        text: 'CodeBoxes'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'users',
+        payload: this.getMenuItemHref('users'),
+        text: 'Users'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'channels',
+        payload: this.getMenuItemHref('channels'),
+        text: 'Channels'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'tasks',
+        payload: this.getMenuItemHref('tasks'),
+        text: 'Tasks'
+      },
+      {
+        type: MUI.MenuItem.Types.SUBHEADER,
+        text: 'Settings'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'admins',
+        payload: this.getMenuItemHref('admins'),
+        text: 'Administrators'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'api-keys',
+        payload: this.getMenuItemHref('api-keys'),
+        text: 'API keys'
+      }
     ];
   },
 
@@ -102,9 +145,7 @@ export default React.createClass({
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
           selectedIndex={this.getActiveTabIndex()}
           style={styles.leftNav}
-          menuItems={this.menuItems()}
-          onChange={this.handleTabActive}/>
-
+          menuItems={this.menuItems()}/>
         <div style={styles.content}>
           <Router.RouteHandler />
         </div>
