@@ -7,7 +7,7 @@ import AuthConstants from '../apps/Account/AuthConstants';
 
 // Components
 import Header from '../apps/Header/Header.react';
-import MagneticPixel from '../common/MagneticPixel';
+import ConversionPixel from '../common/ConversionPixel';
 
 /* eslint-disable no-process-env */
 
@@ -36,12 +36,15 @@ export default React.createClass({
     }
   },
 
-  renderMagneticConversionPixel() {
+  renderConversionPixels() {
     if (SessionStore.getSignUpMode() && ENV === 'production') {
       SessionStore.removeSignUpMode();
 
       return (
-        <MagneticPixel />
+        <div>
+          <ConversionPixel.Adroll />
+          <ConversionPixel.Magnetic />
+        </div>
       )
     }
   },
@@ -51,7 +54,7 @@ export default React.createClass({
       <div>
         <Header />
         <Router.RouteHandler />
-        {this.renderMagneticConversionPixel()}
+        {this.renderConversionPixels()}
       </div>
     );
   }
