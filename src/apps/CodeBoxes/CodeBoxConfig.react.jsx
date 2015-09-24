@@ -70,7 +70,7 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
-    clearTimeout(this._timeout);
+    clearTimeout(this.timer);
     let config = this.refs.editorConfig.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
@@ -115,7 +115,7 @@ export default Radium(React.createClass({
             ref="editorConfig"
             height={300}
             mode="javascript"
-            onLoad={clearTimeout(this._timeout)}
+            onLoad={clearTimeout(this.timer)}
             onChange={this.runAutoSave}
             theme="github"
             value={config}/>

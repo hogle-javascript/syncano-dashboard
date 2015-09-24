@@ -1,6 +1,6 @@
 export default {
 
-  _timeout: null,
+  timer: null,
 
   componentWillUpdate() {
     if (!this.getLocalStorageItem() && this.refs.autosaveCheckbox) {
@@ -9,12 +9,12 @@ export default {
   },
 
   componentWillUnmount() {
-    clearTimeout(this._timeout);
+    clearTimeout(this.timer);
   },
 
   getInitialState() {
     return {
-      _timeout: null
+      timer: null
     }
   },
 
@@ -40,10 +40,10 @@ export default {
 
   runAutoSave() {
     if (!this.isSaved() && this.refs.autosaveCheckbox && this.refs.autosaveCheckbox.isChecked()) {
-      clearTimeout(this._timeout);
-      this._timeout = setTimeout(this.handleUpdate, 3000)
+      clearTimeout(this.timer);
+      this.timer = setTimeout(this.handleUpdate, 3000)
     } else {
-      clearTimeout(this._timeout);
+      clearTimeout(this.timer);
     }
   }
 };

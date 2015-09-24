@@ -119,7 +119,7 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    clearTimeout(this._timeout);
+    clearTimeout(this.timer);
     let source = this.refs.editorSource.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
@@ -202,7 +202,7 @@ export default React.createClass({
             mode={editorMode}
             theme="tomorrow"
             onChange={this.runAutoSave}
-            onLoad={clearTimeout(this._timeout)}
+            onLoad={clearTimeout(this.timer)}
             value={source}/>
           <MUI.Checkbox
             ref="autosaveCheckbox"
