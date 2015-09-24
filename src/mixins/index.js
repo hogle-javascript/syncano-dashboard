@@ -5,7 +5,7 @@ import FormMixin from './FormMixin';
 import CheckListStoreMixin from './CheckListStoreMixin';
 import InstanceTabsMixin from './InstanceTabsMixin';
 import StoreFormMixin from './StoreFormMixin';
-import LeftNavMixin from './MenuMixin';
+import LeftNavMixin from './LeftNavMixin';
 import MousetrapMixin from './MousetrapMixin';
 import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
