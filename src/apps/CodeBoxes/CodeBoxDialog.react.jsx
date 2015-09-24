@@ -103,7 +103,7 @@ export default React.createClass({
             <MUI.SelectField
               ref='runtime_name'
               name='runtime_name'
-              floatingLabelText='Runtime name'
+              floatingLabelText='Runtime environment'
               valueLink={this.linkState('runtime_name')}
               errorText={this.getValidationMessages('runtime_name').join(' ')}
               valueMember='payload'

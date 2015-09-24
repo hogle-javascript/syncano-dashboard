@@ -1,7 +1,7 @@
 module.exports = {
   elements: {
     openPlansExplorerButton: {
-      selector: '//button//span[text()="Open Plans Explorer"]',
+      selector: '//button//span[text()="Upgrade your plan"]',
       locateStrategy: 'xpath'
     }
   }

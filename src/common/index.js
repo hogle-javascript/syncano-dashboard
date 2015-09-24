@@ -4,6 +4,7 @@ import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
 import Container from './Container';
+import ConversionPixel from './ConversionPixel';
 import CreditCard from './CreditCard';
 import Dialog from './Dialog';
 import Dropdown from './Dropdown';
@@ -35,6 +36,7 @@ export default {
   ColorIconPicker,
   ColumnList,
   Container,
+  ConversionPixel,
   CreditCard,
   Dialog,
   Dropdown,

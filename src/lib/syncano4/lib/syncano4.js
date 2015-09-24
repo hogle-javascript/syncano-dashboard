@@ -424,6 +424,7 @@ var Syncano = (function() {
       list: this.listInstances.bind(this),
       get: this.getInstance.bind(this),
       remove: this.removeInstance.bind(this),
+      removeShared: this.removeSharedInstance.bind(this),
       update: this.updateInstance.bind(this),
       listAdmins: this.listInstanceAdmins.bind(this)
     };
@@ -964,6 +965,31 @@ var Syncano = (function() {
         throw new Error('Missing instance name');
       }
       return this.request('DELETE', 'v1/instances/' + name, {}, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes admin from shared instance identified by specified instance name and admin ID
+     *
+     * @method Syncano#removeSharedInstance
+     * @alias Syncano.Instances.removeShared
+     * @param {string|object} name
+     * @param {string} name.name - when passed parameter is an object, we use its name property
+     * @param {string|number} adminId - admin ID to remove from instance
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeSharedInstance: function(name, adminId, callbackOK, callbackError) {
+      if (typeof name === 'object') {
+        name = name.name;
+      }
+      if (typeof name === 'undefined' || name.length === 0) {
+        throw new Error('Missing instance name');
+      }
+      if (typeof adminId === 'undefined') {
+        throw new Error('Missing admin ID');
+      }
+      return this.request('DELETE', 'v1/instances/' + name + '/admins/' + adminId, {}, callbackOK, callbackError);
     },
 
     /**
