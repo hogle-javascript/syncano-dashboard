@@ -33,6 +33,6 @@ case "$CIRCLE_NODE_INDEX" in
         ;;
 esac
 
-if [ "$CIRCLE_BRANCH" == "SYNGUI-1624" && "$CIRCLE_NODE_INDEX" == 1 ]; then
+if [[ "$CIRCLE_BRANCH" == "SYNGUI-1624" ] && [ "$CIRCLE_NODE_INDEX" == 1 ]] ; then
     upload_screenshots
 fi
