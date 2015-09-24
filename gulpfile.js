@@ -294,10 +294,10 @@ gulp.task('changelog', function(cb) {
 });
 
 gulp.task('upload-screenshots', function(cb) {
-  var clientId = process.env.GD_CLIENT_ID;
-  var clientSecret = process.env.GD_CLIENT_SECRET;
-  var access_token = process.env.GD_ACCESS_TOKEN;
-  var refresh_token = process.env.GD_REFRESH_TOKEN;
+  var clientId = '640917246320-d4u3u065fvpor5d4lo28h9ud82p19q1s.apps.googleusercontent.com'; //process.env.GD_CLIENT_ID;
+  var clientSecret = 'kdcdOaU0qNSp_2MaMW67aHqK'; //process.env.GD_CLIENT_SECRET;
+  var access_token = 'ya29.2gFMvLddt9QB-2vDFIA2vn0DGH71tVTNYbknf12xPo4zBkxLpY18bIV5Bt1-_dDBnA7L'; //process.env.GD_ACCESS_TOKEN;
+  var refresh_token = '1/zo6xCZdkzvkAnwPtj6GbnnuqEnu3uRRtHWUm4bJQi7A'; //process.env.GD_REFRESH_TOKEN;
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
   if (process.env.CI && nodeIndex.toString() !== '1') {
@@ -321,8 +321,8 @@ gulp.task('upload-screenshots', function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
-  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
-  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+  var invisionFolder = '0B-nLxpmereQIUTBqaTVGVE9iT3c' // '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIdUdVNmxkeHN0UTg' // '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
 
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
