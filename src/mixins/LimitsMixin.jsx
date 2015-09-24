@@ -13,19 +13,21 @@ export default {
     }
   },
 
-  getLimit(objectsName) {
-    let classLimit = 32;
-
+  isFriend() {
     if (SessionStore.getUser()) {
       let email = SessionStore.getUser({}).email;
       let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
 
-      classLimit = _.some(endings, (ending) => _.endsWith(email, ending)) ? 64 : 32;
+      return _.some(endings, (ending) => _.endsWith(email, ending))
     }
 
+    return false;
+  },
+
+  getLimit(objectsName) {
     let limits = {
       instances: 16,
-      classes: classLimit
+      classes: this.isFriend() ? 64 : 32
     };
 
     return limits[objectsName];
