@@ -1,6 +1,8 @@
 import React from 'react';
 import Router from 'react-router';
 
+import {Menu} from '../mixins';
+
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
@@ -16,6 +18,7 @@ export default React.createClass({
   },
 
   mixins: [
+    Menu,
     Router.State,
     Router.Navigation
   ],
@@ -27,19 +30,6 @@ export default React.createClass({
     if (params.instanceName) {
       SessionActions.fetchInstance(params.instanceName);
     }
-  },
-
-  getActiveTabIndex() {
-    let index = 1;
-
-    this.menuItems().some((item, i) => {
-      if (item.route && this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        return true;
-      }
-    });
-
-    return index;
   },
 
   getStyles() {
@@ -61,11 +51,7 @@ export default React.createClass({
     }
   },
 
-  getMenuItemHref(route) {
-    return this.makeHref(route, this.getParams());
-  },
-
-  menuItems() {
+  getMenuItems() {
     return [
       {
         type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'
@@ -143,9 +129,9 @@ export default React.createClass({
           ref="leftNav"
           header={this.renderInstanceDropdown()}
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
-          selectedIndex={this.getActiveTabIndex()}
+          selectedIndex={this.getActiveTab(this.getMenuItems()).index}
           style={styles.leftNav}
-          menuItems={this.menuItems()}/>
+          menuItems={this.getMenuItems()}/>
         <div style={styles.content}>
           <Router.RouteHandler />
         </div>

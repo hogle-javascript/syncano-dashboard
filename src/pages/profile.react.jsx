@@ -1,6 +1,8 @@
 import React from 'react';
 import Router from 'react-router';
 
+import {Menu} from '../mixins';
+
 import MUI from 'material-ui';
 import Container from '../common/Container';
 
@@ -9,24 +11,10 @@ export default React.createClass({
   displayName: 'ProfileBilling',
 
   mixins: [
+    Menu,
     Router.Navigation,
     Router.State
   ],
-
-  getActiveTab() {
-    let index = 1;
-    let text = null;
-
-    this.menuItems().some((item, i) => {
-      if (item.route && this.isActive(item.route, item.params, item.query)) {
-        index = i;
-        text = item.text;
-        return true;
-      }
-    });
-
-    return {index, text}
-  },
 
   getStyles() {
     return {
@@ -46,11 +34,7 @@ export default React.createClass({
     }
   },
 
-  getMenuItemHref(route) {
-    return this.makeHref(route, this.getParams());
-  },
-
-  menuItems() {
+  getMenuItems() {
     return [
       {
         type: MUI.MenuItem.Types.SUBHEADER,
@@ -107,6 +91,8 @@ export default React.createClass({
 
   render() {
     const styles = this.getStyles();
+    let menuItems = this.getMenuItems();
+    let activeTab = this.getActiveTab(menuItems, ['text']);
 
     return (
       <div>
@@ -114,11 +100,11 @@ export default React.createClass({
           className="left-nav"
           ref="leftNav"
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
-          selectedIndex={this.getActiveTab().index}
+          selectedIndex={activeTab.index}
           style={styles.leftNav}
-          menuItems={this.menuItems()}/>
+          menuItems={menuItems}/>
         <Container.Profile
-          headerText={this.getActiveTab().text}
+          headerText={activeTab.text}
           style={styles.content}>
           <Router.RouteHandler />
         </Container.Profile>
