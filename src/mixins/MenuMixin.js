@@ -7,18 +7,18 @@ export default {
   },
 
   getActiveTab(menuItems, params) {
-    let output = {};
+    let activeTab = {};
 
     _.some(menuItems, (item, index) => {
       if (item.route && this.isActive(item.route, item.params, item.query)) {
-        output.index = index;
+        activeTab.index = index;
         _.map(params, (param) => {
-          output[param] = item[param];
+          activeTab[param] = item[param];
         });
         return true;
       }
     });
 
-    return output;
+    return activeTab;
   }
 };
