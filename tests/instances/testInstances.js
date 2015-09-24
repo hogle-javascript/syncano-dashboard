@@ -29,8 +29,8 @@ module.exports = {
   'Test Edit Instance': function(client) {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@editButton');
+    instancesPage.clickDropdown();
+    instancesPage.clickButton('@editDropdownItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');

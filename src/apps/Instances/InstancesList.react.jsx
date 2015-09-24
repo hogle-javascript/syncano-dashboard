@@ -88,6 +88,7 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu item={item}>
           <MenuItem
+            className="dropdown-item-edit"
             onTouchTap={this.showInstanceEditDialog.bind(this, item)}
             primaryText="Edit an Instance" />
           <MenuItem

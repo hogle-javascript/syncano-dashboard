@@ -21,6 +21,10 @@ var instancesCommands = {
     return this.waitForElementVisible(button)
       .click(button);
   },
+  clickDropdown: function() {
+    return this.waitForElementVisible('@instanceDropdown')
+      .click('@instanceDropdown')
+  },
   isModalClosed: function(element) {
     return this.waitForElementNotVisible(element);
   },
@@ -30,6 +34,10 @@ module.exports = {
   url: 'https://localhost:8080/#/instances',
   commands: [instancesCommands],
   elements: {
+    instanceDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
     instancesTable: {
       selector: 'div[id=instances]'
     },
@@ -55,6 +63,10 @@ module.exports = {
     },
     selectInstance: {
       selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit"]',
       locateStrategy: 'xpath'
     },
     editButton: {
