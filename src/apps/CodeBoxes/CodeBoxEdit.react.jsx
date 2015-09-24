@@ -6,6 +6,7 @@ import Router from 'react-router';
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
+import AutosaveMixin from './CodeBoxAutosaveMixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -31,6 +32,7 @@ export default React.createClass({
     Mixins.Dialogs,
     HeaderMixin,
     UnsavedDataMixin,
+    AutosaveMixin,
     Mixins.InstanceTabs,
     Mixins.Mousetrap,
     SnackbarNotificationMixin
@@ -58,6 +60,9 @@ export default React.createClass({
       durationSummary: {
         marginTop: 8
       },
+      autosaveCheckbox: {
+        marginTop: 30
+      },
       statusSummaryFailed: {
         color: MUI.Styles.Colors.red400
       },
@@ -75,10 +80,12 @@ export default React.createClass({
   },
 
   isSaved() {
-    let initialCodeBoxSource = this.state.currentCodeBox.source;
-    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+    if (this.state.currentCodeBox && this.refs.editorSource) {
+      let initialCodeBoxSource = this.state.currentCodeBox.source;
+      let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
 
-    return initialCodeBoxSource === currentCodeBoxSource;
+      return initialCodeBoxSource === currentCodeBoxSource;
+    }
   },
 
   handleConfirm() {
@@ -112,6 +119,7 @@ export default React.createClass({
   },
 
   handleUpdate() {
+    clearTimeout(this._timeout);
     let source = this.refs.editorSource.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
@@ -193,7 +201,16 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
+            onChange={this.runAutoSave}
+            onLoad={clearTimeout(this._timeout)}
             value={source}/>
+          <MUI.Checkbox
+            ref="autosaveCheckbox"
+            name="autosaveCheckbox"
+            label="Autosave"
+            style={styles.autosaveCheckbox}
+            defaultChecked={JSON.parse(this.getLocalStorageItem())}
+            onCheck={this.saveCheckboxState}/>
 
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
