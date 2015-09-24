@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
 
-import {Menu} from '../mixins';
+import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
@@ -18,7 +18,7 @@ export default React.createClass({
   },
 
   mixins: [
-    Menu,
+    LeftNav,
     Router.State,
     Router.Navigation
   ],

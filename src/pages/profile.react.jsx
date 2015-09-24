@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
 
-import {Menu} from '../mixins';
+import {LeftNav} from '../mixins';
 
 import MUI from 'material-ui';
 import Container from '../common/Container';
@@ -11,7 +11,7 @@ export default React.createClass({
   displayName: 'ProfileBilling',
 
   mixins: [
-    Menu,
+    LeftNav,
     Router.Navigation,
     Router.State
   ],
