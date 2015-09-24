@@ -1,4 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
+
+import SessionStore from '../../src/apps/Session/SessionStore';
 
 import Notification from '../common/Notification/Notification.react';
 
@@ -11,9 +14,18 @@ export default {
   },
 
   getLimit(objectsName) {
+    let classLimit = 32;
+
+    if (SessionStore.getUser()) {
+      let email = SessionStore.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
+
+      classLimit = _.some(endings, (ending) => _.endsWith(email, ending)) ? 64 : 32;
+    }
+
     let limits = {
       instances: 16,
-      classes: 32
+      classes: classLimit
     };
 
     return limits[objectsName];
