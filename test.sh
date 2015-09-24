@@ -16,6 +16,10 @@ function run_e2e_tests {
     rm -rf ./dist_e2e
 }
 
+function upload_screenshots {
+    npm run-script upload-screenshots
+}
+
 case "$CIRCLE_NODE_INDEX" in
     0)
         run_unit_tests
@@ -28,3 +32,7 @@ case "$CIRCLE_NODE_INDEX" in
         run_e2e_tests
         ;;
 esac
+
+if [[ "$CIRCLE_BRANCH" == "master" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
+    upload_screenshots
+fi

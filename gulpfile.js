@@ -301,6 +301,7 @@ gulp.task('upload-screenshots', function(cb) {
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
   if (process.env.CI && nodeIndex.toString() !== '1') {
+    gutil.log('Exit');
     return cb();
   }
 
@@ -342,6 +343,7 @@ gulp.task('upload-screenshots', function(cb) {
       }, function(err, response) {
         if (err) return callback(err);
         if (response.items.length < 1) {
+          gutil.log('Creating version folder...');
           drive.files.insert({
             resource: {
               title: version,
@@ -353,6 +355,7 @@ gulp.task('upload-screenshots', function(cb) {
             callback(null, folder);
           });
         } else {
+          gutil.log('Saving version folder ID...');
           var folder = response.items[0];
           callback(null, folder)
         }
@@ -362,6 +365,7 @@ gulp.task('upload-screenshots', function(cb) {
       // Get list of files from disc, GoogleDrive latest and version folder
       async.parallel({
         localFilesList: function(callback) {
+          gutil.log('Creating screenshots list...');
           var screenshots = './reports/screenshots/_navigation/';
           var files = fs.readdirSync(screenshots);
           var localFilesList = _.map(_.filter(files, function(file) {
@@ -376,6 +380,7 @@ gulp.task('upload-screenshots', function(cb) {
           callback(null, localFilesList);
         },
         latestFolderFilesList: function(callback) {
+          gutil.log('Creating latest folder screenshots list...');
           var latestFolderFilesList = [];
 
           drive.files.list({
@@ -393,6 +398,7 @@ gulp.task('upload-screenshots', function(cb) {
           });
         },
         versionFolderFilesList: function(callback) {
+          gutil.log('Creating version folder screenshots list...');
           var versionFolderFilesList = [];
 
           drive.files.list({
@@ -442,8 +448,10 @@ gulp.task('upload-screenshots', function(cb) {
         return newFiles;
       }
 
+      gutil.log('Creating list of files to update...');
       files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.latestFolderFilesList));
       files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.versionFolderFilesList));
+      gutil.log('Creating list of new files...');
       files.newFilesForLatest = getNewFiles(files.latestFolderFilesList);
       files.newFilesForVersion = getNewFiles(files.versionFolderFilesList);
 
@@ -451,53 +459,65 @@ gulp.task('upload-screenshots', function(cb) {
     },
     function(files, folder, callback) {
       // Update files
-      var fileObjects = _.map(files.filesToUpdateList, function(file) {
-        return {
-          fileId: file.id,
-          media: {
-            mimeType: 'image/png',
-            body: fs.readFileSync(file.updateMediaPath)
+      if (files.filesToUpdateList.length > 0) {
+        gutil.log('Updating files...');
+        var fileObjects = _.map(files.filesToUpdateList, function(file) {
+          return {
+            fileId: file.id,
+            media: {
+              mimeType: 'image/png',
+              body: fs.readFileSync(file.updateMediaPath)
+            }
           }
-        }
-      });
+        });
 
-      async.each(fileObjects, drive.files.update, function(err) {
-        if (err) return callback(err);
+        async.each(fileObjects, drive.files.update, function(err) {
+          if (err) return callback(err);
+          callback(null, files, folder);
+        });
+      } else {
+        gutil.log('No files to update.');
         callback(null, files, folder);
-      });
+      }
     },
     function(files, folder, callback) {
       // Insert new files
-      function mapDriveObjects(newFiles, folderId) {
-        var objects = newFiles.map(function(file) {
-          return {
-            resource: {
-              title: file.title,
-              mimeType: 'image/png',
-              parents: [{id: folderId}]
-            },
-            media: {
-              mimeType: 'image/png',
-              body: fs.createReadStream(file.path)
-            }
-          };
-        });
-        return objects;
-      }
-
-      var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
-      var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
-
-      async.parallel([
-        function() {
-          async.each(latestDriveObjects, drive.files.insert);
-        },
-        function() {
-          async.each(versionDriveObjects, drive.files.insert)
+      if (files.newFilesForLatest.length > 0 || files.newFilesForVersion.length > 0) {
+        gutil.log('Uploading new files...');
+        function mapDriveObjects(newFiles, folderId) {
+          var objects = newFiles.map(function(file) {
+            return {
+              resource: {
+                title: file.title,
+                mimeType: 'image/png',
+                parents: [{id: folderId}]
+              },
+              media: {
+                mimeType: 'image/png',
+                body: fs.createReadStream(file.path)
+              }
+            };
+          });
+          return objects;
         }
-      ], function() {
+
+        var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
+        var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
+
+        async.parallel([
+          function() {
+            async.each(latestDriveObjects, drive.files.insert);
+          },
+          function() {
+            async.each(versionDriveObjects, drive.files.insert)
+          }
+        ], function() {
+          callback();
+        });
+      } else {
+        gutil.log('No new files to upload.');
         callback();
-      });
+      }
     }
   ], function(err) {
     if (err) throw err;
