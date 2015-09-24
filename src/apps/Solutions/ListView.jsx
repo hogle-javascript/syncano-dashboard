@@ -1,13 +1,12 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Limits} from '../../mixins';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
 
 import Store from './ListViewStore';
 import Actions from './ListViewActions';
@@ -31,6 +30,7 @@ export default React.createClass({
     Router.Navigation,
 
     HeaderMixin,
+    Limits,
     Reflux.connect(Store)
   ],
 
@@ -52,17 +52,6 @@ export default React.createClass({
         background: MUI.Styles.Colors.lightBlue50
       }
     }
-  },
-
-  isFriend() {
-    if (SessionStore.getUser()) {
-      let email = SessionStore.getUser({}).email;
-      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
-
-      return _.some(endings, (ending) => _.endsWith(email, ending))
-    }
-
-    return false;
   },
 
   handleChangeFilter(filter) {
