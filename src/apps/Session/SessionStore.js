@@ -81,7 +81,7 @@ export default Reflux.createStore({
     }
 
     if (this.signUpMode) {
-      window.analytics.identify(analyticsIdentifyObject)
+      window.analytics.identify(user.email, analyticsIdentifyObject)
     } else {
       window.analytics.identify(user.email)
     }
