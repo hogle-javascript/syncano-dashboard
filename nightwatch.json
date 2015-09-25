@@ -17,7 +17,6 @@
       "webdriver.ie.driver" : ""
     }
   },
-
   "test_settings" : {
     "1280x1024" : {
       "launch_url" : "https://localhost:8080/",
