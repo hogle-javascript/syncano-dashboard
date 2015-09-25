@@ -12,7 +12,7 @@ function run_e2e_tests {
     npm run-script e2e-setup
     nohup npm run-script e2e-http-server &
     sleep 5
-    npm run-script e2e
+    npm run-script e2e-screenshots
     rm -rf ./dist_e2e
 }
 
@@ -33,6 +33,6 @@ case "$CIRCLE_NODE_INDEX" in
         ;;
 esac
 
-if [[ "$CIRCLE_BRANCH" == "master" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
+if [[ "$CIRCLE_BRANCH" == "screenshots" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
     upload_screenshots
 fi
