@@ -3,6 +3,7 @@ import Date from './Date.react';
 import Desc from './Desc.react';
 import IconName from './IconName.react';
 import Key from './Key.react';
+import Menu from './Menu.react';
 import Name from './Name.react';
 import Text from './Text.react';
 import ID from './ID.react';
@@ -14,6 +15,7 @@ export default {
   Desc,
   IconName,
   Key,
+  Menu,
   Name,
   Text,
   ID,

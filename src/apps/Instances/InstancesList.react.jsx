@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from 'react-router';
+import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
@@ -8,7 +9,11 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
 import Actions from './InstancesActions';
+import Store from './InstancesStore';
+import InstanceDialogActions from './InstanceDialogActions';
+import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
 
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -17,7 +22,12 @@ export default React.createClass({
 
   displayName: 'InstancesList',
 
+  contextTypes: {
+    instancesDialogs: React.PropTypes.object
+  },
+
   mixins: [
+    Reflux.connect(ColumnMenuStore, 'columnMenu'),
     Router.State,
     Router.Navigation,
     HeaderMixin,
@@ -45,7 +55,18 @@ export default React.createClass({
     SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
   },
 
+  showInstanceEditDialog(instance) {
+    InstanceDialogActions.showDialog(instance);
+  },
+
+  showInstanceDeleteDialog(dialogRef) {
+    this.context.instancesDialogs[dialogRef].show();
+  },
+
   renderItem(item) {
+    let dialogRef = Store.amIOwner(item) ? 'deleteInstanceDialog' : 'deleteSharedInstanceDialog';
+    let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
+
     item.metadata = item.metadata || {};
 
     return (
@@ -65,6 +86,15 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu item={item}>
+          <MenuItem
+            className="dropdown-item-edit"
+            onTouchTap={this.showInstanceEditDialog.bind(this, item)}
+            primaryText="Edit an Instance" />
+          <MenuItem
+            onTouchTap={this.showInstanceDeleteDialog.bind(this, dialogRef)}
+            primaryText={removeText} />
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -106,6 +136,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
           {this.getList()}
