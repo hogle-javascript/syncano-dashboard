@@ -41,8 +41,8 @@ export default {
     let promises = _.map(names, (name) => this.Connection.Instances.removeShared(name, adminId));
 
     this.D.all(promises)
-    .success(this.completed)
-    .error(this.failure);
+      .success(this.completed)
+      .error(this.failure);
   },
 
   set(name) {

@@ -14,20 +14,17 @@ var instancesCommands = {
       .setValue('@createModalDescriptionInput', description);
   },
   clickSelectInstance: function() {
-    return this.waitForElementVisible('@selectInstance')
-      .click('@selectInstance');
+    return this.waitForElementVisible('@selectInstance').click('@selectInstance');
   },
   clickButton: function(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
+    return this.waitForElementVisible(button).click(button);
   },
   clickDropdown: function() {
-    return this.waitForElementVisible('@instanceDropdown')
-      .click('@instanceDropdown')
+    return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
   isModalClosed: function(element) {
     return this.waitForElementNotVisible(element);
-  },
+  }
 };
 
 module.exports = {
