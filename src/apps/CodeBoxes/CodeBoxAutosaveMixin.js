@@ -21,11 +21,7 @@ export default {
   },
 
   isAutosaveEnabled() {
-    if (this.isActive('codebox-edit')) {
-      return JSON.parse(localStorage.getItem('codeBoxSourceAutosave'))
-    }
-
-    return JSON.parse(localStorage.getItem('codeBoxConfigAutosave'))
+    return JSON.parse(localStorage.getItem(this.getAutosaveConfigName()));
   },
 
   getAutosaveConfigName() {
