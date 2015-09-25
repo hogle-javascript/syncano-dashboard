@@ -119,9 +119,9 @@ export default React.createClass({
   },
 
   handleUpdate() {
-    this.clearAutosaveTimer();
     let source = this.refs.editorSource.editor.getValue();
 
+    this.clearAutosaveTimer();
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'

@@ -70,9 +70,9 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
-    this.clearAutosaveTimer();
     let config = this.refs.editorConfig.editor.getValue();
 
+    this.clearAutosaveTimer();
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
     this.setSnackbarNotification({
       message: 'Saving...'

@@ -39,7 +39,7 @@ export default {
   runAutoSave() {
     if (!this.isSaved() && this.refs.autosaveCheckbox && this.refs.autosaveCheckbox.isChecked()) {
       this.clearAutosaveTimer();
-      this.autosaveTimer = setTimeout(this.handleUpdate, 3000);
+      this.setAutosaveTimer();
     } else {
       this.clearAutosaveTimer();
     }
@@ -47,5 +47,9 @@ export default {
 
   clearAutosaveTimer() {
     clearTimeout(this.autosaveTimer);
+  },
+
+  setAutosaveTimer() {
+    this.autosaveTimer = setTimeout(this.handleUpdate, 3000);
   }
 };
