@@ -20,6 +20,7 @@ deployment:
   production:
     branch: master
     commands:
+      - NODE_ENV=production ./automerge_to_screenshots.sh
       - NODE_ENV=production npm run-script check-github-tag
       - NODE_ENV=production npm run-script publish
       - NODE_ENV=production npm run-script clean

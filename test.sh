@@ -33,6 +33,6 @@ case "$CIRCLE_NODE_INDEX" in
         ;;
 esac
 
-if [[ "$CIRCLE_BRANCH" == "master" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
+if [[ "$CIRCLE_BRANCH" == "screenshots" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
     upload_screenshots
 fi

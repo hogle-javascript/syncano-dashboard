@@ -26,7 +26,7 @@ module.exports = {
   },
 
   afterEach: function(client, done) {
-    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
+    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
       done();
       return;
     }
