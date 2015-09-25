@@ -1,32 +1,34 @@
+import _ from 'lodash';
+
 export default {
 
-  timer: null,
+  autosaveTimer: null,
 
-  componentWillUpdate() {
-    if (!this.getLocalStorageItem() && this.refs.autosaveCheckbox) {
-      localStorage.setItem(this.getLocalStorageItemName(), this.refs.autosaveCheckbox.isChecked())
+  componentWillMount() {
+    if (!_.has(localStorage, this.getAutosaveConfigName())) {
+      localStorage.setItem(this.getAutosaveConfigName(), true)
     }
   },
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
+    this.clearAutosaveTimer();
   },
 
   getInitialState() {
     return {
-      timer: null
+      autosaveTimer: null
     }
   },
 
-  getLocalStorageItem() {
+  isAutosaveEnabled() {
     if (this.isActive('codebox-edit')) {
-      return localStorage.getItem('codeBoxSourceAutosave')
+      return JSON.parse(localStorage.getItem('codeBoxSourceAutosave'))
     }
 
-    return localStorage.getItem('codeBoxConfigAutosave')
+    return JSON.parse(localStorage.getItem('codeBoxConfigAutosave'))
   },
 
-  getLocalStorageItemName() {
+  getAutosaveConfigName() {
     if (this.isActive('codebox-edit')) {
       return 'codeBoxSourceAutosave'
     }
@@ -35,15 +37,19 @@ export default {
   },
 
   saveCheckboxState(event, checked) {
-    localStorage.setItem(this.getLocalStorageItemName(), checked);
+    localStorage.setItem(this.getAutosaveConfigName(), checked);
   },
 
   runAutoSave() {
     if (!this.isSaved() && this.refs.autosaveCheckbox && this.refs.autosaveCheckbox.isChecked()) {
-      clearTimeout(this.timer);
-      this.timer = setTimeout(this.handleUpdate, 3000)
+      this.clearAutosaveTimer();
+      this.autosaveTimer = setTimeout(this.handleUpdate, 3000);
     } else {
-      clearTimeout(this.timer);
+      this.clearAutosaveTimer();
     }
+  },
+
+  clearAutosaveTimer() {
+    clearTimeout(this.autosaveTimer);
   }
 };

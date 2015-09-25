@@ -70,7 +70,7 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
-    clearTimeout(this.timer);
+    this.clearAutosaveTimer();
     let config = this.refs.editorConfig.editor.getValue();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
@@ -115,7 +115,7 @@ export default Radium(React.createClass({
             ref="editorConfig"
             height={300}
             mode="javascript"
-            onLoad={clearTimeout(this.timer)}
+            onLoad={this.clearAutosaveTimer}
             onChange={this.runAutoSave}
             theme="github"
             value={config}/>
@@ -124,7 +124,7 @@ export default Radium(React.createClass({
             name="autoSaveCheckbox"
             label="Autosave"
             style={styles.autosaveCheckbox}
-            defaultChecked={JSON.parse(this.getLocalStorageItem())}
+            defaultChecked={this.isAutosaveEnabled()}
             onCheck={this.saveCheckboxState} />
         </div>
       )
