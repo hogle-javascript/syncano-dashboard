@@ -5,7 +5,7 @@ module.exports = {
   before: function(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.goToLoginPage();
+    loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
     loginPage.clickSignInButton();
