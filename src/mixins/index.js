@@ -12,6 +12,7 @@ import WaitForStoreMixin from './WaitForStoreMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
 import LimitsMixin from './LimitsMixin';
+import ListItemDropdownMixin from './ListItemDropdownMixin';
 
 let Mixins = {};
 
@@ -29,5 +30,6 @@ Mixins.WaitForStore = WaitForStoreMixin;
 Mixins.StoreHelpers = StoreHelpersMixin;
 Mixins.IsLoading = IsLoadingMixin;
 Mixins.Limits = LimitsMixin;
+Mixins.ListItemDropdown = ListItemDropdownMixin;
 
 export default Mixins;

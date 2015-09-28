@@ -6,6 +6,7 @@ import Mixins from '../../mixins';
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
+import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 import AdminsActions from './AdminsActions';
@@ -46,6 +47,7 @@ export default Reflux.createStore({
     console.debug('AdminsStore::setAdmins');
 
     this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.hideDialogs = false;
     this.trigger(this.data);
   },
 
@@ -68,7 +70,6 @@ export default Reflux.createStore({
 
   onFetchAdminsCompleted(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-    this.trigger(this.data);
     AdminsActions.setAdmins(items);
   },
 
@@ -76,5 +77,6 @@ export default Reflux.createStore({
     console.debug('AdminsStore::onRemoveAdminsCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
+    ColumnMenuActions.clearClickedItem();
   }
 });
