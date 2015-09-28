@@ -59,7 +59,7 @@ export default React.createClass({
     InstanceDialogActions.showDialog(instance);
   },
 
-  showInstanceDeleteDialog(dialogRef) {
+  showContextDialog(dialogRef) {
     this.context.dialogs[dialogRef].show();
   },
 
@@ -89,11 +89,14 @@ export default React.createClass({
         <Column.Menu item={item}>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.showInstanceEditDialog.bind(this, item)}
+            onTouchTap={this.showInstanceEditDialog.bind(null, item)}
             primaryText="Edit an Instance" />
           <MenuItem
-            onTouchTap={this.showInstanceDeleteDialog.bind(this, dialogRef)}
+            onTouchTap={this.showContextDialog.bind(null, dialogRef)}
             primaryText={removeText} />
+          <MenuItem
+            onTouchTap={this.showContextDialog.bind(null, 'pickColorIconDialog')}
+            primaryText="Customize an Instance" />
         </Column.Menu>
       </Common.ColumnList.Item>
     )

@@ -141,9 +141,10 @@ export default Radium(React.createClass({
 
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
+    let instance = this.state.columnMenu.item ? this.state.columnMenu.item : Store.getCheckedItem();
 
     Actions.updateInstance(
-      Store.getCheckedItem().name, {
+      instance.name, {
         metadata: JSON.stringify({color, icon})
       }
     );
@@ -317,13 +318,6 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
-            <Common.Fab.TooltipItem
-              tooltip="Click here to customize Instances"
-              secondary={true}
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
