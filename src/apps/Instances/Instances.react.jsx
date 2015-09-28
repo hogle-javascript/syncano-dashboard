@@ -12,6 +12,8 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
+import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
+import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
 
 import Header from '../Header'
 
@@ -30,11 +32,16 @@ import './Instances.sass';
 export default Radium(React.createClass({
   displayName: 'Instances',
 
+  childContextTypes: {
+    instancesDialogs: React.PropTypes.object
+  },
+
   mixins: [
     Router.State,
     Router.Navigation,
 
     Reflux.connect(Store),
+    Reflux.connect(ColumnMenuStore, 'columnMenu'),
     Mixins.Dialogs,
     Mixins.Limits
   ],
@@ -52,6 +59,12 @@ export default Radium(React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
+  },
+
+  getChildContext() {
+    return {
+      instancesDialogs: this.refs
+    };
   },
 
   getStyles() {
@@ -133,6 +146,10 @@ export default Radium(React.createClass({
     }]
   },
 
+  getInstancesToDelete() {
+    return this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
+  },
+
   onNextStep() {
     Actions.setTourConfig(this.getTourConfig());
     Actions.nextStep();
@@ -151,12 +168,17 @@ export default Radium(React.createClass({
 
   handleDelete() {
     console.info('Instances::handleDelete');
-    Actions.removeInstances(Store.getCheckedItems());
+    Actions.removeInstances(this.getInstancesToDelete());
   },
 
   handleDeleteShared() {
     console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
+    Actions.removeSharedInstance(this.getInstancesToDelete(), SessionStore.getUser().id);
+  },
+
+  handleCancel(ref) {
+    this.hideDialogs(ref);
+    ColumnMenuActions.clearClickedItem();
   },
 
   handleItemClick(instanceName) {
@@ -168,7 +190,7 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = Store.getCheckedItems();
+    let checkedInstances = this.getInstancesToDelete();
 
     return [
       {
@@ -189,7 +211,7 @@ export default Radium(React.createClass({
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,
@@ -208,14 +230,14 @@ export default Radium(React.createClass({
         params: {
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
-          title: 'Delete shared Instance',
+          title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            'Do you really want to leave ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
             this.getDialogList(checkedInstances),
             <Common.Loading
               type="linear"
@@ -316,12 +338,6 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Instance"
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showInstanceEditDialog}
-              iconClassName="synicon-pencil"/>
             <Common.Fab.TooltipItem
               tooltip="Click here to customize Instances"
               secondary={true}
