@@ -15,7 +15,6 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      description: null,
       ignore_acl: false,
       allow_user_create: false
     };

@@ -17,7 +17,6 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       label: null,
-      description: null,
       runtime_name: '',
       runtimes: [
         {payload: '', text: 'Loading...'}

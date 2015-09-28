@@ -17,9 +17,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       name: null,
-      description: null,
       type: 'default',
-      custom_publish: null,
+      custom_publish: false,
       group: null,
       group_permissions: 'none',
       other_permissions: 'none'
