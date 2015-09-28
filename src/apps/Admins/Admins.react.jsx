@@ -49,16 +49,16 @@ export default React.createClass({
 
   handleDeleteAdmin() {
     console.info('Admins::handleDelete');
-    Actions.removeAdmins(this.getCheckedItems(Store.getCheckedItems));
+    Actions.removeAdmins(this.getClickedItem(Store.getCheckedItems));
   },
 
   handleResendInvitation() {
     console.info('Admins::handleResendInvitation');
-    AdminsInvitationsActions.resendInvitation(this.getCheckedItems(AdminsInvitationsStore.getCheckedItems));
+    AdminsInvitationsActions.resendInvitation(this.getClickedItem(AdminsInvitationsStore.getCheckedItems));
   },
   handleRemoveInvitation() {
     console.info('Admins::handleRemoveInvitation');
-    AdminsInvitationsActions.removeInvitation(this.getCheckedItems(AdminsInvitationsStore.getCheckedItems));
+    AdminsInvitationsActions.removeInvitation(this.getClickedItem(AdminsInvitationsStore.getCheckedItems));
   },
 
   uncheckAll() {
@@ -92,13 +92,13 @@ export default React.createClass({
   },
 
   showAdminEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
+    Actions.showDialog(this.getClickedItem(Store.getCheckedItem));
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedAdmins = this.getCheckedItems(Store.getCheckedItems);
-    let checkedAdminsInvitations = this.getCheckedItems(AdminsInvitationsStore.getCheckedItems);
+    let checkedAdmins = this.getClickedItem(Store.getCheckedItems);
+    let checkedAdminsInvitations = this.getClickedItem(AdminsInvitationsStore.getCheckedItems);
 
     return [
       {

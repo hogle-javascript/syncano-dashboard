@@ -1,6 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 
+import {DialogMixin} from '../mixins';
+
 import ColumnMenuActions from '../common/ColumnList/Column/MenuActions';
 import ColumnMenuStore from '../common/ColumnList/Column/MenuStore';
 
@@ -11,7 +13,8 @@ export default {
   },
 
   mixins: [
-    Reflux.connect(ColumnMenuStore, 'columnMenu')
+    Reflux.connect(ColumnMenuStore, 'columnMenu'),
+    DialogMixin
   ],
 
   getChildContext() {
@@ -20,12 +23,12 @@ export default {
     }
   },
 
-  getCheckedItems(altGetItemsFunc) {
+  getClickedItem(altGetItemsFunc) {
     return this.state.columnMenu.item ? [this.state.columnMenu.item] : altGetItemsFunc();
   },
 
   handleContextModalCancel(dialogRef) {
-    this.hideDialog(dialogRef);
-    ColumnMenuActions.clearCheckedItem();
+    this.hideDialogs(dialogRef);
+    ColumnMenuActions.clearClickedItem();
   }
 }

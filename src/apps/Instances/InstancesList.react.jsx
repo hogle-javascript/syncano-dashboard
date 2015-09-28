@@ -23,7 +23,7 @@ export default React.createClass({
   displayName: 'InstancesList',
 
   contextTypes: {
-    instancesDialogs: React.PropTypes.object
+    dialogs: React.PropTypes.object
   },
 
   mixins: [
@@ -60,7 +60,7 @@ export default React.createClass({
   },
 
   showInstanceDeleteDialog(dialogRef) {
-    this.context.instancesDialogs[dialogRef].show();
+    this.context.dialogs[dialogRef].show();
   },
 
   renderItem(item) {
