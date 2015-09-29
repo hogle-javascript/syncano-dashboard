@@ -23,7 +23,7 @@ var instancesCommands = {
   },
   isModalClosed: function(element) {
     return this.waitForElementNotVisible(element);
-  },
+  }
 };
 
 module.exports = {
@@ -80,6 +80,10 @@ module.exports = {
     },
     deleteInstanceModalTitle: {
       selector: '//h3[text()="Delete an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    welcomeDialogCreateInstance: {
+      selector: '//div[@class="welcome-dialog"]//button',
       locateStrategy: 'xpath'
     }
   }

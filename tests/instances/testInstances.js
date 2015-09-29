@@ -12,12 +12,11 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'Test Add Instance': function(client) {
+  'Test Add Instance from welcome dialog': function(client) {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.waitForElementPresent('@emptyListItem');
-    instancesPage.clickFAB();
-    instancesPage.fillInstanceName();
+    instancesPage.clickButton('@welcomeDialogCreateInstance');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton');
