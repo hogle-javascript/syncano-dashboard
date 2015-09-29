@@ -63,7 +63,7 @@ module.exports = {
       selector: '.synicon-checkbox-multiple-marked-outline'
     },
     instanceSelected: {
-    selector: '.synicon-checkbox-marked-outline'
+      selector: '.synicon-checkbox-marked-outline'
     },
     instancesTableRowDescription: {
       selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
@@ -82,6 +82,10 @@ module.exports = {
     },
     deleteInstanceModalTitle: {
       selector: '//h3[text()="Delete an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    docsLink: {
+      selector: '//a[@href="http://docs.syncano.com/"]',
       locateStrategy: 'xpath'
     }
   }
