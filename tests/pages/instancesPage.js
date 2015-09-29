@@ -83,10 +83,6 @@ module.exports = {
     deleteInstanceModalTitle: {
       selector: '//h3[text()="Delete an Instance"]',
       locateStrategy: 'xpath'
-    },
-    docsLink: {
-      selector: '//a[@href="http://docs.syncano.com/"]',
-      locateStrategy: 'xpath'
     }
   }
 };
