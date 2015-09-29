@@ -4,10 +4,6 @@ var instancesCommands = {
       .click('@fab')
       .waitForElementVisible('@confirmButton');
   },
-  fillInstanceName: function() {
-    return this.waitForElementVisible('@createModalNameInput')
-      .setValue('@createModalNameInput', 'nightwatch_test_instance');
-  },
   fillInstanceDescription: function(description) {
     return this.waitForElementVisible('@createModalDescriptionInput')
       .clearValue('@createModalDescriptionInput')
@@ -63,6 +59,12 @@ module.exports = {
     deleteButton: {
       selector: '.synicon-delete'
     },
+    selectButton: {
+      selector: '.synicon-checkbox-multiple-marked-outline'
+    },
+    instanceSelected: {
+      selector: '.synicon-checkbox-marked-outline'
+    },
     instancesTableRowDescription: {
       selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
       locateStrategy: 'xpath'
@@ -84,6 +86,10 @@ module.exports = {
     },
     welcomeDialogCreateInstance: {
       selector: '//div[@class="welcome-dialog"]//button',
+      locateStrategy: 'xpath'
+    },
+    instanceDescription: {
+      selector: '//div[@class="instances-list-container"]//*[text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     }
   }

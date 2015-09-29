@@ -4,7 +4,7 @@ module.exports = {
   tags: ['users'],
   before: function(client) {
     var loginPage = client.page.loginPage();
-    loginPage.goToLoginPage();
+    loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
     loginPage.clickSignInButton();
