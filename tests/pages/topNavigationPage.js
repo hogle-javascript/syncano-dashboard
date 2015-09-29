@@ -1,5 +1,5 @@
 const topNavigationCommands = {
-  clickButtona: function(button) {
+  clickButton: function(button) {
     return this.waitForElementVisible(button)
       .click(button);
   }
@@ -25,7 +25,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     support: {
-      selector: '//ul[@class="toolbar-list"]/li[2]/a',
+      selector: '//a[@href="http://www.syncano.com/support/"]',
       locateStrategy: 'xpath'
     },
     docs: {

@@ -12,7 +12,15 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'User Goes to Docs page': function(client) {
+  afterEach: function(client, done) {
+    client.windowHandles(function(result) {
+      const handle = result.value[0];
+
+      client.switchWindow(handle);
+    });
+    client.pause(500, done);
+  },
+  'Admin Goes to Docs page': function(client) {
     const topNavigationPage = client.page.topNavigationPage();
     const docsPage = client.page.docsPage();
 
@@ -23,14 +31,28 @@ module.exports = {
 
       client.switchWindow(handle);
     });
-
     docsPage.waitForElementVisible('@syncanoLogo');
+    client.window('delete');
   },
-  'User can view notification dropdown': function(client) {
+  'Admin can view notification dropdown': function(client) {
     const topNavigationPage = client.page.topNavigationPage();
 
     topNavigationPage.navigate();
     topNavigationPage.click('@menuNotifications');
     topNavigationPage.waitForElementVisible('@notificationsDropdown');
+  },
+  'Admin Goes to Support page': function(client) {
+    const topNavigationPage = client.page.topNavigationPage();
+    const supportPage = client.page.supportPage();
+
+    topNavigationPage.navigate();
+    topNavigationPage.click('@support')
+    client.pause(1000);
+    client.windowHandles(function(result) {
+      const handle = result.value[1];
+
+      client.switchWindow(handle);
+    });
+    supportPage.waitForElementVisible('@supportPage');
   }
 };
