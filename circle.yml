@@ -20,15 +20,8 @@ deployment:
   production:
     branch: master
     commands:
-      - NODE_ENV=production npm run-script check-github-tag
-      - NODE_ENV=production npm run-script publish
-      - NODE_ENV=production npm run-script clean
-      - NODE_ENV=production npm run-script add-github-tag
-      - NODE_ENV=production npm run-script changelog
-      - NODE_ENV=production npm run-script s3-cleanup
+      - NODE_ENV=production npm run-script deployment-master
   staging:
     branch: devel
     commands:
-      - npm run-script publish
-      - npm run-script clean
-      - npm run-script s3-cleanup
+      - npm run-script deployment-devel
