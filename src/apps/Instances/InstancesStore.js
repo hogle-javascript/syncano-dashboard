@@ -145,7 +145,6 @@ export default Reflux.createStore({
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map((key) => instances[key]);
-    this.data.hideDialogs = false;
     this.trigger(this.data);
   },
 
