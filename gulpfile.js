@@ -11,6 +11,7 @@ var gulp             = require('gulp'),
     revOverride      = require('gulp-rev-css-url'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
+    gulpSequence     = require('gulp-sequence'),
     del              = require('del'),
     moment           = require('moment'),
     webpack          = require('webpack'),
@@ -101,11 +102,11 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
 
 gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
   new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
-    .listen(8080, 'localhost', function(err) {
+    .listen(8080, '0.0.0.0', function(err) {
       if (err) {
         throw new gutil.PluginError('webpack-dev-server', err);
       }
-      gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
+      gutil.log('[webpack-dev-server]', 'https://0.0.0.0:8080/');
     });
 });
 
@@ -584,3 +585,12 @@ gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
+gulp.task('deployment-master', gulpSequence(
+  'check-github-tag',
+  'publish',
+  'clean',
+  'add-github-tag',
+  'changelog',
+  's3-cleanup'
+));
+gulp.task('deployment-devel', gulpSequence('publish', 'clean', 's3-cleanup'));
