@@ -36,8 +36,7 @@ export default Radium(React.createClass({
 
     Reflux.connect(Store),
     Mixins.Dialogs,
-    Mixins.Limits,
-    Mixins.ListItemDropdown
+    Mixins.Limits
   ],
 
   componentDidMount() {
@@ -141,10 +140,8 @@ export default Radium(React.createClass({
 
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
-    let instance = this.state.columnMenu.item ? this.state.columnMenu.item : Store.getCheckedItem();
-
     Actions.updateInstance(
-      instance.name, {
+      Store.getCheckedItem().name, {
         metadata: JSON.stringify({color, icon})
       }
     );
@@ -153,12 +150,12 @@ export default Radium(React.createClass({
 
   handleDelete() {
     console.info('Instances::handleDelete');
-    Actions.removeInstances(this.getClickedItem(Store.getCheckedItems));
+    Actions.removeInstances(Store.getCheckedItems());
   },
 
   handleDeleteShared() {
     console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(this.getClickedItem(Store.getCheckedItems), SessionStore.getUser().id);
+    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
   },
 
   handleItemClick(instanceName) {
@@ -170,7 +167,7 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = this.getClickedItem(Store.getCheckedItems);
+    let checkedInstances = Store.getCheckedItems();
 
     return [
       {
@@ -191,7 +188,7 @@ export default Radium(React.createClass({
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleContextModalCancel.bind(null, 'deleteInstanceDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,
@@ -212,7 +209,7 @@ export default Radium(React.createClass({
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleContextModalCancel.bind(null, 'deleteSharedInstanceDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
@@ -237,7 +234,7 @@ export default Radium(React.createClass({
   },
 
   showInstanceEditDialog() {
-    InstanceDialogActions.showDialog(this.getClickedItem(Store.getCheckedItem));
+    InstanceDialogActions.showDialog(Store.getCheckedItem());
   },
 
   renderDeleteFabButton() {
@@ -318,6 +315,13 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
+            <Common.Fab.TooltipItem
+              tooltip="Click here to customize Instances"
+              secondary={true}
+              mini={true}
+              disabled={checkedInstances > 1}
+              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
+              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
@@ -336,14 +340,14 @@ export default Radium(React.createClass({
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
-          emptyItemContent="Create an instance"/>
+          emptyItemContent="Create an instance" />
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
             items={Store.getOtherInstances()}
             listType="sharedInstances"
-            viewMode="stream"/>
+            viewMode="stream" />
         </Common.Show>
       </Container>
     );

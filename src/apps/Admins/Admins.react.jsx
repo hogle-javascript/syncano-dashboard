@@ -32,7 +32,6 @@ export default React.createClass({
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
-    Mixins.ListItemDropdown,
     HeaderMixin
   ],
 
@@ -49,16 +48,17 @@ export default React.createClass({
 
   handleDeleteAdmin() {
     console.info('Admins::handleDelete');
-    Actions.removeAdmins(this.getClickedItem(Store.getCheckedItems));
+    Actions.removeAdmins(Store.getCheckedItems());
   },
 
   handleResendInvitation() {
     console.info('Admins::handleResendInvitation');
-    AdminsInvitationsActions.resendInvitation(this.getClickedItem(AdminsInvitationsStore.getCheckedItems));
+    AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
   },
+
   handleRemoveInvitation() {
     console.info('Admins::handleRemoveInvitation');
-    AdminsInvitationsActions.removeInvitation(this.getClickedItem(AdminsInvitationsStore.getCheckedItems));
+    AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());
   },
 
   uncheckAll() {
@@ -92,13 +92,13 @@ export default React.createClass({
   },
 
   showAdminEditDialog() {
-    Actions.showDialog(this.getClickedItem(Store.getCheckedItem));
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedAdmins = this.getClickedItem(Store.getCheckedItems);
-    let checkedAdminsInvitations = this.getClickedItem(AdminsInvitationsStore.getCheckedItems);
+    let checkedAdmins = Store.getCheckedItems();
+    let checkedAdminsInvitations = AdminsInvitationsStore.getCheckedItems();
 
     return [
       {
@@ -108,7 +108,7 @@ export default React.createClass({
           ref: 'deleteAdminDialog',
           title: 'Remove an Administrator',
           actions: [
-            {text: 'Cancel', onClick: this.handleContextModalCancel.bind(null, 'deleteAdminDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
           ],
           modal: true,
@@ -129,7 +129,7 @@ export default React.createClass({
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleContextModalCancel.bind(null, 'resendInvitationDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleResendInvitation}
           ],
           modal: true,
@@ -150,7 +150,7 @@ export default React.createClass({
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleContextModalCancel.bind(null, 'removeInvitationDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
           ],
           modal: true,

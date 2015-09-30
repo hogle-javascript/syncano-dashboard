@@ -6,8 +6,9 @@ import _ from 'lodash';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import AdminActions from './AdminsActions';
 import SessionStore from '../Session/SessionStore';
+import AdminsInvitationsActions from './AdminsInvitationsActions';
+import AdminsActions from './AdminsActions'
 
 // Components
 import Common from '../../common';
@@ -16,10 +17,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 export default React.createClass({
 
   displayName: 'AdminsList',
-
-  contextTypes: {
-    dialogs: React.PropTypes.object
-  },
 
   mixins: [
     HeaderMixin,
@@ -54,14 +51,16 @@ export default React.createClass({
   getDropdownMenu(item) {
     if (_.has(item, 'key')) {
       return (
-      <Common.ColumnList.Column.Menu item={item}>
+      <Common.ColumnList.Column.Menu>
         <MenuItem
+          onTouchTap={this.showMenuDialog.bind(null, item,
+            AdminsInvitationsActions.removeInvitation.bind(null, [item]))}
           className="dropdown-item-remove-invitation"
-          onTouchTap={this.showContextDialog.bind(this, 'removeInvitationDialog')}
           primaryText="Remove Invitation" />
         <MenuItem
+          onTouchTap={this.showMenuDialog.bind(null, item,
+            AdminsInvitationsActions.resendInvitation.bind(null, [item]))}
           className="dropdown-item-resend-invitation"
-          onTouchTap={this.showContextDialog.bind(this, 'resendInvitationDialog')}
           primaryText="Resend Invitation" />
       </Common.ColumnList.Column.Menu>
       )
@@ -71,11 +70,11 @@ export default React.createClass({
       <Common.ColumnList.Column.Menu item={item}>
         <MenuItem
           className="dropdown-item-delete-admin"
-          onTouchTap={this.showContextDialog.bind(this, 'deleteAdminDialog')}
+          onTouchTap={this.showMenuDialog.bind(null, item, AdminsActions.removeAdmins.bind(null, [item]))}
           primaryText="Delete Admin" />
         <MenuItem
           className="dropdown-item-edit-admin"
-          onTouchTap={AdminActions.showDialog.bind(this, item)}
+          onTouchTap={AdminsActions.showDialog.bind(null, item)}
           primaryText="Edit Admin" />
       </Common.ColumnList.Column.Menu>
     )
@@ -83,6 +82,10 @@ export default React.createClass({
 
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
+  },
+
+  showMenuDialog(listItem, confirmFunc, event) {
+    this.refs.menuDialog.show(listItem.email, confirmFunc, event.target.innerHTML)
   },
 
   showContextDialog(ref) {
@@ -137,6 +140,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container className="admin-list">
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.ColumnHeader
             primary={true}
