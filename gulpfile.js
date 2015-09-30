@@ -4,6 +4,7 @@ var gulp             = require('gulp'),
     async            = require('async'),
     _                = require('lodash'),
     AWS              = require('aws-sdk'),
+    bump             = require('gulp-bump'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
@@ -231,20 +232,42 @@ gulp.task('check-github-tag', function(cb) {
 
 gulp.task('add-github-tag', function(cb) {
   async.series([
-    function (callback) {
+    function(callback) {
       git.exec({args: 'config --global user.email "ci@syncano.com"'}, callback);
     },
 
-    function (callback) {
+    function(callback) {
       git.exec({args: 'config --global user.name "CI"'}, callback);
     },
 
-    function (callback) {
+    function(callback) {
+      gulp.src('./package.json')
+          .pipe(git.commit('Version bump: ' + version))
+          .on('finish', callback);
+    },
+
+    function(callback) {
       git.tag(version, 'Release ' + version, callback);
     },
 
-    function (callback) {
+    function(callback) {
       git.push('origin', version, callback);
+    },
+
+    function(callback) {
+      git.push('origin', 'master', callback);
+    },
+
+    function(callback) {
+      git.checkout('devel', callback);
+    },
+
+    function(callback) {
+      git.merge('master', callback);
+    },
+
+    function(callback) {
+      git.push('origin', 'devel', callback);
     }
   ], function(err) {
     if (err) throw err;
@@ -579,6 +602,12 @@ gulp.task('s3-cleanup', function(cb) {
     });
   });
 
+});
+
+gulp.task('bump', function(){
+  gulp.src('./package.json')
+  .pipe(bump())
+  .pipe(gulp.dest('./'));
 });
 
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);

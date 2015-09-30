@@ -20,6 +20,7 @@ deployment:
   production:
     branch: master
     commands:
+      - NODE_ENV=production npm run-script bump
       - NODE_ENV=production npm run-script deployment-master
   staging:
     branch: devel
