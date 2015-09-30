@@ -51,7 +51,7 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: '//div[@class="instances-list-container"]/div[2]/div/div[2]',
+      selector: '//div[@class="description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     selectInstance: {
@@ -73,10 +73,6 @@ module.exports = {
     },
     instanceSelected: {
       selector: '.synicon-checkbox-marked-outline'
-    },
-    instancesTableRowDescription: {
-      selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
-      locateStrategy: 'xpath'
     },
     emptyListItem: {
       selector: '.empty-list-item'
