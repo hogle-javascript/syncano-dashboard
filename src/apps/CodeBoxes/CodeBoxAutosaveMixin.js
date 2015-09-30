@@ -5,6 +5,9 @@ export default {
   autosaveTimer: null,
 
   componentWillMount() {
+    if (!this.autosaveAttributeName) {
+      throw Error("Missing attribute: 'autosaveAttributeName'");
+    }
     if (!_.has(localStorage, this.getAutosaveConfigName())) {
       localStorage.setItem(this.getAutosaveConfigName(), true)
     }
@@ -25,11 +28,7 @@ export default {
   },
 
   getAutosaveConfigName() {
-    if (this.isActive('codebox-edit')) {
-      return 'codeBoxSourceAutosave'
-    }
-
-    return 'codeBoxConfigAutosave'
+    return this.autosaveAttributeName;
   },
 
   saveCheckboxState(event, checked) {

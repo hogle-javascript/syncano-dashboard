@@ -38,6 +38,8 @@ export default React.createClass({
     SnackbarNotificationMixin
   ],
 
+  autosaveAttributeName: 'codeBoxSourceAutosave',
+
   componentDidMount() {
     Actions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {

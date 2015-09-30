@@ -39,6 +39,8 @@ export default Radium(React.createClass({
     Mixins.InstanceTabs
   ],
 
+  autosaveAttributeName: 'codeBoxConfigAutosave',
+
   componentDidMount() {
     Actions.fetch();
     this.bindShortcut(['command+s', 'ctrl+s'], () => {
