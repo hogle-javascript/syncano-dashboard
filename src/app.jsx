@@ -8,7 +8,7 @@ import './app.sass';
 
 import React from 'react';
 import Router from 'react-router';
-import URI from 'URIjs';
+import URI from 'urijs';
 import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
