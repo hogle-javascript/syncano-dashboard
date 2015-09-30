@@ -101,11 +101,11 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
 
 gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
   new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
-    .listen(8080, 'localhost', function(err) {
+    .listen(8080, '0.0.0.0', function(err) {
       if (err) {
         throw new gutil.PluginError('webpack-dev-server', err);
       }
-      gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
+      gutil.log('[webpack-dev-server]', 'https://0.0.0.0:8080/');
     });
 });
 
