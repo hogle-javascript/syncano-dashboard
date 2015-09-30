@@ -1,10 +1,10 @@
 export default {
   get(solutionId) {
-    this.Connection
-      .Solutions
-      .get(solutionId)
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Solutions
+            .get(solutionId)
+            .then(this.completed)
+            .catch(this.failure);
   },
   listVersions(solutionId) {
     this.Connection
@@ -21,22 +21,22 @@ export default {
       .catch(this.failure);
   },
   install(payload) {
-    this.Connection
-      .Solutions
-      .install(
-      payload.solutionId,
-      payload.versionId,
-      payload.instanceName
-    )
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Solutions
+            .install(
+              payload.solutionId,
+              payload.versionId,
+              payload.instanceName
+            )
+            .then(this.completed)
+            .catch(this.failure);
   },
   remove(solutionId) {
-    this.Connection
-      .Solutions
-      .remove(solutionId)
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Solutions
+            .remove(solutionId)
+            .then(this.completed)
+            .catch(this.failure);
   },
   list(payload) {
     this.Connection

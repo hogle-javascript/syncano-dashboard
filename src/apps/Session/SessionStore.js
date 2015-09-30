@@ -62,26 +62,23 @@ export default Reflux.createStore({
     return localStorage.getItem('invitationKey');
   },
 
+  getUTMData() {
+    return JSON.parse(localStorage.getItem('UTMData'));
+  },
+
   setAnalyticsIdentifying(user) {
-    let currentQuery = this.getRouter() ? this.getRouter().getCurrentQuery() : {};
+    let UTMData = this.getUTMData();
     let analyticsIdentifyObject = {
       email: user.email,
       'Auth backend': user.network ? user.network : 'password'
     };
-    let analyticsIdentifyCampaign = {
-      'UTM Campaign': currentQuery.utm_campaign,
-      'UTM Content': currentQuery.utm_content,
-      'UTM Medium': currentQuery.utm_medium,
-      'UTM Source': currentQuery.utm_source,
-      'UTM Term': currentQuery.utm_term
-    };
 
-    if (!_.isUndefined(currentQuery.utm_campaign)) {
-      _.extend(analyticsIdentifyObject, analyticsIdentifyCampaign);
+    if (!_.isUndefined(UTMData)) {
+      _.extend(analyticsIdentifyObject, UTMData);
     }
 
     if (this.signUpMode) {
-      window.analytics.identify(analyticsIdentifyObject)
+      window.analytics.identify(user.email, analyticsIdentifyObject)
     } else {
       window.analytics.identify(user.email)
     }
@@ -120,6 +117,20 @@ export default Reflux.createStore({
 
     this.setAnalyticsIdentifying(user);
     this.trigger(this);
+  },
+
+  setUTMData(query) {
+    let UTMData = {
+      'UTM Campaign': query.utm_campaign,
+      'UTM Content': query.utm_content,
+      'UTM Medium': query.utm_medium,
+      'UTM Source': query.utm_source,
+      'UTM Term': query.utm_term
+    };
+
+    if (query.utm_campaign) {
+      localStorage.setItem('UTMData', JSON.stringify(UTMData));
+    }
   },
 
   setInstance(instance) {
@@ -231,5 +242,4 @@ export default Reflux.createStore({
   isReady() {
     return this.isAuthenticated() && this.user !== null;
   }
-
 });
