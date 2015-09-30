@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import URI from 'URIjs';
+import URI from 'urijs';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
