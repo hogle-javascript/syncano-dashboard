@@ -157,7 +157,7 @@ export default React.createClass({
                 <Column.ColumnHeader
                   primary={true}
                   columnName="CHECK_ICON">
-                  Invitations
+                  Instance
                 </Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DESC">From</Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
