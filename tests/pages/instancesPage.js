@@ -19,7 +19,7 @@ var instancesCommands = {
   },
   isModalClosed: function(element) {
     return this.waitForElementNotVisible(element);
-  },
+  }
 };
 
 module.exports = {
@@ -63,7 +63,7 @@ module.exports = {
       selector: '.synicon-checkbox-multiple-marked-outline'
     },
     instanceSelected: {
-    selector: '.synicon-checkbox-marked-outline'
+      selector: '.synicon-checkbox-marked-outline'
     },
     instancesTableRowDescription: {
       selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
@@ -82,6 +82,14 @@ module.exports = {
     },
     deleteInstanceModalTitle: {
       selector: '//h3[text()="Delete an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    welcomeDialogCreateInstance: {
+      selector: '//div[@class="welcome-dialog"]//button',
+      locateStrategy: 'xpath'
+    },
+    instanceDescription: {
+      selector: '//div[@class="instances-list-container"]//*[text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     }
   }

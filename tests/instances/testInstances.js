@@ -13,12 +13,12 @@ module.exports = {
   after: function(client) {
     client.end();
   },
-  'Test Add Instance': function(client) {
+  'Test Add Instance from welcome dialog': function(client) {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@emptyListItem');
-    instancesPage.clickFAB();
+    instancesPage.clickButton('@welcomeDialogCreateInstance');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton');
@@ -62,20 +62,32 @@ module.exports = {
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
-  'Test Create multiple Instances': function(client) {
+  'Add an Instance from empty list item': function(client){
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@emptyListItem');
-    for (i = 0; i < 2 ; i++) { 
-    instancesPage.clickFAB();
+    instancesPage.clickButton('@emptyListItem');
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
+    instancesPage.fillInstanceDescription('nightwatch_test_instance');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@addInstanceModalTitle');
+    instancesPage.waitForElementVisible('@instanceDescription')
+  },
+  'Test Create multiple Instances by FAB': function(client) {
+    const instancesPage = client.page.instancesPage();
+    var i = 0;
+
+    instancesPage.navigate();
+    for (i; i < 2; i += 1) {
+      instancesPage.clickFAB();
+      instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
+      instancesPage.clickButton('@confirmButton');
+      instancesPage.isModalClosed('@addInstanceModalTitle');
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
-    },
-    'Test Delete multiple Instances': function(client) {
+  },
+  'Test Delete multiple Instances': function(client) {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -87,5 +99,5 @@ module.exports = {
     instancesPage.isModalClosed('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-    }
+  }
 };
