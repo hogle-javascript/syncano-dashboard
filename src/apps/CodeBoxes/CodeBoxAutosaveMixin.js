@@ -8,8 +8,8 @@ export default {
     if (!this.autosaveAttributeName) {
       throw Error("Missing attribute: 'autosaveAttributeName'");
     }
-    if (!_.has(localStorage, this.getAutosaveConfigName())) {
-      localStorage.setItem(this.getAutosaveConfigName(), true)
+    if (!_.has(localStorage, this.autosaveAttributeName)) {
+      localStorage.setItem(this.autosaveAttributeName, true)
     }
   },
 
@@ -24,15 +24,11 @@ export default {
   },
 
   isAutosaveEnabled() {
-    return JSON.parse(localStorage.getItem(this.getAutosaveConfigName()));
-  },
-
-  getAutosaveConfigName() {
-    return this.autosaveAttributeName;
+    return JSON.parse(localStorage.getItem(this.autosaveAttributeName));
   },
 
   saveCheckboxState(event, checked) {
-    localStorage.setItem(this.getAutosaveConfigName(), checked);
+    localStorage.setItem(this.autosaveAttributeName, checked);
   },
 
   runAutoSave() {
