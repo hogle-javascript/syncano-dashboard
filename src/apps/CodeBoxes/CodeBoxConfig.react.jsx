@@ -58,6 +58,9 @@ export default Radium(React.createClass({
       },
       autosaveCheckbox: {
         marginTop: 30
+      },
+      wrongConfigSnackbar: {
+        color: MUI.Styles.Colors.red400
       }
     }
   },
@@ -86,6 +89,7 @@ export default Radium(React.createClass({
 
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
+    let styles = this.getStyles();
 
     if (this.isConfigValid()) {
       this.clearAutosaveTimer();
@@ -96,7 +100,8 @@ export default Radium(React.createClass({
     } else {
       this.setSnackbarNotification({
         message: 'Config is not Valid. Please verify if it is valid JSON format',
-        autoHideDuration: 4000
+        autoHideDuration: 4000,
+        style: styles.wrongConfigSnackbar
       });
     }
   },
