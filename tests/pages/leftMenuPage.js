@@ -1,8 +1,8 @@
-var leftMenuCommands = {
-  clickButton: function(button) {
-    return this.waitForElementVisible(button, 5000)
+const leftMenuCommands = {
+  'clickButton': function(button) {
+    return this.waitForElementVisible(button)
       .click(button);
-  },
+  }
 };
 
 module.exports = {
@@ -10,6 +10,10 @@ module.exports = {
   elements: {
     leftMenu: {
       selector: '.left-nav'
+    },
+    instancesDropdown: {
+      selector: '//div[@class="instances-dropdown"]',
+      locateStrategy: 'xpath'
     },
     classes: {
       selector: '//div[@class="left-nav"]//a[text()="Classes"]',

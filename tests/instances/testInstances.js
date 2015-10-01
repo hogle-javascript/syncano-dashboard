@@ -1,3 +1,5 @@
+const utils = require('../utils');
+
 module.exports = {
   tags: ['instances'],
   before: function(client) {
@@ -87,6 +89,16 @@ module.exports = {
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
+  'Test instances Dropdown': function(client) {
+    const instancesPage = client.page.instancesPage();
+    const leftMenuPage = client.page.leftMenuPage();
+
+    instancesPage.navigate();
+    instancesPage.clickButton('@instancesTableRow');
+    leftMenuPage.clickButton('@instancesDropdown');
+
+
+  }
   'Test Delete multiple Instances': function(client) {
     const instancesPage = client.page.instancesPage();
 
