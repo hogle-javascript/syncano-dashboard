@@ -58,9 +58,6 @@ export default Radium(React.createClass({
       },
       autosaveCheckbox: {
         marginTop: 30
-      },
-      wrongConfigSnackbar: {
-        color: MUI.Styles.Colors.red400
       }
     }
   },
@@ -97,7 +94,10 @@ export default Radium(React.createClass({
         message: 'Saving...'
       });
     } else {
-      this.refs.wrongConfigSnackbar.show();
+      this.setSnackbarNotification({
+        message: 'Config is not Valid. Please verify if it is valid JSON format',
+        autoHideDuration: 4000
+      });
     }
   },
 
@@ -160,11 +160,6 @@ export default Radium(React.createClass({
     return (
       <Container style={styles.container}>
         {this.getDialogs()}
-        <MUI.Snackbar
-          ref='wrongConfigSnackbar'
-          message='Config is not Valid. Please verify if it is valid JSON format'
-          autoHideDuration={4000}
-          style={styles.wrongConfigSnackbar}/>
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"

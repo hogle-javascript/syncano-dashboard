@@ -32,11 +32,9 @@ export default {
   },
 
   runAutoSave() {
+    this.clearAutosaveTimer();
     if (!this.isSaved() && this.refs.autosaveCheckbox && this.refs.autosaveCheckbox.isChecked()) {
-      this.clearAutosaveTimer();
       this.setAutosaveTimer();
-    } else {
-      this.clearAutosaveTimer();
     }
   },
 

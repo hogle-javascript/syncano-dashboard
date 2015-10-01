@@ -25,6 +25,7 @@ export default React.createClass({
 
     if (this.state.snackbar !== null) {
       this.refs.snackbar.dismiss();
+      delete this.refs.snackbar._wasOpen;
     }
   },
 
