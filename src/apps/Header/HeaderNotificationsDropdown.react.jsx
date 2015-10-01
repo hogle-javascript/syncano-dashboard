@@ -96,6 +96,7 @@ export default Radium(React.createClass({
       message: 'Activation e-mail was send',
       autoHideDuration: 3000
     });
+    this.hasLastInvitation();
   },
 
   handleNotificationsIconClick() {
@@ -179,7 +180,8 @@ export default Radium(React.createClass({
         <MenuItem
           key="resend-link"
           leftIcon={icon}
-          style={styles.menuItem}>
+          style={styles.menuItem}
+          onTouchTap={this.handleResendEmail}>
           {resendLink}
         </MenuItem>
       )
@@ -229,7 +231,6 @@ export default Radium(React.createClass({
         <MUI.IconMenu
           ref='headerNotificationDropdown'
           iconButtonElement={this.renderIcon()}
-          onItemTouchTap={this.handleResendEmail}
           autoWidth={false}
           maxWidth='400px'
           menuStyle={styles.menu}>
