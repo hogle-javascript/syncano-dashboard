@@ -1,5 +1,3 @@
-const utils = require('../utils');
-
 module.exports = {
   tags: ['instances'],
   before: function(client) {
@@ -78,7 +76,7 @@ module.exports = {
   },
   'Test Create multiple Instances by FAB': function(client) {
     const instancesPage = client.page.instancesPage();
-    var i = 0;
+    let i = 0;
 
     instancesPage.navigate();
     for (i; i < 2; i += 1) {
@@ -89,16 +87,39 @@ module.exports = {
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
-  'Test instances Dropdown': function(client) {
+  'Test Instances Dropdown': function(client) {
     const instancesPage = client.page.instancesPage();
     const leftMenuPage = client.page.leftMenuPage();
+    const instanceNames = [];
 
     instancesPage.navigate();
+    instancesPage.waitForElementPresent('@instancesTableName');
+    const instanceName = instancesPage.elements.instancesTableName;
+
+    client.elements(instanceName.locateStrategy, instanceName.selector, function(result) {
+      result.value.forEach(function(value) {
+        client.elementIdText(value.ELEMENT, function(el) {
+          instanceNames.push(el.value);
+        });
+      });
+    });
+    instancesPage.waitForElementPresent('@instancesTableRow', function() {
+    });
     instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@instancesDropdown');
+    leftMenuPage.clickButton('@instancesListSecondItem');
+    leftMenuPage.waitForElementPresent('@instancesDropdown');
+    const instancesDropdown = leftMenuPage.elements.instancesDropdown.selector;
 
+    client.element('xpath', instancesDropdown, function(result) {
+      const elementId = result.value.ELEMENT;
 
-  }
+      client.pause(500);
+      client.elementIdText(elementId.toString(), function(text) {
+        client.assert.equal(text.value, instanceNames[1]);
+      });
+    })
+  },
   'Test Delete multiple Instances': function(client) {
     const instancesPage = client.page.instancesPage();
 

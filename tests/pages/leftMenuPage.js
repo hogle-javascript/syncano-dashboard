@@ -15,6 +15,10 @@ module.exports = {
       selector: '//div[@class="instances-dropdown"]',
       locateStrategy: 'xpath'
     },
+    instancesListSecondItem: {
+      selector: '//div[@class="instances-dropdown"]/div[2]/div[2]//span[2]',
+      locateStrategy: 'xpath'
+    },
     classes: {
       selector: '//div[@class="left-nav"]//a[text()="Classes"]',
       locateStrategy: 'xpath'
