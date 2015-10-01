@@ -68,7 +68,7 @@ export default Radium(React.createClass({
     const styles = this.getStyles();
 
     return (
-      <div style={styles.main}>
+      <div className='welcome-dialog' style={styles.main}>
         <div style={styles.overlay}></div>
         <MUI.Paper
           ref="dialog"

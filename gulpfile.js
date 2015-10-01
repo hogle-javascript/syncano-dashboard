@@ -4,6 +4,7 @@ var gulp             = require('gulp'),
     async            = require('async'),
     _                = require('lodash'),
     AWS              = require('aws-sdk'),
+    bump             = require('gulp-bump'),
     gutil            = require('gulp-util'),
     git              = require('gulp-git'),
     rev              = require('gulp-rev'),
@@ -11,6 +12,7 @@ var gulp             = require('gulp'),
     revOverride      = require('gulp-rev-css-url'),
     stripDebug       = require('gulp-strip-debug'),
     cloudfront       = require('gulp-cloudfront'),
+    gulpSequence     = require('gulp-sequence'),
     del              = require('del'),
     moment           = require('moment'),
     webpack          = require('webpack'),
@@ -101,11 +103,11 @@ gulp.task('webpack:build', ['clean', 'copy'], function(callback) {
 
 gulp.task('webpack-dev-server', ['clean', 'copy'], function() {
   new WebpackDevServer(webpack(webpackConfig), webpackConfig.devServer)
-    .listen(8080, 'localhost', function(err) {
+    .listen(8080, '0.0.0.0', function(err) {
       if (err) {
         throw new gutil.PluginError('webpack-dev-server', err);
       }
-      gutil.log('[webpack-dev-server]', 'https://localhost:8080/');
+      gutil.log('[webpack-dev-server]', 'https://0.0.0.0:8080/');
     });
 });
 
@@ -230,20 +232,42 @@ gulp.task('check-github-tag', function(cb) {
 
 gulp.task('add-github-tag', function(cb) {
   async.series([
-    function (callback) {
+    function(callback) {
       git.exec({args: 'config --global user.email "ci@syncano.com"'}, callback);
     },
 
-    function (callback) {
+    function(callback) {
       git.exec({args: 'config --global user.name "CI"'}, callback);
     },
 
-    function (callback) {
+    function(callback) {
+      gulp.src('./package.json')
+          .pipe(git.commit('Version bump: ' + version))
+          .on('finish', callback);
+    },
+
+    function(callback) {
       git.tag(version, 'Release ' + version, callback);
     },
 
-    function (callback) {
+    function(callback) {
       git.push('origin', version, callback);
+    },
+
+    function(callback) {
+      git.push('origin', 'master', callback);
+    },
+
+    function(callback) {
+      git.checkout('devel', callback);
+    },
+
+    function(callback) {
+      git.merge('master', callback);
+    },
+
+    function(callback) {
+      git.push('origin', 'devel', callback);
     }
   ], function(err) {
     if (err) throw err;
@@ -580,7 +604,22 @@ gulp.task('s3-cleanup', function(cb) {
 
 });
 
+gulp.task('bump', function(){
+  gulp.src('./package.json')
+  .pipe(bump())
+  .pipe(gulp.dest('./'));
+});
+
 gulp.task('copy', ['copy:index', 'copy:images', 'copy:css', 'copy:fonts', 'copy:js']);
 gulp.task('serve', ['webpack-dev-server']);
 gulp.task('build', ['webpack:build', 'revreplace']);
 gulp.task('default', ['webpack-dev-server']);
+gulp.task('deployment-master', gulpSequence(
+  'check-github-tag',
+  'publish',
+  'clean',
+  'add-github-tag',
+  'changelog',
+  's3-cleanup'
+));
+gulp.task('deployment-devel', gulpSequence('publish', 'clean', 's3-cleanup'));
