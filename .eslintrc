@@ -47,6 +47,7 @@
           "childContextTypes",
           "mixins",
           "statics",
+          "autosaveAttributeName",
           "validatorConstraints",
           "defaultProps",
           "constructor",
