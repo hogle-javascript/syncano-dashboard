@@ -59,10 +59,6 @@ module.exports = {
     },
     resetButton: {
       selector: '.synicon-backup-restore'
-    },
-    confirmDeleteButton: {
-      selector: '//span[text()="Confirm"]',
-      locateStrategy: 'xpath'
     }
   }
 };

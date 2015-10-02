@@ -28,17 +28,32 @@ module.exports = {
 
     apiKeysPage.expect.element('@apiKeysTableRow').to.be.present.after(5000);
   },
-  'Test Reset Api Key': function(client) {
+  'Test Reset Api Key': function ResetApiKey(client) {
     const apiKeysPage = client.page.apiKeysPage();
+    var apiKeyValue = null;
 
     apiKeysPage.navigate();
+    apiKeysPage.waitForElementPresent('@apiKeyValue');
+    const apiKeyValueElement = apiKeysPage.elements.apiKeyValue.selector;
+
+    client.element('xpath', apiKeyValueElement, function(result) {
+      client.elementIdText(result.value.ELEMENT, function(text) {
+        apiKeyValue = text.value;
+      });
+    })
     apiKeysPage.clickButton('@selectApiKey');
     apiKeysPage.clickButton('@resetButton');
     client.pause(1000);
-    apiKeysPage.clickButton('@confirmDeleteButton');
+    apiKeysPage.clickButton('@confirmButton');
+    apiKeysPage.waitForElementPresent('@selectApiKey');
     client.pause(1000);
-    apiKeysPage.expect.element('@apiKeysTableRow').to.be.not.present.after(5000);
-  }
+
+    client.element('xpath', apiKeyValueElement, function(result) {
+      client.elementIdText(result.value.ELEMENT, function(text) {
+        client.assert.notEqual(text.value, apiKeyValue);
+      });
+    })
+  },
   'Test Delete Api Key': function(client) {
     const apiKeysPage = client.page.apiKeysPage();
 
@@ -46,8 +61,8 @@ module.exports = {
     apiKeysPage.clickButton('@selectApiKey');
     apiKeysPage.clickButton('@deleteButton');
     client.pause(1000);
-    apiKeysPage.clickButton('@confirmDeleteButton');
+    apiKeysPage.clickButton('@confirmButton');
     client.pause(1000);
-    apiKeysPage.expect.element('@apiKeysTableRow').to.be.not.present.after(5000);
+    apiKeysPage.waitForElementNotPresent('@selectApiKey');
   }
 };
