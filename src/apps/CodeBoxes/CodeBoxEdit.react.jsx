@@ -6,6 +6,7 @@ import Router from 'react-router';
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
+import AutosaveMixin from './CodeBoxAutosaveMixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -31,10 +32,13 @@ export default React.createClass({
     Mixins.Dialogs,
     HeaderMixin,
     UnsavedDataMixin,
+    AutosaveMixin,
     Mixins.InstanceTabs,
     Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
+
+  autosaveAttributeName: 'codeBoxSourceAutosave',
 
   componentDidMount() {
     Actions.fetch();
@@ -58,6 +62,9 @@ export default React.createClass({
       durationSummary: {
         marginTop: 8
       },
+      autosaveCheckbox: {
+        marginTop: 30
+      },
       statusSummaryFailed: {
         color: MUI.Styles.Colors.red400
       },
@@ -75,10 +82,12 @@ export default React.createClass({
   },
 
   isSaved() {
-    let initialCodeBoxSource = this.state.currentCodeBox.source;
-    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+    if (this.state.currentCodeBox && this.refs.editorSource) {
+      let initialCodeBoxSource = this.state.currentCodeBox.source;
+      let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
 
-    return initialCodeBoxSource === currentCodeBoxSource;
+      return initialCodeBoxSource === currentCodeBoxSource;
+    }
   },
 
   handleConfirm() {
@@ -114,6 +123,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
 
+    this.clearAutosaveTimer();
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
@@ -193,7 +203,16 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
+            onChange={this.runAutoSave}
+            onLoad={this.clearAutosaveTimer}
             value={source}/>
+          <MUI.Checkbox
+            ref="autosaveCheckbox"
+            name="autosaveCheckbox"
+            label="Autosave"
+            style={styles.autosaveCheckbox}
+            defaultChecked={this.isAutosaveEnabled()}
+            onCheck={this.saveCheckboxState}/>
 
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
