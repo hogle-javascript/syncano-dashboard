@@ -1,6 +1,7 @@
-var utils = require('../utils');
+const utils = require('../utils');
+const globals = require('../globals');
 
-var apiKeysCommands = {
+const apiKeysCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button)
       .click(button);
@@ -17,7 +18,7 @@ var apiKeysCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/api_keys',
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
@@ -38,18 +39,26 @@ module.exports = {
       selector: 'input[name="allow_user_create"]'
     },
     confirmButton: {
-      selector: 'button span[data-reactid*="$submitLabel"]'
+      selector: '//span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     },
     apiKeysTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('test_api_key_description') + '"]',
+      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]',
       locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: '//span[@class="synicon-key"]',
+      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]/preceding-sibling::div//span',
+      locateStrategy: 'xpath'
+    },
+    apiKeyValue: {
+      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]/../following-sibling::div[2]/div[1]',
       locateStrategy: 'xpath'
     },
     deleteButton: {
       selector: '.synicon-delete'
+    },
+    resetButton: {
+      selector: '.synicon-backup-restore'
     },
     confirmDeleteButton: {
       selector: '//span[text()="Confirm"]',

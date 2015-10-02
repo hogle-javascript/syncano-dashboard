@@ -1,9 +1,9 @@
-var utils = require('../utils');
+const utils = require('../utils');
 
 module.exports = {
   tags: ['api_keys'],
   before: function(client) {
-    var loginPage = client.page.loginPage();
+    const loginPage = client.page.loginPage();
     loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
@@ -16,9 +16,10 @@ module.exports = {
   },
 
   'Test Add Api Key': function(client) {
-    var apiKeysPage = client.page.apiKeysPage();
-    var description = utils.addSuffix('test_api_key_description');
+    const apiKeysPage = client.page.apiKeysPage();
+    const description = utils.addSuffix('api_key_description');
 
+    apiKeysPage.navigate();
     apiKeysPage.clickButton('@addApiKeyButton');
     apiKeysPage.fillApiKeyDescription(description);
     apiKeysPage.clickButton('@confirmButton');
@@ -27,11 +28,21 @@ module.exports = {
 
     apiKeysPage.expect.element('@apiKeysTableRow').to.be.present.after(5000);
   },
+  'Test Reset Api Key': function(client) {
+    const apiKeysPage = client.page.apiKeysPage();
 
+    apiKeysPage.navigate();
+    apiKeysPage.clickButton('@selectApiKey');
+    apiKeysPage.clickButton('@resetButton');
+    client.pause(1000);
+    apiKeysPage.clickButton('@confirmDeleteButton');
+    client.pause(1000);
+    apiKeysPage.expect.element('@apiKeysTableRow').to.be.not.present.after(5000);
+  }
   'Test Delete Api Key': function(client) {
-    var apiKeysPage = client.page.apiKeysPage();
-    var description = utils.addSuffix('test_api_key_description');
+    const apiKeysPage = client.page.apiKeysPage();
 
+    apiKeysPage.navigate();
     apiKeysPage.clickButton('@selectApiKey');
     apiKeysPage.clickButton('@deleteButton');
     client.pause(1000);
