@@ -67,7 +67,7 @@ module.exports = function(cb) {
         } else {
           gutil.log('Saving version folder ID...');
           var folder = response.items[0];
-          callback(null, folder)
+          callback(null, folder);
         }
       });
     },
@@ -79,7 +79,7 @@ module.exports = function(cb) {
           var screenshots = './reports/screenshots/_navigation/';
           var files = fs.readdirSync(screenshots);
           var localFilesList = _.map(_.filter(files, function(file) {
-            return _.includes(file, '.png')
+            return _.includes(file, '.png');
           }), function(file) {
             return {
               path: path.join(screenshots, file),
@@ -101,7 +101,7 @@ module.exports = function(cb) {
               return {
                 title: item.title,
                 id: item.id
-              }
+              };
             });
 
             callback(null, latestFolderFilesList);
@@ -119,7 +119,7 @@ module.exports = function(cb) {
               return {
                 title: item.title,
                 id: item.id
-              }
+              };
             });
 
             callback(null, versionFolderFilesList);
@@ -127,7 +127,7 @@ module.exports = function(cb) {
         }
       }, function(err, filesLists) {
         if (err) return callback(err);
-        callback(null, filesLists, folder)
+        callback(null, filesLists, folder);
       });
     },
     function(_files, folder,  callback) {
@@ -178,7 +178,7 @@ module.exports = function(cb) {
               mimeType: 'image/png',
               body: fs.readFileSync(file.updateMediaPath)
             }
-          }
+          };
         });
 
         async.each(fileObjects, drive.files.update, function(err) {
@@ -219,7 +219,7 @@ module.exports = function(cb) {
             async.each(latestDriveObjects, drive.files.insert);
           },
           function() {
-            async.each(versionDriveObjects, drive.files.insert)
+            async.each(versionDriveObjects, drive.files.insert);
           }
         ], function() {
           callback();
