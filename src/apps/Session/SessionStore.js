@@ -162,7 +162,7 @@ export default Reflux.createStore({
     this.theme = theme;
   },
 
-  amIFriend() {
+  hasFriendlyUser() {
     if (this.getUser()) {
       let email = this.getUser({}).email;
       let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];

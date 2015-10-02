@@ -97,7 +97,7 @@ export default React.createClass({
         <CreateDialog />
         <InstallDialog />
 
-        <Common.Show if={SessionStore.amIFriend()}>
+        <Common.Show if={SessionStore.hasFriendlyUser()}>
           <Common.Fab>
             <Common.Fab.TooltipItem
               tooltip="Click here to create a Solution"
