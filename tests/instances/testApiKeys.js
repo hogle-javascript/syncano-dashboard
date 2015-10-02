@@ -2,8 +2,9 @@ const utils = require('../utils');
 
 module.exports = {
   tags: ['api_keys'],
-  before: function(client) {
+  before: function before(client) {
     const loginPage = client.page.loginPage();
+
     loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
@@ -11,11 +12,11 @@ module.exports = {
     loginPage.verifyLoginSuccessful();
   },
 
-  after: function(client) {
+  after: function after(client) {
     client.end();
   },
 
-  'Test Add Api Key': function(client) {
+  'Test Add Api Key': function AddApiKey(client) {
     const apiKeysPage = client.page.apiKeysPage();
     const description = utils.addSuffix('api_key_description');
 
@@ -25,12 +26,11 @@ module.exports = {
     apiKeysPage.clickButton('@confirmButton');
 
     apiKeysPage.waitForModalToClose();
-
-    apiKeysPage.expect.element('@apiKeysTableRow').to.be.present.after(5000);
+    apiKeysPage.waitForElementVisible('@apiKeysTableRow');
   },
   'Test Reset Api Key': function ResetApiKey(client) {
     const apiKeysPage = client.page.apiKeysPage();
-    var apiKeyValue = null;
+    let apiKeyValue = null;
 
     apiKeysPage.navigate();
     apiKeysPage.waitForElementPresent('@apiKeyValue');
@@ -47,14 +47,13 @@ module.exports = {
     apiKeysPage.clickButton('@confirmButton');
     apiKeysPage.waitForElementPresent('@selectApiKey');
     client.pause(1000);
-
     client.element('xpath', apiKeyValueElement, function(result) {
       client.elementIdText(result.value.ELEMENT, function(text) {
         client.assert.notEqual(text.value, apiKeyValue);
       });
     })
   },
-  'Test Delete Api Key': function(client) {
+  'Test Delete Api Key': function DeleteApiKey(client) {
     const apiKeysPage = client.page.apiKeysPage();
 
     apiKeysPage.navigate();
