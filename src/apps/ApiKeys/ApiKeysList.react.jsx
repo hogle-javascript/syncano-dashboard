@@ -11,6 +11,7 @@ import Store from './ApiKeysStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -27,6 +28,10 @@ export default React.createClass({
 
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
+  },
+
+  showMenuDialog(listItem, onClickConfirm, event) {
+    this.refs.menuDialog.show(listItem.api_key, onClickConfirm, event.target.innerHTML)
   },
 
   renderItem(item) {
@@ -59,6 +64,16 @@ export default React.createClass({
           {allow_user_create}
         </Column.Text>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeApiKeys.bind(null, [item]))}
+          className="dropdown-item-delete-apikey"
+          primaryText="Delete an API Key" />
+          <MenuItem
+          onTouchTap={this.showMenuDialog.bind(null, item, Actions.resetApiKey.bind(null, [item]))}
+          className="dropdown-item-reset-apikey"
+          primaryText="Reset an API Key" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -81,6 +96,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container className="api-keys-list">
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"
@@ -91,6 +107,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
