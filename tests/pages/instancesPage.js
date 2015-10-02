@@ -54,6 +54,10 @@ module.exports = {
       selector: '//div[@class="description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
+    instancesTableName: {
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
+      locateStrategy: 'xpath'
+    },
     selectInstance: {
       selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
       locateStrategy: 'xpath'

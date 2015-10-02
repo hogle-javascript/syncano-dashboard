@@ -6,6 +6,7 @@ import Radium from 'radium';
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
+import AutosaveMixin from './CodeBoxAutosaveMixin';
 import Mixins from '../../mixins';
 
 // Stores and Actions
@@ -13,6 +14,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
+import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -31,10 +33,13 @@ export default Radium(React.createClass({
     HeaderMixin,
     SnackbarNotificationMixin,
     UnsavedDataMixin,
+    AutosaveMixin,
     Mixins.Mousetrap,
     Mixins.Dialogs,
     Mixins.InstanceTabs
   ],
+
+  autosaveAttributeName: 'codeBoxConfigAutosave',
 
   componentDidMount() {
     Actions.fetch();
@@ -50,24 +55,55 @@ export default Radium(React.createClass({
         margin: '25px auto',
         width: '100%',
         maxWidth: '1140px'
+      },
+      autosaveCheckbox: {
+        marginTop: 30
+      },
+      wrongConfigSnackbar: {
+        color: MUI.Styles.Colors.red400
       }
     }
   },
 
   isSaved() {
-    let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
-    let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
+    if (this.state.currentCodeBox && this.refs.editorConfig) {
+      let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
+      let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
 
-    return initialCodeBoxConfig === currentCodeBoxConfig;
+      return initialCodeBoxConfig === currentCodeBoxConfig;
+    }
+  },
+
+  isConfigValid() {
+    let configValue = this.refs.editorConfig ? this.refs.editorConfig.editor.getValue() : null;
+
+    if (configValue) {
+      try {
+        JSON.parse(configValue);
+        return true
+      } catch (err) {
+        return false
+      }
+    }
   },
 
   handleUpdate() {
     let config = this.refs.editorConfig.editor.getValue();
+    let styles = this.getStyles();
 
-    Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
-    this.setSnackbarNotification({
-      message: 'Saving...'
-    });
+    if (this.isConfigValid()) {
+      this.clearAutosaveTimer();
+      Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+      this.setSnackbarNotification({
+        message: 'Saving...'
+      });
+    } else {
+      this.setSnackbarNotification({
+        message: 'Config is not Valid. Please verify if it is valid JSON format',
+        autoHideDuration: 4000,
+        style: styles.wrongConfigSnackbar
+      });
+    }
   },
 
   initDialogs() {
@@ -93,6 +129,7 @@ export default Radium(React.createClass({
   },
 
   renderEditor() {
+    let styles = this.getStyles();
     let config = null;
     let codeBox = this.state.currentCodeBox;
 
@@ -105,8 +142,17 @@ export default Radium(React.createClass({
             ref="editorConfig"
             height={300}
             mode="javascript"
+            onLoad={this.clearAutosaveTimer}
+            onChange={this.runAutoSave}
             theme="github"
-            value={config}/>
+            value={config} />
+          <MUI.Checkbox
+            ref="autosaveCheckbox"
+            name="autoSaveCheckbox"
+            label="Autosave"
+            style={styles.autosaveCheckbox}
+            defaultChecked={this.isAutosaveEnabled()}
+            onCheck={this.saveCheckboxState} />
         </div>
       )
     }
