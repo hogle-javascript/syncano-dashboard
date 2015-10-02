@@ -83,12 +83,13 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu item={item}>
+        <Column.Menu>
           <MenuItem
-            className="dropdown-item-edit"
+            className="dropdown-item-instance-edit"
             onTouchTap={this.showInstanceEditDialog.bind(null, item)}
             primaryText="Edit an Instance" />
           <MenuItem
+            className="dropdown-item-instance-delete"
             onTouchTap={this.showMenuDialog.bind(null, item, removeInstanceFunc)}
             primaryText={removeText} />
         </Column.Menu>
@@ -125,7 +126,7 @@ export default React.createClass({
 
     return (
       <Common.Lists.Container className='instances-list-container'>
-        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

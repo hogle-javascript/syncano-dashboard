@@ -5,10 +5,12 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
+import Actions from './SchedulesActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -49,6 +51,10 @@ export default React.createClass({
     });
   },
 
+  showMenuDialog(listItem, onClickConfirm, event) {
+    this.refs.menuDialog.show(listItem.label, onClickConfirm, event.target.innerHTML)
+  },
+
   renderItem(item) {
     let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
     let codeBoxLabel = codeBox ? codeBox.label : '';
@@ -71,6 +77,16 @@ export default React.createClass({
         <Column.Desc>{item.crontab}</Column.Desc>
         <Column.Date date={item.scheduled_next}/>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+          className="dropdown-item-edit-schedule"
+          onTouchTap={Actions.showDialog.bind(null, item)}
+          primaryText="Edit a Schedule" />
+          <MenuItem
+          className="dropdown-item-delete-schedule"
+          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeSchedules.bind(null, [item]))}
+          primaryText="Delete a Schedule" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -93,6 +109,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container>
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -108,6 +125,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Crontab</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Next run</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
