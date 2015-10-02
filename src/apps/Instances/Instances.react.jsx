@@ -12,8 +12,6 @@ import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
-import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
-import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
 
 import Header from '../Header'
 
@@ -32,16 +30,11 @@ import './Instances.sass';
 export default Radium(React.createClass({
   displayName: 'Instances',
 
-  childContextTypes: {
-    instancesDialogs: React.PropTypes.object
-  },
-
   mixins: [
     Router.State,
     Router.Navigation,
 
     Reflux.connect(Store),
-    Reflux.connect(ColumnMenuStore, 'columnMenu'),
     Mixins.Dialogs,
     Mixins.Limits
   ],
@@ -59,12 +52,6 @@ export default Radium(React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Instances::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
-  },
-
-  getChildContext() {
-    return {
-      instancesDialogs: this.refs
-    };
   },
 
   getStyles() {
@@ -146,10 +133,6 @@ export default Radium(React.createClass({
     }]
   },
 
-  getInstancesToDelete() {
-    return this.state.columnMenu.item ? [this.state.columnMenu.item] : Store.getCheckedItems();
-  },
-
   onNextStep() {
     Actions.setTourConfig(this.getTourConfig());
     Actions.nextStep();
@@ -157,7 +140,6 @@ export default Radium(React.createClass({
 
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
-
     Actions.updateInstance(
       Store.getCheckedItem().name, {
         metadata: JSON.stringify({color, icon})
@@ -168,17 +150,12 @@ export default Radium(React.createClass({
 
   handleDelete() {
     console.info('Instances::handleDelete');
-    Actions.removeInstances(this.getInstancesToDelete());
+    Actions.removeInstances(Store.getCheckedItems());
   },
 
   handleDeleteShared() {
     console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(this.getInstancesToDelete(), SessionStore.getUser().id);
-  },
-
-  handleCancel(ref) {
-    this.hideDialogs(ref);
-    ColumnMenuActions.clearClickedItem();
+    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
   },
 
   handleItemClick(instanceName) {
@@ -190,7 +167,7 @@ export default Radium(React.createClass({
   // Dialogs config
   initDialogs() {
     let checkedItemIconColor = Store.getCheckedItemIconColor();
-    let checkedInstances = this.getInstancesToDelete();
+    let checkedInstances = Store.getCheckedItems();
 
     return [
       {
@@ -211,7 +188,7 @@ export default Radium(React.createClass({
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,
@@ -232,7 +209,7 @@ export default Radium(React.createClass({
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
+            {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
@@ -363,14 +340,14 @@ export default Radium(React.createClass({
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
-          emptyItemContent="Create an instance"/>
+          emptyItemContent="Create an instance" />
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
             items={Store.getOtherInstances()}
             listType="sharedInstances"
-            viewMode="stream"/>
+            viewMode="stream" />
         </Common.Show>
       </Container>
     );

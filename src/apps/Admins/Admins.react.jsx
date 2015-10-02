@@ -55,6 +55,7 @@ export default React.createClass({
     console.info('Admins::handleResendInvitation');
     AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
   },
+
   handleRemoveInvitation() {
     console.info('Admins::handleRemoveInvitation');
     AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());

@@ -52,7 +52,7 @@ export default Radium(React.createClass({
 
     return (
       <div
-        className={this.props.className}
+        className={`description-field ${this.props.className}`}
         style={styles}>
         {this.props.children}
       </div>

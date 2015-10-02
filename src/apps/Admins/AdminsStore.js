@@ -68,7 +68,6 @@ export default Reflux.createStore({
 
   onFetchAdminsCompleted(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-    this.trigger(this.data);
     AdminsActions.setAdmins(items);
   },
 

@@ -6,7 +6,6 @@ import Mixins from '../../mixins';
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import ColumnMenuActions from '../../common/ColumnList/Column/MenuActions';
 import Actions from './InstancesActions';
 
 export default Reflux.createStore({
@@ -146,7 +145,6 @@ export default Reflux.createStore({
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map((key) => instances[key]);
-    this.data.hideDialogs = false;
     this.trigger(this.data);
   },
 
@@ -191,13 +189,11 @@ export default Reflux.createStore({
   onRemoveInstancesCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();
-    ColumnMenuActions.clearClickedItem();
   },
 
   onRemoveSharedInstanceCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();
-    ColumnMenuActions.clearClickedItem();
   },
 
   onUpdateInstanceCompleted() {

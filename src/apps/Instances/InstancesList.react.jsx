@@ -1,6 +1,5 @@
 import React from 'react';
 import Router from 'react-router';
-import Reflux from 'reflux';
 
 // Utils
 import Mixins from '../../mixins';
@@ -8,10 +7,11 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
-import ColumnMenuStore from '../../common/ColumnList/Column/MenuStore';
+import InstancesActions from './InstancesActions';
 
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
@@ -22,12 +22,7 @@ export default React.createClass({
 
   displayName: 'InstancesList',
 
-  contextTypes: {
-    instancesDialogs: React.PropTypes.object
-  },
-
   mixins: [
-    Reflux.connect(ColumnMenuStore, 'columnMenu'),
     Router.State,
     Router.Navigation,
     HeaderMixin,
@@ -59,13 +54,15 @@ export default React.createClass({
     InstanceDialogActions.showDialog(instance);
   },
 
-  showInstanceDeleteDialog(dialogRef) {
-    this.context.instancesDialogs[dialogRef].show();
+  showMenuDialog(listItem, confirmFunc, event) {
+    this.refs.menuDialog.show(listItem.name, confirmFunc, event.target.innerHTML)
   },
 
   renderItem(item) {
-    let dialogRef = Store.amIOwner(item) ? 'deleteInstanceDialog' : 'deleteSharedInstanceDialog';
     let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
+    let removeInstanceFunc = Store.amIOwner(item)
+      ? InstancesActions.removeInstances.bind(null, [item])
+      : InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
 
     item.metadata = item.metadata || {};
 
@@ -89,10 +86,10 @@ export default React.createClass({
         <Column.Menu item={item}>
           <MenuItem
             className="dropdown-item-edit"
-            onTouchTap={this.showInstanceEditDialog.bind(this, item)}
+            onTouchTap={this.showInstanceEditDialog.bind(null, item)}
             primaryText="Edit an Instance" />
           <MenuItem
-            onTouchTap={this.showInstanceDeleteDialog.bind(this, dialogRef)}
+            onTouchTap={this.showMenuDialog.bind(null, item, removeInstanceFunc)}
             primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>
@@ -128,6 +125,7 @@ export default React.createClass({
 
     return (
       <Common.Lists.Container className='instances-list-container'>
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

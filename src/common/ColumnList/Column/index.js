@@ -8,6 +8,7 @@ import Name from './Name.react';
 import Text from './Text.react';
 import ID from './ID.react';
 import ColumnHeader from './ColumnHeader.react';
+import MenuDialog from './MenuDialog.react';
 
 export default {
   CheckIcon,
@@ -16,6 +17,7 @@ export default {
   IconName,
   Key,
   Menu,
+  MenuDialog,
   Name,
   Text,
   ID,
