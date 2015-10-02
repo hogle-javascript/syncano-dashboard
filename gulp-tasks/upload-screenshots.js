@@ -76,7 +76,7 @@ module.exports = function(cb) {
       async.parallel({
         localFilesList: function(callback) {
           gutil.log('Creating screenshots list...');
-          var screenshots = './reports/screenshots/_navigation/';
+          var screenshots = '../reports/screenshots/_navigation/';
           var files = fs.readdirSync(screenshots);
           var localFilesList = _.map(_.filter(files, function(file) {
             return _.includes(file, '.png');
