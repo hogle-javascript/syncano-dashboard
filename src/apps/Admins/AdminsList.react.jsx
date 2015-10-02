@@ -48,29 +48,32 @@ export default React.createClass({
     }
   },
 
-  getDropdownMenu(item) {
-    if (_.has(item, 'key')) {
-      return (
+  getAdminInvitationDropdown(item) {
+    let removeInvitation = AdminsInvitationsActions.removeInvitation.bind(null, [item]);
+    let resendInvitation = AdminsInvitationsActions.resendInvitation.bind(null, [item]);
+
+    return (
       <Common.ColumnList.Column.Menu>
         <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item,
-            AdminsInvitationsActions.removeInvitation.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item, removeInvitation)}
           className="dropdown-item-remove-invitation"
           primaryText="Remove Invitation" />
         <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item,
-            AdminsInvitationsActions.resendInvitation.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item, resendInvitation)}
           className="dropdown-item-resend-invitation"
           primaryText="Resend Invitation" />
       </Common.ColumnList.Column.Menu>
-      )
-    }
+    )
+  },
+
+  getAdminDropdown(item) {
+    let removeAdmin = AdminsActions.removeAdmins.bind(null, [item]);
 
     return (
       <Common.ColumnList.Column.Menu item={item}>
         <MenuItem
           className="dropdown-item-delete-admin"
-          onTouchTap={this.showMenuDialog.bind(null, item, AdminsActions.removeAdmins.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item, removeAdmin)}
           primaryText="Delete Admin" />
         <MenuItem
           className="dropdown-item-edit-admin"
@@ -80,16 +83,22 @@ export default React.createClass({
     )
   },
 
+  getDropdownMenu(item) {
+    let isInvitation = _.has(item, 'key');
+
+    if (isInvitation) {
+      return this.getAdminInvitationDropdown(item);
+    }
+
+    return this.getAdminDropdown(item)
+  },
+
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
   },
 
-  showMenuDialog(listItem, confirmFunc, event) {
-    this.refs.menuDialog.show(listItem.email, confirmFunc, event.target.innerHTML)
-  },
-
-  showContextDialog(ref) {
-    this.context.dialogs[ref].show();
+  showMenuDialog(listItem, onClickConfirm, event) {
+    this.refs.menuDialog.show(listItem.email, onClickConfirm, event.target.innerHTML)
   },
 
   renderItem(item) {

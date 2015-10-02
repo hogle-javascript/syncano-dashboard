@@ -3,8 +3,6 @@ import React from 'react';
 // Utils
 import Mixins from '../../../mixins';
 
-// Stores and Actions
-
 // Components
 import MUI from 'material-ui';
 import Common from '../../../common';
@@ -12,11 +10,6 @@ import Common from '../../../common';
 export default React.createClass({
 
   displayName: 'MenuDialog',
-
-  propTypes: {
-    dialogTitle: React.PropTypes.string,
-    confirmFunc: React.PropTypes.func
-  },
 
   mixins: [
     Mixins.Dialog
@@ -42,15 +35,15 @@ export default React.createClass({
   },
 
   handleConfirmClick() {
-    this.state.confirmFunction();
+    this.state.handleConfirm();
     this.refs.dialog.dismiss();
   },
 
-  show(objName, confirmFunc, title) {
+  show(objName, onClickConfirm, title) {
     this.setState({
       dialogTitle: title,
       itemName: objName,
-      confirmFunction: confirmFunc,
+      handleConfirm: onClickConfirm,
       dialogMessage: this.getDialogMessage(objName, title)
     }, () => this.refs.dialog.show())
   },
