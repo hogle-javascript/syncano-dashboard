@@ -162,6 +162,17 @@ export default Reflux.createStore({
     this.theme = theme;
   },
 
+  amIFriend() {
+    if (this.getUser()) {
+      let email = this.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending))
+    }
+
+    return false;
+  },
+
   onFetchInstanceCompleted(payload) {
     console.info('SessionStore::onFetchInstanceCompleted');
     SessionActions.setInstance(payload);

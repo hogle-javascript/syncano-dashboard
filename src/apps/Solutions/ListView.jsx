@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -54,18 +53,6 @@ export default React.createClass({
     }
   },
 
-  isFriend() {
-    if (SessionStore.getUser()) {
-      let email = SessionStore.getUser({}).email;
-      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
-
-      return _.some(endings, (ending) => _.endsWith(email, ending))
-    }
-
-    return false;
-  },
-
-
   handleChangeFilter(filter) {
     Actions.setFilter(filter);
   },
@@ -110,7 +97,7 @@ export default React.createClass({
         <CreateDialog />
         <InstallDialog />
 
-        <Common.Show if={this.isFriend()}>
+        <Common.Show if={SessionStore.amIFriend()}>
           <Common.Fab>
             <Common.Fab.TooltipItem
               tooltip="Click here to create a Solution"
