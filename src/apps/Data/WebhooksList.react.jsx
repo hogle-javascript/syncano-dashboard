@@ -92,13 +92,13 @@ export default React.createClass({
         <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
-          className="dropdown-item-edit"
-          onTouchTap={Actions.showDialog.bind(null, item)}
-          primaryText="Edit a Webhook" />
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Webhook" />
           <MenuItem
-          className="dropdown-item-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeWebhooks.bind(null, [item]))}
-          primaryText="Delete a Webhook" />
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeWebhooks.bind(null, [item]))}
+            primaryText="Delete a Webhook" />
         </Column.Menu>
       </Common.ColumnList.Item>
     )
