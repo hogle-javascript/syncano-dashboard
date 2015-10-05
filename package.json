@@ -34,7 +34,6 @@
     "react-tap-event-plugin": "^0.1.7",
     "react-zeroclipboard": "^2.0.1",
     "reflux": "latest",
-    "superagent": "^1.3.0",
     "validate.js": "^0.8.0"
   },
   "devDependencies": {
@@ -88,6 +87,7 @@
     "react-script-loader": "0.0.1",
     "sass-loader": "~2.0.1",
     "selenium-standalone": "^4.5.3",
+    "superagent": "^1.4.0",
     "style-loader": "^0.12.3",
     "through2": "^2.0.0",
     "url-loader": "^0.5.6",
