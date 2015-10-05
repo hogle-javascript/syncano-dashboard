@@ -17,9 +17,12 @@ const tasksCommands = {
       .clearValue(field)
       .setValue(field, value);
   },
-  clickDropdown: function() {
+  clickScheduleDropdown: function() {
     return this.waitForElementVisible('@scheduleDropdown').click('@scheduleDropdown');
-  }
+  },
+  clickTriggerDropdown: function() {
+    return this.waitForElementVisible('@triggerDropdown').click('@triggerDropdown');
+  },
 };
 
 module.exports = {
@@ -30,8 +33,12 @@ module.exports = {
       selector: '//span[@class="synicon-dots-vertical"]',
       locateStrategy: 'xpath'
     },
+    triggerDropdown: {
+      selector: '//div[@class="triggers-list"]/div[3]/div/div[1]/div[7]/div[2]',
+      locateStrategy: 'xpath'
+    },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-edit-schedule"]',
+      selector: '//a[@class="dropdown-item-edit"]',
       locateStrategy: 'xpath'
     },
     confirm: {

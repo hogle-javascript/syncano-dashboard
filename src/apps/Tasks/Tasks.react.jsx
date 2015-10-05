@@ -189,16 +189,10 @@ export default React.createClass({
               onClick={isAnyTriggerSelected ? TriggersActions.selectAll : TriggersActions.uncheckAll}
               iconClassName={isAnyTriggerSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
-              tooltip="Click here to delete Schedules"
+              tooltip="Click here to delete Triggers"
               mini={true}
               onClick={this.showDialog.bind(null, 'removeTriggerDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a Trigger"
-              mini={true}
-              disabled={checkedSchedules > 1}
-              onClick={this.showTriggerEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 

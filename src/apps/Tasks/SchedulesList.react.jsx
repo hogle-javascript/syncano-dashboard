@@ -79,11 +79,11 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-          className="dropdown-item-edit-schedule"
+          className="dropdown-item-edit"
           onTouchTap={Actions.showDialog.bind(null, item)}
           primaryText="Edit a Schedule" />
           <MenuItem
-          className="dropdown-item-delete-schedule"
+          className="dropdown-item-delete"
           onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeSchedules.bind(null, [item]))}
           primaryText="Delete a Schedule" />
         </Column.Menu>
