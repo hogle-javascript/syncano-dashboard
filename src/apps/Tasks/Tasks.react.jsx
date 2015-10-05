@@ -178,12 +178,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'removeScheduleDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a Schedule"
-              mini={true}
-              disabled={checkedSchedules > 1}
-              onClick={this.showScheduleEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 

@@ -16,6 +16,9 @@ const tasksCommands = {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
+  },
+  clickDropdown: function() {
+    return this.waitForElementVisible('@scheduleDropdown').click('@scheduleDropdown');
   }
 };
 
@@ -23,6 +26,14 @@ module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
   commands: [tasksCommands],
   elements: {
+    scheduleDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit-schedule"]',
+      locateStrategy: 'xpath'
+    },
     confirm: {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'

@@ -32,8 +32,8 @@ module.exports = {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
-    tasksPage.clickButton('@selectScheduleTableRow');
-    tasksPage.clickButton('@editButton');
+    tasksPage.clickDropdown();
+    tasksPage.clickButton('@editDropdownItem');
     tasksPage.waitForElementVisible('@editScheduleModalTitle');
     tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes');
     tasksPage.waitForElementNotVisible('@addScheduleModalCronTabName')
