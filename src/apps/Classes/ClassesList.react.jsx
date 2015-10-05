@@ -42,8 +42,8 @@ export default React.createClass({
     console.info('ClassesList::handleItemClick');
   },
 
-  showMenuDialog(listItem, confirmFunc, event) {
-    this.refs.menuDialog.show(listItem.name, confirmFunc, event.target.innerHTML)
+  showMenuDialog(listItem, handleConfirm, event) {
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
   },
 
   redirectToEditClassView(className) {
