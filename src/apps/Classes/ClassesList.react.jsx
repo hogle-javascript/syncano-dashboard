@@ -7,10 +7,11 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
-import ClassesActions from './ClassesActions';
-import ClassesStore from './ClassesStore';
+import Actions from './ClassesActions';
+import Store from './ClassesStore';
 
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -19,7 +20,7 @@ export default React.createClass({
   displayName: 'ClassesList',
 
   mixins: [
-    Reflux.connect(ClassesStore),
+    Reflux.connect(Store),
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -27,7 +28,7 @@ export default React.createClass({
 
   // List
   handleItemIconClick(id, state) {
-    ClassesActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleItemClick(className) {
@@ -39,6 +40,19 @@ export default React.createClass({
       }
     );
     console.info('ClassesList::handleItemClick');
+  },
+
+  showMenuDialog(listItem, confirmFunc, event) {
+    this.refs.menuDialog.show(listItem.name, confirmFunc, event.target.innerHTML)
+  },
+
+  redirectToEditClassView(className) {
+    let classNameParam = className || Store.getCheckedItem().name;
+
+    this.context.router.transitionTo('classes-edit', {
+      instanceName: this.getParams().instanceName,
+      className: classNameParam
+    });
   },
 
   renderItem(item) {
@@ -70,6 +84,16 @@ export default React.createClass({
           {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+          className="dropdown-item-edit-class"
+          onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
+          primaryText="Edit a Class" />
+          <MenuItem
+          className="dropdown-item-delete-class"
+          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeClasses.bind(null, [item]))}
+          primaryText="Delete a Class" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -91,6 +115,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container className="classes-list-container">
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -114,6 +139,7 @@ export default React.createClass({
             Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
