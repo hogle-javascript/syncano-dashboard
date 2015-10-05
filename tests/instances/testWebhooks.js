@@ -33,8 +33,8 @@ module.exports = {
 
     dataPage.navigate();
     dataPage.waitForElementVisible('@webhookListItem');
-    instancesPage.clickWebhookDropdown();
-    instancesPage.clickButton('@editDropdownItem');
+    dataPage.clickWebhookDropdown();
+    dataPage.clickButton('@editDropdownItem');
     dataPage.waitForElementVisible('@editWebhookModalTitle');
     dataPage.fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
     client.pause(1000);
