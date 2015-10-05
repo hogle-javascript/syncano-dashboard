@@ -63,8 +63,8 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
-  showMenuDialog(listItem, confirmFunc, event) {
-    this.refs.menuDialog.show(listItem.username, confirmFunc, event.target.innerHTML)
+  showMenuDialog(listItem, handleConfirm, event) {
+    this.refs.menuDialog.show(listItem.username, handleConfirm, event.target.innerHTML)
   },
 
   renderItemGroups(groups) {
