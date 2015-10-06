@@ -1,23 +1,32 @@
-var loginCommands = {
-  typeEmail: function() {
+const loginCommands = {
+  typeEmail() {
     return this
       .waitForElementPresent('@emailInput')
       .setValue('@emailInput', process.env.NIGHTWATCH_EMAIL);
   },
-  typePassword: function() {
+  typePassword() {
     return this
       .waitForElementVisible('@passInput')
       .setValue('@passInput', process.env.NIGHTWATCH_PASSWORD);
   },
-  clickSignInButton: function() {
+  clickSignInButton() {
     return this
       .waitForElementVisible('@loginButton')
       .click('@loginButton');
   },
-  verifyLoginSuccessful: function() {
+  clickButton(button) {
+    return this.waitForElementVisible(button)
+      .click(button);
+  },
+  verifyLoginSuccessful() {
     return this
       .waitForElementVisible('@instancesDiv', 20000)
       .assert.containsText('@instancesDiv', 'My instances');
+  },
+  fillInputField(field, value) {
+    return this.waitForElementVisible(field)
+      .clearValue(field)
+      .setValue(field, value);
   }
 };
 
@@ -33,6 +42,24 @@ module.exports = {
     },
     loginButton: {
       selector: 'button[type=submit]'
+    },
+    loginButtonGoogle: {
+      selector: 'span.synicon-google'
+    },
+    emailInputGoogle: {
+      selector: 'input#Email'
+    },
+    passInputGoogle: {
+      selector: 'input#Passwd'
+    },
+    nextButtonGoogle: {
+      selector: 'input#next'
+    },
+    signInButtonGoogle: {
+      selector: 'input#signIn'
+    },
+    approveAccessButtonGoogle: {
+      selector: 'button#submit_approve_access'
     },
     mainDiv: {
       selector: 'div[id=app]'
