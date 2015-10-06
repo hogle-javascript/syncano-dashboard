@@ -2,6 +2,7 @@ var path       = require('path'),
     ENV        = require('./_common')().ENV,
     gulp       = require('gulp'),
     awspublish = require('gulp-awspublish'),
+    cloudfront = require('gulp-cloudfront'),
     through    = require('through2');
 
 module.exports = function() {

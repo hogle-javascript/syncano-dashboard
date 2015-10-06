@@ -36,8 +36,9 @@ module.exports = {
   'Test Edit Class' : function(client) {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickSelectClass();
-    classesPage.clickButton('@editButton');
+    classesPage.navigate();
+    classesPage.clickDropdown();
+    classesPage.clickButton('@editDropdownItem');
     classesPage.fillClassDescription('nightwatch_test_class_new_description');
     classesPage.clickButton('@confirmButton');
     classesPage.waitForElementNotVisible('@editClassTitle');
