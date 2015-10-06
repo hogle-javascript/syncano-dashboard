@@ -51,8 +51,8 @@ export default React.createClass({
     });
   },
 
-  showMenuDialog(listItem, onClickConfirm, event) {
-    this.refs.menuDialog.show(listItem.label, onClickConfirm, event.target.innerHTML)
+  showMenuDialog(listItem, handleConfirm, event) {
+    this.refs.menuDialog.show(listItem.label, handleConfirm, event.target.innerHTML)
   },
 
   renderItem(item) {
