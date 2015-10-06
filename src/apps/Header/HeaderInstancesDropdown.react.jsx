@@ -82,6 +82,10 @@ export default Radium(React.createClass({
       dropdownMenuItem: {
         height: 'auto',
         paddingLeft: 16
+      },
+      itemsDivider: {
+        marginLeft: -16,
+        marginRight: -48
       }
     }
   },
@@ -114,18 +118,15 @@ export default Radium(React.createClass({
     }
   },
 
-  render() {
+  renderDropdownItems(items, hasSeparator) {
     let styles = this.getStyles();
-    let instance = SessionStore.instance;
-    let instancesList = InstancesStore.getAllInstances(true);
     let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
-
-    if (!instance || !instancesList || !instancesList.length > 0) {
-      return null;
-    }
-
-    let dropDownMenuItems = instancesList.map((item) => {
+    let instancesSeparator = {
+      payload: null,
+      text: <MUI.ListDivider style={styles.itemsDivider} />
+    };
+    let dropDownMenuItems = items.map((item) => {
       item.metadata = item.metadata || {};
       item.metadata.icon = item.metadata.icon || null;
       item.metadata.color = item.metadata.color || null;
@@ -136,12 +137,12 @@ export default Radium(React.createClass({
       let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
       let text = (
-        <div style={styles.dropdownLabelContainer}>
-          <MUI.FontIcon
-            className={iconClassName}
-            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
-          {item.name}
-        </div>
+      <div style={styles.dropdownLabelContainer}>
+        <MUI.FontIcon
+        className={iconClassName}
+        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+        {item.name}
+      </div>
       );
 
       return {
@@ -149,6 +150,26 @@ export default Radium(React.createClass({
         text
       }
     });
+
+    if (hasSeparator) {
+      dropDownMenuItems.push(instancesSeparator);
+    }
+
+    return dropDownMenuItems;
+  },
+
+  render() {
+    let styles = this.getStyles();
+    let instance = SessionStore.instance;
+    let instancesList = InstancesStore.getAllInstances(true);
+    let dropDownMenuItems = [];
+
+    if (!instance || !instancesList || !instancesList.length > 0) {
+      return null;
+    }
+
+    dropDownMenuItems = this.renderDropdownItems(InstancesStore.getMyInstances(true), true)
+      .concat(this.renderDropdownItems(InstancesStore.getOtherInstances(true)))
 
     return (
       <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>

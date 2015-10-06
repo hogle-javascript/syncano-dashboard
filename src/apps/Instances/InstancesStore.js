@@ -119,17 +119,27 @@ export default Reflux.createStore({
     return [].concat(my, other);
   },
 
-  getMyInstances() {
+  getMyInstances(reversed = false) {
     if (this.data.items === null) {
       return this.data.items;
     }
+
+    if (reversed) {
+      return this.data.items.filter(this.filterMyInstances).reverse();
+    }
+
     return this.data.items.filter(this.filterMyInstances);
   },
 
-  getOtherInstances() {
+  getOtherInstances(reversed = false) {
     if (this.data.items === null) {
       return this.data.items;
     }
+
+    if (reversed) {
+      return this.data.items.filter(this.filterOtherInstances).reverse();
+    }
+
     return this.data.items.filter(this.filterOtherInstances);
   },
 
