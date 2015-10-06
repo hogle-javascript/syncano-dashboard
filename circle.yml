@@ -1,7 +1,7 @@
 machine:
   node:
     version:
-      0.12.07
+      0.12.7
   environment:
     NODE_ENV: staging
 
