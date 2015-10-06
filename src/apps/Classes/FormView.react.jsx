@@ -286,6 +286,7 @@ export default React.createClass({
           acceptCharset="UTF-8"
           method="post"
           className="vp-4-t">
+          {this.renderFormNotifications()}
           <div className='row'>
             <div className='col-xs-8'>
               <MUI.TextField
