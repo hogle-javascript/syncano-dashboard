@@ -43,6 +43,18 @@ module.exports = {
     loginButton: {
       selector: 'button[type=submit]'
     },
+    loginButtonFacebook: {
+      selector: 'span.synicon-facebook'
+    },
+    emailInputFacebook: {
+      selector: 'input[name=email]'
+    },
+    passInputFacebook: {
+      selector: 'input[name=pass]'
+    },
+    signInButtonFacebook: {
+      selector: 'input[name=login]'
+    },
     loginButtonGoogle: {
       selector: 'span.synicon-google'
     },
