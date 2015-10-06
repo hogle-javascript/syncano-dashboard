@@ -30,8 +30,8 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  showMenuDialog(listItem, onClickConfirm, event) {
-    this.refs.menuDialog.show(listItem.api_key, onClickConfirm, event.target.innerHTML)
+  showMenuDialog(listItem, handleConfirm, event) {
+    this.refs.menuDialog.show(listItem.api_key, handleConfirm, event.target.innerHTML)
   },
 
   renderItem(item) {
