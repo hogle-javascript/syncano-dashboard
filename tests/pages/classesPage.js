@@ -36,13 +36,24 @@ const classesCommands = {
   clickButton: function(button) {
     return this.waitForElementVisible(button)
       .click(button);
-  }
+  },
+  clickDropdown: function() {
+    return this.waitForElementVisible('@classItemDropdown').click('@classItemDropdown');
+  },
 };
 
 module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
+    classItemDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit-class"]',
+      locateStrategy: 'xpath'
+    },
     fab: {
       selector: '.synicon-plus'
     },
