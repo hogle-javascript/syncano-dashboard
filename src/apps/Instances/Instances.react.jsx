@@ -138,16 +138,6 @@ export default Radium(React.createClass({
     Actions.nextStep();
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Instances::handleChangePalette', color, icon);
-    Actions.updateInstance(
-      Store.getCheckedItem().name, {
-        metadata: JSON.stringify({color, icon})
-      }
-    );
-    Actions.uncheckAll()
-  },
-
   handleDelete() {
     console.info('Instances::handleDelete');
     Actions.removeInstances(Store.getCheckedItems());
@@ -166,21 +156,9 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
     let checkedInstances = Store.getCheckedItems();
 
     return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
       {
         dialog: Common.Dialog,
         params: {
@@ -315,13 +293,6 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
-            <Common.Fab.TooltipItem
-              tooltip="Click here to customize Instances"
-              secondary={true}
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 

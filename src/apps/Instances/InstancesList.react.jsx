@@ -26,7 +26,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.IsLoading({attr: 'state.items'})
+    Mixins.IsLoading({attr: 'state.items'}),
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -50,12 +51,44 @@ export default React.createClass({
     SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
   },
 
+  handleChangePalette(color, icon) {
+    console.info('Instances::handleChangePalette', color, icon);
+    Actions.updateInstance(
+    Store.getClickedItem().name, {
+      metadata: JSON.stringify({color, icon})
+    }
+    );
+    Actions.uncheckAll()
+  },
+
+  handleClickItemDropdown(item) {
+    Actions.setClickedInstance(item);
+  },
+
   showInstanceEditDialog(instance) {
     InstanceDialogActions.showDialog(instance);
   },
 
   showMenuDialog(listItem, confirmFunc, event) {
     this.refs.menuDialog.show(listItem.name, confirmFunc, event.target.innerHTML)
+  },
+
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      }
+    ]
   },
 
   renderItem(item) {
@@ -83,11 +116,15 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu item={item}>
+        <Column.Menu handleClick={this.handleClickItemDropdown.bind(null, item)}>
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={this.showInstanceEditDialog.bind(null, item)}
             primaryText="Edit an Instance" />
+          <MenuItem
+            className="dropdown-item-customize"
+            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
+            primaryText="Customize an Instance" />
           <MenuItem
             onTouchTap={this.showMenuDialog.bind(null, item, removeInstanceFunc)}
             primaryText={removeText} />
@@ -126,6 +163,7 @@ export default React.createClass({
     return (
       <Common.Lists.Container className='instances-list-container'>
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
