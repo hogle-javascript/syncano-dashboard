@@ -45,7 +45,9 @@ export default Radium(React.createClass({
 
   handleTouchTap(event) {
     event.stopPropagation();
-    this.props.handleClick();
+    if (this.props.handleClick) {
+      this.props.handleClick();
+    }
   },
 
   renderItemIconMenuButton() {

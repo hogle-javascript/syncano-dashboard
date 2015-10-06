@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -22,6 +23,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     HeaderMixin,
+    Mixins.Dialogs,
     Router.State,
     Router.Navigation
   ],
@@ -42,6 +44,21 @@ export default React.createClass({
     console.info('ClassesList::handleItemClick');
   },
 
+  handleChangePalette(color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+
+    Actions.updateClass(
+    Store.getClickedItem().name, {
+      metadata: JSON.stringify({color, icon})
+    }
+    );
+    Actions.uncheckAll()
+  },
+
+  handleClassDropdownClick(item) {
+    Actions.setClickedClass(item);
+  },
+
   showMenuDialog(listItem, handleConfirm, event) {
     this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
   },
@@ -53,6 +70,24 @@ export default React.createClass({
       instanceName: this.getParams().instanceName,
       className: classNameParam
     });
+  },
+
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      }
+    ]
   },
 
   renderItem(item) {
@@ -84,15 +119,19 @@ export default React.createClass({
           {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
-        <Column.Menu>
+        <Column.Menu handleClick={this.handleClassDropdownClick.bind(null, item)}>
           <MenuItem
-          className="dropdown-item-edit-class"
-          onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
-          primaryText="Edit a Class" />
+            className="dropdown-item-edit-class"
+            onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
+            primaryText="Edit a Class" />
           <MenuItem
-          className="dropdown-item-delete-class"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeClasses.bind(null, [item]))}
-          primaryText="Delete a Class" />
+            className="dropdown-item-customize-class"
+            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
+            primaryText="Customize a Class" />
+          <MenuItem
+            className="dropdown-item-delete-class"
+            onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeClasses.bind(null, [item]))}
+            primaryText="Delete a Class" />
         </Column.Menu>
       </Common.ColumnList.Item>
     )
@@ -116,6 +155,7 @@ export default React.createClass({
     return (
       <Common.Lists.Container className="classes-list-container">
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

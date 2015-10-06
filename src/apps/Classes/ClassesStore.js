@@ -49,6 +49,10 @@ export default Reflux.createStore({
     return this.data.items;
   },
 
+  getClickedItem() {
+    return this.data.clickedItem;
+  },
+
   getClassesDropdown(addSelf = false) {
     let items = this.data.items.map((item) => {
       return {
@@ -163,6 +167,10 @@ export default Reflux.createStore({
     }
 
     this.trigger(this.data);
+  },
+
+  onSetClickedClass(item) {
+    this.data.clickedItem = item;
   },
 
   onUpdateClass() {
