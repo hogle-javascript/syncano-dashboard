@@ -1,24 +1,24 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../utils';
+import globals from '../globals';
 
 const apiKeysCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  fillApiKeyDescription: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
+  fillApiKeyDescription(description) {
+    return this.waitForElementVisible('@createModalDescriptionInput')
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
-  waitForModalToClose: function() {
+  waitForModalToClose() {
     return this.waitForElementNotVisible('@createModalDescriptionInput')
       .waitForElementVisible('@apiKeysTableRow');
   }
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/api_keys',
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
@@ -43,15 +43,15 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     apiKeysTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]',
+      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]`,
       locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]/preceding-sibling::div//span',
+      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]/preceding-sibling::div//span`,
       locateStrategy: 'xpath'
     },
     apiKeyValue: {
-      selector: '//div[text()="' + utils.addSuffix('api_key_description') + '"]/../following-sibling::div[2]/div[1]',
+      selector: `//div[text()="${utils.addSuffix('api_key_description')}"]/../following-sibling::div[2]/div[1]`,
       locateStrategy: 'xpath'
     },
     deleteButton: {
