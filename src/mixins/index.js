@@ -11,7 +11,6 @@ import StoreLoadingMixin from './StoreLoadingMixin';
 import WaitForStoreMixin from './WaitForStoreMixin';
 import StoreHelpersMixin from './StoreHelpersMixin';
 import IsLoadingMixin from './IsLoadingMixin';
-import LimitsMixin from './LimitsMixin';
 
 let Mixins = {};
 
@@ -28,6 +27,5 @@ Mixins.StoreLoading = StoreLoadingMixin;
 Mixins.WaitForStore = WaitForStoreMixin;
 Mixins.StoreHelpers = StoreHelpersMixin;
 Mixins.IsLoading = IsLoadingMixin;
-Mixins.Limits = LimitsMixin;
 
 export default Mixins;

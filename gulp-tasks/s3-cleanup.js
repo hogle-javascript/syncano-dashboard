@@ -1,7 +1,8 @@
-var _   = require('lodash'),
-    ENV = require('./_common')().ENV,
-    AWS = require('aws-sdk'),
-    moment = require('moment'),
+var _        = require('lodash'),
+    ENV      = require('./_common')().ENV,
+    AWS      = require('aws-sdk'),
+    moment   = require('moment'),
+    gutil    = require('gulp-util'),
     listKeys = require('../s3ListKeys');
 
 module.exports = function(cb) {
