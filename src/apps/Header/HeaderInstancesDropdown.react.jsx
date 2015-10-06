@@ -96,6 +96,10 @@ export default Radium(React.createClass({
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
     // Redirect to main instance screen
+    if (selectedIndex === 0) {
+      this.props.handleAddInstance();
+      return
+    }
     SessionActions.fetchInstance(menuItem.payload).then(() => {
       this.transitionTo('instance', {instanceName: menuItem.payload});
     });
@@ -109,13 +113,31 @@ export default Radium(React.createClass({
 
       instancesList.some((event, index) => {
         if (event.name === currentInstance.name) {
-          instanceActiveIndex = index;
+          instanceActiveIndex = index + 1;
           return true;
         }
       });
 
       return instanceActiveIndex;
     }
+  },
+
+  renderAddInstanceItem() {
+    let styles = this.getStyles();
+    let iconBackground = {backgroundColor: '#BDBDBD'};
+    let item = (
+      <div style={styles.dropdownLabelContainer} onClick={this.handleAddInstance}>
+        <MUI.FontIcon
+        className="synicon-plus"
+        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+        Add an Instance
+      </div>
+    );
+
+    return [{
+      payload: 'Add an Instance',
+      text: item
+    }]
   },
 
   renderDropdownItems(items, hasSeparator) {
@@ -126,6 +148,11 @@ export default Radium(React.createClass({
       payload: null,
       text: <MUI.ListDivider style={styles.itemsDivider} />
     };
+
+    if (!items) {
+      return null
+    }
+
     let dropDownMenuItems = items.map((item) => {
       item.metadata = item.metadata || {};
       item.metadata.icon = item.metadata.icon || null;
@@ -168,8 +195,9 @@ export default Radium(React.createClass({
       return null;
     }
 
-    dropDownMenuItems = this.renderDropdownItems(InstancesStore.getMyInstances(true), true)
-      .concat(this.renderDropdownItems(InstancesStore.getOtherInstances(true)))
+    dropDownMenuItems = this.renderAddInstanceItem()
+      .concat(this.renderDropdownItems(InstancesStore.getMyInstances(true), true))
+      .concat(this.renderDropdownItems(InstancesStore.getOtherInstances(true)));
 
     return (
       <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>

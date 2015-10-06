@@ -5,9 +5,11 @@ import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
+import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
+import InstanceDialog from '../apps/Instances/InstanceDialog.react';
 
 export default React.createClass({
 
@@ -111,10 +113,18 @@ export default React.createClass({
     ];
   },
 
+  redirectToNewInstance() {
+    let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
+
+    SessionActions.fetchInstance(instanceName).then(() => {
+      this.transitionTo('instance', {instanceName});
+    });
+  },
+
   renderInstanceDropdown() {
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown />
+        <HeaderInstancesDropdown handleAddInstance={InstanceDialogActions.showDialog}/>
       </div>
     )
   },
@@ -124,6 +134,9 @@ export default React.createClass({
 
     return (
       <div>
+        <InstanceDialog
+          ref="addInstanceDialog"
+          handleSubmit={this.redirectToNewInstance}/>
         <MUI.LeftNav
           className="left-nav"
           ref="leftNav"
