@@ -6,11 +6,12 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import ChannelsActions from './ChannelsActions';
-import ChannelsStore from './ChannelsStore';
+import Actions from './ChannelsActions';
+import Store from './ChannelsStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -22,7 +23,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ChannelsStore),
+    Reflux.connect(Store),
     HeaderMixin
   ],
 
@@ -32,7 +33,11 @@ export default React.createClass({
 
   // List
   handleItemIconClick(id, state) {
-    ChannelsActions.checkItem(id, state);
+    Actions.checkItem(id, state);
+  },
+
+  showMenuDialog(listItem, handleConfirm, event) {
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
   },
 
   renderItem(item) {
@@ -61,6 +66,16 @@ export default React.createClass({
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu item={item}>
+          <MenuItem
+          className="dropdown-item-channel-edit"
+          onTouchTap={Actions.showDialog.bind(null, item)}
+          primaryText="Edit a Channel" />
+          <MenuItem
+          className="dropdown-item-channel-delete"
+          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeChannels.bind(null, [item]))}
+          primaryText="Delete a Channel" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     )
   },
@@ -83,6 +98,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container>
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -106,6 +122,7 @@ export default React.createClass({
             Custom publish
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>
