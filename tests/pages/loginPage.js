@@ -73,6 +73,18 @@ module.exports = {
     approveAccessButtonGoogle: {
       selector: 'button#submit_approve_access'
     },
+    loginButtonGithub: {
+      selector: 'span.synicon-github'
+    },
+    emailInputGithub: {
+      selector: 'input#login_field'
+    },
+    passInputGithub: {
+      selector: 'input#password'
+    },
+    signInButtonGithub: {
+      selector: 'input[name=commit]'
+    },
     mainDiv: {
       selector: 'div[id=app]'
     },
