@@ -63,7 +63,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
-      selector: '//a[@class="dropdown-item-edit"]',
+      selector: '//a[@class="dropdown-item-instance-edit"]',
       locateStrategy: 'xpath'
     },
     editButton: {
