@@ -16,6 +16,9 @@ const dataCommands = {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
+  },
+  clickWebhookDropdown: function() {
+    return this.waitForElementVisible('@webhookDropdown').click('@webhookDropdown');
   }
 };
 
@@ -23,6 +26,14 @@ module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/webhooks',
   commands: [dataCommands],
   elements: {
+    webhookDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit"]',
+      locateStrategy: 'xpath'
+    },
     instancesDropdown: {
       selector: '.instances-dropdown'
     },
