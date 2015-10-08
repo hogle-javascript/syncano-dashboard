@@ -29,7 +29,6 @@ export default React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
-    Mixins.Limits,
     HeaderMixin
   ],
 
@@ -198,8 +197,6 @@ export default React.createClass({
       <Container>
         {this.getDialogs()}
 
-        {this.renderLimitNotification('classes')}
-
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem
@@ -219,7 +216,7 @@ export default React.createClass({
         <Common.Fab>
           <Common.Fab.TooltipItem
             tooltip="Click here to add a Class"
-            onClick={this.checkObjectsCount.bind(null, this.state.items, 'classes', this.redirectToAddClassView)}
+            onClick={this.redirectToAddClassView}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 

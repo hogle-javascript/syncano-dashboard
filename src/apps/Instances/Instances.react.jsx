@@ -35,8 +35,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs,
-    Mixins.Limits
+    Mixins.Dialogs
   ],
 
   componentDidMount() {
@@ -248,7 +247,6 @@ export default Radium(React.createClass({
 
     let instances = this.state.items;
     let instancesCount = instances ? instances.length : 0;
-    let myInstances = Store.getMyInstances();
     let checkedInstances = Store.getNumberOfChecked();
     let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -276,8 +274,6 @@ export default Radium(React.createClass({
           onClick={this.onNextStep}
           showDots={true} />
 
-        {this.renderLimitNotification('instances')}
-
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
           visible={shouldShowWelcomeDialog}/>
@@ -300,7 +296,7 @@ export default Radium(React.createClass({
           <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
-            onClick={this.checkObjectsCount.bind(null, myInstances, 'instances', this.showInstanceDialog)}
+            onClick={this.showInstanceDialog}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 
