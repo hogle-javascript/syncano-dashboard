@@ -49,12 +49,28 @@ export default React.createClass({
       },
       content: {
         margin: '96px 104px 48px 304px'
+      },
+      addInstanceItem: {
+        color: 'rgba(0, 0, 0, 0.54)',
+        fontSize: 12,
+        fontWeight: 800
+      },
+      plusIcon: {
+        verticalAlign: '-webkit-baseline-middle',
+        color: 'rgba(0, 0, 0, 0.54)'
       }
     }
   },
 
   getMenuItems() {
     return [
+      {
+        type: MUI.MenuItem.Types.SUBHEADER,
+        text: 'Instances'
+      },
+      {
+        text: this.renderAddInstanceItem()
+      },
       {
         type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'
       },
@@ -113,6 +129,10 @@ export default React.createClass({
     ];
   },
 
+  showAddInstanceDialog() {
+    InstanceDialogActions.showDialog();
+  },
+
   redirectToNewInstance() {
     let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
 
@@ -121,10 +141,21 @@ export default React.createClass({
     });
   },
 
+  renderAddInstanceItem() {
+    return (
+      <div
+        style={this.getStyles().addInstanceItem}
+        onClick={this.showAddInstanceDialog}>
+        <MUI.FontIcon style={this.getStyles().plusIcon} className="synicon-plus"/>
+        Add an Instance
+      </div>
+    )
+  },
+
   renderInstanceDropdown() {
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown handleAddInstance={InstanceDialogActions.showDialog}/>
+        <HeaderInstancesDropdown/>
       </div>
     )
   },

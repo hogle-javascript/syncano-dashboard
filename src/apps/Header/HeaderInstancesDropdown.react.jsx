@@ -96,10 +96,6 @@ export default Radium(React.createClass({
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
     // Redirect to main instance screen
-    if (selectedIndex === 0) {
-      this.props.handleAddInstance();
-      return
-    }
     SessionActions.fetchInstance(menuItem.payload).then(() => {
       this.transitionTo('instance', {instanceName: menuItem.payload});
     });
@@ -113,7 +109,7 @@ export default Radium(React.createClass({
 
       instancesList.some((event, index) => {
         if (event.name === currentInstance.name) {
-          instanceActiveIndex = index + 1;
+          instanceActiveIndex = index;
           return true;
         }
       });
@@ -128,8 +124,8 @@ export default Radium(React.createClass({
     let item = (
       <div style={styles.dropdownLabelContainer} onClick={this.handleAddInstance}>
         <MUI.FontIcon
-        className="synicon-plus"
-        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          className="synicon-plus"
+          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
         Add an Instance
       </div>
     );
@@ -166,8 +162,8 @@ export default Radium(React.createClass({
       let text = (
       <div style={styles.dropdownLabelContainer}>
         <MUI.FontIcon
-        className={iconClassName}
-        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          className={iconClassName}
+          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
         {item.name}
       </div>
       );
@@ -195,8 +191,7 @@ export default Radium(React.createClass({
       return null;
     }
 
-    dropDownMenuItems = this.renderAddInstanceItem()
-      .concat(this.renderDropdownItems(InstancesStore.getMyInstances(true), true))
+    dropDownMenuItems = this.renderDropdownItems(InstancesStore.getMyInstances(true), true)
       .concat(this.renderDropdownItems(InstancesStore.getOtherInstances(true)));
 
     return (
