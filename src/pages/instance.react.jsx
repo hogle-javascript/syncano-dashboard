@@ -51,9 +51,7 @@ export default React.createClass({
         margin: '96px 104px 48px 304px'
       },
       addInstanceItem: {
-        color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: 12,
-        fontWeight: 800
+        fontSize: 14
       },
       plusIcon: {
         verticalAlign: '-webkit-baseline-middle',
@@ -72,7 +70,8 @@ export default React.createClass({
         text: this.renderAddInstanceItem()
       },
       {
-        type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'
+        type: MUI.MenuItem.Types.SUBHEADER,
+        text: 'Modules'
       },
       {
         type: MUI.MenuItem.Types.LINK,
@@ -147,7 +146,7 @@ export default React.createClass({
         style={this.getStyles().addInstanceItem}
         onClick={this.showAddInstanceDialog}>
         <MUI.FontIcon style={this.getStyles().plusIcon} className="synicon-plus"/>
-        Add an Instance
+        <span style={{verticalAlign: 'middle'}}>Add an Instance</span>
       </div>
     )
   },
