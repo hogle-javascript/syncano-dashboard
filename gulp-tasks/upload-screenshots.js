@@ -1,7 +1,11 @@
 var async      = require('async'),
     gutil      = require('gulp-util'),
     google     = require('googleapis'),
-    googleAuth = require('google-auth-library');
+    googleAuth = require('google-auth-library'),
+    _          = require('lodash'),
+    path       = require('path'),
+    fs         = require('fs'),
+    version    = require('./_common')().version;
 
 module.exports = function(cb) {
   var clientId = process.env.GD_CLIENT_ID;
@@ -76,7 +80,7 @@ module.exports = function(cb) {
       async.parallel({
         localFilesList: function(callback) {
           gutil.log('Creating screenshots list...');
-          var screenshots = '../reports/screenshots/_navigation/';
+          var screenshots = path.resolve(__dirname, '../reports/screenshots/_navigation/');
           var files = fs.readdirSync(screenshots);
           var localFilesList = _.map(_.filter(files, function(file) {
             return _.includes(file, '.png');
