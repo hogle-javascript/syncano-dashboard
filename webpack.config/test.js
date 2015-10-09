@@ -1,3 +1,3 @@
-var config = require('./stagning');
+var config = require('./staging');
 
 module.exports = config;
