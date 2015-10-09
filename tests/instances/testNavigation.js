@@ -7,7 +7,7 @@ module.exports = {
     const loginPage = client.page.loginPage();
 
     console.log('Starting tests');
-    loginPage.goToLoginPage();
+    loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
     loginPage.clickSignInButton();

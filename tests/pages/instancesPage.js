@@ -4,10 +4,6 @@ var instancesCommands = {
       .click('@fab')
       .waitForElementVisible('@confirmButton');
   },
-  fillInstanceName: function() {
-    return this.waitForElementVisible('@createModalNameInput')
-      .setValue('@createModalNameInput', 'nightwatch_test_instance');
-  },
   fillInstanceDescription: function(description) {
     return this.waitForElementVisible('@createModalDescriptionInput')
       .clearValue('@createModalDescriptionInput')
@@ -23,7 +19,7 @@ var instancesCommands = {
   },
   isModalClosed: function(element) {
     return this.waitForElementNotVisible(element);
-  },
+  }
 };
 
 module.exports = {
@@ -53,6 +49,10 @@ module.exports = {
       selector: '//div[@class="instances-list-container"]/div[2]/div/div[2]',
       locateStrategy: 'xpath'
     },
+    instancesTableName: {
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
+      locateStrategy: 'xpath'
+    },
     selectInstance: {
       selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
       locateStrategy: 'xpath'
@@ -62,6 +62,15 @@ module.exports = {
     },
     deleteButton: {
       selector: '.synicon-delete'
+    },
+    selectButton: {
+      selector: '.synicon-checkbox-multiple-marked-outline'
+    },
+    instanceSelected: {
+      selector: '.synicon-checkbox-marked-outline'
+    },
+    instanceToSelect: {
+      selector: '.synicon-checkbox-blank-outline'
     },
     instancesTableRowDescription: {
       selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
@@ -80,6 +89,14 @@ module.exports = {
     },
     deleteInstanceModalTitle: {
       selector: '//h3[text()="Delete an Instance"]',
+      locateStrategy: 'xpath'
+    },
+    welcomeDialogCreateInstance: {
+      selector: '//div[@class="welcome-dialog"]//button',
+      locateStrategy: 'xpath'
+    },
+    instanceDescription: {
+      selector: '//div[@class="instances-list-container"]//*[text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
     }
   }

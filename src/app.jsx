@@ -8,10 +8,12 @@ import './app.sass';
 
 import React from 'react';
 import Router from 'react-router';
-import URI from 'URIjs';
+import URI from 'urijs';
 import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
+
+import SessionStore from './apps/Session/SessionStore';
 
 let container = document.getElementById('app');
 
@@ -22,6 +24,8 @@ Router.run(routes, (Root, state) => {
   let originalUri = uri.normalize().toString();
   let pathname = decodeURIComponent(state.pathname).replace('//', '/');
   let query = _.extend({}, uri.search(true), state.query);
+
+  SessionStore.setUTMData(state.query);
 
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {
@@ -56,7 +60,6 @@ Router.run(routes, (Root, state) => {
       path: state.pathname
     });
   }
-
 
   React.render(<Root/>, container);
 });
