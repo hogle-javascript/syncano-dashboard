@@ -124,7 +124,9 @@ module.exports = {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickSelectInstance();
+    instancesPage.waitForElementPresent('@selectInstance');
+    instancesPage.moveToElement('@selectInstance', 0, 0);
+    instancesPage.clickButton('@instanceToSelect')
     instancesPage.clickButton('@selectButton');
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
