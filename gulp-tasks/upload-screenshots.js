@@ -2,18 +2,30 @@ var async      = require('async'),
     gutil      = require('gulp-util'),
     google     = require('googleapis'),
     googleAuth = require('google-auth-library');
+    version    = 'v' + require('../package.json').version;
+    fs         = require('fs');
+    path       = require('path');
+    _          = require('lodash');
 
 module.exports = function(cb) {
-  var clientId = process.env.GD_CLIENT_ID;
-  var clientSecret = process.env.GD_CLIENT_SECRET;
-  var access_token = process.env.GD_ACCESS_TOKEN;
-  var refresh_token = process.env.GD_REFRESH_TOKEN;
+  var clientId = '640917246320-d4u3u065fvpor5d4lo28h9ud82p19q1s.apps.googleusercontent.com'; //process.env.GD_CLIENT_ID;
+  var clientSecret = 'kdcdOaU0qNSp_2MaMW67aHqK'; //process.env.GD_CLIENT_SECRET;
+  var access_token = 'ya29.2gFMvLddt9QB-2vDFIA2vn0DGH71tVTNYbknf12xPo4zBkxLpY18bIV5Bt1-_dDBnA7L'; //process.env.GD_ACCESS_TOKEN;
+  var refresh_token = '1/zo6xCZdkzvkAnwPtj6GbnnuqEnu3uRRtHWUm4bJQi7A'; //process.env.GD_REFRESH_TOKEN;
   var nodeIndex = process.env.CIRCLE_NODE_INDEX || '';
 
-  if (process.env.CI && nodeIndex.toString() !== '1') {
-    gutil.log('Exit');
-    return cb();
-  }
+  var invisionFolder = '0B-nLxpmereQIUTBqaTVGVE9iT3c'; // '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
+  var latestFolder = '0B-nLxpmereQIdUdVNmxkeHN0UTg'; // '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
+  var resolutions = ['360x640', '768x1024', '1280x1024'];
+  var versionFolder, versionResolutionFolders, latestResolutionFolders, filesLists = null;
+
+  var auth = new googleAuth();
+  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
+
+  //if (process.env.CI && nodeIndex.toString() !== '1') {
+  //  gutil.log('Exit');
+  //  return cb();
+  //}
 
   if (!clientId) {
     throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
@@ -31,11 +43,6 @@ module.exports = function(cb) {
     throw new gutil.PluginError('upload-screenshots', '"GD_REFRESH_TOKEN" env variable is required');
   }
 
-  var invisionFolder = '0B-nLxpmereQIfkV2X1gxQkNtbXlwbHlCZE1RYlpoMFY1OGlaM1ppUkMybnU5bFllRENVZzg';
-  var latestFolder = '0B-nLxpmereQIfkwwekk3b3I0dUJMdnZjS2Q4MTVqQnRublJVemlPZEdHVHdEaUlTWjIzdlk';
-
-  var auth = new googleAuth();
-  var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
   oauth2Client.setCredentials({
     access_token: access_token,
     refresh_token: refresh_token,
@@ -45,174 +52,234 @@ module.exports = function(cb) {
 
   var drive = google.drive({version: 'v2', auth: oauth2Client});
 
-  async.waterfall([
-    function(callback) {
-      // If actual version folder exist get it otherwise create it and get it
-      drive.files.list({
-        q: "fullText contains '" + version + "' and '" + invisionFolder + "' in parents and trashed = false"
-      }, function(err, response) {
-        if (err) return callback(err);
-        if (response.items.length < 1) {
-          gutil.log('Creating version folder...');
-          drive.files.insert({
-            resource: {
-              title: version,
-              mimeType: 'application/vnd.google-apps.folder',
-              parents: [{id: invisionFolder}]
-            }
-          }, function(err, folder) {
-            if (err) return callback(err);
-            callback(null, folder);
-          });
-        } else {
-          gutil.log('Saving version folder ID...');
-          var folder = response.items[0];
-          callback(null, folder);
-        }
-      });
-    },
-    function(folder, callback) {
-      // Get list of files from disc, GoogleDrive latest and version folder
-      async.parallel({
-        localFilesList: function(callback) {
-          gutil.log('Creating screenshots list...');
-          var screenshots = '../reports/screenshots/_navigation/';
-          var files = fs.readdirSync(screenshots);
-          var localFilesList = _.map(_.filter(files, function(file) {
-            return _.includes(file, '.png');
-          }), function(file) {
-            return {
-              path: path.join(screenshots, file),
-              title: file
-            };
-          });
+  /* CREATING AND GETTING VERSION FOLDER */
 
-          callback(null, localFilesList);
-        },
-        latestFolderFilesList: function(callback) {
-          gutil.log('Creating latest folder screenshots list...');
-          var latestFolderFilesList = [];
-
-          drive.files.list({
-            q: "'" + latestFolder + "' in parents and trashed = false"
-          }, function(err, response) {
-            if (err) return callback(err);
-            latestFolderFilesList = _.map(response.items, function(item) {
-              return {
-                title: item.title,
-                id: item.id
-              };
-            });
-
-            callback(null, latestFolderFilesList);
-          });
-        },
-        versionFolderFilesList: function(callback) {
-          gutil.log('Creating version folder screenshots list...');
-          var versionFolderFilesList = [];
-
-          drive.files.list({
-            q: "'" + folder.id + "' in parents and trashed = false"
-          }, function(err, response) {
-            if (err) return callback(err);
-            versionFolderFilesList = _.map(response.items, function(item) {
-              return {
-                title: item.title,
-                id: item.id
-              };
-            });
-
-            callback(null, versionFolderFilesList);
-          });
-        }
-      }, function(err, filesLists) {
-        if (err) return callback(err);
-        callback(null, filesLists, folder);
-      });
-    },
-    function(_files, folder,  callback) {
-      // Check which files should be updated and which should be inserted
-      var files = _files;
-      files.filesToUpdateList = [];
-
-      function getFilesToUpdate(filesToFilter) {
-        var filteredFiles = _.filter(filesToFilter, function(remoteFile) {
-          return _.some(files.localFilesList, function(localFile) {
-            if (localFile.title === remoteFile.title) {
-              remoteFile.updateMediaPath = localFile.path;
-              return true;
-            }
-
-            return false;
-          });
-        });
-
-        return filteredFiles;
-      }
-
-      function getNewFiles(filesToFilter) {
-        var newFiles = _.reject(files.localFilesList, function(remoteFile) {
-          return _.some(filesToFilter, 'title', remoteFile.title);
-        });
-
-        return newFiles;
-      }
-
-      gutil.log('Creating list of files to update...');
-      files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.latestFolderFilesList));
-      files.filesToUpdateList = files.filesToUpdateList.concat(getFilesToUpdate(files.versionFolderFilesList));
-      gutil.log('Creating list of new files...');
-      files.newFilesForLatest = getNewFiles(files.latestFolderFilesList);
-      files.newFilesForVersion = getNewFiles(files.versionFolderFilesList);
-
-      callback(null, files, folder);
-    },
-    function(files, folder, callback) {
-      // Update files
-      if (files.filesToUpdateList.length > 0) {
-        gutil.log('Updating files...');
-        var fileObjects = _.map(files.filesToUpdateList, function(file) {
-          return {
-            fileId: file.id,
-            media: {
-              mimeType: 'image/png',
-              body: fs.readFileSync(file.updateMediaPath)
-            }
-          };
-        });
-
-        async.each(fileObjects, drive.files.update, function(err) {
-          if (err) return callback(err);
-          callback(null, files, folder);
-        });
+  function checkVersionFolder(callback) {
+    // If actual version folder exist get it otherwise create it and get it
+    drive.files.list({
+      q: "fullText contains '" + version + "' and '" + invisionFolder + "' in parents and trashed = false"
+    }, function(err, response) {
+      if (err) return callback(err);
+      if (response.items.length < 1) {
+        createVersionFolder(callback);
       } else {
-        gutil.log('No files to update.');
-        callback(null, files, folder);
+        getVersionFolder(response, callback);
       }
-    },
-    function(files, folder, callback) {
-      // Insert new files
-      if (files.newFilesForLatest.length > 0 || files.newFilesForVersion.length > 0) {
-        gutil.log('Uploading new files...');
-        function mapDriveObjects(newFiles, folderId) {
-          var objects = newFiles.map(function(file) {
+    });
+  }
+
+  function createVersionFolder(callback) {
+    gutil.log('Creating version folder...');
+    drive.files.insert({
+      resource: {
+        title: version,
+        mimeType: 'application/vnd.google-apps.folder',
+        parents: [{id: invisionFolder}]
+      }
+    }, function(err, _versionFolder) {
+      if (err) return callback(err);
+      async.each(resolutions, function(resolution, stepCallback) {
+        drive.files.insert({
+          resource: {
+            title: resolution,
+            mimeType: 'application/vnd.google-apps.folder',
+            parents: [{id: _versionFolder.id}]
+          }
+        }, function(err) {
+          if (err) return callback(err);
+          stepCallback();
+        })
+      }, function(err, _versionResolutionFolders) {
+        if (err) return callback(err);
+        versionFolder = _versionFolder;
+        versionResolutionFolders = _versionResolutionFolders;
+        callback();
+      });
+    });
+  }
+
+  function getVersionFolder(response, callback) {
+    gutil.log('Saving version folder ID...');
+    drive.files.list({
+      q: "mimeType = 'application/vnd.google-apps.folder' and '" + response.items[0].id + "' in parents and" +
+      " trashed = false"
+    }, function(err, _versionResolutionFolders) {
+      versionFolder = response.items[0];
+      versionResolutionFolders = _versionResolutionFolders.items;
+      callback();
+    });
+  }
+
+  /* GETTING FILES LISTS */
+
+  function getFilesLists(callback) {
+    // Get list of files from disc, GoogleDrive latest and version folder
+    async.parallel({
+      localFilesList: getLocalFilesList,
+      latestFolderFilesList: getLatestFolderFilesList,
+      versionFolderFilesList: getVersionFolderFilesList
+    }, function(err, _filesLists) {
+      if (err) return callback(err);
+      filesLists = _filesLists;
+      callback()
+    })
+  }
+
+  function getLocalFilesList(callback) {
+    gutil.log('Creating screenshots list...');
+    var screenshots = path.resolve(__dirname, '../reports/screenshots/_navigation/');
+    var localFilesList = {};
+
+    _.forEach(resolutions, function (resolution) {
+      var resolutionDirPath = path.join(screenshots, resolution);
+      localFilesList[resolution] = _.map(_.filter(fs.readdirSync(resolutionDirPath), function (fileName) {
+        return _.includes(fileName, '.png');
+      }), function (file) {
+        return {
+          path: path.join(screenshots, resolution, file),
+          title: file
+        }
+      })
+    });
+
+    callback(null, localFilesList);
+  }
+
+  function getLatestFolderFilesList(callback) {
+    gutil.log('Creating latest folder screenshots list...');
+    var latestFolderFilesList = {};
+
+    drive.files.list({
+      q: "'" + latestFolder + "' in parents and trashed = false"
+    }, function (err, _latestResolutionFolders) {
+      if (err) return callback(err);
+      async.each(_latestResolutionFolders.items, function(latestResolutionFolder, callbackOK) {
+        drive.files.list({
+          q: "'" + latestResolutionFolder.id + "' in parents and trashed = false"
+        }, function (err, files) {
+          if (err) return callback(err);
+          latestFolderFilesList[latestResolutionFolder.title] = _.map(files.items, function (file) {
             return {
-              resource: {
-                title: file.title,
-                mimeType: 'image/png',
-                parents: [{id: folderId}]
-              },
-              media: {
-                mimeType: 'image/png',
-                body: fs.createReadStream(file.path)
-              }
-            };
+              title: file.title,
+              id: file.id
+            }
           });
-          return objects;
+          callbackOK();
+        })
+      }, function (err) {
+        if (err) return callback(err);
+        latestResolutionFolders = _latestResolutionFolders.items;
+        callback(null, latestFolderFilesList);
+      });
+    })
+  }
+
+  function getVersionFolderFilesList(callback) {
+    gutil.log('Creating version folder screenshots list...');
+    var versionFolderFilesList = {};
+
+    async.each(versionResolutionFolders, function(versionResolutionFolder, callbackOK) {
+      drive.files.list({
+        q: "'" + versionResolutionFolder.id + "' in parents and trashed = false"
+      }, function (err, files) {
+        if (err) return callback(err);
+        versionFolderFilesList[versionResolutionFolder.title] = _.map(files.items, function (file) {
+          return {
+            title: file.title,
+            id: file.id
+          }
+        });
+        callbackOK();
+      })
+    }, function(err) {
+      if (err) return callback(err)
+      callback(null, versionFolderFilesList)
+    })
+  }
+
+  /* FILTERING WHICH FILES SHOULD BE UPDATED AND WHICH SHOULD BE INSERTED */
+
+  function splitFilesIntoGroup(callback) {
+    // Check which files should be updated and which should be inserted
+    filesLists.filesToUpdateList = [];
+    filesLists.newFilesForLatest = {};
+    filesLists.newFilesForVersion = {};
+
+    gutil.log('Creating list of new files and files to update...');
+
+    _.forEach(resolutions, function(resolution) {
+      filesLists.filesToUpdateList = filesLists.filesToUpdateList
+        .concat(filterFilesToUpdate(filesLists.latestFolderFilesList[resolution], resolution));
+
+      filesLists.filesToUpdateList = filesLists.filesToUpdateList
+        .concat(filterFilesToUpdate(filesLists.versionFolderFilesList[resolution], resolution));
+
+      filesLists.newFilesForLatest[resolution] = filterNewFiles(filesLists.latestFolderFilesList[resolution], resolution);
+      filesLists.newFilesForVersion[resolution] = filterNewFiles(filesLists.versionFolderFilesList[resolution], resolution);
+    });
+
+    callback();
+  }
+
+  function filterFilesToUpdate(filesToFilter, resolution) {
+    var filteredFiles = _.filter(filesToFilter, function(remoteFile) {
+      return _.some(filesLists.localFilesList[resolution], function(localFile) {
+        if (localFile.title === remoteFile.title) {
+          remoteFile.updateMediaPath = localFile.path;
+          return true;
         }
 
-        var latestDriveObjects = mapDriveObjects(files.newFilesForLatest, latestFolder);
-        var versionDriveObjects = mapDriveObjects(files.newFilesForVersion, folder.id);
+        return false;
+      });
+    });
+
+    return filteredFiles;
+  }
+
+  function filterNewFiles(filesToFilter, resolution) {
+    var newFiles = _.reject(filesLists.localFilesList[resolution], function(remoteFile) {
+      return _.some(filesToFilter, 'title', remoteFile.title);
+    });
+
+    return newFiles;
+  }
+
+  /* UPDATE FILES */
+
+  function updateFiles(callback) {
+    if (filesLists.filesToUpdateList.length > 0) {
+      gutil.log('Updating files...');
+      var fileObjects = _.map(filesLists.filesToUpdateList, function(file) {
+        return {
+          fileId: file.id,
+          media: {
+            mimeType: 'image/png',
+            body: fs.readFileSync(file.updateMediaPath)
+          }
+        };
+      });
+
+      async.each(fileObjects, drive.files.update, function(err) {
+        if (err) return callback(err);
+        callback();
+      });
+    } else {
+      gutil.log('No files to update.');
+      callback();
+    }
+  }
+
+  /* INSERT FILES */
+
+  function insertNewFiles(callback) {
+    _.forEach(resolutions, function(resolution) {
+      if (filesLists.newFilesForLatest[resolution].length > 0 || filesLists.newFilesForVersion[resolution].length > 0) {
+        gutil.log('Uploading new files...');
+
+        var latestResolutionFolderID = _.pluck(_.filter(latestResolutionFolders, 'title', resolution), 'id');
+        var versionResolutionFolderID = _.pluck(_.filter(versionResolutionFolders, 'title', resolution), 'id');
+        var latestDriveObjects = mapFilesObjects(filesLists.newFilesForLatest[resolution], latestResolutionFolderID);
+        var versionDriveObjects = mapFilesObjects(filesLists.newFilesForVersion[resolution], versionResolutionFolderID);
 
         async.parallel([
           function() {
@@ -225,10 +292,35 @@ module.exports = function(cb) {
           callback();
         });
       } else {
-        gutil.log('No new files to upload.');
+        gutil.log(resolution, ' - no new files to upload.');
         callback();
       }
-    }
+    })
+  }
+
+  function mapFilesObjects(files, folderID) {
+    var objects = files.map(function(file) {
+      return {
+        resource: {
+          title: file.title,
+          mimeType: 'image/png',
+          parents: [{id: folderID}]
+        },
+        media: {
+          mimeType: 'image/png',
+          body: fs.createReadStream(file.path)
+        }
+      };
+    });
+    return objects;
+  }
+
+  async.waterfall([
+    checkVersionFolder,
+    getFilesLists,
+    splitFilesIntoGroup,
+    updateFiles,
+    insertNewFiles
   ], function(err) {
     if (err) throw err;
     cb();
