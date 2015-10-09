@@ -116,7 +116,7 @@ module.exports = {
 
       client.pause(500);
       client.elementIdText(elementId.toString(), function(text) {
-        client.assert.equal(text.value, instanceNames[0]);
+        client.assert.equal(text.value, instanceNames[1]);
       });
     })
   },

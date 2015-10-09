@@ -44,7 +44,8 @@ module.exports = {
   commands: [classesCommands],
   elements: {
     fab: {
-      selector: '.synicon-plus'
+      selector: '(//span[@class="synicon-plus"])[2]',
+      locateStrategy: 'xpath'
     },
     createModalNameInput: {
       selector: 'input[name=name]'
