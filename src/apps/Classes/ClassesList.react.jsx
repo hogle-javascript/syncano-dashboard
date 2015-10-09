@@ -46,12 +46,9 @@ export default React.createClass({
 
   handleChangePalette(color, icon) {
     console.info('Classes::handleChangePalette', color, icon);
+    let metadata = JSON.stringify({color, icon});
 
-    Actions.updateClass(
-    Store.getClickedItem().name, {
-      metadata: JSON.stringify({color, icon})
-    }
-    );
+    Actions.updateClass(Store.getClickedItem().name, {metadata});
     Actions.uncheckAll()
   },
 
