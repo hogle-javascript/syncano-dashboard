@@ -70,6 +70,8 @@ module.exports = function(cb) {
 
   function createVersionFolder(callback) {
     gutil.log('Creating version folder...');
+    versionResolutionFolders = [];
+
     drive.files.insert({
       resource: {
         title: version,
@@ -85,14 +87,14 @@ module.exports = function(cb) {
             mimeType: 'application/vnd.google-apps.folder',
             parents: [{id: _versionFolder.id}]
           }
-        }, function(err) {
+        }, function(err, versionResolutionFolder) {
           if (err) return callback(err);
+          versionResolutionFolders.push(versionResolutionFolder);
           stepCallback();
         })
-      }, function(err, _versionResolutionFolders) {
+      }, function(err) {
         if (err) return callback(err);
         versionFolder = _versionFolder;
-        versionResolutionFolders = _versionResolutionFolders;
         callback();
       });
     });
@@ -237,8 +239,8 @@ module.exports = function(cb) {
   }
 
   function filterNewFiles(filesToFilter, resolution) {
-    var newFiles = _.reject(filesLists.localFilesList[resolution], function(remoteFile) {
-      return _.some(filesToFilter, 'title', remoteFile.title);
+    var newFiles = _.reject(filesLists.localFilesList[resolution], function(localFile) {
+      return _.some(filesToFilter, 'title', localFile.title);
     });
 
     return newFiles;
@@ -272,7 +274,7 @@ module.exports = function(cb) {
   /* INSERT FILES */
 
   function insertNewFiles(callback) {
-    _.forEach(resolutions, function(resolution) {
+    async.each(resolutions, function(resolution,stepCallback) {
       if (filesLists.newFilesForLatest[resolution].length > 0 || filesLists.newFilesForVersion[resolution].length > 0) {
         gutil.log('Uploading new files...');
 
@@ -288,13 +290,17 @@ module.exports = function(cb) {
           function() {
             async.each(versionDriveObjects, drive.files.insert);
           }
-        ], function() {
-          callback();
-        });
+        ], function(err) {
+          if (err) return callback(err);
+          stepCallback()
+        })
       } else {
         gutil.log(resolution, ' - no new files to upload.');
-        callback();
+        stepCallback()
       }
+    }, function(err) {
+      if (err) return callback(err);
+      callback()
     })
   }
 
