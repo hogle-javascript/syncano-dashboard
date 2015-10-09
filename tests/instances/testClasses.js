@@ -61,5 +61,13 @@ module.exports = {
     classesPage.navigate();
     classesPage.clickButton('@selectUserClass');
     classesPage.waitForElementVisible('@inactiveDeleteButton');
+  },
+  'Test Admin selects/deselects class': function cantDeleteUserClass(client) {
+    const classesPage = client.page.classesPage();
+
+    classesPage.navigate();
+    classesPage.clickButton('@selectUserClass');
+    classesPage.clickButton('@checkboxSelected');
+    classesPage.waitForElementVisible('@selectUserClass');
   }
 };
