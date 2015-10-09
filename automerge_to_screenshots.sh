@@ -5,5 +5,5 @@ LAST_COMMIT=$(git rev-list -1 HEAD)
 
 echo Automatically merging commit $LAST_COMMIT from $CURRENT_BRANCH to screenshots branch
 
-git checkout screenshots && git merge master
+git checkout TNB-175 && git merge TNB-175-TEMP
 git checkout $CURRENT_BRANCH
