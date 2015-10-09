@@ -91,9 +91,9 @@ export default React.createClass({
 
   renderItem(item) {
     let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
-    let removeInstanceFunc = Store.amIOwner(item)
-      ? InstancesActions.removeInstances.bind(null, [item])
-      : InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
+    let handleRemoveUserInstance = InstancesActions.removeInstances.bind(null, [item]);
+    let handleRemoveShared = InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
+    let handleRemoveInstance = Store.amIOwner(item) ? handleRemoveUserInstance : handleRemoveShared;
 
     item.metadata = item.metadata || {};
 
@@ -125,7 +125,7 @@ export default React.createClass({
             primaryText="Customize an Instance" />
           <MenuItem
             className="dropdown-item-instance-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item, removeInstanceFunc)}
+            onTouchTap={this.showMenuDialog.bind(null, item, handleRemoveInstance)}
             primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>
