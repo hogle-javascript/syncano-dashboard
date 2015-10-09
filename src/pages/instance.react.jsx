@@ -145,7 +145,9 @@ export default React.createClass({
       <div
         style={this.getStyles().addInstanceItem}
         onClick={this.showAddInstanceDialog}>
-        <MUI.FontIcon style={this.getStyles().plusIcon} className="synicon-plus"/>
+        <MUI.FontIcon
+          style={this.getStyles().plusIcon}
+          className="synicon-plus"/>
         <span style={{verticalAlign: 'middle'}}>Add an Instance</span>
       </div>
     )

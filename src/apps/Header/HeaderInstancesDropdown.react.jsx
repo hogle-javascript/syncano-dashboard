@@ -125,7 +125,7 @@ export default Radium(React.createClass({
       <div style={styles.dropdownLabelContainer} onClick={this.handleAddInstance}>
         <MUI.FontIcon
           className="synicon-plus"
-          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          style={[styles.dropdownInstanceIcon, iconBackground]}/>
         Add an Instance
       </div>
     );
@@ -185,14 +185,15 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
+    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(true), true);
+    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances(true));
     let dropDownMenuItems = [];
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
-    dropDownMenuItems = this.renderDropdownItems(InstancesStore.getMyInstances(true), true)
-      .concat(this.renderDropdownItems(InstancesStore.getOtherInstances(true)));
+    dropDownMenuItems = userInstances.concat(sharedInstances);
 
     return (
       <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>

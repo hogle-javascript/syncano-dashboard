@@ -123,24 +123,26 @@ export default Reflux.createStore({
     if (this.data.items === null) {
       return this.data.items;
     }
+    let filteredItems = this.data.items.filter(this.filterMyInstances);
 
     if (reversed) {
-      return this.data.items.filter(this.filterMyInstances).reverse();
+      return filteredItems.reverse();
     }
 
-    return this.data.items.filter(this.filterMyInstances);
+    return filteredItems;
   },
 
   getOtherInstances(reversed = false) {
     if (this.data.items === null) {
       return this.data.items;
     }
+    let filteredItems = this.data.items.filter(this.filterOtherInstances);
 
     if (reversed) {
-      return this.data.items.filter(this.filterOtherInstances).reverse();
+      return filteredItems.reverse();
     }
 
-    return this.data.items.filter(this.filterOtherInstances);
+    return filteredItems;
   },
 
   getInstancesDropdown() {
