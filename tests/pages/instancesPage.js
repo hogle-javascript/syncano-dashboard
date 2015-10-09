@@ -78,6 +78,13 @@ module.exports = {
     instanceSelected: {
       selector: '.synicon-checkbox-marked-outline'
     },
+    instanceToSelect: {
+      selector: '.synicon-checkbox-blank-outline'
+    },
+    instancesTableRowDescription: {
+      selector: '//div[@class="instances-list-container"]/div[2]//div[@class="col-flex-1"]',
+      locateStrategy: 'xpath'
+    },
     emptyListItem: {
       selector: '.empty-list-item'
     },
