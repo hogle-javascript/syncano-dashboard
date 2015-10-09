@@ -12,13 +12,14 @@ function run_e2e_tests {
     npm run-script e2e-setup
     nohup npm run-script e2e-http-server &
     sleep 5
-    npm run-script e2e-screenshots
+    npm run-script e2e-screenshots 2>&1 /dev/null
     rm -rf ./dist_e2e
 }
 
-function upload_screenshots {
-    npm run-script upload-screenshots
-}
+if [[ "$CIRCLE_BRANCH" == "screenshots" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
+    git fetch --all
+    git reset --hard origin/TNB-175
+fi
 
 case "$CIRCLE_NODE_INDEX" in
     0)
@@ -34,5 +35,5 @@ case "$CIRCLE_NODE_INDEX" in
 esac
 
 if [[ "$CIRCLE_BRANCH" == "screenshots" && "$CIRCLE_NODE_INDEX" == 1 ]]; then
-    upload_screenshots
+    npm run-script upload-screenshots
 fi

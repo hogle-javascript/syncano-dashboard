@@ -22,7 +22,14 @@ deployment:
     commands:
       - NODE_ENV=production npm run-script bump
       - NODE_ENV=production npm run-script deployment-master
+      - curl -v -X POST https://circleci.com/api/v1/project/syncano/syncano-dashboard/tree/screenshots?circle-token=$CI_TOKEN
+
   staging:
     branch: devel
     commands:
       - npm run-script deployment-devel
+
+  screenshots:
+    branch: TNB-175
+    commands:
+      - curl -v -X POST https://circleci.com/api/v1/project/syncano/syncano-dashboard/tree/screenshots?circle-token=$CI_TOKEN
