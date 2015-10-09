@@ -38,42 +38,20 @@ module.exports = {
   //   });
   //   instancesPage.waitForElementPresent('@instancesTable')
   // },
-  // 'Admin Logs in with Facebook': function FacebookLogin(client) {
-  //   const loginPage = client.page.loginPage();
-  //   const instancesPage = client.page.instancesPage();
-
-  //   loginPage.clickButton('@loginButtonFacebook')
-  //   client.pause(1000);
-  //   client.windowHandles(function(result) {
-  //     const handle = result.value[1];
-
-  //     client.switchWindow(handle);
-  //   });
-  //   loginPage.fillInputField('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL)
-  //     .fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
-  //     .clickButton('@signInButtonFacebook');
-
-  //   client.windowHandles(function(result) {
-  //     const handle = result.value[0];
-
-  //     client.switchWindow(handle);
-  //   });
-  //   instancesPage.waitForElementPresent('@instancesTable')
-  // },
-  'Admin Logs in with Github': function GithubLogin(client) {
+  'Admin Logs in with Facebook': function FacebookLogin(client) {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickButton('@loginButtonGithub')
+    loginPage.clickButton('@loginButtonFacebook')
     client.pause(1000);
     client.windowHandles(function(result) {
       const handle = result.value[1];
 
       client.switchWindow(handle);
     });
-    loginPage.fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
-      .fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
-      .clickButton('@signInButtonGithub');
+    loginPage.fillInputField('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL)
+      .fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
+      .clickButton('@signInButtonFacebook');
 
     client.windowHandles(function(result) {
       const handle = result.value[0];
@@ -81,5 +59,27 @@ module.exports = {
       client.switchWindow(handle);
     });
     instancesPage.waitForElementPresent('@instancesTable')
-  }
+  },
+  // 'Admin Logs in with Github': function GithubLogin(client) {
+  //   const loginPage = client.page.loginPage();
+  //   const instancesPage = client.page.instancesPage();
+
+  //   loginPage.clickButton('@loginButtonGithub')
+  //   client.pause(1000);
+  //   client.windowHandles(function(result) {
+  //     const handle = result.value[1];
+
+  //     client.switchWindow(handle);
+  //   });
+  //   loginPage.fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
+  //     .fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
+  //     .clickButton('@signInButtonGithub');
+
+  //   client.windowHandles(function(result) {
+  //     const handle = result.value[0];
+
+  //     client.switchWindow(handle);
+  //   });
+  //   instancesPage.waitForElementPresent('@instancesTable')
+  // }
 };
