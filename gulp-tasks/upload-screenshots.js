@@ -22,10 +22,10 @@ module.exports = function(cb) {
   var auth = new googleAuth();
   var oauth2Client = new auth.OAuth2(clientId, clientSecret, "urn:ietf:wg:oauth:2.0:oob");
 
-  //if (process.env.CI && nodeIndex.toString() !== '1') {
-  //  gutil.log('Exit');
-  //  return cb();
-  //}
+  if (process.env.CI && nodeIndex.toString() !== '1') {
+    gutil.log('Exit');
+    return cb();
+  }
 
   if (!clientId) {
     throw new gutil.PluginError('upload-screenshots', '"GD_CLIENT_ID" env variable is required');
