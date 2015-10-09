@@ -59,10 +59,11 @@ module.exports = {
       client.switchWindow(handle);
     });
     instancesPage.waitForElementPresent('@instancesTable')
-  },
+  }
   // 'Admin Logs in with Github': function GithubLogin(client) {
   //   const loginPage = client.page.loginPage();
   //   const instancesPage = client.page.instancesPage();
+
 
   //   loginPage.clickButton('@loginButtonGithub')
   //   client.pause(1000);
