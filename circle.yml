@@ -26,7 +26,3 @@ deployment:
     branch: devel
     commands:
       - npm run-script deployment-devel
-  screenshots:
-      branch: TNB-175
-      commands:
-        - ./automerge_to_screenshots.sh
