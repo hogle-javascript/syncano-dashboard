@@ -1,9 +1,10 @@
 #!/bin/sh
+set -e
 
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-LAST_COMMIT=$(git rev-list -1 HEAD)
+git config --global user.email "ci@syncano.com"
+git config --global user.name "CI"
 
-echo Automatically merging commit $LAST_COMMIT from $CURRENT_BRANCH to screenshots branch
-
-git checkout screenshots && git merge master
-git checkout $CURRENT_BRANCH
+git fetch origin
+git checkout screenshots 
+git merge master
+git push origin screenshots
