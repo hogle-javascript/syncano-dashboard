@@ -32,7 +32,7 @@ module.exports = {
     }
     const res = client.globals.test_settings.resolution;
     const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation/' + res, prefix + '.png'));
+    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', res, prefix + '.png'));
 
     client.saveScreenshot(fileNamePath, done);
   },
