@@ -46,7 +46,7 @@ export default {
   },
 
   set(name) {
-    return this.Connection
+    this.Connection
       .setInstance(name)
       .then(this.completed)
       .catch(this.failure);
