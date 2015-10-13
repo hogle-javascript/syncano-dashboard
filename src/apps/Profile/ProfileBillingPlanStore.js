@@ -164,12 +164,19 @@ export default Reflux.createStore({
   },
 
   getTotalPlanValue(subscription) {
+    console.log('subscription', subscription, this.data.profile.subscription);
     let commitment = null;
 
     if (!subscription || subscription === 'default') {
       commitment = this.data.profile.subscription.commitment;
     } else {
       commitment = subscription.commitment;
+    }
+
+    if (_.isString(commitment)) {
+      // Workaround for SYNCORE-851
+      commitment = commitment.replace(/u'/g, "'").replace(/'/g, '"');
+      commitment = JSON.parse(commitment);
     }
 
     return parseInt(commitment.api, 10) + parseInt(commitment.cbx, 10);
