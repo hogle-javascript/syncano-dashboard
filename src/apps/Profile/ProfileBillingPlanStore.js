@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import moment from 'moment';
-import D from 'd.js';
+// import D from 'd.js';
 import _ from 'lodash';
 
 import Mixins from '../../mixins';
@@ -42,16 +42,21 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('ClassesStore::refreshData');
 
-    D.all([
-      Actions.fetchBillingProfile(),
-      Actions.fetchBillingUsage(),
-      Actions.fetchBillingSubscriptions()
-    ])
-      .then(() => {
+    const join = this.joinTrailing(
+      Actions.fetchBillingProfile.completed,
+      Actions.fetchBillingUsage.completed,
+      Actions.fetchBillingSubscriptions.completed,
+      () => {
+        join.stop();
         this.data.isReady = true;
         this.data.isLoading = false;
         this.trigger(this.data);
-      });
+      }
+    );
+
+    Actions.fetchBillingProfile();
+    Actions.fetchBillingUsage();
+    Actions.fetchBillingSubscriptions();
   },
 
   setProfile(profile) {
