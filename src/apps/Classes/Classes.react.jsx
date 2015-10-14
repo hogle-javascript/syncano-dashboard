@@ -94,17 +94,6 @@ export default React.createClass({
     return item.protectedFromDelete;
   },
 
-  handleChangePalette(color, icon) {
-    console.info('Classes::handleChangePalette', color, icon);
-
-    Actions.updateClass(
-      Store.getCheckedItem().name, {
-        metadata: JSON.stringify({color, icon})
-      }
-    );
-    Actions.uncheckAll()
-  },
-
   handleDelete() {
     console.info('Classes::handleDelete');
     Actions.removeClasses(Store.getCheckedItems());
@@ -123,18 +112,8 @@ export default React.createClass({
     this.context.router.transitionTo('classes-add', this.getParams());
   },
 
-  redirectToEditClassView(className) {
-    let classNameParam = className || Store.getCheckedItem().name;
-
-    this.context.router.transitionTo('classes-edit', {
-      instanceName: this.getParams().instanceName,
-      className: classNameParam
-    });
-  },
-
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
@@ -202,23 +181,11 @@ export default React.createClass({
     }
 
     return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
       deleteDialog
     ]
   },
 
   render() {
-    let styles = this.getStyles();
     let checkedClasses = Store.getCheckedItems();
     let checkedClassesCount = Store.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
@@ -243,14 +210,6 @@ export default React.createClass({
               disabled={someClassIsProtectedFromDelete}
               onClick={this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              style={styles.fabListTopButton}
-              tooltip="Click here to customize Class"
-              secondary={true}
-              mini={true}
-              disabled={checkedClassesCount > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
