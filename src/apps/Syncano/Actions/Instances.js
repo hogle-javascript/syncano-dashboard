@@ -49,6 +49,6 @@ export default {
     this.Connection
       .setInstance(name)
       .then(this.completed)
-      .catch(this.failure)
+      .catch(this.failure);
   }
 };
