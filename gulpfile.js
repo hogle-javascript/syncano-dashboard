@@ -209,14 +209,14 @@ gulp.task('publish', ['clean', 'build', 'revision:index'], function() {
 gulp.task('check-github-tag', function(cb) {
   async.series([
     function (callback) {
-      git.fetch('origin', '', {args: '--tags'}, callback);
+      git.fetch('origin', '', {args: ' --tags '}, callback);
     },
 
     function (callback) {
       git.exec({args: 'tag -l "' + version + '"'}, function(err, stdout) {
         if (err) return callback(err);
         if (stdout.indexOf(version) > -1) {
-          return callback(new gutil.PluginError('check-github-tag', 'Version "' + version +'" already exists.'))
+          return callback(new gutil.PluginError('check-github-tag', 'Version "' + version + '" already exists.'))
         }
 
         callback();
