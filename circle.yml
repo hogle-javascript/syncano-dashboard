@@ -1,7 +1,7 @@
 machine:
   node:
     version:
-      0.10.32
+      0.12.7
   environment:
     NODE_ENV: staging
 
@@ -18,7 +18,7 @@ test:
 
 deployment:
   production:
-    branch: master-hotfix
+    branch: master-hotifx
     commands:
       - NODE_ENV=production npm run-script check-github-tag
       - NODE_ENV=production npm run-script publish
