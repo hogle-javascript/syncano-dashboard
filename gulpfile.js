@@ -255,7 +255,7 @@ gulp.task('changelog', function(cb) {
   async.waterfall([
     function (callback) {
       // Fetch tags from origin
-      git.fetch('origin', '', {args: '--tags'}, callback);
+      git.fetch('origin', '', {args: ' --tags '}, callback);
     },
 
     function (callback) {
