@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import moment from 'moment';
-// import D from 'd.js';
 import _ from 'lodash';
 
 import Mixins from '../../mixins';
@@ -164,7 +163,6 @@ export default Reflux.createStore({
   },
 
   getTotalPlanValue(subscription) {
-    console.log('subscription', subscription, this.data.profile.subscription);
     let commitment = null;
 
     if (!subscription || subscription === 'default') {
