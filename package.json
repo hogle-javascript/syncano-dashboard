@@ -9,7 +9,7 @@
     "url": "https://github.com/Syncano/syncano-dashboard.git"
   },
   "dependencies": {
-    "urijs": "^1.16.1",
+    "URIjs": "^1.16.0",
     "brace": "^0.5.1",
     "c3": "^0.4.11-rc4",
     "classnames": "^2.1.3",
