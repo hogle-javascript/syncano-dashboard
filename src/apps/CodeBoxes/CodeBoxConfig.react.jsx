@@ -1,21 +1,18 @@
 import React from 'react';
-import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
+import Router from 'react-router';
+import Reflux from 'reflux';
+import _ from 'lodash';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './CodeBoxAutosaveMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
 
-// Stores and Actions
-import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
+import Actions from './CodeBoxActions';
 
-// Components
 import MUI from 'material-ui';
-import Common from '../../common';
+import Common from '../../common'
 import Container from '../../common/Container/Container.react';
 
 let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
@@ -25,18 +22,15 @@ export default Radium(React.createClass({
   displayName: 'CodeBoxConfig',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-    React.addons.LinkedStateMixin,
-
     Reflux.connect(Store),
-    HeaderMixin,
+    React.addons.LinkedStateMixin,
+    Router.Navigation,
+
     SnackbarNotificationMixin,
-    UnsavedDataMixin,
     AutosaveMixin,
+    UnsavedDataMixin,
     Mixins.Mousetrap,
-    Mixins.Dialogs,
-    Mixins.InstanceTabs
+    Mixins.Dialogs
   ],
 
   autosaveAttributeName: 'codeBoxConfigAutosave',
@@ -49,33 +43,48 @@ export default Radium(React.createClass({
     });
   },
 
+  componentWillUpdate() {
+    // 'mousetrap' class has to be added directly to input element to make CMD + S works
+
+    if (this.state.currentCodeBox) {
+      let refNames = _.keys(this.refs, (ref) => {
+        return ref
+      }).filter((refName) => _.includes(refName, 'field') || _.includes(refName, 'Field'));
+
+      _.forEach(refNames, (refName) => {
+        let inputNode = this.refs[refName].refs.input.getDOMNode();
+
+        if (inputNode && !_.includes(inputNode.className, 'mousetrap')) {
+          inputNode.classList.add('mousetrap');
+        }
+      })
+    }
+  },
+
   getStyles() {
     return {
       container: {
         margin: '25px auto',
         width: '100%',
-        maxWidth: '1140px'
+        maxWidth: '600px'
       },
-      autosaveCheckbox: {
-        marginTop: 30
+      field: {
+        margin: '10px 10px'
+      },
+      addButton: {
+        margin: '20px 10px'
       },
       wrongConfigSnackbar: {
         color: MUI.Styles.Colors.red400
+      },
+      deleteIcon: {
+        padding: '24px 12px'
       }
     }
   },
 
-  isSaved() {
-    if (this.state.currentCodeBox && this.refs.editorConfig) {
-      let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
-      let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
-
-      return initialCodeBoxConfig === currentCodeBoxConfig;
-    }
-  },
-
   isConfigValid() {
-    let configValue = this.refs.editorConfig ? this.refs.editorConfig.editor.getValue() : null;
+    let configValue = this.state.currentCodeBox ? this.state.currentCodeBox.config : null;
 
     if (configValue) {
       try {
@@ -87,23 +96,64 @@ export default Radium(React.createClass({
     }
   },
 
-  handleUpdate() {
-    let config = this.refs.editorConfig.editor.getValue();
-    let styles = this.getStyles();
-
-    if (this.isConfigValid()) {
-      this.clearAutosaveTimer();
-      Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
-      this.setSnackbarNotification({
-        message: 'Saving...'
-      });
-    } else {
-      this.setSnackbarNotification({
-        message: 'Config is not Valid. Please verify if it is valid JSON format',
-        autoHideDuration: 4000,
-        style: styles.wrongConfigSnackbar
-      });
+  isSaved() {
+    if (this.state.currentCodeBox && this.state.originalConfig) {
+      return _.isEqual(this.state.currentCodeBox.config, this.state.originalConfig)
     }
+  },
+
+  handleAddField() {
+    let currentCodeBox = this.state.currentCodeBox;
+    let newKey = this.refs.newFieldKey.getValue();
+    let newValue = this.refs.newFieldValue.getValue();
+
+    if (_.has(currentCodeBox.config, newKey)) {
+      this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
+      return
+    }
+
+    _.set(currentCodeBox.config, newKey, newValue);
+    this.setState({currentCodeBox}, () => {
+      this.refs.newFieldKey.clearValue();
+      this.refs.newFieldValue.clearValue();
+    }, this.runAutoSave())
+  },
+
+  handleUpdate() {
+    let config = this.state.currentCodeBox.config;
+
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+    this.setSnackbarNotification({
+      message: 'Saving...'
+    });
+  },
+
+  handleDeleteKey(key) {
+    let currentCodeBox = this.state.currentCodeBox;
+
+    delete currentCodeBox.config[key];
+    this.setState({currentCodeBox});
+  },
+
+  handleUpdateKey(key) {
+    let currentCodeBox = this.state.currentCodeBox;
+    let newKey = this.refs[`fieldKey${key}`].getValue();
+    let newValue = this.refs[`fieldValue${key}`].getValue();
+    let newField = {};
+
+    newField[newKey] = newValue;
+
+    if (key !== newKey && _.has(currentCodeBox.config, newKey)) {
+      this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
+      return;
+    }
+
+    currentCodeBox.config = _.omit(currentCodeBox.config, key);
+    _.assign(currentCodeBox.config, newField);
+
+    this.setState({currentCodeBox});
+    this.refs[`fieldKey${key}`].setErrorText(null);
+    this.runAutoSave();
   },
 
   initDialogs() {
@@ -128,54 +178,105 @@ export default Radium(React.createClass({
     }]
   },
 
-  renderEditor() {
+  renderFields() {
+    if (!this.state.currentCodeBox) {
+      return null
+    }
+
     let styles = this.getStyles();
-    let config = null;
-    let codeBox = this.state.currentCodeBox;
-
-    if (codeBox) {
-      config = JSON.stringify(codeBox.config, null, 2);
-
+    let codeboxConfig = this.state.currentCodeBox ? this.state.currentCodeBox.config : {};
+    let configFields = _.map(_.keys(codeboxConfig), (key) => {
       return (
+        <div
+          className="row"
+          key={`row${key}`}>
+          <MUI.TextField
+            key={`fieldKey${key}`}
+            ref={`fieldKey${key}`}
+            hintText="Key"
+            defaultValue={key}
+            style={styles.field}
+            onBlur={this.handleUpdateKey.bind(null, key)}
+            onFocus={this.clearAutosaveTimer} />
+          <MUI.TextField
+            key={`fieldValue${key}`}
+            ref={`fieldValue${key}`}
+            hintText="Value"
+            defaultValue={codeboxConfig[key]}
+            style={styles.field}
+            onBlur={this.handleUpdateKey.bind(null, key)}
+            onFocus={this.clearAutosaveTimer} />
+          <MUI.IconButton
+            iconClassName="synicon-delete"
+            style={styles.deleteIcon}
+            tooltip="Delete key"
+            onClick={this.handleDeleteKey.bind(null, key)}/>
+        </div>
+      )
+    });
+
+    return _.sortBy(configFields, 'key');
+  },
+
+  renderNewFiledSection() {
+    let styles = this.getStyles();
+
+    return (
+      <div>
+        <div className="row">
+          <MUI.TextField
+            ref="newFieldKey"
+            hintText="Key"
+            defaultValue=""
+            style={styles.field} />
+          <MUI.TextField
+            ref="newFieldValue"
+            hintText="Value"
+            defaultValue=""
+            style={styles.field} />
+        </div>
         <div>
-          <Common.Editor
-            ref="editorConfig"
-            height={300}
-            mode="javascript"
-            onLoad={this.clearAutosaveTimer}
-            onChange={this.runAutoSave}
-            theme="github"
-            value={config} />
+          <MUI.RaisedButton
+            label="Add field"
+            secondary={true}
+            onClick={this.handleAddField}
+            style={styles.addButton} />
           <MUI.Checkbox
             ref="autosaveCheckbox"
             name="autoSaveCheckbox"
             label="Autosave"
-            style={styles.autosaveCheckbox}
+            style={styles.addButton}
             defaultChecked={this.isAutosaveEnabled()}
             onCheck={this.saveCheckboxState} />
         </div>
-      )
-    }
+      </div>
+    )
   },
 
   render() {
-    console.debug('CodeBoxConfig::render');
     let styles = this.getStyles();
 
+    if (!this.state.currentCodeBox) {
+      return null
+    }
+
     return (
-      <Container style={styles.container}>
-        {this.getDialogs()}
-        <Common.Fab position="top">
-          <Common.Fab.TooltipItem
+      <div>
+        <Container style={styles.container}>
+          {this.getDialogs()}
+          <Common.Fab position="top">
+            <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>
-        </Common.Fab>
-        <Common.Loading show={this.state.isLoading}>
-          {this.renderEditor()}
-        </Common.Loading>
-      </Container>
-    );
+          </Common.Fab>
+          {this.renderFields()}
+        </Container>
+        <Container style={styles.container}>
+          {this.renderNewFiledSection()}
+        </Container>
+      </div>
+    )
   }
-}));
+}))
