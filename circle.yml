@@ -18,7 +18,7 @@ test:
 
 deployment:
   production:
-    branch: master-hotifx
+    branch: master
     commands:
       - NODE_ENV=production npm run-script check-github-tag
       - NODE_ENV=production npm run-script publish
