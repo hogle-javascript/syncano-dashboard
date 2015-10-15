@@ -1,5 +1,4 @@
 const utils = require('../utils');
-let url = null;
 
 module.exports = {
   tags: ['classes'],
@@ -20,32 +19,22 @@ module.exports = {
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@addInstanceModalTitle');
 
-    client.element('xpath', instancesPage.elements.instancesTableName.selector, function(result) {
-      const elementId = result.value.ELEMENT.toString();
-
-      client.pause(500);
-      client.elementIdText(elementId, function(text) {
-        url = 'https://localhost:8080/#/instances/' + text.value + '/classes/';
-      });
-    });
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@classes');
+    client.pause(1000);
   },
   after(client) {
     client.end();
   },
-  'Test Add Multiple Classes': function addClass(client) {
+  'Test Add Multiple Classes': function addClasses(client) {
     let className = utils.addSuffix('class');
     const classesPage = client.page.classesPage();
     let i = 0;
 
-    classesPage.waitForElementVisible('@userProfileClassName')
-
     for (i; i < 2; i += 1) {
-      className += i.toString();
+      className += '_' + i.toString();
       classesPage.clickButton('@fab');
       classesPage.fillInputField('@createModalNameInput', className);
-      classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description');
       classesPage.fillInputField('@createModalFieldNameInput', 'schemaName');
       classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString');
       classesPage.clickButton('@addButton');
@@ -53,8 +42,23 @@ module.exports = {
       classesPage.waitForElementVisible('@addClassTitle');
       classesPage.clickButton('@confirmButton');
       classesPage.waitForElementNotVisible('@addClassTitle');
-
-      classesPage.waitForElementVisible('@classTableRow');
     }
+  },
+  'Test Select/Delete multiple Classes': function deleteClasses(client) {
+    const classesPage = client.page.classesPage();
+
+    classesPage.clickButton('@selectUserClass');
+    classesPage.clickButton('@multipleSelectButton');
+    classesPage.clickButton('@selectUserClass');
+    client.pause(1000);
+    classesPage.clickButton('@deleteButton');
+    client.pause(1000);
+    classesPage.clickButton('@confirmDeleteButton');
+    classesPage.waitForElementNotVisible('@deleteClassModalTitle');
+    const classTableRows = classesPage.elements.classTableRows.selector;
+
+    client.elements('xpath', classTableRows, function(result) {
+      client.assert.equal(result.value.length, 1);
+    });
   }
 };
