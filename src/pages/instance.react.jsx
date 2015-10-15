@@ -135,9 +135,8 @@ export default React.createClass({
   redirectToNewInstance() {
     let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
 
-    SessionActions.fetchInstance(instanceName).then(() => {
-      this.transitionTo('instance', {instanceName});
-    });
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
   },
 
   renderAddInstanceItem() {

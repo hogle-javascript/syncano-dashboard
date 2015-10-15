@@ -96,19 +96,17 @@ export default Radium(React.createClass({
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
     // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload).then(() => {
-      this.transitionTo('instance', {instanceName: menuItem.payload});
-    });
+    SessionActions.fetchInstance(menuItem.payload);
+    this.transitionTo('instance', {instanceName: menuItem.payload});
   },
 
-  handleInstanceActive() {
+  handleInstanceActive(items) {
     if (InstancesStore.getAllInstances()) {
       let currentInstance = SessionStore.instance;
-      let instancesList = InstancesStore.getAllInstances(true);
       let instanceActiveIndex = null;
 
-      instancesList.some((event, index) => {
-        if (event.name === currentInstance.name) {
+      items.some((event, index) => {
+        if (event.payload === currentInstance.name) {
           instanceActiveIndex = index;
           return true;
         }
@@ -185,8 +183,8 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
-    let userInstances = this.renderDropdownItems(InstancesStore.getInstances('user', true), true);
-    let sharedInstances = this.renderDropdownItems(InstancesStore.getInstances('shared', true));
+    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(), true);
+    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances());
     let dropDownMenuItems = [];
 
     if (!instance || !instancesList || !instancesList.length > 0) {
@@ -207,7 +205,7 @@ export default Radium(React.createClass({
           menuItemStyle={styles.dropdownMenuItem}
           menuItems={dropDownMenuItems}
           onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
+          selectedIndex={this.handleInstanceActive(dropDownMenuItems)} />
       </OutsideClickHandler>
     )
   }

@@ -44,6 +44,9 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
+    if (this.props.handleSubmit) {
+      Actions.createInstance.completed.preEmit = this.props.handleSubmit;
+    }
     Actions.createInstance({
       name: this.state.name,
       description: this.state.description,
@@ -51,11 +54,7 @@ export default React.createClass({
         color: Common.Color.getRandomColorName(),
         icon: Common.Icon.Store.getRandomIconPickerIcon()
       }
-    }).then(() => {
-      if (this.props.handleSubmit) {
-        this.props.handleSubmit();
-      }
-    });
+    })
   },
 
   render() {

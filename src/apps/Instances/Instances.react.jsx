@@ -28,6 +28,7 @@ import WelcomeDialog from './WelcomeDialog';
 import './Instances.sass';
 
 export default Radium(React.createClass({
+
   displayName: 'Instances',
 
   mixins: [
@@ -339,16 +340,16 @@ export default Radium(React.createClass({
         <InstancesList
           ref="myInstancesList"
           name="My instances"
-          items={Store.getInstances('user')}
+          items={Store.getMyInstances()}
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
           emptyItemContent="Create an instance"/>
-        <Common.Show if={this.state.items !== null && Store.getInstances('shared').length && !this.state.isLoading}>
+        <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
-            items={Store.getInstances('shared')}
+            items={Store.getOtherInstances()}
             listType="sharedInstances"
             viewMode="stream"/>
         </Common.Show>
