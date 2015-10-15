@@ -40,9 +40,9 @@ export default Reflux.createStore({
     let activeGroup = GroupsStore.getActiveGroup();
 
     if (activeGroup) {
-      GroupsActions.fetchGroupUsers(activeGroup.id).then((payload) => this.setUsers(payload));
+      GroupsActions.fetchGroupUsers(activeGroup.id);
     } else {
-      UsersActions.fetchUsers().then((payload) => this.setUsers(payload));
+      UsersActions.fetchUsers();
     }
   },
 
@@ -55,12 +55,14 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchUsers() {
-    console.debug('UsersStore::onFetchUsers');
+  onFetchUsersCompleted(payload) {
+    console.debug('UsersStore::onFetchUsersCompleted');
+    this.setUsers(payload);
   },
 
-  onFetchUsersCompleted() {
-    console.debug('UsersStore::onFetchUsersCompleted');
+  onFetchGroupUsersCompleted(payload) {
+    console.debug('UsersStore::onFetchGroupUsersCompleted');
+    this.setUsers(payload);
   },
 
   onRemoveUsersCompleted() {

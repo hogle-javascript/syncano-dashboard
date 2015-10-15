@@ -3,11 +3,6 @@ const utils = require('../utils');
 
 
 const classesCommands = {
-  clickFAB: function() {
-    return this.waitForElementVisible('@fab', 1000)
-      .click('@fab')
-      .waitForElementVisible('@confirmButton', 5000);
-  },
   fillInputField: function(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
@@ -18,20 +13,6 @@ const classesCommands = {
       .click(field)
       .waitForElementVisible(value)
       .click(value);
-  },
-  fillClassDescription: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
-  },
-  fillClassFieldName: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
-  },
-  clickSelectClass: function() {
-    return this.waitForElementVisible('@selectClass', 5000)
-      .click('@selectClass');
   },
   clickButton: function(button) {
     return this.waitForElementVisible(button)
@@ -94,12 +75,20 @@ module.exports = {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]/../div[1]/span',
       locateStrategy: 'xpath'
     },
+    selectUserClass: {
+      selector: '//div[text()="user_profile"]/preceding-sibling::div/span',
+      locateStrategy: 'xpath'
+    },
     classTableRowDescription: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]/../following-sibling::div[1]',
       locateStrategy: 'xpath'
     },
     classTableName: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]',
+      locateStrategy: 'xpath'
+    },
+    inactiveDeleteButton: {
+      selector: '//span[@class="synicon-delete"]/../../button[@disabled]',
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -120,6 +109,9 @@ module.exports = {
     deleteClassModalTitle: {
       selector: '//h3[text()="Delete a Class"]',
       locateStrategy: 'xpath'
+    },
+    checkboxSelected: {
+      selector: '.synicon-checkbox-marked-outline'
     }
   }
 };
