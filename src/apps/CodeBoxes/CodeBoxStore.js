@@ -25,7 +25,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       currentCodeBox: null,
-      originalConfig: null,
+      codeBoxConfig: null,
 
       traces: [],
       lastTraceResult: null,
@@ -58,9 +58,12 @@ export default Reflux.createStore({
 
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
-    if (!_.isEqual(this.data.originalConfig, codeBox.config)) {
-      this.data.originalConfig = _.assign({}, codeBox.config);
-    }
+    this.data.codeBoxConfig = _.map(_.keys(codeBox.config), (key) => {
+      return {
+        key,
+        value: codeBox.config[key]
+      }
+    });
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },
@@ -119,9 +122,6 @@ export default Reflux.createStore({
   },
 
   onUpdateCodeBoxCompleted(codeBox) {
-    if (!_.isEqual(this.data.originalConfig, codeBox.config)) {
-      this.data.originalConfig = _.assign({}, codeBox.config);
-    }
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
     this.dismissSnackbarNotification();

@@ -72,7 +72,8 @@ export default Radium(React.createClass({
         margin: '10px 10px'
       },
       addButton: {
-        margin: '20px 10px'
+        margin: '20px 10px',
+        maxWidth: '120px'
       },
       wrongConfigSnackbar: {
         color: MUI.Styles.Colors.red400
@@ -83,44 +84,52 @@ export default Radium(React.createClass({
     }
   },
 
-  isConfigValid() {
-    let configValue = this.state.currentCodeBox ? this.state.currentCodeBox.config : null;
+  getConfigObject() {
+    let codeBoxConfig = this.state.codeBoxConfig;
+    let codeBoxConfigObject = {};
 
-    if (configValue) {
-      try {
-        JSON.parse(configValue);
-        return true
-      } catch (err) {
-        return false
-      }
-    }
+    _.forEach(codeBoxConfig, (field) => {
+      codeBoxConfigObject[field.key] = field.value;
+    });
+
+    return codeBoxConfigObject;
   },
 
   isSaved() {
-    if (this.state.currentCodeBox && this.state.originalConfig) {
-      return _.isEqual(this.state.currentCodeBox.config, this.state.originalConfig)
+    if (this.state.currentCodeBox && this.state.codeBoxConfig) {
+      return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject())
     }
   },
 
   handleAddField() {
-    let currentCodeBox = this.state.currentCodeBox;
+    let codeBoxConfig = this.state.codeBoxConfig;
     let newKey = this.refs.newFieldKey.getValue();
     let newValue = this.refs.newFieldValue.getValue();
+    let newField = {
+      key: newKey,
+      value: newValue
+    };
 
-    if (_.has(currentCodeBox.config, newKey)) {
+    if (newKey === '') {
+      this.refs.newFieldKey.setErrorText('This field cannot be empty');
+      return
+    }
+
+    if (_.includes(_.pluck(codeBoxConfig, 'key'), newKey)) {
       this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
       return
     }
 
-    _.set(currentCodeBox.config, newKey, newValue);
-    this.setState({currentCodeBox}, () => {
-      this.refs.newFieldKey.clearValue();
-      this.refs.newFieldValue.clearValue();
-    }, this.runAutoSave())
+    codeBoxConfig.push(newField);
+    this.setState({codeBoxConfig});
+    this.refs.newFieldKey.clearValue();
+    this.refs.newFieldValue.clearValue();
+    this.runAutoSave();
   },
 
   handleUpdate() {
-    let config = this.state.currentCodeBox.config;
+    this.handleUpdateAllKeys();
+    let config = this.getConfigObject();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
     this.setSnackbarNotification({
@@ -129,31 +138,39 @@ export default Radium(React.createClass({
   },
 
   handleDeleteKey(key) {
-    let currentCodeBox = this.state.currentCodeBox;
+    let codeBoxConfig = this.state.codeBoxConfig;
 
-    delete currentCodeBox.config[key];
-    this.setState({currentCodeBox});
+    codeBoxConfig = _.filter(codeBoxConfig, (field) => {
+      return field.key !== key;
+    });
+    this.setState({codeBoxConfig});
   },
 
-  handleUpdateKey(key) {
-    let currentCodeBox = this.state.currentCodeBox;
+  handleUpdateAllKeys() {
+    _.forEach(this.state.codeBoxConfig, (field, index) => {
+      this.handleUpdateKey(field.key, index);
+    })
+  },
+
+  handleUpdateKey(key, index) {
+    let codeBoxConfig = this.state.codeBoxConfig;
     let newKey = this.refs[`fieldKey${key}`].getValue();
     let newValue = this.refs[`fieldValue${key}`].getValue();
-    let newField = {};
+    let newField = {
+      key: newKey,
+      value: newValue
+    };
 
-    newField[newKey] = newValue;
-
-    if (key !== newKey && _.has(currentCodeBox.config, newKey)) {
+    if (key !== newKey && _.includes(_.pluck(codeBoxConfig, 'key'), newKey)) {
       this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
       return;
     }
 
-    currentCodeBox.config = _.omit(currentCodeBox.config, key);
-    _.assign(currentCodeBox.config, newField);
+    codeBoxConfig[index] = newField;
 
-    this.setState({currentCodeBox});
-    this.refs[`fieldKey${key}`].setErrorText(null);
-    this.runAutoSave();
+    this.setState({codeBoxConfig}, () => {
+      this.refs[`fieldKey${newKey}`].setErrorText(null);
+    });
   },
 
   initDialogs() {
@@ -179,38 +196,38 @@ export default Radium(React.createClass({
   },
 
   renderFields() {
-    if (!this.state.currentCodeBox) {
+    if (!this.state.codeBoxConfig) {
       return null
     }
 
     let styles = this.getStyles();
-    let codeboxConfig = this.state.currentCodeBox ? this.state.currentCodeBox.config : {};
-    let configFields = _.map(_.keys(codeboxConfig), (key) => {
+    let codeboxConfig = this.state.codeBoxConfig ? this.state.codeBoxConfig : [];
+    let configFields = _.map(codeboxConfig, (field, index) => {
       return (
         <div
           className="row"
-          key={`row${key}`}>
+          key={index}>
           <MUI.TextField
-            key={`fieldKey${key}`}
-            ref={`fieldKey${key}`}
+            key={`fieldKey${field.key}`}
+            ref={`fieldKey${field.key}`}
             hintText="Key"
-            defaultValue={key}
+            defaultValue={field.key}
             style={styles.field}
-            onBlur={this.handleUpdateKey.bind(null, key)}
-            onFocus={this.clearAutosaveTimer} />
+            onChange={this.runAutoSave}
+            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
           <MUI.TextField
-            key={`fieldValue${key}`}
-            ref={`fieldValue${key}`}
+            key={`fieldValue${field.key}`}
+            ref={`fieldValue${field.key}`}
             hintText="Value"
-            defaultValue={codeboxConfig[key]}
+            defaultValue={field.value}
             style={styles.field}
-            onBlur={this.handleUpdateKey.bind(null, key)}
-            onFocus={this.clearAutosaveTimer} />
+            onChange={this.runAutoSave}
+            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
           <MUI.IconButton
             iconClassName="synicon-delete"
             style={styles.deleteIcon}
             tooltip="Delete key"
-            onClick={this.handleDeleteKey.bind(null, key)}/>
+            onClick={this.handleDeleteKey.bind(null, field.key)}/>
         </div>
       )
     });
@@ -256,7 +273,7 @@ export default Radium(React.createClass({
   render() {
     let styles = this.getStyles();
 
-    if (!this.state.currentCodeBox) {
+    if (!this.state.codeBoxConfig) {
       return null
     }
 
