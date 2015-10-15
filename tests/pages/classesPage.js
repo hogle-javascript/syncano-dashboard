@@ -78,6 +78,9 @@ module.exports = {
       selector: '//div[text()="user_profile"]/preceding-sibling::div/span',
       locateStrategy: 'xpath'
     },
+    classToSelect: {
+      selector: '.synicon-checkbox-blank-outline'
+    },
     classTableRowDescription: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]/../following-sibling::div[1]',
       locateStrategy: 'xpath'
