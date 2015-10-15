@@ -1,5 +1,5 @@
 const leftMenuCommands = {
-  'clickButton': function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   }
@@ -13,6 +13,10 @@ module.exports = {
     },
     instancesDropdown: {
       selector: '//div[@class="instances-dropdown"]',
+      locateStrategy: 'xpath'
+    },
+    instancesDropdownItems: {
+      selector: '//div[@class="instances-dropdown"]/div[2]/div',
       locateStrategy: 'xpath'
     },
     instancesListSecondItem: {

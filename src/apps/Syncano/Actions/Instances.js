@@ -46,9 +46,9 @@ export default {
   },
 
   set(name) {
-    return this.Connection
-            .setInstance(name)
-            .then(this.completed)
-            .catch(this.failure);
+    this.Connection
+      .setInstance(name)
+      .then(this.completed)
+      .catch(this.failure);
   }
 };
