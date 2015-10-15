@@ -339,16 +339,16 @@ export default Radium(React.createClass({
         <InstancesList
           ref="myInstancesList"
           name="My instances"
-          items={Store.getMyInstances()}
+          items={Store.getInstances('user')}
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
           emptyItemContent="Create an instance"/>
-        <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
+        <Common.Show if={this.state.items !== null && Store.getInstances('shared').length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
-            items={Store.getOtherInstances()}
+            items={Store.getInstances('shared')}
             listType="sharedInstances"
             viewMode="stream"/>
         </Common.Show>

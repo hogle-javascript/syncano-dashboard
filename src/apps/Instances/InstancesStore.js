@@ -109,8 +109,8 @@ export default Reflux.createStore({
       return this.data.items;
     }
 
-    let my = this.getMyInstances() || [];
-    let other = this.getOtherInstances() || [];
+    let my = this.getInstances('user') || [];
+    let other = this.getInstances('shared') || [];
 
     if (reversed === true) {
       my.reverse();
@@ -119,30 +119,20 @@ export default Reflux.createStore({
     return [].concat(my, other);
   },
 
-  getMyInstances(reversed = false) {
+  getInstances(ownership, reversed = false) {
     if (this.data.items === null) {
       return this.data.items;
     }
-    let filteredItems = this.data.items.filter(this.filterMyInstances);
+    let filteredItems = {
+      user: this.data.items.filter(this.filterMyInstances),
+      shared: this.data.items.filter(this.filterOtherInstances)
+    };
 
     if (reversed) {
-      return filteredItems.reverse();
+      return filteredItems[ownership].reverse();
     }
 
-    return filteredItems;
-  },
-
-  getOtherInstances(reversed = false) {
-    if (this.data.items === null) {
-      return this.data.items;
-    }
-    let filteredItems = this.data.items.filter(this.filterOtherInstances);
-
-    if (reversed) {
-      return filteredItems.reverse();
-    }
-
-    return filteredItems;
+    return filteredItems[ownership];
   },
 
   getInstancesDropdown() {
