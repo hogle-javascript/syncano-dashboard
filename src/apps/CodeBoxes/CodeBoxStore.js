@@ -58,10 +58,10 @@ export default Reflux.createStore({
 
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
-    this.data.codeBoxConfig = _.map(_.keys(codeBox.config), (key) => {
+    this.data.codeBoxConfig = _.map(codeBox.config, (value, key) => {
       return {
         key,
-        value: codeBox.config[key]
+        value
       };
     });
     this.data.currentCodeBox = codeBox;
@@ -123,7 +123,6 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted(codeBox) {
     this.data.currentCodeBox = codeBox;
-    this.trigger(this.data);
     this.dismissSnackbarNotification();
     this.refreshData();
   },

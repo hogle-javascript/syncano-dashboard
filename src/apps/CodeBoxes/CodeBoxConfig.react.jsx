@@ -47,9 +47,8 @@ export default Radium(React.createClass({
     // 'mousetrap' class has to be added directly to input element to make CMD + S works
 
     if (this.state.currentCodeBox) {
-      let refNames = _.keys(this.refs, (ref) => {
-        return ref;
-      }).filter((refName) => _.includes(refName, 'field') || _.includes(refName, 'Field'));
+      let refNames = _.keys(this.refs)
+        .filter((refName) => _.includes(refName, 'field') || _.includes(refName, 'Field'));
 
       _.forEach(refNames, (refName) => {
         let inputNode = this.refs[refName].refs.input.getDOMNode();
@@ -86,36 +85,37 @@ export default Radium(React.createClass({
 
   getConfigObject() {
     let codeBoxConfig = this.state.codeBoxConfig;
-    let codeBoxConfigObject = {};
-
-    _.forEach(codeBoxConfig, (field) => {
-      codeBoxConfigObject[field.key] = field.value;
-    });
+    let codeBoxConfigObject = _.reduce(codeBoxConfig, (result, item) => {
+      result[item.key] = item.value;
+      return result;
+    }, {});
 
     return codeBoxConfigObject;
   },
 
   isSaved() {
-    if (this.state.currentCodeBox && this.state.codeBoxConfig) {
-      return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
-    }
+    return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
+  },
+
+  isKeyExist(newKey) {
+    let existingKeys = _.pluck(this.state.codeBoxConfig, 'key');
+
+    return _.includes(existingKeys, newKey);
   },
 
   handleAddField() {
     let codeBoxConfig = this.state.codeBoxConfig;
-    let newKey = this.refs.newFieldKey.getValue();
-    let newValue = this.refs.newFieldValue.getValue();
     let newField = {
-      key: newKey,
-      value: newValue
+      key: this.refs.newFieldKey.getValue(),
+      value: this.refs.newFieldValue.getValue()
     };
 
-    if (newKey === '') {
+    if (newField.key === '') {
       this.refs.newFieldKey.setErrorText('This field cannot be empty');
       return;
     }
 
-    if (_.includes(_.pluck(codeBoxConfig, 'key'), newKey)) {
+    if (this.isKeyExist(newField.key)) {
       this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
       return;
     }
@@ -128,6 +128,7 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
+    this.clearAutosaveTimer();
     this.handleUpdateAllKeys();
     let config = this.getConfigObject();
 
@@ -154,14 +155,12 @@ export default Radium(React.createClass({
 
   handleUpdateKey(key, index) {
     let codeBoxConfig = this.state.codeBoxConfig;
-    let newKey = this.refs[`fieldKey${key}`].getValue();
-    let newValue = this.refs[`fieldValue${key}`].getValue();
     let newField = {
-      key: newKey,
-      value: newValue
+      key: this.refs[`fieldKey${key}`].getValue(),
+      value: this.refs[`fieldValue${key}`].getValue()
     };
 
-    if (key !== newKey && _.includes(_.pluck(codeBoxConfig, 'key'), newKey)) {
+    if (key !== newField.key && this.isKeyExist(newField.key)) {
       this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
       return;
     }
@@ -169,7 +168,7 @@ export default Radium(React.createClass({
     codeBoxConfig[index] = newField;
 
     this.setState({codeBoxConfig}, () => {
-      this.refs[`fieldKey${newKey}`].setErrorText(null);
+      this.refs[`fieldKey${newField.key}`].setErrorText(null);
     });
   },
 
