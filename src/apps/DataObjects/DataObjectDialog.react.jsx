@@ -31,9 +31,9 @@ export default React.createClass({
 
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'integer') {
-        validateObj[item.name] = {numericality: true}
+        validateObj[item.name] = {numericality: true};
       } else if (item.type === 'text') {
-        validateObj[item.name] = {length: {maximum: 32000}}
+        validateObj[item.name] = {length: {maximum: 32000}};
       }
     });
     return validateObj;
@@ -111,7 +111,7 @@ export default React.createClass({
           fileFields.push({
             name: item.name,
             file
-          })
+          });
         }
       }
     });
@@ -144,7 +144,7 @@ export default React.createClass({
       className: DataObjectsStore.getCurrentClassName(),
       params: this.getParams(),
       fileFields: this.getFileFields()
-    })
+    });
   },
 
   handleEditSubmit() {
@@ -152,12 +152,12 @@ export default React.createClass({
       className: DataObjectsStore.getCurrentClassName(),
       params: this.getParams(),
       fileFields: this.getFileFields()
-    })
+    });
   },
 
   handleFileOnClick(value, event) {
     event.stopPropagation();
-    window.open(value, '_blank')
+    window.open(value, '_blank');
   },
 
   handleRemoveFile(name) {
@@ -239,7 +239,7 @@ export default React.createClass({
               value={this.state.channel_room || 'no channel'}
               floatingLabelText='Channel Room'/>
           </div>
-        )
+        );
       }
       return (
         <div key="add-fields">
@@ -263,7 +263,7 @@ export default React.createClass({
             hintText='Channel Room'
             floatingLabelText='Channel Room'/>
         </div>
-      )
+      );
     };
 
     return (
@@ -323,7 +323,7 @@ export default React.createClass({
             menuItems={permissions}/>
         </div>
       </div>
-    )
+    );
   },
 
   renderDropZone(item) {
@@ -340,7 +340,7 @@ export default React.createClass({
     let description = file ? file.name : null;
 
     if (description) {
-      description = description + ' (' + Filesize(file.size) + ')'
+      description = description + ' (' + Filesize(file.size) + ')';
     }
     return (
       <div
@@ -356,7 +356,7 @@ export default React.createClass({
           </div>
         </Dropzone>
       </div>
-    )
+    );
   },
 
   renderCustomFields() {
@@ -381,7 +381,7 @@ export default React.createClass({
               floatingLabelText={'Value of ' + item.name}
               errorText={this.getValidationMessages(item.name).join(' ')}
               menuItems={menuItems}/>
-          )
+          );
         }
 
         /* eslint-disable no-undefined */
@@ -425,7 +425,7 @@ export default React.createClass({
                 </div>
               </div>
             </div>
-          )
+          );
         }
 
         if (item.type === 'file') {
@@ -452,7 +452,7 @@ export default React.createClass({
                     </div>
                   </div>
                 </div>
-              )
+              );
             }
           }
           return this.renderDropZone(item);
@@ -468,8 +468,8 @@ export default React.createClass({
             errorText={this.getValidationMessages(item.name).join(' ')}
             hintText={'Field ' + item.name}
             floatingLabelText={item.name + ' (' + item.type + ')'}/>
-        )
-      })
+        );
+      });
     }
   },
 

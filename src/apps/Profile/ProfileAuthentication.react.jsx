@@ -58,7 +58,7 @@ export default Radium(React.createClass({
         paddingLeft: 30,
         paddingRight: 30
       }
-    }
+    };
   },
 
   handleCopyClick() {

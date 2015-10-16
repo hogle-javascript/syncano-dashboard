@@ -30,7 +30,7 @@ export default React.createClass({
         fontSize: 34,
         margin: 0
       }
-    }
+    };
   },
 
   render() {

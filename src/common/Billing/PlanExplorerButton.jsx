@@ -62,7 +62,7 @@ export default Radium(React.createClass({
               />
           </div>
         </div>
-      )
+      );
     }
 
     return (
@@ -71,6 +71,6 @@ export default Radium(React.createClass({
         label={this.renderExplorerButtonLabel() || ''}
         onTouchTap={this.handleShowPlanDialog}
         />
-    )
+    );
   }
 }));

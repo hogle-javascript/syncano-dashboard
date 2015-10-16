@@ -8,7 +8,7 @@ export default Reflux.createStore({
     return {
       isLoading: true,
       invoices: []
-    }
+    };
   },
 
   onFetchInvoicesCompleted(invoices) {

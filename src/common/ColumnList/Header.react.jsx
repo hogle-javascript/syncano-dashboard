@@ -12,7 +12,7 @@ export default Radium(React.createClass({
       lineHeight: '24px',
       color: 'rgba(0,0,0,.54)',
       marginBottom: 16
-    }
+    };
   },
 
   render() {
@@ -22,6 +22,6 @@ export default Radium(React.createClass({
       <div style={styles}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }));

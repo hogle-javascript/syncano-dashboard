@@ -23,14 +23,14 @@ export default React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   getStyles() {
@@ -51,7 +51,7 @@ export default React.createClass({
         margin: 4,
         background: '#fff'
       }
-    }
+    };
   },
 
   // List
@@ -74,7 +74,7 @@ export default React.createClass({
 
     return (
       <ul style={styles.groupsList}>{itemGroups}</ul>
-    )
+    );
   },
 
   renderItem(item) {
@@ -95,7 +95,7 @@ export default React.createClass({
         <Column.Date date={item.profile.updated_at}/>
         <Column.Date date={item.profile.created_at}/>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -109,7 +109,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick.bind(null, null)}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

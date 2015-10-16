@@ -25,14 +25,14 @@ export default Radium(React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   getStyles() {
@@ -44,7 +44,7 @@ export default Radium(React.createClass({
       listItemChecked: {
         background: MUI.Styles.Colors.lightBlue50
       }
-    }
+    };
   },
 
   renderItemIconMenuButton() {
@@ -53,7 +53,7 @@ export default Radium(React.createClass({
         touch={true}
         tooltipPosition='bottom-left'
         iconClassName='synicon-dots-vertical'/>
-    )
+    );
   },
 
   renderItemIconMenu(item) {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
       </MUI.IconMenu>
-    )
+    );
   },
 
   renderItem(item) {
@@ -80,7 +80,7 @@ export default Radium(React.createClass({
         rightIconButton={this.renderItemIconMenu(item)}>
         {item.label}
       </MUI.ListItem>
-    )
+    );
   },
 
   renderList() {
@@ -112,7 +112,7 @@ export default Radium(React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

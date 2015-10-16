@@ -34,7 +34,7 @@ export default Radium(React.createClass({
       ':hover': {
         color: this.state.hoverColor
       }
-    }
+    };
   },
 
   render() {

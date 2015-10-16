@@ -132,8 +132,8 @@ export default React.createClass({
               </Common.Show>
             </div>
           </div>
-        )
-      }))
+        );
+      }));
     }
   },
 
@@ -168,7 +168,7 @@ export default React.createClass({
         errorText={this.getValidationMessages('page_size').join(' ')}
         hintText='Number'
         floatingLabelText='Number of records in data set'/>
-    ]
+    ];
   },
 
   render() {

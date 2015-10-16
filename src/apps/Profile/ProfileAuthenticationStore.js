@@ -17,7 +17,7 @@ export default Reflux.createStore({
     return {
       isLoading: typeof account_key === 'undefined',
       account_key
-    }
+    };
   },
 
   init() {

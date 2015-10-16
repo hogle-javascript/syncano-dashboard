@@ -7,7 +7,7 @@ export default {
       return {
         payload: item[payloadArg],
         text: item[textArg]
-      }
+      };
     });
   },
   getSelectOptions(list, labelArg, valueArg) {
@@ -18,7 +18,7 @@ export default {
       return {
         label: item[labelArg],
         value: item[valueArg]
-      }
+      };
     });
   },
   getSelectValuesFromList(list) {
@@ -29,7 +29,7 @@ export default {
       return {
         label: item,
         value: item
-      }
+      };
     });
   },
   saveListFromSyncano(obj) {

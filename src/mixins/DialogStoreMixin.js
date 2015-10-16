@@ -10,7 +10,7 @@ export default {
     return {
       _dialogMode: 'add',
       _dialogVisible: false
-    }
+    };
   },
 
   showDialog(instance, secondInstance) {

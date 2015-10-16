@@ -41,7 +41,7 @@ export default React.createClass({
       custom_publish: this.state.custom_publish,
       other_permissions: this.state.other_permissions,
       group_permissions: this.state.group_permissions
-    }
+    };
   },
 
   handleDialogShow() {

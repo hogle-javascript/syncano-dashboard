@@ -15,7 +15,7 @@ export default Radium(React.createClass({
 
   getClassName() {
     if (this.props.className) {
-      return this.props.className
+      return this.props.className;
     }
 
     return ColumnListConstans.DEFAULT_CLASSNAME[this.props.columnName];
@@ -47,6 +47,6 @@ export default Radium(React.createClass({
         style={componentStyles}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }));

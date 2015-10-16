@@ -27,7 +27,7 @@ export default React.createClass({
   ],
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items})
+    this.setState({items: nextProps.items});
   },
 
   // List
@@ -62,7 +62,7 @@ export default React.createClass({
         </Column.Desc>
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

@@ -26,7 +26,7 @@ export default Reflux.createStore({
       },
       versions: null,
       isLoading: true
-    }
+    };
   },
 
   init() {

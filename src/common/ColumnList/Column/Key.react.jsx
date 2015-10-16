@@ -30,7 +30,7 @@ export default Radium(React.createClass({
         lineHeight: '16px',
         padding: '16px 8px'
       }
-    }
+    };
   },
 
   handleClick() {
