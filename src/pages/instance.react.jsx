@@ -51,10 +51,12 @@ export default React.createClass({
         margin: '96px 104px 48px 304px'
       },
       addInstanceItem: {
-        fontSize: 14
+        fontSize: 14,
+        display: 'flex; display: -ms-flexbox; display: -webkit-flex; display: flex;',
+        alignItems: '-ms-flex-align: center; -webkit-align-items: center; align-items: center;'
       },
       plusIcon: {
-        verticalAlign: '-webkit-baseline-middle',
+        marginTop: '4px',
         color: 'rgba(0, 0, 0, 0.54)'
       }
     }
@@ -140,14 +142,16 @@ export default React.createClass({
   },
 
   renderAddInstanceItem() {
+    let styles = this.getStyles();
+
     return (
       <div
-        style={this.getStyles().addInstanceItem}
+        style={styles.addInstanceItem}
         onClick={this.showAddInstanceDialog}>
         <MUI.FontIcon
           style={this.getStyles().plusIcon}
           className="synicon-plus"/>
-        <span style={{verticalAlign: 'middle'}}>Add an Instance</span>
+        <span>Add an Instance</span>
       </div>
     )
   },

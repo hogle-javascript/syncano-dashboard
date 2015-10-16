@@ -82,9 +82,9 @@ export default React.createClass({
   renderList() {
     if (this.state.items.length === 0) {
       return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </Common.ColumnList.EmptyItem>
       )
     }
 

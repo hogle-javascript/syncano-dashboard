@@ -86,6 +86,9 @@ export default Radium(React.createClass({
       itemsDivider: {
         marginLeft: -16,
         marginRight: -48
+      },
+      addInstanceIcon: {
+        backgroundColor: '#BDBDBD'
       }
     }
   },
@@ -118,12 +121,13 @@ export default Radium(React.createClass({
 
   renderAddInstanceItem() {
     let styles = this.getStyles();
-    let iconBackground = {backgroundColor: '#BDBDBD'};
     let item = (
-      <div style={styles.dropdownLabelContainer} onClick={this.handleAddInstance}>
+      <div
+        style={styles.dropdownLabelContainer}
+        onClick={this.handleAddInstance}>
         <MUI.FontIcon
           className="synicon-plus"
-          style={[styles.dropdownInstanceIcon, iconBackground]}/>
+          style={[styles.dropdownInstanceIcon, styles.addInstanceIcon]}/>
         Add an Instance
       </div>
     );
@@ -158,12 +162,12 @@ export default Radium(React.createClass({
       let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
       let iconClassName = 'synicon-' + icon;
       let text = (
-      <div style={styles.dropdownLabelContainer}>
-        <MUI.FontIcon
-          className={iconClassName}
-          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
-        {item.name}
-      </div>
+        <div style={styles.dropdownLabelContainer}>
+          <MUI.FontIcon
+            className={iconClassName}
+            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          {item.name}
+        </div>
       );
 
       return {
