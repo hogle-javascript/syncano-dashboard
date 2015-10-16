@@ -62,7 +62,7 @@ export default Radium(React.createClass({
       wrongConfigSnackbar: {
         color: MUI.Styles.Colors.red400
       }
-    }
+    };
   },
 
   isSaved() {
@@ -80,9 +80,9 @@ export default Radium(React.createClass({
     if (configValue) {
       try {
         JSON.parse(configValue);
-        return true
+        return true;
       } catch (err) {
-        return false
+        return false;
       }
     }
   },
@@ -125,7 +125,7 @@ export default Radium(React.createClass({
         modal: true,
         children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
       }
-    }]
+    }];
   },
 
   renderEditor() {
@@ -154,7 +154,7 @@ export default Radium(React.createClass({
             defaultChecked={this.isAutosaveEnabled()}
             onCheck={this.saveCheckboxState} />
         </div>
-      )
+      );
     }
   },
 

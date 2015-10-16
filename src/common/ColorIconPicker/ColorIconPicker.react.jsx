@@ -21,7 +21,7 @@ export default Radium(React.createClass({
     return {
       selectedColor: this.props.selectedColor,
       selectedIcon: this.props.selectedIcon
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +29,7 @@ export default Radium(React.createClass({
     this.setState({
       selectedColor: nextProps.selectedColor,
       selectedIcon: nextProps.selectedIcon
-    })
+    });
   },
 
   getStyles() {
@@ -50,7 +50,7 @@ export default Radium(React.createClass({
         justifyContent: 'center',
         alignItems: 'center'
       }
-    }
+    };
   },
 
   handleSetColor(event) {
@@ -90,7 +90,7 @@ export default Radium(React.createClass({
           style={{color: iconColor}}
           onClick={this.handleSetIcon}/>
       </MUI.Paper>
-    )
+    );
   },
 
   genColorItem(color) {

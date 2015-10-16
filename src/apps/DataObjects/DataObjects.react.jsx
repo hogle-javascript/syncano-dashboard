@@ -64,8 +64,8 @@ export default React.createClass({
     // Writing to the store
     if (selectedRows === 'all') {
       rowsSelection = Store.getItems().map((item, index) => {
-        return index
-      })
+        return index;
+      });
     }
 
     Actions.setSelectedRows(rowsSelection);
@@ -113,7 +113,7 @@ export default React.createClass({
         modal: true,
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
-    }]
+    }];
   },
 
   showDataObjectDialog() {
@@ -179,7 +179,7 @@ export default React.createClass({
         </div>
       </Common.Show>
     </div>
-    )
+    );
   },
 
   render() {

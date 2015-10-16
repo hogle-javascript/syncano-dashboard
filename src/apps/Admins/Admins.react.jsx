@@ -163,7 +163,7 @@ export default React.createClass({
           ]
         }
       }
-    ]
+    ];
   },
 
   render() {

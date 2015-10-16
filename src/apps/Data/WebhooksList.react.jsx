@@ -30,8 +30,8 @@ export default React.createClass({
     event.stopPropagation();
     this.refs.snackbar.show();
     setTimeout(() => {
-      this.refs.snackbar.dismiss()
-    }, 1200)
+      this.refs.snackbar.dismiss();
+    }, 1200);
   },
 
   handleItemClick(itemName) {
@@ -83,7 +83,7 @@ export default React.createClass({
         <Column.Desc className="col-xs-2">{copyLinkIcon}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -98,7 +98,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

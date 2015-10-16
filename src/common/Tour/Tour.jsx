@@ -132,7 +132,7 @@ export default Radium(React.createClass({
     if (!visible) classes += ' react-tour-hide';
 
     if (!config[currentStep]) {
-      return <div />
+      return <div />;
     }
 
     if (config[currentStep].left) {

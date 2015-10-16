@@ -46,7 +46,7 @@ export default React.createClass({
         fontWeight: 400,
         fontSize: 17
       }
-    }
+    };
   },
 
   handleTabActive(tab) {
@@ -64,14 +64,14 @@ export default React.createClass({
         params={tab.params}
         style={styles.menuItemStyles}
         onActive={this.handleTabActive}/>
-    )
+    );
   },
 
   render() {
     let styles = this.getStyles();
 
     if (this.state.menuItems.length === 0) {
-      return null
+      return null;
     }
 
     return (

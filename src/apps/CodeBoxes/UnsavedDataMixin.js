@@ -16,7 +16,7 @@ export default {
       if (!component.isSaved() && !component.state._ignoreUnsavedData) {
         transition.abort();
         component.showDialog('unsavedDataWarn');
-        component.state._interuptedTransitionPath = transition.path
+        component.state._interuptedTransitionPath = transition.path;
       }
     }
   },
@@ -24,7 +24,7 @@ export default {
   getInitialState() {
     return {
       _ignoreUnsavedData: false
-    }
+    };
   },
 
   _handleContinueTransition() {

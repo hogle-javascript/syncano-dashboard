@@ -59,7 +59,7 @@ export default React.createClass({
         marginTop: '4px',
         color: 'rgba(0, 0, 0, 0.54)'
       }
-    }
+    };
   },
 
   getMenuItems() {
@@ -161,7 +161,7 @@ export default React.createClass({
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
         <HeaderInstancesDropdown/>
       </div>
-    )
+    );
   },
 
   render() {

@@ -53,7 +53,7 @@ export default Reflux.createStore({
             type: 'indexed',
             tick: {
               format: (x) => {
-                return x / 2 ? x : null
+                return x / 2 ? x : null;
               },
               fit: true
             },

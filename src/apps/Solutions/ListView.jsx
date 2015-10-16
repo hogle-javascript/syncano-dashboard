@@ -50,7 +50,7 @@ export default React.createClass({
       listItemChecked: {
         background: MUI.Styles.Colors.lightBlue50
       }
-    }
+    };
   },
 
   handleChangeFilter(filter) {

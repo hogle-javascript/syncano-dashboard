@@ -51,7 +51,7 @@ export default React.createClass({
       tab: {
         color: '#444'
       }
-    }
+    };
   },
 
   getTabsData() {
@@ -138,7 +138,7 @@ export default React.createClass({
         <MUI.ToolbarGroup>
           <MUI.ToolbarTitle text={toolbarTitleText}/>
         </MUI.ToolbarGroup>
-      )
+      );
     }
   },
 

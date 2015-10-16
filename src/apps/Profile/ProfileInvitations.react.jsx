@@ -75,7 +75,7 @@ export default React.createClass({
           children: 'Do you really want to decline ' + checked + ' Invitations?'
         }
       }
-    ]
+    ];
   },
 
   uncheckAll() {

@@ -27,7 +27,7 @@ export default {
       .Accounts
       .get()
       .then(this.completed)
-      .catch(this.failure)
+      .catch(this.failure);
   },
 
   resetKey() {

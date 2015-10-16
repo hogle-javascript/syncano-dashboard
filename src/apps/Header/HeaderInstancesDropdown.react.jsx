@@ -90,7 +90,7 @@ export default Radium(React.createClass({
       addInstanceIcon: {
         backgroundColor: '#BDBDBD'
       }
-    }
+    };
   },
 
   handleOutsideClick() {
@@ -173,7 +173,7 @@ export default Radium(React.createClass({
       return {
         payload: item.name,
         text
-      }
+      };
     });
 
     if (hasSeparator) {
@@ -211,6 +211,6 @@ export default Radium(React.createClass({
           onChange={this.handleDropdownItemClick}
           selectedIndex={this.handleInstanceActive(dropDownMenuItems)} />
       </OutsideClickHandler>
-    )
+    );
   }
 }));

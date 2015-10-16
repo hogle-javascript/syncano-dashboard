@@ -23,7 +23,7 @@ export default Reflux.createStore({
       selectedTags: [],
       isLoading: false,
       filter: 'public'
-    }
+    };
   },
 
   init() {

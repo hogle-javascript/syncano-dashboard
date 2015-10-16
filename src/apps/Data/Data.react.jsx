@@ -141,7 +141,7 @@ export default React.createClass({
           children: 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' Data endpoints?'
         }
       }
-    ]
+    ];
   },
 
   render() {

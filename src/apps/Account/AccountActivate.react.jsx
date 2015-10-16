@@ -36,6 +36,6 @@ export default React.createClass({
           <p className="vm-0-b">{this.state.status}</p>
         </div>
       </Container>
-    )
+    );
   }
 });

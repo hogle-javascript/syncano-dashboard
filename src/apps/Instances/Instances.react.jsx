@@ -13,7 +13,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import Header from '../Header'
+import Header from '../Header';
 
 // Components
 import MUI from 'material-ui';
@@ -46,7 +46,7 @@ export default Radium(React.createClass({
       this.showDialog('addInstanceDialog');
     }
     Store.fetch();
-    Actions.setTourConfig(this.getTourConfig())
+    Actions.setTourConfig(this.getTourConfig());
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -67,7 +67,7 @@ export default Radium(React.createClass({
       link: {
         color: MUI.Styles.Colors.blue500
       }
-    }
+    };
   },
 
   getTourConfig() {
@@ -130,7 +130,7 @@ export default Radium(React.createClass({
       radius: 100,
       top: -14,
       left: 20
-    }]
+    }];
   },
 
   onNextStep() {
@@ -146,7 +146,7 @@ export default Radium(React.createClass({
         metadata: JSON.stringify({color, icon})
       }
     );
-    Actions.uncheckAll()
+    Actions.uncheckAll();
   },
 
   handleDelete() {
@@ -224,7 +224,7 @@ export default Radium(React.createClass({
           ]
         }
       }
-    ]
+    ];
   },
 
   showInstanceDialog() {
@@ -246,7 +246,7 @@ export default Radium(React.createClass({
           mini={true}
           onClick={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}
           iconClassName="synicon-delete"/>
-      )
+      );
     }
 
     return (
@@ -255,7 +255,7 @@ export default Radium(React.createClass({
         mini={true}
         onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
         iconClassName="synicon-delete"/>
-    )
+    );
   },
 
   render() {
@@ -266,7 +266,7 @@ export default Radium(React.createClass({
             icon='synicon-block-helper'
             text={this.state.blocked}/>
         </div>
-      )
+      );
     }
 
     let instances = this.state.items;

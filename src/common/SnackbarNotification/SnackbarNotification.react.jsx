@@ -67,6 +67,6 @@ export default React.createClass({
         onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : null}
         openOnMount={snackbar.openOnMount}
         style={snackbar.style}/>
-    )
+    );
   }
 });

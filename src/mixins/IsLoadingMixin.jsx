@@ -26,7 +26,7 @@ export default (options = {}, props = {}) => {
         <Common.Container.Loading>
           <Common.Loading {...props} show = {true} />
         </Common.Container.Loading>
-      )
+      );
     },
 
     renderIsLoading() {
@@ -45,7 +45,7 @@ export default (options = {}, props = {}) => {
   if (options.overwriteRender === true) {
     mixin.render = function() {
       return this.renderIsLoading();
-    }
+    };
   }
 
   return mixin;

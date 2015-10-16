@@ -77,16 +77,16 @@ export default React.createClass({
     if (e.target.value.length > 5) {
       this.setState({
         errorText: '(DummyError) This field is 5 chars only'
-      })
+      });
     } else {
       this.setState({
         errorText: null
-      })
+      });
     }
   },
 
   logDate() {
-    console.debug(this.refs.modifiedDatePicker.getDate())
+    console.debug(this.refs.modifiedDatePicker.getDate());
   },
 
   logTime() {
@@ -128,7 +128,7 @@ export default React.createClass({
     ];
 
     let handleSnackbarClick = () => {
-      this.refs.snackbar.show()
+      this.refs.snackbar.show();
     };
 
     let handleSnackbarAction = () => {
