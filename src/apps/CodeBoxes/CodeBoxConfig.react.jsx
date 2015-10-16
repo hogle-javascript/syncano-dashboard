@@ -138,12 +138,10 @@ export default Radium(React.createClass({
     });
   },
 
-  handleDeleteKey(key) {
+  handleDeleteKey(index) {
     let codeBoxConfig = this.state.codeBoxConfig;
 
-    codeBoxConfig = _.filter(codeBoxConfig, (field) => {
-      return field.key !== key;
-    });
+    codeBoxConfig.splice(index, 1);
     this.setState({codeBoxConfig});
   },
 
@@ -226,7 +224,7 @@ export default Radium(React.createClass({
             iconClassName="synicon-delete"
             style={styles.deleteIcon}
             tooltip="Delete key"
-            onClick={this.handleDeleteKey.bind(null, field.key)}/>
+            onClick={this.handleDeleteKey.bind(null, index)}/>
         </div>
       );
     });
