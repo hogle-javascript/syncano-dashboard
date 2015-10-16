@@ -4,6 +4,7 @@ import Radium from 'radium';
 import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
+import SnackbarNotification from '../../common/SnackbarNotification';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
@@ -16,6 +17,8 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
+    Reflux.ListenerMixin,
+    SnackbarNotification.Mixin,
     FormMixin
   ],
 
@@ -30,6 +33,16 @@ export default Radium(React.createClass({
       presence: true,
       equality: 'newPassword'
     }
+  },
+
+  componentDidMount() {
+    let snackbarText = 'Password reset successfully';
+
+    this.listenTo(Actions.changePassword.completed, this.showSnackbar.bind(null, snackbarText));
+  },
+
+  componentWillUnmount() {
+    this.stopListenTo(Actions.changePassword.completed);
   },
 
   getStyles() {
@@ -61,10 +74,6 @@ export default Radium(React.createClass({
     };
   },
 
-  handleCopyClick() {
-    this.refs.snackbar.show();
-  },
-
   handleResetClick() {
     Actions.resetKey();
   },
@@ -73,8 +82,16 @@ export default Radium(React.createClass({
     Actions.changePassword(this.state);
   },
 
+  showSnackbar(message) {
+    this.setSnackbarNotification({
+      message,
+      autoHideDuration: 4000
+    });
+  },
+
   render() {
     let styles = this.getStyles();
+    let snackbarText = 'API key copied to the clipboard';
 
     return (
       <div>
@@ -87,68 +104,65 @@ export default Radium(React.createClass({
               <MUI.FlatButton
                 label="COPY"
                 primary={true}
-                onClick={this.handleCopyClick}/>
+                onClick={this.showSnackbar.bind(null, snackbarText)}/>
             </ZeroClipboard>
             <MUI.FlatButton
-              label = "RESET"
-              primary = {true}
-              onClick = {this.handleResetClick} />
+              label="RESET"
+              primary={true}
+              onClick={this.handleResetClick} />
             </div>
           </div>
-          <MUI.Snackbar
-            ref="snackbar"
-            message="API key copied to the clipboard"/>
         </div>
         <div style={styles.content}>
           <div>Password settings</div>
-          {this.renderFormNotifications()}
           <div className="row" style={styles.contentRow}>
             <div className="col-md-15">
               <form
-                style = {styles.form}
-                onSubmit = {this.handleFormValidation}
-                acceptCharset = "UTF-8"
-                method = "post">
+                style={styles.form}
+                onSubmit={this.handleFormValidation}
+                acceptCharset="UTF-8"
+                method="post">
+                {this.renderFormNotifications()}
                 <MUI.TextField
-                  ref = "currentPassword"
-                  type = "password"
-                  valueLink = {this.linkState('currentPassword')}
-                  errorText = {this.getValidationMessages('currentPassword').join(' ')}
-                  name = "currentPassword"
-                  floatingLabelText = "Current password"
-                  className = "text-field"
-                  autoComplete = "currentPassword"
-                  hintText = "Current password"
-                  fullWidth = {true} />
+                  ref="currentPassword"
+                  type="password"
+                  valueLink={this.linkState('currentPassword')}
+                  errorText={this.getValidationMessages('currentPassword').join(' ')}
+                  name="currentPassword"
+                  floatingLabelText="Current password"
+                  className="text-field"
+                  autoComplete="currentPassword"
+                  hintText="Current password"
+                  fullWidth={true} />
                 <MUI.TextField
-                  ref = "newPassword"
-                  type = "password"
-                  valueLink = {this.linkState('newPassword')}
-                  errorText = {this.getValidationMessages('newPassword').join(' ')}
-                  name = "newPassword"
-                  floatingLabelText = "New password"
-                  className = "text-field"
-                  autoComplete = "newPassword"
-                  hintText = "New password"
-                  fullWidth = {true} />
+                  ref="newPassword"
+                  type="password"
+                  valueLink={this.linkState('newPassword')}
+                  errorText={this.getValidationMessages('newPassword').join(' ')}
+                  name="newPassword"
+                  floatingLabelText="New password"
+                  className="text-field"
+                  autoComplete="newPassword"
+                  hintText="New password"
+                  fullWidth={true} />
                 <MUI.TextField
-                  ref = "confirmNewPassword"
-                  type = "password"
-                  valueLink = {this.linkState('confirmNewPassword')}
-                  errorText = {this.getValidationMessages('confirmNewPassword').join(' ')}
-                  name = "confirmNewPassword"
-                  floatingLabelText = "Confirm new password"
-                  className = "text-field vm-6-b"
-                  autoComplete = "confirmNewPassword"
-                  hintText = "Confirm new password"
-                  fullWidth = {true} />
+                  ref="confirmNewPassword"
+                  type="password"
+                  valueLink={this.linkState('confirmNewPassword')}
+                  errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
+                  name="confirmNewPassword"
+                  floatingLabelText="Confirm new password"
+                  className="text-field vm-6-b"
+                  autoComplete="confirmNewPassword"
+                  hintText="Confirm new password"
+                  fullWidth={true} />
                 <MUI.RaisedButton
-                  type = "submit"
-                  label = "Update"
-                  style = {styles.updateButton}
-                  labelStyle = {styles.updateButtonLabel}
-                  className = "raised-button"
-                  secondary = {true} />
+                  type="submit"
+                  label="Update"
+                  style={styles.updateButton}
+                  labelStyle={styles.updateButtonLabel}
+                  className="raised-button"
+                  secondary={true} />
               </form>
             </div>
           </div>
