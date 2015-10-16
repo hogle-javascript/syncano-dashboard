@@ -58,16 +58,16 @@ module.exports = {
   'Test Admin cannot delete user_profile class': function cantDeleteUserClass(client) {
     const classesPage = client.page.classesPage();
 
-    classesPage.navigate();
     classesPage.clickButton('@selectUserClass');
     classesPage.waitForElementVisible('@inactiveDeleteButton');
+    classesPage.clickButton('@checkboxSelected');
   },
   'Test Admin selects/deselects class': function cantDeleteUserClass(client) {
     const classesPage = client.page.classesPage();
 
-    classesPage.navigate();
-    classesPage.clickButton('@selectUserClass');
+    classesPage.moveToElement('@selectUserClass', 0, 0);
+    classesPage.clickButton('@classToSelect');
     classesPage.clickButton('@checkboxSelected');
-    classesPage.waitForElementVisible('@selectUserClass');
+    classesPage.waitForElementVisible('@classToSelect');
   }
 };
