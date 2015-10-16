@@ -44,7 +44,7 @@ export default Radium(React.createClass({
       <MUI.FontIcon
         className="synicon-plus"
         style={styles.icon}/>
-    )
+    );
   },
 
   getAvatar() {
@@ -54,7 +54,7 @@ export default Radium(React.createClass({
       <MUI.Avatar
         icon={this.getIcon()}
         style={styles.avatar}/>
-    )
+    );
   },
 
   render() {
@@ -68,6 +68,6 @@ export default Radium(React.createClass({
         leftAvatar={this.getAvatar()}>
         {this.props.children}
       </MUI.ListItem>
-    )
+    );
   }
 }));

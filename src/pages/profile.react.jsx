@@ -31,7 +31,7 @@ export default React.createClass({
       content: {
         marginLeft: 304
       }
-    }
+    };
   },
 
   getMenuItems() {

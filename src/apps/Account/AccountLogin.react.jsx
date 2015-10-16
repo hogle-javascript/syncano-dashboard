@@ -65,7 +65,7 @@ export default React.createClass({
     let invKey = this.getQuery().invitation_key || null;
 
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
-      SessionActions.setInvitationFromUrl(invKey)
+      SessionActions.setInvitationFromUrl(invKey);
     }
   },
 

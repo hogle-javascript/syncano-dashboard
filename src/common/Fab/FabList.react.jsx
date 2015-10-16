@@ -16,7 +16,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       position: 'bottom'
-    }
+    };
   },
 
   getStyles() {

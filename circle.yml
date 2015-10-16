@@ -2,8 +2,6 @@ machine:
   node:
     version:
       0.12.7
-  environment:
-    NODE_ENV: staging
 
 general:
   artifacts:
@@ -27,4 +25,4 @@ deployment:
   staging:
     branch: devel
     commands:
-      - npm run-script deployment-devel
+      - NODE_ENV=staging npm run-script deployment-devel

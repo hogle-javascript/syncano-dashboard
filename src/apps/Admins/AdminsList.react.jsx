@@ -24,14 +24,14 @@ export default React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   getStyles() {
@@ -41,7 +41,7 @@ export default React.createClass({
         fontSize: 14,
         marginTop: 4
       }
-    }
+    };
   },
 
   handleItemIconClick(id, state) {
@@ -74,7 +74,7 @@ export default React.createClass({
         <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

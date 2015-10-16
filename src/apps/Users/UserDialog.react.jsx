@@ -98,7 +98,7 @@ export default React.createClass({
   handleSelectFieldChange(newValue, selectedGroups) {
     this.setState({
       newUserGroups: selectedGroups
-    })
+    });
   },
 
   render() {

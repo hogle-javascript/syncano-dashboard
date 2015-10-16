@@ -71,7 +71,7 @@ export default React.createClass({
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
       }
-    }
+    };
   },
 
   isPayloadValid() {
@@ -95,7 +95,7 @@ export default React.createClass({
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
 
     if (this.isPayloadValid()) {
-      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload})
+      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload});
       this.hideDialogs(true);
     } else {
       this.hideDialogs(true);
@@ -168,7 +168,7 @@ export default React.createClass({
         modal: true,
         children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
       }
-    }]
+    }];
   },
 
   shouldCodeBoxRun() {
@@ -225,7 +225,7 @@ export default React.createClass({
             </div>
           </div>
         </div>
-      )
+      );
     }
   },
 

@@ -46,6 +46,6 @@ export default Radium(React.createClass({
         onClick={this.handleClick}>
         {this.props.children}
       </div>
-    )
+    );
   }
 }));

@@ -43,6 +43,6 @@ export default React.createClass({
         </MUI.Paper>
         {this.props.bottomContent}
       </div>
-    )
+    );
   }
 });

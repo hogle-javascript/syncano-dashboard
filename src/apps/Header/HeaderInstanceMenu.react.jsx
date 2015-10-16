@@ -21,7 +21,7 @@ export default React.createClass({
     return {
       color: '#fff',
       fill: '#fff'
-    }
+    };
   },
 
   handleApiKeysClick() {
@@ -39,7 +39,7 @@ export default React.createClass({
       <MUI.IconButton
         iconStyle={styles}
         iconClassName="synicon-cog"/>
-    )
+    );
   },
 
   render() {
@@ -48,6 +48,6 @@ export default React.createClass({
         <MenuItem onClick={this.handleAdminsClick}>Admins</MenuItem>
         <MenuItem onClick={this.handleApiKeysClick}>API Keys</MenuItem>
       </MUI.IconMenu>
-    )
+    );
   }
 });

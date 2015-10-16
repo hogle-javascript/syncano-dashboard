@@ -14,7 +14,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       mode: 'login'
-    }
+    };
   },
 
   getStyles() {
@@ -40,12 +40,12 @@ export default Radium(React.createClass({
       listDivider: {
         backgroundColor: MUI.Styles.Colors.blue700
       }
-    }
+    };
   },
 
   handleSocialSignup(network) {
     SessionStore.setSignUpMode();
-    AuthActions.socialLogin(network)
+    AuthActions.socialLogin(network);
   },
 
   renderSocialButtons() {

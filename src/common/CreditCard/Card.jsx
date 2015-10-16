@@ -44,7 +44,7 @@ export default Radium(React.createClass({
         display: 'block',
         transform: 'translateY(18%)'
       }
-    }
+    };
   },
 
   getCardTypeIcon(cardType) {
@@ -58,7 +58,7 @@ export default Radium(React.createClass({
       <PaymentIcon
         type={cardType}
         style={styles.cardIcon}/>
-    )
+    );
   },
 
   render() {

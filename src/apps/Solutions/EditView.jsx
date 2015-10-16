@@ -68,7 +68,7 @@ export default React.createClass({
         modal: true,
         children: 'Do you really want to delete this Solution?'
       }
-    }]
+    }];
   },
 
   isMySolution() {
@@ -147,7 +147,7 @@ export default React.createClass({
           style={styles.tag}>
           {tag}
         </div>
-      )
+      );
     });
   },
 

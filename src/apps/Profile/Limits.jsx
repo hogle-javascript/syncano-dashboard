@@ -30,6 +30,6 @@ export default React.createClass({
           </div>
         </Show>
       </div>
-    )
+    );
   }
 });

@@ -108,7 +108,7 @@ export default Reflux.createStore({
       return {
         payload: instance.name,
         text: instanceText
-      }
+      };
     });
   },
 

@@ -26,7 +26,7 @@ export default {
       .create(payload.className, payload.params)
       .then((createdItem) => {
         let promises = payload.fileFields.map((file) => {
-          return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file)
+          return this.Connection.DataObjects.uploadFile(payload.className, createdItem, file);
         });
 
         this.D.all(promises)
@@ -42,7 +42,7 @@ export default {
       .update(payload.className, payload.params)
       .then((updatedItem) => {
         let promises = payload.fileFields.map((file) => {
-          return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file)
+          return this.Connection.DataObjects.uploadFile(payload.className, updatedItem, file);
         });
 
         this.D.all(promises)

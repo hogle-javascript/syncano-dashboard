@@ -33,7 +33,7 @@ export default Reflux.createStore({
       lastTraceDuration: null,
       lastTraceReady: true,
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -62,7 +62,7 @@ export default Reflux.createStore({
       return {
         key,
         value: codeBox.config[key]
-      }
+      };
     });
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
@@ -106,7 +106,7 @@ export default Reflux.createStore({
       if (lastTrace.status === 'pending') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
-          this.fetchTraces()
+          this.fetchTraces();
         }, 300);
       } else {
         this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';

@@ -25,6 +25,6 @@ export default React.createClass({
           {this.props.result}
         </div>
       </div>
-    )
+    );
   }
 });

@@ -12,7 +12,7 @@ import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
 
 import MUI from 'material-ui';
-import Common from '../../common'
+import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
 let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
@@ -48,7 +48,7 @@ export default Radium(React.createClass({
 
     if (this.state.currentCodeBox) {
       let refNames = _.keys(this.refs, (ref) => {
-        return ref
+        return ref;
       }).filter((refName) => _.includes(refName, 'field') || _.includes(refName, 'Field'));
 
       _.forEach(refNames, (refName) => {
@@ -57,7 +57,7 @@ export default Radium(React.createClass({
         if (inputNode && !_.includes(inputNode.className, 'mousetrap')) {
           inputNode.classList.add('mousetrap');
         }
-      })
+      });
     }
   },
 
@@ -81,7 +81,7 @@ export default Radium(React.createClass({
       deleteIcon: {
         padding: '24px 12px'
       }
-    }
+    };
   },
 
   getConfigObject() {
@@ -97,7 +97,7 @@ export default Radium(React.createClass({
 
   isSaved() {
     if (this.state.currentCodeBox && this.state.codeBoxConfig) {
-      return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject())
+      return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
     }
   },
 
@@ -112,12 +112,12 @@ export default Radium(React.createClass({
 
     if (newKey === '') {
       this.refs.newFieldKey.setErrorText('This field cannot be empty');
-      return
+      return;
     }
 
     if (_.includes(_.pluck(codeBoxConfig, 'key'), newKey)) {
       this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
-      return
+      return;
     }
 
     codeBoxConfig.push(newField);
@@ -149,7 +149,7 @@ export default Radium(React.createClass({
   handleUpdateAllKeys() {
     _.forEach(this.state.codeBoxConfig, (field, index) => {
       this.handleUpdateKey(field.key, index);
-    })
+    });
   },
 
   handleUpdateKey(key, index) {
@@ -192,12 +192,12 @@ export default Radium(React.createClass({
         modal: true,
         children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
       }
-    }]
+    }];
   },
 
   renderFields() {
     if (!this.state.codeBoxConfig) {
-      return null
+      return null;
     }
 
     let styles = this.getStyles();
@@ -229,7 +229,7 @@ export default Radium(React.createClass({
             tooltip="Delete key"
             onClick={this.handleDeleteKey.bind(null, field.key)}/>
         </div>
-      )
+      );
     });
 
     return _.sortBy(configFields, 'key');
@@ -267,14 +267,14 @@ export default Radium(React.createClass({
             onCheck={this.saveCheckboxState} />
         </div>
       </div>
-    )
+    );
   },
 
   render() {
     let styles = this.getStyles();
 
     if (!this.state.codeBoxConfig) {
-      return null
+      return null;
     }
 
     return (
@@ -294,6 +294,6 @@ export default Radium(React.createClass({
           {this.renderNewFiledSection()}
         </Container>
       </div>
-    )
+    );
   }
-}))
+}));

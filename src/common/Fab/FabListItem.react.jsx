@@ -23,7 +23,7 @@ export default Radium(React.createClass({
         alignItems: 'center',
         justifyContent: 'center'
       }
-    }
+    };
   },
 
   render() {

@@ -22,7 +22,7 @@ export default Reflux.createStore({
       items: [],
       triggers: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -42,7 +42,7 @@ export default Reflux.createStore({
     ]).then(() => {
       this.data.isLoading = false;
       this.trigger(this.data);
-    })
+    });
   },
 
   getItems() {
@@ -54,7 +54,7 @@ export default Reflux.createStore({
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     });
 
     if (addSelf === true) {
@@ -129,7 +129,7 @@ export default Reflux.createStore({
       return {
         color: null,
         icon: null
-      }
+      };
     }
     return {
       color: singleItem.metadata ? singleItem.metadata.color : 'blue',
