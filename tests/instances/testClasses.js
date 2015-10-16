@@ -8,53 +8,53 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const slug = Date.now();
 
-    signupPage.navigate();
-    signupPage.setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com');
-    signupPage.setValue('@passInput', slug);
-    signupPage.clickSubmitButton();
+    signupPage.navigate()
+      .setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com')
+      .setValue('@passInput', slug)
+      .clickSubmitButton();
 
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@emptyListItem');
-    instancesPage.clickButton('@welcomeDialogCreateInstance');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
+    instancesPage.navigate()
+      .waitForElementPresent('@emptyListItem')
+      .clickButton('@welcomeDialogCreateInstance')
+      .clickButton('@confirmButton')
+      .isModalClosed('@addInstanceModalTitle')
+      .clickButton('@instancesTableRow');
 
-    instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@classes');
     client.pause(1000);
   },
   after(client) {
     client.end();
   },
-  'Test Add Multiple Classes': function addClasses(client) {
+  'Test Add Multiple Classes': (client) => {
     let className = utils.addSuffix('class');
     const classesPage = client.page.classesPage();
     let i = 0;
 
     for (i; i < 2; i += 1) {
       className += '_' + i.toString();
-      classesPage.clickButton('@fab');
-      classesPage.fillInputField('@createModalNameInput', className);
-      classesPage.fillInputField('@createModalFieldNameInput', 'schemaName');
-      classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString');
-      classesPage.clickButton('@addButton');
+      classesPage.clickButton('@fab')
+        .fillInputField('@createModalNameInput', className)
+        .fillInputField('@createModalFieldNameInput', 'schemaName')
+        .selectFromDropdown('@createModalDropdownType', '@createModalSchemaString')
+        .clickButton('@addButton');
       client.pause(1000);
-      classesPage.waitForElementVisible('@addClassTitle');
-      classesPage.clickButton('@confirmButton');
-      classesPage.waitForElementNotVisible('@addClassTitle');
+      classesPage.waitForElementVisible('@addClassTitle')
+      .clickButton('@confirmButton')
+      .waitForElementNotVisible('@addClassTitle');
     }
   },
-  'Test Select/Delete multiple Classes': function deleteClasses(client) {
+  'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickButton('@selectUserClass');
-    classesPage.clickButton('@multipleSelectButton');
-    classesPage.clickButton('@selectUserClass');
+    classesPage.clickButton('@selectUserClass')
+      .clickButton('@multipleSelectButton')
+      .clickButton('@selectUserClass');
     client.pause(1000);
     classesPage.clickButton('@deleteButton');
     client.pause(1000);
-    classesPage.clickButton('@confirmDeleteButton');
-    classesPage.waitForElementNotVisible('@deleteClassModalTitle');
+    classesPage.clickButton('@confirmDeleteButton')
+      .waitForElementNotVisible('@deleteClassModalTitle');
     const classTableRows = classesPage.elements.classTableRows.selector;
 
     client.elements('xpath', classTableRows, function(result) {
