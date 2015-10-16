@@ -45,7 +45,7 @@ export default React.createClass({
           <ConversionPixel.Adroll />
           <ConversionPixel.Magnetic />
         </div>
-      )
+      );
     }
   },
 

@@ -18,7 +18,7 @@ export default Reflux.createStore({
       cvc: null,
       exp_month: null,
       exp_year: null
-    }
+    };
   },
 
   init() {

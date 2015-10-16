@@ -23,7 +23,7 @@ export default React.createClass({
     return {
       initialColor: this.props.initialColor,
       initialIcon: this.props.initialIcon
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -31,7 +31,7 @@ export default React.createClass({
     this.setState({
       color: nextProps.initialColor,
       icon: nextProps.initialIcon
-    })
+    });
   },
 
   handleSubmit() {

@@ -15,6 +15,6 @@ export default React.createClass({
         src="/img/syncano-logo.svg"
         className={this.props.className}
         />
-    )
+    );
   }
 });

@@ -36,13 +36,13 @@ export default React.createClass({
       },
       type: 'normal-link',
       clickable: true
-    }
+    };
   },
 
   getInitialState() {
     return {
       isOpen: this.props.isOpen
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +54,7 @@ export default React.createClass({
       isOpen: (!this.state.isOpen && this.props.clickable)
     }, () => {
       if (this.state.isOpen && this.props.handleOnClick) {
-        this.props.handleOnClick()
+        this.props.handleOnClick();
       }
     });
   },
@@ -69,13 +69,13 @@ export default React.createClass({
         <DropdownNotifiItem
           items={this.props.items}
           isLoading={this.props.isLoading}/>
-      )
+      );
     }
     return (
       <MaterialDropdownItem
         items={this.props.items}
         headerContent={this.props.headerContent}/>
-    )
+    );
   },
 
   render() {

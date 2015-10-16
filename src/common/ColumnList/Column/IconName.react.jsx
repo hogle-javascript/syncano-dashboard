@@ -21,13 +21,13 @@ export default Radium(React.createClass({
       color: 'black',
       hoverColor: MUI.Styles.Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.ICON_NAME
-    }
+    };
   },
 
   getInitialState() {
     return {
       checked: this.props.checked
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {

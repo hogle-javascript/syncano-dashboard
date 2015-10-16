@@ -42,7 +42,7 @@ export default Radium(React.createClass({
     return {
       tracesFor: 'codebox',
       showHeader: false
-    }
+    };
   },
 
   componentDidMount() {
@@ -58,7 +58,7 @@ export default Radium(React.createClass({
       cBList: {
         top: '-45px'
       }
-    }
+    };
   },
 
   getConfig() {
@@ -113,7 +113,7 @@ export default Radium(React.createClass({
       <MUI.ToolbarGroup>
         <MUI.ToolbarTitle text={toolbarTitleText}/>
       </MUI.ToolbarGroup>
-    )
+    );
   },
 
   render() {

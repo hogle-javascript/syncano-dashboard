@@ -19,7 +19,7 @@ export default React.createClass({
         fontSize: 20,
         lineHeight: '24px'
       }
-    }
+    };
   },
 
   render() {

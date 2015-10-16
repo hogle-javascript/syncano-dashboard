@@ -13,7 +13,7 @@ export default Radium(React.createClass({
       withSidebar: {
         marginLeft: 300
       }
-    }
+    };
   },
 
   render() {

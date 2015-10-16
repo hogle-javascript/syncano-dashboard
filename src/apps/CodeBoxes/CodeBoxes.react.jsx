@@ -140,7 +140,7 @@ export default React.createClass({
                 show={this.state.isLoading}/>
           ]
         }
-      }]
+      }];
     }
 
     return [{
@@ -168,7 +168,7 @@ export default React.createClass({
             show={this.state.isLoading}/>
         ]
       }
-    }]
+    }];
   },
 
   render() {

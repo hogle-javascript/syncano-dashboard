@@ -14,13 +14,13 @@ export default Radium(React.createClass({
   getInitialState() {
     return {
       visible: this.props.visible
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       visible: nextProps.visible
-    })
+    });
   },
 
   getStyles() {
@@ -56,7 +56,7 @@ export default Radium(React.createClass({
         background: 'rgba(0, 0, 0, 0.541176)'
       }
 
-    }
+    };
   },
 
   handleCloseDialog() {

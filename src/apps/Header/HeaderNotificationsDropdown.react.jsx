@@ -66,7 +66,7 @@ export default Radium(React.createClass({
         border: '1px solid #DDD',
         minWidth: '400px'
       }
-    }
+    };
   },
 
   hasLastInvitation() {
@@ -123,7 +123,7 @@ export default Radium(React.createClass({
           leftIcon={icon}
           style={styles.menuItem}
           />
-      )
+      );
     }
 
     let notifications = this.state.accountInvitations.items.map((item) => {
@@ -184,7 +184,7 @@ export default Radium(React.createClass({
           onTouchTap={this.handleResendEmail}>
           {resendLink}
         </MenuItem>
-      )
+      );
     }
 
     return notifications;
@@ -209,7 +209,7 @@ export default Radium(React.createClass({
         <MUI.FontIcon
           className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
           color={styles.notificationIcon.color}/>
-      )
+      );
     }
 
     return (
@@ -220,7 +220,7 @@ export default Radium(React.createClass({
           iconClassName={iconClassName}
           onTouchTap={this.handleNotificationsIconClick}/>
       </div>
-    )
+    );
   },
 
   render() {
@@ -244,6 +244,6 @@ export default Radium(React.createClass({
           </Loading>
         </MUI.IconMenu>
       </div>
-    )
+    );
   }
 }));

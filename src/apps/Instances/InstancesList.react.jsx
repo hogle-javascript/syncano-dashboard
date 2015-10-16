@@ -28,11 +28,11 @@ export default React.createClass({
     return {
       listType: this.props.listType,
       items: this.props.items
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items})
+    this.setState({items: nextProps.items});
   },
 
   // List
@@ -67,7 +67,7 @@ export default React.createClass({
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   getList() {
@@ -76,7 +76,7 @@ export default React.createClass({
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
         </Common.ColumnList.EmptyItem>
-      )
+      );
     }
 
     let items = this.state.items.map((item) => this.renderItem(item));
@@ -91,7 +91,7 @@ export default React.createClass({
         padding: 0,
         background: 'none'
       }
-    }
+    };
   },
 
   renderLoaded() {

@@ -109,7 +109,7 @@ export default React.createClass({
             show={this.state.isLoading}/>
         ]
       }
-    }]
+    }];
   },
 
   render() {

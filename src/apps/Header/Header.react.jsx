@@ -87,7 +87,7 @@ export default Radium(React.createClass({
       bottomToolbarGroupIcon: {
         color: '#fff'
       }
-    }
+    };
   },
 
   getDropdownItems() {
@@ -118,7 +118,7 @@ export default Radium(React.createClass({
       name: 'logout',
       handleItemClick: this.handleLogout
 
-    }]
+    }];
   },
 
   getDropdownHeaderItems() {
@@ -127,7 +127,7 @@ export default Radium(React.createClass({
       userEmail: this.state.user.email,
       clickable: true,
       handleItemClick: this.handleAccountClick
-    }
+    };
   },
 
   handleTabActive(tab) {
@@ -208,6 +208,6 @@ export default Radium(React.createClass({
           </MUI.ToolbarGroup>
         </MUI.Toolbar>
       </div>
-    )
+    );
   }
 }));

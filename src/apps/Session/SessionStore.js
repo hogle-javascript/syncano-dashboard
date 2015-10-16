@@ -78,9 +78,9 @@ export default Reflux.createStore({
     }
 
     if (this.signUpMode) {
-      window.analytics.identify(user.email, analyticsIdentifyObject)
+      window.analytics.identify(user.email, analyticsIdentifyObject);
     } else {
-      window.analytics.identify(user.email)
+      window.analytics.identify(user.email);
     }
   },
 
@@ -167,7 +167,7 @@ export default Reflux.createStore({
       let email = this.getUser({}).email;
       let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
 
-      return _.some(endings, (ending) => _.endsWith(email, ending))
+      return _.some(endings, (ending) => _.endsWith(email, ending));
     }
 
     return false;
@@ -212,7 +212,7 @@ export default Reflux.createStore({
       accent1Color: Colors[accentColor + '700'],
       accent2Color: Colors[accentColor + '300'],
       accent3Color: Colors[accentColor + '200']
-    }
+    };
   },
 
   onLogin(payload) {

@@ -83,7 +83,7 @@ export default Radium(React.createClass({
         height: 'auto',
         paddingLeft: 16
       }
-    }
+    };
   },
 
   handleOutsideClick() {
@@ -147,7 +147,7 @@ export default Radium(React.createClass({
       return {
         payload: item.name,
         text
-      }
+      };
     });
 
     return (
@@ -164,6 +164,6 @@ export default Radium(React.createClass({
           onChange={this.handleDropdownItemClick}
           selectedIndex={this.handleInstanceActive()} />
       </OutsideClickHandler>
-    )
+    );
   }
 }));

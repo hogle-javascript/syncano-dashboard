@@ -43,19 +43,19 @@ export default Reflux.createStore({
       return {
         payload: item.id,
         text: item.number
-      }
+      };
     });
   },
 
   getInstancesDropdown() {
     if (this.data.instances === null) {
-      return [{payload: '', text: 'Loading...'}]
+      return [{payload: '', text: 'Loading...'}];
     }
     return this.data.instances.map((item) => {
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     });
   },
 
