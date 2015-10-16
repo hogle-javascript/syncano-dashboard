@@ -183,8 +183,8 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
-    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(), true);
-    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances());
+    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(true), true);
+    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances(true));
     let dropDownMenuItems = [];
 
     if (!instance || !instancesList || !instancesList.length > 0) {

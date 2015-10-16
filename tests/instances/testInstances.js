@@ -108,16 +108,11 @@ module.exports = {
     instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@instancesDropdown');
     leftMenuPage.clickButton('@instancesListSecondItem');
+    client.pause(1000);
     leftMenuPage.waitForElementPresent('@instancesDropdown');
-    const instancesDropdownItems = leftMenuPage.elements.instancesDropdownItems.selector;
-
-    client.element('xpath', instancesDropdownItems, function(result) {
-      const elementId = result.value.ELEMENT;
-
-      client.pause(1000);
-      client.elementIdText(elementId.toString(), function(text) {
-        client.assert.equal(text.value, instanceNames[0]);
-      });
+    const dropdown = leftMenuPage.elements.instancesDropdown.selector;
+    client.getText('xpath', dropdown, function(text) {
+      client.assert.equal(text.value, instanceNames[1]);
     })
   },
   'Test Delete multiple Instances': function deleteInstances(client) {
@@ -126,7 +121,7 @@ module.exports = {
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@selectInstance');
     instancesPage.moveToElement('@selectInstance', 0, 0);
-    instancesPage.clickButton('@instanceToSelect')
+    instancesPage.clickButton('@instanceToSelect');
     instancesPage.clickButton('@selectButton');
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
