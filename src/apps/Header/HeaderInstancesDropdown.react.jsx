@@ -135,7 +135,7 @@ export default Radium(React.createClass({
     return [{
       payload: 'Add an Instance',
       text: item
-    }]
+    }];
   },
 
   renderDropdownItems(items, hasSeparator) {
@@ -148,7 +148,7 @@ export default Radium(React.createClass({
     };
 
     if (!items) {
-      return null
+      return null;
     }
 
     let dropDownMenuItems = items.map((item) => {

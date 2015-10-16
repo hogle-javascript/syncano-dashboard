@@ -153,7 +153,7 @@ export default React.createClass({
           className="synicon-plus"/>
         <span>Add an Instance</span>
       </div>
-    )
+    );
   },
 
   renderInstanceDropdown() {

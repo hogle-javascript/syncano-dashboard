@@ -46,7 +46,7 @@ export default React.createClass({
 
   handleAddSubmit() {
     if (this.props.handleSubmit) {
-      this.listenTo(Actions.createInstance.completed, this.extendSubmit)
+      this.listenTo(Actions.createInstance.completed, this.extendSubmit);
     }
     Actions.createInstance({
       name: this.state.name,
@@ -55,7 +55,7 @@ export default React.createClass({
         color: Common.Color.getRandomColorName(),
         icon: Common.Icon.Store.getRandomIconPickerIcon()
       }
-    })
+    });
   },
 
   extendSubmit() {
