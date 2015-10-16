@@ -10,13 +10,25 @@ module.exports = {
   elements: {
     codeBoxEditView: {
       selector: '#brace-editor'
-      },
+    },
     config: {
       selector: '//div[text()="Config"]',
       locateStrategy: 'xpath'
-      },
-    configEmpty: {
-      selector: '//span[@class="ace_paren ace_lparen"]',
+    },
+    configKeyField: {
+      selector: '//div[@class="config-input-key"]',
+      locateStrategy: 'xpath'
+    },
+    configValueField: {
+      selector: '//div[@class="config-input-value"]',
+      locateStrategy: 'xpath'
+    },
+    configAddFieldButton: {
+      selector: '//button[@class="add-field-button"]',
+      locateStrategy: 'xpath'
+    },
+    configAutosaveCheckbox: {
+      selector: '//div[@class="config-autosave-checkbox"]',
       locateStrategy: 'xpath'
     },
     traces: {

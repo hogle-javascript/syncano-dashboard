@@ -242,11 +242,13 @@ export default Radium(React.createClass({
       <div>
         <div className="row">
           <MUI.TextField
+            className="config-input-key"
             ref="newFieldKey"
             hintText="Key"
             defaultValue=""
             style={styles.field} />
           <MUI.TextField
+            className="config-input-value"
             ref="newFieldValue"
             hintText="Value"
             defaultValue=""
@@ -254,11 +256,13 @@ export default Radium(React.createClass({
         </div>
         <div>
           <MUI.RaisedButton
+            className="add-field-button"
             label="Add field"
             secondary={true}
             onClick={this.handleAddField}
             style={styles.addButton} />
           <MUI.Checkbox
+            className="config-autosave-checkbox"
             ref="autosaveCheckbox"
             name="autoSaveCheckbox"
             label="Autosave"
