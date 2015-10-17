@@ -42,7 +42,7 @@ export default Radium(React.createClass({
   },
 
   componentWillUnmount() {
-    this.stopListenTo(Actions.changePassword.completed);
+    this.stopListeningTo(Actions.changePassword.completed);
   },
 
   getStyles() {
