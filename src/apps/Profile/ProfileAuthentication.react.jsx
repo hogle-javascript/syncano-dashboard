@@ -23,9 +23,6 @@ export default Radium(React.createClass({
   ],
 
   validatorConstraints: {
-    currentPassword: {
-      presence: true
-    },
     newPassword: {
       presence: true
     },
@@ -126,8 +123,8 @@ export default Radium(React.createClass({
                 <MUI.TextField
                   ref="currentPassword"
                   type="password"
-                  valueLink={this.linkState('currentPassword')}
-                  errorText={this.getValidationMessages('currentPassword').join(' ')}
+                  valueLink={this.linkState('current_password')}
+                  errorText={this.getValidationMessages('current_password').join(' ')}
                   name="currentPassword"
                   floatingLabelText="Current password"
                   className="text-field"
