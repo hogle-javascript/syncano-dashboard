@@ -62,18 +62,6 @@ export default Radium(React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  setupToggles() {
-    const plan = Store.getPlan();
-
-    if (plan === 'builder') {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment') {
-      this.refs.toggle.setToggled(true);
-    }
-  },
-
   getStyles() {
     return {
       main: {
@@ -127,30 +115,6 @@ export default Radium(React.createClass({
     };
   },
 
-  // Dialogs config
-  initDialogs() {
-    return [{
-      dialog: Common.Dialog,
-      params: {
-        key: 'cancelProductionPlan',
-        ref: 'cancelProductionPlan',
-        title: 'Cancel Production Plan',
-        actions: [
-          {
-            text: 'No, I want to keep my plan.',
-            onClick: this.handleCancelCancelProductionPlan
-          },
-          {
-            text: 'Yes, I want to cancel.',
-            onClick: this.handleCancelProductionPlan
-          }
-        ],
-        modal: true,
-        children: ['Are you sure you want to cancel your Production plan?']
-      }
-    }];
-  },
-
   handleCancelCancelProductionPlan() {
     this.setupToggles();
     this.refs.cancelProductionPlan.dismiss();
@@ -176,6 +140,58 @@ export default Radium(React.createClass({
 
   handleDeleteSubscription() {
     Actions.cancelNewPlan(this.state.subscriptions._items);
+  },
+
+  handlePlanDialogDismiss() {
+    this.setupToggles();
+    Actions.fetch();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleAddSubmit();
+  },
+
+  handleAddSubmit() {
+    Actions.updateBillingProfile({
+      hard_limit: this.state.hard_limit,
+      soft_limit: this.state.soft_limit
+    });
+  },
+
+  // Dialogs config
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        key: 'cancelProductionPlan',
+        ref: 'cancelProductionPlan',
+        title: 'Cancel Production Plan',
+        actions: [
+          {
+            text: 'No, I want to keep my plan.',
+            onClick: this.handleCancelCancelProductionPlan
+          },
+          {
+            text: 'Yes, I want to cancel.',
+            onClick: this.handleCancelProductionPlan
+          }
+        ],
+        modal: true,
+        children: ['Are you sure you want to cancel your Production plan?']
+      }
+    }];
+  },
+
+  setupToggles() {
+    const plan = Store.getPlan();
+
+    if (plan === 'builder') {
+      this.refs.toggle.setToggled(false);
+    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
+      this.refs.toggle.setToggled(false);
+    } else if (plan === 'paid-commitment') {
+      this.refs.toggle.setToggled(true);
+    }
   },
 
   renderMainDesc() {
@@ -263,22 +279,6 @@ export default Radium(React.createClass({
         </div>
       );
     }
-  },
-
-  handlePlanDialogDismiss() {
-    this.setupToggles();
-    Actions.fetch();
-  },
-
-  handleSuccessfullValidation() {
-    this.handleAddSubmit();
-  },
-
-  handleAddSubmit() {
-    Actions.updateBillingProfile({
-      hard_limit: this.state.hard_limit,
-      soft_limit: this.state.soft_limit
-    });
   },
 
   renderLimitsForm() {
