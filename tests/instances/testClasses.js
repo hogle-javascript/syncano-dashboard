@@ -8,12 +8,14 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const slug = Date.now();
 
-    signupPage.navigate()
+    signupPage
+      .navigate()
       .setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com')
       .setValue('@passInput', slug)
       .clickSubmitButton();
 
-    instancesPage.navigate()
+    instancesPage
+      .navigate()
       .waitForElementPresent('@emptyListItem')
       .clickButton('@welcomeDialogCreateInstance')
       .clickButton('@confirmButton')
@@ -33,27 +35,31 @@ module.exports = {
 
     for (i; i < 2; i += 1) {
       className += '_' + i.toString();
-      classesPage.clickButton('@fab')
+      classesPage
+        .clickButton('@fab')
         .fillInputField('@createModalNameInput', className)
         .fillInputField('@createModalFieldNameInput', 'schemaName')
         .selectFromDropdown('@createModalDropdownType', '@createModalSchemaString')
         .clickButton('@addButton');
       client.pause(1000);
-      classesPage.waitForElementVisible('@addClassTitle')
-      .clickButton('@confirmButton')
-      .waitForElementNotVisible('@addClassTitle');
+      classesPage
+        .waitForElementVisible('@addClassTitle')
+        .clickButton('@confirmButton')
+        .waitForElementNotVisible('@addClassTitle');
     }
   },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickButton('@selectUserClass')
+    classesPage
+      .clickButton('@selectUserClass')
       .clickButton('@multipleSelectButton')
       .clickButton('@selectUserClass');
     client.pause(1000);
     classesPage.clickButton('@deleteButton');
     client.pause(1000);
-    classesPage.clickButton('@confirmDeleteButton')
+    classesPage
+      .clickButton('@confirmDeleteButton')
       .waitForElementNotVisible('@deleteClassModalTitle');
     const classTableRows = classesPage.elements.classTableRows.selector;
 
