@@ -15,6 +15,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
+    Reflux.ListenerMixin,
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -44,6 +45,9 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
+    if (this.props.handleSubmit) {
+      this.listenTo(Actions.createInstance.completed, this.extendSubmit);
+    }
     Actions.createInstance({
       name: this.state.name,
       description: this.state.description,
@@ -52,6 +56,11 @@ export default React.createClass({
         icon: Common.Icon.Store.getRandomIconPickerIcon()
       }
     });
+  },
+
+  extendSubmit() {
+    this.props.handleSubmit();
+    this.stopListeningTo(Actions.createInstance.completed);
   },
 
   render() {

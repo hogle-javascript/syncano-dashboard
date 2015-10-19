@@ -31,6 +31,15 @@ export default React.createClass({
     };
   },
 
+  getStyles() {
+    return {
+      list: {
+        padding: 0,
+        background: 'none'
+      }
+    };
+  },
+
   componentWillReceiveProps(nextProps) {
     this.setState({items: nextProps.items});
   },
@@ -70,7 +79,7 @@ export default React.createClass({
     );
   },
 
-  getList() {
+  renderList() {
     if (this.state.items.length === 0) {
       return (
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
@@ -83,15 +92,6 @@ export default React.createClass({
 
     items.reverse();
     return items;
-  },
-
-  getStyles() {
-    return {
-      list: {
-        padding: 0,
-        background: 'none'
-      }
-    };
   },
 
   renderLoaded() {
@@ -109,7 +109,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
-          {this.getList()}
+          {this.renderList()}
         </Common.Lists.List>
       </Common.Lists.Container>
     );

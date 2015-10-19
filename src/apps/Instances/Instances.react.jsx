@@ -28,6 +28,7 @@ import WelcomeDialog from './WelcomeDialog';
 import './Instances.sass';
 
 export default Radium(React.createClass({
+
   displayName: 'Instances',
 
   mixins: [

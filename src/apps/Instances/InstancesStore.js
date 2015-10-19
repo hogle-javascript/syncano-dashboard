@@ -104,33 +104,33 @@ export default Reflux.createStore({
     return !this.amIOwner(item);
   },
 
-  getAllInstances(reversed = false) {
-    if (this.data.items === null) {
-      return this.data.items;
-    }
-
-    let my = this.getMyInstances() || [];
-    let other = this.getOtherInstances() || [];
-
-    if (reversed === true) {
-      my.reverse();
-      other.reverse();
-    }
-    return [].concat(my, other);
+  getAllInstances(reversed) {
+    return this.getInstances('all', reversed);
   },
 
-  getMyInstances() {
-    if (this.data.items === null) {
-      return this.data.items;
-    }
-    return this.data.items.filter(this.filterMyInstances);
+  getOtherInstances(reversed) {
+    return this.getInstances('other', reversed);
   },
 
-  getOtherInstances() {
+  getMyInstances(reversed) {
+    return this.getInstances('user', reversed);
+  },
+
+  getInstances(ownership, reversed) {
     if (this.data.items === null) {
       return this.data.items;
     }
-    return this.data.items.filter(this.filterOtherInstances);
+    let filteredItems = {
+      user: this.data.items.filter(this.filterMyInstances),
+      other: this.data.items.filter(this.filterOtherInstances),
+      all: this.data.items
+    };
+
+    if (reversed) {
+      return [].concat(filteredItems[ownership]).reverse();
+    }
+
+    return filteredItems[ownership];
   },
 
   getInstancesDropdown() {

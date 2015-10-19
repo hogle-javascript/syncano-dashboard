@@ -82,6 +82,13 @@ export default Radium(React.createClass({
       dropdownMenuItem: {
         height: 'auto',
         paddingLeft: 16
+      },
+      itemsDivider: {
+        marginLeft: -16,
+        marginRight: -48
+      },
+      addInstanceIcon: {
+        backgroundColor: '#BDBDBD'
       }
     };
   },
@@ -92,19 +99,17 @@ export default Radium(React.createClass({
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
     // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload).then(() => {
-      this.transitionTo('instance', {instanceName: menuItem.payload});
-    });
+    SessionActions.fetchInstance(menuItem.payload);
+    this.transitionTo('instance', {instanceName: menuItem.payload});
   },
 
-  handleInstanceActive() {
+  handleInstanceActive(items) {
     if (InstancesStore.getAllInstances()) {
       let currentInstance = SessionStore.instance;
-      let instancesList = InstancesStore.getAllInstances(true);
       let instanceActiveIndex = null;
 
-      instancesList.some((event, index) => {
-        if (event.name === currentInstance.name) {
+      items.some((event, index) => {
+        if (event.payload === currentInstance.name) {
           instanceActiveIndex = index;
           return true;
         }
@@ -114,18 +119,39 @@ export default Radium(React.createClass({
     }
   },
 
-  render() {
+  renderAddInstanceItem() {
     let styles = this.getStyles();
-    let instance = SessionStore.instance;
-    let instancesList = InstancesStore.getAllInstances(true);
+    let item = (
+      <div
+        style={styles.dropdownLabelContainer}
+        onClick={this.handleAddInstance}>
+        <MUI.FontIcon
+          className="synicon-plus"
+          style={[styles.dropdownInstanceIcon, styles.addInstanceIcon]}/>
+        Add an Instance
+      </div>
+    );
+
+    return [{
+      payload: 'Add an Instance',
+      text: item
+    }];
+  },
+
+  renderDropdownItems(items, hasSeparator) {
+    let styles = this.getStyles();
     let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+    let instancesSeparator = {
+      payload: null,
+      text: <MUI.ListDivider style={styles.itemsDivider} />
+    };
 
-    if (!instance || !instancesList || !instancesList.length > 0) {
+    if (!items) {
       return null;
     }
 
-    let dropDownMenuItems = instancesList.map((item) => {
+    let dropDownMenuItems = items.map((item) => {
       item.metadata = item.metadata || {};
       item.metadata.icon = item.metadata.icon || null;
       item.metadata.color = item.metadata.color || null;
@@ -150,6 +176,27 @@ export default Radium(React.createClass({
       };
     });
 
+    if (hasSeparator) {
+      dropDownMenuItems.push(instancesSeparator);
+    }
+
+    return dropDownMenuItems;
+  },
+
+  render() {
+    let styles = this.getStyles();
+    let instance = SessionStore.instance;
+    let instancesList = InstancesStore.getAllInstances(true);
+    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(true), true);
+    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances(true));
+    let dropDownMenuItems = [];
+
+    if (!instance || !instancesList || !instancesList.length > 0) {
+      return null;
+    }
+
+    dropDownMenuItems = userInstances.concat(sharedInstances);
+
     return (
       <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>
         <MUI.DropDownMenu
@@ -162,7 +209,7 @@ export default Radium(React.createClass({
           menuItemStyle={styles.dropdownMenuItem}
           menuItems={dropDownMenuItems}
           onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
+          selectedIndex={this.handleInstanceActive(dropDownMenuItems)} />
       </OutsideClickHandler>
     );
   }

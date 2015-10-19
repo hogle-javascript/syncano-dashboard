@@ -5,9 +5,11 @@ import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
+import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
+import InstanceDialog from '../apps/Instances/InstanceDialog.react';
 
 export default React.createClass({
 
@@ -47,6 +49,15 @@ export default React.createClass({
       },
       content: {
         margin: '96px 104px 48px 304px'
+      },
+      addInstanceItem: {
+        fontSize: 14,
+        display: 'flex; display: -ms-flexbox; display: -webkit-flex; display: flex;',
+        alignItems: '-ms-flex-align: center; -webkit-align-items: center; align-items: center;'
+      },
+      plusIcon: {
+        marginTop: '4px',
+        color: 'rgba(0, 0, 0, 0.54)'
       }
     };
   },
@@ -54,7 +65,15 @@ export default React.createClass({
   getMenuItems() {
     return [
       {
-        type: MUI.MenuItem.Types.SUBHEADER, text: 'Modules'
+        type: MUI.MenuItem.Types.SUBHEADER,
+        text: 'Instances'
+      },
+      {
+        text: this.renderAddInstanceItem()
+      },
+      {
+        type: MUI.MenuItem.Types.SUBHEADER,
+        text: 'Modules'
       },
       {
         type: MUI.MenuItem.Types.LINK,
@@ -111,10 +130,36 @@ export default React.createClass({
     ];
   },
 
+  showAddInstanceDialog() {
+    InstanceDialogActions.showDialog();
+  },
+
+  redirectToNewInstance() {
+    let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
+
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
+  },
+
+  renderAddInstanceItem() {
+    let styles = this.getStyles();
+
+    return (
+      <div
+        style={styles.addInstanceItem}
+        onClick={this.showAddInstanceDialog}>
+        <MUI.FontIcon
+          style={this.getStyles().plusIcon}
+          className="synicon-plus"/>
+        <span>Add an Instance</span>
+      </div>
+    );
+  },
+
   renderInstanceDropdown() {
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown />
+        <HeaderInstancesDropdown/>
       </div>
     );
   },
@@ -124,6 +169,9 @@ export default React.createClass({
 
     return (
       <div>
+        <InstanceDialog
+          ref="addInstanceDialog"
+          handleSubmit={this.redirectToNewInstance}/>
         <MUI.LeftNav
           className="left-nav"
           ref="leftNav"

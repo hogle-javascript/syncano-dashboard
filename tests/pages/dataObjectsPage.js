@@ -37,7 +37,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addDataObjectButton: {
-      selector: '//span[@class="synicon-plus"]',
+      selector: '(//span[@class="synicon-plus"])[2]',
       locateStrategy: 'xpath'
     },
     deleteDataObjectButton: {

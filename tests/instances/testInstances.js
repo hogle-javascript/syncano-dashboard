@@ -13,7 +13,7 @@ module.exports = {
   after(client) {
     client.end();
   },
-  'Test Add Instance from welcome dialog': function addInstanceDialog(client) {
+  'Test Add Instance from welcome dialog': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -27,7 +27,7 @@ module.exports = {
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
   },
-  'Test Edit Instance': function editInstance(client) {
+  'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -41,7 +41,7 @@ module.exports = {
     instancesPage.expect.element('@instancesTableRowDescription')
     .to.contain.text('nightwatch_test_instance_new_description');
   },
-  'Test Select/Deselect Instance': function selectDeselectInstance(client) {
+  'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -50,7 +50,7 @@ module.exports = {
     instancesPage.clickSelectInstance();
     instancesPage.waitForElementNotPresent('@instanceSelected');
   },
-  'Test Delete Instance': function deleteInstance(client) {
+  'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -62,7 +62,7 @@ module.exports = {
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
-  'Add an Instance from empty list item': function addInstanceListItem(client) {
+  'Add an Instance from empty list item': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
@@ -74,7 +74,7 @@ module.exports = {
     instancesPage.isModalClosed('@addInstanceModalTitle');
     instancesPage.waitForElementVisible('@instanceDescription')
   },
-  'Test Create multiple Instances by FAB': function addInstancesFab(client) {
+  'Test Create multiple Instances by FAB': (client) => {
     const instancesPage = client.page.instancesPage();
     let i = 0;
 
@@ -87,7 +87,7 @@ module.exports = {
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
-  'Test Instances Dropdown': function instancesDropdown(client) {
+  'Test Instances Dropdown': (client) => {
     const instancesPage = client.page.instancesPage();
     const leftMenuPage = client.page.leftMenuPage();
     const instanceNames = [];
@@ -96,37 +96,32 @@ module.exports = {
     instancesPage.waitForElementPresent('@instancesTableName');
     const instanceName = instancesPage.elements.instancesTableName;
 
-    client.elements(instanceName.locateStrategy, instanceName.selector, function(result) {
-      result.value.forEach(function(value) {
-        client.elementIdText(value.ELEMENT, function(el) {
+    client.elements(instanceName.locateStrategy, instanceName.selector, (result) => {
+      result.value.forEach((value) => {
+        client.elementIdText(value.ELEMENT, (el) => {
           instanceNames.push(el.value);
         });
       });
     });
-    instancesPage.waitForElementPresent('@instancesTableRow', function() {
+    instancesPage.waitForElementPresent('@instancesTableRow', () => {
     });
     instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@instancesDropdown');
     leftMenuPage.clickButton('@instancesListSecondItem');
+    client.pause(1000);
     leftMenuPage.waitForElementPresent('@instancesDropdown');
-    const instancesDropdownItems = leftMenuPage.elements.instancesDropdownItems.selector;
-
-    client.element('xpath', instancesDropdownItems, function(result) {
-      const elementId = result.value.ELEMENT;
-
-      client.pause(1000);
-      client.elementIdText(elementId.toString(), function(text) {
-        client.assert.equal(text.value, instanceNames[0]);
-      });
+    const dropdown = leftMenuPage.elements.instancesDropdown.selector;
+    client.getText('xpath', dropdown, (text) => {
+      client.assert.equal(text.value, instanceNames[1]);
     })
   },
-  'Test Delete multiple Instances': function deleteInstances(client) {
+  'Test Delete multiple Instances': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@selectInstance');
     instancesPage.moveToElement('@selectInstance', 0, 0);
-    instancesPage.clickButton('@instanceToSelect')
+    instancesPage.clickButton('@instanceToSelect');
     instancesPage.clickButton('@selectButton');
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
