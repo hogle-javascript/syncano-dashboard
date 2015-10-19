@@ -4,7 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import Mixins from '../../mixins';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -23,7 +23,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     HeaderMixin,
-    Mixins.Dialogs,
+    Dialogs,
     Router.State,
     Router.Navigation
   ],
@@ -54,10 +54,6 @@ export default React.createClass({
 
   handleClassDropdownClick(item) {
     Actions.setClickedClass(item);
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   redirectToEditClassView(className) {
@@ -127,7 +123,7 @@ export default React.createClass({
             primaryText="Customize a Class" />
           <MenuItem
             className="dropdown-item-delete-class"
-            onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeClasses.bind(null, [item]))}
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}
             primaryText="Delete a Class" />
         </Column.Menu>
       </Common.ColumnList.Item>

@@ -68,10 +68,6 @@ export default React.createClass({
     InstanceDialogActions.showDialog(instance);
   },
 
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
-  },
-
   initDialogs() {
     let checkedItemIconColor = Store.getCheckedItemIconColor();
 
@@ -126,7 +122,7 @@ export default React.createClass({
             primaryText="Customize an Instance" />
           <MenuItem
             className="dropdown-item-instance-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item, handleRemoveInstance)}
+            onTouchTap={this.showMenuDialog.bind(null, item.name, handleRemoveInstance)}
             primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>

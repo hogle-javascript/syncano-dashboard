@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import Actions from './CodeBoxesActions';
@@ -24,7 +25,8 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin
+    HeaderMixin,
+    Dialogs
   ],
 
   componentWillReceiveProps(nextProps) {
@@ -42,10 +44,6 @@ export default React.createClass({
       instanceName: this.getParams().instanceName,
       codeboxId: itemId
     });
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.label, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -76,7 +74,7 @@ export default React.createClass({
           primaryText="Edit a CodeBox" />
           <MenuItem
           className="dropdown-item-codebox-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeCodeBoxes.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeCodeBoxes.bind(null, [item]))}
           primaryText="Delete a Codebox" />
         </Column.Menu>
       </Common.ColumnList.Item>

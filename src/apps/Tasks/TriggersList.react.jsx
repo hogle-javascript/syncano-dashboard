@@ -3,6 +3,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import Actions from './TriggersActions';
@@ -19,6 +20,7 @@ export default React.createClass({
   displayName: 'TriggersList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -51,10 +53,6 @@ export default React.createClass({
     });
   },
 
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.label, handleConfirm, event.target.innerHTML);
-  },
-
   renderItem(item) {
     let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
     let codeBoxLabel = codeBox ? codeBox.label : '';
@@ -84,7 +82,7 @@ export default React.createClass({
           primaryText="Edit a Trigger" />
           <MenuItem
           className="dropdown-item-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeTriggers.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}
           primaryText="Delete a Trigger" />
         </Column.Menu>
       </Common.ColumnList.Item>

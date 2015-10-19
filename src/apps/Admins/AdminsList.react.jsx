@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
@@ -21,7 +22,8 @@ export default React.createClass({
   mixins: [
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Dialogs
   ],
 
   getInitialState() {
@@ -55,11 +57,11 @@ export default React.createClass({
     return (
       <Common.ColumnList.Column.Menu>
         <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item, removeInvitation)}
+          onTouchTap={this.showMenuDialog.bind(null, item.email, removeInvitation)}
           className="dropdown-item-remove-invitation"
           primaryText="Remove Invitation" />
         <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item, resendInvitation)}
+          onTouchTap={this.showMenuDialog.bind(null, item.email, resendInvitation)}
           className="dropdown-item-resend-invitation"
           primaryText="Resend Invitation" />
       </Common.ColumnList.Column.Menu>
@@ -73,7 +75,7 @@ export default React.createClass({
       <Common.ColumnList.Column.Menu item={item}>
         <MenuItem
           className="dropdown-item-delete-admin"
-          onTouchTap={this.showMenuDialog.bind(null, item, removeAdmin)}
+          onTouchTap={this.showMenuDialog.bind(null, item.email, removeAdmin)}
           primaryText="Delete Admin" />
         <MenuItem
           className="dropdown-item-edit-admin"
@@ -95,10 +97,6 @@ export default React.createClass({
 
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
-  },
-
-  showMenuDialog(listItem, onClickConfirm, event) {
-    this.refs.menuDialog.show(listItem.email, onClickConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {

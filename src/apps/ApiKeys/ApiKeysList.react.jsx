@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
@@ -23,15 +24,12 @@ export default React.createClass({
     Reflux.connect(Store),
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Dialogs
   ],
 
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.api_key, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -66,11 +64,11 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeApiKeys.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
           className="dropdown-item-delete-apikey"
           primaryText="Delete an API Key" />
           <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.resetApiKey.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}
           className="dropdown-item-reset-apikey"
           primaryText="Reset an API Key" />
         </Column.Menu>

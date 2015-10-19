@@ -6,6 +6,7 @@ import Actions from './UsersActions';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import Common from '../../common';
@@ -18,6 +19,7 @@ export default React.createClass({
   displayName: 'UsersList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -63,10 +65,6 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.username, handleConfirm, event.target.innerHTML);
-  },
-
   renderItemGroups(groups) {
     let styles = this.getStyles();
 
@@ -109,7 +107,7 @@ export default React.createClass({
           primaryText="Edit an User" />
           <MenuItem
           className="dropdown-item-delete-user"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeUsers.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
           primaryText="Delete an User" />
         </Column.Menu>
       </Common.ColumnList.Item>
