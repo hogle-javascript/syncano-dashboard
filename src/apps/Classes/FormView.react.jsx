@@ -53,7 +53,7 @@ export default React.createClass({
       return {
         payload: item,
         text: item
-      }
+      };
     });
   },
 
@@ -157,17 +157,17 @@ export default React.createClass({
     fields.push(field);
 
     if (this.refs.fieldOrder) {
-      this.refs.fieldOrder.setChecked()
+      this.refs.fieldOrder.setChecked();
     }
 
     if (this.refs.fieldFilter) {
-      this.refs.fieldFilter.setChecked()
+      this.refs.fieldFilter.setChecked();
     }
 
     this.setState({
       fields,
       fieldName: ''
-    })
+    });
   },
 
   handleRemoveField(item) {
@@ -242,7 +242,7 @@ export default React.createClass({
               onClick={this.handleRemoveField.bind(this, item)} />
           </span>
         </div>
-      )
+      );
     });
   },
 

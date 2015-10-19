@@ -14,7 +14,7 @@ export default React.createClass({
       sectionTopic: {
         fontSize: '1.3em'
       }
-    }
+    };
   },
 
   render() {
@@ -48,6 +48,6 @@ export default React.createClass({
           {this.props.sliderSummary}
         </div>
       </div>
-    )
+    );
   }
 });

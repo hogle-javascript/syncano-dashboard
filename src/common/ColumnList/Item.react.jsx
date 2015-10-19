@@ -54,7 +54,7 @@ export default Radium(React.createClass({
         rounded={false}>
         {this.props.children}
       </MUI.Paper>
-    )
+    );
   },
 
   renderItem() {
@@ -71,7 +71,7 @@ export default Radium(React.createClass({
         rounded={false}>
         {this.props.children}
       </MUI.Paper>
-    )
+    );
   },
 
   render() {

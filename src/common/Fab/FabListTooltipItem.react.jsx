@@ -23,7 +23,7 @@ export default Radium(React.createClass({
   getInitialState() {
     return {
       hovered: false
-    }
+    };
   },
 
   getStyles() {
@@ -69,7 +69,7 @@ export default Radium(React.createClass({
       buttonWhenHovered: {
         background: ColorManipulator.fade(this._getColor(), 0.6)
       }
-    }
+    };
   },
 
   getTheme() {
@@ -78,14 +78,14 @@ export default Radium(React.createClass({
 
   _getColor() {
     if (this.props.disabled) {
-      return this.getTheme().disabledColor
+      return this.getTheme().disabledColor;
     }
 
     if (this.props.secondary) {
-      return this.getTheme().secondaryColor
+      return this.getTheme().secondaryColor;
     }
 
-    return this.getTheme().color
+    return this.getTheme().color;
   },
 
   _handleMouseLeave() {

@@ -19,7 +19,7 @@ export default Reflux.createStore({
     return {
       items: [],
       isLoading: true
-    }
+    };
   },
 
   init() {

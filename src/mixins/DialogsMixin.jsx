@@ -6,7 +6,7 @@ export default {
 
     return dialogs.map((dialog) => {
       return React.createElement(dialog.dialog, dialog.params);
-    })
+    });
   },
 
   showDialog(ref) {
@@ -14,7 +14,7 @@ export default {
   },
 
   getDialogListLength(items) {
-    return items.length
+    return items.length;
   },
 
   getDialogList(items, paramName, associationFor) {

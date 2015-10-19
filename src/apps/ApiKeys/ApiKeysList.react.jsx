@@ -60,7 +60,7 @@ export default React.createClass({
         </Column.Text>
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

@@ -10,7 +10,7 @@ export default Radium(React.createClass({
       display: '-webkit-flex; display: flex',
       flexDirection: 'column',
       justifyContent: 'center'
-    }
+    };
   },
 
   render() {

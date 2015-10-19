@@ -29,14 +29,14 @@ export default Radium(React.createClass({
     payloadValue: (value) => {
       try {
         JSON.parse(value);
-        return null
+        return null;
       } catch (err) {
         return {
           format: {
             pattern: '',
             message: 'is not a valid JSON'
           }
-        }
+        };
       }
     }
   },
@@ -45,7 +45,7 @@ export default Radium(React.createClass({
     return {
       panelCollapsed: true,
       payloadValue: '{"abc": 123}'
-    }
+    };
   },
 
   getStyles() {
@@ -64,7 +64,7 @@ export default Radium(React.createClass({
         whiteSpace: 'pre',
         overflow: 'auto'
       }
-    }
+    };
   },
 
   render() {

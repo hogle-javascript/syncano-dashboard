@@ -21,7 +21,7 @@ export default Reflux.createStore({
       channels: [
         {payload: '', text: 'Loading...'}
       ]
-    }
+    };
   },
 
   init() {

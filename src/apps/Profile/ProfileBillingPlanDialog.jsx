@@ -63,7 +63,7 @@ export default React.createClass({
           is: 4
         }
       }
-    }
+    };
   },
 
   getValidatorAttributes() {
@@ -78,7 +78,7 @@ export default React.createClass({
       cvc: data.cvc,
       exp_month: data.exp_month,
       exp_year: data.exp_year
-    }
+    };
   },
 
   getStyles() {
@@ -122,7 +122,7 @@ export default React.createClass({
         fontSize: '0.8em',
         color: '#9B9B9B'
       }
-    }
+    };
   },
 
   getInfo(type) {
@@ -202,8 +202,8 @@ export default React.createClass({
         .then(() => {
           subscribe().then(
             setLimits
-          )
-        })
+          );
+        });
     }
   },
 
@@ -217,13 +217,13 @@ export default React.createClass({
   handleDismiss() {
     this.resetDialogState();
     if (typeof this.props.onDismiss === 'function') {
-      this.props.onDismiss()
+      this.props.onDismiss();
     }
   },
 
   renderCard() {
     if (typeof this.state.card === 'undefined') {
-      return <Common.Loading show={true}/>
+      return <Common.Loading show={true}/>;
     }
 
     if (this.state.card) {
@@ -240,7 +240,7 @@ export default React.createClass({
           </div>
         </div>
       </div>
-      )
+      );
     }
     return (
     <div>
@@ -297,7 +297,7 @@ export default React.createClass({
         </div>
       </div>
     </div>
-    )
+    );
   },
 
   renderSlider(type) {
@@ -323,7 +323,7 @@ export default React.createClass({
       optionClick={this.handleSliderLabelsClick}
       onChange={this.onSliderChange}
     />
-    )
+    );
   },
 
   renderSliderSummary(info) {
@@ -338,7 +338,7 @@ export default React.createClass({
         <div><strong>${info.overage.value}</strong></div>
       </div>
     </div>
-    )
+    );
   },
 
   render() {

@@ -45,7 +45,7 @@ export default React.createClass({
         paddingLeft: 30,
         paddingRight: 30
       }
-    }
+    };
   },
 
   handleSuccessfullValidation() {

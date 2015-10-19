@@ -16,7 +16,7 @@ export default Reflux.createStore({
       tracesFor: null,
       isLoading: true,
       currentObjectName: null
-    }
+    };
   },
 
   init() {
@@ -103,20 +103,20 @@ export default Reflux.createStore({
 
   onFetchCurrentCodeBoxCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentCodeBoxCompleted', currentObj);
-    this.saveCurrentObj(currentObj.label)
+    this.saveCurrentObj(currentObj.label);
   },
 
   onFetchCurrentWebhookCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentWebhookCompleted', currentObj);
-    this.saveCurrentObj(currentObj.name)
+    this.saveCurrentObj(currentObj.name);
   },
   onFetchCurrentTriggerCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentTriggerCompleted', currentObj);
-    this.saveCurrentObj(currentObj.label)
+    this.saveCurrentObj(currentObj.label);
   },
 
   onFetchCurrentScheduleCompleted(currentObj) {
     console.debug('TracesStore::onFetchCurrentScheduleCompleted', currentObj);
-    this.saveCurrentObj(currentObj.label)
+    this.saveCurrentObj(currentObj.label);
   }
 });

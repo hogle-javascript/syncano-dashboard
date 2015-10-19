@@ -41,7 +41,7 @@ export default React.createClass({
         <Column.Desc className="col-xs-9">{item.class}</Column.Desc>
         <Column.Date date={item.created_at} />
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -56,7 +56,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

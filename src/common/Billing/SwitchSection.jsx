@@ -54,7 +54,7 @@ export default Radium(React.createClass({
       activePlan: {
         color: this.context.muiTheme.palette.primary1Color
       }
-    }
+    };
   },
 
   handleCancelPlanDialog() {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
 
   handlePlanDialog() {
     this.setToggled(true);
-    this.props.onPlanDialog()
+    this.props.onPlanDialog();
   },
 
   setToggled(value) {
@@ -79,7 +79,7 @@ export default Radium(React.createClass({
           <div style={{fontSize: '1.1rem', lineHeight: '1.1rem'}}><strong>Builder</strong></div>
           <div>We pick your bill</div>
         </div>
-      )
+      );
     }
 
     if (this.props.planCanceled) {
@@ -91,7 +91,7 @@ export default Radium(React.createClass({
 
           <div>Click <a onClick={this.handlePlanDialog}> here </a> to extend.</div>
         </div>
-      )
+      );
     }
     return (
       <div style={styles.cancelPlanLink}>
@@ -113,13 +113,13 @@ export default Radium(React.createClass({
             <a onClick={this.handlePlanDialog}>Switch to Production</a>
           </div>
         </div>
-      )
+      );
     }
     return (
       <div style={[this.props.planCanceled === false && styles.activePlan]}>
         Production
       </div>
-    )
+    );
   },
 
   renderToggle() {
@@ -141,7 +141,7 @@ export default Radium(React.createClass({
         ref="toggle"
         defaultToggled={defaultToggled}
         onToggle={toggleHandler}/>
-    )
+    );
   },
 
   render() {
@@ -163,6 +163,6 @@ export default Radium(React.createClass({
           {this.renderRightSide()}
         </div>
       </div>
-    )
+    );
   }
 }));

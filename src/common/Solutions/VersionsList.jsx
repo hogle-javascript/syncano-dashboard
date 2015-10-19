@@ -24,7 +24,7 @@ export default React.createClass({
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.items === null
-    })
+    });
   },
 
   // List
@@ -79,7 +79,7 @@ export default React.createClass({
         </Column.ID>
 
       </ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -98,7 +98,7 @@ export default React.createClass({
     <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
       {this.props.emptyItemContent}
     </ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

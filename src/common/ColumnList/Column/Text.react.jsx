@@ -26,7 +26,7 @@ export default Radium(React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   getStyles() {
