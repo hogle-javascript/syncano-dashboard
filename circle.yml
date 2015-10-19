@@ -2,8 +2,6 @@ machine:
   node:
     version:
       0.12.7
-  environment:
-    NODE_ENV: staging
 
 general:
   artifacts:
@@ -14,7 +12,7 @@ test:
   override:
     - ./test.sh:
         parallel: true
-        timeout: 300
+        timeout: 360
 
 deployment:
   production:
@@ -22,7 +20,9 @@ deployment:
     commands:
       - NODE_ENV=production npm run-script bump
       - NODE_ENV=production npm run-script deployment-master
+      - curl -v -X POST https://circleci.com/api/v1/project/syncano/syncano-dashboard/tree/screenshots?circle-token=$CI_TOKEN
+
   staging:
     branch: devel
     commands:
-      - npm run-script deployment-devel
+      - NODE_ENV=staging npm run-script deployment-devel

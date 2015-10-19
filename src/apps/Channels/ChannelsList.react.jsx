@@ -28,7 +28,7 @@ export default React.createClass({
   ],
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items})
+    this.setState({items: nextProps.items});
   },
 
   // List
@@ -37,7 +37,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -77,7 +77,7 @@ export default React.createClass({
           primaryText="Delete a Channel" />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

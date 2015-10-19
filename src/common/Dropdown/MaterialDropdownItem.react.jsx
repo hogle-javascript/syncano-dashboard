@@ -47,7 +47,7 @@ export default React.createClass({
         transform: 'translateY(-50%)',
         top: '50%'
       }
-    }
+    };
   },
 
   getGravatarUrl() {
@@ -92,7 +92,7 @@ export default React.createClass({
           secondaryText={secondaryText}
           disableTouchTap={!headerContentProps.clickable}
           onClick={headerContentProps.handleItemClick}/>
-      )
+      );
     }
 
     return headerContentElement;
@@ -125,7 +125,7 @@ export default React.createClass({
             </span>
           </MUI.ListItem>
         </MUI.List>
-      )
+      );
     });
 
     return items;

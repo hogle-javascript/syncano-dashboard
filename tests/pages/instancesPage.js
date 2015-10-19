@@ -1,10 +1,10 @@
-var instancesCommands = {
-  clickFAB: function() {
+const instancesCommands = {
+  clickFAB() {
     return this.waitForElementVisible('@fab')
       .click('@fab')
       .waitForElementVisible('@confirmButton');
   },
-  fillInstanceDescription: function(description) {
+  fillInstanceDescription(description) {
     return this.waitForElementVisible('@createModalDescriptionInput')
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
@@ -18,7 +18,7 @@ var instancesCommands = {
   clickDropdown: function() {
     return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
-  isModalClosed: function(element) {
+  isModalClosed(element) {
     return this.waitForElementNotVisible(element);
   }
 };

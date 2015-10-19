@@ -29,7 +29,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -59,7 +59,7 @@ export default React.createClass({
             primaryText="Delete a Data Endpoint" />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -74,7 +74,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

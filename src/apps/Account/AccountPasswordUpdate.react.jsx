@@ -39,7 +39,7 @@ export default React.createClass({
       buttonLabel: {
         fontSize: 16
       }
-    }
+    };
   },
 
   handleButtonClick() {
@@ -69,6 +69,6 @@ export default React.createClass({
             primary={true}/>
         </div>
       </Container>
-    )
+    );
   }
 });

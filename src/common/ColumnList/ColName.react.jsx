@@ -24,15 +24,15 @@ export default React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   handleMouseOver() {
-    this.setState({color: this.props.hoverColor})
+    this.setState({color: this.props.hoverColor});
   },
 
   handleMouseLeave() {
-    this.setState({color: this.props.color})
+    this.setState({color: this.props.color});
   },
 
   handleClick() {
@@ -48,6 +48,6 @@ export default React.createClass({
         onClick={this.handleClick}>
         <div style={{fontSize: '16px'}}>{this.props.children}</div>
       </div>
-    )
+    );
   }
 });

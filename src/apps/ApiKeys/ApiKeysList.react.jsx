@@ -31,7 +31,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.api_key, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.api_key, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -75,7 +75,7 @@ export default React.createClass({
           primaryText="Reset an API Key" />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

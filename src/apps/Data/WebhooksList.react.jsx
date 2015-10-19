@@ -34,8 +34,8 @@ export default React.createClass({
     event.stopPropagation();
     this.refs.snackbar.show();
     setTimeout(() => {
-      this.refs.snackbar.dismiss()
-    }, 1200)
+      this.refs.snackbar.dismiss();
+    }, 1200);
   },
 
   handleItemClick(itemName) {
@@ -47,7 +47,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderCopyLinkIcon(item) {
@@ -101,7 +101,7 @@ export default React.createClass({
             primaryText="Delete a Webhook" />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -116,7 +116,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

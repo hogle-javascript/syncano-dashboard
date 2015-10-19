@@ -8,7 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
-import AdminsActions from './AdminsActions'
+import AdminsActions from './AdminsActions';
 
 // Components
 import Common from '../../common';
@@ -28,14 +28,14 @@ export default React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   getStyles() {
@@ -45,7 +45,7 @@ export default React.createClass({
         fontSize: 14,
         marginTop: 4
       }
-    }
+    };
   },
 
   getAdminInvitationDropdown(item) {
@@ -63,7 +63,7 @@ export default React.createClass({
           className="dropdown-item-resend-invitation"
           primaryText="Resend Invitation" />
       </Common.ColumnList.Column.Menu>
-    )
+    );
   },
 
   getAdminDropdown(item) {
@@ -80,7 +80,7 @@ export default React.createClass({
           onTouchTap={AdminsActions.showDialog.bind(null, item)}
           primaryText="Edit Admin" />
       </Common.ColumnList.Column.Menu>
-    )
+    );
   },
 
   getDropdownMenu(item) {
@@ -90,7 +90,7 @@ export default React.createClass({
       return this.getAdminInvitationDropdown(item);
     }
 
-    return this.getAdminDropdown(item)
+    return this.getAdminDropdown(item);
   },
 
   handleItemIconClick(id, state) {
@@ -98,7 +98,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, onClickConfirm, event) {
-    this.refs.menuDialog.show(listItem.email, onClickConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.email, onClickConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -128,7 +128,7 @@ export default React.createClass({
         <Common.ColumnList.Column.Date date={item.created_at}/>
         {this.getDropdownMenu(item)}
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {

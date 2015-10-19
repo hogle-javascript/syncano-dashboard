@@ -53,7 +53,7 @@ export default React.createClass({
       fabListBottom: {
         bottom: 100
       }
-    }
+    };
   },
 
   getAssociatedClasses() {
@@ -84,7 +84,7 @@ export default React.createClass({
         <div>
           Not associated: {this.getDialogList(associatedItems, 'name')}
         </div>
-      )
+      );
     }
 
     return list[associationsFor];
@@ -92,6 +92,17 @@ export default React.createClass({
 
   isProtectedFromDelete(item) {
     return item.protectedFromDelete;
+  },
+
+  handleChangePalette(color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+
+    Actions.updateClass(
+      Store.getCheckedItem().name, {
+        metadata: JSON.stringify({color, icon})
+      }
+    );
+    Actions.uncheckAll();
   },
 
   handleDelete() {
@@ -177,12 +188,12 @@ export default React.createClass({
                 show={this.state.isLoading}/>
           ]
         }
-      }
+      };
     }
 
     return [
       deleteDialog
-    ]
+    ];
   },
 
   render() {

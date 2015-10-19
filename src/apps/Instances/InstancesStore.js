@@ -23,7 +23,7 @@ export default Reflux.createStore({
       isTourVisible: false,
       reactTourConfig: null,
       currentStep: -1
-    }
+    };
   },
 
   init() {
@@ -147,7 +147,7 @@ export default Reflux.createStore({
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     });
   },
 
@@ -217,7 +217,7 @@ export default Reflux.createStore({
       return {
         color: null,
         icon: null
-      }
+      };
     }
 
     return {

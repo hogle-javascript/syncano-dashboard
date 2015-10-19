@@ -34,11 +34,11 @@ export default React.createClass({
     return {
       listType: this.props.listType,
       items: this.props.items
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items})
+    this.setState({items: nextProps.items});
   },
 
   // List
@@ -48,7 +48,8 @@ export default React.createClass({
   },
 
   handleItemClick(instanceName) {
-    SessionActions.fetchInstance(instanceName).then(() => this.transitionTo('instance', {instanceName}));
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
   },
 
   handleChangePalette(color, icon) {
@@ -56,7 +57,7 @@ export default React.createClass({
     let metadata = JSON.stringify({color, icon});
 
     Actions.updateInstance(Store.getClickedItem().name, {metadata});
-    Actions.uncheckAll()
+    Actions.uncheckAll();
   },
 
   handleClickItemDropdown(item) {
@@ -68,7 +69,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   initDialogs() {
@@ -86,7 +87,7 @@ export default React.createClass({
           handleClick: this.handleChangePalette
         }
       }
-    ]
+    ];
   },
 
   renderItem(item) {
@@ -129,7 +130,7 @@ export default React.createClass({
             primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   getList() {
@@ -138,7 +139,7 @@ export default React.createClass({
         <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
           {this.props.emptyItemContent}
         </Common.ColumnList.EmptyItem>
-      )
+      );
     }
 
     let items = this.state.items.map((item) => this.renderItem(item));
@@ -153,7 +154,7 @@ export default React.createClass({
         padding: 0,
         background: 'none'
       }
-    }
+    };
   },
 
   renderLoaded() {

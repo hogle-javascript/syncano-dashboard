@@ -17,7 +17,7 @@ export default Radium(React.createClass({
     this.setState({
       stars_count: nextProps.solution.stars_count,
       starred_by_me: nextProps.solution.starred_by_me
-    })
+    });
   },
 
   getStyles() {
@@ -36,7 +36,7 @@ export default Radium(React.createClass({
         fontSize: 13,
         color: MUI.Styles.Colors.grey500
       }
-    }
+    };
   },
 
   isStarred() {
@@ -71,6 +71,6 @@ export default Radium(React.createClass({
           {this.state.stars_count.toString()}
         </div>
       </div>
-    )
+    );
   }
 }));

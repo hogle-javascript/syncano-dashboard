@@ -15,7 +15,7 @@ export default React.createClass({
     return {
       disabled: this.props.disabled,
       columns: this.props.columns
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {
@@ -24,7 +24,7 @@ export default React.createClass({
 
   handleMenuClick() {
     console.info('ColumnAvatarCheck:handleClick');
-    this.props.handleIconClick(this.props.id, !this.state.checked)
+    this.props.handleIconClick(this.props.id, !this.state.checked);
   },
 
   handleClick(columnId) {
@@ -46,7 +46,7 @@ export default React.createClass({
           primaryText={column.name}
           secondaryText={column.tooltip}
           leftCheckbox={checkbox}/>
-      )
+      );
     });
   },
 
@@ -61,6 +61,6 @@ export default React.createClass({
         openDirection="bottom-left">
         {this.renderMenuItems()}
       </MUI.IconMenu>
-    )
+    );
   }
 });

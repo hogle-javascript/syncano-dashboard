@@ -41,7 +41,7 @@ export default Radium(React.createClass({
       hard_limit: {
         equality: {
           attribute: 'soft_limit',
-          message: '^Hard limit have to be higher then soft limit',
+          message: '^Hard limit has to be higher than soft limit',
           comparator: (v1, v2) => {
             return parseInt(v1, 10) > parseInt(v2, 10);
           }
@@ -50,11 +50,11 @@ export default Radium(React.createClass({
           onlyInteger: true
         }
       }
-    }
+    };
   },
 
   componentDidMount() {
-    Actions.fetch()
+    Actions.fetch();
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -124,7 +124,7 @@ export default Radium(React.createClass({
         display: 'flex',
         justifyContent: 'center'
       }
-    }
+    };
   },
 
   // Dialogs config
@@ -148,7 +148,7 @@ export default Radium(React.createClass({
         modal: true,
         children: ['Are you sure you want to cancel your Production plan?']
       }
-    }]
+    }];
   },
 
   handleCancelCancelProductionPlan() {
@@ -158,12 +158,12 @@ export default Radium(React.createClass({
 
   handleShowCancelPlanDialog() {
     console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.showDialog('cancelProductionPlan')
+    this.showDialog('cancelProductionPlan');
   },
 
   handleCancelProductionPlan() {
     Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
-      return item.id
+      return item.id;
     })).then(() => {
       Actions.fetch();
     });
@@ -254,7 +254,7 @@ export default Radium(React.createClass({
 
           </div>
 
-        )
+        );
       }
       return (
         <div>
@@ -339,7 +339,7 @@ export default Radium(React.createClass({
           </div>
         </div>
       </form>
-    )
+    );
   },
 
   renderSummary() {
@@ -428,7 +428,7 @@ export default Radium(React.createClass({
               onClick={this.handleShowPlanDialog}/>
           </div>
         </div>
-      )
+      );
     }
 
     return (

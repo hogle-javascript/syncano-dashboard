@@ -49,7 +49,7 @@ export default React.createClass({
     let metadata = JSON.stringify({color, icon});
 
     Actions.updateClass(Store.getClickedItem().name, {metadata});
-    Actions.uncheckAll()
+    Actions.uncheckAll();
   },
 
   handleClassDropdownClick(item) {
@@ -57,7 +57,7 @@ export default React.createClass({
   },
 
   showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML)
+    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   redirectToEditClassView(className) {
@@ -84,7 +84,7 @@ export default React.createClass({
           handleClick: this.handleChangePalette
         }
       }
-    ]
+    ];
   },
 
   renderItem(item) {
@@ -131,7 +131,7 @@ export default React.createClass({
             primaryText="Delete a Class" />
         </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -145,7 +145,7 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

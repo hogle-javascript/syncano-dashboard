@@ -18,7 +18,7 @@ export default React.createClass({
   getInitialState() {
     return {
       _dialogVisible: false
-    }
+    };
   },
 
   getDialogMessage(itemName, title) {
@@ -31,7 +31,7 @@ export default React.createClass({
           </li>
         </ul>
       </div>
-    )
+    );
   },
 
   handleConfirmClick() {
@@ -45,7 +45,7 @@ export default React.createClass({
       itemName: objName,
       handleConfirm: onClickConfirm,
       dialogMessage: this.getDialogMessage(objName, title)
-    }, () => this.refs.dialog.show())
+    }, () => this.refs.dialog.show());
   },
 
   render() {

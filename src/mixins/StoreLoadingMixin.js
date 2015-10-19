@@ -8,7 +8,7 @@ export default {
 
       arr.forEach(function(item) {
         this.setLoadingState(item);
-      }.bind(this))
+      }.bind(this));
     }
   },
 

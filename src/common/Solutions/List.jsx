@@ -34,7 +34,7 @@ export default React.createClass({
         fontSize: 34,
         margin: 0
       }
-    }
+    };
   },
 
   getListItems() {
@@ -64,7 +64,7 @@ export default React.createClass({
             onUnstar={this.props.onUnstar}
             onStar={this.props.onStar}/>
         </div>
-      )
+      );
     });
   },
 

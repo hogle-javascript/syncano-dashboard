@@ -9,7 +9,7 @@ export default {
       throw Error("Missing attribute: 'autosaveAttributeName'");
     }
     if (!_.has(localStorage, this.autosaveAttributeName)) {
-      localStorage.setItem(this.autosaveAttributeName, true)
+      localStorage.setItem(this.autosaveAttributeName, true);
     }
   },
 
@@ -20,7 +20,7 @@ export default {
   getInitialState() {
     return {
       autosaveTimer: null
-    }
+    };
   },
 
   isAutosaveEnabled() {

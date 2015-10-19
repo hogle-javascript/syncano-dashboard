@@ -18,7 +18,7 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       checkable: true
-    }
+    };
   },
 
   getInitialState() {
@@ -26,11 +26,11 @@ export default Radium(React.createClass({
       hovered: false,
       checked: this.props.checked,
       background: this.props.background
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked})
+    this.setState({checked: newProps.checked});
   },
 
   getIconState() {
@@ -78,7 +78,7 @@ export default Radium(React.createClass({
       checkable: {
         cursor: 'pointer'
       }
-    }
+    };
   },
 
   handleClick(event) {
@@ -126,6 +126,6 @@ export default Radium(React.createClass({
           className={`synicon-${iconClass}`}
           style={iconStyle}/>
       </MUI.Paper>
-    )
+    );
   }
 }));

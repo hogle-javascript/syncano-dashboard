@@ -26,7 +26,7 @@ export default Radium(React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   getStyles() {
@@ -40,7 +40,7 @@ export default Radium(React.createClass({
       padding: '16px 8px',
       wordBreak: 'break-all',
       color: this.props.color
-    }
+    };
   },
 
   handleTouchTap(event) {
@@ -56,7 +56,7 @@ export default Radium(React.createClass({
         touch={true}
         tooltipPosition='bottom-left'
         iconClassName='synicon-dots-vertical'/>
-    )
+    );
   },
 
   render() {
