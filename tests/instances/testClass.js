@@ -1,6 +1,6 @@
 const utils = require('../utils');
 
-module.exports = {
+export default {
   tags: ['class'],
   before(client) {
     const loginPage = client.page.loginPage();
