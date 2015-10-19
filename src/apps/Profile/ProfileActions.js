@@ -9,6 +9,7 @@ export default CreateActions({
   },
   changePassword: {
     asyncResult: true,
+    asyncForm: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Profile.changePassword'
   },
