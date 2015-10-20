@@ -31,6 +31,10 @@ export default React.createClass({
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({items: nextProps.items});
+  },
+
   getStyles() {
     return {
       list: {
@@ -40,8 +44,19 @@ export default React.createClass({
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items});
+  getList() {
+    if (this.state.items.length === 0) {
+      return (
+        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </Common.ColumnList.EmptyItem>
+      );
+    }
+
+    let items = this.state.items.map((item) => this.renderItem(item));
+
+    items.reverse();
+    return items;
   },
 
   // List
@@ -79,21 +94,6 @@ export default React.createClass({
     );
   },
 
-  renderList() {
-    if (this.state.items.length === 0) {
-      return (
-        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </Common.ColumnList.EmptyItem>
-      );
-    }
-
-    let items = this.state.items.map((item) => this.renderItem(item));
-
-    items.reverse();
-    return items;
-  },
-
   renderLoaded() {
     let styles = this.getStyles();
 
@@ -109,7 +109,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
-          {this.renderList()}
+          {this.getList()}
         </Common.Lists.List>
       </Common.Lists.Container>
     );

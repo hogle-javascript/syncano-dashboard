@@ -1,19 +1,16 @@
 import React from 'react';
-import Reflux from 'reflux';
-import Router from 'react-router';
 import Radium from 'radium';
+import Router from 'react-router';
+import Reflux from 'reflux';
+import _ from 'lodash';
 
-// Utils
-import HeaderMixin from '../Header/HeaderMixin';
-import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './CodeBoxAutosaveMixin';
+import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
 
-// Stores and Actions
-import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
+import Actions from './CodeBoxActions';
 
-// Components
 import MUI from 'material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
@@ -25,18 +22,15 @@ export default Radium(React.createClass({
   displayName: 'CodeBoxConfig',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
-    React.addons.LinkedStateMixin,
-
     Reflux.connect(Store),
-    HeaderMixin,
+    React.addons.LinkedStateMixin,
+    Router.Navigation,
+
     SnackbarNotificationMixin,
-    UnsavedDataMixin,
     AutosaveMixin,
+    UnsavedDataMixin,
     Mixins.Mousetrap,
-    Mixins.Dialogs,
-    Mixins.InstanceTabs
+    Mixins.Dialogs
   ],
 
   autosaveAttributeName: 'codeBoxConfigAutosave',
@@ -49,61 +43,131 @@ export default Radium(React.createClass({
     });
   },
 
+  componentWillUpdate() {
+    // 'mousetrap' class has to be added directly to input element to make CMD + S works
+
+    if (this.state.currentCodeBox) {
+      let refNames = _.keys(this.refs)
+        .filter((refName) => _.includes(refName.toLowerCase(), 'field'));
+
+      _.forEach(refNames, (refName) => {
+        let inputNode = this.refs[refName].refs.input.getDOMNode();
+
+        if (inputNode && !_.includes(inputNode.className, 'mousetrap')) {
+          inputNode.classList.add('mousetrap');
+        }
+      });
+    }
+  },
+
   getStyles() {
     return {
       container: {
         margin: '25px auto',
         width: '100%',
-        maxWidth: '1140px'
+        maxWidth: '600px'
       },
-      autosaveCheckbox: {
-        marginTop: 30
+      field: {
+        margin: '10px 10px'
+      },
+      addButton: {
+        margin: '20px 10px',
+        maxWidth: '120px'
       },
       wrongConfigSnackbar: {
         color: MUI.Styles.Colors.red400
+      },
+      deleteIcon: {
+        padding: '24px 12px'
       }
     };
   },
 
-  isSaved() {
-    if (this.state.currentCodeBox && this.refs.editorConfig) {
-      let initialCodeBoxConfig = JSON.stringify(this.state.currentCodeBox.config, null, 2);
-      let currentCodeBoxConfig = this.refs.editorConfig.editor.getValue();
+  getConfigObject() {
+    let codeBoxConfig = this.state.codeBoxConfig;
+    let codeBoxConfigObject = _.reduce(codeBoxConfig, (result, item) => {
+      result[item.key] = item.value;
+      return result;
+    }, {});
 
-      return initialCodeBoxConfig === currentCodeBoxConfig;
-    }
+    return codeBoxConfigObject;
   },
 
-  isConfigValid() {
-    let configValue = this.refs.editorConfig ? this.refs.editorConfig.editor.getValue() : null;
+  isSaved() {
+    return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
+  },
 
-    if (configValue) {
-      try {
-        JSON.parse(configValue);
-        return true;
-      } catch (err) {
-        return false;
-      }
+  hasKey(newKey) {
+    let existingKeys = _.pluck(this.state.codeBoxConfig, 'key');
+
+    return _.includes(existingKeys, newKey);
+  },
+
+  handleAddField() {
+    let codeBoxConfig = this.state.codeBoxConfig;
+    let newField = {
+      key: this.refs.newFieldKey.getValue(),
+      value: this.refs.newFieldValue.getValue()
+    };
+
+    if (newField.key === '') {
+      this.refs.newFieldKey.setErrorText('This field cannot be empty');
+      return;
     }
+
+    if (this.hasKey(newField.key)) {
+      this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
+      return;
+    }
+
+    codeBoxConfig.push(newField);
+    this.setState({codeBoxConfig});
+    this.refs.newFieldKey.clearValue();
+    this.refs.newFieldValue.clearValue();
+    this.runAutoSave();
   },
 
   handleUpdate() {
-    let config = this.refs.editorConfig.editor.getValue();
-    let styles = this.getStyles();
+    this.clearAutosaveTimer();
+    this.handleUpdateAllKeys();
+    let config = this.getConfigObject();
 
-    if (this.isConfigValid()) {
-      this.clearAutosaveTimer();
-      Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
-      this.setSnackbarNotification({
-        message: 'Saving...'
-      });
-    } else {
-      this.setSnackbarNotification({
-        message: 'Config is not Valid. Please verify if it is valid JSON format',
-        autoHideDuration: 4000,
-        style: styles.wrongConfigSnackbar
-      });
+    Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
+    this.setSnackbarNotification({
+      message: 'Saving...'
+    });
+  },
+
+  handleDeleteKey(index) {
+    let codeBoxConfig = this.state.codeBoxConfig;
+
+    codeBoxConfig.splice(index, 1);
+    this.setState({codeBoxConfig});
+  },
+
+  handleUpdateAllKeys() {
+    _.forEach(this.state.codeBoxConfig, (field, index) => {
+      this.handleUpdateKey(field.key, index);
+    });
+  },
+
+  handleUpdateKey(key, index) {
+    let codeBoxConfig = this.state.codeBoxConfig;
+    let newField = {
+      key: this.refs[`fieldKey${key}`].getValue(),
+      value: this.refs[`fieldValue${key}`].getValue()
+    };
+
+    if (key !== newField.key && this.hasKey(newField.key)) {
+      this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
+      return;
     }
+
+    codeBoxConfig[index] = newField;
+
+    this.setState({codeBoxConfig}, () => {
+      this.refs[`fieldKey${newField.key}`].setErrorText(null);
+    });
   },
 
   initDialogs() {
@@ -128,54 +192,109 @@ export default Radium(React.createClass({
     }];
   },
 
-  renderEditor() {
+  renderFields() {
+    if (!this.state.codeBoxConfig) {
+      return null;
+    }
+
     let styles = this.getStyles();
-    let config = null;
-    let codeBox = this.state.currentCodeBox;
-
-    if (codeBox) {
-      config = JSON.stringify(codeBox.config, null, 2);
-
+    let codeboxConfig = this.state.codeBoxConfig ? this.state.codeBoxConfig : [];
+    let configFields = _.map(codeboxConfig, (field, index) => {
       return (
-        <div>
-          <Common.Editor
-            ref="editorConfig"
-            height={300}
-            mode="javascript"
-            onLoad={this.clearAutosaveTimer}
+        <div
+          className="row"
+          key={index}>
+          <MUI.TextField
+            key={`fieldKey${field.key}`}
+            ref={`fieldKey${field.key}`}
+            hintText="Key"
+            defaultValue={field.key}
+            style={styles.field}
             onChange={this.runAutoSave}
-            theme="github"
-            value={config} />
-          <MUI.Checkbox
-            ref="autosaveCheckbox"
-            name="autoSaveCheckbox"
-            label="Autosave"
-            style={styles.autosaveCheckbox}
-            defaultChecked={this.isAutosaveEnabled()}
-            onCheck={this.saveCheckboxState} />
+            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
+          <MUI.TextField
+            key={`fieldValue${field.key}`}
+            ref={`fieldValue${field.key}`}
+            hintText="Value"
+            defaultValue={field.value}
+            style={styles.field}
+            onChange={this.runAutoSave}
+            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
+          <MUI.IconButton
+            iconClassName="synicon-delete"
+            style={styles.deleteIcon}
+            tooltip="Delete key"
+            onClick={this.handleDeleteKey.bind(null, index)}/>
         </div>
       );
-    }
+    });
+
+    return _.sortBy(configFields, 'key');
   },
 
-  render() {
-    console.debug('CodeBoxConfig::render');
+  renderNewFiledSection() {
     let styles = this.getStyles();
 
     return (
-      <Container style={styles.container}>
-        {this.getDialogs()}
-        <Common.Fab position="top">
-          <Common.Fab.TooltipItem
+      <div>
+        <div className="row">
+          <MUI.TextField
+            className="config-input-key"
+            ref="newFieldKey"
+            hintText="Key"
+            defaultValue=""
+            style={styles.field} />
+          <MUI.TextField
+            className="config-input-value"
+            ref="newFieldValue"
+            hintText="Value"
+            defaultValue=""
+            style={styles.field} />
+        </div>
+        <div>
+          <MUI.RaisedButton
+            className="add-field-button"
+            label="Add field"
+            secondary={true}
+            onClick={this.handleAddField}
+            style={styles.addButton} />
+          <MUI.Checkbox
+            className="config-autosave-checkbox"
+            ref="autosaveCheckbox"
+            name="autoSaveCheckbox"
+            label="Autosave"
+            style={styles.addButton}
+            defaultChecked={this.isAutosaveEnabled()}
+            onCheck={this.saveCheckboxState} />
+        </div>
+      </div>
+    );
+  },
+
+  render() {
+    let styles = this.getStyles();
+
+    if (!this.state.codeBoxConfig) {
+      return null;
+    }
+
+    return (
+      <div>
+        <Container style={styles.container}>
+          {this.getDialogs()}
+          <Common.Fab position="top">
+            <Common.Fab.TooltipItem
             tooltip="Click here to save CodeBox"
             mini={true}
             onClick={this.handleUpdate}
             iconClassName="synicon-content-save"/>
-        </Common.Fab>
-        <Common.Loading show={this.state.isLoading}>
-          {this.renderEditor()}
-        </Common.Loading>
-      </Container>
+          </Common.Fab>
+          {this.renderFields()}
+        </Container>
+        <Container style={styles.container}>
+          {this.renderNewFiledSection()}
+        </Container>
+      </div>
     );
   }
 }));

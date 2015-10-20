@@ -82,8 +82,12 @@ module.exports = {
     leftMenuPage.clickButton('@codeBoxes');
     codeBoxesPage.clickButton('@codeBoxListItem');
     codeBoxEditPage.clickButton('@config');
-    codeBoxEditPage.waitForElementPresent('@configEmpty');
-    codeBoxEditPage.verify.containsText('@configEmpty', '{');
+    codeBoxEditPage.waitForElementPresent('@configKeyField');
+    codeBoxEditPage.waitForElementPresent('@configValueField');
+    codeBoxEditPage.waitForElementPresent('@configAddFieldButton');
+    codeBoxEditPage.waitForElementPresent('@configAutosaveCheckbox');
+    codeBoxEditPage.verify.containsText('@configKeyField', '');
+    codeBoxEditPage.verify.containsText('@configValueField', '');
   },
   'User goes to CodeBox traces view' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();

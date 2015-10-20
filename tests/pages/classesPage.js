@@ -59,6 +59,13 @@ module.exports = {
     editButton: {
       selector: '.synicon-pencil'
     },
+    multipleSelectButton: {
+      selector: '.synicon-checkbox-multiple-marked-outline'
+    },
+    classTableRows: {
+      selector: '//div[@class="classes-list-container"]/div[2]/div/div',
+      locateStrategy: 'xpath'
+    },
     classTableRow: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]',
       locateStrategy: 'xpath'
