@@ -1,9 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import Radium from 'radium';
 
 // Actions & Stores
 import Actions from './InstancesActions';
+import InstanceDialogActions from './InstanceDialogActions';
 import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 
@@ -13,14 +15,16 @@ import {Dialogs} from '../../mixins';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
+import InstanceDialog from './InstanceDialog.react';
 import Container from '../../common/Container/Container.react';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'InstanceEdit',
 
   mixins: [
     Router.State,
+    Router.Navigation,
     Reflux.connect(SessionStore),
     React.addons.LinkedStateMixin,
     Dialogs
@@ -47,6 +51,15 @@ export default React.createClass({
       container: {
         padding: '5px 10px'
       },
+      subTabsHeader: {
+        backgroundColor: 'transparent'
+      },
+      tabs: {
+      },
+      tab: {
+        color: '#444',
+        borderBottom: '1px solid #DDDDDD'
+      },
       title: {
         fontSize: '20px',
         fontWeight: 500,
@@ -54,18 +67,30 @@ export default React.createClass({
         font: '"Avenir", sans-serif;',
         marginBottom: '20px'
       },
-      textField: {
-        marginBottom: '25px',
-        width: '100%'
+      nameSection: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: 40
+      },
+      nameField: {
+        minWidth: '60%'
+      },
+      createButton: {
+        alignSelf: 'center',
+        marginRight: 20
       },
       confirmButton: {
-        marginLeft: '8px',
+        marginLeft: '30px',
         marginTop: 50
       },
-      picker: {
+      content: {
         height: 300,
         marginBottom: 50,
-        padding: '10px 8px'
+        padding: '10px 8px',
+        width: '100%'
+      },
+      generalTab: {
+        margin: '25px 20px 0 20px'
       }
     };
   },
@@ -97,6 +122,17 @@ export default React.createClass({
     }
   },
 
+  showAddInstanceDialog() {
+    InstanceDialogActions.showDialog();
+  },
+
+  redirectToNewInstance() {
+    let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
+
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
+  },
+
   render() {
     const instance = this.state.instance;
     const styles = this.getStyles();
@@ -107,29 +143,47 @@ export default React.createClass({
 
     return (
       <Container style={styles.container}>
+        <InstanceDialog
+          ref="addInstanceDialog"
+          handleSubmit={this.redirectToNewInstance}/>
         <div style={styles.title}>
           Edit an Instance
         </div>
-        <div className="col-xs-16">
-          <MUI.TextField
-            ref="name"
-            floatingLabelText="Instance name"
-            disabled={true}
-            defaultValue={instance.name}
-            style={styles.textField} />
-        </div>
-        <div className="col-xs-16">
-          <MUI.TextField
-            ref="description"
-            floatingLabelText="Instance description"
-            defaultValue={instance.description}
-            multiLine={true}
-            style={styles.textField} />
-        </div>
-        <div style={styles.picker}>
-          <MUI.Tabs>
-            <MUI.Tab label="Colors">
-              <div style={styles.picker}>
+        <div style={styles.content}>
+          <MUI.Tabs
+            tabItemContainerStyle={styles.subTabsHeader}
+            style={styles.tabs}>
+            <MUI.Tab
+              label="General"
+              style={styles.tab}>
+              <div style={styles.generalTab}>
+                <div style={styles.nameSection}>
+                  <MUI.TextField
+                    ref="name"
+                    floatingLabelText="Instance name"
+                    disabled={true}
+                    defaultValue={instance.name}
+                    style={styles.nameField} />
+                  <MUI.RaisedButton
+                    onClick={this.showAddInstanceDialog}
+                    label="Create an Instance"
+                    secondary={true}
+                    style={styles.createButton} />
+                </div>
+                <div>
+                  <MUI.TextField
+                    ref="description"
+                    floatingLabelText="Instance description"
+                    defaultValue={instance.description}
+                    fullWidth={true}
+                    multiLine={true} />
+                </div>
+              </div>
+            </MUI.Tab>
+            <MUI.Tab
+              label="Colors"
+              style={styles.tab}>
+              <div style={styles.content}>
                 <Common.ColorIconPicker
                   ref="color"
                   pickerType="color"
@@ -139,8 +193,10 @@ export default React.createClass({
                 />
               </div>
             </MUI.Tab>
-            <MUI.Tab label="Icons">
-              <div style={styles.picker}>
+            <MUI.Tab
+              label="Icons"
+              style={styles.tab}>
+              <div style={styles.content}>
                 <Common.ColorIconPicker
                   ref="icon"
                   pickerType="icon"
@@ -161,4 +217,4 @@ export default React.createClass({
       </Container>
     );
   }
-});
+}));

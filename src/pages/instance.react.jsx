@@ -5,11 +5,9 @@ import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
-import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
-import InstanceDialog from '../apps/Instances/InstanceDialog.react';
 
 export default React.createClass({
 
@@ -110,6 +108,12 @@ export default React.createClass({
       },
       {
         type: MUI.MenuItem.Types.LINK,
+        route: 'instance-edit',
+        payload: this.getMenuItemHref('instance-edit'),
+        text: 'General'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
         route: 'admins',
         payload: this.getMenuItemHref('admins'),
         text: 'Administrators'
@@ -119,43 +123,8 @@ export default React.createClass({
         route: 'api-keys',
         payload: this.getMenuItemHref('api-keys'),
         text: 'API keys'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'instance-edit',
-        payload: this.getMenuItemHref('instance-edit'),
-        text: 'General'
-      },
-      {
-        text: this.renderAddInstanceItem()
       }
     ];
-  },
-
-  showAddInstanceDialog() {
-    InstanceDialogActions.showDialog();
-  },
-
-  redirectToNewInstance() {
-    let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
-
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
-  },
-
-  renderAddInstanceItem() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        style={styles.addInstanceItem}
-        onClick={this.showAddInstanceDialog}>
-        <MUI.FontIcon
-          style={this.getStyles().plusIcon}
-          className="synicon-plus"/>
-        <span>Add an Instance</span>
-      </div>
-    );
   },
 
   renderInstanceDropdown() {
@@ -171,9 +140,6 @@ export default React.createClass({
 
     return (
       <div>
-        <InstanceDialog
-          ref="addInstanceDialog"
-          handleSubmit={this.redirectToNewInstance}/>
         <MUI.LeftNav
           className="left-nav"
           ref="leftNav"
