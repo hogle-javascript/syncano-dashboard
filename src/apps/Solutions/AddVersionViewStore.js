@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import D from 'd.js';
 import _ from 'lodash';
 
 // Utils & Mixins
@@ -67,8 +66,6 @@ export default Reflux.createStore({
       Actions.fetchInstances,
       this.refreshData
     );
-
-    this.listenTo(SessionActions.fetchInstance.completed, this.fetchInstanceData);
   },
 
   refreshData() {
@@ -135,16 +132,27 @@ export default Reflux.createStore({
     this.data.dataReady = 'loading';
     this.trigger(this.data);
 
-    D.all([
-      Actions.fetchClasses(),
-      Actions.fetchDataViews(),
-      Actions.fetchWebhooks(),
-      Actions.fetchTriggers(),
-      Actions.fetchCodeBoxes(),
-      Actions.fetchSchedules(),
-      Actions.fetchChannels()
-    ])
-      .then(this.setInstanceData);
+    const join = this.joinTrailing(
+      Actions.fetchClasses.completed,
+      Actions.fetchDataViews.completed,
+      Actions.fetchWebhooks.completed,
+      Actions.fetchTriggers.completed,
+      Actions.fetchCodeBoxes.completed,
+      Actions.fetchSchedules.completed,
+      Actions.fetchChannels.completed,
+      () => {
+        join.stop();
+        this.setInstanceData();
+      }
+    );
+
+    Actions.fetchClasses();
+    Actions.fetchDataViews();
+    Actions.fetchWebhooks();
+    Actions.fetchTriggers();
+    Actions.fetchCodeBoxes();
+    Actions.fetchSchedules();
+    Actions.fetchChannels();
   },
 
   onFetchClassesCompleted(obj) {
