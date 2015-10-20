@@ -66,13 +66,6 @@ export default React.createClass({
     return [
       {
         type: MUI.MenuItem.Types.SUBHEADER,
-        text: 'Instances'
-      },
-      {
-        text: this.renderAddInstanceItem()
-      },
-      {
-        type: MUI.MenuItem.Types.SUBHEADER,
         text: 'Modules'
       },
       {
@@ -126,6 +119,15 @@ export default React.createClass({
         route: 'api-keys',
         payload: this.getMenuItemHref('api-keys'),
         text: 'API keys'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'instance-edit',
+        payload: this.getMenuItemHref('instance-edit'),
+        text: 'General'
+      },
+      {
+        text: this.renderAddInstanceItem()
       }
     ];
   },
