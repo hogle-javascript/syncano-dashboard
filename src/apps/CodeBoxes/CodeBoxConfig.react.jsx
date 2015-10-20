@@ -48,7 +48,7 @@ export default Radium(React.createClass({
 
     if (this.state.currentCodeBox) {
       let refNames = _.keys(this.refs)
-        .filter((refName) => _.includes(refName, 'field') || _.includes(refName, 'Field'));
+        .filter((refName) => _.includes(refName.toLowerCase(), 'field'));
 
       _.forEach(refNames, (refName) => {
         let inputNode = this.refs[refName].refs.input.getDOMNode();
@@ -97,7 +97,7 @@ export default Radium(React.createClass({
     return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
   },
 
-  isKeyExist(newKey) {
+  hasKey(newKey) {
     let existingKeys = _.pluck(this.state.codeBoxConfig, 'key');
 
     return _.includes(existingKeys, newKey);
@@ -115,7 +115,7 @@ export default Radium(React.createClass({
       return;
     }
 
-    if (this.isKeyExist(newField.key)) {
+    if (this.hasKey(newField.key)) {
       this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
       return;
     }
@@ -158,7 +158,7 @@ export default Radium(React.createClass({
       value: this.refs[`fieldValue${key}`].getValue()
     };
 
-    if (key !== newField.key && this.isKeyExist(newField.key)) {
+    if (key !== newField.key && this.hasKey(newField.key)) {
       this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
       return;
     }
