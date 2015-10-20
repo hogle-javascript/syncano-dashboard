@@ -6,6 +6,7 @@ import Actions from './DataViewsActions';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import Common from '../../common';
@@ -18,6 +19,7 @@ export default React.createClass({
   displayName: 'DataViewsList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -26,10 +28,6 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -55,7 +53,7 @@ export default React.createClass({
             primaryText="Edit a Data Endpoint" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeDataViews.bind(null, [item]))}
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}
             primaryText="Delete a Data Endpoint" />
         </Column.Menu>
       </Common.ColumnList.Item>

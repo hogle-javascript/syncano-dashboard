@@ -7,6 +7,7 @@ import Actions from './WebhooksActions';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import MUI from 'material-ui';
@@ -20,6 +21,7 @@ export default React.createClass({
   displayName: 'WebhooksList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -44,10 +46,6 @@ export default React.createClass({
       instanceName: this.getParams().instanceName,
       webhookName: itemName
     });
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderCopyLinkIcon(item) {
@@ -97,7 +95,7 @@ export default React.createClass({
             primaryText="Edit a Webhook" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeWebhooks.bind(null, [item]))}
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}
             primaryText="Delete a Webhook" />
         </Column.Menu>
       </Common.ColumnList.Item>

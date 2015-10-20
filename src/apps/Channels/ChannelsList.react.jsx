@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ChannelsActions';
@@ -24,7 +25,8 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    HeaderMixin
+    HeaderMixin,
+    Dialogs
   ],
 
   componentWillReceiveProps(nextProps) {
@@ -34,10 +36,6 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
-  },
-
-  showMenuDialog(listItem, handleConfirm, event) {
-    this.refs.menuDialog.show(listItem.name, handleConfirm, event.target.innerHTML);
   },
 
   renderItem(item) {
@@ -73,7 +71,7 @@ export default React.createClass({
           primaryText="Edit a Channel" />
           <MenuItem
           className="dropdown-item-channel-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item, Actions.removeChannels.bind(null, [item]))}
+          onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
           primaryText="Delete a Channel" />
         </Column.Menu>
       </Common.ColumnList.Item>

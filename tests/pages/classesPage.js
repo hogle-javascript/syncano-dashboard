@@ -1,29 +1,28 @@
-const globals = require('../globals');
-const utils = require('../utils');
-
+import globals from '../globals';
+import utils from '../utils';
 
 const classesCommands = {
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
       .click(field)
       .waitForElementVisible(value)
       .click(value);
   },
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  clickDropdown: function() {
+  clickDropdown() {
     return this.waitForElementVisible('@classItemDropdown').click('@classItemDropdown');
-  },
+  }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
@@ -33,6 +32,10 @@ module.exports = {
     },
     editDropdownItem: {
       selector: '//a[@class="dropdown-item-edit-class"]',
+      locateStrategy: 'xpath'
+    },
+    deleteDropdownItem: {
+      selector: '//a[@class="dropdown-item-delete-class"]',
       locateStrategy: 'xpath'
     },
     fab: {
