@@ -35,6 +35,30 @@ export default React.createClass({
     this.setState({items: nextProps.items});
   },
 
+  getList() {
+    if (this.state.items.length === 0) {
+      return (
+        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
+          {this.props.emptyItemContent}
+        </Common.ColumnList.EmptyItem>
+      );
+    }
+
+    let items = this.state.items.map((item) => this.renderItem(item));
+
+    items.reverse();
+    return items;
+  },
+
+  getStyles() {
+    return {
+      list: {
+        padding: 0,
+        background: 'none'
+      }
+    };
+  },
+
   // List
   handleItemIconClick(id, state) {
     console.info('InstancesList::handleItemIconClick', id, state);
@@ -68,30 +92,6 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
       </Common.ColumnList.Item>
     );
-  },
-
-  getList() {
-    if (this.state.items.length === 0) {
-      return (
-        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </Common.ColumnList.EmptyItem>
-      );
-    }
-
-    let items = this.state.items.map((item) => this.renderItem(item));
-
-    items.reverse();
-    return items;
-  },
-
-  getStyles() {
-    return {
-      list: {
-        padding: 0,
-        background: 'none'
-      }
-    };
   },
 
   renderLoaded() {
