@@ -64,13 +64,13 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
-          className="dropdown-item-delete-apikey"
-          primaryText="Delete an API Key" />
+            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
+            className="dropdown-item-delete-apikey"
+            primaryText="Delete an API Key" />
           <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}
-          className="dropdown-item-reset-apikey"
-          primaryText="Reset an API Key" />
+            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}
+            className="dropdown-item-reset-apikey"
+            primaryText="Reset an API Key" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
@@ -105,7 +105,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

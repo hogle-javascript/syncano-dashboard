@@ -102,13 +102,13 @@ export default React.createClass({
         <Column.Date date={item.profile.created_at}/>
         <Column.Menu>
           <MenuItem
-          className="dropdown-item-edit-user"
-          onTouchTap={Actions.showDialog.bind(null, item)}
-          primaryText="Edit an User" />
+            className="dropdown-item-edit-user"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit an User" />
           <MenuItem
-          className="dropdown-item-delete-user"
-          onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
-          primaryText="Delete an User" />
+            className="dropdown-item-delete-user"
+            onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
+            primaryText="Delete an User" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
@@ -142,7 +142,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

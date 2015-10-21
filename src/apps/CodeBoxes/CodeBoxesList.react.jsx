@@ -67,15 +67,15 @@ export default React.createClass({
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu item={item}>
+        <Column.Menu>
           <MenuItem
-          className="dropdown-item-codebox-edit"
-          onTouchTap={Actions.showDialog.bind(null, item)}
-          primaryText="Edit a CodeBox" />
+            className="dropdown-item-codebox-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a CodeBox" />
           <MenuItem
-          className="dropdown-item-codebox-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeCodeBoxes.bind(null, [item]))}
-          primaryText="Delete a Codebox" />
+            className="dropdown-item-codebox-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeCodeBoxes.bind(null, [item]))}
+            primaryText="Delete a Codebox" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
@@ -109,7 +109,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

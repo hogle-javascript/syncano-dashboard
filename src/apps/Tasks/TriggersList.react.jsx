@@ -77,13 +77,13 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-          className="dropdown-item-edit"
-          onTouchTap={Actions.showDialog.bind(null, item)}
-          primaryText="Edit a Trigger" />
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Trigger" />
           <MenuItem
-          className="dropdown-item-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}
-          primaryText="Delete a Trigger" />
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}
+            primaryText="Delete a Trigger" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
@@ -127,7 +127,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

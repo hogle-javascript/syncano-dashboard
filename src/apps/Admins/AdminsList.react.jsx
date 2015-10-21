@@ -72,7 +72,7 @@ export default React.createClass({
     let removeAdmin = AdminsActions.removeAdmins.bind(null, [item]);
 
     return (
-      <Common.ColumnList.Column.Menu item={item}>
+      <Common.ColumnList.Column.Menu>
         <MenuItem
           className="dropdown-item-delete-admin"
           onTouchTap={this.showMenuDialog.bind(null, item.email, removeAdmin)}
@@ -157,7 +157,7 @@ export default React.createClass({
           </Common.ColumnList.Column.ColumnHeader>
           <Common.ColumnList.Column.ColumnHeader columnName="DESC">Role</Common.ColumnList.Column.ColumnHeader>
           <Common.ColumnList.Column.ColumnHeader columnName="DATE">Created</Common.ColumnList.Column.ColumnHeader>
-          <Common.ColumnList.Column.ColumnHeader columnName="MENU"></Common.ColumnList.Column.ColumnHeader>
+          <Common.ColumnList.Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

@@ -64,15 +64,15 @@ export default React.createClass({
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu item={item}>
+        <Column.Menu>
           <MenuItem
-          className="dropdown-item-channel-edit"
-          onTouchTap={Actions.showDialog.bind(null, item)}
-          primaryText="Edit a Channel" />
+            className="dropdown-item-channel-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Channel" />
           <MenuItem
-          className="dropdown-item-channel-delete"
-          onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
-          primaryText="Delete a Channel" />
+            className="dropdown-item-channel-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
+            primaryText="Delete a Channel" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
@@ -120,7 +120,7 @@ export default React.createClass({
             Custom publish
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"></Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

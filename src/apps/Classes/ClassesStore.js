@@ -20,6 +20,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      clickedItem: null,
       triggers: [],
       isLoading: true
     };
