@@ -278,7 +278,7 @@
     "react/jsx-curly-spacing": 1,
     // "react/jsx-max-props-per-line": 1,
     "react/jsx-no-duplicate-props": 2,
-    "react/jsx-quotes": [2, "double"],
+    "jsx-quotes": [1, "prefer-double"],
     "react/jsx-sort-prop-types": 0,
     "react/jsx-sort-props": 0,
     "react/jsx-uses-react": 2,
@@ -291,7 +291,6 @@
     "react/react-in-jsx-scope": 2,
     "react/require-extension": 1,
     "react/self-closing-comp": 2,
-    "react/jsx-quotes" : 1,
     "react/prop-types" : 1,
     "react/wrap-multilines": [2, "never"]
   }
