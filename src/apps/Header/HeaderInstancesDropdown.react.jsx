@@ -92,9 +92,8 @@ export default Radium(React.createClass({
 
   handleDropdownItemClick(event, selectedIndex, menuItem) {
     // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload).then(() => {
-      this.transitionTo('instance', {instanceName: menuItem.payload});
-    });
+    SessionActions.fetchInstance(menuItem.payload);
+    this.transitionTo('instance', {instanceName: menuItem.payload});
   },
 
   handleInstanceActive() {
