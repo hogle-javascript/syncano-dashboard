@@ -52,13 +52,12 @@ export default Radium(React.createClass({
         padding: '5px 10px'
       },
       subTabsHeader: {
-        backgroundColor: 'transparent'
-      },
-      tabs: {
+        backgroundColor: 'transparent',
+        borderBottom: '1px solid #DDD'
       },
       tab: {
         color: '#444',
-        borderBottom: '1px solid #DDDDDD'
+        borderBottom: '1px solid #DDD'
       },
       title: {
         fontSize: '20px',
@@ -73,11 +72,11 @@ export default Radium(React.createClass({
         marginBottom: 40
       },
       nameField: {
-        minWidth: '60%'
+        flexGrow: 5
       },
       createButton: {
         alignSelf: 'center',
-        marginRight: 20
+        margin: '0 20px'
       },
       confirmButton: {
         marginLeft: '30px',
@@ -150,9 +149,7 @@ export default Radium(React.createClass({
           Edit an Instance
         </div>
         <div style={styles.content}>
-          <MUI.Tabs
-            tabItemContainerStyle={styles.subTabsHeader}
-            style={styles.tabs}>
+          <MUI.Tabs tabItemContainerStyle={styles.subTabsHeader}>
             <MUI.Tab
               label="General"
               style={styles.tab}>
