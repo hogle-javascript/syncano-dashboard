@@ -15,4 +15,5 @@ gulp.task('deployment-master', gulpSequence(
   'changelog',
   's3-cleanup'
 ));
-gulp.task('deployment-devel', gulpSequence('publish', 'clean', 's3-cleanup'));
+gulp.task('deployment-devel', gulpSequence('publish', 'clean'));
+gulp.task('deployment-branch', gulpSequence('publish-branch', 'clean'));

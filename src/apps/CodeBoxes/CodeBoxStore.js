@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
@@ -24,6 +25,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       currentCodeBox: null,
+      codeBoxConfig: null,
 
       traces: [],
       lastTraceResult: null,
@@ -56,6 +58,12 @@ export default Reflux.createStore({
 
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
+    this.data.codeBoxConfig = _.map(codeBox.config, (value, key) => {
+      return {
+        key,
+        value
+      };
+    });
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },
@@ -115,7 +123,6 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted(codeBox) {
     this.data.currentCodeBox = codeBox;
-    this.trigger(this.data);
     this.dismissSnackbarNotification();
     this.refreshData();
   },

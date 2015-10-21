@@ -26,3 +26,8 @@ deployment:
     branch: devel
     commands:
       - NODE_ENV=staging npm run-script deployment-devel
+
+  sockets:
+    branch: sockets
+    commands:
+      - NODE_ENV=staging npm run-script deployment-branch
