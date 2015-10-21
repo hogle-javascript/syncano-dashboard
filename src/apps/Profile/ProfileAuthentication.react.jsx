@@ -33,7 +33,7 @@ export default Radium(React.createClass({
   },
 
   componentDidMount() {
-    let snackbarText = 'Password reset successfully';
+    let snackbarText = 'Password reset successful';
 
     this.listenTo(Actions.changePassword.completed, this.showSnackbar.bind(null, snackbarText));
   },
