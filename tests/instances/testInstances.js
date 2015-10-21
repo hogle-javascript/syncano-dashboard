@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   tags: ['instances'],
   before(client) {
     const signupPage = client.page.signupPage();
@@ -110,6 +110,7 @@ module.exports = {
     leftMenuPage.clickButton('@instancesListSecondItem');
     client.pause(1000);
     leftMenuPage.waitForElementPresent('@instancesDropdown');
+    client.pause(1000);
     const dropdown = leftMenuPage.elements.instancesDropdown.selector;
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[1]);
