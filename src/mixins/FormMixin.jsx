@@ -37,7 +37,7 @@ export default {
 
   renderFormErrorFeedback() {
     if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
-      return true;
+      return false;
     }
 
     return <Notification type="error">{this.state.errors.feedback}</Notification>;
@@ -45,7 +45,7 @@ export default {
 
   renderFormFeedback() {
     if (!this.state.feedback || typeof this.state.feedback === 'undefined') {
-      return true;
+      return false;
     }
 
     return <Notification>{this.state.feedback}</Notification>;
