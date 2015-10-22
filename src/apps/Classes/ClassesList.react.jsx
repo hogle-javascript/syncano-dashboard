@@ -4,13 +4,15 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import SessionStore from '../Session/SessionStore';
-import ClassesActions from './ClassesActions';
-import ClassesStore from './ClassesStore';
+import Actions from './ClassesActions';
+import Store from './ClassesStore';
 
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -19,15 +21,16 @@ export default React.createClass({
   displayName: 'ClassesList',
 
   mixins: [
-    Reflux.connect(ClassesStore),
+    Reflux.connect(Store),
     HeaderMixin,
+    Dialogs,
     Router.State,
     Router.Navigation
   ],
 
   // List
   handleItemIconClick(id, state) {
-    ClassesActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleItemClick(className) {
@@ -39,6 +42,45 @@ export default React.createClass({
       }
     );
     console.info('ClassesList::handleItemClick');
+  },
+
+  handleChangePalette(color, icon) {
+    console.info('Classes::handleChangePalette', color, icon);
+    let metadata = JSON.stringify({color, icon});
+
+    Actions.updateClass(Store.getClickedItem().name, {metadata});
+    Actions.uncheckAll();
+  },
+
+  handleClassDropdownClick(item) {
+    Actions.setClickedClass(item);
+  },
+
+  redirectToEditClassView(className) {
+    let classNameParam = className || Store.getCheckedItem().name;
+
+    this.context.router.transitionTo('classes-edit', {
+      instanceName: this.getParams().instanceName,
+      className: classNameParam
+    });
+  },
+
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      }
+    ];
   },
 
   renderItem(item) {
@@ -70,6 +112,20 @@ export default React.createClass({
           {objectsCount}
         </Column.ID>
         <Column.Date date={item.created_at}/>
+        <Column.Menu handleClick={this.handleClassDropdownClick.bind(null, item)}>
+          <MenuItem
+            className="dropdown-item-edit-class"
+            onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
+            primaryText="Edit a Class" />
+          <MenuItem
+            className="dropdown-item-customize-class"
+            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
+            primaryText="Customize a Class" />
+          <MenuItem
+            className="dropdown-item-delete-class"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}
+            primaryText="Delete a Class" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
@@ -91,6 +147,8 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container className="classes-list-container">
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -114,6 +172,7 @@ export default React.createClass({
             Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

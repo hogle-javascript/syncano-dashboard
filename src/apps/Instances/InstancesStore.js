@@ -18,6 +18,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      clickedItem: null,
       items: null,
       isTourVisible: false,
       reactTourConfig: null,
@@ -43,6 +44,10 @@ export default Reflux.createStore({
     if (item) {
       return item.owner.email === SessionStore.getUser({}).email;
     }
+  },
+
+  onSetClickedInstance(item) {
+    this.data.clickedItem = item;
   },
 
   onCheckItem(checkId, state) {
@@ -73,6 +78,10 @@ export default Reflux.createStore({
     }
 
     this.trigger(this.data);
+  },
+
+  getClickedItem() {
+    return this.data.clickedItem;
   },
 
   getInstanceById(name) {

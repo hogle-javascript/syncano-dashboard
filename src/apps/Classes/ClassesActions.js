@@ -3,6 +3,7 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     setClasses: {},
+    setClickedClass: {},
     fetch: {},
     getClassByName: {},
 

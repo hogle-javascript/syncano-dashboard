@@ -1,4 +1,4 @@
-const utils = require('../utils');
+import utils from '../utils';
 
 export default {
   tags: ['class'],
@@ -39,8 +39,9 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickButton('@selectClass')
-      .clickButton('@editButton')
+      .clickDropdown()
+      .clickButton('@editDropdownItem')
+      .waitForElementVisible('@createModalDescriptionInput')
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
       .clickButton('@confirmButton')
       .waitForElementNotVisible('@editClassTitle');
@@ -53,10 +54,11 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickButton('@selectClass')
-      .clickButton('@deleteButton');
+      .clickDropdown()
+      .clickButton('@deleteDropdownItem');
     client.pause(1000);
     classesPage
+      .waitForElementVisible('@deleteClassModalTitle')
       .clickButton('@confirmDeleteButton')
       .waitForElementNotVisible('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');

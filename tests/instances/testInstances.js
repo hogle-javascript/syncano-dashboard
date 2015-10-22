@@ -31,14 +31,14 @@ export default {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@editButton');
+    instancesPage.clickDropdown();
+    instancesPage.clickButton('@editDropdownItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(10000);
-    instancesPage.expect.element('@instancesTableRowDescription')
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRow')
     .to.contain.text('nightwatch_test_instance_new_description');
   },
   'Test Select/Deselect Instance': (client) => {
