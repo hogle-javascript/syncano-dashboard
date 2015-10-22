@@ -2,21 +2,24 @@ var _         = require('lodash'),
     oauthshim = require('oauth-shim'),
     express   = require('express');
 
-
+var networks    = ['FACEBOOK', 'GOOGLE', 'GITHUB'];
 var port        = process.env.PORT || 3000;
-var credentials = {};
 var app         = express();
 
-app.all('/', oauthshim);
-
-if (process.env.FACEBOOK_ID) credentials[process.env.FACEBOOK_ID] = process.env.FACEBOOK_SECRET;
-if (process.env.GOOGLE_ID)   credentials[process.env.GOOGLE_ID]   = process.env.GOOGLE_SECRET;
-if (process.env.GITHUB_ID)   credentials[process.env.GITHUB_ID]   = process.env.GITHUB_SECRET;
+var credentials = _.reduce(networks, function(result, network) {
+  var id     = process.env[network + '_ID'];
+  var secret = process.env[network + '_SECRET'];
+  if (!_.isEmpty(id) && !_.isEmpty(secret)) {
+    result[id] = secret;
+  }
+  return result;
+}, {});
 
 if (_.isEmpty(credentials)) {
     throw new Error('"credentials" are required');
 }
 
+app.all('/', oauthshim);
 oauthshim.init(credentials);
 app.listen(port);
 
