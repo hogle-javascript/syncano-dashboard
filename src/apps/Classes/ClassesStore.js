@@ -127,18 +127,18 @@ export default Reflux.createStore({
     return orderPayload;
   },
 
-  getCheckedItemIconColor() {
-    let singleItem = this.getCheckedItem();
+  getClickedItemIconColor() {
+    let clickedItem = this.getClickedItem();
 
-    if (!singleItem) {
+    if (!clickedItem) {
       return {
         color: null,
         icon: null
       };
     }
     return {
-      color: singleItem.metadata ? singleItem.metadata.color : 'blue',
-      icon: singleItem.metadata ? singleItem.metadata.icon : 'table-large'
+      color: clickedItem.metadata ? clickedItem.metadata.color : 'blue',
+      icon: clickedItem.metadata ? clickedItem.metadata.icon : 'table-large'
     };
   },
 
@@ -172,6 +172,7 @@ export default Reflux.createStore({
 
   onSetClickedClass(item) {
     this.data.clickedItem = item;
+    this.trigger(this.data);
   },
 
   onUpdateClass() {

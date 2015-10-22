@@ -48,6 +48,7 @@ export default Reflux.createStore({
 
   onSetClickedInstance(item) {
     this.data.clickedItem = item;
+    this.trigger(this.data);
   },
 
   onCheckItem(checkId, state) {
@@ -210,10 +211,10 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  getCheckedItemIconColor() {
-    let singleItem = this.getCheckedItem();
+  getClickedItemIconColor() {
+    let clickedItem = this.getClickedItem();
 
-    if (!singleItem) {
+    if (!clickedItem) {
       return {
         color: null,
         icon: null
@@ -221,8 +222,8 @@ export default Reflux.createStore({
     }
 
     return {
-      color: singleItem.metadata.color,
-      icon: singleItem.metadata.icon
+      color: clickedItem.metadata.color,
+      icon: clickedItem.metadata.icon
     };
   }
 });

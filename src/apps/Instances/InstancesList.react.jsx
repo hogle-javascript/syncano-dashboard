@@ -93,7 +93,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let clickedItem = Store.getClickedItemIconColor();
 
     return [
       {
@@ -102,8 +102,8 @@ export default React.createClass({
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
           mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
+          initialColor: clickedItem.color,
+          initialIcon: clickedItem.icon,
           handleClick: this.handleChangePalette
         }
       }
