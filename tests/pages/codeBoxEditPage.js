@@ -27,10 +27,6 @@ module.exports = {
       selector: '//button[@class="add-field-button"]',
       locateStrategy: 'xpath'
     },
-    configAutosaveCheckbox: {
-      selector: '//div[@class="config-autosave-checkbox"]',
-      locateStrategy: 'xpath'
-    },
     traces: {
       selector: '//div[text()="Traces"]',
       locateStrategy: 'xpath'
