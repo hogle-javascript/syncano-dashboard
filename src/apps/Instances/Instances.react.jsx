@@ -167,21 +167,9 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
     let checkedInstances = Store.getCheckedItems();
 
     return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
       {
         dialog: Common.Dialog,
         params: {
@@ -208,14 +196,14 @@ export default Radium(React.createClass({
         params: {
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
-          title: 'Delete shared Instance',
+          title: 'Leave shared Instance',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            'Do you really want to leave ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
             this.getDialogList(checkedInstances),
             <Common.Loading
               type="linear"
@@ -313,19 +301,6 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Instance"
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showInstanceEditDialog}
-              iconClassName="synicon-pencil"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to customize Instances"
-              secondary={true}
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
@@ -344,14 +319,14 @@ export default Radium(React.createClass({
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
-          emptyItemContent="Create an instance"/>
+          emptyItemContent="Create an instance" />
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
             items={Store.getOtherInstances()}
             listType="sharedInstances"
-            viewMode="stream"/>
+            viewMode="stream" />
         </Common.Show>
       </Container>
     );

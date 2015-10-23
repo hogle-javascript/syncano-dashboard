@@ -194,12 +194,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteCodeBoxDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit CodeBox"
-              mini={true}
-              disabled={checkedItems > 1}
-              onClick={this.showCodeBoxEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 

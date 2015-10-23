@@ -51,6 +51,12 @@ export default {
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
+    classesPage.navigate();
+    classesPage.clickDropdown();
+    classesPage.clickButton('@editDropdownItem');
+    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description');
+    classesPage.clickButton('@confirmButton');
+    classesPage.waitForElementNotVisible('@editClassTitle');
     classesPage
       .clickButton('@selectUserClass')
       .clickButton('@multipleSelectButton')
@@ -62,8 +68,12 @@ export default {
       .clickButton('@confirmDeleteButton')
       .waitForElementNotVisible('@deleteClassModalTitle');
     const classTableRows = classesPage.elements.classTableRows.selector;
+    const userProfileClassName = classesPage.elements.userProfileClassName.selector;
 
-    client.elements('xpath', classTableRows, function(result) {
+    client.elements('xpath', classTableRows, (result) => {
+      client.assert.equal(result.value.length, 0);
+    });
+    client.elements('xpath', userProfileClassName, (result) => {
       client.assert.equal(result.value.length, 1);
     });
   }

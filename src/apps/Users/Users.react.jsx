@@ -200,12 +200,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a User"
-              mini={true}
-              disabled={checkedUsers > 1}
-              onClick={this.showUserEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
         <Common.Fab>

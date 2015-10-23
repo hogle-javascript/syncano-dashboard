@@ -10,6 +10,7 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import MUI from 'material-ui';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
@@ -104,6 +105,16 @@ export default React.createClass({
         <Column.Desc>{item.inviter}</Column.Desc>
         <Column.Desc>{item.role}</Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-invitation-accept"
+            onTouchTap={this.showMenuDialog.bind(null, item.inviter, Actions.acceptInvitations.bind(null, [item]))}
+            primaryText="Accept Invitation" />
+          <MenuItem
+            className="dropdown-item-invitation-decline"
+            onTouchTap={this.showMenuDialog.bind(null, item.inviter, Actions.declineInvitations.bind(null, [item]))}
+            primaryText="Decline Invitation" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
@@ -122,6 +133,7 @@ export default React.createClass({
 
     return (
       <Container>
+        <Column.MenuDialog ref="menuDialog"/>
         {this.getDialogs()}
 
         <Common.Show if={checkedInvitations > 0}>
@@ -162,6 +174,7 @@ export default React.createClass({
                 <Column.ColumnHeader columnName="DESC">From</Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
                 <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+                <Column.ColumnHeader columnName="MENU"/>
               </Common.ColumnList.Header>
               <Common.Lists.List>
                 {this.renderList()}

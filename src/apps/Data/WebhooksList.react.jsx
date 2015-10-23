@@ -2,12 +2,17 @@ import React from 'react';
 import Router from 'react-router';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
+// Stores and Actions
+import Actions from './WebhooksActions';
+
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -16,6 +21,7 @@ export default React.createClass({
   displayName: 'WebhooksList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -82,6 +88,16 @@ export default React.createClass({
         <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
         <Column.Desc className="col-xs-2">{copyLinkIcon}</Column.Desc>
         <Column.Date date={item.created_at} />
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Webhook" />
+          <MenuItem
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}
+            primaryText="Delete a Webhook" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
@@ -104,6 +120,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container>
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -131,6 +148,7 @@ export default React.createClass({
             URL
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>
