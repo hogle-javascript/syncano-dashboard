@@ -21,7 +21,8 @@ export default React.createClass({
   getStyles() {
     return {
       style: {
-        overflow: 'auto'
+        overflow: 'auto',
+        zIndex: 11
       },
       bodyStyle: {
         overflowX: 'initial',

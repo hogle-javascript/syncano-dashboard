@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   tags: ['instances'],
   before(client) {
     const signupPage = client.page.signupPage();
@@ -31,14 +31,14 @@ module.exports = {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@editButton');
+    instancesPage.clickDropdown();
+    instancesPage.clickButton('@editDropdownItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRowDescription').to.be.present.after(10000);
-    instancesPage.expect.element('@instancesTableRowDescription')
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRow')
     .to.contain.text('nightwatch_test_instance_new_description');
   },
   'Test Select/Deselect Instance': (client) => {
@@ -110,6 +110,7 @@ module.exports = {
     leftMenuPage.clickButton('@instancesListSecondItem');
     client.pause(1000);
     leftMenuPage.waitForElementPresent('@instancesDropdown');
+    client.pause(1000);
     const dropdown = leftMenuPage.elements.instancesDropdown.selector;
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[1]);

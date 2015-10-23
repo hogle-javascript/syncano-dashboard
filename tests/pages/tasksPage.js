@@ -16,13 +16,31 @@ const tasksCommands = {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
-  }
+  },
+  clickScheduleDropdown: function() {
+    return this.waitForElementVisible('@scheduleDropdown').click('@scheduleDropdown');
+  },
+  clickTriggerDropdown: function() {
+    return this.waitForElementVisible('@triggerDropdown').click('@triggerDropdown');
+  },
 };
 
 module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
   commands: [tasksCommands],
   elements: {
+    scheduleDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    triggerDropdown: {
+      selector: '//div[@class="triggers-list"]/div[3]/div/div[1]/div[7]/div[2]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit"]',
+      locateStrategy: 'xpath'
+    },
     confirm: {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'

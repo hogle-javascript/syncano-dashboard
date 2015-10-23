@@ -44,7 +44,7 @@ export default Radium(React.createClass({
 
     return (
       <MUI.Paper
-        onClick={this.props.handleClick}
+        onTouchTap={this.props.handleClick}
         zDepth={this.props.zDepth}
         style={[
           styles.base,

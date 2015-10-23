@@ -7,8 +7,13 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
 import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
+import Store from './InstancesStore';
+import InstanceDialogActions from './InstanceDialogActions';
+import InstancesActions from './InstancesActions';
 
+import MenuItem from 'material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -21,7 +26,8 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
-    Mixins.IsLoading({attr: 'state.items'})
+    Mixins.IsLoading({attr: 'state.items'}),
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -70,7 +76,46 @@ export default React.createClass({
     this.transitionTo('instance', {instanceName});
   },
 
+  handleChangePalette(color, icon) {
+    console.info('Instances::handleChangePalette', color, icon);
+    let metadata = JSON.stringify({color, icon});
+
+    Actions.updateInstance(Store.getClickedItem().name, {metadata});
+    Actions.uncheckAll();
+  },
+
+  handleClickItemDropdown(item) {
+    Actions.setClickedInstance(item);
+  },
+
+  showInstanceEditDialog(instance) {
+    InstanceDialogActions.showDialog(instance);
+  },
+
+  initDialogs() {
+    let checkedItemIconColor = Store.getCheckedItemIconColor();
+
+    return [
+      {
+        dialog: Common.ColorIconPicker.Dialog,
+        params: {
+          key: 'pickColorIconDialog',
+          ref: 'pickColorIconDialog',
+          mode: 'add',
+          initialColor: checkedItemIconColor.color,
+          initialIcon: checkedItemIconColor.icon,
+          handleClick: this.handleChangePalette
+        }
+      }
+    ];
+  },
+
   renderItem(item) {
+    let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
+    let handleRemoveUserInstance = InstancesActions.removeInstances.bind(null, [item]);
+    let handleRemoveShared = InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
+    let handleRemoveInstance = Store.amIOwner(item) ? handleRemoveUserInstance : handleRemoveShared;
+
     item.metadata = item.metadata || {};
 
     return (
@@ -90,6 +135,20 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu handleClick={this.handleClickItemDropdown.bind(null, item)}>
+          <MenuItem
+            className="dropdown-item-instance-edit"
+            onTouchTap={this.showInstanceEditDialog.bind(null, item)}
+            primaryText="Edit an Instance" />
+          <MenuItem
+            className="dropdown-item-customize"
+            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
+            primaryText="Customize an Instance" />
+          <MenuItem
+            className="dropdown-item-instance-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, handleRemoveInstance)}
+            primaryText={removeText} />
+        </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
@@ -99,6 +158,8 @@ export default React.createClass({
 
     return (
       <Common.Lists.Container className='instances-list-container'>
+        <Column.MenuDialog ref="menuDialog"/>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -107,6 +168,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
           {this.getList()}
