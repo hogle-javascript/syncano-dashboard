@@ -157,6 +157,12 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  stopRemoveInstanceListener() {
+    if (this.hasListener(Actions.removeInstances.completed)) {
+      this.stopListeningTo(Actions.removeInstances.completed);
+    }
+  },
+
   onSetTourConfig(config) {
     this.data.tourConfig = config;
   },
@@ -195,9 +201,22 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
+  onRemoveInstances(instances) {
+    let activeInstance = SessionStore.getInstance();
+
+    if (activeInstance && activeInstance.name === instances[0].name) {
+      this.listenTo(Actions.removeInstances.completed, SessionStore.getRouter().transitionTo.bind(null, 'instances'));
+    }
+  },
+
   onRemoveInstancesCompleted() {
     this.data.hideDialogs = true;
     this.refreshData();
+    this.stopRemoveInstanceListener();
+  },
+
+  onRemoveInstancesFailure() {
+    this.stopRemoveInstanceListener();
   },
 
   onRemoveSharedInstanceCompleted() {
