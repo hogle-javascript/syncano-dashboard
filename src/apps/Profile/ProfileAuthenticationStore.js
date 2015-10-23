@@ -38,7 +38,7 @@ export default Reflux.createStore({
 
   onChangePasswordCompleted() {
     this.trigger({
-      feedback: 'Password changed successfuly',
+      feedback: 'Password changed successfully',
       current_password: null,
       newPassword: null,
       confirmNewPassword: null
