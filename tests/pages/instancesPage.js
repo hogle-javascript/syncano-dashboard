@@ -9,13 +9,14 @@ const instancesCommands = {
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
-  clickSelectInstance() {
-    return this.waitForElementVisible('@selectInstance')
-      .click('@selectInstance');
+  clickSelectInstance: function() {
+    return this.waitForElementVisible('@selectInstance').click('@selectInstance');
   },
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
+  clickButton: function(button) {
+    return this.waitForElementVisible(button).click(button);
+  },
+  clickDropdown: function() {
+    return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
   isModalClosed(element) {
     return this.waitForElementNotVisible(element);
@@ -26,6 +27,10 @@ module.exports = {
   url: 'https://localhost:8080/#/instances',
   commands: [instancesCommands],
   elements: {
+    instanceDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
     instancesTable: {
       selector: 'div[id=instances]'
     },
@@ -46,15 +51,19 @@ module.exports = {
       selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
     },
     instancesTableRow: {
-      selector: '//div[@class="instances-list-container"]/div[2]/div/div[2]',
+      selector: '//div[@class="description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
+      selector: '//div[@class="instances-list-container"]/div[4]/div/div[1]/div[2]',
       locateStrategy: 'xpath'
     },
     selectInstance: {
       selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-instance-edit"]',
       locateStrategy: 'xpath'
     },
     editButton: {

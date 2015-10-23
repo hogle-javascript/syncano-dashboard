@@ -1,11 +1,16 @@
 import React from 'react';
 import Router from 'react-router';
 
+// Stores and Actions
+import Actions from './UsersActions';
+
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -14,6 +19,7 @@ export default React.createClass({
   displayName: 'UsersList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -94,6 +100,16 @@ export default React.createClass({
         <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
         <Column.Date date={item.profile.updated_at}/>
         <Column.Date date={item.profile.created_at}/>
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit-user"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit an User" />
+          <MenuItem
+            className="dropdown-item-delete-user"
+            onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
+            primaryText="Delete an User" />
+        </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
@@ -116,6 +132,7 @@ export default React.createClass({
     return (
       <div>
         <Common.ColumnList.Header>
+          <Column.MenuDialog ref="menuDialog"/>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -125,6 +142,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

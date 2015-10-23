@@ -5,6 +5,7 @@ export default CreateActions(
     fetch: {},
     setInstances: {},
     setTourConfig: {},
+    setClickedInstance: {},
     nextStep: {},
 
     fetchInstances: {

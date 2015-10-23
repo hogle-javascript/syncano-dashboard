@@ -44,7 +44,13 @@ export default {
         this.refs[dialogConf.params.ref].dismiss();
       });
     }
-  }
+  },
 
+  showMenuDialog(itemName, handleConfirm, event) {
+    if (!this.refs.menuDialog) {
+      throw new Error("'menuDialog' ref not found. Please define dialog with 'menuDialog' ref.");
+    }
+    this.refs.menuDialog.show(itemName, handleConfirm, event.target.innerHTML);
+  }
 };
 
