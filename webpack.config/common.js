@@ -1,7 +1,6 @@
 var ENV     = process.env.NODE_ENV || 'development',
     path    = require('path'),
     webpack = require('webpack'),
-    compass = require('node-libcompass').includePaths,
     envVars = null,
     plugin  = {ENV: JSON.stringify(ENV)},
     package = require('../package.json');
@@ -48,11 +47,9 @@ module.exports = {
       {
         test: /\.sass$/,
         loader: "style!css!sass?sourceMap&indentedSyntax&outputStyle=expanded&precision=8&" +
-          "includePaths[]=" + compass + "&" +
-          "includePaths[]=" +
-          (path.resolve(__dirname, "../src/assets/sass")) + "&" +
-          "includePaths[]=" +
-          (path.resolve(__dirname, "../node_modules"))
+          "includePaths[]=" + (path.resolve(__dirname, "../node_modules/compass-mixins/lib")) + "&" +
+          "includePaths[]=" + (path.resolve(__dirname, "../src/assets/sass")) + "&" +
+          "includePaths[]=" + (path.resolve(__dirname, "../node_modules"))
       }
     ]
   },
