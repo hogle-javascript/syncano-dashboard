@@ -85,7 +85,6 @@ export default React.createClass({
     });
 
     return (
-      <OutsideClickHandler onOutsideClick={this.close}>
         <div className="dropdown">
           <div
             className="dropdown-button clickable"
@@ -98,7 +97,6 @@ export default React.createClass({
             </div>
           </div>
         </div>
-      </OutsideClickHandler>
     );
   }
 });

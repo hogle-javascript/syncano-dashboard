@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {Link} from 'react-router-old';
 
 import MUI from 'material-ui';
 import Common from '../';
@@ -34,7 +34,7 @@ export default React.createClass({
         style={styles}
         ref={this.props.ref}>
         <div className="account-logo">
-          <Router.Link to="login"><Common.Logo className="logo-blue"/></Router.Link>
+          <Link to="login"><Common.Logo className="logo-blue"/></Link>
         </div>
         <MUI.Paper
           className="account-container__content"

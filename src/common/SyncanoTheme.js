@@ -6,21 +6,20 @@ import Spacing from './Spacing';
 export default {
   spacing: Spacing,
   contentFontFamily: 'Avenir, sans-serif',
-  getPalette() {
-    return {
-      primary1Color: Colors.blue700,
-      primary2Color: Colors.blue500,
-      primary3Color: Colors.blue100,
+  palette: {
+    primary1Color: Colors.blue700,
+    primary2Color: Colors.blue500,
+    primary3Color: Colors.blue100,
 
-      accent1Color: Colors.indigo500,
-      accent2Color: Colors.pinkA400,
-      accent3Color: Colors.pinkA100,
+    accent1Color: Colors.indigo500,
+    accent2Color: Colors.pinkA400,
+    accent3Color: Colors.pinkA100,
 
-      textColor: Colors.darkBlack,
-      canvasColor: Colors.white,
-      borderColor: Colors.grey300,
-      disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
-    };
+    textColor: Colors.darkBlack,
+    alternateTextColor: Colors.white,
+    canvasColor: Colors.white,
+    borderColor: Colors.grey300,
+    disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3)
   },
   getComponentThemes(palette) {
     return {

@@ -1,18 +1,17 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
-import MUI from 'material-ui';
+import {Styles} from 'material-ui';
 import {SyncanoTheme, SnackbarNotification} from './../common';
-
-let ThemeManager = new MUI.Styles.ThemeManager();
 
 export default React.createClass({
 
   displayName: 'App',
 
   contextTypes: {
-    router: React.PropTypes.func
+    router: React.PropTypes.func,
+    location: React.PropTypes.object
   },
 
   childContextTypes: {
@@ -25,18 +24,18 @@ export default React.createClass({
 
   getChildContext() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: Styles.ThemeManager.getMuiTheme(SyncanoTheme)
     };
   },
 
   componentWillMount() {
     SessionActions.setRouter(this.context.router);
-    SessionActions.setTheme(ThemeManager);
-    ThemeManager.setTheme(SyncanoTheme);
+    //SessionActions.setTheme(ThemeManager);
+    console.error(this);
   },
 
   componentWillUpdate() {
-    if (typeof this.getParams().instanceName === 'undefined') {
+    if (_.isUndefined(this.getParams().instanceName)) {
       SessionStore.removeInstance();
     }
   },

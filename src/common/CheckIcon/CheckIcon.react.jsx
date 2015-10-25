@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import _ from 'lodash';
 
 import MUI from 'material-ui';
 
@@ -118,7 +119,7 @@ export default Radium(React.createClass({
       <MUI.Paper
         zDepth={0}
         circle={true}
-        style={[styles.background, this.props.checkable && styles.checkable]}
+        style={_.assign(styles.background, this.props.checkable && styles.checkable)}
         onMouseOver={this.props.checkable ? this.handleMouseOver : null}
         onMouseLeave={this.props.checkable ? this.handleMouseLeave : null}
         onTouchTap={this.props.checkable ? this.handleClick : null}>

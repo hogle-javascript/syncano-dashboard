@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Reflux from 'reflux';
 
 import HeaderStore from './HeaderStore';

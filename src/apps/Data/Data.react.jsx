@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';

@@ -73,7 +73,7 @@ export default Radium(React.createClass({
   },
 
   getTheme() {
-    return this.context.muiTheme.component.floatingActionButton;
+    return this.context.muiTheme.floatingActionButton;
   },
 
   _getColor() {

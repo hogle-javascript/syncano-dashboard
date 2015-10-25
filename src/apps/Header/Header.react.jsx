@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Stores & Actions
 import HeaderStore from './HeaderStore';
@@ -48,7 +48,7 @@ export default Radium(React.createClass({
         zIndex: 8
       },
       topToolbar: {
-        background: this.context.muiTheme.palette.primary1Color,
+        background: this.context.muiTheme.toolbar.backgroundColor,
         height: 64,
         padding: 0
       },
@@ -69,20 +69,6 @@ export default Radium(React.createClass({
         display: 'inline-flex',
         alignItems: 'center',
         cursor: 'pointer'
-      },
-      bottomToolbar: {
-        display: 'flex',
-        fontSize: 17,
-        fontWeight: 500,
-        height: 56,
-        background: this.context.muiTheme.palette.primary2Color,
-        padding: '0 32px'
-      },
-      bottomToolbarGroup: {
-        display: 'flex',
-        float: 'none',
-        alignItems: 'center',
-        justifyContent: 'center'
       },
       bottomToolbarGroupIcon: {
         color: '#fff'

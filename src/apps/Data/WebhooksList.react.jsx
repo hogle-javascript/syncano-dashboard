@@ -1,6 +1,6 @@
 import React from 'react';
-import Router from 'react-router';
-import ReactZeroClipboard from 'react-zeroclipboard';
+import Router from 'react-router-old';
+//import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
 import Actions from './WebhooksActions';
@@ -54,12 +54,14 @@ export default React.createClass({
 
     return (
       <div>
+        {/*
         <ReactZeroClipboard text={webhookLink}>
           <MUI.IconButton
             iconClassName="synicon-link-variant"
             tooltip="Copy Webhook URL"
             onClick={this.handleURLClick}/>
         </ReactZeroClipboard>
+        */}
       </div>
     );
   },
