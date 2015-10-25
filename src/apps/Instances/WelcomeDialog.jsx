@@ -38,7 +38,7 @@ export default Radium(React.createClass({
       },
       text: {
         backgroundImage: 'url(/img/bg.png)',
-        //backgroundColor: this.context.muiTheme.palette.primary1Color,
+        // backgroundColor: this.context.muiTheme.palette.primary1Color,
         padding: '35px 30px',
         width: '100%',
         textAlign: 'center',

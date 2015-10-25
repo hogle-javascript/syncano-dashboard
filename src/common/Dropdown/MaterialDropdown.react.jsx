@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import OutsideClickHandler from 'react-outsideclickhandler';
 
 import MaterialDropdownItem from './MaterialDropdownItem.react';
 import DropdownNotifiItem from './DropdownNotifiItem.react';

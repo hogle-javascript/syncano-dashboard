@@ -1,5 +1,7 @@
 import React from 'react';
 import Router from 'react-router-old';
+import _ from 'lodash';
+
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
 import {Styles} from 'material-ui';
@@ -30,7 +32,7 @@ export default React.createClass({
 
   componentWillMount() {
     SessionActions.setRouter(this.context.router);
-    //SessionActions.setTheme(ThemeManager);
+    // SessionActions.setTheme(ThemeManager);
     console.error(this);
   },
 

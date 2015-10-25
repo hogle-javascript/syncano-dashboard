@@ -127,7 +127,7 @@ export default React.createClass({
         <MUI.LeftNav
           className="left-nav"
           ref="leftNav"
-          //header={this.renderInstanceDropdown()}
+          // header={this.renderInstanceDropdown()}
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
           selectedIndex={this.getActiveTab(this.getMenuItems()).index}
           style={styles.leftNav}
