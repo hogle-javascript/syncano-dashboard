@@ -47,9 +47,7 @@ export default React.createClass({
     });
   },
 
-  renderCopyLinkIcon(item) {
-    let link = item.public ? item.links['public-link'] : item.links.run;
-
+  renderCopyLinkIcon() {
     return (
       <div>
       </div>
