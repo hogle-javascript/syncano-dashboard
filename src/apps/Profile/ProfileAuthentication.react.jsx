@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
+import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
 
@@ -87,10 +88,16 @@ export default Radium(React.createClass({
           <div className="row" style={styles.contentRow}>
             <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
             <div className="col-xs-10">
-            <MUI.FlatButton
-              label="RESET"
-              primary={true}
-              onClick={this.handleResetClick} />
+              <ZeroClipboard text={this.state.account_key}>
+                <MUI.FlatButton
+                  label="COPY"
+                  primary={true}
+                  onClick={this.showSnackbar}/>
+              </ZeroClipboard>
+              <MUI.FlatButton
+                label="RESET"
+                primary={true}
+                onClick={this.handleResetClick}/>
             </div>
           </div>
         </div>

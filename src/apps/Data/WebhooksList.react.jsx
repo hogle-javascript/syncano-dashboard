@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from 'react-router-old';
+import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
 import Actions from './WebhooksActions';
@@ -47,10 +48,17 @@ export default React.createClass({
     });
   },
 
-  renderCopyLinkIcon() {
+  renderCopyLinkIcon(item) {
+    let link = item.public ? item.links['public-link'] : item.links.run;
+    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + link;
+
     return (
-      <div>
-      </div>
+      <ReactZeroClipboard text={webhookLink}>
+        <MUI.IconButton
+          iconClassName="synicon-link-variant"
+          tooltip="Copy Webhook URL"
+          onClick={this.handleURLClick}/>
+      </ReactZeroClipboard>
     );
   },
 
