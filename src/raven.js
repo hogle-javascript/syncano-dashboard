@@ -7,9 +7,7 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
   var ravenOptions = {
     tags: {
       environment: ENV,
-      version: VERSION,
-      branch: CIRCLE_BRANCH,
-      commit: CIRCLE_SHA1
+      version: VERSION
     },
     ignoreErrors: [
       // Random plugins/extensions
