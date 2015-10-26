@@ -48,7 +48,7 @@ export default Radium(React.createClass({
         zIndex: 8
       },
       topToolbar: {
-        background: this.context.muiTheme.toolbar.backgroundColor,
+        background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 64,
         padding: 0
       },

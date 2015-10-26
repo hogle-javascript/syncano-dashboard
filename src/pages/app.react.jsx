@@ -12,9 +12,9 @@ export default React.createClass({
   displayName: 'App',
 
   contextTypes: {
-    router: React.PropTypes.func,
-    location: React.PropTypes.object
+    router: React.PropTypes.func
   },
+
 
   childContextTypes: {
     muiTheme: React.PropTypes.object
@@ -24,16 +24,24 @@ export default React.createClass({
     Router.State
   ],
 
-  getChildContext() {
+  getInitialState() {
     return {
       muiTheme: Styles.ThemeManager.getMuiTheme(SyncanoTheme)
     };
   },
 
+  getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme
+    };
+  },
+
   componentWillMount() {
+    let palette = this.state.muiTheme.rawTheme.palette;
+    let newMuiTheme = _.merge(this.state.muiTheme, SyncanoTheme.getComponentThemes(palette));
+
     SessionActions.setRouter(this.context.router);
-    // SessionActions.setTheme(ThemeManager);
-    console.error(this);
+    this.setState({muiTheme: newMuiTheme});
   },
 
   componentWillUpdate() {

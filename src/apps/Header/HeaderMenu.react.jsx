@@ -42,7 +42,7 @@ export default React.createClass({
         height: 56
       },
       menuItemStyles: {
-        color: this.context.muiTheme.palette.primary3Color,
+        color: this.context.muiTheme.rawTheme.palette.primary3Color,
         fontWeight: 400,
         fontSize: 17
       }
