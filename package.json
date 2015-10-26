@@ -89,6 +89,7 @@
     "react-addons-create-fragment": "^0.14.0",
     "react-addons-linked-state-mixin": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
+    "react-addons-test-utils": "^0.14.0",
     "react-addons-transition-group": "^0.14.0",
     "react-addons-update": "^0.14.0",
     "react-hot-loader": "1.2.9",
