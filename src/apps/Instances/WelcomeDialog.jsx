@@ -26,7 +26,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       main: {
-        display: this.state.visible || 'none'
+        display: this.state.visible ? 'block' : 'none'
       },
       paper: {
         position: 'fixed',

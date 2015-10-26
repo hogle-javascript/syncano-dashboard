@@ -11,7 +11,7 @@ export default Radium(React.createClass({
   propTypes: {
     config: React.PropTypes.arrayOf(React.PropTypes.shape({
       node: React.PropTypes.object,
-      text: React.PropTypes.string
+      text: React.PropTypes.node
     })),
     currentStep: React.PropTypes.number.isRequired,
     visible: React.PropTypes.bool,

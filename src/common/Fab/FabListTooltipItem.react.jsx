@@ -78,7 +78,7 @@ export default Radium(React.createClass({
 
   _getColor() {
     if (this.props.disabled) {
-      return this.getTheme().disabledColor;
+      return this.getTheme().disabledTextColor;
     }
 
     if (this.props.secondary) {

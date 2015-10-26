@@ -48,11 +48,11 @@ export default Radium(React.createClass({
         color: '#444',
         cursor: 'pointer',
         ':hover': {
-          color: this.context.muiTheme.palette.primary1Color
+          // color: this.context.muiTheme.palette.primary1Color
         }
       },
       activePlan: {
-        color: this.context.muiTheme.palette.primary1Color
+        // color: this.context.muiTheme.palette.primary1Color
       }
     };
   },
