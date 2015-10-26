@@ -5,6 +5,12 @@ if (SENTRY_DSN !== undefined && SENTRY_DSN.length > 0) {
   require('raven-js/plugins/native');
 
   var ravenOptions = {
+    tags: {
+      environment: ENV,
+      version: VERSION,
+      branch: CIRCLE_BRANCH,
+      commit: CIRCLE_SHA1
+    },
     ignoreErrors: [
       // Random plugins/extensions
       'top.GLOBALS',
