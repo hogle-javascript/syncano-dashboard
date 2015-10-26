@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router-old';
 import Radium from 'radium';
-import OutsideClickHandler from 'react-outsideclickhandler';
+import OnClickOutside from 'react-onclickoutside';
 
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
@@ -25,7 +25,8 @@ export default Radium(React.createClass({
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
-    Router.State
+    Router.State,
+    OnClickOutside
   ],
 
   componentDidMount() {
@@ -86,7 +87,7 @@ export default Radium(React.createClass({
     };
   },
 
-  handleOutsideClick() {
+  handleClickOutside() {
     this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
   },
 
@@ -150,19 +151,17 @@ export default Radium(React.createClass({
     });
 
     return (
-      <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>
-        <MUI.DropDownMenu
-          ref="HeaderInstancesDropdown"
-          className="instances-dropdown"
-          style={{width: '100%'}}
-          menuStyle={styles.dropdownMenu}
-          labelStyle={styles.dropdownLabel}
-          underlineStyle={styles.dropdownLabelUnderline}
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={dropDownMenuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
-      </OutsideClickHandler>
+      <MUI.DropDownMenu
+        ref="HeaderInstancesDropdown"
+        className="instances-dropdown"
+        style={{width: '100%'}}
+        menuStyle={styles.dropdownMenu}
+        labelStyle={styles.dropdownLabel}
+        underlineStyle={styles.dropdownLabelUnderline}
+        menuItemStyle={styles.dropdownMenuItem}
+        menuItems={dropDownMenuItems}
+        onChange={this.handleDropdownItemClick}
+        selectedIndex={this.handleInstanceActive()} />
     );
   }
 }));
