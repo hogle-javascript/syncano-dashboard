@@ -16,7 +16,11 @@
     "SENTRY_DSN": true,
     "ANALYTICS_WRITE_KEY": true,
     "STRIPE_PUBLISHABLE_KEY": true,
-    "SYNCANO_BASE_URL": true
+    "SYNCANO_BASE_URL": true,
+    "ENV": true,
+    "CIRCLE_BRANCH": true,
+    "CIRCLE_SHA1": true,
+    "VERSION": true
   },
   "ecmaFeatures": {
     "arrowFunctions": true,
