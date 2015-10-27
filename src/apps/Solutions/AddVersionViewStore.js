@@ -116,8 +116,11 @@ export default Reflux.createStore({
 
   setInstance(instance) {
     this.data.instance = instance;
-    Actions.fetchInstance(instance)
-      .then(Actions.fetchInstanceData);
+    Actions.fetchInstance(instance);
+  },
+
+  onFetchInstanceCompleted() {
+    Actions.fetchInstanceData();
   },
 
   setInstanceData() {
