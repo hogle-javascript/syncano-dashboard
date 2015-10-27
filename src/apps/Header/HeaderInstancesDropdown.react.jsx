@@ -83,6 +83,15 @@ export default Radium(React.createClass({
       noInstancesItem: {
         fontWeight: 500,
         color: '#BDBDBD'
+      },
+      dropdownIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingRight: 10
+      },
+      iconMenu: {
+        width: '100%'
       }
     };
   },
@@ -171,7 +180,7 @@ export default Radium(React.createClass({
     let icon = 'synicon-' + iconName;
 
     return (
-      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 10}}>
+      <div style={styles.dropdownIcon}>
         <MUI.FontIcon
           className={icon}
           style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
@@ -195,11 +204,12 @@ export default Radium(React.createClass({
 
     return (
       <MUI.IconMenu
+        className="instances-list"
         ref="instancesDropdown"
         onItemTouchTap={this.closeDropdown}
         iconButtonElement={this.renderDropdownIcon()}
         openDirection="bottom-right"
-        style={{width: '100%'}}
+        style={styles.iconMenu}
         menuStyle={styles.dropdownMenu}>
         {this.renderAddInstanceItem()}
         {this.renderList(InstancesStore.getMyInstances(true))}

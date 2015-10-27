@@ -114,7 +114,7 @@ export default {
     const dropdown = leftMenuPage.elements.instancesDropdown.selector;
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[1]);
-    })
+    });
   },
   'Test Delete multiple Instances': (client) => {
     const instancesPage = client.page.instancesPage();
