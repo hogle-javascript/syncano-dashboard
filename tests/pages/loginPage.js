@@ -20,13 +20,21 @@ const loginCommands = {
   },
   verifyLoginSuccessful() {
     return this
-      .waitForElementVisible('@instancesDiv', 20000)
+      .waitForElementVisible('@instancesDiv')
       .assert.containsText('@instancesDiv', 'My instances');
   },
   fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
+  },
+  login(email, pass) {
+    return this
+      .waitForElementVisible('@emailInput')
+      .setValue('@emailInput', email)
+      .setValue('@passInput', pass)
+      .waitForElementVisible('@loginButton')
+      .click('@loginButton');
   }
 };
 
