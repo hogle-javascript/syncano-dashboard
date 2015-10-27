@@ -15,6 +15,7 @@ import Common from '../../common';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -23,6 +24,7 @@ export default React.createClass({
   mixins: [
     Dialogs,
     HeaderMixin,
+    SnackbarNotificationMixin,
     Router.State,
     Router.Navigation
   ],
@@ -34,10 +36,10 @@ export default React.createClass({
 
   handleURLClick(event) {
     event.stopPropagation();
-    this.refs.snackbar.show();
-    setTimeout(() => {
-      this.refs.snackbar.dismiss();
-    }, 1200);
+    this.setSnackbarNotification({
+      message: 'URL copied to the clipboard',
+      autoHideDuration: 1200
+    });
   },
 
   handleItemClick(itemName) {
@@ -155,9 +157,6 @@ export default React.createClass({
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
-        <MUI.Snackbar
-          ref="snackbar"
-          message="URL copied to the clipboard"/>
       </Common.Lists.Container>
     );
   }

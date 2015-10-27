@@ -4,6 +4,7 @@ import Radium from 'radium';
 import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
+import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
@@ -17,7 +18,8 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
-    FormMixin
+    FormMixin,
+    SnackbarNotificationMixin
   ],
 
   validatorConstraints: {
@@ -71,7 +73,10 @@ export default Radium(React.createClass({
   },
 
   showSnackbar() {
-    this.refs.snackbar.show();
+    this.setSnackbarNotification({
+      message: 'API key copied to the clipboard',
+      autoHideDuration: 3000
+    });
   },
 
   render() {
@@ -79,10 +84,6 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <MUI.Snackbar
-          ref="snackbar"
-          message="API key copied to the clipboard"
-          autoHideDuration={3000} />
         <div style={styles.content}>
           <div>Account key</div>
           <div className="row" style={styles.contentRow}>
