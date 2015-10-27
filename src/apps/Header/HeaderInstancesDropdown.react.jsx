@@ -22,7 +22,7 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    Reflux.ListenerMixin,
+    MUI.Mixins.StylePropable,
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
@@ -112,7 +112,7 @@ export default Radium(React.createClass({
     let icon = (
       <MUI.FontIcon
         className="synicon-plus"
-        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
+        style={this.mergeAndPrefix(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
     );
 
     return (
@@ -120,7 +120,7 @@ export default Radium(React.createClass({
         <MUI.ListItem
           primaryText="Add an Instance"
           leftIcon={icon}
-          onTouchTap={this.showAddInstanceDialog} />
+          onTouchTap={this.showAddInstanceDialog}/>
       </MUI.List>
     );
   },
@@ -137,14 +137,14 @@ export default Radium(React.createClass({
       let icon = (
         <MUI.FontIcon
           className={iconName}
-          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+          style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
       );
 
       return (
         <MUI.ListItem
           primaryText={instance.name}
           onTouchTap={this.handleDropdownItemClick.bind(null, instance.name)}
-          leftIcon={icon} />
+          leftIcon={icon}/>
       );
     });
 
@@ -183,7 +183,7 @@ export default Radium(React.createClass({
       <div style={styles.dropdownIcon}>
         <MUI.FontIcon
           className={icon}
-          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
+          style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
         <MUI.ListItem
           disabled={true}
           primaryText={currentInstance.name}

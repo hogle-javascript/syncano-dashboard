@@ -137,9 +137,9 @@ export default React.createClass({
 
   renderInstanceDropdown() {
     return (
-    <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-      <HeaderInstancesDropdown/>
-    </div>
+      <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
+        <HeaderInstancesDropdown/>
+      </div>
     );
   },
 
@@ -147,22 +147,22 @@ export default React.createClass({
     const styles = this.getStyles();
 
     return (
-    <div>
-      <InstanceDialog
-        ref="addInstanceDialog"
-        handleSubmit={this.redirectToNewInstance}/>
-      <MUI.LeftNav
-        className="left-nav"
-        ref="leftNav"
-        header={this.renderInstanceDropdown()}
-        menuItemStyleSubheader={styles.menuItemStyleSubheader}
-        selectedIndex={this.getActiveTab(this.getMenuItems()).index}
-        style={styles.leftNav}
-        menuItems={this.getMenuItems()}/>
-      <div style={styles.content}>
-        <Router.RouteHandler />
+      <div>
+        <InstanceDialog
+          ref="addInstanceDialog"
+          handleSubmit={this.redirectToNewInstance}/>
+        <MUI.LeftNav
+          className="left-nav"
+          ref="leftNav"
+          header={this.renderInstanceDropdown()}
+          menuItemStyleSubheader={styles.menuItemStyleSubheader}
+          selectedIndex={this.getActiveTab(this.getMenuItems()).index}
+          style={styles.leftNav}
+          menuItems={this.getMenuItems()}/>
+        <div style={styles.content}>
+          <Router.RouteHandler />
+        </div>
       </div>
-    </div>
     );
   }
 });
