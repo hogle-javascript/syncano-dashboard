@@ -5,7 +5,6 @@ import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
-import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
@@ -125,15 +124,8 @@ export default React.createClass({
         route: 'instance-edit',
         payload: this.getMenuItemHref('instance-edit'),
         text: 'General'
-      },
-      {
-        text: this.renderAddInstanceItem()
       }
     ];
-  },
-
-  showAddInstanceDialog() {
-    InstanceDialogActions.showDialog();
   },
 
   redirectToNewInstance() {
@@ -141,21 +133,6 @@ export default React.createClass({
 
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName});
-  },
-
-  renderAddInstanceItem() {
-    let styles = this.getStyles();
-
-    return (
-    <div
-      style={styles.addInstanceItem}
-      onClick={this.showAddInstanceDialog}>
-      <MUI.FontIcon
-        style={this.getStyles().plusIcon}
-        className="synicon-plus"/>
-      <span>Add an Instance</span>
-    </div>
-    );
   },
 
   renderInstanceDropdown() {

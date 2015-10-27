@@ -93,6 +93,17 @@ export default Radium(React.createClass({
   getDropdownItems() {
     return [{
       leftIcon: {
+        name: 'synicon-view-list',
+        style: {}
+      },
+      content: {
+        text: 'Instances list',
+        style: {}
+      },
+      name: 'instances',
+      handleItemClick: this.handleInstancesListClick
+    }, {
+      leftIcon: {
         name: 'synicon-credit-card',
         style: {}
       },
@@ -132,6 +143,10 @@ export default Radium(React.createClass({
 
   handleTabActive(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
+  },
+
+  handleInstancesListClick() {
+    this.transitionTo('instances');
   },
 
   handleAccountClick(event) {

@@ -2,12 +2,12 @@ import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
 import Radium from 'radium';
-import OutsideClickHandler from 'react-outsideclickhandler';
 
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
+import InstanceDialogActions from '../Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import Common from '../../common';
@@ -22,6 +22,7 @@ export default Radium(React.createClass({
   },
 
   mixins: [
+    Reflux.ListenerMixin,
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
@@ -35,39 +36,12 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      instanceToolbarGroup: {
-        display: '-webkit-box; display: flex',
-        float: 'none',
-        alignItems: 'center',
-        justifyContent: 'center',
-        maxWidth: 320,
-        width: '100%',
-        marginLeft: '-32px'
-      },
-      dropdownLabelUnderline: {
-        display: 'none'
-      },
-      dropdownLabelContainer: {
-        display: '-webkit-box; display: flex',
-        alignItems: 'center',
-        overflow: 'hidden'
-      },
-      dropdownLabel: {
-        WebkitBoxFlex: '1',
-        flex: '1',
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        paddingRight: 40,
-        paddingLeft: 0,
-        color: 'black',
-        fontWeight: 400
-      },
       dropdownInstanceIcon: {
+        left: 20,
         minWidth: 32,
         height: 32,
         fontSize: 18,
-        lineHeight: '20px',
+        lineHeight: '18px',
         display: '-webkit-inline-flex; display: inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -76,141 +50,161 @@ export default Radium(React.createClass({
         backgroundColor: 'green',
         margin: '8px 16px 8px 0'
       },
-      dropdownMenu: {
-        maxHeight: 'calc(100vh - 80px)'
-      },
-      dropdownMenuItem: {
-        height: 'auto',
-        paddingLeft: 16
-      },
-      itemsDivider: {
-        marginLeft: -16,
-        marginRight: -48
+      addInstanceList: {
+        minWidth: 320,
+        paddingBottom: 0,
+        paddingTop: 0
       },
       addInstanceIcon: {
-        backgroundColor: '#BDBDBD'
+        backgroundColor: '#BDBDBD',
+        color: '#FFF',
+        fontSize: 24
+      },
+      dropdownMenu: {
+        left: 0,
+        top: 0,
+        maxHeight: 'calc(100vh - 80px)',
+        overflow: 'auto',
+        boxShadow: '0 3px 10px rgba(0, 0, 0, 0.16), 0 3px 10px rgba(0, 0, 0, 0.23)'
+      },
+      list: {
+        minWidth: 320,
+        paddingBottom: 0
+      },
+      separator: {
+        borderTop: '1px solid #BDBDBD',
+        paddingLeft: 20
+      },
+      dropdownText: {
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        paddingLeft: 0
+      },
+      noInstancesItem: {
+        fontWeight: 500,
+        color: '#BDBDBD'
       }
     };
   },
 
-  handleOutsideClick() {
-    this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
-  },
-
-  handleDropdownItemClick(event, selectedIndex, menuItem) {
+  handleDropdownItemClick(instanceName) {
     // Redirect to main instance screen
-    SessionActions.fetchInstance(menuItem.payload);
-    this.transitionTo('instance', {instanceName: menuItem.payload});
+    this.refs.instancesDropdown.close();
+    SessionActions.fetchInstance(instanceName);
+    this.transitionTo('instance', {instanceName});
   },
 
-  handleInstanceActive(items) {
-    if (InstancesStore.getAllInstances()) {
-      let currentInstance = SessionStore.instance;
-      let instanceActiveIndex = null;
-
-      items.some((event, index) => {
-        if (event.payload === currentInstance.name) {
-          instanceActiveIndex = index;
-          return true;
-        }
-      });
-
-      return instanceActiveIndex;
-    }
+  showAddInstanceDialog() {
+    InstanceDialogActions.showDialog();
   },
 
   renderAddInstanceItem() {
     let styles = this.getStyles();
-    let item = (
-      <div
-        style={styles.dropdownLabelContainer}
-        onClick={this.handleAddInstance}>
-        <MUI.FontIcon
-          className="synicon-plus"
-          style={[styles.dropdownInstanceIcon, styles.addInstanceIcon]}/>
-        Add an Instance
-      </div>
+    let icon = (
+      <MUI.FontIcon
+        className="synicon-plus"
+        style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, styles.addInstanceIcon)}/>
     );
 
-    return [{
-      payload: 'Add an Instance',
-      text: item
-    }];
+    return (
+      <MUI.List style={styles.addInstanceList}>
+        <MUI.ListItem
+          primaryText="Add an Instance"
+          leftIcon={icon}
+          onTouchTap={this.showAddInstanceDialog} />
+      </MUI.List>
+    );
   },
 
-  renderDropdownItems(items, hasSeparator) {
+  renderListItems(instances) {
     let styles = this.getStyles();
     let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
-    let instancesSeparator = {
-      payload: null,
-      text: <MUI.ListDivider style={styles.itemsDivider} />
-    };
-
-    if (!items) {
-      return null;
-    }
-
-    let dropDownMenuItems = items.map((item) => {
-      item.metadata = item.metadata || {};
-      item.metadata.icon = item.metadata.icon || null;
-      item.metadata.color = item.metadata.color || null;
-
+    let items = instances.map((instance) => {
+      let iconName = instance.metadata.icon ? 'synicon-' + instance.metadata.icon : 'synicon-' + defaultIcon;
       let iconBackground = {
-        backgroundColor: Common.Color.getColorByName(item.metadata.color, 'dark') || defaultIconBackground
+        backgroundColor: Common.Color.getColorByName(instance.metadata.color, 'dark') || defaultIconBackground
       };
-      let icon = item.metadata.icon ? item.metadata.icon : defaultIcon;
-      let iconClassName = 'synicon-' + icon;
-      let text = (
-        <div style={styles.dropdownLabelContainer}>
-          <MUI.FontIcon
-            className={iconClassName}
-            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
-          {item.name}
-        </div>
+      let icon = (
+        <MUI.FontIcon
+          className={iconName}
+          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
       );
 
-      return {
-        payload: item.name,
-        text
-      };
+      return (
+        <MUI.ListItem
+          primaryText={instance.name}
+          onTouchTap={this.handleDropdownItemClick.bind(null, instance.name)}
+          leftIcon={icon} />
+      );
     });
 
-    if (hasSeparator) {
-      dropDownMenuItems.push(instancesSeparator);
-    }
+    return items;
+  },
 
-    return dropDownMenuItems;
+  renderList(instances) {
+    let styles = this.getStyles();
+    let subheaderText = InstancesStore.amIOwner(instances[0]) ? 'My Instances' : 'Shared with me';
+
+    return (
+      <Common.Show if={instances.length > 0}>
+        <MUI.List
+          style={styles.list}
+          subheader={subheaderText}
+          subheaderStyle={styles.separator}>
+          {this.renderListItems(instances)}
+        </MUI.List>
+      </Common.Show>
+    );
+  },
+
+  renderDropdownIcon() {
+    let styles = this.getStyles();
+    let defaultIconBackground = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    let currentInstance = SessionStore.instance;
+    let defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
+    let iconStyle = {
+      backgroundColor: Common.Color.getColorByName(currentInstance.metadata.color, 'dark') || defaultIconBackground,
+      left: 0
+    };
+    let iconName = currentInstance.metadata.icon ? currentInstance.metadata.icon : defaultIcon;
+    let icon = 'synicon-' + iconName;
+
+    return (
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingRight: 10}}>
+        <MUI.FontIcon
+          className={icon}
+          style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconStyle)}/>
+        <MUI.ListItem
+          disabled={true}
+          primaryText={currentInstance.name}
+          style={styles.dropdownText}/>
+        <MUI.FontIcon className='synicon-menu-down'/>
+      </div>
+    );
   },
 
   render() {
     let styles = this.getStyles();
     let instance = SessionStore.instance;
     let instancesList = InstancesStore.getAllInstances(true);
-    let userInstances = this.renderDropdownItems(InstancesStore.getMyInstances(true), true);
-    let sharedInstances = this.renderDropdownItems(InstancesStore.getOtherInstances(true));
-    let dropDownMenuItems = [];
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
     }
 
-    dropDownMenuItems = userInstances.concat(sharedInstances);
-
     return (
-      <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>
-        <MUI.DropDownMenu
-          ref="HeaderInstancesDropdown"
-          className="instances-dropdown"
-          style={{width: '100%'}}
-          menuStyle={styles.dropdownMenu}
-          labelStyle={styles.dropdownLabel}
-          underlineStyle={styles.dropdownLabelUnderline}
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={dropDownMenuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive(dropDownMenuItems)} />
-      </OutsideClickHandler>
+      <MUI.IconMenu
+        ref="instancesDropdown"
+        onItemTouchTap={this.closeDropdown}
+        iconButtonElement={this.renderDropdownIcon()}
+        openDirection="bottom-right"
+        style={{width: '100%'}}
+        menuStyle={styles.dropdownMenu}>
+        {this.renderAddInstanceItem()}
+        {this.renderList(InstancesStore.getMyInstances(true))}
+        {this.renderList(InstancesStore.getOtherInstances(true))}
+      </MUI.IconMenu>
     );
   }
 }));
