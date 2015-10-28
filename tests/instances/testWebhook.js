@@ -1,57 +1,62 @@
-const utils = require('../utils');
+import utils from '../utils';
 
-module.exports = {
+export default {
   tags: ['webhook'],
-  before: function(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
-
+    loginPage
+      .navigate()
+      .typeEmail()
+      .typePassword()
+      .clickSignInButton()
+      .verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'User adds a Webhook' : function(client) {
+  'User adds a Webhook': (client) => {
     const webhook = utils.addSuffix('webhook');
     const dataPage = client.page.dataPage();
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickButton('@addWebhookButton');
-    dataPage.waitForElementVisible('@addWebhookModalTitle');
-    dataPage.fillInputField('@addWebhookModalNameInput', webhook);
-    dataPage.selectFromDropdown('@addWebhookModalCodeboxDropdown', '@addWebhookModalCodeboxDropdownChoice');
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementVisible('@webhookTableRow');
+    dataPage
+      .navigate()
+      .waitForElementVisible('@webhookListItem')
+      .clickButton('@addWebhookButton')
+      .waitForElementVisible('@addWebhookModalTitle')
+      .fillInputField('@addWebhookModalNameInput', webhook)
+      .selectFromDropdown('@addWebhookModalCodeboxDropdown', '@addWebhookModalCodeboxDropdownChoice')
+      .clickButton('@confirmButton')
+      .waitForElementVisible('@webhookTableRow');
   },
-  'User edits a Webhook' : function(client) {
+  'User edits a Webhook': (client) => {
     const dataPage = client.page.dataPage();
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickWebhookDropdown();
-    dataPage.clickButton('@editDropdownItem');
-    dataPage.waitForElementVisible('@editWebhookModalTitle');
-    dataPage.fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
+    dataPage
+      .navigate()
+      .waitForElementVisible('@webhookListItem')
+      .clickWebhookDropdown()
+      .clickButton('@editDropdownItem')
+      .waitForElementVisible('@editWebhookModalTitle')
+      .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
     client.pause(1000);
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementVisible('@webhookTableRow');
-    dataPage.waitForElementVisible('@webhookTableRowDescription')
+    dataPage
+      .clickButton('@confirmButton')
+      .waitForElementVisible('@webhookTableRow')
+      .waitForElementVisible('@webhookTableRowDescription');
   },
-  'User deletes a Webhook' : function(client) {
+  'User deletes a Webhook': (client) => {
     const dataPage = client.page.dataPage();
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickButton('@selectWebhookTableRow');
-    dataPage.clickButton('@deleteButton');
-    dataPage.waitForElementVisible('@deleteWebhookModalTitle');
+    dataPage
+     .navigate()
+     .waitForElementVisible('@webhookListItem')
+     .clickButton('@selectWebhookTableRow')
+     .clickButton('@deleteButton')
+     .waitForElementVisible('@deleteWebhookModalTitle');
     client.pause(1000);
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementNotPresent('@selectWebhookTableRow');
+    dataPage
+      .clickButton('@confirmButton')
+      .waitForElementNotPresent('@selectWebhookTableRow');
   }
 };

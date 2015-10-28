@@ -1,6 +1,4 @@
 import Syncano from 'syncano';
-// const Syncano = require('syncano');
-
 
 export default {
   waitForConditionTimeout: 15000,
@@ -19,7 +17,7 @@ export default {
     this.tempInstanceName = 'a' + this.tempPass;
     this.tempEmail = 'syncano.bot+' + this.tempPass + '@syncano.com';
 
-    const error = function(err) {
+    const error = (err) => {
       console.log(err);
       done();
     };
