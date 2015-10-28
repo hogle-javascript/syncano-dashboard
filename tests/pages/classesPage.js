@@ -39,7 +39,7 @@ export default {
       locateStrategy: 'xpath'
     },
     fab: {
-      selector: '(//span[@class="synicon-plus"])[2]',
+      selector: '(//span[@class="synicon-plus"])[1]',
       locateStrategy: 'xpath'
     },
     createModalNameInput: {

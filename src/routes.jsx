@@ -18,6 +18,7 @@ import Profile from './apps/Profile';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
+import InstanceEdit from './apps/Instances/InstanceEdit.react';
 import Solutions from './apps/Solutions';
 
 // Instance Apps
@@ -120,6 +121,13 @@ export default (
           name="api-keys"
           handler={ApiKeys}
           path="api_keys"
+          />
+
+        {/* General */}
+        <Route
+          name="instance-edit"
+          handler={InstanceEdit}
+          path="edit"
           />
 
         {/* Classes */}

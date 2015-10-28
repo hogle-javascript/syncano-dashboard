@@ -9,13 +9,13 @@ const instancesCommands = {
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
-  clickSelectInstance: function() {
+  clickSelectInstance() {
     return this.waitForElementVisible('@selectInstance').click('@selectInstance');
   },
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button).click(button);
   },
-  clickDropdown: function() {
+  clickDropdown() {
     return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
   isModalClosed(element) {
@@ -23,7 +23,7 @@ const instancesCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances',
   commands: [instancesCommands],
   elements: {

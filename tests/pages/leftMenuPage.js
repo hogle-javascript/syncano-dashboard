@@ -5,14 +5,14 @@ const leftMenuCommands = {
   }
 };
 
-module.exports = {
+export default {
   commands: [leftMenuCommands],
   elements: {
     leftMenu: {
       selector: '.left-nav'
     },
     instancesDropdown: {
-      selector: '//div[@class="instances-dropdown"]',
+      selector: '//div[@class="left-nav"]/div/div[1]/div',
       locateStrategy: 'xpath'
     },
     instancesDropdownItems: {
@@ -20,7 +20,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     instancesListSecondItem: {
-      selector: '//div[@class="instances-dropdown"]/div[2]/div[2]//span[2]',
+      selector: '//div[@class="instances-list"]/div[2]/div/div[3]',
       locateStrategy: 'xpath'
     },
     classes: {

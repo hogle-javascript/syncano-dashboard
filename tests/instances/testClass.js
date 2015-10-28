@@ -10,7 +10,7 @@ export default {
       .typeEmail()
       .typePassword()
       .clickSignInButton()
-      .verifyLoginSuccessful();
+      .verifyLoginSuccessful()
   },
   after(client) {
     client.end();
@@ -43,7 +43,8 @@ export default {
       .clickButton('@editDropdownItem')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
-      .clickButton('@confirmButton');
+      .clickButton('@confirmButton')
+      .waitForElementNotVisible('@editClassTitle');
     client.pause(1000);
     classesPage
       .waitForElementVisible('@classTableRowDescription')

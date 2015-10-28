@@ -5,7 +5,6 @@ import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
-import InstanceDialogActions from '../apps/Instances/InstanceDialogActions';
 
 import MUI from 'material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
@@ -66,13 +65,6 @@ export default React.createClass({
     return [
       {
         type: MUI.MenuItem.Types.SUBHEADER,
-        text: 'Instances'
-      },
-      {
-        text: this.renderAddInstanceItem()
-      },
-      {
-        type: MUI.MenuItem.Types.SUBHEADER,
         text: 'Modules'
       },
       {
@@ -126,12 +118,14 @@ export default React.createClass({
         route: 'api-keys',
         payload: this.getMenuItemHref('api-keys'),
         text: 'API keys'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'instance-edit',
+        payload: this.getMenuItemHref('instance-edit'),
+        text: 'General'
       }
     ];
-  },
-
-  showAddInstanceDialog() {
-    InstanceDialogActions.showDialog();
   },
 
   redirectToNewInstance() {
@@ -139,21 +133,6 @@ export default React.createClass({
 
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName});
-  },
-
-  renderAddInstanceItem() {
-    let styles = this.getStyles();
-
-    return (
-      <div
-        style={styles.addInstanceItem}
-        onClick={this.showAddInstanceDialog}>
-        <MUI.FontIcon
-          style={this.getStyles().plusIcon}
-          className="synicon-plus"/>
-        <span>Add an Instance</span>
-      </div>
-    );
   },
 
   renderInstanceDropdown() {

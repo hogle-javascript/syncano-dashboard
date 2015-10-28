@@ -22,7 +22,7 @@ module.exports = {
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: '(//span[@class="synicon-plus"])[2]',
+      selector: '(//span[@class="synicon-plus"])[1]',
       locateStrategy: 'xpath'
     },
     apiKeysListItem: {
