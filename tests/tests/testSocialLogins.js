@@ -15,7 +15,7 @@ export default {
     loginPage.clickButton('@loginButtonFacebook');
     client
       .pause(1000)
-      .windowHandles(function(result) {
+      .windowHandles((result) => {
         const handle = result.value[1];
 
         client.switchWindow(handle);
@@ -25,7 +25,7 @@ export default {
       .fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
       .clickButton('@signInButtonFacebook');
 
-    client.windowHandles(function(result) {
+    client.windowHandles((result) => {
       const handle = result.value[0];
 
       client.switchWindow(handle);
