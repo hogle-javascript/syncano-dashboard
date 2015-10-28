@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -48,6 +48,12 @@ export default React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      fieldTarget: 'self'
+    };
+  },
+
   getFieldTypes() {
     return Constants.fieldTypes.map((item) => {
       return {
@@ -75,7 +81,6 @@ export default React.createClass({
       return schema;
     }));
   },
-
 
   hasFilter(fieldType) {
     const noFilterFields = ['file', 'text'];
@@ -137,13 +142,17 @@ export default React.createClass({
   },
 
   handleFieldAdd() {
+    if (_.includes(_.pluck(this.state.fields, 'fieldName'), this.state.fieldName)) {
+      this.refs.fieldName.setErrorText('Field with this name already exists.');
+      return;
+    }
     if (!this.state.fieldName) {
       return;
     }
 
     const fields = this.state.fields;
 
-    const field = {
+    let field = {
       fieldName: this.state.fieldName,
       fieldType: this.state.fieldType,
       fieldOrder: this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
@@ -224,22 +233,22 @@ export default React.createClass({
               <MUI.Checkbox
                 name="filter"
                 defaultChecked={item.fieldFilter}
-                onCheck={this.handleOnCheck.bind(this, item)} />
+                onCheck={this.handleOnCheck.bind(this, item)}/>
             </Common.Show>
           </span>
           <span className='col-xs-3'>
             <Common.Show if={this.hasOrder(item.fieldType)}>
               <MUI.Checkbox
                 name="order"
-                defaultChecked ={item.fieldOrder}
-                onCheck={this.handleOnCheck.bind(this, item)} />
+                defaultChecked={item.fieldOrder}
+                onCheck={this.handleOnCheck.bind(this, item)}/>
             </Common.Show>
           </span>
           <span className='col-xs-5'>
             <MUI.FlatButton
               label='Remove'
               secondary={true}
-              onClick={this.handleRemoveField.bind(this, item)} />
+              onClick={this.handleRemoveField.bind(this, item)}/>
           </span>
         </div>
       );
@@ -276,7 +285,7 @@ export default React.createClass({
           </MUI.ToolbarGroup>
 
           <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={title} />
+            <MUI.ToolbarTitle text={title}/>
           </MUI.ToolbarGroup>
 
         </Common.InnerToolbar>
@@ -297,7 +306,7 @@ export default React.createClass({
                 valueLink={this.linkState('name')}
                 errorText={this.getValidationMessages('name').join(' ')}
                 hintText='Name of the Class'
-                floatingLabelText='Name' />
+                floatingLabelText='Name'/>
             </div>
             <div className='col-flex-1'>
               <MUI.TextField
@@ -307,7 +316,7 @@ export default React.createClass({
                 valueLink={this.linkState('description')}
                 errorText={this.getValidationMessages('description').join(' ')}
                 hintText='Description of the Class'
-                floatingLabelText='Description' />
+                floatingLabelText='Description'/>
             </div>
           </div>
           <div className="row vm-4-b">
@@ -319,7 +328,7 @@ export default React.createClass({
                 valueLink={this.linkState('group')}
                 errorText={this.getValidationMessages('group').join(' ')}
                 hintText='Group ID'
-                floatingLabelText='Group' />
+                floatingLabelText='Group'/>
             </div>
             <div className="col-flex-1">
               <MUI.SelectField
@@ -331,7 +340,7 @@ export default React.createClass({
                 valueLink={this.linkState('group_permissions')}
                 floatingLabelText='Group Permissions'
                 errorText={this.getValidationMessages('group_permissions').join(' ')}
-                menuItems={permissions} />
+                menuItems={permissions}/>
             </div>
             <div className="col-flex-1">
               <MUI.SelectField
@@ -343,7 +352,7 @@ export default React.createClass({
                 valueLink={this.linkState('other_permissions')}
                 floatingLabelText='Other Permissions'
                 errorText={this.getValidationMessages('other_permissions').join(' ')}
-                menuItems={permissions} />
+                menuItems={permissions}/>
             </div>
           </div>
           <div className="vm-2-b">
@@ -366,13 +375,13 @@ export default React.createClass({
           <div className='row align-bottom vm-2-b'>
             <div className='col-xs-8'>
               <MUI.TextField
-               ref='fieldName'
-               name='fieldName'
-               fullWidth={true}
-               valueLink={this.linkState('fieldName')}
-               errorText={this.getValidationMessages('fieldName').join(' ')}
-               hintText='Name of the Field'
-               floatingLabelText='Name' />
+                style={{verticalAlign: 'middle'}}
+                ref='fieldName'
+                name='fieldName'
+                fullWidth={true}
+                valueLink={this.linkState('fieldName')}
+                hintText='Name of the Field'
+                floatingLabelText='Name'/>
             </div>
             <div className='col-xs-8'>
               <MUI.SelectField
@@ -385,7 +394,7 @@ export default React.createClass({
                 errorText={this.getValidationMessages('fieldType').join(' ')}
                 valueMember='payload'
                 displayMember='text'
-                menuItems={this.getFieldTypes()} />
+                menuItems={this.getFieldTypes()}/>
             </div>
             <div className='col-xs-8'>
               <Common.Show if={this.state.fieldType === 'reference'}>
@@ -398,7 +407,7 @@ export default React.createClass({
                   errorText={this.getValidationMessages('fieldTarget').join(' ')}
                   valueMember='payload'
                   displayMember='text'
-                  menuItems={ClassesStore.getClassesDropdown(true)} />
+                  menuItems={ClassesStore.getClassesDropdown(true)}/>
               </Common.Show>
             </div>
             <div className='col-xs-3'>
@@ -406,7 +415,7 @@ export default React.createClass({
                 <MUI.Checkbox
                   style={{marginBottom: 10}}
                   ref="fieldFilter"
-                  name ="filter" />
+                  name="filter"/>
               </Common.Show>
             </div>
             <div className='col-xs-3'>
@@ -414,16 +423,16 @@ export default React.createClass({
                 <MUI.Checkbox
                   style={{marginBottom: 10}}
                   ref="fieldOrder"
-                  name ="order" />
+                  name="order"/>
               </Common.Show>
             </div>
             <div className='col-xs-5'>
               <MUI.FlatButton
                 style={{marginBottom: 4}}
                 label='Add'
-                disabled ={!this.state.fieldType || !this.state.fieldName}
+                disabled={!this.state.fieldType || !this.state.fieldName}
                 secondary={true}
-                onClick={this.handleFieldAdd} />
+                onClick={this.handleFieldAdd}/>
             </div>
           </div>
           <div className="vm-4-b">
@@ -435,12 +444,12 @@ export default React.createClass({
               label="Confirm"
               className="raised-button"
               secondary={true}
-              style={{margin: '0 8px 0 auto'}} />
+              style={{margin: '0 8px 0 auto'}}/>
             <MUI.FlatButton
               label='Cancel'
               className="raised-button"
               onClick={this.handleBackClick}
-              style={{margin: '0 8px 0 auto'}} />
+              style={{margin: '0 8px 0 auto'}}/>
           </div>
         </form>
       </Common.Loading>
