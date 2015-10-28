@@ -8,7 +8,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 let RouteHandler = Router.RouteHandler;

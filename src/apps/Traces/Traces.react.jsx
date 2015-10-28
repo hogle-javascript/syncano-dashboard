@@ -13,7 +13,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 // Local components

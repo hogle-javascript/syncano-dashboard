@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import './Tour.css';
 

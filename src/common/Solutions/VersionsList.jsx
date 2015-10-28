@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import ColumnList from '../ColumnList';
 import Loading from '../Loading';
 import Lists from '../Lists';

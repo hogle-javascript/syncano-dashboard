@@ -9,7 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Store from './TracesStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;

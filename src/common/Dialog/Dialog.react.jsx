@@ -1,5 +1,5 @@
 import React from 'react';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 

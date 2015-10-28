@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-old';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../';
 
 import './AccountContainer.sass';

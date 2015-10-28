@@ -8,11 +8,11 @@ import HeaderStore from './HeaderStore';
 import ProfileInvitationsStore from '../Profile/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
-import MenuItem from 'material-ui/lib/menus/menu-item';
-import MenuDivider from 'material-ui/lib/menus/menu-divider';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import MenuDivider from 'syncano-material-ui/lib/menus/menu-divider';
 import Loading from '../../common/Loading';
 
 

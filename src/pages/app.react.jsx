@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
-import {Styles} from 'material-ui';
+import {Styles} from 'syncano-material-ui';
 import {SyncanoTheme, SnackbarNotification} from './../common';
 
 export default React.createClass({

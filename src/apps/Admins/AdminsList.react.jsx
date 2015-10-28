@@ -13,7 +13,7 @@ import AdminsActions from './AdminsActions';
 
 // Components
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 export default React.createClass({
 

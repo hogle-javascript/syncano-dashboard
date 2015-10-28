@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import './Notification.sass';
 

@@ -12,7 +12,7 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 import CreateDialogActions from './CreateDialogActions';

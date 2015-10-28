@@ -17,7 +17,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 import Header from '../Header';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';

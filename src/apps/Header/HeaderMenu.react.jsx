@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 
 import HeaderStore from './HeaderStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 

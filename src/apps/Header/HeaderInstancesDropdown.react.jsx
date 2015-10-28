@@ -9,7 +9,7 @@ import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default Radium(React.createClass({

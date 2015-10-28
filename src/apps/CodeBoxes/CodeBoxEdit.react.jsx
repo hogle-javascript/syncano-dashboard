@@ -14,7 +14,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 

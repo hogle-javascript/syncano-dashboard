@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Show from '../../common/Show';
 
 export default React.createClass({

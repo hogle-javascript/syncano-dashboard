@@ -6,7 +6,7 @@ import {LeftNav} from '../mixins';
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
 
 export default React.createClass({

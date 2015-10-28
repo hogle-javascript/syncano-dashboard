@@ -3,7 +3,7 @@ import Router from 'react-router-old';
 
 import {LeftNav} from '../mixins';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Container from '../common/Container';
 
 export default React.createClass({

@@ -1,8 +1,8 @@
 import React from 'react';
 import Router from 'react-router-old';
 
-import MUI from 'material-ui';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MUI from 'syncano-material-ui';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 export default React.createClass({
 

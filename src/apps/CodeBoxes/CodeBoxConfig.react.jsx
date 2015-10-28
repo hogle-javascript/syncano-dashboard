@@ -11,7 +11,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
