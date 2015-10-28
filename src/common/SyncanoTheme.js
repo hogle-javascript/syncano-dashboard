@@ -42,6 +42,9 @@ export default {
       toggle: {
         thumbOffColor: '#fff',
         trackOffColor: 'rgba(0, 0, 0, 0.26)'
+      },
+      menuSubheader: {
+        textColor: 'rgba(0, 0, 0, 0.54)'
       }
     };
   }
