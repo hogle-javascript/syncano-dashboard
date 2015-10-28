@@ -32,6 +32,12 @@ export default {
       },
       floatingActionButton: {
         color: Colors.pinkA200
+      },
+      tableHeaderColumn: {
+        textColor: 'rgba(0, 0, 0, 0.54)'
+      },
+      tableRow: {
+        hoverColor: '#EEEEEE'
       }
     };
   }
