@@ -38,6 +38,10 @@ export default {
       },
       tableRow: {
         hoverColor: '#EEEEEE'
+      },
+      toggle: {
+        thumbOffColor: '#fff',
+        trackOffColor: 'rgba(0, 0, 0, 0.26)'
       }
     };
   }
