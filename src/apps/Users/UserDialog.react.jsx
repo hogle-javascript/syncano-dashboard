@@ -81,13 +81,18 @@ export default React.createClass({
 
   handleEditSubmit() {
     let userGroups = this.getSelectValueSource().value;
+    let credentials = {
+      username: this.state.username,
+      password: this.state.password
+    };
+
+    if (!this.state.password) {
+      delete credentials.password;
+    }
 
     UsersActions.updateUser(
       this.state.id,
-      {
-        username: this.state.username,
-        password: this.state.password
-      },
+      credentials,
       {
         groups: this.state.groups,
         newGroups: userGroups
