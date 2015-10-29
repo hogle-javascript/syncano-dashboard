@@ -21,6 +21,10 @@ export default Radium(React.createClass({
 
   displayName: 'InstanceEdit',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Router.State,
     Router.Navigation,
@@ -89,7 +93,7 @@ export default Radium(React.createClass({
         justifyContent: 'space-between'
       },
       deleteButton: {
-        backgroundColor: MUI.Styles.Colors.pink400,
+        backgroundColor: this.context.muiTheme.palette.accent2Color,
         color: '#FFF',
         ':hover': {
           opacity: 0.4
