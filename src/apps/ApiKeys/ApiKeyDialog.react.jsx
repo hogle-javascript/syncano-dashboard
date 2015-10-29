@@ -9,7 +9,7 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeyDialogStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({

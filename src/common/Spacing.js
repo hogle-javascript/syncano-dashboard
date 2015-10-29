@@ -1,8 +1,8 @@
 export default {
   iconSize: 24,
 
-  desktopGutter: 32,
-  desktopGutterMore: 40,
+  desktopGutter: 24,
+  desktopGutterMore: 32,
   desktopGutterLess: 16,
   desktopGutterMini: 8,
   desktopKeylineIncrement: 64,

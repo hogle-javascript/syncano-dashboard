@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default {
 

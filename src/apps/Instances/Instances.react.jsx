@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 
 // Utils
@@ -16,7 +17,7 @@ import InstanceDialogActions from './InstanceDialogActions';
 import Header from '../Header';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
@@ -77,7 +78,7 @@ export default Radium(React.createClass({
     }
 
     return [{
-      node: React.findDOMNode(this.refs.myInstancesList),
+      node: ReactDOM.findDOMNode(this.refs.myInstancesList),
       text: <div>All your <strong style={styles.tourHighlight}>Instances</strong> will be listed here.<br />
               <div style={styles.secondLine}>
                 Instance is a place for all of your
@@ -88,7 +89,7 @@ export default Radium(React.createClass({
       radius: 200
     },
     {
-      node: React.findDOMNode(this.refs.addInstanceFab),
+      node: ReactDOM.findDOMNode(this.refs.addInstanceFab),
       text: <div>You can add a new <strong style={styles.tourHighlight}>Instance</strong> by clicking here
               <div style={styles.secondLine}>
                 You will see a similar button placed in same screen corner, on other views as well - you will

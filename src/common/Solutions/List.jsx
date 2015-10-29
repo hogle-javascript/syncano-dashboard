@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {FontIcon} from 'material-ui';
+import {FontIcon} from 'syncano-material-ui';
 import ListItem from './ListItem';
 
 export default React.createClass({

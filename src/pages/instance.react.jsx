@@ -1,12 +1,12 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
 
 export default React.createClass({
@@ -114,7 +114,7 @@ export default React.createClass({
   renderInstanceDropdown() {
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown />
+        <HeaderInstancesDropdown/>
       </div>
     );
   },

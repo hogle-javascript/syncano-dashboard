@@ -1,10 +1,10 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Reflux from 'reflux';
 
 import HeaderStore from './HeaderStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -42,7 +42,7 @@ export default React.createClass({
         height: 56
       },
       menuItemStyles: {
-        color: this.context.muiTheme.palette.primary3Color,
+        color: this.context.muiTheme.rawTheme.palette.primary3Color,
         fontWeight: 400,
         fontSize: 17
       }

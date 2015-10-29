@@ -1,7 +1,7 @@
 import React from 'react' ;
 import Reflux from 'reflux';
-import Router from 'react-router';
-import MUI from 'material-ui' ;
+import Router from 'react-router-old';
+import MUI from 'syncano-material-ui' ;
 
 // Utils
 import Mixins from '../../mixins';

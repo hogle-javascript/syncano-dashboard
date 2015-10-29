@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
 import _ from 'lodash';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -14,7 +14,7 @@ import Actions from './FormViewActions';
 import Store from './FormViewStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
