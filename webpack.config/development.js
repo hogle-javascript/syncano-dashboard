@@ -42,8 +42,14 @@ config.devServer = {
   hot: true,
   noInfo: false,
   stats: {
-    colors: true
+    assets: false,
+    colors: true,
+    version: false,
+    hash: false,
+    timings: false,
+    chunks: false,
+    chunkModules: false
   }
-}
+};
 
 module.exports = config;
