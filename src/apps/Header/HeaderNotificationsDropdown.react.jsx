@@ -109,7 +109,7 @@ export default Radium(React.createClass({
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
         <MUI.FontIcon
-          className='synicon-information'
+          className="synicon-information"
           color={MUI.Styles.Colors.lightBlueA700}/>
       );
 
@@ -127,26 +127,26 @@ export default Radium(React.createClass({
       let icon = (
         <MUI.FontIcon
           key={`${item.id}Icon`}
-          className='synicon-share-variant'
+          className="synicon-share-variant"
           color={MUI.Styles.Colors.lightGreen500}/>
       );
       let content = (
         <div>
-          <strong>{item.inviter + ' '}</strong>
+          <strong>{`${item.inviter} `}</strong>
             invited you to their instance
-          <strong>{' ' + item.instance}</strong>
+          <strong>{` ${item.instance}`}</strong>
         </div>
       );
       let buttons = [
         <MUI.FlatButton
           key={`${item.id}ButtonAccept`}
           onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-          label='Accept'
+          label="Accept"
           primary={true}/>,
         <MUI.FlatButton
           key={`${item.id}ButtonDecline`}
           onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-          label='Decline'/>
+          label="Decline"/>
       ];
 
       return (
@@ -165,13 +165,12 @@ export default Radium(React.createClass({
     if (!this.state.user.is_active) {
       let icon = (
         <MUI.FontIcon
-          className='synicon-alert'
+          className="synicon-alert"
           color={MUI.Styles.Colors.orange500}/>
       );
 
       let resendLink = (
-        <div
-          style={this.getStyles().resendEmailText}>
+        <div style={this.getStyles().resendEmailText}>
           Your email address is not yet verified. Click here to resend activation email.
         </div>
       );
@@ -207,7 +206,7 @@ export default Radium(React.createClass({
 
       notificationCountIcon = (
         <MUI.FontIcon
-          className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
+          className={`synicon-numeric-${synIconName}-box notification-count-icon`}
           color={styles.notificationIcon.color}/>
       );
     }
@@ -229,14 +228,14 @@ export default Radium(React.createClass({
     return (
       <div>
         <MUI.IconMenu
-          ref='headerNotificationDropdown'
+          ref="headerNotificationDropdown"
           iconButtonElement={this.renderIcon()}
           autoWidth={false}
-          maxWidth='400px'
+          maxWidth="400px"
           menuStyle={styles.menu}>
           <MenuItem
-            key='notificationDropdownHeader'
-            primaryText='Notifications'
+            key="notificationDropdownHeader"
+            primaryText="Notifications"
             disabled={true}/>
           <MenuDivider />
           <Loading show={this.state.accountInvitations.isLoading}>
