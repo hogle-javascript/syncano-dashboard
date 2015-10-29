@@ -106,6 +106,24 @@ module.exports = {
     dataListItemTitle: {
       selector: '//div[text()="Data Endpoints"]',
       locateStrategy: 'xpath'
+    },
+    webhookToSelect: {
+      selector: '.col-xs-10 .synicon-arrow-up-bold'
+    },
+    checkboxToSelect: {
+      selector: '.synicon-checkbox-blank-outline'
+    },
+    checkboxSelected: {
+      selector: '.synicon-checkbox-marked-outline'
+    },
+    selectMultipleButton: {
+      selector: '.synicon-checkbox-multiple-marked-outline'
+    },
+    deselectMultipleButton: {
+      selector: '.synicon-checkbox-multiple-blank-outline'
+    },
+    emptyListItem: {
+      selector: '.empty-list-item'
     }
   }
 };
