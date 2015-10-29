@@ -32,7 +32,7 @@ export default Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
-    MUI.Mixins.StylePropable
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {

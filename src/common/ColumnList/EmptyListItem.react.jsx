@@ -7,7 +7,7 @@ export default Radium(React.createClass({
 
   displayName: 'Item',
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {

@@ -26,6 +26,7 @@ export default Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
+    MUI.Utils.Styles,
     OnClickOutside
   ],
 
@@ -139,7 +140,7 @@ export default Radium(React.createClass({
         <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
-            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+            style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
           {item.name}
         </div>
       );

@@ -11,7 +11,7 @@ export default Radium(React.createClass({
     position: React.PropTypes.string.isRequired
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {

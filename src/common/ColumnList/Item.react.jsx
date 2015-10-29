@@ -1,6 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-import _ from 'lodash';
 
 import MUI from 'syncano-material-ui';
 
@@ -8,9 +7,7 @@ export default Radium(React.createClass({
 
   displayName: 'Item',
 
-  mixins: [
-    MUI.Mixins.StylePropable
-  ],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -51,7 +48,7 @@ export default Radium(React.createClass({
       <MUI.Paper
         onTouchTap={this.props.handleClick}
         zDepth={this.props.zDepth}
-        style={_.assign(
+        style={this.mergeAndPrefix(
           styles.base,
           styles.hoverable,
           this.props.checked === true && styles.checked
@@ -68,7 +65,7 @@ export default Radium(React.createClass({
     return (
       <MUI.Paper
         zDepth={0}
-        style={_.assign(
+        style={this.mergeAndPrefix(
           styles.base,
           styles.noBackground,
           this.props.checked === true && styles.checked

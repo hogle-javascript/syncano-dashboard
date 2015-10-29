@@ -6,7 +6,7 @@ export default React.createClass({
 
   displayName: 'SliderSection',
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {

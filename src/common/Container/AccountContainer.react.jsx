@@ -14,7 +14,7 @@ export default React.createClass({
     style: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {

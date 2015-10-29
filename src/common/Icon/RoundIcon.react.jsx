@@ -14,7 +14,7 @@ export default Radium(React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {

@@ -18,7 +18,7 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getInitialState() {
     return {

@@ -9,7 +9,7 @@ export default React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {

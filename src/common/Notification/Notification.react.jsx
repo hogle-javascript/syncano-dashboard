@@ -15,7 +15,7 @@ export default React.createClass({
     children: React.PropTypes.any.isRequired
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
