@@ -60,7 +60,7 @@ export default React.createClass({
         fontSize: '20px',
         fontWeight: 500,
         color: 'rgba(0,0,0,.54)',
-        font: '"Avenir", sans-serif;',
+        font: '"Avenir", sans-serif',
         marginBottom: '20px'
       },
       tooltip: {
@@ -93,7 +93,7 @@ export default React.createClass({
         justifyContent: 'space-between'
       },
       deleteButton: {
-        backgroundColor: this.context.muiTheme.palette.accent2Color,
+        backgroundColor: this.context.muiTheme.rawTheme.palette.accent2Color,
         color: '#FFF',
         ':hover': {
           opacity: 0.4
