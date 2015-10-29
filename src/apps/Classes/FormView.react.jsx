@@ -54,6 +54,18 @@ export default React.createClass({
     };
   },
 
+  getStyles() {
+    return {
+      schemaAddSection: {
+        alignItems: 'stretch',
+        height: 110
+      },
+      checkBox: {
+        alignSelf: 'center'
+      }
+    };
+  },
+
   getFieldTypes() {
     return Constants.fieldTypes.map((item) => {
       return {
@@ -125,7 +137,11 @@ export default React.createClass({
       group: this.state.group,
       group_permissions: this.state.group_permissions,
       other_permissions: this.state.other_permissions,
-      schema
+      schema,
+      metadata: {
+        color: Common.Color.getRandomColorName(),
+        icon: Common.Icon.Store.getRandomIconPickerIcon()
+      }
     });
   },
 
@@ -256,6 +272,7 @@ export default React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const title = this.hasEditMode() ? 'Update a Class' : 'Add a Class';
     const permissions = [
       {
@@ -372,10 +389,9 @@ export default React.createClass({
             <div className='col-xs-3'>Order</div>
             <div className='col-xs-5'></div>
           </div>
-          <div className='row align-bottom vm-2-b'>
+          <div style={styles.schemaAddSection} className='row align-bottom vm-2-b'>
             <div className='col-xs-8'>
               <MUI.TextField
-                style={{verticalAlign: 'middle'}}
                 ref='fieldName'
                 name='fieldName'
                 fullWidth={true}
@@ -410,23 +426,21 @@ export default React.createClass({
                   menuItems={ClassesStore.getClassesDropdown(true)}/>
               </Common.Show>
             </div>
-            <div className='col-xs-3'>
+            <div className='col-xs-3' style={styles.checkBox}>
               <Common.Show if={this.hasFilter(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginBottom: 10}}
                   ref="fieldFilter"
                   name="filter"/>
               </Common.Show>
             </div>
-            <div className='col-xs-3'>
+            <div className='col-xs-3' style={styles.checkBox}>
               <Common.Show if={this.hasOrder(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginBottom: 10}}
                   ref="fieldOrder"
                   name="order"/>
               </Common.Show>
             </div>
-            <div className='col-xs-5'>
+            <div className='col-xs-5' style={styles.checkBox}>
               <MUI.FlatButton
                 style={{marginBottom: 4}}
                 label='Add'
