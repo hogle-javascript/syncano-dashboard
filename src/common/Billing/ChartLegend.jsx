@@ -46,7 +46,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   renderPercent(row) {

@@ -20,7 +20,7 @@ export default Radium(React.createClass({
     let styles = {
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   handleDeleteSubscription() {
