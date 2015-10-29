@@ -1,5 +1,5 @@
 var ENV       = process.env.NODE_ENV || 'development',
-	_         = require('lodash'),
+    _         = require('lodash'),
     oauthshim = require('oauth-shim'),
     express   = require('express');
 
@@ -9,8 +9,8 @@ var app         = express();
 
 var credentials = _.reduce(networks, function(result, network) {
   var envName = ENV.toUpperCase() + '_' + network;
-  var id     = process.env[envName + '_ID'] || process.env[network + '_ID'];
-  var secret = process.env[envName + '_SECRET'] || process.env[network + '_SECRET'];
+  var id      = process.env[envName + '_ID'] || process.env[network + '_ID'];
+  var secret  = process.env[envName + '_SECRET'] || process.env[network + '_SECRET'];
   if (!_.isEmpty(id) && !_.isEmpty(secret)) {
     result[id] = secret;
   }
@@ -18,7 +18,7 @@ var credentials = _.reduce(networks, function(result, network) {
 }, {});
 
 if (_.isEmpty(credentials)) {
-    throw new Error('"credentials" are required');
+  throw new Error('"credentials" are required');
 }
 
 app.all('/', oauthshim);

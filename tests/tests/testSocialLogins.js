@@ -60,7 +60,7 @@ export default {
     });
     instancesPage.waitForElementPresent('@instancesTable');
   },
-  'Admin Logs in with Github': function GithubLogin(client) {
+  'Admin Logs in with Github': (client) => {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
@@ -72,7 +72,8 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage.fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
+    loginPage
+      .fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
       .fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
       .clickButton('@signInButtonGithub');
 
