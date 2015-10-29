@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {
@@ -48,11 +48,11 @@ export default Radium(React.createClass({
         color: '#444',
         cursor: 'pointer',
         ':hover': {
-          color: this.context.muiTheme.palette.primary1Color
+          color: this.context.muiTheme.rawTheme.palette.primary1Color
         }
       },
       activePlan: {
-        color: this.context.muiTheme.palette.primary1Color
+        color: this.context.muiTheme.rawTheme.palette.primary1Color
       }
     };
   },

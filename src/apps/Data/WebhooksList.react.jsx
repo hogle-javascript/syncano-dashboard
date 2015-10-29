@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
@@ -10,9 +10,9 @@ import HeaderMixin from '../Header/HeaderMixin';
 import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
@@ -55,14 +55,12 @@ export default React.createClass({
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + link;
 
     return (
-      <div>
-        <ReactZeroClipboard text={webhookLink}>
-          <MUI.IconButton
-            iconClassName="synicon-link-variant"
-            tooltip="Copy Webhook URL"
-            onClick={this.handleURLClick}/>
-        </ReactZeroClipboard>
-      </div>
+      <ReactZeroClipboard text={webhookLink}>
+        <MUI.IconButton
+          iconClassName="synicon-link-variant"
+          tooltip="Copy Webhook URL"
+          onClick={this.handleURLClick}/>
+      </ReactZeroClipboard>
     );
   },
 

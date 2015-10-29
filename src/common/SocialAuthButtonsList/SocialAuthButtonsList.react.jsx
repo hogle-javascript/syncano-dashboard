@@ -5,7 +5,7 @@ import SessionStore from '../../apps/Session/SessionStore';
 import AuthActions from '../../apps/Account/AuthActions';
 import AuthConstants from '../../apps/Account/AuthConstants';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 

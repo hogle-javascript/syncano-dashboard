@@ -3,9 +3,8 @@ import Radium from 'radium';
 import ReactZeroClipboard from 'react-zeroclipboard';
 import ColumnListConstans from '../ColumnListConstans';
 
+import MUI from 'syncano-material-ui';
 import SnackbarNotificationMixin from '../../SnackbarNotification/SnackbarNotificationMixin';
-
-import MUI from 'material-ui';
 
 export default Radium(React.createClass({
 
@@ -51,6 +50,7 @@ export default Radium(React.createClass({
       <div
         className={this.props.className}
         style={styles.key}>
+
         <div
           ref="key"
           className="col-xs-25">

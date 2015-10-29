@@ -1,7 +1,7 @@
 import React from 'react';
 import Gravatar from 'gravatar';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 

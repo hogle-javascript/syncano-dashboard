@@ -9,7 +9,7 @@ import SnackbarNotificationMixin from '../../common/SnackbarNotification/Snackba
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -89,16 +89,16 @@ export default Radium(React.createClass({
           <div className="row" style={styles.contentRow}>
             <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
             <div className="col-xs-10">
-            <ZeroClipboard text={this.state.account_key}>
+              <ZeroClipboard text={this.state.account_key}>
+                <MUI.FlatButton
+                  label="COPY"
+                  primary={true}
+                  onClick={this.showSnackbar}/>
+              </ZeroClipboard>
               <MUI.FlatButton
-                label="COPY"
+                label="RESET"
                 primary={true}
-                onClick={this.showSnackbar}/>
-            </ZeroClipboard>
-            <MUI.FlatButton
-              label="RESET"
-              primary={true}
-              onClick={this.handleResetClick} />
+                onClick={this.handleResetClick}/>
             </div>
           </div>
         </div>

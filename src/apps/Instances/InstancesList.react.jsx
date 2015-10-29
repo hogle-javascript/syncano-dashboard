@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +13,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 import InstancesActions from './InstancesActions';
 
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;

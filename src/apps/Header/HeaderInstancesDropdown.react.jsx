@@ -1,15 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
-import OutsideClickHandler from 'react-outsideclickhandler';
+import OnClickOutside from 'react-onclickoutside';
 
 import HeaderStore from './HeaderStore';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default Radium(React.createClass({
@@ -25,7 +25,9 @@ export default Radium(React.createClass({
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
-    Router.State
+    Router.State,
+    MUI.Utils.Styles,
+    OnClickOutside
   ],
 
   componentDidMount() {
@@ -86,7 +88,7 @@ export default Radium(React.createClass({
     };
   },
 
-  handleOutsideClick() {
+  handleClickOutside() {
     this.refs.HeaderInstancesDropdown._handleOverlayTouchTap();
   },
 
@@ -138,7 +140,7 @@ export default Radium(React.createClass({
         <div style={styles.dropdownLabelContainer}>
           <MUI.FontIcon
             className={iconClassName}
-            style={MUI.Mixins.StylePropable.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
+            style={this.mergeAndPrefix(styles.dropdownInstanceIcon, iconBackground)}/>
           {item.name}
         </div>
       );
@@ -150,19 +152,17 @@ export default Radium(React.createClass({
     });
 
     return (
-      <OutsideClickHandler onOutsideClick={this.handleOutsideClick}>
-        <MUI.DropDownMenu
-          ref="HeaderInstancesDropdown"
-          className="instances-dropdown"
-          style={{width: '100%'}}
-          menuStyle={styles.dropdownMenu}
-          labelStyle={styles.dropdownLabel}
-          underlineStyle={styles.dropdownLabelUnderline}
-          menuItemStyle={styles.dropdownMenuItem}
-          menuItems={dropDownMenuItems}
-          onChange={this.handleDropdownItemClick}
-          selectedIndex={this.handleInstanceActive()} />
-      </OutsideClickHandler>
+      <MUI.DropDownMenu
+        ref="HeaderInstancesDropdown"
+        className="instances-dropdown"
+        style={{width: '100%'}}
+        menuStyle={styles.dropdownMenu}
+        labelStyle={styles.dropdownLabel}
+        underlineStyle={styles.dropdownLabelUnderline}
+        menuItemStyle={styles.dropdownMenuItem}
+        menuItems={dropDownMenuItems}
+        onChange={this.handleDropdownItemClick}
+        selectedIndex={this.handleInstanceActive()} />
     );
   }
 }));

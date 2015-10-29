@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 import _ from 'lodash';
 
@@ -7,8 +7,8 @@ import _ from 'lodash';
 import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
-import MUI from 'material-ui';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MUI from 'syncano-material-ui';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 export default Radium(React.createClass({

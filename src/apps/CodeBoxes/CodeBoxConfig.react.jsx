@@ -1,16 +1,17 @@
 import React from 'react';
 import Radium from 'radium';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -22,7 +23,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     Router.Navigation,
 
     SnackbarNotificationMixin,

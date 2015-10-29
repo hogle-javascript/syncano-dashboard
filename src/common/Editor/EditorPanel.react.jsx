@@ -7,7 +7,7 @@ import Radium from 'radium';
 import FormMixin from '../../mixins/FormMixin';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Loading from '../../common/Loading';
 
 import './Editor.css';

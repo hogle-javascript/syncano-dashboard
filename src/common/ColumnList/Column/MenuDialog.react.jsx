@@ -4,7 +4,7 @@ import React from 'react';
 import Mixins from '../../../mixins';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../../common';
 
 export default React.createClass({

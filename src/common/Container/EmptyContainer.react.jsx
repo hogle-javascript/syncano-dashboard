@@ -1,5 +1,5 @@
 import React from 'react';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -11,7 +11,7 @@ export default React.createClass({
     text: React.PropTypes.string
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {

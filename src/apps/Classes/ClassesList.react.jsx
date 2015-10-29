@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -12,7 +12,7 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 

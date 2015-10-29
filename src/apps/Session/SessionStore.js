@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import SessionActions from './SessionActions';
 
-import Colors from 'material-ui/lib/styles/colors';
+import Colors from 'syncano-material-ui/lib/styles/colors';
 import SyncanoTheme from '../../common/SyncanoTheme';
 
 export default Reflux.createStore({

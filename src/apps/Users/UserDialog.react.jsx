@@ -12,7 +12,7 @@ import UsersActions from './UsersActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 import 'react-select/dist/default.css';
