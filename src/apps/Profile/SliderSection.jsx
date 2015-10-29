@@ -1,12 +1,12 @@
 import React from 'react';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
   displayName: 'SliderSection',
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {

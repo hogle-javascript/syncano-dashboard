@@ -1,11 +1,11 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
+import _ from 'lodash';
+
 import SessionActions from '../apps/Session/SessionActions';
 import SessionStore from '../apps/Session/SessionStore';
-import MUI from 'material-ui';
+import {Styles} from 'syncano-material-ui';
 import {SyncanoTheme, SnackbarNotification} from './../common';
-
-let ThemeManager = new MUI.Styles.ThemeManager();
 
 export default React.createClass({
 
@@ -15,6 +15,7 @@ export default React.createClass({
     router: React.PropTypes.func
   },
 
+
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -23,20 +24,28 @@ export default React.createClass({
     Router.State
   ],
 
+  getInitialState() {
+    return {
+      muiTheme: Styles.ThemeManager.getMuiTheme(SyncanoTheme)
+    };
+  },
+
   getChildContext() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: this.state.muiTheme
     };
   },
 
   componentWillMount() {
+    let palette = this.state.muiTheme.rawTheme.palette;
+    let newMuiTheme = _.merge(this.state.muiTheme, SyncanoTheme.getComponentThemes(palette));
+
     SessionActions.setRouter(this.context.router);
-    SessionActions.setTheme(ThemeManager);
-    ThemeManager.setTheme(SyncanoTheme);
+    this.setState({muiTheme: newMuiTheme});
   },
 
   componentWillUpdate() {
-    if (typeof this.getParams().instanceName === 'undefined') {
+    if (_.isUndefined(this.getParams().instanceName)) {
       SessionStore.removeInstance();
     }
   },

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Pages
 import AppPage from './pages/app.react';
@@ -30,9 +30,6 @@ import Data from './apps/Data';
 import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
-
-// Examples
-import Examples from './examples/Examples.react';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -312,12 +309,6 @@ export default (
 
       <DefaultRoute handler={Instances}/>
     </Route>
-
-    {/* Examples */}
-    <Route
-      name="examples"
-      handler={Examples}
-      />
   </Route>
 );
 

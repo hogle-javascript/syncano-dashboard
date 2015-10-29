@@ -33,6 +33,7 @@ export default {
     instancesPage.navigate();
     instancesPage.clickDropdown();
     instancesPage.clickButton('@editDropdownItem');
+    client.pause(1000);
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');
@@ -72,7 +73,7 @@ export default {
     instancesPage.fillInstanceDescription('nightwatch_test_instance');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@addInstanceModalTitle');
-    instancesPage.waitForElementVisible('@instanceDescription')
+    instancesPage.waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
     const instancesPage = client.page.instancesPage();

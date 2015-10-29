@@ -1,12 +1,12 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 import {LeftNav} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
 import InstanceDialog from '../apps/Instances/InstanceDialog.react';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -26,7 +26,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       main: {
-        display: this.state.visible || 'none'
+        display: this.state.visible ? 'block' : 'none'
       },
       paper: {
         position: 'fixed',
@@ -38,7 +38,7 @@ export default Radium(React.createClass({
       },
       text: {
         backgroundImage: 'url(/img/bg.png)',
-        backgroundColor: this.context.muiTheme.palette.primary1Color,
+        backgroundColor: this.context.muiTheme.rawTheme.palette.primary1Color,
         padding: '35px 30px',
         width: '100%',
         textAlign: 'center',

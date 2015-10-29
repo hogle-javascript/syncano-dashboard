@@ -4,12 +4,12 @@ import Radium from 'radium';
 import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
-import SnackbarNotification from '../../common/SnackbarNotification';
+import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -18,11 +18,14 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
-    SnackbarNotification.Mixin,
-    FormMixin
+    FormMixin,
+    SnackbarNotificationMixin
   ],
 
   validatorConstraints: {
+    current_password: {
+      presence: true
+    },
     newPassword: {
       presence: true
     },
@@ -30,16 +33,6 @@ export default Radium(React.createClass({
       presence: true,
       equality: 'newPassword'
     }
-  },
-
-  componentDidMount() {
-    let snackbarText = 'Password reset successfully';
-
-    this.listenTo(Actions.changePassword.completed, this.showSnackbar.bind(null, snackbarText));
-  },
-
-  componentWillUnmount() {
-    this.stopListeningTo(Actions.changePassword.completed);
   },
 
   getStyles() {
@@ -54,9 +47,6 @@ export default Radium(React.createClass({
       accountKey: {
         fontFamily: 'monospace'
       },
-      form: {
-        // maxWidth : 416
-      },
       updateButton: {
         height: 36,
         lineHeight: '36px',
@@ -67,6 +57,9 @@ export default Radium(React.createClass({
         fontWeight: 400,
         paddingLeft: 30,
         paddingRight: 30
+      },
+      settingsTitle: {
+        paddingBottom: 10
       }
     };
   },
@@ -79,16 +72,15 @@ export default Radium(React.createClass({
     Actions.changePassword(this.state);
   },
 
-  showSnackbar(message) {
+  showSnackbar() {
     this.setSnackbarNotification({
-      message,
-      autoHideDuration: 4000
+      message: 'API key copied to the clipboard',
+      autoHideDuration: 3000
     });
   },
 
   render() {
     let styles = this.getStyles();
-    let snackbarText = 'API key copied to the clipboard';
 
     return (
       <div>
@@ -97,25 +89,24 @@ export default Radium(React.createClass({
           <div className="row" style={styles.contentRow}>
             <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
             <div className="col-xs-10">
-            <ZeroClipboard text={this.state.account_key}>
+              <ZeroClipboard text={this.state.account_key}>
+                <MUI.FlatButton
+                  label="COPY"
+                  primary={true}
+                  onClick={this.showSnackbar}/>
+              </ZeroClipboard>
               <MUI.FlatButton
-                label="COPY"
+                label="RESET"
                 primary={true}
-                onClick={this.showSnackbar.bind(null, snackbarText)}/>
-            </ZeroClipboard>
-            <MUI.FlatButton
-              label="RESET"
-              primary={true}
-              onClick={this.handleResetClick} />
+                onClick={this.handleResetClick}/>
             </div>
           </div>
         </div>
         <div style={styles.content}>
-          <div>Password settings</div>
+          <div style={styles.settingsTitle}>Password settings</div>
           <div className="row" style={styles.contentRow}>
             <div className="col-md-15">
               <form
-                style={styles.form}
                 onSubmit={this.handleFormValidation}
                 acceptCharset="UTF-8"
                 method="post">

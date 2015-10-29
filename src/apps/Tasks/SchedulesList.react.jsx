@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -11,7 +11,7 @@ import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 

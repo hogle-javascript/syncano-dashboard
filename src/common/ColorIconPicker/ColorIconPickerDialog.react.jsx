@@ -1,6 +1,7 @@
 import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -16,7 +17,7 @@ export default React.createClass({
   },
 
   mixins: [
-    React.addons.LinkedStateMixin
+    LinkedStateMixin
   ],
 
   getInitialState() {

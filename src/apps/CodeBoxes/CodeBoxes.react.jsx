@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import _ from 'lodash';
 
 // Utils
@@ -135,9 +135,9 @@ export default React.createClass({
             associatedWithSchedulesList,
             associatedWithTriggersList,
             <Common.Loading
-                type="linear"
-                position="bottom"
-                show={this.state.isLoading}/>
+              type="linear"
+              position="bottom"
+              show={this.state.isLoading}/>
           ]
         }
       }];

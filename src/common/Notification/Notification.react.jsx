@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import './Notification.sass';
 
@@ -15,7 +15,7 @@ export default React.createClass({
     children: React.PropTypes.any.isRequired
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -31,7 +31,7 @@ export default React.createClass({
       verticalAlign: 'middle'
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   render() {

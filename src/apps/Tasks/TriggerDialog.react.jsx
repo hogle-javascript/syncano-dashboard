@@ -11,7 +11,7 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({

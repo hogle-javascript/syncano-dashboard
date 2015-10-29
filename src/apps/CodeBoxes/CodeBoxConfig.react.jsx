@@ -1,17 +1,17 @@
 import React from 'react';
 import Radium from 'radium';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Reflux from 'reflux';
 import _ from 'lodash';
 
-import AutosaveMixin from './CodeBoxAutosaveMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -23,17 +23,14 @@ export default Radium(React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
     Router.Navigation,
 
     SnackbarNotificationMixin,
-    AutosaveMixin,
     UnsavedDataMixin,
     Mixins.Mousetrap,
     Mixins.Dialogs
   ],
-
-  autosaveAttributeName: 'codeBoxConfigAutosave',
 
   componentDidMount() {
     Actions.fetch();
@@ -60,6 +57,12 @@ export default Radium(React.createClass({
     }
   },
 
+  getInitialState() {
+    return {
+      notificationVisible: false
+    };
+  },
+
   getStyles() {
     return {
       container: {
@@ -68,17 +71,16 @@ export default Radium(React.createClass({
         maxWidth: '600px'
       },
       field: {
-        margin: '10px 10px'
-      },
-      addButton: {
-        margin: '20px 10px',
-        maxWidth: '120px'
-      },
-      wrongConfigSnackbar: {
-        color: MUI.Styles.Colors.red400
+        margin: '10px 14px'
       },
       deleteIcon: {
         padding: '24px 12px'
+      },
+      buttonsSection: {
+        margin: '15px 20px 0'
+      },
+      saveButton: {
+        marginLeft: 10
       }
     };
   },
@@ -97,26 +99,29 @@ export default Radium(React.createClass({
     return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
   },
 
+  isValid() {
+    let codeBoxConfig = this.state.codeBoxConfig;
+
+    return _.uniq(_.pluck(codeBoxConfig, 'key')).length === codeBoxConfig.length;
+  },
+
   hasKey(newKey) {
-    let existingKeys = _.pluck(this.state.codeBoxConfig, 'key');
+    let codeBoxConfig = this.state.codeBoxConfig;
+    let existingKeys = _.pluck(codeBoxConfig, 'key');
 
     return _.includes(existingKeys, newKey);
   },
 
-  handleAddField() {
+  handleAddField(event) {
+    event.preventDefault();
     let codeBoxConfig = this.state.codeBoxConfig;
     let newField = {
       key: this.refs.newFieldKey.getValue(),
       value: this.refs.newFieldValue.getValue()
     };
 
-    if (newField.key === '') {
-      this.refs.newFieldKey.setErrorText('This field cannot be empty');
-      return;
-    }
-
     if (this.hasKey(newField.key)) {
-      this.refs.newFieldKey.setErrorText('Config already have key with this name. Please choose another name.');
+      this.refs.newFieldKey.setErrorText('Field with this name already exist. Please choose another.');
       return;
     }
 
@@ -124,17 +129,24 @@ export default Radium(React.createClass({
     this.setState({codeBoxConfig});
     this.refs.newFieldKey.clearValue();
     this.refs.newFieldValue.clearValue();
-    this.runAutoSave();
+    this.refs.newFieldKey.focus();
   },
 
   handleUpdate() {
-    this.clearAutosaveTimer();
-    this.handleUpdateAllKeys();
+    if (!this.isValid()) {
+      this.setState({
+        notificationVisible: true
+      });
+      return;
+    }
     let config = this.getConfigObject();
 
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
     this.setSnackbarNotification({
       message: 'Saving...'
+    });
+    this.setState({
+      notificationVisible: false
     });
   },
 
@@ -145,29 +157,29 @@ export default Radium(React.createClass({
     this.setState({codeBoxConfig});
   },
 
-  handleUpdateAllKeys() {
-    _.forEach(this.state.codeBoxConfig, (field, index) => {
-      this.handleUpdateKey(field.key, index);
-    });
-  },
-
   handleUpdateKey(key, index) {
     let codeBoxConfig = this.state.codeBoxConfig;
     let newField = {
-      key: this.refs[`fieldKey${key}`].getValue(),
-      value: this.refs[`fieldValue${key}`].getValue()
+      key: this.refs[`fieldKey${index}`].getValue(),
+      value: this.refs[`fieldValue${index}`].getValue()
     };
 
     if (key !== newField.key && this.hasKey(newField.key)) {
-      this.refs[`fieldKey${key}`].setErrorText('Config already have key with this name. Please choose another name.');
+      codeBoxConfig[index] = newField;
+      this.setState({codeBoxConfig}, () => {
+        this.refs[`fieldKey${index}`].setErrorText('Field with this name already exist. Please choose another.');
+      });
       return;
     }
-
     codeBoxConfig[index] = newField;
+    this.setState({codeBoxConfig});
+  },
 
-    this.setState({codeBoxConfig}, () => {
-      this.refs[`fieldKey${newField.key}`].setErrorText(null);
-    });
+  handleCancelChanges() {
+    let newState = this.state;
+
+    newState.codeBoxConfig = Store.mapConfig(this.state.currentCodeBox.config);
+    this.replaceState(newState);
   },
 
   initDialogs() {
@@ -205,68 +217,80 @@ export default Radium(React.createClass({
           className="row"
           key={index}>
           <MUI.TextField
-            key={`fieldKey${field.key}`}
-            ref={`fieldKey${field.key}`}
+            key={`fieldKey${index}`}
+            ref={`fieldKey${index}`}
             hintText="Key"
             defaultValue={field.key}
+            value={this.state.codeBoxConfig[index].key}
             style={styles.field}
-            onChange={this.runAutoSave}
-            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
           <MUI.TextField
-            key={`fieldValue${field.key}`}
-            ref={`fieldValue${field.key}`}
+            key={`fieldValue${index}`}
+            ref={`fieldValue${index}`}
             hintText="Value"
             defaultValue={field.value}
+            value={this.state.codeBoxConfig[index].value}
             style={styles.field}
-            onChange={this.runAutoSave}
-            onBlur={this.handleUpdateKey.bind(null, field.key, index)} />
+            onChange={this.handleUpdateKey.bind(this, field.key, index)} />
           <MUI.IconButton
-            iconClassName="synicon-delete"
+            iconClassName="synicon-close"
             style={styles.deleteIcon}
             tooltip="Delete key"
-            onClick={this.handleDeleteKey.bind(null, index)}/>
+            onClick={this.handleDeleteKey.bind(this, index)}/>
         </div>
       );
     });
 
-    return _.sortBy(configFields, 'key');
+    return configFields;
   },
 
   renderNewFiledSection() {
     let styles = this.getStyles();
 
     return (
-      <div>
-        <div className="row">
-          <MUI.TextField
-            className="config-input-key"
-            ref="newFieldKey"
-            hintText="Key"
-            defaultValue=""
-            style={styles.field} />
-          <MUI.TextField
-            className="config-input-value"
-            ref="newFieldValue"
-            hintText="Value"
-            defaultValue=""
-            style={styles.field} />
-        </div>
-        <div>
-          <MUI.RaisedButton
-            className="add-field-button"
-            label="Add field"
-            secondary={true}
-            onClick={this.handleAddField}
-            style={styles.addButton} />
-          <MUI.Checkbox
-            className="config-autosave-checkbox"
-            ref="autosaveCheckbox"
-            name="autoSaveCheckbox"
-            label="Autosave"
-            style={styles.addButton}
-            defaultChecked={this.isAutosaveEnabled()}
-            onCheck={this.saveCheckboxState} />
-        </div>
+      <form
+        key="form"
+        className="row"
+        onSubmit={this.handleAddField}>
+        <MUI.TextField
+          className="config-input-key"
+          ref="newFieldKey"
+          key="newFieldKey"
+          hintText="Key"
+          defaultValue=""
+          style={styles.field} />
+        <MUI.TextField
+          className="config-input-value"
+          ref="newFieldValue"
+          key="newFieldValue"
+          hintText="Value"
+          defaultValue=""
+          style={styles.field} />
+        <MUI.IconButton
+          className="add-field-button"
+          iconClassName="synicon-plus"
+          tooltip="Add field"
+          type="submit"
+          style={styles.deleteIcon} />
+      </form>
+    );
+  },
+
+  renderButtons() {
+    let styles = this.getStyles();
+
+    return (
+      <div
+        className="row align-right"
+        style={styles.buttonsSection}>
+        <MUI.FlatButton
+          label="Cancel"
+          onClick={this.handleCancelChanges} />
+        <MUI.RaisedButton
+          label="Save"
+          style={styles.saveButton}
+          secondary={true}
+          onTouchTap={this.handleUpdate} />
       </div>
     );
   },
@@ -281,18 +305,17 @@ export default Radium(React.createClass({
     return (
       <div>
         <Container style={styles.container}>
+          <Common.Show if={this.state.notificationVisible}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                Config save failed. One or more keys are not unique. Please verify keys and try again.
+              </Common.Notification>
+            </div>
+          </Common.Show>
           {this.getDialogs()}
-          <Common.Fab position="top">
-            <Common.Fab.TooltipItem
-            tooltip="Click here to save CodeBox"
-            mini={true}
-            onClick={this.handleUpdate}
-            iconClassName="synicon-content-save"/>
-          </Common.Fab>
           {this.renderFields()}
-        </Container>
-        <Container style={styles.container}>
           {this.renderNewFiledSection()}
+          {this.renderButtons()}
         </Container>
       </div>
     );

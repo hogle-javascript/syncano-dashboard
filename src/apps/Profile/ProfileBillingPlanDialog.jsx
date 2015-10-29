@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 import Mixins from '../../mixins';
 
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import SliderSection from './SliderSection';
 
