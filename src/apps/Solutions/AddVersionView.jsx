@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 
 // Utils
@@ -12,7 +12,7 @@ import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default Radium(React.createClass({

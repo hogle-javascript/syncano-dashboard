@@ -10,7 +10,7 @@ import ChannelsActions from './ChannelsActions';
 import ChannelDialogStore from './ChannelDialogStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({

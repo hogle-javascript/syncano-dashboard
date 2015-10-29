@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Loading from '../../common/Loading';
 
 export default React.createClass({

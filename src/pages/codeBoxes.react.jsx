@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Stores and Action
 import CodeBoxesActions from '../apps/CodeBoxes/CodeBoxesActions';
@@ -25,5 +25,4 @@ export default React.createClass({
   render() {
     return <Router.RouteHandler />;
   }
-
 });

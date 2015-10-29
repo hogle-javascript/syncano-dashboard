@@ -1,62 +1,37 @@
-const utils = require('../utils');
+import globals from '../globals';
+import Syncano from 'syncano';
 
 export default {
   tags: ['classes'],
   before(client) {
-    const signupPage = client.page.signupPage();
-    const instancesPage = client.page.instancesPage();
-    const leftMenuPage = client.page.leftMenuPage();
-    const slug = Date.now();
+    const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
+    const loginPage = client.page.loginPage();
+    const classOptions = {
+      name: null,
+      schema: [
+        {type: 'string', name: 'name'}
+      ]
+    };
+    let i = 0;
 
-    signupPage
+    for (i; i < 3; i += 1) {
+      classOptions.name = `class_${i.toString()}`;
+      syncano.instance(globals.tempInstanceName).class().add(classOptions);
+    }
+
+    loginPage
       .navigate()
-      .setValue('@emailInput', 'syncano.bot+' + slug + '@syncano.com')
-      .setValue('@passInput', slug)
-      .clickSubmitButton();
-
-    instancesPage
-      .navigate()
-      .waitForElementPresent('@emptyListItem')
-      .clickButton('@welcomeDialogCreateInstance')
-      .clickButton('@confirmButton')
-      .isModalClosed('@addInstanceModalTitle')
-      .clickButton('@instancesTableRow');
-
-    leftMenuPage.clickButton('@classes');
-    client.pause(1000);
+      .login(globals.tempEmail, globals.tempPass)
+      .verifyLoginSuccessful();
   },
   after(client) {
     client.end();
   },
-  'Test Add Multiple Classes': (client) => {
-    let className = utils.addSuffix('class');
-    const classesPage = client.page.classesPage();
-    let i = 0;
-
-    for (i; i < 2; i += 1) {
-      className += '_' + i.toString();
-      classesPage
-        .clickButton('@fab')
-        .fillInputField('@createModalNameInput', className)
-        .fillInputField('@createModalFieldNameInput', 'schemaName')
-        .selectFromDropdown('@createModalDropdownType', '@createModalSchemaString')
-        .clickButton('@addButton');
-      client.pause(1000);
-      classesPage
-        .waitForElementVisible('@addClassTitle')
-        .clickButton('@confirmButton')
-        .waitForElementNotVisible('@addClassTitle');
-    }
-  },
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.navigate();
-    classesPage.clickDropdown();
-    classesPage.clickButton('@editDropdownItem');
-    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description');
-    classesPage.clickButton('@confirmButton');
-    classesPage.waitForElementNotVisible('@editClassTitle');
+    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/classes`);
+
     classesPage
       .clickButton('@selectUserClass')
       .clickButton('@multipleSelectButton')

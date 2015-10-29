@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import SolutionStar from '../SolutionStar';
 

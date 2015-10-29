@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
-import Radium from 'radium';
+import Router from 'react-router-old';
 
 // Actions & Stores
 import Actions from './InstancesActions';
@@ -13,11 +12,11 @@ import SessionActions from '../Session/SessionActions';
 import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
-export default Radium(React.createClass({
+export default React.createClass({
 
   displayName: 'InstanceEdit',
 
@@ -30,7 +29,8 @@ export default Radium(React.createClass({
     Router.Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    Dialogs
+    Dialogs,
+    MUI.Utils.Styles
   ],
 
   validatorConstraints: {
@@ -207,7 +207,7 @@ export default Radium(React.createClass({
               tooltip="Click to customize Instance"
               tooltipStyles={styles.tooltip}
               iconStyle={styles.instanceIcon}
-              style={[styles.instanceIconButton, iconBackgroundColor]}
+              style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
               iconClassName={'synicon-' + icon}
               onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
             <MUI.TextField
@@ -240,4 +240,4 @@ export default Radium(React.createClass({
       </Container>
     );
   }
-}));
+});

@@ -1,13 +1,13 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
   displayName: 'Item',
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {
@@ -34,7 +34,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   getIcon() {

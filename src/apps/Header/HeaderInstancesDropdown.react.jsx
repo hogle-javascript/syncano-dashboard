@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 
 import HeaderStore from './HeaderStore';
@@ -9,7 +9,7 @@ import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 import InstanceDialogActions from '../Instances/InstanceDialogActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default Radium(React.createClass({
@@ -22,11 +22,11 @@ export default Radium(React.createClass({
   },
 
   mixins: [
-    MUI.Mixins.StylePropable,
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
     Router.Navigation,
-    Router.State
+    Router.State,
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {

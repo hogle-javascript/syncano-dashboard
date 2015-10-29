@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -14,6 +14,8 @@ export default Radium(React.createClass({
     checkable: React.PropTypes.bool,
     handleClick: React.PropTypes.func
   },
+
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -118,7 +120,7 @@ export default Radium(React.createClass({
       <MUI.Paper
         zDepth={0}
         circle={true}
-        style={[styles.background, this.props.checkable && styles.checkable]}
+        style={this.mergeAndPrefix(styles.background, this.props.checkable && styles.checkable)}
         onMouseOver={this.props.checkable ? this.handleMouseOver : null}
         onMouseLeave={this.props.checkable ? this.handleMouseLeave : null}
         onTouchTap={this.props.checkable ? this.handleClick : null}>

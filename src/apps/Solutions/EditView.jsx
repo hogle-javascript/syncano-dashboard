@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Select from 'react-select';
 
 // Utils
@@ -16,7 +16,7 @@ import Store from './EditViewStore';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 

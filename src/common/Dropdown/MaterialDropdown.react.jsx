@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import OutsideClickHandler from 'react-outsideclickhandler';
+
+import OnClickOutside from 'react-onclickoutside';
 
 import MaterialDropdownItem from './MaterialDropdownItem.react';
 import DropdownNotifiItem from './DropdownNotifiItem.react';
@@ -26,6 +27,10 @@ export default React.createClass({
     isLoading: React.PropTypes.bool
   },
 
+  mixins: [
+    OnClickOutside
+  ],
+
   getDefaultProps() {
     return {
       icon: 'dots-vertical',
@@ -49,6 +54,10 @@ export default React.createClass({
     this.setState(nextProps);
   },
 
+  handleClickOutside() {
+    this.setState({isOpen: false});
+  },
+
   toggleOpenClose() {
     this.setState({
       isOpen: (!this.state.isOpen && this.props.clickable)
@@ -57,10 +66,6 @@ export default React.createClass({
         this.props.handleOnClick();
       }
     });
-  },
-
-  close() {
-    this.setState({isOpen: false});
   },
 
   renderItems() {
@@ -85,20 +90,18 @@ export default React.createClass({
     });
 
     return (
-      <OutsideClickHandler onOutsideClick={this.close}>
-        <div className="dropdown">
-          <div
-            className="dropdown-button clickable"
-            onClick={this.toggleOpenClose}>
-            {this.props.children}
-          </div>
-          <div className={cssClasses}>
-            <div className="dropdown-menu-section">
-              {this.renderItems()}
-            </div>
+      <div className="dropdown">
+        <div
+          className="dropdown-button clickable"
+          onClick={this.toggleOpenClose}>
+          {this.props.children}
+        </div>
+        <div className={cssClasses}>
+          <div className="dropdown-menu-section">
+            {this.renderItems()}
           </div>
         </div>
-      </OutsideClickHandler>
+      </div>
     );
   }
 });
