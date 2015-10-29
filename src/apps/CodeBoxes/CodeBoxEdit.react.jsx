@@ -135,6 +135,7 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'runUnsavedCodeBox',
         ref: 'runUnsavedCodeBox',
         title: 'Unsaved CodeBox',
         actions: [
@@ -150,10 +151,10 @@ export default React.createClass({
         modal: true,
         children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
       }
-    },
-    {
+    }, {
       dialog: Common.Dialog,
       params: {
+        key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
         actions: [
@@ -220,10 +221,12 @@ export default React.createClass({
               ref="tracePanel"
               trace={this.state.lastTraceResult}
               loading={!this.state.lastTraceReady}/>
-            <div style={styles.durationSummary}>
-              Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
-              duration: {this.state.lastTraceDuration}ms
-            </div>
+            <Common.Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
+              <div style={styles.durationSummary}>
+                Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
+                duration: {this.state.lastTraceDuration}ms
+              </div>
+            </Common.Show>
           </div>
         </div>
       );
