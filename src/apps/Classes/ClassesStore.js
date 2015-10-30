@@ -137,8 +137,8 @@ export default Reflux.createStore({
       };
     }
     return {
-      color: clickedItem.metadata ? clickedItem.metadata.color : 'blue',
-      icon: clickedItem.metadata ? clickedItem.metadata.icon : 'table-large'
+      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'blue',
+      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'table-large'
     };
   },
 

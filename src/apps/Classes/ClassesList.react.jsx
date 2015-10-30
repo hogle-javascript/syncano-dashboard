@@ -85,6 +85,7 @@ export default React.createClass({
 
   renderItem(item) {
     let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
+    let metadata = item.metadata;
 
     return (
       <Common.ColumnList.Item
@@ -94,8 +95,8 @@ export default React.createClass({
         handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id={item.name.toString()}
-          icon={item.metadata ? item.metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(item.metadata ? item.metadata.color : 'blue', 'xlight')}
+          icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
+          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.name}
@@ -116,15 +117,15 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit-class"
             onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
-            primaryText="Edit a Class" />
+            primaryText="Edit a Class"/>
           <MenuItem
             className="dropdown-item-customize-class"
             onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
-            primaryText="Customize a Class" />
+            primaryText="Customize a Class"/>
           <MenuItem
             className="dropdown-item-delete-class"
             onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}
-            primaryText="Delete a Class" />
+            primaryText="Delete a Class"/>
         </Column.Menu>
       </Common.ColumnList.Item>
     );
