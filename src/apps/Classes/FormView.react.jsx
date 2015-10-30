@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 import Router from 'react-router-old';
 
 // Utils
@@ -45,6 +46,24 @@ export default React.createClass({
       this.setFields(nextState.schema);
       nextState.schemaInitialized = true;
     }
+  },
+
+  getInitialState() {
+    return {
+      fieldTarget: 'self'
+    };
+  },
+
+  getStyles() {
+    return {
+      schemaAddSection: {
+        alignItems: 'stretch',
+        height: 110
+      },
+      checkBox: {
+        alignSelf: 'center'
+      }
+    };
   },
 
   getFieldTypes() {
@@ -139,13 +158,17 @@ export default React.createClass({
   },
 
   handleFieldAdd() {
+    if (_.includes(_.pluck(this.state.fields, 'fieldName'), this.state.fieldName)) {
+      this.refs.fieldName.setErrorText('Field with this name already exists.');
+      return;
+    }
     if (!this.state.fieldName) {
       return;
     }
 
     const fields = this.state.fields;
 
-    const field = {
+    let field = {
       fieldName: this.state.fieldName,
       fieldType: this.state.fieldType,
       fieldOrder: this.refs.fieldOrder ? this.refs.fieldOrder.isChecked() : null,
@@ -249,6 +272,7 @@ export default React.createClass({
   },
 
   render() {
+    const styles = this.getStyles();
     const title = this.hasEditMode() ? 'Update a Class' : 'Add a Class';
     const permissions = [
       {
@@ -365,14 +389,13 @@ export default React.createClass({
             <div className='col-xs-3'>Order</div>
             <div className='col-xs-5'></div>
           </div>
-          <div className='row align-bottom vm-2-b'>
+          <div style={styles.schemaAddSection} className='row align-bottom vm-2-b'>
             <div className='col-xs-8'>
               <MUI.TextField
                 ref='fieldName'
                 name='fieldName'
                 fullWidth={true}
                 valueLink={this.linkState('fieldName')}
-                errorText={this.getValidationMessages('fieldName').join(' ')}
                 hintText='Name of the Field'
                 floatingLabelText='Name'/>
             </div>
@@ -403,23 +426,21 @@ export default React.createClass({
                   menuItems={ClassesStore.getClassesDropdown(true)}/>
               </Common.Show>
             </div>
-            <div className='col-xs-3'>
+            <div className='col-xs-3' style={styles.checkBox}>
               <Common.Show if={this.hasFilter(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginBottom: 10}}
                   ref="fieldFilter"
                   name="filter"/>
               </Common.Show>
             </div>
-            <div className='col-xs-3'>
+            <div className='col-xs-3' style={styles.checkBox}>
               <Common.Show if={this.hasOrder(this.state.fieldType)}>
                 <MUI.Checkbox
-                  style={{marginBottom: 10}}
                   ref="fieldOrder"
                   name="order"/>
               </Common.Show>
             </div>
-            <div className='col-xs-5'>
+            <div className='col-xs-5' style={styles.checkBox}>
               <MUI.FlatButton
                 style={{marginBottom: 4}}
                 label='Add'
