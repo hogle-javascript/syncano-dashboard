@@ -1,7 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-
 import MUI from 'material-ui';
+
+import ColumnListConstans from './ColumnListConstans';
 
 export default Radium(React.createClass({
 
@@ -19,6 +20,7 @@ export default Radium(React.createClass({
         display: 'flex',
         marginBottom: 0,
         justifyContent: 'center',
+        height: ColumnListConstans.DEFAULT_ITEM_HEIGHT,
         background: '#fff'
       },
       noBackground: {

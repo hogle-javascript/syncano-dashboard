@@ -11,5 +11,7 @@ export default {
     MENU: 'col-menu',
     NAME: 'col-xs-8',
     TEXT: 'col-xs-4'
-  }
+  },
+  DEFAULT_CELL_PADDING: '16px 8px',
+  DEFAULT_ITEM_HEIGHT: 64
 };

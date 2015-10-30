@@ -37,7 +37,7 @@ export default Radium(React.createClass({
       alignItems: 'center',
       fontSize: 13,
       lineHeight: '16px',
-      padding: '16px 8px',
+      padding: ColumnListConstans.DEFAULT_CELL_PADDING,
       wordBreak: 'break-all',
       color: this.props.color
     };

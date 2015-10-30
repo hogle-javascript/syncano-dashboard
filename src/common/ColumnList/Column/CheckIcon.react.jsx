@@ -45,7 +45,7 @@ export default Radium(React.createClass({
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 12,
-        padding: '16px 8px'
+        padding: ColumnListConstans.DEFAULT_CELL_PADDING
       },
       name: {
         fontSize: 16,
@@ -54,7 +54,6 @@ export default Radium(React.createClass({
         flexDirection: 'column',
         justifyContent: 'center',
         wordBreak: 'break-all',
-        pointerEvents: 'none',
         color: this.state.color
       },
       link: {
@@ -95,9 +94,7 @@ export default Radium(React.createClass({
           checkable={this.props.checkable}/>
 
         <div
-          style={styles.name}
-          onMouseOver={this.handleMouseOver}
-          onMouseOut={this.handleMouseLeave}>
+          style={styles.name}>
           {this.props.children}
         </div>
       </div>

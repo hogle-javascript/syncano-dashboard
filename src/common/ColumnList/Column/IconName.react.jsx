@@ -41,7 +41,7 @@ export default Radium(React.createClass({
         flexDirection: 'row',
         alignItems: 'center',
         fontSize: 12,
-        padding: '16px 8px'
+        padding: ColumnListConstans.DEFAULT_CELL_PADDING
       },
       name: {
         fontSize: 16,
