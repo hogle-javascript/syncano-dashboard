@@ -158,6 +158,7 @@ export default Radium(React.createClass({
     return (
       <Common.Show if={instances.length > 0}>
         <MUI.List
+          className={InstancesStore.amIOwner(instances[0]) ? 'my-instances-list' : 'shared-instances-list'}
           style={styles.list}
           subheader={subheaderText}
           subheaderStyle={styles.separator}>
@@ -204,7 +205,6 @@ export default Radium(React.createClass({
 
     return (
       <MUI.IconMenu
-        className="instances-list"
         ref="instancesDropdown"
         onItemTouchTap={this.closeDropdown}
         iconButtonElement={this.renderDropdownIcon()}

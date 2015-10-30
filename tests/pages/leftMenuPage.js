@@ -20,7 +20,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesListSecondItem: {
-      selector: '//div[@class="instances-list"]/div[2]/div/div[3]',
+      selector: '//div[@class="my-instances-list"]/div[3]',
       locateStrategy: 'xpath'
     },
     classes: {
