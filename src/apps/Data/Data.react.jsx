@@ -7,12 +7,11 @@ import Router from 'react-router';
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
+import MUI from 'material-ui';
 
 // Stores and Actions
 import DataViewsActions from './DataViewsActions';
 import DataViewsStore from './DataViewsStore';
-import WebhooksActions from './WebhooksActions';
-import WebhooksStore from './WebhooksStore';
 
 // Components
 import Common from '../../common';
@@ -20,9 +19,11 @@ import Container from '../../common/Container/Container.react';
 
 // Local components
 import DataViewsList from './DataViewsList.react';
-import WebhooksList from './WebhooksList.react';
 import DataViewDialog from './DataViewDialog.react';
-import WebhookDialog from './WebhookDialog.react';
+
+import Webhooks from '../Webhooks';
+import Tasks from '../Tasks';
+import Channels from '../Channels';
 
 export default React.createClass({
 
@@ -33,7 +34,11 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(DataViewsStore, 'dataviews'),
-    Reflux.connect(WebhooksStore, 'webhooks'),
+    Reflux.connect(Webhooks.Store, 'webhooks'),
+    Reflux.connect(Channels.Store, 'channels'),
+    Reflux.connect(Tasks.SchedulesStore, 'schedules'),
+    Reflux.connect(Tasks.TriggersStore, 'triggers'),
+
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -51,7 +56,7 @@ export default React.createClass({
 
   handleRemoveWebhooks() {
     console.info('Data::handleDelete');
-    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
+    Webhooks.Actions.removeWebhooks(Webhooks.Store.getCheckedItems());
   },
 
   handleRemoveDataViews() {
@@ -62,7 +67,7 @@ export default React.createClass({
   uncheckAll() {
     console.info('Data::uncheckAll');
     DataViewsActions.uncheckAll();
-    WebhooksActions.uncheckAll();
+    Webhooks.Actions.uncheckAll();
   },
 
   showDataViewDialog() {
@@ -74,28 +79,37 @@ export default React.createClass({
   },
 
   showWebhookDialog() {
-    WebhooksActions.showDialog();
+    Webhooks.Actions.showDialog();
   },
 
   showWebhookEditDialog() {
-    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
+    Webhooks.Actions.showDialog(Webhooks.Store.getCheckedItem());
   },
 
   checkDataViewItem(id, state) {
     console.info('Data::checkDataViewItem');
     DataViewsActions.checkItem(id, state);
-    WebhooksActions.uncheckAll();
+    Webhooks.Actions.uncheckAll();
   },
 
   checkWebhook(id, state) {
     console.info('Data::checkWebhook');
-    WebhooksActions.checkItem(id, state);
+    Webhooks.Actions.checkItem(id, state);
+    DataViewsActions.uncheckAll();
+  },
+
+  checkChannel(id, state) {
+    console.info('Data::checkChannel');
+    Channels.Actions.checkItem(id, state);
     DataViewsActions.uncheckAll();
   },
 
   fetch() {
     DataViewsActions.fetch();
-    WebhooksActions.fetch();
+    Webhooks.Actions.fetch();
+    Channels.Actions.fetch();
+    Tasks.TriggersActions.fetch();
+    Tasks.SchedulesActions.fetch();
   },
 
   // Dialogs config
@@ -118,7 +132,7 @@ export default React.createClass({
             }
           ],
           modal: true,
-          children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
+          children: 'Do you really want to delete ' + Webhooks.Store.getCheckedItems().length + ' Webhooks?'
         }
       },
       {
@@ -146,7 +160,7 @@ export default React.createClass({
 
   render() {
     let checkedDataViews = DataViewsStore.getNumberOfChecked();
-    let checkedWebhooks = WebhooksStore.getNumberOfChecked();
+    let checkedWebhooks = Webhooks.Store.getNumberOfChecked();
     let isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length;
     let isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length;
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -154,7 +168,7 @@ export default React.createClass({
 
     return (
       <Container>
-        <WebhookDialog />
+        <Webhooks.Dialog />
         <DataViewDialog />
         {this.getDialogs()}
 
@@ -178,7 +192,7 @@ export default React.createClass({
             <Common.Fab.TooltipItem
               tooltip={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
-              onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              onClick={isAnyWebhookSelected ? Webhooks.Actions.selectAll : Webhooks.Actions.uncheckAll}
               iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
               tooltip="Click here to delete a Webhook"
@@ -188,37 +202,72 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <Common.Fab>
-          {/*
-          <Common.Fab.TooltipItem
-            tooltip="Click here to create a Data Endpoint"
-            onClick={this.showDataViewDialog}
-            iconClassName="synicon-table"/>
-          */}
-          <Common.Fab.TooltipItem
-            tooltip="Click here to create a CodeBox Endpoint"
-            onClick={this.showWebhookDialog}
-            iconClassName="synicon-arrow-up-bold"/>
-        </Common.Fab>
+        <Common.InnerToolbar>
 
-        {/*
-        <DataViewsList
-          name="Data Endpoints"
-          checkItem={this.checkDataViewItem}
-          isLoading={this.state.dataviews.isLoading}
-          items={this.state.dataviews.items}
-          emptyItemHandleClick={this.showDataViewDialog}
-          emptyItemContent="Create a DataView"/>
-         */}
+            <MUI.ToolbarGroup style={{'padding-left': 36}}>
+              <MUI.ToolbarTitle text={'Sockets'}/>
+            </MUI.ToolbarGroup>
 
-        <WebhooksList
-          name="Webhooks"
-          checkItem={this.checkWebhook}
-          isLoading={this.state.webhooks.isLoading}
-          items={this.state.webhooks.items}
-          emptyItemHandleClick={this.showWebhookDialog}
-          emptyItemContent="Create a Webhook"/>
-      </Container>
+            <MUI.ToolbarGroup float="right">
+
+              <MUI.IconButton
+                style={{fontSize: 25, marginTop: 5}}
+                iconClassName="synicon-delete"
+                tooltip="Delete Data Objects"
+              />
+
+            </MUI.ToolbarGroup>
+
+        </Common.InnerToolbar>
+
+        <div style={{clear: 'both', height: '100%', marginTop: 130}}>
+
+          <DataViewsList
+            name="Data Socket"
+            checkItem={this.checkDataViewItem}
+            isLoading={this.state.dataviews.isLoading}
+            items={this.state.dataviews.items}
+            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemContent="Create a Data Socket"/>
+
+          <Webhooks.List
+            name="CodeBox Sockets"
+            checkItem={this.checkWebhook}
+            isLoading={this.state.webhooks.isLoading}
+            items={this.state.webhooks.items}
+            emptyItemHandleClick={this.showWebhookDialog}
+            emptyItemContent="Create a CodeBox Socket"/>
+
+          <Channels.List
+            name="Channel Sockets"
+            checkItem={this.checkChannel}
+            isLoading={this.state.channels.isLoading}
+            items={this.state.channels.items}
+            emptyItemHandleClick={this.showChannelDialog}
+            emptyItemContent="Create a Channel Socket"/>
+
+          <Tasks.TriggersList
+            name="Trigger Sockets"
+            checkItem={this.checkDataViewItem}
+            isLoading={this.state.triggers.isLoading}
+            items={this.state.triggers.items}
+            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemContent="Create a Trigger Socket"/>
+
+          <Tasks.SchedulesList
+            name="Schedule Sockets"
+            checkItem={this.checkDataViewItem}
+            isLoading={this.state.schedules.isLoading}
+            items={this.state.schedules.items}
+            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemContent="Create a Trigger Socket"
+            />
+
+        </div>
+
+        </Container>
     );
   }
 });
+
+
