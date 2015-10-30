@@ -8,7 +8,7 @@ export default {
   contentFontFamily: 'Avenir, sans-serif',
   getPalette() {
     return {
-      primary1Color: Colors.blue700,
+      primary1Color: '#244273',
       primary2Color: Colors.blue500,
       primary3Color: Colors.blue100,
 

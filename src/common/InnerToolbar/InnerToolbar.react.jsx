@@ -13,11 +13,11 @@ export default React.createClass({
   getStyles() {
     return {
       position: 'fixed',
-      top: 64,
+      top: 50,
       right: 0,
       paddingLeft: 256,
-      background: 'rgba(215,215,215,0.6)',
-      padding: '0px 32px 0 24px',
+      background: 'rgba(222,222,222,0.30)',
+      padding: '0px 24px 0 24px',
       zIndex: 6
     };
   },
