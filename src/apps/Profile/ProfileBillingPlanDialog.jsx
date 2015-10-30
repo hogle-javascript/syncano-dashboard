@@ -16,6 +16,7 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
+    Reflux.ListenerMixin,
     Router.State,
     Router.Navigation,
 
@@ -65,6 +66,12 @@ export default React.createClass({
       }
     };
   },
+
+  componentWillUnmount() {
+    this.stopListeningTo(Actions.subscribePlan.completed);
+    this.stopListeningTo(Actions.updateCard.completed);
+  },
+
 
   getValidatorAttributes() {
     if (this.state.card) {
@@ -194,16 +201,13 @@ export default React.createClass({
       });
     };
 
+    this.listenTo(Actions.subscribePlan.completed, setLimits);
+
     if (this.state.card) {
-      subscribe().then(setLimits);
+      subscribe();
     } else {
-      Actions
-        .updateCard(this.getValidatorAttributes())
-        .then(() => {
-          subscribe().then(
-            setLimits
-          );
-        });
+      this.listenTo(Actions.updateCard.completed, subscribe);
+      Actions.updateCard(this.getValidatorAttributes());
     }
   },
 
