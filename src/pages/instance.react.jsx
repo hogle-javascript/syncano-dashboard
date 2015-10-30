@@ -37,9 +37,10 @@ export default React.createClass({
   getStyles() {
     return {
       leftNav: {
-        paddingTop: 64,
+        paddingTop: 50,
         zIndex: 7,
-        overflow: 'visible'
+        overflow: 'visible',
+        boxShadow: ''
       },
       menuItemStyleSubheader: {
         color: 'rgba(0, 0, 0, 0.54)',
@@ -47,8 +48,11 @@ export default React.createClass({
         paddingTop: 4,
         fontWeight: 800
       },
+      menuStyle: {
+        backgroundColor: 'rgba(245,245,245,0.30)'
+      },
       content: {
-        margin: '96px 104px 48px 304px'
+        margin: '96px 24px 48px 284px'
       },
       addInstanceItem: {
         fontSize: 14,
@@ -58,12 +62,24 @@ export default React.createClass({
       plusIcon: {
         marginTop: '4px',
         color: 'rgba(0, 0, 0, 0.54)'
+      },
+      instanceDropdown: {
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: 24,
+        backgroundColor: '#F2F2F2'
       }
     };
   },
 
   getMenuItems() {
     return [
+      {
+        type: MUI.MenuItem.Types.LINK,
+        route: 'sockets',
+        payload: this.getMenuItemHref('sockets'),
+        text: 'Sockets'
+      },
       {
         type: MUI.MenuItem.Types.SUBHEADER,
         text: 'Instances'
@@ -77,9 +93,9 @@ export default React.createClass({
       },
       {
         type: MUI.MenuItem.Types.LINK,
-        route: 'webhooks',
-        payload: this.getMenuItemHref('webhooks'),
-        text: 'Webhooks'
+        route: 'users',
+        payload: this.getMenuItemHref('users'),
+        text: 'Users & Groups'
       },
       {
         type: MUI.MenuItem.Types.LINK,
@@ -91,25 +107,7 @@ export default React.createClass({
         type: MUI.MenuItem.Types.LINK,
         route: 'codeboxes',
         payload: this.getMenuItemHref('codeboxes'),
-        text: 'CodeBoxes'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'users',
-        payload: this.getMenuItemHref('users'),
-        text: 'Users'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'channels',
-        payload: this.getMenuItemHref('channels'),
-        text: 'Channels'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'tasks',
-        payload: this.getMenuItemHref('tasks'),
-        text: 'Tasks'
+        text: 'Snippets'
       },
       {
         type: MUI.MenuItem.Types.SUBHEADER,
@@ -158,8 +156,8 @@ export default React.createClass({
 
   renderInstanceDropdown() {
     return (
-      <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown/>
+      <div style={this.getStyles().instanceDropdown}>
+        <HeaderInstancesDropdown />
       </div>
     );
   },
@@ -176,6 +174,7 @@ export default React.createClass({
           className="left-nav"
           ref="leftNav"
           header={this.renderInstanceDropdown()}
+          menuStyle={styles.menuStyle}
           menuItemStyleSubheader={styles.menuItemStyleSubheader}
           selectedIndex={this.getActiveTab(this.getMenuItems()).index}
           style={styles.leftNav}
