@@ -51,6 +51,17 @@ export default Reflux.createStore({
     Actions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
+  mapConfig(originalConfig) {
+    let config = _.map(originalConfig, (value, key) => {
+      return {
+        key,
+        value
+      };
+    });
+
+    return _.sortBy(config, 'key');
+  },
+
   getCurrentCodeBox() {
     console.debug('CodeBoxStore::getCurrentCodeBox');
     return this.data.currentCodeBox;
@@ -58,12 +69,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
-    this.data.codeBoxConfig = _.map(codeBox.config, (value, key) => {
-      return {
-        key,
-        value
-      };
-    });
+    this.data.codeBoxConfig = this.mapConfig(codeBox.config);
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },

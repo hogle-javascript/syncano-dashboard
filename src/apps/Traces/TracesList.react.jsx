@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -9,7 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Store from './TracesStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;

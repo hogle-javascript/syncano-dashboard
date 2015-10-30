@@ -1,9 +1,9 @@
 var ENV     = process.env.NODE_ENV || 'development',
     path    = require('path'),
     webpack = require('webpack'),
-    compass = require('node-libcompass').includePaths,
+    version = require('../package.json').version,
     envVars = null,
-    plugin  = {ENV: JSON.stringify(ENV)},
+    plugin  = {ENV: JSON.stringify(ENV), VERSION: JSON.stringify(version)},
     package = require('../package.json');
 
 envVars = [
@@ -13,7 +13,9 @@ envVars = [
   'OAUTH_PROXY_URL',
   'SENTRY_DSN',
   'ANALYTICS_WRITE_KEY',
-  'STRIPE_PUBLISHABLE_KEY'
+  'STRIPE_PUBLISHABLE_KEY',
+  'CIRCLE_BRANCH',
+  'CIRCLE_SHA1'
 ];
 
 // We want to check env variables like this: DEVELOPMENT_FACEBOOK_ID or FACEBOOK_ID or null
@@ -48,11 +50,9 @@ module.exports = {
       {
         test: /\.sass$/,
         loader: "style!css!sass?sourceMap&indentedSyntax&outputStyle=expanded&precision=8&" +
-          "includePaths[]=" + compass + "&" +
-          "includePaths[]=" +
-          (path.resolve(__dirname, "../src/assets/sass")) + "&" +
-          "includePaths[]=" +
-          (path.resolve(__dirname, "../node_modules"))
+          "includePaths[]=" + (path.resolve(__dirname, "../node_modules/compass-mixins/lib")) + "&" +
+          "includePaths[]=" + (path.resolve(__dirname, "../src/assets/sass")) + "&" +
+          "includePaths[]=" + (path.resolve(__dirname, "../node_modules"))
       }
     ]
   },

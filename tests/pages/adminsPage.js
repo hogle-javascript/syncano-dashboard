@@ -36,7 +36,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addAdminButton: {
-      selector: '(//span[@class="synicon-plus"])[2]',
+      selector: '(//span[@class="synicon-plus"])[1]',
       locateStrategy: 'xpath'
     },
     addAdminModalTitle: {

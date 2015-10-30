@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 let Transitions = MUI.Styles.Transitions;
 let ColorManipulator = MUI.Utils.ColorManipulator;
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getInitialState() {
     return {
@@ -73,12 +73,12 @@ export default Radium(React.createClass({
   },
 
   getTheme() {
-    return this.context.muiTheme.component.floatingActionButton;
+    return this.context.muiTheme.floatingActionButton;
   },
 
   _getColor() {
     if (this.props.disabled) {
-      return this.getTheme().disabledColor;
+      return this.getTheme().disabledTextColor;
     }
 
     if (this.props.secondary) {

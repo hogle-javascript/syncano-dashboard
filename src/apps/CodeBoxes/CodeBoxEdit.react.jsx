@@ -1,19 +1,20 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './CodeBoxAutosaveMixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -26,7 +27,7 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialogs,

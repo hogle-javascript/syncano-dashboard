@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import FormMixin from '../../mixins/FormMixin';
@@ -10,7 +10,7 @@ import Store from './AuthStore';
 import Actions from './AuthActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Container from '../../common/Container/AccountContainer.react';
 
 export default React.createClass({

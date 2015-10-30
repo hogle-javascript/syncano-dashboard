@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
+import Toolbar from 'syncano-material-ui/lib/toolbar/toolbar';
 
 export default React.createClass({
 

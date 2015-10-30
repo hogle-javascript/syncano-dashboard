@@ -85,7 +85,6 @@ module.exports = {
     codeBoxEditPage.waitForElementPresent('@configKeyField');
     codeBoxEditPage.waitForElementPresent('@configValueField');
     codeBoxEditPage.waitForElementPresent('@configAddFieldButton');
-    codeBoxEditPage.waitForElementPresent('@configAutosaveCheckbox');
     codeBoxEditPage.verify.containsText('@configKeyField', '');
     codeBoxEditPage.verify.containsText('@configValueField', '');
   },

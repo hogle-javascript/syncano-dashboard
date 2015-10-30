@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
@@ -12,7 +12,7 @@ import {Dialogs} from '../../mixins';
 // Components
 import MUI from 'material-ui';
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 

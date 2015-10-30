@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
@@ -10,11 +10,12 @@ import HeaderMixin from '../Header/HeaderMixin';
 import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -23,6 +24,7 @@ export default React.createClass({
   mixins: [
     Dialogs,
     HeaderMixin,
+    SnackbarNotificationMixin,
     Router.State,
     Router.Navigation
   ],
@@ -34,10 +36,10 @@ export default React.createClass({
 
   handleURLClick(event) {
     event.stopPropagation();
-    this.refs.snackbar.show();
-    setTimeout(() => {
-      this.refs.snackbar.dismiss();
-    }, 1200);
+    this.setSnackbarNotification({
+      message: 'URL copied to the clipboard',
+      autoHideDuration: 1200
+    });
   },
 
   handleItemClick(itemName) {
@@ -52,7 +54,6 @@ export default React.createClass({
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.self;
 
     return (
-      <div>
         <ReactZeroClipboard text={webhookLink}>
           <MUI.IconButton
             style={{height: 20, width: 20, padding: '0 50', cursor: 'copy'}}
@@ -61,7 +62,6 @@ export default React.createClass({
             tooltip="Copy Webhook URL"
             onClick={this.handleURLClick}/>
         </ReactZeroClipboard>
-      </div>
     );
   },
 
@@ -157,9 +157,6 @@ export default React.createClass({
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
-        <MUI.Snackbar
-          ref="snackbar"
-          message="URL copied to the clipboard"/>
       </Common.Lists.Container>
     );
   }

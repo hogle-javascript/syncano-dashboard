@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -12,7 +12,7 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import Common from '../../common';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -66,7 +66,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let clickedItem = Store.getClickedItemIconColor();
 
     return [
       {
@@ -75,8 +75,8 @@ export default React.createClass({
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
           mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
+          initialColor: clickedItem.color,
+          initialIcon: clickedItem.icon,
           handleClick: this.handleChangePalette
         }
       }
@@ -94,8 +94,8 @@ export default React.createClass({
         handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id={item.name.toString()}
-          icon={item.metadata ? item.metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(item.metadata ? item.metadata.color : 'blue', 'xlight')}
+          icon={item.metadata.icon ? item.metadata.icon : 'table-large'}
+          background={Common.Color.getColorByName(item.metadata.color ? item.metadata.color : 'blue')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.name}
@@ -116,15 +116,15 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit-class"
             onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
-            primaryText="Edit a Class" />
+            primaryText="Edit a Class"/>
           <MenuItem
             className="dropdown-item-customize-class"
             onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
-            primaryText="Customize a Class" />
+            primaryText="Customize a Class"/>
           <MenuItem
             className="dropdown-item-delete-class"
             onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}
-            primaryText="Delete a Class" />
+            primaryText="Delete a Class"/>
         </Column.Menu>
       </Common.ColumnList.Item>
     );

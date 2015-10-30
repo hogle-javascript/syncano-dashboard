@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +13,7 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 import InstancesActions from './InstancesActions';
 
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -93,7 +93,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
+    let clickedItem = Store.getClickedItemIconColor();
 
     return [
       {
@@ -102,8 +102,8 @@ export default React.createClass({
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
           mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
+          initialColor: clickedItem.color,
+          initialIcon: clickedItem.icon,
           handleClick: this.handleChangePalette
         }
       }

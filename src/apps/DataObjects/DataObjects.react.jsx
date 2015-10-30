@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import _ from 'lodash';
 
 // Utils
@@ -12,7 +12,7 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 // Local components

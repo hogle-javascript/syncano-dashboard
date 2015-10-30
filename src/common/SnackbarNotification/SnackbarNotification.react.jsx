@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import Store from './SnackbarNotificationStore';
 
@@ -25,7 +25,6 @@ export default React.createClass({
 
     if (this.state.snackbar !== null) {
       this.refs.snackbar.dismiss();
-      delete this.refs.snackbar._wasOpen;
     }
   },
 

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Pages
 import AppPage from './pages/app.react';
@@ -18,6 +18,7 @@ import Profile from './apps/Profile';
 
 // Apps for authenticated users
 import Instances from './apps/Instances/Instances.react';
+import InstanceEdit from './apps/Instances/InstanceEdit.react';
 import Solutions from './apps/Solutions';
 
 // Instance Apps
@@ -30,9 +31,6 @@ import Data from './apps/Data';
 import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
-
-// Examples
-import Examples from './examples/Examples.react';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -114,6 +112,13 @@ export default (
           name="api-keys"
           handler={ApiKeys}
           path="api_keys"
+          />
+
+        {/* General */}
+        <Route
+          name="instance-edit"
+          handler={InstanceEdit}
+          path="edit"
           />
 
         {/* Classes */}
@@ -315,12 +320,6 @@ export default (
 
       <DefaultRoute handler={Instances}/>
     </Route>
-
-    {/* Examples */}
-    <Route
-      name="examples"
-      handler={Examples}
-      />
   </Route>
 );
 

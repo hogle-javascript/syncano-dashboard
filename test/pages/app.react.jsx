@@ -1,7 +1,5 @@
-import React from 'react/addons';
-let { TestUtils } = React.addons;
+import TestUtils from 'react-addons-test-utils';
 
-describe('app', function() {
-  it('should render', function() {
-  });
+describe('app', () => {
+  it('should render', () => {});
 });
