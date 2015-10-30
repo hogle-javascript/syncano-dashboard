@@ -49,20 +49,22 @@ export default Radium(React.createClass({
       },
       topToolbar: {
         background: this.context.muiTheme.palette.primary1Color,
-        height: 64,
+        height: 50,
         padding: 0
       },
       logotypeContainer: {
-        paddingLeft: 24,
+        paddingLeft: 64,
         height: '100%',
+        width: 256,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        background: 'rgba(0,0,0,0.05)'
       },
       logo: {
         width: 120
       },
       toolbarList: {
-        padding: 10,
+        padding: 24,
         display: 'flex'
       },
       toolbarListItem: {
@@ -166,11 +168,17 @@ export default Radium(React.createClass({
             </Router.Link>
           </MUI.ToolbarGroup>
           <MUI.ToolbarGroup
-            float="right"
-            style={{marginLeft: 100, height: '100%'}}>
+            float="left"
+            style={{marginLeft: '-5', height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
+              <li
+                id="menu-solutions"
+                style={styles.toolbarListItem}>
+                <a onClick={this.handleSolutionsClick}>Solutions Market</a>
+              </li>
+
               <li style={styles.toolbarListItem}>
                 <a
                   href="http://docs.syncano.com/"
@@ -180,16 +188,19 @@ export default Radium(React.createClass({
               </li>
               <li style={styles.toolbarListItem}>
                 <a
-                  href="http://www.syncano.com/support/"
+                  href="http://ideas.syncano.io"
                   target="_blank">
-                  Support
+                  Ideas
                 </a>
               </li>
-              <li
-                id="menu-solutions"
-                style={styles.toolbarListItem}>
-                <a onClick={this.handleSolutionsClick}>Solutions</a>
-              </li>
+            </ul>
+          </MUI.ToolbarGroup>
+          <MUI.ToolbarGroup
+            float="right"
+            style={{marginLeft: 100, height: '100%'}}>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
               <li id="menu-account">
                 <Common.Dropdown.Material
                   items={this.getDropdownItems()}
