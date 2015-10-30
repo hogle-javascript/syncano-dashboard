@@ -106,6 +106,8 @@ export default Reflux.createStore({
   getCodeBoxLastTraceResult() {
     console.debug('CodeBoxStore::getCodeBoxLastTraceResult', this.data.traces);
     this.data.lastTraceResult = null;
+    this.data.lastTraceStatus = null;
+    this.data.lastTraceDuration = null;
     if (this.data.traces.length > 0) {
       let lastTrace = this.data.traces[0];
 

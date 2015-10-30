@@ -15,7 +15,6 @@ import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import MenuDivider from 'syncano-material-ui/lib/menus/menu-divider';
 import Loading from '../../common/Loading';
 
-
 export default Radium(React.createClass({
 
   displayName: 'HeaderNotificationsDropdown',
@@ -110,9 +109,8 @@ export default Radium(React.createClass({
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
         <MUI.FontIcon
-          className='synicon-information'
-          color={MUI.Styles.Colors.lightBlueA700}
-          />
+          className="synicon-information"
+          color={MUI.Styles.Colors.lightBlueA700}/>
       );
 
       return (
@@ -121,33 +119,34 @@ export default Radium(React.createClass({
           primaryText="You don't have any notifications"
           disabled={true}
           leftIcon={icon}
-          style={styles.menuItem}
-          />
+          style={styles.menuItem}/>
       );
     }
 
     let notifications = this.state.accountInvitations.items.map((item) => {
       let icon = (
-          <MUI.FontIcon
-            className='synicon-share-variant'
-            color={MUI.Styles.Colors.lightGreen500}
-            />
-        );
+        <MUI.FontIcon
+          key={`${item.id}Icon`}
+          className="synicon-share-variant"
+          color={MUI.Styles.Colors.lightGreen500}/>
+      );
       let content = (
-          <div>
-            <strong>{item.inviter + ' '}</strong>
+        <div>
+          <strong>{`${item.inviter} `}</strong>
             invited you to their instance
-            <strong>{' ' + item.instance}</strong>
-          </div>
-        );
+          <strong>{` ${item.instance}`}</strong>
+        </div>
+      );
       let buttons = [
         <MUI.FlatButton
+          key={`${item.id}ButtonAccept`}
           onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
-          label='Accept'
+          label="Accept"
           primary={true}/>,
         <MUI.FlatButton
+          key={`${item.id}ButtonDecline`}
           onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
-          label='Decline'/>
+          label="Decline"/>
       ];
 
       return (
@@ -165,16 +164,16 @@ export default Radium(React.createClass({
 
     if (!this.state.user.is_active) {
       let icon = (
-          <MUI.FontIcon
-            className='synicon-alert'
-            color={MUI.Styles.Colors.orange500}/>
-        );
+        <MUI.FontIcon
+          className="synicon-alert"
+          color={MUI.Styles.Colors.orange500}/>
+      );
 
       let resendLink = (
-          <div style={this.getStyles().resendEmailText}>
-            Your email address is not yet verified. Click here to resend activation email.
-          </div>
-        );
+        <div style={this.getStyles().resendEmailText}>
+          Your email address is not yet verified. Click here to resend activation email.
+        </div>
+      );
 
       notifications.push(
         <MenuItem
@@ -207,7 +206,7 @@ export default Radium(React.createClass({
 
       notificationCountIcon = (
         <MUI.FontIcon
-          className={'synicon-numeric-' + synIconName + '-box notification-count-icon'}
+          className={`synicon-numeric-${synIconName}-box notification-count-icon`}
           color={styles.notificationIcon.color}/>
       );
     }
@@ -229,14 +228,14 @@ export default Radium(React.createClass({
     return (
       <div>
         <MUI.IconMenu
-          ref='headerNotificationDropdown'
+          ref="headerNotificationDropdown"
           iconButtonElement={this.renderIcon()}
           autoWidth={false}
-          maxWidth='400px'
+          maxWidth="400px"
           menuStyle={styles.menu}>
           <MenuItem
-            key='notificationDropdownHeader'
-            primaryText='Notifications'
+            key="notificationDropdownHeader"
+            primaryText="Notifications"
             disabled={true}/>
           <MenuDivider />
           <Loading show={this.state.accountInvitations.isLoading}>
