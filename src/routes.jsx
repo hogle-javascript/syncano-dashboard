@@ -24,6 +24,7 @@ import Solutions from './apps/Solutions';
 import Admins from './apps/Admins/Admins.react';
 import ApiKeys from './apps/ApiKeys/ApiKeys.react';
 import CodeBoxes from './apps/CodeBoxes';
+import Webhooks from './apps/Webhooks';
 import DataObjects from './apps/DataObjects/DataObjects.react';
 import Data from './apps/Data';
 import Tasks from './apps/Tasks';
@@ -89,20 +90,13 @@ export default (
         handler={InstancePage}
         path="instances/:instanceName">
 
-        <Redirect from="/instances/:instanceName" to="webhooks" />
+        <Redirect from="/instances/:instanceName" to="sockets" />
 
         {/* Data */}
         <Route
-          name="webhooks"
-          path="webhooks"
+          name="sockets"
+          path="sockets"
           >
-
-          {/* Webhook Traces */}
-          <Route
-            name='webhook-traces'
-            handler={Data.WebhookTraces}
-            path='webhook/:webhookName/traces'
-            />
 
           <DefaultRoute handler={Data}/>
 
@@ -145,6 +139,23 @@ export default (
             path=":className/objects" />
 
           <DefaultRoute handler={Classes}/>
+        </Route>
+
+        {/* WebHooks */}
+        <Route
+          name="webhooks"
+          path="webhooks"
+          >
+
+          {/* Webhook Traces */}
+          <Route
+            name='webhook-traces'
+            handler={Data.WebhookTraces}
+            path='webhook/:webhookName/traces'
+            />
+
+          <DefaultRoute handler={Webhooks}/>
+
         </Route>
 
         {/* CodeBoxes */}
