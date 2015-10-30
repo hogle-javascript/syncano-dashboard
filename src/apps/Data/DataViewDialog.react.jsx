@@ -139,7 +139,7 @@ export default React.createClass({
 
   renderOptions() {
     console.info('DataViewDialog::renderOrderBy', this.state.class);
-    let orderField = <div style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
+    let orderField = <div key="options_header" style={{paddingTop: '24px'}}>Add schema fields with order index</div>;
     let orderFields = ClassesStore.getClassOrderFieldsPayload(this.state.class);
 
     if (orderFields.length > 0) {

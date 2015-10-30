@@ -24,6 +24,8 @@ import DataViewDialog from './DataViewDialog.react';
 import Webhooks from '../Webhooks';
 import Tasks from '../Tasks';
 import Channels from '../Channels';
+import CodeBoxes from '../CodeBoxes';
+import Classes from '../Classes';
 
 export default React.createClass({
 
@@ -108,6 +110,8 @@ export default React.createClass({
     DataViewsActions.fetch();
     Webhooks.Actions.fetch();
     Channels.Actions.fetch();
+    Classes.Actions.fetch();
+    CodeBoxes.Actions.fetch();
     Tasks.TriggersActions.fetch();
     Tasks.SchedulesActions.fetch();
   },
