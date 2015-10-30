@@ -2,18 +2,18 @@
 
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import MUI from 'material-ui';
 
 // Stores and Actions
 import WebhooksActions from './WebhooksActions';
 import WebhooksStore from './WebhooksStore';
 
 // Components
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 
@@ -128,7 +128,7 @@ export default React.createClass({
 
         <Common.InnerToolbar>
 
-            <MUI.ToolbarGroup style={{'padding-left': 36}}>
+            <MUI.ToolbarGroup style={{paddingLeft: 36}}>
               <MUI.ToolbarTitle text={'Webhooks'}/>
             </MUI.ToolbarGroup>
 

@@ -7,7 +7,7 @@ import Router from 'react-router-old';
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 // Stores and Actions
 import DataViewsActions from './DataViewsActions';
@@ -204,7 +204,7 @@ export default React.createClass({
 
         <Common.InnerToolbar>
 
-            <MUI.ToolbarGroup style={{'padding-left': 36}}>
+            <MUI.ToolbarGroup style={{paddingLeft: 36}}>
               <MUI.ToolbarTitle text={'Sockets'}/>
             </MUI.ToolbarGroup>
 

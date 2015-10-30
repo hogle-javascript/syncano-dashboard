@@ -12,7 +12,7 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
@@ -71,7 +71,7 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked={item.checked}
-        key={item.id}>
+        key={item.name}>
         <Column.CheckIcon
           className="col-xs-12"
           id = {item.name}

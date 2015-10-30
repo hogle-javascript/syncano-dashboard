@@ -142,6 +142,7 @@ export default Radium(React.createClass({
 
       return (
         <MUI.ListItem
+          key={instance.name}
           primaryText={instance.name}
           onTouchTap={this.handleDropdownItemClick.bind(null, instance.name)}
           leftIcon={icon}/>

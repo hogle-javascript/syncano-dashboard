@@ -63,6 +63,7 @@ export default React.createClass({
         color: 'rgba(0, 0, 0, 0.54)'
       },
       instanceDropdown: {
+        height: 56,
         paddingTop: 2,
         paddingBottom: 2,
         paddingLeft: 24,
