@@ -205,7 +205,7 @@ export default React.createClass({
         </Common.Fab>
 
         <CodeBoxesList
-          name="CodeBoxes"
+          name="Snippets"
           items={this.state.items}
           emptyItemHandleClick={this.showCodeBoxDialog}
           emptyItemContent="Create a CodeBox"/>
