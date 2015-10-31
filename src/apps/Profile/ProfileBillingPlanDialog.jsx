@@ -16,7 +16,6 @@ export default React.createClass({
   displayName: 'ProfileBillingPlanDialog',
 
   mixins: [
-    Reflux.ListenerMixin,
     Router.State,
     Router.Navigation,
 
@@ -66,12 +65,6 @@ export default React.createClass({
       }
     };
   },
-
-  componentWillUnmount() {
-    this.stopListeningTo(Actions.subscribePlan.completed);
-    this.stopListeningTo(Actions.updateCard.completed);
-  },
-
 
   getValidatorAttributes() {
     if (this.state.card) {
@@ -132,41 +125,6 @@ export default React.createClass({
     };
   },
 
-  getInfo(type) {
-    let info = {
-      included: 0,
-      overage: 0,
-      total: 0
-    };
-
-    if (!this.state.plan) {
-      return info;
-    }
-
-    let pricing = this.state.plan.pricing[type];
-    let options = this.state.plan.options[type];
-    let sliderValue = this.state[type + 'Selected'];
-
-    if (!sliderValue) {
-      info = pricing[Object.keys(pricing)[0]];
-      info.total = Object.keys(pricing)[0];
-      return info;
-    }
-
-    let value = String(parseFloat(sliderValue));
-
-    info = pricing[options[value]];
-    info.total = options[value];
-    return info;
-  },
-
-  onSliderChange(type, event, value) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
-  },
-
   handleDialogShow() {
     console.debug('ProfileBillingPlanDialog::handleDialogShow');
     Actions.fetchBillingPlans();
@@ -174,48 +132,11 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    this.handleAddSubmit();
+    Actions.submitPlan(this.getValidatorAttributes());
   },
 
   handleAddSubmit() {
-    console.debug('ProfileBillingPlanDialog::handleAddSubmit');
-
-    let apiTotal = this.getInfo('api').total;
-    let cbxTotal = this.getInfo('cbx').total;
-
-    let total = parseInt(apiTotal, 10) + parseInt(cbxTotal, 10);
-
-    let subscribe = () => {
-      return Actions.subscribePlan(this.state.plan.name, {
-        commitment: JSON.stringify({
-          api: apiTotal,
-          cbx: cbxTotal
-        })
-      });
-    };
-
-    let setLimits = () => {
-      return Actions.updateBillingProfile({
-        hard_limit: parseInt(total * 3, 10),
-        soft_limit: parseInt(total * 1.5, 10)
-      });
-    };
-
-    this.listenTo(Actions.subscribePlan.completed, setLimits);
-
-    if (this.state.card) {
-      subscribe();
-    } else {
-      this.listenTo(Actions.updateCard.completed, subscribe);
-      Actions.updateCard(this.getValidatorAttributes());
-    }
-  },
-
-  handleSliderLabelsClick(value, type) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
+    Actions.submitPlan(this.getValidatorAttributes());
   },
 
   handleDismiss() {
@@ -324,8 +245,8 @@ export default React.createClass({
       value={typeof selected !== 'undefined' ? selected : defaultValue}
       type={type}
       legendItems={options}
-      optionClick={this.handleSliderLabelsClick}
-      onChange={this.onSliderChange}
+      optionClick={Actions.sliderLabelsClick}
+      onChange={Actions.sliderChange}
     />
     );
   },
@@ -347,8 +268,8 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let apiInfo = this.getInfo('api');
-    let cbxInfo = this.getInfo('cbx');
+    let apiInfo = Store.getInfo('api');
+    let cbxInfo = Store.getInfo('cbx');
     let sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
 
     let dialogCustomActions = [

@@ -4,6 +4,9 @@ export default CreateActions(
   {
     fetch: {},
     setInstances: {},
+    sliderChange: {},
+    sliderLabelsClick: {},
+    submitPlan: {},
 
     fetchBillingPlans: {
       asyncResult: true,
