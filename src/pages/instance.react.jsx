@@ -108,6 +108,12 @@ export default React.createClass({
       },
       {
         type: MUI.MenuItem.Types.LINK,
+        route: 'instance-edit',
+        payload: this.getMenuItemHref('instance-edit'),
+        text: 'General'
+      },
+      {
+        type: MUI.MenuItem.Types.LINK,
         route: 'admins',
         payload: this.getMenuItemHref('admins'),
         text: 'Administrators'
@@ -117,12 +123,6 @@ export default React.createClass({
         route: 'api-keys',
         payload: this.getMenuItemHref('api-keys'),
         text: 'API keys'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'instance-edit',
-        payload: this.getMenuItemHref('instance-edit'),
-        text: 'General'
       }
     ];
   },

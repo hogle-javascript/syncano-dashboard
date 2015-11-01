@@ -163,48 +163,15 @@ export default React.createClass({
   },
 
   render() {
-    let checkedDataViews = DataViewsStore.getNumberOfChecked();
-    let checkedWebhooks = Webhooks.Store.getNumberOfChecked();
-    let isAnyDataViewSelected = checkedDataViews >= 1 && checkedDataViews < this.state.dataviews.items.length;
-    let isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length;
-    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
-    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
-
     return (
       <Container>
         <Webhooks.Dialog />
         <DataViewDialog />
+        <Tasks.ScheduleDialog />
+        <Tasks.TriggerDialog />
+        <Channels.Dialog />
+
         {this.getDialogs()}
-
-        <Common.Show if={checkedDataViews > 0}>
-          <Common.Fab position="top">
-            <Common.Fab.TooltipItem
-              tooltip={isAnyDataViewSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini={true}
-              onClick={isAnyDataViewSelected ? DataViewsActions.selectAll : DataViewsActions.uncheckAll}
-              iconClassName={isAnyDataViewSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to delete a Data Endpoint"
-              mini={true}
-              onClick={this.showDialog.bind(null, 'removeDataViewDialog')}
-              iconClassName="synicon-delete"/>
-          </Common.Fab>
-        </Common.Show>
-
-        <Common.Show if={checkedWebhooks > 0}>
-          <Common.Fab position="top">
-            <Common.Fab.TooltipItem
-              tooltip={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini={true}
-              onClick={isAnyWebhookSelected ? Webhooks.Actions.selectAll : Webhooks.Actions.uncheckAll}
-              iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to delete a Webhook"
-              mini={true}
-              onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
-              iconClassName="synicon-delete"/>
-          </Common.Fab>
-        </Common.Show>
 
         <Common.InnerToolbar>
 
@@ -215,9 +182,35 @@ export default React.createClass({
             <MUI.ToolbarGroup float="right">
 
               <MUI.IconButton
-                style={{fontSize: 25, marginTop: 5}}
-                iconClassName="synicon-delete"
-                tooltip="Delete Data Objects"
+                iconClassName="synicon-socket-data"
+                iconStyle={{color: 'green', fontSize: 30}}
+                tooltip="Create Data Socket"
+                onClick={DataViewsActions.showDialog}
+              />
+              <MUI.IconButton
+                iconClassName="synicon-socket-codebox"
+                iconStyle={{color: 'red', fontSize: 30}}
+                tooltip="Create CodeBox Socket"
+                onClick={Webhooks.Actions.showDialog}
+              />
+              <MUI.IconButton
+                iconClassName="synicon-socket-channel"
+                iconStyle={{color: 'blue', fontSize: 30}}
+                tooltip="Create Channel Socket"
+                onClick={Channels.Actions.showDialog}
+              />
+              <MUI.IconButton
+                iconClassName="synicon-socket-trigger"
+                iconStyle={{color: 'yellow', fontSize: 30}}
+                tooltip="Create Trigger Socket"
+                onClick={Tasks.TriggersActions.showDialog}
+              />
+              <MUI.IconButton
+                iconClassName="synicon-socket-schedule"
+                iconStyle={{color: 'pink', fontSize: 30}}
+                tooltip="Create Schedule Socket"
+                tooltipPosition="bottom-left"
+                onClick={Tasks.SchedulesActions.showDialog}
               />
 
             </MUI.ToolbarGroup>

@@ -16,7 +16,7 @@ export default React.createClass({
       top: 50,
       right: 0,
       paddingLeft: 256,
-      background: 'rgba(222,222,222,0.30)',
+      background: 'rgba(243,243,243,0.90)',
       padding: '0px 24px 0 24px',
       zIndex: 6
     };
