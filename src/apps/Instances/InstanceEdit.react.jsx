@@ -20,6 +20,10 @@ export default React.createClass({
 
   displayName: 'InstanceEdit',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Router.State,
     Router.Navigation,
@@ -49,20 +53,27 @@ export default React.createClass({
   getStyles() {
     return {
       container: {
-        padding: '5px 10px'
+        padding: '5px 10px',
+        width: '50%'
       },
       title: {
         fontSize: '20px',
         fontWeight: 500,
         color: 'rgba(0,0,0,.54)',
-        font: '"Avenir", sans-serif;',
+        font: '"Avenir", sans-serif',
         marginBottom: '20px'
       },
-      nameSection: {
-        width: '50%',
-        display: '-webkit-inline-flex; display: inline-flex',
-        justifyContent: 'space-between',
-        marginBottom: 40
+      tooltip: {
+        top: 0,
+        left: 50
+      },
+      customizeSection: {
+        display: '-webkit-flex; display: flex',
+        flexDirection: 'column',
+        marginBottom: 48
+      },
+      textField: {
+        marginBottom: 16
       },
       instanceIconButton: {
         minWidth: 48,
@@ -70,31 +81,26 @@ export default React.createClass({
         fontSize: 18,
         lineHeight: '20px',
         display: '-webkit-inline-flex; display: inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         borderRadius: '50%',
         color: '#FFF',
-        margin: '10px 16px 0 0',
-        alignSelf: 'center'
+        marginBottom: 16
       },
       instanceIcon: {
         color: '#FFF'
-      },
-      nameField: {
-        flex: 5
       },
       buttonsSection: {
         display: 'flex',
         justifyContent: 'space-between'
       },
-      confirmButton: {
-        margin: '20px 10px'
+      deleteButton: {
+        backgroundColor: this.context.muiTheme.rawTheme.palette.accent2Color,
+        color: '#FFF',
+        ':hover': {
+          opacity: 0.4
+        }
       },
       content: {
-        height: 300,
-        marginBottom: 50,
-        margin: '25px 20px 0 20px',
-        padding: '10px 8px',
+        marginTop: 30,
         width: '100%'
       }
     };
@@ -162,12 +168,12 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Deleting this Instance can cause problems with your applications that are connected to it.' +
+            'Deleting this Instance can cause problems with your applications that are connected to it. ' +
             'Do you really want to delete this Instance?', this.getDialogList([instance]),
             <Common.Loading
               type="linear"
               position="bottom"
-              show={this.state.isLoading} />
+              show={this.state.isLoading}/>
           ]
         }
       }
@@ -196,9 +202,10 @@ export default React.createClass({
           General
         </div>
         <div style={styles.content}>
-          <div style={styles.nameSection}>
+          <div style={styles.customizeSection}>
             <MUI.IconButton
-              tooltip="Change Instance icon"
+              tooltip="Click to customize Instance"
+              tooltipStyles={styles.tooltip}
               iconStyle={styles.instanceIcon}
               style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
               iconClassName={'synicon-' + icon}
@@ -207,28 +214,27 @@ export default React.createClass({
               ref="name"
               floatingLabelText="Instance name"
               disabled={true}
+              fullWidth={true}
               defaultValue={instance.name}
-              style={styles.nameField} />
-          </div>
-          <div>
+              style={styles.textField}/>
             <MUI.TextField
               ref="description"
               floatingLabelText="Instance description"
               defaultValue={instance.description}
+              multiLine={true}
               fullWidth={true}
-              multiLine={true} />
+              style={styles.textField}/>
           </div>
           <div style={styles.buttonsSection}>
             <MUI.RaisedButton
               onTouchTap={this.handleUpdate}
               type="submit"
               label="Update"
-              secondary={true}
-              style={styles.confirmButton} />
+              secondary={true}/>
             <MUI.FlatButton
               label="Delete an Instance"
-              style={styles.confirmButton}
-              onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')} />
+              style={styles.deleteButton}
+              onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
           </div>
         </div>
       </Container>
