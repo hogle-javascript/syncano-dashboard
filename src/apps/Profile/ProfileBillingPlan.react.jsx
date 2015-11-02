@@ -128,9 +128,7 @@ export default Radium(React.createClass({
   handleCancelProductionPlan() {
     Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
       return item.id;
-    })).then(() => {
-      Actions.fetch();
-    });
+    }));
   },
 
   handleShowPlanDialog() {

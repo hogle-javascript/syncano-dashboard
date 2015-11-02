@@ -9,7 +9,7 @@ export default Radium(React.createClass({
 
   propTypes: {
     plan: React.PropTypes.string,
-    planCanceled: React.PropTypes.string,
+    planCanceled: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
     onPlanDialog: React.PropTypes.func,
     onCancelPlanDialog: React.PropTypes.func
   },
