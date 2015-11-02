@@ -6,7 +6,6 @@ import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
@@ -21,15 +20,19 @@ export default Radium(React.createClass({
 
   displayName: 'CodeBoxConfig',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(Store),
-    LinkedStateMixin,
     Router.Navigation,
 
     SnackbarNotificationMixin,
     UnsavedDataMixin,
     Mixins.Mousetrap,
-    Mixins.Dialogs
+    Mixins.Dialogs,
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {
@@ -59,7 +62,10 @@ export default Radium(React.createClass({
 
   getInitialState() {
     return {
-      notificationVisible: false
+      notification: {
+        visible: false,
+        errorText: null
+      }
     };
   },
 
@@ -81,6 +87,9 @@ export default Radium(React.createClass({
       },
       saveButton: {
         marginLeft: 10
+      },
+      invalidConfigSnackbar: {
+        color: this.context.muiTheme.rawTheme.palette.accent2Color
       }
     };
   },
@@ -99,7 +108,7 @@ export default Radium(React.createClass({
     return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
   },
 
-  isValid() {
+  isConfigValid() {
     let codeBoxConfig = this.state.codeBoxConfig;
 
     return _.uniq(_.pluck(codeBoxConfig, 'key')).length === codeBoxConfig.length;
@@ -120,6 +129,11 @@ export default Radium(React.createClass({
       value: this.refs.newFieldValue.getValue()
     };
 
+    if (codeBoxConfig.length >= 16) {
+      this.refs.newFieldKey.setErrorText('Too many keys defined (exceeds 16).');
+      return;
+    }
+
     if (this.hasKey(newField.key)) {
       this.refs.newFieldKey.setErrorText('Field with this name already exist. Please choose another.');
       return;
@@ -133,9 +147,12 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
-    if (!this.isValid()) {
+    if (!this.isConfigValid()) {
       this.setState({
-        notificationVisible: true
+        notification: {
+          visible: true,
+          errorText: 'Config save failed. One or more keys are not unique. Please verify keys and try again.'
+        }
       });
       return;
     }
@@ -146,7 +163,10 @@ export default Radium(React.createClass({
       message: 'Saving...'
     });
     this.setState({
-      notificationVisible: false
+      notification: {
+        visible: false,
+        errorText: null
+      }
     });
   },
 
@@ -305,10 +325,10 @@ export default Radium(React.createClass({
     return (
       <div>
         <Container style={styles.container}>
-          <Common.Show if={this.state.notificationVisible}>
+          <Common.Show if={this.state.notification.visible}>
             <div style={styles.notification}>
               <Common.Notification type="error">
-                Config save failed. One or more keys are not unique. Please verify keys and try again.
+                {this.state.notification.errorText}
               </Common.Notification>
             </div>
           </Common.Show>
