@@ -227,6 +227,7 @@ export default React.createClass({
             <MUI.TextField
               ref='field-channel'
               name='field-channel'
+              style={{display: 'block'}}
               fullWidth={true}
               disabled={true}
               value={this.state.channel || 'no channel'}
@@ -234,6 +235,7 @@ export default React.createClass({
             <MUI.TextField
               ref='field-channel_room'
               name='field-channel_room'
+              style={{display: 'block'}}
               fullWidth={true}
               disabled={true}
               value={this.state.channel_room || 'no channel'}
@@ -246,6 +248,7 @@ export default React.createClass({
           <MUI.SelectField
             ref='field-channel'
             name='field-channel'
+            style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -256,6 +259,7 @@ export default React.createClass({
           <MUI.TextField
             ref='field-channel_room'
             name='field-channel_room'
+            style={{display: 'block'}}
             fullWidth={true}
             disabled={this.hasEditMode()}
             valueLink={this.linkState('channel_room')}
@@ -273,6 +277,7 @@ export default React.createClass({
           <MUI.TextField
             ref='field-owner'
             name='owner'
+            style={{display: 'block'}}
             fullWidth={true}
             valueLink={this.linkState('owner')}
             errorText={this.getValidationMessages('owner').join(' ')}
@@ -281,6 +286,7 @@ export default React.createClass({
           <MUI.TextField
             ref='field-group'
             name='owner'
+            style={{display: 'block'}}
             fullWidth={true}
             valueLink={this.linkState('group')}
             errorText={this.getValidationMessages('group').join(' ')}
@@ -294,6 +300,7 @@ export default React.createClass({
           <MUI.SelectField
             ref='field-owner_permissions'
             name='field-owner_permissions'
+            style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -304,6 +311,7 @@ export default React.createClass({
           <MUI.SelectField
             ref='field-group_permissions'
             name='field-group_permissions'
+            style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -314,6 +322,7 @@ export default React.createClass({
           <MUI.SelectField
             ref='field-other_permissions'
             name='field-other_permissions'
+            style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -375,6 +384,7 @@ export default React.createClass({
               ref={'field-' + item.name}
               name={item.name}
               valueLink={this.linkState(item.name)}
+              style={{display: 'block'}}
               fullWidth={true}
               valueMember="payload"
               displayMember="text"
@@ -463,6 +473,7 @@ export default React.createClass({
             key={'field-' + item.name}
             ref={'field-' + item.name}
             name={item.name}
+            style={{display: 'block'}}
             fullWidth={true}
             valueLink={this.linkState(item.name)}
             errorText={this.getValidationMessages(item.name).join(' ')}
