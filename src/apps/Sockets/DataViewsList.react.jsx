@@ -40,13 +40,6 @@ export default React.createClass({
     }, 1200);
   },
 
-  handleClassClick(className) {
-    let params = this.getParams();
-
-    params.className = className;
-    this.context.router.transitionTo('classes-edit', params);
-  },
-
   renderCopyLinkIcon(item) {
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.self;
 
@@ -75,7 +68,7 @@ export default React.createClass({
           className="col-xs-12"
           id={item.name}
           icon='table'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Common.Color.getColorByName('blue')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           <div onClick={this.handleURLClick}>{item.name}</div>
@@ -87,9 +80,7 @@ export default React.createClass({
           </div>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5">
-          <a onClick={this.handleClassClick.bind(this, item.class)}>{item.class}</a>
-        </Column.Desc>
+        <Column.Desc className="col-xs-5">{item.class}</Column.Desc>
         <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
