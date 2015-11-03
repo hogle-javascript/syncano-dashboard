@@ -15,13 +15,13 @@ export default {
   after(client) {
     client.end();
   },
-  'User adds a Webhook': (client) => {
+  'User adds a CodeBox Socket': (client) => {
     const webhook = utils.addSuffix('webhook');
     const socketsPage = client.page.socketsPage();
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@webhookListItem')
+      .waitForElementVisible('@codeBoxSocketItem')
       .clickButton('@addWebhookButton')
       .waitForElementVisible('@addWebhookModalTitle')
       .fillInputField('@addWebhookModalNameInput', webhook)
@@ -45,12 +45,12 @@ export default {
   //     .waitForElementVisible('@webhookTableRow')
   //     .waitForElementVisible('@webhookTableRowDescription');
   // },
-  'User deletes a Webhook': (client) => {
+  'User deletes a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
      .navigate()
-     .waitForElementVisible('@webhookListItem')
+     .waitForElementVisible('@codeBoxSocketItem')
      .clickButton('@selectWebhookTableRow')
      .clickButton('@deleteButton')
      .waitForElementVisible('@deleteWebhookModalTitle');

@@ -27,20 +27,20 @@ export default {
       selector: '//div[@class="left-nav"]//a[text()="Classes"]',
       locateStrategy: 'xpath'
     },
-    codeBoxes: {
-      selector: '//div[@class="left-nav"]//a[text()="CodeBoxes"]',
+    snippets: {
+      selector: '//div[@class="left-nav"]//a[text()="Snippets"]',
       locateStrategy: 'xpath'
     },
     users: {
-      selector: '//div[@class="left-nav"]//a[text()="Users"]',
-      locateStrategy: 'xpath'
-    },
-    channels: {
-      selector: '//div[@class="left-nav"]//a[text()="Channels"]',
+      selector: '//div[@class="left-nav"]//a[text()="Users & Groups"]',
       locateStrategy: 'xpath'
     },
     tasks: {
       selector: '//div[@class="left-nav"]//a[text()="Tasks"]',
+      locateStrategy: 'xpath'
+    },
+    general: {
+      selector: '//div[@class="left-nav"]//a[text()="General"]',
       locateStrategy: 'xpath'
     },
     administrators: {

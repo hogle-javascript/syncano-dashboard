@@ -57,6 +57,10 @@ module.exports = {
       selector: '//div[text()="schedule_123"]',
       locateStrategy: 'xpath'
     },
+    triggerListItem: {
+      selector: '//div[text()="trigger_123"]',
+      locateStrategy: 'xpath'
+    },
     addScheduleButton: {
       selector: '//button//span[@class="synicon-camera-timer"]',
       locateStrategy: 'xpath'

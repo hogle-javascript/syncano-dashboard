@@ -16,8 +16,8 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
     
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@webhookListItem');
+    var socketsPage = client.page.socketsPage();
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
     
     var leftMenuPage = client.page.leftMenuPage();
     leftMenuPage.clickButton('@channels');
