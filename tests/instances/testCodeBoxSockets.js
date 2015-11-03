@@ -29,30 +29,30 @@ export default {
       .clickButton('@confirmButton')
       .waitForElementVisible('@webhookTableRow');
   },
-  // 'User edits a Webhook': (client) => {
-  //   const socketsPage = client.page.socketsPage();
+  'User edits a Webhook': (client) => {
+    const socketsPage = client.page.socketsPage();
 
-  //   socketsPage
-  //     .navigate()
-  //     .waitForElementVisible('@webhookListItem')
-  //     .clickWebhookDropdown()
-  //     .clickButton('@editDropdownItem')
-  //     .waitForElementVisible('@editWebhookModalTitle')
-  //     .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
-  //   client.pause(1000);
-  //   socketsPage
-  //     .clickButton('@confirmButton')
-  //     .waitForElementVisible('@webhookTableRow')
-  //     .waitForElementVisible('@webhookTableRowDescription');
-  // },
+    socketsPage
+      .navigate()
+      .waitForElementVisible('@webhookListItem')
+      .clickWebhookDropdown()
+      .clickButton('@editDropdownItem')
+      .waitForElementVisible('@editWebhookModalTitle')
+      .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
+    client.pause(1000);
+    socketsPage
+      .clickButton('@confirmButton')
+      .waitForElementVisible('@webhookTableRow')
+      .waitForElementVisible('@webhookTableRowDescription');
+  },
   'User deletes a Webhook': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
      .navigate()
      .waitForElementVisible('@webhookListItem')
-     .clickButton('@selectWebhookTableRow')
-     .clickButton('@deleteButton')
+     .clickWebhookDropdown()
+     .clickButton('@deleteDropdownItem')
      .waitForElementVisible('@deleteWebhookModalTitle');
     client.pause(1000);
     socketsPage

@@ -27,11 +27,15 @@ module.exports = {
   commands: [dataCommands],
   elements: {
     webhookDropdown: {
-      selector: '//span[@class="synicon-dots-vertical"]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[@class="col-menu"]`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
       selector: '//a[@class="dropdown-item-edit"]',
+      locateStrategy: 'xpath'
+    },
+    deleteDropdownItem: {
+      selector: '//a[@class="dropdown-item-delete"]',
       locateStrategy: 'xpath'
     },
     instancesDropdown: {
@@ -80,15 +84,15 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     webhookTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]`,
       locateStrategy: 'xpath'
     },
     selectWebhookTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../div[1]/span',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../div[1]/span`,
       locateStrategy: 'xpath'
     },
     webhookTableRowDescription: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../following-sibling::div[1]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteWebhookModalTitle: {
