@@ -1,7 +1,7 @@
 import utils from '../utils';
 
 export default {
-  tags: ['webhook'],
+  tags: ['codeBoxSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -15,13 +15,13 @@ export default {
   after(client) {
     client.end();
   },
-  'User adds a Webhook': (client) => {
+  'User adds a CodeBox Socket': (client) => {
     const webhook = utils.addSuffix('webhook');
-    const dataPage = client.page.dataPage();
+    const socketsPage = client.page.socketsPage();
 
-    dataPage
+    socketsPage
       .navigate()
-      .waitForElementVisible('@webhookListItem')
+      .waitForElementVisible('@codeBoxSocketItem')
       .clickButton('@addWebhookButton')
       .waitForElementVisible('@addWebhookModalTitle')
       .fillInputField('@addWebhookModalNameInput', webhook)
@@ -29,33 +29,33 @@ export default {
       .clickButton('@confirmButton')
       .waitForElementVisible('@webhookTableRow');
   },
-  'User edits a Webhook': (client) => {
-    const dataPage = client.page.dataPage();
+  'User edits a CodeBox Socket': (client) => {
+    const socketsPage = client.page.socketsPage();
 
-    dataPage
+    socketsPage
       .navigate()
-      .waitForElementVisible('@webhookListItem')
+      .waitForElementVisible('@codeBoxSocketItem')
       .clickWebhookDropdown()
       .clickButton('@editDropdownItem')
       .waitForElementVisible('@editWebhookModalTitle')
       .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
     client.pause(1000);
-    dataPage
+    socketsPage
       .clickButton('@confirmButton')
       .waitForElementVisible('@webhookTableRow')
       .waitForElementVisible('@webhookTableRowDescription');
   },
-  'User deletes a Webhook': (client) => {
-    const dataPage = client.page.dataPage();
+  'User deletes a CodeBox Socket': (client) => {
+    const socketsPage = client.page.socketsPage();
 
-    dataPage
+    socketsPage
      .navigate()
-     .waitForElementVisible('@webhookListItem')
-     .clickButton('@selectWebhookTableRow')
-     .clickButton('@deleteButton')
+     .waitForElementVisible('@codeBoxSocketItem')
+     .clickWebhookDropdown()
+     .clickButton('@deleteDropdownItem')
      .waitForElementVisible('@deleteWebhookModalTitle');
     client.pause(1000);
-    dataPage
+    socketsPage
       .clickButton('@confirmButton')
       .waitForElementNotPresent('@selectWebhookTableRow');
   }
