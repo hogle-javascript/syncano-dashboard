@@ -1,4 +1,4 @@
-var codeBoxEditPage = {
+var snippetEditPage = {
   clickButton: function(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
@@ -6,9 +6,9 @@ var codeBoxEditPage = {
 };
 
 module.exports = {
-  commands: [codeBoxEditPage],
+  commands: [snippetEditPage],
   elements: {
-    codeBoxEditView: {
+    snippetEditView: {
       selector: '#brace-editor'
     },
     config: {

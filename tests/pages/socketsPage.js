@@ -2,36 +2,40 @@ const globals = require('../globals');
 const utils = require('../utils');
 
 const dataCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
       .click(field)
       .waitForElementVisible(value)
       .click(value);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
   },
-  clickWebhookDropdown: function() {
+  clickWebhookDropdown() {
     return this.waitForElementVisible('@webhookDropdown').click('@webhookDropdown');
   }
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/webhooks',
+  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
   commands: [dataCommands],
   elements: {
     webhookDropdown: {
-      selector: '//span[@class="synicon-dots-vertical"]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[@class="col-menu"]`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
       selector: '//a[@class="dropdown-item-edit"]',
+      locateStrategy: 'xpath'
+    },
+    deleteDropdownItem: {
+      selector: '//a[@class="dropdown-item-delete"]',
       locateStrategy: 'xpath'
     },
     instancesDropdown: {
@@ -53,9 +57,9 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addWebhookButton: {
-      selector: '.synicon-arrow-up-bold'
+      selector: '.synicon-socket-codebox'
     },
-    webhookListItem: {
+    codeBoxSocketItem: {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
@@ -80,15 +84,15 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     webhookTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]`,
       locateStrategy: 'xpath'
     },
     selectWebhookTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../div[1]/span',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../div[1]/span`,
       locateStrategy: 'xpath'
     },
     webhookTableRowDescription: {
-      selector: '//div[text()="' + utils.addSuffix('webhook') + '"]/../following-sibling::div[1]',
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteWebhookModalTitle: {
@@ -108,7 +112,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     webhookToSelect: {
-      selector: '.col-xs-10 .synicon-arrow-up-bold'
+      selector: '.col-xs-12 .synicon-arrow-up-bold'
     },
     checkboxToSelect: {
       selector: '.synicon-checkbox-blank-outline'
