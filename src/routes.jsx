@@ -31,6 +31,7 @@ import Data from './apps/Data';
 import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
+import Sockets from './apps/Sockets';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -90,15 +91,22 @@ export default (
 
         <Redirect from="/instances/:instanceName" to="sockets" />
 
-        {/* Data */}
+        {/* Sockets */}
         <Route
           name="sockets"
           path="sockets"
           >
 
-          <DefaultRoute handler={Data}/>
+          <DefaultRoute handler={Sockets}/>
 
         </Route>
+
+        {/* Data */}
+        <Route
+          name="data"
+          path="data"
+          handler={Data}
+        />
 
         {/* Admins */}
         <Route
