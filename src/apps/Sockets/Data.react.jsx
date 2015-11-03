@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars, no-inline-comments */
-
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router-old';

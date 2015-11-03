@@ -68,7 +68,7 @@ export default React.createClass({
           className="col-xs-12"
           id={item.name}
           icon='table'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+          background={Common.Color.getColorByName('blue')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           <div onClick={this.handleURLClick}>{item.name}</div>
