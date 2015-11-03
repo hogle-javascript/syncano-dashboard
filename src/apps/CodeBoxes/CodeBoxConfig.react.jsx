@@ -3,6 +3,7 @@ import Radium from 'radium';
 import Router from 'react-router-old';
 import Reflux from 'reflux';
 import _ from 'lodash';
+import CodeBoxesConstants from './CodeBoxesConstants';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
@@ -129,7 +130,7 @@ export default Radium(React.createClass({
       value: this.refs.newFieldValue.getValue()
     };
 
-    if (codeBoxConfig.length >= 16) {
+    if (codeBoxConfig.length >= CodeBoxesConstants.maxConfigKeys) {
       this.refs.newFieldKey.setErrorText('Too many keys defined (exceeds 16).');
       return;
     }
