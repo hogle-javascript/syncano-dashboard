@@ -16,10 +16,10 @@ module.exports = {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
 
-    var dataPage = client.page.dataPage();
-    dataPage.waitForElementPresent('@webhookListItem');
+    var socketsPage = client.page.socketsPage();
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
-    dataPage.clickButton('@webhookListItem');
+    socketsPage.clickButton('@codeBoxSocketItem');
 
     var webhookTracesPage = client.page.webhookTracesPage();
 

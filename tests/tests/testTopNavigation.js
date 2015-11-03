@@ -40,19 +40,19 @@ module.exports = {
     topNavigationPage.navigate();
     topNavigationPage.click('@menuNotifications');
     topNavigationPage.waitForElementVisible('@notificationsDropdown');
-  },
-  'Admin Goes to Support page': function(client) {
-    const topNavigationPage = client.page.topNavigationPage();
-    const supportPage = client.page.supportPage();
-
-    topNavigationPage.navigate();
-    topNavigationPage.click('@support')
-    client.pause(1000);
-    client.windowHandles(function(result) {
-      const handle = result.value[1];
-
-      client.switchWindow(handle);
-    });
-    supportPage.waitForElementVisible('@supportPage');
   }
+  //'Admin Goes to Support page': function(client) {
+  //  const topNavigationPage = client.page.topNavigationPage();
+  //  const supportPage = client.page.supportPage();
+  //
+  //  topNavigationPage.navigate();
+  //  topNavigationPage.click('@support')
+  //  client.pause(1000);
+  //  client.windowHandles(function(result) {
+  //    const handle = result.value[1];
+  //
+  //    client.switchWindow(handle);
+  //  });
+  //  supportPage.waitForElementVisible('@supportPage');
+  //}
 };

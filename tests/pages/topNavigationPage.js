@@ -13,7 +13,7 @@ module.exports = {
       selector: '.logo-white'
     },
     solutions: {
-      selector: '//ul[@class="toolbar-list"]/li[3]/a',
+      selector: '//ul[@class="toolbar-list"]/li[1]/a',
       locateStrategy: 'xpath'
     },
     account: {

@@ -59,7 +59,7 @@ module.exports = {
     addWebhookButton: {
       selector: '.synicon-socket-codebox'
     },
-    webhookListItem: {
+    codeBoxSocketItem: {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
