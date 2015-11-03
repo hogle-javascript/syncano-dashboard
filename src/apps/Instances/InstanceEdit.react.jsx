@@ -213,6 +213,7 @@ export default React.createClass({
               iconClassName={'synicon-' + icon}
               onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
             <MUI.TextField
+              className="instance-name-field"
               ref="name"
               floatingLabelText="Instance name"
               disabled={true}

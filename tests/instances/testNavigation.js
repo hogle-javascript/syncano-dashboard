@@ -1,6 +1,5 @@
 const path = require('path');
 
-
 module.exports = {
   tags: ['navigation'],
   before: function(client) {
@@ -18,11 +17,11 @@ module.exports = {
   },
   beforeEach: function(client) {
     const instancesPage = client.page.instancesPage();
-    const dataPage = client.page.dataPage();
+    const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableRow');
-    dataPage.waitForElementPresent('@webhookListItem');
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
 
   afterEach: function(client, done) {
@@ -37,6 +36,32 @@ module.exports = {
     client.saveScreenshot(fileNamePath, done);
   },
 
+  'User goes to Sockets View' : function(client) {
+    const instancesPage = client.page.instancesPage();
+    const channelsPage = client.page.channelsPage();
+    const tasksPage = client.page.tasksPage();
+    const socketsPage = client.page.socketsPage();
+
+    instancesPage.navigate();
+    instancesPage.clickButton('@instancesTableRow');
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
+    socketsPage.waitForElementPresent('@dataListItem');
+    channelsPage.waitForElementPresent('@channelListItem');
+    tasksPage.waitForElementPresent('@scheduleListItem');
+    tasksPage.waitForElementPresent('@triggerListItem');
+  },
+  'User goes to General view' : function(client) {
+    const leftMenuPage = client.page.leftMenuPage();
+    const generalPage = client.page.generalPage();
+    const instanceName = client.globals.instanceName;
+    const instanceNameField = generalPage.elements.instanceNameField.selector;
+
+    leftMenuPage.clickButton('@general');
+    generalPage.waitForElementPresent('@instanceNameField');
+    client.getValue('xpath', instanceNameField, (result) => {
+      client.assert.equal(result.value, instanceName);
+    });
+  },
   'User goes to Administrators View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
     const adminsPage = client.page.adminsPage();
@@ -51,13 +76,6 @@ module.exports = {
     leftMenuPage.clickButton('@apiKeys');
     apiKeysPage.waitForElementPresent('@apiKeysListItem');
   },
-  'User goes to Channels View' : function(client) {
-    const leftMenuPage = client.page.leftMenuPage();
-    const channelsPage = client.page.channelsPage();
-
-    leftMenuPage.clickButton('@channels');
-    channelsPage.waitForElementPresent('@channelListItem');
-  },
   'User goes to Classes View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
@@ -65,38 +83,38 @@ module.exports = {
     leftMenuPage.clickButton('@classes');
     classesPage.waitForElementPresent('@userProfileClassName');
   },
-  'User goes to CodeBox edit view' : function(client) {
+  'User goes to Snippets edit view' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
-    const codeBoxesPage = client.page.codeBoxesPage();
-    const codeBoxEditPage = client.page.codeBoxEditPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@codeBoxes');
-    codeBoxesPage.clickButton('@codeBoxListItem');
-    codeBoxEditPage.waitForElementPresent('@codeBoxEditView');
+    leftMenuPage.clickButton('@snippets');
+    snippetsPage.clickButton('@snippetListItem');
+    snippetEditPage.waitForElementPresent('@snippetEditView');
   },
-  'User goes to CodeBox config view' : function(client) {
+  'User goes to Snippet config view' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
-    const codeBoxesPage = client.page.codeBoxesPage();
-    const codeBoxEditPage = client.page.codeBoxEditPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@codeBoxes');
-    codeBoxesPage.clickButton('@codeBoxListItem');
-    codeBoxEditPage.clickButton('@config');
-    codeBoxEditPage.waitForElementPresent('@configKeyField');
-    codeBoxEditPage.waitForElementPresent('@configValueField');
-    codeBoxEditPage.waitForElementPresent('@configAddFieldButton');
-    codeBoxEditPage.verify.containsText('@configKeyField', '');
-    codeBoxEditPage.verify.containsText('@configValueField', '');
+    leftMenuPage.clickButton('@snippets');
+    snippetsPage.clickButton('@snippetListItem');
+    snippetEditPage.clickButton('@config');
+    snippetEditPage.waitForElementPresent('@configKeyField');
+    snippetEditPage.waitForElementPresent('@configValueField');
+    snippetEditPage.waitForElementPresent('@configAddFieldButton');
+    snippetEditPage.verify.containsText('@configKeyField', '');
+    snippetEditPage.verify.containsText('@configValueField', '');
   },
-  'User goes to CodeBox traces view' : function(client) {
+  'User goes to Snippet traces view' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
-    const codeBoxesPage = client.page.codeBoxesPage();
-    const codeBoxEditPage = client.page.codeBoxEditPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@codeBoxes');
-    codeBoxesPage.clickButton('@codeBoxListItem');
-    codeBoxEditPage.clickButton('@traces');
-    codeBoxEditPage.waitForElementPresent('@tracesEmpty');
+    leftMenuPage.clickButton('@snippets');
+    snippetsPage.clickButton('@snippetListItem');
+    snippetEditPage.clickButton('@traces');
+    snippetEditPage.waitForElementPresent('@tracesEmpty');
   },
   'User goes to Data Objects View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
@@ -107,32 +125,21 @@ module.exports = {
     classesPage.clickButton('@userClassListItem');
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  'User goes to Webhooks View' : function(client) {
-    const dataPage = client.page.dataPage();
-
-    dataPage.waitForElementPresent('@webhookListItem');
-  },
-  'User goes to Tasks View' : function(client) {
-    const leftMenuPage = client.page.leftMenuPage();
-    const tasksPage = client.page.tasksPage();
-
-    leftMenuPage.clickButton('@tasks');
-    tasksPage.waitForElementPresent('@scheduleListItem');
-  },
-  'User goes to Users View' : function(client) {
+  'User goes to Users & Groups View' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();
     const usersPage = client.page.usersPage();
 
     leftMenuPage.clickButton('@users');
     usersPage.waitForElementPresent('@user');
   },
-  'User goes to Webhook Traces View' : function(client) {
-    const dataPage = client.page.dataPage();
-    const webhookTracesPage = client.page.webhookTracesPage();
-
-    dataPage.clickButton('@webhookListItem');
-    webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
-  },
+  // It will be codeBox Socket traces view test when codebox start working
+  //'User goes to Webhook Traces View' : function(client) {
+  //  const socketsPage = client.page.socketsPage();
+  //  const webhookTracesPage = client.page.webhookTracesPage();
+  //
+  //  socketsPage.clickButton('@codeBoxSocketItem');
+  //  webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
+  //},
   'User goes to Solutions View' : function(client) {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();

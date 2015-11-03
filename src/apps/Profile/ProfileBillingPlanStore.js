@@ -198,14 +198,12 @@ export default Reflux.createStore({
   onCancelSubscriptionsCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onCancelNewPlanCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

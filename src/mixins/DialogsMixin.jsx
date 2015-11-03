@@ -41,7 +41,9 @@ export default {
   hideDialogs(hideDialogsFlag) {
     if (hideDialogsFlag) {
       return this.initDialogs().map((dialogConf) => {
-        this.refs[dialogConf.params.ref].dismiss();
+        if (this.refs[dialogConf.params.ref]) {
+          this.refs[dialogConf.params.ref].dismiss();
+        }
       });
     }
   },

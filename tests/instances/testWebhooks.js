@@ -34,33 +34,33 @@ export default {
     client.end();
   },
   'Test Select/Deselect multiple Webhooks': (client) => {
-    const dataPage = client.page.dataPage();
+    const socketsPage = client.page.socketsPage();
 
     client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/webhooks`);
 
-    dataPage
+    socketsPage
       .waitForElementVisible('@webhookToSelect')
       .clickButton('@webhookToSelect')
       .clickButton('@selectMultipleButton');
 
-    client.elements('css selector', dataPage.elements.checkboxSelected.selector, (result) => {
+    client.elements('css selector', socketsPage.elements.checkboxSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
-    dataPage
+    socketsPage
       .clickButton('@deselectMultipleButton')
       .waitForElementVisible('@webhookToSelect');
 
-    client.elements('css selector', dataPage.elements.webhookToSelect.selector, (result) => {
+    client.elements('css selector', socketsPage.elements.webhookToSelect.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
   },
   'Test Delete multiple Webhooks': (client) => {
-    const dataPage = client.page.dataPage();
+    const socketsPage = client.page.socketsPage();
 
     client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/webhooks`);
 
-    dataPage
+    socketsPage
       .waitForElementVisible('@webhookToSelect')
       .clickButton('@webhookToSelect')
       .clickButton('@selectMultipleButton')
@@ -69,7 +69,7 @@ export default {
 
     client.pause(1000);
 
-    dataPage
+    socketsPage
       .clickButton('@confirmButton')
       .waitForElementVisible('@emptyListItem');
   }

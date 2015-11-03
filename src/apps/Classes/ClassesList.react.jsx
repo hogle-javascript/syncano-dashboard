@@ -85,6 +85,7 @@ export default React.createClass({
 
   renderItem(item) {
     let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
+    let metadata = item.metadata;
 
     return (
       <Common.ColumnList.Item
@@ -94,8 +95,8 @@ export default React.createClass({
         handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id={item.name.toString()}
-          icon={item.metadata.icon ? item.metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(item.metadata.color ? item.metadata.color : 'blue')}
+          icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
+          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.name}
