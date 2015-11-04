@@ -322,10 +322,10 @@ export default Radium(React.createClass({
           {this.renderFields()}
           {this.renderNewFiledSection()}
           {this.renderButtons()}
-          <Common.Show if={Object.keys(this.state.errors).length > 0}>
+          <Common.Show if={this.getValidationMessages('config').length > 0}>
             <div style={styles.notification}>
               <Common.Notification type="error">
-                {this.state.errors.config}
+                {this.getValidationMessages('config').join(' ')}
               </Common.Notification>
             </div>
           </Common.Show>
