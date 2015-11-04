@@ -1,7 +1,8 @@
 machine:
   node:
-    version:
-      4.2.1
+    version: 4.2.1
+  post:
+    - npm install -g npm
 
 general:
   artifacts:
