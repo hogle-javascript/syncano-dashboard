@@ -17,6 +17,7 @@ general:
 test:
   pre:
     - npm i
+    - npm i lodash
   override:
     - ./test.sh:
         parallel: true
