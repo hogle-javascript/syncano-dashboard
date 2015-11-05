@@ -28,11 +28,11 @@ module.exports = function(cb) {
     },
 
     function(callback) {
-      git.push('origin', 'master', callback);
+      git.checkout('devel', callback);
     },
 
     function(callback) {
-      git.checkout('devel', callback);
+      git.pull('origin', 'devel', callback);
     },
 
     function(callback) {
