@@ -36,11 +36,6 @@ export default Radium(React.createClass({
     MUI.Utils.Styles
   ],
 
-  /* eslint-disable react/sort-comp */
-  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
-
-  /* eslint-enable react/sort-comp */
-
   componentDidMount() {
     SessionStore.getInstance();
   },
@@ -86,7 +81,11 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
     let user = SessionStore.getUser() || '';
     let billingIcon = <MUI.FontIcon className="synicon-credit-card"/>;
-    let logoutIcon = <MUI.FontIcon style={styles.logoutDropdownItem} className="synicon-power"/>;
+    let logoutIcon = (
+      <MUI.FontIcon
+        style={styles.logoutDropdownItem}
+        className="synicon-power"/>
+    );
 
     if (!user) {
       return null;
@@ -139,10 +138,10 @@ export default Radium(React.createClass({
     this.transitionTo('solutions');
   },
 
+  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
+
   renderIconButton() {
-    return (
-      <MUI.Avatar src={this.getGravatarUrl()}/>
-    );
+    return <MUI.Avatar src={this.getGravatarUrl()}/>;
   },
 
   render() {
