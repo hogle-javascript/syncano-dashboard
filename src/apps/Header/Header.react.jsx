@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Stores & Actions
 import HeaderStore from './HeaderStore';
@@ -10,7 +10,7 @@ import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Logo from '../../common/Logo/Logo.react';
 
@@ -32,7 +32,7 @@ export default Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
-    MUI.Mixins.StylePropable
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {
@@ -48,7 +48,7 @@ export default Radium(React.createClass({
         zIndex: 8
       },
       topToolbar: {
-        background: this.context.muiTheme.palette.primary1Color,
+        background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 64,
         padding: 0
       },
@@ -70,24 +70,10 @@ export default Radium(React.createClass({
         alignItems: 'center',
         cursor: 'pointer'
       },
-      bottomToolbar: {
-        display: 'flex',
-        fontSize: 17,
-        fontWeight: 500,
-        height: 56,
-        background: this.context.muiTheme.palette.primary2Color,
-        padding: '0 32px'
-      },
-      bottomToolbarGroup: {
-        display: 'flex',
-        float: 'none',
-        alignItems: 'center',
-        justifyContent: 'center'
-      },
       bottomToolbarGroupIcon: {
         color: '#fff'
       }
-    }
+    };
   },
 
   getDropdownItems() {
@@ -118,7 +104,7 @@ export default Radium(React.createClass({
       name: 'logout',
       handleItemClick: this.handleLogout
 
-    }]
+    }];
   },
 
   getDropdownHeaderItems() {
@@ -127,7 +113,7 @@ export default Radium(React.createClass({
       userEmail: this.state.user.email,
       clickable: true,
       handleItemClick: this.handleAccountClick
-    }
+    };
   },
 
   handleTabActive(tab) {
@@ -208,6 +194,6 @@ export default Radium(React.createClass({
           </MUI.ToolbarGroup>
         </MUI.Toolbar>
       </div>
-    )
+    );
   }
 }));

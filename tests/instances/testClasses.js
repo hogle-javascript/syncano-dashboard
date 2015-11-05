@@ -1,58 +1,55 @@
-const utils = require('../utils');
+import globals from '../globals';
+import Syncano from 'syncano';
 
-module.exports = {
+export default {
   tags: ['classes'],
-  before: function(client) {
+  before(client) {
+    const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
+    const classOptions = {
+      name: null,
+      schema: [
+        {type: 'string', name: 'name'}
+      ]
+    };
+    let i = 0;
 
-    loginPage.goToLoginPage();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    for (i; i < 3; i += 1) {
+      classOptions.name = `class_${i.toString()}`;
+      syncano.instance(globals.tempInstanceName).class().add(classOptions);
+    }
+
+    loginPage
+      .navigate()
+      .login(globals.tempEmail, globals.tempPass)
+      .verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'Test Add Class' : function(client) {
-    const className = utils.addSuffix('class');
+  'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.navigate();
-    classesPage.clickFAB();
-    classesPage.fillInputField('@createModalNameInput', className);
-    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description');
-    classesPage.fillInputField('@createModalFieldNameInput', 'schemaName');
-    classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString');
-    classesPage.clickButton('@addButton');
+    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/classes`);
+
+    classesPage
+      .clickButton('@selectUserClass')
+      .clickButton('@multipleSelectButton')
+      .clickButton('@selectUserClass');
     client.pause(1000);
-    classesPage.waitForElementVisible('@addClassTitle');
-    classesPage.clickButton('@confirmButton');
-    classesPage.waitForElementNotVisible('@addClassTitle');
-
-    classesPage.waitForElementVisible('@classTableRow');
-    classesPage.verify.containsText('@classTableRowDescription', 'nightwatch_test_class_description');
-  },
-  'Test Edit Class' : function(client) {
-    const classesPage = client.page.classesPage();
-
-    classesPage.clickSelectClass();
-    classesPage.clickButton('@editButton');
-    classesPage.fillClassDescription('nightwatch_test_class_new_description');
-    classesPage.clickButton('@confirmButton');
-    classesPage.waitForElementNotVisible('@editClassTitle');
-    client.pause(1000);
-    classesPage.waitForElementVisible('@classTableRowDescription');
-    classesPage.verify.containsText('@classTableRowDescription', 'nightwatch_test_class_new_description');
-  },
-  'Test Delete Class' : function(client) {
-    const classesPage = client.page.classesPage();
-
-    classesPage.clickSelectClass();
     classesPage.clickButton('@deleteButton');
     client.pause(1000);
-    classesPage.clickButton('@confirmDeleteButton');
-    classesPage.waitForElementNotVisible('@deleteClassModalTitle');
-    classesPage.waitForElementNotPresent('@classTableName');
+    classesPage
+      .clickButton('@confirmDeleteButton')
+      .waitForElementNotVisible('@deleteClassModalTitle');
+    const classTableRows = classesPage.elements.classTableRows.selector;
+    const userProfileClassName = classesPage.elements.userProfileClassName.selector;
+
+    client.elements('xpath', classTableRows, (result) => {
+      client.assert.equal(result.value.length, 0);
+    });
+    client.elements('xpath', userProfileClassName, (result) => {
+      client.assert.equal(result.value.length, 1);
+    });
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 import _ from 'lodash';
 
@@ -13,7 +13,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 // Local components
@@ -42,7 +42,7 @@ export default Radium(React.createClass({
     return {
       tracesFor: 'codebox',
       showHeader: false
-    }
+    };
   },
 
   componentDidMount() {
@@ -58,7 +58,7 @@ export default Radium(React.createClass({
       cBList: {
         top: '-45px'
       }
-    }
+    };
   },
 
   getConfig() {
@@ -113,7 +113,7 @@ export default Radium(React.createClass({
       <MUI.ToolbarGroup>
         <MUI.ToolbarTitle text={toolbarTitleText}/>
       </MUI.ToolbarGroup>
-    )
+    );
   },
 
   render() {

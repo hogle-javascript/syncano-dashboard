@@ -1,18 +1,20 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
+import AutosaveMixin from './CodeBoxAutosaveMixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -25,16 +27,19 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialogs,
     HeaderMixin,
     UnsavedDataMixin,
+    AutosaveMixin,
     Mixins.InstanceTabs,
     Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
+
+  autosaveAttributeName: 'codeBoxSourceAutosave',
 
   componentDidMount() {
     Actions.fetch();
@@ -58,13 +63,16 @@ export default React.createClass({
       durationSummary: {
         marginTop: 8
       },
+      autosaveCheckbox: {
+        marginTop: 30
+      },
       statusSummaryFailed: {
         color: MUI.Styles.Colors.red400
       },
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
       }
-    }
+    };
   },
 
   isPayloadValid() {
@@ -75,10 +83,12 @@ export default React.createClass({
   },
 
   isSaved() {
-    let initialCodeBoxSource = this.state.currentCodeBox.source;
-    let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
+    if (this.state.currentCodeBox && this.refs.editorSource) {
+      let initialCodeBoxSource = this.state.currentCodeBox.source;
+      let currentCodeBoxSource = this.refs.editorSource.editor.getValue();
 
-    return initialCodeBoxSource === currentCodeBoxSource;
+      return initialCodeBoxSource === currentCodeBoxSource;
+    }
   },
 
   handleConfirm() {
@@ -86,7 +96,7 @@ export default React.createClass({
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
 
     if (this.isPayloadValid()) {
-      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload})
+      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload});
       this.hideDialogs(true);
     } else {
       this.hideDialogs(true);
@@ -114,6 +124,7 @@ export default React.createClass({
   handleUpdate() {
     let source = this.refs.editorSource.editor.getValue();
 
+    this.clearAutosaveTimer();
     Actions.updateCodeBox(this.state.currentCodeBox.id, {source});
     this.setSnackbarNotification({
       message: 'Saving...'
@@ -124,6 +135,7 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'runUnsavedCodeBox',
         ref: 'runUnsavedCodeBox',
         title: 'Unsaved CodeBox',
         actions: [
@@ -139,10 +151,10 @@ export default React.createClass({
         modal: true,
         children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
       }
-    },
-    {
+    }, {
       dialog: Common.Dialog,
       params: {
+        key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
         actions: [
@@ -158,7 +170,7 @@ export default React.createClass({
         modal: true,
         children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
       }
-    }]
+    }];
   },
 
   shouldCodeBoxRun() {
@@ -193,20 +205,31 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
+            onChange={this.runAutoSave}
+            onLoad={this.clearAutosaveTimer}
             value={source}/>
+          <MUI.Checkbox
+            ref="autosaveCheckbox"
+            name="autosaveCheckbox"
+            label="Autosave"
+            style={styles.autosaveCheckbox}
+            defaultChecked={this.isAutosaveEnabled()}
+            onCheck={this.saveCheckboxState}/>
 
           <div style={styles.tracePanel}>
             <Common.Editor.Panel
               ref="tracePanel"
               trace={this.state.lastTraceResult}
               loading={!this.state.lastTraceReady}/>
-            <div style={styles.durationSummary}>
-              Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
-              duration: {this.state.lastTraceDuration}ms
-            </div>
+            <Common.Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
+              <div style={styles.durationSummary}>
+                Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
+                duration: {this.state.lastTraceDuration}ms
+              </div>
+            </Common.Show>
           </div>
         </div>
-      )
+      );
     }
   },
 

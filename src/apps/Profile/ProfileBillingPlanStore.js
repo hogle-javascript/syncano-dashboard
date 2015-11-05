@@ -27,7 +27,7 @@ export default Reflux.createStore({
         rows: [],
         showPercents: false
       }
-    }
+    };
   },
 
   init() {
@@ -126,7 +126,7 @@ export default Reflux.createStore({
         included: pricing.cbx.included,
         overage: pricing.cbx.overage
       }
-    })
+    });
   },
 
   getCovered() {
@@ -198,14 +198,12 @@ export default Reflux.createStore({
   onCancelSubscriptionsCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onCancelNewPlanCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

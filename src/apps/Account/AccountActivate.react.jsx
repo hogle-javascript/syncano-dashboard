@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 import Store from './AuthStore';
 import Actions from './AuthActions';
@@ -36,6 +36,6 @@ export default React.createClass({
           <p className="vm-0-b">{this.state.status}</p>
         </div>
       </Container>
-    )
+    );
   }
 });

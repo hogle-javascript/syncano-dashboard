@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -141,7 +141,7 @@ export default React.createClass({
           children: 'Do you really want to delete ' + DataViewsStore.getCheckedItems().length + ' Data endpoints?'
         }
       }
-    ]
+    ];
   },
 
   render() {
@@ -170,12 +170,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'removeDataViewDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a Data Endpoint"
-              mini={true}
-              disabled={checkedDataViews > 1}
-              onClick={this.showDataViewEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 
@@ -191,12 +185,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a Webhook"
-              mini={true}
-              disabled={checkedDataViews > 1}
-              onClick={this.showWebhookEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 

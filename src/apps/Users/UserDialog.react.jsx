@@ -12,7 +12,7 @@ import UsersActions from './UsersActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 import 'react-select/dist/default.css';
@@ -81,13 +81,17 @@ export default React.createClass({
 
   handleEditSubmit() {
     let userGroups = this.getSelectValueSource().value;
+    let credentials = {
+      username: this.state.username
+    };
+
+    if (this.state.password) {
+      credentials.password = this.state.password;
+    }
 
     UsersActions.updateUser(
       this.state.id,
-      {
-        username: this.state.username,
-        password: this.state.password
-      },
+      credentials,
       {
         groups: this.state.groups,
         newGroups: userGroups
@@ -98,7 +102,7 @@ export default React.createClass({
   handleSelectFieldChange(newValue, selectedGroups) {
     this.setState({
       newUserGroups: selectedGroups
-    })
+    });
   },
 
   render() {

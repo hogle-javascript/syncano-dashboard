@@ -11,7 +11,7 @@ import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
@@ -41,7 +41,7 @@ export default Radium(React.createClass({
       hard_limit: {
         equality: {
           attribute: 'soft_limit',
-          message: 'Hard limit have to be higher then soft limit',
+          message: '^Hard limit has to be higher than soft limit',
           comparator: (v1, v2) => {
             return parseInt(v1, 10) > parseInt(v2, 10);
           }
@@ -50,28 +50,16 @@ export default Radium(React.createClass({
           onlyInteger: true
         }
       }
-    }
+    };
   },
 
   componentDidMount() {
-    Actions.fetch()
+    Actions.fetch();
   },
 
   componentWillUpdate(nextProps, nextState) {
     console.info('ProfileBillingPlan::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
-  },
-
-  setupToggles() {
-    const plan = Store.getPlan();
-
-    if (plan === 'builder') {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
-      this.refs.toggle.setToggled(false);
-    } else if (plan === 'paid-commitment') {
-      this.refs.toggle.setToggled(true);
-    }
   },
 
   getStyles() {
@@ -124,7 +112,48 @@ export default Radium(React.createClass({
         display: 'flex',
         justifyContent: 'center'
       }
-    }
+    };
+  },
+
+  handleCancelCancelProductionPlan() {
+    this.setupToggles();
+    this.refs.cancelProductionPlan.dismiss();
+  },
+
+  handleShowCancelPlanDialog() {
+    console.debug('ProfileBillingPlan::handlePlanToggle');
+    this.showDialog('cancelProductionPlan');
+  },
+
+  handleCancelProductionPlan() {
+    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
+      return item.id;
+    }));
+  },
+
+  handleShowPlanDialog() {
+    console.debug('ProfileBillingPlan::handleShowPlanDialog');
+    PlanDialogActions.showDialog();
+  },
+
+  handleDeleteSubscription() {
+    Actions.cancelNewPlan(this.state.subscriptions._items);
+  },
+
+  handlePlanDialogDismiss() {
+    this.setupToggles();
+    Actions.fetch();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleAddSubmit();
+  },
+
+  handleAddSubmit() {
+    Actions.updateBillingProfile({
+      hard_limit: this.state.hard_limit,
+      soft_limit: this.state.soft_limit
+    });
   },
 
   // Dialogs config
@@ -148,34 +177,19 @@ export default Radium(React.createClass({
         modal: true,
         children: ['Are you sure you want to cancel your Production plan?']
       }
-    }]
+    }];
   },
 
-  handleCancelCancelProductionPlan() {
-    this.setupToggles();
-    this.refs.cancelProductionPlan.dismiss();
-  },
+  setupToggles() {
+    const plan = Store.getPlan();
 
-  handleShowCancelPlanDialog() {
-    console.debug('ProfileBillingPlan::handlePlanToggle');
-    this.showDialog('cancelProductionPlan')
-  },
-
-  handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
-      return item.id
-    })).then(() => {
-      Actions.fetch();
-    });
-  },
-
-  handleShowPlanDialog() {
-    console.debug('ProfileBillingPlan::handleShowPlanDialog');
-    PlanDialogActions.showDialog();
-  },
-
-  handleDeleteSubscription() {
-    Actions.cancelNewPlan(this.state.subscriptions._items);
+    if (plan === 'builder') {
+      this.refs.toggle.setToggled(false);
+    } else if (plan === 'paid-commitment' && Store.isPlanCanceled()) {
+      this.refs.toggle.setToggled(false);
+    } else if (plan === 'paid-commitment') {
+      this.refs.toggle.setToggled(true);
+    }
   },
 
   renderMainDesc() {
@@ -254,7 +268,7 @@ export default Radium(React.createClass({
 
           </div>
 
-        )
+        );
       }
       return (
         <div>
@@ -263,22 +277,6 @@ export default Radium(React.createClass({
         </div>
       );
     }
-  },
-
-  handlePlanDialogDismiss() {
-    this.setupToggles();
-    Actions.fetch();
-  },
-
-  handleSuccessfullValidation() {
-    this.handleAddSubmit();
-  },
-
-  handleAddSubmit() {
-    Actions.updateBillingProfile({
-      hard_limit: this.state.hard_limit,
-      soft_limit: this.state.soft_limit
-    });
   },
 
   renderLimitsForm() {
@@ -339,7 +337,7 @@ export default Radium(React.createClass({
           </div>
         </div>
       </form>
-    )
+    );
   },
 
   renderSummary() {
@@ -428,7 +426,7 @@ export default Radium(React.createClass({
               onClick={this.handleShowPlanDialog}/>
           </div>
         </div>
-      )
+      );
     }
 
     return (

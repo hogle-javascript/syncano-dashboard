@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -90,7 +90,7 @@ export default React.createClass({
           />
         ]
       }
-    }]
+    }];
   },
 
   render() {
@@ -118,13 +118,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteChannelDialog')}
               iconClassName="synicon-delete"
-              />
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a Channel"
-              mini={true}
-              disabled={checkedItems > 1}
-              onClick={this.showChannelEditDialog}
-              iconClassName="synicon-pencil"
               />
           </Common.Fab>
         </Common.Show>

@@ -1,57 +1,76 @@
-const utils = require('../utils');
+import globals from '../globals';
+import Syncano from 'syncano';
 
-module.exports = {
+export default {
   tags: ['webhooks'],
-  before: function(client) {
+  before(client) {
+    const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
 
-    loginPage.goToLoginPage();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    const codeBoxOptions = {
+      label: 'codebox',
+      source: 'print "foo"',
+      runtime_name: 'python'
+    };
+    const webhookOptions = {
+      name: null,
+      codebox: null
+    };
 
+    syncano.instance(globals.tempInstanceName).codebox().add(codeBoxOptions).then((success) => {
+      webhookOptions.codebox = success.id;
+      for (let i = 0; i < 3; i += 1) {
+        webhookOptions.name = `webhook_${i.toString()}`;
+        syncano.instance(globals.tempInstanceName).webhook().add(webhookOptions);
+      }
+    });
+
+    loginPage
+      .navigate()
+      .login(globals.tempEmail, globals.tempPass)
+      .verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'User adds a Webhook' : function(client) {
-    const webhook = utils.addSuffix('webhook');
+  'Test Select/Deselect multiple Webhooks': (client) => {
     const dataPage = client.page.dataPage();
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickButton('@addWebhookButton');
-    dataPage.waitForElementVisible('@addWebhookModalTitle');
-    dataPage.fillInputField('@addWebhookModalNameInput', webhook);
-    dataPage.selectFromDropdown('@addWebhookModalCodeboxDropdown', '@addWebhookModalCodeboxDropdownChoice');
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementVisible('@webhookTableRow');
+    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/webhooks`);
+
+    dataPage
+      .waitForElementVisible('@webhookToSelect')
+      .clickButton('@webhookToSelect')
+      .clickButton('@selectMultipleButton');
+
+    client.elements('css selector', dataPage.elements.checkboxSelected.selector, (result) => {
+      client.assert.equal(result.value.length, 3);
+    });
+
+    dataPage
+      .clickButton('@deselectMultipleButton')
+      .waitForElementVisible('@webhookToSelect');
+
+    client.elements('css selector', dataPage.elements.webhookToSelect.selector, (result) => {
+      client.assert.equal(result.value.length, 3);
+    });
   },
-  'User edits a Webhook' : function(client) {
+  'Test Delete multiple Webhooks': (client) => {
     const dataPage = client.page.dataPage();
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickButton('@selectWebhookTableRow');
-    dataPage.clickButton('@editButton');
-    dataPage.waitForElementVisible('@editWebhookModalTitle');
-    dataPage.fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
-    client.pause(1000);
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementVisible('@webhookTableRow');
-    dataPage.waitForElementVisible('@webhookTableRowDescription')
-  },
-  'User deletes a Webhook' : function(client) {
-    const dataPage = client.page.dataPage();
+    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/webhooks`);
 
-    dataPage.navigate();
-    dataPage.waitForElementVisible('@webhookListItem');
-    dataPage.clickButton('@selectWebhookTableRow');
-    dataPage.clickButton('@deleteButton');
-    dataPage.waitForElementVisible('@deleteWebhookModalTitle');
+    dataPage
+      .waitForElementVisible('@webhookToSelect')
+      .clickButton('@webhookToSelect')
+      .clickButton('@selectMultipleButton')
+      .clickButton('@deleteButton')
+      .waitForElementVisible('@deleteWebhookModalTitle');
+
     client.pause(1000);
-    dataPage.clickButton('@confirmButton');
-    dataPage.waitForElementNotPresent('@selectWebhookTableRow');
+
+    dataPage
+      .clickButton('@confirmButton')
+      .waitForElementVisible('@emptyListItem');
   }
 };

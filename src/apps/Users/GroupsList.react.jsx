@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 import _ from 'lodash';
 
@@ -7,8 +7,8 @@ import _ from 'lodash';
 import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
-import MUI from 'material-ui';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import MUI from 'syncano-material-ui';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 export default Radium(React.createClass({
@@ -25,14 +25,14 @@ export default Radium(React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   getStyles() {
@@ -44,7 +44,7 @@ export default Radium(React.createClass({
       listItemChecked: {
         background: MUI.Styles.Colors.lightBlue50
       }
-    }
+    };
   },
 
   renderItemIconMenuButton() {
@@ -53,7 +53,7 @@ export default Radium(React.createClass({
         touch={true}
         tooltipPosition='bottom-left'
         iconClassName='synicon-dots-vertical'/>
-    )
+    );
   },
 
   renderItemIconMenu(item) {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
       </MUI.IconMenu>
-    )
+    );
   },
 
   renderItem(item) {
@@ -80,7 +80,7 @@ export default Radium(React.createClass({
         rightIconButton={this.renderItemIconMenu(item)}>
         {item.label}
       </MUI.ListItem>
-    )
+    );
   },
 
   renderList() {
@@ -112,7 +112,7 @@ export default Radium(React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

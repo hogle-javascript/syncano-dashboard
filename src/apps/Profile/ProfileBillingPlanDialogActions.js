@@ -1,9 +1,12 @@
-import CreateActions from '../../utils/ActionsConstructor.js'
+import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions(
   {
     fetch: {},
     setInstances: {},
+    sliderChange: {},
+    sliderLabelsClick: {},
+    submitPlan: {},
 
     fetchBillingPlans: {
       asyncResult: true,

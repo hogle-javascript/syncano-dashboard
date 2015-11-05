@@ -1,18 +1,18 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Limits} from '../../mixins';
 
 // Stores and Actions
 
 import Store from './ListViewStore';
 import Actions from './ListViewActions';
+import SessionStore from '../Session/SessionStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 import CreateDialogActions from './CreateDialogActions';
@@ -30,7 +30,6 @@ export default React.createClass({
     Router.Navigation,
 
     HeaderMixin,
-    Limits,
     Reflux.connect(Store)
   ],
 
@@ -51,7 +50,7 @@ export default React.createClass({
       listItemChecked: {
         background: MUI.Styles.Colors.lightBlue50
       }
-    }
+    };
   },
 
   handleChangeFilter(filter) {
@@ -98,7 +97,7 @@ export default React.createClass({
         <CreateDialog />
         <InstallDialog />
 
-        <Common.Show if={this.isFriend()}>
+        <Common.Show if={SessionStore.hasFriendlyUser()}>
           <Common.Fab>
             <Common.Fab.TooltipItem
               tooltip="Click here to create a Solution"

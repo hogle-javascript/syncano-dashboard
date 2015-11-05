@@ -1,8 +1,10 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import Mixins from '../../mixins';
 
 import SessionActions from '../Session/SessionActions';
+import SessionStore from '../Session/SessionStore';
 import InstancesActions from '../Instances/InstancesActions';
 import Actions from './ProfileInvitationsActions';
 
@@ -18,7 +20,7 @@ export default Reflux.createStore({
     return {
       items: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -50,6 +52,14 @@ export default Reflux.createStore({
   },
 
   onFetchInvitationsCompleted(items) {
+    let invKey = SessionStore.getRouter().getCurrentQuery().invitation_key || null;
+    let isInvitedByEmail = _.some(items._items, 'key', invKey);
+
+    if (invKey !== null && isInvitedByEmail) {
+      Actions.acceptInvitations(invKey);
+      return;
+    }
+
     console.debug('ProfileInvitationsStore::onFetchInvitationsCompleted');
     Actions.setInvitations(items);
   },
@@ -60,6 +70,12 @@ export default Reflux.createStore({
   },
 
   onAcceptInvitationsCompleted() {
+    let invKey = SessionStore.getRouter().getCurrentQuery().invitation_key || null;
+
+    if (invKey === localStorage.getItem('invitationKey')) {
+      localStorage.removeItem('invitationKey');
+    }
+
     InstancesActions.fetch();
     this.data.hideDialogs = true;
     this.trigger(this.data);

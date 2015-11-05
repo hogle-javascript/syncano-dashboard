@@ -1,4 +1,4 @@
-import Adroll from './Adroll.react'
+import Adroll from './Adroll.react';
 import Magnetic from './Magnetic.react';
 
 export default {

@@ -1,6 +1,8 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -10,6 +12,7 @@ import Actions from './CodeBoxActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
+    StoreFormMixin,
     WaitForStoreMixin,
     SnackbarNotificationMixin
   ],
@@ -24,6 +27,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       currentCodeBox: null,
+      codeBoxConfig: null,
 
       traces: [],
       lastTraceResult: null,
@@ -31,11 +35,12 @@ export default Reflux.createStore({
       lastTraceDuration: null,
       lastTraceReady: true,
       isLoading: true
-    }
+    };
   },
 
   init() {
     this.data = this.getInitialState();
+    this.listenToForms();
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
@@ -49,6 +54,17 @@ export default Reflux.createStore({
     Actions.fetchCodeBoxTraces(SessionStore.getRouter().getCurrentParams().codeboxId);
   },
 
+  mapConfig(originalConfig) {
+    let config = _.map(originalConfig, (value, key) => {
+      return {
+        key,
+        value
+      };
+    });
+
+    return _.sortBy(config, 'key');
+  },
+
   getCurrentCodeBox() {
     console.debug('CodeBoxStore::getCurrentCodeBox');
     return this.data.currentCodeBox;
@@ -56,6 +72,7 @@ export default Reflux.createStore({
 
   onFetchCodeBoxCompleted(codeBox) {
     console.debug('CodeBoxStore::onFetchCodeBoxCompleted');
+    this.data.codeBoxConfig = this.mapConfig(codeBox.config);
     this.data.currentCodeBox = codeBox;
     this.trigger(this.data);
   },
@@ -92,13 +109,15 @@ export default Reflux.createStore({
   getCodeBoxLastTraceResult() {
     console.debug('CodeBoxStore::getCodeBoxLastTraceResult', this.data.traces);
     this.data.lastTraceResult = null;
+    this.data.lastTraceStatus = null;
+    this.data.lastTraceDuration = null;
     if (this.data.traces.length > 0) {
       let lastTrace = this.data.traces[0];
 
       if (lastTrace.status === 'pending') {
         this.data.lastTraceReady = false;
         setTimeout(() => {
-          this.fetchTraces()
+          this.fetchTraces();
         }, 300);
       } else {
         this.data.lastTraceResult = lastTrace.result.stdout !== '' ? lastTrace.result.stdout : 'Success';
@@ -115,7 +134,6 @@ export default Reflux.createStore({
 
   onUpdateCodeBoxCompleted(codeBox) {
     this.data.currentCodeBox = codeBox;
-    this.trigger(this.data);
     this.dismissSnackbarNotification();
     this.refreshData();
   },

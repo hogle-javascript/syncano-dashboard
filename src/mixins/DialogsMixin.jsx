@@ -6,7 +6,7 @@ export default {
 
     return dialogs.map((dialog) => {
       return React.createElement(dialog.dialog, dialog.params);
-    })
+    });
   },
 
   showDialog(ref) {
@@ -14,7 +14,7 @@ export default {
   },
 
   getDialogListLength(items) {
-    return items.length
+    return items.length;
   },
 
   getDialogList(items, paramName, associationFor) {
@@ -41,10 +41,18 @@ export default {
   hideDialogs(hideDialogsFlag) {
     if (hideDialogsFlag) {
       return this.initDialogs().map((dialogConf) => {
-        this.refs[dialogConf.params.ref].dismiss();
+        if (this.refs[dialogConf.params.ref]) {
+          this.refs[dialogConf.params.ref].dismiss();
+        }
       });
     }
-  }
+  },
 
+  showMenuDialog(itemName, handleConfirm, event) {
+    if (!this.refs.menuDialog) {
+      throw new Error("'menuDialog' ref not found. Please define dialog with 'menuDialog' ref.");
+    }
+    this.refs.menuDialog.show(itemName, handleConfirm, event.target.innerHTML);
+  }
 };
 

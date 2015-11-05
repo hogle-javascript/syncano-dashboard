@@ -1,5 +1,4 @@
-import React from 'react/addons';
-let { TestUtils } = React.addons;
+import TestUtils from 'react-addons-test-utils';
 
 describe('HeaderNotificationsDropdown', function() {
   it('should render', function() {

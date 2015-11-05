@@ -1,39 +1,103 @@
-var LOCATORS = {
-  url          : 'https://localhost:8080/',
-  emailInput   : 'input[name=email]',
-  passInput    : 'input[name=password]',
-  loginButton  : 'button[type=submit]',
-  mainDiv      : 'div[id=app]',
-  instancesDiv : 'div[id=instances]'
+const loginCommands = {
+  typeEmail() {
+    return this
+      .waitForElementPresent('@emailInput')
+      .setValue('@emailInput', process.env.NIGHTWATCH_EMAIL);
+  },
+  typePassword() {
+    return this
+      .waitForElementVisible('@passInput')
+      .setValue('@passInput', process.env.NIGHTWATCH_PASSWORD);
+  },
+  clickSignInButton() {
+    return this
+      .waitForElementVisible('@loginButton')
+      .click('@loginButton');
+  },
+  clickButton(button) {
+    return this.waitForElementVisible(button)
+      .click(button);
+  },
+  verifyLoginSuccessful() {
+    return this
+      .waitForElementVisible('@instancesDiv')
+      .assert.containsText('@instancesDiv', 'My instances');
+  },
+  fillInputField(field, value) {
+    return this.waitForElementVisible(field)
+      .clearValue(field)
+      .setValue(field, value);
+  },
+  login(email, pass) {
+    return this
+      .waitForElementVisible('@emailInput')
+      .setValue('@emailInput', email)
+      .setValue('@passInput', pass)
+      .waitForElementVisible('@loginButton')
+      .click('@loginButton');
+  }
 };
 
-module.exports = function(client) {
-  return {
-    goToLoginPage: function() {
-      return client
-        .url(LOCATORS.url)
-        .waitForElementVisible('body', 1000);
+module.exports = {
+  url: 'https://localhost:8080/#/login',
+  commands: [loginCommands],
+  elements: {
+    emailInput: {
+      selector: 'input[type=text]'
     },
-    typeEmail: function() {
-      return client
-        .waitForElementPresent(LOCATORS.emailInput, 5000)
-        .setValue(LOCATORS.emailInput, process.env.NIGHTWATCH_EMAIL);
+    passInput: {
+      selector: 'input[name=password]'
     },
-    typePassword: function() {
-      return client
-        .waitForElementVisible(LOCATORS.passInput, 1000)
-        .setValue(LOCATORS.passInput, process.env.NIGHTWATCH_PASSWORD);
+    loginButton: {
+      selector: 'button[type=submit]'
     },
-    clickSignInButton: function() {
-      return client
-        .waitForElementVisible(LOCATORS.loginButton, 1000)
-        .click(LOCATORS.loginButton);
+    loginButtonFacebook: {
+      selector: 'span.synicon-facebook'
     },
-    verifyLoginSuccessful: function() {
-      return client
-        .waitForElementVisible(LOCATORS.instancesDiv, 20000)
-        .assert.containsText(LOCATORS.instancesDiv, 'My instances');
+    emailInputFacebook: {
+      selector: 'input[name=email]'
+    },
+    passInputFacebook: {
+      selector: 'input[name=pass]'
+    },
+    signInButtonFacebook: {
+      selector: 'input[name=login]'
+    },
+    loginButtonGoogle: {
+      selector: 'span.synicon-google'
+    },
+    emailInputGoogle: {
+      selector: 'input#Email'
+    },
+    passInputGoogle: {
+      selector: 'input#Passwd'
+    },
+    nextButtonGoogle: {
+      selector: 'input#next'
+    },
+    signInButtonGoogle: {
+      selector: 'input#signIn'
+    },
+    approveAccessButtonGoogle: {
+      selector: 'button#submit_approve_access'
+    },
+    loginButtonGithub: {
+      selector: 'span.synicon-github'
+    },
+    emailInputGithub: {
+      selector: 'input#login_field'
+    },
+    passInputGithub: {
+      selector: 'input#password'
+    },
+    signInButtonGithub: {
+      selector: 'input[name=commit]'
+    },
+    mainDiv: {
+      selector: 'div[id=app]'
+    },
+    instancesDiv: {
+      selector: 'div[id=instances]'
     }
-  };
+  }
 };
-

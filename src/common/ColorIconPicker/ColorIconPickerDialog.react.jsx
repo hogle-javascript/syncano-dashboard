@@ -1,6 +1,7 @@
 import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -15,15 +16,19 @@ export default React.createClass({
     handleClick: React.PropTypes.func
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
-    React.addons.LinkedStateMixin
+    LinkedStateMixin
   ],
 
   getInitialState() {
     return {
       initialColor: this.props.initialColor,
       initialIcon: this.props.initialIcon
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -31,7 +36,25 @@ export default React.createClass({
     this.setState({
       color: nextProps.initialColor,
       icon: nextProps.initialIcon
-    })
+    });
+  },
+
+  getStyles() {
+    return {
+      tabContent: {
+        height: 370,
+        padding: '20px 20px 0'
+      },
+      inkBar: {
+        backgroundColor: this.context.muiTheme.rawTheme.palette.accent2Color
+      },
+      body: {
+        padding: 0
+      },
+      content: {
+        paddingBottom: 24
+      }
+    };
   },
 
   handleSubmit() {
@@ -66,6 +89,7 @@ export default React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
     let dialogStandardActions = [
       {
         text: 'Cancel',
@@ -82,30 +106,28 @@ export default React.createClass({
     return (
       <Common.Dialog
         ref="dialog"
-        contentInnerStyle={{paddingBottom: 24, padding: '0px'}}
-        actions={dialogStandardActions}
-        >
-        <MUI.Tabs>
+        bodyStyle={styles.body}
+        contentInnerStyle={styles.content}
+        actions={dialogStandardActions}>
+        <MUI.Tabs inkBarStyle={styles.inkBar}>
           <MUI.Tab label="Colors">
-            <div style={{height: 300, padding: '20px 20px 0'}}>
+            <div style={styles.tabContent}>
               <Common.ColorIconPicker
                 ref="color"
                 pickerType="color"
                 selectedIcon={this.state.icon}
                 selectedColor={this.state.color}
-                handleChange={this.handleChange}
-                />
+                handleChange={this.handleChange}/>
             </div>
           </MUI.Tab>
           <MUI.Tab label="Icons">
-            <div style={{height: 300, paddingTop: 20}}>
+            <div style={styles.tabContent}>
               <Common.ColorIconPicker
                 ref="icon"
                 pickerType="icon"
                 selectedColor={this.state.color}
                 selectedIcon={this.state.icon}
-                handleChange={this.handleChange}
-                />
+                handleChange={this.handleChange}/>
             </div>
           </MUI.Tab>
         </MUI.Tabs>
@@ -113,4 +135,3 @@ export default React.createClass({
     );
   }
 });
-

@@ -21,6 +21,6 @@ export default React.createClass({
           <img src="//magnetic.t.domdex.com/23447/pix.gif?t=c&for=syncano" width="1" height="1" style="display:none;">
         </noscript>`}}>
       </div>
-    )
+    );
   }
 });

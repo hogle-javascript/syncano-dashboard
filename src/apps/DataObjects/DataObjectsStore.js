@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-import URI from 'URIjs';
+import URI from 'urijs';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -97,7 +97,7 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('DataObjectsStore::refreshData');
-    DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className)
+    DataObjectsActions.fetchCurrentClassObj(SessionStore.router.getCurrentParams().className);
   },
 
   refreshDataObjects() {
@@ -143,11 +143,11 @@ export default Reflux.createStore({
         name: item.name,
         tooltip: 'Custom property: ' + item.name + ' (type: ' + item.type + ')',
         checked: true
-      })
+      });
     });
 
     // Do we have any settings in localStorage?
-    this.updateFromLocalStorage()
+    this.updateFromLocalStorage();
   },
 
   setSelectedRows(selectedRows) {
@@ -176,7 +176,7 @@ export default Reflux.createStore({
     this.data.prevParams = new URI(items.prev() || '').search(true);
 
     if (!this.data.items) {
-      this.data.items = []
+      this.data.items = [];
     }
 
     let newItems = [];
@@ -231,7 +231,7 @@ export default Reflux.createStore({
     console.debug('DataObjectsStore::checkToggleColumn', columnId);
     this.data.columns.map((item) => {
       if (columnId === item.id) {
-        item.checked = !item.checked
+        item.checked = !item.checked;
       }
     });
     this.updateLocalStorage();

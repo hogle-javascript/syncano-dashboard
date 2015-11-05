@@ -7,7 +7,7 @@ module.exports = {
     const loginPage = client.page.loginPage();
 
     console.log('Starting tests');
-    loginPage.goToLoginPage();
+    loginPage.navigate();
     loginPage.typeEmail();
     loginPage.typePassword();
     loginPage.clickSignInButton();
@@ -26,13 +26,13 @@ module.exports = {
   },
 
   afterEach: function(client, done) {
-    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'master') {
+    if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
       done();
       return;
     }
-
+    const res = client.globals.test_settings.resolution;
     const prefix = client.currentTest.name.replace(/\s/g, '-').replace(/"|'/g, '');
-    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', prefix + '.png'))
+    const fileNamePath = path.resolve(path.join(client.options.screenshotsPath, '_navigation', res, prefix + '.png'));
 
     client.saveScreenshot(fileNamePath, done);
   },
@@ -82,8 +82,11 @@ module.exports = {
     leftMenuPage.clickButton('@codeBoxes');
     codeBoxesPage.clickButton('@codeBoxListItem');
     codeBoxEditPage.clickButton('@config');
-    codeBoxEditPage.waitForElementPresent('@configEmpty');
-    codeBoxEditPage.verify.containsText('@configEmpty', '{');
+    codeBoxEditPage.waitForElementPresent('@configKeyField');
+    codeBoxEditPage.waitForElementPresent('@configValueField');
+    codeBoxEditPage.waitForElementPresent('@configAddFieldButton');
+    codeBoxEditPage.verify.containsText('@configKeyField', '');
+    codeBoxEditPage.verify.containsText('@configValueField', '');
   },
   'User goes to CodeBox traces view' : function(client) {
     const leftMenuPage = client.page.leftMenuPage();

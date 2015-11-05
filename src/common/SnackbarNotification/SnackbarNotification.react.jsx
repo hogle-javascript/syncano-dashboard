@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import Store from './SnackbarNotificationStore';
 
@@ -66,6 +66,6 @@ export default React.createClass({
         onActionTouchTap={(snackbar.onActionTouchTap) ? snackbar.onActionTouchTap.bind(this) : null}
         openOnMount={snackbar.openOnMount}
         style={snackbar.style}/>
-    )
+    );
   }
 });

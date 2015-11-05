@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Radium from 'radium';
 
 // Utils
@@ -13,10 +14,10 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
-import Header from '../Header'
+import Header from '../Header';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container.react';
 import EmptyContainer from '../../common/Container/EmptyContainer.react';
@@ -35,8 +36,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialogs,
-    Mixins.Limits
+    Mixins.Dialogs
   ],
 
   componentDidMount() {
@@ -46,7 +46,7 @@ export default Radium(React.createClass({
       this.showDialog('addInstanceDialog');
     }
     Store.fetch();
-    Actions.setTourConfig(this.getTourConfig())
+    Actions.setTourConfig(this.getTourConfig());
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -67,7 +67,7 @@ export default Radium(React.createClass({
       link: {
         color: MUI.Styles.Colors.blue500
       }
-    }
+    };
   },
 
   getTourConfig() {
@@ -78,7 +78,7 @@ export default Radium(React.createClass({
     }
 
     return [{
-      node: React.findDOMNode(this.refs.myInstancesList),
+      node: ReactDOM.findDOMNode(this.refs.myInstancesList),
       text: <div>All your <strong style={styles.tourHighlight}>Instances</strong> will be listed here.<br />
               <div style={styles.secondLine}>
                 Instance is a place for all of your
@@ -89,7 +89,7 @@ export default Radium(React.createClass({
       radius: 200
     },
     {
-      node: React.findDOMNode(this.refs.addInstanceFab),
+      node: ReactDOM.findDOMNode(this.refs.addInstanceFab),
       text: <div>You can add a new <strong style={styles.tourHighlight}>Instance</strong> by clicking here
               <div style={styles.secondLine}>
                 You will see a similar button placed in same screen corner, on other views as well - you will
@@ -130,7 +130,7 @@ export default Radium(React.createClass({
       radius: 100,
       top: -14,
       left: 20
-    }]
+    }];
   },
 
   onNextStep() {
@@ -146,7 +146,7 @@ export default Radium(React.createClass({
         metadata: JSON.stringify({color, icon})
       }
     );
-    Actions.uncheckAll()
+    Actions.uncheckAll();
   },
 
   handleDelete() {
@@ -167,21 +167,9 @@ export default Radium(React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
     let checkedInstances = Store.getCheckedItems();
 
     return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
       {
         dialog: Common.Dialog,
         params: {
@@ -208,14 +196,14 @@ export default Radium(React.createClass({
         params: {
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
-          title: 'Delete shared Instance',
+          title: 'Leave shared Instance',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
+            'Do you really want to leave ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
             this.getDialogList(checkedInstances),
             <Common.Loading
               type="linear"
@@ -224,7 +212,7 @@ export default Radium(React.createClass({
           ]
         }
       }
-    ]
+    ];
   },
 
   showInstanceDialog() {
@@ -246,7 +234,7 @@ export default Radium(React.createClass({
           mini={true}
           onClick={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}
           iconClassName="synicon-delete"/>
-      )
+      );
     }
 
     return (
@@ -255,7 +243,7 @@ export default Radium(React.createClass({
         mini={true}
         onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
         iconClassName="synicon-delete"/>
-    )
+    );
   },
 
   render() {
@@ -266,12 +254,11 @@ export default Radium(React.createClass({
             icon='synicon-block-helper'
             text={this.state.blocked}/>
         </div>
-      )
+      );
     }
 
     let instances = this.state.items;
     let instancesCount = instances ? instances.length : 0;
-    let myInstances = Store.getMyInstances();
     let checkedInstances = Store.getNumberOfChecked();
     let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
@@ -299,8 +286,6 @@ export default Radium(React.createClass({
           onClick={this.onNextStep}
           showDots={true} />
 
-        {this.renderLimitNotification('instances')}
-
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
           visible={shouldShowWelcomeDialog}/>
@@ -316,19 +301,6 @@ export default Radium(React.createClass({
               onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
             {this.renderDeleteFabButton()}
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Instance"
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showInstanceEditDialog}
-              iconClassName="synicon-pencil"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to customize Instances"
-              secondary={true}
-              mini={true}
-              disabled={checkedInstances > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
@@ -336,7 +308,7 @@ export default Radium(React.createClass({
           <Common.Fab.TooltipItem
             ref="addInstanceFab"
             tooltip="Click here to add Instances"
-            onClick={this.checkObjectsCount.bind(null, myInstances, 'instances', this.showInstanceDialog)}
+            onClick={this.showInstanceDialog}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 
@@ -347,14 +319,14 @@ export default Radium(React.createClass({
           listType="myInstances"
           viewMode="stream"
           emptyItemHandleClick={this.showInstanceDialog}
-          emptyItemContent="Create an instance"/>
+          emptyItemContent="Create an instance" />
         <Common.Show if={this.state.items !== null && Store.getOtherInstances().length && !this.state.isLoading}>
           <InstancesList
             ref="otherInstancesList"
             name="Shared with me"
             items={Store.getOtherInstances()}
             listType="sharedInstances"
-            viewMode="stream"/>
+            viewMode="stream" />
         </Common.Show>
       </Container>
     );

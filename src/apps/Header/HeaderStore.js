@@ -11,7 +11,7 @@ export default Reflux.createStore({
       menuItems: [],
       user: SessionStore.getUser({}),
       expandAccountMenu: false
-    }
+    };
   },
 
   init() {

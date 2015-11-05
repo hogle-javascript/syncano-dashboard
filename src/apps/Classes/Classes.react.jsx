@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import _ from 'lodash';
 
 // Utils
@@ -29,7 +29,6 @@ export default React.createClass({
     Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
-    Mixins.Limits,
     HeaderMixin
   ],
 
@@ -54,7 +53,7 @@ export default React.createClass({
       fabListBottom: {
         bottom: 100
       }
-    }
+    };
   },
 
   getAssociatedClasses() {
@@ -85,7 +84,7 @@ export default React.createClass({
         <div>
           Not associated: {this.getDialogList(associatedItems, 'name')}
         </div>
-      )
+      );
     }
 
     return list[associationsFor];
@@ -103,7 +102,7 @@ export default React.createClass({
         metadata: JSON.stringify({color, icon})
       }
     );
-    Actions.uncheckAll()
+    Actions.uncheckAll();
   },
 
   handleDelete() {
@@ -124,18 +123,8 @@ export default React.createClass({
     this.context.router.transitionTo('classes-add', this.getParams());
   },
 
-  redirectToEditClassView(className) {
-    let classNameParam = className || Store.getCheckedItem().name;
-
-    this.context.router.transitionTo('classes-edit', {
-      instanceName: this.getParams().instanceName,
-      className: classNameParam
-    });
-  },
-
   // Dialogs config
   initDialogs() {
-    let checkedItemIconColor = Store.getCheckedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
@@ -199,27 +188,15 @@ export default React.createClass({
                 show={this.state.isLoading}/>
           ]
         }
-      }
+      };
     }
 
     return [
-      {
-        dialog: Common.ColorIconPicker.Dialog,
-        params: {
-          key: 'pickColorIconDialog',
-          ref: 'pickColorIconDialog',
-          mode: 'add',
-          initialColor: checkedItemIconColor.color,
-          initialIcon: checkedItemIconColor.icon,
-          handleClick: this.handleChangePalette
-        }
-      },
       deleteDialog
-    ]
+    ];
   },
 
   render() {
-    let styles = this.getStyles();
     let checkedClasses = Store.getCheckedItems();
     let checkedClassesCount = Store.getNumberOfChecked();
     let isAnyAndNotAllClassSelected = checkedClassesCount >= 1 && checkedClassesCount < (this.state.items.length);
@@ -230,8 +207,6 @@ export default React.createClass({
     return (
       <Container>
         {this.getDialogs()}
-
-        {this.renderLimitNotification('classes')}
 
         <Common.Show if={checkedClassesCount > 0}>
           <Common.Fab position="top">
@@ -246,27 +221,13 @@ export default React.createClass({
               disabled={someClassIsProtectedFromDelete}
               onClick={this.showDialog.bind(null, 'deleteClassDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Class"
-              mini={true}
-              disabled={checkedClassesCount > 1}
-              onClick={this.redirectToEditClassView.bind(null, null)}
-              iconClassName="synicon-pencil"/>
-            <Common.Fab.TooltipItem
-              style={styles.fabListTopButton}
-              tooltip="Click here to customize Class"
-              secondary={true}
-              mini={true}
-              disabled={checkedClassesCount > 1}
-              onClick={this.showDialog.bind(null, 'pickColorIconDialog')}
-              iconClassName="synicon-palette"/>
           </Common.Fab>
         </Common.Show>
 
         <Common.Fab>
           <Common.Fab.TooltipItem
             tooltip="Click here to add a Class"
-            onClick={this.checkObjectsCount.bind(null, this.state.items, 'classes', this.redirectToAddClassView)}
+            onClick={this.redirectToAddClassView}
             iconClassName="synicon-plus"/>
         </Common.Fab>
 

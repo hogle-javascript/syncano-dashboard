@@ -39,11 +39,11 @@ export default Reflux.createStore({
   },
 
   onSetInstance() {
-    this.refreshData()
+    this.refreshData();
   },
 
   onGetClassCompleted(payload) {
-    this.trigger(payload)
+    this.trigger(payload);
   },
 
   onCreateClassCompleted() {

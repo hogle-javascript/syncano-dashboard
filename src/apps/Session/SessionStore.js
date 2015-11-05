@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import SessionActions from './SessionActions';
 
-import Colors from 'material-ui/lib/styles/colors';
+import Colors from 'syncano-material-ui/lib/styles/colors';
 import SyncanoTheme from '../../common/SyncanoTheme';
 
 export default Reflux.createStore({
@@ -78,9 +78,9 @@ export default Reflux.createStore({
     }
 
     if (this.signUpMode) {
-      window.analytics.identify(user.email, analyticsIdentifyObject)
+      window.analytics.identify(user.email, analyticsIdentifyObject);
     } else {
-      window.analytics.identify(user.email)
+      window.analytics.identify(user.email);
     }
   },
 
@@ -162,6 +162,17 @@ export default Reflux.createStore({
     this.theme = theme;
   },
 
+  hasFriendlyUser() {
+    if (this.getUser()) {
+      let email = this.getUser({}).email;
+      let endings = ['syncano.rocks', 'syncano.io', 'syncano.com', 'chimeraprime.com'];
+
+      return _.some(endings, (ending) => _.endsWith(email, ending));
+    }
+
+    return false;
+  },
+
   onFetchInstanceCompleted(payload) {
     console.info('SessionStore::onFetchInstanceCompleted');
     SessionActions.setInstance(payload);
@@ -201,7 +212,7 @@ export default Reflux.createStore({
       accent1Color: Colors[accentColor + '700'],
       accent2Color: Colors[accentColor + '300'],
       accent3Color: Colors[accentColor + '200']
-    }
+    };
   },
 
   onLogin(payload) {

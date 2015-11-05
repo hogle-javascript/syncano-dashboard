@@ -7,8 +7,9 @@ import './segment';
 import './app.sass';
 
 import React from 'react';
-import Router from 'react-router';
-import URI from 'URIjs';
+import ReactDOM from 'react-dom';
+import Router from 'react-router-old';
+import URI from 'urijs';
 import _ from 'lodash';
 import routes from './routes';
 import tapPlugin from 'react-tap-event-plugin';
@@ -61,5 +62,5 @@ Router.run(routes, (Root, state) => {
     });
   }
 
-  React.render(<Root/>, container);
+  ReactDOM.render(<Root/>, container);
 });

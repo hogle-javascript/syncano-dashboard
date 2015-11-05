@@ -1,42 +1,68 @@
-var utils = require('../utils');
+import utils from '../utils';
 
 module.exports = {
   tags: ['api_keys'],
-  before: function(client) {
-    var loginPage = client.page.loginPage();
-    loginPage.goToLoginPage();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+  before(client) {
+    const loginPage = client.page.loginPage();
+
+    loginPage.navigate()
+      .typeEmail()
+      .typePassword()
+      .clickSignInButton()
+      .verifyLoginSuccessful();
   },
 
-  after: function(client) {
+  after(client) {
     client.end();
   },
 
-  'Test Add Api Key': function(client) {
-    var apiKeysPage = client.page.apiKeysPage();
-    var description = utils.addSuffix('test_api_key_description');
+  'Test Add Api Key': function AddApiKey(client) {
+    const apiKeysPage = client.page.apiKeysPage();
+    const description = utils.addSuffix('api_key_description');
 
-    apiKeysPage.clickButton('@addApiKeyButton');
-    apiKeysPage.fillApiKeyDescription(description);
-    apiKeysPage.clickButton('@confirmButton');
+    apiKeysPage.navigate()
+      .clickButton('@addApiKeyButton')
+      .fillApiKeyDescription(description)
+      .clickButton('@confirmButton')
 
-    apiKeysPage.waitForModalToClose();
-
-    apiKeysPage.expect.element('@apiKeysTableRow').to.be.present.after(5000);
+      .waitForModalToClose()
+      .waitForElementVisible('@apiKeysTableRow');
   },
+  'Test Reset Api Key': function ResetApiKey(client) {
+    const apiKeysPage = client.page.apiKeysPage();
+    let apiKeyValue = null;
 
-  'Test Delete Api Key': function(client) {
-    var apiKeysPage = client.page.apiKeysPage();
-    var description = utils.addSuffix('test_api_key_description');
+    apiKeysPage.navigate()
+      .waitForElementPresent('@apiKeyValue');
 
-    apiKeysPage.clickButton('@selectApiKey');
-    apiKeysPage.clickButton('@deleteButton');
+    const apiKeyValueElement = apiKeysPage.elements.apiKeyValue.selector;
+
+    client.element('xpath', apiKeyValueElement, function(result) {
+      client.elementIdText(result.value.ELEMENT, function(text) {
+        apiKeyValue = text.value;
+      });
+    })
+    apiKeysPage.clickButton('@selectApiKey')
+      .clickButton('@resetButton');
     client.pause(1000);
-    apiKeysPage.clickButton('@confirmDeleteButton');
+    apiKeysPage.clickButton('@confirmButton')
+      .waitForElementPresent('@selectApiKey');
+    client.pause(1000)
+      .element('xpath', apiKeyValueElement, function(result) {
+        client.elementIdText(result.value.ELEMENT, function(text) {
+          client.assert.notEqual(text.value, apiKeyValue);
+        });
+      })
+  },
+  'Test Delete Api Key': function DeleteApiKey(client) {
+    const apiKeysPage = client.page.apiKeysPage();
+
+    apiKeysPage.navigate()
+      .clickButton('@selectApiKey')
+      .clickButton('@deleteButton');
     client.pause(1000);
-    apiKeysPage.expect.element('@apiKeysTableRow').to.be.not.present.after(5000);
+    apiKeysPage.clickButton('@confirmButton');
+    client.pause(1000);
+    apiKeysPage.waitForElementNotPresent('@selectApiKey');
   }
 };

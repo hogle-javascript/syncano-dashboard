@@ -1,22 +1,30 @@
 import React from 'react';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import ReactZeroClipboard from 'react-zeroclipboard';
+
+// Stores and Actions
+import Actions from './WebhooksActions';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
+let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
   displayName: 'WebhooksList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
+    SnackbarNotificationMixin,
     Router.State,
     Router.Navigation
   ],
@@ -28,10 +36,10 @@ export default React.createClass({
 
   handleURLClick(event) {
     event.stopPropagation();
-    this.refs.snackbar.show();
-    setTimeout(() => {
-      this.refs.snackbar.dismiss()
-    }, 1200)
+    this.setSnackbarNotification({
+      message: 'URL copied to the clipboard',
+      autoHideDuration: 1200
+    });
   },
 
   handleItemClick(itemName) {
@@ -47,14 +55,12 @@ export default React.createClass({
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + link;
 
     return (
-      <div>
-        <ReactZeroClipboard text={webhookLink}>
-          <MUI.IconButton
-            iconClassName="synicon-link-variant"
-            tooltip="Copy Webhook URL"
-            onClick={this.handleURLClick}/>
-        </ReactZeroClipboard>
-      </div>
+      <ReactZeroClipboard text={webhookLink}>
+        <MUI.IconButton
+          iconClassName="synicon-link-variant"
+          tooltip="Copy Webhook URL"
+          onClick={this.handleURLClick}/>
+      </ReactZeroClipboard>
     );
   },
 
@@ -82,8 +88,18 @@ export default React.createClass({
         <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
         <Column.Desc className="col-xs-2">{copyLinkIcon}</Column.Desc>
         <Column.Date date={item.created_at} />
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Webhook" />
+          <MenuItem
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}
+            primaryText="Delete a Webhook" />
+        </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -98,12 +114,13 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {
     return (
       <Common.Lists.Container>
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -131,15 +148,13 @@ export default React.createClass({
             URL
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
-        <MUI.Snackbar
-          ref="snackbar"
-          message="URL copied to the clipboard"/>
       </Common.Lists.Container>
     );
   }

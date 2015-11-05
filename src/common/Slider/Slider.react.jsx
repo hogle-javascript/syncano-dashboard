@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -14,13 +14,13 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       defaultSliderValue: 0
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       value: nextProps.value
-    })
+    });
   },
 
   getStyles() {
@@ -43,7 +43,7 @@ export default Radium(React.createClass({
       selectedItem: {
         color: MUI.Styles.Colors.lightBlueA700
       }
-    }
+    };
   },
 
   handleOptionsClick(i, type) {
@@ -86,7 +86,7 @@ export default Radium(React.createClass({
     <div style={styles}>
       {this.renderLegendItems()}
     </div>
-    )
+    );
   },
 
   render() {
@@ -104,7 +104,7 @@ export default Radium(React.createClass({
           value={this.state.value}/>
         {this.renderLegend()}
       </div>
-    )
+    );
   }
 
 }));

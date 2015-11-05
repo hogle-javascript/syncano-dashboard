@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import Mixins from '../../mixins';
@@ -172,7 +172,7 @@ export default React.createClass({
           ]
         }
       }
-    ]
+    ];
   },
 
   render() {
@@ -200,12 +200,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'removeUserDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit a User"
-              mini={true}
-              disabled={checkedUsers > 1}
-              onClick={this.showUserEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
         <Common.Fab>

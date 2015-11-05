@@ -2,27 +2,27 @@ import Stripe from '../../../stripe';
 
 export default {
   getProfile() {
-    this.Connection
-      .Billing
-      .getProfile()
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Billing
+            .getProfile()
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   updateProfile(payload) {
-    this.Connection
-      .Billing
-      .updateProfile(payload)
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Billing
+            .updateProfile(payload)
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   getCard() {
-    this.Connection
-      .Billing
-      .getCard()
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Billing
+            .getCard()
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   updateCard(payload) {
@@ -30,47 +30,48 @@ export default {
       if (response.error) {
         return this.failure(response.error);
       }
-      this.Connection
-        .Billing
-        .updateCard(response.id)
-        .then(this.completed)
-        .catch(this.failure);
+      return this.Connection
+              .Billing
+              .updateCard(response.id)
+              .then(this.completed)
+              .catch(this.failure);
     });
   },
 
   listInvoices() {
-    this.Connection
-      .Billing
-      .getInvoices()
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Billing
+            .getInvoices()
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   subscribePlan(plan, payload) {
-    this.Connection
-      .Billing
-      .subscribePlan(plan, payload)
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Billing
+            .subscribePlan(plan, payload)
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   cancelNewPlan(subscriptions) {
     let currentPlan = subscriptions[0];
 
-    this.Connection.
-      Billing.cancelSubscription(subscriptions[1].id)
+    this.Connection
+      .Billing
+      .cancelSubscription(subscriptions[1].id)
       .then(
-      this.Connection
-        .Billing
-        .subscribePlan(currentPlan.plan, {
-          commitment: JSON.stringify({
-            api: currentPlan.commitment.api,
-            cbx: currentPlan.commitment.cbx
+        this.Connection
+          .Billing
+          .subscribePlan(currentPlan.plan, {
+            commitment: JSON.stringify({
+              api: currentPlan.commitment.api,
+              cbx: currentPlan.commitment.cbx
+            })
           })
-        })
-        .then(this.completed)
-        .catch(this.failure)
-    )
+          .then(this.completed)
+          .catch(this.failure)
+      )
       .catch(this.failure);
   },
 
@@ -93,9 +94,9 @@ export default {
   cancelSubscriptions(ids) {
     let promises = ids.map((id) => this.Connection.Billing.cancelSubscription(id));
 
-    this.D.all(promises)
-      .success(this.completed)
-      .error(this.failure);
+    return this.D.all(promises)
+            .success(this.completed)
+            .error(this.failure);
   },
 
   getUsage() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 import Select from 'react-select';
 
 // Utils
@@ -16,7 +16,7 @@ import Store from './EditViewStore';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -47,28 +47,29 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  // Dialogs config
-  initDialogs() {
-    return [{
-      dialog: Common.Dialog,
-      params: {
-        key: 'deleteCreateDialog',
-        ref: 'deleteCreateDialog',
-        title: 'Delete a Solution',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
-        ],
-        modal: true,
-        children: 'Do you really want to delete this Solution?'
+  getStyles() {
+    return {
+      main: {
+        margin: '65px auto',
+        width: '80%',
+        maxWidth: '1140px'
+      },
+      tag: {
+        color: '#9b9b9b',
+        paddingRight: 5
+      },
+      cardTextListIcon: {
+        fontSize: 24,
+        marginRight: 14
+      },
+      description: {
+        color: 'rgba(0,0,0,.54)',
+        textAlign: 'left',
+        fontSize: '1rem',
+        lineHeight: '1rem',
+        height: 100
       }
-    }]
+    };
   },
 
   isMySolution() {
@@ -95,31 +96,6 @@ export default React.createClass({
     InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 
-  getStyles() {
-    return {
-      main: {
-        margin: '65px auto',
-        width: '80%',
-        maxWidth: '1140px'
-      },
-      tag: {
-        color: '#9b9b9b',
-        paddingRight: 5
-      },
-      cardTextListIcon: {
-        fontSize: 24,
-        marginRight: 14
-      },
-      description: {
-        color: 'rgba(0,0,0,.54)',
-        textAlign: 'left',
-        fontSize: '1rem',
-        lineHeight: '1rem',
-        height: 100
-      }
-    };
-  },
-
   handleBackClick() {
     SessionStore.getRouter().transitionTo('solutions');
   },
@@ -132,6 +108,30 @@ export default React.createClass({
     Actions.updateSolution(this.state.item.id, {
       tags: tagsArray.map((item) => item.value)
     });
+  },
+
+  // Dialogs config
+  initDialogs() {
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteCreateDialog',
+        ref: 'deleteCreateDialog',
+        title: 'Delete a Solution',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        children: 'Do you really want to delete this Solution?'
+      }
+    }];
   },
 
   renderItemTags() {
@@ -147,7 +147,7 @@ export default React.createClass({
           style={styles.tag}>
           {tag}
         </div>
-      )
+      );
     });
   },
 

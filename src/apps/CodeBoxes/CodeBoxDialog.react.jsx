@@ -9,7 +9,7 @@ import Actions from './CodeBoxesActions';
 import Store from './CodeBoxDialogStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({

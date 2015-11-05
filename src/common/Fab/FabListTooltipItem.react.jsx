@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 let Transitions = MUI.Styles.Transitions;
 let ColorManipulator = MUI.Utils.ColorManipulator;
@@ -18,12 +18,12 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getInitialState() {
     return {
       hovered: false
-    }
+    };
   },
 
   getStyles() {
@@ -60,7 +60,8 @@ export default Radium(React.createClass({
       },
       tooltip: {
         right: 60,
-        top: 32
+        top: 32,
+        pointerEvents: 'none'
       },
       tooltipButtonMini: {
         right: 44,
@@ -69,23 +70,23 @@ export default Radium(React.createClass({
       buttonWhenHovered: {
         background: ColorManipulator.fade(this._getColor(), 0.6)
       }
-    }
+    };
   },
 
   getTheme() {
-    return this.context.muiTheme.component.floatingActionButton;
+    return this.context.muiTheme.floatingActionButton;
   },
 
   _getColor() {
     if (this.props.disabled) {
-      return this.getTheme().disabledColor
+      return this.getTheme().disabledTextColor;
     }
 
     if (this.props.secondary) {
-      return this.getTheme().secondaryColor
+      return this.getTheme().secondaryColor;
     }
 
-    return this.getTheme().color
+    return this.getTheme().color;
   },
 
   _handleMouseLeave() {

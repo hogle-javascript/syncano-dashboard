@@ -1,7 +1,7 @@
 import React from 'react' ;
 import Reflux from 'reflux';
-import Router from 'react-router';
-import MUI from 'material-ui' ;
+import Router from 'react-router-old';
+import MUI from 'syncano-material-ui' ;
 
 // Utils
 import Mixins from '../../mixins';
@@ -57,7 +57,7 @@ export default React.createClass({
           solutionId: this.state.solutionId,
           versionId: this.state.version,
           instanceName
-        })
+        });
       });
     } else {
       Actions.installSolution({
@@ -92,7 +92,7 @@ export default React.createClass({
 
   renderInstanceField() {
     if (this.state.instances === null) {
-      return <Common.Loading />
+      return <Common.Loading />;
     }
 
     if (this.state.instances instanceof Array && this.state.instances.length < 2) {
@@ -105,7 +105,7 @@ export default React.createClass({
           valueLink={this.linkState('instance')}
           errorText={this.getValidationMessages('instance').join(' ')}
           floatingLabelText="Instance Name"/>
-      )
+      );
     }
 
     return (
@@ -119,7 +119,7 @@ export default React.createClass({
         floatingLabelText='Instances'
         errorText={this.getValidationMessages('instance').join(' ')}
         menuItems={Store.getInstancesDropdown()}/>
-    )
+    );
   },
 
   render() {

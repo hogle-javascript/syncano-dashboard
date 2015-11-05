@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -11,12 +11,12 @@ export default Radium(React.createClass({
     position: React.PropTypes.string.isRequired
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
       position: 'bottom'
-    }
+    };
   },
 
   getStyles() {
@@ -35,7 +35,7 @@ export default Radium(React.createClass({
       styles.top = '200px';
     }
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   render() {

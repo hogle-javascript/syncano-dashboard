@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import ColumnList from '../ColumnList';
 import Loading from '../Loading';
 import Lists from '../Lists';
@@ -24,7 +24,7 @@ export default React.createClass({
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.items === null
-    })
+    });
   },
 
   // List
@@ -79,7 +79,7 @@ export default React.createClass({
         </Column.ID>
 
       </ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -98,7 +98,7 @@ export default React.createClass({
     <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
       {this.props.emptyItemContent}
     </ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {

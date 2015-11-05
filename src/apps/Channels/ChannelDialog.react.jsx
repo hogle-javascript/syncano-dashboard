@@ -10,7 +10,7 @@ import ChannelsActions from './ChannelsActions';
 import ChannelDialogStore from './ChannelDialogStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -41,7 +41,7 @@ export default React.createClass({
       custom_publish: this.state.custom_publish,
       other_permissions: this.state.other_permissions,
       group_permissions: this.state.group_permissions
-    }
+    };
   },
 
   handleDialogShow() {

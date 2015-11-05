@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import SolutionStar from '../SolutionStar';
 
@@ -70,7 +70,7 @@ export default Radium(React.createClass({
         color: '#9b9b9b',
         paddingRight: 3
       }
-    }
+    };
   },
 
   isNoVersions() {
@@ -113,7 +113,7 @@ export default Radium(React.createClass({
           color={color}/>
         {name}
       </div>
-    )
+    );
   },
 
   renderItemTags() {
@@ -131,7 +131,7 @@ export default Radium(React.createClass({
           onClick={this.handleTagClick.bind(null, tag)}>
           {tag}
         </a>
-      )
+      );
     });
   },
 
@@ -187,6 +187,6 @@ export default Radium(React.createClass({
             touch={true}/>
         </div>
       </MUI.Card>
-    )
+    );
   }
 }));

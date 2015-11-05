@@ -1,11 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 import Store from './AuthStore';
 import Constants from './AuthConstants';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Container from '../../common/Container/AccountContainer.react';
 
 export default React.createClass({
@@ -39,7 +39,7 @@ export default React.createClass({
       buttonLabel: {
         fontSize: 16
       }
-    }
+    };
   },
 
   handleButtonClick() {
@@ -69,6 +69,6 @@ export default React.createClass({
             primary={true}/>
         </div>
       </Container>
-    )
+    );
   }
 });

@@ -1,48 +1,43 @@
-const globals = require('../globals');
-const utils = require('../utils');
-
+import globals from '../globals';
+import utils from '../utils';
 
 const classesCommands = {
-  clickFAB: function() {
-    return this.waitForElementVisible('@fab', 1000)
-      .click('@fab')
-      .waitForElementVisible('@confirmButton', 5000);
-  },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
       .click(field)
       .waitForElementVisible(value)
       .click(value);
   },
-  fillClassDescription: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
-  },
-  fillClassFieldName: function(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput', 1000)
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
-  },
-  clickSelectClass: function() {
-    return this.waitForElementVisible('@selectClass', 5000)
-      .click('@selectClass');
-  },
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
+  },
+  clickDropdown() {
+    return this.waitForElementVisible('@classItemDropdown').click('@classItemDropdown');
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
+    classItemDropdown: {
+      selector: '//span[@class="synicon-dots-vertical"]',
+      locateStrategy: 'xpath'
+    },
+    editDropdownItem: {
+      selector: '//a[@class="dropdown-item-edit-class"]',
+      locateStrategy: 'xpath'
+    },
+    deleteDropdownItem: {
+      selector: '//a[@class="dropdown-item-delete-class"]',
+      locateStrategy: 'xpath'
+    },
     fab: {
       selector: '.synicon-plus'
     },
@@ -77,6 +72,13 @@ module.exports = {
     editButton: {
       selector: '.synicon-pencil'
     },
+    multipleSelectButton: {
+      selector: '.synicon-checkbox-multiple-marked-outline'
+    },
+    classTableRows: {
+      selector: '//div[@class="classes-list-container"]/div[2]/div/div',
+      locateStrategy: 'xpath'
+    },
     classTableRow: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]',
       locateStrategy: 'xpath'
@@ -93,12 +95,23 @@ module.exports = {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]/../div[1]/span',
       locateStrategy: 'xpath'
     },
+    selectUserClass: {
+      selector: '//div[text()="user_profile"]/preceding-sibling::div/span',
+      locateStrategy: 'xpath'
+    },
+    classToSelect: {
+      selector: '.synicon-checkbox-blank-outline'
+    },
     classTableRowDescription: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]/../following-sibling::div[1]',
       locateStrategy: 'xpath'
     },
     classTableName: {
       selector: '//div[text()="' + utils.addSuffix('class') + '"]',
+      locateStrategy: 'xpath'
+    },
+    inactiveDeleteButton: {
+      selector: '//span[@class="synicon-delete"]/../../button[@disabled]',
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -119,6 +132,9 @@ module.exports = {
     deleteClassModalTitle: {
       selector: '//h3[text()="Delete a Class"]',
       locateStrategy: 'xpath'
+    },
+    checkboxSelected: {
+      selector: '.synicon-checkbox-marked-outline'
     }
   }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -17,13 +17,13 @@ export default React.createClass({
     return {
       color: '#000',
       hoverColor: MUI.Styles.Colors.blue600
-    }
+    };
   },
 
   getInitialState() {
     return {
       checked: this.props.checked
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {
@@ -57,7 +57,7 @@ export default React.createClass({
 
   handleIconClick() {
     console.info('ColumnAvatarCheck:handleClick');
-    this.props.handleIconClick(this.props.id, !this.state.checked)
+    this.props.handleIconClick(this.props.id, !this.state.checked);
   },
 
   handleMouseOver() {
@@ -79,7 +79,7 @@ export default React.createClass({
       <MUI.FontIcon
         className={`synicon-${iconState.icon}`}
         style={styles.icon}/>
-    )
+    );
   },
 
   render() {
@@ -93,6 +93,6 @@ export default React.createClass({
         onClick={this.handleIconClick}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseLeave}/>
-    )
+    );
   }
 });

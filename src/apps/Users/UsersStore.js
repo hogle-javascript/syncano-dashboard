@@ -22,7 +22,7 @@ export default Reflux.createStore({
     return {
       items: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -50,7 +50,7 @@ export default Reflux.createStore({
     let usersArray = users._items ? users._items : users;
 
     this.data.items = Object.keys(usersArray).map((key) => {
-      return usersArray[key].user ? usersArray[key].user : usersArray[key]
+      return usersArray[key].user ? usersArray[key].user : usersArray[key];
     });
     this.trigger(this.data);
   },

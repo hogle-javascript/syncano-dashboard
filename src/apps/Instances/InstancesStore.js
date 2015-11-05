@@ -18,11 +18,12 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
+      clickedItem: null,
       items: null,
       isTourVisible: false,
       reactTourConfig: null,
       currentStep: -1
-    }
+    };
   },
 
   init() {
@@ -43,6 +44,11 @@ export default Reflux.createStore({
     if (item) {
       return item.owner.email === SessionStore.getUser({}).email;
     }
+  },
+
+  onSetClickedInstance(item) {
+    this.data.clickedItem = item;
+    this.trigger(this.data);
   },
 
   onCheckItem(checkId, state) {
@@ -73,6 +79,10 @@ export default Reflux.createStore({
     }
 
     this.trigger(this.data);
+  },
+
+  getClickedItem() {
+    return this.data.clickedItem;
   },
 
   getInstanceById(name) {
@@ -138,7 +148,7 @@ export default Reflux.createStore({
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     });
   },
 
@@ -201,19 +211,19 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  getCheckedItemIconColor() {
-    let singleItem = this.getCheckedItem();
+  getClickedItemIconColor() {
+    let clickedItem = this.getClickedItem();
 
-    if (!singleItem) {
+    if (!clickedItem) {
       return {
         color: null,
         icon: null
-      }
+      };
     }
 
     return {
-      color: singleItem.metadata.color,
-      icon: singleItem.metadata.icon
+      color: clickedItem.metadata.color,
+      icon: clickedItem.metadata.icon
     };
   }
 });

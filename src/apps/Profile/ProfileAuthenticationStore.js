@@ -17,7 +17,7 @@ export default Reflux.createStore({
     return {
       isLoading: typeof account_key === 'undefined',
       account_key
-    }
+    };
   },
 
   init() {
@@ -38,8 +38,8 @@ export default Reflux.createStore({
 
   onChangePasswordCompleted() {
     this.trigger({
-      feedback: 'Password changed successfully.',
-      currentPassword: null,
+      feedback: 'Password changed successfully',
+      current_password: null,
       newPassword: null,
       confirmNewPassword: null
     });

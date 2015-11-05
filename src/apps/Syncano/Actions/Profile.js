@@ -14,7 +14,7 @@ export default {
     this.Connection
       .Accounts
       .changePassword({
-        current_password: payload.currentPassword,
+        current_password: payload.current_password,
         new_password: payload.newPassword
       })
       .then(this.completed)
@@ -27,7 +27,7 @@ export default {
       .Accounts
       .get()
       .then(this.completed)
-      .catch(this.failure)
+      .catch(this.failure);
   },
 
   resetKey() {

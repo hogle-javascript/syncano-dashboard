@@ -1,7 +1,7 @@
 import React from 'react';
-import Router from 'react-router';
+import {Link} from 'react-router-old';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../';
 
 import './AccountContainer.sass';
@@ -14,14 +14,14 @@ export default React.createClass({
     style: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {
       marginBottom: 50
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   render() {
@@ -34,7 +34,7 @@ export default React.createClass({
         style={styles}
         ref={this.props.ref}>
         <div className="account-logo">
-          <Router.Link to="login"><Common.Logo className="logo-blue"/></Router.Link>
+          <Link to="login"><Common.Logo className="logo-blue"/></Link>
         </div>
         <MUI.Paper
           className="account-container__content"
@@ -43,6 +43,6 @@ export default React.createClass({
         </MUI.Paper>
         {this.props.bottomContent}
       </div>
-    )
+    );
   }
 });

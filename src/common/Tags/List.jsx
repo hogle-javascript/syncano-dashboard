@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
-import MUI from 'material-ui';
-import Show from '../../common/Show'
+import MUI from 'syncano-material-ui';
+import Show from '../../common/Show';
 
 export default React.createClass({
 
@@ -12,7 +12,7 @@ export default React.createClass({
     return {
       items: this.props.items,
       selectedItems: this.props.selectedItems
-    }
+    };
   },
 
   getStyles() {
@@ -24,7 +24,7 @@ export default React.createClass({
         marginTop: 12,
         color: 'grey'
       }
-    }
+    };
   },
 
   handleOnTouchTap(name) {
@@ -48,7 +48,7 @@ export default React.createClass({
         primaryText="All tags"
         innerDivStyle={_.isEmpty(this.props.selectedItems) ? styles.listItemChecked : {}}
         onTouchTap={this.handleResetActiveTagsList}/>
-    )
+    );
   },
 
   renderTagsListItems() {
@@ -62,7 +62,7 @@ export default React.createClass({
           rightAvatar={<div style={styles.tagsCounter}>{item.count}</div>}
           innerDivStyle={this.props.selectedItems.indexOf(item.name) > -1 ? styles.listItemChecked : {}}
           onTouchTap={this.handleOnTouchTap.bind(this, item.name)}/>
-      )
+      );
     });
   },
 

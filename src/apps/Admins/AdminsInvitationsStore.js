@@ -20,7 +20,7 @@ export default Reflux.createStore({
     return {
       items: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -67,13 +67,11 @@ export default Reflux.createStore({
   onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map((item) => items[item]);
-    this.trigger(this.data);
     AdminsInvitationsActions.setInvitations(items);
   },
 
   onRemoveInvitationCompleted() {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

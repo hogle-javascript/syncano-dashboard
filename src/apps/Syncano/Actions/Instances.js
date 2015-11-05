@@ -10,15 +10,15 @@ export default {
   },
 
   create(payload) {
-    this.Connection
-      .Instances
-      .create({
-        name: payload.name,
-        description: payload.description,
-        metadata: payload.metadata
-      })
-      .then(this.completed)
-      .catch(this.failure);
+    return this.Connection
+            .Instances
+            .create({
+              name: payload.name,
+              description: payload.description,
+              metadata: payload.metadata
+            })
+            .then(this.completed)
+            .catch(this.failure);
   },
 
   update(name, payload) {

@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -27,7 +27,7 @@ export default Radium(React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   getStyles() {
@@ -40,7 +40,7 @@ export default Radium(React.createClass({
       padding: '16px 8px',
       wordBreak: 'break-all',
       color: this.props.color
-    }
+    };
   },
 
   handleClick() {
@@ -52,7 +52,7 @@ export default Radium(React.createClass({
 
     return (
       <div
-        className={this.props.className}
+        className={`description-field ${this.props.className}`}
         style={styles}>
         {this.props.children}
       </div>

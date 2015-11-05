@@ -1,5 +1,5 @@
 import React from 'react';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -9,33 +9,34 @@ export default React.createClass({
     handleClick: React.PropTypes.func
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
       style: {},
       bodyStyle: {}
-    }
+    };
   },
 
   getStyles() {
     return {
       style: {
-        overflow: 'auto'
+        overflow: 'auto',
+        zIndex: 11
       },
       bodyStyle: {
         overflowX: 'initial',
         overflowY: 'initial'
       }
-    }
+    };
   },
 
   show() {
-    this.refs.dialog.show()
+    this.refs.dialog.show();
   },
 
   dismiss() {
-    this.refs.dialog.dismiss()
+    this.refs.dialog.dismiss();
   },
 
   render() {

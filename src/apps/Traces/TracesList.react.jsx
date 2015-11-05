@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import Router from 'react-router-old';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -9,7 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Store from './TracesStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -47,7 +47,7 @@ export default Radium(React.createClass({
         fontSize: 34,
         margin: 0
       }
-    }
+    };
   },
 
   toggleTrace(traceId) {
@@ -124,7 +124,7 @@ export default Radium(React.createClass({
           <Common.Trace.Result result={item.result}/>
         </div>
       </MUI.Paper>
-    )
+    );
   },
 
   renderList() {
@@ -174,7 +174,7 @@ export default Radium(React.createClass({
           <Column.ColumnHeader columnName="DESC">Duration</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Executed</Column.ColumnHeader>
         </Common.ColumnList.Header>
-      )
+      );
     }
     return true;
   },
