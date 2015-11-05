@@ -44,7 +44,7 @@ export default Radium(React.createClass({
     });
   },
 
-  componentWillUpdate() {
+  componentWillUpdate(nextProps, nextState) {
     // 'mousetrap' class has to be added directly to input element to make CMD + S works
 
     if (this.state.currentCodeBox) {
@@ -58,6 +58,9 @@ export default Radium(React.createClass({
           inputNode.classList.add('mousetrap');
         }
       });
+    }
+    if (nextState.errors.config && nextState.errors.config.length > 0) {
+      window.scrollTo(0, document.body.scrollHeight);
     }
   },
 
@@ -126,6 +129,11 @@ export default Radium(React.createClass({
       return;
     }
 
+    if (newField.key === '') {
+      this.refs.newFieldKey.setErrorText('This field cannot be blank.');
+      return;
+    }
+
     codeBoxConfig.push(newField);
     this.setState({codeBoxConfig});
     this.refs.newFieldKey.clearValue();
@@ -147,12 +155,6 @@ export default Radium(React.createClass({
     Actions.updateCodeBox(this.state.currentCodeBox.id, {config});
     this.setSnackbarNotification({
       message: 'Saving...'
-    });
-    this.setState({
-      notification: {
-        visible: false,
-        errorText: null
-      }
     });
   },
 
