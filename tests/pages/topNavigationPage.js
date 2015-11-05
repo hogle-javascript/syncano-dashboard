@@ -17,11 +17,19 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     account: {
-      selector: '//ul[@class="toolbar-list"]//div[@class="dropdown"]',
+      selector: '//ul[@class="toolbar-list"]//li[@id="menu-account"]',
       locateStrategy: 'xpath'
     },
     accountDropdown: {
-      selector: '//div[@class="dropdown-menu-section"]/div/div[1]',
+      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[1]',
+      locateStrategy: 'xpath'
+    },
+    billingDropdown: {
+      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[2]',
+      locateStrategy: 'xpath'
+    },
+    logoutDropdown: {
+      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[3]',
       locateStrategy: 'xpath'
     },
     support: {
