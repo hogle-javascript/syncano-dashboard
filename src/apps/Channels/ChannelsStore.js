@@ -50,7 +50,6 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.waitFor(
-      SessionActions.setUser,
       SessionActions.setInstance,
       this.refreshData
     );

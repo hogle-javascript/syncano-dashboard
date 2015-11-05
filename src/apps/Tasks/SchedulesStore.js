@@ -4,7 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';
 import SchedulesActions from './SchedulesActions';
 
@@ -25,9 +24,7 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.waitFor(
-      SessionActions.setUser,
       SessionActions.setInstance,
-      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
   },
