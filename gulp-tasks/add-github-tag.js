@@ -1,5 +1,6 @@
 var version = require('./_common')().version,
     async   = require('async'),
+    gulp    = require('gulp'),
     git     = require('gulp-git');
 
 module.exports = function(cb) {
