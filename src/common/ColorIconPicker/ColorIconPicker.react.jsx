@@ -17,6 +17,10 @@ export default Radium(React.createClass({
     handleChange: React.PropTypes.func
   },
 
+  mixins: [
+    MUI.Utils.Styles
+  ],
+
   getInitialState() {
     return {
       selectedColor: this.props.selectedColor,
@@ -49,6 +53,9 @@ export default Radium(React.createClass({
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center'
+      },
+      colorItem: {
+        margin: 18
       }
     };
   },
@@ -95,10 +102,10 @@ export default Radium(React.createClass({
 
   genColorItem(color) {
     let icon = null;
-    let styles = this.getStyles().item;
+    let styles = this.getStyles();
     let zDepth = 0;
 
-    styles.background = ColorStore.getColorByName(color);
+    styles.item.background = ColorStore.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
@@ -115,7 +122,7 @@ export default Radium(React.createClass({
         zDepth={zDepth}
         key={color}
         circle={true}
-        style={styles}
+        style={this.mergeAndPrefix(styles.item, styles.colorItem)}
         onClick={this.handleSetColor}>
         {icon}
       </MUI.Paper>
