@@ -104,11 +104,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit-user"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit an User" />
+            primaryText="Edit a User" />
           <MenuItem
             className="dropdown-item-delete-user"
             onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
-            primaryText="Delete an User" />
+            primaryText="Delete a User" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
