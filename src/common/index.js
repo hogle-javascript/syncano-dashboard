@@ -1,5 +1,6 @@
 import Billing from './Billing';
 import CheckIcon from './CheckIcon';
+import Clipboard from './Clipboard';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
@@ -32,6 +33,7 @@ import SnackbarNotification from './SnackbarNotification';
 export default {
   Billing,
   CheckIcon,
+  Clipboard,
   Color,
   ColorIconPicker,
   ColumnList,
