@@ -1,5 +1,6 @@
 var version = require('./_common')().version,
     async   = require('async'),
+    gulp    = require('gulp'),
     git     = require('gulp-git');
 
 module.exports = function(cb) {
@@ -27,11 +28,11 @@ module.exports = function(cb) {
     },
 
     function(callback) {
-      git.push('origin', 'master', callback);
+      git.checkout('devel', callback);
     },
 
     function(callback) {
-      git.checkout('devel', callback);
+      git.pull('origin', 'devel', callback);
     },
 
     function(callback) {

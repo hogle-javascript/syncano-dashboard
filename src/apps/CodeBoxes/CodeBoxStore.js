@@ -2,6 +2,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
+import StoreFormMixin from '../../mixins/StoreFormMixin';
 
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
@@ -11,6 +12,7 @@ import Actions from './CodeBoxActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
+    StoreFormMixin,
     WaitForStoreMixin,
     SnackbarNotificationMixin
   ],
@@ -38,6 +40,7 @@ export default Reflux.createStore({
 
   init() {
     this.data = this.getInitialState();
+    this.listenToForms();
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,

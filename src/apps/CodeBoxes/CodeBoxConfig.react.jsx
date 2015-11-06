@@ -6,7 +6,6 @@ import _ from 'lodash';
 
 import UnsavedDataMixin from './UnsavedDataMixin';
 import Mixins from '../../mixins';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 import Actions from './CodeBoxActions';
@@ -21,15 +20,20 @@ export default Radium(React.createClass({
 
   displayName: 'CodeBoxConfig',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Reflux.connect(Store),
-    LinkedStateMixin,
     Router.Navigation,
 
     SnackbarNotificationMixin,
     UnsavedDataMixin,
     Mixins.Mousetrap,
-    Mixins.Dialogs
+    Mixins.Dialogs,
+    Mixins.Form,
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {
@@ -40,7 +44,7 @@ export default Radium(React.createClass({
     });
   },
 
-  componentWillUpdate() {
+  componentWillUpdate(nextProps, nextState) {
     // 'mousetrap' class has to be added directly to input element to make CMD + S works
 
     if (this.state.currentCodeBox) {
@@ -55,12 +59,9 @@ export default Radium(React.createClass({
         }
       });
     }
-  },
-
-  getInitialState() {
-    return {
-      notificationVisible: false
-    };
+    if (nextState.errors.config && nextState.errors.config.length > 0) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   },
 
   getStyles() {
@@ -81,6 +82,9 @@ export default Radium(React.createClass({
       },
       saveButton: {
         marginLeft: 10
+      },
+      notification: {
+        marginTop: 20
       }
     };
   },
@@ -99,7 +103,7 @@ export default Radium(React.createClass({
     return _.isEqual(this.state.currentCodeBox.config, this.getConfigObject());
   },
 
-  isValid() {
+  isConfigValid() {
     let codeBoxConfig = this.state.codeBoxConfig;
 
     return _.uniq(_.pluck(codeBoxConfig, 'key')).length === codeBoxConfig.length;
@@ -125,6 +129,11 @@ export default Radium(React.createClass({
       return;
     }
 
+    if (newField.key === '') {
+      this.refs.newFieldKey.setErrorText('This field cannot be blank.');
+      return;
+    }
+
     codeBoxConfig.push(newField);
     this.setState({codeBoxConfig});
     this.refs.newFieldKey.clearValue();
@@ -133,9 +142,11 @@ export default Radium(React.createClass({
   },
 
   handleUpdate() {
-    if (!this.isValid()) {
+    if (!this.isConfigValid()) {
       this.setState({
-        notificationVisible: true
+        errors: {
+          config: ['Config save failed. One or more keys are not unique. Please verify keys and try again.']
+        }
       });
       return;
     }
@@ -145,15 +156,13 @@ export default Radium(React.createClass({
     this.setSnackbarNotification({
       message: 'Saving...'
     });
-    this.setState({
-      notificationVisible: false
-    });
   },
 
   handleDeleteKey(index) {
     let codeBoxConfig = this.state.codeBoxConfig;
 
     codeBoxConfig.splice(index, 1);
+    this.clearValidations();
     this.setState({codeBoxConfig});
   },
 
@@ -173,6 +182,7 @@ export default Radium(React.createClass({
     }
     codeBoxConfig[index] = newField;
     this.setState({codeBoxConfig});
+    this.clearValidations();
   },
 
   handleCancelChanges() {
@@ -180,6 +190,11 @@ export default Radium(React.createClass({
 
     newState.codeBoxConfig = Store.mapConfig(this.state.currentCodeBox.config);
     this.replaceState(newState);
+    this.clearValidations();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleUpdate();
   },
 
   initDialogs() {
@@ -290,7 +305,7 @@ export default Radium(React.createClass({
           label="Save"
           style={styles.saveButton}
           secondary={true}
-          onTouchTap={this.handleUpdate} />
+          onTouchTap={this.handleFormValidation} />
       </div>
     );
   },
@@ -305,17 +320,17 @@ export default Radium(React.createClass({
     return (
       <div>
         <Container style={styles.container}>
-          <Common.Show if={this.state.notificationVisible}>
-            <div style={styles.notification}>
-              <Common.Notification type="error">
-                Config save failed. One or more keys are not unique. Please verify keys and try again.
-              </Common.Notification>
-            </div>
-          </Common.Show>
           {this.getDialogs()}
           {this.renderFields()}
           {this.renderNewFiledSection()}
           {this.renderButtons()}
+          <Common.Show if={this.getValidationMessages('config').length > 0}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                {this.getValidationMessages('config').join(' ')}
+              </Common.Notification>
+            </div>
+          </Common.Show>
         </Container>
       </div>
     );

@@ -1,7 +1,13 @@
 machine:
   node:
-    version:
-      0.12.7
+    version: 4.2.2
+  pre:
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update
+    - sudo apt-get install gcc-4.9 g++-4.9
+  post:
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 50 --slave /usr/bin/g++ g++ /usr/bin/g++-4.9
+    - npm install -g npm
 
 general:
   artifacts:
@@ -9,6 +15,9 @@ general:
     - "reports/"
 
 test:
+  pre:
+    - npm i
+    - npm i lodash
   override:
     - ./test.sh:
         parallel: true
