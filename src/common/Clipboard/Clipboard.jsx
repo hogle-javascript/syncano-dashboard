@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactZeroClipboard from 'react-zeroclipboard';
-
 import SnackbarNotification from '../SnackbarNotification';
-
 import {IconButton, FlatButton} from 'syncano-material-ui';
-
 
 export default React.createClass({
   displayName: 'Clipboard',
