@@ -31,6 +31,7 @@ export default Reflux.createStore({
 
   setTriggers(items) {
     this.data.items = Object.keys(items).map((item) => items[item]);
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -39,6 +40,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('TriggersStore::refreshData');
     TriggersActions.fetchTriggers();
   },
 
@@ -50,13 +52,11 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
-    this.data.isLoading = false;
     TriggersActions.setTriggers(items);
   },
 
   onRemoveTriggersCompleted() {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

@@ -7,8 +7,8 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import ChannelsActions from './ChannelsActions';
-import ChannelsStore from './ChannelsStore';
+import Actions from './ChannelsActions';
+import Store from './ChannelsStore';
 
 // Components
 import Common from '../../common';
@@ -26,7 +26,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ChannelsStore),
+    Reflux.connect(Store),
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -34,12 +34,12 @@ export default React.createClass({
 
   componentDidMount() {
     console.info('Channels::componentDidMount');
-    ChannelsActions.fetch();
+    Actions.fetch();
     if (this.getParams().action === 'add') {
       // Show Add modal
       this.showChannelDialog();
     }
-    ChannelsActions.fetch();
+    Actions.fetch();
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -49,20 +49,20 @@ export default React.createClass({
 
   handleDelete() {
     console.info('Channels::handleDelete');
-    ChannelsActions.removeChannels(ChannelsStore.getCheckedItems());
+    Actions.removeChannels(Store.getCheckedItems());
   },
 
   showChannelDialog() {
-    ChannelsActions.showDialog();
+    Actions.showDialog();
   },
 
   showChannelEditDialog() {
-    ChannelsActions.showDialog(ChannelsStore.getCheckedItem());
+    Actions.showDialog(Store.getCheckedItem());
   },
 
   // Dialogs config
   initDialogs() {
-    let checkedChannels = ChannelsStore.getCheckedItems();
+    let checkedChannels = Store.getCheckedItems();
 
     return [{
       dialog: Common.Dialog,
@@ -94,7 +94,7 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = ChannelsStore.getNumberOfChecked();
+    let checkedItems = Store.getNumberOfChecked();
     let isAnyChannelSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
@@ -110,7 +110,7 @@ export default React.createClass({
             <Common.Fab.TooltipItem
               tooltip={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
-              onClick={isAnyChannelSelected ? ChannelsActions.selectAll : ChannelsActions.uncheckAll}
+              onClick={isAnyChannelSelected ? Actions.selectAll : Actions.uncheckAll}
               iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}
               />
             <Common.Fab.TooltipItem
@@ -131,6 +131,7 @@ export default React.createClass({
         </Common.Fab>
         <ChannelsList
           name="Channels"
+          isLoading={this.props.isLoading}
           items={this.state.items}
           emptyItemHandleClick={this.showChannelDialog}
           emptyItemContent="Create a Channel"

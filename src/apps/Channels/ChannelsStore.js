@@ -1,7 +1,6 @@
 import Reflux from 'reflux';
 
 import CheckListStoreMixin from '../../mixins/CheckListStoreMixin';
-import StoreLoadingMixin from '../../mixins/StoreLoadingMixin';
 import WaitForStoreMixin from '../../mixins/WaitForStoreMixin';
 
 import SessionActions from '../Session/SessionActions';
@@ -11,7 +10,6 @@ export default Reflux.createStore({
   listenables: ChannelsActions,
   mixins: [
     CheckListStoreMixin,
-    StoreLoadingMixin,
     WaitForStoreMixin
   ],
 
@@ -43,7 +41,8 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      items: []
+      items: [],
+      isLoading: true
     };
   },
 
@@ -53,7 +52,6 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
-    this.setLoadingStates();
   },
 
   getItems() {
@@ -90,17 +88,25 @@ export default Reflux.createStore({
     this.data.items = Object.keys(items).map(function(key) {
       return items[key];
     });
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  onRemoveChannels() {
+    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onRemoveChannelsCompleted() {
     console.debug('ChannelsStore::onRemoveChannelsCompleted');
     this.data.hideDialogs = true;
+    this.data.isLoading = false;
     this.refreshData();
   },
 
   onFetchChannels() {
     console.debug('ChannelsStore::onFetchChannels');
+    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
