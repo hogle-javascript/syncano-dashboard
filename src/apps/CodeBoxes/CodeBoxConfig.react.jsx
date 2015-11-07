@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import Reflux from 'reflux';
 import _ from 'lodash';
 

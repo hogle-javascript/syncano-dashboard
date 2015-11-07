@@ -8,7 +8,7 @@ import './app.sass';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import URI from 'urijs';
 import _ from 'lodash';
 import routes from './routes';
