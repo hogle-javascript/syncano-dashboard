@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import Radium from 'radium';
 
 // Utils
