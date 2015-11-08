@@ -13,7 +13,8 @@ export default React.createClass({
 
   getStyles() {
     let styles = {
-      marginBottom: 50
+      paddingTop: 32,
+      paddingBottom: 64
     };
 
     return this.mergeAndPrefix(styles, this.props.style);
