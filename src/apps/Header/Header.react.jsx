@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import Gravatar from 'gravatar';
 
 // Stores & Actions
