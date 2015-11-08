@@ -236,7 +236,7 @@ export default React.createClass({
                   label="Update"
                   secondary={true}/>
                 <MUI.FlatButton
-                  label="Delete an Instance"
+                  label={`${deleteButtonText} an Instance`}
                   style={styles.deleteButton}
                   onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
               </div>
