@@ -1,10 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-import ReactZeroClipboard from 'react-zeroclipboard';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'syncano-material-ui';
-import SnackbarNotificationMixin from '../../SnackbarNotification/SnackbarNotificationMixin';
+import Clipboard from '../../Clipboard';
 
 export default Radium(React.createClass({
 
@@ -14,8 +12,6 @@ export default Radium(React.createClass({
     id: React.PropTypes.string,
     handleClick: React.PropTypes.func
   },
-
-  mixins: [SnackbarNotificationMixin],
 
   getDefaultProps() {
     return {
@@ -36,13 +32,6 @@ export default Radium(React.createClass({
     };
   },
 
-  handleClick() {
-    this.setSnackbarNotification({
-      message: 'API key copied to the clipboard',
-      autoHideDuration: 1200
-    });
-  },
-
   render() {
     let styles = this.getStyles();
 
@@ -57,12 +46,11 @@ export default Radium(React.createClass({
           {this.props.children}
         </div>
 
-        <ReactZeroClipboard text={this.props.children}>
-          <MUI.FlatButton
-            label="COPY"
-            primary={true}
-            onClick={this.handleClick}/>
-        </ReactZeroClipboard>
+        <Clipboard
+          type="button"
+          text="COPY"
+          copyText={this.props.children}
+          snackbarText="API key copied to the clipboard"/>
       </div>
     );
   }
