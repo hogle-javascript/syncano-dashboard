@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router-old';
+import Router from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -126,22 +126,12 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <Common.InnerToolbar>
-
-            <MUI.ToolbarGroup style={{paddingLeft: 36}}>
-              <MUI.ToolbarTitle text={'Webhooks'}/>
-            </MUI.ToolbarGroup>
-
-            <MUI.ToolbarGroup float="right">
-
-              <MUI.IconButton
-                style={{fontSize: 25, marginTop: 5}}
-                iconClassName="synicon-delete"
-                tooltip="Delete Data Objects"
-              />
-
-            </MUI.ToolbarGroup>
-
+        <Common.InnerToolbar title="Webhooks">
+          <MUI.IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-delete"
+            tooltip="Delete Data Objects"
+          />
         </Common.InnerToolbar>
 
         <div style={{clear: 'both', height: '100%', marginTop: 130}}>

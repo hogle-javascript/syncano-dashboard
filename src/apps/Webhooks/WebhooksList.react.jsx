@@ -1,6 +1,5 @@
 import React from 'react';
-import Router from 'react-router-old';
-import ReactZeroClipboard from 'react-zeroclipboard';
+import Router from 'react-router';
 
 // Stores and Actions
 import Actions from './WebhooksActions';
@@ -10,12 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
-let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -24,7 +21,6 @@ export default React.createClass({
   mixins: [
     Dialogs,
     HeaderMixin,
-    SnackbarNotificationMixin,
     Router.State,
     Router.Navigation
   ],
@@ -32,14 +28,6 @@ export default React.createClass({
   // List
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
-  },
-
-  handleURLClick(event) {
-    event.stopPropagation();
-    this.setSnackbarNotification({
-      message: 'URL copied to the clipboard',
-      autoHideDuration: 1200
-    });
   },
 
   handleItemClick(itemName) {
@@ -54,14 +42,11 @@ export default React.createClass({
     let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.self;
 
     return (
-        <ReactZeroClipboard text={webhookLink}>
-          <MUI.IconButton
-            style={{height: 20, width: 20, padding: '0 50', cursor: 'copy'}}
-            iconStyle={{fontSize: 15, color: '#9B9B9B'}}
-            iconClassName="synicon-link-variant"
-            tooltip="Copy Webhook URL"
-            onClick={this.handleURLClick}/>
-        </ReactZeroClipboard>
+      <Common.Clipboard
+        type="icon"
+        tooltipText="Copy Webhook URL"
+        copyText={webhookLink}
+        snackbarText="URL copied to the clipboard"/>
     );
   },
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router-old';
+import Router from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -122,6 +122,8 @@ export default React.createClass({
       <Container>
         <ApiKeyDialog />
         {this.getDialogs()}
+
+        <Common.InnerToolbar title="API Keys"/>
 
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">

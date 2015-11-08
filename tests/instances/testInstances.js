@@ -13,20 +13,6 @@ export default {
   after(client) {
     client.end();
   },
-  'Test Add Instance from welcome dialog': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@emptyListItem');
-    instancesPage.clickButton('@welcomeDialogCreateInstance');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
-    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
-
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
-    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
-  },
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
@@ -52,6 +38,32 @@ export default {
     instancesPage.waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage.navigate();
+    instancesPage.clickSelectInstance();
+    instancesPage.clickButton('@deleteButton');
+    client.pause(1000);
+    instancesPage.clickButton('@confirmDeleteButton');
+    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+
+    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
+  },
+  'Test Add Instance from welcome dialog': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage.navigate();
+    instancesPage.waitForElementPresent('@emptyListItem');
+    instancesPage.clickButton('@welcomeDialogCreateInstance');
+    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
+    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
+    instancesPage.clickButton('@confirmButton');
+    instancesPage.isModalClosed('@addInstanceModalTitle');
+
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
+  },
+  'Test Delete an Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();

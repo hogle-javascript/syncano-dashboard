@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions

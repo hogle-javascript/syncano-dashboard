@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router-old';
+import Router from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -187,6 +187,8 @@ export default React.createClass({
         {this.getDialogs()}
         <UserDialog />
         <GroupDialog />
+
+        <Common.InnerToolbar title="Users & Groups"/>
 
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">

@@ -60,7 +60,8 @@ export default Radium(React.createClass({
       },
       tooltip: {
         right: 60,
-        top: 32
+        top: 32,
+        pointerEvents: 'none'
       },
       tooltipButtonMini: {
         right: 44,
