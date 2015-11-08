@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router-old';
+import Router from 'react-router';
 import _ from 'lodash';
 
 import SessionActions from '../apps/Session/SessionActions';

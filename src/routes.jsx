@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Router from 'react-router-old';
+import Router from 'react-router';
 
 // Pages
 import AppPage from './pages/app.react';
