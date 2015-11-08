@@ -123,6 +123,8 @@ export default React.createClass({
         <ApiKeyDialog />
         {this.getDialogs()}
 
+        <Common.InnerToolbar title="API Keys"/>
+
         <Common.Show if={checkedApiKeys > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem

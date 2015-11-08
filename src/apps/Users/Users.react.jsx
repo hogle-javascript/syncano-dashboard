@@ -188,6 +188,8 @@ export default React.createClass({
         <UserDialog />
         <GroupDialog />
 
+        <Common.InnerToolbar title="Users & Groups"/>
+
         <Common.Show if={checkedUsers > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem

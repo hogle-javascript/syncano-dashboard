@@ -165,51 +165,41 @@ export default React.createClass({
 
         {this.getDialogs()}
 
-        <Common.InnerToolbar>
+        <Common.InnerToolbar title="Sockets">
 
-            <MUI.ToolbarGroup style={{paddingLeft: 36}}>
-              <MUI.ToolbarTitle text={'Sockets'}/>
-            </MUI.ToolbarGroup>
+          <MUI.IconButton
+            iconClassName="synicon-socket-data"
+            iconStyle={{color: 'green', fontSize: 30}}
+            tooltip="Create Data Socket"
+            onClick={Data.Actions.showDialog}/>
 
-            <MUI.ToolbarGroup float="right">
+          <MUI.IconButton
+            iconClassName="synicon-socket-codebox"
+            iconStyle={{color: 'red', fontSize: 30}}
+            tooltip="Create CodeBox Socket"
+            onClick={Webhooks.Actions.showDialog}/>
 
-              <MUI.IconButton
-                iconClassName="synicon-socket-data"
-                iconStyle={{color: 'green', fontSize: 30}}
-                tooltip="Create Data Socket"
-                onClick={Data.Actions.showDialog}
-              />
-              <MUI.IconButton
-                iconClassName="synicon-socket-codebox"
-                iconStyle={{color: 'red', fontSize: 30}}
-                tooltip="Create CodeBox Socket"
-                onClick={Webhooks.Actions.showDialog}
-              />
-              <MUI.IconButton
-                iconClassName="synicon-socket-channel"
-                iconStyle={{color: 'blue', fontSize: 30}}
-                tooltip="Create Channel Socket"
-                onClick={Channels.Actions.showDialog}
-              />
-              <MUI.IconButton
-                iconClassName="synicon-socket-trigger"
-                iconStyle={{color: 'yellow', fontSize: 30}}
-                tooltip="Create Trigger Socket"
-                onClick={Tasks.TriggersActions.showDialog}
-              />
-              <MUI.IconButton
-                iconClassName="synicon-socket-schedule"
-                iconStyle={{color: 'pink', fontSize: 30}}
-                tooltip="Create Schedule Socket"
-                tooltipPosition="bottom-left"
-                onClick={Tasks.SchedulesActions.showDialog}
-              />
+          <MUI.IconButton
+            iconClassName="synicon-socket-channel"
+            iconStyle={{color: 'blue', fontSize: 30}}
+            tooltip="Create Channel Socket"
+            onClick={Channels.Actions.showDialog}/>
 
-            </MUI.ToolbarGroup>
+          <MUI.IconButton
+            iconClassName="synicon-socket-trigger"
+            iconStyle={{color: 'yellow', fontSize: 30}}
+            tooltip="Create Trigger Socket"
+            onClick={Tasks.TriggersActions.showDialog}/>
 
+          <MUI.IconButton
+            iconClassName="synicon-socket-schedule"
+            iconStyle={{color: 'pink', fontSize: 30}}
+            tooltip="Create Schedule Socket"
+            tooltipPosition="bottom-left"
+            onClick={Tasks.SchedulesActions.showDialog}/>
         </Common.InnerToolbar>
 
-        <div style={{clear: 'both', height: '100%', marginTop: 130}}>
+        <div style={{clear: 'both', height: '100%'}}>
 
           <Data.List
             name="Data Socket"

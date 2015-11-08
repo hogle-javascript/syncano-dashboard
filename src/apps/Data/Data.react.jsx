@@ -107,23 +107,12 @@ export default React.createClass({
 
         {this.getDialogs()}
 
-        <Common.InnerToolbar>
-
-            <MUI.ToolbarGroup style={{paddingLeft: 36}}>
-              <MUI.ToolbarTitle text={'Sockets'}/>
-            </MUI.ToolbarGroup>
-
-            <MUI.ToolbarGroup float="right">
-
-              <MUI.IconButton
-                iconClassName="synicon-socket-data"
-                iconStyle={{color: 'green', fontSize: 30}}
-                tooltip="Create Data Socket"
-                onClick={Actions.showDialog}
-              />
-
-            </MUI.ToolbarGroup>
-
+        <Common.InnerToolbar title="Sockets">
+          <MUI.IconButton
+            iconClassName="synicon-socket-data"
+            iconStyle={{color: 'green', fontSize: 30}}
+            tooltip="Create Data Socket"
+            onClick={Actions.showDialog}/>
         </Common.InnerToolbar>
 
         <div style={{clear: 'both', height: '100%', marginTop: 130}}>
@@ -137,8 +126,7 @@ export default React.createClass({
             emptyItemContent="Create a Data Socket"/>
 
         </div>
-
-        </Container>
+      </Container>
     );
   }
 });

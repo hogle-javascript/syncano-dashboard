@@ -192,41 +192,26 @@ export default React.createClass({
         <DataObjectDialog />
 
         <div className="col-flex-1">
-          <Common.InnerToolbar>
-            <MUI.ToolbarGroup>
-              <MUI.IconButton
-                iconClassName="synicon-arrow-left"
-                onClick={this.handleBackClick}
-                touch={true}
-                style={{marginTop: 4}}
-                iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
-            </MUI.ToolbarGroup>
+          <Common.InnerToolbar
+            title={`Class: ${this.getParams().className} ${selectedMessageText}`}
+            onBackButtonTouchTap={this.handleBackClick}>
 
-            <MUI.ToolbarGroup>
-              <MUI.ToolbarTitle text={'Class: ' + this.getParams().className}/>
-              <MUI.ToolbarTitle text={selectedMessageText}/>
-            </MUI.ToolbarGroup>
+            <MUI.IconButton
+              style={{fontSize: 25, marginTop: 5}}
+              iconClassName="synicon-plus"
+              tooltip="Add Data Objects"
+              onClick={this.showDataObjectDialog}/>
 
-            <MUI.ToolbarGroup float="right">
+            <MUI.IconButton
+              style={{fontSize: 25, marginTop: 5}}
+              iconClassName="synicon-delete"
+              tooltip="Delete Data Objects"
+              disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
+              onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
-              <MUI.IconButton
-                style={{fontSize: 25, marginTop: 5}}
-                iconClassName="synicon-plus"
-                tooltip="Add Data Objects"
-                onClick={this.showDataObjectDialog}/>
-
-              <MUI.IconButton
-                style={{fontSize: 25, marginTop: 5}}
-                iconClassName="synicon-delete"
-                tooltip="Delete Data Objects"
-                disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
-                onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
-
-              <ColumnsFilterMenu
-                columns={Store.getTableColumns()}
-                checkToggleColumn={Actions.checkToggleColumn}/>
-
-            </MUI.ToolbarGroup>
+            <ColumnsFilterMenu
+              columns={Store.getTableColumns()}
+              checkToggleColumn={Actions.checkToggleColumn}/>
 
           </Common.InnerToolbar>
 
