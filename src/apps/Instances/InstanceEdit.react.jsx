@@ -52,10 +52,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      container: {
-        padding: '5px 10px',
-        width: '50%'
-      },
       title: {
         fontSize: '20px',
         fontWeight: 500,
@@ -196,46 +192,53 @@ export default React.createClass({
     }
 
     return (
-      <Container style={styles.container}>
+      <Container>
         {this.getDialogs()}
-        <div style={styles.title}>
-          General
-        </div>
-        <div style={styles.content}>
-          <div style={styles.customizeSection}>
-            <MUI.IconButton
-              tooltip="Click to customize Instance"
-              tooltipStyles={styles.tooltip}
-              iconStyle={styles.instanceIcon}
-              style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
-              iconClassName={'synicon-' + icon}
-              onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
-            <MUI.TextField
-              className="instance-name-field"
-              ref="name"
-              floatingLabelText="Instance name"
-              disabled={true}
-              fullWidth={true}
-              defaultValue={instance.name}
-              style={styles.textField}/>
-            <MUI.TextField
-              ref="description"
-              floatingLabelText="Instance description"
-              defaultValue={instance.description}
-              multiLine={true}
-              fullWidth={true}
-              style={styles.textField}/>
-          </div>
-          <div style={styles.buttonsSection}>
-            <MUI.RaisedButton
-              onTouchTap={this.handleUpdate}
-              type="submit"
-              label="Update"
-              secondary={true}/>
-            <MUI.FlatButton
-              label="Delete an Instance"
-              style={styles.deleteButton}
-              onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+
+        <Common.InnerToolbar title="General"/>
+
+        <div style={{width: '50%'}}>
+          <div className="col-flex-1">
+            <div style={styles.title}>
+              General
+            </div>
+            <div style={styles.content}>
+              <div style={styles.customizeSection}>
+                <MUI.IconButton
+                  tooltip="Click to customize Instance"
+                  tooltipStyles={styles.tooltip}
+                  iconStyle={styles.instanceIcon}
+                  style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
+                  iconClassName={'synicon-' + icon}
+                  onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
+                <MUI.TextField
+                  className="instance-name-field"
+                  ref="name"
+                  floatingLabelText="Instance name"
+                  disabled={true}
+                  fullWidth={true}
+                  defaultValue={instance.name}
+                  style={styles.textField}/>
+                <MUI.TextField
+                  ref="description"
+                  floatingLabelText="Instance description"
+                  defaultValue={instance.description}
+                  multiLine={true}
+                  fullWidth={true}
+                  style={styles.textField}/>
+              </div>
+              <div style={styles.buttonsSection}>
+                <MUI.RaisedButton
+                  onTouchTap={this.handleUpdate}
+                  type="submit"
+                  label="Update"
+                  secondary={true}/>
+                <MUI.FlatButton
+                  label="Delete an Instance"
+                  style={styles.deleteButton}
+                  onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+              </div>
+            </div>
           </div>
         </div>
       </Container>

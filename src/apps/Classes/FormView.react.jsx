@@ -291,21 +291,9 @@ export default React.createClass({
 
     return (
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
-        <Common.InnerToolbar>
-          <MUI.ToolbarGroup>
-            <MUI.IconButton
-              iconClassName="synicon-arrow-left"
-              onClick={this.handleBackClick}
-              touch={true}
-              style={{marginTop: 4}}
-              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
-          </MUI.ToolbarGroup>
-
-          <MUI.ToolbarGroup>
-            <MUI.ToolbarTitle text={title}/>
-          </MUI.ToolbarGroup>
-
-        </Common.InnerToolbar>
+        <Common.InnerToolbar
+          title={title}
+          onBackButtonTouchTap={this.handleBackClick}/>
 
         <form
           onSubmit={this.handleFormValidation}

@@ -15,7 +15,7 @@ export default React.createClass({
 
   getStyles() {
     const styles = {
-      margin: '0px auto 48px 0'
+      marginBottom: 48
     };
 
     return this.mergeAndPrefix(styles, this.props.style);

@@ -1,3 +1,3 @@
-import InnerToolbar from './InnerToolbar.react';
+import InnerToolbar from './InnerToolbar';
 
 export default InnerToolbar;

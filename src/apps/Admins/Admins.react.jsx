@@ -181,6 +181,8 @@ export default React.createClass({
         <AdminDialog />
         {this.getDialogs()}
 
+        <Common.InnerToolbar title="Administrators"/>
+
         <Common.Show if={checkedAdmins > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem

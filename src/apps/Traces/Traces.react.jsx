@@ -13,7 +13,6 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 // Local components
@@ -106,35 +105,17 @@ export default Radium(React.createClass({
     this.transitionTo(config.route, this.getParams());
   },
 
-  renderToolbarTitle() {
-    let toolbarTitleText = this.getToolbarTitleText();
-
-    return (
-      <MUI.ToolbarGroup>
-        <MUI.ToolbarTitle text={toolbarTitleText}/>
-      </MUI.ToolbarGroup>
-    );
-  },
-
   render() {
     const styles = this.getStyles();
     const config = this.getConfig();
+    let toolbarTitleText = this.getToolbarTitleText();
 
     return (
       <div>
-        <Common.InnerToolbar>
-          <MUI.ToolbarGroup>
-            <MUI.IconButton
-              iconClassName="synicon-arrow-left"
-              tooltip={config.backLabel}
-              tooltipPosition="bottom-right"
-              onClick={this.handleBackClick}
-              touch={true}
-              style={{marginTop: 4}}
-              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
-          </MUI.ToolbarGroup>
-          {this.renderToolbarTitle()}
-        </Common.InnerToolbar>
+        <Common.InnerToolbar
+          title={toolbarTitleText}
+          onBackButtonTouchTap={this.handleBackClick}
+          backButtonTooltip={config.backLabel}/>
         <div style={[styles.list, this.isActive('codebox-traces') && styles.cBList]}>
           <TracesList
             tracesFor={this.props.tracesFor}

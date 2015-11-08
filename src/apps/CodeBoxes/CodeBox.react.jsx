@@ -78,6 +78,12 @@ export default React.createClass({
     return null;
   },
 
+  getToolbarTitle() {
+    let toolbarTitleText = this.getToolbarTitleText();
+
+    return !this.isActive('codebox-traces') ? toolbarTitleText : null;
+  },
+
   getToolbarTitleText() {
     let codeBoxLabel = this.getCodeBoxLabel();
 
@@ -131,34 +137,14 @@ export default React.createClass({
     }
   },
 
-  renderToolbarTitle() {
-    let toolbarTitleText = this.getToolbarTitleText();
-
-    if (!this.isActive('codebox-traces')) {
-      return (
-        <MUI.ToolbarGroup>
-          <MUI.ToolbarTitle text={toolbarTitleText}/>
-        </MUI.ToolbarGroup>
-      );
-    }
-  },
-
   render() {
     return (
       <div>
-        <Common.InnerToolbar>
-          <MUI.ToolbarGroup>
-            <MUI.IconButton
-              iconClassName="synicon-arrow-left"
-              tooltip="Go back to CodeBoxes list"
-              tooltipPosition="bottom-right"
-              onClick={this.handleBackClick}
-              touch={true}
-              style={{marginTop: 4}}
-              iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
-          </MUI.ToolbarGroup>
-          {this.renderToolbarTitle()}
-        </Common.InnerToolbar>
+        <Common.InnerToolbar
+          title={this.getToolbarTitle()}
+          onBackButtonTouchTap={this.handleBackClick}
+          backButtonTooltip="Go back to CodeBoxes list"/>
+
         <div style={{margin: '65px auto', width: '100%'}}>
           <div style={{paddingTop: 32}}>
             {this.renderTabs()}

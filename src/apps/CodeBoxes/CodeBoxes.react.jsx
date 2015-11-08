@@ -13,6 +13,7 @@ import Store from './CodeBoxesStore';
 
 // Components
 import Common from '../../common';
+import Container from '../../common/Container/Container.react';
 
 // Local components
 import CodeBoxesList from './CodeBoxesList.react';
@@ -178,9 +179,11 @@ export default React.createClass({
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
-      <div>
+      <Container>
         <CodeBoxDialog />
         {this.getDialogs()}
+
+        <Common.InnerToolbar title="Snippets"/>
 
         <Common.Show if={checkedItems > 0}>
           <Common.Fab position="top">
@@ -209,7 +212,7 @@ export default React.createClass({
           items={this.state.items}
           emptyItemHandleClick={this.showCodeBoxDialog}
           emptyItemContent="Create a CodeBox"/>
-      </div>
+      </Container>
     );
   }
 });
