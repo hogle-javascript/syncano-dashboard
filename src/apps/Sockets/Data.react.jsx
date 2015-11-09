@@ -200,7 +200,6 @@ export default React.createClass({
         </Common.InnerToolbar>
 
         <div style={{clear: 'both', height: '100%'}}>
-
           <Data.List
             name="Data Socket"
             checkItem={this.checkDataViewItem}
@@ -239,12 +238,11 @@ export default React.createClass({
             isLoading={this.state.schedules.isLoading}
             items={this.state.schedules.items}
             emptyItemHandleClick={this.showDataViewDialog}
-            emptyItemContent="Create a Trigger Socket"
-            />
+            emptyItemContent="Create a Trigger Socket"/>
 
         </div>
 
-        </Container>
+      </Container>
     );
   }
 });

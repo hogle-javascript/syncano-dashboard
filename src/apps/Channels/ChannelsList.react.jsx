@@ -160,7 +160,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>

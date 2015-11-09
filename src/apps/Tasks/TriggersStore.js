@@ -4,8 +4,6 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import ClassesActions from '../Classes/ClassesActions';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import SessionActions from '../Session/SessionActions';
 import TriggersActions from './TriggersActions';
 
@@ -26,16 +24,14 @@ export default Reflux.createStore({
   init() {
     this.data = this.getInitialState();
     this.waitFor(
-      SessionActions.setUser,
       SessionActions.setInstance,
-      ClassesActions.fetchClasses,
-      CodeBoxesActions.fetchCodeBoxes,
       this.refreshData
     );
   },
 
   setTriggers(items) {
     this.data.items = Object.keys(items).map((item) => items[item]);
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -44,6 +40,7 @@ export default Reflux.createStore({
   },
 
   refreshData() {
+    console.debug('TriggersStore::refreshData');
     TriggersActions.fetchTriggers();
   },
 
@@ -55,13 +52,11 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
-    this.data.isLoading = false;
     TriggersActions.setTriggers(items);
   },
 
   onRemoveTriggersCompleted() {
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

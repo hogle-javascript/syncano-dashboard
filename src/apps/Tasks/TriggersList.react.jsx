@@ -26,20 +26,6 @@ export default React.createClass({
     Router.Navigation
   ],
 
-  getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    });
-  },
-
   // List
   handleItemIconClick(id, state) {
     this.props.checkItem(id, state);
@@ -90,7 +76,7 @@ export default React.createClass({
   },
 
   renderList() {
-    let items = this.state.items.map((item) => this.renderItem(item));
+    let items = this.props.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       items.reverse();
@@ -130,7 +116,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
