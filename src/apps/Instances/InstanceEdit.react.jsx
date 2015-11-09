@@ -138,6 +138,7 @@ export default React.createClass({
 
   initDialogs() {
     let instance = this.state.instance;
+    let deleteText = Store.amIOwner(instance) ? 'delete' : 'leave';
     let metadata = instance ? instance.metadata : {icon: null, color: null};
 
     return [
@@ -164,8 +165,8 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Deleting this Instance can cause problems with your applications that are connected to it. ' +
-            'Do you really want to delete this Instance?', this.getDialogList([instance]),
+            `Deleting this Instance can cause problems with your applications that are connected to it. ` +
+            `Do you really want to ${deleteText} this Instance?`, this.getDialogList([instance]),
             <Common.Loading
               type="linear"
               position="bottom"
@@ -179,6 +180,7 @@ export default React.createClass({
   render() {
     const styles = this.getStyles();
     const instance = this.state.instance;
+    const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
     const defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
     const defaultIconColor = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let icon = instance ? instance.metadata.icon : defaultIcon;
@@ -234,7 +236,7 @@ export default React.createClass({
                   label="Update"
                   secondary={true}/>
                 <MUI.FlatButton
-                  label="Delete an Instance"
+                  label={`${deleteButtonText} an Instance`}
                   style={styles.deleteButton}
                   onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
               </div>
