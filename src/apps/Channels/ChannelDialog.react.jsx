@@ -125,6 +125,7 @@ export default React.createClass({
               errorText={this.getValidationMessages('type').join(' ')}
               valueMember='payload'
               displayMember='text'
+              disabled={this.hasEditMode()}
               fullWidth={true}
               menuItems={ChannelsStore.getChannelTypesDropdown()} />
 
