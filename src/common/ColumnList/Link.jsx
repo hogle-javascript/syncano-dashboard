@@ -70,7 +70,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + this.props.link;
+    let link = SYNCANO_BASE_URL.slice(0, -1) + this.props.link;
 
     return (
       <div
@@ -80,7 +80,7 @@ export default React.createClass({
         onFocus={this.showTooltip}
         style={styles.root}>
         <Clipboard
-          copyText={webhookLink}
+          copyText={link}
           snackbarText={this.props.snackbar}>
           <div style={styles.name}>{this.props.name}</div>
           <div style={styles.linkContainer}>
