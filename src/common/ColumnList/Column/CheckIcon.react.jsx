@@ -54,6 +54,7 @@ export default Radium(React.createClass({
         flexDirection: 'column',
         justifyContent: 'center',
         wordBreak: 'break-all',
+        flex: 1,
         color: this.state.color
       },
       link: {

@@ -1,6 +1,5 @@
 import React from 'react';
 import Router from 'react-router';
-import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Stores and Actions
 import Actions from './DataViewsActions';
@@ -10,7 +9,6 @@ import HeaderMixin from '../Header/HeaderMixin';
 import {Dialogs} from '../../mixins';
 
 // Components
-import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
@@ -32,14 +30,6 @@ export default React.createClass({
     this.props.checkItem(id, state);
   },
 
-  handleURLClick(event) {
-    event.stopPropagation();
-    this.refs.snackbar.show();
-    setTimeout(() => {
-      this.refs.snackbar.dismiss();
-    }, 1200);
-  },
-
   handleClassClick(className) {
     let params = this.getParams();
 
@@ -47,26 +37,7 @@ export default React.createClass({
     this.context.router.transitionTo('classes-edit', params);
   },
 
-  renderCopyLinkIcon(item) {
-    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.self;
-
-    return (
-      <div>
-        <ReactZeroClipboard text={webhookLink}>
-          <MUI.IconButton
-            style={{height: 20, width: 20, padding: '0 50', cursor: 'copy'}}
-            iconStyle={{fontSize: 15, color: '#9B9B9B'}}
-            iconClassName="synicon-link-variant"
-            tooltip="Copy Webhook URL"
-            onClick={this.handleURLClick}/>
-        </ReactZeroClipboard>
-      </div>
-    );
-  },
-
   renderItem(item) {
-    let copyLinkIcon = this.renderCopyLinkIcon(item);
-
     return (
       <Common.ColumnList.Item
         checked={item.checked}
@@ -78,13 +49,10 @@ export default React.createClass({
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
-          <div onClick={this.handleURLClick}>{item.name}</div>
-          <div style={{display: 'flex', flexWrap: 'wrap', cursor: 'copy'}}>
-            <div style={{fontSize: '0.8em', color: '#9B9B9B'}} onClick={this.handleURLClick}>
-              {item.links.self}
-            </div>
-            <div>{copyLinkIcon}</div>
-          </div>
+          <Common.ColumnList.Link
+            name={item.name}
+            link={item.links.self}
+            tooltip="Copy Socket URL"/>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-5">
@@ -149,9 +117,6 @@ export default React.createClass({
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
-        <MUI.Snackbar
-          ref="snackbar"
-          message="URL copied to the clipboard" />
       </Common.Lists.Container>
     );
   }

@@ -6,6 +6,7 @@ import EmptyItem from './EmptyListItem.react';
 import Header from './Header.react';
 import Item from './Item.react';
 import ItemColumn from './ItemColumn.react';
+import Link from './Link';
 
 export default {
   Column,
@@ -15,5 +16,6 @@ export default {
   EmptyItem,
   Header,
   Item,
-  ItemColumn
+  ItemColumn,
+  Link
 };
