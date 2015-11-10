@@ -1,5 +1,7 @@
 import React from 'react';
+import {History} from 'react-router';
 
+import {Store as SessionStore} from '../../apps/Session';
 import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'syncano-material-ui';
 
 export default React.createClass({
@@ -33,15 +35,23 @@ export default React.createClass({
     };
   },
 
+  isHistory() {
+    return History.length > 1;
+  },
+
+  handleBackButtonTouchTap() {
+    return this.isHistory() ? SessionStore.getRouter().goBack() : this.props.onBackButtonTouchTap;
+  },
+
   renderBackButton() {
-    if (this.props.onBackButtonTouchTap) {
+    if (this.isHistory() || this.props.onBackButtonTouchTap) {
       return (
         <ToolbarGroup>
           <IconButton
             iconClassName="synicon-arrow-left"
             tooltip={this.props.backButtonTooltip}
             tooltipPosition={this.props.backButtonTooltipPosition}
-            onClick={this.props.onBackButtonTouchTap}
+            onClick={this.handleBackButtonTouchTap}
             touch={true}
             style={{marginTop: 4}}
             iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
