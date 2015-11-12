@@ -115,7 +115,7 @@
     "clean": "gulp clean",
     "oauth-server": "node oauth-server.js",
     "eslint": "eslint src --quiet --ext .js --ext .jsx",
-    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags channels,codeBoxes,webhookTraces,webhooks,classes",
+    "e2e": "nightwatch -e 1280x1024 --suiteRetries 1 --skiptags channels,codeBoxes,webhookTraces,webhooks,classes,codeBoxSockets",
     "e2e-screenshots": "nightwatch -e 1280x1024,360x640,768x1024 --tag navigation || true",
     "e2e-setup": "gulp selenium-install",
     "e2e-http-server": "http-server ./dist_e2e --ssl --cert ./node_modules/webpack-dev-server/ssl/server.crt --key ./node_modules/webpack-dev-server/ssl/server.key",
