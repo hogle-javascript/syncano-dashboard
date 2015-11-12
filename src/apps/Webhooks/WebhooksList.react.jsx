@@ -67,11 +67,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Webhook" />
+            primaryText="Edit a CodeBox" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}
-            primaryText="Delete a Webhook" />
+            primaryText="Delete a CodeBox" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
