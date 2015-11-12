@@ -194,7 +194,7 @@ export default React.createClass({
         <div className="col-flex-1">
           <Common.InnerToolbar
             title={`Class: ${this.getParams().className} ${selectedMessageText}`}
-            onBackButtonTouchTap={this.handleBackClick}>
+            backFallback={this.handleBackClick}>
 
             <MUI.IconButton
               style={{fontSize: 25, marginTop: 5}}
