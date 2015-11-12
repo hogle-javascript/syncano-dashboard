@@ -32,34 +32,34 @@ export default {
     });
     instancesPage.waitForElementPresent('@instancesTable');
   },
-  'Admin Logs in with Google': (client) => {
-    const loginPage = client.page.loginPage();
-    const instancesPage = client.page.instancesPage();
+  // 'Admin Logs in with Google': (client) => {
+  //   const loginPage = client.page.loginPage();
+  //   const instancesPage = client.page.instancesPage();
 
-    loginPage.clickButton('@loginButtonGoogle');
-    client
-      .pause(1000)
-      .windowHandles((result) => {
-        const handle = result.value[1];
+  //   loginPage.clickButton('@loginButtonGoogle');
+  //   client
+  //     .pause(1000)
+  //     .windowHandles((result) => {
+  //       const handle = result.value[1];
 
-        client.switchWindow(handle);
-      });
-    loginPage
-      .fillInputField('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL)
-      .clickButton('@nextButtonGoogle')
-      .fillInputField('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
-      .clickButton('@signInButtonGoogle');
+  //       client.switchWindow(handle);
+  //     });
+  //   loginPage
+  //     .fillInputField('@emailInputGoogle', process.env.NIGHTWATCH_EMAIL)
+  //     .clickButton('@nextButtonGoogle')
+  //     .fillInputField('@passInputGoogle', process.env.NIGHTWATCH_PASSWORD)
+  //     .clickButton('@signInButtonGoogle');
 
-    client.pause(2000);
-    loginPage.clickButton('@approveAccessButtonGoogle');
+  //   client.pause(2000);
+  //   loginPage.clickButton('@approveAccessButtonGoogle');
 
-    client.windowHandles((result) => {
-      const handle = result.value[0];
+  //   client.windowHandles((result) => {
+  //     const handle = result.value[0];
 
-      client.switchWindow(handle);
-    });
-    instancesPage.waitForElementPresent('@instancesTable');
-  },
+  //     client.switchWindow(handle);
+  //   });
+  //   instancesPage.waitForElementPresent('@instancesTable');
+  // },
   'Admin Logs in with Github': (client) => {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
