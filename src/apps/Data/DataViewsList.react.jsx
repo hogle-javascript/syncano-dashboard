@@ -58,7 +58,6 @@ export default React.createClass({
         <Column.Desc className="col-xs-5">
           <a onClick={this.handleClassClick.bind(this, item.class)}>{item.class}</a>
         </Column.Desc>
-        <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
@@ -109,7 +108,6 @@ export default React.createClass({
             className="col-xs-5">
             Class
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>

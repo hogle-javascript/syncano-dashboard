@@ -62,7 +62,6 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
         <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
-        <Column.Date date={item.created_at} />
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
@@ -118,7 +117,6 @@ export default React.createClass({
             className="col-xs-3">
             Public
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
