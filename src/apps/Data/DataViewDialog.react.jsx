@@ -172,7 +172,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add';
+    let title = this.hasEditMode() ? 'Edit' : 'Create';
     let dialogStandardActions = [
       <MUI.FlatButton
         key="cancel"
