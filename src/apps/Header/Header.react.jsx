@@ -122,7 +122,17 @@ export default Radium(React.createClass({
   getGravatarUrl() {
     let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
 
-    return Gravatar.url(userEmail, {default: this.fallBackAvatar}, true);
+    if (this.state.gravatarUrl) {
+      return this.state.gravatarUrl;
+    }
+
+    return Gravatar.url(userEmail, {default: '404'}, true);
+  },
+
+  onAvatarError() {
+    let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
+
+    this.setState({gravatarUrl: fallBackAvatar});
   },
 
   handleInstancesListClick() {
@@ -149,10 +159,12 @@ export default Radium(React.createClass({
     this.transitionTo('solutions');
   },
 
-  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
-
   renderIconButton() {
-    return <MUI.Avatar src={this.getGravatarUrl()}/>;
+    return (
+      <MUI.Avatar
+        src={this.getGravatarUrl()}
+        onError={this.onAvatarError}/>
+    );
   },
 
   render() {
