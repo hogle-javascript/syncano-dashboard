@@ -38,21 +38,8 @@ export default React.createClass({
     });
   },
 
-  renderCopyLinkIcon(item) {
-    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.self;
-
-    return (
-      <Common.Clipboard
-        type="icon"
-        tooltipText="Copy CodeBox URL"
-        copyText={webhookLink}
-        snackbarText="URL copied to the clipboard"/>
-    );
-  },
-
   renderItem(item) {
     let publicString = item.public.toString();
-    let copyLinkIcon = this.renderCopyLinkIcon(item);
 
     return (
       <Common.ColumnList.Item
@@ -67,13 +54,10 @@ export default React.createClass({
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
-          <div onClick={this.handleURLClick}>{item.name}</div>
-          <div style={{display: 'flex', flexWrap: 'wrap', cursor: 'copy'}}>
-            <div style={{fontSize: '0.8em', color: '#9B9B9B'}} onClick={this.handleURLClick}>
-              {item.links.self}
-            </div>
-            <div>{copyLinkIcon}</div>
-          </div>
+          <Common.ColumnList.Link
+            name={item.name}
+            link={item.links.self}
+            tooltip="Copy Webhook URL"/>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>

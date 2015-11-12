@@ -1,15 +1,14 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import ZeroClipboard from 'react-zeroclipboard';
 
 import FormMixin from '../../mixins/FormMixin';
-import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
 
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
 import MUI from 'syncano-material-ui';
+import {Clipboard} from '../../common';
 
 export default Radium(React.createClass({
 
@@ -18,8 +17,7 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(Store),
     Reflux.ListenerMixin,
-    FormMixin,
-    SnackbarNotificationMixin
+    FormMixin
   ],
 
   validatorConstraints: {
@@ -72,13 +70,6 @@ export default Radium(React.createClass({
     Actions.changePassword(this.state);
   },
 
-  showSnackbar() {
-    this.setSnackbarNotification({
-      message: 'API key copied to the clipboard',
-      autoHideDuration: 3000
-    });
-  },
-
   render() {
     let styles = this.getStyles();
 
@@ -89,12 +80,11 @@ export default Radium(React.createClass({
           <div className="row" style={styles.contentRow}>
             <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
             <div className="col-xs-10">
-              <ZeroClipboard text={this.state.account_key}>
-                <MUI.FlatButton
-                  label="COPY"
-                  primary={true}
-                  onClick={this.showSnackbar}/>
-              </ZeroClipboard>
+              <Clipboard
+                copyText={this.state.account_key}
+                snackbarText="API key copied to the clipboard"
+                snackbarAutoHideDuration={3000}
+                text="COPY"/>
               <MUI.FlatButton
                 label="RESET"
                 primary={true}

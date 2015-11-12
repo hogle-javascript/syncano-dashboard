@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import ReactZeroClipboard from 'react-zeroclipboard';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
@@ -12,12 +11,10 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
-let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 
 export default React.createClass({
 
@@ -29,7 +26,6 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    SnackbarNotificationMixin,
     Dialogs
   ],
 
@@ -42,34 +38,7 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleURLClick(event) {
-    event.stopPropagation();
-    this.setSnackbarNotification({
-      message: 'URL copied to the clipboard',
-      autoHideDuration: 3000
-    });
-  },
-
-  renderCopyLinkIcon(item) {
-    let webhookLink = SYNCANO_BASE_URL.slice(0, -1) + item.links.poll;
-
-    return (
-      <div>
-        <ReactZeroClipboard text={webhookLink}>
-          <MUI.IconButton
-            style={{height: 20, width: 20, padding: '0 50', cursor: 'copy'}}
-            iconStyle={{fontSize: 15, color: '#9B9B9B'}}
-            iconClassName="synicon-link-variant"
-            tooltip="Copy Webhook URL"
-            onClick={this.handleURLClick}/>
-        </ReactZeroClipboard>
-      </div>
-    );
-  },
-
   renderItem(item) {
-    let copyLinkIcon = this.renderCopyLinkIcon(item);
-
     return (
       <Common.ColumnList.Item
         checked={item.checked}
@@ -80,15 +49,11 @@ export default React.createClass({
           icon = {'bullhorn'}
           background = {Common.Color.getColorByName('blue', 'xlight')}
           checked = {item.checked}
-          handleIconClick = {this.handleItemIconClick}
-          handleNameClick = {this.handleItemClick} >
-          <div onClick={this.handleURLClick}>{item.name}</div>
-          <div style={{display: 'flex', flexWrap: 'wrap', cursor: 'copy'}}>
-            <div style={{fontSize: '0.8em', color: '#9B9B9B'}} onClick={this.handleURLClick}>
-              {item.links.poll}
-            </div>
-            <div>{copyLinkIcon}</div>
-          </div>
+          handleIconClick = {this.handleItemIconClick}>
+          <Common.ColumnList.Link
+            name={item.name}
+            link={item.links.poll}
+            tooltip="Copy Channel URL"/>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Desc className="col-xs-5 col-md-5">

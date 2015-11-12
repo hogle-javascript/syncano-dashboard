@@ -8,13 +8,19 @@ export default React.createClass({
 
   mixins: [SnackbarNotification.Mixin],
 
+  getDefaultProps() {
+    return {
+      snackbarAutoHideDuration: 1200
+    };
+  },
+
   handleClick(event) {
     event.preventDefault();
     event.stopPropagation();
 
     this.setSnackbarNotification({
       message: this.props.snackbarText,
-      autoHideDuration: 1200
+      autoHideDuration: this.props.snackbarAutoHideDuration
     });
   },
 
@@ -22,6 +28,8 @@ export default React.createClass({
     return (
       <IconButton
         iconClassName="synicon-link-variant"
+        style={this.props.style}
+        iconStyle={this.props.iconStyle}
         tooltip={this.props.tooltipText}
         onClick={this.handleClick}/>
     );
