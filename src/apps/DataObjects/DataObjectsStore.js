@@ -78,6 +78,13 @@ export default Reflux.createStore({
           width: 120,
           tooltip: 'Built-in property: Created At',
           checked: true
+        },
+        {
+          id: 'updated_at',
+          name: 'Updated',
+          width: 120,
+          tooltip: 'Built-in property: Updated At',
+          checked: true
         }
       ]
     };
