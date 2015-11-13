@@ -4,11 +4,13 @@ export default {
   waitForConditionTimeout: 15000,
   retryAssertionTimeout: 2000,
   instanceName: 'long-frost-7585',
-  className: null,
+  tempClassName: null,
   tempEmail: null,
   tempPass: null,
   tempAccountKey: null,
   tempInstanceName: null,
+  tempCodeBoxId: null,
+  tempTriggerId: null,
 
   before(done) {
     const syncano = new Syncano({baseUrl: 'https://api.syncano.rocks'});
