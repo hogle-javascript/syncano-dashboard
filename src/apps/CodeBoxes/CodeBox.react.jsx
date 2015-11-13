@@ -142,7 +142,8 @@ export default React.createClass({
       <div>
         <Common.InnerToolbar
           title={this.getToolbarTitle()}
-          onBackButtonTouchTap={this.handleBackClick}
+          backFallback={this.handleBackClick}
+          forceBackFallback={true}
           backButtonTooltip="Go back to CodeBoxes list"/>
 
         <div style={{margin: '65px auto', width: '100%'}}>
