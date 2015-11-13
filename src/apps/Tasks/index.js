@@ -22,7 +22,6 @@ Tasks.ScheduleTraces = ScheduleTraces;
 Tasks.TriggersList = TriggersList;
 Tasks.TriggersStore = TriggersStore;
 Tasks.TriggersActions = TriggersActions;
-Tasks.TriggersActions = TriggersActions;
 Tasks.TriggerDialog = TriggerDialog;
 Tasks.TriggerDialogStore = TriggerDialogStore;
 Tasks.TriggerTraces = TriggerTraces;
