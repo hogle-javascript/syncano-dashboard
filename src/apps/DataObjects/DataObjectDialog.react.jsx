@@ -11,6 +11,8 @@ import DataObjectsActions from './DataObjectsActions';
 import DataObjectDialogStore from './DataObjectDialogStore';
 import DataObjectsStore from './DataObjectsStore';
 import ChannelsActions from '../Channels/ChannelsActions';
+import GroupsStore from '../Users/GroupsStore';
+import GroupsActions from '../Users/GroupsActions';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -37,6 +39,10 @@ export default React.createClass({
       }
     });
     return validateObj;
+  },
+
+  componentDidMount() {
+    GroupsActions.fetch();
   },
 
   getParams() {
@@ -125,6 +131,27 @@ export default React.createClass({
     }
 
     return true;
+  },
+
+  getGroups() {
+    const groups = GroupsStore.getGroups();
+    const emptyItem = {
+      payload: null,
+      text: 'none'
+    };
+
+    if (groups.length === 0) {
+      return [emptyItem];
+    }
+    const groupsObjects = groups.map((group) => {
+      return {
+        payload: group.id,
+        text: group.label
+      };
+    });
+
+    groupsObjects.unshift(emptyItem);
+    return groupsObjects;
   },
 
   onDrop(fieldName, files) {
@@ -283,15 +310,17 @@ export default React.createClass({
             errorText={this.getValidationMessages('owner').join(' ')}
             hintText='User ID'
             floatingLabelText='Owner'/>
-          <MUI.TextField
-            ref='field-group'
-            name='owner'
+          <MUI.SelectField
+            ref="field-group"
+            name="group"
             style={{display: 'block'}}
             fullWidth={true}
+            valueMember="payload"
+            displayMember="text"
             valueLink={this.linkState('group')}
+            floatingLabelText="Group"
             errorText={this.getValidationMessages('group').join(' ')}
-            hintText='Group ID'
-            floatingLabelText='Group'/>
+            menuItems={this.getGroups()} />
           {renderChannelFields()}
         </div>
 
