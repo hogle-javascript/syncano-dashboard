@@ -114,7 +114,7 @@ export default Radium(React.createClass({
       <div>
         <Common.InnerToolbar
           title={toolbarTitleText}
-          onBackButtonTouchTap={this.handleBackClick}
+          backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
         <div style={[styles.list, this.isActive('codebox-traces') && styles.cBList]}>
           <TracesList

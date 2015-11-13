@@ -14,7 +14,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      backButtonTooltipPosition: 'bottom-right'
+      backButtonTooltipPosition: 'bottom-right',
+      forceBackFallback: false
     };
   },
 
@@ -40,11 +41,15 @@ export default React.createClass({
   },
 
   handleBackButtonTouchTap() {
-    return this.isHistory() ? SessionStore.getRouter().goBack() : this.props.onBackButtonTouchTap;
+    if (this.isHistory() && !this.props.forceBackFallback) {
+      return SessionStore.getRouter().goBack();
+    }
+
+    return this.props.backFallback();
   },
 
   renderBackButton() {
-    if (this.isHistory() || this.props.onBackButtonTouchTap) {
+    if (this.isHistory() || this.props.backFallback) {
       return (
         <ToolbarGroup>
           <IconButton

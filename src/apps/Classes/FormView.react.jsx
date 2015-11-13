@@ -293,7 +293,7 @@ export default React.createClass({
       <Common.Loading show={this.hasEditMode() && this.state.name === null}>
         <Common.InnerToolbar
           title={title}
-          onBackButtonTouchTap={this.handleBackClick}/>
+          backFallback={this.handleBackClick}/>
 
         <form
           onSubmit={this.handleFormValidation}
