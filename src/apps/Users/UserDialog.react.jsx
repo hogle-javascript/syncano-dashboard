@@ -106,7 +106,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Edit' : 'Add';
+    let title = this.hasEditMode() ? 'Edit' : 'Create';
     let selectValueSource = this.getSelectValueSource();
     let selectValue = '';
     let allGroups = GroupsStore.getGroups().map((group) => {

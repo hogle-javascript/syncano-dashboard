@@ -64,7 +64,19 @@ export default React.createClass({
     Webhooks.Actions.uncheckAll();
   },
 
-  showDataViewDialog() {
+  showTriggerAddDialog() {
+    Tasks.TriggersActions.showDialog();
+  },
+
+  showScheduleAddDialog() {
+    Tasks.SchedulesActions.showDialog();
+  },
+
+  showChannelAddDialog() {
+    Channels.Actions.showDialog();
+  },
+
+  showDataViewAddDialog() {
     Data.Actions.showDialog();
   },
 
@@ -72,7 +84,7 @@ export default React.createClass({
     Data.Actions.showDialog(Data.Store.getCheckedItem());
   },
 
-  showWebhookDialog() {
+  showWebhookAddDialog() {
     Webhooks.Actions.showDialog();
   },
 
@@ -171,32 +183,32 @@ export default React.createClass({
             iconClassName="synicon-socket-data"
             iconStyle={{color: 'green', fontSize: 30}}
             tooltip="Create Data Socket"
-            onClick={Data.Actions.showDialog}/>
+            onTouchTap={this.showDataViewAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-codebox"
             iconStyle={{color: 'red', fontSize: 30}}
             tooltip="Create CodeBox Socket"
-            onClick={Webhooks.Actions.showDialog}/>
+            onTouchTap={this.showWebhookAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-channel"
             iconStyle={{color: 'blue', fontSize: 30}}
             tooltip="Create Channel Socket"
-            onClick={Channels.Actions.showDialog}/>
+            onTouchTap={this.showChannelAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-trigger"
             iconStyle={{color: 'yellow', fontSize: 30}}
             tooltip="Create Trigger Socket"
-            onClick={Tasks.TriggersActions.showDialog}/>
+            onTouchTap={this.showTriggerAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-schedule"
             iconStyle={{color: 'pink', fontSize: 30}}
             tooltip="Create Schedule Socket"
             tooltipPosition="bottom-left"
-            onClick={Tasks.SchedulesActions.showDialog}/>
+            onTouchTap={this.showScheduleAddDialog}/>
         </Common.InnerToolbar>
 
         <div style={{clear: 'both', height: '100%'}}>
@@ -205,7 +217,7 @@ export default React.createClass({
             checkItem={this.checkDataViewItem}
             isLoading={this.state.dataviews.isLoading}
             items={this.state.dataviews.items}
-            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemHandleClick={this.showDataViewAddDialog}
             emptyItemContent="Create a Data Socket"/>
 
           <Webhooks.List
@@ -213,7 +225,7 @@ export default React.createClass({
             checkItem={this.checkWebhook}
             isLoading={this.state.webhooks.isLoading}
             items={this.state.webhooks.items}
-            emptyItemHandleClick={this.showWebhookDialog}
+            emptyItemHandleClick={this.showWebhookAddDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
           <Channels.List
@@ -221,7 +233,7 @@ export default React.createClass({
             checkItem={this.checkChannel}
             isLoading={this.state.channels.isLoading}
             items={this.state.channels.items}
-            emptyItemHandleClick={this.showChannelDialog}
+            emptyItemHandleClick={this.showChannelAddDialog}
             emptyItemContent="Create a Channel Socket"/>
 
           <Tasks.TriggersList
@@ -229,7 +241,7 @@ export default React.createClass({
             checkItem={this.checkDataViewItem}
             isLoading={this.state.triggers.isLoading}
             items={this.state.triggers.items}
-            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemHandleClick={this.showTriggerAddDialog}
             emptyItemContent="Create a Trigger Socket"/>
 
           <Tasks.SchedulesList
@@ -237,7 +249,7 @@ export default React.createClass({
             checkItem={this.checkDataViewItem}
             isLoading={this.state.schedules.isLoading}
             items={this.state.schedules.items}
-            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemHandleClick={this.showScheduleAddDialog}
             emptyItemContent="Create a Trigger Socket"/>
 
         </div>
