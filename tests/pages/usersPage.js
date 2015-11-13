@@ -26,7 +26,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
-      selector: '//h3[text()="Add a User"]',
+      selector: '//h3[text()="Create a User"]',
       locateStrategy: 'xpath'
     },
     username: {
@@ -62,7 +62,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {
-      selector: '//h3[text()="Add a Group"]',
+      selector: '//h3[text()="Create a Group"]',
       locateStrategy: 'xpath'
     },
     groupName: {

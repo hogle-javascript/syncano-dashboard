@@ -64,7 +64,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addWebhookModalTitle: {
-      selector: '//h3[text()="Add a Webhook"]',
+      selector: '//h3[text()="Create a Webhook"]',
       locateStrategy: 'xpath'
     },
     addWebhookModalNameInput: {
