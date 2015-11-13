@@ -222,8 +222,10 @@ export default React.createClass({
             onTouchTap={this.showScheduleAddDialog}/>
         </Common.InnerToolbar>
 
-        <div style={{clear: 'both', height: '100%'}}>
-          <Common.Loading show={this.isLoaded()}>
+        <div style={{clear: 'both', height: '100%', minHeight: 750}}>
+          <Common.Loading
+            show={this.isLoaded()}
+            position="center">
             <Data.List
               name="Data Socket"
               checkItem={this.checkDataViewItem}

@@ -29,10 +29,6 @@ export default React.createClass({
     Dialogs
   ],
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items});
-  },
-
   // List
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
@@ -45,11 +41,11 @@ export default React.createClass({
         key={item.name}>
         <Column.CheckIcon
           className="col-xs-12"
-          id = {item.name}
-          icon = {'bullhorn'}
-          background = {Common.Color.getColorByName('blue', 'xlight')}
-          checked = {item.checked}
-          handleIconClick = {this.handleItemIconClick}>
+          id={item.name}
+          icon={'bullhorn'}
+          background={Common.Color.getColorByName('blue', 'xlight')}
+          checked={item.checked}
+          handleIconClick={this.handleItemIconClick}>
           <Common.ColumnList.Link
             name={item.name}
             link={item.links.poll}
@@ -71,18 +67,18 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-channel-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Channel" />
+            primaryText="Edit a Channel"/>
           <MenuItem
             className="dropdown-item-channel-delete"
             onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
-            primaryText="Delete a Channel" />
+            primaryText="Delete a Channel"/>
         </Column.Menu>
       </Common.ColumnList.Item>
     );
   },
 
   renderList() {
-    let items = this.state.items.map((item) => this.renderItem(item));
+    let items = this.props.items.map((item) => this.renderItem(item));
 
     if (items.length > 0) {
       items.reverse();

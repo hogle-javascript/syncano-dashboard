@@ -86,8 +86,7 @@ export default React.createClass({
           <Common.Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading}
-          />
+            show={this.state.isLoading}/>
         ]
       }
     }];
@@ -111,14 +110,12 @@ export default React.createClass({
               tooltip={isAnyChannelSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyChannelSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}
-              />
+              iconClassName={isAnyChannelSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
               tooltip="Click here to delete Channels"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteChannelDialog')}
-              iconClassName="synicon-delete"
-              />
+              iconClassName="synicon-delete"/>
           </Common.Fab>
         </Common.Show>
 
@@ -126,16 +123,14 @@ export default React.createClass({
           <Common.Fab.TooltipItem
             tooltip="Click here to add a Channel"
             onClick={this.showChannelDialog}
-            iconClassName="synicon-plus"
-            />
+            iconClassName="synicon-plus"/>
         </Common.Fab>
         <ChannelsList
           name="Channels"
-          isLoading={this.props.isLoading}
+          isLoading={this.state.isLoading}
           items={this.state.items}
           emptyItemHandleClick={this.showChannelDialog}
-          emptyItemContent="Create a Channel"
-          />
+          emptyItemContent="Create a Channel"/>
       </Container>
     );
   }
