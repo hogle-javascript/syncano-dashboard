@@ -93,7 +93,7 @@ export default React.createClass({
             params[item.name] = dateTime.toISOString();
           }
         } else {
-          let fieldValue = this.refs['field-' + item.name].getValue();
+          let fieldValue = this.refs[`field-${item.name}`].getValue();
 
           params[item.name] = fieldValue || null;
         }
@@ -111,7 +111,7 @@ export default React.createClass({
     // Searching for files
     DataObjectsStore.getCurrentClassObj().schema.map((item) => {
       if (item.type === 'file') {
-        let file = this.state['file-' + item.name];
+        let file = this.state[`file-${item.name}`];
 
         if (file) {
           fileFields.push({
@@ -252,64 +252,66 @@ export default React.createClass({
         return (
           <div key="edit-fields">
             <MUI.TextField
-              ref='field-channel'
-              name='field-channel'
+              ref="field-channel"
+              name="field-channel"
               style={{display: 'block'}}
               fullWidth={true}
               disabled={true}
               value={this.state.channel || 'no channel'}
-              floatingLabelText='Channel'/>
+              floatingLabelText="Channel"/>
             <MUI.TextField
-              ref='field-channel_room'
-              name='field-channel_room'
+              ref="field-channel_room"
+              name="field-channel_room"
               style={{display: 'block'}}
               fullWidth={true}
               disabled={true}
               value={this.state.channel_room || 'no channel'}
-              floatingLabelText='Channel Room'/>
+              floatingLabelText="Channel Room"/>
           </div>
         );
       }
       return (
         <div key="add-fields">
           <MUI.SelectField
-            ref='field-channel'
-            name='field-channel'
+            ref="field-channel"
+            name="field-channel"
             style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
-            floatingLabelText='Channel'
+            floatingLabelText="Channel"
             valueLink={this.linkState('channel')}
             errorText={this.getValidationMessages('channel').join(' ')}
             menuItems={this.state.channels}/>
           <MUI.TextField
-            ref='field-channel_room'
-            name='field-channel_room'
+            ref="field-channel_room"
+            name="field-channel_room"
             style={{display: 'block'}}
             fullWidth={true}
             disabled={this.hasEditMode()}
             valueLink={this.linkState('channel_room')}
             errorText={this.getValidationMessages('channel_room').join(' ')}
-            hintText='Channel Room'
-            floatingLabelText='Channel Room'/>
+            hintText="Channel Room"
+            floatingLabelText="Channel Room"/>
         </div>
       );
     };
 
     return (
-      <div className='row' style={{padding: 0, margin: 0}}>
-        <div className='col-flex-1'>
+      <div
+        className="row"
+        style={{padding: 0, margin: 0}}>
+        <div className="col-flex-1">
           <div>Built-in fields</div>
           <MUI.TextField
-            ref='field-owner'
-            name='owner'
+            ref="field-owner"
+            name="owner"
             style={{display: 'block'}}
             fullWidth={true}
             valueLink={this.linkState('owner')}
             errorText={this.getValidationMessages('owner').join(' ')}
-            hintText='User ID'
-            floatingLabelText='Owner'/>
+            hintText="User ID"
+            floatingLabelText="Owner"/>
           <MUI.SelectField
             ref="field-group"
             name="group"
@@ -320,43 +322,45 @@ export default React.createClass({
             valueLink={this.linkState('group')}
             floatingLabelText="Group"
             errorText={this.getValidationMessages('group').join(' ')}
-            menuItems={this.getGroups()} />
+            menuItems={this.getGroups()}/>
           {renderChannelFields()}
         </div>
 
-        <div className='col-flex-1' style={{paddingLeft: 15}}>
+        <div
+          className="col-flex-1"
+          style={{paddingLeft: 15}}>
           <div>Permissions</div>
           <MUI.SelectField
-            ref='field-owner_permissions'
-            name='field-owner_permissions'
+            ref="field-owner_permissions"
+            name="field-owner_permissions"
             style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
             valueLink={this.linkState('owner_permissions')}
-            floatingLabelText='Owner Permissions'
+            floatingLabelText="Owner Permissions"
             errorText={this.getValidationMessages('owner_permissions').join(' ')}
             menuItems={permissions}/>
           <MUI.SelectField
-            ref='field-group_permissions'
-            name='field-group_permissions'
+            ref="field-group_permissions"
+            name="field-group_permissions"
             style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
             valueLink={this.linkState('group_permissions')}
-            floatingLabelText='Group Permissions'
+            floatingLabelText="Group Permissions"
             errorText={this.getValidationMessages('group_permissions').join(' ')}
             menuItems={permissions}/>
           <MUI.SelectField
-            ref='field-other_permissions'
-            name='field-other_permissions'
+            ref="field-other_permissions"
+            name="field-other_permissions"
             style={{display: 'block'}}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
             valueLink={this.linkState('other_permissions')}
-            floatingLabelText='Other Permissions'
+            floatingLabelText="Other Permissions"
             errorText={this.getValidationMessages('other_permissions').join(' ')}
             menuItems={permissions}/>
         </div>
@@ -374,7 +378,7 @@ export default React.createClass({
       color: 'grey'
     };
 
-    let file = this.state['file-' + item.name];
+    let file = this.state[`file-${item.name}`];
     let description = file ? file.name : null;
 
     if (description) {
@@ -382,11 +386,11 @@ export default React.createClass({
     }
     return (
       <div
-        key={'dropzone-' + item.name}
+        key={`dropzone-${item.name}`}
         style={{marginTop: 25}}>
-        <div style={{marginBottom: 10, color: 'grey'}}>{item.name + ' (file)'}</div>
+        <div style={{marginBottom: 10, color: 'grey'}}>{`${item.name} (file)`}</div>
         <Dropzone
-          ref={'file-' + item.name}
+          ref={`file-${item.name}`}
           onDrop={this.onDrop.bind(this, 'file-' + item.name)}
           style={dropZoneStyle}>
           <div style={{padding: 15}}>
@@ -409,15 +413,15 @@ export default React.createClass({
 
           return (
             <MUI.SelectField
-              key={'field-' + item.name}
-              ref={'field-' + item.name}
+              key={`field-${item.name}`}
+              ref={`field-${item.name}`}
               name={item.name}
               valueLink={this.linkState(item.name)}
               style={{display: 'block'}}
               fullWidth={true}
               valueMember="payload"
               displayMember="text"
-              floatingLabelText={'Value of ' + item.name}
+              floatingLabelText={`Value of ${item.name}`}
               errorText={this.getValidationMessages(item.name).join(' ')}
               menuItems={menuItems}/>
           );
@@ -430,37 +434,38 @@ export default React.createClass({
             ? new Date(this.state[item.name].value)
             : undefined;
 
-        /* eslint-enable no-undefined*/
+          /* eslint-enable no-undefined*/
 
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
           return (
-            <div key={'field-' + item.name}>
-              <div className="row" style={labelStyle}>
+            <div key={`field-${item.name}`}>
+              <div
+                className="row"
+                style={labelStyle}>
                 <div>{item.name} (datetime)</div>
               </div>
               <div className="row">
                 <div className="col-flex-1">
                   <MUI.DatePicker
-                    ref={'fielddate-' + item.name}
+                    ref={`fielddate-${item.name}`}
                     textFieldStyle={{width: '100%'}}
                     mode="landscape"
-                    defaultDate={value} />
+                    defaultDate={value}/>
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
-                    ref={'fieldtime-' + item.name}
+                    ref={`fieldtime-${item.name}`}
                     style={{width: '100%'}}
                     defaultTime={value}
-                    emptyDefaultTime={this.getEmptyDefaultTime(value)} />
+                    emptyDefaultTime={this.getEmptyDefaultTime(value)}/>
                 </div>
                 <div className="col-xs-5">
                   <MUI.IconButton
                     iconClassName="synicon-close"
                     tooltip={`Clear ${item.name} field`}
                     tooltipPosition="bottom-left"
-                    onClick={this.handleClearDateTime.bind(null, item.name)}
-                    />
+                    onClick={this.handleClearDateTime.bind(null, item.name)}/>
                 </div>
               </div>
             </div>
@@ -473,19 +478,21 @@ export default React.createClass({
               let url = this.state[item.name].value;
 
               return (
-                <div key={'file-' + item.name}>
-                  <div style={{marginTop: 25, color: 'grey'}}>{item.name + ' (file)'}</div>
-                  <div className='row' style={{marginTop: 15}}>
-                    <div className='col-xs-8'>
+                <div key={`file-${item.name}`}>
+                  <div style={{marginTop: 25, color: 'grey'}}>{`${item.name} (file)`}</div>
+                  <div
+                    className="row"
+                    style={{marginTop: 15}}>
+                    <div className="col-xs-8">
                       <MUI.IconButton
                         iconClassName="synicon-download"
                         onClick={this.handleFileOnClick.bind(this, url)}
                         tooltip={url}/>
                     </div>
-                    <div className='col-flex-1'>
+                    <div className="col-flex-1">
                       <MUI.FlatButton
                         style={{marginTop: 5}}
-                        label='Remove'
+                        label="Remove"
                         secondary={true}
                         onClick={this.handleRemoveFile.bind(this, item.name)}/>
                     </div>
@@ -499,15 +506,15 @@ export default React.createClass({
 
         return (
           <MUI.TextField
-            key={'field-' + item.name}
-            ref={'field-' + item.name}
+            key={`field-${item.name}`}
+            ref={`field-${item.name}`}
             name={item.name}
             style={{display: 'block'}}
             fullWidth={true}
             valueLink={this.linkState(item.name)}
             errorText={this.getValidationMessages(item.name).join(' ')}
-            hintText={'Field ' + item.name}
-            floatingLabelText={item.name + ' (' + item.type + ')'}/>
+            hintText={`Field ${item.name}`}
+            floatingLabelText={`${item.name} (${item.type})`}/>
         );
       });
     }
@@ -544,20 +551,22 @@ export default React.createClass({
           onDismiss={this.resetDialogState}>
           <div>
             {this.renderFormNotifications()}
-              <div className="row">
-                <div className="col-xs-20">
-                  {this.renderBuiltinFields()}
-                </div>
-                <div className="col-xs-15" style={{paddingLeft: 15}}>
-                  <div>Class fields</div>
-                  {this.renderCustomFields()}
-                </div>
+            <div className="row">
+              <div className="col-xs-20">
+                {this.renderBuiltinFields()}
               </div>
+              <div
+                className="col-xs-15"
+                style={{paddingLeft: 15}}>
+                <div>Class fields</div>
+                {this.renderCustomFields()}
+              </div>
+            </div>
           </div>
           <Common.Loading
             type="linear"
             position="bottom"
-            show={this.state.isLoading} />
+            show={this.state.isLoading}/>
         </Common.Dialog>
       </form>
     );
