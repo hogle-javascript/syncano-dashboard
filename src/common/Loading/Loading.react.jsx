@@ -34,6 +34,9 @@ export default Radium(React.createClass({
       bottom: {
         position: 'absolute',
         bottom: 0
+      },
+      center: {
+        margin: '50% auto'
       }
     };
 
@@ -41,6 +44,7 @@ export default Radium(React.createClass({
       return [styles.base,
         this.props.position === 'top' && styles.top,
         this.props.position === 'bottom' && styles.bottom,
+        this.props.position === 'center' && styles.center,
         this.props.style];
     }
   },

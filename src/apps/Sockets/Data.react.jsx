@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -46,6 +47,16 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
+  },
+
+  isLoaded() {
+    let loadingStates = Object.keys(this.state).map((key) => {
+      if (this.state[key].hasOwnProperty('isLoading')) {
+        return this.state[key].isLoading;
+      }
+    });
+
+    return _.includes(loadingStates, true);
   },
 
   handleRemoveWebhooks() {
@@ -211,47 +222,50 @@ export default React.createClass({
             onTouchTap={this.showScheduleAddDialog}/>
         </Common.InnerToolbar>
 
-        <div style={{clear: 'both', height: '100%'}}>
-          <Data.List
-            name="Data Socket"
-            checkItem={this.checkDataViewItem}
-            isLoading={this.state.dataviews.isLoading}
-            items={this.state.dataviews.items}
-            emptyItemHandleClick={this.showDataViewAddDialog}
-            emptyItemContent="Create a Data Socket"/>
+        <div style={{clear: 'both', height: '100%', minHeight: 750}}>
+          <Common.Loading
+            show={this.isLoaded()}
+            position="center">
+            <Data.List
+              name="Data Socket"
+              checkItem={this.checkDataViewItem}
+              isLoading={this.state.dataviews.isLoading}
+              items={this.state.dataviews.items}
+              emptyItemHandleClick={this.showDataViewAddDialog}
+              emptyItemContent="Create a Data Socket"/>
 
-          <Webhooks.List
-            name="CodeBox Sockets"
-            checkItem={this.checkWebhook}
-            isLoading={this.state.webhooks.isLoading}
-            items={this.state.webhooks.items}
-            emptyItemHandleClick={this.showWebhookAddDialog}
-            emptyItemContent="Create a CodeBox Socket"/>
+            <Webhooks.List
+              name="CodeBox Sockets"
+              checkItem={this.checkWebhook}
+              isLoading={this.state.webhooks.isLoading}
+              items={this.state.webhooks.items}
+              emptyItemHandleClick={this.showWebhookAddDialog}
+              emptyItemContent="Create a CodeBox Socket"/>
 
-          <Channels.List
-            name="Channel Sockets"
-            checkItem={this.checkChannel}
-            isLoading={this.state.channels.isLoading}
-            items={this.state.channels.items}
-            emptyItemHandleClick={this.showChannelAddDialog}
-            emptyItemContent="Create a Channel Socket"/>
+            <Channels.List
+              name="Channel Sockets"
+              checkItem={this.checkChannel}
+              isLoading={this.state.channels.isLoading}
+              items={this.state.channels.items}
+              emptyItemHandleClick={this.showChannelAddDialog}
+              emptyItemContent="Create a Channel Socket"/>
 
-          <Tasks.TriggersList
-            name="Trigger Sockets"
-            checkItem={this.checkDataViewItem}
-            isLoading={this.state.triggers.isLoading}
-            items={this.state.triggers.items}
-            emptyItemHandleClick={this.showTriggerAddDialog}
-            emptyItemContent="Create a Trigger Socket"/>
+            <Tasks.TriggersList
+              name="Trigger Sockets"
+              checkItem={this.checkDataViewItem}
+              isLoading={this.state.triggers.isLoading}
+              items={this.state.triggers.items}
+              emptyItemHandleClick={this.showTriggerAddDialog}
+              emptyItemContent="Create a Trigger Socket"/>
 
-          <Tasks.SchedulesList
-            name="Schedule Sockets"
-            checkItem={this.checkDataViewItem}
-            isLoading={this.state.schedules.isLoading}
-            items={this.state.schedules.items}
-            emptyItemHandleClick={this.showScheduleAddDialog}
-            emptyItemContent="Create a Trigger Socket"/>
-
+            <Tasks.SchedulesList
+              name="Schedule Sockets"
+              checkItem={this.checkDataViewItem}
+              isLoading={this.state.schedules.isLoading}
+              items={this.state.schedules.items}
+              emptyItemHandleClick={this.showScheduleAddDialog}
+              emptyItemContent="Create a Trigger Socket"/>
+          </Common.Loading>
         </div>
 
       </Container>

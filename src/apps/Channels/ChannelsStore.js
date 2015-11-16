@@ -64,7 +64,7 @@ export default Reflux.createStore({
       text: 'no channel'
     }];
 
-    return dropdown.concat(this.data.items.map(function(item) {
+    return dropdown.concat(this.data.items.map((item) => {
       return {
         payload: item.name,
         text: item.name
@@ -85,7 +85,7 @@ export default Reflux.createStore({
   },
 
   setChannels(items) {
-    this.data.items = Object.keys(items).map(function(key) {
+    this.data.items = Object.keys(items).map((key) => {
       return items[key];
     });
     this.data.isLoading = false;
