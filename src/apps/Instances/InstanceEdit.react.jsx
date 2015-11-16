@@ -138,7 +138,7 @@ export default React.createClass({
 
   initDialogs() {
     let instance = this.state.instance;
-    let deleteText = Store.amIOwner(instance) ? 'delete' : 'leave';
+    let deleteText = Store.amIOwner(instance) ? ['Delete', 'Deleting'] : ['Leave', 'Leaving'];
     let metadata = instance ? instance.metadata : {icon: null, color: null};
 
     return [
@@ -158,15 +158,15 @@ export default React.createClass({
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
+          title: `${deleteText[0]} an Instance`,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,
           children: [
-            `Deleting this Instance can cause problems with your applications that are connected to it. ` +
-            `Do you really want to ${deleteText} this Instance?`, this.getDialogList([instance]),
+            `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
+            `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),
             <Common.Loading
               type="linear"
               position="bottom"
