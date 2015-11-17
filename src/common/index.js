@@ -26,6 +26,7 @@ import SocialAuthButtonsList from './SocialAuthButtonsList';
 import Tags from './Tags';
 import Tour from './Tour';
 import Trace from './Trace';
+import SelectField from './SelectField';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import SnackbarNotification from './SnackbarNotification';
@@ -59,6 +60,7 @@ export default {
   Tags,
   Tour,
   Trace,
+  SelectField,
   Spacing,
   SyncanoTheme,
   SnackbarNotification

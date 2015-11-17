@@ -117,7 +117,7 @@ export default React.createClass({
                   floatingLabelText='Description of a Channel' />
               </div>
             </div>
-            <MUI.SelectField
+            <Common.SelectField
               ref='type'
               name='type'
               floatingLabelText='Channel type'
