@@ -54,26 +54,26 @@ export default React.createClass({
         dialog: Common.Dialog,
         params: {
           ref: 'acceptInvitationsDialog',
-          title: 'Accept Invitation',
+          title: 'Accept an Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Yes, I\'m sure.', onClick: this.handleAccept}
+            {text: 'Confirm', onClick: this.handleAccept}
           ],
           modal: true,
-          children: 'Do you really want to accept ' + checked + ' Invitations?'
+          children: `Do you really want to accept ${checked} Invitation(s)?`
         }
       },
       {
         dialog: Common.Dialog,
         params: {
           ref: 'declineInvitationsDialog',
-          title: 'Decline Invitation',
+          title: 'Decline an Invitation',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
-            {text: 'Yes, I\'m sure.', onClick: this.handleDecline}
+            {text: 'Confirm', onClick: this.handleDecline}
           ],
           modal: true,
-          children: 'Do you really want to decline ' + checked + ' Invitations?'
+          children: `Do you really want to decline ${checked} Invitation(s)?`
         }
       }
     ];
