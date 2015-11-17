@@ -1,32 +1,28 @@
+import Globals from '../globals';
+import Syncano from 'syncano';
 
+exports.command = (callbackDone) => {
+  console.log('temp class');
+  let error = (err) => {
+    console.log(err);
+  };
 
-exports.command = function(callback) {
-  let self = this;
-  let globals = require('../globals');
-  let Syncano = require('syncano');
+  const classOptions = {
+    name: 'class',
+    schema: [
+      {type: 'string', name: 'name'}
+    ]
+  };
 
-  this.executeAsync(function(data, done) {
-    const classOptions = {
-      name: 'class',
-      schema: [
-        {type: 'string', name: 'name'}
-      ]
-    };
+  const syncano = new Syncano({accountKey: Globals.tempAccountKey,
+    baseUrl: 'https://api.syncano.rocks'});
 
-    const syncano = new Syncano({accountKey: data[0],
-                                 baseUrl: 'https://api.syncano.rocks'});
+  syncano.instance(Globals.tempInstanceName).class().add(classOptions).then((resp) => {
+    Globals.tempClassName = resp.name;
+    if (typeof callbackDone === 'function') {
+      callbackDone();
+    }
+  }).catch(error);
 
-    // console.log('fooo');
-    // console.log('sync contructor ', syncano);
-    syncano.instance(data[1]).class().add(classOptions).then((res) => {
-      globals.tempClassName = res.name;
-
-      done(true);
-    });
-  }, [globals.tempAccountKey, globals.tempInstanceName], function(result) {
-    callback.call(self, JSON.stringify(result, null, 2));
-  });
   return this;
-
-  // console.log(globals);
 };

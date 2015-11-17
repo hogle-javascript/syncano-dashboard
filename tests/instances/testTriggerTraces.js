@@ -1,14 +1,19 @@
 import globals from '../globals';
 import Syncano from 'syncano';
-
+import async from 'async';
 
 export default {
-  tags: ['testTriggerTraces'],
-  before(client) {
+  tags: ['triggerTraces'],
+  before(client, done) {
     const loginPage = client.page.loginPage();
     const syncanoPage = client.page.syncanoPage();
 
-    // client.createTempAccount();
+    async.waterfall([
+      client.createTempAccount,
+      client.createTempClass
+    ]);
+    done();
+    // client.createTempClass();
     // client.pause(5000);
     // console.log(globals);
     // syncanoPage.createTempClass(done.bind(null, true));
@@ -50,14 +55,14 @@ export default {
     //   syncano.instance(globals.tempInstanceName).class(globals.tempClassName).dataobject().add({name: 'name'});
     // });
 
-    client.createTempClass(function(result) {
-      console.log(result);
-    });
-    loginPage.navigate();
+    //client.createTempClass(function(result) {
+    //  console.log(result);
+    //});
+    //loginPage.navigate();
     // client.pause(5000);
 
-    loginPage.login(globals.tempEmail, globals.tempPass)
-      .verifyLoginSuccessful();
+    //loginPage.login(globals.tempEmail, globals.tempPass)
+    //  .verifyLoginSuccessful();
   },
   after(client) {
     client.end();
