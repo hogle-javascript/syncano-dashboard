@@ -1,9 +1,8 @@
 import globals from '../globals';
 import Syncano from 'syncano';
 
-module.exports.command = function(callback) {
-
-  this.execute(function() {
+module.exports.command = function() {
+  this.executeAsync(() => {
     const syncano = new Syncano({baseUrl: 'https://api.syncano.rocks'});
 
     globals.tempPass = Date.now();
@@ -17,11 +16,10 @@ module.exports.command = function(callback) {
 
     syncano.register({email: globals.tempEmail, password: globals.tempPass}).then((success) => {
       globals.tempAccountKey = success.account_key;
+      console.log(globals);
       account = new Syncano({accountKey: success.account_key, baseUrl: 'https://api.syncano.rocks'});
-      account.instance().add({name: globals.tempInstanceName}).then(() => {
-      });
+      account.instance().add({name: globals.tempInstanceName});
     }).catch(error);
   });
-
   return this;
 };

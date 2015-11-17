@@ -1,9 +1,11 @@
-import globals from '../globals';
-import Syncano from 'syncano';
 
-module.exports.command = function(callback) {
-  console.log('this');
-  this.execute(() => {
+
+exports.command = function(callback) {
+  let self = this;
+  let globals = require('../globals');
+  let Syncano = require('syncano');
+
+  this.executeAsync(function(data, done) {
     const classOptions = {
       name: 'class',
       schema: [
@@ -11,14 +13,20 @@ module.exports.command = function(callback) {
       ]
     };
 
-    console.log('or this');
-    const syncano = new Syncano({accountKey: globals.tempAccountKey,
+    const syncano = new Syncano({accountKey: data[0],
                                  baseUrl: 'https://api.syncano.rocks'});
 
-    syncano.instance(globals.tempInstanceName).class().add(classOptions).then((res) => {
+    // console.log('fooo');
+    // console.log('sync contructor ', syncano);
+    syncano.instance(data[1]).class().add(classOptions).then((res) => {
       globals.tempClassName = res.name;
+
+      done(true);
     });
+  }, [globals.tempAccountKey, globals.tempInstanceName], function(result) {
+    callback.call(self, JSON.stringify(result, null, 2));
   });
-  console.log(globals);
   return this;
+
+  // console.log(globals);
 };
