@@ -45,6 +45,72 @@ export default React.createClass({
     GroupsActions.fetch();
   },
 
+  getStyles() {
+    return {
+      groupDropdownLabel: {
+        overflowY: 'hidden',
+        maxHeight: 56,
+        paddingRight: 24
+      },
+      groupMenuItem: {
+        padding: '0 24px'
+      },
+      groupItemContainer: {
+        display: '-webkit-flex; display: flex',
+        justifyContent: 'space-between',
+        flexWrap: 'nowrap'
+      },
+      groupItemLabel: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      },
+      groupItemId: {
+        flexShrink: 0
+      },
+      dialogField: {
+        display: 'block'
+      },
+      dropZone: {
+        height: 80,
+        width: 250,
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: 'grey',
+        color: 'grey'
+      },
+      customFieldsContainer: {
+        paddingLeft: 15
+      },
+      buildInFieldsContainer: {
+        padding: 0,
+        margin: 0
+      },
+      removeFileButton: {
+        marginTop: 5
+      },
+      dropZoneContainer: {
+        marginTop: 25
+      },
+      dropZoneHeader: {
+        marginBottom: 10,
+        color: 'grey'
+      },
+      dropZoneDescription: {
+        padding: 15
+      },
+      dateField: {
+        width: '100%'
+      },
+      fileDownload: {
+        marginTop: 25,
+        color: 'grey'
+      },
+      fileButtonsContainer: {
+        marginTop: 15
+      }
+    };
+  },
+
   getParams() {
     let params = {
       id: this.state.id,
@@ -146,7 +212,7 @@ export default React.createClass({
     const groupsObjects = groups.map((group) => {
       return {
         payload: group.id,
-        text: group.label
+        text: this.renderGroupDropdownItem(group)
       };
     });
 
@@ -227,7 +293,23 @@ export default React.createClass({
     /* eslint-enable no-undefined */
   },
 
+  renderGroupDropdownItem(group) {
+    let styles = this.getStyles();
+
+    return (
+      <div style={styles.groupItemContainer}>
+        <div style={styles.groupItemLabel}>
+          {group.label}
+        </div>
+        <div style={styles.groupItemId}>
+          {` (ID: ${group.id})`}
+        </div>
+      </div>
+    );
+  },
+
   renderBuiltinFields() {
+    let styles = this.getStyles();
     let permissions = [
       {
         text: 'none',
@@ -254,7 +336,7 @@ export default React.createClass({
             <MUI.TextField
               ref="field-channel"
               name="field-channel"
-              style={{display: 'block'}}
+              style={styles.dialogField}
               fullWidth={true}
               disabled={true}
               value={this.state.channel || 'no channel'}
@@ -262,7 +344,7 @@ export default React.createClass({
             <MUI.TextField
               ref="field-channel_room"
               name="field-channel_room"
-              style={{display: 'block'}}
+              style={styles.dialogField}
               fullWidth={true}
               disabled={true}
               value={this.state.channel_room || 'no channel'}
@@ -275,7 +357,7 @@ export default React.createClass({
           <MUI.SelectField
             ref="field-channel"
             name="field-channel"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -286,7 +368,7 @@ export default React.createClass({
           <MUI.TextField
             ref="field-channel_room"
             name="field-channel_room"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             disabled={this.hasEditMode()}
             valueLink={this.linkState('channel_room')}
@@ -300,27 +382,29 @@ export default React.createClass({
     return (
       <div
         className="row"
-        style={{padding: 0, margin: 0}}>
+        style={styles.buildInFieldsContainer}>
         <div className="col-flex-1">
           <div>Built-in fields</div>
           <MUI.TextField
             ref="field-owner"
             name="owner"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueLink={this.linkState('owner')}
             errorText={this.getValidationMessages('owner').join(' ')}
             hintText="User ID"
             floatingLabelText="Owner"/>
           <MUI.SelectField
-            ref="field-group"
+            ref="group"
             name="group"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
+            labelStyle={styles.groupDropdownLabel}
+            menuItemStyle={styles.groupMenuItem}
             valueMember="payload"
             displayMember="text"
             valueLink={this.linkState('group')}
-            floatingLabelText="Group"
+            floatingLabelText="Group (ID)"
             errorText={this.getValidationMessages('group').join(' ')}
             menuItems={this.getGroups()}/>
           {renderChannelFields()}
@@ -328,12 +412,12 @@ export default React.createClass({
 
         <div
           className="col-flex-1"
-          style={{paddingLeft: 15}}>
+          style={styles.customFieldsContainer}>
           <div>Permissions</div>
           <MUI.SelectField
             ref="field-owner_permissions"
             name="field-owner_permissions"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -344,7 +428,7 @@ export default React.createClass({
           <MUI.SelectField
             ref="field-group_permissions"
             name="field-group_permissions"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -355,7 +439,7 @@ export default React.createClass({
           <MUI.SelectField
             ref="field-other_permissions"
             name="field-other_permissions"
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueMember="payload"
             displayMember="text"
@@ -369,15 +453,7 @@ export default React.createClass({
   },
 
   renderDropZone(item) {
-    let dropZoneStyle = {
-      height: 80,
-      width: 250,
-      borderStyle: 'dashed',
-      borderWidth: 1,
-      borderColor: 'grey',
-      color: 'grey'
-    };
-
+    let styles = this.getStyles();
     let file = this.state[`file-${item.name}`];
     let description = file ? file.name : null;
 
@@ -387,13 +463,13 @@ export default React.createClass({
     return (
       <div
         key={`dropzone-${item.name}`}
-        style={{marginTop: 25}}>
-        <div style={{marginBottom: 10, color: 'grey'}}>{`${item.name} (file)`}</div>
+        style={styles.dropZoneContainer}>
+        <div style={styles.dropZoneHeader}>{`${item.name} (file)`}</div>
         <Dropzone
           ref={`file-${item.name}`}
           onDrop={this.onDrop.bind(this, 'file-' + item.name)}
-          style={dropZoneStyle}>
-          <div style={{padding: 15}}>
+          style={styles.dropZone}>
+          <div style={styles.dropZoneDescription}>
             {description || 'Click to select files to upload or drop file here.'}
           </div>
         </Dropzone>
@@ -402,6 +478,8 @@ export default React.createClass({
   },
 
   renderCustomFields() {
+    let styles = this.getStyles();
+
     if (DataObjectsStore.getCurrentClassObj()) {
       return DataObjectsStore.getCurrentClassObj().schema.map((item) => {
         if (item.type === 'boolean') {
@@ -417,7 +495,7 @@ export default React.createClass({
               ref={`field-${item.name}`}
               name={item.name}
               valueLink={this.linkState(item.name)}
-              style={{display: 'block'}}
+              style={styles.dialogField}
               fullWidth={true}
               valueMember="payload"
               displayMember="text"
@@ -449,14 +527,14 @@ export default React.createClass({
                 <div className="col-flex-1">
                   <MUI.DatePicker
                     ref={`fielddate-${item.name}`}
-                    textFieldStyle={{width: '100%'}}
+                    textFieldStyle={styles.dateField}
                     mode="landscape"
                     defaultDate={value}/>
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
                     ref={`fieldtime-${item.name}`}
-                    style={{width: '100%'}}
+                    textFieldStyle={styles.dateField}
                     defaultTime={value}
                     emptyDefaultTime={this.getEmptyDefaultTime(value)}/>
                 </div>
@@ -479,10 +557,10 @@ export default React.createClass({
 
               return (
                 <div key={`file-${item.name}`}>
-                  <div style={{marginTop: 25, color: 'grey'}}>{`${item.name} (file)`}</div>
+                  <div style={styles.fileDownload}>{`${item.name} (file)`}</div>
                   <div
                     className="row"
-                    style={{marginTop: 15}}>
+                    style={styles.fileButtonsContainer}>
                     <div className="col-xs-8">
                       <MUI.IconButton
                         iconClassName="synicon-download"
@@ -491,7 +569,7 @@ export default React.createClass({
                     </div>
                     <div className="col-flex-1">
                       <MUI.FlatButton
-                        style={{marginTop: 5}}
+                        style={styles.removeFileButton}
                         label="Remove"
                         secondary={true}
                         onClick={this.handleRemoveFile.bind(this, item.name)}/>
@@ -509,7 +587,7 @@ export default React.createClass({
             key={`field-${item.name}`}
             ref={`field-${item.name}`}
             name={item.name}
-            style={{display: 'block'}}
+            style={styles.dialogField}
             fullWidth={true}
             valueLink={this.linkState(item.name)}
             errorText={this.getValidationMessages(item.name).join(' ')}
@@ -521,6 +599,7 @@ export default React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
     let editTitle = 'Edit a Data Object #' + this.state.id + ' (' + DataObjectsStore.getCurrentClassName() + ')';
     let addTitle = 'Add a Data Object';
     let title = this.hasEditMode() ? editTitle : addTitle;
@@ -557,7 +636,7 @@ export default React.createClass({
               </div>
               <div
                 className="col-xs-15"
-                style={{paddingLeft: 15}}>
+                style={styles.customFieldsContainer}>
                 <div>Class fields</div>
                 {this.renderCustomFields()}
               </div>
