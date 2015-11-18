@@ -7,7 +7,6 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './CodeBoxAutosaveMixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -24,18 +23,22 @@ export default React.createClass({
 
   displayName: 'CodeBoxEdit',
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object
+  },
+
   mixins: [
     Router.State,
     Router.Navigation,
-    LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
+    Mixins.Form,
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    Mixins.InstanceTabs,
-    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
@@ -71,6 +74,18 @@ export default React.createClass({
       },
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
+      },
+      notification: {
+        marginTop: 20
+      },
+      characterCounter: {
+        color: MUI.Styles.Colors.grey400,
+        marginTop: 10,
+        display: '-webkit-flex; display: flex;',
+        justifyContent: 'flex-end'
+      },
+      invalidCharactersCount: {
+        color: this.context.muiTheme.rawTheme.palette.accent2Color
       }
     };
   },
@@ -131,6 +146,15 @@ export default React.createClass({
     });
   },
 
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleUpdate();
+  },
+
   initDialogs() {
     return [{
       dialog: Common.Dialog,
@@ -181,6 +205,21 @@ export default React.createClass({
     }
   },
 
+  renderCharacterCounter() {
+    let styles = this.getStyles();
+    let charactersLimit = 32768;
+    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
+    let isCounterValid = charactersCount <= charactersLimit;
+
+    return (
+      <Common.Show if={charactersCount > 25000 && this.getValidationMessages('source').length === 0}>
+        <div style={[styles.characterCounter, !isCounterValid && styles.invalidCharactersCount]}>
+          {`Characters count: ${charactersCount} / ${charactersLimit}`}
+        </div>
+      </Common.Show>
+    );
+  },
+
   renderEditor() {
     let styles = this.getStyles();
     let source = null;
@@ -205,9 +244,17 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
-            onChange={this.runAutoSave}
+            onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
+          {this.renderCharacterCounter()}
+          <Common.Show if={this.getValidationMessages('source').length > 0}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                {this.getValidationMessages('source').join(' ')}
+              </Common.Notification>
+            </div>
+          </Common.Show>
           <MUI.Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
