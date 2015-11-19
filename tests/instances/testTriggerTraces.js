@@ -8,11 +8,11 @@ export default {
     const loginPage = client.page.loginPage();
     const syncanoPage = client.page.syncanoPage();
 
-    async.waterfall([
-      client.createTempAccount,
-      client.createTempClass
-    ]);
-    done();
+    client.createTempAccount(done);
+    // async.waterfall([
+    //   client.createTempAccount,
+    //   client.createTempClass
+    // ], () => done());
     // client.createTempClass();
     // client.pause(5000);
     // console.log(globals);
