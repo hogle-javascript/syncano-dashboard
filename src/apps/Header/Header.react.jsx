@@ -1,7 +1,8 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Router from 'react-router-old';
+import Router from 'react-router';
+import Gravatar from 'gravatar';
 
 // Stores & Actions
 import HeaderStore from './HeaderStore';
@@ -70,72 +71,89 @@ export default Radium(React.createClass({
         alignItems: 'center',
         cursor: 'pointer'
       },
-      bottomToolbarGroupIcon: {
-        color: '#fff'
+      logoutDropdownItem: {
+        color: this.context.muiTheme.rawTheme.palette.accent2Color
       }
     };
   },
 
   getDropdownItems() {
-    return [{
-      leftIcon: {
-        name: 'synicon-credit-card',
-        style: {}
-      },
-      content: {
-        text: 'Billing',
-        style: {}
-      },
-      name: 'billing',
-      handleItemClick: this.handleBillingClick
-    }, {
-      leftIcon: {
-        name: 'synicon-power',
-        style: {
-          color: '#f50057'
-        }
-      },
-      content: {
-        text: 'Logout',
-        style: {
-          color: '#f50057'
-        }
-      },
-      name: 'logout',
-      handleItemClick: this.handleLogout
+    let styles = this.getStyles();
+    let user = SessionStore.getUser() || '';
+    let billingIcon = <MUI.FontIcon className="synicon-credit-card"/>;
+    let logoutIcon = (
+      <MUI.FontIcon
+        style={styles.logoutDropdownItem}
+        className="synicon-power"/>
+    );
 
-    }];
+    if (!user) {
+      return null;
+    }
+
+    return (
+      <MUI.List>
+        <MUI.ListItem
+          leftAvatar={this.renderIconButton()}
+          onTouchTap={this.handleAccountClick}
+          primaryText={`${user.first_name} ${user.last_name}`}
+          secondaryText={user.email}/>
+        <MUI.ListDivider/>
+        <MUI.ListItem
+          onTouchTap={this.handleBillingClick}
+          leftIcon={billingIcon}
+          primaryText="Billing"/>
+        <MUI.ListItem
+          onTouchTap={this.handleLogout}
+          style={styles.logoutDropdownItem}
+          leftIcon={logoutIcon}
+          primaryText="Logout"/>
+      </MUI.List>
+    );
   },
 
-  getDropdownHeaderItems() {
-    return {
-      userFullName: this.state.user.first_name + ' ' + this.state.user.last_name,
-      userEmail: this.state.user.email,
-      clickable: true,
-      handleItemClick: this.handleAccountClick
-    };
+  getGravatarUrl() {
+    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : null;
+
+    if (this.state.gravatarUrl) {
+      return this.state.gravatarUrl;
+    }
+
+    return Gravatar.url(userEmail, {default: '404'}, true);
+  },
+
+  onAvatarError() {
+    let fallBackAvatar = `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`;
+
+    this.setState({gravatarUrl: fallBackAvatar});
   },
 
   handleTabActive(tab) {
     this.transitionTo(tab.props.route, tab.props.params);
   },
 
-  handleAccountClick(event) {
+  handleAccountClick() {
     this.transitionTo('profile-settings');
-    event.stopPropagation();
   },
 
   handleLogout() {
     SessionActions.logout();
   },
 
-  handleBillingClick(event) {
+  handleBillingClick() {
     this.transitionTo('profile-billing-plan');
-    event.stopPropagation();
   },
 
   handleSolutionsClick() {
     this.transitionTo('solutions');
+  },
+
+  renderIconButton() {
+    return (
+      <MUI.Avatar
+        src={this.getGravatarUrl()}
+        onError={this.onAvatarError}/>
+    );
   },
 
   render() {
@@ -177,13 +195,9 @@ export default Radium(React.createClass({
                 <a onClick={this.handleSolutionsClick}>Solutions</a>
               </li>
               <li id="menu-account">
-                <Common.Dropdown.Material
-                  items={this.getDropdownItems()}
-                  isOpen={this.state.expandAccountMenu}
-                  headerContent={this.getDropdownHeaderItems()}
-                  iconStyle={styles.bottomToolbarGroupIcon}>
-                  Account
-                </Common.Dropdown.Material>
+                <MUI.IconMenu iconButtonElement={this.renderIconButton()}>
+                  {this.getDropdownItems()}
+                </MUI.IconMenu>
               </li>
               <li
                 id="menu-notifications"
