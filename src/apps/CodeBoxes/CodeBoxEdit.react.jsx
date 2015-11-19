@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import CodeBoxesConstants from './CodeBoxesConstants';
 
 // Utils
 import Mixins from '../../mixins';
@@ -22,10 +23,6 @@ let SnackbarNotificationMixin = Common.SnackbarNotification.Mixin;
 export default React.createClass({
 
   displayName: 'CodeBoxEdit',
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object
-  },
 
   mixins: [
     Router.State,
@@ -77,15 +74,6 @@ export default React.createClass({
       },
       notification: {
         marginTop: 20
-      },
-      characterCounter: {
-        color: MUI.Styles.Colors.grey400,
-        marginTop: 10,
-        display: '-webkit-flex; display: flex;',
-        justifyContent: 'flex-end'
-      },
-      invalidCharactersCount: {
-        color: this.context.muiTheme.rawTheme.palette.accent2Color
       }
     };
   },
@@ -205,25 +193,13 @@ export default React.createClass({
     }
   },
 
-  renderCharacterCounter() {
-    let styles = this.getStyles();
-    let charactersLimit = 32768;
-    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
-    let isCounterValid = charactersCount <= charactersLimit;
-
-    return (
-      <Common.Show if={charactersCount > 25000 && this.getValidationMessages('source').length === 0}>
-        <div style={[styles.characterCounter, !isCounterValid && styles.invalidCharactersCount]}>
-          {`Characters count: ${charactersCount} / ${charactersLimit}`}
-        </div>
-      </Common.Show>
-    );
-  },
-
   renderEditor() {
     let styles = this.getStyles();
     let source = null;
     let codeBox = this.state.currentCodeBox;
+    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
+    let charactersCountWarn = CodeBoxesConstants.charactersCountWarn;
+    let isCounterVisible = charactersCount > charactersCountWarn && this.getValidationMessages('source').length === 0;
     let editorMode = 'python';
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
@@ -247,7 +223,10 @@ export default React.createClass({
             onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
-          {this.renderCharacterCounter()}
+          <Common.CharacterCounter
+            visible={isCounterVisible}
+            characters={charactersCount}
+            maxCharacters={CodeBoxesConstants.maxCharactersCount}/>
           <Common.Show if={this.getValidationMessages('source').length > 0}>
             <div style={styles.notification}>
               <Common.Notification type="error">
