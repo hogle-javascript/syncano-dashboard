@@ -36,6 +36,20 @@ export default React.createClass({
         validateObj[item.name] = {numericality: true};
       } else if (item.type === 'text') {
         validateObj[item.name] = {length: {maximum: 32000}};
+      } else if (item.type === 'datetime') {
+        let isDateSet = typeof this.refs[`fielddate-${item.name}`].getDate() !== 'undefined';
+        let isTimeSet = typeof this.refs[`fieldtime-${item.name}`].getTime() !== 'undefined';
+        let validate = (isFieldSet) => {
+          let isValid = isDateSet === isTimeSet;
+
+          if (!isValid && !isFieldSet) {
+            return {presence: {message: `^Both date and time fields must be filled`}};
+          }
+          return null;
+        };
+
+        validateObj[`fielddate-${item.name}`] = validate(isDateSet);
+        validateObj[`fieldtime-${item.name}`] = validate(isTimeSet);
       }
     });
     return validateObj;
@@ -526,6 +540,7 @@ export default React.createClass({
               <div className="row">
                 <div className="col-flex-1">
                   <MUI.DatePicker
+                    errorText={this.getValidationMessages(`fielddate-${item.name}`).join(' ')}
                     ref={`fielddate-${item.name}`}
                     textFieldStyle={styles.dateField}
                     mode="landscape"
@@ -533,6 +548,7 @@ export default React.createClass({
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
+                    errorText={this.getValidationMessages(`fieldtime-${item.name}`).join(' ')}
                     ref={`fieldtime-${item.name}`}
                     textFieldStyle={styles.dateField}
                     defaultTime={value}
