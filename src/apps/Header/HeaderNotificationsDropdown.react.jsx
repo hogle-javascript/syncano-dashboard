@@ -29,7 +29,8 @@ export default Radium(React.createClass({
     Reflux.connect(ProfileInvitationsStore, 'accountInvitations'),
     Router.Navigation,
     Router.State,
-    SnackbarNotificationMixin
+    SnackbarNotificationMixin,
+    MUI.Utils.Styles
   ],
 
   componentDidMount() {
@@ -42,8 +43,17 @@ export default Radium(React.createClass({
         color: MUI.Styles.Colors.white,
         fontSize: 21
       },
-      notificationIcon: {
-        color: '#ff3d00'
+      badgeContainer: {
+        padding: '0'
+      },
+      badgeContainerFilled: {
+        padding: '0 6px 0 0'
+      },
+      badge: {
+        color: '#fff'
+      },
+      badgeFilled: {
+        background: this.context.muiTheme.rawTheme.palette.accent2Color
       },
       resendEmailText: {
         cursor: 'pointer',
@@ -133,7 +143,7 @@ export default Radium(React.createClass({
       let content = (
         <div>
           <strong>{`${item.inviter} `}</strong>
-            invited you to their instance
+          invited you to their instance
           <strong>{` ${item.instance}`}</strong>
         </div>
       );
@@ -191,33 +201,25 @@ export default Radium(React.createClass({
 
   renderIcon() {
     let notifications = this.renderItems();
-    let notificationCountIcon = null;
-    let iconClassName = 'synicon-';
+    let isBadge = notifications.length > 0;
+    let notificationCountIcon = isBadge ? notifications.length : '';
+    let iconClassName = notifications.length > 0 ? 'synicon-bell' : 'synicon-bell-outline';
     let styles = this.getStyles();
+    let badgeContainerStyle = this.mergeAndPrefix(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
+    let badgeStyle = this.mergeAndPrefix(styles.badge, isBadge && styles.badgeFilled);
 
-    if (notifications.length > 0) {
-      iconClassName += 'bell';
-    } else {
-      iconClassName += 'bell-outline';
-    }
-
-    if (notifications.length > 0) {
-      let synIconName = notifications.length < 10 ? notifications.length : '9-plus';
-
-      notificationCountIcon = (
-        <MUI.FontIcon
-          className={`synicon-numeric-${synIconName}-box notification-count-icon`}
-          color={styles.notificationIcon.color}/>
-      );
-    }
 
     return (
       <div>
-        {notificationCountIcon}
-        <MUI.IconButton
-          iconStyle={styles.icon}
-          iconClassName={iconClassName}
-          onTouchTap={this.handleNotificationsIconClick}/>
+        <MUI.Badge
+          badgeContent={notificationCountIcon}
+          style={badgeContainerStyle}
+          badgeStyle={badgeStyle}>
+          <MUI.IconButton
+            iconStyle={styles.icon}
+            iconClassName={iconClassName}
+            onTouchTap={this.handleNotificationsIconClick}/>
+        </MUI.Badge>
       </div>
     );
   },
