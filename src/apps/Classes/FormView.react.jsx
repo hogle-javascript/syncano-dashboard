@@ -13,6 +13,7 @@ import Store from './FormViewStore';
 import SessionStore from '../Session/SessionStore';
 import ClassesStore from './ClassesStore';
 import GroupsStore from '../Users/GroupsStore';
+import GroupsActions from '../Users/GroupsActions';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -38,6 +39,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    GroupsActions.fetch();
     if (this.hasEditMode()) {
       Store.refreshData();
     }
