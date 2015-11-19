@@ -2,7 +2,6 @@ import React from 'react';
 import Radium from 'radium';
 
 import MUI from 'syncano-material-ui';
-import Common from '../../common';
 
 export default Radium(React.createClass({
 
@@ -60,12 +59,14 @@ export default Radium(React.createClass({
   render() {
     let styles = this.getStyles();
 
+    if (!this.props.visible) {
+      return null;
+    }
+
     return (
-      <Common.Show if={this.props.visible}>
-        <div style={styles}>
-          {`Characters count: ${this.props.characters} / ${this.props.maxCharacters}`}
-        </div>
-      </Common.Show>
+      <div style={styles}>
+        {`Characters count: ${this.props.characters} / ${this.props.maxCharacters}`}
+      </div>
     );
   }
 }));
