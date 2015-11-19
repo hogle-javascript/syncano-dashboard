@@ -2,6 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 import Dropzone from 'react-dropzone';
 import Filesize from 'filesize';
+import _ from 'lodash';
 
 // Utils
 import Mixins from '../../mixins';
@@ -37,8 +38,8 @@ export default React.createClass({
       } else if (item.type === 'text') {
         validateObj[item.name] = {length: {maximum: 32000}};
       } else if (item.type === 'datetime') {
-        let isDateSet = typeof this.refs[`fielddate-${item.name}`].getDate() !== 'undefined';
-        let isTimeSet = typeof this.refs[`fieldtime-${item.name}`].getTime() !== 'undefined';
+        let isDateSet = !_.isUndefined(this.refs[`fielddate-${item.name}`].getDate());
+        let isTimeSet = !_.isUndefined(this.refs[`fieldtime-${item.name}`].getTime());
         let validate = (isFieldSet) => {
           let isValid = isDateSet === isTimeSet;
 
