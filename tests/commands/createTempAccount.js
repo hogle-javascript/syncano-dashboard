@@ -11,7 +11,7 @@ exports.command = (callback) => {
 
   async.waterfall([
     (cb) => {
-      Syncano({baseUrl, debug: true})
+      new Syncano({baseUrl, debug: true})
         .register({
             email: Globals.tempEmail,
             password: Globals.tempPass
@@ -23,7 +23,7 @@ exports.command = (callback) => {
         .catch(cb);
     },
     (accountKey, cb) => {
-      Syncano({baseUrl, accountKey})
+      new Syncano({baseUrl, accountKey})
         .instance()
         .add({name: Globals.tempInstanceName})
         .then(() => cb(null))

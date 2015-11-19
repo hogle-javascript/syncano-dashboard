@@ -8,7 +8,15 @@ export default {
     const loginPage = client.page.loginPage();
     const syncanoPage = client.page.syncanoPage();
 
-    client.createTempAccount(done);
+    async.waterfall([
+      client.createTempAccount,
+      client.createTempClass
+    ], (err) => {
+      if (err) throw err;
+      console.log(globals);
+      done();
+    });
+
     // async.waterfall([
     //   client.createTempAccount,
     //   client.createTempClass
@@ -69,8 +77,8 @@ export default {
   },
   'Test Trigger Traces': (client) => {
     const classesPage = client.page.classesPage();
-
-    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/classes/`);
+    console.log(globals);
+    client.url(`https://google.pl`);
     client.pause(5000, function() {
       console.log(globals);
     });
