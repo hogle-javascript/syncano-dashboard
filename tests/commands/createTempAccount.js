@@ -11,7 +11,7 @@ exports.command = (callback) => {
 
   async.waterfall([
     (cb) => {
-      new Syncano({baseUrl, debug: true})
+      new Syncano({baseUrl})
         .register({
             email: Globals.tempEmail,
             password: Globals.tempPass

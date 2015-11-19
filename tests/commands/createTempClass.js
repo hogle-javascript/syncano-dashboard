@@ -19,7 +19,7 @@ exports.command = (callback) => {
     .then((response) => {
       Globals.tempClassName = response.name;
       if (typeof callback === 'function') {
-        callback();
+        callback.call(this);
       }
     })
     .catch((error) => {
