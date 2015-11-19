@@ -8,7 +8,8 @@ export default {
 
   columnsRenderers() {
     return {
-      created_at: this.renderColumnDate
+      created_at: this.renderColumnDate,
+      updated_at: this.renderColumnDate
     };
   },
 

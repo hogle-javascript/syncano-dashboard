@@ -42,7 +42,6 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.listenToForms();
     this.waitFor(
-      SessionActions.setUser,
       SessionActions.setInstance,
       this.refreshData
     );
@@ -68,6 +67,11 @@ export default Reflux.createStore({
   getCurrentCodeBox() {
     console.debug('CodeBoxStore::getCurrentCodeBox');
     return this.data.currentCodeBox;
+  },
+
+  onFetchCodeBox() {
+    this.data.currentCodeBox = null;
+    this.trigger(this.data);
   },
 
   onFetchCodeBoxCompleted(codeBox) {

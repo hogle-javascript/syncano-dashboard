@@ -8,6 +8,8 @@ import Mixins from '../../mixins';
 import ChannelsStore from './ChannelsStore';
 import ChannelsActions from './ChannelsActions';
 import ChannelDialogStore from './ChannelDialogStore';
+import GroupsStore from '../Users/GroupsStore';
+import GroupsActions from '../Users/GroupsActions';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -32,6 +34,41 @@ export default React.createClass({
     }
   },
 
+  componentDidMount() {
+    GroupsActions.fetch();
+  },
+
+  getStyles() {
+    return {
+      groupDropdownLabel: {
+        overflowY: 'hidden',
+        maxHeight: 56,
+        paddingRight: 24
+      },
+      groupMenuItem: {
+        padding: '0 24px'
+      },
+      groupSection: {
+        marginTop: 40
+      },
+      groupItemContainer: {
+        display: '-webkit-flex; display: flex',
+        justifyContent: 'space-between',
+        flexWrap: 'nowrap'
+      },
+      groupItemLabel: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      },
+      groupItemId: {
+        flexShrink: 0
+      },
+      toggle: {
+        marginTop: 20
+      }
+    };
+  },
+
   getParams() {
     return {
       name: this.state.name,
@@ -42,6 +79,27 @@ export default React.createClass({
       other_permissions: this.state.other_permissions,
       group_permissions: this.state.group_permissions
     };
+  },
+
+  getGroups() {
+    const groups = GroupsStore.getGroups();
+    const emptyItem = {
+      payload: null,
+      text: 'none'
+    };
+
+    if (groups.length === 0) {
+      return [emptyItem];
+    }
+    const groupsObjects = groups.map((group) => {
+      return {
+        payload: group.id,
+        text: this.renderGroupDropdownItem(group)
+      };
+    });
+
+    groupsObjects.unshift(emptyItem);
+    return groupsObjects;
   },
 
   handleDialogShow() {
@@ -63,7 +121,23 @@ export default React.createClass({
     this.setState(state);
   },
 
+  renderGroupDropdownItem(group) {
+    let styles = this.getStyles();
+
+    return (
+      <div style={styles.groupItemContainer}>
+        <div style={styles.groupItemLabel}>
+          {group.label}
+        </div>
+        <div style={styles.groupItemId}>
+          {` (ID: ${group.id})`}
+        </div>
+      </div>
+    );
+  },
+
   render() {
+    let styles = this.getStyles();
     let title = this.hasEditMode() ? 'Edit' : 'Add';
     let dialogStandardActions = [
       <MUI.FlatButton
@@ -104,7 +178,7 @@ export default React.createClass({
                   disabled={this.hasEditMode()}
                   fullWidth={true}
                   hintText='Short name for your Channel'
-                  floatingLabelText='Name of a Channel' />
+                  floatingLabelText='Name of a Channel'/>
               </div>
               <div className="col-flex-1">
                 <MUI.TextField
@@ -114,7 +188,7 @@ export default React.createClass({
                   errorText={this.getValidationMessages('description').join(' ')}
                   fullWidth={true}
                   hintText='Description of a Channel (optional)'
-                  floatingLabelText='Description of a Channel' />
+                  floatingLabelText='Description of a Channel'/>
               </div>
             </div>
             <MUI.SelectField
@@ -125,20 +199,25 @@ export default React.createClass({
               errorText={this.getValidationMessages('type').join(' ')}
               valueMember='payload'
               displayMember='text'
+              disabled={this.hasEditMode()}
               fullWidth={true}
-              menuItems={ChannelsStore.getChannelTypesDropdown()} />
+              menuItems={ChannelsStore.getChannelTypesDropdown()}/>
 
-            <div style={{marginTop: 40}}>Permissions</div>
+            <div style={styles.groupSection}>Permissions</div>
             <div className="row">
               <div className="col-flex-1">
-                <MUI.TextField
-                  ref='group'
-                  name='group'
+                <MUI.SelectField
+                  ref="group"
+                  name="group"
                   fullWidth={true}
+                  labelStyle={styles.groupDropdownLabel}
+                  menuItemStyle={styles.groupMenuItem}
+                  valueMember="payload"
+                  displayMember="text"
                   valueLink={this.linkState('group')}
+                  floatingLabelText="Group (ID)"
                   errorText={this.getValidationMessages('group').join(' ')}
-                  hintText='ID of the Group'
-                  floatingLabelText='Group (ID)' />
+                  menuItems={this.getGroups()}/>
               </div>
               <div className="col-flex-1">
                 <MUI.SelectField
@@ -150,7 +229,7 @@ export default React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   fullWidth={true}
-                  menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
+                  menuItems={ChannelsStore.getChannelPermissionsDropdown()}/>
               </div>
               <div className="col-flex-1">
                 <MUI.SelectField
@@ -162,7 +241,7 @@ export default React.createClass({
                   valueMember='payload'
                   displayMember='text'
                   fullWidth={true}
-                  menuItems={ChannelsStore.getChannelPermissionsDropdown()} />
+                  menuItems={ChannelsStore.getChannelPermissionsDropdown()}/>
               </div>
             </div>
             <MUI.Toggle
@@ -170,13 +249,13 @@ export default React.createClass({
               name='custom_publish'
               defaultToggled={this.state.custom_publish}
               onToggle={this.handleToogle}
-              style={{marginTop: 20}}
-              label='Custom publishing in this channel?' />
+              style={styles.toggle}
+              label='Custom publishing in this channel?'/>
           </div>
           <Common.Loading
             type='linear'
             position='bottom'
-            show={this.state.isLoading} />
+            show={this.state.isLoading}/>
         </Common.Dialog>
       </form>
     );

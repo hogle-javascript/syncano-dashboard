@@ -75,27 +75,6 @@ export default React.createClass({
     }
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.editor = ace.edit(nextProps.name);
-    this.editor.getSession().setMode('ace/mode/' + nextProps.mode);
-    this.editor.setTheme('ace/theme/' + nextProps.theme);
-    this.editor.setFontSize(nextProps.fontSize);
-    this.editor.setOption('maxLines', nextProps.maxLines);
-    this.editor.setOption('readOnly', nextProps.readOnly);
-    this.editor.setOption('highlightActiveLine', nextProps.highlightActiveLine);
-    this.editor.setShowPrintMargin(nextProps.setShowPrintMargin);
-
-    if (this.editor.getValue() !== nextProps.value) {
-      this.editor.setValue(nextProps.value);
-    }
-    this.editor.renderer.setShowGutter(nextProps.showGutter);
-    if (nextProps.onLoad) {
-      nextProps.onLoad(this.editor);
-    }
-
-    this.editor.clearSelection();
-  },
-
   onChange() {
     let value = this.editor.getValue();
 
