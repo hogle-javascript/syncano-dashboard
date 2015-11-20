@@ -10,6 +10,7 @@ export default Radium(React.createClass({
   propTypes: {
     visible: React.PropTypes.bool,
     maxCharacters: React.PropTypes.number.isRequired,
+    charactersCountWarn: React.PropTypes.number,
     characters: React.PropTypes.number.isRequired,
     position: React.PropTypes.oneOf(['left', 'right', 'center']),
     style: React.PropTypes.object
@@ -27,8 +28,7 @@ export default Radium(React.createClass({
   },
 
   getStyles() {
-    let isCountExceeded = this.props.characters > this.props.maxCharacters;
-    let styles = {
+    return {
       characterCounter: {
         color: MUI.Styles.Colors.grey400,
         marginTop: 10,
@@ -47,24 +47,25 @@ export default Radium(React.createClass({
         justifyContent: 'flex-end'
       }
     };
+  },
 
-    return [
+  render() {
+    let isCountExceeded = this.props.characters > this.props.maxCharacters;
+    let isWarnCountExceed = this.props.charactersCountWarn && (this.props.characters > this.props.charactersCountWarn);
+    let styles = this.getStyles();
+    let counterStyle = [
       styles.characterCounter,
       styles[this.props.position],
       this.props.style,
       isCountExceeded && styles.invalidCharactersCount
     ];
-  },
 
-  render() {
-    let styles = this.getStyles();
-
-    if (!this.props.visible) {
+    if (!this.props.visible || !isWarnCountExceed) {
       return null;
     }
 
     return (
-      <div style={styles}>
+      <div style={counterStyle}>
         {`Characters count: ${this.props.characters} / ${this.props.maxCharacters}`}
       </div>
     );

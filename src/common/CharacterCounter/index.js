@@ -1,3 +1,3 @@
-import CharacterCounter from './CharacterCounter.react';
+import CharacterCounter from './CharacterCounter';
 
 export default CharacterCounter;

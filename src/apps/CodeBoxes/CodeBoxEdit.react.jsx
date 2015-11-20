@@ -198,8 +198,6 @@ export default React.createClass({
     let source = null;
     let codeBox = this.state.currentCodeBox;
     let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
-    let charactersCountWarn = CodeBoxesConstants.charactersCountWarn;
-    let isCounterVisible = charactersCount > charactersCountWarn && this.getValidationMessages('source').length === 0;
     let editorMode = 'python';
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
@@ -224,7 +222,7 @@ export default React.createClass({
             onLoad={this.clearAutosaveTimer}
             value={source}/>
           <Common.CharacterCounter
-            visible={isCounterVisible}
+            charactersCountWarn={CodeBoxesConstants.charactersCountWarn}
             characters={charactersCount}
             maxCharacters={CodeBoxesConstants.maxCharactersCount}/>
           <Common.Show if={this.getValidationMessages('source').length > 0}>

@@ -1,7 +1,6 @@
-let source = {
-  maxCharactersCount: 65536
+const maxCharacters = 65536;
+
+export default {
+  maxCharactersCount: maxCharacters,
+  charactersCountWarn: Math.floor(maxCharacters * 3 / 4)
 };
-
-source.charactersCountWarn = Math.floor(source.maxCharactersCount * 3 / 4);
-
-export default source;
