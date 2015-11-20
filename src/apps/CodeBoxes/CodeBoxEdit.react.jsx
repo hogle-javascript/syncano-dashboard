@@ -198,8 +198,8 @@ export default React.createClass({
     let styles = this.getStyles();
     let source = null;
     let codeBox = this.state.currentCodeBox;
+    let editorMode = Store.getEditorMode();
     let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
-    let editorMode = 'python';
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
 
@@ -211,7 +211,6 @@ export default React.createClass({
 
     if (codeBox) {
       source = codeBox.source;
-      editorMode = Store.getEditorMode();
 
       return (
         <div>
