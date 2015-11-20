@@ -94,7 +94,7 @@ export default Reflux.createStore({
 
   fetchTraces() {
     console.debug('CodeBoxStore::fetchTraces');
-    if (this.data.currentCodeBoxId === null) {
+    if (!this.data.currentCodeBox) {
       return;
     }
     Actions.fetchCodeBoxTraces(this.data.currentCodeBox.id);
