@@ -87,7 +87,9 @@ export default Reflux.createStore({
   },
 
   getEditorMode() {
-    return this.langMap[this.data.currentCodeBox.runtime_name];
+    let currentCodeBox = this.data.currentCodeBox;
+
+    return currentCodeBox ? this.langMap[currentCodeBox.runtime_name] : 'python';
   },
 
   fetchTraces() {
