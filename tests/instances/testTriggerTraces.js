@@ -1,5 +1,4 @@
-import globals from '../globals';
-import Syncano from 'syncano';
+import Globals from '../globals';
 import async from 'async';
 
 export default {
@@ -8,17 +7,34 @@ export default {
     client.end();
   },
   'Test Trigger Traces': (client) => {
-    const classesPage = client.page.classesPage();
-
     async.waterfall([
       client.createTempAccount,
-      client.createTempClass
+      client.createTempCodeBox,
+      client.createTempTrigger,
+      client.createTempUser
     ], (err) => {
       if (err) throw err;
-      client.url(`https://google.pl`);
-      client.pause(5000, function() {
-        console.log(globals);
+      const loginPage = client.page.loginPage();
+      const triggerTraces = client.page.triggerTracesPage();
+      const url = `#/instances/${Globals.tempInstanceName}/tasks/trigger/${Globals.tempTriggerId}/traces`;
+
+      loginPage
+        .navigate()
+        .login(Globals.tempEmail, Globals.tempPass)
+        .verifyLoginSuccessful();
+
+      client.urlHash(url);
+      triggerTraces.waitForElementPresent('@traceCheckIcon');
+      client.element('css selector', triggerTraces.elements.traceCheckIcon.selector, function(result) {
+        if (result.value && result.value.ELEMENT) {
+          triggerTraces.clickButton('@traceCheckIcon');
+        } else {
+          client.pause(5000);
+          client.urlHash(url);
+          triggerTraces.clickButton('@traceCheckIcon');
+        }
       });
+      triggerTraces.waitForElementVisible('@traceDetails');
     });
   }
 };
