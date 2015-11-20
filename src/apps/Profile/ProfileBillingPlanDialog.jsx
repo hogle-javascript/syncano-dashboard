@@ -66,6 +66,12 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    console.debug('ProfileBillingPlanDialog::componentDidMount');
+    Actions.fetchBillingPlans();
+    Actions.fetchBillingCard();
+  },
+
   getValidatorAttributes() {
     if (this.state.card) {
       return {};
@@ -123,12 +129,6 @@ export default React.createClass({
         color: '#9B9B9B'
       }
     };
-  },
-
-  handleDialogShow() {
-    console.debug('ProfileBillingPlanDialog::handleDialogShow');
-    Actions.fetchBillingPlans();
-    Actions.fetchBillingCard();
   },
 
   handleEditSubmit() {
@@ -321,8 +321,7 @@ export default React.createClass({
         <Common.Dialog
           ref="dialog"
           contentStyle={{maxWidth: 850, padding: 0}}
-          onShow={this.handleDialogShow}
-          openImmediately={this.props.openImmediately}
+          defaultOpen={this.props.defaultOpen}
           actions={dialogCustomActions}
           onDismiss={this.handleDismiss}>
           <div>

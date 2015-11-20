@@ -35,8 +35,8 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    console.info('ScheduleDialog::handleDialogShow');
+  componentDidMount() {
+    console.info('ScheduleDialog::componentDidMount');
     CodeBoxesActions.fetch();
   },
 
@@ -81,11 +81,9 @@ export default React.createClass({
         method='post'>
         <Common.Dialog
           ref='dialog'
-          title={title + ' a Schedule'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          title={`${title} a Schedule`}
+          defaultOpen={this.props.defaultOpen}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

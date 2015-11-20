@@ -33,16 +33,16 @@ export default React.createClass({
     }
   },
 
+  componentDidMount() {
+    console.info('DataViewDialog::componentDidMount');
+    ClassesActions.fetch();
+  },
+
   isEnabled(list, field) {
     if (!list) {
       return false;
     }
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
-  },
-
-  handleDialogShow() {
-    console.info('DataViewDialog::handleDialogShow');
-    ClassesActions.fetch();
   },
 
   handleAddSubmit() {
@@ -203,10 +203,8 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' a Data Endpoint'}
-          openImmediately={this.props.openImmediately}
+          defaultOpen={this.props.defaultOpen}
           actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}
           modal={true}>
 
           <div>

@@ -39,6 +39,11 @@ export default React.createClass({
     return validateObj;
   },
 
+  componentDidMount() {
+    console.info('DataObjectDialog::componentDidMount');
+    ChannelsActions.fetch();
+  },
+
   getParams() {
     let params = {
       id: this.state.id,
@@ -132,11 +137,6 @@ export default React.createClass({
 
     state[fieldName] = files[0];
     this.setState(state);
-  },
-
-  handleDialogShow() {
-    console.info('DataObjectDialog::handleDialogShow');
-    ChannelsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -510,9 +510,7 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title}
-          onShow={this.handleDialogShow}
-          actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}>
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
               <div className="row">

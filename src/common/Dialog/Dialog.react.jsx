@@ -31,12 +31,16 @@ export default React.createClass({
     };
   },
 
+  isOpen() {
+    return this.refs.dialog.isOpen();
+  },
+
   show() {
-    this.refs.dialog.show();
+    this.refs.dialog.setState({open: true});
   },
 
   dismiss() {
-    this.refs.dialog.dismiss();
+    this.refs.dialog.setState({open: false});
   },
 
   render() {

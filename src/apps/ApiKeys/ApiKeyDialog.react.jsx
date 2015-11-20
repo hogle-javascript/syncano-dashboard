@@ -68,10 +68,8 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' an API Key'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          defaultOpen={this.props.defaultOpen}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

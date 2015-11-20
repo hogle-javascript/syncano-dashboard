@@ -44,10 +44,6 @@ export default React.createClass({
     };
   },
 
-  handleDialogShow() {
-    console.info('ScheduleDialog::handleDialogShow');
-  },
-
   handleEditSubmit() {
     ChannelsActions.updateChannel(this.state.name, this.getParams());
   },
@@ -88,8 +84,6 @@ export default React.createClass({
           ref='dialog'
           title={title + ' a Channel'}
           actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}
-          onShow={this.handleDialogShow}
           contentStyle={{padding: '8px 0 0 0'}}>
           <div>
             {this.renderFormNotifications()}

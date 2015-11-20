@@ -39,8 +39,8 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    console.info('TriggerDialog::handleDialogShow');
+  componentDidMount() {
+    console.info('TriggerDialog::componentDidMount');
     CodeBoxesActions.fetch();
     ClassesActions.fetch();
   },
@@ -88,11 +88,9 @@ export default React.createClass({
         method="post">
         <Common.Dialog
           ref="dialog"
-          title={title + ' a Trigger'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          title={`${title} a Trigger`}
+          defaultOpen={this.props.defaultOpen}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

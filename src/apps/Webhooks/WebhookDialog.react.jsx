@@ -32,8 +32,8 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    console.info('WebhookDialog::handleDialogShow');
+  componentDidMount() {
+    console.info('WebhookDialog::componentDidMount');
     CodeBoxesActions.fetch();
   },
 
@@ -47,12 +47,11 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    WebhooksActions.updateWebhook(
-      this.state.name, {
-        codebox: this.state.codebox,
-        description: this.state.description,
-        public: this.state.public
-      });
+    WebhooksActions.updateWebhook(this.state.name, {
+      codebox: this.state.codebox,
+      description: this.state.description,
+      public: this.state.public
+    });
   },
 
   handleToogle(event, status) {
@@ -86,10 +85,8 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' a Webhook'}
-          openImmediately={this.props.openImmediately}
+          defaultOpen={this.props.defaultOpen}
           actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}
           modal={true}>
           <div>
             {this.renderFormNotifications()}

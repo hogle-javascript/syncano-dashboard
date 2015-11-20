@@ -141,8 +141,7 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' a User'}
-          actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}>
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField
