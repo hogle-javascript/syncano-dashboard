@@ -186,6 +186,7 @@ export default React.createClass({
   },
 
   shouldCodeBoxRun() {
+    this.clearAutosaveTimer();
     if (this.isSaved()) {
       this.handleRun();
     } else {
