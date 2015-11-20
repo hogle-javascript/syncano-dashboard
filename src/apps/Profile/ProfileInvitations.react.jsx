@@ -59,7 +59,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleAccept}
           ],
-          modal: true,
           children: `Do you really want to accept ${checked} Invitation(s)?`
         }
       },
@@ -72,7 +71,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDecline}
           ],
-          modal: true,
           children: `Do you really want to decline ${checked} Invitation(s)?`
         }
       }

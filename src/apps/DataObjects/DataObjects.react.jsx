@@ -110,7 +110,6 @@ export default React.createClass({
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
-        modal: true,
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }];

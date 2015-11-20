@@ -181,7 +181,6 @@ export default Radium(React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
             this.getDialogList(checkedInstances),
@@ -202,7 +201,6 @@ export default Radium(React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
-          modal: true,
           children: [
             'Do you really want to leave ' + this.getDialogListLength(checkedInstances) + ' Instance(s)?',
             this.getDialogList(checkedInstances),

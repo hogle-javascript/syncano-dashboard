@@ -111,7 +111,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
             this.getDialogList(checkedAdmins, 'email'),
@@ -132,7 +131,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleResendInvitation}
           ],
-          modal: true,
           children: [
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),
@@ -153,7 +151,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),

@@ -128,7 +128,6 @@ export default React.createClass({
               onClick: this.handleDelete
             }
           ],
-          modal: true,
           children: [
             'Some of checked CodeBoxes are associated with Schedules or Triggers. Do you really want to delete ' +
             checkedCodeboxes.length + ' CodeBox(es)?',
@@ -159,7 +158,6 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
-        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
           this.getDialogList(checkedCodeboxes, 'label'),

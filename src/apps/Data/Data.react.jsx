@@ -92,7 +92,6 @@ export default React.createClass({
               onClick: this.handleRemoveDataViews
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + Store.getCheckedItems().length + ' Data endpoints?'
         }
       }

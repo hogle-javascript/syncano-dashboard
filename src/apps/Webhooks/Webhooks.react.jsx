@@ -93,7 +93,6 @@ export default React.createClass({
               onClick: this.handleRemoveWebhooks
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
         }
       }

@@ -86,8 +86,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' a Webhook'}
           defaultOpen={this.props.defaultOpen}
-          actions={dialogStandardActions}
-          modal={true}>
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

@@ -150,7 +150,6 @@ export default React.createClass({
               onClick: this.handleRemoveWebhooks
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + Webhooks.Store.getCheckedItems().length + ' Webhooks?'
         }
       },
@@ -170,7 +169,6 @@ export default React.createClass({
               onClick: this.handleRemoveDataViews
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + Data.Store.getCheckedItems().length + ' Data endpoints?'
         }
       }

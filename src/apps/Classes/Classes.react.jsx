@@ -144,7 +144,6 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
-        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
           this.getDialogList(checkedClasses),
@@ -176,7 +175,6 @@ export default React.createClass({
               onClick: this.handleDelete
             }
           ],
-          modal: true,
           children: [
             'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
             checkedClasses.length + ' Class(es)?',

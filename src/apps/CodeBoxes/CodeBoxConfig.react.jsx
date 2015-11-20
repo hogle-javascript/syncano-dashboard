@@ -213,7 +213,6 @@ export default Radium(React.createClass({
             onClick: this.handleCancel
           }
         ],
-        modal: true,
         children: "You're leaving CodeBox Config with unsaved changes. Are you sure you want to continue?"
       }
     }];

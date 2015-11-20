@@ -84,7 +84,6 @@ export default React.createClass({
               onClick: this.handleRemoveTriggers
             }
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
             this.getDialogList(checkedTriggers, 'label'),
@@ -104,7 +103,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveSchedules}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
             this.getDialogList(checkedSchedules, 'label'),

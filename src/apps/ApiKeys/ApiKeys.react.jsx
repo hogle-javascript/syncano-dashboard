@@ -75,7 +75,6 @@ export default React.createClass({
             onClick: this.handleReset
           }
         ],
-        modal: true,
         children: [
           'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
           <Common.Loading
@@ -99,7 +98,6 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
-        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
           this.getDialogList(checkedApiKeys, 'api_key'),

@@ -79,7 +79,6 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
-        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedChannels) + ' Channel(s)?',
           this.getDialogList(checkedChannels),

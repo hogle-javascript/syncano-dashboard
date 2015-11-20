@@ -140,7 +140,6 @@ export default React.createClass({
               onClick: this.handleRemoveGroups
             }
           ],
-          modal: true,
           children: [
             'Do you really want to delete this Group?',
             <Common.Loading
@@ -161,7 +160,6 @@ export default React.createClass({
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveUsers}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
             this.getDialogList(checkedUsers, 'username'),

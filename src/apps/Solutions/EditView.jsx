@@ -128,7 +128,6 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
-        modal: true,
         children: 'Do you really want to delete this Solution?'
       }
     }];

@@ -204,9 +204,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' a Data Endpoint'}
           defaultOpen={this.props.defaultOpen}
-          actions={dialogStandardActions}
-          modal={true}>
-
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <div>Main settings</div>
