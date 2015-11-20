@@ -5,12 +5,12 @@ exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
 
-    const data = {
-      label: 'trigger',
-      signal: 'post_create',
-      class: 'user_profile',
-      codebox: Globals.tempCodeBoxId
-    };
+  const data = {
+    label: 'trigger',
+    signal: 'post_create',
+    class: 'user_profile',
+    codebox: Globals.tempCodeBoxId
+  };
 
   new Syncano({accountKey, baseUrl})
     .instance(Globals.tempInstanceName)

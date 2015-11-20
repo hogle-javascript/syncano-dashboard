@@ -5,16 +5,17 @@ exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
 
-const data = {
-        username: 'user', 
-        password: 'password'};
+  const data = {
+    username: 'user',
+    password: 'password'
+  };
 
 
   new Syncano({accountKey, baseUrl})
     .instance(Globals.tempInstanceName)
     .user()
     .add(data)
-    .then((response) => {
+    .then(() => {
       if (typeof callback === 'function') {
         callback.call(this);
       }

@@ -13,8 +13,8 @@ exports.command = (callback) => {
     (cb) => {
       new Syncano({baseUrl})
         .register({
-            email: Globals.tempEmail,
-            password: Globals.tempPass
+          email: Globals.tempEmail,
+          password: Globals.tempPass
         })
         .then((success) => {
           Globals.tempAccountKey = success.account_key;
@@ -27,7 +27,7 @@ exports.command = (callback) => {
         .instance()
         .add({name: Globals.tempInstanceName})
         .then(() => cb(null))
-        .catch(cb)
+        .catch(cb);
     }
   ], (err) => {
     if (err) throw err;
@@ -36,5 +36,5 @@ exports.command = (callback) => {
     }
   });
 
-  return this; // allows the command to be chained.
+  return this;
 };
