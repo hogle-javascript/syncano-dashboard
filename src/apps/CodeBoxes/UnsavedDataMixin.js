@@ -13,6 +13,9 @@ export default {
 
   statics: {
     willTransitionFrom(transition, component) {
+      if (component.hasOwnProperty('clearAutosaveTimer')) {
+        component.clearAutosaveTimer();
+      }
       if (!component.isSaved() && !component.state._ignoreUnsavedData) {
         transition.abort();
         component.showDialog('unsavedDataWarn');
