@@ -138,6 +138,7 @@ export default React.createClass({
         key: 'runUnsavedCodeBox',
         ref: 'runUnsavedCodeBox',
         title: 'Unsaved CodeBox',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -156,6 +157,7 @@ export default React.createClass({
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Just leave',

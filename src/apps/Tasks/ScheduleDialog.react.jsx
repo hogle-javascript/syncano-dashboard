@@ -83,6 +83,7 @@ export default React.createClass({
           ref='dialog'
           title={`${title} a Schedule`}
           defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
           actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}

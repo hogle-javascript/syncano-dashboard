@@ -140,6 +140,7 @@ export default React.createClass({
           key: 'removeWebhookDialog',
           ref: 'removeWebhookDialog',
           title: 'Delete a Webhook',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -159,6 +160,7 @@ export default React.createClass({
           key: 'removeDataViewDialog',
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',

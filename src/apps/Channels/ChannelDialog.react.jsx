@@ -84,6 +84,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' a Channel'}
           actions={dialogStandardActions}
+          onRequestClose={this.handleCancel}
           contentStyle={{padding: '8px 0 0 0'}}>
           <div>
             {this.renderFormNotifications()}

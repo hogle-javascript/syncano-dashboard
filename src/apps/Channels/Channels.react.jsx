@@ -69,6 +69,7 @@ export default React.createClass({
       params: {
         ref: 'deleteChannelDialog',
         title: 'Delete a Channel',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',

@@ -203,6 +203,7 @@ export default Radium(React.createClass({
       params: {
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox config',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Just leave',

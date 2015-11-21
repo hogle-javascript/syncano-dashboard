@@ -74,6 +74,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' an Administrator'}
           defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
           actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
@@ -86,7 +87,6 @@ export default React.createClass({
               errorText={this.getValidationMessages('email').join(' ')}
               hintText='Email of the administrator'
               floatingLabelText='Email'/>
-
             <MUI.SelectField
               className="invite-admin-dropdown"
               ref='role'

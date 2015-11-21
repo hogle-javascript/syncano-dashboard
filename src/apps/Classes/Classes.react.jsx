@@ -134,6 +134,7 @@ export default React.createClass({
         key: 'deleteClassDialog',
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -165,6 +166,7 @@ export default React.createClass({
         params: {
           ref: 'deleteClassDialog',
           title: 'Delete a Class',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',

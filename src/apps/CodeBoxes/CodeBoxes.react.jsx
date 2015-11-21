@@ -118,6 +118,7 @@ export default React.createClass({
         params: {
           ref: 'deleteCodeBoxDialog',
           title: 'Delete a CodeBox',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -148,6 +149,7 @@ export default React.createClass({
       params: {
         ref: 'deleteCodeBoxDialog',
         title: 'Delete a CodeBox',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',

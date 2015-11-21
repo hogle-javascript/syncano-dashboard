@@ -323,6 +323,7 @@ export default React.createClass({
           contentStyle={{maxWidth: 850, padding: 0}}
           defaultOpen={this.props.defaultOpen}
           actions={dialogCustomActions}
+          onRequestClose={this.handleCancel}
           onDismiss={this.handleDismiss}>
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>

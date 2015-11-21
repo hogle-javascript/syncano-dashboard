@@ -74,6 +74,7 @@ export default React.createClass({
         params: {
           ref: 'removeTriggerDialog',
           title: 'Delete a Trigger',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -99,6 +100,7 @@ export default React.createClass({
         params: {
           ref: 'removeScheduleDialog',
           title: 'Delete a Schedule',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveSchedules}

@@ -177,6 +177,7 @@ export default Radium(React.createClass({
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
@@ -197,6 +198,7 @@ export default Radium(React.createClass({
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteShared}

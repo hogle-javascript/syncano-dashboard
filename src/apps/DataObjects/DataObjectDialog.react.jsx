@@ -510,6 +510,7 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title}
+          onRequestClose={this.handleCancel}
           actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}

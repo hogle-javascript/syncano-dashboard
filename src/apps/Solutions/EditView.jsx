@@ -118,6 +118,7 @@ export default React.createClass({
         key: 'deleteCreateDialog',
         ref: 'deleteCreateDialog',
         title: 'Delete a Solution',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',

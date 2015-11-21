@@ -47,14 +47,15 @@ export default React.createClass({
     let styles = this.getStyles();
     let style = this.mergeAndPrefix(this.props.style, styles.style);
     let bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
+    let {children, ...other} = this.props;
 
     return (
       <MUI.Dialog
-        {...this.props}
+        {...other}
         style={style}
         bodyStyle={bodyStyle}
         ref='dialog'>
-        {this.props.children}
+        {children}
       </MUI.Dialog>
     );
   }

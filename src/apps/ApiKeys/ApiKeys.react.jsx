@@ -65,6 +65,7 @@ export default React.createClass({
       params: {
         title: 'Reset an API Key',
         ref: 'resetApiKeyDialog',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -88,6 +89,7 @@ export default React.createClass({
       params: {
         title: 'Delete an API key',
         ref: 'deleteApiKeyDialog',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',

@@ -55,6 +55,7 @@ export default React.createClass({
         params: {
           ref: 'acceptInvitationsDialog',
           title: 'Accept an Invitation',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleAccept}
@@ -67,6 +68,7 @@ export default React.createClass({
         params: {
           ref: 'declineInvitationsDialog',
           title: 'Decline an Invitation',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDecline}

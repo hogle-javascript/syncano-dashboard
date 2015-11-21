@@ -159,6 +159,7 @@ export default React.createClass({
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}

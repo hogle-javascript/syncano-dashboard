@@ -82,6 +82,7 @@ export default React.createClass({
           key: 'removeDataViewDialog',
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',

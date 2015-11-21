@@ -164,6 +164,7 @@ export default Radium(React.createClass({
         key: 'cancelProductionPlan',
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'No, I want to keep my plan.',

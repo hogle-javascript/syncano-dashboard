@@ -107,6 +107,7 @@ export default React.createClass({
           key: 'deleteAdminDialog',
           ref: 'deleteAdminDialog',
           title: 'Remove an Administrator',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
@@ -127,6 +128,7 @@ export default React.createClass({
           title: 'Resend an Invitation',
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleResendInvitation}
@@ -147,6 +149,7 @@ export default React.createClass({
           title: 'Delete an Invitation',
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}

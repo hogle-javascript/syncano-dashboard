@@ -69,6 +69,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' an API Key'}
           defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
           actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
