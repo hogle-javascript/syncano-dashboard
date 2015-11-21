@@ -29,8 +29,8 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    if (!this.hasEditMode()) {
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       this.setState({
         name: Store.genUniqueName()
       });
