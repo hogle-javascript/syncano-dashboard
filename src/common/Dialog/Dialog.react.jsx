@@ -45,7 +45,7 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let {children, style, bodyStyle, ...other} = this.props;
+    let {children, style, bodyStyle, ...other} = this.props; // eslint-disable-line no-redeclare
     let dialogStyle = this.mergeAndPrefix(style, styles.style);
     let dialogBodyStyle = this.mergeAndPrefix(bodyStyle, styles.bodyStyle);
 
