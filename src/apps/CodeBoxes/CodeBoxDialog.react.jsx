@@ -31,8 +31,8 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('CodeBoxDialog::componentDidMount');
+  handleDialogShow() {
+    console.info('CodeBoxDialog::componentWillUpdate');
     Actions.fetchCodeBoxRuntimes();
   },
 

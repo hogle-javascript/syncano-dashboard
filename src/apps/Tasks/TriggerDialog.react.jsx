@@ -39,8 +39,8 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('TriggerDialog::componentDidMount');
+  handleDialogShow() {
+    console.info('TriggerDialog::handleDialogShow');
     CodeBoxesActions.fetch();
     ClassesActions.fetch();
   },

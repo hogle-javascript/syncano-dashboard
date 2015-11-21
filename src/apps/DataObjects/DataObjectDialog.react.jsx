@@ -39,11 +39,6 @@ export default React.createClass({
     return validateObj;
   },
 
-  componentDidMount() {
-    console.info('DataObjectDialog::componentDidMount');
-    ChannelsActions.fetch();
-  },
-
   getParams() {
     let params = {
       id: this.state.id,
@@ -137,6 +132,11 @@ export default React.createClass({
 
     state[fieldName] = files[0];
     this.setState(state);
+  },
+
+  handleDialogShow() {
+    console.info('DataObjectDialog::handleDialogShow');
+    ChannelsActions.fetch();
   },
 
   handleAddSubmit() {

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
 
   componentWillUpdate(nextProps, nextState) {
@@ -11,7 +13,10 @@ export default {
       return this.refs.dialog.dismiss();
     }
 
-    if (nextState._dialogVisible === true) {
+    if (!this.state._dialogVisible && nextState._dialogVisible) {
+      if (_.isFunction(this.handleDialogShow)) {
+        this.handleDialogShow();
+      }
       return this.refs.dialog.show();
     }
   },

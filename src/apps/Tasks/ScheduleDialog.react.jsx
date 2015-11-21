@@ -35,8 +35,8 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('ScheduleDialog::componentDidMount');
+  handleDialogShow() {
+    console.info('ScheduleDialog::handleDialogShow');
     CodeBoxesActions.fetch();
   },
 

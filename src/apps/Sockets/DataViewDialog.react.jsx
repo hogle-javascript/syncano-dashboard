@@ -33,16 +33,16 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('DataViewDialog::componentDidMount');
-    ClassesActions.fetch();
-  },
-
   isEnabled(list, field) {
     if (!list) {
       return false;
     }
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
+  },
+
+  handleDialogShow() {
+    console.info('DataViewDialog::componentDidMount');
+    ClassesActions.fetch();
   },
 
   handleAddSubmit() {

@@ -32,8 +32,8 @@ export default React.createClass({
     }
   },
 
-  componentDidMount() {
-    console.info('WebhookDialog::componentDidMount');
+  handleDialogShow() {
+    console.info('WebhookDialog::handleDialogShow');
     CodeBoxesActions.fetch();
   },
 

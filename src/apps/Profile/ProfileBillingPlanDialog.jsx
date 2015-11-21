@@ -66,12 +66,6 @@ export default React.createClass({
     };
   },
 
-  componentDidMount() {
-    console.debug('ProfileBillingPlanDialog::componentDidMount');
-    Actions.fetchBillingPlans();
-    Actions.fetchBillingCard();
-  },
-
   getValidatorAttributes() {
     if (this.state.card) {
       return {};
@@ -129,6 +123,12 @@ export default React.createClass({
         color: '#9B9B9B'
       }
     };
+  },
+
+  handleDialogShow() {
+    console.debug('ProfileBillingPlanDialog::componentDidMount');
+    Actions.fetchBillingPlans();
+    Actions.fetchBillingCard();
   },
 
   handleEditSubmit() {
