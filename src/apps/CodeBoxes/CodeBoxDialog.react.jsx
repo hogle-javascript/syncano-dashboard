@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('CodeBoxDialog::componentWillUpdate');
+    console.info('CodeBoxDialog::handleDialogShow');
     Actions.fetchCodeBoxRuntimes();
   },
 

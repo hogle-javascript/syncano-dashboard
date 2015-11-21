@@ -31,10 +31,6 @@ export default React.createClass({
     };
   },
 
-  isOpen() {
-    return this.refs.dialog.isOpen();
-  },
-
   show() {
     this.refs.dialog.setState({open: true});
   },

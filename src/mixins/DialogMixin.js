@@ -17,6 +17,7 @@ export default {
       if (_.isFunction(this.handleDialogShow)) {
         this.handleDialogShow();
       }
+
       return this.refs.dialog.show();
     }
   },

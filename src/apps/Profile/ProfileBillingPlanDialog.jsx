@@ -126,7 +126,7 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.debug('ProfileBillingPlanDialog::componentDidMount');
+    console.debug('ProfileBillingPlanDialog::handleDialogShow');
     Actions.fetchBillingPlans();
     Actions.fetchBillingCard();
   },

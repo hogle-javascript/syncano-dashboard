@@ -41,7 +41,7 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('DataViewDialog::componentDidMount');
+    console.info('DataViewDialog::handleDialogShow');
     ClassesActions.fetch();
   },
 

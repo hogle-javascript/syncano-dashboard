@@ -40,7 +40,6 @@ export default React.createClass({
     return list.replace(/ /g, '').split(',').indexOf(field) > -1;
   },
 
-
   handleDialogShow() {
     console.info('DataViewDialog::handleDialogShow');
     ClassesActions.fetch();
