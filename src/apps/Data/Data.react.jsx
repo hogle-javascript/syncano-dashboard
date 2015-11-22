@@ -82,6 +82,7 @@ export default React.createClass({
           key: 'removeDataViewDialog',
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -92,7 +93,6 @@ export default React.createClass({
               onClick: this.handleRemoveDataViews
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + Store.getCheckedItems().length + ' Data endpoints?'
         }
       }

@@ -62,9 +62,9 @@ export default React.createClass({
         <Common.Dialog
           ref="dialog"
           title={`${title} a Group`}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}>
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

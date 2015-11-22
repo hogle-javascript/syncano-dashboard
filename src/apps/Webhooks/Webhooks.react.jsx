@@ -83,6 +83,7 @@ export default React.createClass({
           key: 'removeWebhookDialog',
           ref: 'removeWebhookDialog',
           title: 'Delete a Webhook',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -93,7 +94,6 @@ export default React.createClass({
               onClick: this.handleRemoveWebhooks
             }
           ],
-          modal: true,
           children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
         }
       }

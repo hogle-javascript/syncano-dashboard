@@ -203,12 +203,9 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' a Data Endpoint'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}
-          modal={true}>
-
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <div>Main settings</div>

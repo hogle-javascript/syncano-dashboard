@@ -107,11 +107,11 @@ export default React.createClass({
           key: 'deleteAdminDialog',
           ref: 'deleteAdminDialog',
           title: 'Remove an Administrator',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
             this.getDialogList(checkedAdmins, 'email'),
@@ -128,11 +128,11 @@ export default React.createClass({
           title: 'Resend an Invitation',
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleResendInvitation}
           ],
-          modal: true,
           children: [
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),
@@ -149,11 +149,11 @@ export default React.createClass({
           title: 'Delete an Invitation',
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),

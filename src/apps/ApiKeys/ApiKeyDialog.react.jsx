@@ -22,12 +22,6 @@ export default React.createClass({
     Mixins.Form
   ],
 
-  handleDialogShow() {
-    console.info('ApiKeyDialog::handleDialogHide');
-    this.refs.ignore_acl.setToggled(this.state.allow_user_create);
-    this.refs.allow_user_create.setToggled(this.state.ignore_acl);
-  },
-
   handleAddSubmit() {
     Actions.createApiKey({
       description: this.state.description,
@@ -68,10 +62,9 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' an API Key'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

@@ -138,6 +138,7 @@ export default React.createClass({
         key: 'runUnsavedCodeBox',
         ref: 'runUnsavedCodeBox',
         title: 'Unsaved CodeBox',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -148,7 +149,6 @@ export default React.createClass({
             onClick: this.handleConfirm
           }
         ],
-        modal: true,
         children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
       }
     }, {
@@ -157,6 +157,7 @@ export default React.createClass({
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
+        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Just leave',
@@ -167,7 +168,6 @@ export default React.createClass({
             onClick: this.handleCancel
           }
         ],
-        modal: true,
         children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
       }
     }];

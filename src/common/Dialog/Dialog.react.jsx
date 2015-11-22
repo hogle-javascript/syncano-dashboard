@@ -32,25 +32,26 @@ export default React.createClass({
   },
 
   show() {
-    this.refs.dialog.show();
+    this.refs.dialog.setState({open: true});
   },
 
   dismiss() {
-    this.refs.dialog.dismiss();
+    this.refs.dialog.setState({open: false});
   },
 
   render() {
     let styles = this.getStyles();
-    let style = this.mergeAndPrefix(this.props.style, styles.style);
-    let bodyStyle = this.mergeAndPrefix(this.props.bodyStyle, styles.bodyStyle);
+    let {children, style, bodyStyle, ...other} = this.props; // eslint-disable-line no-redeclare
+    let dialogStyle = this.mergeAndPrefix(style, styles.style);
+    let dialogBodyStyle = this.mergeAndPrefix(bodyStyle, styles.bodyStyle);
 
     return (
       <MUI.Dialog
-        {...this.props}
-        style={style}
-        bodyStyle={bodyStyle}
+        {...other}
+        style={dialogStyle}
+        bodyStyle={dialogBodyStyle}
         ref='dialog'>
-        {this.props.children}
+        {children}
       </MUI.Dialog>
     );
   }
