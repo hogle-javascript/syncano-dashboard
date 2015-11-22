@@ -47,12 +47,11 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    WebhooksActions.updateWebhook(
-      this.state.name, {
-        codebox: this.state.codebox,
-        description: this.state.description,
-        public: this.state.public
-      });
+    WebhooksActions.updateWebhook(this.state.name, {
+      codebox: this.state.codebox,
+      description: this.state.description,
+      public: this.state.public
+    });
   },
 
   handleToogle(event, status) {
@@ -86,11 +85,9 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title + ' a Webhook'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}
-          modal={true}>
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

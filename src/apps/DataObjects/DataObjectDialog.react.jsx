@@ -510,9 +510,8 @@ export default React.createClass({
         <Common.Dialog
           ref='dialog'
           title={title}
-          onShow={this.handleDialogShow}
-          actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}>
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
               <div className="row">

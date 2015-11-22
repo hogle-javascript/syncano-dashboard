@@ -68,10 +68,6 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    console.debug('SolutionInstallDialog::handleDialogShow');
-  },
-
   renderCustomFormNotifications() {
     let nonFormFields = ['classes'];
     let messages = [];
@@ -146,10 +142,9 @@ export default React.createClass({
         <Common.Dialog
           ref="dialog"
           title={title}
-          openImmediately={this.props.openImmediately}
-          actions={dialogCustomActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogCustomActions}>
           <div>
             {this.renderFormNotifications()}
             {this.renderCustomFormNotifications()}

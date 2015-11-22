@@ -88,11 +88,10 @@ export default React.createClass({
         method="post">
         <Common.Dialog
           ref="dialog"
-          title={title + ' a Trigger'}
-          openImmediately={this.props.openImmediately}
-          actions={dialogStandardActions}
-          onShow={this.handleDialogShow}
-          onDismiss={this.resetDialogState}>
+          title={`${title} a Trigger`}
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogStandardActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

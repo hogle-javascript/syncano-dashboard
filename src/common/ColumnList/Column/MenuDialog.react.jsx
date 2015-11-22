@@ -68,8 +68,8 @@ export default React.createClass({
       <Common.Dialog
         ref="dialog"
         title={this.state.dialogTitle}
-        actions={dialogStandardActions}
-        onDismiss={this.resetDialogState}>
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
         {this.state.dialogMessage}
       </Common.Dialog>
     );

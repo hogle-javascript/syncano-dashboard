@@ -106,11 +106,11 @@ export default React.createClass({
         key: 'deleteDataObjectDialog',
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
+        onRequestClose: this.handleCancel,
         actions: [
           {text: 'Cancel', onClick: this.handleCancel},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
-        modal: true,
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }];

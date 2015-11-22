@@ -29,8 +29,8 @@ export default React.createClass({
     }
   },
 
-  handleDialogShow() {
-    if (!this.hasEditMode()) {
+  componentWillUpdate(nextProps, nextState) {
+    if (!this.state._dialogVisible && nextState._dialogVisible && nextState._dialogMode !== 'edit') {
       this.setState({
         name: Store.genUniqueName()
       });
@@ -87,10 +87,9 @@ export default React.createClass({
         <Common.Dialog
           ref="dialog"
           title={title}
-          openImmediately={this.props.openImmediately}
-          actions={dialogCustomActions}
-          onDismiss={this.resetDialogState}
-          onShow={this.handleDialogShow}>
+          defaultOpen={this.props.defaultOpen}
+          onRequestClose={this.handleCancel}
+          actions={dialogCustomActions}>
           <div>
             {this.renderFormNotifications()}
             <MUI.TextField

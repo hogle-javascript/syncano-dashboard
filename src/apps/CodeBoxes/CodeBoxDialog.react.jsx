@@ -32,7 +32,7 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('ScheduleDialog::handleDialogShow');
+    console.info('CodeBoxDialog::handleDialogShow');
     Actions.fetchCodeBoxRuntimes();
   },
 
@@ -77,8 +77,7 @@ export default React.createClass({
           ref='dialog'
           title={title + ' a CodeBox'}
           actions={dialogStandardActions}
-          onDismiss={this.resetDialogState}
-          onShow={this.handleDialogShow}
+          onRequestClose={this.handleCancel}
           contentStyle={{padding: '8px 0 0 0'}}>
           <div>
             {this.renderFormNotifications()}

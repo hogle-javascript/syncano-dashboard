@@ -108,6 +108,7 @@ export default React.createClass({
         ref="dialog"
         bodyStyle={styles.body}
         contentInnerStyle={styles.content}
+        onRequestClose={this.handleCancel}
         actions={dialogStandardActions}>
         <MUI.Tabs inkBarStyle={styles.inkBar}>
           <MUI.Tab label="Colors">

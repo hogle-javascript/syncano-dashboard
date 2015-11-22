@@ -321,9 +321,9 @@ export default React.createClass({
         <Common.Dialog
           ref="dialog"
           contentStyle={{maxWidth: 850, padding: 0}}
-          onShow={this.handleDialogShow}
-          openImmediately={this.props.openImmediately}
+          defaultOpen={this.props.defaultOpen}
           actions={dialogCustomActions}
+          onRequestClose={this.handleCancel}
           onDismiss={this.handleDismiss}>
           <div>
             <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>

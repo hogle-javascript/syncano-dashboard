@@ -130,6 +130,7 @@ export default React.createClass({
         params: {
           ref: 'removeGroupDialog',
           title: 'Delete a Group',
+          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -140,7 +141,6 @@ export default React.createClass({
               onClick: this.handleRemoveGroups
             }
           ],
-          modal: true,
           children: [
             'Do you really want to delete this Group?',
             <Common.Loading
@@ -157,11 +157,11 @@ export default React.createClass({
         params: {
           ref: 'removeUserDialog',
           title: 'Delete a User',
+          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleRemoveUsers}
           ],
-          modal: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
             this.getDialogList(checkedUsers, 'username'),

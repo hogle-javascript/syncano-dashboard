@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
 
   componentWillUpdate(nextProps, nextState) {
@@ -7,17 +9,21 @@ export default {
       return true;
     }
 
-    if (nextState._dialogVisible === false) {
-      return this.refs.dialog.dismiss();
+    if (!nextState._dialogVisible) {
+      return this.handleCancel();
     }
 
-    if (nextState._dialogVisible === true) {
+    if (!this.state._dialogVisible && nextState._dialogVisible) {
+      if (_.isFunction(this.handleDialogShow)) {
+        this.handleDialogShow();
+      }
+
       return this.refs.dialog.show();
     }
   },
 
   resetDialogState() {
-    if (typeof this.getInitialState === 'function') {
+    if (_.isFunction(this.getInitialState)) {
       this.replaceState(this.getInitialState());
     }
   },
@@ -26,7 +32,8 @@ export default {
     console.debug('DialogMixin::handleCancel');
 
     this.refs.dialog.dismiss();
-    if (typeof this.refs.dialog.props.onDismiss !== 'function') {
+
+    if (!_.isFunction(this.refs.dialog.props.onDismiss)) {
       this.resetDialogState();
     }
   },
@@ -35,10 +42,10 @@ export default {
     console.debug('DialogMixin::handleSuccessfullValidation');
 
     if (this.hasEditMode()) {
-      if (typeof this.handleEditSubmit === 'function') {
+      if (_.isFunction(this.handleEditSubmit)) {
         this.handleEditSubmit();
       }
-    } else if (typeof this.handleAddSubmit === 'function') {
+    } else if (_.isFunction(this.handleAddSubmit)) {
       this.handleAddSubmit();
     }
   },
