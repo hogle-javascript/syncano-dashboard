@@ -519,9 +519,7 @@ export default React.createClass({
         /* eslint-disable no-undefined */
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name]
-            ? new Date(this.state[item.name].value)
-            : undefined;
+          let value = this.state[item.name] ? new Date(this.state[item.name].value) : undefined;
 
         /* eslint-enable no-undefined*/
 
