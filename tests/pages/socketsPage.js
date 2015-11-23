@@ -75,11 +75,11 @@ module.exports = {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalCodeboxDropdown: {
+    addWebhookModalCodeBoxDropdown: {
       selector: '//div[@class="codebox-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalCodeboxDropdownChoice: {
+    addWebhookModalCodeBoxDropdownChoice: {
       selector: '//div[@class="codebox-dropdown"]//span[text()="codebox"]',
       locateStrategy: 'xpath'
     },

@@ -47,7 +47,7 @@ export default React.createClass({
     this.hideDialogs(nextState.hideDialogs);
   },
 
-  getAssociatedCodeboxes(associatedWith) {
+  getAssociatedCodeBoxes(associatedWith) {
     let checkedCodeBoxes = Store.getCheckedItems();
 
     let associatedCodeBoxes = _.filter(checkedCodeBoxes, (codeBox) => {
@@ -102,10 +102,10 @@ export default React.createClass({
 
   // Dialogs config
   initDialogs() {
-    let checkedCodeboxes = Store.getCheckedItems();
-    let codeboxesAssociatedWithTriggers = this.getAssociatedCodeboxes('triggers');
-    let codeboxesAssociatedWithSchedules = this.getAssociatedCodeboxes('schedules');
-    let codeboxesNotAssociated = _.difference(_.difference(checkedCodeboxes, codeboxesAssociatedWithSchedules),
+    let checkedCodeBoxes = Store.getCheckedItems();
+    let codeboxesAssociatedWithTriggers = this.getAssociatedCodeBoxes('triggers');
+    let codeboxesAssociatedWithSchedules = this.getAssociatedCodeBoxes('schedules');
+    let codeboxesNotAssociated = _.difference(_.difference(checkedCodeBoxes, codeboxesAssociatedWithSchedules),
       codeboxesAssociatedWithTriggers);
 
     if (codeboxesAssociatedWithSchedules.length > 0 || codeboxesAssociatedWithTriggers.length > 0) {
@@ -131,7 +131,7 @@ export default React.createClass({
           ],
           children: [
             'Some of checked CodeBoxes are associated with Schedules or Triggers. Do you really want to delete ' +
-            checkedCodeboxes.length + ' CodeBox(es)?',
+            checkedCodeBoxes.length + ' CodeBox(es)?',
             notAssociatedList,
             associatedWithSchedulesList,
             associatedWithTriggersList,
@@ -161,8 +161,8 @@ export default React.createClass({
           }
         ],
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedCodeboxes) + ' CodeBox(es)?',
-          this.getDialogList(checkedCodeboxes, 'label'),
+          'Do you really want to delete ' + this.getDialogListLength(checkedCodeBoxes) + ' CodeBox(es)?',
+          this.getDialogList(checkedCodeBoxes, 'label'),
           <Common.Loading
             type="linear"
             position="bottom"
@@ -174,7 +174,7 @@ export default React.createClass({
 
   render() {
     let checkedItems = Store.getNumberOfChecked();
-    let isAnyCodeboxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
+    let isAnyCodeBoxSelected = checkedItems >= 1 && checkedItems < (this.state.items.length);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
@@ -188,10 +188,10 @@ export default React.createClass({
         <Common.Show if={checkedItems > 0}>
           <Common.Fab position="top">
             <Common.Fab.TooltipItem
-              tooltip={isAnyCodeboxSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              tooltip={isAnyCodeBoxSelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
-              onClick={isAnyCodeboxSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyCodeboxSelected ? markedIcon : blankIcon}/>
+              onClick={isAnyCodeBoxSelected ? Actions.selectAll : Actions.uncheckAll}
+              iconClassName={isAnyCodeBoxSelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
               tooltip="Click here to delete CodeBoxes"
               mini={true}

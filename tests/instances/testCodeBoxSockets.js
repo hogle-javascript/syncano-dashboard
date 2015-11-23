@@ -25,7 +25,7 @@ export default {
       .clickButton('@addWebhookButton')
       .waitForElementVisible('@addWebhookModalTitle')
       .fillInputField('@addWebhookModalNameInput', webhook)
-      .selectFromDropdown('@addWebhookModalCodeboxDropdown', '@addWebhookModalCodeboxDropdownChoice')
+      .selectFromDropdown('@addWebhookModalCodeBoxDropdown', '@addWebhookModalCodeBoxDropdownChoice')
       .clickButton('@confirmButton')
       .waitForElementVisible('@webhookTableRow');
   },
