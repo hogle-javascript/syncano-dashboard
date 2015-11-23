@@ -75,7 +75,7 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-codebox-delete"
             onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeCodeBoxes.bind(null, [item]))}
-            primaryText="Delete a Codebox" />
+            primaryText="Delete a CodeBox" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );
