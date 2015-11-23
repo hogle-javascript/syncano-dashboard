@@ -65,7 +65,7 @@ export default Radium(React.createClass({
         width: 120
       },
       toolbarList: {
-        padding: 24,
+        padding: '0 24px',
         display: 'flex'
       },
       toolbarListItem: {
