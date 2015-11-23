@@ -1,5 +1,3 @@
-import 'babel-core/polyfill';
-
 import './apps/Account/AccountActivate.react';
 import './apps/Account/AccountLogin.react';
 import './apps/Account/AccountPasswordReset.react';

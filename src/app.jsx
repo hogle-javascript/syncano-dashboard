@@ -7,6 +7,7 @@ import './segment';
 import './app.sass';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Router from 'react-router';
 import URI from 'urijs';
 import _ from 'lodash';
@@ -61,5 +62,5 @@ Router.run(routes, (Root, state) => {
     });
   }
 
-  React.render(<Root/>, container);
+  ReactDOM.render(<Root/>, container);
 });

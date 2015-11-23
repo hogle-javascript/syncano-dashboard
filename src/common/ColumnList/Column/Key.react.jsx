@@ -1,9 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
-import ReactZeroClipboard from 'react-zeroclipboard';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'material-ui';
+import Clipboard from '../../Clipboard';
 
 export default Radium(React.createClass({
 
@@ -30,11 +29,7 @@ export default Radium(React.createClass({
         lineHeight: '16px',
         padding: '16px 8px'
       }
-    }
-  },
-
-  handleClick() {
-    this.refs.snackbar.show();
+    };
   },
 
   render() {
@@ -44,22 +39,18 @@ export default Radium(React.createClass({
       <div
         className={this.props.className}
         style={styles.key}>
+
         <div
           ref="key"
           className="col-xs-25">
           {this.props.children}
         </div>
 
-        <ReactZeroClipboard text={this.props.children}>
-          <MUI.FlatButton
-            label="COPY"
-            primary={true}
-            onClick={this.handleClick}/>
-        </ReactZeroClipboard>
-
-        <MUI.Snackbar
-          ref="snackbar"
-          message="API key copied to the clipboard"/>
+        <Clipboard
+          type="button"
+          text="COPY"
+          copyText={this.props.children}
+          snackbarText="API key copied to the clipboard"/>
       </div>
     );
   }

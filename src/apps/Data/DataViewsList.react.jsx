@@ -1,11 +1,16 @@
 import React from 'react';
 import Router from 'react-router';
 
+// Stores and Actions
+import Actions from './DataViewsActions';
+
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -14,6 +19,7 @@ export default React.createClass({
   displayName: 'DataViewsList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -40,8 +46,18 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-9">{item.class}</Column.Desc>
         <Column.Date date={item.created_at} />
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Data Endpoint" />
+          <MenuItem
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}
+            primaryText="Delete a Data Endpoint" />
+        </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -56,12 +72,13 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {
     return (
       <Common.Lists.Container>
+        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -79,6 +96,7 @@ export default React.createClass({
             Class
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

@@ -44,7 +44,7 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: []
-    }
+    };
   },
 
   init() {
@@ -71,7 +71,7 @@ export default Reflux.createStore({
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     }));
   },
 

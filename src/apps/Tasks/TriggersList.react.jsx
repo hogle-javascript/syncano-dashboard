@@ -3,12 +3,15 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
+import Actions from './TriggersActions';
 import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -17,6 +20,7 @@ export default React.createClass({
   displayName: 'TriggersList',
 
   mixins: [
+    Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -26,14 +30,14 @@ export default React.createClass({
     return {
       items: this.props.items,
       isLoading: this.props.isLoading
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       items: nextProps.items,
       isLoading: nextProps.isLoading
-    })
+    });
   },
 
   // List
@@ -71,8 +75,18 @@ export default React.createClass({
         <Column.Desc className="col-sm-6">{item.class}</Column.Desc>
         <Column.Desc>{item.signal}</Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Trigger" />
+          <MenuItem
+            className="dropdown-item-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}
+            primaryText="Delete a Trigger" />
+        </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -87,12 +101,13 @@ export default React.createClass({
       <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
         {this.props.emptyItemContent}
       </Common.ColumnList.EmptyItem>
-    )
+    );
   },
 
   render() {
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="triggers-list">
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -112,6 +127,7 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

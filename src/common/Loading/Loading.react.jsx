@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -16,7 +16,7 @@ export default Radium(React.createClass({
       type: 'circular',
       size: 1,
       show: false
-    }
+    };
   },
 
   getStyles() {
@@ -58,7 +58,7 @@ export default Radium(React.createClass({
       <MUI.CircularProgress
         mode='indeterminate'
         size={this.props.size}/>
-    )
+    );
   },
 
   render() {
@@ -68,6 +68,6 @@ export default Radium(React.createClass({
       <div style={styles}>
         {this.renderItem()}
       </div>
-    )
+    );
   }
 }));

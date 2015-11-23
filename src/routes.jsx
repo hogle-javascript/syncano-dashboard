@@ -30,9 +30,6 @@ import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
 
-// Examples
-import Examples from './examples/Examples.react';
-
 const Route = Router.Route;
 const Redirect = Router.Redirect;
 const NotFoundRoute = Router.NotFoundRoute;
@@ -304,12 +301,6 @@ export default (
 
       <DefaultRoute handler={Instances}/>
     </Route>
-
-    {/* Examples */}
-    <Route
-      name="examples"
-      handler={Examples}
-      />
   </Route>
 );
 

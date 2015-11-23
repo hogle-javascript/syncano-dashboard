@@ -6,7 +6,7 @@ import {LeftNav} from '../mixins';
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown.react';
 
 export default React.createClass({
@@ -48,7 +48,7 @@ export default React.createClass({
       content: {
         margin: '96px 104px 48px 304px'
       }
-    }
+    };
   },
 
   getMenuItems() {
@@ -114,9 +114,9 @@ export default React.createClass({
   renderInstanceDropdown() {
     return (
       <div style={{paddingTop: 10, paddingBottom: 10, paddingLeft: 24}}>
-        <HeaderInstancesDropdown />
+        <HeaderInstancesDropdown/>
       </div>
-    )
+    );
   },
 
   render() {

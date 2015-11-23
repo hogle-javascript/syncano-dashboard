@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -26,15 +26,15 @@ export default React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   handleMouseOver() {
-    this.setState({color: this.props.hoverColor})
+    this.setState({color: this.props.hoverColor});
   },
 
   handleMouseLeave() {
-    this.setState({color: this.props.color})
+    this.setState({color: this.props.color});
   },
 
   handleClick() {
@@ -51,6 +51,6 @@ export default React.createClass({
         <div style={{fontSize: '16px'}}>{this.props.name}</div>
         <div style={{fontSize: '13px', opacity: '0.7'}}>{this.props.description}</div>
       </div>
-    )
+    );
   }
 });

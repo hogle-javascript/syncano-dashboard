@@ -4,10 +4,11 @@ import Router from 'react-router';
 
 import HeaderMixin from '../Header/HeaderMixin';
 import InstanceTabsMixin from '../../mixins/InstanceTabsMixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './CodeBoxStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 let RouteHandler = Router.RouteHandler;
@@ -19,7 +20,7 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    React.addons.LinkedStateMixin,
+    LinkedStateMixin,
 
     Reflux.connect(Store),
     HeaderMixin,
@@ -51,7 +52,7 @@ export default React.createClass({
       tab: {
         color: '#444'
       }
-    }
+    };
   },
 
   getTabsData() {
@@ -138,7 +139,7 @@ export default React.createClass({
         <MUI.ToolbarGroup>
           <MUI.ToolbarTitle text={toolbarTitleText}/>
         </MUI.ToolbarGroup>
-      )
+      );
     }
   },
 
@@ -158,9 +159,7 @@ export default React.createClass({
           </MUI.ToolbarGroup>
           {this.renderToolbarTitle()}
         </Common.InnerToolbar>
-
         <div style={{margin: '65px auto', width: '100%'}}>
-
           <div style={{paddingTop: 32}}>
             {this.renderTabs()}
             <RouteHandler/>

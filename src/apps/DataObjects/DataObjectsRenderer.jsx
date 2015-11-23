@@ -2,14 +2,15 @@ import React from 'react';
 import Moment from 'moment';
 import _ from 'lodash';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default {
 
   columnsRenderers() {
     return {
-      created_at: this.renderColumnDate
-    }
+      created_at: this.renderColumnDate,
+      updated_at: this.renderColumnDate
+    };
   },
 
   getColumnRenderer(column) {
@@ -26,18 +27,18 @@ export default {
         <div>{Moment(value).format('DD/MM/YYYY')}</div>
         <div>{Moment(value).format('LTS')}</div>
       </div>
-    )
+    );
   },
 
   renderReference(obj) {
     return (
       <div>{obj.target + ': ' + obj.value}</div>
-    )
+    );
   },
 
   handleFileOnClick(value, event) {
     event.stopPropagation();
-    window.open(value, '_blank')
+    window.open(value, '_blank');
   },
 
   renderFile(obj) {
@@ -45,7 +46,7 @@ export default {
       <MUI.IconButton
         iconClassName="synicon-download"
         onClick={this.handleFileOnClick.bind(this, obj.value)}/>
-    )
+    );
   },
 
   // Header

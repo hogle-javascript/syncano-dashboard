@@ -1,6 +1,5 @@
 import Reflux from 'reflux';
 import moment from 'moment';
-import D from 'd.js';
 import _ from 'lodash';
 
 import Mixins from '../../mixins';
@@ -28,7 +27,7 @@ export default Reflux.createStore({
         rows: [],
         showPercents: false
       }
-    }
+    };
   },
 
   init() {
@@ -42,16 +41,21 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('ClassesStore::refreshData');
 
-    D.all([
-      Actions.fetchBillingProfile(),
-      Actions.fetchBillingUsage(),
-      Actions.fetchBillingSubscriptions()
-    ])
-      .then(() => {
+    const join = this.joinTrailing(
+      Actions.fetchBillingProfile.completed,
+      Actions.fetchBillingUsage.completed,
+      Actions.fetchBillingSubscriptions.completed,
+      () => {
+        join.stop();
         this.data.isReady = true;
         this.data.isLoading = false;
         this.trigger(this.data);
-      });
+      }
+    );
+
+    Actions.fetchBillingProfile();
+    Actions.fetchBillingUsage();
+    Actions.fetchBillingSubscriptions();
   },
 
   setProfile(profile) {
@@ -122,7 +126,7 @@ export default Reflux.createStore({
         included: pricing.cbx.included,
         overage: pricing.cbx.overage
       }
-    })
+    });
   },
 
   getCovered() {
@@ -167,6 +171,12 @@ export default Reflux.createStore({
       commitment = subscription.commitment;
     }
 
+    if (_.isString(commitment)) {
+      // Workaround for SYNCORE-851
+      commitment = commitment.replace(/u'/g, "'").replace(/'/g, '"');
+      commitment = JSON.parse(commitment);
+    }
+
     return parseInt(commitment.api, 10) + parseInt(commitment.cbx, 10);
   },
 
@@ -188,14 +198,12 @@ export default Reflux.createStore({
   onCancelSubscriptionsCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onCancelNewPlanCompleted() {
     this.data.isLoading = false;
     this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 

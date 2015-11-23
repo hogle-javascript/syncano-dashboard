@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -14,13 +14,13 @@ export default Radium(React.createClass({
     onPlanDialog: React.PropTypes.func
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     let styles = {
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   handleDeleteSubscription() {
@@ -62,7 +62,7 @@ export default Radium(React.createClass({
               />
           </div>
         </div>
-      )
+      );
     }
 
     return (
@@ -71,6 +71,6 @@ export default Radium(React.createClass({
         label={this.renderExplorerButtonLabel() || ''}
         onTouchTap={this.handleShowPlanDialog}
         />
-    )
+    );
   }
 }));

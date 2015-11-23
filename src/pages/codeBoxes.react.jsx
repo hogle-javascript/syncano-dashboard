@@ -23,7 +23,6 @@ export default React.createClass({
   },
 
   render() {
-    return <Router.RouteHandler />
+    return <Router.RouteHandler />;
   }
-
 });

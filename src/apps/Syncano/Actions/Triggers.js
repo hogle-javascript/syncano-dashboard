@@ -12,7 +12,7 @@ export default {
       .Triggers
       .get(triggerId)
       .then(this.completed)
-      .catch(this.failure)
+      .catch(this.failure);
   },
 
   list() {

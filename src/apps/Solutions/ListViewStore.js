@@ -23,7 +23,7 @@ export default Reflux.createStore({
       selectedTags: [],
       isLoading: false,
       filter: 'public'
-    }
+    };
   },
 
   init() {
@@ -37,7 +37,8 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('SolutionsStore::refreshData');
-    Actions.fetchTags().then(this.refreshSolutions);
+    Actions.fetchTags();
+    this.refreshSolutions();
   },
 
   refreshSolutions() {
@@ -65,7 +66,7 @@ export default Reflux.createStore({
   },
 
   setTags(tags) {
-    this.data.tags = this.saveListFromSyncano(tags);
+    this.data.tags = tags._items || tags.objects;
   },
 
   onSelectOneTag(tag) {

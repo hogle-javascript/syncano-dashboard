@@ -1,5 +1,7 @@
 import Billing from './Billing';
+import CharacterCounter from './CharacterCounter';
 import CheckIcon from './CheckIcon';
+import Clipboard from './Clipboard';
 import Color from './Color';
 import ColorIconPicker from './ColorIconPicker';
 import ColumnList from './ColumnList';
@@ -31,7 +33,9 @@ import SnackbarNotification from './SnackbarNotification';
 
 export default {
   Billing,
+  CharacterCounter,
   CheckIcon,
+  Clipboard,
   Color,
   ColorIconPicker,
   ColumnList,

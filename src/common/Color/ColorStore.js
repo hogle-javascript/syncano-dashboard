@@ -1,4 +1,4 @@
-import Colors from 'material-ui/lib/styles/colors';
+import Colors from 'syncano-material-ui/lib/styles/colors';
 
 export default {
   syncanoThemeColorName: 'blue',

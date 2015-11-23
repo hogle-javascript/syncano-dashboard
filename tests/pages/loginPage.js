@@ -1,23 +1,40 @@
-var loginCommands = {
-  typeEmail: function() {
+const loginCommands = {
+  typeEmail() {
     return this
       .waitForElementPresent('@emailInput')
       .setValue('@emailInput', process.env.NIGHTWATCH_EMAIL);
   },
-  typePassword: function() {
+  typePassword() {
     return this
       .waitForElementVisible('@passInput')
       .setValue('@passInput', process.env.NIGHTWATCH_PASSWORD);
   },
-  clickSignInButton: function() {
+  clickSignInButton() {
     return this
       .waitForElementVisible('@loginButton')
       .click('@loginButton');
   },
-  verifyLoginSuccessful: function() {
+  clickButton(button) {
+    return this.waitForElementVisible(button)
+      .click(button);
+  },
+  verifyLoginSuccessful() {
     return this
-      .waitForElementVisible('@instancesDiv', 20000)
+      .waitForElementVisible('@instancesDiv')
       .assert.containsText('@instancesDiv', 'My instances');
+  },
+  fillInputField(field, value) {
+    return this.waitForElementVisible(field)
+      .clearValue(field)
+      .setValue(field, value);
+  },
+  login(email, pass) {
+    return this
+      .waitForElementVisible('@emailInput')
+      .setValue('@emailInput', email)
+      .setValue('@passInput', pass)
+      .waitForElementVisible('@loginButton')
+      .click('@loginButton');
   }
 };
 
@@ -33,6 +50,48 @@ module.exports = {
     },
     loginButton: {
       selector: 'button[type=submit]'
+    },
+    loginButtonFacebook: {
+      selector: 'span.synicon-facebook'
+    },
+    emailInputFacebook: {
+      selector: 'input[name=email]'
+    },
+    passInputFacebook: {
+      selector: 'input[name=pass]'
+    },
+    signInButtonFacebook: {
+      selector: 'input[name=login]'
+    },
+    loginButtonGoogle: {
+      selector: 'span.synicon-google'
+    },
+    emailInputGoogle: {
+      selector: 'input#Email'
+    },
+    passInputGoogle: {
+      selector: 'input#Passwd'
+    },
+    nextButtonGoogle: {
+      selector: 'input#next'
+    },
+    signInButtonGoogle: {
+      selector: 'input#signIn'
+    },
+    approveAccessButtonGoogle: {
+      selector: 'button#submit_approve_access'
+    },
+    loginButtonGithub: {
+      selector: 'span.synicon-github'
+    },
+    emailInputGithub: {
+      selector: 'input#login_field'
+    },
+    passInputGithub: {
+      selector: 'input#password'
+    },
+    signInButtonGithub: {
+      selector: 'input[name=commit]'
     },
     mainDiv: {
       selector: 'div[id=app]'

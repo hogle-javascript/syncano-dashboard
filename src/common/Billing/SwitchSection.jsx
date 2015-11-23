@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -9,7 +9,7 @@ export default Radium(React.createClass({
 
   propTypes: {
     plan: React.PropTypes.string,
-    planCanceled: React.PropTypes.string,
+    planCanceled: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool]),
     onPlanDialog: React.PropTypes.func,
     onCancelPlanDialog: React.PropTypes.func
   },
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
     muiTheme: React.PropTypes.object
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getStyles() {
     return {
@@ -48,13 +48,13 @@ export default Radium(React.createClass({
         color: '#444',
         cursor: 'pointer',
         ':hover': {
-          color: this.context.muiTheme.palette.primary1Color
+          color: this.context.muiTheme.rawTheme.palette.primary1Color
         }
       },
       activePlan: {
-        color: this.context.muiTheme.palette.primary1Color
+        color: this.context.muiTheme.rawTheme.palette.primary1Color
       }
-    }
+    };
   },
 
   handleCancelPlanDialog() {
@@ -63,7 +63,7 @@ export default Radium(React.createClass({
 
   handlePlanDialog() {
     this.setToggled(true);
-    this.props.onPlanDialog()
+    this.props.onPlanDialog();
   },
 
   setToggled(value) {
@@ -79,7 +79,7 @@ export default Radium(React.createClass({
           <div style={{fontSize: '1.1rem', lineHeight: '1.1rem'}}><strong>Builder</strong></div>
           <div>We pick your bill</div>
         </div>
-      )
+      );
     }
 
     if (this.props.planCanceled) {
@@ -91,7 +91,7 @@ export default Radium(React.createClass({
 
           <div>Click <a onClick={this.handlePlanDialog}> here </a> to extend.</div>
         </div>
-      )
+      );
     }
     return (
       <div style={styles.cancelPlanLink}>
@@ -113,13 +113,13 @@ export default Radium(React.createClass({
             <a onClick={this.handlePlanDialog}>Switch to Production</a>
           </div>
         </div>
-      )
+      );
     }
     return (
       <div style={[this.props.planCanceled === false && styles.activePlan]}>
         Production
       </div>
-    )
+    );
   },
 
   renderToggle() {
@@ -141,7 +141,7 @@ export default Radium(React.createClass({
         ref="toggle"
         defaultToggled={defaultToggled}
         onToggle={toggleHandler}/>
-    )
+    );
   },
 
   render() {
@@ -163,6 +163,6 @@ export default Radium(React.createClass({
           {this.renderRightSide()}
         </div>
       </div>
-    )
+    );
   }
 }));

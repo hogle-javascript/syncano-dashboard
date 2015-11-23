@@ -13,7 +13,7 @@ import Actions from './AuthActions';
 import Constants from './AuthConstants';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/AccountContainer.react';
 
@@ -63,7 +63,7 @@ export default React.createClass({
     let invKey = this.getQuery().invitation_key || null;
 
     if (invKey !== null && SessionActions.getInvitationFromUrl() !== invKey) {
-      SessionActions.setInvitationFromUrl(invKey)
+      SessionActions.setInvitationFromUrl(invKey);
     }
   },
 
@@ -73,7 +73,7 @@ export default React.createClass({
       By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
       Terms of Use and Privacy Policy</a>.
     </p>
-    )
+    );
   },
 
   handleSuccessfullValidation(data) {

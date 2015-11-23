@@ -7,7 +7,7 @@ import Mixins from '../../mixins';
 import Store from './ProfileBillingPlanDialogStore';
 import Actions from './ProfileBillingPlanDialogActions';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import SliderSection from './SliderSection';
 
@@ -63,7 +63,7 @@ export default React.createClass({
           is: 4
         }
       }
-    }
+    };
   },
 
   getValidatorAttributes() {
@@ -78,7 +78,7 @@ export default React.createClass({
       cvc: data.cvc,
       exp_month: data.exp_month,
       exp_year: data.exp_year
-    }
+    };
   },
 
   getStyles() {
@@ -122,42 +122,7 @@ export default React.createClass({
         fontSize: '0.8em',
         color: '#9B9B9B'
       }
-    }
-  },
-
-  getInfo(type) {
-    let info = {
-      included: 0,
-      overage: 0,
-      total: 0
     };
-
-    if (!this.state.plan) {
-      return info;
-    }
-
-    let pricing = this.state.plan.pricing[type];
-    let options = this.state.plan.options[type];
-    let sliderValue = this.state[type + 'Selected'];
-
-    if (!sliderValue) {
-      info = pricing[Object.keys(pricing)[0]];
-      info.total = Object.keys(pricing)[0];
-      return info;
-    }
-
-    let value = String(parseFloat(sliderValue));
-
-    info = pricing[options[value]];
-    info.total = options[value];
-    return info;
-  },
-
-  onSliderChange(type, event, value) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
   },
 
   handleDialogShow() {
@@ -167,63 +132,23 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    this.handleAddSubmit();
+    Actions.submitPlan(this.getValidatorAttributes());
   },
 
   handleAddSubmit() {
-    console.debug('ProfileBillingPlanDialog::handleAddSubmit');
-
-    let apiTotal = this.getInfo('api').total;
-    let cbxTotal = this.getInfo('cbx').total;
-
-    let total = parseInt(apiTotal, 10) + parseInt(cbxTotal, 10);
-
-    let subscribe = () => {
-      return Actions.subscribePlan(this.state.plan.name, {
-        commitment: JSON.stringify({
-          api: apiTotal,
-          cbx: cbxTotal
-        })
-      });
-    };
-
-    let setLimits = () => {
-      return Actions.updateBillingProfile({
-        hard_limit: parseInt(total * 3, 10),
-        soft_limit: parseInt(total * 1.5, 10)
-      });
-    };
-
-    if (this.state.card) {
-      subscribe().then(setLimits);
-    } else {
-      Actions
-        .updateCard(this.getValidatorAttributes())
-        .then(() => {
-          subscribe().then(
-            setLimits
-          )
-        })
-    }
-  },
-
-  handleSliderLabelsClick(value, type) {
-    let newState = {};
-
-    newState[type + 'Selected'] = value;
-    this.setState(newState);
+    Actions.submitPlan(this.getValidatorAttributes());
   },
 
   handleDismiss() {
     this.resetDialogState();
     if (typeof this.props.onDismiss === 'function') {
-      this.props.onDismiss()
+      this.props.onDismiss();
     }
   },
 
   renderCard() {
     if (typeof this.state.card === 'undefined') {
-      return <Common.Loading show={true}/>
+      return <Common.Loading show={true}/>;
     }
 
     if (this.state.card) {
@@ -240,7 +165,7 @@ export default React.createClass({
           </div>
         </div>
       </div>
-      )
+      );
     }
     return (
     <div>
@@ -297,7 +222,7 @@ export default React.createClass({
         </div>
       </div>
     </div>
-    )
+    );
   },
 
   renderSlider(type) {
@@ -320,10 +245,10 @@ export default React.createClass({
       value={typeof selected !== 'undefined' ? selected : defaultValue}
       type={type}
       legendItems={options}
-      optionClick={this.handleSliderLabelsClick}
-      onChange={this.onSliderChange}
+      optionClick={Actions.sliderLabelsClick}
+      onChange={Actions.sliderChange}
     />
-    )
+    );
   },
 
   renderSliderSummary(info) {
@@ -338,13 +263,13 @@ export default React.createClass({
         <div><strong>${info.overage.value}</strong></div>
       </div>
     </div>
-    )
+    );
   },
 
   render() {
     let styles = this.getStyles();
-    let apiInfo = this.getInfo('api');
-    let cbxInfo = this.getInfo('cbx');
+    let apiInfo = Store.getInfo('api');
+    let cbxInfo = Store.getInfo('cbx');
     let sum = parseInt(apiInfo.total, 10) + parseInt(cbxInfo.total, 10);
 
     let dialogCustomActions = [

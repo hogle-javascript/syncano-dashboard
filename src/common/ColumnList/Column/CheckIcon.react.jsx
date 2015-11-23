@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import CheckIcon from '../../../common/CheckIcon/CheckIcon.react';
 
@@ -25,13 +25,13 @@ export default Radium(React.createClass({
       hoverColor: MUI.Styles.Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
       checkable: true
-    }
+    };
   },
 
   getInitialState() {
     return {
       checked: this.props.checked
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {
@@ -64,7 +64,7 @@ export default Radium(React.createClass({
           color: this.props.hoverColor
         }
       }
-    }
+    };
   },
 
   handleIconClick(id, state) {

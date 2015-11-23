@@ -7,7 +7,7 @@ export default {
       errors: {},
       feedback: null,
       canSubmit: true
-    }
+    };
   },
 
   listenToForms() {

@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -26,7 +26,7 @@ export default Radium(React.createClass({
     return {
       color: this.props.color,
       hoverColor: this.props.hoverColor
-    }
+    };
   },
 
   getStyles() {

@@ -4,13 +4,15 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
-import ChannelsActions from './ChannelsActions';
-import ChannelsStore from './ChannelsStore';
+import Actions from './ChannelsActions';
+import Store from './ChannelsStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -22,17 +24,18 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(ChannelsStore),
-    HeaderMixin
+    Reflux.connect(Store),
+    HeaderMixin,
+    Dialogs
   ],
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items})
+    this.setState({items: nextProps.items});
   },
 
   // List
   handleItemIconClick(id, state) {
-    ChannelsActions.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   renderItem(item) {
@@ -61,8 +64,18 @@ export default React.createClass({
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+            className="dropdown-item-channel-edit"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit a Channel" />
+          <MenuItem
+            className="dropdown-item-channel-delete"
+            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
+            primaryText="Delete a Channel" />
+        </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -83,6 +96,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container>
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
@@ -106,6 +120,7 @@ export default React.createClass({
             Custom publish
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

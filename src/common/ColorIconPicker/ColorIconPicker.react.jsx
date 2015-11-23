@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import ColorStore from '../Color/ColorStore';
 import IconStore from '../Icon/IconStore';
@@ -17,11 +17,15 @@ export default Radium(React.createClass({
     handleChange: React.PropTypes.func
   },
 
+  mixins: [
+    MUI.Utils.Styles
+  ],
+
   getInitialState() {
     return {
       selectedColor: this.props.selectedColor,
       selectedIcon: this.props.selectedIcon
-    }
+    };
   },
 
   componentWillReceiveProps(nextProps) {
@@ -29,7 +33,7 @@ export default Radium(React.createClass({
     this.setState({
       selectedColor: nextProps.selectedColor,
       selectedIcon: nextProps.selectedIcon
-    })
+    });
   },
 
   getStyles() {
@@ -49,8 +53,11 @@ export default Radium(React.createClass({
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center'
+      },
+      colorItem: {
+        margin: 18
       }
-    }
+    };
   },
 
   handleSetColor(event) {
@@ -90,15 +97,15 @@ export default Radium(React.createClass({
           style={{color: iconColor}}
           onClick={this.handleSetIcon}/>
       </MUI.Paper>
-    )
+    );
   },
 
   genColorItem(color) {
     let icon = null;
-    let styles = this.getStyles().item;
+    let styles = this.getStyles();
     let zDepth = 0;
 
-    styles.background = ColorStore.getColorByName(color);
+    styles.item.background = ColorStore.getColorByName(color);
 
     if (color === this.state.selectedColor) {
       zDepth = 3;
@@ -115,7 +122,7 @@ export default Radium(React.createClass({
         zDepth={zDepth}
         key={color}
         circle={true}
-        style={styles}
+        style={this.mergeAndPrefix(styles.item, styles.colorItem)}
         onClick={this.handleSetColor}>
         {icon}
       </MUI.Paper>

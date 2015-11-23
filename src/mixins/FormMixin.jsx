@@ -32,12 +32,12 @@ export default {
       errors: {},
       feedback: null,
       canSubmit: true
-    }
+    };
   },
 
   renderFormErrorFeedback() {
     if (!this.state.errors || typeof this.state.errors.feedback === 'undefined') {
-      return true;
+      return false;
     }
 
     return <Notification type="error">{this.state.errors.feedback}</Notification>;
@@ -45,14 +45,14 @@ export default {
 
   renderFormFeedback() {
     if (!this.state.feedback || typeof this.state.feedback === 'undefined') {
-      return true;
+      return false;
     }
 
     return <Notification>{this.state.feedback}</Notification>;
   },
 
   renderFormNotifications() {
-    return this.renderFormErrorFeedback() || this.renderFormFeedback()
+    return this.renderFormErrorFeedback() || this.renderFormFeedback();
   },
 
   resetForm() {
@@ -143,7 +143,7 @@ export default {
     this.validate((isValid, errors) => {
       if (isValid === true) {
         if (_.isFunction(this.handleSuccessfullValidation)) {
-          this.handleSuccessfullValidation(this.getFormAttributes())
+          this.handleSuccessfullValidation(this.getFormAttributes());
         }
       } else if (_.isFunction(this.handleFailedValidation)) {
         this.handleFailedValidation(errors);

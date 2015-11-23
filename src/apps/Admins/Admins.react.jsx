@@ -55,6 +55,7 @@ export default React.createClass({
     console.info('Admins::handleResendInvitation');
     AdminsInvitationsActions.resendInvitation(AdminsInvitationsStore.getCheckedItems());
   },
+
   handleRemoveInvitation() {
     console.info('Admins::handleRemoveInvitation');
     AdminsInvitationsActions.removeInvitation(AdminsInvitationsStore.getCheckedItems());
@@ -163,7 +164,7 @@ export default React.createClass({
           ]
         }
       }
-    ]
+    ];
   },
 
   render() {
@@ -192,12 +193,6 @@ export default React.createClass({
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteAdminDialog')}
               iconClassName="synicon-delete"/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to edit Admin"
-              mini={true}
-              disabled={checkedAdmins > 1}
-              onClick={this.showAdminEditDialog}
-              iconClassName="synicon-pencil"/>
           </Common.Fab>
         </Common.Show>
 

@@ -109,7 +109,7 @@ export default React.createClass({
             show={this.state.isLoading}/>
         ]
       }
-    }]
+    }];
   },
 
   render() {
@@ -129,35 +129,30 @@ export default React.createClass({
               tooltip={isAnyApiKeySelected ? 'Click here to select all' : 'Click here to unselect all'}
               mini={true}
               onClick={isAnyApiKeySelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyApiKeySelected ? markedIcon : blankIcon}
-              />
+              iconClassName={isAnyApiKeySelected ? markedIcon : blankIcon}/>
             <Common.Fab.TooltipItem
               tooltip="Click here to delete API Keys"
               mini={true}
               onClick={this.showDialog.bind(null, 'deleteApiKeyDialog')}
-              iconClassName="synicon-delete"
-              />
+              iconClassName="synicon-delete"/>
             <Common.Fab.TooltipItem
               tooltip="Click here to reset an API Key"
               mini={true}
               onClick={this.showDialog.bind(null, 'resetApiKeyDialog')}
-              iconClassName="synicon-backup-restore"
-              />
+              iconClassName="synicon-backup-restore"/>
           </Common.Fab>
         </Common.Show>
         <Common.Fab>
           <Common.Fab.TooltipItem
             tooltip="Click here to add an API Key"
             onClick={this.showApiKeyDialog}
-            iconClassName="synicon-plus"
-            />
+            iconClassName="synicon-plus"/>
         </Common.Fab>
         <ApiKeysList
           name="API Keys"
           items={this.state.items}
           emptyItemHandleClick={this.showApiKeyDialog}
-          emptyItemContent="Generate an API Key"
-          />
+          emptyItemContent="Generate an API Key"/>
       </Container>
     );
   }

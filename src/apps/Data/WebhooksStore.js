@@ -18,7 +18,7 @@ export default Reflux.createStore({
     return {
       items: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -40,6 +40,11 @@ export default Reflux.createStore({
 
   refreshData() {
     WebhooksActions.fetchWebhooks();
+  },
+
+  onFetchWebhooks() {
+    this.data.isLoading = true;
+    this.trigger(this.data);
   },
 
   onFetchWebhooksCompleted(items) {

@@ -1,4 +1,4 @@
-import CreateActions from '../../utils/ActionsConstructor.js'
+import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
   updateSettings: {
@@ -9,6 +9,7 @@ export default CreateActions({
   },
   changePassword: {
     asyncResult: true,
+    asyncForm: true,
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Profile.changePassword'
   },

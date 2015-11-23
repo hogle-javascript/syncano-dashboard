@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 
 import HeaderStore from './HeaderStore';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -42,11 +42,11 @@ export default React.createClass({
         height: 56
       },
       menuItemStyles: {
-        color: this.context.muiTheme.palette.primary3Color,
+        color: this.context.muiTheme.rawTheme.palette.primary3Color,
         fontWeight: 400,
         fontSize: 17
       }
-    }
+    };
   },
 
   handleTabActive(tab) {
@@ -64,14 +64,14 @@ export default React.createClass({
         params={tab.params}
         style={styles.menuItemStyles}
         onActive={this.handleTabActive}/>
-    )
+    );
   },
 
   render() {
     let styles = this.getStyles();
 
     if (this.state.menuItems.length === 0) {
-      return null
+      return null;
     }
 
     return (

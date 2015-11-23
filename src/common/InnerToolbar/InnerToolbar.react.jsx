@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Toolbar from 'material-ui/lib/toolbar/toolbar';
+import Toolbar from 'syncano-material-ui/lib/toolbar/toolbar';
 
 export default React.createClass({
 
@@ -19,7 +19,7 @@ export default React.createClass({
       background: 'rgba(215,215,215,0.6)',
       padding: '0px 32px 0 24px',
       zIndex: 6
-    }
+    };
   },
 
   render() {

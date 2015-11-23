@@ -11,7 +11,7 @@ import ClassesActions from '../Classes/ClassesActions';
 import ClassesStore from '../Classes/ClassesStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -132,8 +132,8 @@ export default React.createClass({
               </Common.Show>
             </div>
           </div>
-        )
-      }))
+        );
+      }));
     }
   },
 
@@ -168,7 +168,7 @@ export default React.createClass({
         errorText={this.getValidationMessages('page_size').join(' ')}
         hintText='Number'
         floatingLabelText='Number of records in data set'/>
-    ]
+    ];
   },
 
   render() {

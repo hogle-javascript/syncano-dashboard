@@ -12,7 +12,7 @@ import Store from './AddVersionViewStore';
 import Actions from './AddVersionViewActions';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default Radium(React.createClass({
@@ -73,7 +73,7 @@ export default Radium(React.createClass({
         overflow: 'hidden',
         textOverflow: 'ellipsis'
       }
-    }
+    };
   },
 
   handleBackClick() {
@@ -153,7 +153,7 @@ export default Radium(React.createClass({
           obj[pkName] = (pkName === 'id') ? parseInt(item, 10) : item;
           formatedSpec[section].push(obj);
         }
-      })
+      });
     });
 
     return formatedSpec;
@@ -164,7 +164,7 @@ export default Radium(React.createClass({
       type: this.state.type,
       export_spec: JSON.stringify(this.prepareExportSpec()),
       instance: this.state.instance
-    }
+    };
   },
 
   renderCheckboxes(label, data, pk, labelPk, type) {
@@ -190,7 +190,7 @@ export default Radium(React.createClass({
             onCheck={this.handleOnCheck.bind(this, item[pk], type)}
             />
         </div>
-      )
+      );
     });
 
     return (
@@ -202,7 +202,7 @@ export default Radium(React.createClass({
           </div>
         </div>
       </div>
-    )
+    );
   },
 
   renderInfo() {
@@ -213,7 +213,7 @@ export default Radium(React.createClass({
     } else if (this.state.dataReady === 'loading') {
       return (
         <Common.Loading key="loading" style={{marginTop: 30}} show={true}/>
-      )
+      );
     }
     return (
       <div key="info" style={{padding: 100, margin: '0 auto'}}>
@@ -221,7 +221,7 @@ export default Radium(React.createClass({
           Choose the Instance which you want to use to export new solution version.
         </div>
       </div>
-    )
+    );
   },
 
   render() {

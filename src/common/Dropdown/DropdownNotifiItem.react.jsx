@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Loading from '../../common/Loading';
 
 export default React.createClass({
@@ -58,7 +58,7 @@ export default React.createClass({
           {item.content.text}
           {buttons}
         </MUI.ListItem>
-      )
+      );
     });
 
     return items;
@@ -99,7 +99,7 @@ export default React.createClass({
           </span>
       </MUI.ListItem>
     </MUI.List>
-    )
+    );
   },
 
   renderNormalLinkItems() {
@@ -123,10 +123,10 @@ export default React.createClass({
             {item.content.text}
           </span>
         </MUI.ListItem>
-      )
+      );
     });
 
-    return items
+    return items;
   },
 
   renderItems() {

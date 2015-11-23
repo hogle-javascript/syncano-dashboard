@@ -20,9 +20,10 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       items: [],
+      clickedItem: null,
       triggers: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -42,11 +43,15 @@ export default Reflux.createStore({
     ]).then(() => {
       this.data.isLoading = false;
       this.trigger(this.data);
-    })
+    });
   },
 
   getItems() {
     return this.data.items;
+  },
+
+  getClickedItem() {
+    return this.data.clickedItem;
   },
 
   getClassesDropdown(addSelf = false) {
@@ -54,7 +59,7 @@ export default Reflux.createStore({
       return {
         payload: item.name,
         text: item.name
-      }
+      };
     });
 
     if (addSelf === true) {
@@ -122,18 +127,18 @@ export default Reflux.createStore({
     return orderPayload;
   },
 
-  getCheckedItemIconColor() {
-    let singleItem = this.getCheckedItem();
+  getClickedItemIconColor() {
+    let clickedItem = this.getClickedItem();
 
-    if (!singleItem) {
+    if (!clickedItem) {
       return {
         color: null,
         icon: null
-      }
+      };
     }
     return {
-      color: singleItem.metadata ? singleItem.metadata.color : 'blue',
-      icon: singleItem.metadata ? singleItem.metadata.icon : 'table-large'
+      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'blue',
+      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'table-large'
     };
   },
 
@@ -162,6 +167,11 @@ export default Reflux.createStore({
       this.data.items = this.data.items.map(this.setProtectedFromEditClasses);
     }
 
+    this.trigger(this.data);
+  },
+
+  onSetClickedClass(item) {
+    this.data.clickedItem = item;
     this.trigger(this.data);
   },
 

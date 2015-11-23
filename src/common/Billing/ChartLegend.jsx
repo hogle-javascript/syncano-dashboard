@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import _ from 'lodash';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -18,7 +18,7 @@ export default Radium(React.createClass({
     }))
   },
 
-  mixins: [MUI.Mixins.StylePropable],
+  mixins: [MUI.Utils.Styles],
 
   getDefaultProps() {
     return {
@@ -46,7 +46,7 @@ export default Radium(React.createClass({
       }
     };
 
-    return this.mergeStyles(styles, this.props.style);
+    return this.mergeAndPrefix(styles, this.props.style);
   },
 
   renderPercent(row) {

@@ -1,4 +1,4 @@
-import objectAssign from 'object-assign';
+import _ from 'lodash';
 
 export default {
 
@@ -10,7 +10,7 @@ export default {
     return {
       _dialogMode: 'add',
       _dialogVisible: false
-    }
+    };
   },
 
   showDialog(instance, secondInstance) {
@@ -18,9 +18,9 @@ export default {
     let state = {_dialogVisible: true};
 
     if (typeof instance !== 'undefined') {
-      state = objectAssign(state, instance, {_dialogMode: 'edit'});
+      state = _.assign(state, instance, {_dialogMode: 'edit'});
     } else if (typeof secondInstance !== 'undefined') {
-      state = objectAssign(state, {secondInstance});
+      state = _.assign(state, {secondInstance});
     }
 
     this.trigger(state);

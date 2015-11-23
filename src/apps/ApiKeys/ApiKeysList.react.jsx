@@ -4,6 +4,7 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
+import {Dialogs} from '../../mixins';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
@@ -11,6 +12,7 @@ import Store from './ApiKeysStore';
 
 // Components
 import Common from '../../common';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -22,7 +24,8 @@ export default React.createClass({
     Reflux.connect(Store),
     HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    Dialogs
   ],
 
   handleItemIconClick(id, state) {
@@ -59,8 +62,18 @@ export default React.createClass({
           {allow_user_create}
         </Column.Text>
         <Column.Date date={item.created_at}/>
+        <Column.Menu>
+          <MenuItem
+            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
+            className="dropdown-item-delete-apikey"
+            primaryText="Delete an API Key" />
+          <MenuItem
+            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}
+            className="dropdown-item-reset-apikey"
+            primaryText="Reset an API Key" />
+        </Column.Menu>
       </Common.ColumnList.Item>
-    )
+    );
   },
 
   renderList() {
@@ -81,6 +94,7 @@ export default React.createClass({
   render() {
     return (
       <Common.Lists.Container className="api-keys-list">
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"
@@ -91,6 +105,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU"/>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.state.isLoading}>

@@ -44,7 +44,7 @@ export default Reflux.createStore({
       selectedRuntimeIndex: 0,
       traces: [],
       isLoading: true
-    }
+    };
   },
 
   init() {
@@ -55,7 +55,7 @@ export default Reflux.createStore({
       this.refreshData
     );
     this.setLoadingStates();
-    this.listenTo(Actions.setCurrentCodeBoxId, this.fetchTraces)
+    this.listenTo(Actions.setCurrentCodeBoxId, this.fetchTraces);
   },
 
   fetchTraces() {
@@ -83,7 +83,7 @@ export default Reflux.createStore({
       return {
         payload: item.id,
         text: item.label
-      }
+      };
     });
   },
 
@@ -136,7 +136,7 @@ export default Reflux.createStore({
     ]).then(() => {
       this.data.isLoading = false;
       this.trigger(this.data);
-    })
+    });
   },
 
   setCodeBoxes(items) {
@@ -168,12 +168,12 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(triggers) {
     console.debug('CodeBoxesStore::onFetchTriggersCompleted');
-    this.setItems(triggers, 'triggers')
+    this.setItems(triggers, 'triggers');
   },
 
   onFetchSchedulesCompleted(schedules) {
     console.debug('CodeBoxesStore::onFetchSchedulesCompleted');
-    this.setItems(schedules, 'schedules')
+    this.setItems(schedules, 'schedules');
   },
 
   setItems(items, itemsType) {
@@ -197,7 +197,7 @@ export default Reflux.createStore({
       let CodeBoxId = this.data.currentCodeBoxId;
 
       setTimeout(() => {
-        Actions.fetchCodeBoxTrace(CodeBoxId, trace.id)
+        Actions.fetchCodeBoxTrace(CodeBoxId, trace.id);
       }, 300);
     } else {
       this.data.lastTraceResult = trace.result;

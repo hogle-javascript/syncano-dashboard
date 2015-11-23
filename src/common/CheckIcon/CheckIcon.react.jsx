@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -15,10 +15,12 @@ export default Radium(React.createClass({
     handleClick: React.PropTypes.func
   },
 
+  mixins: [MUI.Utils.Styles],
+
   getDefaultProps() {
     return {
       checkable: true
-    }
+    };
   },
 
   getInitialState() {
@@ -26,11 +28,11 @@ export default Radium(React.createClass({
       hovered: false,
       checked: this.props.checked,
       background: this.props.background
-    }
+    };
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked})
+    this.setState({checked: newProps.checked});
   },
 
   getIconState() {
@@ -78,7 +80,7 @@ export default Radium(React.createClass({
       checkable: {
         cursor: 'pointer'
       }
-    }
+    };
   },
 
   handleClick(event) {
@@ -118,14 +120,14 @@ export default Radium(React.createClass({
       <MUI.Paper
         zDepth={0}
         circle={true}
-        style={[styles.background, this.props.checkable && styles.checkable]}
+        style={this.mergeAndPrefix(styles.background, this.props.checkable && styles.checkable)}
         onMouseOver={this.props.checkable ? this.handleMouseOver : null}
         onMouseLeave={this.props.checkable ? this.handleMouseLeave : null}
-        onClick={this.props.checkable ? this.handleClick : null}>
+        onTouchTap={this.props.checkable ? this.handleClick : null}>
         <MUI.FontIcon
           className={`synicon-${iconClass}`}
           style={iconStyle}/>
       </MUI.Paper>
-    )
+    );
   }
 }));

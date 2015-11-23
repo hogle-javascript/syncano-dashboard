@@ -1,6 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import CodeBoxesConstants from './CodeBoxesConstants';
 
 // Utils
 import Mixins from '../../mixins';
@@ -13,7 +14,7 @@ import Actions from './CodeBoxActions';
 import Store from './CodeBoxStore';
 
 // Components
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -26,15 +27,15 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    React.addons.LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
+    Mixins.Form,
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    Mixins.InstanceTabs,
-    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
@@ -70,8 +71,11 @@ export default React.createClass({
       },
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
+      },
+      notification: {
+        marginTop: 20
       }
-    }
+    };
   },
 
   isPayloadValid() {
@@ -95,7 +99,7 @@ export default React.createClass({
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
 
     if (this.isPayloadValid()) {
-      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload})
+      Actions.runCodeBoxWithUpdate(this.state.currentCodeBox.id, {source}, {payload});
       this.hideDialogs(true);
     } else {
       this.hideDialogs(true);
@@ -130,10 +134,20 @@ export default React.createClass({
     });
   },
 
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleUpdate();
+  },
+
   initDialogs() {
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'runUnsavedCodeBox',
         ref: 'runUnsavedCodeBox',
         title: 'Unsaved CodeBox',
         actions: [
@@ -149,10 +163,10 @@ export default React.createClass({
         modal: true,
         children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
       }
-    },
-    {
+    }, {
       dialog: Common.Dialog,
       params: {
+        key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
         actions: [
@@ -168,10 +182,11 @@ export default React.createClass({
         modal: true,
         children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
       }
-    }]
+    }];
   },
 
   shouldCodeBoxRun() {
+    this.clearAutosaveTimer();
     if (this.isSaved()) {
       this.handleRun();
     } else {
@@ -183,7 +198,8 @@ export default React.createClass({
     let styles = this.getStyles();
     let source = null;
     let codeBox = this.state.currentCodeBox;
-    let editorMode = 'python';
+    let editorMode = Store.getEditorMode();
+    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
 
@@ -195,7 +211,6 @@ export default React.createClass({
 
     if (codeBox) {
       source = codeBox.source;
-      editorMode = Store.getEditorMode();
 
       return (
         <div>
@@ -203,9 +218,20 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
-            onChange={this.runAutoSave}
+            onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
+          <Common.CharacterCounter
+            charactersCountWarn={CodeBoxesConstants.charactersCountWarn}
+            characters={charactersCount}
+            maxCharacters={CodeBoxesConstants.maxCharactersCount}/>
+          <Common.Show if={this.getValidationMessages('source').length > 0}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                {this.getValidationMessages('source').join(' ')}
+              </Common.Notification>
+            </div>
+          </Common.Show>
           <MUI.Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
@@ -219,13 +245,15 @@ export default React.createClass({
               ref="tracePanel"
               trace={this.state.lastTraceResult}
               loading={!this.state.lastTraceReady}/>
-            <div style={styles.durationSummary}>
-              Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
-              duration: {this.state.lastTraceDuration}ms
-            </div>
+            <Common.Show if={this.state.lastTraceDuration && this.state.lastTraceStatus}>
+              <div style={styles.durationSummary}>
+                Last run status: <span style={traceStyle}>{lastTraceStatus} </span>
+                duration: {this.state.lastTraceDuration}ms
+              </div>
+            </Common.Show>
           </div>
         </div>
-      )
+      );
     }
   },
 

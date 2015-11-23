@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Radium from 'radium';
 
-import MUI from 'material-ui';
+import MUI from 'syncano-material-ui';
 
 import './Tour.css';
 
@@ -11,7 +11,7 @@ export default Radium(React.createClass({
   propTypes: {
     config: React.PropTypes.arrayOf(React.PropTypes.shape({
       node: React.PropTypes.object,
-      text: React.PropTypes.string
+      text: React.PropTypes.node
     })),
     currentStep: React.PropTypes.number.isRequired,
     visible: React.PropTypes.bool,
@@ -132,7 +132,7 @@ export default Radium(React.createClass({
     if (!visible) classes += ' react-tour-hide';
 
     if (!config[currentStep]) {
-      return <div />
+      return <div />;
     }
 
     if (config[currentStep].left) {

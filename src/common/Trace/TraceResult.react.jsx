@@ -16,15 +16,21 @@ export default React.createClass({
     };
   },
 
+  renderTrace() {
+    let result = this.props.result;
+
+    return result.stderr ? result.stderr : result.stdout;
+  },
+
   render() {
     let styles = this.getStyles();
 
     return (
       <div>
         <div style={styles.result}>
-          {this.props.result}
+          {this.renderTrace()}
         </div>
       </div>
-    )
+    );
   }
 });
