@@ -49,10 +49,6 @@ export default React.createClass({
     });
   },
 
-  componentWillUnmount() {
-    Store.clearCurrentCodeBox();
-  },
-
   getStyles() {
     return {
       container: {
