@@ -30,9 +30,9 @@ module.exports = {
       client.elementIdText(result.value.ELEMENT, function(text) {
         const now = new Date().getTime();
         const traceDateTime = Date.parse(`${traceDate[2]}-${traceDate[1]}-${traceDate[0]} ${text.value}`);
-        const miliseconds = now - traceDateTime;
+        const milliseconds = now - traceDateTime;
 
-        client.assert.equal(true, miliseconds < 420000, 'Last schedule run less then 7 minutes ago');
+        client.assert.equal(true, milliseconds < 420000, 'Last schedule run less then 7 minutes ago');
       });
     });
   }
