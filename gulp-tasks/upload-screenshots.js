@@ -27,7 +27,7 @@ function getOrCreateFolder(options, callback) {
       });
     },
     function(folder, cb) {
-      // Try to create folder is not exists
+      // Try to create folder
       if (folder !== null) return cb(null, folder);
       options.drive.files.insert({
         resource: {
@@ -168,8 +168,7 @@ module.exports = function(done) {
       return fs.statSync(path.join(folder, file)).isFile();
     });
 
-    result[resolution] = {'title': resolution, 'files': []}
-    result[resolution]['files'] = _.map(files, function(file) {
+    result[resolution] = _.map(files, function(file) {
       return {
         'title': file,
         'path': path.join(folder, file)
@@ -210,7 +209,7 @@ module.exports = function(done) {
     gutil.log(gutil.colors.green.bold('Creating screenshots files...'));
 
     var screenshots = _.reduce(resolutionFolders, function(result, folder) {
-      _.forEach(localFiles[folder.title]['files'], function(file) {
+      _.forEach(localFiles[folder.title], function(file) {
         result.push({
           drive: drive,
           title: file.title,
