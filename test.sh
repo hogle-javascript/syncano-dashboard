@@ -18,8 +18,8 @@ function run_e2e_tests {
 }
 
 function run_e2e_screenshots {
-    git fetch --all
-    git reset --hard origin/master
+    # git fetch --all
+    # git reset --hard origin/master
     npm run-script build
     mv ./dist ./dist_e2e
     npm run-script e2e-setup
