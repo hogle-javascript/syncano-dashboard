@@ -11,7 +11,8 @@ gulp.task('deployment-master', gulpSequence(
   'check-github-tag',
   'publish',
   'clean',
-  'add-github-tag'
+  'add-github-tag',
+  'changelog'
 ));
 gulp.task('deployment-devel', gulpSequence('publish', 'clean'));
 gulp.task('deployment-branch', gulpSequence('publish-branch', 'clean'));
