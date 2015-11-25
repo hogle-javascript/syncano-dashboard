@@ -69,9 +69,8 @@ export default Reflux.createStore({
     return this.data.currentCodeBox;
   },
 
-  onFetchCodeBox() {
+  clearCurrentCodeBox() {
     this.data.currentCodeBox = null;
-    this.trigger(this.data);
   },
 
   onFetchCodeBoxCompleted(codeBox) {

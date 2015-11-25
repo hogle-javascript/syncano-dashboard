@@ -94,7 +94,7 @@ export default React.createClass({
     }
   },
 
-  handleConfirm() {
+  handleRun() {
     let source = this.refs.editorSource.editor.getValue();
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
 
@@ -103,20 +103,6 @@ export default React.createClass({
       this.hideDialogs(true);
     } else {
       this.hideDialogs(true);
-      this.setSnackbarNotification({
-        message: "Can't run CodeBox with invalid payload",
-        autoHideDuration: 3000
-      });
-    }
-  },
-
-  handleRun() {
-    if (this.isPayloadValid()) {
-      Actions.runCodeBox({
-        id: this.state.currentCodeBox.id,
-        payload: this.refs.tracePanel.refs.payloadField.getValue()
-      });
-    } else {
       this.setSnackbarNotification({
         message: "Can't run CodeBox with invalid payload",
         autoHideDuration: 3000
@@ -147,25 +133,6 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
-        key: 'runUnsavedCodeBox',
-        ref: 'runUnsavedCodeBox',
-        title: 'Unsaved CodeBox',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel
-          },
-          {
-            text: 'Save',
-            onClick: this.handleConfirm
-          }
-        ],
-        modal: true,
-        children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
-      }
-    }, {
-      dialog: Common.Dialog,
-      params: {
         key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox source',
@@ -183,15 +150,6 @@ export default React.createClass({
         children: "You're leaving CodeBox Editor with unsaved changes. Are you sure you want to continue?"
       }
     }];
-  },
-
-  shouldCodeBoxRun() {
-    this.clearAutosaveTimer();
-    if (this.isSaved()) {
-      this.handleRun();
-    } else {
-      this.showDialog('runUnsavedCodeBox');
-    }
   },
 
   renderEditor() {
@@ -265,14 +223,9 @@ export default React.createClass({
         {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
-            tooltip="Click here to save CodeBox"
-            mini={true}
-            onClick={this.handleUpdate}
-            iconClassName="synicon-content-save"/>
-          <Common.Fab.TooltipItem
             tooltip="Click here to execute CodeBox"
             mini={true}
-            onClick={this.shouldCodeBoxRun}
+            onClick={this.handleRun}
             iconClassName="synicon-play"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>
