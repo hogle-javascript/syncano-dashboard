@@ -123,8 +123,21 @@ export default React.createClass({
 
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
-            <li><p><Link to="password-reset">Forgot password?</Link></p></li>
-            <li><p>Don't have an account?<Link to="signup"> Sign up here</Link></p></li>
+            <li>
+              <p>
+                <Link to="password-reset">Forgot password?</Link>
+              </p>
+            </li>
+            <li>
+              <p>
+                Don't have an account?
+                <Link
+                  to="signup"
+                  query={this.getQuery()}>
+                  Sign up here
+                </Link>
+              </p>
+            </li>
           </ul>
           <p className="vm-4-t vm-0-b">
             If you created your account before August 2015, please login <a href="https://login.syncano.com/">here</a>
