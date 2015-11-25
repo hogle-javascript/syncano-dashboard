@@ -17,7 +17,7 @@ test:
   override:
     - ./test.sh:
         parallel: true
-        timeout: 360
+        timeout: 1500
 
 deployment:
   production:
