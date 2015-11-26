@@ -35,7 +35,7 @@ module.exports = function(cb) {
   async.waterfall([
     function(callback) {
       // Parse git log in search of ticket numbers
-      var after = moment().subtract(6, 'weeks').format('YYYY-MM-DD');
+      var after = moment().subtract(8, 'weeks').format('YYYY-MM-DD');
       var command = 'log --grep="[[:alpha:]{2, 10}][-][[:digit:]]" --oneline --pretty=format:"%s" --after="' + after + '"';
       var regex = /[A-Za-z]{2,10}-[\d]+/gm;
 
