@@ -20,8 +20,8 @@ const loginCommands = {
   },
   verifyLoginSuccessful() {
     return this
-      .waitForElementVisible('@instancesDiv')
-      .assert.containsText('@instancesDiv', 'My instances');
+      .waitForElementVisible('@socketsHeaderTitle')
+      .assert.containsText('@socketsHeaderTitle', 'Sockets');
   },
   fillInputField(field, value) {
     return this.waitForElementVisible(field)
@@ -98,6 +98,10 @@ module.exports = {
     },
     instancesDiv: {
       selector: 'div[id=instances]'
+    },
+    socketsHeaderTitle: {
+      selector: '//span[text()="Sockets"]',
+      locateStrategy: 'xpath'
     }
   }
 };
