@@ -9,11 +9,6 @@ import AuthConstants from '../apps/Account/AuthConstants';
 import Header from '../apps/Header/Header.react';
 import ConversionPixel from '../common/ConversionPixel';
 
-/* eslint-disable no-process-env */
-
-let ENV = process.env.NODE_ENV || 'development';
-
-/* eslint-enable */
 
 export default React.createClass({
 

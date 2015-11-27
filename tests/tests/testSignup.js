@@ -10,7 +10,7 @@ module.exports = {
     signupPage.setValue('@passInput', slug);
     signupPage.clickSubmitButton();
 
-    instancesPage.expect.element('@instancesTable').to.be.present.after(2000);
+    instancesPage.expect.element('@socketsHeaderTitle').to.be.present.after(2000);
     client.end();
   }
 };

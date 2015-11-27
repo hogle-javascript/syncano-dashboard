@@ -100,6 +100,7 @@ export default Radium(React.createClass({
     // Redirect to main instance screen
     this.refs.instancesDropdown.close();
     SessionActions.fetchInstance(instanceName);
+    localStorage.setItem('lastInstance', instanceName);
     this.transitionTo('instance', {instanceName});
   },
 

@@ -28,6 +28,7 @@ export default React.createClass({
   mixins: [
     Reflux.connect(Store),
     Router.State,
+    Router.Navigation,
     FormMixin
   ],
 
@@ -54,10 +55,32 @@ export default React.createClass({
   componentWillUpdate() {
     // I don't know if it's good place for this but it works
     if (SessionStore.isAuthenticated()) {
-      let router = this.context.router;
-      let next = router.getCurrentQuery().next || Constants.LOGIN_REDIRECT_PATH;
+      let queryNext = this.getQuery().next || null;
+      let lastInstance = localStorage.getItem('lastInstance') || null;
 
-      router.replaceWith(next);
+      if (queryNext !== null) {
+        this.replaceWith(queryNext);
+      } else if (lastInstance !== null) {
+        this.replaceWith('instance', {instanceName: lastInstance});
+      } else {
+        SessionStore
+          .getConnection()
+          .Instances
+          .list()
+          .then((instances) => {
+            if (instances.length > 0) {
+              let instance = instances._items[0];
+
+              localStorage.setItem('lastInstance', instance.name);
+              this.replaceWith('instance', {instanceName: instance.name});
+            } else {
+              this.replaceWith('sockets');
+            }
+          })
+          .catch(() => {
+            this.replaceWith('sockets');
+          });
+      }
     }
 
     let invKey = this.getQuery().invitation_key || null;
