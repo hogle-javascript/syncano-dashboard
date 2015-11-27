@@ -107,6 +107,10 @@ export default {
     instanceDescription: {
       selector: '//div[@class="instances-list-container"]//*[text()="nightwatch_test_instance"]',
       locateStrategy: 'xpath'
+    },
+    socketsHeaderTitle: {
+      selector: '//span[text()="Sockets"]',
+      locateStrategy: 'xpath'
     }
   }
 };
