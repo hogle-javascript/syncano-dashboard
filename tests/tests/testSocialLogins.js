@@ -30,7 +30,7 @@ export default {
 
       client.switchWindow(handle);
     });
-    instancesPage.waitForElementPresent('@instancesTable');
+    instancesPage.waitForElementPresent('@socketsHeaderTitle');
   },
   // 'Admin Logs in with Google': (client) => {
   //   const loginPage = client.page.loginPage();
@@ -82,6 +82,6 @@ export default {
 
       client.switchWindow(handle);
     });
-    instancesPage.waitForElementPresent('@instancesTable');
+    instancesPage.waitForElementPresent('@socketsHeaderTitle');
   }
 };
