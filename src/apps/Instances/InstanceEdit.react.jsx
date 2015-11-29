@@ -159,11 +159,11 @@ export default React.createClass({
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
-          onRequestClose: this.handleCancel,
           actions: [
             {text: 'Cancel', onClick: this.handleCancel},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
+          modal: true,
           children: [
             `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
             `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),

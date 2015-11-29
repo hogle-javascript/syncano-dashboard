@@ -118,7 +118,6 @@ export default React.createClass({
         key: 'deleteCreateDialog',
         ref: 'deleteCreateDialog',
         title: 'Delete a Solution',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -129,6 +128,7 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: 'Do you really want to delete this Solution?'
       }
     }];

@@ -134,7 +134,6 @@ export default React.createClass({
         key: 'deleteClassDialog',
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -145,6 +144,7 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
           this.getDialogList(checkedClasses),
@@ -166,7 +166,6 @@ export default React.createClass({
         params: {
           ref: 'deleteClassDialog',
           title: 'Delete a Class',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -177,6 +176,7 @@ export default React.createClass({
               onClick: this.handleDelete
             }
           ],
+          modal: true,
           children: [
             'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
             checkedClasses.length + ' Class(es)?',

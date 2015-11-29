@@ -118,7 +118,6 @@ export default React.createClass({
         params: {
           ref: 'deleteCodeBoxDialog',
           title: 'Delete a CodeBox',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
@@ -129,6 +128,7 @@ export default React.createClass({
               onClick: this.handleDelete
             }
           ],
+          modal: true,
           children: [
             'Some of checked CodeBoxes are associated with Schedules or Triggers. Do you really want to delete ' +
             checkedCodeBoxes.length + ' CodeBox(es)?',
@@ -149,7 +149,6 @@ export default React.createClass({
       params: {
         ref: 'deleteCodeBoxDialog',
         title: 'Delete a CodeBox',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
@@ -160,6 +159,7 @@ export default React.createClass({
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeBoxes) + ' CodeBox(es)?',
           this.getDialogList(checkedCodeBoxes, 'label'),
