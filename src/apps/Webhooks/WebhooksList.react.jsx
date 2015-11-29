@@ -57,7 +57,7 @@ export default React.createClass({
           <Common.ColumnList.Link
             name={item.name}
             link={item.links.self}
-            tooltip="Copy Webhook URL"/>
+            tooltip="Copy CobeBox Socket url"/>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
