@@ -47,48 +47,43 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label={submitLabel}
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset='UTF-8'
-        method='post'>
-        <Common.Dialog
-          ref='dialog'
-          title={title + ' an API Key'}
-          defaultOpen={this.props.defaultOpen}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <MUI.TextField
-              ref='description'
-              name='description'
-              fullWidth={true}
-              valueLink={this.linkState('description')}
-              errorText={this.getValidationMessages('description').join(' ')}
-              floatingLabelText='Description of an API Key'/>
-            <MUI.Toggle
-              ref='ignore_acl'
-              name='ignore_acl'
-              onToggle={this.handleToogle}
-              style={{marginTop: 20}}
-              label='Ignore ACL?'/>
-            <MUI.Toggle
-              ref='allow_user_create'
-              name='allow_user_create'
-              onToggle={this.handleToogle}
-              style={{marginTop: 20}}
-              label='User registration?'/>
-          </div>
-        </Common.Dialog>
-      </form>
+      <Common.Dialog
+        ref='dialog'
+        title={title + ' an API Key'}
+        defaultOpen={this.props.defaultOpen}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+          <MUI.TextField
+            ref='description'
+            name='description'
+            fullWidth={true}
+            valueLink={this.linkState('description')}
+            errorText={this.getValidationMessages('description').join(' ')}
+            floatingLabelText='Description of an API Key'/>
+          <MUI.Toggle
+            ref='ignore_acl'
+            name='ignore_acl'
+            onToggle={this.handleToogle}
+            style={{marginTop: 20}}
+            label='Ignore ACL?'/>
+          <MUI.Toggle
+            ref='allow_user_create'
+            name='allow_user_create'
+            onToggle={this.handleToogle}
+            style={{marginTop: 20}}
+            label='User registration?'/>
+        </div>
+      </Common.Dialog>
     );
   }
 });

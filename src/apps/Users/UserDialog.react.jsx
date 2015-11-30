@@ -120,10 +120,10 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
@@ -134,47 +134,42 @@ export default React.createClass({
     }
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset="UTF-8"
-        method="post">
-        <Common.Dialog
-          ref='dialog'
-          title={title + ' a User'}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <MUI.TextField
-              ref='username'
-              fullWidth={true}
-              valueLink={this.linkState('username')}
-              errorText={this.getValidationMessages('username').join(' ')}
-              hintText='Username'
-              floatingLabelText='Username' />
-            <MUI.TextField
-              ref='password'
-              type='password'
-              fullWidth={true}
-              valueLink={this.linkState('password')}
-              errorText={this.getValidationMessages('password').join(' ')}
-              hintText='User password'
-              floatingLabelText='Password'
-              className='vm-4-b' />
-            <Select
-              name='group'
-              multi={true}
-              value={selectValue}
-              placeholder='User groups'
-              options={allGroups}
-              onChange={this.handleSelectFieldChange} />
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading} />
-          </div>
-        </Common.Dialog>
-      </form>
+      <Common.Dialog
+        ref='dialog'
+        title={title + ' a User'}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+          <MUI.TextField
+            ref='username'
+            fullWidth={true}
+            valueLink={this.linkState('username')}
+            errorText={this.getValidationMessages('username').join(' ')}
+            hintText='Username'
+            floatingLabelText='Username' />
+          <MUI.TextField
+            ref='password'
+            type='password'
+            fullWidth={true}
+            valueLink={this.linkState('password')}
+            errorText={this.getValidationMessages('password').join(' ')}
+            hintText='User password'
+            floatingLabelText='Password'
+            className='vm-4-b' />
+          <Select
+            name='group'
+            multi={true}
+            value={selectValue}
+            placeholder='User groups'
+            options={allGroups}
+            onChange={this.handleSelectFieldChange} />
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading} />
+        </div>
+      </Common.Dialog>
     );
   }
 });

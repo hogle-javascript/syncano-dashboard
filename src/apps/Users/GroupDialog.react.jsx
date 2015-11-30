@@ -47,41 +47,36 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset="UTF-8"
-        method="post">
-        <Common.Dialog
-          ref="dialog"
-          title={`${title} a Group`}
-          defaultOpen={this.props.defaultOpen}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <MUI.TextField
-              ref="label"
-              label="label"
-              fullWidth={true}
-              valueLink={this.linkState('label')}
-              errorText={this.getValidationMessages('label').join(' ')}
-              hintText="Name of the group"
-              floatingLabelText="Group Name"/>
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}/>
-          </div>
-        </Common.Dialog>
-      </form>
+      <Common.Dialog
+        ref="dialog"
+        title={`${title} a Group`}
+        defaultOpen={this.props.defaultOpen}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+          <MUI.TextField
+            ref="label"
+            label="label"
+            fullWidth={true}
+            valueLink={this.linkState('label')}
+            errorText={this.getValidationMessages('label').join(' ')}
+            hintText="Name of the group"
+            floatingLabelText="Group Name"/>
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
+        </div>
+      </Common.Dialog>
     );
   }
 });

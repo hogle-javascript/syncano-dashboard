@@ -58,50 +58,45 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label={submitLabel}
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset='UTF-8'
-        method='post'>
-        <Common.Dialog
-          ref='dialog'
-          title={title + ' an Administrator'}
-          defaultOpen={this.props.defaultOpen}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <MUI.TextField
-              ref='email'
-              name='email'
-              fullWidth={true}
-              disabled={this.hasEditMode()}
-              valueLink={this.linkState('email')}
-              errorText={this.getValidationMessages('email').join(' ')}
-              hintText='Email of the administrator'
-              floatingLabelText='Email'/>
-            <MUI.SelectField
-              className="invite-admin-dropdown"
-              ref='role'
-              name='role'
-              autoWidth={true}
-              valueLink={this.linkState('role')}
-              valueMember='payload'
-              displayMember='text'
-              floatingLabelText='Role of the administrator'
-              style={{width: '50%'}}
-              errorText={this.getValidationMessages('role').join(' ')}
-              menuItems={AdminDialogStore.getRoles()}/>
-          </div>
-        </Common.Dialog>
-      </form>
+      <Common.Dialog
+        ref='dialog'
+        title={title + ' an Administrator'}
+        defaultOpen={this.props.defaultOpen}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+          <MUI.TextField
+            ref='email'
+            name='email'
+            fullWidth={true}
+            disabled={this.hasEditMode()}
+            valueLink={this.linkState('email')}
+            errorText={this.getValidationMessages('email').join(' ')}
+            hintText='Email of the administrator'
+            floatingLabelText='Email'/>
+          <MUI.SelectField
+            className="invite-admin-dropdown"
+            ref='role'
+            name='role'
+            autoWidth={true}
+            valueLink={this.linkState('role')}
+            valueMember='payload'
+            displayMember='text'
+            floatingLabelText='Role of the administrator'
+            style={{width: '50%'}}
+            errorText={this.getValidationMessages('role').join(' ')}
+            menuItems={AdminDialogStore.getRoles()}/>
+        </div>
+      </Common.Dialog>
     );
   }
 });
