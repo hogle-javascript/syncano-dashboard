@@ -139,7 +139,7 @@ export default React.createClass({
           <ul className="list--flex list--horizontal">
             <li>
               <p>
-                Already have an account?
+                <span>Already have an account? </span>
                 <Router.Link
                   to="login"
                   query={this.getQuery()}>
