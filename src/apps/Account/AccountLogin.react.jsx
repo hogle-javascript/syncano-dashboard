@@ -130,7 +130,7 @@ export default React.createClass({
             </li>
             <li>
               <p>
-                Don't have an account?
+                <span>Don't have an account? </span>
                 <Link
                   to="signup"
                   query={this.getQuery()}>
