@@ -100,7 +100,7 @@ module.exports = {
       selector: '//h3[text()="Delete an Instance"]',
       locateStrategy: 'xpath'
     },
-    welcomeDialogCreateInstance: {
+    welcomeDialog: {
       selector: '//div[@class="welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
