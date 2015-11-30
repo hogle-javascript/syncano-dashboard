@@ -9,13 +9,13 @@ const instancesCommands = {
       .clearValue('@createModalDescriptionInput')
       .setValue('@createModalDescriptionInput', description);
   },
-  clickSelectInstance: function() {
+  clickSelectInstance() {
     return this.waitForElementVisible('@selectInstance').click('@selectInstance');
   },
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button).click(button);
   },
-  clickDropdown: function() {
+  clickDropdown() {
     return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
   isModalClosed(element) {
@@ -100,7 +100,7 @@ module.exports = {
       selector: '//h3[text()="Delete an Instance"]',
       locateStrategy: 'xpath'
     },
-    welcomeDialogCreateInstance: {
+    welcomeDialog: {
       selector: '//div[@class="welcome-dialog"]//button',
       locateStrategy: 'xpath'
     },
