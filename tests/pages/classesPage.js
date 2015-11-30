@@ -49,7 +49,7 @@ export default {
       selector: 'input[name=fieldName]'
     },
     createModalDropdown: {
-      selector: '//form//label[text()="Type"]',
+      selector: '//label[text()="Type"]',
       locateStrategy: 'xpath'
     },
     createModalDropdownType: {
