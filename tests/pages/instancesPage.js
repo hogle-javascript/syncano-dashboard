@@ -55,7 +55,7 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '//div[@class="instances-list-container"]/div[4]/div/div[1]/div[2]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
       locateStrategy: 'xpath'
     },
     selectInstance: {

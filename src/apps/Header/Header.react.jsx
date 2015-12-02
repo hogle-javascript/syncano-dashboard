@@ -215,14 +215,14 @@ export default Radium(React.createClass({
               className="toolbar-list"
               style={styles.toolbarList}>
               <li id="menu-account">
-                <MUI.IconMenu iconButtonElement={this.renderIconButton()}>
+                <MUI.IconMenu id="menu-account--dropdown" iconButtonElement={this.renderIconButton()}>
                   {this.getDropdownItems()}
                 </MUI.IconMenu>
               </li>
               <li
                 id="menu-notifications"
                 style={styles.toolbarListItem}>
-                <HeaderNotificationsDropdown />
+                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
               </li>
             </ul>
           </MUI.ToolbarGroup>

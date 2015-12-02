@@ -1,7 +1,6 @@
 const topNavigationCommands = {
   clickButton: function(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
+    return this.waitForElementVisible(button).click(button);
   }
 };
 
@@ -21,19 +20,19 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     accountDropdown: {
-      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[1]',
+      selector: '//div[@id="menu-account--dropdown"]/div/div[1]',
       locateStrategy: 'xpath'
     },
     instancesListDropdown: {
-      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[2]',
+      selector: '//div[@id="menu-account--dropdown"]/div/div[2]',
       locateStrategy: 'xpath'
     },
     billingDropdown: {
-      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[3]',
+      selector: '//div[@id="menu-account--dropdown"]/div/div[3]',
       locateStrategy: 'xpath'
     },
     logoutDropdown: {
-      selector: '//li[@id="menu-account"]/div/span/div/div/div/div/div/div[4]',
+      selector: '//div[@id="menu-account--dropdown"]/div/div[4]',
       locateStrategy: 'xpath'
     },
     support: {
@@ -45,11 +44,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     menuNotifications: {
-      selector: '//li[@id="menu-notifications"]',
+      selector: '//ul[@class="toolbar-list"]//li[@id="menu-notifications"]',
       locateStrategy: 'xpath'
     },
     notificationsDropdown: {
-      selector: '//li[@id="menu-notifications"]//div[text()="Notifications"]',
+      selector: '//div[@id="menu-notifications--dropdown"]//div[text()="Notifications"]',
       locateStrategy: 'xpath'
     }
   }
