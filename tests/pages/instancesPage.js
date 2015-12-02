@@ -48,14 +48,15 @@ export default {
       locateStrategy: 'xpath'
     },
     confirmDeleteButton: {
-      selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
+      selector: '//button//span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     },
     instancesTableRow: {
       selector: '//div[@class="description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '//div[@class="instances-list-container"]/div[4]/div/div[1]/div[2]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
       locateStrategy: 'xpath'
     },
     selectInstance: {

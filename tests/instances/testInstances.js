@@ -116,16 +116,18 @@ export default {
         });
       });
     });
-    instancesPage.waitForElementPresent('@instancesTableRow', () => {
-    });
+    instancesPage.waitForElementPresent('@instancesTableRow');
     instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@instancesDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@instancesListSecondItem');
     client.pause(1000);
     leftMenuPage.waitForElementPresent('@instancesDropdown');
     client.pause(1000);
-    const dropdown = leftMenuPage.elements.instancesDropdown.selector;
+    const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
+
     client.getText('xpath', dropdown, (text) => {
+      console.log(text.value);
       client.assert.equal(text.value, instanceNames[1]);
     });
   },
