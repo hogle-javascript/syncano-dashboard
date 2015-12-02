@@ -53,6 +53,7 @@ export default Radium(React.createClass({
   renderItemIconMenuButton() {
     return (
       <MUI.IconButton
+        className={this.props.dropdownIconClassName}
         touch={true}
         tooltipPosition='bottom-left'
         iconClassName='synicon-dots-vertical'/>

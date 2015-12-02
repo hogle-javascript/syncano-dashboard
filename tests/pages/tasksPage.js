@@ -34,7 +34,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
-      selector: '//div[@class="triggers-list"]/div[3]/div/div[1]/div[7]/div[2]',
+      selector: '//button[@class="triggers-list--button"]',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {

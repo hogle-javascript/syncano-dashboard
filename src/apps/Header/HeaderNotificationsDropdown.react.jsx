@@ -208,19 +208,16 @@ export default Radium(React.createClass({
     let badgeContainerStyle = this.mergeAndPrefix(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
     let badgeStyle = this.mergeAndPrefix(styles.badge, isBadge && styles.badgeFilled);
 
-
     return (
-      <div>
-        <MUI.Badge
-          badgeContent={notificationCountIcon}
-          style={badgeContainerStyle}
-          badgeStyle={badgeStyle}>
-          <MUI.IconButton
-            iconStyle={styles.icon}
-            iconClassName={iconClassName}
-            onTouchTap={this.handleNotificationsIconClick}/>
-        </MUI.Badge>
-      </div>
+      <MUI.Badge
+        badgeContent={notificationCountIcon}
+        style={badgeContainerStyle}
+        badgeStyle={badgeStyle}>
+        <MUI.IconButton
+          iconStyle={styles.icon}
+          iconClassName={iconClassName}
+          onTouchTap={this.handleNotificationsIconClick}/>
+      </MUI.Badge>
     );
   },
 
@@ -228,23 +225,21 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div>
-        <MUI.IconMenu
-          ref="headerNotificationDropdown"
-          iconButtonElement={this.renderIcon()}
-          autoWidth={false}
-          maxWidth="400px"
-          menuStyle={styles.menu}>
-          <MenuItem
-            key="notificationDropdownHeader"
-            primaryText="Notifications"
-            disabled={true}/>
-          <MenuDivider />
-          <Loading show={this.state.accountInvitations.isLoading}>
-            {this.renderItems()}
-          </Loading>
-        </MUI.IconMenu>
-      </div>
+      <MUI.IconMenu
+        ref="headerNotificationDropdown"
+        iconButtonElement={this.renderIcon()}
+        autoWidth={false}
+        maxWidth="400px"
+        menuStyle={styles.menu}>
+        <MenuItem
+          key="notificationDropdownHeader"
+          primaryText="Notifications"
+          disabled={true}/>
+        <MenuDivider />
+        <Loading show={this.state.accountInvitations.isLoading}>
+          {this.renderItems()}
+        </Loading>
+      </MUI.IconMenu>
     );
   }
 }));

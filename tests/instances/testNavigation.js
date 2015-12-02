@@ -163,8 +163,9 @@ module.exports = {
     const profilePage = client.page.profilePage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.clickButton('@accountDropdown');
-    profilePage.waitForElementPresent('@updateButton')
+    profilePage.waitForElementPresent('@updateButton');
     client.pause(1000);
   },
   'User goes to Account Authentication View' : function(client) {
