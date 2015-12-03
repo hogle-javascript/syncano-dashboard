@@ -18,6 +18,7 @@ export default {
 
     instancesPage.navigate();
     instancesPage.clickDropdown('@instanceDropdown');
+    client.pause(1000);
     instancesPage.clickButton('@editDropdownItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
