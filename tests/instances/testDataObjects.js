@@ -26,7 +26,7 @@ module.exports = {
   },
   'Administrator edits a Data Object' : function(client) {
     const dataObjectsPage = client.page.dataObjectsPage();
-    const edited = utils.addSuffix('string') + 'edited';
+    const edited = utils.addSuffix('edited');
 
     dataObjectsPage.navigate();
     dataObjectsPage.clickButton('@stringFieldTableRow');

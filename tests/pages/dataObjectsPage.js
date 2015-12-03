@@ -57,11 +57,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     stringFieldEditedTableRow: {
-      selector: '//td[text()="' + utils.addSuffix('string') + 'edited"]',
+      selector: '//td[text()="' + utils.addSuffix('edited') + '"]',
       locateStrategy: 'xpath'
     },
     selectDataObjectTableRow: {
-      selector: '//td[text()="' + utils.addSuffix('string') + 'edited"]/preceding-sibling::td//input[@type="checkbox"]',
+      selector: '//td[text()="' + utils.addSuffix('edited') + '"]/preceding-sibling::td//input[@type="checkbox"]',
       locateStrategy: 'xpath'
     }
   }
