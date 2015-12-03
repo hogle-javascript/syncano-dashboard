@@ -62,7 +62,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div[1]/div[1]//span',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
