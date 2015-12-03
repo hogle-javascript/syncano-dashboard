@@ -19,7 +19,6 @@ export default {
     instancesPage.navigate();
     instancesPage.clickDropdown();
     instancesPage.clickButton('@editDropdownItem');
-    client.pause(1000);
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@editInstanceModalTitle');
@@ -80,8 +79,8 @@ export default {
 
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@emptyListItem');
+    client.pause(1000);
     instancesPage.clickButton('@emptyListItem');
-    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.fillInstanceDescription('nightwatch_test_instance');
     instancesPage.clickButton('@confirmButton');
     instancesPage.isModalClosed('@addInstanceModalTitle');
@@ -103,6 +102,8 @@ export default {
   'Test Instances Dropdown': (client) => {
     const instancesPage = client.page.instancesPage();
     const leftMenuPage = client.page.leftMenuPage();
+    const socketsPage = client.page.socketsPage();
+
     const instanceNames = [];
 
     instancesPage.navigate();
@@ -119,16 +120,12 @@ export default {
     instancesPage.waitForElementPresent('@instancesTableRow');
     instancesPage.clickButton('@instancesTableRow');
     leftMenuPage.clickButton('@instancesDropdown');
-    client.pause(1000);
     leftMenuPage.clickButton('@instancesListSecondItem');
-    client.pause(1000);
-    leftMenuPage.waitForElementPresent('@instancesDropdown');
-    client.pause(1000);
+    socketsPage.waitForElementPresent('@dataSocketTableTitle');
     const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 
     client.getText('xpath', dropdown, (text) => {
-      console.log(text.value);
-      client.assert.equal(text.value, instanceNames[1]);
+      client.assert.equal(text.value, instanceNames[0]);
     });
   },
   'Test Delete multiple Instances': (client) => {

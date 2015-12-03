@@ -19,7 +19,7 @@ const instancesCommands = {
     return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
   },
   isModalClosed(element) {
-    return this.waitForElementNotVisible(element);
+    return this.waitForElementNotVisible(element, 25000);
   }
 };
 
