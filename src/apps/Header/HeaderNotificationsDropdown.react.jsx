@@ -209,15 +209,17 @@ export default Radium(React.createClass({
     let badgeStyle = this.mergeAndPrefix(styles.badge, isBadge && styles.badgeFilled);
 
     return (
-      <MUI.Badge
-        badgeContent={notificationCountIcon}
-        style={badgeContainerStyle}
-        badgeStyle={badgeStyle}>
-        <MUI.IconButton
-          iconStyle={styles.icon}
-          iconClassName={iconClassName}
-          onTouchTap={this.handleNotificationsIconClick}/>
-      </MUI.Badge>
+      <div>
+        <MUI.Badge
+          badgeContent={notificationCountIcon}
+          style={badgeContainerStyle}
+          badgeStyle={badgeStyle}>
+          <MUI.IconButton
+            iconStyle={styles.icon}
+            iconClassName={iconClassName}
+            onTouchTap={this.handleNotificationsIconClick}/>
+        </MUI.Badge>
+      </div>
     );
   },
 
@@ -230,6 +232,14 @@ export default Radium(React.createClass({
         iconButtonElement={this.renderIcon()}
         autoWidth={false}
         maxWidth="400px"
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'middle'
+        }}
+        targetOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
         menuStyle={styles.menu}>
         <MenuItem
           key="notificationDropdownHeader"
@@ -240,6 +250,6 @@ export default Radium(React.createClass({
           {this.renderItems()}
         </Loading>
       </MUI.IconMenu>
-    );
+  );
   }
 }));

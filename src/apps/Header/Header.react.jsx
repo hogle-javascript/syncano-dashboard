@@ -215,7 +215,17 @@ export default Radium(React.createClass({
               className="toolbar-list"
               style={styles.toolbarList}>
               <li id="menu-account">
-                <MUI.IconMenu id="menu-account--dropdown" iconButtonElement={this.renderIconButton()}>
+                <MUI.IconMenu
+                  id="menu-account--dropdown"
+                  iconButtonElement={this.renderIconButton()}
+                  anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'middle'
+                  }}
+                  targetOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}>
                   {this.getDropdownItems()}
                 </MUI.IconMenu>
               </li>
