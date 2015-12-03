@@ -39,8 +39,9 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown('@classItemDropdown')
-      .clickButton('@editDropdownItem')
+      .clickDropdown('@classItemDropdown');
+    client.pause(1000);
+    classesPage.clickButton('@editDropdownItem')
       .waitForElementNotVisible('@editDropdownItem')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
