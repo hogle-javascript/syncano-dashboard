@@ -1,45 +1,50 @@
-const utils = require('../utils');
+import utils from '../utils';
 
 module.exports = {
   tags: ['users'],
-  before: function(client) {
-    var loginPage = client.page.loginPage();
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+  before(client) {
+    const loginPage = client.page.loginPage();
+
+    loginPage
+      .navigate()
+      .typeEmail()
+      .typePassword()
+      .clickSignInButton()
+      .verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'Administrator adds a Group' : function(client) {
+  'Administrator adds a Group'(client) {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
 
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList')
-    usersPage.clickButton('@addGroupButton');
-    usersPage.waitForElementPresent('@addGroupModalTitle');
-    usersPage.fillInputField('@groupName', suffix);
-    usersPage.clickButton('@confirm');
-    usersPage.waitForElementPresent('@groupTableRow');
+    usersPage.navigate()
+      .waitForElementVisible('@groupEditButton')
+      .waitForElementVisible('@userList')
+      .clickButton('@addGroupButton')
+      .waitForElementPresent('@addGroupModalTitle')
+      .fillInputField('@groupName', suffix)
+      .clickButton('@confirm')
+      .waitForElementPresent('@groupTableRow');
   },
-  'Administrator deletes a Group' : function(client) {
+  'Administrator deletes a Group'(client) {
     const usersPage = client.page.usersPage();
 
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList');
-    usersPage.clickDropdown('@groupTableRowDropdown');
+    usersPage
+      .navigate()
+      .waitForElementVisible('@groupEditButton')
+      .waitForElementVisible('@userList')
+      .clickDropdown('@groupTableRowDropdown');
     client.pause(1000);
-    usersPage.clickButton('@deleteButtonDropdown');
-    usersPage.waitForElementPresent('@deleteGroupModalTitle');
+    usersPage
+      .clickButton('@deleteButtonDropdown')
+      .waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
-    usersPage.clickButton('@confirm');
-    usersPage.waitForElementVisible('@groupList');
-    usersPage.waitForElementNotPresent('@groupTableRowDropdown');
+    usersPage
+      .clickButton('@confirm')
+      .waitForElementVisible('@groupList')
+      .waitForElementNotPresent('@groupTableRowDropdown');
   }
   // 'Administrator adds a User' : function(client) {
   //   const usersPage = client.page.usersPage();
