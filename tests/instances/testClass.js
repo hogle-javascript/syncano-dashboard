@@ -39,8 +39,10 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown()
+      .clickDropdown('@classItemDropdown')
+      .waitForElementNotPresent('@hasToDisappearOrTestsWillFail')
       .clickButton('@editDropdownItem')
+      .waitForElementNotVisible('@editDropdownItem')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
       .clickButton('@confirmButton');
@@ -53,7 +55,7 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown()
+      .clickDropdown('@classItemDropdown')
       .clickButton('@deleteDropdownItem');
     client.pause(1000);
     classesPage
