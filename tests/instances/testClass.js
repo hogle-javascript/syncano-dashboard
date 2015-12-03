@@ -40,7 +40,6 @@ export default {
 
     classesPage
       .clickDropdown('@classItemDropdown')
-      .waitForElementNotPresent('@hasToDisappearOrTestsWillFail')
       .clickButton('@editDropdownItem')
       .waitForElementNotVisible('@editDropdownItem')
       .waitForElementVisible('@createModalDescriptionInput')

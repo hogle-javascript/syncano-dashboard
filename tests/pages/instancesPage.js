@@ -15,8 +15,10 @@ const instancesCommands = {
   clickButton(button) {
     return this.waitForElementVisible(button).click(button);
   },
-  clickDropdown() {
-    return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
+  clickDropdown(element) {
+    return this.waitForElementVisible(element)
+               .waitForElementNotPresent('@dropdownClickAnimation')
+               .click(element);
   },
   isModalClosed(element) {
     return this.waitForElementNotVisible(element, 25000);
@@ -111,6 +113,10 @@ export default {
     },
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',
+      locateStrategy: 'xpath'
+    },
+    dropdownClickAnimation: {
+      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

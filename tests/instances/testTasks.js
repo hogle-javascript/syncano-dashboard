@@ -32,7 +32,7 @@ module.exports = {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
-    tasksPage.clickScheduleDropdown();
+    tasksPage.clickDropdown('@scheduleDropdown');
     tasksPage.clickButton('@editDropdownItem');
     tasksPage.waitForElementVisible('@editScheduleModalTitle');
     tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes');
@@ -70,7 +70,7 @@ module.exports = {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
-    tasksPage.clickTriggerDropdown();
+    tasksPage.clickDropdown('@triggerDropdown');
     tasksPage.clickButton('@editDropdownItem');
     tasksPage.waitForElementVisible('@confirm');
     tasksPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate');

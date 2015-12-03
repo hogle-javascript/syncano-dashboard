@@ -17,12 +17,11 @@ const tasksCommands = {
       .clearValue(field)
       .setValue(field, value);
   },
-  clickScheduleDropdown: function() {
-    return this.waitForElementVisible('@scheduleDropdown').click('@scheduleDropdown');
-  },
-  clickTriggerDropdown: function() {
-    return this.waitForElementVisible('@triggerDropdown').click('@triggerDropdown');
-  },
+  clickDropdown(element) {
+    return this.waitForElementVisible(element)
+               .waitForElementNotPresent('@dropdownClickAnimation')
+               .click(element);
+  }
 };
 
 module.exports = {
@@ -163,6 +162,10 @@ module.exports = {
       // moar lolpath!!!
       selector: '//div[text()="' + utils.addSuffix('trigger') +
       '"]/parent::div/following-sibling::div[text()="post_update"]',
+      locateStrategy: 'xpath'
+    },
+    dropdownClickAnimation: {
+      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

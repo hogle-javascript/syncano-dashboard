@@ -17,7 +17,7 @@ export default {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickDropdown();
+    instancesPage.clickDropdown('@instanceDropdown');
     instancesPage.clickButton('@editDropdownItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
     instancesPage.clickButton('@confirmButton');
