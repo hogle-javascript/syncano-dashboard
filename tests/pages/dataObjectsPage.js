@@ -1,16 +1,16 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../utils';
+import globals from '../globals';
 
 const dataObjectsCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  clickCheckbox: function(button) {
+  clickCheckbox(button) {
     return this.waitForElementPresent(button)
       .click(button);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, '')
