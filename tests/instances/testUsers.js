@@ -31,13 +31,14 @@ module.exports = {
 
     usersPage.navigate();
     usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList')
-    usersPage.clickButton('@groupTableRowDropdown');
+    usersPage.waitForElementVisible('@userList');
+    usersPage.clickDropdown('@groupTableRowDropdown');
+    client.pause(1000);
     usersPage.clickButton('@deleteButtonDropdown');
     usersPage.waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
     usersPage.clickButton('@confirm');
-    usersPage.waitForElementVisible('@groupList')
+    usersPage.waitForElementVisible('@groupList');
     usersPage.waitForElementNotPresent('@groupTableRowDropdown');
   }
   // 'Administrator adds a User' : function(client) {
