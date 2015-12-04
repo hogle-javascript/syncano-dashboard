@@ -34,6 +34,7 @@ export default React.createClass({
     Reflux.connect(Tasks.SchedulesStore, 'schedules'),
     Reflux.connect(Tasks.TriggersStore, 'triggers'),
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -140,17 +141,17 @@ export default React.createClass({
           key: 'removeWebhookDialog',
           ref: 'removeWebhookDialog',
           title: 'Delete a Webhook',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
             },
             {
               text: 'Confirm',
               onClick: this.handleRemoveWebhooks
             }
           ],
+          modal: true,
           children: 'Do you really want to delete ' + Webhooks.Store.getCheckedItems().length + ' Webhooks?'
         }
       },
@@ -160,17 +161,17 @@ export default React.createClass({
           key: 'removeDataViewDialog',
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
             },
             {
               text: 'Confrim',
               onClick: this.handleRemoveDataViews
             }
           ],
+          modal: true,
           children: 'Do you really want to delete ' + Data.Store.getCheckedItems().length + ' Data endpoints?'
         }
       }

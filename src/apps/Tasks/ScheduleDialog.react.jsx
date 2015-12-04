@@ -67,58 +67,54 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset='UTF-8'
-        method='post'>
-        <Common.Dialog
-          ref='dialog'
-          title={`${title} a Schedule`}
-          defaultOpen={this.props.defaultOpen}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <MUI.TextField
-              ref='label'
-              name='label'
-              fullWidth={true}
-              valueLink={this.linkState('label')}
-              errorText={this.getValidationMessages('label').join(' ')}
-              floatingLabelText='Label of the schedule'/>
-            <MUI.SelectField
-              ref='codebox'
-              name='codebox'
-              className='codebox-dropdown'
-              floatingLabelText='CodeBox'
-              valueLink={this.linkState('codebox')}
-              errorText={this.getValidationMessages('codebox').join(' ')}
-              valueMember='payload'
-              displayMember='text'
-              fullWidth={true}
-              menuItems={this.state.codeboxes}/>
-            <MUI.SelectField
-              ref='crontab'
-              name='crontab'
-              className='crontab-dropdown'
-              floatingLabelText='CronTab'
-              valueLink={this.linkState('crontab')}
-              errorText={this.getValidationMessages('crontab').join(' ')}
-              valueMember='payload'
-              displayMember='text'
-              fullWidth={true}
-              menuItems={ScheduleDialogStore.getCrontabDropdown()}/>
-          </div>
-        </Common.Dialog>
-      </form>
+      <Common.Dialog
+        key='dialog'
+        ref='dialog'
+        title={`${title} a Schedule`}
+        defaultOpen={this.props.defaultOpen}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+          <MUI.TextField
+            ref='label'
+            name='label'
+            fullWidth={true}
+            valueLink={this.linkState('label')}
+            errorText={this.getValidationMessages('label').join(' ')}
+            floatingLabelText='Label of the schedule'/>
+          <MUI.SelectField
+            ref='codebox'
+            name='codebox'
+            className='codebox-dropdown'
+            floatingLabelText='CodeBox'
+            valueLink={this.linkState('codebox')}
+            errorText={this.getValidationMessages('codebox').join(' ')}
+            valueMember='payload'
+            displayMember='text'
+            fullWidth={true}
+            menuItems={this.state.codeboxes}/>
+          <MUI.SelectField
+            ref='crontab'
+            name='crontab'
+            className='crontab-dropdown'
+            floatingLabelText='CronTab'
+            valueLink={this.linkState('crontab')}
+            errorText={this.getValidationMessages('crontab').join(' ')}
+            valueMember='payload'
+            displayMember='text'
+            fullWidth={true}
+            menuItems={ScheduleDialogStore.getCrontabDropdown()}/>
+        </div>
+      </Common.Dialog>
     );
   }
 });

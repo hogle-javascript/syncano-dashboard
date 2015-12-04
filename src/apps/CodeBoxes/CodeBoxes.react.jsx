@@ -28,6 +28,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -116,19 +117,20 @@ export default React.createClass({
       return [{
         dialog: Common.Dialog,
         params: {
+          key: 'deleteCodeBoxDialog',
           ref: 'deleteCodeBoxDialog',
           title: 'Delete a CodeBox',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'deleteCodeBoxDialog')
             },
             {
               text: 'Confirm',
               onClick: this.handleDelete
             }
           ],
+          modal: true,
           children: [
             'Some of checked CodeBoxes are associated with Schedules or Triggers. Do you really want to delete ' +
             checkedCodeBoxes.length + ' CodeBox(es)?',
@@ -147,19 +149,20 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'deleteCodeBoxDialog',
         ref: 'deleteCodeBoxDialog',
         title: 'Delete a CodeBox',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteCodeBoxDialog')
           },
           {
             text: 'Confirm',
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedCodeBoxes) + ' CodeBox(es)?',
           this.getDialogList(checkedCodeBoxes, 'label'),

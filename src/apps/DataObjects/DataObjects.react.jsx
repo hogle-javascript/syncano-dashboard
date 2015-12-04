@@ -29,6 +29,7 @@ export default React.createClass({
 
     Reflux.connect(Store),
     Mixins.Header,
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs
   ],
@@ -106,11 +107,12 @@ export default React.createClass({
         key: 'deleteDataObjectDialog',
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
-        onRequestClose: this.handleCancel,
         actions: [
-          {text: 'Cancel', onClick: this.handleCancel},
+          {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteDataObjectDialog')},
           {text: 'Confirm', onClick: this.handleDelete}
         ],
+        avoidResetState: true,
+        modal: true,
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }];
@@ -149,7 +151,6 @@ export default React.createClass({
       <MUI.Table
         ref="table"
         multiSelectable={true}
-        deselectOnClickaway={false}
         showRowHover={true}
         onCellClick={this.handleCellClick}
         onRowSelection={this.handleRowSelection}
@@ -157,7 +158,7 @@ export default React.createClass({
         bodyTableStyle={{overflowX: 'visible', overflowY: 'initial'}}>
         {tableHeader}
         <MUI.TableBody
-          deselectOnClickaway={this.state.deselectOnClickaway}
+          deselectOnClickaway={false}
           showRowHover={true}
           stripedRows={false}>
           {tableData}
@@ -207,7 +208,7 @@ export default React.createClass({
               iconClassName="synicon-delete"
               tooltip="Delete Data Objects"
               disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
-              onClick={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
+              onTouchTap={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
             <ColumnsFilterMenu
               columns={Store.getTableColumns()}

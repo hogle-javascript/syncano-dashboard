@@ -180,10 +180,10 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
@@ -196,67 +196,61 @@ export default React.createClass({
     }
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        method="post"
-        acceptCharset="UTF-8">
-        <Common.Dialog
-          ref='dialog'
-          title={title + ' a Data Endpoint'}
-          defaultOpen={this.props.defaultOpen}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-            <div>Main settings</div>
-            <div className='row'>
-              <div className='col-xs-12'>
-                <MUI.TextField
-                  ref='name'
-                  name='name'
-                  fullWidth={true}
-                  disabled={this.hasEditMode()}
-                  valueLink={this.linkState('name')}
-                  errorText={this.getValidationMessages('name').join(' ')}
-                  hintText='Name of the endpoint'
-                  floatingLabelText='Endpoint'/>
-              </div>
-              <div className='col-flex-1' style={{paddingLeft: 15}}>
-                <MUI.TextField
-                  ref='description'
-                  name='description'
-                  fullWidth={true}
-                  valueLink={this.linkState('description')}
-                  errorText={this.getValidationMessages('description').join(' ')}
-                  hintText='Description of the endpoint'
-                  floatingLabelText='Description'/>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col-flex-1'>
-                <MUI.SelectField
-                  ref="class"
-                  name="class"
-                  fullWidth={true}
-                  floatingLabelText="Class"
-                  valueLink={this.linkState('class')}
-                  errorText={this.getValidationMessages('class').join(' ')}
-                  valueMember="payload"
-                  displayMember="text"
-                  menuItems={this.state.classes}/>
-              </div>
-            </div>
-            <div className="row" style={{marginTop: 30}}>
-              <div className="col-flex-1">
-                {fields}
-              </div>
-              <div className="col-flex-1" style={{paddingLeft: 40}}>
-                {options}
-              </div>
-            </div>
+      <Common.Dialog
+        key='dialog'
+        ref='dialog'
+        title={`${title} a Data Endpoint`}
+        defaultOpen={this.props.defaultOpen}
+        actions={dialogStandardActions}
+        modal={true}>
+        {this.renderFormNotifications()}
+        <div>Main settings</div>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <MUI.TextField
+              ref='name'
+              name='name'
+              fullWidth={true}
+              disabled={this.hasEditMode()}
+              valueLink={this.linkState('name')}
+              errorText={this.getValidationMessages('name').join(' ')}
+              hintText='Name of the endpoint'
+              floatingLabelText='Endpoint'/>
           </div>
-        </Common.Dialog>
-      </form>
+          <div className='col-flex-1' style={{paddingLeft: 15}}>
+            <MUI.TextField
+              ref='description'
+              name='description'
+              fullWidth={true}
+              valueLink={this.linkState('description')}
+              errorText={this.getValidationMessages('description').join(' ')}
+              hintText='Description of the endpoint'
+              floatingLabelText='Description'/>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-flex-1'>
+            <MUI.SelectField
+              ref="class"
+              name="class"
+              fullWidth={true}
+              floatingLabelText="Class"
+              valueLink={this.linkState('class')}
+              errorText={this.getValidationMessages('class').join(' ')}
+              valueMember="payload"
+              displayMember="text"
+              menuItems={this.state.classes}/>
+          </div>
+        </div>
+        <div className="row" style={{marginTop: 30}}>
+          <div className="col-flex-1">
+            {fields}
+          </div>
+          <div className="col-flex-1" style={{paddingLeft: 40}}>
+            {options}
+          </div>
+        </div>
+      </Common.Dialog>
     );
   }
 });

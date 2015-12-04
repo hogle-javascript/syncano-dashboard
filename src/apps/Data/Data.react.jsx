@@ -31,6 +31,7 @@ export default React.createClass({
 
     Reflux.connect(Store, 'dataviews'),
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -82,17 +83,17 @@ export default React.createClass({
           key: 'removeDataViewDialog',
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
             },
             {
               text: 'Confrim',
               onClick: this.handleRemoveDataViews
             }
           ],
+          modal: true,
           children: 'Do you really want to delete ' + Store.getCheckedItems().length + ' Data endpoints?'
         }
       }
