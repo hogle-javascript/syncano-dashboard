@@ -29,16 +29,12 @@ export default React.createClass({
       <div
         className="container"
         style={styles.container}>
+        <Common.InnerToolbar title={this.props.headerText}/>
         <div className="row align-center">
           <div className="col-flex-1">
-            <div>
-              <div style={styles.header}>
-                {this.props.headerText}
-              </div>
-              <Common.Loading show={this.props.show}>
-                {this.props.children}
-              </Common.Loading>
-            </div>
+            <Common.Loading show={this.props.show}>
+              {this.props.children}
+            </Common.Loading>
           </div>
         </div>
       </div>

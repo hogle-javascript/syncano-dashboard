@@ -116,17 +116,13 @@ export default React.createClass({
             onClick={Actions.showDialog}/>
         </Common.InnerToolbar>
 
-        <div style={{clear: 'both', height: '100%', marginTop: 130}}>
-
-          <List
-            name="Data Socket"
-            checkItem={this.checkDataViewItem}
-            isLoading={this.state.dataviews.isLoading}
-            items={this.state.dataviews.items}
-            emptyItemHandleClick={this.showDataViewDialog}
-            emptyItemContent="Create a Data Socket"/>
-
-        </div>
+        <List
+          name="Data Socket"
+          checkItem={this.checkDataViewItem}
+          isLoading={this.state.dataviews.isLoading}
+          items={this.state.dataviews.items}
+          emptyItemHandleClick={this.showDataViewDialog}
+          emptyItemContent="Create a Data Socket"/>
       </Container>
     );
   }

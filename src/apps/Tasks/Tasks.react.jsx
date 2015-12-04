@@ -210,6 +210,8 @@ export default React.createClass({
             iconClassName="synicon-arrow-up-bold"/>
         </Common.Fab>
 
+        <Common.InnerToolbar title="Tasks" />
+
         <SchedulesList
           name="Schedules"
           checkItem={this.checkSchedule}

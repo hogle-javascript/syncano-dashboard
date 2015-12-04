@@ -127,6 +127,9 @@ export default React.createClass({
             onClick={this.showChannelDialog}
             iconClassName="synicon-plus"/>
         </Common.Fab>
+
+        <Common.InnerToolbar title="Channels" />
+
         <ChannelsList
           name="Channels"
           isLoading={this.state.isLoading}
