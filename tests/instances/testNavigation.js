@@ -175,6 +175,7 @@ module.exports = {
     const authenticationPage = client.page.authenticationPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@authentication');
