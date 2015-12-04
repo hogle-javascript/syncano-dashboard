@@ -50,6 +50,10 @@ module.exports = {
     notificationsDropdown: {
       selector: '//div[@id="menu-notifications--dropdown"]//div[text()="Notifications"]',
       locateStrategy: 'xpath'
+    },
+    fox: {
+      selector: '//div[@id="menu-account--dropdown"]//img[contains(@style, "did-flip:true")]',
+      locateStrategy: 'xpath'
     }
   }
 };
