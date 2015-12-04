@@ -228,6 +228,7 @@ export default Radium(React.createClass({
 
     return (
       <MUI.IconMenu
+        id={this.props.id}
         ref="headerNotificationDropdown"
         iconButtonElement={this.renderIcon()}
         autoWidth={false}
