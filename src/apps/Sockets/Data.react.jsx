@@ -192,31 +192,31 @@ export default React.createClass({
 
           <MUI.IconButton
             iconClassName="synicon-socket-data"
-            iconStyle={{color: 'green', fontSize: 30}}
+            iconStyle={{color: MUI.Styles.Colors.green300, fontSize: 35}}
             tooltip="Create Data Socket"
             onTouchTap={this.showDataViewAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-codebox"
-            iconStyle={{color: 'red', fontSize: 30}}
+            iconStyle={{color: MUI.Styles.Colors.red300, fontSize: 35}}
             tooltip="Create CodeBox Socket"
             onTouchTap={this.showWebhookAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-channel"
-            iconStyle={{color: 'blue', fontSize: 30}}
+            iconStyle={{color: MUI.Styles.Colors.blue300, fontSize: 35}}
             tooltip="Create Channel Socket"
             onTouchTap={this.showChannelAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-trigger"
-            iconStyle={{color: 'yellow', fontSize: 30}}
+            iconStyle={{color: MUI.Styles.Colors.amberA200, fontSize: 35}}
             tooltip="Create Trigger Socket"
             onTouchTap={this.showTriggerAddDialog}/>
 
           <MUI.IconButton
             iconClassName="synicon-socket-schedule"
-            iconStyle={{color: 'pink', fontSize: 30}}
+            iconStyle={{color: MUI.Styles.Colors.lime400, fontSize: 35}}
             tooltip="Create Schedule Socket"
             tooltipPosition="bottom-left"
             onTouchTap={this.showScheduleAddDialog}/>
