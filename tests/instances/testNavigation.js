@@ -188,6 +188,7 @@ module.exports = {
     const invitationsPage = client.page.invitationsPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@invitations');
@@ -200,6 +201,7 @@ module.exports = {
     const billingPlanPage = client.page.billingPlanPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@billingPlan');
@@ -212,6 +214,7 @@ module.exports = {
     const paymentMethodsPage = client.page.paymentMethodsPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@paymentMethods');
@@ -224,6 +227,7 @@ module.exports = {
     const invoicesPage = client.page.invoicesPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@invoices');
@@ -236,6 +240,7 @@ module.exports = {
     const billingAddressPage = client.page.billingAddressPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@billingAddress');
