@@ -30,6 +30,7 @@ export default React.createClass({
 
     Reflux.connect(Store, 'admins'),
     Reflux.connect(AdminsInvitationsStore, 'invitations'),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -108,7 +109,7 @@ export default React.createClass({
           ref: 'deleteAdminDialog',
           title: 'Remove an Administrator',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteAdminDialog')},
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
           ],
           modal: true,
@@ -129,7 +130,7 @@ export default React.createClass({
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'resendInvitationDialog')},
             {text: 'Confirm', onClick: this.handleResendInvitation}
           ],
           modal: true,
@@ -150,7 +151,7 @@ export default React.createClass({
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeInvitationDialog')},
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
           ],
           modal: true,

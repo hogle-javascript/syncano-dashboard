@@ -27,6 +27,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -137,7 +138,7 @@ export default React.createClass({
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteClassDialog')
           },
           {
             text: 'Confirm',
@@ -161,34 +162,16 @@ export default React.createClass({
       let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
       let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
-      deleteDialog = {
-        dialog: Common.Dialog,
-        params: {
-          ref: 'deleteClassDialog',
-          title: 'Delete a Class',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleDelete
-            }
-          ],
-          modal: true,
-          children: [
-            'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
-            checkedClasses.length + ' Class(es)?',
-            notAssociatedList,
-            associatedWithTriggersList,
-            <Common.Loading
-                type="linear"
-                position="bottom"
-                show={this.state.isLoading}/>
-          ]
-        }
-      };
+      deleteDialog.params.children = [
+        'Some of checked Classes are associated with Triggers. Do you really want to delete ' +
+        checkedClasses.length + ' Class(es)?',
+        notAssociatedList,
+        associatedWithTriggersList,
+        <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.state.isLoading}/>
+      ];
     }
 
     return [

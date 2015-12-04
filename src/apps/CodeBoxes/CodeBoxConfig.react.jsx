@@ -31,6 +31,7 @@ export default Radium(React.createClass({
     SnackbarNotificationMixin,
     UnsavedDataMixin,
     Mixins.Mousetrap,
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.Form,
     MUI.Utils.Styles
@@ -193,7 +194,7 @@ export default Radium(React.createClass({
     this.clearValidations();
   },
 
-  handleSuccessfullValidation() {
+  handleAddSubmit() {
     this.handleUpdate();
   },
 
@@ -201,6 +202,7 @@ export default Radium(React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'unsavedDataWarn',
         ref: 'unsavedDataWarn',
         title: 'Unsaved CodeBox config',
         actions: [
@@ -210,7 +212,7 @@ export default Radium(React.createClass({
           },
           {
             text: 'Continue editing',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'unsavedDataWarn')
           }
         ],
         modal: true,

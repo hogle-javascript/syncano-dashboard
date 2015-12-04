@@ -504,6 +504,7 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref='dialog'
         title={title}
         onRequestClose={this.handleCancel}

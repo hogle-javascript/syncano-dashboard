@@ -9,7 +9,7 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 
 // Utils
-import {Dialogs} from '../../mixins';
+import {Dialog, Dialogs} from '../../mixins';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -29,6 +29,7 @@ export default React.createClass({
     Router.Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
+    Dialog,
     Dialogs,
     MUI.Utils.Styles
   ],
@@ -160,7 +161,7 @@ export default React.createClass({
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,

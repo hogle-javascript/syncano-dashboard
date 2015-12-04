@@ -70,8 +70,9 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref='dialog'
-        title={title + ' a CodeBox'}
+        title={`${title} a CodeBox`}
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
         contentStyle={{padding: '8px 0 0 0'}}>

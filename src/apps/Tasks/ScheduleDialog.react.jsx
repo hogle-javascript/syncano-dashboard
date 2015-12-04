@@ -76,6 +76,7 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref='dialog'
         title={`${title} a Schedule`}
         defaultOpen={this.props.defaultOpen}

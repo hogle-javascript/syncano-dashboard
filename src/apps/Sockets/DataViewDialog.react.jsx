@@ -197,8 +197,9 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref='dialog'
-        title={title + ' a Data Endpoint'}
+        title={`${title} a Data Endpoint`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         modal={true}>

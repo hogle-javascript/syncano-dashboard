@@ -34,6 +34,7 @@ export default React.createClass({
 
     Reflux.connect(SchedulesStore, 'schedules'),
     Reflux.connect(TriggersStore, 'triggers'),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -72,12 +73,13 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'removeTriggerDialog',
           ref: 'removeTriggerDialog',
           title: 'Delete a Trigger',
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeTriggerDialog')
             },
             {
               text: 'Confirm',
@@ -98,10 +100,11 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'removeScheduleDialog',
           ref: 'removeScheduleDialog',
           title: 'Delete a Schedule',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeScheduleDialog')},
             {text: 'Confirm', onClick: this.handleRemoveSchedules}
           ],
           modal: true,

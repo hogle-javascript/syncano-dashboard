@@ -37,6 +37,7 @@ export default Radium(React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs
   ],
 
@@ -178,7 +179,7 @@ export default Radium(React.createClass({
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
             {text: 'Confirm', onClick: this.handleDelete}
           ],
           modal: true,
@@ -199,7 +200,7 @@ export default Radium(React.createClass({
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
             {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,

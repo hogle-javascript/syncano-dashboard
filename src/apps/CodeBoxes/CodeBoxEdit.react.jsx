@@ -30,6 +30,7 @@ export default React.createClass({
     LinkedStateMixin,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     HeaderMixin,
     UnsavedDataMixin,
@@ -141,7 +142,7 @@ export default React.createClass({
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'runUnsavedCodeBox')
           },
           {
             text: 'Save',
@@ -164,7 +165,7 @@ export default React.createClass({
           },
           {
             text: 'Continue editing',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'unsavedDataWarn')
           }
         ],
         modal: true,

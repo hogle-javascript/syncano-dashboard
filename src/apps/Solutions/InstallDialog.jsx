@@ -136,6 +136,7 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref="dialog"
         title={title}
         defaultOpen={this.props.defaultOpen}

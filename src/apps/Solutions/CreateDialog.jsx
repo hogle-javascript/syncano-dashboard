@@ -17,10 +17,10 @@ export default React.createClass({
   displayName: 'SolutionDialog',
 
   mixins: [
-    Mixins.Dialog,
-    Mixins.Form,
+    Reflux.connect(Store),
 
-    Reflux.connect(Store)
+    Mixins.Dialog,
+    Mixins.Form
   ],
 
   validatorConstraints: {
@@ -54,7 +54,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update a Solution' : 'Create a Solution';
+    let title = this.hasEditMode() ? 'Update' : 'Create';
     let dialogCustomActions = [
       <MUI.FlatButton
         key="cancel"
@@ -71,8 +71,9 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref="dialog"
-        title={title}
+        title={`${title} a Solution`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         actions={dialogCustomActions}>

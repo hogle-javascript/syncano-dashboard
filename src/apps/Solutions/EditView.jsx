@@ -30,6 +30,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.IsLoading(),
 
@@ -121,7 +122,7 @@ export default React.createClass({
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteCreateDialog')
           },
           {
             text: 'Confirm',

@@ -28,6 +28,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -116,12 +117,13 @@ export default React.createClass({
       return [{
         dialog: Common.Dialog,
         params: {
+          key: 'deleteCodeBoxDialog',
           ref: 'deleteCodeBoxDialog',
           title: 'Delete a CodeBox',
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'deleteCodeBoxDialog')
             },
             {
               text: 'Confirm',
@@ -147,12 +149,13 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'deleteCodeBoxDialog',
         ref: 'deleteCodeBoxDialog',
         title: 'Delete a CodeBox',
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteCodeBoxDialog')
           },
           {
             text: 'Confirm',

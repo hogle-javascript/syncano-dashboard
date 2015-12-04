@@ -31,6 +31,7 @@ export default React.createClass({
 
     Reflux.connect(Store, 'dataviews'),
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -85,7 +86,7 @@ export default React.createClass({
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
             },
             {
               text: 'Confrim',

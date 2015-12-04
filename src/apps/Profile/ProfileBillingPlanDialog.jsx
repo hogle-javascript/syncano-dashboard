@@ -314,12 +314,12 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref="dialog"
         contentStyle={{maxWidth: 850, padding: 0}}
         defaultOpen={this.props.defaultOpen}
         actions={dialogCustomActions}
-        onRequestClose={this.handleCancel}
-        onDismiss={this.handleDismiss}>
+        onRequestClose={this.handleCancel}>
         <div>
           <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
           <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>

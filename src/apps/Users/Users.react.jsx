@@ -31,6 +31,7 @@ export default React.createClass({
 
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -128,6 +129,7 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'removeGroupDialog',
           ref: 'removeGroupDialog',
           title: 'Delete a Group',
           actions: [
@@ -155,10 +157,11 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'removeUserDialog',
           ref: 'removeUserDialog',
           title: 'Delete a User',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeUserDialog')},
             {text: 'Confirm', onClick: this.handleRemoveUsers}
           ],
           modal: true,

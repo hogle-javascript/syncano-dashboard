@@ -23,6 +23,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs
   ],
 
@@ -53,10 +54,11 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'acceptInvitationsDialog',
           ref: 'acceptInvitationsDialog',
           title: 'Accept an Invitation',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'acceptInvitationsDialog')},
             {text: 'Confirm', onClick: this.handleAccept}
           ],
           modal: true,
@@ -66,10 +68,11 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
+          key: 'declineInvitationsDialog',
           ref: 'declineInvitationsDialog',
           title: 'Decline an Invitation',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel},
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'declineInvitationsDialog')},
             {text: 'Confirm', onClick: this.handleDecline}
           ],
           modal: true,

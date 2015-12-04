@@ -32,6 +32,7 @@ export default React.createClass({
 
     Reflux.connect(WebhooksStore, 'webhooks'),
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -86,7 +87,7 @@ export default React.createClass({
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
             },
             {
               text: 'Confirm',

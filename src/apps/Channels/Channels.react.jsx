@@ -27,6 +27,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -67,12 +68,13 @@ export default React.createClass({
     return [{
       dialog: Common.Dialog,
       params: {
+        key: 'deleteChannelDialog',
         ref: 'deleteChannelDialog',
         title: 'Delete a Channel',
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteChannelDialog')
           },
           {
             text: 'Confirm',

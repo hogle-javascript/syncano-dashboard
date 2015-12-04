@@ -135,8 +135,9 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref='dialog'
-        title={title + ' a User'}
+        title={`${title} a User`}
         onRequestClose={this.handleCancel}
         actions={dialogStandardActions}>
         <div>

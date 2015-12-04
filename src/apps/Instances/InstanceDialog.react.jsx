@@ -64,7 +64,7 @@ export default React.createClass({
   },
 
   render() {
-    let title = this.hasEditMode() ? 'Update an Instance' : 'Create an Instance';
+    let title = this.hasEditMode() ? 'Update' : 'Create';
     let dialogCustomActions = [
       <MUI.FlatButton
         key="cancel"
@@ -81,31 +81,30 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key='dialog'
         ref="dialog"
-        title={title}
+        title={`${title} an Instance`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         actions={dialogCustomActions}>
-        <div>
-          {this.renderFormNotifications()}
-          <MUI.TextField
-            ref="name"
-            name="name"
-            fullWidth={true}
-            disabled={true}
-            valueLink={this.linkState('name')}
-            errorText={this.getValidationMessages('name').join(' ')}
-            hintText="Short name for your Instance"
-            floatingLabelText="Name"/>
-          <MUI.TextField
-            ref="description"
-            name="description"
-            fullWidth={true}
-            valueLink={this.linkState('description')}
-            errorText={this.getValidationMessages('description').join(' ')}
-            hintText="Multiline description of Instance (optional)"
-            floatingLabelText="Description"/>
-        </div>
+        {this.renderFormNotifications()}
+        <MUI.TextField
+          ref="name"
+          name="name"
+          fullWidth={true}
+          disabled={true}
+          valueLink={this.linkState('name')}
+          errorText={this.getValidationMessages('name').join(' ')}
+          hintText="Short name for your Instance"
+          floatingLabelText="Name"/>
+        <MUI.TextField
+          ref="description"
+          name="description"
+          fullWidth={true}
+          valueLink={this.linkState('description')}
+          errorText={this.getValidationMessages('description').join(' ')}
+          hintText="Multiline description of Instance (optional)"
+          floatingLabelText="Description"/>
         <Common.Loading
           type="linear"
           position="bottom"
