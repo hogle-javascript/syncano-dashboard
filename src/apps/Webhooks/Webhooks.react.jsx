@@ -47,6 +47,22 @@ export default React.createClass({
     this.hideDialogs(nextState.webhooks.hideDialogs);
   },
 
+  getStyles() {
+    return {
+      listSockets: {
+        marginTop: 130
+      },
+      listBase: {
+        clear: 'both',
+        height: '100%'
+      },
+      icon: {
+        fontSize: 25,
+        marginTop: 5
+      }
+    };
+  },
+
   handleRemoveWebhooks() {
     console.info('Data::handleDelete');
     WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
@@ -105,6 +121,9 @@ export default React.createClass({
     let isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length;
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let styles = this.getStyles();
+    let routeName = this.getRoutes()[this.getRoutes().length - 1];
+    let isSocketView = routeName === 'sockets';
 
     return (
       <Container>
@@ -128,13 +147,13 @@ export default React.createClass({
 
         <Common.InnerToolbar title="Webhooks">
           <MUI.IconButton
-            style={{fontSize: 25, marginTop: 5}}
+            style={styles.icon}
             iconClassName="synicon-delete"
             tooltip="Delete Data Objects"
           />
         </Common.InnerToolbar>
 
-        <div style={{clear: 'both', height: '100%', marginTop: 130}}>
+        <div style={[styles.listBase, isSocketView && styles.listSockets]}>
 
           <WebhooksList
             name="CodeBox Sockets"

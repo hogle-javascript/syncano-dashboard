@@ -29,8 +29,21 @@ export default Radium(React.createClass({
       },
       iconName: {
         paddingLeft: 16
+      },
+      link: {
+        cursor: 'pointer',
+        display: 'inline-block',
+        ':hover': {
+          textDecoration: 'underline'
+        }
       }
     };
+  },
+
+  handleClick() {
+    if (typeof this.props.handleClick === 'function') {
+      this.props.handleClick();
+    }
   },
 
   render() {
@@ -45,7 +58,11 @@ export default Radium(React.createClass({
       <div
         className={this.getClassName()}
         style={componentStyles}>
-        {this.props.children}
+        <div
+          style={this.props.handleClick && styles.link}
+          onClick={this.handleClick}>
+          {this.props.children}
+        </div>
       </div>
     );
   }

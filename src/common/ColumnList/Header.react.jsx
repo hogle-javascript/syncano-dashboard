@@ -2,6 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 
 export default Radium(React.createClass({
+
   displayName: 'Header',
 
   getStyles() {

@@ -32,6 +32,8 @@ import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users.react';
 import Channels from './apps/Channels/Channels.react';
 import Sockets from './apps/Sockets';
+import Triggers from './apps/Tasks/Triggers';
+import Schedules from './apps/Tasks/Schedules';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -234,6 +236,20 @@ export default (
           <DefaultRoute handler={Tasks}/>
 
         </Route>
+
+        {/* Triggers */}
+        <Route
+          name="triggers"
+          handler={Triggers}
+          path="triggers"
+          />
+
+        {/* Schedules */}
+        <Route
+          name="schedules"
+          handler={Schedules}
+          path="schedules"
+          />
 
         {/* Channels */}
         <Route
