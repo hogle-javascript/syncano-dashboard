@@ -57,8 +57,15 @@ export default React.createClass({
       <MUI.IconMenu
         closeOnItemTouchTap={false}
         iconButtonElement={mainIcon}
-        maxHeight="calc(100vh - 90px)"
-        openDirection="bottom-left">
+        maxHeight={`calc(100vh - 90px)`}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'middle'
+        }}
+        targetOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}>
         {this.renderMenuItems()}
       </MUI.IconMenu>
     );

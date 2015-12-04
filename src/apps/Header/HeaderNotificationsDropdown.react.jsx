@@ -208,7 +208,6 @@ export default Radium(React.createClass({
     let badgeContainerStyle = this.mergeAndPrefix(styles.badgeContainer, isBadge && styles.badgeContainerFilled);
     let badgeStyle = this.mergeAndPrefix(styles.badge, isBadge && styles.badgeFilled);
 
-
     return (
       <div>
         <MUI.Badge
@@ -228,23 +227,30 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div>
-        <MUI.IconMenu
-          ref="headerNotificationDropdown"
-          iconButtonElement={this.renderIcon()}
-          autoWidth={false}
-          maxWidth="400px"
-          menuStyle={styles.menu}>
-          <MenuItem
-            key="notificationDropdownHeader"
-            primaryText="Notifications"
-            disabled={true}/>
-          <MenuDivider />
-          <Loading show={this.state.accountInvitations.isLoading}>
-            {this.renderItems()}
-          </Loading>
-        </MUI.IconMenu>
-      </div>
-    );
+      <MUI.IconMenu
+        id={this.props.id}
+        ref="headerNotificationDropdown"
+        iconButtonElement={this.renderIcon()}
+        autoWidth={false}
+        maxWidth="400px"
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'middle'
+        }}
+        targetOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        menuStyle={styles.menu}>
+        <MenuItem
+          key="notificationDropdownHeader"
+          primaryText="Notifications"
+          disabled={true}/>
+        <MenuDivider />
+        <Loading show={this.state.accountInvitations.isLoading}>
+          {this.renderItems()}
+        </Loading>
+      </MUI.IconMenu>
+  );
   }
 }));

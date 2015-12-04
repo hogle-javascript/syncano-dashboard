@@ -61,7 +61,7 @@ export default React.createClass({
         <Column.Desc className="col-sm-6">{item.class}</Column.Desc>
         <Column.Desc>{item.signal}</Column.Desc>
         <Column.Date date={item.created_at}/>
-        <Column.Menu>
+        <Column.Menu dropdownIconClassName="triggers-list--button">
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}

@@ -1,15 +1,20 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../utils';
+import globals from '../globals';
 
 const usersCommands = {
-  clickButton: function(button) {
-    return this.waitForElementVisible(button, 5000)
+  clickButton(button) {
+    return this.waitForElementVisible(button)
       .click(button);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
+  },
+  clickDropdown(element) {
+    return this.waitForElementVisible(element)
+               .waitForElementNotPresent('@dropdownClickAnimation')
+               .click(element);
   }
 };
 
@@ -95,6 +100,10 @@ module.exports = {
     },
     groupList: {
       selector: '//div[@class="col-lg-8"]/div/div[2]',
+      locateStrategy: 'xpath'
+    },
+    dropdownClickAnimation: {
+      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

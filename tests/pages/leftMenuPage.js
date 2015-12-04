@@ -15,12 +15,16 @@ export default {
       selector: '//div[@class="left-nav"]/div/div[1]/div',
       locateStrategy: 'xpath'
     },
+    instancesDropdownName: {
+      selector: '//span[@class="synicon-menu-down"]/preceding-sibling::div/div',
+      locateStrategy: 'xpath'
+    },
     instancesDropdownItems: {
       selector: '//div[@class="instances-dropdown"]/div[2]/div',
       locateStrategy: 'xpath'
     },
     instancesListSecondItem: {
-      selector: '//div[@class="my-instances-list"]/div[3]',
+      selector: '//div[@class="my-instances-list"]/div[2]',
       locateStrategy: 'xpath'
     },
     classes: {

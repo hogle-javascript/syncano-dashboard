@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="178px" height="162px" viewBox="0 0 178 162" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.3 (16618) - http://www.bohemiancoding.com/sketch -->
+    <title>CodeBox Socket Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Sockets---light-background-1" sketch:type="MSArtboardGroup" transform="translate(-258.000000, -638.000000)" fill="#7986CB">
+            <g id="CodeBox-Socket-Icon" sketch:type="MSLayerGroup" transform="translate(258.000000, 638.000000)">
+                <path d="M136.805143,5.59006788 L176.257714,75.9251876 C177.324,77.3496963 177.857143,79.1303323 177.857143,81 C177.857143,82.8696677 177.324,84.6503037 176.257714,86.0748124 L136.805143,156.409932 C135.294571,159.25895 132.362286,161.128617 128.985714,161.128617 L49.0142857,161.128617 C45.6377143,161.128617 42.7054286,159.25895 41.1948571,156.409932 L1.74228571,86.0748124 C0.676,84.6503037 0.142857143,82.8696677 0.142857143,81 C0.142857143,79.1303323 0.676,77.3496963 1.74228571,75.9251876 L41.1948571,5.59006788 C42.7054286,2.74105038 45.6377143,0.871382637 49.0142857,0.871382637 L128.985714,0.871382637 C132.362286,0.871382637 135.294571,2.74105038 136.805143,5.59006788 Z M117.3,53 L63.7,53 C59.9996922,53 57,55.9996922 57,59.7 L57,120 L70.4,106.6 L117.3,106.6 C121.000308,106.6 124,103.600308 124,99.9 L124,59.7 C124,55.9996922 121.000308,53 117.3,53 M117.3,99.9 L70.4,99.9 L63.7,106.6 L63.7,59.7 L117.3,59.7" id="Shape" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -49,7 +49,7 @@ export default React.createClass({
           <Common.ColumnList.Link
             name={item.name}
             link={item.links.poll}
-            tooltip="Copy Channel URL"/>
+            tooltip="Copy Channel Socket url"/>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Desc className="col-xs-5 col-md-5">

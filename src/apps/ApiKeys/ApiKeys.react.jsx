@@ -27,6 +27,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -65,17 +66,18 @@ export default React.createClass({
       params: {
         title: 'Reset an API Key',
         ref: 'resetApiKeyDialog',
-        onRequestClose: this.handleCancel,
+        key: 'resetApiKeyDialog',
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'resetApiKeyDialog')
           },
           {
             text: 'Confirm',
             onClick: this.handleReset
           }
         ],
+        modal: true,
         children: [
           'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
           <Common.Loading
@@ -89,17 +91,18 @@ export default React.createClass({
       params: {
         title: 'Delete an API key',
         ref: 'deleteApiKeyDialog',
-        onRequestClose: this.handleCancel,
+        key: 'deleteApiKeyDialog',
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteApiKeyDialog')
           },
           {
             text: 'Confirm',
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: [
           'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
           this.getDialogList(checkedApiKeys, 'api_key'),

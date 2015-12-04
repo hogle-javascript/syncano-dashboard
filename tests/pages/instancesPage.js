@@ -15,11 +15,13 @@ const instancesCommands = {
   clickButton(button) {
     return this.waitForElementVisible(button).click(button);
   },
-  clickDropdown() {
-    return this.waitForElementVisible('@instanceDropdown').click('@instanceDropdown');
+  clickDropdown(element) {
+    return this.waitForElementVisible(element)
+               .waitForElementNotPresent('@dropdownClickAnimation')
+               .click(element);
   },
   isModalClosed(element) {
-    return this.waitForElementNotVisible(element);
+    return this.waitForElementNotVisible(element, 25000);
   }
 };
 
@@ -48,18 +50,19 @@ export default {
       locateStrategy: 'xpath'
     },
     confirmDeleteButton: {
-      selector: 'button[data-reactid*="$deleteInstanceDialog"] + button'
+      selector: '//button//span[text()="Confirm"]',
+      locateStrategy: 'xpath'
     },
     instancesTableRow: {
       selector: '//div[@class="description-field col-flex-1"]',
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '//div[@class="instances-list-container"]/div[4]/div/div[1]/div[2]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//div[@class="instances-list-container"]//span[contains(@class, "synicon")]',
+      selector: '//div[@class="instances-list-container"]/div[2]/div[1]/div[1]//span',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -110,6 +113,10 @@ export default {
     },
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',
+      locateStrategy: 'xpath'
+    },
+    dropdownClickAnimation: {
+      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

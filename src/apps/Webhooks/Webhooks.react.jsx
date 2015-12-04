@@ -32,6 +32,7 @@ export default React.createClass({
 
     Reflux.connect(WebhooksStore, 'webhooks'),
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -83,17 +84,17 @@ export default React.createClass({
           key: 'removeWebhookDialog',
           ref: 'removeWebhookDialog',
           title: 'Delete a Webhook',
-          onRequestClose: this.handleCancel,
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel
+              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
             },
             {
               text: 'Confirm',
               onClick: this.handleRemoveWebhooks
             }
           ],
+          modal: true,
           children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
         }
       }

@@ -25,6 +25,7 @@ export default Radium(React.createClass({
 
   mixins: [
     Mixins.Form,
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.IsLoading(),
     Reflux.connect(Store),
@@ -117,7 +118,7 @@ export default Radium(React.createClass({
 
   handleCancelCancelProductionPlan() {
     this.setupToggles();
-    this.refs.cancelProductionPlan.dismiss();
+    this.handleCancel('cancelProductionPlan');
   },
 
   handleShowCancelPlanDialog() {
@@ -126,9 +127,7 @@ export default Radium(React.createClass({
   },
 
   handleCancelProductionPlan() {
-    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => {
-      return item.id;
-    }));
+    Actions.cancelSubscriptions(this.state.subscriptions._items.map((item) => item.id));
   },
 
   handleShowPlanDialog() {
@@ -143,10 +142,6 @@ export default Radium(React.createClass({
   handlePlanDialogDismiss() {
     this.setupToggles();
     Actions.fetch();
-  },
-
-  handleSuccessfullValidation() {
-    this.handleAddSubmit();
   },
 
   handleAddSubmit() {
@@ -164,7 +159,6 @@ export default Radium(React.createClass({
         key: 'cancelProductionPlan',
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'No, I want to keep my plan.',
@@ -175,6 +169,7 @@ export default Radium(React.createClass({
             onClick: this.handleCancelProductionPlan
           }
         ],
+        modal: true,
         children: ['Are you sure you want to cancel your Production plan?']
       }
     }];

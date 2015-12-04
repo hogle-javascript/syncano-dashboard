@@ -28,12 +28,14 @@ export default {
     }
   },
 
-  handleCancel() {
+  handleCancel(dialogRef) {
     console.debug('DialogMixin::handleCancel');
 
-    this.refs.dialog.dismiss();
+    let ref = _.isString(dialogRef) ? this.refs[dialogRef] : this.refs.dialog;
 
-    if (!_.isFunction(this.refs.dialog.props.onDismiss)) {
+    ref.dismiss();
+
+    if (!ref.props.avoidResetState) {
       this.resetDialogState();
     }
   },
