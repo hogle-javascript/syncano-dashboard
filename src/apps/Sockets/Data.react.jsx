@@ -226,7 +226,7 @@ export default React.createClass({
         <div style={{clear: 'both', height: '100%'}}>
           <Common.Loading show={this.isLoaded()}>
             <Data.List
-              name="Data Socket"
+              name="Data Sockets"
               checkItem={this.checkDataViewItem}
               isLoading={this.state.dataviews.isLoading}
               items={this.state.dataviews.items}

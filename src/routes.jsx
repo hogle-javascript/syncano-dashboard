@@ -217,19 +217,17 @@ export default (
           path="tasks"
           >
 
-          {/* Schedule Traces */}
           <Route
             name='schedule-traces'
             handler={Tasks.ScheduleTraces}
             path='schedule/:scheduleId/traces'
             />
 
-          {/* Trigger Traces */}
           <Route
-              name='trigger-traces'
-              handler={Tasks.TriggerTraces}
-              path='trigger/:triggerId/traces'
-              />
+            name='trigger-traces'
+            handler={Tasks.TriggerTraces}
+            path='trigger/:triggerId/traces'
+            />
 
           <DefaultRoute handler={Tasks}/>
 
