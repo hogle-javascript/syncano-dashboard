@@ -1,9 +1,9 @@
-import Data from './Data.react';
+import Data from './Data';
 
 import DataViewsStore from './DataViewsStore';
-import DataViewsList from './DataViewsList.react';
+import DataViewsList from './DataViewsList';
 import DataViewsActions from './DataViewsActions';
-import DataViewDialog from './DataViewDialog.react';
+import DataViewDialog from './DataViewDialog';
 import DataViewDialogStore from './DataViewDialogStore';
 
 Data.Actions = DataViewsActions;

@@ -1,8 +1,8 @@
-import Classes from './Classes.react';
+import Classes from './Classes';
 import ClassesStore from './ClassesStore';
-import ClassesList from './ClassesList.react';
+import ClassesList from './ClassesList';
 import ClassesActions from './ClassesActions';
-import FormView from './FormView.react';
+import FormView from './FormView';
 import FormViewStore from './FormViewStore';
 
 Classes.Actions = ClassesActions;

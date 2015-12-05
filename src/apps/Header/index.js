@@ -1,10 +1,10 @@
-import Header from './Header.react';
+import Header from './Header';
 import HeaderActions from './HeaderActions';
-import HeaderInstanceMenu from './HeaderInstanceMenu.react';
-import HeaderInstancesDropdown from './HeaderInstancesDropdown.react';
-import HeaderMenu from './HeaderMenu.react';
+import HeaderInstanceMenu from './HeaderInstanceMenu';
+import HeaderInstancesDropdown from './HeaderInstancesDropdown';
+import HeaderMenu from './HeaderMenu';
 import HeaderMixin from './HeaderMixin';
-import HeaderNotificationsDropdown from './HeaderNotificationsDropdown.react';
+import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 import HeaderStore from './HeaderStore';
 
 Header.Actions = HeaderActions;

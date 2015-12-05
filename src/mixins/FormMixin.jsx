@@ -4,7 +4,7 @@ import ReactStateSetters from 'react/lib/ReactStateSetters';
 import _ from 'lodash';
 import validate from 'validate.js';
 
-import Notification from '../common/Notification/Notification.react';
+import Notification from '../common/Notification/Notification';
 
 validate.moment = require('moment');
 
