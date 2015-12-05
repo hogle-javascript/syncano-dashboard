@@ -11,7 +11,7 @@ module.exports = function(cb) {
       fontName: fontName,
       path: paths.assets + '/templates/synicons.css',
       targetPath: '../../css/synicons.css',
-      fontPath: '/fonts/icons/'
+      fontPath: 'fonts/icons/'
     }))
     .pipe(iconfont({
       fontName: fontName,
