@@ -495,41 +495,37 @@ export default React.createClass({
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
       <MUI.FlatButton
-        type="submit"
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        method="post"
-        acceptCharset="UTF-8">
-        <Common.Dialog
-          ref='dialog'
-          title={title}
-          onRequestClose={this.handleCancel}
-          actions={dialogStandardActions}>
-          <div>
-            {this.renderFormNotifications()}
-              <div className="row">
-                <div className="col-xs-20">
-                  {this.renderBuiltinFields()}
-                </div>
-                <div className="col-xs-15" style={{paddingLeft: 15}}>
-                  <div>Class fields</div>
-                  {this.renderCustomFields()}
-                </div>
+      <Common.Dialog
+        key='dialog'
+        ref='dialog'
+        title={title}
+        onRequestClose={this.handleCancel}
+        actions={dialogStandardActions}>
+        <div>
+          {this.renderFormNotifications()}
+            <div className="row">
+              <div className="col-xs-20">
+                {this.renderBuiltinFields()}
               </div>
-          </div>
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading} />
-        </Common.Dialog>
-      </form>
+              <div className="col-xs-15" style={{paddingLeft: 15}}>
+                <div>Class fields</div>
+                {this.renderCustomFields()}
+              </div>
+            </div>
+        </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading} />
+      </Common.Dialog>
     );
   }
 });

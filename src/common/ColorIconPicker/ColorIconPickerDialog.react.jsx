@@ -105,6 +105,7 @@ export default React.createClass({
 
     return (
       <Common.Dialog
+        key="dialog"
         ref="dialog"
         bodyStyle={styles.body}
         contentInnerStyle={styles.content}

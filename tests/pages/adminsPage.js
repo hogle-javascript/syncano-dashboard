@@ -52,7 +52,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {
-      selector: '//form//div[@tabindex="0"]//span[text()="read"]',
+      selector: '//div[@tabindex="0"]//span[text()="read"]',
       locateStrategy: 'xpath'
     },
     adminEmailTableRow: {

@@ -163,8 +163,10 @@ module.exports = {
     const profilePage = client.page.profilePage();
 
     topNavigationPage.clickButton('@account');
+    topNavigationPage.waitForElementVisible('@fox');
+    client.pause(1000);
     topNavigationPage.clickButton('@accountDropdown');
-    profilePage.waitForElementPresent('@updateButton')
+    profilePage.waitForElementPresent('@updateButton');
     client.pause(1000);
   },
   'User goes to Account Authentication View' : function(client) {
@@ -173,6 +175,8 @@ module.exports = {
     const authenticationPage = client.page.authenticationPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@authentication');
     authenticationPage.waitForElementPresent('@accountKey');
@@ -184,6 +188,8 @@ module.exports = {
     const invitationsPage = client.page.invitationsPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@invitations');
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
@@ -195,6 +201,8 @@ module.exports = {
     const billingPlanPage = client.page.billingPlanPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@billingPlan');
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
@@ -206,6 +214,8 @@ module.exports = {
     const paymentMethodsPage = client.page.paymentMethodsPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@paymentMethods');
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
@@ -217,6 +227,8 @@ module.exports = {
     const invoicesPage = client.page.invoicesPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@invoices');
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
@@ -228,6 +240,8 @@ module.exports = {
     const billingAddressPage = client.page.billingAddressPage();
 
     topNavigationPage.clickButton('@account');
+    client.pause(1000);
+    topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
     leftMenuPage.clickButton('@billingAddress');
     billingAddressPage.waitForElementPresent('@billingAddressTitle');

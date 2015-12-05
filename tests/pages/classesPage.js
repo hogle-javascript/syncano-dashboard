@@ -17,8 +17,10 @@ const classesCommands = {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  clickDropdown() {
-    return this.waitForElementVisible('@classItemDropdown').click('@classItemDropdown');
+  clickDropdown(element) {
+    return this.waitForElementVisible(element)
+               .waitForElementNotPresent('@dropdownClickAnimation')
+               .click(element);
   }
 };
 
@@ -49,7 +51,7 @@ export default {
       selector: 'input[name=fieldName]'
     },
     createModalDropdown: {
-      selector: '//form//label[text()="Type"]',
+      selector: '//label[text()="Type"]',
       locateStrategy: 'xpath'
     },
     createModalDropdownType: {
@@ -136,6 +138,10 @@ export default {
     },
     checkboxSelected: {
       selector: '.synicon-checkbox-marked-outline'
+    },
+    dropdownClickAnimation: {
+      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
+      locateStrategy: 'xpath'
     }
   }
 };
