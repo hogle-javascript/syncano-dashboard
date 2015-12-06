@@ -127,25 +127,15 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <Common.InnerToolbar title="Webhooks">
-          <MUI.IconButton
-            style={{fontSize: 25, marginTop: 5}}
-            iconClassName="synicon-delete"
-            tooltip="Delete Data Objects"
-          />
-        </Common.InnerToolbar>
+        <Common.InnerToolbar title="CodeBox Sockets" />
 
-        <div style={{clear: 'both', height: '100%', marginTop: 130}}>
-
-          <WebhooksList
-            name="CodeBox Sockets"
-            checkItem={this.checkWebhook}
-            isLoading={this.state.webhooks.isLoading}
-            items={this.state.webhooks.items}
-            emptyItemHandleClick={this.showWebhookDialog}
-            emptyItemContent="Create a CodeBox Socket"/>
-
-        </div>
+        <WebhooksList
+          name="CodeBox Sockets"
+          checkItem={this.checkWebhook}
+          isLoading={this.state.webhooks.isLoading}
+          items={this.state.webhooks.items}
+          emptyItemHandleClick={this.showWebhookDialog}
+          emptyItemContent="Create a CodeBox Socket"/>
 
         </Container>
     );

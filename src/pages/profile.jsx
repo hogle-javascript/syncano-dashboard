@@ -5,6 +5,7 @@ import {LeftNav} from '../mixins';
 
 import MUI from 'syncano-material-ui';
 import Container from '../common/Container';
+import Common from '../common';
 
 export default React.createClass({
 
@@ -19,8 +20,10 @@ export default React.createClass({
   getStyles() {
     return {
       leftNav: {
-        paddingTop: 64,
-        zIndex: 7
+        paddingTop: 50,
+        zIndex: 7,
+        overflow: 'visible',
+        boxShadow: ''
       },
       menuItemStyleSubheader: {
         color: 'rgba(0, 0, 0, 0.54)',
@@ -29,7 +32,7 @@ export default React.createClass({
         fontWeight: 800
       },
       content: {
-        marginLeft: 304
+        margin: '96px 24px 48px 284px'
       }
     };
   },
@@ -103,11 +106,10 @@ export default React.createClass({
           selectedIndex={activeTab.index}
           style={styles.leftNav}
           menuItems={menuItems}/>
-        <Container.Profile
-          headerText={activeTab.text}
-          style={styles.content}>
+        <Container style={styles.content}>
+          <Common.InnerToolbar title={activeTab.text}/>
           <Router.RouteHandler />
-        </Container.Profile>
+        </Container>
       </div>
     );
   }

@@ -202,9 +202,6 @@ export default React.createClass({
 
         <div style={{width: '50%'}}>
           <div className="col-flex-1">
-            <div style={styles.title}>
-              General
-            </div>
             <div style={styles.content}>
               <div style={styles.customizeSection}>
                 <MUI.IconButton

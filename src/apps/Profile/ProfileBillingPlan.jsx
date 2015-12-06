@@ -72,9 +72,6 @@ export default Radium(React.createClass({
       },
       planContainer: {
         zIndex: 1,
-        position: 'fixed',
-        top: 64,
-        left: 0,
         width: '100%',
         background: '#EBEBEB'
       },
@@ -83,7 +80,6 @@ export default Radium(React.createClass({
         justifyContent: 'space-between'
       },
       planTitle: {
-        paddingLeft: 310,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
