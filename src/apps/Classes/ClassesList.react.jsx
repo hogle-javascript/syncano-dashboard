@@ -1,18 +1,19 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
+import _ from 'lodash';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
-import Common from '../../common';
+import ListItem from './ClassesListItem';
+import {IconMenu} from 'syncano-material-ui';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
 
@@ -21,27 +22,68 @@ export default React.createClass({
   displayName: 'ClassesList',
 
   mixins: [
-    Reflux.connect(Store),
-    HeaderMixin,
-    Dialogs,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    HeaderMixin,
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Mixins.List
   ],
 
-  // List
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
+  getInitialState() {
+    return {};
   },
 
-  handleItemClick(className) {
-    SessionStore.getRouter().transitionTo(
-      'classes-data-objects',
-      {
-        instanceName: SessionStore.getInstance().name,
-        className
+  getStyles() {
+    return {
+      fabListTop: {
+        top: 200
+      },
+      fabListTopButton: {
+        margin: '5px 0'
+      },
+      fabListBottom: {
+        bottom: 100
       }
-    );
-    console.info('ClassesList::handleItemClick');
+    };
+  },
+
+  getAssociatedClasses() {
+    let checkedClasses = Store.getCheckedItems();
+
+    let associatedClasses = _.filter(checkedClasses, (checkedClass) => {
+      checkedClass.triggers = _.pluck(_.filter(this.props.triggers, 'class', checkedClass.name), 'label');
+      return checkedClass.triggers.length > 0;
+    });
+
+    return associatedClasses;
+  },
+
+  getAssociationsList(associationsFor, associatedItems) {
+    let hasItems = associatedItems.length > 0;
+    let list = {
+      triggers: null,
+      notAssociated: null
+    };
+
+    if (hasItems) {
+      list.triggers = (
+        <div>
+          Associated with Triggers: {this.getDialogList(associatedItems, 'name', associationsFor)}
+        </div>
+      );
+      list.notAssociated = (
+        <div>
+          Not associated: {this.getDialogList(associatedItems, 'name')}
+        </div>
+      );
+    }
+
+    return list[associationsFor];
+  },
+
+  isProtectedFromDelete(item) {
+    return item.protectedFromDelete;
   },
 
   handleChangePalette(color, icon) {
@@ -52,23 +94,72 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleClassDropdownClick(item) {
-    Actions.setClickedClass(item);
+  handleItemIconClick(id, state) {
+    Actions.checkItem(id, state);
   },
 
-  redirectToEditClassView(className) {
-    let classNameParam = className || Store.getCheckedItem().name;
+  handleDelete() {
+    console.info('Classes::handleDelete');
+    Actions.removeClasses(Store.getCheckedItems());
+  },
 
-    this.context.router.transitionTo('classes-edit', {
-      instanceName: this.getParams().instanceName,
-      className: classNameParam
-    });
+  handleReset() {
+    console.info('Classes::handleReset');
+    Actions.resetClass(Store.getCheckedItem().id);
   },
 
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
+    let checkedClasses = Store.getCheckedItems();
+    let classesAssociatedWithTriggers = this.getAssociatedClasses();
+    let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
+    let deleteDialog = {
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteClassDialog',
+        ref: 'deleteClassDialog',
+        title: 'Delete a Class',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel.bind(null, 'deleteClassDialog')
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          this.getDialogList(checkedClasses),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.props.isLoading}
+          />
+        ]
+      }
+    };
+
+    if (classesAssociatedWithTriggers) {
+      let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
+      let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
+
+      deleteDialog.params.children = [
+        `Some of checked Classes are associated with Triggers. Do you really want to delete ${checkedClasses.length}
+        Class(es)?`,
+        notAssociatedList,
+        associatedWithTriggersList,
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.props.isLoading}/>
+      ];
+    }
 
     return [
+      deleteDialog,
       {
         dialog: Common.ColorIconPicker.Dialog,
         params: {
@@ -84,68 +175,18 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let objectsCount = item.objects_count < 1000 ? item.objects_count : `~ ${item.objects_count}`;
-    let metadata = item.metadata;
-
     return (
-      <Common.ColumnList.Item
-        key={item.name}
-        id={item.name}
-        checked={item.checked}
-        handleClick={this.handleItemClick.bind(null, item.name)}>
-        <Column.CheckIcon
-          id={item.name.toString()}
-          icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          {item.name}
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
-        <Column.ID className="col-xs-3 col-md-3">{item.group}</Column.ID>
-        <Column.Desc className="col-xs-6 col-md-6">
-          <div>
-            <div>group: {item.group_permissions}</div>
-            <div>other: {item.other_permissions}</div>
-          </div>
-        </Column.Desc>
-        <Column.ID className="col-xs-4 col-md-4">
-          {objectsCount}
-        </Column.ID>
-        <Column.Date date={item.created_at}/>
-        <Column.Menu handleClick={this.handleClassDropdownClick.bind(null, item)}>
-          <MenuItem
-            className="dropdown-item-edit-class"
-            onTouchTap={this.redirectToEditClassView.bind(null, item.name)}
-            primaryText="Edit a Class"/>
-          <MenuItem
-            className="dropdown-item-customize-class"
-            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
-            primaryText="Customize a Class"/>
-          <MenuItem
-            className="dropdown-item-delete-class"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}
-            primaryText="Delete a Class"/>
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    let items = this.state.items.map((item) => this.renderItem(item));
-
-    if (items.length > 0) {
-      items.reverse();
-      return items;
-    }
-    return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
       <Common.Lists.Container className="classes-list-container">
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
@@ -173,10 +214,23 @@ export default React.createClass({
             Objects
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Selected"
+                disabled={!checkedItems}
+                onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>

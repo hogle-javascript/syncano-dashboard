@@ -4,14 +4,16 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
+import ListItem from './ChannelsListItem';
 import Common from '../../common';
+import {IconMenu} from 'syncano-material-ui';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
@@ -26,75 +28,71 @@ export default React.createClass({
 
     Reflux.connect(Store),
     HeaderMixin,
-    Dialogs
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Mixins.List
   ],
 
-  // List
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Channels::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
+
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
 
-  renderItem(item) {
-    return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.name}>
-        <Column.CheckIcon
-          className="col-xs-12"
-          id={item.name}
-          icon={'bullhorn'}
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          <Common.ColumnList.Link
-            name={item.name}
-            link={item.links.poll}
-            tooltip="Copy Channel Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">
-          <div>
-            <div>group: {item.group_permissions}</div>
-            <div>other: {item.other_permissions}</div>
-          </div>
-        </Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">{item.type}</Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">
-          {item.custom_publish ? 'Yes' : 'No'}
-        </Column.Desc>
-        <Column.Date date={item.created_at}/>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-channel-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Channel"/>
-          <MenuItem
-            className="dropdown-item-channel-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}
-            primaryText="Delete a Channel"/>
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
+  handleDelete() {
+    console.info('Channels::handleDelete');
+    Actions.removeChannels(Store.getCheckedItems());
   },
 
-  renderList() {
-    let items = this.props.items.map((item) => this.renderItem(item));
+  initDialogs() {
+    let checkedChannels = Store.getCheckedItems();
 
-    if (items.length > 0) {
-      items.reverse();
-      return items;
-    }
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        key: 'deleteChannelDialog',
+        ref: 'deleteChannelDialog',
+        title: 'Delete a Channel',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel.bind(null, 'deleteChannelDialog')
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        avoidResetState: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedChannels) + ' Channel(s)?',
+          this.getDialogList(checkedChannels),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.props.isLoading}/>
+        ]
+      }
+    }];
+  },
 
+  renderItem(item) {
     return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}/>
     );
   },
 
   render() {
     return (
       <Common.Lists.Container>
+        {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
@@ -120,7 +118,19 @@ export default React.createClass({
             Custom publish
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Selected"
+                onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

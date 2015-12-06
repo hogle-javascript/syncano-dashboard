@@ -1,7 +1,9 @@
 import React from 'react';
 
+import Mixins from '../../mixins/';
+
 // Components
-import MUI from 'syncano-material-ui';
+import ListItem from './VersionsListItem';
 import ColumnList from '../ColumnList';
 import Loading from '../Loading';
 import Lists from '../Lists';
@@ -12,6 +14,10 @@ let Column = ColumnList.Column;
 export default React.createClass({
 
   displayName: 'SolutionVersionsList',
+
+  mixins: [
+    Mixins.List
+  ],
 
   getInitialState() {
     return {
@@ -27,11 +33,6 @@ export default React.createClass({
     });
   },
 
-  // List
-  handleDownloadVersion(url) {
-    window.open(url, '_blank');
-  },
-
   handleInstallClick(versionId) {
     if (this.props.onInstall) {
       this.props.onInstall(versionId);
@@ -39,66 +40,7 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    return (
-      <ColumnList.Item
-        key={item.id}
-        id={item.id}
-        handleClick={this.handleItemClick}>
-        <Column.Desc className="col-xs-5 col-md-5">
-          <div style={{marginLeft: 10}}>
-            <MUI.Avatar style={{fontSize: '1rem'}}>
-              {item.number}
-            </MUI.Avatar>
-          </div>
-        </Column.Desc>
-
-        <Column.Date date={item.created_at}/>
-
-        <Column.Desc>
-          {item.type}
-        </Column.Desc>
-
-        <Column.ID className="col-xs-5 col-md-5">
-          {item.installations_count}
-        </Column.ID>
-
-        <Column.ID className="col-xs-4 col-md-4">
-          <MUI.IconButton
-            iconClassName="synicon-cloud-download"
-            tooltip="Download this Solution version file"
-            onClick={this.handleDownloadVersion.bind(this, item.data.url)}
-            />
-        </Column.ID>
-
-        <Column.ID className="col-xs-4 col-md-4">
-          <MUI.IconButton
-            iconClassName="synicon-download"
-            tooltip="Install this Solution version"
-            onClick={this.handleInstallClick.bind(null, item.id)}
-            />
-        </Column.ID>
-
-      </ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    if (this.state.items === null) {
-      return true;
-    }
-
-    let items = this.state.items.map((item) => {
-      return this.renderItem(item);
-    });
-
-    if (items.length > 0) {
-      return items;
-    }
-    return (
-    <ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-      {this.props.emptyItemContent}
-    </ColumnList.EmptyItem>
-    );
+    return <ListItem onInstallClick={this.handleInstallClick} item={item}/>;
   },
 
   render() {
@@ -136,7 +78,6 @@ export default React.createClass({
             className="col-xs-4">
             Install
           </Column.ColumnHeader>
-
 
         </ColumnList.Header>
         <Lists.List>

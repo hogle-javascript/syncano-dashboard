@@ -259,12 +259,6 @@ export default Radium(React.createClass({
       );
     }
 
-    let instances = this.state.items;
-    let instancesCount = instances ? instances.length : 0;
-    let checkedInstances = Store.getNumberOfChecked();
-    let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
-    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
-    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
     let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : '';
     let shouldShowWelcomeDialog = this.state.items !== null &&
       Store.getAllInstances().length === 0 &&
@@ -294,17 +288,6 @@ export default Radium(React.createClass({
 
         <InstanceDialog />
         {this.getDialogs()}
-
-        <Common.Show if={checkedInstances > 0}>
-          <Common.Fab position="top">
-            <Common.Fab.TooltipItem
-              tooltip={isAnyInstanceSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini={true}
-              onClick={isAnyInstanceSelected ? Actions.selectAll : Actions.uncheckAll}
-              iconClassName={isAnyInstanceSelected ? markedIcon : blankIcon}/>
-            {this.renderDeleteFabButton()}
-          </Common.Fab>
-        </Common.Show>
 
         <Common.Fab>
           <Common.Fab.TooltipItem

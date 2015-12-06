@@ -113,6 +113,7 @@ export default React.createClass({
             {text: 'Confirm', onClick: this.handleDeleteAdmin}
           ],
           modal: true,
+          avoidResetState: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
             this.getDialogList(checkedAdmins, 'email'),
@@ -134,6 +135,7 @@ export default React.createClass({
             {text: 'Confirm', onClick: this.handleResendInvitation}
           ],
           modal: true,
+          avoidResetState: true,
           children: [
             'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),
@@ -155,6 +157,7 @@ export default React.createClass({
             {text: 'Confirm', onClick: this.handleRemoveInvitation}
           ],
           modal: true,
+          avoidResetState: true,
           children: [
             'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
             this.getDialogList(checkedAdminsInvitations, 'email'),
@@ -231,6 +234,7 @@ export default React.createClass({
           checkItem={this.checkAdminItem}
           isLoading={this.state.admins.isLoading}
           items={this.state.admins.items}/>
+
         <AdminsList
           name="Invitations"
           mode="invitations"

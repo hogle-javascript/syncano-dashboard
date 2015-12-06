@@ -6,13 +6,11 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
-import InstanceDialogActions from './InstanceDialogActions';
-import InstancesActions from './InstancesActions';
 
+import ListItem from './InstancesListItem';
+import {IconMenu} from 'syncano-material-ui';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
@@ -27,7 +25,8 @@ export default React.createClass({
     Router.Navigation,
     HeaderMixin,
     Mixins.IsLoading({attr: 'state.items'}),
-    Mixins.Dialogs
+    Mixins.Dialogs,
+    Mixins.List
   ],
 
   getInitialState() {
@@ -50,30 +49,10 @@ export default React.createClass({
     };
   },
 
-  getList() {
-    if (this.state.items.length === 0) {
-      return (
-        <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-          {this.props.emptyItemContent}
-        </Common.ColumnList.EmptyItem>
-      );
-    }
-
-    let items = this.state.items.map((item) => this.renderItem(item));
-
-    items.reverse();
-    return items;
-  },
-
   // List
   handleItemIconClick(id, state) {
     console.info('InstancesList::handleItemIconClick', id, state);
     Actions.checkItem(id, state);
-  },
-
-  handleItemClick(instanceName) {
-    SessionActions.fetchInstance(instanceName);
-    this.transitionTo('instance', {instanceName});
   },
 
   handleChangePalette(color, icon) {
@@ -82,14 +61,6 @@ export default React.createClass({
 
     Actions.updateInstance(Store.getClickedItem().name, {metadata});
     Actions.uncheckAll();
-  },
-
-  handleClickItemDropdown(item) {
-    Actions.setClickedInstance(item);
-  },
-
-  showInstanceEditDialog(instance) {
-    InstanceDialogActions.showDialog(instance);
   },
 
   initDialogs() {
@@ -111,46 +82,7 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
-    let handleRemoveUserInstance = InstancesActions.removeInstances.bind(null, [item]);
-    let handleRemoveShared = InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
-    let handleRemoveInstance = Store.amIOwner(item) ? handleRemoveUserInstance : handleRemoveShared;
-
-    item.metadata = item.metadata || {};
-
-    return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        id={item.name}
-        key={item.name}
-        handleClick={this.handleItemClick.bind(null, item.name)}>
-        <Column.CheckIcon
-          id={item.name}
-          icon={item.metadata.icon}
-          background={Common.Color.getColorByName(item.metadata.color)}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}
-          handleNameClick={this.handleItemClick}>
-          {item.name}
-        </Column.CheckIcon>
-        <Column.Desc>{item.description}</Column.Desc>
-        <Column.Date date={item.created_at}/>
-        <Column.Menu handleClick={this.handleClickItemDropdown.bind(null, item)}>
-          <MenuItem
-            className="dropdown-item-instance-edit"
-            onTouchTap={this.showInstanceEditDialog.bind(null, item)}
-            primaryText="Edit an Instance" />
-          <MenuItem
-            className="dropdown-item-customize"
-            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
-            primaryText="Customize an Instance" />
-          <MenuItem
-            className="dropdown-item-instance-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, handleRemoveInstance)}
-            primaryText={removeText} />
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
+    return <ListItem onIconClick={this.handleItemIconClick} item={item}/>;
   },
 
   renderLoaded() {
@@ -168,10 +100,22 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Selected"
+                onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List style={styles.list}>
-          {this.getList()}
+          {this.renderList()}
         </Common.Lists.List>
       </Common.Lists.Container>
     );

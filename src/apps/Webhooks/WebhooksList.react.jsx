@@ -1,16 +1,18 @@
 import React from 'react';
 import Router from 'react-router';
 
-// Stores and Actions
-import Actions from './WebhooksActions';
-
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
+
+import Actions from './WebhooksActions';
+import Store from './WebhooksStore';
 
 // Components
-import Common from '../../common';
+import ListItem from './WebhooksListItem';
+import {IconMenu} from 'syncano-material-ui';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
 
@@ -19,81 +21,74 @@ export default React.createClass({
   displayName: 'WebhooksList',
 
   mixins: [
-    Dialogs,
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    HeaderMixin,
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Mixins.List
   ],
 
-  // List
+  getInitialState() {
+    return {};
+  },
+
   handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
-  handleItemClick(itemName) {
-    // Redirect to traces screen
-    this.transitionTo('webhook-traces', {
-      instanceName: this.getParams().instanceName,
-      webhookName: itemName
-    });
+  handleRemoveWebhooks() {
+    console.info('Data::handleDelete');
+    Actions.removeWebhooks(Store.getCheckedItems());
   },
 
-  renderItem(item) {
-    let publicString = item.public.toString();
+  initDialogs() {
+    let checkedItems = Store.getCheckedItems();
 
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'removeWebhookDialog',
+          ref: 'removeWebhookDialog',
+          title: 'Delete a Webhook',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleRemoveWebhooks
+            }
+          ],
+          modal: true,
+          avoidResetState: true,
+          children: [
+            `Do you really want to delete ${this.getDialogListLength(checkedItems)} Webhooks?`,
+            this.getDialogList(checkedItems, 'name')
+          ]
+        }
+      }
+    ];
+  },
+
+  renderItem(item, index) {
     return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        id={item.name}
-        key={item.name}>
-
-        <Column.CheckIcon
-          className="col-xs-12"
-          id={item.name.toString()}
-          icon='arrow-up-bold'
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          <Common.ColumnList.Link
-            name={item.name}
-            link={item.links.self}
-            tooltip="Copy CobeBox Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-4">{item.codebox}</Column.Desc>
-        <Column.Desc className="col-xs-3">{publicString}</Column.Desc>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a CodeBox Socket" />
-          <MenuItem
-            className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}
-            primaryText="Delete a CodeBox Socket" />
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    let items = this.props.items.map((item) => this.renderItem(item));
-
-    if (items.length > 0) {
-      items.reverse();
-      return items;
-    }
-
-    return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        key={`webhookslist-${index}`}
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
       <Common.Lists.Container>
+        {this.getDialogs()}
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
@@ -110,6 +105,11 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-xs-4">
+            Traces
+          </Column.ColumnHeader>
+          <Column.ColumnHeader
+            columnName="DESC"
+            className="col-xs-4">
             Snippet ID
           </Column.ColumnHeader>
           <Column.ColumnHeader
@@ -117,7 +117,20 @@ export default React.createClass({
             className="col-xs-3">
             Public
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Selected"
+                disabled={!checkedItems}
+                onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

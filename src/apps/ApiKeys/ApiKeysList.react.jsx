@@ -4,15 +4,17 @@ import Router from 'react-router';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
 
 // Stores and Actions
 import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import Common from '../../common';
+import ListItem from './ApiKeysListItem';
+import {IconMenu} from 'syncano-material-ui';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
 
@@ -25,75 +27,105 @@ export default React.createClass({
     HeaderMixin,
     Router.State,
     Router.Navigation,
-    Dialogs
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Mixins.List
   ],
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('ApiKeysList::componentWillUpdate');
+    this.hideDialogs(nextState.hideDialogs);
+  },
 
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
 
-  renderItem(item) {
-    let ignore_acl = null;
-    let allow_user_create = null;
-
-    if (item.ignore_acl) {
-      ignore_acl = <div>Ignore ACL</div>;
-    }
-    if (item.allow_user_create) {
-      allow_user_create = <div>Allow user creation</div>;
-    }
-
-    return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.id}>
-        <Column.CheckIcon
-          id={item.id.toString()}
-          icon='key'
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          {item.description}
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
-        <Column.Key color="black">{item.api_key}</Column.Key>
-        <Column.Text>
-          {ignore_acl}
-          {allow_user_create}
-        </Column.Text>
-        <Column.Date date={item.created_at}/>
-        <Column.Menu>
-          <MenuItem
-            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
-            className="dropdown-item-delete-apikey"
-            primaryText="Delete an API Key" />
-          <MenuItem
-            onTouchTap={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}
-            className="dropdown-item-reset-apikey"
-            primaryText="Reset an API Key" />
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
+  handleDelete() {
+    console.info('ApiKeys::handleDelete');
+    Actions.removeApiKeys(Store.getCheckedItems());
   },
 
-  renderList() {
-    let items = this.state.items.map((item) => this.renderItem(item));
+  handleReset() {
+    console.info('ApiKeys::handleReset');
+    Actions.resetApiKey(Store.getCheckedItems());
+  },
 
-    if (items.length > 0) {
-      items.reverse();
-      return items;
-    }
+  initDialogs() {
+    let checkedApiKeys = Store.getCheckedItems();
 
+    return [{
+      dialog: Common.Dialog,
+      params: {
+        title: 'Reset an API Key',
+        ref: 'resetApiKeyDialog',
+        key: 'resetApiKeyDialog',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel.bind(null, 'resetApiKeyDialog')
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleReset
+          }
+        ],
+        modal: true,
+        avoidResetState: true,
+        children: [
+          'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.props.isLoading}/>
+        ]
+      }
+    }, {
+      dialog: Common.Dialog,
+      params: {
+        title: 'Delete an API key',
+        ref: 'deleteApiKeyDialog',
+        key: 'deleteApiKeyDialog',
+        actions: [
+          {
+            text: 'Cancel',
+            onClick: this.handleCancel.bind(null, 'deleteApiKeyDialog')
+          },
+          {
+            text: 'Confirm',
+            onClick: this.handleDelete
+          }
+        ],
+        modal: true,
+        avoidResetState: true,
+        children: [
+          'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
+          this.getDialogList(checkedApiKeys, 'api_key'),
+          <Common.Loading
+            type="linear"
+            position="bottom"
+            show={this.props.isLoading}/>
+        ]
+      }
+    }];
+  },
+
+  renderItem(item) {
     return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
+        showResetDialog={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
       <Common.Lists.Container className="api-keys-list">
+        {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
@@ -105,10 +137,26 @@ export default React.createClass({
           <Column.ColumnHeader columnName="KEY">Key</Column.ColumnHeader>
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Selected"
+                disabled={!checkedItems}
+                onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+              <MenuItem
+                tooltip="Reset an API Key"
+                onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
+          <Common.Loading show={this.props.isLoading}>
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
