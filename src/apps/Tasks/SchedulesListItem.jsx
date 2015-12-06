@@ -1,4 +1,5 @@
 import React from 'react';
+import {State, Link} from 'react-router';
 
 // Stores and Actions
 import Actions from './SchedulesActions';
@@ -14,13 +15,9 @@ export default React.createClass({
 
   displayName: 'SchedulesListItem',
 
-  handleItemClick(itemId) {
-    // Redirect to traces screen
-    this.transitionTo('schedule-traces', {
-      instanceName: this.getParams().instanceName,
-      scheduleId: itemId
-    });
-  },
+  mixins: [
+    State
+  ],
 
   render() {
     let item = this.props.item;
@@ -30,8 +27,7 @@ export default React.createClass({
     return (
       <Common.ColumnList.Item
         checked={item.checked}
-        key={item.id}
-        handleClick={this.handleItemClick.bind(null, item.id)}>
+        key={item.id}>
         <Column.CheckIcon
           id={item.id.toString()}
           icon="camera-timer"
@@ -43,6 +39,14 @@ export default React.createClass({
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc className="col-sm-6">{codeBoxLabel}</Column.Desc>
         <Column.Desc>{item.crontab}</Column.Desc>
+        <Column.Desc>
+          <Link to="schedule-traces" params={{
+            instanceName: this.getParams().instanceName,
+            scheduleId: item.id
+          }}>
+            Traces
+          </Link>
+        </Column.Desc>
         <Column.Date date={item.scheduled_next}/>
         <Column.Date date={item.created_at}/>
         <Column.Menu>
@@ -52,7 +56,7 @@ export default React.createClass({
             primaryText="Edit a Schedule" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeSchedules.bind(null, [item]))}
+            onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Schedule" />
         </Column.Menu>
       </Common.ColumnList.Item>

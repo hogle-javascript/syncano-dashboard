@@ -1,5 +1,5 @@
-import Adroll from './Adroll.react';
-import Magnetic from './Magnetic.react';
+import Adroll from './Adroll';
+import Magnetic from './Magnetic';
 
 export default {
   Adroll,

@@ -1,11 +1,9 @@
 import React from 'react';
-import _ from 'lodash';
 
 import Mixins from '../../mixins/';
 
 // Stores and Actions
-import AdminsInvitationsActions from './AdminsInvitationsActions';
-import AdminsActions from './AdminsActions';
+import Actions from './AdminsActions';
 import SessionStore from '../Session/SessionStore';
 
 import Common from '../../common';
@@ -27,51 +25,6 @@ export default React.createClass({
         marginTop: 4
       }
     };
-  },
-
-  getDropdownMenu(item) {
-    let isInvitation = _.has(item, 'key');
-
-    if (isInvitation) {
-      return this.getAdminInvitationDropdown(item);
-    }
-
-    return this.getAdminDropdown(item);
-  },
-
-  getAdminInvitationDropdown(item) {
-    let removeInvitation = AdminsInvitationsActions.removeInvitation.bind(null, [item]);
-    let resendInvitation = AdminsInvitationsActions.resendInvitation.bind(null, [item]);
-
-    return (
-      <Common.ColumnList.Column.Menu>
-        <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.email, removeInvitation)}
-          className="dropdown-item-remove-invitation"
-          primaryText="Remove Invitation" />
-        <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.email, resendInvitation)}
-          className="dropdown-item-resend-invitation"
-          primaryText="Resend Invitation" />
-      </Common.ColumnList.Column.Menu>
-    );
-  },
-
-  getAdminDropdown(item) {
-    let removeAdmin = AdminsActions.removeAdmins.bind(null, [item]);
-
-    return (
-      <Common.ColumnList.Column.Menu>
-        <MenuItem
-          className="dropdown-item-delete-admin"
-          onTouchTap={this.showMenuDialog.bind(null, item.email, removeAdmin)}
-          primaryText="Delete Admin" />
-        <MenuItem
-          className="dropdown-item-edit-admin"
-          onTouchTap={AdminsActions.showDialog.bind(null, item)}
-          primaryText="Edit Admin" />
-      </Common.ColumnList.Column.Menu>
-    );
   },
 
   render() {
@@ -100,7 +53,16 @@ export default React.createClass({
         </Common.ColumnList.Column.CheckIcon>
         <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at}/>
-        {this.getDropdownMenu(item)}
+        <Common.ColumnList.Column.Menu>
+          <MenuItem
+            className="dropdown-item-edit-admin"
+            onTouchTap={Actions.showDialog.bind(null, item)}
+            primaryText="Edit Admin" />
+          <MenuItem
+            className="dropdown-item-delete-admin"
+            onTouchTap={this.props.showDeleteDialog}
+            primaryText="Delete Admin" />
+        </Common.ColumnList.Column.Menu>
       </Common.ColumnList.Item>
     );
   }

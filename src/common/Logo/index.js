@@ -1,3 +1,3 @@
-import Logo from './Logo.react';
+import Logo from './Logo';
 
 export default Logo;

@@ -1,5 +1,5 @@
 import IconStore from './IconStore';
-import RoundIcon from './RoundIcon.react';
+import RoundIcon from './RoundIcon';
 
 RoundIcon.Store = IconStore;
 

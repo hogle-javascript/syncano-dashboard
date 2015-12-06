@@ -1,5 +1,5 @@
-import ColorIconPicker from './ColorIconPicker.react';
-import ColorIconPickerDialog from './ColorIconPickerDialog.react';
+import ColorIconPicker from './ColorIconPicker';
+import ColorIconPickerDialog from './ColorIconPickerDialog';
 
 ColorIconPicker.Dialog = ColorIconPickerDialog;
 

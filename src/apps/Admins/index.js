@@ -1,9 +1,9 @@
-import Admins from './Admins.react';
+import Admins from './Admins';
 import AdminsStore from './AdminsStore';
-import AdminDialog from './AdminDialog.react';
+import AdminDialog from './AdminDialog';
 import AdminDialogStore from './AdminDialogStore';
 import AdminsActions from './AdminsActions';
-import AdminsList from './AdminsList.react';
+import AdminsList from './AdminsList';
 import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 

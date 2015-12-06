@@ -39,7 +39,7 @@ export default Reflux.createStore({
     AdminsInvitationsActions.fetchInvitations();
   },
 
-  selectAllAdminsInvitations() {
+  selectAll() {
     this.getPendingInvitations().forEach((item) => item.checked = true);
     this.trigger(this.data);
   },

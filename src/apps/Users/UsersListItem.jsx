@@ -78,7 +78,7 @@ export default React.createClass({
             primaryText="Edit a User" />
           <MenuItem
             className="dropdown-item-delete-user"
-            onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
+            onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a User" />
         </Column.Menu>
       </Common.ColumnList.Item>

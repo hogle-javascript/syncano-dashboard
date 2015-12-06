@@ -49,13 +49,13 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-            onTouchTap={this.props.showDeleteDialog}
-            className="dropdown-item-delete-apikey"
-            primaryText="Delete an API Key" />
-          <MenuItem
             onTouchTap={this.props.showResetDialog}
             className="dropdown-item-reset-apikey"
             primaryText="Reset an API Key" />
+          <MenuItem
+            onTouchTap={this.props.showDeleteDialog}
+            className="dropdown-item-delete-apikey"
+            primaryText="Delete an API Key" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );

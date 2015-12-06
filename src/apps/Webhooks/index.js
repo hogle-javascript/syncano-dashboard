@@ -1,10 +1,10 @@
-import Webhooks from './Webhooks.react';
+import Webhooks from './Webhooks';
 import WebhooksStore from './WebhooksStore';
-import WebhooksList from './WebhooksList.react';
+import WebhooksList from './WebhooksList';
 import WebhooksActions from './WebhooksActions';
-import WebhookDialog from './WebhookDialog.react';
+import WebhookDialog from './WebhookDialog';
 import WebhookDialogStore from './WebhookDialogStore';
-import WebhookTraces from './WebhookTraces.react';
+import WebhookTraces from './WebhookTraces';
 
 Webhooks.Actions = WebhooksActions;
 Webhooks.Store = WebhooksStore;

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Navigation} from 'react-router';
 
 import Mixins from '../../mixins/';
 
@@ -20,6 +21,7 @@ export default React.createClass({
   displayName: 'InstancesListItem',
 
   mixins: [
+    Navigation,
     Mixins.Dialogs
   ],
 

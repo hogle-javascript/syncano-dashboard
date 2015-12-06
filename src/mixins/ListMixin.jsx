@@ -1,6 +1,6 @@
 import React from 'react';
 import {IconButton} from 'syncano-material-ui';
-import EmptyItem from '../common/ColumnList/EmptyListItem.react';
+import EmptyItem from '../common/ColumnList/EmptyListItem';
 
 export default {
   renderList() {

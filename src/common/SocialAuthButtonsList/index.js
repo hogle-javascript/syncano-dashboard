@@ -1,3 +1,3 @@
-import SocialAuthButtonsList from './SocialAuthButtonsList.react';
+import SocialAuthButtonsList from './SocialAuthButtonsList';
 
 export default SocialAuthButtonsList;
