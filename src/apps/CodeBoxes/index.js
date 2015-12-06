@@ -1,13 +1,13 @@
-import CodeBoxes from './CodeBoxes.react';
-import CodeBox from './CodeBox.react';
-import CodeBoxConfig from './CodeBoxConfig.react';
-import CodeBoxEdit from './CodeBoxEdit.react';
+import CodeBoxes from './CodeBoxes';
+import CodeBox from './CodeBox';
+import CodeBoxConfig from './CodeBoxConfig';
+import CodeBoxEdit from './CodeBoxEdit';
 import CodeBoxesStore from './CodeBoxesStore';
-import CodeBoxesList from './CodeBoxesList.react';
+import CodeBoxesList from './CodeBoxesList';
 import CodeBoxesActions from './CodeBoxesActions';
-import CodeBoxDialog from './CodeBoxDialog.react';
+import CodeBoxDialog from './CodeBoxDialog';
 import CodeBoxDialogStore from './CodeBoxDialogStore';
-import CodeBoxTraces from './CodeBoxTraces.react';
+import CodeBoxTraces from './CodeBoxTraces';
 
 CodeBoxes.Actions = CodeBoxesActions;
 CodeBoxes.Store = CodeBoxesStore;

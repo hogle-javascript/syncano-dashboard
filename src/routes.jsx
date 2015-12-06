@@ -3,13 +3,13 @@ import React from 'react';
 import Router from 'react-router';
 
 // Pages
-import AppPage from './pages/app.react';
-import ClassesPage from './pages/classes.react';
-import DashboardPage from './pages/dashboard.react';
-import InstancePage from './pages/instance.react';
-import ProfilePage from './pages/profile.react';
-import CodeBoxesPage from './pages/codeBoxes.react';
-import NotFoundPage from './pages/notfound.react';
+import AppPage from './pages/app';
+import ClassesPage from './pages/classes';
+import DashboardPage from './pages/dashboard';
+import InstancePage from './pages/instance';
+import ProfilePage from './pages/profile';
+import CodeBoxesPage from './pages/codeBoxes';
+import NotFoundPage from './pages/notfound';
 
 // Apps
 import Account from './apps/Account';
@@ -17,20 +17,20 @@ import Classes from './apps/Classes';
 import Profile from './apps/Profile';
 
 // Apps for authenticated users
-import Instances from './apps/Instances/Instances.react';
-import InstanceEdit from './apps/Instances/InstanceEdit.react';
+import Instances from './apps/Instances/Instances';
+import InstanceEdit from './apps/Instances/InstanceEdit';
 import Solutions from './apps/Solutions';
 
 // Instance Apps
-import Admins from './apps/Admins/Admins.react';
-import ApiKeys from './apps/ApiKeys/ApiKeys.react';
+import Admins from './apps/Admins/Admins';
+import ApiKeys from './apps/ApiKeys/ApiKeys';
 import CodeBoxes from './apps/CodeBoxes';
 import Webhooks from './apps/Webhooks';
-import DataObjects from './apps/DataObjects/DataObjects.react';
+import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
 import Tasks from './apps/Tasks';
-import Users from './apps/Users/Users.react';
-import Channels from './apps/Channels/Channels.react';
+import Users from './apps/Users/Users';
+import Channels from './apps/Channels/Channels';
 import Sockets from './apps/Sockets';
 
 const Route = Router.Route;

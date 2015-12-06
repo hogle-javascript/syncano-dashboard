@@ -1,4 +1,4 @@
-import Result from './TraceResult.react';
+import Result from './TraceResult';
 
 export default {
   Result

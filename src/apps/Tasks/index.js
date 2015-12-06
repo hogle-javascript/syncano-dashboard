@@ -1,16 +1,16 @@
-import ScheduleDialog from './ScheduleDialog.react';
+import ScheduleDialog from './ScheduleDialog';
 import ScheduleDialogStore from './ScheduleDialogStore';
 import SchedulesActions from './SchedulesActions';
-import SchedulesList from './SchedulesList.react';
+import SchedulesList from './SchedulesList';
 import SchedulesStore from './SchedulesStore';
-import ScheduleTraces from './ScheduleTraces.react';
-import Tasks from './Tasks.react';
-import TriggerDialog from './TriggerDialog.react';
+import ScheduleTraces from './ScheduleTraces';
+import Tasks from './Tasks';
+import TriggerDialog from './TriggerDialog';
 import TriggerDialogStore from './TriggerDialogStore';
 import TriggersActions from './TriggersActions';
-import TriggersList from './TriggersList.react';
+import TriggersList from './TriggersList';
 import TriggersStore from './TriggersStore';
-import TriggerTraces from './TriggerTraces.react';
+import TriggerTraces from './TriggerTraces';
 
 Tasks.ScheduleDialog = ScheduleDialog;
 Tasks.ScheduleDialogStore = ScheduleDialogStore;

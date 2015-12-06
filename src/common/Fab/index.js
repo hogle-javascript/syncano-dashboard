@@ -1,6 +1,6 @@
-import FabList from './FabList.react';
-import FabListItem from './FabListItem.react';
-import FabListTooltipItem from './FabListTooltipItem.react';
+import FabList from './FabList';
+import FabListItem from './FabListItem';
+import FabListTooltipItem from './FabListTooltipItem';
 
 FabList.Item = FabListItem;
 FabList.TooltipItem = FabListTooltipItem;
