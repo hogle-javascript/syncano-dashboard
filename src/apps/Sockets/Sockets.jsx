@@ -65,6 +65,12 @@ export default React.createClass({
     Data.Actions.removeDataViews(Data.Store.getCheckedItems());
   },
 
+  handleListTitleClick(routeName) {
+    let instanceName = this.getParams().instanceName;
+
+    this.transitionTo(routeName, {instanceName});
+  },
+
   uncheckAll() {
     console.info('Data::uncheckAll');
     Data.Actions.uncheckAll();
@@ -225,6 +231,7 @@ export default React.createClass({
               checkItem={this.checkDataViewItem}
               isLoading={this.state.dataviews.isLoading}
               items={this.state.dataviews.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'data')}
               emptyItemHandleClick={this.showDataViewAddDialog}
               emptyItemContent="Create a Data Socket"/>
 
@@ -233,6 +240,7 @@ export default React.createClass({
               checkItem={this.checkWebhook}
               isLoading={this.state.webhooks.isLoading}
               items={this.state.webhooks.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'webhooks')}
               emptyItemHandleClick={this.showWebhookAddDialog}
               emptyItemContent="Create a CodeBox Socket"/>
 
@@ -241,6 +249,7 @@ export default React.createClass({
               checkItem={this.checkChannel}
               isLoading={this.state.channels.isLoading}
               items={this.state.channels.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'channels')}
               emptyItemHandleClick={this.showChannelAddDialog}
               emptyItemContent="Create a Channel Socket"/>
 
@@ -249,6 +258,7 @@ export default React.createClass({
               checkItem={this.checkDataViewItem}
               isLoading={this.state.triggers.isLoading}
               items={this.state.triggers.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'triggers')}
               emptyItemHandleClick={this.showTriggerAddDialog}
               emptyItemContent="Create a Trigger Socket"/>
 
@@ -257,6 +267,7 @@ export default React.createClass({
               checkItem={this.checkDataViewItem}
               isLoading={this.state.schedules.isLoading}
               items={this.state.schedules.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
               emptyItemHandleClick={this.showScheduleAddDialog}
               emptyItemContent="Create a Trigger Socket"/>
           </Common.Loading>

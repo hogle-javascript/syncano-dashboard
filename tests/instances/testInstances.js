@@ -31,11 +31,12 @@ export default {
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.waitForElementPresent('@instanceSelected');
-    instancesPage.clickSelectInstance();
-    instancesPage.waitForElementNotPresent('@instanceSelected');
+    instancesPage
+      .navigate()
+      .clickSelectInstance()
+      .waitForElementPresent('@instanceSelected')
+      .clickSelectInstance()
+      .waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -63,7 +64,7 @@ export default {
 
     instancesPage
       .clickButton('@confirmButton')
-      .isModalClosed('@addInstanceModalTitle');
+      .waitForElementNotPresent('@addInstanceModalTitle', 30000);
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');

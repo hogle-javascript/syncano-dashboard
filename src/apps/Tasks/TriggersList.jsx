@@ -109,7 +109,8 @@ export default React.createClass({
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
-            columnName="CHECK_ICON">
+            columnName="CHECK_ICON"
+            handleClick={this.props.handleTitleClick}>
             {this.props.name}
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>

@@ -54,8 +54,9 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown('@classItemDropdown')
-      .clickButton('@deleteDropdownItem');
+      .clickDropdown('@classItemDropdown');
+    client.pause(1000);
+    classesPage.clickButton('@deleteDropdownItem');
     client.pause(1000);
     classesPage
       .waitForElementVisible('@deleteClassModalTitle')
