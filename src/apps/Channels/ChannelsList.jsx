@@ -31,6 +31,10 @@ export default React.createClass({
     Mixins.List
   ],
 
+  getInitialState() {
+    return {};
+  },
+
   componentWillUpdate(nextProps) {
     console.info('Channels::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
