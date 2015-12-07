@@ -106,6 +106,10 @@ export default {
       selector: '//div[text()="user_profile"]/../preceding-sibling::div/span',
       locateStrategy: 'xpath'
     },
+    userClassDropDown: {
+      selector: '//div[text()="user_profile"]/../../../div[@class="col-menu"]//button',
+      locateStrategy: 'xpath'
+    },
     classToSelect: {
       selector: '.synicon-checkbox-blank-outline'
     },
@@ -118,7 +122,7 @@ export default {
       locateStrategy: 'xpath'
     },
     inactiveDeleteButton: {
-      selector: '//div[text()="Delete Class(es)"]/../../..',
+      selector: '//div[text()="Delete a Class"]/..',
       locateStrategy: 'xpath'
     },
     deleteButton: {

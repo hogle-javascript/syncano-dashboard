@@ -63,15 +63,16 @@ export default {
       .waitForElementNotVisible('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');
   },
-  //'Test Admin cannot delete user_profile class': (client) => {
-  //  const classesPage = client.page.classesPage();
-  //
-  //  classesPage
-  //    .clickButton('@selectUserClass')
-  //    .clickButton('@classesListMenu')
-  //    .waitForElementVisible('@inactiveDeleteButton')
-  //    .clickButton('@checkboxSelected');
-  //},
+  'Test Admin cannot delete user_profile class': (client) => {
+    const classesPage = client.page.classesPage();
+
+    classesPage
+      .clickDropdown('@userClassDropDown')
+      .waitForElementVisible('@inactiveDeleteButton');
+
+  // assert that Delete Class element is greyed out
+    classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', 'color: rgba(0, 0, 0, 0.298039)');
+  },
   'Test Admin selects/deselects class': (client) => {
     const classesPage = client.page.classesPage();
 
