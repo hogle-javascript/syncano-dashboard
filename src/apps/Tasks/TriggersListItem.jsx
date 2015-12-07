@@ -7,6 +7,7 @@ import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
+
 let Column = Common.ColumnList.Column;
 
 export default React.createClass({
@@ -46,7 +47,7 @@ export default React.createClass({
             primaryText="Edit a Trigger" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}
+            onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Trigger" />
         </Column.Menu>
       </Common.ColumnList.Item>

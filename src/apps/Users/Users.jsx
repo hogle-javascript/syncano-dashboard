@@ -72,11 +72,6 @@ export default React.createClass({
     GroupsActions.showDialog(group || GroupsStore.getCheckedItem());
   },
 
-  showGroupDeleteDialog(group) {
-    group.checked = true;
-    this.showDialog('removeGroupDialog');
-  },
-
   render() {
     let activeGroup = GroupsStore.getActiveGroup();
 

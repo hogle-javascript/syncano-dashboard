@@ -92,6 +92,7 @@ export default React.createClass({
             primaryText="Customize a Class"/>
           <MenuItem
             className="dropdown-item-delete-class"
+            disabled={item.protectedFromDelete}
             onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Class"/>
         </Column.Menu>

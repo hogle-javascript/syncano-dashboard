@@ -3,8 +3,7 @@ import globals from '../globals';
 
 const apiKeysCommands = {
   clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
+    return this.waitForElementVisible(button).click(button);
   },
   fillApiKeyDescription(description) {
     return this.waitForElementVisible('@createModalDescriptionInput')
@@ -23,6 +22,10 @@ module.exports = {
   elements: {
     addApiKeyButton: {
       selector: '(//span[@class="synicon-plus"])[1]',
+      locateStrategy: 'xpath'
+    },
+    apiKeysListMenu: {
+      selector: '//div[@class="api-keys-list"]/div[1]/div[@class="col-menu"]/div/button',
       locateStrategy: 'xpath'
     },
     apiKeysListItem: {
@@ -55,10 +58,12 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '.synicon-delete'
+      selector: '//div[text()="Delete API Key(s)"]',
+      locateStrategy: 'xpath'
     },
     resetButton: {
-      selector: '.synicon-backup-restore'
+      selector: '//div[text()="Reset API Key(s)"]',
+      locateStrategy: 'xpath'
     }
   }
 };

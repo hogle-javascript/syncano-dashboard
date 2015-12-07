@@ -58,6 +58,7 @@ export default React.createClass({
           name="API Keys"
           items={this.state.items}
           isLoading={this.state.isLoading}
+          hideDialogs={this.state.hideDialogs}
           emptyItemHandleClick={this.showApiKeyDialog}
           emptyItemContent="Generate an API Key"/>
       </Container>

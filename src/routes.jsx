@@ -24,6 +24,7 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
+import CodeBox from './apps/CodeBox';
 import CodeBoxes from './apps/CodeBoxes';
 import Webhooks from './apps/Webhooks';
 import DataObjects from './apps/DataObjects/DataObjects';
@@ -178,23 +179,23 @@ export default (
           path="codeboxes">
           <Route
             name="codebox"
-            handler={CodeBoxes.Details}
+            handler={CodeBox}
             path=":codeboxId">
             <Route
               name="codebox-traces"
-              handler={CodeBoxes.Traces}
+              handler={CodeBox.Traces}
               path="traces"
               />
             <Route
               name="codebox-edit"
-              handler={CodeBoxes.Edit}
+              handler={CodeBox.Edit}
               path="edit"
               />
             <Route
               name="codebox-config"
-              handler={CodeBoxes.Config}
+              handler={CodeBox.Config}
               path="config"/>
-            <DefaultRoute handler={CodeBoxes.Edit}/>
+            <DefaultRoute handler={CodeBox.Edit}/>
           </Route>
           <DefaultRoute handler={CodeBoxes}/>
         </Route>

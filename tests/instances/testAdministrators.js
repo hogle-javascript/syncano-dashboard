@@ -2,7 +2,7 @@ const utils = require('../utils');
 
 module.exports = {
   tags: ['administrators'],
-  before: function(client) {
+  before: (client) => {
     const loginPage = client.page.loginPage();
 
     loginPage.navigate();
@@ -11,32 +11,35 @@ module.exports = {
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
   },
-  after: function(client) {
+  after: (client) => {
     client.end();
   },
-  'User adds an Administrator' : function(client) {
+  'User adds an Administrator': (client) => {
     const email = utils.addSuffix('admin') + '@syncano.com';
     const adminsPage = client.page.adminsPage();
 
-    adminsPage.navigate();
-    adminsPage.waitForElementVisible('@adminsListItem');
-    adminsPage.clickButton('@addAdminButton');
-    adminsPage.waitForElementVisible('@addAdminModalTitle');
-    adminsPage.fillInputField('@addAdminModalEmailInput', email);
-    adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
-    adminsPage.clickButton('@confirmButton');
-    adminsPage.waitForElementVisible('@adminEmailTableRow');
+    adminsPage.navigate()
+      .waitForElementVisible('@adminsListItem')
+      .clickButton('@addAdminButton')
+      .waitForElementVisible('@addAdminModalTitle')
+      .fillInputField('@addAdminModalEmailInput', email)
+      .selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead')
+      .clickButton('@confirmButton')
+      .waitForElementVisible('@adminEmailTableRow');
   },
-  'User deletes an Administrator' : function(client) {
+  'User deletes an Administrator': (client) => {
     const adminsPage = client.page.adminsPage();
 
-    adminsPage.navigate();
-    adminsPage.clickButton('@selectAdminTableRow');
-    adminsPage.clickButton('@deleteButton');
-    adminsPage.waitForElementVisible('@deleteAdminModalTitle');
+    adminsPage.navigate()
+      .clickButton('@selectAdminTableRow')
+      .clickButton('@adminsListMenu')
+      .clickButton('@deleteButton')
+      .waitForElementVisible('@deleteAdminModalTitle');
+
     client.pause(1000);
-    adminsPage.clickButton('@confirmButton');
-    adminsPage.waitForElementVisible('@adminTableRow')
-    adminsPage.waitForElementNotPresent('@adminEmailTableRow');
+
+    adminsPage.clickButton('@confirmButton')
+      .waitForElementVisible('@adminTableRow')
+      .waitForElementNotPresent('@adminEmailTableRow');
   }
 };

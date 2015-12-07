@@ -38,8 +38,7 @@ export default {
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .clickDropdown('@classItemDropdown');
+    classesPage.clickDropdown('@classItemDropdown');
     client.pause(1000);
     classesPage.clickButton('@editDropdownItem')
       .waitForElementNotVisible('@editDropdownItem')
@@ -64,14 +63,15 @@ export default {
       .waitForElementNotVisible('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');
   },
-  'Test Admin cannot delete user_profile class': (client) => {
-    const classesPage = client.page.classesPage();
-
-    classesPage
-      .clickButton('@selectUserClass')
-      .waitForElementVisible('@inactiveDeleteButton')
-      .clickButton('@checkboxSelected');
-  },
+  //'Test Admin cannot delete user_profile class': (client) => {
+  //  const classesPage = client.page.classesPage();
+  //
+  //  classesPage
+  //    .clickButton('@selectUserClass')
+  //    .clickButton('@classesListMenu')
+  //    .waitForElementVisible('@inactiveDeleteButton')
+  //    .clickButton('@checkboxSelected');
+  //},
   'Test Admin selects/deselects class': (client) => {
     const classesPage = client.page.classesPage();
 

@@ -33,9 +33,9 @@ export default React.createClass({
     return {};
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Admins::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleDeleteAdmin() {
@@ -89,7 +89,7 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="admin-list">
+      <Common.Lists.Container className="admins-list">
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
@@ -104,7 +104,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Delete Admin(s)"
                 disabled={!checkedItems}
                 onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
               <MenuItem

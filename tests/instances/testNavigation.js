@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   tags: ['navigation'],
-  before: function(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
     console.log('Starting tests');
@@ -12,10 +12,10 @@ module.exports = {
     loginPage.clickSignInButton();
     loginPage.verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  beforeEach: function(client) {
+  beforeEach(client) {
     const instancesPage = client.page.instancesPage();
     const socketsPage = client.page.socketsPage();
 
@@ -24,7 +24,7 @@ module.exports = {
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
 
-  afterEach: function(client, done) {
+  afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
       done();
       return;
@@ -36,7 +36,7 @@ module.exports = {
     client.saveScreenshot(fileNamePath, done);
   },
 
-  'User goes to Sockets View' : function(client) {
+  'User goes to Sockets View': (client) => {
     const instancesPage = client.page.instancesPage();
     const channelsPage = client.page.channelsPage();
     const tasksPage = client.page.tasksPage();
@@ -50,7 +50,7 @@ module.exports = {
     tasksPage.waitForElementPresent('@scheduleListItem');
     tasksPage.waitForElementPresent('@triggerListItem');
   },
-  'User goes to General view' : function(client) {
+  'User goes to General view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const generalPage = client.page.generalPage();
     const instanceName = client.globals.instanceName;
@@ -62,28 +62,28 @@ module.exports = {
       client.assert.equal(result.value, instanceName);
     });
   },
-  'User goes to Administrators View' : function(client) {
+  'User goes to Administrators View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const adminsPage = client.page.adminsPage();
 
     leftMenuPage.clickButton('@administrators');
     adminsPage.waitForElementPresent('@adminsListItem');
   },
-  'User goes to API Keys View' : function(client) {
+  'User goes to API Keys View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const apiKeysPage = client.page.apiKeysPage();
 
     leftMenuPage.clickButton('@apiKeys');
     apiKeysPage.waitForElementPresent('@apiKeysListItem');
   },
-  'User goes to Classes View' : function(client) {
+  'User goes to Classes View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
 
     leftMenuPage.clickButton('@classes');
     classesPage.waitForElementPresent('@userProfileClassName');
   },
-  'User goes to Snippets edit view' : function(client) {
+  'User goes to Snippets edit view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
@@ -92,7 +92,7 @@ module.exports = {
     snippetsPage.clickButton('@snippetListItem');
     snippetEditPage.waitForElementPresent('@snippetEditView');
   },
-  'User goes to Snippet config view' : function(client) {
+  'User goes to Snippet config view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
@@ -106,7 +106,7 @@ module.exports = {
     snippetEditPage.verify.containsText('@configKeyField', '');
     snippetEditPage.verify.containsText('@configValueField', '');
   },
-  'User goes to Snippet traces view' : function(client) {
+  'User goes to Snippet traces view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
@@ -116,7 +116,7 @@ module.exports = {
     snippetEditPage.clickButton('@traces');
     snippetEditPage.waitForElementPresent('@tracesEmpty');
   },
-  'User goes to Data Objects View' : function(client) {
+  'User goes to Data Objects View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
     const dataObjectsPage = client.page.dataObjectsPage();
@@ -125,22 +125,22 @@ module.exports = {
     classesPage.clickButton('@userClassListItem');
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
-  'User goes to Users & Groups View' : function(client) {
+  'User goes to Users & Groups View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const usersPage = client.page.usersPage();
 
     leftMenuPage.clickButton('@users');
     usersPage.waitForElementPresent('@user');
   },
-  // It will be codeBox Socket traces view test when codebox start working
-  //'User goes to Webhook Traces View' : function(client) {
+  //It will be codeBox Socket traces view test when codebox start working
+  //'User goes to Webhook Traces View': (client) => {
   //  const socketsPage = client.page.socketsPage();
   //  const webhookTracesPage = client.page.webhookTracesPage();
   //
   //  socketsPage.clickButton('@codeBoxSocketItem');
   //  webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
   //},
-  'User goes to Solutions View' : function(client) {
+  'User goes to Solutions View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();
 
@@ -148,7 +148,7 @@ module.exports = {
     solutionsPage.waitForElementPresent('@solutionDetails');
     solutionsPage.waitForElementVisible('@solutionAvatars');
   },
-  'User goes to Solution Details View' : function(client) {
+  'User goes to Solution Details View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();
     const solutionDetailsPage = client.page.solutionDetailsPage();
@@ -158,7 +158,7 @@ module.exports = {
     solutionsPage.clickButton('@solutionDetails');
     solutionDetailsPage.waitForElementPresent('@installSolutionButton');
   },
-  'User goes to Account Profile View' : function(client) {
+  'User goes to Account Profile View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const profilePage = client.page.profilePage();
 
@@ -169,7 +169,7 @@ module.exports = {
     profilePage.waitForElementPresent('@updateButton');
     client.pause(1000);
   },
-  'User goes to Account Authentication View' : function(client) {
+  'User goes to Account Authentication View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const authenticationPage = client.page.authenticationPage();
@@ -182,7 +182,7 @@ module.exports = {
     authenticationPage.waitForElementPresent('@accountKey');
     client.pause(1000);
   },
-  'User goes to Account Invitations View' : function(client) {
+  'User goes to Account Invitations View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const invitationsPage = client.page.invitationsPage();
@@ -195,7 +195,7 @@ module.exports = {
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
     client.pause(1000);
   },
-  'User goes to Billing Plan View' : function(client) {
+  'User goes to Billing Plan View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const billingPlanPage = client.page.billingPlanPage();
@@ -208,7 +208,7 @@ module.exports = {
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
     client.pause(1000);
   },
-  'User goes to Payment methods view' : function(client) {
+  'User goes to Payment methods view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const paymentMethodsPage = client.page.paymentMethodsPage();
@@ -221,7 +221,7 @@ module.exports = {
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
     client.pause(1000);
   },
-  'User goes to Invoices view' : function(client) {
+  'User goes to Invoices view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const invoicesPage = client.page.invoicesPage();
@@ -234,7 +234,7 @@ module.exports = {
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
     client.pause(1000);
   },
-  'User goes to Billing Address view' : function(client) {
+  'User goes to Billing Address view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const billingAddressPage = client.page.billingAddressPage();

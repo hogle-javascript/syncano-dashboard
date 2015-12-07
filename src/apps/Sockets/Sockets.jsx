@@ -45,11 +45,6 @@ export default React.createClass({
     this.fetch();
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Data::componentWillUpdate');
-    this.hideDialogs(nextState.dataviews.hideDialogs || nextState.webhooks.hideDialogs);
-  },
-
   isLoaded() {
     let loadingStates = Object.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {

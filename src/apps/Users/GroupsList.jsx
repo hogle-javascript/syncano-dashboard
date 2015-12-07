@@ -30,9 +30,9 @@ export default Radium(React.createClass({
     return {};
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   getStyles() {
@@ -53,8 +53,13 @@ export default Radium(React.createClass({
   },
 
   handleCancelGroupsDialog() {
-    this.uncheckAllGroups();
+    Actions.uncheckAll();
     this.refs.removeGroupDialog.dismiss();
+  },
+
+  showGroupDeleteDialog(group) {
+    group.checked = true;
+    this.showDialog('removeGroupDialog');
   },
 
   initDialogs() {
@@ -102,7 +107,7 @@ export default Radium(React.createClass({
       <MUI.IconMenu iconButtonElement={this.renderItemIconMenuButton()}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
-        <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
+        <MenuItem onTouchTap={this.showGroupDeleteDialog.bind(null, item)}>Delete</MenuItem>
       </MUI.IconMenu>
     );
   },

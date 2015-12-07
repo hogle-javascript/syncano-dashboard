@@ -19,28 +19,8 @@ export default React.createClass({
     Mixins.List
   ],
 
-  getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.items === null
-    };
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.items === null
-    });
-  },
-
-  handleInstallClick(versionId) {
-    if (this.props.onInstall) {
-      this.props.onInstall(versionId);
-    }
-  },
-
   renderItem(item) {
-    return <ListItem onInstallClick={this.handleInstallClick} item={item}/>;
+    return <ListItem onInstallClick={this.props.onInstall} item={item}/>;
   },
 
   render() {
@@ -81,7 +61,7 @@ export default React.createClass({
 
         </ColumnList.Header>
         <Lists.List>
-          <Loading show={this.state.isLoading}>
+          <Loading show={this.props.isLoading}>
             {this.renderList()}
           </Loading>
         </Lists.List>

@@ -34,6 +34,11 @@ export default React.createClass({
     return {};
   },
 
+  componentWillUpdate(nextProps) {
+    console.info('ApiKeysList::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
+  },
+
   getStyles() {
     return {
       fabListTop: {
@@ -185,10 +190,12 @@ export default React.createClass({
   },
 
   render() {
-    let checkedItems = Store.getNumberOfChecked();
+    let checkedItems = Store.getCheckedItems();
+    let checkedItemsCount = Store.getNumberOfChecked();
+    let someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
 
     return (
-      <Common.Lists.Container className="classes-list-container">
+      <Common.Lists.Container className="classes-list">
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         {this.getDialogs()}
         <Common.ColumnList.Header>
@@ -217,8 +224,8 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
-                disabled={!checkedItems}
+                primaryText="Delete Class(es)"
+                disabled={!checkedItemsCount || someClassIsProtectedFromDelete}
                 onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
               <MenuItem
                 primaryText="Unselect All"

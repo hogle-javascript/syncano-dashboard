@@ -27,6 +27,19 @@ export default React.createClass({
     };
   },
 
+  renderEditAdmin(item, isOwner) {
+    if (isOwner) {
+      return true;
+    }
+
+    return (
+      <MenuItem
+        className="dropdown-item-edit-admin"
+        onTouchTap={Actions.showDialog.bind(null, item)}
+        primaryText="Edit an Admin" />
+    );
+  },
+
   render() {
     let item = this.props.item;
     let styles = this.getStyles();
@@ -54,14 +67,11 @@ export default React.createClass({
         <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at}/>
         <Common.ColumnList.Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit-admin"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit Admin" />
+          {this.renderEditAdmin(item, isOwner)}
           <MenuItem
             className="dropdown-item-delete-admin"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete Admin" />
+            primaryText="Delete an Admin" />
         </Common.ColumnList.Column.Menu>
       </Common.ColumnList.Item>
     );

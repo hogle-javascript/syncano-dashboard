@@ -1,5 +1,4 @@
 import React from 'react';
-import Reflux from 'reflux';
 import Router from 'react-router';
 
 // Utils
@@ -26,16 +25,15 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(Store),
     HeaderMixin,
     Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.List
   ],
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Channels::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleItemIconClick(id, state) {
@@ -123,7 +121,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Delete Channel(s)"
                 disabled={!checkedItems}
                 onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
               <MenuItem

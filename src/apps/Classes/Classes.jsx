@@ -38,12 +38,6 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Classes::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
-  },
-
-
   checkClassItem(id, state) {
     Actions.checkItem(id, state);
   },
@@ -67,6 +61,7 @@ export default React.createClass({
           items={this.state.items}
           triggers={this.state.triggers}
           checkItem={this.checkClassItem}
+          hideDialogs={this.state.hideDialogs}
           emptyItemHandleClick={this.redirectToAddClassView}
           emptyItemContent="Create a Class"/>
       </Container>

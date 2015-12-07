@@ -34,10 +34,6 @@ export default React.createClass({
     Mixins.List
   ],
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items});
-  },
-
   componentWillUpdate(nextProps, nextState) {
     console.info('CodeBoxes::componentWillUpdate');
     this.hideDialogs(nextState.hideDialogs);
@@ -195,7 +191,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Delete Snippet(s)"
                 disabled={!checkedItems}
                 onTouchTap={this.showDialog.bind(null, 'deleteCodeBoxDialog')}/>
               <MenuItem

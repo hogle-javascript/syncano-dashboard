@@ -19,7 +19,8 @@ export default Reflux.createStore({
   getInitialState() {
     return {
       clickedItem: null,
-      items: null,
+      items: [],
+      isLoading: true,
       isTourVisible: false,
       reactTourConfig: null,
       currentStep: -1
@@ -155,6 +156,7 @@ export default Reflux.createStore({
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
     this.data.items = Object.keys(instances).map((key) => instances[key]);
+    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
@@ -191,6 +193,7 @@ export default Reflux.createStore({
 
   onFetchInstances() {
     console.debug('InstancesStore::onFetchInstances');
+    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -207,18 +210,21 @@ export default Reflux.createStore({
 
   onRemoveInstancesCompleted() {
     this.data.hideDialogs = true;
+    this.data.isLoading = false;
     this.redirectToInstancesList();
     this.refreshData();
   },
 
   onRemoveSharedInstanceCompleted() {
     this.data.hideDialogs = true;
+    this.data.isLoading = false;
     this.redirectToInstancesList();
     this.refreshData();
   },
 
   onUpdateInstanceCompleted() {
     this.data.hideDialogs = true;
+    this.data.isLoading = false;
     this.refreshData();
   },
 

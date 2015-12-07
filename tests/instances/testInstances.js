@@ -5,10 +5,11 @@ export default {
     const slug = Date.now();
     const email = 'syncano.bot+' + slug + '@syncano.com';
 
-    signupPage.navigate();
-    signupPage.setValue('@emailInput', email);
-    signupPage.setValue('@passInput', slug);
-    signupPage.clickSubmitButton();
+    signupPage
+      .navigate()
+      .setValue('@emailInput', email)
+      .setValue('@passInput', slug)
+      .clickSubmitButton();
   },
   after(client) {
     client.end();
@@ -16,17 +17,16 @@ export default {
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickDropdown('@instanceDropdown');
-    client.pause(1000);
-    instancesPage.clickButton('@editDropdownItem');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@editInstanceModalTitle');
+    instancesPage
+      .navigate()
+      .clickDropdown('@instancesItemDropdown')
+      .clickButton('@editDropdownItem')
+      .fillInstanceDescription('nightwatch_test_instance_new_description')
+      .clickButton('@confirmButton')
+      .isModalClosed('@editInstanceModalTitle');
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
-    instancesPage.expect.element('@instancesTableRow')
-    .to.contain.text('nightwatch_test_instance_new_description');
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_new_description');
   },
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -40,25 +40,30 @@ export default {
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@deleteButton');
-    client.pause(1000);
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+    instancesPage
+      .navigate()
+      .clickSelectInstance()
+      .clickButton('@instancesListMenu')
+      .clickButton('@deleteButton')
+      .clickButton('@confirmDeleteButton')
+      .isModalClosed('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
   'Test Add Instance from welcome dialog': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@emptyListItem');
-    instancesPage.clickButton('@welcomeDialogCreateInstance');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@emptyListItem')
+      .clickButton('@welcomeDialogCreateInstance')
+      .fillInstanceDescription('nightwatch_test_instance_description');
+
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
+
+    instancesPage
+      .clickButton('@confirmButton')
+      .isModalClosed('@addInstanceModalTitle');
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
@@ -66,12 +71,13 @@ export default {
   'Test Delete an Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@deleteButton');
-    client.pause(1000);
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+    instancesPage
+      .navigate()
+      .clickSelectInstance()
+      .clickButton('@instancesListMenu')
+      .clickButton('@deleteButton')
+      .clickButton('@confirmDeleteButton')
+      .isModalClosed('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
@@ -81,11 +87,12 @@ export default {
     instancesPage.navigate();
     instancesPage.waitForElementPresent('@emptyListItem');
     client.pause(1000);
-    instancesPage.clickButton('@emptyListItem');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
-    instancesPage.waitForElementVisible('@instanceDescription');
+    instancesPage
+      .clickButton('@emptyListItem')
+      .fillInstanceDescription('nightwatch_test_instance')
+      .clickButton('@confirmButton')
+      .isModalClosed('@addInstanceModalTitle')
+      .waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -98,7 +105,7 @@ export default {
       instancesPage.clickButton('@confirmButton');
       instancesPage.isModalClosed('@addInstanceModalTitle');
     }
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.expect.element('@instancesTableRow').to.be.present.after(15000);
   },
   //'Test Instances Dropdown': (client) => {
   //  const instancesPage = client.page.instancesPage();
@@ -136,9 +143,13 @@ export default {
     instancesPage.waitForElementPresent('@selectInstance');
     instancesPage.moveToElement('@selectInstance', 0, 0);
     instancesPage.clickButton('@instanceToSelect');
-    instancesPage.clickButton('@selectButton');
-    instancesPage.clickButton('@deleteButton');
+    instancesPage.clickButton('@instancesListMenu');
     client.pause(1000);
+    instancesPage.clickButton('@selectButton');
+    client.pause(1000);
+    instancesPage.clickButton('@instancesListMenu');
+    client.pause(1000);
+    instancesPage.clickButton('@deleteButton');
     instancesPage.clickButton('@confirmDeleteButton');
     instancesPage.isModalClosed('@deleteInstanceModalTitle');
 

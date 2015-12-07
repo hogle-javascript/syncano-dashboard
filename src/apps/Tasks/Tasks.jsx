@@ -97,6 +97,7 @@ export default React.createClass({
           checkItem={this.checkSchedule}
           isLoading={this.state.schedules.isLoading}
           items={this.state.schedules.items}
+          hideDialogs={this.state.schedules.hideDialogs}
           emptyItemHandleClick={this.showScheduleDialog}
           emptyItemContent="Create a Schedule"/>
 
@@ -105,6 +106,7 @@ export default React.createClass({
           checkItem={this.checkTrigger}
           isLoading={this.state.triggers.isLoading}
           items={this.state.triggers.items}
+          hideDialogs={this.state.triggers.hideDialogs}
           emptyItemHandleClick={this.showTriggerDialog}
           emptyItemContent="Create a Trigger"/>
       </Container>

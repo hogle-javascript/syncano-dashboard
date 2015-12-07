@@ -16,12 +16,6 @@ export default React.createClass({
     window.open(url, '_blank');
   },
 
-  handleInstallClick(versionId) {
-    if (this.props.onInstall) {
-      this.props.onInstall(versionId);
-    }
-  },
-
   render() {
     let item = this.props.item;
 
@@ -60,7 +54,7 @@ export default React.createClass({
           <MUI.IconButton
             iconClassName="synicon-download"
             tooltip="Install this Solution version"
-            onClick={this.handleInstallClick.bind(null, item.id)}
+            onClick={this.props.onInstallClick.bind(null, item.id)}
             />
         </Column.ID>
 

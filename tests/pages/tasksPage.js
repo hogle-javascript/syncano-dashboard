@@ -28,8 +28,16 @@ module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
   commands: [tasksCommands],
   elements: {
+    schedulesListMenu: {
+      selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]/div/button',
+      locateStrategy: 'xpath'
+    },
+    triggersListMenu: {
+      selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]/div/button',
+      locateStrategy: 'xpath'
+    },
     scheduleDropdown: {
-      selector: '//span[@class="synicon-dots-vertical"]',
+      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]/../following-sibling::div[@class="col-menu"]/div/button',
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
@@ -44,12 +52,20 @@ module.exports = {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    deleteButton: {
-      selector: '//span[@class="synicon-delete"]',
+    schedulesDeleteButton: {
+      selector: '//div[text()="Delete Schedule(s)"]',
       locateStrategy: 'xpath'
     },
-    editButton: {
-      selector: '//span[@class="synicon-pencil"]',
+    triggersDeleteButton: {
+      selector: '//div[text()="Delete Trigger(s)"]',
+      locateStrategy: 'xpath'
+    },
+    schedulesEditButton: {
+      selector: '//span[text()="Edit a Schedule"]',
+      locateStrategy: 'xpath'
+    },
+    triggersEditButton: {
+      selector: '//span[text()="Edit a Trigger"]',
       locateStrategy: 'xpath'
     },
     scheduleListItem: {

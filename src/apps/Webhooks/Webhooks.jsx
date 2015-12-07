@@ -30,7 +30,6 @@ export default React.createClass({
 
     Reflux.connect(Store),
 
-    Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
   ],
@@ -38,11 +37,6 @@ export default React.createClass({
   componentDidMount() {
     console.info('Data::componentDidMount');
     this.fetch();
-  },
-
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Data::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
   },
 
   showWebhookDialog() {
@@ -76,6 +70,7 @@ export default React.createClass({
           checkItem={this.checkWebhook}
           isLoading={this.state.isLoading}
           items={this.state.items}
+          hideDialogs={this.state.hideDialogs}
           emptyItemHandleClick={this.showWebhookDialog}
           emptyItemContent="Create a CodeBox Socket"/>
       </Container>

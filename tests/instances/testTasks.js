@@ -2,93 +2,100 @@ const utils = require('../utils');
 
 module.exports = {
   tags: ['tasks'],
-  before: function(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .typeEmail()
+      .typePassword()
+      .clickSignInButton()
+      .verifyLoginSuccessful();
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'Administrator adds a Schedule': function(client) {
+  'Administrator adds a Schedule': (client) => {
     const tasksPage = client.page.tasksPage();
     const suffix = utils.addSuffix('schedule');
 
-    tasksPage.navigate();
-    tasksPage.clickButton('@addScheduleButton');
-    tasksPage.waitForElementPresent('@addScheduleModalTitle');
-    tasksPage.fillInputField('@addScheduleModalLabel', suffix);
-    tasksPage.selectFromDropdown('@addScheduleModalCodeBox', '@addScheduleModalCodeBoxName');
-    tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName');
-    tasksPage.waitForElementNotVisible('@runEvery5minutes')
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementPresent('@scheduleTableRow');
+    tasksPage
+      .navigate()
+      .clickButton('@addScheduleButton')
+      .waitForElementPresent('@addScheduleModalTitle')
+      .fillInputField('@addScheduleModalLabel', suffix)
+      .selectFromDropdown('@addScheduleModalCodeBox', '@addScheduleModalCodeBoxName')
+      .selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName')
+      .waitForElementNotVisible('@runEvery5minutes')
+      .clickButton('@confirm')
+      .waitForElementPresent('@scheduleTableRow');
   },
-  'Administrator edits a Schedule Crontab' : function(client) {
+  'Administrator edits a Schedule Crontab': (client) => {
     const tasksPage = client.page.tasksPage();
 
-    tasksPage.navigate();
-    tasksPage.clickDropdown('@scheduleDropdown');
+    tasksPage
+      .navigate()
+      .clickDropdown('@scheduleDropdown');
     client.pause(1000);
-    tasksPage.clickButton('@editDropdownItem');
-    tasksPage.waitForElementVisible('@editScheduleModalTitle');
-    tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes');
-    tasksPage.waitForElementNotVisible('@addScheduleModalCronTabName')
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementVisible('@cronTabScheduleTableRow');
+    tasksPage
+      .clickButton('@editDropdownItem')
+      .waitForElementVisible('@editScheduleModalTitle')
+      .selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes')
+      .waitForElementNotVisible('@addScheduleModalCronTabName')
+      .clickButton('@confirm')
+      .waitForElementVisible('@cronTabScheduleTableRow');
   },
-  'Administrator deletes a Schedule' : function(client) {
+  'Administrator deletes a Schedule': (client) => {
     const tasksPage = client.page.tasksPage();
 
-    tasksPage.navigate();
-    tasksPage.clickButton('@selectScheduleTableRow');
-    tasksPage.clickButton('@deleteButton');
-    tasksPage.waitForElementPresent('@deleteScheduleModalTitle');
-    client.pause(1000);
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementNotPresent('@selectScheduleTableRow');
+    tasksPage
+      .navigate()
+      .clickButton('@selectScheduleTableRow')
+      .clickButton('@schedulesListMenu')
+      .clickButton('@schedulesDeleteButton')
+      .waitForElementPresent('@deleteScheduleModalTitle')
+      .clickButton('@confirm')
+      .waitForElementNotPresent('@selectScheduleTableRow');
   },
-  'Administrator adds a Trigger': function(client) {
+  'Administrator adds a Trigger': (client) => {
     const tasksPage = client.page.tasksPage();
     const suffix = utils.addSuffix('trigger');
 
-    tasksPage.navigate();
-    tasksPage.clickButton('@addTriggerButton');
-    tasksPage.waitForElementPresent('@addTriggerModalTitle');
-    tasksPage.fillInputField('@addTriggerModalLabel', suffix);
-    tasksPage.selectFromDropdown('@addTriggerModalCodeBox', '@addScheduleModalCodeBoxName');
-    tasksPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate');
-    tasksPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName');
-    tasksPage.waitForElementNotVisible('@addTriggerModalClassName');
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementPresent('@triggerTableRow');
+    tasksPage
+      .navigate()
+      .clickButton('@addTriggerButton')
+      .waitForElementPresent('@addTriggerModalTitle')
+      .fillInputField('@addTriggerModalLabel', suffix)
+      .selectFromDropdown('@addTriggerModalCodeBox', '@addScheduleModalCodeBoxName')
+      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate')
+      .selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName')
+      .waitForElementNotVisible('@addTriggerModalClassName')
+      .clickButton('@confirm')
+      .waitForElementPresent('@triggerTableRow');
   },
-  'Administrator edits a Trigger Signal' : function(client) {
+  'Administrator edits a Trigger Signal': (client) => {
     const tasksPage = client.page.tasksPage();
 
-    tasksPage.navigate();
-    tasksPage.clickDropdown('@triggerDropdown');
-    client.pause(1000);
-    tasksPage.clickButton('@editDropdownItem');
-    tasksPage.waitForElementVisible('@confirm');
-    tasksPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate');
-    tasksPage.waitForElementNotVisible('@addTriggerModalSignalUpdate');
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementPresent('@signalTriggerTableRow');
+    tasksPage
+      .navigate()
+      .clickDropdown('@triggerDropdown')
+      .clickButton('@editDropdownItem')
+      .waitForElementVisible('@confirm')
+      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate')
+      .waitForElementNotVisible('@addTriggerModalSignalUpdate')
+      .clickButton('@confirm')
+      .waitForElementPresent('@signalTriggerTableRow');
   },
-  'Administrator deletes a Trigger' : function(client) {
+  'Administrator deletes a Trigger': (client) => {
     const tasksPage = client.page.tasksPage();
 
-    tasksPage.navigate();
-    tasksPage.clickButton('@selectTriggerTableRow');
-    tasksPage.clickButton('@deleteButton');
-    tasksPage.waitForElementVisible('@confirm');
-    client.pause(1000);
-    tasksPage.clickButton('@confirm');
-    tasksPage.waitForElementNotPresent('@selectTriggerTableRow');
+    tasksPage
+      .navigate()
+      .clickButton('@selectTriggerTableRow')
+      .clickButton('@triggersListMenu')
+      .clickButton('@triggersDeleteButton')
+      .waitForElementVisible('@confirm')
+      .clickButton('@confirm')
+      .waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

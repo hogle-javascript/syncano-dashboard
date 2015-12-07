@@ -72,6 +72,7 @@ export default React.createClass({
           name="Administrators"
           checkItem={this.checkAdminItem}
           isLoading={this.state.admins.isLoading}
+          hideDialogs={this.state.admins.hideDialogs}
           items={this.state.admins.items}/>
 
         <AdminsInvitationsList
@@ -80,6 +81,7 @@ export default React.createClass({
           emptyItemContent="Invite administrator"
           checkItem={this.checkInvitationItem}
           isLoading={this.state.invitations.isLoading}
+          hideDialogs={this.state.invitations.hideDialogs}
           items={AdminsInvitationsStore.getPendingInvitations()}/>
       </Container>
     );

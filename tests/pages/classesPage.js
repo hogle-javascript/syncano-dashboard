@@ -28,8 +28,12 @@ export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
   commands: [classesCommands],
   elements: {
+    classesListMenu: {
+      selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]/div/button',
+      locateStrategy: 'xpath'
+    },
     classItemDropdown: {
-      selector: '//span[@class="synicon-dots-vertical"]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../../following-sibling::div[@class="col-menu"]/div/button',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -79,7 +83,7 @@ export default {
       selector: '.synicon-checkbox-multiple-marked-outline'
     },
     classTableRows: {
-      selector: '//div[@class="classes-list-container"]/div[2]/div/div',
+      selector: '//div[@class="classes-list"]/div[2]/div/div',
       locateStrategy: 'xpath'
     },
     classTableRow: {
@@ -87,11 +91,11 @@ export default {
       locateStrategy: 'xpath'
     },
     userProfileClassName: {
-      selector: '//div[@class="classes-list-container"]//div[text()="user_profile"]',
+      selector: '//div[@class="classes-list"]//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     userClassListItem: {
-      selector: '//div[text()="Class that holds profiles for users."]',
+      selector: '//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     selectClass: {
@@ -99,14 +103,14 @@ export default {
       locateStrategy: 'xpath'
     },
     selectUserClass: {
-      selector: '//div[text()="user_profile"]/preceding-sibling::div/span',
+      selector: '//div[text()="user_profile"]/../preceding-sibling::div/span',
       locateStrategy: 'xpath'
     },
     classToSelect: {
       selector: '.synicon-checkbox-blank-outline'
     },
     classTableRowDescription: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../following-sibling::div[1]',
+      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../../following-sibling::div[1]',
       locateStrategy: 'xpath'
     },
     classTableName: {
@@ -114,7 +118,7 @@ export default {
       locateStrategy: 'xpath'
     },
     inactiveDeleteButton: {
-      selector: '//span[@class="synicon-delete"]/../../button[@disabled]',
+      selector: '//div[text()="Delete Class(es)"]/../../..',
       locateStrategy: 'xpath'
     },
     deleteButton: {

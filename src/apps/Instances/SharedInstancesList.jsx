@@ -8,6 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 // Stores and Actions
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
+import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
 import {IconMenu} from 'syncano-material-ui';
@@ -18,7 +19,7 @@ let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
-  displayName: 'InstancesList',
+  displayName: 'SharedInstancesList',
 
   mixins: [
     Router.State,
@@ -32,11 +33,6 @@ export default React.createClass({
 
   getInitialState() {
     return {};
-  },
-
-  componentWillUpdate(nextProps) {
-    console.info('Channels::componentWillUpdate');
-    this.hideDialogs(nextProps.hideDialogs);
   },
 
   getStyles() {
@@ -61,11 +57,12 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleDelete() {
-    console.info('Instances::handleDelete');
-    Actions.removeInstances(Store.getCheckedItems());
+  handleDeleteShared() {
+    console.info('Instances::handleDeleteShared');
+    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
   },
 
+  // Dialogs config
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
     let checkedItems = Store.getCheckedItems();
@@ -74,16 +71,16 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          key: 'deleteInstanceDialog',
-          ref: 'deleteInstanceDialog',
-          title: 'Delete an Instance',
+          key: 'deleteSharedInstanceDialog',
+          ref: 'deleteSharedInstanceDialog',
+          title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDelete}
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
+            {text: 'Confirm', onClick: this.handleDeleteShared}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedItems) + ' Instance(s)?',
+            'Do you really want to leave ' + this.getDialogListLength(checkedItems) + ' Instance(s)?',
             this.getDialogList(checkedItems),
             <Common.Loading
               type="linear"
@@ -107,12 +104,14 @@ export default React.createClass({
   },
 
   renderItem(item) {
+    let removeSharedInstance = Actions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
+
     return (
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeInstances.bind(null, [item]))}
-        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, removeSharedInstance)}
+        showCustomizeDialog=""/>
     );
   },
 
@@ -135,9 +134,9 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Instance(s)"
+                primaryText="Leave Instance(s)"
                 disabled={!checkedItems}
-                onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+                onTouchTap={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}/>
               <MenuItem
                 primaryText="Unselect All"
                 disabled={!checkedItems}

@@ -33,9 +33,9 @@ export default React.createClass({
     return {};
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Tasks::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleItemIconClick(id, state) {
@@ -88,7 +88,7 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container>
+      <Common.Lists.Container className="schedules-list">
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
@@ -110,9 +110,9 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Delete Schedule(s)"
                 disabled={!checkedItems}
-                onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
+                onTouchTap={this.showDialog.bind(null, 'removeScheduleDialog')}/>
               <MenuItem
                 primaryText="Unselect All"
                 onTouchTap={Actions.uncheckAll}/>

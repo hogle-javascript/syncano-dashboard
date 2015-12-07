@@ -32,9 +32,9 @@ export default React.createClass({
     Mixins.List
   ],
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('ApiKeysList::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleItemIconClick(id, state) {
@@ -140,18 +140,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Reset API Key(s)"
+                disabled={!checkedItems}
+                onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
+              <MenuItem
+                primaryText="Delete API Key(s)"
                 disabled={!checkedItems}
                 onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
               <MenuItem
                 primaryText="Unselect All"
+                disabled={!checkedItems}
                 onTouchTap={Actions.uncheckAll}/>
               <MenuItem
                 primaryText="Select All"
                 onTouchTap={Actions.selectAll}/>
-              <MenuItem
-                tooltip="Reset an API Key"
-                onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
             </IconMenu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>

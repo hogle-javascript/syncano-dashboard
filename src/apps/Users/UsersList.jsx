@@ -33,9 +33,9 @@ export default React.createClass({
     return {};
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Users::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleRemoveUsers() {
@@ -93,10 +93,10 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <div>
+      <Common.Lists.Container className="users-list">
         {this.getDialogs()}
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
-          <Column.MenuDialog ref="menuDialog"/>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -109,7 +109,7 @@ export default React.createClass({
           <Column.ColumnHeader columnName="MENU">
             <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
               <MenuItem
-                primaryText="Delete Selected"
+                primaryText="Delete User(s)"
                 disabled={!checkedItems}
                 onTouchTap={this.showDialog.bind(null, 'removeUserDialog')}/>
               <MenuItem
@@ -126,7 +126,7 @@ export default React.createClass({
             {this.renderList()}
           </Common.Loading>
         </Common.Lists.List>
-      </div>
+      </Common.Lists.Container>
     );
   }
 });

@@ -27,8 +27,12 @@ module.exports = {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
+    adminsListMenu: {
+      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class="col-menu"]/div/button',
+      locateStrategy: 'xpath'
+    },
     deleteButton: {
-      selector: '//span[@class="synicon-delete"]',
+      selector: '//div[text()="Delete Invitation(s)"]',
       locateStrategy: 'xpath'
     },
     adminsListItem: {
@@ -60,11 +64,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]/../../preceding-sibling::div',
+      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]/../preceding-sibling::div',
       locateStrategy: 'xpath'
     },
     adminTableRow: {
-      selector: '//div[@class="admin-list"][2]/div[2]',
+      selector: '//div[@class="admins-invitations-list"]/div[2]',
       locateStrategy: 'xpath'
     },
     deleteAdminModalTitle: {

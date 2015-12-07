@@ -10,7 +10,10 @@ import Mixins from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
+import {IconMenu} from 'syncano-material-ui';
+import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
+
 let Column = Common.ColumnList.Column;
 
 export default React.createClass({
@@ -21,6 +24,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     HeaderMixin,
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.List
   ],
@@ -29,9 +33,9 @@ export default React.createClass({
     return {};
   },
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     console.info('Tasks::componentWillUpdate');
-    this.hideDialogs(nextState.hideDialogs);
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   handleItemIconClick(id, state) {
@@ -79,7 +83,7 @@ export default React.createClass({
             <Common.Loading
               type='linear'
               position='bottom'
-              show={this.state.triggers.isLoading}/>
+              show={this.props.isLoading}/>
           ]
         }
       }
@@ -87,12 +91,20 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    return <ListItem onIconClick={this.handleItemIconClick} item={item}/>;
+    return (
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}/>
+    );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
       <Common.Lists.Container className="triggers-list">
+        {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
@@ -113,7 +125,20 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
+              <MenuItem
+                primaryText="Delete Trigger(s)"
+                disabled={!checkedItems}
+                onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
+              <MenuItem
+                primaryText="Unselect All"
+                onTouchTap={Actions.uncheckAll}/>
+              <MenuItem
+                primaryText="Select All"
+                onTouchTap={Actions.selectAll}/>
+            </IconMenu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
         <Common.Lists.List>
           <Common.Loading show={this.props.isLoading}>

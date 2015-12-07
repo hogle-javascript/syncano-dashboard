@@ -4,12 +4,9 @@ import {Navigation} from 'react-router';
 import Mixins from '../../mixins/';
 
 // Stores and Actions
-import SessionActions from '../Session/SessionActions';
-import SessionStore from '../Session/SessionStore';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
-import InstancesActions from './InstancesActions';
 
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
@@ -26,7 +23,6 @@ export default React.createClass({
   ],
 
   handleItemClick(instanceName) {
-    SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName});
   },
 
@@ -41,9 +37,6 @@ export default React.createClass({
   render() {
     let item = this.props.item;
     let removeText = Store.amIOwner(item) ? 'Delete an Instance' : 'Leave an Instance';
-    let handleRemoveUserInstance = InstancesActions.removeInstances.bind(null, [item]);
-    let handleRemoveShared = InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
-    let handleRemoveInstance = Store.amIOwner(item) ? handleRemoveUserInstance : handleRemoveShared;
 
     item.metadata = item.metadata || {};
 
@@ -51,16 +44,16 @@ export default React.createClass({
       <Common.ColumnList.Item
         checked={item.checked}
         id={item.name}
-        key={item.name}
-        handleClick={this.handleItemClick.bind(null, item.name)}>
+        key={item.name}>
         <Column.CheckIcon
           id={item.name}
           icon={item.metadata.icon}
           background={Common.Color.getColorByName(item.metadata.color)}
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}
-          handleNameClick={this.handleItemClick}>
-          {item.name}
+          handleIconClick={this.props.onIconClick}>
+          <div onClick={this.handleItemClick.bind(null, item.name)} style={{cursor: 'pointer'}}>
+            {item.name}
+          </div>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.Date date={item.created_at}/>
@@ -71,11 +64,11 @@ export default React.createClass({
             primaryText="Edit an Instance" />
           <MenuItem
             className="dropdown-item-customize"
-            onTouchTap={this.showDialog.bind(null, 'pickColorIconDialog')}
+            onTouchTap={this.props.showCustomizeDialog}
             primaryText="Customize an Instance" />
           <MenuItem
             className="dropdown-item-instance-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, handleRemoveInstance)}
+            onTouchTap={this.props.showDeleteDialog}
             primaryText={removeText} />
         </Column.Menu>
       </Common.ColumnList.Item>

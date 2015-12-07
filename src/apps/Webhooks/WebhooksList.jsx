@@ -33,6 +33,11 @@ export default React.createClass({
     return {};
   },
 
+  componentWillUpdate(nextProps) {
+    console.info('Admins::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
+  },
+
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
@@ -125,6 +130,7 @@ export default React.createClass({
                 onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
               <MenuItem
                 primaryText="Unselect All"
+                disabled={!checkedItems}
                 onTouchTap={Actions.uncheckAll}/>
               <MenuItem
                 primaryText="Select All"
