@@ -58,7 +58,7 @@ export default {
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
+    instancesPage.waitForElementNotPresent('@addInstanceModalTitle', 30000);
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
