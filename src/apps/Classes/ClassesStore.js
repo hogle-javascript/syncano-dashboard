@@ -130,15 +130,15 @@ export default Reflux.createStore({
   getClickedItemIconColor() {
     let clickedItem = this.getClickedItem();
 
-    if (!clickedItem) {
+    if (!clickedItem || !clickedItem.metadata) {
       return {
-        color: null,
-        icon: null
+        color: 'indigo',
+        icon: 'cloud'
       };
     }
     return {
-      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'blue',
-      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'table-large'
+      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'indigo',
+      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'cloud'
     };
   },
 

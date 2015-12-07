@@ -216,14 +216,14 @@ export default Reflux.createStore({
 
     if (!clickedItem) {
       return {
-        color: null,
-        icon: null
+        color: 'indigo',
+        icon: 'cloud'
       };
     }
 
     return {
-      color: clickedItem.metadata.color,
-      icon: clickedItem.metadata.icon
+      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'indigo',
+      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'cloud'
     };
   }
 });

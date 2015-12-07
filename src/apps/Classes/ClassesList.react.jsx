@@ -66,7 +66,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let clickedItem = Store.getClickedItemIconColor();
+    let clickedItemMeta = Store.getClickedItemIconColor();
 
     return [
       {
@@ -75,8 +75,8 @@ export default React.createClass({
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
           mode: 'add',
-          initialColor: clickedItem.color,
-          initialIcon: clickedItem.icon,
+          initialColor: clickedItemMeta.color,
+          initialIcon: clickedItemMeta.icon,
           handleClick: this.handleChangePalette
         }
       }
@@ -95,8 +95,8 @@ export default React.createClass({
         handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id={item.name.toString()}
-          icon={metadata && metadata.icon ? metadata.icon : 'table-large'}
-          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
+          icon={metadata && metadata.icon ? metadata.icon : 'cloud'}
+          background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'indigo')}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}>
           {item.name}
