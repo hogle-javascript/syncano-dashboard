@@ -35,7 +35,7 @@ export default {
     socketsPage
       .navigate()
       .waitForElementVisible('@codeBoxSocketItem')
-      .clickWebhookDropdown()
+      .clickButton('@codeBoxSocketDropDown')
       .clickButton('@editDropdownItem')
       .waitForElementVisible('@editWebhookModalTitle')
       .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
@@ -51,7 +51,7 @@ export default {
     socketsPage
      .navigate()
      .waitForElementVisible('@codeBoxSocketItem')
-     .clickWebhookDropdown()
+     .clickButton('@codeBoxSocketDropDown')
      .clickButton('@deleteDropdownItem')
      .waitForElementVisible('@deleteWebhookModalTitle');
     client.pause(1000);
