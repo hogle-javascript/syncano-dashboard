@@ -1,14 +1,14 @@
-import CheckIcon from './CheckIcon.react';
-import Date from './Date.react';
-import Desc from './Desc.react';
-import IconName from './IconName.react';
-import Key from './Key.react';
-import Menu from './Menu.react';
-import Name from './Name.react';
-import Text from './Text.react';
-import ID from './ID.react';
-import ColumnHeader from './ColumnHeader.react';
-import MenuDialog from './MenuDialog.react';
+import CheckIcon from './CheckIcon';
+import Date from './Date';
+import Desc from './Desc';
+import IconName from './IconName';
+import Key from './Key';
+import Menu from './Menu';
+import Name from './Name';
+import Text from './Text';
+import ID from './ID';
+import ColumnHeader from './ColumnHeader';
+import MenuDialog from './MenuDialog';
 
 export default {
   CheckIcon,

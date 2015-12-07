@@ -1,8 +1,8 @@
-import Channels from './Channels.react';
+import Channels from './Channels';
 import ChannelsStore from './ChannelsStore';
-import ChannelsList from './ChannelsList.react';
+import ChannelsList from './ChannelsList';
 import ChannelsActions from './ChannelsActions';
-import ChannelDialog from './ChannelDialog.react';
+import ChannelDialog from './ChannelDialog';
 import ChannelDialogStore from './ChannelDialogStore';
 
 Channels.Actions = ChannelsActions;

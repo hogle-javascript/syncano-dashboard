@@ -9,10 +9,10 @@ import Actions from './SchedulesActions';
 import Store from './SchedulesStore';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
-import SchedulesList from './SchedulesList.react';
-import ScheduleDialog from './ScheduleDialog.react';
+import SchedulesList from './SchedulesList';
+import ScheduleDialog from './ScheduleDialog';
 import Common from '../../common';
-import Container from '../../common/Container/Container.react';
+import Container from '../../common/Container/Container';
 
 export default React.createClass({
 

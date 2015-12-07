@@ -30,6 +30,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.IsLoading(),
 
@@ -118,17 +119,17 @@ export default React.createClass({
         key: 'deleteCreateDialog',
         ref: 'deleteCreateDialog',
         title: 'Delete a Solution',
-        onRequestClose: this.handleCancel,
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteCreateDialog')
           },
           {
             text: 'Confirm',
             onClick: this.handleDelete
           }
         ],
+        modal: true,
         children: 'Do you really want to delete this Solution?'
       }
     }];

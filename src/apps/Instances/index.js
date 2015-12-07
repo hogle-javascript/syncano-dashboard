@@ -1,8 +1,8 @@
-import Instances from './Instances.react';
+import Instances from './Instances';
 import InstancesStore from './InstancesStore';
-import InstancesList from './InstancesList.react';
+import InstancesList from './InstancesList';
 import InstancesActions from './InstancesActions';
-import InstanceDialog from './InstanceDialog.react';
+import InstanceDialog from './InstanceDialog';
 import InstanceDialogStore from './InstanceDialogStore';
 
 Instances.Actions = InstancesActions;

@@ -1,5 +1,5 @@
-import Editor from './Editor.react';
-import EditorPanel from './EditorPanel.react';
+import Editor from './Editor';
+import EditorPanel from './EditorPanel';
 
 Editor.Panel = EditorPanel;
 

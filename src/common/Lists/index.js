@@ -1,5 +1,5 @@
-import List from './List.react';
-import Container from './ListContainer.react';
+import List from './List';
+import Container from './ListContainer';
 
 export default {
   List,

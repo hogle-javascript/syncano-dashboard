@@ -9,10 +9,10 @@ import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
-import TriggersList from './TriggersList.react';
-import TriggerDialog from './TriggerDialog.react';
+import TriggersList from './TriggersList';
+import TriggerDialog from './TriggerDialog';
 import Common from '../../common';
-import Container from '../../common/Container/Container.react';
+import Container from '../../common/Container/Container';
 
 export default React.createClass({
 

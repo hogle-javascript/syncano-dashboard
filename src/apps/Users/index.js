@@ -1,15 +1,15 @@
-import Users from './Users.react';
+import Users from './Users';
 import UsersStore from './UsersStore';
-import UsersList from './UsersList.react';
+import UsersList from './UsersList';
 import UsersActions from './UsersActions';
-import UserDialog from './UserDialog.react';
+import UserDialog from './UserDialog';
 import UserDialogStore from './UserDialogStore';
 
 import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
-import GroupDialog from './GroupDialog.react';
+import GroupDialog from './GroupDialog';
 import GroupDialogStore from './GroupDialogStore';
-import GroupsList from './GroupsList.react';
+import GroupsList from './GroupsList';
 
 Users.Actions = UsersActions;
 Users.Store = UsersStore;

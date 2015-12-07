@@ -1,10 +1,10 @@
-import PaymentIcon from './PaymentIcon.react';
-import AmericanExpress from './AmericanExpress.react';
-import DinersClub from './DinersClub.react';
-import Discover from './Discover.react';
-import JCB from './JCB.react';
-import MasterCard from './MasterCard.react';
-import Visa from './Visa.react';
+import PaymentIcon from './PaymentIcon';
+import AmericanExpress from './AmericanExpress';
+import DinersClub from './DinersClub';
+import Discover from './Discover';
+import JCB from './JCB';
+import MasterCard from './MasterCard';
+import Visa from './Visa';
 
 PaymentIcon.AmericanExpress = AmericanExpress;
 PaymentIcon.DinersClub = DinersClub;

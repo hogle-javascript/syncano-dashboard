@@ -1,5 +1,5 @@
 import React from 'react';
-import Show from '../../common/Show/Show.react';
+import Show from '../../common/Show/Show';
 
 export default React.createClass({
 

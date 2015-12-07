@@ -1,8 +1,8 @@
-import ApiKeys from './ApiKeys.react';
+import ApiKeys from './ApiKeys';
 import ApiKeysStore from './ApiKeysStore';
-import ApiKeysList from './ApiKeysList.react';
+import ApiKeysList from './ApiKeysList';
 import ApiKeysActions from './ApiKeysActions';
-import ApiKeyDialog from './ApiKeyDialog.react';
+import ApiKeyDialog from './ApiKeyDialog';
 import ApiKeyDialogStore from './ApiKeyDialogStore';
 
 ApiKeys.Actions = ApiKeysActions;

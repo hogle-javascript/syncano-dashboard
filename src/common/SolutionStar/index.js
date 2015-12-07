@@ -1,3 +1,3 @@
-import SolutionStar from './SolutionStar.react';
+import SolutionStar from './SolutionStar';
 
 export default SolutionStar;

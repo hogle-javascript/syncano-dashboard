@@ -128,6 +128,10 @@ module.exports = {
     },
     emptyListItem: {
       selector: '.empty-list-item'
+    },
+    dataSocketTableTitle: {
+      selector: '//div[text()="Data Socket"]',
+      locateStrategy: 'xpath'
     }
   }
 };

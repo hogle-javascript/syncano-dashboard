@@ -1,0 +1,166 @@
+/* eslint-disable no-unused-vars, no-inline-comments */
+
+import React from 'react';
+import Reflux from 'reflux';
+import Router from 'react-router';
+
+// Utils
+import Mixins from '../../mixins';
+import HeaderMixin from '../Header/HeaderMixin';
+
+// Stores and Actions
+import WebhooksActions from './WebhooksActions';
+import WebhooksStore from './WebhooksStore';
+
+// Components
+import MUI from 'syncano-material-ui';
+import Common from '../../common';
+import Container from '../../common/Container/Container';
+
+// Local components
+import WebhooksList from './WebhooksList';
+import WebhookDialog from './WebhookDialog';
+
+
+export default React.createClass({
+
+  displayName: 'Data',
+
+  mixins: [
+    Router.State,
+    Router.Navigation,
+
+    Reflux.connect(WebhooksStore, 'webhooks'),
+
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    HeaderMixin
+  ],
+
+  componentDidMount() {
+    console.info('Data::componentDidMount');
+    this.fetch();
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    console.info('Data::componentWillUpdate');
+    this.hideDialogs(nextState.webhooks.hideDialogs);
+  },
+
+  getStyles() {
+    return {
+      listSockets: {
+        marginTop: 130
+      },
+      listBase: {
+        clear: 'both',
+        height: '100%'
+      },
+      icon: {
+        fontSize: 25,
+        marginTop: 5
+      }
+    };
+  },
+
+  handleRemoveWebhooks() {
+    console.info('Data::handleDelete');
+    WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
+  },
+
+  uncheckAll() {
+    console.info('Data::uncheckAll');
+    WebhooksActions.uncheckAll();
+  },
+
+  showWebhookDialog() {
+    WebhooksActions.showDialog();
+  },
+
+  showWebhookEditDialog() {
+    WebhooksActions.showDialog(WebhooksStore.getCheckedItem());
+  },
+
+  checkWebhook(id, state) {
+    console.info('Data::checkWebhook');
+    WebhooksActions.checkItem(id, state);
+  },
+
+  fetch() {
+    WebhooksActions.fetch();
+  },
+
+  // Dialogs config
+  initDialogs() {
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'removeWebhookDialog',
+          ref: 'removeWebhookDialog',
+          title: 'Delete a Webhook',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleRemoveWebhooks
+            }
+          ],
+          modal: true,
+          children: 'Do you really want to delete ' + WebhooksStore.getCheckedItems().length + ' Webhooks?'
+        }
+      }
+    ];
+  },
+
+  render() {
+    let checkedWebhooks = WebhooksStore.getNumberOfChecked();
+    let isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length;
+    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
+    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let styles = this.getStyles();
+    let routeName = this.getRoutes()[this.getRoutes().length - 1];
+    let isSocketView = routeName === 'sockets';
+
+    return (
+      <Container>
+        <WebhookDialog />
+        {this.getDialogs()}
+
+        <Common.Show if={checkedWebhooks > 0}>
+          <Common.Fab position="top">
+            <Common.Fab.TooltipItem
+              tooltip={isAnyWebhookSelected ? 'Click here to select all' : 'Click here to unselect all'}
+              mini={true}
+              onClick={isAnyWebhookSelected ? WebhooksActions.selectAll : WebhooksActions.uncheckAll}
+              iconClassName={isAnyWebhookSelected ? markedIcon : blankIcon}/>
+            <Common.Fab.TooltipItem
+              tooltip="Click here to delete a Webhook"
+              mini={true}
+              onClick={this.showDialog.bind(null, 'removeWebhookDialog')}
+              iconClassName="synicon-delete"/>
+          </Common.Fab>
+        </Common.Show>
+
+        <Common.InnerToolbar title="CodeBox Sockets" />
+
+        <div style={[styles.listBase, isSocketView && styles.listSockets]}>
+
+          <WebhooksList
+            name="CodeBox Sockets"
+            checkItem={this.checkWebhook}
+            isLoading={this.state.webhooks.isLoading}
+            items={this.state.webhooks.items}
+            emptyItemHandleClick={this.showWebhookDialog}
+            emptyItemContent="Create a CodeBox Socket"/>
+
+        </div>
+
+        </Container>
+    );
+  }
+});
