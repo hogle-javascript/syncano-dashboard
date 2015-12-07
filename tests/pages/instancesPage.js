@@ -5,14 +5,11 @@ const instancesCommands = {
       .waitForElementVisible('@confirmButton');
   },
   fillInstanceDescription(field, description) {
-    return this.waitForElementVisible('@createModalDescriptionInput')
+    return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, '')
       .clearValue(field)
       .setValue(field, description);
-  },
-  clickSelectInstance() {
-    return this.waitForElementVisible('@selectInstance').click('@selectInstance');
   },
   clickButton(button) {
     return this.waitForElementVisible(button).click(button);

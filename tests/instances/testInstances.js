@@ -16,87 +16,98 @@ export default {
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickDropdown('@instanceDropdown');
+    instancesPage
+      .navigate()
+      .clickDropdown('@instanceDropdown');
     client.pause(1000);
-    instancesPage.clickButton('@editDropdownItem');
-    instancesPage.fillInstanceDescription('@createModalDescriptionInput', 'new_description');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.waitForElementNotVisible('@editInstanceModalTitle');
+    instancesPage
+      .clickButton('@editDropdownItem')
+      .fillInstanceDescription('@createModalDescriptionInput', 'new_description')
+      .clickButton('@confirmButton')
+      .waitForElementNotVisible('@editInstanceModalTitle');
 
-    instancesPage.waitForElementVisible('@instancesTableRow');
-    instancesPage.expect.element('@instancesTableRow')
-    .to.contain.text('new_description');
+    instancesPage
+      .waitForElementVisible('@instancesTableRow')
+      .expect.element('@instancesTableRow').to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.waitForElementVisible('@instanceSelected');
-    instancesPage.clickSelectInstance();
-    instancesPage.waitForElementNotVisible('@instanceSelected');
+    instancesPage
+      .navigate()
+      .clickButton('@selectInstance')
+      .waitForElementVisible('@instanceSelected')
+      .clickButton('@selectInstance')
+      .waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@deleteButton');
+    instancesPage
+      .navigate()
+      .clickButton('@selectInstance')
+      .clickButton('@deleteButton');
     client.pause(1000);
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
+    instancesPage
+      .clickButton('@confirmDeleteButton')
+      .waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
   'Test Add Instance from welcome dialog': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.waitForElementVisible('@emptyListItem');
-    instancesPage.clickButton('@welcomeDialogCreateInstance');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
-    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.waitForElementNotVisible('@addInstanceModalTitle', 30000);
+    instancesPage
+      .navigate()
+      .waitForElementVisible('@emptyListItem')
+      .clickButton('@welcomeDialogCreateInstance')
+      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance_description');
 
+    instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
+    instancesPage.clickButton('@confirmButton')
+      .waitForElementNotVisible('@addInstanceModalTitle', 30000);
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
   },
   'Test Delete an Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickSelectInstance();
-    instancesPage.clickButton('@deleteButton');
+    instancesPage
+      .navigate()
+      .clickButton('@selectInstance')
+      .clickButton('@deleteButton');
     client.pause(1000);
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
-
+    instancesPage
+      .clickButton('@confirmDeleteButton')
+      .waitForElementNotVisible('@deleteInstanceModalTitle');
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
   'Add an Instance from empty list item': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@emptyListItem');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@emptyListItem');
     client.pause(1000);
-    instancesPage.clickButton('@emptyListItem');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance');
-    instancesPage.clickButton('@confirmButton');
-    instancesPage.waitForElementNotVisible('@addInstanceModalTitle');
-    instancesPage.waitForElementVisible('@instanceDescription');
+    instancesPage
+      .clickButton('@emptyListItem')
+      .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
+      .clickButton('@confirmButton')
+      .waitForElementNotVisible('@addInstanceModalTitle')
+      .waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
     const instancesPage = client.page.instancesPage();
     let i = 0;
 
-    instancesPage.navigate();
+    instancesPage
+      .navigate();
     for (i; i < 2; i += 1) {
       instancesPage.clickFAB();
       instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
-      instancesPage.clickButton('@confirmButton');
-      instancesPage.waitForElementNotVisible('@addInstanceModalTitle');
+      instancesPage
+        .clickButton('@confirmButton')
+        .waitForElementNotVisible('@addInstanceModalTitle');
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
@@ -132,15 +143,17 @@ export default {
   'Test Delete multiple Instances': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@selectInstance');
-    instancesPage.moveToElement('@selectInstance', 0, 0);
-    instancesPage.clickButton('@instanceToSelect');
-    instancesPage.clickButton('@selectButton');
-    instancesPage.clickButton('@deleteButton');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@selectInstance')
+      .moveToElement('@selectInstance', 0, 0)
+      .clickButton('@instanceToSelect')
+      .clickButton('@selectButton')
+      .clickButton('@deleteButton');
     client.pause(1000);
-    instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
+    instancesPage
+      .clickButton('@confirmDeleteButton')
+      .waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
