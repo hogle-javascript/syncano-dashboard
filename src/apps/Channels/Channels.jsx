@@ -102,6 +102,9 @@ export default React.createClass({
 
     return (
       <Container>
+
+        <Common.InnerToolbar title="Channel Sockets" />
+
         <ChannelDialog />
         {this.getDialogs()}
 
