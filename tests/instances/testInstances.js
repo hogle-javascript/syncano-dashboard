@@ -20,22 +20,22 @@ export default {
     instancesPage.clickDropdown('@instanceDropdown');
     client.pause(1000);
     instancesPage.clickButton('@editDropdownItem');
-    instancesPage.fillInstanceDescription('nightwatch_test_instance_new_description');
+    instancesPage.fillInstanceDescription('@createModalDescriptionInput', 'new_description');
     instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@editInstanceModalTitle');
+    instancesPage.waitForElementNotVisible('@editInstanceModalTitle');
 
-    instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
+    instancesPage.waitForElementVisible('@instancesTableRow');
     instancesPage.expect.element('@instancesTableRow')
-    .to.contain.text('nightwatch_test_instance_new_description');
+    .to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
     instancesPage.clickSelectInstance();
-    instancesPage.waitForElementPresent('@instanceSelected');
+    instancesPage.waitForElementVisible('@instanceSelected');
     instancesPage.clickSelectInstance();
-    instancesPage.waitForElementNotPresent('@instanceSelected');
+    instancesPage.waitForElementNotVisible('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
@@ -45,7 +45,7 @@ export default {
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
     instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
@@ -53,12 +53,12 @@ export default {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.waitForElementPresent('@emptyListItem');
+    instancesPage.waitForElementVisible('@emptyListItem');
     instancesPage.clickButton('@welcomeDialogCreateInstance');
     instancesPage.fillInstanceDescription('nightwatch_test_instance_description');
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton');
-    instancesPage.waitForElementNotPresent('@addInstanceModalTitle', 30000);
+    instancesPage.waitForElementNotVisible('@addInstanceModalTitle', 30000);
 
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
@@ -71,7 +71,7 @@ export default {
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
     instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   },
@@ -84,7 +84,7 @@ export default {
     instancesPage.clickButton('@emptyListItem');
     instancesPage.fillInstanceDescription('nightwatch_test_instance');
     instancesPage.clickButton('@confirmButton');
-    instancesPage.isModalClosed('@addInstanceModalTitle');
+    instancesPage.waitForElementNotVisible('@addInstanceModalTitle');
     instancesPage.waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
@@ -96,7 +96,7 @@ export default {
       instancesPage.clickFAB();
       instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
       instancesPage.clickButton('@confirmButton');
-      instancesPage.isModalClosed('@addInstanceModalTitle');
+      instancesPage.waitForElementNotVisible('@addInstanceModalTitle');
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
@@ -140,7 +140,7 @@ export default {
     instancesPage.clickButton('@deleteButton');
     client.pause(1000);
     instancesPage.clickButton('@confirmDeleteButton');
-    instancesPage.isModalClosed('@deleteInstanceModalTitle');
+    instancesPage.waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }

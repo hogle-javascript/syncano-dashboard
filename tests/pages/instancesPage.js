@@ -4,10 +4,12 @@ const instancesCommands = {
       .click('@fab')
       .waitForElementVisible('@confirmButton');
   },
-  fillInstanceDescription(description) {
+  fillInstanceDescription(field, description) {
     return this.waitForElementVisible('@createModalDescriptionInput')
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
+      .clearValue(field)
+      .setValue(field, '')
+      .clearValue(field)
+      .setValue(field, description);
   },
   clickSelectInstance() {
     return this.waitForElementVisible('@selectInstance').click('@selectInstance');
