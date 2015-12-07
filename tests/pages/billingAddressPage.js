@@ -1,7 +1,7 @@
 module.exports = {
   elements: {
     billingAddressTitle: {
-      selector: '//div[@class="container"]//div[text()="Billing address"]',
+      selector: '//div[text()="Company name"]',
       locateStrategy: 'xpath'
     }
   }

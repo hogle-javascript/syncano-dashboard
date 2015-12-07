@@ -48,6 +48,22 @@ export default React.createClass({
     this.hideDialogs(nextState.webhooks.hideDialogs);
   },
 
+  getStyles() {
+    return {
+      listSockets: {
+        marginTop: 130
+      },
+      listBase: {
+        clear: 'both',
+        height: '100%'
+      },
+      icon: {
+        fontSize: 25,
+        marginTop: 5
+      }
+    };
+  },
+
   handleRemoveWebhooks() {
     console.info('Data::handleDelete');
     WebhooksActions.removeWebhooks(WebhooksStore.getCheckedItems());
@@ -106,6 +122,9 @@ export default React.createClass({
     let isAnyWebhookSelected = checkedWebhooks >= 1 && checkedWebhooks < this.state.webhooks.items.length;
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
+    let styles = this.getStyles();
+    let routeName = this.getRoutes()[this.getRoutes().length - 1];
+    let isSocketView = routeName === 'sockets';
 
     return (
       <Container>
@@ -129,13 +148,17 @@ export default React.createClass({
 
         <Common.InnerToolbar title="CodeBox Sockets" />
 
-        <WebhooksList
-          name="CodeBox Sockets"
-          checkItem={this.checkWebhook}
-          isLoading={this.state.webhooks.isLoading}
-          items={this.state.webhooks.items}
-          emptyItemHandleClick={this.showWebhookDialog}
-          emptyItemContent="Create a CodeBox Socket"/>
+        <div style={[styles.listBase, isSocketView && styles.listSockets]}>
+
+          <WebhooksList
+            name="CodeBox Sockets"
+            checkItem={this.checkWebhook}
+            isLoading={this.state.webhooks.isLoading}
+            items={this.state.webhooks.items}
+            emptyItemHandleClick={this.showWebhookDialog}
+            emptyItemContent="Create a CodeBox Socket"/>
+
+        </div>
 
         </Container>
     );

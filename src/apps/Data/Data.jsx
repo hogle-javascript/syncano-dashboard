@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars, no-inline-comments */
-
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import Radium from 'radium';
 
 // Utils
 import Mixins from '../../mixins';
@@ -21,7 +20,7 @@ import Container from '../../common/Container/Container';
 import List from './DataViewsList';
 import Dialog from './DataViewDialog';
 
-export default React.createClass({
+export default Radium(React.createClass({
 
   displayName: 'Data',
 
@@ -45,6 +44,22 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     console.info('Data::componentWillUpdate');
     this.hideDialogs(nextState.dataviews.hideDialogs);
+  },
+
+  getStyles() {
+    return {
+      listSockets: {
+        marginTop: 130
+      },
+      listBase: {
+        clear: 'both',
+        height: '100%'
+      },
+      icon: {
+        color: 'green',
+        fontSize: 30
+      }
+    };
   },
 
   handleRemoveDataViews() {
@@ -101,6 +116,10 @@ export default React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
+    let routeName = this.getRoutes()[this.getRoutes().length - 1];
+    let isSocketView = routeName === 'sockets';
+
     return (
       <Container>
 
@@ -111,19 +130,24 @@ export default React.createClass({
         <Common.InnerToolbar title="Sockets">
           <MUI.IconButton
             iconClassName="synicon-socket-data"
-            iconStyle={{color: 'green', fontSize: 30}}
+            iconStyle={styles.icon}
             tooltip="Create Data Socket"
             onClick={Actions.showDialog}/>
         </Common.InnerToolbar>
 
-        <List
-          name="Data Socket"
-          checkItem={this.checkDataViewItem}
-          isLoading={this.state.dataviews.isLoading}
-          items={this.state.dataviews.items}
-          emptyItemHandleClick={this.showDataViewDialog}
-          emptyItemContent="Create a Data Socket"/>
+        <div style={[styles.listBase, isSocketView && styles.listSockets]}>
+
+          <List
+            name="Data Socket"
+            checkItem={this.checkDataViewItem}
+            isLoading={this.state.dataviews.isLoading}
+            items={this.state.dataviews.items}
+            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemContent="Create a Data Socket"/>
+
+        </div>
+
       </Container>
     );
   }
-});
+}));
