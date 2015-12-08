@@ -16,6 +16,7 @@ export default {
 
       loginPage
         .navigate()
+        .waitForElementPresent('@emailInput', 60000)
         .login(Globals.tempEmail, Globals.tempPass)
         .verifyLoginSuccessful();
     });

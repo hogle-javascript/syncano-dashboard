@@ -1,5 +1,5 @@
 export default {
-  tags: ['instance'],
+  tags: ['instances'],
   before(client) {
     const signupPage = client.page.signupPage();
     const slug = Date.now();
