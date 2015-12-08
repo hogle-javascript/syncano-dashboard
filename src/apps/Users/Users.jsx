@@ -103,6 +103,7 @@ export default React.createClass({
               checkItem={this.checkGroup}
               isLoading={this.state.groups.isLoading}
               items={this.state.groups.items}
+              hideDialogs={this.state.groups.hideDialogs}
               emptyItemHandleClick={this.showGroupDialog}
               emptyItemContent="Create a Group"/>
           </div>
@@ -112,6 +113,7 @@ export default React.createClass({
               checkItem={this.checkUser}
               isLoading={this.state.users.isLoading}
               items={this.state.users.items}
+              hideDialogs={this.state.users.hideDialogs}
               emptyItemHandleClick={this.showUserDialog}
               emptyItemContent="Create a User"/>
           </div>
