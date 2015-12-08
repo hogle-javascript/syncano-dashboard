@@ -37,7 +37,6 @@ export default Radium(React.createClass({
       justifyContent: 'flex-end',
       fontSize: 13,
       lineHeight: '16px',
-      padding: '16px 8px',
       wordBreak: 'break-all',
       color: this.props.color
     };

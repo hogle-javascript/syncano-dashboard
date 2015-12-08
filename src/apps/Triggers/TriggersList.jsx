@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   componentWillUpdate(nextProps) {
-    console.info('Tasks::componentWillUpdate');
+    console.info('Triggers::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
@@ -43,7 +43,6 @@ export default React.createClass({
   },
 
   handleItemClick(itemId) {
-    // Redirect to traces screen
     this.transitionTo('trigger-traces', {
       instanceName: this.getParams().instanceName,
       triggerId: itemId
@@ -51,7 +50,7 @@ export default React.createClass({
   },
 
   handleRemoveTriggers() {
-    console.info('Tasks::handleDelete');
+    console.info('Triggers::handleDelete');
     Actions.removeTriggers(Store.getCheckedItems());
   },
 

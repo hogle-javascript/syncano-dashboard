@@ -51,9 +51,6 @@ export default React.createClass({
   render() {
     return (
       <Container>
-
-        <Common.InnerToolbar title="Channel Sockets" />
-
         <ChannelDialog />
 
         <Common.InnerToolbar title="Channel Sockets">

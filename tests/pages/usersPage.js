@@ -23,7 +23,7 @@ module.exports = {
   commands: [usersCommands],
   elements: {
     usersListMenu: {
-      selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]/div/button',
+      selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     user: {

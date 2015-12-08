@@ -71,12 +71,12 @@ export default Radium(React.createClass({
         backLabel: 'Go back to CodeBoxes list'
       },
       trigger: {
-        route: 'tasks',
-        backLabel: 'Go back to Tasks list'
+        route: 'triggers',
+        backLabel: 'Go back to Triggers list'
       },
       schedule: {
-        route: 'tasks',
-        backLabel: 'Go back to Tasks list'
+        route: 'schedules',
+        backLabel: 'Go back to Schedules list'
       }
     }[this.props.tracesFor];
   },

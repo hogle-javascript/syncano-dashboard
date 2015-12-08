@@ -31,8 +31,13 @@ export default {
         params
       },
       {
-        label: 'Tasks',
-        route: 'tasks',
+        label: 'Schedules',
+        route: 'schedules',
+        params
+      },
+      {
+        label: 'Triggers',
+        route: 'triggers',
         params
       }
     ];

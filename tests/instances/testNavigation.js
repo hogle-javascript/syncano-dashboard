@@ -20,7 +20,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
 
@@ -39,16 +39,17 @@ module.exports = {
   'User goes to Sockets View': (client) => {
     const instancesPage = client.page.instancesPage();
     const channelsPage = client.page.channelsPage();
-    const tasksPage = client.page.tasksPage();
+    const schedulesPage = client.page.schedulesPage();
+    const triggersPage = client.page.triggersPage();
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
     socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
-    tasksPage.waitForElementPresent('@scheduleListItem');
-    tasksPage.waitForElementPresent('@triggerListItem');
+    schedulesPage.waitForElementPresent('@scheduleListItem');
+    triggersPage.waitForElementPresent('@triggerListItem');
   },
   'User goes to General view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();

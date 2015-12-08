@@ -1,21 +1,21 @@
 const utils = require('../utils');
 const globals = require('../globals');
 
-const tasksCommands = {
-  clickButton: function(button) {
+const triggersCommands = {
+  clickButton(button) {
     return this.waitForElementVisible(button)
-      .click(button);
+                .click(button);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
-      .click(field)
-      .waitForElementVisible(value)
-      .click(value);
+               .click(field)
+               .waitForElementVisible(value)
+               .click(value);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
+                .clearValue(field)
+                .setValue(field, value);
   },
   clickDropdown(element) {
     return this.waitForElementVisible(element)
@@ -25,19 +25,11 @@ const tasksCommands = {
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
-  commands: [tasksCommands],
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/triggers`,
+  commands: [triggersCommands],
   elements: {
-    schedulesListMenu: {
-      selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]/div/button',
-      locateStrategy: 'xpath'
-    },
     triggersListMenu: {
-      selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]/div/button',
-      locateStrategy: 'xpath'
-    },
-    scheduleDropdown: {
-      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]/../following-sibling::div[@class="col-menu"]/div/button',
+      selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
@@ -52,78 +44,20 @@ module.exports = {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
-    schedulesDeleteButton: {
-      selector: '//div[text()="Delete Schedule(s)"]',
-      locateStrategy: 'xpath'
-    },
     triggersDeleteButton: {
       selector: '//div[text()="Delete Trigger(s)"]',
-      locateStrategy: 'xpath'
-    },
-    schedulesEditButton: {
-      selector: '//span[text()="Edit a Schedule"]',
       locateStrategy: 'xpath'
     },
     triggersEditButton: {
       selector: '//span[text()="Edit a Trigger"]',
       locateStrategy: 'xpath'
     },
-    scheduleListItem: {
-      selector: '//div[text()="schedule_123"]',
-      locateStrategy: 'xpath'
-    },
     triggerListItem: {
       selector: '//div[text()="trigger_123"]',
       locateStrategy: 'xpath'
     },
-    addScheduleButton: {
-      selector: '//button//span[@class="synicon-camera-timer"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalTitle: {
-      selector: '//h3[text()="Create a Schedule"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalLabel: {
-      selector: '//input[@name="label"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalCodeBox: {
-      selector: '//div[@class="codebox-dropdown"]',
-      locateStrategy: 'xpath'
-    },
     addScheduleModalCodeBoxName: {
       selector: '//span[text()="codebox"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalCronTab: {
-      selector: '//div[@class="crontab-dropdown"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalCronTabName: {
-      selector: '//span[text()="Run once a year at midnight"]',
-      locateStrategy: 'xpath'
-    },
-    scheduleTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]',
-      locateStrategy: 'xpath'
-    },
-    selectScheduleTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]/preceding-sibling::div',
-      locateStrategy: 'xpath'
-    },
-    cronTabScheduleTableRow: {
-      // lolpath!
-      selector: '//div[text()="' + utils.addSuffix('schedule') +
-      '"]/parent::div/following-sibling::div[text()="*/5 * * * *"]',
-      locateStrategy: 'xpath'
-    },
-    deleteScheduleModalTitle: {
-      selector: '//h3[text()="Delete a Schedule"]',
-      locateStrategy: 'xpath'
-    },
-    editScheduleModalTitle: {
-      selector: '//h3[text()="Edit a Schedule"]',
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {
