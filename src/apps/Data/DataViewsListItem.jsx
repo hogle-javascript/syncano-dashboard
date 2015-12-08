@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link, State} from 'react-router';
 
 import Mixins from '../../mixins';
 
@@ -16,15 +17,9 @@ export default React.createClass({
   displayName: 'DataViewsListItem',
 
   mixins: [
+    State,
     Mixins.Dialogs
   ],
-
-  handleClassClick(className) {
-    let params = this.getParams();
-
-    params.className = className;
-    this.context.router.transitionTo('classes-edit', params);
-  },
 
   render() {
     let item = this.props.item;
@@ -47,7 +42,12 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-5">
-          <a onClick={this.handleClassClick.bind(this, item.class)}>{item.class}</a>
+          <Link to="classes-edit" params={{
+            instanceName: this.getParams().instanceName,
+            className: item.class
+          }}>
+            {item.class}
+          </Link>
         </Column.Desc>
         <Column.Menu>
           <MenuItem
@@ -56,7 +56,7 @@ export default React.createClass({
             primaryText="Edit a Data Endpoint" />
           <MenuItem
             className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}
+            onTouchTap={this.props.showDeleteDialog}
             primaryText="Delete a Data Endpoint" />
         </Column.Menu>
       </Common.ColumnList.Item>
