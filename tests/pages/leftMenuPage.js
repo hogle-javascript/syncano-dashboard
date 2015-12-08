@@ -39,8 +39,12 @@ export default {
       selector: '//div[@class="left-nav"]//a[text()="Users & Groups"]',
       locateStrategy: 'xpath'
     },
-    tasks: {
-      selector: '//div[@class="left-nav"]//a[text()="Tasks"]',
+    schedules: {
+      selector: '//div[@class="left-nav"]//a[text()="Schedules"]',
+      locateStrategy: 'xpath'
+    },
+    triggers: {
+      selector: '//div[@class="left-nav"]//a[text()="Triggers"]',
       locateStrategy: 'xpath'
     },
     general: {

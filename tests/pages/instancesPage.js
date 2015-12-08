@@ -30,11 +30,11 @@ export default {
   commands: [instancesCommands],
   elements: {
     instancesListMenu: {
-      selector: '//div[@class="instances-list"]/div[1]/div[@class="col-menu"]/div/button',
+      selector: '//div[@class="instances-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     instancesItemDropdown: {
-      selector: '//div[text()="Your first instance."]/following-sibling::div[@class="col-menu"]/div/button',
+      selector: '//div[text()="Your first instance."]/following-sibling::div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     instancesTable: {

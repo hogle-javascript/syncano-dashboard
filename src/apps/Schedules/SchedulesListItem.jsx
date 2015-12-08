@@ -7,7 +7,7 @@ import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
 
 // Components
 import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 

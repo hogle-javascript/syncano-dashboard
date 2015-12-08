@@ -11,7 +11,7 @@ import Mixins from '../../mixins';
 // Components
 import ListItem from './SchedulesListItem';
 import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -34,7 +34,7 @@ export default React.createClass({
   },
 
   componentWillUpdate(nextProps) {
-    console.info('Tasks::componentWillUpdate');
+    console.info('Schedules::componentWillUpdate');
     this.hideDialogs(nextProps.hideDialogs);
   },
 
@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   handleRemoveSchedules() {
-    console.info('Tasks::handleRemoveSchedules');
+    console.info('Schedules::handleRemoveSchedules');
     Actions.removeSchedules(Store.getCheckedItems());
   },
 

@@ -1,34 +1,34 @@
 const globals = require('../globals');
 const utils = require('../utils');
 
-const tasksCommands = {
-  clickButton: function(button) {
+const adminsCommands = {
+  clickButton(button) {
     return this.waitForElementVisible(button)
-      .click(button);
+               .click(button);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
-      .click(field)
-      .waitForElementVisible(value)
-      .click(value);
+               .click(field)
+               .waitForElementVisible(value)
+               .click(value);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
+               .clearValue(field)
+               .setValue(field, value);
   }
 };
 
 module.exports = {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/admins',
-  commands: [tasksCommands],
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/admins`,
+  commands: [adminsCommands],
   elements: {
     confirmButton: {
       selector: '//span[text()="Confirm"]',
       locateStrategy: 'xpath'
     },
     adminsListMenu: {
-      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class="col-menu"]/div/button',
+      selector: '//div[@class="admins-invitations-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -60,11 +60,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     adminEmailTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]',
+      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]`,
       locateStrategy: 'xpath'
     },
     selectAdminTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('admin') + '@syncano.com' + '"]/../preceding-sibling::div',
+      selector: `//div[text()="${utils.addSuffix('admin')}@syncano.com"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     adminTableRow: {

@@ -14,11 +14,12 @@ import Container from '../../common/Container/Container';
 
 // Apps
 import Data from '../Data';
-import Webhooks from '../Webhooks';
-import Tasks from '../Tasks';
 import Channels from '../Channels';
-import CodeBoxes from '../CodeBoxes';
 import Classes from '../Classes';
+import CodeBoxes from '../CodeBoxes';
+import Schedules from '../Schedules';
+import Triggers from '../Triggers';
+import Webhooks from '../Webhooks';
 
 export default React.createClass({
 
@@ -28,11 +29,11 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
-    Reflux.connect(Data.Store, 'dataviews'),
-    Reflux.connect(Webhooks.Store, 'webhooks'),
     Reflux.connect(Channels.Store, 'channels'),
-    Reflux.connect(Tasks.SchedulesStore, 'schedules'),
-    Reflux.connect(Tasks.TriggersStore, 'triggers'),
+    Reflux.connect(Data.Store, 'dataviews'),
+    Reflux.connect(Schedules.Store, 'schedules'),
+    Reflux.connect(Triggers.Store, 'triggers'),
+    Reflux.connect(Webhooks.Store, 'webhooks'),
 
     Mixins.Dialog,
     Mixins.Dialogs,
@@ -78,11 +79,11 @@ export default React.createClass({
   },
 
   showTriggerAddDialog() {
-    Tasks.TriggersActions.showDialog();
+    Triggers.Actions.showDialog();
   },
 
   showScheduleAddDialog() {
-    Tasks.SchedulesActions.showDialog();
+    Schedules.Actions.showDialog();
   },
 
   showChannelAddDialog() {
@@ -125,12 +126,12 @@ export default React.createClass({
 
   fetch() {
     Data.Actions.fetch();
-    Webhooks.Actions.fetch();
+    CodeBoxes.Actions.fetch();
     Channels.Actions.fetch();
     Classes.Actions.fetch();
-    CodeBoxes.Actions.fetch();
-    Tasks.TriggersActions.fetch();
-    Tasks.SchedulesActions.fetch();
+    Schedules.Actions.fetch();
+    Triggers.Actions.fetch();
+    Webhooks.Actions.fetch();
   },
 
   // Dialogs config
@@ -184,8 +185,8 @@ export default React.createClass({
       <Container>
         <Webhooks.Dialog />
         <Data.Dialog />
-        <Tasks.ScheduleDialog />
-        <Tasks.TriggerDialog />
+        <Schedules.Dialog />
+        <Triggers.Dialog />
         <Channels.Dialog />
 
         {this.getDialogs()}
@@ -253,7 +254,7 @@ export default React.createClass({
               emptyItemHandleClick={this.showChannelAddDialog}
               emptyItemContent="Create a Channel Socket"/>
 
-            <Tasks.TriggersList
+            <Triggers.List
               name="Trigger Sockets"
               checkItem={this.checkDataViewItem}
               isLoading={this.state.triggers.isLoading}
@@ -262,7 +263,7 @@ export default React.createClass({
               emptyItemHandleClick={this.showTriggerAddDialog}
               emptyItemContent="Create a Trigger Socket"/>
 
-            <Tasks.SchedulesList
+            <Schedules.List
               name="Schedule Sockets"
               checkItem={this.checkDataViewItem}
               isLoading={this.state.schedules.isLoading}
@@ -272,7 +273,6 @@ export default React.createClass({
               emptyItemContent="Create a Trigger Socket"/>
           </Common.Loading>
         </div>
-
       </Container>
     );
   }

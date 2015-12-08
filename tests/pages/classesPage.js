@@ -4,18 +4,18 @@ import utils from '../utils';
 const classesCommands = {
   fillInputField(field, value) {
     return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
+               .clearValue(field)
+               .setValue(field, value);
   },
   selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
-      .click(field)
-      .waitForElementVisible(value)
-      .click(value);
+               .click(field)
+               .waitForElementVisible(value)
+               .click(value);
   },
   clickButton(button) {
     return this.waitForElementVisible(button)
-      .click(button);
+               .click(button);
   },
   clickDropdown(element) {
     return this.waitForElementVisible(element)
@@ -25,15 +25,15 @@ const classesCommands = {
 };
 
 export default {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes',
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/classes`,
   commands: [classesCommands],
   elements: {
     classesListMenu: {
-      selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]/div/button',
+      selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     classItemDropdown: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../../following-sibling::div[@class="col-menu"]/div/button',
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -87,7 +87,7 @@ export default {
       locateStrategy: 'xpath'
     },
     classTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]',
+      selector: `//div[text()="${utils.addSuffix('class')}"]`,
       locateStrategy: 'xpath'
     },
     userProfileClassName: {
@@ -99,7 +99,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectClass: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../div[1]/span',
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../div[1]/span`,
       locateStrategy: 'xpath'
     },
     selectUserClass: {
@@ -114,11 +114,11 @@ export default {
       selector: '.synicon-checkbox-blank-outline'
     },
     classTableRowDescription: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]/../../following-sibling::div[1]',
+      selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     classTableName: {
-      selector: '//div[text()="' + utils.addSuffix('class') + '"]',
+      selector: `//div[text()="${utils.addSuffix('class')}"]`,
       locateStrategy: 'xpath'
     },
     inactiveDeleteButton: {

@@ -25,7 +25,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {
-      selector: '//div[@class="api-keys-list"]/div[1]/div[@class="col-menu"]/div/button',
+      selector: '//div[@class="api-keys-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
     apiKeysListItem: {
