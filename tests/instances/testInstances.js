@@ -9,6 +9,7 @@ export default {
     signupPage.setValue('@emailInput', email);
     signupPage.setValue('@passInput', slug);
     signupPage.clickSubmitButton();
+
   },
   after(client) {
     client.end();
@@ -65,7 +66,7 @@ export default {
 
     instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
     instancesPage.clickButton('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 30000);
+      .waitForElementNotVisible('@addInstanceModalTitle', 60000);
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
     instancesPage.expect.element('@instancesTableRow').to.contain.text('nightwatch_test_instance_description');
   },
@@ -93,7 +94,7 @@ export default {
       .clickButton('@emptyListItem')
       .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
       .clickButton('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle', 30000)
+      .waitForElementNotVisible('@addInstanceModalTitle', 60000)
       .waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
@@ -107,7 +108,7 @@ export default {
       instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
       instancesPage
         .clickButton('@confirmButton')
-        .waitForElementNotVisible('@addInstanceModalTitle', 30000);
+        .waitForElementNotVisible('@addInstanceModalTitle', 60000);
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },

@@ -2,7 +2,7 @@ var signupCommands = {
   clickSubmitButton: function() {
     return this.waitForElementVisible('@submitButton')
       .click('@submitButton')
-      .waitForElementNotPresent('@submitButton');
+      .waitForElementNotPresent('@submitButton', 60000);
   },
   clickTermsOfUseLink: function() {
     return this.waitForElementVisible('@termsOfUseLink')
