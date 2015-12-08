@@ -16,9 +16,6 @@ const dataCommands = {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
-  },
-  clickWebhookDropdown() {
-    return this.waitForElementVisible('@webhookDropdown').click('@webhookDropdown');
   }
 };
 
@@ -26,8 +23,8 @@ module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
   commands: [dataCommands],
   elements: {
-    webhookDropdown: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[@class="col-menu"]`,
+    codeBoxSocketDropDown: {
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../../../..//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -92,11 +89,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     webhookTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteWebhookModalTitle: {
-      selector: '//h3[text()="Delete a Webhook"]',
+      selector: '//h3[text()="Delete a CodeBox Socket"]',
       locateStrategy: 'xpath'
     },
     editWebhookModalTitle: {
