@@ -93,7 +93,7 @@ export default {
       .clickButton('@emptyListItem')
       .fillInstanceDescription('@createModalDescriptionInput', 'nightwatch_test_instance')
       .clickButton('@confirmButton')
-      .waitForElementNotVisible('@addInstanceModalTitle')
+      .waitForElementNotVisible('@addInstanceModalTitle', 30000)
       .waitForElementVisible('@instanceDescription');
   },
   'Test Create multiple Instances by FAB': (client) => {
@@ -107,7 +107,7 @@ export default {
       instancesPage.expect.element('@addInstanceModalTitle').to.be.present.after(10000);
       instancesPage
         .clickButton('@confirmButton')
-        .waitForElementNotVisible('@addInstanceModalTitle');
+        .waitForElementNotVisible('@addInstanceModalTitle', 30000);
     }
     instancesPage.expect.element('@instancesTableRow').to.be.present.after(10000);
   },
