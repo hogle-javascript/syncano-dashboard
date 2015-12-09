@@ -11,7 +11,6 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -48,8 +47,7 @@ export default React.createClass({
         <ApiKeyDialog />
 
         <Common.InnerToolbar title="API Keys">
-          <IconButton
-            iconClassName="synicon-plus"
+          <Common.Socket
             tooltip="Click here to add an API Key"
             onTouchTap={this.showApiKeyDialog}/>
         </Common.InnerToolbar>

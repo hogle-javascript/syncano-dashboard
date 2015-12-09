@@ -3,14 +3,14 @@ import {Styles} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
-  displayName: 'UsersSocket',
+  displayName: 'UserSocket',
 
   render() {
     return (
       <SocketWrapper
         {...this.props}
-        iconClassName="synicon-socket-users"
-        tooltip="Create a Group"
+        iconClassName="synicon-socket-user"
+        tooltip="Create an User"
         iconStyle={{color: Styles.Colors.deepPurple300}}/>
     );
   }

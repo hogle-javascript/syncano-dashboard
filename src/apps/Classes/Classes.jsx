@@ -11,7 +11,6 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -46,9 +45,8 @@ export default React.createClass({
     return (
       <Container>
         <Common.InnerToolbar title="Classes">
-          <IconButton
-            iconClassName="synicon-plus"
-            tooltip="Click here to add a Class"
+          <Common.Socket
+            tooltip="Create a Class"
             onTouchTap={this.redirectToAddClassView}/>
         </Common.InnerToolbar>
 

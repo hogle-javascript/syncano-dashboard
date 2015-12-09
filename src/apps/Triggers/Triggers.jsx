@@ -11,7 +11,6 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -43,9 +42,8 @@ export default React.createClass({
         <TriggerDialog />
 
         <Common.InnerToolbar title="Trigger Sockets">
-          <IconButton
-            iconClassName="synicon-arrow-up-bold"
-            tooltip="Click here to create a Trigger"
+          <Common.Socket.Trigger
+            tooltipPosition="bottom-left"
             onTouchTap={this.showTriggerDialog}/>
         </Common.InnerToolbar>
 

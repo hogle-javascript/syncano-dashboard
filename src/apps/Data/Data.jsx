@@ -6,7 +6,6 @@ import Radium from 'radium';
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import MUI from 'syncano-material-ui';
 
 // Stores and Actions
 import Actions from './DataViewsActions';
@@ -56,9 +55,8 @@ export default Radium(React.createClass({
         <DataDialog/>
 
         <Common.InnerToolbar title="Sockets">
-          <MUI.IconButton
-            iconClassName="synicon-socket-data"
-            tooltip="Create Data Socket"
+          <Common.Socket.Data
+            tooltipPosition="bottom-left"
             onClick={Actions.showDialog}/>
         </Common.InnerToolbar>
 
