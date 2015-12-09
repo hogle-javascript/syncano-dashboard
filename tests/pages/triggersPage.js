@@ -45,7 +45,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     triggersDeleteButton: {
-      selector: '//div[text()="Delete Trigger(s)"]',
+      selector: '//div[text()="Delete Trigger"]',
       locateStrategy: 'xpath'
     },
     triggersEditButton: {
@@ -65,7 +65,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addTriggerButton: {
-      selector: '//button//span[@class="synicon-arrow-up-bold"]',
+      selector: '//button//span[@class="synicon-socket-trigger"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalTitle: {
