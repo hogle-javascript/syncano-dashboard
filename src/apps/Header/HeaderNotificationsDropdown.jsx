@@ -5,8 +5,8 @@ import Radium from 'radium';
 
 import AuthActions from '../Account/AuthActions';
 import HeaderStore from './HeaderStore';
-import ProfileInvitationsStore from '../Profile/ProfileInvitationsStore';
-import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
+import ProfileInvitationsStore from '../ProfileInvitations/ProfileInvitationsStore';
+import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
 
 import MUI from 'syncano-material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';

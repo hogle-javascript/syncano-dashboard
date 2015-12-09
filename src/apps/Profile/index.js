@@ -10,9 +10,9 @@ import BillingInvoices from './ProfileBillingInvoices';
 import BillingInvoicesStore from './ProfileBillingInvoicesStore';
 import BillingPayment from './ProfileBillingPayment';
 import BillingPaymentStore from './ProfileBillingPaymentStore';
-import Invitations from './ProfileInvitations';
-import InvitationsActions from './ProfileInvitationsActions';
-import InvitationsStore from './ProfileInvitationsStore';
+import Invitations from './../ProfileInvitations/ProfileInvitations';
+import InvitationsActions from './../ProfileInvitations/ProfileInvitationsActions';
+import InvitationsStore from './../ProfileInvitations/ProfileInvitationsStore';
 import Settings from './ProfileSettings';
 import SettingsStore from './ProfileSettingsStore';
 
