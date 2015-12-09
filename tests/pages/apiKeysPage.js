@@ -21,7 +21,7 @@ module.exports = {
   commands: [apiKeysCommands],
   elements: {
     addApiKeyButton: {
-      selector: '(//span[@class="synicon-plus"])[1]',
+      selector: '//span[@class="synicon-plus-circle-outline"]',
       locateStrategy: 'xpath'
     },
     apiKeysListMenu: {
@@ -58,11 +58,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete API Key(s)"]',
+      selector: '//div[text()="Delete API Key"]',
       locateStrategy: 'xpath'
     },
     resetButton: {
-      selector: '//div[text()="Reset API Key(s)"]',
+      selector: '//div[text()="Reset API Key"]',
       locateStrategy: 'xpath'
     }
   }
