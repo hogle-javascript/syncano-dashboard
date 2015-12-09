@@ -30,6 +30,9 @@ export default React.createClass({
         padding: '0px 24px 0 24px',
         zIndex: 6
       },
+      toolbarRight: {
+        paddingTop: 4
+      },
       title: {
         paddingLeft: 36
       }
@@ -82,9 +85,11 @@ export default React.createClass({
   },
 
   renderChildren() {
+    const styles = this.getStyles();
+
     if (this.props.children) {
       return (
-        <ToolbarGroup float="right">
+        <ToolbarGroup float="right" style={styles.toolbarRight}>
           {this.props.children}
         </ToolbarGroup>
       );

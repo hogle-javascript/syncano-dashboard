@@ -6,7 +6,6 @@ import _ from 'lodash';
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
-import MUI from 'syncano-material-ui';
 
 // Components
 import Common from '../../common';
@@ -56,16 +55,6 @@ export default React.createClass({
     return _.includes(loadingStates, true);
   },
 
-  handleRemoveWebhooks() {
-    console.info('Data::handleDelete');
-    Webhooks.Actions.removeWebhooks(Webhooks.Store.getCheckedItems());
-  },
-
-  handleRemoveDataViews() {
-    console.info('Data::handleRemoveDataViews');
-    Data.Actions.removeDataViews(Data.Store.getCheckedItems());
-  },
-
   handleListTitleClick(routeName) {
     let instanceName = this.getParams().instanceName;
 
@@ -94,16 +83,8 @@ export default React.createClass({
     Data.Actions.showDialog();
   },
 
-  showDataViewEditDialog() {
-    Data.Actions.showDialog(Data.Store.getCheckedItem());
-  },
-
   showWebhookAddDialog() {
     Webhooks.Actions.showDialog();
-  },
-
-  showWebhookEditDialog() {
-    Webhooks.Actions.showDialog(Webhooks.Store.getCheckedItem());
   },
 
   checkDataViewItem(id, state) {
@@ -134,52 +115,6 @@ export default React.createClass({
     Webhooks.Actions.fetch();
   },
 
-  // Dialogs config
-  initDialogs() {
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeWebhookDialog',
-          ref: 'removeWebhookDialog',
-          title: 'Delete a Webhook',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveWebhooks
-            }
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + Webhooks.Store.getCheckedItems().length + ' Webhooks?'
-        }
-      },
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeDataViewDialog',
-          ref: 'removeDataViewDialog',
-          title: 'Delete a DataView',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
-            },
-            {
-              text: 'Confrim',
-              onClick: this.handleRemoveDataViews
-            }
-          ],
-          modal: true,
-          children: 'Do you really want to delete ' + Data.Store.getCheckedItems().length + ' Data endpoints?'
-        }
-      }
-    ];
-  },
-
   render() {
     return (
       <Container>
@@ -189,40 +124,14 @@ export default React.createClass({
         <Triggers.Dialog />
         <Channels.Dialog />
 
-        {this.getDialogs()}
-
         <Common.InnerToolbar title="Sockets">
-
-          <MUI.IconButton
-            iconClassName="synicon-socket-data"
-            iconStyle={{color: MUI.Styles.Colors.green300, fontSize: 35}}
-            tooltip="Create Data Socket"
-            onTouchTap={this.showDataViewAddDialog}/>
-
-          <MUI.IconButton
-            iconClassName="synicon-socket-codebox"
-            iconStyle={{color: MUI.Styles.Colors.red300, fontSize: 35}}
-            tooltip="Create CodeBox Socket"
-            onTouchTap={this.showWebhookAddDialog}/>
-
-          <MUI.IconButton
-            iconClassName="synicon-socket-channel"
-            iconStyle={{color: MUI.Styles.Colors.blue300, fontSize: 35}}
-            tooltip="Create Channel Socket"
-            onTouchTap={this.showChannelAddDialog}/>
-
-          <MUI.IconButton
-            iconClassName="synicon-socket-trigger"
-            iconStyle={{color: MUI.Styles.Colors.amberA200, fontSize: 35}}
-            tooltip="Create Trigger Socket"
-            onTouchTap={this.showTriggerAddDialog}/>
-
-          <MUI.IconButton
-            iconClassName="synicon-socket-schedule"
-            iconStyle={{color: MUI.Styles.Colors.lime400, fontSize: 35}}
-            tooltip="Create Schedule Socket"
-            tooltipPosition="bottom-left"
-            onTouchTap={this.showScheduleAddDialog}/>
+          <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
+          <Common.Socket.Webhook onTouchTap={this.showWebhookAddDialog}/>
+          <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
+          <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
+          <Common.Socket.Schedule
+            onTouchTap={this.showScheduleAddDialog}
+            tooltipPosition="bottom-left"/>
         </Common.InnerToolbar>
 
         <div style={{clear: 'both', height: '100%'}}>
