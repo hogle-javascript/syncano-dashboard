@@ -52,7 +52,8 @@ export default React.createClass({
         <CodeBoxDialog />
 
         <Common.InnerToolbar title="Snippets">
-          <Common.Socket.Webhook
+          <Common.Socket
+            tooltip="Create a Snippet"
             tooltipPosition="bottom-left"
             onTouchTap={this.showCodeBoxDialog}/>
         </Common.InnerToolbar>
