@@ -45,8 +45,8 @@ export default {
 
     instancesPage
       .navigate()
-      .clickButton('@selectInstance')
-      .clickButton('@deleteButton');
+      .clickDropdown('@instanceDropdown')
+      .clickButton('@deleteDropdownItem');
     client.pause(1000);
     instancesPage
       .clickButton('@confirmDeleteButton')

@@ -1,16 +1,16 @@
 import React from 'react';
 import Router from 'react-router';
 
-// Stores and Actions
 import Actions from './UsersActions';
+import Store from './UsersStore';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
 
 // Components
+import ListItem from './UsersListItem';
 import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -19,120 +19,81 @@ export default React.createClass({
   displayName: 'UsersList',
 
   mixins: [
-    Dialogs,
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    HeaderMixin,
+    Mixins.Dialog,
+    Mixins.Dialogs
   ],
 
   getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    };
+    return {};
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    });
+  componentWillUpdate(nextProps) {
+    console.info('Users::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
-  getStyles() {
-    return {
-      groupsList: {
-        margin: '0 -4px',
-        padding: 0,
-        listStyle: 'none'
-      },
-      groupsListItem: {
-        display: 'inline-block',
-        lineHeight: '24px',
-        border: '1px solid #ddd',
-        borderRadius: 2,
-        color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: 12,
-        padding: '0 4px',
-        margin: 4,
-        background: '#fff'
-      }
-    };
+  handleRemoveUsers() {
+    console.info('Users::handleRemoveUsers');
+    Actions.removeUsers(Store.getCheckedItems());
   },
 
-  // List
   handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
-  renderItemGroups(groups) {
-    let styles = this.getStyles();
+  uncheckAllUsers() {
+    console.info('Users::uncheckAllUsers');
+    Actions.uncheckAll();
+  },
 
-    if (typeof groups === 'undefined') {
-      return true;
-    }
+  initDialogs() {
+    let checkedUsers = Store.getCheckedItems();
 
-    if (groups.length === 0) {
-      return 'No group';
-    }
-
-    let itemGroups = groups.map((group) => <li style={styles.groupsListItem}>{group.label}</li>);
-
-    return (
-      <ul style={styles.groupsList}>{itemGroups}</ul>
-    );
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'removeUserDialog',
+          ref: 'removeUserDialog',
+          title: 'Delete a User',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeUserDialog')},
+            {text: 'Confirm', onClick: this.handleRemoveUsers}
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
+            this.getDialogList(checkedUsers, 'username'),
+            <Common.Loading
+              type='linear'
+              position='bottom'
+              show={this.props.isLoading}/>
+          ]
+        }
+      }
+    ];
   },
 
   renderItem(item) {
     return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.id}>
-        <Column.CheckIcon
-          id={item.id.toString()}
-          icon='account'
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          {item.username}
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
-        <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
-        <Column.Date date={item.profile.updated_at}/>
-        <Column.Date date={item.profile.created_at}/>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit-user"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a User" />
-          <MenuItem
-            className="dropdown-item-delete-user"
-            onTouchTap={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}
-            primaryText="Delete a User" />
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    let items = this.state.items.map((item) => this.renderItem(item));
-
-    if (items.length > 0) {
-      return items;
-    }
-
-    return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick.bind(null, null)}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.username, Actions.removeUsers.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
-      <div>
+      <Common.Lists.Container className="users-list">
+        {this.getDialogs()}
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
-          <Column.MenuDialog ref="menuDialog"/>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -142,14 +103,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Groups</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete User"
+                onTouchTap={this.showDialog.bind(null, 'removeUserDialog')}/>
+            </Common.Lists.Menu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
-      </div>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
+      </Common.Lists.Container>
     );
   }
 });

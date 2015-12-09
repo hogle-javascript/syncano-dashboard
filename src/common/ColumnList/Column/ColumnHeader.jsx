@@ -32,10 +32,7 @@ export default Radium(React.createClass({
       },
       link: {
         cursor: 'pointer',
-        display: 'inline-block',
-        ':hover': {
-          textDecoration: 'underline'
-        }
+        display: 'inline-block'
       }
     };
   },

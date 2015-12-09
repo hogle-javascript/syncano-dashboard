@@ -3,7 +3,11 @@ import Router from 'react-router';
 import Radium from 'radium';
 import _ from 'lodash';
 
+import Actions from './GroupsActions';
+import Store from './GroupsStore';
+
 // Utils
+import Mixins from '../../mixins';
 import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
@@ -16,23 +20,19 @@ export default Radium(React.createClass({
   displayName: 'GroupsList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
-    Router.Navigation
+    Router.Navigation,
+    HeaderMixin,
+    Mixins.Dialogs
   ],
 
   getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    };
+    return {};
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    });
+  componentWillUpdate(nextProps) {
+    console.info('Users::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
   getStyles() {
@@ -47,6 +47,52 @@ export default Radium(React.createClass({
     };
   },
 
+  handleRemoveGroups() {
+    console.info('Users::handleDeleteGroups');
+    Actions.removeGroups(Store.getCheckedItems());
+  },
+
+  handleCancelGroupsDialog() {
+    Actions.uncheckAll();
+    this.refs.removeGroupDialog.dismiss();
+  },
+
+  showGroupDeleteDialog(group) {
+    group.checked = true;
+    this.showDialog('removeGroupDialog');
+  },
+
+  initDialogs() {
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'removeGroupDialog',
+          ref: 'removeGroupDialog',
+          title: 'Delete a Group',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancelGroupsDialog
+            },
+            {
+              text: 'Confirm',
+              onClick: this.handleRemoveGroups
+            }
+          ],
+          modal: true,
+          children: [
+            'Do you really want to delete this Group?',
+            <Common.Loading
+              type='linear'
+              position='bottom'
+              show={this.props.isLoading}/>
+          ]
+        }
+      }
+    ];
+  },
+
   renderItemIconMenuButton() {
     return (
       <MUI.IconButton
@@ -58,10 +104,13 @@ export default Radium(React.createClass({
 
   renderItemIconMenu(item) {
     return (
-      <MUI.IconMenu iconButtonElement={this.renderItemIconMenuButton()}>
+      <MUI.IconMenu
+        iconButtonElement={this.renderItemIconMenuButton()}
+        anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
-        <MenuItem onTouchTap={this.props.handleGroupDelete.bind(null, item)}>Delete</MenuItem>
+        <MenuItem onTouchTap={this.showGroupDeleteDialog.bind(null, item)}>Delete</MenuItem>
       </MUI.IconMenu>
     );
   },
@@ -85,10 +134,10 @@ export default Radium(React.createClass({
 
   renderList() {
     let styles = this.getStyles();
-    let items = this.state.items;
+    let items = this.props.items;
     let itemsCount = items.length;
     let indexOfListItem = itemsCount - 1;
-    let listItems = this.state.items.map((item, index) => {
+    let listItems = items.map((item, index) => {
       if (index < indexOfListItem) {
         return [
           this.renderItem(item),
@@ -118,6 +167,7 @@ export default Radium(React.createClass({
   render() {
     return (
       <div>
+        {this.getDialogs()}
         <Common.ColumnList.Header>
           <Common.ColumnList.Column.ColumnHeader
             primary={true}
@@ -126,7 +176,7 @@ export default Radium(React.createClass({
             {this.props.name}
           </Common.ColumnList.Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Loading show={this.state.isLoading}>
+        <Common.Loading show={this.props.isLoading}>
           {this.renderList()}
         </Common.Loading>
       </div>

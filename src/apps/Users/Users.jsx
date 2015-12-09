@@ -32,7 +32,6 @@ export default React.createClass({
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
     Mixins.Dialog,
-    Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
   ],
@@ -43,48 +42,8 @@ export default React.createClass({
     GroupsActions.fetch();
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    console.info('Users::componentWillUpdate');
-    this.hideDialogs(nextState.users.hideDialogs || nextState.groups.hideDialogs);
-  },
-
-  handleRemoveGroups() {
-    console.info('Users::handleDeleteGroups');
-    GroupsActions.removeGroups(GroupsStore.getCheckedItems());
-  },
-
-  handleRemoveUsers() {
-    console.info('Users::handleRemoveUsers');
-    Actions.removeUsers(Store.getCheckedItems());
-  },
-
   handleGroupClick(group) {
     GroupsActions.setActiveGroup(group);
-  },
-
-  handleCancelGroupsDialog() {
-    this.uncheckAllGroups();
-    this.refs.removeGroupDialog.dismiss();
-  },
-
-  uncheckAllUsers() {
-    console.info('Users::uncheckAllUsers');
-    Actions.uncheckAll();
-  },
-
-  uncheckAllGroups() {
-    console.info('Users::uncheckAllGroups');
-    GroupsActions.uncheckAll();
-  },
-
-  selectAllUsers() {
-    console.info('Users::selectAllUsers');
-    Actions.selectAll();
-  },
-
-  selectAllGroups() {
-    console.info('Users::selectAllGroups');
-    GroupsActions.selectAll();
   },
 
   checkUser(id, state) {
@@ -104,10 +63,6 @@ export default React.createClass({
     /* eslint-enable */
   },
 
-  showUserEditDialog() {
-    Actions.showDialog(Store.getCheckedItem());
-  },
-
   showGroupDialog() {
     GroupsActions.showDialog();
   },
@@ -116,107 +71,23 @@ export default React.createClass({
     GroupsActions.showDialog(group || GroupsStore.getCheckedItem());
   },
 
-  showGroupDeleteDialog(group) {
-    group.checked = true;
-    this.showDialog('removeGroupDialog');
-  },
-
-  initDialogs() {
-    let checkedUsers = Store.getCheckedItems();
-
-    return [
-      // Groups
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeGroupDialog',
-          ref: 'removeGroupDialog',
-          title: 'Delete a Group',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancelGroupsDialog
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveGroups
-            }
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete this Group?',
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.state.groups.isLoading}/>
-          ]
-        }
-      },
-
-      // Users
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeUserDialog',
-          ref: 'removeUserDialog',
-          title: 'Delete a User',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeUserDialog')},
-            {text: 'Confirm', onClick: this.handleRemoveUsers}
-          ],
-          modal: true,
-          children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
-            this.getDialogList(checkedUsers, 'username'),
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.state.users.isLoading}/>
-          ]
-        }
-      }
-    ];
-  },
-
   render() {
-    let checkedUsers = Store.getNumberOfChecked();
-    let isAnyUserSelected = checkedUsers >= 1 && checkedUsers < (this.state.users.items.length);
     let activeGroup = GroupsStore.getActiveGroup();
-    let markedIcon = 'synicon-checkbox-multiple-marked-outline';
-    let blankIcon = 'synicon-checkbox-multiple-blank-outline';
 
     return (
       <Container>
-        {this.getDialogs()}
         <UserDialog />
         <GroupDialog />
 
-        <Common.InnerToolbar title="Users & Groups"/>
+        <Common.InnerToolbar title="Users & Groups">
+          <Common.Socket.Users
+            iconClassName="synicon-socket-user"
+            onTouchTap={this.showGroupDialog}/>
+          <Common.Socket.User
+            tooltipPosition="bottom-left"
+            onTouchTap={this.showUserDialog.bind(null, null)}/>
+        </Common.InnerToolbar>
 
-        <Common.Show if={checkedUsers > 0}>
-          <Common.Fab position="top">
-            <Common.Fab.TooltipItem
-              tooltip={isAnyUserSelected ? 'Click here to select all' : 'Click here to unselect all'}
-              mini={true}
-              onClick={isAnyUserSelected ? this.selectAllUsers : this.uncheckAllUsers}
-              iconClassName={isAnyUserSelected ? markedIcon : blankIcon}/>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to delete Users"
-              mini={true}
-              onClick={this.showDialog.bind(null, 'removeUserDialog')}
-              iconClassName="synicon-delete"/>
-          </Common.Fab>
-        </Common.Show>
-        <Common.Fab>
-          <Common.Fab.TooltipItem
-            tooltip="Click here to create a User account"
-            onClick={this.showUserDialog.bind(null, null)}
-            iconClassName="synicon-account-plus"/>
-          <Common.Fab.TooltipItem
-            tooltip="Click here to create a Group"
-            onClick={this.showGroupDialog}
-            iconClassName="synicon-account-multiple-plus"/>
-        </Common.Fab>
         <Common.Lists.Container className="row">
           <div className="col-lg-8">
             <GroupsList
@@ -229,6 +100,7 @@ export default React.createClass({
               checkItem={this.checkGroup}
               isLoading={this.state.groups.isLoading}
               items={this.state.groups.items}
+              hideDialogs={this.state.groups.hideDialogs}
               emptyItemHandleClick={this.showGroupDialog}
               emptyItemContent="Create a Group"/>
           </div>
@@ -238,6 +110,7 @@ export default React.createClass({
               checkItem={this.checkUser}
               isLoading={this.state.users.isLoading}
               items={this.state.users.items}
+              hideDialogs={this.state.users.hideDialogs}
               emptyItemHandleClick={this.showUserDialog}
               emptyItemContent="Create a User"/>
           </div>

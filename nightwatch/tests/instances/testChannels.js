@@ -1,6 +1,6 @@
 module.exports = {
   tags: ['channels'],
-  before: function(client) {
+  before: (client) => {
     var loginPage = client.page.loginPage();
     loginPage.navigate();
     loginPage.typeEmail();
@@ -9,10 +9,10 @@ module.exports = {
     loginPage.verifyLoginSuccessful();
 
   },
-  after: function(client) {
+  after: (client) => {
     client.end();
   },
-  'User goes to Channels View' : function(client) {
+  'User goes to Channels View': (client) => {
     var instancesPage = client.page.instancesPage();
     instancesPage.clickButton('@instancesTableRow');
     

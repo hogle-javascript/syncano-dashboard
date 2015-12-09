@@ -15,7 +15,7 @@ module.exports = {
   after(client) {
     client.end();
   },
-  'Administrator adds a Group'(client) {
+  'Administrator adds a Group': (client) => {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
 
@@ -28,7 +28,7 @@ module.exports = {
       .clickButton('@confirm')
       .waitForElementPresent('@groupTableRow');
   },
-  'Administrator deletes a Group'(client) {
+  'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
 
     usersPage
@@ -45,34 +45,35 @@ module.exports = {
       .clickButton('@confirm')
       .waitForElementVisible('@groupList')
       .waitForElementNotPresent('@groupTableRowDropdown');
-  }
-  // 'Administrator adds a User' : function(client) {
+  },
+  // 'Administrator adds a User': (client) => {
   //   const usersPage = client.page.usersPage();
   //   const suffix = utils.addSuffix('user');
-
-  //   usersPage.navigate();
-  //   usersPage.waitForElementVisible('@groupEditButton');
-  //   usersPage.waitForElementVisible('@userList')
-  //   usersPage.clickButton('@addUserButton');
-  //   usersPage.waitForElementPresent('@addUserModalTitle');
-  //   usersPage.fillInputField('@username', suffix);
-  //   usersPage.fillInputField('@password', suffix);
-  //   usersPage.clickButton('@confirm');
-  //   usersPage.waitForElementPresent('@userTableRow');
+  //
+  //   usersPage
+  //     .navigate()
+  //     .waitForElementVisible('@groupEditButton')
+  //     .waitForElementVisible('@userList')
+  //     .clickButton('@addUserButton')
+  //     .waitForElementPresent('@addUserModalTitle')
+  //     .fillInputField('@username', suffix)
+  //     .fillInputField('@password', suffix)
+  //     .clickButton('@confirm')
+  //     .waitForElementPresent('@userTableRow');
   // },
-  // 'Administrator deletes a User' : function(client) {
+  // 'Administrator deletes a User': (client) => {
   //   const usersPage = client.page.usersPage();
-
-  //   usersPage.navigate();
-  //   usersPage.waitForElementVisible('@groupEditButton');
-  //   usersPage.waitForElementVisible('@userList')
-  //   usersPage.clickButton('@selectUserTableRow');
-  //   client.pause(1000);
-  //   usersPage.clickButton('@deleteButton');
-  //   client.pause(1000);
-  //   usersPage.waitForElementPresent('@deleteUserModalTitle');
-  //   client.pause(1000);
-  //   usersPage.clickButton('@confirm');
-  //   usersPage.waitForElementNotPresent('@userTableRow');
+  //
+  //   usersPage
+  //     .navigate()
+  //     .waitForElementVisible('@groupEditButton')
+  //     .waitForElementVisible('@userList')
+  //     .clickButton('@selectUserTableRow')
+  //     .clickButton('@usersListMenu')
+  //     .clickButton('@deleteButton')
+  //     .waitForElementPresent('@deleteUserModalTitle')
+  //     .clickButton('@confirm')
+  //     .waitForElementNotPresent('@userTableRow');
   // }
-}
+};
+

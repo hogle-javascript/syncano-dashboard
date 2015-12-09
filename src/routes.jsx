@@ -24,16 +24,16 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
+import CodeBox from './apps/CodeBox';
 import CodeBoxes from './apps/CodeBoxes';
 import Webhooks from './apps/Webhooks';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
-import Tasks from './apps/Tasks';
 import Users from './apps/Users/Users';
 import Channels from './apps/Channels/Channels';
 import Sockets from './apps/Sockets';
-import Triggers from './apps/Tasks/Triggers';
-import Schedules from './apps/Tasks/Schedules';
+import Triggers from './apps/Triggers';
+import Schedules from './apps/Schedules';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -180,23 +180,23 @@ export default (
           path="codeboxes">
           <Route
             name="codebox"
-            handler={CodeBoxes.Details}
+            handler={CodeBox}
             path=":codeboxId">
             <Route
               name="codebox-traces"
-              handler={CodeBoxes.Traces}
+              handler={CodeBox.Traces}
               path="traces"
               />
             <Route
               name="codebox-edit"
-              handler={CodeBoxes.Edit}
+              handler={CodeBox.Edit}
               path="edit"
               />
             <Route
               name="codebox-config"
-              handler={CodeBoxes.Config}
+              handler={CodeBox.Config}
               path="config"/>
-            <DefaultRoute handler={CodeBoxes.Edit}/>
+            <DefaultRoute handler={CodeBox.Edit}/>
           </Route>
           <DefaultRoute handler={CodeBoxes}/>
         </Route>
@@ -213,41 +213,33 @@ export default (
           path="objects"
           />
 
-        {/* Tasks */}
-        <Route
-          name="tasks"
-          path="tasks"
-          >
-
-          <Route
-            name='schedule-traces'
-            handler={Tasks.ScheduleTraces}
-            path='schedule/:scheduleId/traces'
-            />
-
-          <Route
-            name='trigger-traces'
-            handler={Tasks.TriggerTraces}
-            path='trigger/:triggerId/traces'
-            />
-
-          <DefaultRoute handler={Tasks}/>
-
-        </Route>
-
         {/* Triggers */}
         <Route
           name="triggers"
-          handler={Triggers}
           path="triggers"
+          >
+          <Route
+            name='trigger-traces'
+            handler={Triggers.Traces}
+            path=':triggerId/traces'
           />
+
+          <DefaultRoute handler={Triggers}/>
+        </Route>
 
         {/* Schedules */}
         <Route
           name="schedules"
-          handler={Schedules}
           path="schedules"
+          >
+          <Route
+            name='schedule-traces'
+            handler={Schedules.Traces}
+            path=':scheduleId/traces'
           />
+
+          <DefaultRoute handler={Schedules}/>
+        </Route>
 
         {/* Channels */}
         <Route

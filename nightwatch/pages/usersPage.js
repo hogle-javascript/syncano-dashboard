@@ -22,12 +22,16 @@ module.exports = {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/users',
   commands: [usersCommands],
   elements: {
+    usersListMenu: {
+      selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]//button',
+      locateStrategy: 'xpath'
+    },
     user: {
       selector: '//div[text()="username"]',
       locateStrategy: 'xpath'
     },
     addUserButton: {
-      selector: '//span[@class="synicon-account-plus"]',
+      selector: '//span[@class="synicon-socket-user"]',
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
@@ -55,7 +59,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//span[@class="synicon-delete"]',
+      selector: '//div[text()="Delete User(s)"]',
       locateStrategy: 'xpath'
     },
     deleteUserModalTitle: {
@@ -63,7 +67,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: '//span[@class="synicon-account-multiple-plus"]',
+      selector: '//span[@class="synicon-socket-users"]',
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {

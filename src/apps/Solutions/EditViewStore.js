@@ -24,7 +24,7 @@ export default Reflux.createStore({
         stars_count: 0,
         tags: []
       },
-      versions: null,
+      versions: [],
       isLoading: true
     };
   },

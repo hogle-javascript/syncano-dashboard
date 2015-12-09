@@ -49,7 +49,7 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onSelectAllAdmins() {
+  onSelectAll() {
     console.debug('AdminsStore::onSelectAllAdmins');
     this.data.items.forEach((item) => {
       let instanceOwnerId = SessionStore.getInstance().owner.id;

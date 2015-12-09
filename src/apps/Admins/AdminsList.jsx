@@ -1,169 +1,116 @@
 import React from 'react';
 import Router from 'react-router';
-import _ from 'lodash';
+
+import Actions from './AdminsActions';
+import Store from './AdminsStore';
 
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
-
-// Stores and Actions
-import SessionStore from '../Session/SessionStore';
-import AdminsInvitationsActions from './AdminsInvitationsActions';
-import AdminsActions from './AdminsActions';
+import Mixins from '../../mixins';
 
 // Components
+import ListItem from './AdminsListItem';
 import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
+
+let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
   displayName: 'AdminsList',
 
   mixins: [
-    HeaderMixin,
     Router.State,
     Router.Navigation,
-    Dialogs
+    HeaderMixin,
+    Mixins.Dialog,
+    Mixins.Dialogs
   ],
 
   getInitialState() {
-    return {
-      items: this.props.items,
-      isLoading: this.props.isLoading
-    };
+    return {};
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      items: nextProps.items,
-      isLoading: nextProps.isLoading
-    });
+  componentWillUpdate(nextProps) {
+    console.info('Admins::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
   },
 
-  getStyles() {
-    return {
-      ownerLabel: {
-        color: 'rgba(0, 0, 0, 0.54)',
-        fontSize: 14,
-        marginTop: 4
-      }
-    };
-  },
-
-  getAdminInvitationDropdown(item) {
-    let removeInvitation = AdminsInvitationsActions.removeInvitation.bind(null, [item]);
-    let resendInvitation = AdminsInvitationsActions.resendInvitation.bind(null, [item]);
-
-    return (
-      <Common.ColumnList.Column.Menu>
-        <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.email, removeInvitation)}
-          className="dropdown-item-remove-invitation"
-          primaryText="Remove Invitation" />
-        <MenuItem
-          onTouchTap={this.showMenuDialog.bind(null, item.email, resendInvitation)}
-          className="dropdown-item-resend-invitation"
-          primaryText="Resend Invitation" />
-      </Common.ColumnList.Column.Menu>
-    );
-  },
-
-  getAdminDropdown(item) {
-    let removeAdmin = AdminsActions.removeAdmins.bind(null, [item]);
-
-    return (
-      <Common.ColumnList.Column.Menu>
-        <MenuItem
-          className="dropdown-item-delete-admin"
-          onTouchTap={this.showMenuDialog.bind(null, item.email, removeAdmin)}
-          primaryText="Delete Admin" />
-        <MenuItem
-          className="dropdown-item-edit-admin"
-          onTouchTap={AdminsActions.showDialog.bind(null, item)}
-          primaryText="Edit Admin" />
-      </Common.ColumnList.Column.Menu>
-    );
-  },
-
-  getDropdownMenu(item) {
-    let isInvitation = _.has(item, 'key');
-
-    if (isInvitation) {
-      return this.getAdminInvitationDropdown(item);
-    }
-
-    return this.getAdminDropdown(item);
+  handleDeleteAdmin() {
+    console.info('Admins::handleDelete');
+    Actions.removeAdmins(Store.getCheckedItems());
   },
 
   handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+    Actions.checkItem(id, state);
+  },
+
+  initDialogs() {
+    let checkedAdmins = Store.getCheckedItems();
+
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'deleteAdminDialog',
+          ref: 'deleteAdminDialog',
+          title: 'Remove an Administrator',
+          actions: [
+            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteAdminDialog')},
+            {text: 'Confirm', onClick: this.handleDeleteAdmin}
+          ],
+          modal: true,
+          avoidResetState: true,
+          children: [
+            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            this.getDialogList(checkedAdmins, 'email'),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.props.isLoading}/>
+          ]
+        }
+      }
+    ];
   },
 
   renderItem(item) {
-    let styles = this.getStyles();
-    let isOwner = item.id === SessionStore.getInstance().owner.id;
-
     return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.id}>
-        <Common.ColumnList.Column.CheckIcon
-          className="col-xs-25 col-md-20"
-          id={item.id.toString()}
-          icon='account'
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}
-          checkable={!isOwner}>
-          <div>
-            <div>{item.email}</div>
-            <div style={styles.ownerLabel}>
-              {isOwner ? 'Owner (cannot be edited)' : null}
-            </div>
-          </div>
-        </Common.ColumnList.Column.CheckIcon>
-        <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
-        <Common.ColumnList.Column.Date date={item.created_at}/>
-        {this.getDropdownMenu(item)}
-      </Common.ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    let items = this.state.items || [];
-
-    if (items.length > 0) {
-      items = items.map((item) => this.renderItem(item));
-
-      return items;
-    }
-    return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.email, Actions.removeAdmins.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
-      <Common.Lists.Container className="admin-list">
-        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+      <Common.Lists.Container className="admins-list">
+        {this.getDialogs()}
+        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
-          <Common.ColumnList.Column.ColumnHeader
+          <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
             className="col-xs-25 col-md-20">
             {this.props.name}
-          </Common.ColumnList.Column.ColumnHeader>
-          <Common.ColumnList.Column.ColumnHeader columnName="DESC">Role</Common.ColumnList.Column.ColumnHeader>
-          <Common.ColumnList.Column.ColumnHeader columnName="DATE">Created</Common.ColumnList.Column.ColumnHeader>
-          <Common.ColumnList.Column.ColumnHeader columnName="MENU"/>
+          </Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader columnName="MENU">
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Admin"
+                onTouchTap={this.showDialog.bind(null, 'deleteAdminDialog')}/>
+            </Common.Lists.Menu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.state.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

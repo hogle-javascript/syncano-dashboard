@@ -21,7 +21,7 @@ export default {
 
     classesPage
       .navigate()
-      .clickButton('@fab')
+      .clickButton('@addClassButton')
       .fillInputField('@createModalNameInput', className)
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description')
       .fillInputField('@createModalFieldNameInput', 'schemaName')
@@ -38,8 +38,7 @@ export default {
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .clickDropdown('@classItemDropdown');
+    classesPage.clickDropdown('@classItemDropdown');
     client.pause(1000);
     classesPage.clickButton('@editDropdownItem')
       .waitForElementNotVisible('@editDropdownItem')
@@ -69,9 +68,11 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickButton('@selectUserClass')
-      .waitForElementVisible('@inactiveDeleteButton')
-      .clickButton('@checkboxSelected');
+      .clickDropdown('@userClassDropDown')
+      .waitForElementVisible('@inactiveDeleteButton');
+
+  // assert that Delete Class element is greyed out
+    classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', 'color: rgba(0, 0, 0, 0.298039)');
   },
   'Test Admin selects/deselects class': (client) => {
     const classesPage = client.page.classesPage();

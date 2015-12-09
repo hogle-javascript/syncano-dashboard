@@ -4,11 +4,11 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
+import Actions from './AdminsInvitationsActions';
 import SessionActions from '../Session/SessionActions';
-import AdminsInvitationsActions from './AdminsInvitationsActions';
 
 export default Reflux.createStore({
-  listenables: AdminsInvitationsActions,
+  listenables: Actions,
   mixins: [
     Mixins.CheckListStore,
     Mixins.StoreForm,
@@ -36,10 +36,10 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('AdminsInvitationsStore::refreshData');
-    AdminsInvitationsActions.fetchInvitations();
+    Actions.fetchInvitations();
   },
 
-  selectAllAdminsInvitations() {
+  selectAll() {
     this.getPendingInvitations().forEach((item) => item.checked = true);
     this.trigger(this.data);
   },
@@ -67,7 +67,7 @@ export default Reflux.createStore({
   onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
     this.data.items = Object.keys(items).map((item) => items[item]);
-    AdminsInvitationsActions.setInvitations(items);
+    Actions.setInvitations(items);
   },
 
   onRemoveInvitationCompleted() {
@@ -78,6 +78,6 @@ export default Reflux.createStore({
   onResendInvitationCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
-    AdminsInvitationsActions.uncheckAll();
+    Actions.uncheckAll();
   }
 });

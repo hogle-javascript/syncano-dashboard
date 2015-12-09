@@ -16,7 +16,7 @@ module.exports = {
     client.end();
   },
 
-  'Test Add Api Key': function AddApiKey(client) {
+  'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     const description = utils.addSuffix('api_key_description');
 
@@ -28,37 +28,40 @@ module.exports = {
       .waitForModalToClose()
       .waitForElementVisible('@apiKeysTableRow');
   },
-  'Test Reset Api Key': function ResetApiKey(client) {
+  'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
     let apiKeyValue = null;
 
-    apiKeysPage.navigate()
+    apiKeysPage
+      .navigate()
       .waitForElementPresent('@apiKeyValue');
 
     const apiKeyValueElement = apiKeysPage.elements.apiKeyValue.selector;
 
-    client.element('xpath', apiKeyValueElement, function(result) {
-      client.elementIdText(result.value.ELEMENT, function(text) {
-        apiKeyValue = text.value;
-      });
-    })
-    apiKeysPage.clickButton('@selectApiKey')
+    client.element('xpath', apiKeyValueElement, (result) => {
+      client.elementIdText(result.value.ELEMENT, (text) => apiKeyValue = text.value);
+    });
+    apiKeysPage
+      .clickButton('@selectApiKey')
+      .clickButton('@apiKeysListMenu')
       .clickButton('@resetButton');
     client.pause(1000);
-    apiKeysPage.clickButton('@confirmButton')
+    apiKeysPage
+      .clickButton('@confirmButton')
       .waitForElementPresent('@selectApiKey');
     client.pause(1000)
-      .element('xpath', apiKeyValueElement, function(result) {
-        client.elementIdText(result.value.ELEMENT, function(text) {
+      .element('xpath', apiKeyValueElement, (result) => {
+        client.elementIdText(result.value.ELEMENT, (text) => {
           client.assert.notEqual(text.value, apiKeyValue);
         });
       })
   },
-  'Test Delete Api Key': function DeleteApiKey(client) {
+  'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
 
     apiKeysPage.navigate()
       .clickButton('@selectApiKey')
+      .clickButton('@apiKeysListMenu')
       .clickButton('@deleteButton');
     client.pause(1000);
     apiKeysPage.clickButton('@confirmButton');

@@ -1,16 +1,17 @@
 import React from 'react';
 import Router from 'react-router';
 
-// Stores and Actions
-import Actions from './DataViewsActions';
-
 // Utils
 import HeaderMixin from '../Header/HeaderMixin';
-import {Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
+
+// Stores and Actions
+import Actions from './DataViewsActions';
+import Store from './DataViewsStore';
 
 // Components
+import ListItem from './DataViewsListItem';
 import Common from '../../common';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -19,77 +20,71 @@ export default React.createClass({
   displayName: 'DataViewsList',
 
   mixins: [
-    Dialogs,
+    Mixins.Dialog,
+    Mixins.Dialogs,
     HeaderMixin,
     Router.State,
     Router.Navigation
   ],
 
-  // List
-  handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+  getInitialState() {
+    return {};
   },
 
-  handleClassClick(className) {
-    let params = this.getParams();
+  componentWillUpdate(nextProps) {
+    console.info('Data::componentWillUpdate');
+    this.hideDialogs(nextProps.hideDialogs);
+  },
 
-    params.className = className;
-    this.context.router.transitionTo('classes-edit', params);
+  handleItemIconClick(id, state) {
+    Actions.checkItem(id, state);
+  },
+
+  handleRemoveDataViews() {
+    console.info('Data::handleRemoveDataViews');
+    Actions.removeDataViews(Store.getCheckedItems());
+  },
+
+  initDialogs() {
+    return [
+      {
+        dialog: Common.Dialog,
+        params: {
+          key: 'removeDataViewDialog',
+          ref: 'removeDataViewDialog',
+          title: 'Delete a DataView',
+          actions: [
+            {
+              text: 'Cancel',
+              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
+            },
+            {
+              text: 'Confrim',
+              onClick: this.handleRemoveDataViews
+            }
+          ],
+          modal: true,
+          children: `Do you really want to delete ${Store.getCheckedItems().length} Data endpoints?`
+        }
+      }
+    ];
   },
 
   renderItem(item) {
     return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.name}>
-        <Column.CheckIcon
-          className="col-xs-12"
-          id={item.name}
-          icon='table'
-          background={Common.Color.getColorByName('blue', 'xlight')}
-          checked={item.checked}
-          handleIconClick={this.handleItemIconClick}>
-          <Common.ColumnList.Link
-            name={item.name}
-            link={item.links.self}
-            tooltip="Copy Data Socket url"/>
-        </Column.CheckIcon>
-        <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5">
-          <a onClick={this.handleClassClick.bind(this, item.class)}>{item.class}</a>
-        </Column.Desc>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Data Endpoint" />
-          <MenuItem
-            className="dropdown-item-delete"
-            onTouchTap={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}
-            primaryText="Delete a Data Endpoint" />
-        </Column.Menu>
-      </Common.ColumnList.Item>
-    );
-  },
-
-  renderList() {
-    let items = this.props.items.map((item) => this.renderItem(item));
-
-    if (items.length > 0) {
-      items.reverse();
-      return items;
-    }
-
-    return (
-      <Common.ColumnList.EmptyItem handleClick={this.props.emptyItemHandleClick}>
-        {this.props.emptyItemContent}
-      </Common.ColumnList.EmptyItem>
+      <ListItem
+        onIconClick={this.handleItemIconClick}
+        item={item}
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}/>
     );
   },
 
   render() {
+    let checkedItems = Store.getNumberOfChecked();
+
     return (
       <Common.Lists.Container>
+        {this.getDialogs()}
         <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
@@ -109,13 +104,19 @@ export default React.createClass({
             className="col-xs-5">
             Class
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="MENU"/>
+          <Column.ColumnHeader columnName="MENU">
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Data Socket"
+                onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
+            </Common.Lists.Menu>
+          </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

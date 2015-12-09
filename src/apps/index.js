@@ -9,10 +9,11 @@ import DataObjects from './DataObjects';
 import Header from './Header';
 import Instances from './Instances';
 import Profile from './Profile';
+import Schedules from './Schedules';
 import Session from './Session';
 import Solutions from './Solutions';
-import Tasks from './Tasks';
 import Traces from './Traces';
+import Triggers from './Triggers';
 import Users from './Users';
 
 export default {
@@ -27,9 +28,10 @@ export default {
   Header,
   Instances,
   Profile,
+  Schedules,
   Session,
   Solutions,
-  Tasks,
   Traces,
+  Triggers,
   Users
 };
