@@ -12,7 +12,7 @@ export default React.createClass({
       <MenuItem
         {...other}
         primaryText={pluralize(primaryText, checkedItemsCount)}
-        disabled={!checkedItemsCount}/>
+        disabled={this.props.disabled || !checkedItemsCount}/>
     );
   }
 });
