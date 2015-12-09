@@ -22,20 +22,13 @@ export default Radium(React.createClass({
   getDefaultProps() {
     return {
       color: 'black',
+      icon: ColumnListConstans.DEFAULT_ICON,
+      background: ColumnListConstans.DEFAULT_BACKGROUND,
       hoverColor: MUI.Styles.Colors.blue600,
       className: ColumnListConstans.DEFAULT_CLASSNAME.CHECK_ICON,
-      checkable: true
+      checkable: true,
+      checked: false
     };
-  },
-
-  getInitialState() {
-    return {
-      checked: this.props.checked
-    };
-  },
-
-  componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
   },
 
   getStyles() {
@@ -88,9 +81,9 @@ export default Radium(React.createClass({
         style={styles.container}>
         <CheckIcon
           id={this.props.id}
-          icon={this.props.icon || ColumnListConstans.DEFAULT_ICON}
-          background={this.props.background || ColumnListConstans.DEFAULT_BACKGROUND}
-          checked={this.state.checked}
+          icon={this.props.icon}
+          background={this.props.background}
+          checked={this.props.checked}
           handleClick={this.handleIconClick}
           checkable={this.props.checkable}/>
 

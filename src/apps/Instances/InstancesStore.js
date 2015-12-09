@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -154,7 +155,12 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
-    this.data.items = Object.keys(instances).map((key) => instances[key]);
+    this.data.items = Object.keys(instances).map((key) => {
+      if (_.isEmpty(instances[key].metadata)) {
+        instances[key].metadata = {color: 'indigo', icon: 'cloud'};
+      }
+      return instances[key];
+    });
     this.trigger(this.data);
   },
 

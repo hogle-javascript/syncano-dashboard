@@ -130,15 +130,15 @@ export default Reflux.createStore({
   getClickedItemIconColor() {
     let clickedItem = this.getClickedItem();
 
-    if (!clickedItem || !clickedItem.metadata) {
+    if (!clickedItem) {
       return {
         color: 'indigo',
         icon: 'cloud'
       };
     }
     return {
-      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'indigo',
-      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'cloud'
+      color: clickedItem.metadata.color,
+      icon: clickedItem.metadata.icon
     };
   },
 
@@ -160,7 +160,12 @@ export default Reflux.createStore({
   },
 
   setClasses(items) {
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = Object.keys(items).map((key) => {
+      if (_.isEmpty(items[key].metadata)) {
+        items[key].metadata = {color: 'indigo', icon: 'cloud'};
+      }
+      return items[key];
+    });
 
     if (this.data.items.length > 0) {
       this.data.items = this.data.items.map(this.setProtectedFromDeleteClasses);

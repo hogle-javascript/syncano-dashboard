@@ -1,6 +1,6 @@
 export default {
-  DEFAULT_BACKGROUND: 'green',
-  DEFAULT_ICON: 'folder',
+  DEFAULT_BACKGROUND: 'indigo',
+  DEFAULT_ICON: 'cloud',
   DEFAULT_CLASSNAME: {
     CHECK_ICON: 'col-xs-10',
     DATE: 'col-date',
