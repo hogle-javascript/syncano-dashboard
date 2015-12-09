@@ -3,7 +3,8 @@ import {Styles} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
-  displayName: 'WebhokSocket',
+
+  displayName: 'WebhookSocket',
 
   render() {
     return (

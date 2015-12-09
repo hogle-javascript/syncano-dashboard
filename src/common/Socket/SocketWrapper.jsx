@@ -2,6 +2,7 @@ import React from 'react';
 import {IconButton, Utils} from 'syncano-material-ui';
 
 export default React.createClass({
+
   displayName: 'SocketWrapper',
 
   getStyles() {

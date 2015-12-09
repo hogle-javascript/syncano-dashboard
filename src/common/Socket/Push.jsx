@@ -3,6 +3,7 @@ import {Styles} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
+
   displayName: 'PushSocket',
 
   render() {
