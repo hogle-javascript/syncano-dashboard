@@ -32,7 +32,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete Invitation(s)"]',
+      selector: '//div[text()="Delete Invitation"]',
       locateStrategy: 'xpath'
     },
     adminsListItem: {
@@ -40,7 +40,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addAdminButton: {
-      selector: '(//span[@class="synicon-plus"])[1]',
+      selector: '//span[@class="synicon-plus-circle-outline"]',
       locateStrategy: 'xpath'
     },
     addAdminModalTitle: {
