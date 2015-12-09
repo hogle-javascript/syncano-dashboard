@@ -11,7 +11,6 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 import EmptyContainer from '../../common/Container/EmptyContainer';
@@ -93,10 +92,11 @@ export default React.createClass({
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
           visible={shouldShowWelcomeDialog}/>
+
         <Common.InnerToolbar title="Instances">
-          <IconButton
-            iconClassName="synicon-plus"
-            tooltip="Click here to add Instances"
+          <Common.Socket
+            tooltip="Create an Instance"
+            tooltipPosition="bottom-left"
             onTouchTap={this.showInstanceDialog}/>
         </Common.InnerToolbar>
 

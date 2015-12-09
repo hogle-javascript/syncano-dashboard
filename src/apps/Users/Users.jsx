@@ -12,7 +12,6 @@ import GroupsActions from './GroupsActions';
 import GroupsStore from './GroupsStore';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -81,13 +80,11 @@ export default React.createClass({
         <GroupDialog />
 
         <Common.InnerToolbar title="Users & Groups">
-          <IconButton
-            iconClassName="synicon-account-plus"
-            tooltip="Click here to create a User account"
+          <Common.Socket.Users
+            iconClassName="synicon-socket-user"
             onTouchTap={this.showUserDialog.bind(null, null)}/>
-          <IconButton
-            iconClassName="synicon-account-multiple-plus"
-            tooltip="Click here to create a Group"
+          <Common.Socket.User
+            tooltipPosition="bottom-left"
             onTouchTap={this.showGroupDialog}/>
         </Common.InnerToolbar>
 

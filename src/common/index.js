@@ -27,6 +27,7 @@ import Tags from './Tags';
 import Tour from './Tour';
 import Trace from './Trace';
 import SelectField from './SelectField';
+import Socket from './Socket';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import SnackbarNotification from './SnackbarNotification';
@@ -61,6 +62,7 @@ export default {
   Tour,
   Trace,
   SelectField,
+  Socket,
   Spacing,
   SyncanoTheme,
   SnackbarNotification

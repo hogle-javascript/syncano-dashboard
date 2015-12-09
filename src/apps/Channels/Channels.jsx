@@ -11,7 +11,6 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -54,9 +53,8 @@ export default React.createClass({
         <ChannelDialog />
 
         <Common.InnerToolbar title="Channel Sockets">
-          <IconButton
-            iconClassName="synicon-plus"
-            tooltip="Click here to add a Channel"
+          <Common.Socket.Channel
+            tooltipPosition="bottom-left"
             onTouchTap={this.showChannelDialog}/>
         </Common.InnerToolbar>
 

@@ -11,7 +11,6 @@ import Actions from './WebhooksActions';
 import Store from './WebhooksStore';
 
 // Components
-import {IconButton, Styles} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -27,9 +26,7 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-
     Reflux.connect(Store),
-
     Mixins.InstanceTabs,
     HeaderMixin
   ],
@@ -53,10 +50,8 @@ export default React.createClass({
         <WebhookDialog />
 
         <Common.InnerToolbar title="CodeBox Sockets">
-          <IconButton
-            iconClassName="synicon-socket-codebox"
-            iconStyle={{color: Styles.Colors.red300, fontSize: 35}}
-            tooltip="Create CodeBox Socket"
+          <Common.Socket.Webhook
+            tooltipPosition="bottom-left"
             onTouchTap={this.showWebhookDialog}/>
         </Common.InnerToolbar>
 

@@ -11,7 +11,6 @@ import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -44,9 +43,8 @@ export default React.createClass({
         <ScheduleDialog />
 
         <Common.InnerToolbar title="Schedule Sockets">
-          <IconButton
-            iconClassName="synicon-camera-timer"
-            tooltip="Click here to create a Schedule Socket"
+          <Common.Socket.Schedule
+            tooltipPosition="bottom-left"
             onTouchTap={this.showScheduleDialog}/>
         </Common.InnerToolbar>
 

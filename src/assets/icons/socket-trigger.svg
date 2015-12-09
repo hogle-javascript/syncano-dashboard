@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="170px" height="154px" viewBox="0 0 170 154" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4.3 (16618) - http://www.bohemiancoding.com/sketch -->
-    <title>Shape</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="Sockets---light-background-1" sketch:type="MSArtboardGroup" transform="translate(-1013.000000, -106.000000)" fill="#FFD740">
-            <g id="DB-Socket-Icon" sketch:type="MSLayerGroup" transform="translate(1013.000000, 107.000000)">
-                <path d="M123.030145,-0.236440879 C126.247501,-0.236440879 129.04152,1.54772376 130.480864,4.26645083 L168.073127,71.3850254 C169.089134,72.7443889 169.597138,74.4435934 169.597138,76.227758 C169.597138,78.0119226 169.089134,79.7111271 168.073127,81.0704906 L130.480864,148.189065 C129.04152,150.907792 126.247501,152.691957 123.030145,152.691957 L46.8296111,152.691957 C43.6122553,152.691957 40.8182357,150.907792 39.3788923,148.189065 L1.78662894,81.0704906 C0.770621821,79.7111271 0.262618262,78.0119226 0.262618262,76.227758 C0.262618262,74.4435934 0.770621821,72.7443889 1.78662894,71.3850254 L39.3788923,4.26645083 C40.8182357,1.54772376 43.6122553,-0.236440879 46.8296111,-0.236440879 L123.030145,-0.236440879 L123.030145,-0.236440879 Z M87.3876559,58.73621 L87.3876559,41.3807829 L121.796545,76.091637 L87.3876559,110.802491 L87.3876559,93.4470641 L52.9787664,93.4470641 L52.9787664,58.73621 L87.3876559,58.73621 L87.3876559,58.73621 Z" id="Shape" sketch:type="MSShapeGroup"></path>
-            </g>
-        </g>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="178px" height="178px" viewBox="0 0 178 178" enable-background="new 0 0 178 178" xml:space="preserve">
+<path fill="#020202" d="M176.398,83.934L136.883,13.71C135.368,10.867,132.434,9,129.05,9H48.949c-3.381,0-6.318,1.867-7.832,4.711
+	L1.603,83.934C0.533,85.354,0,87.133,0,89c0,1.865,0.533,3.646,1.603,5.066l39.516,70.223c1.514,2.844,4.451,4.711,7.832,4.711
+	h80.101c3.383,0,6.318-1.867,7.833-4.711L176.4,94.066c1.066-1.42,1.6-3.201,1.6-5.066C178,87.133,177.467,85.354,176.398,83.934z
+	 M89,123.711v-17.355H54.591V71.644H89V54.289L123.409,89L89,123.711z"/>
 </svg>

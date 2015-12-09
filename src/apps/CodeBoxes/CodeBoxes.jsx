@@ -11,7 +11,6 @@ import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import {IconButton, Styles} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -53,10 +52,9 @@ export default React.createClass({
         <CodeBoxDialog />
 
         <Common.InnerToolbar title="Snippets">
-          <IconButton
-            iconClassName="synicon-socket-codebox"
-            iconStyle={{color: Styles.Colors.red300, fontSize: 35}}
-            tooltip="Click here to add CodeBox"
+          <Common.Socket
+            tooltip="Create a Snippet"
+            tooltipPosition="bottom-left"
             onTouchTap={this.showCodeBoxDialog}/>
         </Common.InnerToolbar>
 

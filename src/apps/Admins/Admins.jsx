@@ -13,7 +13,6 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import {IconButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -62,8 +61,7 @@ export default React.createClass({
         <AdminDialog />
 
         <Common.InnerToolbar title="Administrators">
-          <IconButton
-            iconClassName="synicon-plus"
+          <Common.Socket
             tooltip="Click here to invite Admin"
             onTouchTap={this.showAdminDialog}/>
         </Common.InnerToolbar>
