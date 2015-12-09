@@ -45,7 +45,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     schedulesDeleteButton: {
-      selector: '//div[text()="Delete Schedule(s)"]',
+      selector: '//div[text()="Delete Schedule"]',
       locateStrategy: 'xpath'
     },
     schedulesEditButton: {
@@ -57,7 +57,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addScheduleButton: {
-      selector: '//button//span[@class="synicon-camera-timer"]',
+      selector: '//button//span[@class="synicon-socket-schedule"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalTitle: {
