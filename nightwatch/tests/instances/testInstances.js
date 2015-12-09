@@ -1,4 +1,4 @@
-import Globals from '../globals';
+import Globals from '../../globals';
 import async from 'async';
 
 export default {

@@ -53,7 +53,7 @@ export default {
       .waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  },
+  }
   // This test should be reanabled once we merge with the devel branch
   // 'Add an Instance from empty list item': (client) => {
   //   const instancesPage = client.page.instancesPage();
