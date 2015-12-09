@@ -127,7 +127,7 @@ module.exports = {
       selector: '.empty-list-item'
     },
     dataSocketTableTitle: {
-      selector: '//div[text()="Data Socket"]',
+      selector: '//div[text()="Data Sockets"]',
       locateStrategy: 'xpath'
     }
   }
