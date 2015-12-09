@@ -40,7 +40,7 @@ export default React.createClass({
   },
 
   handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleRemoveDataViews() {

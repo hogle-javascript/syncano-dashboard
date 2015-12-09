@@ -72,12 +72,6 @@ export default React.createClass({
     this.transitionTo(routeName, {instanceName});
   },
 
-  uncheckAll() {
-    console.info('Data::uncheckAll');
-    Data.Actions.uncheckAll();
-    Webhooks.Actions.uncheckAll();
-  },
-
   showTriggerAddDialog() {
     Triggers.Actions.showDialog();
   },
@@ -104,24 +98,6 @@ export default React.createClass({
 
   showWebhookEditDialog() {
     Webhooks.Actions.showDialog(Webhooks.Store.getCheckedItem());
-  },
-
-  checkDataViewItem(id, state) {
-    console.info('Data::checkDataViewItem');
-    Data.Actions.checkItem(id, state);
-    Webhooks.Actions.uncheckAll();
-  },
-
-  checkWebhook(id, state) {
-    console.info('Data::checkWebhook');
-    Webhooks.Actions.checkItem(id, state);
-    Data.Actions.uncheckAll();
-  },
-
-  checkChannel(id, state) {
-    console.info('Data::checkChannel');
-    Channels.Actions.checkItem(id, state);
-    Data.Actions.uncheckAll();
   },
 
   fetch() {
@@ -229,7 +205,6 @@ export default React.createClass({
           <Common.Loading show={this.isLoaded()}>
             <Data.List
               name="Data Sockets"
-              checkItem={this.checkDataViewItem}
               isLoading={this.state.dataviews.isLoading}
               items={this.state.dataviews.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'data')}
@@ -238,7 +213,6 @@ export default React.createClass({
 
             <Webhooks.List
               name="CodeBox Sockets"
-              checkItem={this.checkWebhook}
               isLoading={this.state.webhooks.isLoading}
               items={this.state.webhooks.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'webhooks')}
@@ -247,7 +221,6 @@ export default React.createClass({
 
             <Channels.List
               name="Channel Sockets"
-              checkItem={this.checkChannel}
               isLoading={this.state.channels.isLoading}
               items={this.state.channels.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'channels')}
@@ -256,7 +229,6 @@ export default React.createClass({
 
             <Triggers.List
               name="Trigger Sockets"
-              checkItem={this.checkDataViewItem}
               isLoading={this.state.triggers.isLoading}
               items={this.state.triggers.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'triggers')}
@@ -265,7 +237,6 @@ export default React.createClass({
 
             <Schedules.List
               name="Schedule Sockets"
-              checkItem={this.checkDataViewItem}
               isLoading={this.state.schedules.isLoading}
               items={this.state.schedules.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}

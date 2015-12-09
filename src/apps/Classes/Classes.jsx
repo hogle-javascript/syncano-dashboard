@@ -38,10 +38,6 @@ export default React.createClass({
     Actions.fetch();
   },
 
-  checkClassItem(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   redirectToAddClassView() {
     this.transitionTo('classes-add', this.getParams());
   },
@@ -60,7 +56,6 @@ export default React.createClass({
           name="Classes"
           items={this.state.items}
           triggers={this.state.triggers}
-          checkItem={this.checkClassItem}
           hideDialogs={this.state.hideDialogs}
           emptyItemHandleClick={this.redirectToAddClassView}
           emptyItemContent="Create a Class"/>

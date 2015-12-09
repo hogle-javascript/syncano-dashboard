@@ -50,11 +50,6 @@ export default Radium(React.createClass({
     Actions.showDialog();
   },
 
-  checkDataViewItem(id, state) {
-    console.info('Data::checkDataViewItem');
-    Actions.checkItem(id, state);
-  },
-
   render() {
     return (
       <Container>
@@ -69,7 +64,6 @@ export default Radium(React.createClass({
 
         <DataList
           name="Data Socket"
-          checkItem={this.checkDataViewItem}
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}

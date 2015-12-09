@@ -33,11 +33,6 @@ export default React.createClass({
     CodeBoxesActions.fetch();
   },
 
-  checkTrigger(id, state) {
-    console.info('Triggers::checkTrigger');
-    Actions.checkItem(id, state);
-  },
-
   showTriggerDialog() {
     Actions.showDialog();
   },
@@ -56,7 +51,6 @@ export default React.createClass({
 
         <TriggersList
           name="Triggers"
-          checkItem={this.checkTrigger}
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}

@@ -34,11 +34,6 @@ export default React.createClass({
     CodeBoxesActions.fetch();
   },
 
-  checkSchedule(id, state) {
-    console.info('Schedules::checkSchedule');
-    Actions.checkItem(id, state);
-  },
-
   showScheduleDialog() {
     Actions.showDialog();
   },
@@ -57,7 +52,6 @@ export default React.createClass({
 
         <SchedulesList
           name="Schedules"
-          checkItem={this.checkSchedule}
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}
