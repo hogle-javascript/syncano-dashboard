@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["nightwatch/tests/navigation"],
+  "src_folders" : ["nightwatch/tests"],
   "output_folder" : "./reports",
   "custom_commands_path" : "nightwatch/commands",
   "custom_assertions_path" : "",
