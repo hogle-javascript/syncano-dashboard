@@ -54,7 +54,7 @@ export default Radium(React.createClass({
       <Container>
         <DataDialog/>
 
-        <Common.InnerToolbar title="Sockets">
+        <Common.InnerToolbar title="Data Sockets">
           <Common.Socket.Data
             tooltipPosition="bottom-left"
             onClick={Actions.showDialog}/>
