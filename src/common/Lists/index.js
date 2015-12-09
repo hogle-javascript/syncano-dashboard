@@ -1,7 +1,11 @@
 import List from './List';
 import Container from './ListContainer';
+import Menu from './Menu';
+import MenuItem from './MenuItem';
 
 export default {
+  Container,
   List,
-  Container
+  Menu,
+  MenuItem
 };

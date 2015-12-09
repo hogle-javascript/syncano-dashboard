@@ -10,8 +10,6 @@ import Mixins from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -25,8 +23,7 @@ export default React.createClass({
     Router.Navigation,
     HeaderMixin,
     Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.List
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -126,25 +123,18 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Delete Trigger(s)"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Trigger"
                 onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

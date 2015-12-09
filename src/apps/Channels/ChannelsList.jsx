@@ -12,8 +12,6 @@ import Store from './ChannelsStore';
 // Components
 import ListItem from './ChannelsListItem';
 import Common from '../../common';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -27,8 +25,7 @@ export default React.createClass({
 
     HeaderMixin,
     Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.List
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -124,25 +121,18 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Delete Channel(s)"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Channel"
                 onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

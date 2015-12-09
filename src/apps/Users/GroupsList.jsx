@@ -104,7 +104,10 @@ export default Radium(React.createClass({
 
   renderItemIconMenu(item) {
     return (
-      <MUI.IconMenu iconButtonElement={this.renderItemIconMenuButton()}>
+      <MUI.IconMenu
+        iconButtonElement={this.renderItemIconMenuButton()}
+        anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}>
         <MenuItem onTouchTap={this.props.handleGroupAddUser.bind(null, item)}>Add User</MenuItem>
         <MenuItem onTouchTap={this.props.handleGroupEdit.bind(null, item)}>Edit Group</MenuItem>
         <MenuItem onTouchTap={this.showGroupDeleteDialog.bind(null, item)}>Delete</MenuItem>

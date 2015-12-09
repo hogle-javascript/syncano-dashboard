@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MUI from 'syncano-material-ui';
+import {Utils} from 'syncano-material-ui';
 
 export default React.createClass({
 
@@ -11,14 +11,12 @@ export default React.createClass({
     className: React.PropTypes.string
   },
 
-  mixins: [MUI.Utils.Styles],
-
   getStyles() {
     const styles = {
       marginBottom: 48
     };
 
-    return this.mergeAndPrefix(styles, this.props.style);
+    return Utils.Styles.mergeAndPrefix(styles, this.props.style);
   },
 
   render() {

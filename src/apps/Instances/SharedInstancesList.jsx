@@ -11,8 +11,6 @@ import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -27,8 +25,7 @@ export default React.createClass({
     HeaderMixin,
     Mixins.IsLoading({attr: 'state.items'}),
     Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.List
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -132,24 +129,19 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Leave Instance(s)"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Leave Instance"
                 onTouchTap={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                disabled={!checkedItems}
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List style={styles.list}>
-          {this.renderList()}
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          style={styles.list}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

@@ -33,7 +33,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
-      selector: '//button[@class="triggers-list--button"]',
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -97,11 +97,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     triggerTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('trigger') + '"]',
+      selector: `//div[text()="${ utils.addSuffix('trigger')}"]`,
       locateStrategy: 'xpath'
     },
     selectTriggerTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('trigger') + '"]/preceding-sibling::div',
+      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
@@ -109,9 +109,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
-      // moar lolpath!!!
-      selector: '//div[text()="' + utils.addSuffix('trigger') +
-      '"]/parent::div/following-sibling::div[text()="post_update"]',
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/parent::div/following-sibling::div[text()="post_update"]`,
       locateStrategy: 'xpath'
     },
     dropdownClickAnimation: {
