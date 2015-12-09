@@ -23,6 +23,7 @@
     "moment": "2.10.6",
     "mousetrap": "1.5.3",
     "normalize.css": "3.0.3",
+    "pluralize": "^1.2.1",
     "radium": "0.14.3",
     "raven-js": "1.2.0",
     "react": "0.14.2",

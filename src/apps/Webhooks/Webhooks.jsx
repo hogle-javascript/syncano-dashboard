@@ -43,11 +43,6 @@ export default React.createClass({
     Actions.showDialog();
   },
 
-  checkWebhook(id, state) {
-    console.info('Data::checkWebhook');
-    Actions.checkItem(id, state);
-  },
-
   fetch() {
     Actions.fetch();
   },
@@ -67,7 +62,6 @@ export default React.createClass({
 
         <WebhooksList
           name="CodeBox Sockets"
-          checkItem={this.checkWebhook}
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}

@@ -10,8 +10,6 @@ import Store from './WebhooksStore';
 
 // Components
 import ListItem from './WebhooksListItem';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -25,8 +23,7 @@ export default React.createClass({
     Router.Navigation,
     HeaderMixin,
     Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.List
+    Mixins.Dialogs
   ],
 
   getInitialState() {
@@ -124,26 +121,18 @@ export default React.createClass({
             Public
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Delete Selected"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Webhook"
                 onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                disabled={!checkedItems}
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

@@ -12,8 +12,6 @@ import Store from './DataViewsStore';
 // Components
 import ListItem from './DataViewsListItem';
 import Common from '../../common';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 let Column = Common.ColumnList.Column;
 
@@ -24,7 +22,6 @@ export default React.createClass({
   mixins: [
     Mixins.Dialog,
     Mixins.Dialogs,
-    Mixins.List,
     HeaderMixin,
     Router.State,
     Router.Navigation
@@ -40,7 +37,7 @@ export default React.createClass({
   },
 
   handleItemIconClick(id, state) {
-    this.props.checkItem(id, state);
+    Actions.checkItem(id, state);
   },
 
   handleRemoveDataViews() {
@@ -108,25 +105,18 @@ export default React.createClass({
             Class
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Delete Data Socket(s)"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Delete Data Socket"
                 onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }

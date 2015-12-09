@@ -52,7 +52,6 @@ export default Radium(React.createClass({
   renderItemIconMenuButton() {
     return (
       <MUI.IconButton
-        className={this.props.dropdownIconClassName}
         touch={true}
         tooltipPosition='bottom-left'
         iconClassName='synicon-dots-vertical'/>
@@ -73,7 +72,9 @@ export default Radium(React.createClass({
         </MenuDialog>
         <MUI.IconMenu
           onTouchTap={this.handleTouchTap}
-          iconButtonElement={this.renderItemIconMenuButton()}>
+          iconButtonElement={this.renderItemIconMenuButton()}
+          anchorOrigin={{horizontal: 'middle', vertical: 'center'}}
+          targetOrigin={{horizontal: 'right', vertical: 'top'}}>
           {this.props.children}
         </MUI.IconMenu>
       </div>

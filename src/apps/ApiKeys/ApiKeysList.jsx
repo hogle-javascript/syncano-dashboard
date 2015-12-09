@@ -12,8 +12,6 @@ import Store from './ApiKeysStore';
 
 // Components
 import ListItem from './ApiKeysListItem';
-import {IconMenu} from 'syncano-material-ui';
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
@@ -28,8 +26,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
     Mixins.Dialog,
-    Mixins.Dialogs,
-    Mixins.List
+    Mixins.Dialogs
   ],
 
   componentWillUpdate(nextProps) {
@@ -138,30 +135,21 @@ export default React.createClass({
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <IconMenu iconButtonElement={this.renderListIconMenuButton()}>
-              <MenuItem
-                primaryText="Reset API Key(s)"
-                disabled={!checkedItems}
+            <Common.Lists.Menu
+              checkedItemsCount={checkedItems}
+              actions={Actions}>
+              <Common.Lists.MenuItem
+                primaryText="Reset API Key"
                 onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
-              <MenuItem
-                primaryText="Delete API Key(s)"
-                disabled={!checkedItems}
+              <Common.Lists.MenuItem
+                primaryText="Delete API Key"
                 onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
-              <MenuItem
-                primaryText="Unselect All"
-                disabled={!checkedItems}
-                onTouchTap={Actions.uncheckAll}/>
-              <MenuItem
-                primaryText="Select All"
-                onTouchTap={Actions.selectAll}/>
-            </IconMenu>
+            </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>
-        <Common.Lists.List>
-          <Common.Loading show={this.props.isLoading}>
-            {this.renderList()}
-          </Common.Loading>
-        </Common.Lists.List>
+        <Common.Lists.List
+          {...this.props}
+          renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );
   }
