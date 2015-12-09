@@ -31,7 +31,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addUserButton: {
-      selector: '//span[@class="synicon-account-plus"]',
+      selector: '//span[@class="synicon-socket-user"]',
       locateStrategy: 'xpath'
     },
     addUserModalTitle: {
@@ -67,7 +67,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addGroupButton: {
-      selector: '//span[@class="synicon-account-multiple-plus"]',
+      selector: '//span[@class="synicon-socket-users"]',
       locateStrategy: 'xpath'
     },
     addGroupModalTitle: {

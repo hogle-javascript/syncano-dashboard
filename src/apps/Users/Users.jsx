@@ -82,10 +82,10 @@ export default React.createClass({
         <Common.InnerToolbar title="Users & Groups">
           <Common.Socket.Users
             iconClassName="synicon-socket-user"
-            onTouchTap={this.showUserDialog.bind(null, null)}/>
+            onTouchTap={this.showGroupDialog}/>
           <Common.Socket.User
             tooltipPosition="bottom-left"
-            onTouchTap={this.showGroupDialog}/>
+            onTouchTap={this.showUserDialog.bind(null, null)}/>
         </Common.InnerToolbar>
 
         <Common.Lists.Container className="row">
