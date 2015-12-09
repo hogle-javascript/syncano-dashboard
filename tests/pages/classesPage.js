@@ -44,8 +44,8 @@ export default {
       selector: '//a[@class="dropdown-item-delete-class"]',
       locateStrategy: 'xpath'
     },
-    fab: {
-      selector: '(//span[@class="synicon-plus"])[1]',
+    addClassButton: {
+      selector: '//span[@class="synicon-plus-circle-outline"]',
       locateStrategy: 'xpath'
     },
     createModalNameInput: {

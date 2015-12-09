@@ -21,7 +21,7 @@ export default {
 
     classesPage
       .navigate()
-      .clickButton('@fab')
+      .clickButton('@addClassButton')
       .fillInputField('@createModalNameInput', className)
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description')
       .fillInputField('@createModalFieldNameInput', 'schemaName')
