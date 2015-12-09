@@ -40,7 +40,7 @@ export default {
       });
     });
     instancesPage.waitForElementPresent('@instancesTableRow');
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     leftMenuPage.clickButton('@instancesDropdown');
     leftMenuPage.clickButton('@instancesListSecondItem');
     socketsPage.waitForElementPresent('@dataSocketTableTitle');
@@ -49,22 +49,23 @@ export default {
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
-  },
-  'Test Select and Delete multiple Instances': (client) => {
-    const instancesPage = client.page.instancesPage();
-
-    instancesPage
-      .navigate()
-      .waitForElementPresent('@selectInstance')
-      .moveToElement('@selectInstance', 0, 0)
-      .clickButton('@instanceToSelect')
-      .clickButton('@selectButton')
-      .clickButton('@deleteButton');
-    client.pause(1000);
-    instancesPage
-      .clickButton('@confirmDeleteButton')
-      .waitForElementNotVisible('@deleteInstanceModalTitle');
-
-    instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
+  // Deleted Fabs cousing this test fails so it will be enabled when delete button on toolbar will be added
+  //'Test Select and Delete multiple Instances': (client) => {
+  //  const instancesPage = client.page.instancesPage();
+  //
+  //  instancesPage
+  //    .navigate()
+  //    .waitForElementPresent('@selectInstance')
+  //    .moveToElement('@selectInstance', 0, 0)
+  //    .clickButton('@instanceToSelect')
+  //    .clickButton('@selectButton')
+  //    .clickButton('@deleteButton');
+  //  client.pause(1000);
+  //  instancesPage
+  //    .clickButton('@confirmDeleteButton')
+  //    .waitForElementNotVisible('@deleteInstanceModalTitle');
+  //
+  //  instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
+  //}
 };

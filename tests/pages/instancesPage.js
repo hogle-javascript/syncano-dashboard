@@ -29,7 +29,7 @@ export default {
   commands: [instancesCommands],
   elements: {
     instanceDropdown: {
-      selector: '//span[@class="synicon-dots-vertical"]',
+      selector: '(//span[@class="synicon-dots-vertical"])[2]',
       locateStrategy: 'xpath'
     },
     instancesTable: {
@@ -57,15 +57,19 @@ export default {
       locateStrategy: 'xpath'
     },
     instancesTableName: {
-      selector: '//div[@class="instances-list-container"]/div[2]/div/div[1]/div[2]',
+      selector: '(//div[@class="col-xs-10"])[2]/div[2]/div',
       locateStrategy: 'xpath'
     },
     selectInstance: {
-      selector: '//div[@class="instances-list-container"]/div[2]/div[1]/div[1]//span',
+      selector: '//div[@class="instances-list"]/div[2]/div[1]/div[1]//span',
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
       selector: '//a[@class="dropdown-item-instance-edit"]',
+      locateStrategy: 'xpath'
+    },
+    deleteDropdownItem: {
+      selector: '//a[@class="dropdown-item-instance-delete"]',
       locateStrategy: 'xpath'
     },
     editButton: {

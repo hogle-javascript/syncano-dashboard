@@ -45,15 +45,15 @@ export default {
 
     instancesPage
       .navigate()
-      .clickButton('@selectInstance')
-      .clickButton('@deleteButton');
+      .clickDropdown('@instanceDropdown')
+      .clickButton('@deleteDropdownItem');
     client.pause(1000);
     instancesPage
       .clickButton('@confirmDeleteButton')
       .waitForElementNotVisible('@deleteInstanceModalTitle');
 
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  },
+  }
   // This test should be reanabled once we merge with the devel branch
   // 'Add an Instance from empty list item': (client) => {
   //   const instancesPage = client.page.instancesPage();
