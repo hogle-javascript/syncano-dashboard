@@ -6,7 +6,7 @@ var path       = require('path'),
     through    = require('through2');
 
 module.exports = function() {
-  var branch = process.env.CIRCLE_BRANCH;
+  var branch = (process.env.CIRCLE_BRANCH || '').toLowerCase();
 
   if (!branch || branch.length < 3) {
     throw new gutil.PluginError('publish-branch', '"CIRCLE_BRANCH" env variable is required');
