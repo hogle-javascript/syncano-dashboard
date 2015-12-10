@@ -1,7 +1,7 @@
 import utils from '../utils';
 
 export default {
-  tags: ['codeBoxSockets'],
+  tags: ['SnippetSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
@@ -15,27 +15,27 @@ export default {
   after(client) {
     client.end();
   },
-  'User adds a CodeBox Socket': (client) => {
+  'User adds a Snippet Socket': (client) => {
     const webhook = utils.addSuffix('webhook');
     const socketsPage = client.page.socketsPage();
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@codeBoxSocketItem')
+      .waitForElementVisible('@snippetSocketItem')
       .clickButton('@addWebhookButton')
       .waitForElementVisible('@addWebhookModalTitle')
       .fillInputField('@addWebhookModalNameInput', webhook)
-      .selectFromDropdown('@addWebhookModalCodeBoxDropdown', '@addWebhookModalCodeBoxDropdownChoice')
+      .selectFromDropdown('@addWebhookModalSnippetDropdown', '@addWebhookModalSnippetDropdownChoice')
       .clickButton('@confirmButton')
       .waitForElementVisible('@webhookTableRow');
   },
-  'User edits a CodeBox Socket': (client) => {
+  'User edits a Snippet Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@codeBoxSocketItem')
-      .clickButton('@codeBoxSocketDropDown');
+      .waitForElementVisible('@snippetSocketItem')
+      .clickButton('@snippetSocketDropDown');
     client.pause(1000);
 
     socketsPage
@@ -48,13 +48,13 @@ export default {
       .waitForElementVisible('@webhookTableRow')
       .waitForElementVisible('@webhookTableRowDescription');
   },
-  'User deletes a CodeBox Socket': (client) => {
+  'User deletes a Snippet Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@codeBoxSocketItem')
-      .clickButton('@codeBoxSocketDropDown');
+      .waitForElementVisible('@snippetSocketItem')
+      .clickButton('@snippetSocketDropDown');
     client.pause(1000);
 
     socketsPage

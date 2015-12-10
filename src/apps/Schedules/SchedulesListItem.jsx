@@ -3,7 +3,7 @@ import {State, Link} from 'react-router';
 
 // Stores and Actions
 import Actions from './SchedulesActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import SnippetsStore from '../Snippets/SnippetsStore';
 
 // Components
 import Common from '../../common';
@@ -21,8 +21,8 @@ export default React.createClass({
 
   render() {
     let item = this.props.item;
-    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
-    let codeBoxLabel = codeBox ? codeBox.label : '';
+    let snippet = SnippetsStore.getSnippetById(item.codebox);
+    let snippetLabel = snippet ? snippet.label : '';
 
     return (
       <Common.ColumnList.Item
@@ -37,7 +37,7 @@ export default React.createClass({
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Desc className="col-sm-6">{codeBoxLabel}</Column.Desc>
+        <Column.Desc className="col-sm-6">{snippetLabel}</Column.Desc>
         <Column.Desc>{item.crontab}</Column.Desc>
         <Column.Desc>
           <Link to="schedule-traces" params={{

@@ -51,7 +51,7 @@ export default Radium(React.createClass({
   },
 
   toggleTrace(traceId) {
-    console.info('CodeBoxesTraces::toggleTrace', traceId);
+    console.info('SnippetsTraces::toggleTrace', traceId);
     if (this.state.visibleTraceId === traceId) {
       this.setState({visibleTraceId: null});
     } else {
@@ -131,8 +131,8 @@ export default Radium(React.createClass({
     let items = this.state.items || [];
     let styles = this.getStyles();
     let tracesFor = {
-      codebox: {
-        name: 'CodeBox',
+      snippet: {
+        name: 'Snippet',
         icon: 'synicon-package-variant'
       },
       webhook: {

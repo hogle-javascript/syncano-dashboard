@@ -43,11 +43,11 @@ export default CreateActions({
     children: ['completed', 'failure'],
     method: 'Syncano.Actions.Webhooks.list'
   },
-  fetchCodeBoxes: {
+  fetchSnippets: {
     asyncResult: true,
     loading: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.CodeBoxes.list'
+    method: 'Syncano.Actions.Snippets.list'
   },
   fetchChannels: {
     asyncResult: true,

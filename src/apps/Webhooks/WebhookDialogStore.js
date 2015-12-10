@@ -5,8 +5,8 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import WebhooksActions from './WebhooksActions';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import SnippetsActions from '../Snippets/SnippetsActions';
+import SnippetsStore from '../Snippets/SnippetsStore';
 
 export default Reflux.createStore({
   listenables: WebhooksActions,
@@ -20,7 +20,7 @@ export default Reflux.createStore({
       label: '',
       signal: '',
       class: '',
-      codeboxes: [
+      snippets: [
         {
           payload: '',
           text: 'Loading...'
@@ -31,17 +31,17 @@ export default Reflux.createStore({
 
   init() {
     this.listenToForms();
-    this.listenTo(CodeBoxesActions.setCodeBoxes, this.getCodeBoxDropdown);
+    this.listenTo(SnippetsActions.setSnippets, this.getSnippetDropdown);
   },
 
-  getCodeBoxDropdown() {
-    console.debug('DataViewDialogStore::getCodeBoxDropdown');
-    let codeboxes = CodeBoxesStore.getCodeBoxesDropdown();
+  getSnippetDropdown() {
+    console.debug('DataViewDialogStore::getSnippetDropdown');
+    let snippets = SnippetsStore.getSnippetsDropdown();
 
-    if (codeboxes.length === 0) {
-      codeboxes = [{payload: '', text: 'No CodeBoxes, add one first'}];
+    if (snippets.length === 0) {
+      snippets = [{payload: '', text: 'No Snippets, add one first'}];
     }
-    this.trigger({codeboxes});
+    this.trigger({snippets});
   },
 
   onCreateWebhookCompleted() {

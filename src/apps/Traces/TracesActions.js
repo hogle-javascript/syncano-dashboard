@@ -2,10 +2,10 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 
 export default CreateActions({
   setCurrentObjectId: {},
-  fetchCodeBoxTraces: {
+  fetchSnippetTraces: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.CodeBoxes.listTraces'
+    method: 'Syncano.Actions.Snippets.listTraces'
   },
 
   fetchWebhookTraces: {
@@ -26,10 +26,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Schedules.listTraces'
   },
 
-  fetchCurrentCodeBox: {
+  fetchCurrentSnippet: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.CodeBoxes.get'
+    method: 'Syncano.Actions.Snippets.get'
   },
 
   fetchCurrentWebhook: {

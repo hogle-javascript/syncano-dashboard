@@ -14,7 +14,7 @@ module.exports = {
   },
   'User goes to Channels View': (client) => {
     var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');

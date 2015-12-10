@@ -7,7 +7,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 import Actions from './SchedulesActions';
 import Store from './SchedulesStore';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
@@ -30,7 +30,7 @@ export default React.createClass({
 
   componentWillMount() {
     Actions.fetch();
-    CodeBoxesActions.fetch();
+    SnippetsActions.fetch();
   },
 
   showScheduleDialog() {

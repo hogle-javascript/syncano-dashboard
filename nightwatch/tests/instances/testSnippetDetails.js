@@ -1,6 +1,6 @@
 module.exports = {
-  tags: ['codeBoxes'],
-  before: function(client) {
+  tags: ['snippets'],
+  before(client) {
     var loginPage = client.page.loginPage();
     loginPage.navigate();
     loginPage.typeEmail();
@@ -9,38 +9,38 @@ module.exports = {
     loginPage.verifyLoginSuccessful();
 
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'User goes to CodeBox edit view' : function(client) {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
+  'User goes to Snippet edit view': (client) => {
+    //var instancesPage = client.page.instancesPage();
+    //instancesPage.clickButton('@instancesTableName');
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@codeBoxes');
+    leftMenuPage.clickButton('@snippets');
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@codeBoxListItem');
+    snippetsPage.clickButton('@snippetListItem');
 
     var snippetEditPage = client.page.snippetEditPage();
-    snippetEditPage.waitForElementPresent('@codeBoxEditView');
+    snippetEditPage.waitForElementPresent('@snippetEditView');
   },
-  'User goes to CodeBox config view' : function(client) {
+  'User goes to Snippet config view': (client) => {
     var instancesPage = client.page.instancesPage();
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@codeBoxes');
+    leftMenuPage.clickButton('@snippets');
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@codeBoxListItem');
+    snippetsPage.clickButton('@snippetListItem');
 
     var snippetEditPage = client.page.snippetEditPage();
     snippetEditPage.clickButton('@config');
@@ -52,19 +52,19 @@ module.exports = {
     snippetEditPage.verify.containsText('@configValueField', '');
 
   },
-  'User goes to CodeBox traces view' : function(client) {
+  'User goes to Snippet traces view': (client) => {
     var instancesPage = client.page.instancesPage();
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
     
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@codeBoxes');
+    leftMenuPage.clickButton('@snippets');
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@codeBoxListItem');
+    snippetsPage.clickButton('@snippetListItem');
 
     var snippetEditPage = client.page.snippetEditPage();
     snippetEditPage.clickButton('@traces');

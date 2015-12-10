@@ -113,7 +113,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-sm-6">
-            CodeBox
+            Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"

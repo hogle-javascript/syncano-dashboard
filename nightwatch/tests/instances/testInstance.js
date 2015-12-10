@@ -27,7 +27,7 @@ export default {
       .waitForElementNotVisible('@editInstanceModalTitle');
 
     instancesPage
-      .waitForElementVisible('@instancesTableRow')
+      .waitForElementVisible('@instancesTableName')
       .expect.element('@instancesTableRow').to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {

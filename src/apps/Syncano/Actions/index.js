@@ -6,7 +6,7 @@ import ApiKeys from './ApiKeys';
 import Billing from './Billing';
 import Channels from './Channels';
 import Classes from './Classes';
-import CodeBoxes from './CodeBoxes';
+import Snippets from './Snippets';
 import DataViews from './DataViews';
 import Webhooks from './Webhooks';
 import DataObjects from './DataObjects';
@@ -28,7 +28,7 @@ export default {
   Billing,
   Channels,
   Classes,
-  CodeBoxes,
+  Snippets,
   DataViews,
   Webhooks,
   DataObjects,

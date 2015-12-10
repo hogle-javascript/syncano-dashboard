@@ -1,6 +1,6 @@
 module.exports = {
   tags: ['webhookTraces'],
-  before: function(client) {
+  before(client) {
     var loginPage = client.page.loginPage();
     loginPage.navigate();
     loginPage.typeEmail();
@@ -9,12 +9,12 @@ module.exports = {
     loginPage.verifyLoginSuccessful();
 
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'User goes to Webhook Traces View' : function(client) {
+  'User goes to Webhook Traces View': (client) => {
     var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
 
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');

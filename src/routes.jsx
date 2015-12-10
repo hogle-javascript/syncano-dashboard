@@ -8,7 +8,7 @@ import ClassesPage from './pages/classes';
 import DashboardPage from './pages/dashboard';
 import InstancePage from './pages/instance';
 import ProfilePage from './pages/profile';
-import CodeBoxesPage from './pages/codeBoxes';
+import SnippetsPage from './pages/snippets';
 import NotFoundPage from './pages/notfound';
 
 // Apps
@@ -24,8 +24,8 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
-import CodeBox from './apps/CodeBox';
-import CodeBoxes from './apps/CodeBoxes';
+import Snippet from './apps/Snippet';
+import Snippets from './apps/Snippets';
 import Webhooks from './apps/Webhooks';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
@@ -173,37 +173,37 @@ export default (
 
         </Route>
 
-        {/* CodeBoxes */}
+        {/* Snippets */}
         <Route
-          name="codeboxes"
-          handler={CodeBoxesPage}
-          path="codeboxes">
+          name="snippets"
+          handler={SnippetsPage}
+          path="snippets">
           <Route
-            name="codebox"
-            handler={CodeBox}
-            path=":codeboxId">
+            name="snippet"
+            handler={Snippet}
+            path=":snippetId">
             <Route
-              name="codebox-traces"
-              handler={CodeBox.Traces}
+              name="snippet-traces"
+              handler={Snippet.Traces}
               path="traces"
               />
             <Route
-              name="codebox-edit"
-              handler={CodeBox.Edit}
+              name="snippet-edit"
+              handler={Snippet.Edit}
               path="edit"
               />
             <Route
-              name="codebox-config"
-              handler={CodeBox.Config}
+              name="snippet-config"
+              handler={Snippet.Config}
               path="config"/>
-            <DefaultRoute handler={CodeBox.Edit}/>
+            <DefaultRoute handler={Snippet.Edit}/>
           </Route>
-          <DefaultRoute handler={CodeBoxes}/>
+          <DefaultRoute handler={Snippets}/>
         </Route>
         <Route
-          name="codeboxes-add"
-          handler={CodeBoxes}
-          path="codeboxes/:action"
+          name="snippets-add"
+          handler={Snippets}
+          path="snippets/:action"
           />
 
         {/* Data Objects */}

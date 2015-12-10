@@ -99,7 +99,7 @@ export default React.createClass({
           <Column.ColumnHeader
             columnName="DESC"
             className="col-sm-6">
-            CodeBox
+            Snippet
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Crontab</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DESC">Traces</Column.ColumnHeader>

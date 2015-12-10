@@ -63,10 +63,10 @@ export default React.createClass({
         </Column.Desc>
         <Column.Desc className="col-xs-4">
           <Link
-            to="codebox"
+            to="snippet"
             params={{
               instanceName: this.getParams().instanceName,
-              codeboxId: item.codebox
+              snippetId: item.codebox
             }}>
             {item.codebox}
           </Link>

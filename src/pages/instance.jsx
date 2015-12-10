@@ -98,8 +98,8 @@ export default React.createClass({
       },
       {
         type: MUI.MenuItem.Types.LINK,
-        route: 'codeboxes',
-        payload: this.getMenuItemHref('codeboxes'),
+        route: 'snippets',
+        payload: this.getMenuItemHref('snippets'),
         text: 'Snippets'
       },
       {

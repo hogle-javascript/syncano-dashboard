@@ -7,7 +7,7 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import WebhooksActions from './WebhooksActions';
 import WebhookDialogStore from './WebhookDialogStore';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -34,7 +34,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('WebhookDialog::handleDialogShow');
-    CodeBoxesActions.fetch();
+    SnippetsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -104,16 +104,16 @@ export default React.createClass({
           hintText="Description of the Webhook"
           floatingLabelText="Description"/>
         <MUI.SelectField
-          className="codebox-dropdown"
-          ref="codebox"
-          name="codebox"
-          floatingLabelText="CodeBox"
+          className="snippet-dropdown"
+          ref="snippet"
+          name="snippet"
+          floatingLabelText="Snippet"
           valueLink={this.linkState('codebox')}
           errorText={this.getValidationMessages('codebox').join(' ')}
           valueMember="payload"
           displayMember="text"
           fullWidth={true}
-          menuItems={this.state.codeboxes}/>
+          menuItems={this.state.snippets}/>
         <MUI.Toggle
           ref='public'
           name='public'
