@@ -27,7 +27,7 @@ export default {
       .waitForElementNotVisible('@editInstanceModalTitle');
 
     instancesPage
-      .waitForElementVisible('@instancesTableRow')
+      .waitForElementVisible('@instancesTableName')
       .expect.element('@instancesTableRow').to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {
@@ -45,8 +45,9 @@ export default {
 
     instancesPage
       .navigate()
-      .clickDropdown('@instanceDropdown')
-      .clickButton('@deleteDropdownItem');
+      .clickDropdown('@instanceDropdown');
+    client.pause(1000);
+    instancesPage.clickButton('@deleteDropdownItem');
     client.pause(1000);
     instancesPage
       .clickButton('@confirmDeleteButton')

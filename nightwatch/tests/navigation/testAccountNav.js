@@ -18,7 +18,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     socketsPage.waitForElementPresent('@dataSocketTableTitle');
   },
   afterEach(client, done) {

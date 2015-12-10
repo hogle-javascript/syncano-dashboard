@@ -3,7 +3,7 @@ import React from 'react';
 import {Dialogs} from '../../mixins';
 
 import Actions from './TriggersActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import SnippetsStore from '../Snippets/SnippetsStore';
 
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
@@ -20,8 +20,8 @@ export default React.createClass({
 
   render() {
     let item = this.props.item;
-    let codeBox = CodeBoxesStore.getCodeBoxById(item.codebox);
-    let codeBoxLabel = codeBox ? codeBox.label : '';
+    let snippet = SnippetsStore.getSnippetById(item.codebox);
+    let snippetLabel = snippet ? snippet.label : '';
 
     return (
       <Common.ColumnList.Item
@@ -36,7 +36,7 @@ export default React.createClass({
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Desc className="col-sm-6">{codeBoxLabel}</Column.Desc>
+        <Column.Desc className="col-sm-6">{snippetLabel}</Column.Desc>
         <Column.Desc className="col-sm-6">{item.class}</Column.Desc>
         <Column.Desc>{item.signal}</Column.Desc>
         <Column.Date date={item.created_at}/>

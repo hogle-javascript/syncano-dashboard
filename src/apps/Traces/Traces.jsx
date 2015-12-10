@@ -24,7 +24,7 @@ export default Radium(React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['webhook', 'codebox', 'trigger', 'schedule']),
+    tracesFor: React.PropTypes.oneOf(['webhook', 'snippet', 'trigger', 'schedule']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
@@ -39,7 +39,7 @@ export default Radium(React.createClass({
 
   getDefaultProps() {
     return {
-      tracesFor: 'codebox',
+      tracesFor: 'snippet',
       showHeader: false
     };
   },
@@ -54,7 +54,7 @@ export default Radium(React.createClass({
         position: 'relative',
         top: '35px'
       },
-      cBList: {
+      snippetsList: {
         top: '-45px'
       }
     };
@@ -66,9 +66,9 @@ export default Radium(React.createClass({
         route: 'webhooks',
         backLabel: 'Go back to Data Views'
       },
-      codebox: {
-        route: 'codeboxes',
-        backLabel: 'Go back to CodeBoxes list'
+      snippet: {
+        route: 'snippets',
+        backLabel: 'Go back to Snippets list'
       },
       trigger: {
         route: 'triggers',
@@ -82,8 +82,8 @@ export default Radium(React.createClass({
   },
 
   getTracesFor() {
-    if (this.props.tracesFor === 'codebox') {
-      return 'CodeBox';
+    if (this.props.tracesFor === 'snippet') {
+      return 'Snippet';
     }
 
     return _.capitalize(this.props.tracesFor);
@@ -116,7 +116,7 @@ export default Radium(React.createClass({
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
-        <div style={[styles.list, this.isActive('codebox-traces') && styles.cBList]}>
+        <div style={[styles.list, this.isActive('snippet-traces') && styles.snippetsList]}>
           <TracesList
             tracesFor={this.props.tracesFor}
             name="Traces"

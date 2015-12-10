@@ -18,7 +18,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableRow');
+    instancesPage.clickButton('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
@@ -32,7 +32,7 @@ module.exports = {
 
     client.saveScreenshot(fileNamePath, done);
   },
-  'User goes to Solutions View' : function(client) {
+  'User goes to Solutions View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();
 
@@ -40,7 +40,7 @@ module.exports = {
     solutionsPage.waitForElementPresent('@solutionDetails');
     solutionsPage.waitForElementVisible('@solutionAvatars');
   },
-  'User goes to Solution Details View' : function(client) {
+  'User goes to Solution Details View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();
     const solutionDetailsPage = client.page.solutionDetailsPage();

@@ -39,7 +39,7 @@ export default {
         });
       });
     });
-    instancesPage.waitForElementPresent('@instancesTableRow');
+    instancesPage.waitForElementPresent('@instancesTableName');
     instancesPage.clickButton('@instancesTableName');
     leftMenuPage.clickButton('@instancesDropdown');
     leftMenuPage.clickButton('@instancesListSecondItem');

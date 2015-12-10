@@ -72,12 +72,12 @@ module.exports = {
       selector: '//input[@name="label"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalCodeBox: {
-      selector: '//div[@class="codebox-dropdown"]',
+    addScheduleModalSnippet: {
+      selector: '//div[@class="snippet-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalCodeBoxName: {
-      selector: '//span[text()="codebox"]',
+    addScheduleModalSnippetName: {
+      selector: '//span[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
@@ -142,8 +142,8 @@ module.exports = {
       selector: '//span[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
-    addTriggerModalCodeBox: {
-      selector: '//div[@class="codebox-dropdown"]',
+    addTriggerModalSnippet: {
+      selector: '//div[@class="snippet-dropdown"]',
       locateStrategy: 'xpath'
     },
     triggerTableRow: {

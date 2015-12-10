@@ -5,9 +5,9 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import TriggersActions from './TriggersActions';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 import ClassesActions from '../Classes/ClassesActions';
-import CodeBoxesStore from '../CodeBoxes/CodeBoxesStore';
+import SnippetsStore from '../Snippets/SnippetsStore';
 import ClassesStore from '../Classes/ClassesStore';
 
 export default Reflux.createStore({
@@ -40,7 +40,7 @@ export default Reflux.createStore({
       classes: [
         {payload: '', text: 'Loading...'}
       ],
-      codeboxes: [
+      snippets: [
         {payload: '', text: 'Loading...'}
       ]
     };
@@ -49,7 +49,7 @@ export default Reflux.createStore({
   init() {
     this.listenToForms();
     this.joinTrailing(
-      CodeBoxesActions.setCodeBoxes,
+      SnippetsActions.setSnippets,
       ClassesActions.setClasses,
       this.getDropdowns
     );
@@ -62,12 +62,12 @@ export default Reflux.createStore({
   getDropdowns() {
     console.debug('TriggerDialogStore::getDropdowns');
     let dropdowns = {
-      codeboxes: CodeBoxesStore.getCodeBoxesDropdown(),
+      snippets: SnippetsStore.getSnippetsDropdown(),
       classes: ClassesStore.getClassesDropdown()
     };
 
-    if (dropdowns.codeboxes.length === 0) {
-      dropdowns.codeboxes = [{payload: '', text: 'No codeboxes, add one first'}];
+    if (dropdowns.snippets.length === 0) {
+      dropdowns.snippets = [{payload: '', text: 'No Snippets, add one first'}];
     }
 
     if (dropdowns.classes.length === 0) {

@@ -7,17 +7,17 @@ export default {
     const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
 
-    const codeBoxOptions = {
-      label: 'codebox',
+    const snippetOptions = {
+      label: 'snippet',
       source: 'print "foo"',
       runtime_name: 'python'
     };
     const webhookOptions = {
       name: null,
-      codebox: null
+      snippet: null
     };
 
-    syncano.instance(globals.tempInstanceName).codebox().add(codeBoxOptions).then((success) => {
+    syncano.instance(globals.tempInstanceName).codebox().add(snippetOptions).then((success) => {
       webhookOptions.codebox = success.id;
       for (let i = 0; i < 3; i += 1) {
         webhookOptions.name = `webhook_${i.toString()}`;

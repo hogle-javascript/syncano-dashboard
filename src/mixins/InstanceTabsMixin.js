@@ -21,8 +21,8 @@ export default {
         params
       },
       {
-        label: 'CodeBoxes',
-        route: 'codeboxes',
+        label: 'Snippets',
+        route: 'snippets',
         params
       },
       {

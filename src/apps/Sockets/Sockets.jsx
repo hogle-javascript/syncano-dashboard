@@ -15,7 +15,7 @@ import Container from '../../common/Container/Container';
 import Data from '../Data';
 import Channels from '../Channels';
 import Classes from '../Classes';
-import CodeBoxes from '../CodeBoxes';
+import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import Webhooks from '../Webhooks';
@@ -83,7 +83,7 @@ export default React.createClass({
 
   fetch() {
     Data.Actions.fetch();
-    CodeBoxes.Actions.fetch();
+    Snippets.Actions.fetch();
     Channels.Actions.fetch();
     Classes.Actions.fetch();
     Schedules.Actions.fetch();

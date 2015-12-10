@@ -7,7 +7,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 import Actions from './TriggersActions';
 import Store from './TriggersStore';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
@@ -29,7 +29,7 @@ export default React.createClass({
 
   componentWillMount() {
     Actions.fetch();
-    CodeBoxesActions.fetch();
+    SnippetsActions.fetch();
   },
 
   showTriggerDialog() {

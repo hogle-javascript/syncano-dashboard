@@ -22,7 +22,7 @@ module.exports = {
     tasksPage.clickButton('@addScheduleButton');
     tasksPage.waitForElementPresent('@addScheduleModalTitle');
     tasksPage.fillInputField('@addScheduleModalLabel', suffix);
-    tasksPage.selectFromDropdown('@addScheduleModalCodeBox', '@addScheduleModalCodeBoxName');
+    tasksPage.selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName');
     tasksPage.selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName');
     tasksPage.waitForElementNotVisible('@runEvery5minutes')
     tasksPage.clickButton('@confirm');
@@ -60,7 +60,7 @@ module.exports = {
     tasksPage.clickButton('@addTriggerButton');
     tasksPage.waitForElementPresent('@addTriggerModalTitle');
     tasksPage.fillInputField('@addTriggerModalLabel', suffix);
-    tasksPage.selectFromDropdown('@addTriggerModalCodeBox', '@addScheduleModalCodeBoxName');
+    tasksPage.selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName');
     tasksPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate');
     tasksPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName');
     tasksPage.waitForElementNotVisible('@addTriggerModalClassName');

@@ -10,7 +10,7 @@ export default React.createClass({
       <div className="row">
         <div className="col-md-9" style={{whiteSpace: 'nowrap'}}>
           <div>API calls</div>
-          <div>CodeBox runs</div>
+          <div>Snippet runs</div>
         </div>
         <div className="col-md-9" style={{textAlign: 'right'}}>
           <div><strong>{parseInt(this.props.data.api.included, 10).toLocaleString()}/month</strong></div>

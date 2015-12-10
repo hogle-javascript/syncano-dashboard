@@ -7,7 +7,7 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import SchedulesActions from './SchedulesActions';
 import ScheduleDialogStore from './ScheduleDialogStore';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -37,7 +37,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('ScheduleDialog::handleDialogShow');
-    CodeBoxesActions.fetch();
+    SnippetsActions.fetch();
   },
 
   handleAddSubmit() {
@@ -92,16 +92,16 @@ export default React.createClass({
             errorText={this.getValidationMessages('label').join(' ')}
             floatingLabelText='Label of the schedule'/>
           <MUI.SelectField
-            ref='codebox'
-            name='codebox'
-            className='codebox-dropdown'
-            floatingLabelText='CodeBox'
+            ref='snippet'
+            name='snippet'
+            className='snippet-dropdown'
+            floatingLabelText='Snippet'
             valueLink={this.linkState('codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}
             valueMember='payload'
             displayMember='text'
             fullWidth={true}
-            menuItems={this.state.codeboxes}/>
+            menuItems={this.state.snippets}/>
           <MUI.SelectField
             ref='crontab'
             name='crontab'

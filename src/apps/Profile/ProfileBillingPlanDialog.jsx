@@ -303,11 +303,11 @@ export default React.createClass({
       {
         included: {
           value: parseInt(cbxInfo.included, 10).toLocaleString(),
-          label: 'Total CodeBox runs'
+          label: 'Total Snippet runs'
         },
         overage: {
           value: cbxInfo.overage,
-          label: 'Overage Unit Price: CodeBox run'
+          label: 'Overage Unit Price: Snippet run'
         }
       }
     );
@@ -333,7 +333,7 @@ export default React.createClass({
             sliderSummary={apiSliderSummary} />
           <SliderSection
             style={{paddingTop: 50}}
-            title="CodeBox runs"
+            title="Snippet runs"
             slider={this.renderSlider('cbx')}
             sliderSummary={cbxSliderSummary} />
 
@@ -349,7 +349,7 @@ export default React.createClass({
                   <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                 </div>
                 <div className="row" style={styles.tableRow}>
-                  <div className="col-flex-1">CodeBox runs</div>
+                  <div className="col-flex-1">Snippet runs</div>
                   <div className="col-md-10" style={styles.tableColumnSummary}>
                     {parseInt(cbxInfo.included, 10).toLocaleString()}
                   </div>

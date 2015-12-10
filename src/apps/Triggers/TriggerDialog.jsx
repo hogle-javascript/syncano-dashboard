@@ -7,7 +7,7 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import TriggersActions from './TriggersActions';
 import TriggerDialogStore from './TriggerDialogStore';
-import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
 import ClassesActions from '../Classes/ClassesActions';
 
 // Components
@@ -41,7 +41,7 @@ export default React.createClass({
 
   handleDialogShow() {
     console.info('TriggerDialog::handleDialogShow');
-    CodeBoxesActions.fetch();
+    SnippetsActions.fetch();
     ClassesActions.fetch();
   },
 
@@ -121,16 +121,16 @@ export default React.createClass({
             displayMember="text"
             menuItems={this.state.classes}/>
           <MUI.SelectField
-            ref="codebox"
-            name="codebox"
-            className="codebox-dropdown"
-            floatingLabelText="CodeBox"
+            ref="snippet"
+            name="snippet"
+            className="snippet-dropdown"
+            floatingLabelText="Snippet"
             valueLink={this.linkState('codebox')}
             errorText={this.getValidationMessages('codebox').join(' ')}
             valueMember="payload"
             displayMember="text"
             fullWidth={true}
-            menuItems={this.state.codeboxes}/>
+            menuItems={this.state.snippets}/>
         </div>
       </Common.Dialog>
     );
