@@ -39,7 +39,7 @@ export default Reflux.createStore({
       instanceData: {
         views: [],
         classes: [],
-        webhooks: [],
+        codeboxes: [],
         snippets: [],
         triggers: [],
         schedules: [],
@@ -49,7 +49,7 @@ export default Reflux.createStore({
       exportSpec: {
         views: [],
         classes: {},
-        webhooks: [],
+        codeboxes: [],
         snippets: {},
         triggers: {},
         schedules: {},
@@ -138,7 +138,7 @@ export default Reflux.createStore({
     const join = this.joinTrailing(
       Actions.fetchClasses.completed,
       Actions.fetchDataViews.completed,
-      Actions.fetchWebhooks.completed,
+      Actions.fetchCodeBoxes.completed,
       Actions.fetchTriggers.completed,
       Actions.fetchSnippets.completed,
       Actions.fetchSchedules.completed,
@@ -151,7 +151,7 @@ export default Reflux.createStore({
 
     Actions.fetchClasses();
     Actions.fetchDataViews();
-    Actions.fetchWebhooks();
+    Actions.fetchCodeBoxes();
     Actions.fetchTriggers();
     Actions.fetchSnippets();
     Actions.fetchSchedules();
@@ -162,8 +162,8 @@ export default Reflux.createStore({
     this.data.instanceData.classes = this.saveListFromSyncano(obj);
   },
 
-  onFetchWebhooksCompleted(obj) {
-    this.data.instanceData.webhooks = this.saveListFromSyncano(obj);
+  onFetchCodeBoxesCompleted(obj) {
+    this.data.instanceData.CodeBoxes = this.saveListFromSyncano(obj);
   },
 
   onFetchTriggersCompleted(obj) {

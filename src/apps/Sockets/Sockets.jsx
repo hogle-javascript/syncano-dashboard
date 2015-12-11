@@ -18,7 +18,7 @@ import Classes from '../Classes';
 import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
-import Webhooks from '../Webhooks';
+import CodeBoxes from '../CodeBoxes';
 
 export default React.createClass({
 
@@ -32,7 +32,7 @@ export default React.createClass({
     Reflux.connect(Data.Store, 'dataviews'),
     Reflux.connect(Schedules.Store, 'schedules'),
     Reflux.connect(Triggers.Store, 'triggers'),
-    Reflux.connect(Webhooks.Store, 'webhooks'),
+    Reflux.connect(CodeBoxes.Store, 'codeboxes'),
 
     Mixins.Dialog,
     Mixins.Dialogs,
@@ -77,8 +77,8 @@ export default React.createClass({
     Data.Actions.showDialog();
   },
 
-  showWebhookAddDialog() {
-    Webhooks.Actions.showDialog();
+  showCodeBoxAddDialog() {
+    CodeBoxes.Actions.showDialog();
   },
 
   fetch() {
@@ -88,13 +88,13 @@ export default React.createClass({
     Classes.Actions.fetch();
     Schedules.Actions.fetch();
     Triggers.Actions.fetch();
-    Webhooks.Actions.fetch();
+    CodeBoxes.Actions.fetch();
   },
 
   render() {
     return (
       <Container>
-        <Webhooks.Dialog />
+        <CodeBoxes.Dialog />
         <Data.Dialog />
         <Schedules.Dialog />
         <Triggers.Dialog />
@@ -102,7 +102,7 @@ export default React.createClass({
 
         <Common.InnerToolbar title="Sockets">
           <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
-          <Common.Socket.Webhook onTouchTap={this.showWebhookAddDialog}/>
+          <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
           <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
           <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
           <Common.Socket.Schedule
@@ -120,12 +120,12 @@ export default React.createClass({
               emptyItemHandleClick={this.showDataViewAddDialog}
               emptyItemContent="Create a Data Socket"/>
 
-            <Webhooks.List
+            <CodeBoxes.List
               name="CodeBox Sockets"
-              isLoading={this.state.webhooks.isLoading}
-              items={this.state.webhooks.items}
-              handleTitleClick={this.handleListTitleClick.bind(null, 'webhooks')}
-              emptyItemHandleClick={this.showWebhookAddDialog}
+              isLoading={this.state.codeboxes.isLoading}
+              items={this.state.codeboxes.items}
+              handleTitleClick={this.handleListTitleClick.bind(null, 'codeboxes')}
+              emptyItemHandleClick={this.showCodeBoxAddDialog}
               emptyItemContent="Create a CodeBox Socket"/>
 
             <Channels.List

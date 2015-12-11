@@ -135,8 +135,8 @@ export default Radium(React.createClass({
         name: 'Snippet',
         icon: 'synicon-package-variant'
       },
-      webhook: {
-        name: 'Webhook',
+      codeBox: {
+        name: 'CodeBox',
         icon: 'synicon-arrow-up-bold'
       },
       trigger: {

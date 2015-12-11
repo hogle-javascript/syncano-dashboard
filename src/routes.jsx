@@ -24,9 +24,9 @@ import Solutions from './apps/Solutions';
 // Instance Apps
 import Admins from './apps/Admins/Admins';
 import ApiKeys from './apps/ApiKeys/ApiKeys';
+import CodeBoxes from './apps/CodeBoxes';
 import Snippet from './apps/Snippet';
 import Snippets from './apps/Snippets';
-import Webhooks from './apps/Webhooks';
 import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
 import Users from './apps/Users/Users';
@@ -156,20 +156,20 @@ export default (
           <DefaultRoute handler={Classes}/>
         </Route>
 
-        {/* WebHooks */}
+        {/* CodeBoxes */}
         <Route
-          name="webhooks"
-          path="webhooks"
+          name="codeBoxes"
+          path="codeboxes"
           >
 
-          {/* Webhook Traces */}
+          {/* CodeBox Traces */}
           <Route
-            name='webhook-traces'
-            handler={Data.WebhookTraces}
-            path='webhook/:webhookName/traces'
+            name='codeBox-traces'
+            handler={CodeBoxes.Traces}
+            path=':codeBoxName/traces'
             />
 
-          <DefaultRoute handler={Webhooks}/>
+          <DefaultRoute handler={CodeBoxes}/>
 
         </Route>
 

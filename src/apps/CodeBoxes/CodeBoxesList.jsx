@@ -5,18 +5,18 @@ import Router from 'react-router';
 import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
-import Actions from './WebhooksActions';
-import Store from './WebhooksStore';
+import Actions from './CodeBoxesActions';
+import Store from './CodeBoxesStore';
 
 // Components
-import ListItem from './WebhooksListItem';
+import ListItem from './CodeBoxesListItem';
 import Common from '../../common';
 
 let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
-  displayName: 'WebhooksList',
+  displayName: 'CodeBoxesList',
 
   mixins: [
     Router.State,
@@ -39,9 +39,9 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveWebhooks() {
+  handleRemoveCodeBoxes() {
     console.info('Data::handleDelete');
-    Actions.removeWebhooks(Store.getCheckedItems());
+    Actions.removeCodeBoxes(Store.getCheckedItems());
   },
 
   initDialogs() {
@@ -51,23 +51,23 @@ export default React.createClass({
       {
         dialog: Common.Dialog,
         params: {
-          key: 'removeWebhookDialog',
-          ref: 'removeWebhookDialog',
-          title: 'Delete a Webhook',
+          key: 'removeCodeBoxDialog',
+          ref: 'removeCodeBoxDialog',
+          title: 'Delete a CodeBox',
           actions: [
             {
               text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeWebhookDialog')
+              onClick: this.handleCancel.bind(null, 'removeCodeBoxDialog')
             },
             {
               text: 'Confirm',
-              onClick: this.handleRemoveWebhooks
+              onClick: this.handleRemoveCodeBoxes
             }
           ],
           modal: true,
           avoidResetState: true,
           children: [
-            `Do you really want to delete ${this.getDialogListLength(checkedItems)} Webhooks?`,
+            `Do you really want to delete ${this.getDialogListLength(checkedItems)} CodeBoxes?`,
             this.getDialogList(checkedItems, 'name')
           ]
         }
@@ -78,10 +78,10 @@ export default React.createClass({
   renderItem(item, index) {
     return (
       <ListItem
-        key={`webhookslist-${index}`}
+        key={`codeBoxeslist-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeWebhooks.bind(null, [item]))}/>
+        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeCodeBoxes.bind(null, [item]))}/>
     );
   },
 
@@ -125,8 +125,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Webhook"
-                onTouchTap={this.showDialog.bind(null, 'removeWebhookDialog')}/>
+                primaryText="Delete CodeBox"
+                onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>
         </Common.ColumnList.Header>

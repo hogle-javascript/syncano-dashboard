@@ -1,5 +1,5 @@
 module.exports = {
-  tags: ['webhookTraces'],
+  tags: ['codeBoxTraces'],
   before(client) {
     var loginPage = client.page.loginPage();
     loginPage.navigate();
@@ -12,17 +12,14 @@ module.exports = {
   after(client) {
     client.end();
   },
-  'User goes to Webhook Traces View': (client) => {
-    var instancesPage = client.page.instancesPage();
-    instancesPage.clickButton('@instancesTableName');
-
+  'User goes to CodeBox Traces View': (client) => {
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
-    socketsPage.clickButton('@codeBoxSocketItem');
+    socketsPage.clickButton('@codeBoxSocketItemTraces');
 
-    var webhookTracesPage = client.page.webhookTracesPage();
+    var codeBoxTracesPage = client.page.codeBoxTracesPage();
 
-    webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
+    codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
   }
 };

@@ -24,7 +24,7 @@ module.exports = {
   commands: [dataCommands],
   elements: {
     codeBoxSocketDropDown: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../../../..//button`,
+      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../../../..//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -53,7 +53,7 @@ module.exports = {
       selector: '//span[@class="synicon-pencil"]',
       locateStrategy: 'xpath'
     },
-    addWebhookButton: {
+    addCodeBoxButton: {
       selector: '//span[@class="synicon-socket-codebox"]',
       locateStrategy: 'xpath'
     },
@@ -61,44 +61,48 @@ module.exports = {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalTitle: {
-      selector: '//h3[text()="Create a Webhook"]',
+    codeBoxSocketItemTraces: {
+      selector: '//div[text()="webhook_description"]/following-sibling::div[1]/a',
       locateStrategy: 'xpath'
     },
-    addWebhookModalNameInput: {
+    addCodeBoxModalTitle: {
+      selector: '//h3[text()="Create a CodeBox"]',
+      locateStrategy: 'xpath'
+    },
+    addCodeBoxModalNameInput: {
       selector: '//input[@name="name"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalDescriptionInput: {
+    addCodeBoxModalDescriptionInput: {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalCodeBoxDropdown: {
+    addCodeBoxModalCodeBoxDropdown: {
       selector: '//div[@class="codebox-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addWebhookModalCodeBoxDropdownChoice: {
+    addCodeBoxModalCodeBoxDropdownChoice: {
       selector: '//div[@class="codebox-dropdown"]//span[text()="codebox"]',
       locateStrategy: 'xpath'
     },
-    webhookTableRow: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]`,
+    codeBoxTableRow: {
+      selector: `//div[text()="${utils.addSuffix('codeBox')}"]`,
       locateStrategy: 'xpath'
     },
-    selectWebhookTableRow: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../div[1]/span`,
+    selectCodeBoxTableRow: {
+      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../div[1]/span`,
       locateStrategy: 'xpath'
     },
-    webhookTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('webhook')}"]/../../../../following-sibling::div[1]`,
+    codeBoxTableRowDescription: {
+      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
-    deleteWebhookModalTitle: {
+    deleteCodeBoxModalTitle: {
       selector: '//h3[text()="Delete a CodeBox Socket"]',
       locateStrategy: 'xpath'
     },
-    editWebhookModalTitle: {
-      selector: '//h3[text()="Edit a Webhook"]',
+    editCodeBoxModalTitle: {
+      selector: '//h3[text()="Edit a CodeBox"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {
@@ -109,7 +113,7 @@ module.exports = {
       selector: '//div[text()="Data Endpoints"]',
       locateStrategy: 'xpath'
     },
-    webhookToSelect: {
+    codeBoxToSelect: {
       selector: '.col-xs-12 .synicon-arrow-up-bold'
     },
     checkboxToSelect: {

@@ -14,7 +14,7 @@ import Traces from '../Traces';
 
 export default React.createClass({
 
-  displayName: 'WebhookTraces',
+  displayName: 'CodeBoxTraces',
 
   mixins: [
     Router.State,
@@ -25,12 +25,12 @@ export default React.createClass({
   ],
 
   render() {
-    let webhookName = this.getParams().webhookName;
+    let codeBoxName = this.getParams().codeBoxName;
 
     return (
       <Traces
-        objectId={webhookName}
-        tracesFor='webhook'/>
+        objectId={codeBoxName}
+        tracesFor='codeBox'/>
     );
   }
 });

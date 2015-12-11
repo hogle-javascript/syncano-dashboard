@@ -1,8 +1,8 @@
 export default {
-  get(webhookName) {
+  get(codeboxName) {
     this.Connection
       .WebHooks
-      .get(webhookName)
+      .get(codeboxName)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -39,10 +39,10 @@ export default {
       .error(this.failure);
   },
 
-  listTraces(webhookId) {
+  listTraces(codeboxId) {
     this.Connection
       .WebHooks
-      .traces(webhookId)
+      .traces(codeboxId)
       .then(this.completed)
       .catch(this.failure);
   }
