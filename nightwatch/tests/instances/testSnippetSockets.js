@@ -12,8 +12,8 @@ export default {
   after(client) {
     client.end();
   },
-  'User adds a Snippet Socket': (client) => {
-    const codeBox = utils.addSuffix('codeBox');
+  'User adds a CodeBox Socket': (client) => {
+    const codeBox = utils.addSuffix('codebox');
     const socketsPage = client.page.socketsPage();
 
     socketsPage
@@ -26,7 +26,7 @@ export default {
       .clickButton('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
-  'User edits a Snippet Socket': (client) => {
+  'User edits a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
@@ -45,7 +45,7 @@ export default {
       .waitForElementVisible('@codeBoxTableRow')
       .waitForElementVisible('@codeBoxTableRowDescription');
   },
-  'User deletes a Snippet Socket': (client) => {
+  'User deletes a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
