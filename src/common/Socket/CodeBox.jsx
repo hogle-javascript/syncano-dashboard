@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'CodeBoxSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create CodeBox'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-codebox"
-        tooltip="Create CodeBox Socket"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

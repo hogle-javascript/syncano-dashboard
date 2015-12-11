@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'ScheduleSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Schedule'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-schedule"
-        tooltip="Create Schedule Socket"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

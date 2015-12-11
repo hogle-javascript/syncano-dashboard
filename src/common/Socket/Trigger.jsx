@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'TriggerSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Trigger'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-trigger"
-        tooltip="Create Trigger Socket"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

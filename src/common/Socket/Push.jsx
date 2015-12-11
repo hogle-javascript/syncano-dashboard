@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'PushSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Push Notification'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-push"
-        tooltip="Create Push Socket"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

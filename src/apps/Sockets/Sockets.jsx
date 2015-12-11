@@ -99,6 +99,24 @@ export default React.createClass({
     CodeBoxes.Actions.fetch();
   },
 
+  renderToolbar() {
+    if (!this.hasAnyItem()) {
+      return <Common.InnerToolbar title="Sockets" />;
+    }
+
+    return (
+      <Common.InnerToolbar title="Sockets">
+        <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
+        <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
+        <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
+        <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
+        <Common.Socket.Schedule
+          onTouchTap={this.showScheduleAddDialog}
+          tooltipPosition="bottom-left"/>
+      </Common.InnerToolbar>
+    );
+  },
+
   renderLists() {
     if (!this.hasAnyItem()) {
       return <EmptyView />;
@@ -161,15 +179,7 @@ export default React.createClass({
         <Channels.Dialog />
         <GroupDialog />
 
-        <Common.InnerToolbar title="Sockets">
-          <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
-          <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
-          <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
-          <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
-          <Common.Socket.Schedule
-            onTouchTap={this.showScheduleAddDialog}
-            tooltipPosition="bottom-left"/>
-        </Common.InnerToolbar>
+        {this.renderToolbar()}
 
         {this.renderLists()}
       </Container>

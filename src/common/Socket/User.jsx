@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'UserSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create an User'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-user"
-        tooltip="Create an User"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

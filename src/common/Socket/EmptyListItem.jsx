@@ -26,12 +26,12 @@ export default React.createClass({
         fontWeight: 600
       },
       addIcon: {
-        fontSize: 28
+        fontSize: 36
       },
       addIconContainer: {
-        width: 28,
-        height: 28,
-        padding: 0
+        width: 36,
+        height: 36,
+        padding: '0 0 0 6px'
       }
     };
   },
@@ -40,7 +40,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div className="col-xs-13">
+      <div className="col-xs-14">
         <span style={styles.leadingText}>{`${this.props.title} `}</span>
         {this.props.children}
       </div>
@@ -64,13 +64,15 @@ export default React.createClass({
       <div
         style={styles.listItem}
         className="row align-middle">
-        <div className="col-xs-9"></div>
+        <div className="col-xs-8"></div>
         <div className="col-xs-3">
           {this.renderSocketIcon(this.props.socketName)}
         </div>
         {this.renderText()}
-        <div className="col-xs-10">
+        <div className="col-xs-2">
           <Socket
+            tooltip={this.props.addTooltip}
+            tooltipPosition="bottom-center"
             onTouchTap={this.props.handleAdd}
             style={styles.addIconContainer}
             iconStyle={styles.addIcon}/>

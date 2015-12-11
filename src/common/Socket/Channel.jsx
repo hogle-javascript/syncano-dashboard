@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'ChannelSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Channel'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-socket-channel"
-        tooltip="Create Channel Socket"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );

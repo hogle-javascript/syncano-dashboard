@@ -6,6 +6,12 @@ export default React.createClass({
 
   displayName: 'ChannelSocket',
 
+  getDefaultProps() {
+    return {
+      tooltipPosition: 'bottom-left'
+    };
+  },
+
   getStyles() {
     return {
       iconStyle: {
@@ -26,7 +32,6 @@ export default React.createClass({
       <SocketWrapper
         {...other}
         iconClassName="synicon-plus-circle-outline"
-        tooltipPosition="bottom-left"
         style={style}
         iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
