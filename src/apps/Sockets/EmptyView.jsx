@@ -72,7 +72,7 @@ export default React.createClass({
           Start building your app here!
         </div>
         <div style={styles.subtitle}>
-          Pick a functionality you need and start building your API
+          Pick a functionality you need and start building your API.
         </div>
         <Socket.EmptyListItem
           addTooltip="Create a Data View"

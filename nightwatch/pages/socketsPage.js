@@ -134,6 +134,10 @@ module.exports = {
     dataSocketTableTitle: {
       selector: '//div[text()="Data Sockets"]',
       locateStrategy: 'xpath'
+    },
+    emptySocketsHeading: {
+      selector: '//div[text()="Start building your app here!"]',
+      locateStrategy: 'xpath'
     }
   }
 };
