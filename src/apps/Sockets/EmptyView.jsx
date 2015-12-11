@@ -3,9 +3,9 @@ import React from 'react';
 import ChannelsActions from '../Channels/ChannelsActions';
 import DataViewsActions from '../Data/DataViewsActions';
 import GroupsActions from '../Users/GroupsActions';
-import WebooksActions from '../Webhooks/WebhooksActions';
-import TriggersActions from '../Tasks/TriggersActions';
-import SchedulesActions from '../Tasks/SchedulesActions';
+import WebhooksActions from '../Webhooks/WebhooksActions';
+import TriggersActions from '../Triggers/TriggersActions';
+import SchedulesActions from '../Schedules/SchedulesActions';
 
 import Socket from '../../common/Socket';
 
@@ -59,6 +59,10 @@ export default React.createClass({
     WebhooksActions.showDialog();
   },
 
+  showPushNotificationAddDialog() {
+    console.log('EmptyView::showPushNotificationAddDialog');
+  },
+
   render() {
     let styles = this.getStyles();
 
@@ -71,43 +75,43 @@ export default React.createClass({
           Pick a functionality you need and start building your API
         </div>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showDataViewAddDialog}
           socketName="Data"
           title="Data">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showGroupAddDialog}
           socketName="Users"
           title="Users & Groups">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showChannelAddDialog}
           socketName="Channel"
           title="Channel">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showWebhookAddDialog}
           socketName="Webhook"
           title="CodeBox">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showPushNotificationAddDialog}
           socketName="Push"
           title="Push Notification">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showTriggerAddDialog}
           socketName="Trigger"
           title="Trigger">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={() => {console.error('asdasd');}}
+          handleAdd={this.showScheduleAddDialog}
           socketName="Schedule"
           title="Schedule">
           Logic of your app in a cloud in your favorite language

@@ -19,6 +19,7 @@ import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
 import Webhooks from '../Webhooks';
+import GroupDialog from '../Users/GroupDialog';
 import EmptyView from './EmptyView';
 
 export default React.createClass({
@@ -158,6 +159,7 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
+        <GroupDialog />
 
         <Common.InnerToolbar title="Sockets">
           <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
