@@ -35,6 +35,6 @@ deployment:
       - NODE_ENV=staging npm run-script mark-issues
 
   sockets:
-    branch: sockets
+    branch: /.*/
     commands:
       - NODE_ENV=staging npm run-script deployment-branch
