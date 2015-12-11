@@ -3,7 +3,7 @@ import React from 'react';
 import ChannelsActions from '../Channels/ChannelsActions';
 import DataViewsActions from '../Data/DataViewsActions';
 import GroupsActions from '../Users/GroupsActions';
-import WebhooksActions from '../Webhooks/WebhooksActions';
+import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
 
@@ -55,12 +55,12 @@ export default React.createClass({
     DataViewsActions.showDialog();
   },
 
-  showWebhookAddDialog() {
-    WebhooksActions.showDialog();
+  showCodeBoxAddDialog() {
+    CodeBoxesActions.showDialog();
   },
 
   showPushNotificationAddDialog() {
-    console.log('EmptyView::showPushNotificationAddDialog');
+    console.info('EmptyView::showPushNotificationAddDialog');
   },
 
   render() {
@@ -93,17 +93,23 @@ export default React.createClass({
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
         <Socket.EmptyListItem
-          handleAdd={this.showWebhookAddDialog}
-          socketName="Webhook"
+          handleAdd={this.showCodeBoxAddDialog}
+          socketName="CodeBox"
           title="CodeBox">
           Logic of your app in a cloud in your favorite language
           </Socket.EmptyListItem>
-        <Socket.EmptyListItem
+
+        {/* eslint-disable no-inline-comments */}
+
+        {/* <Socket.EmptyListItem
           handleAdd={this.showPushNotificationAddDialog}
           socketName="Push"
           title="Push Notification">
           Logic of your app in a cloud in your favorite language
-          </Socket.EmptyListItem>
+          </Socket.EmptyListItem> */}
+
+        {/* eslint-enable no-inline-comments */}
+
         <Socket.EmptyListItem
           handleAdd={this.showTriggerAddDialog}
           socketName="Trigger"
