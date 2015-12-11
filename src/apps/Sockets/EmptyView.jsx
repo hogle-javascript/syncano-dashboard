@@ -31,6 +31,10 @@ export default React.createClass({
       listContainer: {
         display: 'flex',
         flexDirection: 'column'
+      },
+      socketDescription: {
+        paddingTop: 5,
+        color: '#9B9B9B'
       }
     };
   },
@@ -69,38 +73,46 @@ export default React.createClass({
     return (
       <div style={styles.container}>
         <div style={styles.title}>
-          Start building your app here!
+          Start building your app here
         </div>
         <div style={styles.subtitle}>
-          Pick a functionality you need and start building your API.
+          Pick a functionality you need and start building your API
         </div>
         <Socket.EmptyListItem
           addTooltip="Create a Data View"
           handleAdd={this.showDataViewAddDialog}
           socketName="Data"
           title="Add Data">
-          Place your objects and manage data templates on Syncano.
+          <div style={styles.socketDescription}>
+            Place your objects and manage data templates on Syncano.
+          </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Group"
           handleAdd={this.showGroupAddDialog}
           socketName="Users"
           title="Organize Users & Groups">
-          Create users for your app and assign them to groups.
+          <div style={styles.socketDescription}>
+            Create users for your app and assign them to groups.
+          </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Channel"
           handleAdd={this.showChannelAddDialog}
           socketName="Channel"
           title="Manage Channels">
-          Get real-time updates to keep your data synchronized.
+          <div style={styles.socketDescription}>
+            Get real-time updates to keep your data synchronized.
+          </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a CodeBox"
           handleAdd={this.showCodeBoxAddDialog}
           socketName="CodeBox"
           title="Write CodeBoxes™">
-          Run scripts on our servers and use them for business logic.
+          <div style={styles.socketDescription}>
+            Run scripts on our servers and use them for business logic.
+          </div>
         </Socket.EmptyListItem>
 
         {/* eslint-disable no-inline-comments */}
@@ -120,14 +132,18 @@ export default React.createClass({
           handleAdd={this.showTriggerAddDialog}
           socketName="Trigger"
           title="Configure Triggers">
-          Execute a CodeBox™ when your data is created, updated or deleted.
+          <div style={styles.socketDescription}>
+            Execute a CodeBox™ when your data is created, updated or deleted.
+          </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Schedule"
           handleAdd={this.showScheduleAddDialog}
           socketName="Schedule"
           title="Create Schedules">
-          Plan events and run codeboxes at desired times.
+          <div style={styles.socketDescription}>
+            Plan events and run codeboxes at desired times.
+          </div>
         </Socket.EmptyListItem>
       </div>
     );

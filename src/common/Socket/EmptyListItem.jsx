@@ -40,7 +40,7 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div className="col-xs-14">
+      <div className="col-xs-12">
         <span style={styles.leadingText}>{`${this.props.title} `}</span>
         {this.props.children}
       </div>
@@ -64,7 +64,7 @@ export default React.createClass({
       <div
         style={styles.listItem}
         className="row align-middle">
-        <div className="col-xs-8"></div>
+        <div className="col-xs-9"></div>
         <div className="col-xs-3">
           {this.renderSocketIcon(this.props.socketName)}
         </div>
