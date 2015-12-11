@@ -7,6 +7,7 @@ import Trigger from './Trigger';
 import User from './User';
 import Users from './Users';
 import Webhook from './Webhook';
+import EmptyListItem from './EmptyListItem';
 
 let Socket = Default;
 
@@ -18,5 +19,6 @@ Socket.Trigger = Trigger;
 Socket.User = User;
 Socket.Users = Users;
 Socket.Webhook = Webhook;
+Socket.EmptyListItem = EmptyListItem;
 
 export default Socket;
