@@ -1,6 +1,6 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['tasks'],
   before: function(client) {
     const loginPage = client.page.loginPage();

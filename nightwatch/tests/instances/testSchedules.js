@@ -1,6 +1,6 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['schedules'],
   before(client) {
     const loginPage = client.page.loginPage();

@@ -1,6 +1,6 @@
 import utils from '../utils';
 
-module.exports = {
+export default {
   tags: ['users'],
   before(client) {
     const loginPage = client.page.loginPage();

@@ -1,4 +1,4 @@
-import globals from '../globals';
+import globals from '../../globals';
 import Syncano from 'syncano';
 
 export default {

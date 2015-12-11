@@ -1,6 +1,6 @@
-import utils from '../utils';
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['api_keys'],
   before(client) {
     const loginPage = client.page.loginPage();
@@ -54,7 +54,7 @@ module.exports = {
         client.elementIdText(result.value.ELEMENT, (text) => {
           client.assert.notEqual(text.value, apiKeyValue);
         });
-      })
+      });
   },
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();

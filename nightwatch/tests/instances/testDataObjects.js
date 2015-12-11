@@ -1,6 +1,6 @@
-import utils from '../utils';
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['dataObjects'],
   before(client) {
     const loginPage = client.page.loginPage();
