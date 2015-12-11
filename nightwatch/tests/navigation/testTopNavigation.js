@@ -6,7 +6,6 @@ module.exports = {
     loginPage
       .navigate()
       .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD)
-      .verifyLoginSuccessful();
   },
   after(client) {
     client.end();

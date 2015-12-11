@@ -5,11 +5,9 @@ export default {
   before: (client) => {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after: (client) => {
     client.end();

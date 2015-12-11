@@ -1,4 +1,4 @@
-import utils from '../utils';
+import utils from '../../utils';
 
 export default {
   tags: ['users'],
@@ -7,10 +7,7 @@ export default {
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
