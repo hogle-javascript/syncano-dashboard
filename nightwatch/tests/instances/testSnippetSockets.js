@@ -1,7 +1,7 @@
 import utils from '../../utils';
 
 export default {
-  tags: ['SnippetSockets'],
+  tags: ['codeBoxSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
