@@ -129,7 +129,6 @@
     "deployment-master": "gulp deployment-master",
     "deployment-devel": "gulp deployment-devel",
     "deployment-branch": "gulp deployment-branch",
-    "bump": "gulp bump",
-    "mark-issues": "gulp mark-issues"
+    "bump": "gulp bump"
   }
 }
