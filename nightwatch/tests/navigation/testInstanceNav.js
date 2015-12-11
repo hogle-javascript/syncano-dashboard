@@ -103,11 +103,11 @@ module.exports = {
     usersPage.waitForElementPresent('@user');
   }
   // It will be codeBox Socket traces view test when codebox start working
-  //'User goes to Webhook Traces View': (client) => {
+  //'User goes to CodeBox Traces View': (client) => {
   //  const socketsPage = client.page.socketsPage();
-  //  const webhookTracesPage = client.page.webhookTracesPage();
+  //  const codeBoxTracesPage = client.page.codeBoxTracesPage();
   //
   //  socketsPage.clickButton('@codeBoxSocketItem');
-  //  webhookTracesPage.waitForElementPresent('@webhookTracesEmptyView');
+  //  codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
   //},
 };

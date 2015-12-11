@@ -8,10 +8,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Snippets.listTraces'
   },
 
-  fetchWebhookTraces: {
+  fetchCodeBoxTraces: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Webhooks.listTraces'
+    method: 'Syncano.Actions.CodeBoxes.listTraces'
   },
 
   fetchTriggerTraces: {
@@ -32,10 +32,10 @@ export default CreateActions({
     method: 'Syncano.Actions.Snippets.get'
   },
 
-  fetchCurrentWebhook: {
+  fetchCurrentCodeBox: {
     asyncResult: true,
     children: ['completed', 'failure'],
-    method: 'Syncano.Actions.Webhooks.get'
+    method: 'Syncano.Actions.CodeBoxes.get'
   },
 
   fetchCurrentTrigger: {

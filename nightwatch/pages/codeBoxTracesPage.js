@@ -1,17 +1,17 @@
-var webhookTracesCommands = {
-  clickButton: function(button) {
+var codeBoxTracesCommands = {
+  clickButton(button) {
     return this.waitForElementVisible(button, 5000)
       .click(button);
-  },
+  }
 };
 
 module.exports = {
-  commands: [webhookTracesCommands],
+  commands: [codeBoxTracesCommands],
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
     },
-    webhookTracesEmptyView: {
+    codeBoxTracesEmptyView: {
       selector: '//span[text()="There are no traces for this "]',
       locateStrategy: 'xpath'
     }

@@ -5,8 +5,8 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores and Actions
-import WebhooksActions from './WebhooksActions';
-import WebhookDialogStore from './WebhookDialogStore';
+import Actions from './CodeBoxesActions';
+import DialogStore from './CodeBoxDialogStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 
 // Components
@@ -15,10 +15,10 @@ import Common from '../../common';
 
 export default React.createClass({
 
-  displayName: 'WebhookDialog',
+  displayName: 'CodeBoxDialog',
 
   mixins: [
-    Reflux.connect(WebhookDialogStore),
+    Reflux.connect(DialogStore),
     Mixins.Dialog,
     Mixins.Form
   ],
@@ -33,12 +33,12 @@ export default React.createClass({
   },
 
   handleDialogShow() {
-    console.info('WebhookDialog::handleDialogShow');
+    console.info('CodeBoxDialog::handleDialogShow');
     SnippetsActions.fetch();
   },
 
   handleAddSubmit() {
-    WebhooksActions.createWebhook({
+    Actions.createCodeBox({
       name: this.state.name,
       codebox: this.state.codebox,
       description: this.state.description,
@@ -47,7 +47,7 @@ export default React.createClass({
   },
 
   handleEditSubmit() {
-    WebhooksActions.updateWebhook(this.state.name, {
+    Actions.updateCodeBox(this.state.name, {
       codebox: this.state.codebox,
       description: this.state.description,
       public: this.state.public
@@ -81,7 +81,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a Webhook`}
+        title={`${title} a CodeBox`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         modal={true}>
@@ -93,7 +93,7 @@ export default React.createClass({
           disabled={this.hasEditMode()}
           valueLink={this.linkState('name')}
           errorText={this.getValidationMessages('name').join(' ')}
-          hintText="Name of the Webhook"
+          hintText="Name of the CodeBox"
           floatingLabelText="Name"/>
         <MUI.TextField
           ref="description"
@@ -101,7 +101,7 @@ export default React.createClass({
           fullWidth={true}
           valueLink={this.linkState('description')}
           errorText={this.getValidationMessages('description').join(' ')}
-          hintText="Description of the Webhook"
+          hintText="Description of the CodeBox"
           floatingLabelText="Description"/>
         <MUI.SelectField
           className="snippet-dropdown"
@@ -120,7 +120,7 @@ export default React.createClass({
           onToggle={this.handleToogle}
           style={{marginTop: 20}}
           defaultToggled={this.state.public}
-          label='Make this Webhook public?'/>
+          label='Make this CodeBox public?'/>
       </Common.Dialog>
     );
   }

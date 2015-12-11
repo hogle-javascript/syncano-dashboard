@@ -7,16 +7,16 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Stores and Actions
-import Actions from './WebhooksActions';
-import Store from './WebhooksStore';
+import Actions from './CodeBoxesActions';
+import Store from './CodeBoxesStore';
 
 // Components
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
 // Local components
-import WebhooksList from './WebhooksList';
-import WebhookDialog from './WebhookDialog';
+import CodeBoxesList from './CodeBoxesList';
+import CodeBoxDialog from './CodeBoxDialog';
 
 
 export default React.createClass({
@@ -36,7 +36,7 @@ export default React.createClass({
     this.fetch();
   },
 
-  showWebhookDialog() {
+  showCodeBoxDialog() {
     Actions.showDialog();
   },
 
@@ -47,20 +47,20 @@ export default React.createClass({
   render() {
     return (
       <Container>
-        <WebhookDialog />
+        <CodeBoxDialog />
 
         <Common.InnerToolbar title="CodeBox Sockets">
-          <Common.Socket.Webhook
+          <Common.Socket.CodeBox
             tooltipPosition="bottom-left"
-            onTouchTap={this.showWebhookDialog}/>
+            onTouchTap={this.showCodeBoxDialog}/>
         </Common.InnerToolbar>
 
-        <WebhooksList
+        <CodeBoxesList
           name="CodeBox Sockets"
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showWebhookDialog}
+          emptyItemHandleClick={this.showCodeBoxDialog}
           emptyItemContent="Create a CodeBox Socket"/>
       </Container>
     );

@@ -4,7 +4,7 @@ import {Link, State} from 'react-router';
 import {Dialogs} from '../../mixins';
 
 // Stores and Actions
-import Actions from './WebhooksActions';
+import Actions from './CodeBoxesActions';
 
 // Components
 import Common from '../../common';
@@ -14,20 +14,12 @@ let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
-  displayName: 'WebhooksListItem',
+  displayName: 'CodeBoxesListItem',
 
   mixins: [
     State,
     Dialogs
   ],
-
-  handleItemClick(itemName) {
-    // Redirect to traces screen
-    this.transitionTo('webhook-traces', {
-      instanceName: this.getParams().instanceName,
-      webhookName: itemName
-    });
-  },
 
   render() {
     let item = this.props.item;
@@ -53,10 +45,10 @@ export default React.createClass({
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
         <Column.Desc className="col-xs-4">
           <Link
-            to="webhook-traces"
+            to="codeBox-traces"
             params={{
               instanceName: this.getParams().instanceName,
-              webhookName: item.name
+              codeBoxName: item.name
             }}>
             traces
           </Link>
