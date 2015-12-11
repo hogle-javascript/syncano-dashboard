@@ -16,18 +16,18 @@ export default {
     client.end();
   },
   'User adds a Snippet Socket': (client) => {
-    const webhook = utils.addSuffix('webhook');
+    const codeBox = utils.addSuffix('codeBox');
     const socketsPage = client.page.socketsPage();
 
     socketsPage
       .navigate()
       .waitForElementVisible('@snippetSocketItem')
-      .clickButton('@addWebhookButton')
-      .waitForElementVisible('@addWebhookModalTitle')
-      .fillInputField('@addWebhookModalNameInput', webhook)
-      .selectFromDropdown('@addWebhookModalSnippetDropdown', '@addWebhookModalSnippetDropdownChoice')
+      .clickButton('@addCodeBoxButton')
+      .waitForElementVisible('@addCodeBoxModalTitle')
+      .fillInputField('@addCodeBoxModalNameInput', codeBox)
+      .selectFromDropdown('@addCodeBoxModalSnippetDropdown', '@addCodeBoxModalSnippetDropdownChoice')
       .clickButton('@confirmButton')
-      .waitForElementVisible('@webhookTableRow');
+      .waitForElementVisible('@codeBoxTableRow');
   },
   'User edits a Snippet Socket': (client) => {
     const socketsPage = client.page.socketsPage();
@@ -40,13 +40,13 @@ export default {
 
     socketsPage
       .clickButton('@editDropdownItem')
-      .waitForElementVisible('@editWebhookModalTitle')
-      .fillInputField('@addWebhookModalDescriptionInput', 'webhook_description');
+      .waitForElementVisible('@editCodeBoxModalTitle')
+      .fillInputField('@addCodeBoxModalDescriptionInput', 'codeBox_description');
     client.pause(1000);
     socketsPage
       .clickButton('@confirmButton')
-      .waitForElementVisible('@webhookTableRow')
-      .waitForElementVisible('@webhookTableRowDescription');
+      .waitForElementVisible('@codeBoxTableRow')
+      .waitForElementVisible('@codeBoxTableRowDescription');
   },
   'User deletes a Snippet Socket': (client) => {
     const socketsPage = client.page.socketsPage();
@@ -59,10 +59,10 @@ export default {
 
     socketsPage
       .clickButton('@deleteDropdownItem')
-      .waitForElementVisible('@deleteWebhookModalTitle');
+      .waitForElementVisible('@deleteCodeBoxModalTitle');
     client.pause(1000);
     socketsPage
       .clickButton('@confirmButton')
-      .waitForElementNotPresent('@selectWebhookTableRow');
+      .waitForElementNotPresent('@selectCodeBoxTableRow');
   }
 };

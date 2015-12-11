@@ -4,7 +4,7 @@ import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
-  displayName: 'WebhookSocket',
+  displayName: 'CodeBoxSocket',
 
   getStyles() {
     return {

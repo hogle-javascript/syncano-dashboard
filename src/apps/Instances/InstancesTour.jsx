@@ -62,7 +62,7 @@ export default React.createClass({
         text: <div>You can add a new <strong style={styles.tourHighlight}>Instance</strong> by clicking here
           <div style={styles.secondLine}>
             You will see a similar button placed in same screen corner, on other views as well - you will
-            use it to add new items in Classes, Snippets, Schedules, Triggers, Webhooks, Users, Groups and Channels
+            use it to add new items in Classes, Snippets, Schedules, Triggers, CodeBoxes, Users, Groups and Channels
           </div>
         </div>,
         radius: 95

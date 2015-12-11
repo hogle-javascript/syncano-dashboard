@@ -3,29 +3,29 @@ import CreateActions from '../../utils/ActionsConstructor.js';
 export default CreateActions(
   {
     fetch: {},
-    setWebhooks: {},
+    setCodeBoxes: {},
 
-    createWebhook: {
+    createCodeBox: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Webhooks.create'
+      method: 'Syncano.Actions.CodeBoxes.create'
     },
-    fetchWebhooks: {
+    fetchCodeBoxes: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Webhooks.list'
+      method: 'Syncano.Actions.CodeBoxes.list'
     },
-    updateWebhook: {
+    updateCodeBox: {
       asyncResult: true,
       asyncForm: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Webhooks.update'
+      method: 'Syncano.Actions.CodeBoxes.update'
     },
-    removeWebhooks: {
+    removeCodeBoxes: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.Webhooks.remove'
+      method: 'Syncano.Actions.CodeBoxes.remove'
     }
   },
   {

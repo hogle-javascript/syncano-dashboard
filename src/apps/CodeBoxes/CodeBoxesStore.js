@@ -5,10 +5,10 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import WebhooksActions from './WebhooksActions';
+import Actions from './CodeBoxesActions';
 
 export default Reflux.createStore({
-  listenables: WebhooksActions,
+  listenables: Actions,
   mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore
@@ -29,31 +29,31 @@ export default Reflux.createStore({
     );
   },
 
-  setWebhooks(items) {
+  setCodeBoxes(items) {
     this.data.items = Object.keys(items).map((item) => items[item]);
     this.trigger(this.data);
   },
 
-  getWebhooks(empty) {
+  getCodeBoxes(empty) {
     return this.data.items || empty || null;
   },
 
   refreshData() {
-    WebhooksActions.fetchWebhooks();
+    Actions.fetchCodeBoxes();
   },
 
-  onFetchWebhooks() {
+  onFetchCodeBoxes() {
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchWebhooksCompleted(items) {
-    console.debug('WebhooksStore::onFetchWebhooksCompleted');
+  onFetchCodeBoxesCompleted(items) {
+    console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
     this.data.isLoading = false;
-    WebhooksActions.setWebhooks(items);
+    Actions.setCodeBoxes(items);
   },
 
-  onRemoveWebhooksCompleted() {
+  onRemoveCodeBoxesCompleted() {
     this.data.hideDialogs = true;
     this.trigger(this.data);
     this.refreshData();

@@ -24,7 +24,7 @@ export default Radium(React.createClass({
   displayName: 'Traces',
 
   propTypes: {
-    tracesFor: React.PropTypes.oneOf(['webhook', 'snippet', 'trigger', 'schedule']),
+    tracesFor: React.PropTypes.oneOf(['codeBox', 'snippet', 'trigger', 'schedule']),
     objectId: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
   },
 
@@ -62,8 +62,8 @@ export default Radium(React.createClass({
 
   getConfig() {
     return {
-      webhook: {
-        route: 'webhooks',
+      codeBox: {
+        route: 'codeBoxes',
         backLabel: 'Go back to Data Views'
       },
       snippet: {

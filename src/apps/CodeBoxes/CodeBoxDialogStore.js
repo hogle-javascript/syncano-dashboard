@@ -4,12 +4,12 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import WebhooksActions from './WebhooksActions';
+import Actions from './CodeBoxesActions';
 import SnippetsActions from '../Snippets/SnippetsActions';
 import SnippetsStore from '../Snippets/SnippetsStore';
 
 export default Reflux.createStore({
-  listenables: WebhooksActions,
+  listenables: Actions,
   mixins: [
     Mixins.StoreForm,
     Mixins.DialogStore
@@ -44,15 +44,15 @@ export default Reflux.createStore({
     this.trigger({snippets});
   },
 
-  onCreateWebhookCompleted() {
-    console.debug('WebhookDialogStore::onCreateWebhookCompleted');
+  onCreateCodeBoxCompleted() {
+    console.debug('CodeBoxDialogStore::onCreateCodeBoxCompleted');
     this.dismissDialog();
-    WebhooksActions.fetchWebhooks();
+    Actions.fetchCodeBoxes();
   },
 
-  onUpdateWebhookCompleted() {
-    console.debug('WebhookDialogStore::onUpdateWebhookCompleted');
+  onUpdateCodeBoxCompleted() {
+    console.debug('CodeBoxDialogStore::onUpdateCodeBoxCompleted');
     this.dismissDialog();
-    WebhooksActions.fetchWebhooks();
+    Actions.fetchCodeBoxes();
   }
 });
