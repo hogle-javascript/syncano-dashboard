@@ -58,10 +58,9 @@ export default {
     classesPage
       .waitForElementVisible('@deleteClassModalTitle')
       .clickButton('@confirmDeleteButton');
+    classesPage.waitForElementNotVisible('@deleteClassModalTitle');
     client.pause(1000);
-    classesPage
-      .waitForElementNotVisible('@deleteClassModalTitle')
-      .waitForElementNotPresent('@classTableName');
+    classesPage.waitForElementNotPresent('@classTableName');
   },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();

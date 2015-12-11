@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   elements: {
     emptyInvoicesView: {
       selector: '//div[@class="invoices-list"]',

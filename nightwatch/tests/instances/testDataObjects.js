@@ -48,6 +48,6 @@ export default {
     client.pause(1000);
     dataObjectsPage.clickButton('@confirm');
     client.pause(1000);
-    dataObjectsPage.waitForElementNotVisible('@selectDataObjectTableRow');
+    dataObjectsPage.waitForElementNotPresent('@selectDataObjectTableRow');
   }
 };

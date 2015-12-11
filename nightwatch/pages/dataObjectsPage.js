@@ -1,5 +1,5 @@
-import utils from '../utils';
-import globals from '../globals';
+import utils from '../../utils';
+import globals from '../../globals';
 
 const dataObjectsCommands = {
   clickButton(button) {
@@ -19,7 +19,7 @@ const dataObjectsCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes/class/objects',
   commands: [dataObjectsCommands],
   elements: {

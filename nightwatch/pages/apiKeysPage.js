@@ -1,5 +1,5 @@
-import utils from '../utils';
-import globals from '../globals';
+import utils from '../../utils';
+import globals from '../../globals';
 
 const apiKeysCommands = {
   clickButton(button) {
@@ -16,7 +16,7 @@ const apiKeysCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
   commands: [apiKeysCommands],
   elements: {

@@ -1,14 +1,14 @@
-var snippetEditPage = {
-  clickButton(button)  {
-    return this.waitForElementVisible(button, 5000).click(button);
+const snippetsPage = {
+  clickButton(button) {
+    return this.waitForElementVisible(button).click(button);
   }
 };
 
-module.exports = {
-  commands: [snippetEditPage],
+export default {
+  commands: [snippetsPage],
   elements: {
     snippetListItem: {
-      selector: '//div[text()="codebox"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     }
   }

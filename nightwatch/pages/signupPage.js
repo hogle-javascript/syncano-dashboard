@@ -1,16 +1,16 @@
-var signupCommands = {
-  clickSubmitButton: function() {
+const signupCommands = {
+  clickSubmitButton() {
     return this.waitForElementVisible('@submitButton')
       .click('@submitButton')
       .waitForElementNotPresent('@submitButton', 60000);
   },
-  clickTermsOfUseLink: function() {
+  clickTermsOfUseLink() {
     return this.waitForElementVisible('@termsOfUseLink')
       .click('@termsOfUseLink');
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/signup',
   commands: [signupCommands],
   elements: {

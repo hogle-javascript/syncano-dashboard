@@ -1,11 +1,11 @@
 const solutionsCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/solutions/list',
   commands: [solutionsCommands],
   elements: {

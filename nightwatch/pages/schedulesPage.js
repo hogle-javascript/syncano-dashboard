@@ -1,12 +1,12 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../../utils';
+import globals from '../../globals';
 
 const schedulesCommands = {
   clickButton(button) {
     return this.waitForElementVisible(button)
                .click(button);
   },
-  selectFromDropdown(field, value)  {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
                .click(field)
                .waitForElementVisible(value)
@@ -24,7 +24,7 @@ const schedulesCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
   commands: [schedulesCommands],
   elements: {

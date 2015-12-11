@@ -19,7 +19,7 @@ const loginCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/login',
   commands: [loginCommands],
   elements: {

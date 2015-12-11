@@ -1,5 +1,5 @@
-import utils from '../utils';
-import globals from '../globals';
+import utils from '../../utils';
+import globals from '../../globals';
 
 const usersCommands = {
   clickButton(button) {
@@ -18,7 +18,7 @@ const usersCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/users',
   commands: [usersCommands],
   elements: {

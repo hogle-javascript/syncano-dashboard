@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   elements: {
     updateButton: {
       selector: '//button[@class="raised-button"]',

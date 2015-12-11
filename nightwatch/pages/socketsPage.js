@@ -1,5 +1,5 @@
-const globals = require('../globals');
-const utils = require('../utils');
+import utils from '../../utils';
+import globals from '../../globals';
 
 const dataCommands = {
   clickButton(button) {
@@ -19,7 +19,7 @@ const dataCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
   commands: [dataCommands],
   elements: {
