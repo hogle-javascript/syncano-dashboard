@@ -42,7 +42,9 @@ module.exports = {
       .waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
     usersPage
-      .clickButton('@confirm')
+      .clickButton('@confirm');
+    client.pause(1000);
+    usersPage
       .waitForElementVisible('@groupList')
       .waitForElementNotPresent('@groupTableRowDropdown');
   },

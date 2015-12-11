@@ -38,7 +38,9 @@ module.exports = {
 
     client.pause(1000);
 
-    adminsPage.clickButton('@confirmButton')
+    adminsPage.clickButton('@confirmButton');
+    client.pause(1000);
+    adminsPage
       .waitForElementVisible('@adminTableRow')
       .waitForElementNotPresent('@adminEmailTableRow');
   }

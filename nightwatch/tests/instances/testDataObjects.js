@@ -49,8 +49,8 @@ module.exports = {
       .waitForElementNotPresent('@deleteDataObjectButtonDisabled')
       .clickButton('@deleteDataObjectButton');
     client.pause(1000);
-    dataObjectsPage
-      .clickButton('@confirm')
-      .waitForElementNotVisible('@selectDataObjectTableRow');
+    dataObjectsPage.clickButton('@confirm');
+    client.pause(1000);
+    dataObjectsPage.waitForElementNotVisible('@selectDataObjectTableRow');
   }
 };

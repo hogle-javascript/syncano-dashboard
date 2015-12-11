@@ -60,7 +60,9 @@ export default {
     client.pause(1000);
     classesPage
       .waitForElementVisible('@deleteClassModalTitle')
-      .clickButton('@confirmDeleteButton')
+      .clickButton('@confirmDeleteButton');
+    client.pause(1000);
+    classesPage
       .waitForElementNotVisible('@deleteClassModalTitle')
       .waitForElementNotPresent('@classTableName');
   },

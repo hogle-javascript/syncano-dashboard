@@ -54,7 +54,8 @@ module.exports = {
       .clickButton('@schedulesListMenu')
       .clickButton('@schedulesDeleteButton')
       .waitForElementPresent('@deleteScheduleModalTitle')
-      .clickButton('@confirm')
-      .waitForElementNotPresent('@selectScheduleTableRow');
+      .clickButton('@confirm');
+    client.pause(1000);
+    schedulesPage.waitForElementNotPresent('@selectScheduleTableRow');
   }
 };

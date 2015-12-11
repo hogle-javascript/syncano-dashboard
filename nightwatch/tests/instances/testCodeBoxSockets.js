@@ -61,8 +61,8 @@ export default {
       .clickButton('@deleteDropdownItem')
       .waitForElementVisible('@deleteCodeBoxModalTitle');
     client.pause(1000);
-    socketsPage
-      .clickButton('@confirmButton')
-      .waitForElementNotPresent('@selectCodeBoxTableRow');
+    socketsPage.clickButton('@confirmButton');
+    client.pause(1000);
+    socketsPage.waitForElementNotPresent('@selectCodeBoxTableRow');
   }
 };

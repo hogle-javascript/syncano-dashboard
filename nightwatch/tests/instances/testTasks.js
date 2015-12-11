@@ -50,6 +50,7 @@ module.exports = {
     tasksPage.waitForElementPresent('@deleteScheduleModalTitle');
     client.pause(1000);
     tasksPage.clickButton('@confirm');
+    client.pause(1000);
     tasksPage.waitForElementNotPresent('@selectScheduleTableRow');
   },
   'Administrator adds a Trigger': function(client) {
@@ -89,6 +90,7 @@ module.exports = {
     tasksPage.waitForElementVisible('@confirm');
     client.pause(1000);
     tasksPage.clickButton('@confirm');
+    client.pause(1000);
     tasksPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };
