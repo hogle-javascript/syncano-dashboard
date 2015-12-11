@@ -25,14 +25,12 @@ deployment:
     commands:
       - NODE_ENV=production npm run-script bump
       - NODE_ENV=production npm run-script deployment-master
-      - NODE_ENV=production npm run-script mark-issues
       - curl -v -X POST https://circleci.com/api/v1/project/syncano/syncano-dashboard/tree/screenshots?circle-token=$CI_TOKEN
 
   staging:
     branch: devel
     commands:
       - NODE_ENV=staging npm run-script deployment-devel
-      - NODE_ENV=staging npm run-script mark-issues
 
   sockets:
     branch: /.*/
