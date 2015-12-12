@@ -172,7 +172,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Snippet"
+                primaryText="Delete a Snippet"
                 onTouchTap={this.showDialog.bind(null, 'deleteSnippetDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

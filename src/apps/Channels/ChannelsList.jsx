@@ -125,7 +125,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Channel"
+                primaryText="Delete a Channel Socket"
                 onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

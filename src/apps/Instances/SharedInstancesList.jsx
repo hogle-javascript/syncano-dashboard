@@ -133,7 +133,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Leave Instance"
+                primaryText="Leave an Instance"
                 onTouchTap={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

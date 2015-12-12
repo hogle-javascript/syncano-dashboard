@@ -139,10 +139,10 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Reset API Key"
+                primaryText="Reset an API Key"
                 onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
               <Common.Lists.MenuItem
-                primaryText="Delete API Key"
+                primaryText="Delete an API Key"
                 onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

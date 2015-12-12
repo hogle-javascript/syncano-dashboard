@@ -110,7 +110,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Schedule"
+                primaryText="Delete a Schedule Socket"
                 onTouchTap={this.showDialog.bind(null, 'removeScheduleDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

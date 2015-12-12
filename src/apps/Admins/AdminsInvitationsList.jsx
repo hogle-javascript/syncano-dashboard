@@ -131,7 +131,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Invitation"
+                primaryText="Delete an Invitation"
                 onTouchTap={this.showDialog.bind(null, 'removeInvitationDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

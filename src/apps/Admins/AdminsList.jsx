@@ -103,7 +103,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Admin"
+                primaryText="Delete an Admin"
                 onTouchTap={this.showDialog.bind(null, 'deleteAdminDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

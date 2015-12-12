@@ -129,7 +129,7 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete CodeBox"
+                primaryText="Delete a CodeBox Socket"
                 onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

@@ -79,7 +79,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a Channel`}
+        title={`${title} a Channel Socket`}
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
         contentStyle={{padding: '8px 0 0 0'}}>
@@ -93,8 +93,8 @@ export default React.createClass({
               name='name'
               disabled={this.hasEditMode()}
               fullWidth={true}
-              hintText='Short name for your Channel'
-              floatingLabelText='Name of a Channel' />
+              hintText='Short name for your Channel Socket'
+              floatingLabelText='Name of a Channel Socket' />
           </div>
           <div className="col-flex-1">
             <MUI.TextField
@@ -103,8 +103,8 @@ export default React.createClass({
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
               fullWidth={true}
-              hintText='Description of a Channel (optional)'
-              floatingLabelText='Description of a Channel' />
+              hintText='Description of a Channel Socket (optional)'
+              floatingLabelText='Description of a Channel Socket' />
           </div>
         </div>
         <Common.SelectField
