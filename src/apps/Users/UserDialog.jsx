@@ -9,7 +9,7 @@ import Mixins from '../../mixins';
 // Stores and Actions
 import Store from './UserDialogStore';
 import UsersActions from './UsersActions';
-import GroupsStore from './GroupsStore';
+import {GroupsStore} from './../Groups';
 
 // Components
 import MUI from 'syncano-material-ui';
