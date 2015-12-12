@@ -58,8 +58,7 @@ export default Radium(React.createClass({
         height: '100%',
         width: 256,
         display: 'flex',
-        alignItems: 'center',
-        background: 'rgba(0,0,0,0.05)'
+        alignItems: 'center'
       },
       logo: {
         width: 120
