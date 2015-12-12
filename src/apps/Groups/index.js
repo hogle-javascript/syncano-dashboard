@@ -5,7 +5,7 @@ import GroupDialogStore from './../Groups/GroupDialogStore';
 import GroupsList from './../Groups/GroupsList';
 import GroupsListItem from './../Groups/GroupsListItem';
 
-let Groups = {
+export default {
   GroupsActions,
   GroupsStore,
   GroupDialog,
@@ -13,5 +13,3 @@ let Groups = {
   GroupsList,
   GroupsListItem
 };
-
-export default Groups;
