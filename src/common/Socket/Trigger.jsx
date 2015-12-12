@@ -11,7 +11,7 @@ export default React.createClass({
       <SocketWrapper
         {...this.props}
         iconClassName="synicon-socket-trigger"
-        tooltip="Create Trigger Socket"
+        tooltip="Create a Trigger Socket"
         iconStyle={{color: Styles.Colors.amberA200}}/>
     );
   }

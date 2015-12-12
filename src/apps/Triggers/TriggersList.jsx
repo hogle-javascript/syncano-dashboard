@@ -74,7 +74,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Trigger')}?`,
             this.getDialogList(checkedTriggers, 'label'),
             <Common.Loading
               type='linear'

@@ -92,45 +92,7 @@ export default React.createClass({
     let snippetsNotAssociated = _.difference(_.difference(checkedSnippets, snippetsAssociatedWithSchedules),
       snippetsAssociatedWithTriggers);
 
-    if (snippetsAssociatedWithSchedules.length > 0 || snippetsAssociatedWithTriggers.length > 0) {
-      let associatedWithSchedulesList = this.getAssociationsList('schedules', snippetsAssociatedWithSchedules);
-      let associatedWithTriggersList = this.getAssociationsList('triggers', snippetsAssociatedWithTriggers);
-      let notAssociatedList = this.getAssociationsList('notAssociated', snippetsNotAssociated);
-
-      return [{
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteSnippetDialog',
-          ref: 'deleteSnippetDialog',
-          title: 'Delete a Snippet',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'deleteSnippetDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleDelete
-            }
-          ],
-          modal: true,
-          avoidResetState: true,
-          children: [
-            'Some of checked Snippets are associated with Schedules or Triggers. Do you really want to delete ' +
-            checkedSnippets.length + ' Snippet(s)?',
-            notAssociatedList,
-            associatedWithSchedulesList,
-            associatedWithTriggersList,
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}/>
-          ]
-        }
-      }];
-    }
-
-    return [{
+    let deleteDialog = {
       dialog: Common.Dialog,
       params: {
         key: 'deleteSnippetDialog',
@@ -149,7 +111,7 @@ export default React.createClass({
         modal: true,
         avoidResetState: true,
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedSnippets) + ' Snippet(s)?',
+          `Do you really want to delete ${Store.getDeleteItemsPhrase('Snippet')}?`,
           this.getDialogList(checkedSnippets, 'label'),
           <Common.Loading
             type="linear"
@@ -157,7 +119,27 @@ export default React.createClass({
             show={this.state.isLoading}/>
         ]
       }
-    }];
+    };
+
+    if (snippetsAssociatedWithSchedules.length > 0 || snippetsAssociatedWithTriggers.length > 0) {
+      let associatedWithSchedulesList = this.getAssociationsList('schedules', snippetsAssociatedWithSchedules);
+      let associatedWithTriggersList = this.getAssociationsList('triggers', snippetsAssociatedWithTriggers);
+      let notAssociatedList = this.getAssociationsList('notAssociated', snippetsNotAssociated);
+
+      deleteDialog.params.children = [
+        `Some of checked Snippets are associated with Schedules or Triggers. Do you really want to delete
+        ${Store.getDeleteItemsPhrase('Snippet')}?`,
+        notAssociatedList,
+        associatedWithSchedulesList,
+        associatedWithTriggersList,
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading}/>
+      ];
+    }
+
+    return [deleteDialog];
   },
 
   renderItem(item) {

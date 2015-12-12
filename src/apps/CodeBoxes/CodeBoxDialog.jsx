@@ -81,7 +81,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a CodeBox`}
+        title={`${title} a CodeBox Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         modal={true}>

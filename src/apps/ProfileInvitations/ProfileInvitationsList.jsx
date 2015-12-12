@@ -49,8 +49,6 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checked = Store.getCheckedItems().length;
-
     return [
       {
         dialog: Common.Dialog,
@@ -63,7 +61,7 @@ export default React.createClass({
             {text: 'Confirm', onClick: this.handleAccept}
           ],
           modal: true,
-          children: `Do you really want to accept ${checked} Invitation(s)?`
+          children: `Do you really want to accept ${Store.getDeleteItemsPhrase('Invitation')}?`
         }
       },
       {
@@ -77,7 +75,7 @@ export default React.createClass({
             {text: 'Confirm', onClick: this.handleDecline}
           ],
           modal: true,
-          children: `Do you really want to decline ${checked} Invitation(s)?`
+          children: `Do you really want to decline ${Store.getDeleteItemsPhrase('Invitation')}?`
         }
       }
     ];

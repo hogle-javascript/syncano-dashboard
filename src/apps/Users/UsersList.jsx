@@ -65,7 +65,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('User')}?`,
             this.getDialogList(checkedUsers, 'username'),
             <Common.Loading
               type='linear'

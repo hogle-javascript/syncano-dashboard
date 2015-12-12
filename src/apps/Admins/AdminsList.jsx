@@ -61,7 +61,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Administrator')}?`,
             this.getDialogList(checkedAdmins, 'email'),
             <Common.Loading
               type="linear"

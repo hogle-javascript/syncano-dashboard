@@ -66,7 +66,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            `Do you really want to resend ${Store.getDeleteItemsPhrase('Invitation')}?`,
             this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
@@ -88,7 +88,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Invitation')}?`,
             this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"

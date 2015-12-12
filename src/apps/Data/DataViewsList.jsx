@@ -46,6 +46,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    let checkedItems = Store.getCheckedItems();
+
     return [
       {
         dialog: Common.Dialog,
@@ -64,7 +66,14 @@ export default React.createClass({
             }
           ],
           modal: true,
-          children: `Do you really want to delete ${Store.getCheckedItems().length} Data endpoints?`
+          children: [
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Data Socket')}?`,
+            this.getDialogList(checkedItems),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.props.isLoading}/>
+          ]
         }
       }
     ];

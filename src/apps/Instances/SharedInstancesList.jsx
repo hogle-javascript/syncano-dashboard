@@ -77,7 +77,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to leave ' + this.getDialogListLength(checkedItems) + ' Instance(s)?',
+            `Do you really want to leave ${Store.getDeleteItemsPhrase('Instance')}?`,
             this.getDialogList(checkedItems),
             <Common.Loading
               type="linear"

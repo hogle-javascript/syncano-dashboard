@@ -78,7 +78,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a Schedule`}
+        title={`${title} a Schedule Socket`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         actions={dialogStandardActions}>

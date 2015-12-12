@@ -96,7 +96,7 @@ export default React.createClass({
         modal: true,
         avoidResetState: true,
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
+          `Do you really want to delete ${Store.getDeleteItemsPhrase('API Key')}?`,
           this.getDialogList(checkedApiKeys, 'api_key'),
           <Common.Loading
             type="linear"
