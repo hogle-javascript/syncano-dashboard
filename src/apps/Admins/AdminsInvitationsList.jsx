@@ -66,7 +66,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to resend ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            `Do you really want to resend ${Store.getDeleteItemsPhrase('Invitation')}?`,
             this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
@@ -88,7 +88,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdminsInvitations) + ' Invitation(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Invitation')}?`,
             this.getDialogList(checkedAdminsInvitations, 'email'),
             <Common.Loading
               type="linear"
@@ -131,7 +131,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Invitation"
+                singleItemText="Delete an Invitation"
+                multipleItemsText="Delete Invitations"
                 onTouchTap={this.showDialog.bind(null, 'removeInvitationDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

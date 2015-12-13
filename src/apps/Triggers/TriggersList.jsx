@@ -74,7 +74,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedTriggers) + ' Trigger(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Trigger')}?`,
             this.getDialogList(checkedTriggers, 'label'),
             <Common.Loading
               type='linear'
@@ -127,7 +127,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Trigger"
+                singleItemText="Delete a Trigger Socket"
+                multipleItemsText="Delete Trigger Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

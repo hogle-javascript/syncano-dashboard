@@ -1,17 +1,16 @@
 import React from 'react';
-import pluralize from 'pluralize';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
 export default React.createClass({
   displayName: 'ListMenuItem',
 
   render() {
-    const {primaryText, checkedItemsCount, ...other} = this.props;
+    const {singleItemText, multipleItemsText, checkedItemsCount, ...other} = this.props;
 
     return (
       <MenuItem
         {...other}
-        primaryText={pluralize(primaryText, checkedItemsCount)}
+        primaryText={checkedItemsCount === 1 ? singleItemText : multipleItemsText}
         disabled={this.props.disabled || !checkedItemsCount}/>
     );
   }

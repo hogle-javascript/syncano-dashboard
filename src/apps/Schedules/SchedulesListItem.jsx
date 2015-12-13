@@ -53,11 +53,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Schedule" />
+            primaryText="Edit a Schedule Socket" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a Schedule" />
+            primaryText="Delete a Schedule Socket" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );

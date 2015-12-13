@@ -65,7 +65,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedUsers) + ' User(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('User')}?`,
             this.getDialogList(checkedUsers, 'username'),
             <Common.Loading
               type='linear'
@@ -108,7 +108,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete User"
+                singleItemText="Delete an User"
+                multipleItemsText="Delete Users"
                 onTouchTap={this.showDialog.bind(null, 'removeUserDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

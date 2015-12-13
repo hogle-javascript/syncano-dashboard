@@ -49,7 +49,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     schedulesEditButton: {
-      selector: '//span[text()="Edit a Schedule"]',
+      selector: '//span[text()="Edit a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     scheduleListItem: {
@@ -61,7 +61,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addScheduleModalTitle: {
-      selector: '//h3[text()="Create a Schedule"]',
+      selector: '//h3[text()="Create a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalLabel: {
@@ -97,11 +97,11 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteScheduleModalTitle: {
-      selector: '//h3[text()="Delete a Schedule"]',
+      selector: '//h3[text()="Delete a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     editScheduleModalTitle: {
-      selector: '//h3[text()="Edit a Schedule"]',
+      selector: '//h3[text()="Edit a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {

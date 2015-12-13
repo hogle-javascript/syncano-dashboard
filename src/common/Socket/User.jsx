@@ -11,7 +11,7 @@ export default React.createClass({
       <SocketWrapper
         {...this.props}
         iconClassName="synicon-socket-user"
-        tooltip="Create an User"
+        tooltip="Create a User"
         iconStyle={{color: Styles.Colors.deepPurple300}}/>
     );
   }

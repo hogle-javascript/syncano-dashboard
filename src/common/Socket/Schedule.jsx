@@ -11,7 +11,7 @@ export default React.createClass({
       <SocketWrapper
         {...this.props}
         iconClassName="synicon-socket-schedule"
-        tooltip="Create Schedule Socket"
+        tooltip="Create a Schedule Socket"
         iconStyle={{color: Styles.Colors.lime400}}/>
     );
   }

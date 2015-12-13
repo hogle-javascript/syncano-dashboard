@@ -53,14 +53,14 @@ export default React.createClass({
         params: {
           key: 'removeScheduleDialog',
           ref: 'removeScheduleDialog',
-          title: 'Delete a Schedule',
+          title: 'Delete a Schedule Socket',
           actions: [
             {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeScheduleDialog')},
             {text: 'Confirm', onClick: this.handleRemoveSchedules}
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedSchedules) + ' Schedule(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Schedule')}?`,
             this.getDialogList(checkedSchedules, 'label'),
             <Common.Loading
               type='linear'
@@ -110,7 +110,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Schedule"
+                singleItemText="Delete a Schedule Socket"
+                multipleItemsText="Delete Schedule Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeScheduleDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

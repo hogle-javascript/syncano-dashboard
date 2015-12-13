@@ -150,7 +150,7 @@ export default React.createClass({
               items={this.state.schedules.items}
               handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
               emptyItemHandleClick={this.showScheduleAddDialog}
-              emptyItemContent="Create a Trigger Socket"/>
+              emptyItemContent="Create a Schedule Socket"/>
           </Common.Loading>
         </div>
       </Container>

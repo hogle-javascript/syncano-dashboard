@@ -61,7 +61,7 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedAdmins) + ' Administrator(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Administrator')}?`,
             this.getDialogList(checkedAdmins, 'email'),
             <Common.Loading
               type="linear"
@@ -103,7 +103,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Admin"
+                singleItemText="Delete an Admin"
+                multipleItemsText="Delete Admins"
                 onTouchTap={this.showDialog.bind(null, 'deleteAdminDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

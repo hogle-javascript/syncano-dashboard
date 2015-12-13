@@ -61,7 +61,7 @@ export default Radium(React.createClass({
         </Common.InnerToolbar>
 
         <DataList
-          name="Data Socket"
+          name="Data Sockets"
           isLoading={this.state.isLoading}
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}
