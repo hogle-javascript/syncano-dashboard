@@ -53,7 +53,7 @@ export default React.createClass({
           items={this.state.items}
           hideDialogs={this.state.hideDialogs}
           emptyItemHandleClick={this.showTriggerDialog}
-          emptyItemContent="Create a Trigger"/>
+          emptyItemContent="Create a Trigger Socket"/>
       </Container>
     );
   }

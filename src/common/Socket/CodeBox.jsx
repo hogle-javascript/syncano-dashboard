@@ -11,7 +11,7 @@ export default React.createClass({
       <SocketWrapper
         {...this.props}
         iconClassName="synicon-socket-codebox"
-        tooltip="Create CodeBox Socket"
+        tooltip="Create a CodeBox Socket"
         iconStyle={{color: Styles.Colors.red300}}/>
     );
   }

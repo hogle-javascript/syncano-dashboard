@@ -11,7 +11,7 @@ export default React.createClass({
       <SocketWrapper
         {...this.props}
         iconClassName="synicon-socket-channel"
-        tooltip="Create Channel Socket"
+        tooltip="Create a Channel Socket"
         iconStyle={{color: Styles.Colors.blue300}}/>
     );
   }
