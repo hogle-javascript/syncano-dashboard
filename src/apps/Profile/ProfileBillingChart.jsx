@@ -33,7 +33,7 @@ export default Radium(React.createClass({
 
     let config = this.state.chart;
 
-    config.bindto = this.refs.chart.getDOMNode();
+    config.bindto = this.refs.chart;
     config.size = {height: 300};
     this.chart = c3.generate(config);
   },
