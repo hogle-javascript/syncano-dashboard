@@ -93,7 +93,7 @@ export default Radium(React.createClass({
         overflow: 'auto'
       };
       styles.trace = {
-        margin: '15px -30px 0 -30px'
+        margin: '15px 0 0'
       };
     }
     return (

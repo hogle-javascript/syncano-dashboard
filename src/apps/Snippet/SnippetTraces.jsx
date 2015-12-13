@@ -31,9 +31,11 @@ export default React.createClass({
 
   render() {
     return (
-      <Traces
-        objectId={this.getParams().snippetId}
-        tracesFor='snippet'/>
+      <div style={{marginTop: 100}}>
+        <Traces
+          objectId={this.getParams().snippetId}
+          tracesFor='snippet'/>
+      </div>
     );
   }
 });
