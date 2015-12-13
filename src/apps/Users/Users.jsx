@@ -8,8 +8,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 
 import Actions from './UsersActions';
 import Store from './UsersStore';
-import GroupsActions from './GroupsActions';
-import GroupsStore from './GroupsStore';
+import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
 import Common from '../../common';
@@ -17,9 +16,7 @@ import Container from '../../common/Container/Container';
 
 // Local components
 import UsersList from './UsersList';
-import GroupsList from './GroupsList';
 import UserDialog from './UserDialog';
-import GroupDialog from './GroupDialog';
 
 export default React.createClass({
 
@@ -42,21 +39,6 @@ export default React.createClass({
     GroupsActions.fetch();
   },
 
-  handleGroupClick(group) {
-    GroupsActions.setActiveGroup(group);
-  },
-
-  checkUser(id, state) {
-    console.info('User::checkUser');
-    Actions.checkItem(id, state);
-  },
-
-  checkGroup(id, state) {
-    console.info('User::checkGroup');
-    Actions.uncheckAll();
-    GroupsActions.checkItem(id, state);
-  },
-
   showUserDialog(group) {
     /* eslint-disable */
     Actions.showDialog(undefined, group);
@@ -67,13 +49,7 @@ export default React.createClass({
     GroupsActions.showDialog();
   },
 
-  showGroupEditDialog(group) {
-    GroupsActions.showDialog(group || GroupsStore.getCheckedItem());
-  },
-
   render() {
-    let activeGroup = GroupsStore.getActiveGroup();
-
     return (
       <Container>
         <UserDialog />
@@ -91,13 +67,7 @@ export default React.createClass({
         <Common.Lists.Container className="row">
           <div className="col-lg-8">
             <GroupsList
-              activeGroup={activeGroup}
-              handleItemClick={this.handleGroupClick}
-              handleGroupAddUser={this.showUserDialog}
-              handleGroupEdit={this.showGroupEditDialog}
-              handleGroupDelete={this.showGroupDeleteDialog}
               name="Groups"
-              checkItem={this.checkGroup}
               isLoading={this.state.groups.isLoading}
               items={this.state.groups.items}
               hideDialogs={this.state.groups.hideDialogs}
@@ -107,7 +77,6 @@ export default React.createClass({
           <div className="col-lg-27">
             <UsersList
               name="Users"
-              checkItem={this.checkUser}
               isLoading={this.state.users.isLoading}
               items={this.state.users.items}
               hideDialogs={this.state.users.hideDialogs}
