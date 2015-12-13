@@ -25,7 +25,6 @@ export default Radium(React.createClass({
 
   mixins: [
     Mixins.Form,
-    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.IsLoading(),
     Reflux.connect(Store),
