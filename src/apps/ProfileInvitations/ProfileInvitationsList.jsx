@@ -114,10 +114,12 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Accept an Invitation"
+                singleItemText="Accept an Invitation"
+                multipleItemsText="Accept Invitations"
                 onTouchTap={this.showDialog.bind(null, 'acceptInvitationsDialog')}/>
               <Common.Lists.MenuItem
-                primaryText="Decline an Invitation"
+                singleItemText="Decline an Invitation"
+                multipleItemsText="Decline Invitations"
                 onTouchTap={this.showDialog.bind(null, 'declineInvitationsDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

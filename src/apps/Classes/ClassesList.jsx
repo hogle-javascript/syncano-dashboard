@@ -223,7 +223,8 @@ export default React.createClass({
               checkedItemsCount={checkedItemsCount}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete a Class"
+                singleItemText="Delete a Class"
+                multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
                 onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
             </Common.Lists.Menu>

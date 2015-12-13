@@ -127,7 +127,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete a Trigger Socket"
+                singleItemText="Delete a Trigger Socket"
+                multipleItemsText="Delete Trigger Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

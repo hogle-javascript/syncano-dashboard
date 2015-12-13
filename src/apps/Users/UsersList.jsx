@@ -108,7 +108,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete an User"
+                singleItemText="Delete an User"
+                multipleItemsText="Delete Users"
                 onTouchTap={this.showDialog.bind(null, 'removeUserDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

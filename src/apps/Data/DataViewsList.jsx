@@ -118,7 +118,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete a Data Socket"
+                singleItemText="Delete a Data Socket"
+                multipleItemsText="Delete Data Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>
