@@ -43,7 +43,7 @@ export default {
     instancesPage.clickButton('@instancesTableName');
     leftMenuPage.clickButton('@instancesDropdown');
     leftMenuPage.clickButton('@instancesListSecondItem');
-    socketsPage.waitForElementPresent('@dataSocketTableTitle');
+    socketsPage.waitForElementPresent('@emptySocketsHeading');
     const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 
     client.getText('xpath', dropdown, (text) => {

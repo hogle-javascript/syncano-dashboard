@@ -1,18 +1,39 @@
 import React from 'react';
-import {Styles} from 'syncano-material-ui';
+import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
   displayName: 'PushSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Push Notification'
+    };
+  },
+
+  getStyles() {
+    return {
+      iconStyle: {
+        color: Styles.Colors.indigo300
+      }
+    };
+  },
+
   render() {
+    const styles = this.getStyles();
+    const {
+      style,
+      iconStyle,
+      ...other
+      } = this.props;
+
     return (
       <SocketWrapper
-        {...this.props}
+        {...other}
         iconClassName="synicon-socket-push"
-        tooltip="Create Push Socket"
-        iconStyle={{color: Styles.Colors.indigo300}}/>
+        style={style}
+        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
   }
 });

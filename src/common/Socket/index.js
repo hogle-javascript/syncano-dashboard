@@ -7,6 +7,7 @@ import Schedule from './Schedule';
 import Trigger from './Trigger';
 import User from './User';
 import Users from './Users';
+import EmptyListItem from './EmptyListItem';
 
 let Socket = Default;
 
@@ -18,5 +19,6 @@ Socket.Schedule = Schedule;
 Socket.Trigger = Trigger;
 Socket.User = User;
 Socket.Users = Users;
+Socket.EmptyListItem = EmptyListItem;
 
 export default Socket;

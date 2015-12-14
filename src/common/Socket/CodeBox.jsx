@@ -1,18 +1,39 @@
 import React from 'react';
-import {Styles} from 'syncano-material-ui';
+import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
   displayName: 'CodeBoxSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create CodeBox'
+    };
+  },
+
+  getStyles() {
+    return {
+      iconStyle: {
+        color: Styles.Colors.red300
+      }
+    };
+  },
+
   render() {
+    const styles = this.getStyles();
+    const {
+      style,
+      iconStyle,
+      ...other
+      } = this.props;
+
     return (
       <SocketWrapper
-        {...this.props}
+        {...other}
         iconClassName="synicon-socket-codebox"
-        tooltip="Create a CodeBox Socket"
-        iconStyle={{color: Styles.Colors.red300}}/>
+        style={style}
+        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
   }
 });

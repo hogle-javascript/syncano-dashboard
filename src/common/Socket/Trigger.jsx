@@ -1,18 +1,39 @@
 import React from 'react';
-import {Styles} from 'syncano-material-ui';
+import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
   displayName: 'TriggerSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Trigger'
+    };
+  },
+
+  getStyles() {
+    return {
+      iconStyle: {
+        color: Styles.Colors.amberA200
+      }
+    };
+  },
+
   render() {
+    const styles = this.getStyles();
+    const {
+      style,
+      iconStyle,
+      ...other
+      } = this.props;
+
     return (
       <SocketWrapper
-        {...this.props}
+        {...other}
         iconClassName="synicon-socket-trigger"
-        tooltip="Create a Trigger Socket"
-        iconStyle={{color: Styles.Colors.amberA200}}/>
+        style={style}
+        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
   }
 });

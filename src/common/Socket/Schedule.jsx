@@ -1,18 +1,39 @@
 import React from 'react';
-import {Styles} from 'syncano-material-ui';
+import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
   displayName: 'ScheduleSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create a Schedule'
+    };
+  },
+
+  getStyles() {
+    return {
+      iconStyle: {
+        color: Styles.Colors.lime400
+      }
+    };
+  },
+
   render() {
+    const styles = this.getStyles();
+    const {
+      style,
+      iconStyle,
+      ...other
+      } = this.props;
+
     return (
       <SocketWrapper
-        {...this.props}
+        {...other}
         iconClassName="synicon-socket-schedule"
-        tooltip="Create a Schedule Socket"
-        iconStyle={{color: Styles.Colors.lime400}}/>
+        style={style}
+        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
   }
 });

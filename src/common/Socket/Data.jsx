@@ -1,18 +1,39 @@
 import React from 'react';
-import {Styles} from 'syncano-material-ui';
+import {Styles, Utils} from 'syncano-material-ui';
 import SocketWrapper from './SocketWrapper';
 
 export default React.createClass({
 
   displayName: 'DataSocket',
 
+  getDefaultProps() {
+    return {
+      tooltip: 'Create Data Socket'
+    };
+  },
+
+  getStyles() {
+    return {
+      iconStyle: {
+        color: Styles.Colors.green400
+      }
+    };
+  },
+
   render() {
+    const styles = this.getStyles();
+    const {
+      style,
+      iconStyle,
+      ...other
+      } = this.props;
+
     return (
       <SocketWrapper
-        {...this.props}
+        {...other}
         iconClassName="synicon-socket-data"
-        tooltip="Create a Data Socket"
-        iconStyle={{color: Styles.Colors.green300}}/>
+        style={style}
+        iconStyle={Utils.Styles.mergeAndPrefix(styles.iconStyle, iconStyle)}/>
     );
   }
 });

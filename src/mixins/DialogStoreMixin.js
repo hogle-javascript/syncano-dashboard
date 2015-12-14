@@ -1,6 +1,15 @@
+import SyntheticUIEvent from 'react/lib/SyntheticUIEvent';
 import _ from 'lodash';
 
 export default {
+
+  isEvent(object) {
+    return object instanceof SyntheticUIEvent;
+  },
+
+  isInstanceObject(object) {
+    return !_.isUndefined(object) && !this.isEvent(object);
+  },
 
   getInitialState() {
     return this.getInitialDialogState();
@@ -17,9 +26,9 @@ export default {
     console.debug('DialogStoreMixin::showDialog');
     let state = {_dialogVisible: true};
 
-    if (typeof instance !== 'undefined') {
+    if (this.isInstanceObject(instance)) {
       state = _.assign(state, instance, {_dialogMode: 'edit'});
-    } else if (typeof secondInstance !== 'undefined') {
+    } else if (this.isInstanceObject(secondInstance)) {
       state = _.assign(state, {secondInstance});
     }
 
