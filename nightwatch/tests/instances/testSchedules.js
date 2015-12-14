@@ -52,8 +52,9 @@ export default {
     client.pause(1000);
     schedulesPage
       .clickButton('@schedulesDeleteButton')
-      .waitForElementPresent('@deleteScheduleModalTitle')
-      .clickButton('@confirm');
+      .waitForElementPresent('@deleteScheduleModalTitle');
+    client.pause(1000);
+    schedulesPage.clickButton('@confirm');
     client.pause(1000);
     schedulesPage.waitForElementNotPresent('@selectScheduleTableRow');
   }

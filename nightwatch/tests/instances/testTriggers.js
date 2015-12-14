@@ -47,10 +47,14 @@ export default {
     triggersPage
       .navigate()
       .clickButton('@selectTriggerTableRow')
-      .clickButton('@triggersListMenu')
+      .clickButton('@triggersListMenu');
+    client.pause(1000);
+    triggersPage
       .clickButton('@triggersDeleteButton')
-      .waitForElementVisible('@confirm')
-      .clickButton('@confirm')
-      .waitForElementNotPresent('@selectTriggerTableRow');
+      .waitForElementVisible('@confirm');
+    client.pause(1000);
+    triggersPage.clickButton('@confirm');
+    client.pause(1000);
+    triggersPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };
