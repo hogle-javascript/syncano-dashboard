@@ -32,7 +32,7 @@ export default {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete Invitation"]',
+      selector: '//div[text()="Delete an Invitation"]',
       locateStrategy: 'xpath'
     },
     adminsListItem: {

@@ -45,7 +45,7 @@ export default {
       locateStrategy: 'xpath'
     },
     schedulesDeleteButton: {
-      selector: '//div[text()="Delete Schedule"]',
+      selector: '//div[text()="Delete a Schedule Socket"]',
       locateStrategy: 'xpath'
     },
     schedulesEditButton: {
