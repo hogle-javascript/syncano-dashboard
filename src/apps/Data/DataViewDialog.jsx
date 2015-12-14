@@ -199,7 +199,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref='dialog'
-        title={`${title} a Data Endpoint`}
+        title={`${title} a Data Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
         modal={true}>
@@ -214,8 +214,8 @@ export default React.createClass({
               disabled={this.hasEditMode()}
               valueLink={this.linkState('name')}
               errorText={this.getValidationMessages('name').join(' ')}
-              hintText='Name of the endpoint'
-              floatingLabelText='Endpoint'/>
+              hintText='Name of the Socket'
+              floatingLabelText='Socket'/>
           </div>
           <div className='col-flex-1' style={{paddingLeft: 15}}>
             <MUI.TextField
@@ -224,7 +224,7 @@ export default React.createClass({
               fullWidth={true}
               valueLink={this.linkState('description')}
               errorText={this.getValidationMessages('description').join(' ')}
-              hintText='Description of the endpoint'
+              hintText='Description of the Socket'
               floatingLabelText='Description'/>
           </div>
         </div>

@@ -1,3 +1,5 @@
+import pluralize from 'pluralize';
+
 export default {
 
   getNumberOfChecked() {
@@ -57,5 +59,11 @@ export default {
     }
 
     return this.data.items.filter((item) => item.checked);
+  },
+
+  getDeleteItemsPhrase(groupName) {
+    let checkedItemsCount = this.getNumberOfChecked();
+
+    return `${checkedItemsCount} ${pluralize(groupName, checkedItemsCount)}`;
   }
 };

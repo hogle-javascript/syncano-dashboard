@@ -15,7 +15,7 @@ module.exports = {
   after(client) {
     client.end();
   },
-  'Administrator adds a Schedule': (client) => {
+  'Administrator adds a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
     const suffix = utils.addSuffix('schedule');
 
@@ -30,7 +30,7 @@ module.exports = {
       .clickButton('@confirm')
       .waitForElementPresent('@scheduleTableRow');
   },
-  'Administrator edits a Schedule Crontab': (client) => {
+  'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
     schedulesPage
@@ -45,7 +45,7 @@ module.exports = {
       .clickButton('@confirm')
       .waitForElementVisible('@cronTabScheduleTableRow');
   },
-  'Administrator deletes a Schedule': (client) => {
+  'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
     schedulesPage

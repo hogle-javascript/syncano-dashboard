@@ -59,7 +59,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete User(s)"]',
+      selector: '//div[text()="Delete User"]',
       locateStrategy: 'xpath'
     },
     deleteUserModalTitle: {

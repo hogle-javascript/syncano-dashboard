@@ -53,11 +53,11 @@ export default React.createClass({
           <MenuItem
             className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Data Endpoint" />
+            primaryText="Edit a Data Socket" />
           <MenuItem
             className="dropdown-item-delete"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a Data Endpoint" />
+            primaryText="Delete a Data Socket" />
         </Column.Menu>
       </Common.ColumnList.Item>
     );

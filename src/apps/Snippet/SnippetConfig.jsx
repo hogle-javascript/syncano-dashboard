@@ -53,7 +53,7 @@ export default Radium(React.createClass({
         .filter((refName) => _.includes(refName.toLowerCase(), 'field'));
 
       _.forEach(refNames, (refName) => {
-        let inputNode = this.refs[refName].refs.input.getDOMNode();
+        let inputNode = this.refs[refName].refs.input;
 
         if (inputNode && !_.includes(inputNode.className, 'mousetrap')) {
           inputNode.classList.add('mousetrap');

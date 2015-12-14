@@ -53,7 +53,7 @@ export default React.createClass({
         params: {
           key: 'removeCodeBoxDialog',
           ref: 'removeCodeBoxDialog',
-          title: 'Delete a CodeBox',
+          title: 'Delete a CodeBox Socket',
           actions: [
             {
               text: 'Cancel',
@@ -67,8 +67,12 @@ export default React.createClass({
           modal: true,
           avoidResetState: true,
           children: [
-            `Do you really want to delete ${this.getDialogListLength(checkedItems)} CodeBoxes?`,
-            this.getDialogList(checkedItems, 'name')
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('CodeBox Socket')}?`,
+            this.getDialogList(checkedItems, 'name'),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.props.isLoading}/>
           ]
         }
       }
@@ -125,7 +129,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete CodeBox"
+                singleItemText="Delete a CodeBox Socket"
+                multipleItemsText="Delete CodeBox Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

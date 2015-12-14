@@ -63,7 +63,7 @@ export default React.createClass({
           isLoading={this.state.isLoading}
           items={this.state.items}
           emptyItemHandleClick={this.showChannelDialog}
-          emptyItemContent="Create a Channel"/>
+          emptyItemContent="Create a Channel Socket"/>
       </Container>
     );
   }

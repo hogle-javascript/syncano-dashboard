@@ -46,6 +46,8 @@ export default React.createClass({
   },
 
   initDialogs() {
+    let checkedItems = Store.getCheckedItems();
+
     return [
       {
         dialog: Common.Dialog,
@@ -64,7 +66,14 @@ export default React.createClass({
             }
           ],
           modal: true,
-          children: `Do you really want to delete ${Store.getCheckedItems().length} Data endpoints?`
+          children: [
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Data Socket')}?`,
+            this.getDialogList(checkedItems),
+            <Common.Loading
+              type="linear"
+              position="bottom"
+              show={this.props.isLoading}/>
+          ]
         }
       }
     ];
@@ -109,7 +118,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Data Socket"
+                singleItemText="Delete a Data Socket"
+                multipleItemsText="Delete Data Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

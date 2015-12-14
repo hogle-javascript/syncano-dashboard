@@ -66,7 +66,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalTitle: {
-      selector: '//h3[text()="Create a CodeBox"]',
+      selector: '//h3[text()="Create a CodeBox Socket"]',
       locateStrategy: 'xpath'
     },
     addCodeBoxModalNameInput: {
@@ -102,7 +102,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     editCodeBoxModalTitle: {
-      selector: '//h3[text()="Edit a CodeBox"]',
+      selector: '//h3[text()="Edit a CodeBox Socket"]',
       locateStrategy: 'xpath'
     },
     dataListItem: {
@@ -110,7 +110,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     dataListItemTitle: {
-      selector: '//div[text()="Data Endpoints"]',
+      selector: '//div[text()="Data Sockets"]',
       locateStrategy: 'xpath'
     },
     codeBoxToSelect: {

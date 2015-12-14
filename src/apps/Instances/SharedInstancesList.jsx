@@ -77,7 +77,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to leave ' + this.getDialogListLength(checkedItems) + ' Instance(s)?',
+            `Do you really want to leave ${Store.getDeleteItemsPhrase('Instance')}?`,
             this.getDialogList(checkedItems),
             <Common.Loading
               type="linear"
@@ -133,7 +133,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Leave Instance"
+                singleItemText="Leave an Instance"
+                multipleItemsText="Leave Instances"
                 onTouchTap={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

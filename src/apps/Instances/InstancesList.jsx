@@ -80,7 +80,7 @@ export default React.createClass({
           ],
           modal: true,
           children: [
-            'Do you really want to delete ' + this.getDialogListLength(checkedItems) + ' Instance(s)?',
+            `Do you really want to delete ${Store.getDeleteItemsPhrase('Instance')}?`,
             this.getDialogList(checkedItems),
             <Common.Loading
               type="linear"
@@ -134,7 +134,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Instance"
+                singleItemText="Delete an Instance"
+                multipleItemsText="Delete Instances"
                 onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

@@ -96,7 +96,7 @@ export default React.createClass({
         modal: true,
         avoidResetState: true,
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedApiKeys) + ' API key(s)?',
+          `Do you really want to delete ${Store.getDeleteItemsPhrase('API Key')}?`,
           this.getDialogList(checkedApiKeys, 'api_key'),
           <Common.Loading
             type="linear"
@@ -139,10 +139,12 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Reset API Key"
+                singleItemText="Reset an API Key"
+                multipleItemsText="Reset API Keys"
                 onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
               <Common.Lists.MenuItem
-                primaryText="Delete API Key"
+                singleItemText="Delete an API Key"
+                multipleItemsText="Delete API Keys"
                 onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

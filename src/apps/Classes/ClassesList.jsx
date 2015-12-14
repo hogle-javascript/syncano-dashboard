@@ -133,7 +133,7 @@ export default React.createClass({
         ],
         modal: true,
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedClasses) + ' Class(es)?',
+          `Do you really want to delete ${Store.getDeleteItemsPhrase('Class')}?`,
           this.getDialogList(checkedClasses),
           <Common.Loading
             type="linear"
@@ -149,8 +149,8 @@ export default React.createClass({
       let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
       deleteDialog.params.children = [
-        `Some of checked Classes are associated with Triggers. Do you really want to delete ${checkedClasses.length}
-        Class(es)?`,
+        `Some of checked Classes are associated with Triggers. Do you really want to delete
+        ${Store.getDeleteItemsPhrase('Class')}?`,
         notAssociatedList,
         associatedWithTriggersList,
         <Common.Loading
@@ -223,7 +223,8 @@ export default React.createClass({
               checkedItemsCount={checkedItemsCount}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Class"
+                singleItemText="Delete a Class"
+                multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
                 onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
             </Common.Lists.Menu>

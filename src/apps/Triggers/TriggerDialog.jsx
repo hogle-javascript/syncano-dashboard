@@ -84,7 +84,7 @@ export default React.createClass({
       <Common.Dialog
         key='dialog'
         ref="dialog"
-        title={`${title} a Trigger`}
+        title={`${title} a Trigger Socket`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
         actions={dialogStandardActions}>

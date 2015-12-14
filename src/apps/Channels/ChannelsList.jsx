@@ -68,7 +68,7 @@ export default React.createClass({
         modal: true,
         avoidResetState: true,
         children: [
-          'Do you really want to delete ' + this.getDialogListLength(checkedChannels) + ' Channel(s)?',
+          `Do you really want to delete ${Store.getDeleteItemsPhrase('Channel')}?`,
           this.getDialogList(checkedChannels),
           <Common.Loading
             type="linear"
@@ -125,7 +125,8 @@ export default React.createClass({
               checkedItemsCount={checkedItems}
               actions={Actions}>
               <Common.Lists.MenuItem
-                primaryText="Delete Channel"
+                singleItemText="Delete a Channel Socket"
+                multipleItemsText="Delete Channel Sockets"
                 onTouchTap={this.showDialog.bind(null, 'deleteChannelDialog')}/>
             </Common.Lists.Menu>
           </Column.ColumnHeader>

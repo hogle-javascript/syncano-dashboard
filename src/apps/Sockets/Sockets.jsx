@@ -137,7 +137,7 @@ export default React.createClass({
             name="CodeBox Sockets"
             isLoading={this.state.codeboxes.isLoading}
             items={this.state.codeboxes.items}
-            handleTitleClick={this.handleListTitleClick.bind(null, 'codeBoxes')}
+            handleTitleClick={this.handleListTitleClick.bind(null, 'codeboxes')}
             emptyItemHandleClick={this.showCodeBoxAddDialog}
             emptyItemContent="Create a CodeBox Socket"/>
 
@@ -163,7 +163,7 @@ export default React.createClass({
             items={this.state.schedules.items}
             handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
             emptyItemHandleClick={this.showScheduleAddDialog}
-            emptyItemContent="Create a Trigger Socket"/>
+            emptyItemContent="Create a Schedule Socket"/>
         </Common.Loading>
       </div>
     );
@@ -180,7 +180,6 @@ export default React.createClass({
         <GroupDialog />
 
         {this.renderToolbar()}
-
         {this.renderLists()}
       </Container>
     );
