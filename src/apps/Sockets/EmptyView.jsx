@@ -39,30 +39,6 @@ export default React.createClass({
     };
   },
 
-  showGroupAddDialog() {
-    GroupsActions.showDialog();
-  },
-
-  showTriggerAddDialog() {
-    TriggersActions.showDialog();
-  },
-
-  showScheduleAddDialog() {
-    SchedulesActions.showDialog();
-  },
-
-  showChannelAddDialog() {
-    ChannelsActions.showDialog();
-  },
-
-  showDataViewAddDialog() {
-    DataViewsActions.showDialog();
-  },
-
-  showCodeBoxAddDialog() {
-    CodeBoxesActions.showDialog();
-  },
-
   showPushNotificationAddDialog() {
     console.info('EmptyView::showPushNotificationAddDialog');
   },
@@ -80,7 +56,7 @@ export default React.createClass({
         </div>
         <Socket.EmptyListItem
           addTooltip="Create a Data View"
-          handleAdd={this.showDataViewAddDialog}
+          handleAdd={DataViewsActions.showDialog}
           socketName="Data"
           title="Add Data">
           <div style={styles.socketDescription}>
@@ -89,7 +65,7 @@ export default React.createClass({
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Group"
-          handleAdd={this.showGroupAddDialog}
+          handleAdd={GroupsActions.showDialog}
           socketName="Users"
           title="Organize Users & Groups">
           <div style={styles.socketDescription}>
@@ -98,7 +74,7 @@ export default React.createClass({
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Channel"
-          handleAdd={this.showChannelAddDialog}
+          handleAdd={ChannelsActions.showDialog}
           socketName="Channel"
           title="Manage Channels">
           <div style={styles.socketDescription}>
@@ -107,7 +83,7 @@ export default React.createClass({
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a CodeBox"
-          handleAdd={this.showCodeBoxAddDialog}
+          handleAdd={CodeBoxesActions.showDialog}
           socketName="CodeBox"
           title="Write CodeBoxes™">
           <div style={styles.socketDescription}>
@@ -129,7 +105,7 @@ export default React.createClass({
 
         <Socket.EmptyListItem
           addTooltip="Create a Trigger"
-          handleAdd={this.showTriggerAddDialog}
+          handleAdd={TriggersActions.showDialog}
           socketName="Trigger"
           title="Configure Triggers">
           <div style={styles.socketDescription}>
@@ -138,7 +114,7 @@ export default React.createClass({
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
           addTooltip="Create a Schedule"
-          handleAdd={this.showScheduleAddDialog}
+          handleAdd={SchedulesActions.showDialog}
           socketName="Schedule"
           title="Create Schedules">
           <div style={styles.socketDescription}>
