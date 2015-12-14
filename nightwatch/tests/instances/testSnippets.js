@@ -1,8 +1,8 @@
-import globals from '../globals';
+import Globals from '../../globals';
 import Syncano from 'syncano';
 
 export default {
-  tags: ['codeboxes'],
+  tags: ['snippets'],
   before(client) {
     const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
@@ -24,11 +24,9 @@ export default {
         syncano.instance(globals.tempInstanceName).codeBox().add(codeBoxOptions);
       }
     });
-
     loginPage
       .navigate()
-      .login(globals.tempEmail, globals.tempPass)
-      .verifyLoginSuccessful();
+      .login(Globals.tempEmail, Globals.tempPass);
   },
   after(client) {
     client.end();

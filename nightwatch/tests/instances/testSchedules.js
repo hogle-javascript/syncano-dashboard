@@ -1,16 +1,13 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['schedules'],
   before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
@@ -51,10 +48,14 @@ module.exports = {
     schedulesPage
       .navigate()
       .clickButton('@selectScheduleTableRow')
-      .clickButton('@schedulesListMenu')
+      .clickButton('@schedulesListMenu');
+    client.pause(1000);
+    schedulesPage
       .clickButton('@schedulesDeleteButton')
-      .waitForElementPresent('@deleteScheduleModalTitle')
-      .clickButton('@confirm')
-      .waitForElementNotPresent('@selectScheduleTableRow');
+      .waitForElementPresent('@deleteScheduleModalTitle');
+    client.pause(1000);
+    schedulesPage.clickButton('@confirm');
+    client.pause(1000);
+    schedulesPage.waitForElementNotPresent('@selectScheduleTableRow');
   }
 };

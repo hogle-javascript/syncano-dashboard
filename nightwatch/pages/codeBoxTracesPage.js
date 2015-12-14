@@ -1,11 +1,11 @@
-var codeBoxTracesCommands = {
+const codeBoxTracesCommands = {
   clickButton(button) {
-    return this.waitForElementVisible(button, 5000)
+    return this.waitForElementVisible(button)
       .click(button);
   }
 };
 
-module.exports = {
+export default {
   commands: [codeBoxTracesCommands],
   elements: {
     instancesDropdown: {

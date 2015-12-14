@@ -1,4 +1,4 @@
-import globals from '../globals';
+import globals from '../../globals';
 import Syncano from 'syncano';
 
 export default {
@@ -21,8 +21,7 @@ export default {
 
     loginPage
       .navigate()
-      .login(globals.tempEmail, globals.tempPass)
-      .verifyLoginSuccessful();
+      .login(globals.tempEmail, globals.tempPass);
   },
   after(client) {
     client.end();

@@ -1,5 +1,5 @@
-const globals = require('../globals');
-const utils = require('../utils');
+import utils from '../utils';
+import globals from '../globals';
 
 const adminsCommands = {
   clickButton(button) {
@@ -19,7 +19,7 @@ const adminsCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/admins`,
   commands: [adminsCommands],
   elements: {

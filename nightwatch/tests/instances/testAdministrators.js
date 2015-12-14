@@ -1,15 +1,13 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['administrators'],
   before: (client) => {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after: (client) => {
     client.end();
@@ -38,7 +36,9 @@ module.exports = {
 
     client.pause(1000);
 
-    adminsPage.clickButton('@confirmButton')
+    adminsPage.clickButton('@confirmButton');
+    client.pause(1000);
+    adminsPage
       .waitForElementVisible('@adminTableRow')
       .waitForElementNotPresent('@adminEmailTableRow');
   }

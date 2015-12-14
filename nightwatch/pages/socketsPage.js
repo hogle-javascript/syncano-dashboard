@@ -1,5 +1,5 @@
-const globals = require('../globals');
-const utils = require('../utils');
+import utils from '../utils';
+import globals from '../globals';
 
 const dataCommands = {
   clickButton(button) {
@@ -19,12 +19,12 @@ const dataCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
   commands: [dataCommands],
   elements: {
-    codeBoxSocketDropDown: {
-      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../../../..//button`,
+    snippetSocketDropDown: {
+      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -57,7 +57,7 @@ module.exports = {
       selector: '//span[@class="synicon-socket-codebox"]',
       locateStrategy: 'xpath'
     },
-    codeBoxSocketItem: {
+    snippetSocketItem: {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
@@ -77,24 +77,24 @@ module.exports = {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalCodeBoxDropdown: {
-      selector: '//div[@class="codebox-dropdown"]',
+    addCodeBoxModalSnippetDropdown: {
+      selector: '//div[@class="snippet-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalCodeBoxDropdownChoice: {
-      selector: '//div[@class="codebox-dropdown"]//span[text()="codebox"]',
+    addCodeBoxModalSnippetDropdownChoice: {
+      selector: '//div[@class="snippet-dropdown"]//span[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codeBox')}"]`,
+      selector: `//div[text()="${utils.addSuffix('codebox')}"]`,
       locateStrategy: 'xpath'
     },
     selectCodeBoxTableRow: {
-      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../div[1]/span`,
+      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../div[1]/span`,
       locateStrategy: 'xpath'
     },
     codeBoxTableRowDescription: {
-      selector: `//div[text()="${utils.addSuffix('codeBox')}"]/../../../../following-sibling::div[1]`,
+      selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../following-sibling::div[1]`,
       locateStrategy: 'xpath'
     },
     deleteCodeBoxModalTitle: {

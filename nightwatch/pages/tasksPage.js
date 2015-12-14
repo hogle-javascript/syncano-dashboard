@@ -1,18 +1,18 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../utils';
+import globals from '../globals';
 
 const tasksCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
   },
-  selectFromDropdown: function(field, value) {
+  selectFromDropdown(field, value) {
     return this.waitForElementVisible(field)
       .click(field)
       .waitForElementVisible(value)
       .click(value);
   },
-  fillInputField: function(field, value) {
+  fillInputField(field, value) {
     return this.waitForElementVisible(field)
       .clearValue(field)
       .setValue(field, value);
@@ -24,7 +24,7 @@ const tasksCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
   commands: [tasksCommands],
   elements: {

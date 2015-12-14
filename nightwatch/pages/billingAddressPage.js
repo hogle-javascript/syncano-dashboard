@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   elements: {
     billingAddressTitle: {
       selector: '//div[text()="Company name"]',

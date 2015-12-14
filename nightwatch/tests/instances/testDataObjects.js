@@ -1,16 +1,13 @@
-import utils from '../utils';
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['dataObjects'],
   before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
@@ -49,8 +46,8 @@ module.exports = {
       .waitForElementNotPresent('@deleteDataObjectButtonDisabled')
       .clickButton('@deleteDataObjectButton');
     client.pause(1000);
-    dataObjectsPage
-      .clickButton('@confirm')
-      .waitForElementNotVisible('@selectDataObjectTableRow');
+    dataObjectsPage.clickButton('@confirm');
+    client.pause(1000);
+    dataObjectsPage.waitForElementNotPresent('@selectDataObjectTableRow');
   }
 };

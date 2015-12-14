@@ -1,4 +1,4 @@
-import utils from '../utils';
+import utils from '../../utils';
 
 export default {
   tags: ['class'],
@@ -7,10 +7,7 @@ export default {
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
@@ -60,9 +57,10 @@ export default {
     client.pause(1000);
     classesPage
       .waitForElementVisible('@deleteClassModalTitle')
-      .clickButton('@confirmDeleteButton')
-      .waitForElementNotVisible('@deleteClassModalTitle')
-      .waitForElementNotPresent('@classTableName');
+      .clickButton('@confirmDeleteButton');
+    classesPage.waitForElementNotVisible('@deleteClassModalTitle');
+    client.pause(1000);
+    classesPage.waitForElementNotPresent('@classTableName');
   },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();

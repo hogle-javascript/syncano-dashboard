@@ -1,11 +1,11 @@
-var channelsCommands = {
-  clickButton: function(button) {
-    return this.waitForElementVisible(button, 5000)
+const channelsCommands = {
+  clickButton(button) {
+    return this.waitForElementVisible(button)
       .click(button);
-  },
+  }
 };
 
-module.exports = {
+export default {
   commands: [channelsCommands],
   elements: {
     channelListItem: {

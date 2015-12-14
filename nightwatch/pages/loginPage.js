@@ -1,27 +1,7 @@
 const loginCommands = {
-  typeEmail() {
-    return this
-      .waitForElementPresent('@emailInput')
-      .setValue('@emailInput', process.env.NIGHTWATCH_EMAIL);
-  },
-  typePassword() {
-    return this
-      .waitForElementVisible('@passInput')
-      .setValue('@passInput', process.env.NIGHTWATCH_PASSWORD);
-  },
-  clickSignInButton() {
-    return this
-      .waitForElementVisible('@loginButton')
-      .click('@loginButton');
-  },
   clickButton(button) {
     return this.waitForElementVisible(button)
       .click(button);
-  },
-  verifyLoginSuccessful() {
-    return this
-      .waitForElementVisible('@socketsHeaderTitle')
-      .assert.containsText('@socketsHeaderTitle', 'Sockets');
   },
   fillInputField(field, value) {
     return this.waitForElementVisible(field)
@@ -34,11 +14,12 @@ const loginCommands = {
       .setValue('@emailInput', email)
       .setValue('@passInput', pass)
       .waitForElementVisible('@loginButton')
-      .click('@loginButton');
+      .click('@loginButton')
+      .waitForElementVisible('@socketsHeaderTitle');
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/login',
   commands: [loginCommands],
   elements: {

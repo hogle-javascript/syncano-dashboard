@@ -1,5 +1,5 @@
-import globals from '../globals';
 import utils from '../utils';
+import globals from '../globals';
 
 const classesCommands = {
   fillInputField(field, value) {

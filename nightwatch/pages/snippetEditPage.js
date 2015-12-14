@@ -1,11 +1,11 @@
-var snippetEditPage = {
-  clickButton: function(button) {
-    return this.waitForElementVisible(button, 5000)
+const snippetEditPage = {
+  clickButton(button) {
+    return this.waitForElementVisible(button)
       .click(button);
-  },
+  }
 };
 
-module.exports = {
+export default {
   commands: [snippetEditPage],
   elements: {
     snippetEditView: {

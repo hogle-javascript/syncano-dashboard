@@ -19,7 +19,7 @@ const dataObjectsCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes/class/objects',
   commands: [dataObjectsCommands],
   elements: {

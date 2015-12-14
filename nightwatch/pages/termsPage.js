@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   url: 'http://www.syncano.com/terms-of-service/',
   commands: [],
   elements: {

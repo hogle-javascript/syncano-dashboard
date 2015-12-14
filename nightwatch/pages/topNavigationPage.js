@@ -1,10 +1,10 @@
 const topNavigationCommands = {
-  clickButton: function(button) {
+  clickButton(button) {
     return this.waitForElementVisible(button).click(button);
   }
 };
 
-module.exports = {
+export default {
   commands: [topNavigationCommands],
   url: 'https://localhost:8080/#/instances',
   elements: {

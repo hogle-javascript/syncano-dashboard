@@ -1,5 +1,5 @@
-const utils = require('../utils');
-const globals = require('../globals');
+import utils from '../utils';
+import globals from '../globals';
 
 const triggersCommands = {
   clickButton(button) {
@@ -24,7 +24,7 @@ const triggersCommands = {
   }
 };
 
-module.exports = {
+export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/triggers`,
   commands: [triggersCommands],
   elements: {

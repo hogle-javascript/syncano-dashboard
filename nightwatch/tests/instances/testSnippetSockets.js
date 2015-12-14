@@ -1,22 +1,19 @@
-import utils from '../utils';
+import utils from '../../utils';
 
 export default {
-  tags: ['SnippetSockets'],
+  tags: ['codeBoxSockets'],
   before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
   },
-  'User adds a Snippet Socket': (client) => {
-    const codeBox = utils.addSuffix('codeBox');
+  'User adds a CodeBox Socket': (client) => {
+    const codeBox = utils.addSuffix('codebox');
     const socketsPage = client.page.socketsPage();
 
     socketsPage
@@ -29,7 +26,7 @@ export default {
       .clickButton('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
-  'User edits a Snippet Socket': (client) => {
+  'User edits a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
@@ -48,7 +45,7 @@ export default {
       .waitForElementVisible('@codeBoxTableRow')
       .waitForElementVisible('@codeBoxTableRowDescription');
   },
-  'User deletes a Snippet Socket': (client) => {
+  'User deletes a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
 
     socketsPage
@@ -61,8 +58,8 @@ export default {
       .clickButton('@deleteDropdownItem')
       .waitForElementVisible('@deleteCodeBoxModalTitle');
     client.pause(1000);
-    socketsPage
-      .clickButton('@confirmButton')
-      .waitForElementNotPresent('@selectCodeBoxTableRow');
+    socketsPage.clickButton('@confirmButton');
+    client.pause(1000);
+    socketsPage.waitForElementNotPresent('@selectCodeBoxTableRow');
   }
 };

@@ -1,16 +1,13 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['triggers'],
   before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
@@ -36,9 +33,11 @@ module.exports = {
 
     triggersPage
       .navigate()
-      .clickDropdown('@triggerDropdown')
-      .clickButton('@editDropdownItem')
-      .waitForElementVisible('@confirm')
+      .clickDropdown('@triggerDropdown');
+    client.pause(1000);
+    triggersPage.clickButton('@editDropdownItem');
+    client.pause(1000);
+    triggersPage.waitForElementVisible('@confirm')
       .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate')
       .waitForElementNotVisible('@addTriggerModalSignalUpdate')
       .clickButton('@confirm')
@@ -50,10 +49,14 @@ module.exports = {
     triggersPage
       .navigate()
       .clickButton('@selectTriggerTableRow')
-      .clickButton('@triggersListMenu')
+      .clickButton('@triggersListMenu');
+    client.pause(1000);
+    triggersPage
       .clickButton('@triggersDeleteButton')
-      .waitForElementVisible('@confirm')
-      .clickButton('@confirm')
-      .waitForElementNotPresent('@selectTriggerTableRow');
+      .waitForElementVisible('@confirm');
+    client.pause(1000);
+    triggersPage.clickButton('@confirm');
+    client.pause(1000);
+    triggersPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

@@ -1,20 +1,18 @@
-const utils = require('../utils');
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['tasks'],
-  before: function(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'Administrator adds a Schedule': function(client) {
+  'Administrator adds a Schedule': (client) => {
     const tasksPage = client.page.tasksPage();
     const suffix = utils.addSuffix('schedule');
 
@@ -28,7 +26,7 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementPresent('@scheduleTableRow');
   },
-  'Administrator edits a Schedule Crontab' : function(client) {
+  'Administrator edits a Schedule Crontab': (client) => {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
@@ -41,7 +39,7 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementVisible('@cronTabScheduleTableRow');
   },
-  'Administrator deletes a Schedule' : function(client) {
+  'Administrator deletes a Schedule': (client) => {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
@@ -50,9 +48,10 @@ module.exports = {
     tasksPage.waitForElementPresent('@deleteScheduleModalTitle');
     client.pause(1000);
     tasksPage.clickButton('@confirm');
+    client.pause(1000);
     tasksPage.waitForElementNotPresent('@selectScheduleTableRow');
   },
-  'Administrator adds a Trigger': function(client) {
+  'Administrator adds a Trigger': (client) => {
     const tasksPage = client.page.tasksPage();
     const suffix = utils.addSuffix('trigger');
 
@@ -67,7 +66,7 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementPresent('@triggerTableRow');
   },
-  'Administrator edits a Trigger Signal' : function(client) {
+  'Administrator edits a Trigger Signal': (client) => {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
@@ -80,7 +79,7 @@ module.exports = {
     tasksPage.clickButton('@confirm');
     tasksPage.waitForElementPresent('@signalTriggerTableRow');
   },
-  'Administrator deletes a Trigger' : function(client) {
+  'Administrator deletes a Trigger': (client) => {
     const tasksPage = client.page.tasksPage();
 
     tasksPage.navigate();
@@ -89,6 +88,7 @@ module.exports = {
     tasksPage.waitForElementVisible('@confirm');
     client.pause(1000);
     tasksPage.clickButton('@confirm');
+    client.pause(1000);
     tasksPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

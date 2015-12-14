@@ -1,15 +1,13 @@
-import utils from '../utils';
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['api_keys'],
   before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
 
   after(client) {
@@ -54,15 +52,16 @@ module.exports = {
         client.elementIdText(result.value.ELEMENT, (text) => {
           client.assert.notEqual(text.value, apiKeyValue);
         });
-      })
+      });
   },
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
 
     apiKeysPage.navigate()
       .clickButton('@selectApiKey')
-      .clickButton('@apiKeysListMenu')
-      .clickButton('@deleteButton');
+      .clickButton('@apiKeysListMenu');
+    client.pause(1000);
+    apiKeysPage.clickButton('@deleteButton');
     client.pause(1000);
     apiKeysPage.clickButton('@confirmButton');
     client.pause(1000);

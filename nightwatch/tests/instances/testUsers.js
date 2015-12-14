@@ -1,16 +1,13 @@
-import utils from '../utils';
+import utils from '../../utils';
 
-module.exports = {
+export default {
   tags: ['users'],
   before(client) {
     const loginPage = client.page.loginPage();
 
     loginPage
       .navigate()
-      .typeEmail()
-      .typePassword()
-      .clickSignInButton()
-      .verifyLoginSuccessful();
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
@@ -42,7 +39,9 @@ module.exports = {
       .waitForElementPresent('@deleteGroupModalTitle');
     client.pause(1000);
     usersPage
-      .clickButton('@confirm')
+      .clickButton('@confirm');
+    client.pause(1000);
+    usersPage
       .waitForElementVisible('@groupList')
       .waitForElementNotPresent('@groupTableRowDropdown');
   },
