@@ -59,8 +59,9 @@ export default {
 
     apiKeysPage.navigate()
       .clickButton('@selectApiKey')
-      .clickButton('@apiKeysListMenu')
-      .clickButton('@deleteButton');
+      .clickButton('@apiKeysListMenu');
+    client.pause(1000);
+    apiKeysPage.clickButton('@deleteButton');
     client.pause(1000);
     apiKeysPage.clickButton('@confirmButton');
     client.pause(1000);
