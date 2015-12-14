@@ -18,7 +18,7 @@ import Classes from '../Classes';
 import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
-import GroupDialog from '../Users/GroupDialog';
+import GroupDialog from '../Groups/GroupDialog';
 import CodeBoxes from '../CodeBoxes';
 import EmptyView from './EmptyView';
 

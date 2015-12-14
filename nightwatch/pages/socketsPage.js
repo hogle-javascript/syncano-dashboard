@@ -136,7 +136,7 @@ module.exports = {
       locateStrategy: 'xpath'
     },
     emptySocketsHeading: {
-      selector: '//div[text()="Start building your app here!"]',
+      selector: '//div[text()="Start building your app here"]',
       locateStrategy: 'xpath'
     }
   }

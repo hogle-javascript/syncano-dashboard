@@ -2,7 +2,7 @@ import React from 'react';
 
 import ChannelsActions from '../Channels/ChannelsActions';
 import DataViewsActions from '../Data/DataViewsActions';
-import GroupsActions from '../Users/GroupsActions';
+import GroupsActions from '../Groups/GroupsActions';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
