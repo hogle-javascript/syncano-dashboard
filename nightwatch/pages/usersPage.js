@@ -79,15 +79,15 @@ export default {
       locateStrategy: 'xpath'
     },
     groupTableRow: {
-      selector: '//span[text()="' + utils.addSuffix('group') + '"]',
+      selector: '//div[text()="' + utils.addSuffix('group') + '"]',
       locateStrategy: 'xpath'
     },
     groupTableRowDropdown: {
-      selector: '//span[text()="' + utils.addSuffix('group') + '"]/following-sibling::div/button',
+      selector: '//div[text()="' + utils.addSuffix('group') + '"]/../following-sibling::div[2]//button',
       locateStrategy: 'xpath'
     },
     deleteButtonDropdown: {
-      selector: '//span[text()="Delete"]',
+      selector: '//div[text()="Delete a Group"]',
       locateStrategy: 'xpath'
     },
     deleteGroupModalTitle: {
