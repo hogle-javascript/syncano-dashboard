@@ -33,9 +33,11 @@ export default {
 
     triggersPage
       .navigate()
-      .clickDropdown('@triggerDropdown')
-      .clickButton('@editDropdownItem')
-      .waitForElementVisible('@confirm')
+      .clickDropdown('@triggerDropdown');
+    client.pause(1000);
+    triggersPage.clickButton('@editDropdownItem');
+    client.pause(1000);
+    triggersPage.waitForElementVisible('@confirm')
       .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate')
       .waitForElementNotVisible('@addTriggerModalSignalUpdate')
       .clickButton('@confirm')
