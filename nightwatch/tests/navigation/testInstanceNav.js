@@ -18,7 +18,7 @@ module.exports = {
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
+    socketsPage.waitForElementPresent('@snippetSocketItem');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
@@ -39,7 +39,7 @@ module.exports = {
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
+    socketsPage.waitForElementPresent('@snippetSocketItem');
     socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
     tasksPage.waitForElementPresent('@scheduleListItem');

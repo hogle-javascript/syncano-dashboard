@@ -48,7 +48,9 @@ export default {
     schedulesPage
       .navigate()
       .clickButton('@selectScheduleTableRow')
-      .clickButton('@schedulesListMenu')
+      .clickButton('@schedulesListMenu');
+    client.pause(1000);
+    schedulesPage
       .clickButton('@schedulesDeleteButton')
       .waitForElementPresent('@deleteScheduleModalTitle')
       .clickButton('@confirm');
