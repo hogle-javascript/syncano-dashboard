@@ -18,7 +18,6 @@ import Classes from '../Classes';
 import Snippets from '../Snippets';
 import Schedules from '../Schedules';
 import Triggers from '../Triggers';
-import GroupDialog from '../Groups/GroupDialog';
 import CodeBoxes from '../CodeBoxes';
 import EmptyView from './EmptyView';
 
@@ -47,7 +46,7 @@ export default React.createClass({
     this.fetch();
   },
 
-  isLoaded() {
+  isViewLoading() {
     let loadingStates = Object.keys(this.state).map((key) => {
       if (this.state[key].hasOwnProperty('isLoading')) {
         return this.state[key].isLoading;
@@ -100,8 +99,8 @@ export default React.createClass({
   },
 
   renderToolbar() {
-    if (!this.hasAnyItem()) {
-      return <Common.InnerToolbar title="Sockets" />;
+    if (!this.hasAnyItem() || this.isViewLoading()) {
+      return <Common.InnerToolbar title="Sockets"/>;
     }
 
     return (
@@ -119,12 +118,16 @@ export default React.createClass({
 
   renderLists() {
     if (!this.hasAnyItem()) {
-      return <EmptyView />;
+      return (
+        <Common.Loading show={this.isViewLoading()}>
+          <EmptyView />;
+        </Common.Loading>
+      );
     }
 
     return (
       <div style={{clear: 'both', height: '100%'}}>
-        <Common.Loading show={this.isLoaded()}>
+        <Common.Loading show={this.isViewLoading()}>
           <Data.List
             name="Data Sockets"
             isLoading={this.state.dataviews.isLoading}
@@ -177,7 +180,6 @@ export default React.createClass({
         <Schedules.Dialog />
         <Triggers.Dialog />
         <Channels.Dialog />
-        <GroupDialog />
 
         {this.renderToolbar()}
         {this.renderLists()}

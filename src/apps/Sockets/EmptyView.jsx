@@ -2,7 +2,6 @@ import React from 'react';
 
 import ChannelsActions from '../Channels/ChannelsActions';
 import DataViewsActions from '../Data/DataViewsActions';
-import GroupsActions from '../Groups/GroupsActions';
 import CodeBoxesActions from '../CodeBoxes/CodeBoxesActions';
 import TriggersActions from '../Triggers/TriggersActions';
 import SchedulesActions from '../Schedules/SchedulesActions';
@@ -61,15 +60,6 @@ export default React.createClass({
           title="Add Data">
           <div style={styles.socketDescription}>
             Place your objects and manage data templates on Syncano.
-          </div>
-        </Socket.EmptyListItem>
-        <Socket.EmptyListItem
-          addTooltip="Create a Group"
-          handleAdd={GroupsActions.showDialog}
-          socketName="Users"
-          title="Organize Users & Groups">
-          <div style={styles.socketDescription}>
-            Create users for your app and assign them to groups.
           </div>
         </Socket.EmptyListItem>
         <Socket.EmptyListItem
