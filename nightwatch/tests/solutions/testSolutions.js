@@ -1,34 +1,32 @@
 
-module.exports = {
+export default {
   tags: ['solutions'],
-  before: function(client) {
+  before(client) {
     const loginPage = client.page.loginPage();
 
-    loginPage.navigate();
-    loginPage.typeEmail();
-    loginPage.typePassword();
-    loginPage.clickSignInButton();
-    loginPage.verifyLoginSuccessful();
+    loginPage
+      .navigate()
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
-  after: function(client) {
+  after(client) {
     client.end();
   },
-  'Administrator can view Favorite Solutions': function(client) {
+  'Administrator can view Favorite Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
     solutionsPage.navigate();
     solutionsPage.clickButton('@favorite');
     solutionsPage.waitForElementVisible('@favoriteSolutionTitle');
   },
-  'Administrator can view his Solutions' : function(client) {
+  'Administrator can view his Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
     solutionsPage.navigate();
     solutionsPage.clickButton('@mySolutions');
     solutionsPage.waitForElementVisible('@mySolutionTitle');
   },
-  'Administrator can filter solutions by tags' : function(client) {
-    var tagsCount = null;
+  'Administrator can filter solutions by tags': (client) => {
+    let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();
     const elementsWithTag = solutionsPage.elements.tagsJs;
 
