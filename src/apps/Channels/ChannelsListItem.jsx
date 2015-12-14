@@ -44,13 +44,13 @@ export default React.createClass({
         <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-            className="dropdown-item-channel-edit"
+            className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Channel"/>
+            primaryText="Edit a Channel Socket"/>
           <MenuItem
-            className="dropdown-item-channel-delete"
+            className="dropdown-item-delete"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a Channel"/>
+            primaryText="Delete a Channel Socket"/>
         </Column.Menu>
       </Common.ColumnList.Item>
     );
