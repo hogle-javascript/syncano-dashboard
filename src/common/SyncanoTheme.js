@@ -7,7 +7,7 @@ export default {
   spacing: Spacing,
   contentFontFamily: 'Avenir, sans-serif',
   palette: {
-    primary1Color: Colors.blue700,
+    primary1Color: '#244273',
     primary2Color: Colors.blue500,
     primary3Color: Colors.blue100,
 

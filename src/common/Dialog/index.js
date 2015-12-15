@@ -1,3 +1,3 @@
-import Dialog from './Dialog.react';
+import Dialog from './Dialog';
 
 export default Dialog;

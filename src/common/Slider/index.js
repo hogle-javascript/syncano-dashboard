@@ -1,3 +1,3 @@
-import Slider from './Slider.react';
+import Slider from './Slider';
 
 export default Slider;

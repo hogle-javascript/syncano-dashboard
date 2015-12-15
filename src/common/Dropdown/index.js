@@ -1,6 +1,6 @@
-import DropdownNotifiItem from './DropdownNotifiItem.react';
-import MaterialDropdown from './MaterialDropdown.react';
-import MaterialDropdownItem from './MaterialDropdownItem.react';
+import DropdownNotifiItem from './DropdownNotifiItem';
+import MaterialDropdown from './MaterialDropdown';
+import MaterialDropdownItem from './MaterialDropdownItem';
 
 let Dropdown = {};
 

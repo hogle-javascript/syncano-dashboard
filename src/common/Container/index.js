@@ -1,8 +1,8 @@
-import Container from './Container.react';
-import AccountContainer from './AccountContainer.react';
-import EmptyContainer from './EmptyContainer.react';
-import ProfileContainer from './ProfileContainer.react';
-import LoadingContainer from './LoadingContainer.react';
+import Container from './Container';
+import AccountContainer from './AccountContainer';
+import EmptyContainer from './EmptyContainer';
+import ProfileContainer from './ProfileContainer';
+import LoadingContainer from './LoadingContainer';
 
 Container.Profile = ProfileContainer;
 Container.Empty = EmptyContainer;

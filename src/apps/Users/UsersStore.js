@@ -6,11 +6,10 @@ import Mixins from '../../mixins';
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
 import UsersActions from './UsersActions';
-import GroupsActions from './GroupsActions';
-import GroupsStore from './GroupsStore';
+import {GroupsActions} from './../Groups';
 
 export default Reflux.createStore({
-  listenables: [UsersActions, GroupsActions],
+  listenables: [UsersActions],
 
   mixins: [
     Mixins.CheckListStore,
@@ -37,13 +36,13 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    let activeGroup = GroupsStore.getActiveGroup();
+    // let activeGroup = GroupsStore.getActiveGroup();
 
-    if (activeGroup) {
-      GroupsActions.fetchGroupUsers(activeGroup.id);
-    } else {
-      UsersActions.fetchUsers();
-    }
+    // if (activeGroup) {
+    //   GroupsActions.fetchGroupUsers(activeGroup.id);
+    // } else {
+    UsersActions.fetchUsers();
+    // }
   },
 
   setUsers(users) {

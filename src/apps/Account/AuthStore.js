@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import StoreFormMixin from '../../mixins/StoreFormMixin';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
-import ProfileInvitationsActions from '../Profile/ProfileInvitationsActions';
+import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
 import Actions from './AuthActions';
 import AuthConstans from './AuthConstants';
 

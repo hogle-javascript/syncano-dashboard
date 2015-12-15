@@ -21,8 +21,8 @@ export default {
         params
       },
       {
-        label: 'CodeBoxes',
-        route: 'codeboxes',
+        label: 'Snippets',
+        route: 'snippets',
         params
       },
       {
@@ -31,8 +31,13 @@ export default {
         params
       },
       {
-        label: 'Tasks',
-        route: 'tasks',
+        label: 'Schedules',
+        route: 'schedules',
+        params
+      },
+      {
+        label: 'Triggers',
+        route: 'triggers',
         params
       }
     ];

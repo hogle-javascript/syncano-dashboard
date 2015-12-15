@@ -128,9 +128,9 @@ export default Radium(React.createClass({
     let map = {
       views: 'name',
       classes: 'name',
-      webhooks: 'name',
+      codeboxes: 'name',
       channels: 'name',
-      codeboxes: 'id',
+      snippets: 'id',
       triggers: 'id',
       schedules: 'id'
     };
@@ -289,8 +289,8 @@ export default Radium(React.createClass({
             <div className="row" style={{marginTop: 30}}>
               {this.renderCheckboxes('Classes', this.state.instanceData.classes, 'name', 'name', 'classes')}
               {this.renderCheckboxes('Data', this.state.instanceData.views, 'name', 'name', 'views')}
-              {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'id', 'label', 'codeboxes')}
-              {this.renderCheckboxes('Webhooks', this.state.instanceData.webhooks, 'name', 'name', 'webhooks')}
+              {this.renderCheckboxes('Snippets', this.state.instanceData.snippets, 'id', 'label', 'snippets')}
+              {this.renderCheckboxes('CodeBoxes', this.state.instanceData.codeboxes, 'name', 'name', 'codeboxes')}
               {this.renderCheckboxes('Triggers', this.state.instanceData.triggers, 'id', 'label', 'triggers')}
               {this.renderCheckboxes('Schedules', this.state.instanceData.schedules, 'id', 'label', 'schedules')}
               {this.renderCheckboxes('Channels', this.state.instanceData.channels, 'name', 'name', 'channels')}

@@ -80,7 +80,7 @@ export default Reflux.createStore({
               return title;
             },
             name: (name) => {
-              return {api: 'API calls', cbx: 'CodeBox runs'}[name];
+              return {api: 'API calls', cbx: 'Snippet runs'}[name];
             },
             value: (value) => d3.format('$')(_.round(value, 5))
           }
@@ -196,7 +196,7 @@ export default Reflux.createStore({
         {
           percent: _.round((usageAmount.cbx / pricing.cbx.overage) / pricing.cbx.included * 100, 0),
           amount: _.round(usageAmount.cbx / pricing.cbx.overage, 0),
-          label: 'CodeBox runs',
+          label: 'Snippet runs',
           styles: {background: '#FFBC5A'}
         }
       ],
