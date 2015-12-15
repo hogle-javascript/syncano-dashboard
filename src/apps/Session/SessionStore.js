@@ -86,7 +86,7 @@ export default Reflux.createStore({
 
   setToken(token) {
     console.info('SessionStore::setToken');
-    this.token = token;
+    localStorage.setItem('token', token);
   },
 
   setInvitationFromUrl(invitationKey) {

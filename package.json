@@ -1,6 +1,6 @@
 {
   "name": "syncano-dashboard",
-  "version": "4.0.15",
+  "version": "4.0.16",
   "license": "UNLICENSED",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
@@ -129,7 +129,6 @@
     "deployment-master": "gulp deployment-master",
     "deployment-devel": "gulp deployment-devel",
     "deployment-branch": "gulp deployment-branch",
-    "bump": "gulp bump",
-    "mark-issues": "gulp mark-issues"
+    "bump": "gulp bump"
   }
 }
