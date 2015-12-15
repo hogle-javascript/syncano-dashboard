@@ -27,8 +27,9 @@ export default {
 
     client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`);
     client.refresh();
+    classesPage.clickDropdown('@classesListMenu');
+    client.pause(1000);
     classesPage
-      .clickDropdown('@classesListMenu')
       .clickButton('@selectAll')
       .clickButton('@selectUserClass');
     client.pause(1000);
