@@ -18,7 +18,7 @@ export default {
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@snippetSocketItem')
+      .waitForElementVisible('@codeBoxSocketItem')
       .clickButton('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .fillInputField('@addCodeBoxModalNameInput', codeBox)
@@ -31,8 +31,8 @@ export default {
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@snippetSocketItem')
-      .clickButton('@snippetSocketDropDown');
+      .waitForElementVisible('@codeBoxSocketItem')
+      .clickButton('@codeBoxSocketDropDown');
     client.pause(1000);
 
     socketsPage
@@ -50,8 +50,8 @@ export default {
 
     socketsPage
       .navigate()
-      .waitForElementVisible('@snippetSocketItem')
-      .clickButton('@snippetSocketDropDown');
+      .waitForElementVisible('@codeBoxSocketItem')
+      .clickButton('@codeBoxSocketDropDown');
     client.pause(1000);
 
     socketsPage

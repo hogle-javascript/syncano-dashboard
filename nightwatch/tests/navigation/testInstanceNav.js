@@ -18,7 +18,7 @@ module.exports = {
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableName');
-    socketsPage.waitForElementPresent('@snippetSocketItem');
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
     if (!process.env.CI || process.env.CIRCLE_BRANCH !== 'screenshots') {
@@ -39,7 +39,7 @@ module.exports = {
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableName');
-    socketsPage.waitForElementPresent('@snippetSocketItem');
+    socketsPage.waitForElementPresent('@codeBoxSocketItem');
     socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
     tasksPage.waitForElementPresent('@scheduleListItem');
@@ -100,13 +100,12 @@ module.exports = {
 
     leftMenuPage.clickButton('@users');
     usersPage.waitForElementPresent('@user');
+  },
+  'User goes to CodeBox Socket Traces View': (client) => {
+    const socketsPage = client.page.socketsPage();
+    const codeBoxTracesPage = client.page.codeBoxTracesPage();
+
+    socketsPage.clickButton('@codeBoxSocketItemTraces');
+    codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
   }
-  // It will be codeBox Socket traces view test when codebox start working
-  //'User goes to CodeBox Traces View': (client) => {
-  //  const socketsPage = client.page.socketsPage();
-  //  const codeBoxTracesPage = client.page.codeBoxTracesPage();
-  //
-  //  socketsPage.clickButton('@codeBoxSocketItem');
-  //  codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
-  //},
 };

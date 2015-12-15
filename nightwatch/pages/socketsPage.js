@@ -23,7 +23,7 @@ export default {
   url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
   commands: [dataCommands],
   elements: {
-    snippetSocketDropDown: {
+    codeBoxSocketDropDown: {
       selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,
       locateStrategy: 'xpath'
     },
@@ -57,7 +57,7 @@ export default {
       selector: '//span[@class="synicon-socket-codebox"]',
       locateStrategy: 'xpath'
     },
-    snippetSocketItem: {
+    codeBoxSocketItem: {
       selector: '//div[text()="webhook_description"]',
       locateStrategy: 'xpath'
     },
