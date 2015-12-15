@@ -36,6 +36,20 @@ export default React.createClass({
         validateObj[item.name] = {numericality: true};
       } else if (item.type === 'text') {
         validateObj[item.name] = {length: {maximum: 32000}};
+      } else if (item.type === 'datetime') {
+        let isDateSet = this.refs[`fielddate-${item.name}`].refs.input.getValue().length !== 0;
+        let isTimeSet = this.refs[`fieldtime-${item.name}`].refs.input.getValue().length !== 0;
+        let validate = (isFieldSet) => {
+          let isValid = isDateSet === isTimeSet;
+
+          if (!isValid && !isFieldSet) {
+            return {presence: {message: `^Both date and time fields must be filled`}};
+          }
+          return null;
+        };
+
+        validateObj[`fielddate-${item.name}`] = validate(isDateSet);
+        validateObj[`fieldtime-${item.name}`] = validate(isTimeSet);
       }
     });
     return validateObj;
@@ -141,12 +155,17 @@ export default React.createClass({
               delete params[item.name];
           }
         } else if (item.type === 'datetime') {
-          let date = this.refs[`fielddate-${item.name}`].getDate();
-          let time = this.refs[`fieldtime-${item.name}`].getTime();
+          let dateInput = this.refs[`fielddate-${item.name}`].refs.input.getValue();
+          let timeInput = this.refs[`fieldtime-${item.name}`].refs.input.getValue();
+          let date = null;
+          let time = null;
 
           params[item.name] = null;
 
-          if (date && this.state[`fielddate-${item.name}`] !== null) {
+          if (dateInput.length !== 0 && timeInput.length !== 0) {
+            date = this.refs[`fielddate-${item.name}`].getDate();
+            time = this.refs[`fieldtime-${item.name}`].getTime();
+
             let dateTime = new Date(
               date.getFullYear(),
               date.getMonth(),
@@ -189,14 +208,6 @@ export default React.createClass({
     });
 
     return fileFields;
-  },
-
-  getEmptyDefaultTime(value) {
-    if (value) {
-      return false;
-    }
-
-    return true;
   },
 
   getGroups() {
@@ -508,11 +519,9 @@ export default React.createClass({
         /* eslint-disable no-undefined */
 
         if (item.type === 'datetime') {
-          let value = this.state[item.name]
-            ? new Date(this.state[item.name].value)
-            : undefined;
+          let value = this.state[item.name] ? new Date(this.state[item.name].value) : undefined;
 
-          /* eslint-enable no-undefined*/
+        /* eslint-enable no-undefined*/
 
           let labelStyle = {fontSize: '0.9rem', paddingLeft: 7, paddingTop: 8, color: 'rgba(0,0,0,0.5)'};
 
@@ -526,6 +535,7 @@ export default React.createClass({
               <div className="row">
                 <div className="col-flex-1">
                   <MUI.DatePicker
+                    errorText={this.getValidationMessages(`fielddate-${item.name}`).join(' ')}
                     ref={`fielddate-${item.name}`}
                     textFieldStyle={styles.dateField}
                     mode="landscape"
@@ -533,10 +543,10 @@ export default React.createClass({
                 </div>
                 <div className="col-flex-1">
                   <MUI.TimePicker
+                    errorText={this.getValidationMessages(`fieldtime-${item.name}`).join(' ')}
                     ref={`fieldtime-${item.name}`}
                     textFieldStyle={styles.dateField}
-                    defaultTime={value}
-                    emptyDefaultTime={this.getEmptyDefaultTime(value)}/>
+                    defaultTime={value}/>
                 </div>
                 <div className="col-xs-5">
                   <MUI.IconButton

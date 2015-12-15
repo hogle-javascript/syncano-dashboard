@@ -149,6 +149,15 @@ export default Radium(React.createClass({
     Actions.uncheckAll();
   },
 
+  handleWelcomDialog() {
+    let userId = SessionStore.getUser().id;
+    let instances = Store.getMyInstances();
+    let instanceName = instances[0].name;
+
+    localStorage.removeItem(`showWelcomeDialog-${userId}`);
+    this.transitionTo('instance', {instanceName});
+  },
+
   handleDelete() {
     console.info('Instances::handleDelete');
     Actions.removeInstances(Store.getCheckedItems());
@@ -216,10 +225,10 @@ export default Radium(React.createClass({
   },
 
   showInstanceDialog() {
-    let userEmail = SessionStore.getUser().email;
+    let userId = SessionStore.getUser().id;
 
     InstanceDialogActions.showDialog();
-    localStorage.setItem(`welcomeShowed${userEmail}`, true);
+    localStorage.removeItem(`showWelcomeDialog-${userId}`);
   },
 
   showInstanceEditDialog() {
@@ -263,10 +272,8 @@ export default Radium(React.createClass({
     let isAnyInstanceSelected = instances !== null && checkedInstances >= 1 && checkedInstances < (instancesCount);
     let markedIcon = 'synicon-checkbox-multiple-marked-outline';
     let blankIcon = 'synicon-checkbox-multiple-blank-outline';
-    let userEmail = SessionStore.getUser() ? SessionStore.getUser().email : '';
-    let shouldShowWelcomeDialog = this.state.items !== null &&
-      Store.getAllInstances().length === 0 &&
-      !localStorage.getItem(`welcomeShowed${userEmail}`);
+    let userId = SessionStore.getUser({id: ''}).id;
+    let shouldShowWelcomeDialog = localStorage.getItem(`showWelcomeDialog-${userId}`) === 'true';
 
     return (
       <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
@@ -287,7 +294,7 @@ export default Radium(React.createClass({
           showDots={true} />
 
         <WelcomeDialog
-          getStarted={this.showInstanceDialog}
+          getStarted={this.handleWelcomDialog}
           visible={shouldShowWelcomeDialog}/>
 
         <InstanceDialog />

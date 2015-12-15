@@ -93,7 +93,7 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let clickedItem = Store.getClickedItemIconColor();
+    let clickedItemMeta = Store.getClickedItemIconColor();
 
     return [
       {
@@ -102,8 +102,8 @@ export default React.createClass({
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
           mode: 'add',
-          initialColor: clickedItem.color,
-          initialIcon: clickedItem.icon,
+          initialColor: clickedItemMeta.color,
+          initialIcon: clickedItemMeta.icon,
           handleClick: this.handleChangePalette
         }
       }
@@ -115,8 +115,7 @@ export default React.createClass({
     let handleRemoveUserInstance = InstancesActions.removeInstances.bind(null, [item]);
     let handleRemoveShared = InstancesActions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
     let handleRemoveInstance = Store.amIOwner(item) ? handleRemoveUserInstance : handleRemoveShared;
-
-    item.metadata = item.metadata || {};
+    let metadata = item.metadata;
 
     return (
       <Common.ColumnList.Item
@@ -126,8 +125,8 @@ export default React.createClass({
         handleClick={this.handleItemClick.bind(null, item.name)}>
         <Column.CheckIcon
           id={item.name}
-          icon={item.metadata.icon}
-          background={Common.Color.getColorByName(item.metadata.color)}
+          icon={metadata.icon}
+          background={Common.Color.getColorByName(metadata.color)}
           checked={item.checked}
           handleIconClick={this.handleItemIconClick}
           handleNameClick={this.handleItemClick}>

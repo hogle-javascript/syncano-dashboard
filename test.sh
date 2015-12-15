@@ -30,21 +30,19 @@ function run_e2e_screenshots {
     npm run-script upload-screenshots
 }
 
-if [ "$CIRCLE_BRANCH" != "master" ]; then
-    case "$CIRCLE_NODE_INDEX" in
-        0)
-            run_unit_tests
-            ;;
-        1)
-            if [[ "$CIRCLE_BRANCH" == "screenshots" ]]; then
-                run_e2e_screenshots
-            else
-                run_e2e_tests
-            fi
-            ;;
-        *)
-            run_unit_tests
+case "$CIRCLE_NODE_INDEX" in
+    0)
+        run_unit_tests
+        ;;
+    1)
+        if [[ "$CIRCLE_BRANCH" == "screenshots" ]]; then
+            run_e2e_screenshots
+        else
             run_e2e_tests
-            ;;
-    esac
-fi
+        fi
+        ;;
+    *)
+        run_unit_tests
+        run_e2e_tests
+        ;;
+esac

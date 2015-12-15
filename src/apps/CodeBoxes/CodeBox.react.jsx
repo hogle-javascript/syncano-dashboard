@@ -27,6 +27,10 @@ export default React.createClass({
     InstanceTabsMixin
   ],
 
+  componentWillUnmount() {
+    Store.clearCurrentCodeBox();
+  },
+
   getActiveSubTabIndex() {
     let index = 0;
 

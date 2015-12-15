@@ -87,7 +87,7 @@ export default Radium(React.createClass({
 
             <MUI.FlatButton
               style={{margin: '24px auto', width: '80%'}}
-              label='Create your first Instance now!'
+              label='Go to your first instance!'
               primary={true}
               onClick={this.handleCloseDialog}/>
           </div>

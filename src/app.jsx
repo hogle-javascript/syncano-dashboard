@@ -28,6 +28,11 @@ Router.run(routes, (Root, state) => {
 
   SessionStore.setUTMData(state.query);
 
+  if (state.query.token) {
+    SessionStore.setToken(state.query.token);
+    location.replace('/');
+  }
+
   // Remove trailing slash
   if (pathname.length > 1 && pathname.match('/$') !== null) {
     pathname = pathname.slice(0, -1);

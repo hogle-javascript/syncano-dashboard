@@ -17,7 +17,7 @@ test:
   override:
     - ./test.sh:
         parallel: true
-        timeout: 360
+        timeout: 600
 
 deployment:
   production:
@@ -33,6 +33,6 @@ deployment:
       - NODE_ENV=staging npm run-script deployment-devel
 
   sockets:
-    branch: sockets
+    branch: /.*/
     commands:
       - NODE_ENV=staging npm run-script deployment-branch

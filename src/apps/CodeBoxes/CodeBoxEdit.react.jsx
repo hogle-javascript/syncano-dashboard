@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import CodeBoxesConstants from './CodeBoxesConstants';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './CodeBoxAutosaveMixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 // Stores and Actions
 import Actions from './CodeBoxActions';
@@ -27,15 +27,15 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
+    Mixins.Form,
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    Mixins.InstanceTabs,
-    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
@@ -71,6 +71,9 @@ export default React.createClass({
       },
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
+      },
+      notification: {
+        marginTop: 20
       }
     };
   },
@@ -91,7 +94,7 @@ export default React.createClass({
     }
   },
 
-  handleConfirm() {
+  handleRun() {
     let source = this.refs.editorSource.editor.getValue();
     let payload = this.refs.tracePanel.refs.payloadField.getValue();
 
@@ -100,20 +103,6 @@ export default React.createClass({
       this.hideDialogs(true);
     } else {
       this.hideDialogs(true);
-      this.setSnackbarNotification({
-        message: "Can't run CodeBox with invalid payload",
-        autoHideDuration: 3000
-      });
-    }
-  },
-
-  handleRun() {
-    if (this.isPayloadValid()) {
-      Actions.runCodeBox({
-        id: this.state.currentCodeBox.id,
-        payload: this.refs.tracePanel.refs.payloadField.getValue()
-      });
-    } else {
       this.setSnackbarNotification({
         message: "Can't run CodeBox with invalid payload",
         autoHideDuration: 3000
@@ -131,27 +120,17 @@ export default React.createClass({
     });
   },
 
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
+  },
+
+  handleSuccessfullValidation() {
+    this.handleUpdate();
+  },
+
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
-      params: {
-        key: 'runUnsavedCodeBox',
-        ref: 'runUnsavedCodeBox',
-        title: 'Unsaved CodeBox',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel
-          },
-          {
-            text: 'Save',
-            onClick: this.handleConfirm
-          }
-        ],
-        modal: true,
-        children: "You're trying to run unsaved CodeBox. Do You wan't to save it before run?"
-      }
-    }, {
       dialog: Common.Dialog,
       params: {
         key: 'unsavedDataWarn',
@@ -173,19 +152,12 @@ export default React.createClass({
     }];
   },
 
-  shouldCodeBoxRun() {
-    if (this.isSaved()) {
-      this.handleRun();
-    } else {
-      this.showDialog('runUnsavedCodeBox');
-    }
-  },
-
   renderEditor() {
     let styles = this.getStyles();
     let source = null;
     let codeBox = this.state.currentCodeBox;
-    let editorMode = 'python';
+    let editorMode = Store.getEditorMode();
+    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
 
@@ -197,7 +169,6 @@ export default React.createClass({
 
     if (codeBox) {
       source = codeBox.source;
-      editorMode = Store.getEditorMode();
 
       return (
         <div>
@@ -205,9 +176,20 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
-            onChange={this.runAutoSave}
+            onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
+          <Common.CharacterCounter
+            charactersCountWarn={CodeBoxesConstants.charactersCountWarn}
+            characters={charactersCount}
+            maxCharacters={CodeBoxesConstants.maxCharactersCount}/>
+          <Common.Show if={this.getValidationMessages('source').length > 0}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                {this.getValidationMessages('source').join(' ')}
+              </Common.Notification>
+            </div>
+          </Common.Show>
           <MUI.Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
@@ -241,14 +223,9 @@ export default React.createClass({
         {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
-            tooltip="Click here to save CodeBox"
-            mini={true}
-            onClick={this.handleUpdate}
-            iconClassName="synicon-content-save"/>
-          <Common.Fab.TooltipItem
             tooltip="Click here to execute CodeBox"
             mini={true}
-            onClick={this.shouldCodeBoxRun}
+            onClick={this.handleRun}
             iconClassName="synicon-play"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>

@@ -52,6 +52,8 @@ export default Reflux.createStore({
       authBackend: 'password',
       email: payload.email
     });
+
+    localStorage.setItem(`showWelcomeDialog-${payload.id}`, true);
     this.onPasswordSignInCompleted(payload);
   },
 
@@ -93,6 +95,11 @@ export default Reflux.createStore({
       authBackend: payload.network,
       email: payload.email
     });
+
+    if (payload.created === true) {
+      localStorage.setItem(`showWelcomeDialog-${payload.id}`, true);
+    }
+
     this.onPasswordSignInCompleted(payload);
   }
 });
