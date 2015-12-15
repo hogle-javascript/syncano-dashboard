@@ -36,10 +36,9 @@ export default React.createClass({
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Desc className="col-sm-6">{snippetLabel}</Column.Desc>
-        <Column.Desc className="col-sm-6">{item.class}</Column.Desc>
-        <Column.Desc>{item.signal}</Column.Desc>
-        <Column.Date date={item.created_at}/>
+        <Column.Desc className="col-flex-1">{item.class}</Column.Desc>
+        <Column.Desc className="col-sm-4">{snippetLabel}</Column.Desc>
+        <Column.Desc className="col-sm-7">{item.signal}</Column.Desc>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

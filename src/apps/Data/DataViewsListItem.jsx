@@ -41,7 +41,7 @@ export default React.createClass({
             tooltip="Copy Data Socket url"/>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5">
+        <Column.Desc className="col-xs-11">
           <Link to="classes-edit" params={{
             instanceName: this.getParams().instanceName,
             className: item.class
