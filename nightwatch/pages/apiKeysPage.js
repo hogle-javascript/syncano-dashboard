@@ -58,11 +58,11 @@ export default {
       locateStrategy: 'xpath'
     },
     deleteButton: {
-      selector: '//div[text()="Delete API Key"]',
+      selector: '//div[text()="Delete an API Key"]',
       locateStrategy: 'xpath'
     },
     resetButton: {
-      selector: '//div[text()="Reset API Key"]',
+      selector: '//div[text()="Reset an API Key"]',
       locateStrategy: 'xpath'
     }
   }

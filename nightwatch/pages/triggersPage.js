@@ -45,11 +45,11 @@ export default {
       locateStrategy: 'xpath'
     },
     triggersDeleteButton: {
-      selector: '//div[text()="Delete Trigger"]',
+      selector: '//div[text()="Delete a Trigger Socket"]',
       locateStrategy: 'xpath'
     },
     triggersEditButton: {
-      selector: '//span[text()="Edit a Trigger"]',
+      selector: '//span[text()="Edit a Trigger Socket"]',
       locateStrategy: 'xpath'
     },
     triggerListItem: {
@@ -69,7 +69,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalTitle: {
-      selector: '//h3[text()="Create a Trigger"]',
+      selector: '//h3[text()="Create a Trigger Socket"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalLabel: {
