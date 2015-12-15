@@ -106,20 +106,19 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-5">
+            className="col-xs-4">
             Permissions
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-5">
+            className="col-xs-4">
             Type
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-xs-5">
+            className="col-xs-3">
             Custom publish
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Common.Lists.Menu
               checkedItemsCount={checkedItems}

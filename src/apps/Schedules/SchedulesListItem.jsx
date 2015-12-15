@@ -37,9 +37,9 @@ export default React.createClass({
           {item.label}
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
-        <Column.Desc className="col-sm-6">{snippetLabel}</Column.Desc>
-        <Column.Desc>{item.crontab}</Column.Desc>
-        <Column.Desc>
+        <Column.Desc className="col-flex-1">{item.crontab}</Column.Desc>
+        <Column.Desc className="col-sm-4">{snippetLabel}</Column.Desc>
+        <Column.Desc className="col-sm-4">
           <Link to="schedule-traces" params={{
             instanceName: this.getParams().instanceName,
             scheduleId: item.id
@@ -47,8 +47,7 @@ export default React.createClass({
             Traces
           </Link>
         </Column.Desc>
-        <Column.Date date={item.scheduled_next}/>
-        <Column.Date date={item.created_at}/>
+        <Column.Date className="col-sm-3" date={item.scheduled_next}/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"
