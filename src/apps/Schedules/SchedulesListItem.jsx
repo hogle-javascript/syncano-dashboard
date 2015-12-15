@@ -38,7 +38,14 @@ export default React.createClass({
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc className="col-flex-1">{item.crontab}</Column.Desc>
-        <Column.Desc className="col-sm-4">{snippetLabel}</Column.Desc>
+        <Column.Desc className="col-sm-4">
+          <Link to="snippet-edit" params={{
+            instanceName: this.getParams().instanceName,
+            snippetId: item.codebox
+          }}>
+            {snippetLabel}
+          </Link>
+        </Column.Desc>
         <Column.Desc className="col-sm-4">
           <Link to="schedule-traces" params={{
             instanceName: this.getParams().instanceName,
