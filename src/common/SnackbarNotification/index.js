@@ -1,4 +1,4 @@
-import SnackbarNotification from './SnackbarNotification.react';
+import SnackbarNotification from './SnackbarNotification';
 import Actions from './SnackbarNotificationActions';
 import Store from './SnackbarNotificationStore';
 import Mixin from './SnackbarNotificationMixin';

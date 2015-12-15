@@ -278,12 +278,11 @@ export default React.createClass({
         label="Cancel"
         onTouchTap={this.handleCancel}
         ref="cancel"/>,
-
       <MUI.FlatButton
-        type='submit'
         key="confirm"
         label="Confirm"
         primary={true}
+        onTouchTap={this.handleFormValidation}
         ref="submit"/>
     ];
 
@@ -304,90 +303,85 @@ export default React.createClass({
       {
         included: {
           value: parseInt(cbxInfo.included, 10).toLocaleString(),
-          label: 'Total CodeBox runs'
+          label: 'Total Snippet runs'
         },
         overage: {
           value: cbxInfo.overage,
-          label: 'Overage Unit Price: CodeBox run'
+          label: 'Overage Unit Price: Snippet run'
         }
       }
     );
 
     return (
-      <form
-        onSubmit={this.handleFormValidation}
-        acceptCharset="UTF-8"
-        method="post">
-        <Common.Dialog
-          ref="dialog"
-          contentStyle={{maxWidth: 850, padding: 0}}
-          onShow={this.handleDialogShow}
-          openImmediately={this.props.openImmediately}
-          actions={dialogCustomActions}
-          onDismiss={this.handleDismiss}>
-          <div>
-            <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
-            <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
-          </div>
-          <div style={{paddingTop: 34}}>
-            {this.renderFormNotifications()}
+      <Common.Dialog
+        key='dialog'
+        ref="dialog"
+        contentStyle={{maxWidth: 850, padding: 0}}
+        defaultOpen={this.props.defaultOpen}
+        actions={dialogCustomActions}
+        onRequestClose={this.handleCancel}>
+        <div>
+          <div style={{fontSize: '1.5em', lineHeight: '1.5em'}}>Choose your plan</div>
+          <div style={{color: '#9B9B9B'}}>move the sliders to choose your plan</div>
+        </div>
+        <div style={{paddingTop: 34}}>
+          {this.renderFormNotifications()}
 
-            <SliderSection
-              title="API calls"
-              slider={this.renderSlider('api')}
-              sliderSummary={apiSliderSummary} />
-            <SliderSection
-              style={{paddingTop: 50}}
-              title="CodeBox runs"
-              slider={this.renderSlider('cbx')}
-              sliderSummary={cbxSliderSummary} />
+          <SliderSection
+            title="API calls"
+            slider={this.renderSlider('api')}
+            sliderSummary={apiSliderSummary} />
+          <SliderSection
+            style={{paddingTop: 50}}
+            title="Snippet runs"
+            slider={this.renderSlider('cbx')}
+            sliderSummary={cbxSliderSummary} />
 
-            <div className="row" style={{marginTop: 40}}>
-              <div className="col-md-24">
-                <div style={styles.sectionTopic}>Summary</div>
-                <div style={styles.table}>
-                  <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">API calls</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>
-                      {parseInt(apiInfo.included, 10).toLocaleString()}
-                    </div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
+          <div className="row" style={{marginTop: 40}}>
+            <div className="col-md-24">
+              <div style={styles.sectionTopic}>Summary</div>
+              <div style={styles.table}>
+                <div className="row" style={styles.tableRow}>
+                  <div className="col-flex-1">API calls</div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>
+                    {parseInt(apiInfo.included, 10).toLocaleString()}
                   </div>
-                  <div className="row" style={styles.tableRow}>
-                    <div className="col-flex-1">CodeBox runs</div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>
-                      {parseInt(cbxInfo.included, 10).toLocaleString()}
-                    </div>
-                    <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
-                  </div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>${apiInfo.total}/Month</div>
                 </div>
-                <div style={{marginTop: 30}}>
-                  {this.renderCard()}
+                <div className="row" style={styles.tableRow}>
+                  <div className="col-flex-1">Snippet runs</div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>
+                    {parseInt(cbxInfo.included, 10).toLocaleString()}
+                  </div>
+                  <div className="col-md-10" style={styles.tableColumnSummary}>${cbxInfo.total}/Month</div>
                 </div>
               </div>
-              <div className="col-md-11" style={{paddingLeft: 35}}>
+              <div style={{marginTop: 30}}>
+                {this.renderCard()}
+              </div>
+            </div>
+            <div className="col-md-11" style={{paddingLeft: 35}}>
 
-                <div style={styles.sectionTopic}>New plan:</div>
-                <div style={{marginTop: 20, background: '#CBEDA5'}}>
+              <div style={styles.sectionTopic}>New plan:</div>
+              <div style={{marginTop: 20, background: '#CBEDA5'}}>
 
-                  <div style={styles.sectionTotalSummary}>
-                    <div><strong>${sum}</strong>/month</div>
-                    <div>+ overage</div>
-                  </div>
+                <div style={styles.sectionTotalSummary}>
+                  <div><strong>${sum}</strong>/month</div>
+                  <div>+ overage</div>
                 </div>
-                <div style={styles.sectionComment}>
-                  The new monthly price and overage rate will begin at the start of the next billing period.
-                  Your card will be charged on the 1st of every month.
-                </div>
+              </div>
+              <div style={styles.sectionComment}>
+                The new monthly price and overage rate will begin at the start of the next billing period.
+                Your card will be charged on the 1st of every month.
               </div>
             </div>
           </div>
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
-        </Common.Dialog>
-      </form>
+        </div>
+        <Common.Loading
+          type="linear"
+          position="bottom"
+          show={this.state.isLoading}/>
+      </Common.Dialog>
     );
   }
 });

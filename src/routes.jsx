@@ -3,13 +3,13 @@ import React from 'react';
 import Router from 'react-router';
 
 // Pages
-import AppPage from './pages/app.react';
-import ClassesPage from './pages/classes.react';
-import DashboardPage from './pages/dashboard.react';
-import InstancePage from './pages/instance.react';
-import ProfilePage from './pages/profile.react';
-import CodeBoxesPage from './pages/codeBoxes.react';
-import NotFoundPage from './pages/notfound.react';
+import AppPage from './pages/app';
+import ClassesPage from './pages/classes';
+import DashboardPage from './pages/dashboard';
+import InstancePage from './pages/instance';
+import ProfilePage from './pages/profile';
+import SnippetsPage from './pages/snippets';
+import NotFoundPage from './pages/notfound';
 
 // Apps
 import Account from './apps/Account';
@@ -17,18 +17,23 @@ import Classes from './apps/Classes';
 import Profile from './apps/Profile';
 
 // Apps for authenticated users
-import Instances from './apps/Instances/Instances.react';
+import Instances from './apps/Instances/Instances';
+import InstanceEdit from './apps/Instances/InstanceEdit';
 import Solutions from './apps/Solutions';
 
 // Instance Apps
-import Admins from './apps/Admins/Admins.react';
-import ApiKeys from './apps/ApiKeys/ApiKeys.react';
+import Admins from './apps/Admins/Admins';
+import ApiKeys from './apps/ApiKeys/ApiKeys';
 import CodeBoxes from './apps/CodeBoxes';
-import DataObjects from './apps/DataObjects/DataObjects.react';
+import Snippet from './apps/Snippet';
+import Snippets from './apps/Snippets';
+import DataObjects from './apps/DataObjects/DataObjects';
 import Data from './apps/Data';
-import Tasks from './apps/Tasks';
-import Users from './apps/Users/Users.react';
-import Channels from './apps/Channels/Channels.react';
+import Users from './apps/Users/Users';
+import Channels from './apps/Channels/Channels';
+import Sockets from './apps/Sockets';
+import Triggers from './apps/Triggers';
+import Schedules from './apps/Schedules';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -86,24 +91,24 @@ export default (
         handler={InstancePage}
         path="instances/:instanceName">
 
-        <Redirect from="/instances/:instanceName" to="webhooks" />
+        <Redirect from="/instances/:instanceName" to="sockets" />
+
+        {/* Sockets */}
+        <Route
+          name="sockets"
+          path="sockets"
+          >
+
+          <DefaultRoute handler={Sockets}/>
+
+        </Route>
 
         {/* Data */}
         <Route
-          name="webhooks"
-          path="webhooks"
-          >
-
-          {/* Webhook Traces */}
-          <Route
-            name='webhook-traces'
-            handler={Data.WebhookTraces}
-            path='webhook/:webhookName/traces'
-            />
-
-          <DefaultRoute handler={Data}/>
-
-        </Route>
+          name="data"
+          path="data"
+          handler={Data}
+        />
 
         {/* Admins */}
         <Route
@@ -117,6 +122,13 @@ export default (
           name="api-keys"
           handler={ApiKeys}
           path="api_keys"
+          />
+
+        {/* General */}
+        <Route
+          name="instance-edit"
+          handler={InstanceEdit}
+          path="edit"
           />
 
         {/* Classes */}
@@ -146,35 +158,52 @@ export default (
 
         {/* CodeBoxes */}
         <Route
-          name="codeboxes"
-          handler={CodeBoxesPage}
-          path="codeboxes">
+          name="codeBoxes"
+          path="codeboxes"
+          >
+
+          {/* CodeBox Traces */}
           <Route
-            name="codebox"
-            handler={CodeBoxes.Details}
-            path=":codeboxId">
+            name='codeBox-traces'
+            handler={CodeBoxes.Traces}
+            path=':codeBoxName/traces'
+            />
+
+          <DefaultRoute handler={CodeBoxes}/>
+
+        </Route>
+
+        {/* Snippets */}
+        <Route
+          name="snippets"
+          handler={SnippetsPage}
+          path="snippets">
+          <Route
+            name="snippet"
+            handler={Snippet}
+            path=":snippetId">
             <Route
-              name="codebox-traces"
-              handler={CodeBoxes.Traces}
+              name="snippet-traces"
+              handler={Snippet.Traces}
               path="traces"
               />
             <Route
-              name="codebox-edit"
-              handler={CodeBoxes.Edit}
+              name="snippet-edit"
+              handler={Snippet.Edit}
               path="edit"
               />
             <Route
-              name="codebox-config"
-              handler={CodeBoxes.Config}
+              name="snippet-config"
+              handler={Snippet.Config}
               path="config"/>
-            <DefaultRoute handler={CodeBoxes.Edit}/>
+            <DefaultRoute handler={Snippet.Edit}/>
           </Route>
-          <DefaultRoute handler={CodeBoxes}/>
+          <DefaultRoute handler={Snippets}/>
         </Route>
         <Route
-          name="codeboxes-add"
-          handler={CodeBoxes}
-          path="codeboxes/:action"
+          name="snippets-add"
+          handler={Snippets}
+          path="snippets/:action"
           />
 
         {/* Data Objects */}
@@ -184,28 +213,32 @@ export default (
           path="objects"
           />
 
-        {/* Tasks */}
+        {/* Triggers */}
         <Route
-          name="tasks"
-          path="tasks"
+          name="triggers"
+          path="triggers"
           >
+          <Route
+            name='trigger-traces'
+            handler={Triggers.Traces}
+            path=':triggerId/traces'
+          />
 
-          {/* Schedule Traces */}
+          <DefaultRoute handler={Triggers}/>
+        </Route>
+
+        {/* Schedules */}
+        <Route
+          name="schedules"
+          path="schedules"
+          >
           <Route
             name='schedule-traces'
-            handler={Tasks.ScheduleTraces}
-            path='schedule/:scheduleId/traces'
-            />
+            handler={Schedules.Traces}
+            path=':scheduleId/traces'
+          />
 
-          {/* Trigger Traces */}
-          <Route
-              name='trigger-traces'
-              handler={Tasks.TriggerTraces}
-              path='trigger/:triggerId/traces'
-              />
-
-          <DefaultRoute handler={Tasks}/>
-
+          <DefaultRoute handler={Schedules}/>
         </Route>
 
         {/* Channels */}

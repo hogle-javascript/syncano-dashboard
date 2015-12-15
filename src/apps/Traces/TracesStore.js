@@ -41,8 +41,8 @@ export default Reflux.createStore({
 
   fetchCurrentItem() {
     let fetch = {
-      codebox: Actions.fetchCurrentCodeBox,
-      webhook: Actions.fetchCurrentWebhook,
+      snippet: Actions.fetchCurrentSnippet,
+      codeBox: Actions.fetchCurrentCodeBox,
       trigger: Actions.fetchCurrentTrigger,
       schedule: Actions.fetchCurrentSchedule
     };
@@ -52,8 +52,8 @@ export default Reflux.createStore({
 
   fetchTraces() {
     let fetch = {
-      codebox: Actions.fetchCodeBoxTraces,
-      webhook: Actions.fetchWebhookTraces,
+      snippet: Actions.fetchSnippetTraces,
+      codeBox: Actions.fetchCodeBoxTraces,
       trigger: Actions.fetchTriggerTraces,
       schedule: Actions.fetchScheduleTraces
     };
@@ -81,13 +81,13 @@ export default Reflux.createStore({
     this.trigger({currentObjectName: currentObjName});
   },
 
-  onFetchCodeBoxTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchCodeBoxTracesCompleted', tracesObj);
+  onFetchSnippetTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onFetchSnippetTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   },
 
-  onFetchWebhookTracesCompleted(tracesObj) {
-    console.debug('TracesStore::onFetchWebhookTracesCompleted', tracesObj);
+  onFetchCodeBoxTracesCompleted(tracesObj) {
+    console.debug('TracesStore::onFetchCodeBoxTracesCompleted', tracesObj);
     this.saveTraces(tracesObj);
   },
 
@@ -101,13 +101,13 @@ export default Reflux.createStore({
     this.saveTraces(tracesObj);
   },
 
-  onFetchCurrentCodeBoxCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentCodeBoxCompleted', currentObj);
+  onFetchCurrentSnippetCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentSnippetCompleted', currentObj);
     this.saveCurrentObj(currentObj.label);
   },
 
-  onFetchCurrentWebhookCompleted(currentObj) {
-    console.debug('TracesStore::onFetchCurrentWebhookCompleted', currentObj);
+  onFetchCurrentCodeBoxCompleted(currentObj) {
+    console.debug('TracesStore::onFetchCurrentCodeBoxCompleted', currentObj);
     this.saveCurrentObj(currentObj.name);
   },
   onFetchCurrentTriggerCompleted(currentObj) {

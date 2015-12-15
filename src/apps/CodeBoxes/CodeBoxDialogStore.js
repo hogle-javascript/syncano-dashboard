@@ -4,8 +4,9 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import SessionStore from '../Session/SessionStore';
 import Actions from './CodeBoxesActions';
+import SnippetsActions from '../Snippets/SnippetsActions';
+import SnippetsStore from '../Snippets/SnippetsStore';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -16,43 +17,42 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      label: null,
-      runtime_name: '',
-      runtimes: [
-        {payload: '', text: 'Loading...'}
+      label: '',
+      signal: '',
+      class: '',
+      snippets: [
+        {
+          payload: '',
+          text: 'Loading...'
+        }
       ]
     };
   },
 
   init() {
     this.listenToForms();
+    this.listenTo(SnippetsActions.setSnippets, this.getSnippetDropdown);
   },
 
-  setCodeBoxRuntimes(payload) {
-    let runtimes = Object.keys(payload).map((runtime) => {
-      return {payload: runtime, text: runtime};
-    });
+  getSnippetDropdown() {
+    console.debug('DataViewDialogStore::getSnippetDropdown');
+    let snippets = SnippetsStore.getSnippetsDropdown();
 
-    this.trigger({runtimes});
+    if (snippets.length === 0) {
+      snippets = [{payload: '', text: 'No Snippets, add one first'}];
+    }
+    this.trigger({snippets});
   },
 
-  onCreateCodeBoxCompleted(resp) {
-    console.debug('CodeBoxesStore::onCreateCodeBoxCompleted');
+  onCreateCodeBoxCompleted() {
+    console.debug('CodeBoxDialogStore::onCreateCodeBoxCompleted');
     this.dismissDialog();
-    SessionStore.getRouter().transitionTo('codebox-edit', {
-      instanceName: SessionStore.getInstance().name,
-      codeboxId: resp.id
-    });
+    Actions.fetchCodeBoxes();
   },
 
   onUpdateCodeBoxCompleted() {
     console.debug('CodeBoxDialogStore::onUpdateCodeBoxCompleted');
     this.dismissDialog();
     Actions.fetchCodeBoxes();
-  },
-
-  onFetchCodeBoxRuntimesCompleted(runtimes) {
-    console.debug('CodeBoxDialogStore::onFetchCodeBoxRuntimesCompleted');
-    Actions.setCodeBoxRuntimes(runtimes);
   }
 });

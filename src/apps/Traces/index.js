@@ -1,6 +1,6 @@
-import Traces from './Traces.react';
+import Traces from './Traces';
 import TracesStore from './TracesStore';
-import TracesList from './TracesList.react';
+import TracesList from './TracesList';
 import TracesActions from './TracesActions';
 
 Traces.Actions = TracesActions;

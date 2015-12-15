@@ -30,6 +30,7 @@ export default React.createClass({
     Router.State,
     Router.Navigation,
 
+    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.IsLoading(),
 
@@ -110,7 +111,6 @@ export default React.createClass({
     });
   },
 
-  // Dialogs config
   initDialogs() {
     return [{
       dialog: Common.Dialog,
@@ -121,7 +121,7 @@ export default React.createClass({
         actions: [
           {
             text: 'Cancel',
-            onClick: this.handleCancel
+            onClick: this.handleCancel.bind(null, 'deleteCreateDialog')
           },
           {
             text: 'Confirm',
@@ -187,7 +187,7 @@ export default React.createClass({
                 iconClassName="synicon-delete"
                 tooltip="Delete Solution"
                 tooltipPosition="bottom-left"
-                onClick={this.showDialog.bind(null, 'deleteCreateDialog')}
+                // onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
                 />
             </Common.Show>
           </MUI.ToolbarGroup>
@@ -272,10 +272,8 @@ export default React.createClass({
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
-
 
             <div style={styles.main}>
               <Common.Show if={!this.isMySolution() && this.isNoVersions()}>
@@ -286,13 +284,12 @@ export default React.createClass({
                 <Common.Solutions.VersionsList
                   name="Versions"
                   items={this.state.versions}
+                  isLoading={this.state.isLoading}
                   onInstall={this.handleInstallSolution}
                   emptyItemHandleClick={this.handleAddVersion}
-                  emptyItemContent="Add new Version"
-                  />
+                  emptyItemContent="Add new Version"/>
               </Common.Show>
             </div>
-
           </div>
         </Container>
       </div>
