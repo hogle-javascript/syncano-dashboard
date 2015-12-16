@@ -91,13 +91,13 @@ export default Reflux.createStore({
   onSocialLoginCompleted(payload) {
     console.debug('AuthStore::onSocialLoginCompleted', payload);
     window.analytics.alias(payload.email);
-    window.analytics.track('Sign up Dashboard', {
-      authBackend: payload.network,
-      email: payload.email
-    });
 
     if (payload.created === true) {
       localStorage.setItem(`showWelcomeDialog-${payload.id}`, true);
+      window.analytics.track('Sign up Dashboard', {
+        authBackend: payload.network,
+        email: payload.email
+      });
     }
 
     this.onPasswordSignInCompleted(payload);
