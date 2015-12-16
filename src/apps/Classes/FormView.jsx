@@ -8,10 +8,11 @@ import Mixins from '../../mixins';
 import Constants from '../../constants/Constants';
 
 // Stores and Actions
-import SessionStore from '../Session/SessionStore';
-import ClassesStore from './ClassesStore';
 import Actions from './FormViewActions';
 import Store from './FormViewStore';
+import SessionStore from '../Session/SessionStore';
+import ClassesStore from './ClassesStore';
+import {GroupsStore, GroupsActions} from '../Groups';
 
 // Components
 import MUI from 'syncano-material-ui';
@@ -26,6 +27,7 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
+    Reflux.connect(GroupsStore, 'groups'),
     Mixins.Form
   ],
 
@@ -36,6 +38,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    GroupsActions.fetch();
     if (this.hasEditMode()) {
       Store.refreshData();
     }
@@ -62,6 +65,26 @@ export default React.createClass({
       },
       checkBox: {
         alignSelf: 'center'
+      },
+      groupDropdownLabel: {
+        overflowY: 'hidden',
+        maxHeight: 56,
+        paddingRight: 24
+      },
+      groupMenuItem: {
+        padding: '0 24px'
+      },
+      groupItemContainer: {
+        display: '-webkit-flex; display: flex',
+        justifyContent: 'space-between',
+        flexWrap: 'nowrap'
+      },
+      groupItemLabel: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      },
+      groupItemId: {
+        flexShrink: 0
       }
     };
   },
@@ -92,6 +115,27 @@ export default React.createClass({
       }
       return schema;
     }));
+  },
+
+  getGroups() {
+    const groups = this.state.groups.items;
+    const emptyItem = {
+      payload: null,
+      text: 'none'
+    };
+
+    if (groups.length === 0) {
+      return [emptyItem];
+    }
+    const groupsObjects = groups.map((group) => {
+      return {
+        payload: group.id,
+        text: this.renderGroupDropdownItem(group)
+      };
+    });
+
+    groupsObjects.unshift(emptyItem);
+    return groupsObjects;
   },
 
   hasFilter(fieldType) {
@@ -237,10 +281,27 @@ export default React.createClass({
     return fields;
   },
 
+  renderGroupDropdownItem(group) {
+    let styles = this.getStyles();
+
+    return (
+      <div style={styles.groupItemContainer}>
+        <div style={styles.groupItemLabel}>
+          {group.label}
+        </div>
+        <div style={styles.groupItemId}>
+          {` (ID: ${group.id})`}
+        </div>
+      </div>
+    );
+  },
+
   renderSchemaFields() {
     return this.state.fields.map((item) => {
       return (
-        <div key={item.fieldName} className='row align-middle vm-1-b'>
+        <div
+          key={item.fieldName}
+          className='row align-middle vm-1-b'>
           <span className='col-xs-8'>{item.fieldName}</span>
           <span className='col-xs-8'>{item.fieldType}</span>
           <span className='col-xs-8'>{item.fieldTarget}</span>
@@ -326,14 +387,18 @@ export default React.createClass({
           </div>
           <div className="row vm-4-b">
             <div className="col-flex-1">
-              <MUI.TextField
-                ref='field-group'
-                name='owner'
+              <MUI.SelectField
+                ref="field-group"
+                name="group"
                 fullWidth={true}
+                labelStyle={styles.groupDropdownLabel}
+                menuItemStyle={styles.groupMenuItem}
+                valueMember="payload"
+                displayMember="text"
                 valueLink={this.linkState('group')}
+                floatingLabelText="Group (ID)"
                 errorText={this.getValidationMessages('group').join(' ')}
-                hintText='Group ID'
-                floatingLabelText='Group'/>
+                menuItems={this.getGroups()}/>
             </div>
             <div className="col-flex-1">
               <MUI.SelectField
@@ -377,7 +442,9 @@ export default React.createClass({
             <div className='col-xs-3'>Order</div>
             <div className='col-xs-5'></div>
           </div>
-          <div style={styles.schemaAddSection} className='row align-bottom vm-2-b'>
+          <div
+            style={styles.schemaAddSection}
+            className='row align-bottom vm-2-b'>
             <div className='col-xs-8'>
               <MUI.TextField
                 ref='fieldName'
@@ -414,21 +481,26 @@ export default React.createClass({
                   menuItems={ClassesStore.getClassesDropdown(true)}/>
               </Common.Show>
             </div>
-            <div className='col-xs-3' style={styles.checkBox}>
+            <div
+              className='col-xs-3'
+              style={styles.checkBox}>
               <Common.Show if={this.hasFilter(this.state.fieldType)}>
                 <MUI.Checkbox
                   ref="fieldFilter"
                   name="filter"/>
               </Common.Show>
             </div>
-            <div className='col-xs-3' style={styles.checkBox}>
+            <div
+              className='col-xs-3'
+              style={styles.checkBox}>
               <Common.Show if={this.hasOrder(this.state.fieldType)}>
                 <MUI.Checkbox
                   ref="fieldOrder"
                   name="order"/>
               </Common.Show>
             </div>
-            <div className='col-xs-5' style={styles.checkBox}>
+            <div className='col-xs-5'
+                 style={styles.checkBox}>
               <MUI.FlatButton
                 style={{marginBottom: 4}}
                 label='Add'

@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils & Mixins
 import Mixins from '../../mixins';
@@ -155,7 +156,12 @@ export default Reflux.createStore({
 
   setInstances(instances) {
     console.debug('InstancesStore::setInstances');
-    this.data.items = Object.keys(instances).map((key) => instances[key]);
+    this.data.items = Object.keys(instances).map((key) => {
+      if (_.isEmpty(instances[key].metadata)) {
+        instances[key].metadata = {color: 'indigo', icon: 'cloud'};
+      }
+      return instances[key];
+    });
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -233,14 +239,14 @@ export default Reflux.createStore({
 
     if (!clickedItem) {
       return {
-        color: null,
-        icon: null
+        color: 'indigo',
+        icon: 'cloud'
       };
     }
 
     return {
-      color: clickedItem.metadata.color,
-      icon: clickedItem.metadata.icon
+      color: clickedItem.metadata.color ? clickedItem.metadata.color : 'indigo',
+      icon: clickedItem.metadata.icon ? clickedItem.metadata.icon : 'cloud'
     };
   }
 });

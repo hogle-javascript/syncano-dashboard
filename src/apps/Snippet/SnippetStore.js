@@ -42,7 +42,6 @@ export default Reflux.createStore({
     this.data = this.getInitialState();
     this.listenToForms();
     this.waitFor(
-      SessionActions.setUser,
       SessionActions.setInstance,
       this.refreshData
     );
@@ -70,6 +69,10 @@ export default Reflux.createStore({
     return this.data.currentSnippet;
   },
 
+  clearCurrentSnippet() {
+    this.data.currentSnippet = null;
+  },
+
   onFetchSnippetCompleted(snippet) {
     console.debug('SnippetStore::onFetchSnippetCompleted');
     this.data.snippetConfig = this.mapConfig(snippet.config);
@@ -83,7 +86,9 @@ export default Reflux.createStore({
   },
 
   getEditorMode() {
-    return this.langMap[this.data.currentSnippet.runtime_name];
+    let currentSnippet = this.data.currentSnippet;
+
+    return currentSnippet ? this.langMap[currentSnippet.runtime_name] : 'python';
   },
 
   fetchTraces() {

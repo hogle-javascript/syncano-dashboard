@@ -31,26 +31,25 @@ export default React.createClass({
             tooltip="Copy Channel Socket url"/>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">
+        <Column.Desc className="col-xs-4 col-md-4">
           <div>
             <div>group: {item.group_permissions}</div>
             <div>other: {item.other_permissions}</div>
           </div>
         </Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">{item.type}</Column.Desc>
-        <Column.Desc className="col-xs-5 col-md-5">
+        <Column.Desc className="col-xs-4 col-md-4">{item.type}</Column.Desc>
+        <Column.Desc className="col-xs-3 col-md-3">
           {item.custom_publish ? 'Yes' : 'No'}
         </Column.Desc>
-        <Column.Date date={item.created_at}/>
         <Column.Menu>
           <MenuItem
-            className="dropdown-item-channel-edit"
+            className="dropdown-item-edit"
             onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a Channel"/>
+            primaryText="Edit a Channel Socket"/>
           <MenuItem
-            className="dropdown-item-channel-delete"
+            className="dropdown-item-delete"
             onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a Channel"/>
+            primaryText="Delete a Channel Socket"/>
         </Column.Menu>
       </Common.ColumnList.Item>
     );

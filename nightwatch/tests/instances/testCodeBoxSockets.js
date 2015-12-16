@@ -21,7 +21,7 @@ export default {
       .waitForElementVisible('@snippetSocketItem')
       .clickButton('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
-      .fillInputField('@addCodeBoxModalNameInput', codeBox)
+      .fillInputField('@modalNameInput', codeBox)
       .selectFromDropdown('@addCodeBoxModalSnippetDropdown', '@addCodeBoxModalSnippetDropdownChoice')
       .clickButton('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
@@ -38,7 +38,7 @@ export default {
     socketsPage
       .clickButton('@editDropdownItem')
       .waitForElementVisible('@editCodeBoxModalTitle')
-      .fillInputField('@addCodeBoxModalDescriptionInput', 'codeBox_description');
+      .fillInputField('@modalDescriptionInput', 'codeBox_description');
     client.pause(1000);
     socketsPage
       .clickButton('@confirmButton')

@@ -53,7 +53,7 @@ export default Radium(React.createClass({
       payloadStyle: {
         display: 'flex',
         flexDirection: 'column',
-        padding: '0px 10px 16px 10px',
+        padding: '0px 10px 24px 10px',
         backgroundColor: '#F1F1F1'
       },
       trace: {

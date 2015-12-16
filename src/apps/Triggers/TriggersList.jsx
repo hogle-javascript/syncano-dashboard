@@ -112,16 +112,15 @@ export default React.createClass({
           <Column.ColumnHeader columnName="ID">ID</Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-sm-6">
-            Snippet
+            className="col-flex-1">
+            Class
           </Column.ColumnHeader>
           <Column.ColumnHeader
             columnName="DESC"
-            className="col-sm-6">
-            Class
+            className="col-sm-4">
+            Snippet
           </Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DESC">Signal</Column.ColumnHeader>
-          <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
+          <Column.ColumnHeader className="col-sm-7" columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
             <Common.Lists.Menu
               checkedItemsCount={checkedItems}

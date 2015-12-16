@@ -92,10 +92,13 @@ export default React.createClass({
 
   getBottomContent() {
     return (
-    <p className="vm-0-b text--center">
-      By signing up you agree to our <a href="http://www.syncano.com/terms-of-service/" target="_blank">
-      Terms of Use and Privacy Policy</a>.
-    </p>
+      <p className="vm-0-b text--center">
+        By signing up you agree to our
+        <a href="http://www.syncano.com/terms-of-service/"
+           target="_blank">
+        Terms of Use and Privacy Policy
+        </a>.
+      </p>
     );
   },
 
@@ -157,7 +160,16 @@ export default React.createClass({
 
         <div className="account-container__content__footer">
           <ul className="list--flex list--horizontal">
-            <li><p>Already have an account? <Router.Link to="login"> Login</Router.Link></p></li>
+            <li>
+              <p>
+                <span>Already have an account? </span>
+                <Router.Link
+                  to="login"
+                  query={this.getQuery()}>
+                  Login
+                </Router.Link>
+              </p>
+            </li>
           </ul>
         </div>
       </Container>

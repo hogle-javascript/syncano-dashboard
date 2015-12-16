@@ -1,13 +1,13 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
+import SnippetConstants from './SnippetConstants';
 
 // Utils
 import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 import UnsavedDataMixin from './UnsavedDataMixin';
 import AutosaveMixin from './SnippetAutosaveMixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 // Stores and Actions
 import Actions from './SnippetActions';
@@ -27,16 +27,16 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-    LinkedStateMixin,
 
     Reflux.connect(Store),
     Mixins.Dialog,
     Mixins.Dialogs,
+    Mixins.InstanceTabs,
+    Mixins.Mousetrap,
+    Mixins.Form,
     HeaderMixin,
     UnsavedDataMixin,
     AutosaveMixin,
-    Mixins.InstanceTabs,
-    Mixins.Mousetrap,
     SnackbarNotificationMixin
   ],
 
@@ -72,6 +72,9 @@ export default React.createClass({
       },
       statusSummarySuccess: {
         color: MUI.Styles.Colors.green400
+      },
+      notification: {
+        marginTop: 20
       }
     };
   },
@@ -89,22 +92,6 @@ export default React.createClass({
       let currentSnippetSource = this.refs.editorSource.editor.getValue();
 
       return initialSnippetSource === currentSnippetSource;
-    }
-  },
-
-  handleConfirm() {
-    let source = this.refs.editorSource.editor.getValue();
-    let payload = this.refs.tracePanel.refs.payloadField.getValue();
-
-    if (this.isPayloadValid()) {
-      Actions.runSnippetWithUpdate(this.state.currentSnippet.id, {source}, {payload});
-      this.hideDialogs(true);
-    } else {
-      this.hideDialogs(true);
-      this.setSnackbarNotification({
-        message: "Can't run Snippet with invalid payload",
-        autoHideDuration: 3000
-      });
     }
   },
 
@@ -132,27 +119,13 @@ export default React.createClass({
     });
   },
 
+  handleOnSourceChange() {
+    this.resetForm();
+    this.runAutoSave();
+  },
+
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
-      params: {
-        key: 'runUnsavedSnippet',
-        ref: 'runUnsavedSnippet',
-        title: 'Unsaved Snippet',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'runUnsavedSnippet')
-          },
-          {
-            text: 'Save',
-            onClick: this.handleConfirm
-          }
-        ],
-        modal: true,
-        children: "You're trying to run unsaved Snippet. Do You wan't to save it before run?"
-      }
-    }, {
       dialog: Common.Dialog,
       params: {
         key: 'unsavedDataWarn',
@@ -187,6 +160,7 @@ export default React.createClass({
     let source = null;
     let snippet = this.state.currentSnippet;
     let editorMode = 'python';
+    let charactersCount = this.refs.editorSource ? this.refs.editorSource.editor.getValue().length : 0;
     let traceStyle =
       this.state.lastTraceStatus === 'success' ? styles.statusSummarySuccess : styles.statusSummaryFailed;
 
@@ -206,9 +180,20 @@ export default React.createClass({
             ref="editorSource"
             mode={editorMode}
             theme="tomorrow"
-            onChange={this.runAutoSave}
+            onChange={this.handleOnSourceChange}
             onLoad={this.clearAutosaveTimer}
             value={source}/>
+          <Common.CharacterCounter
+            charactersCountWarn={SnippetConstants.charactersCountWarn}
+            characters={charactersCount}
+            maxCharacters={SnippetConstants.maxCharactersCount}/>
+          <Common.Show if={this.getValidationMessages('source').length > 0}>
+            <div style={styles.notification}>
+              <Common.Notification type="error">
+                {this.getValidationMessages('source').join(' ')}
+              </Common.Notification>
+            </div>
+          </Common.Show>
           <MUI.Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
@@ -242,14 +227,9 @@ export default React.createClass({
         {this.getDialogs()}
         <Common.Fab position="top">
           <Common.Fab.TooltipItem
-            tooltip="Click here to save Snippet"
-            mini={true}
-            onClick={this.handleUpdate}
-            iconClassName="synicon-content-save"/>
-          <Common.Fab.TooltipItem
             tooltip="Click here to execute Snippet"
             mini={true}
-            onClick={this.shouldSnippetRun}
+            onClick={this.handleRun}
             iconClassName="synicon-play"/>
         </Common.Fab>
         <Common.Loading show={this.state.isLoading}>

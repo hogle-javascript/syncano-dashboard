@@ -15,7 +15,7 @@ module.exports = function(cb) {
 
     function(callback) {
       gulp.src('./package.json')
-          .pipe(git.commit('Version bump: ' + version.text))
+          .pipe(git.commit('Version bump: ' + version.text + ' [ci skip]'))
           .on('finish', callback);
     },
 
