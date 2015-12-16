@@ -33,6 +33,7 @@
     "react-addons-test-utils": "0.14.2",
     "react-addons-transition-group": "0.14.2",
     "react-addons-update": "0.14.2",
+    "react-copy-to-clipboard": "^3.0.4",
     "react-dom": "0.14.2",
     "react-dropzone": "2.2.3",
     "react-onclickoutside": "4.1.0",
