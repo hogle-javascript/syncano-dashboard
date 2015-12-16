@@ -69,11 +69,11 @@ export default {
       selector: '//h3[text()="Create a CodeBox Socket"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalNameInput: {
+    modalNameInput: {
       selector: '//input[@name="name"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalDescriptionInput: {
+    modalDescriptionInput: {
       selector: '//input[@name="description"]',
       locateStrategy: 'xpath'
     },
@@ -138,6 +138,42 @@ export default {
     emptySocketsHeading: {
       selector: '//div[text()="Start building your app here"]',
       locateStrategy: 'xpath'
-    }
+    },
+    channelSocketsListTitle: {
+      selector: '//div[text()="Channel Sockets"]',
+      locateStrategy: 'xpath'
+    },
+    addChannelButton: {
+      selector: '//span[@class="synicon-socket-channel"]',
+      locateStrategy: 'xpath'
+    },
+    addChannelModalTitle: {
+      selector: '//h3[text()="Create a Channel Socket"]',
+      locateStrategy: 'xpath'
+    },
+    editChannelModalTitle: {
+      selector: '//h3[text()="Edit a Channel Socket"]',
+      locateStrategy: 'xpath'
+    },
+    deleteChannelModalTitle: {
+      selector: '//h3[text()="Delete a Channel Socket"]',
+      locateStrategy: 'xpath'
+    },
+    channelTableRow: {
+      selector: `//div[text()="${utils.addSuffix('channel')}"]`,
+      locateStrategy: 'xpath'
+    },
+    selectChannelTableRow: {
+      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../div[1]/span`,
+      locateStrategy: 'xpath'
+    },
+    channelTableRowDescription: {
+      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../../following-sibling::div[1]`,
+      locateStrategy: 'xpath'
+    },
+    channelSocketDropDown: {
+      selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../../..//button`,
+      locateStrategy: 'xpath'
+    },
   }
 };
