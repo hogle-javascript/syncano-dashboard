@@ -4,20 +4,20 @@ import Syncano from 'syncano';
 exports.command = (callback) => {
   const accountKey = Globals.tempAccountKey;
   const baseUrl = 'https://api.syncano.rocks';
-
+  const name = 'class' + Date.now();
   const data = {
-    label: 'trigger',
-    signal: 'post_create',
-    class: 'user_profile',
-    snippet: Globals.tempSnippetId
+    name,
+    schema: [
+      {type: 'string', name}
+    ]
   };
 
   new Syncano({accountKey, baseUrl})
     .instance(Globals.tempInstanceName)
-    .trigger()
+    .class()
     .add(data)
     .then((response) => {
-      Globals.tempTriggerId = response.id;
+      Globals.tempClassName = response.name;
       if (typeof callback === 'function') {
         callback.call(this);
       }
@@ -25,6 +25,5 @@ exports.command = (callback) => {
     .catch((error) => {
       if (error) throw error;
     });
-
   return this;
 };

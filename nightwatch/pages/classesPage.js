@@ -32,6 +32,14 @@ export default {
       selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
       locateStrategy: 'xpath'
     },
+    selectAll: {
+      selector: '//div[text()="Select All"]',
+      locateStrategy: 'xpath'
+    },
+    deleteClasses: {
+      selector: '//div[text()="Delete Classes"]',
+      locateStrategy: 'xpath'
+    },
     classItemDropdown: {
       selector: `//div[text()="${utils.addSuffix('class')}"]/../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
@@ -83,7 +91,7 @@ export default {
       selector: '.synicon-checkbox-multiple-marked-outline'
     },
     classTableRows: {
-      selector: '//div[@class="classes-list"]/div[2]/div/div',
+      selector: '//div[@class="classes-list"]/div[2]/div',
       locateStrategy: 'xpath'
     },
     classTableRow: {
