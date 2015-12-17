@@ -115,19 +115,19 @@ export default Reflux.createStore({
     return !this.amIOwner(item);
   },
 
-  getAllInstances(reversed) {
-    return this.getInstances('all', reversed);
+  getAllInstances() {
+    return this.getInstances('all');
   },
 
-  getOtherInstances(reversed) {
-    return this.getInstances('other', reversed);
+  getOtherInstances() {
+    return this.getInstances('other');
   },
 
-  getMyInstances(reversed) {
-    return this.getInstances('user', reversed);
+  getMyInstances() {
+    return this.getInstances('user');
   },
 
-  getInstances(ownership, reversed) {
+  getInstances(ownership) {
     if (this.data.items === null) {
       return this.data.items;
     }
@@ -136,10 +136,6 @@ export default Reflux.createStore({
       other: this.data.items.filter(this.filterOtherInstances),
       all: this.data.items
     };
-
-    if (reversed) {
-      return [].concat(filteredItems[ownership]).reverse();
-    }
 
     return filteredItems[ownership];
   },

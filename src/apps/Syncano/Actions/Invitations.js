@@ -2,7 +2,7 @@ export default {
   list() {
     this.Connection
       .Invitations
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },

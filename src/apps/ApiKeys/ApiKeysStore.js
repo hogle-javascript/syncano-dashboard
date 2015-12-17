@@ -40,7 +40,7 @@ export default Reflux.createStore({
   setApiKeys(items) {
     console.debug('AdminsStore::setApiKeys');
 
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -51,7 +51,7 @@ export default Reflux.createStore({
 
   onFetchApiKeysCompleted(items) {
     console.debug('ApiKeysStore::onFetchApiKeysCompleted');
-    Actions.setApiKeys(items);
+    Actions.setApiKeys(items._items);
   },
 
   onRemoveApiKeysCompleted() {

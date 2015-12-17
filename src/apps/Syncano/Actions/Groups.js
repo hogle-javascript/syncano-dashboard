@@ -10,7 +10,7 @@ export default {
   list() {
     this.Connection
       .Groups
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },

@@ -18,7 +18,7 @@ export default {
   list() {
     this.Connection
       .WebHooks
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },
@@ -42,7 +42,7 @@ export default {
   listTraces(codeboxId) {
     this.Connection
       .WebHooks
-      .traces(codeboxId)
+      .traces(codeboxId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   }

@@ -30,7 +30,7 @@ export default Reflux.createStore({
   },
 
   setTriggers(items) {
-    this.data.items = Object.keys(items).map((item) => items[item]);
+    this.data.items = items;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -52,7 +52,7 @@ export default Reflux.createStore({
 
   onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
-    TriggersActions.setTriggers(items);
+    TriggersActions.setTriggers(items._items);
   },
 
   onRemoveTriggersCompleted() {

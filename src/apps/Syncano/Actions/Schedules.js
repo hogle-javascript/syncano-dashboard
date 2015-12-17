@@ -18,7 +18,7 @@ export default {
   list() {
     this.Connection
       .Schedules
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },
@@ -44,7 +44,7 @@ export default {
   listTraces(scheduleId) {
     this.Connection
       .Schedules
-      .traces(scheduleId)
+      .traces(scheduleId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   }

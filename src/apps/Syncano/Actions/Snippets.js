@@ -37,7 +37,7 @@ export default {
   list() {
     this.Connection
       .CodeBoxes
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },
@@ -71,7 +71,7 @@ export default {
 
   listTraces(snippetId) {
     this.Connection
-      .CodeBoxes.traces(snippetId, {})
+      .CodeBoxes.traces(snippetId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },

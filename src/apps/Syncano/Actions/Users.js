@@ -4,7 +4,7 @@ export default {
   list() {
     this.Connection
       .Users
-      .list()
+      .list({ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },
