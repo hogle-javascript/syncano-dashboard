@@ -1,10 +1,13 @@
 import _ from 'lodash';
 
 export default {
-  list() {
+  list(params = {}) {
+    if (!_.keys(params).includes('ordering')) {
+      _.assign(params, {ordering: 'desc'});
+    }
     this.Connection
       .Users
-      .list({ordering: 'desc'})
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },

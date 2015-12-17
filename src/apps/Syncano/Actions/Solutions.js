@@ -40,8 +40,10 @@ export default {
             .then(this.completed)
             .catch(this.failure);
   },
-  list(payload = {}) {
-    let params = _.assign(payload, {ordering: 'desc'});
+  list(params = {}) {
+    if (!_.keys(params).includes('ordering')) {
+      _.assign(params, {ordering: 'desc'});
+    }
 
     this.Connection
       .Solutions

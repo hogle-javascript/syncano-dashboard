@@ -1,8 +1,13 @@
+import _ from 'lodash';
+
 export default {
-  list() {
+  list(params = {}) {
+    if (!_.keys(params).includes('ordering')) {
+      _.assign(params, {ordering: 'desc'});
+    }
     this.Connection
       .Invitations
-      .list({ordering: 'desc'})
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },
