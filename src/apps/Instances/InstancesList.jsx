@@ -9,11 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
-import {FlatButton} from 'syncano-material-ui';
 import ListItem from './InstancesListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists, ColorIconPicker} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -66,39 +65,22 @@ export default React.createClass({
 
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
-    let checkedItems = Store.getCheckedItems();
 
     return [
       {
-        dialog: Common.Dialog,
+        dialog: Dialog.Delete,
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'deleteInstanceDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleDelete}/>
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Instance')}?`,
-            this.getDialogList(checkedItems),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading} />
-          ]
+          handleConfirm: this.handleDelete,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          groupName: 'Instance'
         }
       },
       {
-        dialog: Common.ColorIconPicker.Dialog,
+        dialog: ColorIconPicker.Dialog,
         params: {
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
@@ -126,10 +108,10 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Common.Lists.Container className='instances-list'>
+      <Lists.Container className='instances-list'>
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -138,21 +120,21 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete an Instance"
                 multipleItemsText="Delete Instances"
                 onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           style={styles.list}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

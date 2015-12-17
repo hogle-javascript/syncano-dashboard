@@ -156,23 +156,15 @@ export default React.createClass({
         }
       },
       {
-        dialog: Common.Dialog,
+        dialog: Dialog.Delete,
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'deleteInstanceDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleDelete}/>
-          ],
-          modal: true,
+          handleConfirm: this.handleDelete,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          groupName: 'Channel',
           children: [
             `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
             `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),

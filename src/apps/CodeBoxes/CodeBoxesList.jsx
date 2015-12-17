@@ -9,11 +9,10 @@ import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
 import ListItem from './CodeBoxesListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -46,39 +45,18 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedItems = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeCodeBoxDialog',
-          ref: 'removeCodeBoxDialog',
-          title: 'Delete a CodeBox Socket',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'removeCodeBoxDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleRemoveCodeBoxes}/>
-          ],
-          modal: true,
-          avoidResetState: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('CodeBox Socket')}?`,
-            this.getDialogList(checkedItems, 'name'),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeCodeBoxDialog',
+        ref: 'removeCodeBoxDialog',
+        title: 'Delete a CodeBox Socket',
+        handleConfirm: this.handleRemoveCodeBoxes,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'CodeBox Socket'
       }
-    ];
+    }];
   },
 
   renderItem(item, index) {
@@ -95,10 +73,10 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container>
+      <Lists.Container>
         {this.getDialogs()}
-        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Column.MenuDialog ref="menuDialog"/>
+        <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"
             primary={true}
@@ -127,20 +105,20 @@ export default React.createClass({
             Public
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a CodeBox Socket"
                 multipleItemsText="Delete CodeBox Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeCodeBoxDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });
