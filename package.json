@@ -1,6 +1,6 @@
 {
   "name": "syncano-dashboard",
-  "version": "4.0.17",
+  "version": "4.0.18",
   "license": "UNLICENSED",
   "description": "Syncano Dashboard",
   "main": "js/app.jsx",
