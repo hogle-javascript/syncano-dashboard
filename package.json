@@ -39,7 +39,6 @@
     "react-onclickoutside": "4.1.0",
     "react-select": "github:syncano/react-select#build",
     "react-tap-event-plugin": "0.2.1",
-    "react-zeroclipboard": "3.0.0",
     "reflux": "0.3.0",
     "syncano-c3": "0.4.11-rc4",
     "syncano-material-ui": "0.13.4-3",
