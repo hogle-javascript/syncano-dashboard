@@ -10,6 +10,7 @@ import Mixins from '../../mixins';
 import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './ClassesListItem';
 import Common from '../../common';
 
@@ -122,14 +123,15 @@ export default React.createClass({
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteClassDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteClassDialog')}/>,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete}/>
         ],
         modal: true,
         children: [

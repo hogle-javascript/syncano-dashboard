@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Actions from './InstancesActions';
 import Store from './InstancesStore';
 
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './InstancesListItem';
 import Common from '../../common';
 
@@ -75,8 +76,15 @@ export default React.createClass({
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDelete}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'deleteInstanceDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleDelete}/>
           ],
           modal: true,
           children: [

@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './AdminsInvitationsListItem';
 import Common from '../../common';
 
@@ -60,8 +61,15 @@ export default React.createClass({
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'resendInvitationDialog')},
-            {text: 'Confirm', onClick: this.handleResendInvitation}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'resendInvitationDialog')} />,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleResendInvitation} />
           ],
           modal: true,
           avoidResetState: true,
@@ -82,8 +90,15 @@ export default React.createClass({
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeInvitationDialog')},
-            {text: 'Confirm', onClick: this.handleRemoveInvitation}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeInvitationDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveInvitation}/>
           ],
           modal: true,
           avoidResetState: true,

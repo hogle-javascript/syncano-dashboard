@@ -12,7 +12,7 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import MUI from 'syncano-material-ui';
+import {IconButton, FlatButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
 import Common from '../../common';
 
 // Local components
@@ -108,8 +108,15 @@ export default React.createClass({
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
         actions: [
-          {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteDataObjectDialog')},
-          {text: 'Confirm', onClick: this.handleDelete}
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteDataObjectDialog')} />,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete} />
         ],
         avoidResetState: true,
         modal: true,
@@ -148,7 +155,7 @@ export default React.createClass({
 
     return (
     <div>
-      <MUI.Table
+      <Table
         ref="table"
         multiSelectable={true}
         showRowHover={true}
@@ -157,13 +164,13 @@ export default React.createClass({
         wrapperStyle={{minHeight: '120px'}}
         bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
         {tableHeader}
-        <MUI.TableBody
+        <TableBody
           deselectOnClickaway={false}
           showRowHover={true}
           stripedRows={false}>
           {tableData}
-        </MUI.TableBody>
-      </MUI.Table>
+        </TableBody>
+      </Table>
 
       <div
         className="row align-center"
@@ -174,7 +181,7 @@ export default React.createClass({
         <div
           className="row align-center"
           style={{margin: 50}}>
-          <MUI.RaisedButton
+          <RaisedButton
             label="Load more"
             onClick={this.handleMoreRows}/>
         </div>
@@ -197,13 +204,13 @@ export default React.createClass({
             title={`Class: ${this.getParams().className} ${selectedMessageText}`}
             backFallback={this.handleBackClick}>
 
-            <MUI.IconButton
+            <IconButton
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-plus"
               tooltip="Add Data Objects"
               onClick={this.showDataObjectDialog}/>
 
-            <MUI.IconButton
+            <IconButton
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-delete"
               tooltip="Delete Data Objects"

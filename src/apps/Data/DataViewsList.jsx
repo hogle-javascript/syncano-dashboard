@@ -10,6 +10,7 @@ import Actions from './DataViewsActions';
 import Store from './DataViewsStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './DataViewsListItem';
 import Common from '../../common';
 
@@ -56,14 +57,15 @@ export default React.createClass({
           ref: 'removeDataViewDialog',
           title: 'Delete a DataView',
           actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
-            },
-            {
-              text: 'Confrim',
-              onClick: this.handleRemoveDataViews
-            }
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeDataViewDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveDataViews}/>
           ],
           modal: true,
           children: [

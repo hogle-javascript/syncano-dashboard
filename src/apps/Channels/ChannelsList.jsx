@@ -10,6 +10,7 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './ChannelsListItem';
 import Common from '../../common';
 
@@ -56,14 +57,15 @@ export default React.createClass({
         ref: 'deleteChannelDialog',
         title: 'Delete a Channel',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteChannelDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteChannelDialog')} />,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete} />
         ],
         modal: true,
         avoidResetState: true,

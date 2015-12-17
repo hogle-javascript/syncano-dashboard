@@ -10,6 +10,7 @@ import Mixins from '../../mixins';
 import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './GroupsListItem';
 import Common from '../../common';
 
@@ -56,14 +57,15 @@ export default Radium(React.createClass({
           ref: 'removeGroupDialog',
           title: 'Delete a Group',
           actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeGroupDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveGroups
-            }
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeGroupDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveGroups}/>
           ],
           modal: true,
           children: [

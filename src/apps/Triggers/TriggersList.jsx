@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './TriggersListItem';
 import Common from '../../common';
 
@@ -63,14 +64,15 @@ export default React.createClass({
           ref: 'removeTriggerDialog',
           title: 'Delete a Trigger',
           actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeTriggerDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveTriggers
-            }
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeTriggerDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveTriggers}/>
           ],
           modal: true,
           children: [

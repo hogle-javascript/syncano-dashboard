@@ -9,6 +9,7 @@ import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './CodeBoxesListItem';
 import Common from '../../common';
 
@@ -55,14 +56,15 @@ export default React.createClass({
           ref: 'removeCodeBoxDialog',
           title: 'Delete a CodeBox Socket',
           actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeCodeBoxDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveCodeBoxes
-            }
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeCodeBoxDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveCodeBoxes}/>
           ],
           modal: true,
           avoidResetState: true,

@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './UsersListItem';
 import Common from '../../common';
 
@@ -60,8 +61,15 @@ export default React.createClass({
           ref: 'removeUserDialog',
           title: 'Delete a User',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeUserDialog')},
-            {text: 'Confirm', onClick: this.handleRemoveUsers}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeUserDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveUsers}/>
           ],
           modal: true,
           children: [

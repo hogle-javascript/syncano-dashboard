@@ -10,6 +10,7 @@ import Actions from './InstancesActions';
 import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './InstancesListItem';
 import Common from '../../common';
 
@@ -72,8 +73,15 @@ export default React.createClass({
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDeleteShared}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'deleteSharedInstanceDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleDeleteShared}/>
           ],
           modal: true,
           children: [

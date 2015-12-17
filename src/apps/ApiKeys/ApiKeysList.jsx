@@ -11,6 +11,7 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './ApiKeysListItem';
 import Common from '../../common';
 
@@ -58,14 +59,15 @@ export default React.createClass({
         ref: 'resetApiKeyDialog',
         key: 'resetApiKeyDialog',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'resetApiKeyDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleReset
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'resetApiKeyDialog')}/>,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleReset}/>
         ],
         modal: true,
         avoidResetState: true,
@@ -84,14 +86,15 @@ export default React.createClass({
         ref: 'deleteApiKeyDialog',
         key: 'deleteApiKeyDialog',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteApiKeyDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteApiKeyDialog')}/>,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete}/>
         ],
         modal: true,
         avoidResetState: true,

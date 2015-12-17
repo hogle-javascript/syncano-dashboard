@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './SchedulesListItem';
 import Common from '../../common';
 
@@ -55,8 +56,15 @@ export default React.createClass({
           ref: 'removeScheduleDialog',
           title: 'Delete a Schedule Socket',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeScheduleDialog')},
-            {text: 'Confirm', onClick: this.handleRemoveSchedules}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'removeScheduleDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleRemoveSchedules}/>
           ],
           modal: true,
           children: [

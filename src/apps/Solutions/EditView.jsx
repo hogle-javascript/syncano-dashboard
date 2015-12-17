@@ -16,7 +16,9 @@ import Store from './EditViewStore';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import MUI from 'syncano-material-ui';
+import {
+  FlatButton, Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, IconButton, RaisedButton, Avatar
+} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -119,14 +121,15 @@ export default React.createClass({
         ref: 'deleteCreateDialog',
         title: 'Delete a Solution',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteCreateDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteCreateDialog')}/>,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete}/>
         ],
         modal: true,
         children: 'Do you really want to delete this Solution?'
@@ -170,19 +173,18 @@ export default React.createClass({
           </Common.Fab>
         </Common.Show>
 
-        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
-          <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
-            <MUI.FontIcon
+        <Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
+          <ToolbarGroup float="left" style={{padding: '0px'}}>
+            <FontIcon
               style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
               className="synicon-arrow-left"
-              onClick={this.handleBackClick}
-              />
-            <MUI.ToolbarTitle text={'Solutions'}/>
-          </MUI.ToolbarGroup>
+              onClick={this.handleBackClick}/>
+            <ToolbarTitle text={'Solutions'}/>
+          </ToolbarGroup>
 
-          <MUI.ToolbarGroup float="right">
+          <ToolbarGroup float="right">
             <Common.Show if={this.isMySolution()}>
-              <MUI.IconButton
+              <IconButton
                 style={{fontSize: 25, marginTop: 5}}
                 iconClassName="synicon-delete"
                 tooltip="Delete Solution"
@@ -190,8 +192,8 @@ export default React.createClass({
                 // onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
                 />
             </Common.Show>
-          </MUI.ToolbarGroup>
-        </MUI.Toolbar>
+          </ToolbarGroup>
+        </Toolbar>
 
         <Container id='solutions' style={styles.main}>
 
@@ -211,11 +213,10 @@ export default React.createClass({
 
                 <Common.Show if={!this.isMySolution()}>
                   <div className="row">
-                    <MUI.FontIcon
+                    <FontIcon
                       style={styles.cardTextListIcon}
                       className="synicon-tag"
-                      color="rgba(222, 222, 222, 0.54)"
-                      />
+                      color="rgba(222, 222, 222, 0.54)"/>
                     {this.renderItemTags()}
                   </div>
                 </Common.Show>
@@ -246,7 +247,7 @@ export default React.createClass({
 
                 <div className="row vp-5-t align-left">
 
-                  <MUI.RaisedButton
+                  <RaisedButton
                     primary={true}
                     disabled={this.state.versions && this.state.versions.length < 1}
                     label='Install solution'
@@ -266,7 +267,7 @@ export default React.createClass({
                   </div>
                   <div className="col-md-8">
                     <div className="row align-right">
-                      <MUI.Avatar
+                      <Avatar
                         size={70}
                         src={item.author ? item.author.avatar_url : null}/>
                     </div>

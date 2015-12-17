@@ -12,6 +12,7 @@ import SessionActions from '../Session/SessionActions';
 import {Dialog, Dialogs} from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
@@ -161,8 +162,15 @@ export default React.createClass({
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDelete}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'deleteInstanceDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleDelete}/>
           ],
           modal: true,
           children: [

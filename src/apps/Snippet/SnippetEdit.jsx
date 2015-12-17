@@ -14,7 +14,7 @@ import Actions from './SnippetActions';
 import Store from './SnippetStore';
 
 // Components
-import MUI from 'syncano-material-ui';
+import {FlatButton, Styles, Checkbox} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container';
 
@@ -68,10 +68,10 @@ export default React.createClass({
         marginTop: 30
       },
       statusSummaryFailed: {
-        color: MUI.Styles.Colors.red400
+        color: Styles.Colors.red400
       },
       statusSummarySuccess: {
-        color: MUI.Styles.Colors.green400
+        color: Styles.Colors.green400
       },
       notification: {
         marginTop: 20
@@ -132,14 +132,15 @@ export default React.createClass({
         ref: 'unsavedDataWarn',
         title: 'Unsaved Snippet source',
         actions: [
-          {
-            text: 'Just leave',
-            onClick: this._handleContinueTransition
-          },
-          {
-            text: 'Continue editing',
-            onClick: this.handleCancel.bind(null, 'unsavedDataWarn')
-          }
+          <FlatButton
+            label="Just leave"
+            secondary={true}
+            onTouchTap={this._handleContinueTransition}/>,
+          <FlatButton
+            label="Continue editing"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleCancel.bind(null, 'unsavedDataWarn')}/>
         ],
         modal: true,
         children: "You're leaving Snippet Editor with unsaved changes. Are you sure you want to continue?"
@@ -194,7 +195,7 @@ export default React.createClass({
               </Common.Notification>
             </div>
           </Common.Show>
-          <MUI.Checkbox
+          <Checkbox
             ref="autosaveCheckbox"
             name="autosaveCheckbox"
             label="Autosave"

@@ -10,7 +10,7 @@ import Mixins from '../../mixins';
 import Store from './SnippetStore';
 import Actions from './SnippetActions';
 
-import MUI from 'syncano-material-ui';
+import {FlatButton, Utils, TextField, IconButton, RaisedButton} from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
 
@@ -34,7 +34,7 @@ export default Radium(React.createClass({
     Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.Form,
-    MUI.Utils.Styles
+    Utils.Styles
   ],
 
   componentDidMount() {
@@ -206,14 +206,15 @@ export default Radium(React.createClass({
         ref: 'unsavedDataWarn',
         title: 'Unsaved Snippet config',
         actions: [
-          {
-            text: 'Just leave',
-            onClick: this._handleContinueTransition
-          },
-          {
-            text: 'Continue editing',
-            onClick: this.handleCancel.bind(null, 'unsavedDataWarn')
-          }
+          <FlatButton
+            label="Just leave"
+            secondary={true}
+            onTouchTap={this._handleContinueTransition}/>,
+          <FlatButton
+            label="Continue editing"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleCancel.bind(null, 'unsavedDataWarn')}/>
         ],
         modal: true,
         children: "You're leaving Snippet Config with unsaved changes. Are you sure you want to continue?"
@@ -233,7 +234,7 @@ export default Radium(React.createClass({
         <div
           className="row"
           key={index}>
-          <MUI.TextField
+          <TextField
             key={`fieldKey${index}`}
             ref={`fieldKey${index}`}
             hintText="Key"
@@ -241,7 +242,7 @@ export default Radium(React.createClass({
             value={this.state.snippetConfig[index].key}
             style={styles.field}
             onChange={this.handleUpdateKey.bind(this, field.key, index)} />
-          <MUI.TextField
+          <TextField
             key={`fieldValue${index}`}
             ref={`fieldValue${index}`}
             hintText="Value"
@@ -249,7 +250,7 @@ export default Radium(React.createClass({
             value={this.state.snippetConfig[index].value}
             style={styles.field}
             onChange={this.handleUpdateKey.bind(this, field.key, index)} />
-          <MUI.IconButton
+          <IconButton
             iconClassName="synicon-close"
             style={styles.deleteIcon}
             tooltip="Delete key"
@@ -269,21 +270,21 @@ export default Radium(React.createClass({
         key="form"
         className="row"
         onSubmit={this.handleAddField}>
-        <MUI.TextField
+        <TextField
           className="config-input-key"
           ref="newFieldKey"
           key="newFieldKey"
           hintText="Key"
           defaultValue=""
           style={styles.field} />
-        <MUI.TextField
+        <TextField
           className="config-input-value"
           ref="newFieldValue"
           key="newFieldValue"
           hintText="Value"
           defaultValue=""
           style={styles.field} />
-        <MUI.IconButton
+        <IconButton
           className="add-field-button"
           iconClassName="synicon-plus"
           tooltip="Add field"
@@ -300,10 +301,10 @@ export default Radium(React.createClass({
       <div
         className="row align-right"
         style={styles.buttonsSection}>
-        <MUI.FlatButton
+        <FlatButton
           label="Cancel"
           onClick={this.handleCancelChanges} />
-        <MUI.RaisedButton
+        <RaisedButton
           label="Save"
           style={styles.saveButton}
           secondary={true}

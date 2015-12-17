@@ -12,6 +12,7 @@ import Actions from './SnippetsActions';
 import Store from './SnippetsStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './SnippetsListItem';
 import Common from '../../common';
 
@@ -99,14 +100,15 @@ export default React.createClass({
         ref: 'deleteSnippetDialog',
         title: 'Delete a Snippet',
         actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteSnippetDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
+          <FlatButton
+            label="Cancel"
+            secondary={true}
+            onTouchTap={this.handleCancel.bind(null, 'deleteSnippetDialog')}/>,
+          <FlatButton
+            label="Confirm"
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleDelete}/>
         ],
         modal: true,
         avoidResetState: true,

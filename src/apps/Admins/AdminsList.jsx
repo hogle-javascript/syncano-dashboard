@@ -9,6 +9,7 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import ListItem from './AdminsListItem';
 import Common from '../../common';
 
@@ -55,8 +56,15 @@ export default React.createClass({
           ref: 'deleteAdminDialog',
           title: 'Remove an Administrator',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteAdminDialog')},
-            {text: 'Confirm', onClick: this.handleDeleteAdmin}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'deleteAdminDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleDeleteAdmin}/>
           ],
           modal: true,
           avoidResetState: true,
