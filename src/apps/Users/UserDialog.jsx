@@ -139,6 +139,7 @@ export default React.createClass({
         ref='dialog'
         title={`${title} a User`}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         actions={dialogStandardActions}>
         <div>
           {this.renderFormNotifications()}

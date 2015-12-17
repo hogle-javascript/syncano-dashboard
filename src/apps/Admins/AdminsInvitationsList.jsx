@@ -35,16 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleResendInvitation() {
-    console.info('Admins::handleResendInvitation');
-    Actions.resendInvitation(Store.getCheckedItems());
-  },
-
-  handleRemoveInvitation() {
-    console.info('Admins::handleRemoveInvitation');
-    Actions.removeInvitation(Store.getCheckedItems());
-  },
-
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
@@ -57,7 +47,7 @@ export default React.createClass({
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
           title: 'Resend an Invitation',
-          handleConfirm: this.handleResendInvitation,
+          handleConfirm: Actions.resendInvitation,
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           actionName: 'resend',
@@ -70,7 +60,7 @@ export default React.createClass({
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
           title: 'Delete an Invitation',
-          handleConfirm: this.handleRemoveInvitation,
+          handleConfirm: Actions.removeInvitation,
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           itemLabelName: 'email',
@@ -85,8 +75,8 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.email, Actions.removeInvitation.bind(null, [item]))}
-        showResendDialog={this.showMenuDialog.bind(null, item.email, Actions.resendInvitation.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeInvitationDialog', item)}
+        showResendDialog={this.showDialog.bind(null, 'resendInvitationDialog', item)}/>
     );
   },
 
@@ -96,7 +86,6 @@ export default React.createClass({
     return (
       <Lists.Container className="admins-invitations-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

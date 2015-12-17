@@ -1,15 +1,16 @@
 import React from 'react';
 import pluralize from 'pluralize';
+import _ from 'lodash';
 
 import {FlatButton, Dialog} from 'syncano-material-ui';
 import Loading from '../Loading';
-
 
 export default React.createClass({
   displayName: 'DeleteDialog',
 
   getDefaultProps() {
     return {
+      actionName: 'delete',
       itemLabelName: 'name',
       isLoading: false
     };
@@ -36,6 +37,10 @@ export default React.createClass({
         association = schedulesAssociation;
       }
 
+      if (!_.isObject(item)) {
+        return null;
+      }
+
       return <li>{item[paramName || 'name'] + association}</li>;
     });
 
@@ -46,13 +51,15 @@ export default React.createClass({
     this.setState({open: false});
   },
 
-  show() {
-    this.setState({open: true});
+  show(items) {
+    this.setState({open: true, items});
   },
 
   render() {
     let {children, items, groupName, ...other} = this.props; // eslint-disable-line no-redeclare
-    let itemsCount = items.length;
+    let handleConfirmArguments = this.state.items ? this.state.items : items;
+    let listItems = _.filter(handleConfirmArguments, (item) => _.isObject(item));
+    let itemsCount = listItems.length;
 
     return (
       <Dialog
@@ -65,14 +72,14 @@ export default React.createClass({
             label="Confirm"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.props.handleConfirm}/>
+            onTouchTap={this.props.handleConfirm.bind(null, handleConfirmArguments)}/>
         ]}
         open={this.state.open}
         modal={true}
         avoidResetState={true}
         {...other}>
-        Do you really want to delete {itemsCount} {pluralize(groupName, itemsCount)}?
-        {this.getDialogList(items, this.props.itemLabelName)}
+        Do you really want to {this.props.actionName} {itemsCount} {pluralize(groupName, itemsCount)}?
+        {this.getDialogList(listItems, this.props.itemLabelName)}
         <Loading
           type="linear"
           position="bottom"

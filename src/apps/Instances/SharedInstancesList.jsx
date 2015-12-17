@@ -54,12 +54,6 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleDeleteShared() {
-    console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
-  },
-
-  // Dialogs config
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
 
@@ -70,8 +64,9 @@ export default React.createClass({
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
-          handleConfirm: this.handleDeleteShared,
+          handleConfirm: Actions.removeSharedInstance,
           isLoading: this.props.isLoading,
+          actionName: 'leave',
           items: Store.getCheckedItems(),
           groupName: 'Instance'
         }
@@ -91,14 +86,12 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let removeSharedInstance = Actions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
-
     return (
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, removeSharedInstance)}
-        showCustomizeDialog=""/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteSharedInstanceDialog', item, SessionStore.getUser().id)}
+        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
     );
   },
 
@@ -109,7 +102,6 @@ export default React.createClass({
     return (
       <Lists.Container className='instances-list'>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

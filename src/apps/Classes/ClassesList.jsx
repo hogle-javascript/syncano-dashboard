@@ -100,16 +100,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('Classes::handleDelete');
-    Actions.removeClasses(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('Classes::handleReset');
-    Actions.resetClass(Store.getCheckedItem().id);
-  },
-
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
@@ -121,7 +111,7 @@ export default React.createClass({
         key: 'deleteClassDialog',
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
-        handleConfirm: this.handleDelete,
+        handleConfirm: Actions.removeClasses,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'Class'
@@ -166,7 +156,7 @@ export default React.createClass({
         onIconClick={this.handleItemIconClick}
         item={item}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteClassDialog', item)}/>
     );
   },
 
@@ -177,7 +167,6 @@ export default React.createClass({
 
     return (
       <Lists.Container className="classes-list">
-        <ColumnList.Column.MenuDialog ref="menuDialog"/>
         {this.getDialogs()}
         <ColumnList.Header>
           <Column.ColumnHeader

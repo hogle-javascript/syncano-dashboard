@@ -8,7 +8,6 @@ import Name from './Name';
 import Text from './Text';
 import ID from './ID';
 import ColumnHeader from './ColumnHeader';
-import MenuDialog from './MenuDialog';
 
 export default {
   CheckIcon,
@@ -17,7 +16,6 @@ export default {
   IconName,
   Key,
   Menu,
-  MenuDialog,
   Name,
   Text,
   ID,

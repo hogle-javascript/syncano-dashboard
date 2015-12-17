@@ -84,6 +84,7 @@ export default React.createClass({
         title={`${title} a CodeBox Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
+        open={this.state.open}
         modal={true}>
         {this.renderFormNotifications()}
         <MUI.TextField

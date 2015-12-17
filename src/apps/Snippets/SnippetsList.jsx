@@ -80,11 +80,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('Snippets::handleDelete');
-    Actions.removeSnippets(Store.getCheckedItems());
-  },
-
   initDialogs() {
     let checkedSnippets = Store.getCheckedItems();
     let snippetsAssociatedWithTriggers = this.getAssociatedSnippets('triggers');
@@ -98,7 +93,7 @@ export default React.createClass({
         key: 'deleteSnippetDialog',
         ref: 'deleteSnippetDialog',
         title: 'Delete a Snippet',
-        handleConfirm: this.handleDelete,
+        handleConfirm: Actions.removeSnippets,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
@@ -132,8 +127,8 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeSnippets.bind(null, [item]))}
-      />);
+        showDeleteDialog={this.showDialog.bind(null, 'deleteSnippetDialog', item)}/>
+    );
   },
 
   render() {
@@ -142,7 +137,6 @@ export default React.createClass({
     return (
       <Lists.Container>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

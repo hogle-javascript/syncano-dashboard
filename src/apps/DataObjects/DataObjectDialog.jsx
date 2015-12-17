@@ -632,6 +632,7 @@ export default React.createClass({
         ref='dialog'
         title={title}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         actions={dialogStandardActions}>
         {this.renderFormNotifications()}
         <div className="row">
