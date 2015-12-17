@@ -1,12 +1,12 @@
 import React from 'react';
 import Router from 'react-router';
 
-import {LeftNav} from '../mixins';
+import {LeftNavMixin} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import MUI from 'syncano-material-ui';
+import {LeftNav, List, ListItem, Divider} from 'syncano-material-ui';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
@@ -19,7 +19,7 @@ export default React.createClass({
   },
 
   mixins: [
-    LeftNav,
+    LeftNavMixin,
     Router.State,
     Router.Navigation
   ],
@@ -45,7 +45,8 @@ export default React.createClass({
         color: 'rgba(0, 0, 0, 0.54)',
         fontSize: 12,
         paddingTop: 4,
-        fontWeight: 800
+        fontWeight: 800,
+        paddingLeft: 24
       },
       menuStyle: {
         backgroundColor: 'rgba(245,245,245,0.30)'
@@ -72,61 +73,6 @@ export default React.createClass({
     };
   },
 
-  getMenuItems() {
-    return [
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'sockets',
-        payload: this.getMenuItemHref('sockets'),
-        text: 'Sockets'
-      },
-      {
-        type: MUI.MenuItem.Types.SUBHEADER,
-        text: 'Modules'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'users',
-        payload: this.getMenuItemHref('users'),
-        text: 'Users & Groups'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'classes',
-        payload: this.getMenuItemHref('classes'),
-        text: 'Classes'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'snippets',
-        payload: this.getMenuItemHref('snippets'),
-        text: 'Snippets'
-      },
-      {
-        type: MUI.MenuItem.Types.SUBHEADER,
-        text: 'Settings'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'instance-edit',
-        payload: this.getMenuItemHref('instance-edit'),
-        text: 'General'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'admins',
-        payload: this.getMenuItemHref('admins'),
-        text: 'Administrators'
-      },
-      {
-        type: MUI.MenuItem.Types.LINK,
-        route: 'api-keys',
-        payload: this.getMenuItemHref('api-keys'),
-        text: 'API keys'
-      }
-    ];
-  },
-
   redirectToNewInstance() {
     let instanceName = this.refs.addInstanceDialog.refs.name.getValue();
 
@@ -150,15 +96,33 @@ export default React.createClass({
         <InstanceDialog
           ref="addInstanceDialog"
           handleSubmit={this.redirectToNewInstance}/>
-        <MUI.LeftNav
+        <LeftNav
+          open={true}
           className="left-nav"
           ref="leftNav"
-          header={this.renderInstanceDropdown()}
-          menuStyle={styles.menuStyle}
-          menuItemStyleSubheader={styles.menuItemStyleSubheader}
-          selectedIndex={this.getActiveTab(this.getMenuItems()).index}
-          style={styles.leftNav}
-          menuItems={this.getMenuItems()}/>
+          style={styles.leftNav}>
+          <List>
+            <ListItem desktop={true} route="sockets" payload={this.getMenuItemHref('sockets')} primaryText="Sockets"/>
+          </List>
+          <Divider/>
+          <List subheader="Modules">
+            <ListItem
+              desktop={true} route="users" payload={this.getMenuItemHref('users')} primaryText="Users & Groups"/>
+            <ListItem desktop={true} route="classes" payload={this.getMenuItemHref('classes')} primaryText="Classes"/>
+            <ListItem
+              desktop={true} route="snippets" payload={this.getMenuItemHref('snippets')} primaryText="Snippets"/>
+          </List>
+          <Divider/>
+          <List subheader="Settings">
+            <ListItem
+              desktop={true}
+              route="instance-edit" payload={this.getMenuItemHref('instance-edit')} primaryText="General"/>
+            <ListItem
+              desktop={true} route="admins" payload={this.getMenuItemHref('admins')} primaryText="Administrators"/>
+            <ListItem
+              desktop={true} route="api-keys" payload={this.getMenuItemHref('api-keys')} primaryText="API keys"/>
+          </List>
+        </LeftNav>
         <div style={styles.content}>
           <Router.RouteHandler />
         </div>

@@ -12,7 +12,7 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
-import MUI from 'syncano-material-ui';
+import {Styles, List, ListItem, Divider} from 'syncano-material-ui';
 import Common from '../../common';
 
 import CreateDialogActions from './CreateDialogActions';
@@ -48,7 +48,7 @@ export default React.createClass({
         minWidth: 230
       },
       listItemChecked: {
-        background: MUI.Styles.Colors.lightBlue50
+        background: Styles.Colors.lightBlue50
       }
     };
   },
@@ -110,21 +110,21 @@ export default React.createClass({
         <div style={styles.container}>
           <div className="row">
             <div style={styles.sidebar}>
-              <MUI.List zDepth={1} className="vm-6-b">
-                <MUI.ListItem
+              <List zDepth={1} className="vm-6-b">
+                <ListItem
                   innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
                   primaryText="All solutions"
                   onTouchTap={this.handleChangeFilter.bind(this, 'public')}/>
-                <MUI.ListDivider />
-                <MUI.ListItem
+                <Divider />
+                <ListItem
                   innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
                   primaryText="Favorite"
                   onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}/>
-                <MUI.ListItem
+                <ListItem
                   innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
                   primaryText="My solutions"
                   onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}/>
-              </MUI.List>
+              </List>
               <Common.Tags.List
                 items={this.state.tags}
                 selectedItems={this.state.selectedTags}

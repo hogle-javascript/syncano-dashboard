@@ -5,7 +5,7 @@ import SessionStore from '../../apps/Session/SessionStore';
 import AuthActions from '../../apps/Account/AuthActions';
 import AuthConstants from '../../apps/Account/AuthConstants';
 
-import MUI from 'syncano-material-ui';
+import {Styles, FontIcon, Divider, List, ListItem} from 'syncano-material-ui';
 
 export default Radium(React.createClass({
 
@@ -23,12 +23,12 @@ export default Radium(React.createClass({
         paddingTop: 0,
         paddingBottom: 0,
         marginBottom: 24,
-        border: '1px solid' + MUI.Styles.Colors.blue700
+        border: `1px solid ${Styles.Colors.blue700}`
       },
       listItem: {
-        color: MUI.Styles.Colors.blue700,
+        color: Styles.Colors.blue700,
         ':hover': {
-          backgroundColor: MUI.Styles.Colors.blue700,
+          backgroundColor: Styles.Colors.blue700,
           color: '#fff'
         }
       },
@@ -38,7 +38,7 @@ export default Radium(React.createClass({
         left: 12
       },
       listDivider: {
-        backgroundColor: MUI.Styles.Colors.blue700
+        backgroundColor: Styles.Colors.blue700
       }
     };
   },
@@ -57,19 +57,17 @@ export default Radium(React.createClass({
 
     AuthConstants.SOCIAL_NETWORKS.map((network, index) => {
       buttons.push(
-        <MUI.ListItem
+        <ListItem
           key={`network-${index}`}
           style={styles.listItem}
           primaryText={buttonLabel + network}
           onTouchTap={this.handleSocialSignup.bind(null, network)}
-          leftIcon={<MUI.FontIcon
-                         style = {styles.listItemIcon}
-                         className = {`synicon-${network}`}
-                         />}
-          />
+          leftIcon={<FontIcon
+                      style = {styles.listItemIcon}
+                      className = {`synicon-${network}`}/>}/>
       );
       if (index < lastListItemIndex) {
-        buttons.push(<MUI.ListDivider
+        buttons.push(<Divider
           key={`divider-${index}`}
           style={styles.listDivider}/>);
       }
@@ -82,7 +80,7 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.List style={styles.list}>{this.renderSocialButtons()}</MUI.List>
+      <List style={styles.list}>{this.renderSocialButtons()}</List>
     );
   }
 }));

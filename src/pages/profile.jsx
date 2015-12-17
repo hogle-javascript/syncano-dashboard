@@ -1,7 +1,7 @@
 import React from 'react';
 import Router from 'react-router';
 
-import {LeftNav} from '../mixins';
+import {LeftNavMixin} from '../mixins';
 
 import MUI from 'syncano-material-ui';
 import Container from '../common/Container';
@@ -12,7 +12,7 @@ export default React.createClass({
   displayName: 'ProfileBilling',
 
   mixins: [
-    LeftNav,
+    LeftNavMixin,
     Router.Navigation,
     Router.State
   ],

@@ -11,7 +11,7 @@ import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
-import MUI from 'syncano-material-ui';
+import {Utils, FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'syncano-material-ui';
 import Common from '../../common';
 import Logo from '../../common/Logo/Logo';
 
@@ -33,7 +33,7 @@ export default Radium(React.createClass({
     Reflux.connect(InstancesStore),
     Router.Navigation,
     Router.State,
-    MUI.Utils.Styles
+    Utils.Styles
   ],
 
   componentDidMount() {
@@ -81,10 +81,10 @@ export default Radium(React.createClass({
   getDropdownItems() {
     let styles = this.getStyles();
     let user = SessionStore.getUser() || '';
-    let billingIcon = <MUI.FontIcon className="synicon-credit-card"/>;
-    let instancesListIcon = <MUI.FontIcon className="synicon-view-list"/>;
+    let billingIcon = <FontIcon className="synicon-credit-card"/>;
+    let instancesListIcon = <FontIcon className="synicon-view-list"/>;
     let logoutIcon = (
-      <MUI.FontIcon
+      <FontIcon
         style={styles.logoutDropdownItem}
         className="synicon-power"/>
     );
@@ -94,27 +94,27 @@ export default Radium(React.createClass({
     }
 
     return (
-      <MUI.List>
-        <MUI.ListItem
+      <List>
+        <ListItem
           leftAvatar={this.renderIconButton()}
           onTouchTap={this.handleAccountClick}
           primaryText={`${user.first_name} ${user.last_name}`}
           secondaryText={user.email}/>
-        <MUI.ListDivider/>
-        <MUI.ListItem
+        <Divider/>
+        <ListItem
           onTouchTap={this.handleInstancesListClick}
           leftIcon={instancesListIcon}
           primaryText="Instances list"/>
-        <MUI.ListItem
+        <ListItem
           onTouchTap={this.handleBillingClick}
           leftIcon={billingIcon}
           primaryText="Billing"/>
-        <MUI.ListItem
+        <ListItem
           onTouchTap={this.handleLogout}
           style={styles.logoutDropdownItem}
           leftIcon={logoutIcon}
           primaryText="Logout"/>
-      </MUI.List>
+      </List>
     );
   },
 
@@ -160,7 +160,7 @@ export default Radium(React.createClass({
 
   renderIconButton() {
     return (
-      <MUI.Avatar
+      <Avatar
         src={this.getGravatarUrl()}
         onError={this.onAvatarError}/>
     );
@@ -171,15 +171,15 @@ export default Radium(React.createClass({
 
     return (
       <div style={styles.main}>
-        <MUI.Toolbar style={styles.topToolbar}>
-          <MUI.ToolbarGroup style={styles.logotypeContainer}>
+        <Toolbar style={styles.topToolbar}>
+          <ToolbarGroup style={styles.logotypeContainer}>
             <Router.Link to="app">
               <Common.Logo
                 style={styles.logo}
                 className="logo-white"/>
             </Router.Link>
-          </MUI.ToolbarGroup>
-          <MUI.ToolbarGroup
+          </ToolbarGroup>
+          <ToolbarGroup
             float="left"
             style={{marginLeft: '-5', height: '100%'}}>
             <ul
@@ -206,15 +206,15 @@ export default Radium(React.createClass({
                 </a>
               </li>
             </ul>
-          </MUI.ToolbarGroup>
-          <MUI.ToolbarGroup
+          </ToolbarGroup>
+          <ToolbarGroup
             float="right"
             style={{marginLeft: 100, height: '100%'}}>
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
               <li id="menu-account">
-                <MUI.IconMenu
+                <IconMenu
                   id="menu-account--dropdown"
                   iconButtonElement={this.renderIconButton()}
                   anchorOrigin={{
@@ -226,7 +226,7 @@ export default Radium(React.createClass({
                     horizontal: 'right'
                   }}>
                   {this.getDropdownItems()}
-                </MUI.IconMenu>
+                </IconMenu>
               </li>
               <li
                 id="menu-notifications"
@@ -234,8 +234,8 @@ export default Radium(React.createClass({
                 <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
               </li>
             </ul>
-          </MUI.ToolbarGroup>
-        </MUI.Toolbar>
+          </ToolbarGroup>
+        </Toolbar>
       </div>
     );
   }
