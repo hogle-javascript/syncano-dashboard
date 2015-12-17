@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactZeroClipboard from 'react-zeroclipboard';
+import Clipboard from 'react-copy-to-clipboard';
 import SnackbarNotification from '../SnackbarNotification';
 import {IconButton, FlatButton} from 'syncano-material-ui';
 
@@ -14,10 +14,7 @@ export default React.createClass({
     };
   },
 
-  handleClick(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
+  handleClick() {
     this.setSnackbarNotification({
       message: this.props.snackbarText,
       autoHideDuration: this.props.snackbarAutoHideDuration
@@ -64,9 +61,11 @@ export default React.createClass({
 
   render() {
     return (
-      <ReactZeroClipboard text={this.props.copyText}>
+      <Clipboard
+        text={this.props.copyText}
+        onCopy={this.handleClick}>
         {this.renderContent()}
-      </ReactZeroClipboard>
+      </Clipboard>
     );
   }
 });

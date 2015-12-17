@@ -24,6 +24,7 @@ export default React.createClass({
   render() {
     let item = this.props.item;
     let publicString = item.public.toString();
+    let link = item.public ? item.links['public-link'] : item.links.self;
 
     return (
       <Common.ColumnList.Item
@@ -39,7 +40,7 @@ export default React.createClass({
           handleIconClick={this.props.onIconClick}>
           <Common.ColumnList.Link
             name={item.name}
-            link={item.links.self}
+            link={link}
             tooltip="Copy CobeBox Socket url"/>
         </Column.CheckIcon>
         <Column.Desc className="col-flex-1">{item.description}</Column.Desc>
