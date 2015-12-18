@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 export default {
-
   list(params = {}) {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
