@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   get(snippetId) {
     this.Connection
@@ -34,10 +36,11 @@ export default {
     .catch(this.failure);
   },
 
-  list() {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .CodeBoxes
-      .list()
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -71,7 +74,7 @@ export default {
 
   listTraces(snippetId) {
     this.Connection
-      .CodeBoxes.traces(snippetId, {})
+      .CodeBoxes.traces(snippetId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   },

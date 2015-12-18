@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   create(payload) {
     this.Connection
@@ -15,10 +17,11 @@ export default {
       .catch(this.failure);
   },
 
-  list() {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Schedules
-      .list()
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -44,7 +47,7 @@ export default {
   listTraces(scheduleId) {
     this.Connection
       .Schedules
-      .traces(scheduleId)
+      .traces(scheduleId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   }

@@ -17,7 +17,6 @@ export default React.createClass({
     let items = this.props.items.map((item, index) => this.props.renderItem(item, index));
 
     if (items.length > 0) {
-      items.reverse();
       return items;
     }
 

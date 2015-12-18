@@ -35,7 +35,7 @@ export default Reflux.createStore({
 
   setSchedules(items) {
     console.debug('SchedulesStore::setSchedules');
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -53,7 +53,7 @@ export default Reflux.createStore({
 
   onFetchSchedulesCompleted(items) {
     console.debug('SchedulesStore::onFetchSchedulesCompleted');
-    SchedulesActions.setSchedules(items);
+    SchedulesActions.setSchedules(items._items);
   },
 
   onRemoveSchedulesCompleted() {

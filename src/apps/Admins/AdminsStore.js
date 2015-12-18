@@ -45,7 +45,7 @@ export default Reflux.createStore({
   setAdmins(items) {
     console.debug('AdminsStore::setAdmins');
 
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -68,7 +68,7 @@ export default Reflux.createStore({
 
   onFetchAdminsCompleted(items) {
     console.debug('AdminsStore::onFetchAdminsCompleted');
-    AdminsActions.setAdmins(items);
+    AdminsActions.setAdmins(items._items);
   },
 
   onRemoveAdminsCompleted() {

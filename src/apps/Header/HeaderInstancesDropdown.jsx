@@ -199,7 +199,7 @@ export default Radium(React.createClass({
   render() {
     let styles = this.getStyles();
     let instance = SessionStore.instance;
-    let instancesList = InstancesStore.getAllInstances(true);
+    let instancesList = InstancesStore.getAllInstances();
 
     if (!instance || !instancesList || !instancesList.length > 0) {
       return null;
@@ -214,8 +214,8 @@ export default Radium(React.createClass({
         style={styles.iconMenu}
         menuStyle={styles.dropdownMenu}>
         {this.renderAddInstanceItem()}
-        {this.renderList(InstancesStore.getMyInstances(true))}
-        {this.renderList(InstancesStore.getOtherInstances(true))}
+        {this.renderList(InstancesStore.getMyInstances())}
+        {this.renderList(InstancesStore.getOtherInstances())}
       </MUI.IconMenu>
     );
   }

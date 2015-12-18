@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   get(solutionId) {
     return this.Connection
@@ -38,10 +40,11 @@ export default {
             .then(this.completed)
             .catch(this.failure);
   },
-  list(payload) {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Solutions
-      .list(payload)
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },
