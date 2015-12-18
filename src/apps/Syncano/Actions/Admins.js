@@ -1,8 +1,12 @@
+import _ from 'lodash';
+
 export default {
-  list() {
+
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Admins
-      .list({ordering: 'desc'})
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },

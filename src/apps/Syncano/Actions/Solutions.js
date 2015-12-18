@@ -41,10 +41,7 @@ export default {
             .catch(this.failure);
   },
   list(params = {}) {
-    if (!_.keys(params).includes('ordering')) {
-      _.assign(params, {ordering: 'desc'});
-    }
-
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .Solutions
       .list(params)
