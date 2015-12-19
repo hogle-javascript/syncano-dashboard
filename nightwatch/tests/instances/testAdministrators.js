@@ -22,6 +22,10 @@ export default {
       .waitForElementVisible('@addAdminModalTitle')
       .fillInputField('@addAdminModalEmailInput', email)
       .selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead')
+
+    client.pause(1000);
+
+    adminsPage
       .clickButton('@confirmButton')
       .waitForElementVisible('@adminEmailTableRow');
   },

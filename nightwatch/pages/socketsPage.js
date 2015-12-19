@@ -82,7 +82,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalSnippetDropdownChoice: {
-      selector: '//div[@class="snippet-dropdown"]//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {

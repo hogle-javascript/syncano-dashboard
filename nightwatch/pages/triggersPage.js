@@ -57,7 +57,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalSnippetName: {
-      selector: '//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {
@@ -81,7 +81,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalCreate: {
-      selector: '//span[text()="create"]',
+      selector: '//div[text()="create"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalClass: {
@@ -89,7 +89,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalClassName: {
-      selector: '//span[text()="user_profile"]',
+      selector: '//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalSnippet: {
@@ -105,7 +105,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
-      selector: '//span[text()="update"]',
+      selector: '//div[text()="update"]',
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {

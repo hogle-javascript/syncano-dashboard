@@ -73,7 +73,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalSnippetName: {
-      selector: '//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
@@ -81,7 +81,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTabName: {
-      selector: '//span[text()="Run once a year at midnight"]',
+      selector: '//div[text()="Run once a year at midnight"]',
       locateStrategy: 'xpath'
     },
     scheduleTableRow: {
@@ -105,7 +105,7 @@ export default {
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {
-      selector: '//span[text()="Run every 5 minutes"]',
+      selector: '//div[text()="Run every 5 minutes"]',
       locateStrategy: 'xpath'
     },
     dropdownClickAnimation: {

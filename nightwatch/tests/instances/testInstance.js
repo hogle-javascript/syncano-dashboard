@@ -22,11 +22,11 @@ export default {
     client.pause(1000);
     instancesPage
       .clickButton('@editDropdownItem')
-      .fillInstanceDescription('@createModalDescriptionInput', 'new_description')
-      .clickButton('@confirmButton')
-      .waitForElementNotVisible('@editInstanceModalTitle');
-
+      .fillInstanceDescription('@createModalDescriptionInput', 'new_description');
+    client.pause(1000);
     instancesPage
+      .clickButton('@confirmButton')
+      .waitForElementNotVisible('@editInstanceModalTitle')
       .waitForElementVisible('@instancesTableName')
       .expect.element('@instancesTableRow').to.contain.text('new_description');
   },

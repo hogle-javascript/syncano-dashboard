@@ -21,10 +21,13 @@ export default {
       .clickButton('@addTriggerButton')
       .waitForElementPresent('@addTriggerModalTitle')
       .fillInputField('@addTriggerModalLabel', suffix)
-      .selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName')
-      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate')
-      .selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName')
-      .waitForElementNotVisible('@addTriggerModalClassName')
+      .selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName');
+    client.pause(1000);
+    triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate');
+    client.pause(1000);
+    triggersPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName');
+    client.pause(1000);
+    triggersPage
       .clickButton('@confirm')
       .waitForElementPresent('@triggerTableRow');
   },
@@ -37,9 +40,11 @@ export default {
     client.pause(1000);
     triggersPage.clickButton('@editDropdownItem');
     client.pause(1000);
-    triggersPage.waitForElementVisible('@confirm')
-      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate')
-      .waitForElementNotVisible('@addTriggerModalSignalUpdate')
+    triggersPage
+      .waitForElementVisible('@confirm')
+      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate');
+    client.pause(1000);
+    triggersPage
       .clickButton('@confirm')
       .waitForElementPresent('@signalTriggerTableRow');
   },

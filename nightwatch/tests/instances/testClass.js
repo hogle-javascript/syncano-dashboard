@@ -38,7 +38,6 @@ export default {
     classesPage.clickDropdown('@classItemDropdown');
     client.pause(1000);
     classesPage.clickButton('@editDropdownItem')
-      .waitForElementNotVisible('@editDropdownItem')
       .waitForElementVisible('@createModalDescriptionInput')
       .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
       .clickButton('@confirmButton');
@@ -62,6 +61,15 @@ export default {
     client.pause(1000);
     classesPage.waitForElementNotPresent('@classTableName');
   },
+  'Test Admin selects/deselects class': (client) => {
+    const classesPage = client.page.classesPage();
+
+    classesPage
+      .moveToElement('@selectUserClass', 0, 0)
+      .clickButton('@classToSelect')
+      .clickButton('@checkboxSelected')
+      .waitForElementVisible('@classToSelect');
+  },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 
@@ -71,14 +79,5 @@ export default {
 
   // assert that Delete Class element is greyed out
     classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', 'color: rgba(0, 0, 0, 0.298039)');
-  },
-  'Test Admin selects/deselects class': (client) => {
-    const classesPage = client.page.classesPage();
-
-    classesPage
-      .moveToElement('@selectUserClass', 0, 0)
-      .clickButton('@classToSelect')
-      .clickButton('@checkboxSelected')
-      .waitForElementVisible('@classToSelect');
   }
 };

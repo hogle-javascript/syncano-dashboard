@@ -56,7 +56,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {
-      selector: '//div[@tabindex="0"]//span[text()="read"]',
+      selector: '//a[@tabindex="0"]//div[text()="read"]',
       locateStrategy: 'xpath'
     },
     adminEmailTableRow: {

@@ -21,7 +21,9 @@ export default {
       .clickButton('@addScheduleButton')
       .waitForElementPresent('@addScheduleModalTitle')
       .fillInputField('@addScheduleModalLabel', suffix)
-      .selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName')
+      .selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName');
+    client.pause(1000);
+    schedulesPage
       .selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName')
       .waitForElementNotVisible('@runEvery5minutes')
       .clickButton('@confirm')
@@ -36,7 +38,9 @@ export default {
     client.pause(1000);
     schedulesPage
       .clickButton('@editDropdownItem')
-      .waitForElementVisible('@editScheduleModalTitle')
+      .waitForElementVisible('@editScheduleModalTitle');
+    client.pause(1000);
+    schedulesPage
       .selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes')
       .waitForElementNotVisible('@addScheduleModalCronTabName')
       .clickButton('@confirm')

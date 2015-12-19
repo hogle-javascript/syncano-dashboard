@@ -63,7 +63,7 @@ export default {
       locateStrategy: 'xpath'
     },
     createModalSchemaString: {
-      selector: '//span[text()="string"]',
+      selector: '//div[text()="string"]',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {

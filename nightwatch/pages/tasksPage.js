@@ -77,7 +77,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalSnippetName: {
-      selector: '//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {

@@ -23,6 +23,10 @@ export default {
       .waitForElementVisible('@addCodeBoxModalTitle')
       .fillInputField('@modalNameInput', codeBox)
       .selectFromDropdown('@addCodeBoxModalSnippetDropdown', '@addCodeBoxModalSnippetDropdownChoice')
+
+    client.pause(1000);
+
+    socketsPage
       .clickButton('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
