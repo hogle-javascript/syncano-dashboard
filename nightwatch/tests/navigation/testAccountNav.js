@@ -51,6 +51,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@authentication');
     authenticationPage.waitForElementPresent('@accountKey');
     client.pause(1000);
@@ -64,6 +65,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@invitations');
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
     client.pause(1000);
@@ -77,6 +79,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@billingPlan');
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
     client.pause(1000);
@@ -90,6 +93,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@paymentMethods');
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
     client.pause(1000);
@@ -103,6 +107,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@invoices');
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
     client.pause(1000);
@@ -116,6 +121,7 @@ module.exports = {
     client.pause(1000);
     topNavigationPage.waitForElementVisible('@fox');
     topNavigationPage.clickButton('@accountDropdown');
+    client.pause(1000);
     leftMenuPage.clickButton('@billingAddress');
     billingAddressPage.waitForElementPresent('@billingAddressTitle');
     client.pause(1000);

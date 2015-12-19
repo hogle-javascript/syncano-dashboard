@@ -22,6 +22,10 @@ export default React.createClass({
     };
   },
 
+  getConfirmArguments() {
+    return this.state.items ? this.state.items : this.props.items;
+  },
+
   getDialogList(items, paramName, associationFor) {
     let listItems = items.map((item) => {
       let isAssociated = (item.triggers && item.triggers.length > 0) || (item.schedules && item.schedules.length > 0);
@@ -55,11 +59,25 @@ export default React.createClass({
     this.setState({open: true, items});
   },
 
+  renderContent(childrenProps) {
+    console.error('children', childrenProps);
+
+    if (childrenProps) {
+      return childrenProps;
+    }
+
+    let {actionName, groupName, itemLabelName} = this.props;
+    let listItems = _.filter(this.getConfirmArguments(), (item) => _.isObject(item));
+    let itemsCount = listItems.length;
+
+    return (
+      `Do you really want to ${actionName} ${itemsCount} ${pluralize(groupName, itemsCount)}?
+      ${this.getDialogList(listItems, itemLabelName)}`
+    );
+  },
+
   render() {
     let {children, items, groupName, ...other} = this.props; // eslint-disable-line no-redeclare
-    let handleConfirmArguments = this.state.items ? this.state.items : items;
-    let listItems = _.filter(handleConfirmArguments, (item) => _.isObject(item));
-    let itemsCount = listItems.length;
 
     return (
       <Dialog
@@ -72,14 +90,13 @@ export default React.createClass({
             label="Confirm"
             primary={true}
             keyboardFocused={true}
-            onTouchTap={this.props.handleConfirm.bind(null, handleConfirmArguments)}/>
+            onTouchTap={this.props.handleConfirm.bind(null, this.getConfirmArguments())}/>
         ]}
         open={this.state.open}
         modal={true}
         avoidResetState={true}
         {...other}>
-        Do you really want to {this.props.actionName} {itemsCount} {pluralize(groupName, itemsCount)}?
-        {this.getDialogList(listItems, this.props.itemLabelName)}
+        {this.renderContent(children)}
         <Loading
           type="linear"
           position="bottom"
