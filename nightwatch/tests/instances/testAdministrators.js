@@ -21,13 +21,11 @@ export default {
       .clickButton('@addAdminButton')
       .waitForElementVisible('@addAdminModalTitle')
       .fillInputField('@addAdminModalEmailInput', email)
-      .selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead')
-
+      .selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
     client.pause(1000);
-
-    adminsPage
-      .clickButton('@confirmButton')
-      .waitForElementVisible('@adminEmailTableRow');
+    adminsPage.clickButton('@confirmButton');
+    client.pause(1000);
+    adminsPage.waitForElementVisible('@adminEmailTableRow');
   },
   'User deletes an Administrator': (client) => {
     const adminsPage = client.page.adminsPage();
@@ -37,13 +35,11 @@ export default {
       .clickButton('@adminsListMenu')
       .clickButton('@deleteButton')
       .waitForElementVisible('@deleteAdminModalTitle');
-
     client.pause(1000);
-
     adminsPage.clickButton('@confirmButton');
     client.pause(1000);
-    adminsPage
-      .waitForElementVisible('@adminTableRow')
-      .waitForElementNotPresent('@adminEmailTableRow');
+    adminsPage.waitForElementVisible('@adminTableRow');
+    client.pause(1000);
+    adminsPage.waitForElementNotPresent('@adminEmailTableRow');
   }
 };
