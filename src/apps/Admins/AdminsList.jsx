@@ -35,11 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleDeleteAdmin() {
-    console.info('Admins::handleDelete');
-    Actions.removeAdmins(Store.getCheckedItems());
-  },
-
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
@@ -51,7 +46,7 @@ export default React.createClass({
         key: 'deleteAdminDialog',
         ref: 'deleteAdminDialog',
         title: 'Remove an Administrator',
-        handleConfirm: this.handleDeleteAdmin,
+        handleConfirm: Actions.removeAdmins,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'email',
@@ -65,7 +60,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.email, Actions.removeAdmins.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteAdminDialog', item)}/>
     );
   },
 
@@ -75,7 +70,6 @@ export default React.createClass({
     return (
       <Lists.Container className="admins-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

@@ -38,16 +38,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('ApiKeys::handleDelete');
-    Actions.removeApiKeys(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('ApiKeys::handleReset');
-    Actions.resetApiKey(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [
       {
@@ -56,7 +46,7 @@ export default React.createClass({
           key: 'resetApiKeyDialog',
           ref: 'resetApiKeyDialog',
           title: 'Reset an API Key',
-          handleConfirm: this.handleReset,
+          handleConfirm: Actions.resetApiKey,
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           itemLabelName: 'api_key',
@@ -70,7 +60,7 @@ export default React.createClass({
           key: 'deleteApiKeyDialog',
           ref: 'deleteApiKeyDialog',
           title: 'Delete an API key',
-          handleConfirm: this.handleDelete,
+          handleConfirm: Actions.removeApiKeys,
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           itemLabelName: 'api_key',
@@ -85,8 +75,8 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.api_key, Actions.removeApiKeys.bind(null, [item]))}
-        showResetDialog={this.showMenuDialog.bind(null, item.api_key, Actions.resetApiKey.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteApiKeyDialog', item)}
+        showResetDialog={this.showDialog.bind(null, 'resetApiKeyDialog', item)}/>
     );
   },
 
@@ -96,7 +86,6 @@ export default React.createClass({
     return (
       <Lists.Container className="api-keys-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"

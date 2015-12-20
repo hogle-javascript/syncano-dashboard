@@ -58,11 +58,6 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleDelete() {
-    console.info('Instances::handleDelete');
-    Actions.removeInstances(Store.getCheckedItems());
-  },
-
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
 
@@ -73,7 +68,7 @@ export default React.createClass({
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: 'Delete an Instance',
-          handleConfirm: this.handleDelete,
+          handleConfirm: Actions.removeInstances,
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           groupName: 'Instance'
@@ -98,7 +93,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeInstances.bind(null, [item]))}
+        showDeleteDialog={this.showDialog.bind(null, 'deleteInstanceDialog', item)}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
     );
   },
@@ -110,7 +105,6 @@ export default React.createClass({
     return (
       <Lists.Container className='instances-list'>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

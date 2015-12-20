@@ -41,11 +41,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('Channels::handleDelete');
-    Actions.removeChannels(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -53,10 +48,10 @@ export default React.createClass({
         key: 'deleteChannelDialog',
         ref: 'deleteChannelDialog',
         title: 'Delete a Channel',
-        handleConfirm: this.handleDelete,
+        handleConfirm: Actions.removeChannels,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
-        groupName: 'Channel'
+        groupName: 'Channel Socket'
       }
     }];
   },
@@ -66,7 +61,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeChannels.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteChannelDialog', item)}/>
     );
   },
 
@@ -76,7 +71,6 @@ export default React.createClass({
     return (
       <Lists.Container>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"

@@ -46,11 +46,6 @@ export default React.createClass({
     });
   },
 
-  handleRemoveTriggers() {
-    console.info('Triggers::handleDelete');
-    Actions.removeTriggers(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -58,7 +53,7 @@ export default React.createClass({
         key: 'removeTriggerDialog',
         ref: 'removeTriggerDialog',
         title: 'Delete a Trigger',
-        handleConfirm: this.handleRemoveTriggers,
+        handleConfirm: Actions.removeTriggers,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
@@ -72,7 +67,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeTriggerDialog', item)}/>
     );
   },
 
@@ -82,7 +77,6 @@ export default React.createClass({
     return (
       <Lists.Container className="triggers-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

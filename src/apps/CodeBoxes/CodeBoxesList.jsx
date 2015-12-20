@@ -39,11 +39,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveCodeBoxes() {
-    console.info('Data::handleDelete');
-    Actions.removeCodeBoxes(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -51,7 +46,7 @@ export default React.createClass({
         key: 'removeCodeBoxDialog',
         ref: 'removeCodeBoxDialog',
         title: 'Delete a CodeBox Socket',
-        handleConfirm: this.handleRemoveCodeBoxes,
+        handleConfirm: Actions.removeCodeBoxes,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'CodeBox Socket'
@@ -65,7 +60,7 @@ export default React.createClass({
         key={`codeBoxeslist-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeCodeBoxes.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
     );
   },
 
@@ -75,7 +70,6 @@ export default React.createClass({
     return (
       <Lists.Container>
         {this.getDialogs()}
-        <ColumnList.Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"
