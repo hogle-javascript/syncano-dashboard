@@ -1,6 +1,7 @@
 import React from 'react';
 import {State, Navigation} from 'react-router';
 import {ListItem, Utils, Styles} from 'syncano-material-ui';
+
 export default React.createClass({
   displayName: 'LinkListItem',
 

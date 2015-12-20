@@ -60,8 +60,6 @@ export default React.createClass({
   },
 
   renderContent(childrenProps) {
-    console.error('children', childrenProps);
-
     if (childrenProps) {
       return childrenProps;
     }
