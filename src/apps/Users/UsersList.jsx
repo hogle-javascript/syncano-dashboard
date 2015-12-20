@@ -9,11 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
 import ListItem from './UsersListItem';
-import Common from '../../common';
+import {ColumnList, Dialog, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -51,38 +50,19 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedUsers = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeUserDialog',
-          ref: 'removeUserDialog',
-          title: 'Delete a User',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'removeUserDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleRemoveUsers}/>
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('User')}?`,
-            this.getDialogList(checkedUsers, 'username'),
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeUserDialog',
+        ref: 'removeUserDialog',
+        title: 'Delete a User',
+        handleConfirm: this.handleRemoveUsers,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'username',
+        groupName: 'User'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -98,10 +78,10 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="users-list">
+      <Lists.Container className="users-list">
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -112,20 +92,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DATE">Updated</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete an User"
                 multipleItemsText="Delete Users"
                 onTouchTap={this.showDialog.bind(null, 'removeUserDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

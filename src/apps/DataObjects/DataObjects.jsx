@@ -12,8 +12,8 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import {IconButton, FlatButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
-import Common from '../../common';
+import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
+import {Dialog, Show, InnerToolbar, Loading} from '../../common';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -99,27 +99,17 @@ export default React.createClass({
     );
   },
 
-  // Dialogs config
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
+      dialog: Dialog.Delete,
       params: {
         key: 'deleteDataObjectDialog',
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
-        actions: [
-          <FlatButton
-            label="Cancel"
-            secondary={true}
-            onTouchTap={this.handleCancel.bind(null, 'deleteDataObjectDialog')} />,
-          <FlatButton
-            label="Confirm"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.handleDelete} />
-        ],
-        avoidResetState: true,
-        modal: true,
+        handleConfirm: this.handleDelete,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'Channel',
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }];
@@ -177,7 +167,7 @@ export default React.createClass({
         style={{margin: 50}}>
         <div>Loaded {tableData.length} Data Objects</div>
       </div>
-      <Common.Show if={this.state.hasNextPage}>
+      <Show if={this.state.hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
@@ -185,13 +175,13 @@ export default React.createClass({
             label="Load more"
             onClick={this.handleMoreRows}/>
         </div>
-      </Common.Show>
+      </Show>
     </div>
     );
   },
 
   render() {
-    let table = this.state.items ? this.renderTable() : <Common.Loading visible={true}/>;
+    let table = this.state.items ? this.renderTable() : <Loading visible={true}/>;
     let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
 
     return (
@@ -200,7 +190,7 @@ export default React.createClass({
         <DataObjectDialog />
 
         <div className="col-flex-1">
-          <Common.InnerToolbar
+          <InnerToolbar
             title={`Class: ${this.getParams().className} ${selectedMessageText}`}
             backFallback={this.handleBackClick}>
 
@@ -221,12 +211,12 @@ export default React.createClass({
               columns={Store.getTableColumns()}
               checkToggleColumn={Actions.checkToggleColumn}/>
 
-          </Common.InnerToolbar>
+          </InnerToolbar>
 
           <div style={{clear: 'both', height: '100%'}}>
-            <Common.Show if={this.state.isLoading}>
-              <Common.Loading type='linear'/>
-            </Common.Show>
+            <Show if={this.state.isLoading}>
+              <Loading type='linear'/>
+            </Show>
             {table}
           </div>
         </div>

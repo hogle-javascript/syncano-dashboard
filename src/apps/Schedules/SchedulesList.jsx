@@ -9,11 +9,10 @@ import HeaderMixin from '../Header/HeaderMixin';
 import Mixins from '../../mixins';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
 import ListItem from './SchedulesListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -46,38 +45,19 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedSchedules = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeScheduleDialog',
-          ref: 'removeScheduleDialog',
-          title: 'Delete a Schedule Socket',
-          actions: [
-            <FlatButton
-              label="Cancel"
-              secondary={true}
-              onTouchTap={this.handleCancel.bind(null, 'removeScheduleDialog')}/>,
-            <FlatButton
-              label="Confirm"
-              primary={true}
-              keyboardFocused={true}
-              onTouchTap={this.handleRemoveSchedules}/>
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Schedule')}?`,
-            this.getDialogList(checkedSchedules, 'label'),
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.props.items.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeScheduleDialog',
+        ref: 'removeScheduleDialog',
+        title: 'Delete a Schedule Socket',
+        handleConfirm: this.handleRemoveSchedules,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'label',
+        groupName: 'Schedule'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -93,10 +73,10 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="schedules-list">
+      <Lists.Container className="schedules-list">
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
@@ -113,20 +93,20 @@ export default React.createClass({
           <Column.ColumnHeader className="col-sm-4"columnName="DESC">Traces</Column.ColumnHeader>
           <Column.ColumnHeader className="col-sm-3" columnName="DATE">Next run</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Schedule Socket"
                 multipleItemsText="Delete Schedule Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeScheduleDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

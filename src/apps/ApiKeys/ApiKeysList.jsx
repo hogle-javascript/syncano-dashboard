@@ -11,11 +11,10 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
 import ListItem from './ApiKeysListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -50,64 +49,35 @@ export default React.createClass({
   },
 
   initDialogs() {
-    let checkedApiKeys = Store.getCheckedItems();
-
-    return [{
-      dialog: Common.Dialog,
-      params: {
-        title: 'Reset an API Key',
-        ref: 'resetApiKeyDialog',
-        key: 'resetApiKeyDialog',
-        actions: [
-          <FlatButton
-            label="Cancel"
-            secondary={true}
-            onTouchTap={this.handleCancel.bind(null, 'resetApiKeyDialog')}/>,
-          <FlatButton
-            label="Confirm"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.handleReset}/>
-        ],
-        modal: true,
-        avoidResetState: true,
-        children: [
-          'Do you really want to reset ' + this.getDialogListLength(checkedApiKeys) + ' API keys?',
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.props.isLoading}/>
-        ]
+    return [
+      {
+        dialog: Dialog.Delete,
+        params: {
+          key: 'resetApiKeyDialog',
+          ref: 'resetApiKeyDialog',
+          title: 'Reset an API Key',
+          handleConfirm: this.handleReset,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          itemLabelName: 'api_key',
+          actionName: 'reset',
+          groupName: 'API Key'
+        }
+      },
+      {
+        dialog: Dialog.Delete,
+        params: {
+          key: 'deleteApiKeyDialog',
+          ref: 'deleteApiKeyDialog',
+          title: 'Delete an API key',
+          handleConfirm: this.handleDelete,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          itemLabelName: 'api_key',
+          groupName: 'Channel'
+        }
       }
-    }, {
-      dialog: Common.Dialog,
-      params: {
-        title: 'Delete an API key',
-        ref: 'deleteApiKeyDialog',
-        key: 'deleteApiKeyDialog',
-        actions: [
-          <FlatButton
-            label="Cancel"
-            secondary={true}
-            onTouchTap={this.handleCancel.bind(null, 'deleteApiKeyDialog')}/>,
-          <FlatButton
-            label="Confirm"
-            primary={true}
-            keyboardFocused={true}
-            onTouchTap={this.handleDelete}/>
-        ],
-        modal: true,
-        avoidResetState: true,
-        children: [
-          `Do you really want to delete ${Store.getDeleteItemsPhrase('API Key')}?`,
-          this.getDialogList(checkedApiKeys, 'api_key'),
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.props.isLoading}/>
-        ]
-      }
-    }];
+    ];
   },
 
   renderItem(item) {
@@ -124,10 +94,10 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="api-keys-list">
+      <Lists.Container className="api-keys-list">
         {this.getDialogs()}
         <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             columnName="CHECK_ICON"
             primary={true}>
@@ -138,24 +108,24 @@ export default React.createClass({
           <Column.ColumnHeader columnName="TEXT">Permissions</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Reset an API Key"
                 multipleItemsText="Reset API Keys"
                 onTouchTap={this.showDialog.bind(null, 'resetApiKeyDialog')}/>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete an API Key"
                 multipleItemsText="Delete API Keys"
                 onTouchTap={this.showDialog.bind(null, 'deleteApiKeyDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });
