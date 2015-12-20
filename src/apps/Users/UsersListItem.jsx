@@ -4,6 +4,7 @@ import React from 'react';
 import Actions from './UsersActions';
 
 // Components
+import UserInfo from './UserInfo';
 import Common from '../../common';
 import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
 
@@ -12,6 +13,12 @@ let Column = Common.ColumnList.Column;
 export default React.createClass({
 
   displayName: 'UsersListItem',
+
+  getInitialState() {
+    return {
+      userInfoVisible: false
+    };
+  },
 
   getStyles() {
     return {
@@ -30,8 +37,17 @@ export default React.createClass({
         padding: '0 4px',
         margin: 4,
         background: '#fff'
+      },
+      showInfoItem: {
+        cursor: 'pointer'
       }
     };
+  },
+
+  toggleUserInfo() {
+    this.setState({
+      userInfoVisible: !this.state.userInfoVisible
+    });
   },
 
   renderItemGroups(groups) {
@@ -53,35 +69,48 @@ export default React.createClass({
   },
 
   render() {
+    let styles = this.getStyles();
     let item = this.props.item;
 
     return (
-      <Common.ColumnList.Item
-        checked={item.checked}
-        key={item.id}>
-        <Column.CheckIcon
-          id={item.id.toString()}
-          icon='account'
-          background={Common.Color.getColorByName('blue', 'xlight')}
+      <div>
+        <Common.ColumnList.Item
           checked={item.checked}
-          handleIconClick={this.props.onIconClick}>
-          {item.username}
-        </Column.CheckIcon>
-        <Column.ID>{item.id}</Column.ID>
-        <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
-        <Column.Date date={item.profile.updated_at}/>
-        <Column.Date date={item.profile.created_at}/>
-        <Column.Menu>
-          <MenuItem
-            className="dropdown-item-edit-user"
-            onTouchTap={Actions.showDialog.bind(null, item)}
-            primaryText="Edit a User" />
-          <MenuItem
-            className="dropdown-item-delete-user"
-            onTouchTap={this.props.showDeleteDialog}
-            primaryText="Delete a User" />
-        </Column.Menu>
-      </Common.ColumnList.Item>
+          key={item.id}>
+          <Column.CheckIcon
+            id={item.id.toString()}
+            icon='account'
+            background={Common.Color.getColorByName('blue', 'xlight')}
+            checked={item.checked}
+            handleIconClick={this.props.onIconClick}>
+            <div
+              onClick={this.toggleUserInfo}
+              style={styles.showInfoItem}>
+              {item.username}
+            </div>
+          </Column.CheckIcon>
+          <Column.ID>{item.id}</Column.ID>
+          <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
+          <Column.Date date={item.profile.updated_at}/>
+          <Column.Date date={item.profile.created_at}/>
+          <Column.Menu>
+            <MenuItem
+              className="dropdown-item-edit-user"
+              onTouchTap={Actions.showDialog.bind(null, item)}
+              primaryText="Edit a User"/>
+            <MenuItem
+              className="dropdown-item-delete-user"
+              onTouchTap={this.props.showDeleteDialog}
+              primaryText="Delete a User"/>
+          </Column.Menu>
+        </Common.ColumnList.Item>
+
+        <div>
+          <UserInfo
+            visible={this.state.userInfoVisible}
+            user={item}/>
+        </div>
+      </div>
     );
   }
 });
