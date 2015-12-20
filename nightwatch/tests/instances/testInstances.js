@@ -39,9 +39,9 @@ export default {
       });
     });
     instancesPage.waitForElementPresent('@instancesTableName');
-    instancesPage.clickButton('@instancesTableName');
-    leftMenuPage.clickButton('@instancesDropdown');
-    leftMenuPage.clickButton('@instancesListSecondItem');
+    instancesPage.clickButton('@instancesTableName', client);
+    leftMenuPage.clickButton('@instancesDropdown', client);
+    leftMenuPage.clickButton('@instancesListSecondItem', client);
     socketsPage.waitForElementPresent('@emptySocketsHeading');
     const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 

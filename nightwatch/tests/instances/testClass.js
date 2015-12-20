@@ -16,66 +16,53 @@ export default {
     const className = utils.addSuffix('class');
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .navigate()
-      .clickButton('@addClassButton')
-      .fillInputField('@createModalNameInput', className)
-      .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description')
-      .fillInputField('@createModalFieldNameInput', 'schemaName')
-      .selectFromDropdown('@createModalDropdownType', '@createModalSchemaString')
-      .clickButton('@addButton');
-    client.pause(1000);
-    classesPage
-      .waitForElementVisible('@addClassTitle')
-      .clickButton('@confirmButton')
-      .waitForElementNotVisible('@addClassTitle')
-      .waitForElementVisible('@classTableRow')
-      .verify.containsText('@classTableRowDescription', 'nightwatch_test_class_description');
+    classesPage.navigate();
+    classesPage.clickButton('@addClassButton', client);
+    classesPage.fillInputField('@createModalNameInput', className, client);
+    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_description', client);
+    classesPage.fillInputField('@createModalFieldNameInput', 'schemaName', client);
+    classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString', client);
+    classesPage.clickButton('@addButton', client);
+    classesPage.waitForElementVisible('@addClassTitle');
+    classesPage.clickButton('@confirmButton', client);
+    classesPage.waitForElementNotVisible('@addClassTitle');
+    classesPage.waitForElementVisible('@classTableRow');
+    classesPage.verify.containsText('@classTableRowDescription', 'nightwatch_test_class_description');
   },
   'Test Edit Class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage.clickDropdown('@classItemDropdown');
-    client.pause(1000);
-    classesPage.clickButton('@editDropdownItem')
-      .waitForElementVisible('@createModalDescriptionInput')
-      .fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description')
-      .clickButton('@confirmButton');
-    client.pause(1000);
-    classesPage
-      .waitForElementVisible('@classTableRowDescription')
-      .verify.containsText('@classTableRowDescription', 'nightwatch_test_class_new_description');
+    classesPage.clickDropdown('@classItemDropdown', client);
+    classesPage.clickButton('@editDropdownItem', client);
+    classesPage.waitForElementVisible('@createModalDescriptionInput';
+    classesPage.fillInputField('@createModalDescriptionInput', 'nightwatch_test_class_new_description', client);
+    classesPage.clickButton('@confirmButton', client);
+    classesPage.waitForElementVisible('@classTableRowDescription');
+    classesPage.verify.containsText('@classTableRowDescription', 'nightwatch_test_class_new_description');
   },
   'Test Delete Class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .clickDropdown('@classItemDropdown');
-    client.pause(1000);
-    classesPage.clickButton('@deleteDropdownItem');
-    client.pause(1000);
-    classesPage
-      .waitForElementVisible('@deleteClassModalTitle')
-      .clickButton('@confirmDeleteButton');
+    classesPage.clickDropdown('@classItemDropdown', client);
+    classesPage.clickButton('@deleteDropdownItem', client);
+    classesPage.waitForElementVisible('@deleteClassModalTitle');
+    classesPage.clickButton('@confirmDeleteButton', client);
     classesPage.waitForElementNotVisible('@deleteClassModalTitle');
-    client.pause(1000);
     classesPage.waitForElementNotPresent('@classTableName');
   },
   'Test Admin selects/deselects class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .moveToElement('@selectUserClass', 0, 0)
-      .clickButton('@classToSelect')
-      .clickButton('@checkboxSelected')
-      .waitForElementVisible('@classToSelect');
+    classesPage.moveToElement('@selectUserClass', 0, 0);
+    classesPage.clickButton('@classToSelect', client);
+    classesPage.clickButton('@checkboxSelected', client);
+    classesPage.waitForElementVisible('@classToSelect');
   },
   'Test Admin cannot delete user_profile class': (client) => {
     const classesPage = client.page.classesPage();
 
-    classesPage
-      .clickDropdown('@userClassDropDown')
-      .waitForElementVisible('@inactiveDeleteButton');
+    classesPage.clickDropdown('@userClassDropDown', client);
+    classesPage.waitForElementVisible('@inactiveDeleteButton');
 
   // assert that Delete Class element is greyed out
     classesPage.assert.attributeContains('@inactiveDeleteButton', 'style', 'color: rgba(0, 0, 0, 0.298039)');

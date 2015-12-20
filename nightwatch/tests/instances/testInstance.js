@@ -16,43 +16,32 @@ export default {
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage
-      .navigate()
-      .clickDropdown('@instanceDropdown');
-    client.pause(1000);
-    instancesPage
-      .clickButton('@editDropdownItem')
-      .fillInstanceDescription('@createModalDescriptionInput', 'new_description');
-    client.pause(1000);
-    instancesPage
-      .clickButton('@confirmButton')
-      .waitForElementNotVisible('@editInstanceModalTitle')
-      .waitForElementVisible('@instancesTableName')
-      .expect.element('@instancesTableRow').to.contain.text('new_description');
+    instancesPage.navigate();
+    instancesPage.clickDropdown('@instanceDropdown', client);
+    instancesPage.clickButton('@editDropdownItem', client);
+    instancesPage.fillInstanceDescription('@createModalDescriptionInput', 'new_description', client);
+    instancesPage.clickButton('@confirmButton', client);
+    instancesPage.waitForElementNotPresent('@editInstanceModalTitle');
+    instancesPage.waitForElementVisible('@instancesTableName');
+    instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage
-      .navigate()
-      .clickButton('@selectInstance')
-      .waitForElementVisible('@instanceSelected')
-      .clickButton('@selectInstance')
-      .waitForElementNotPresent('@instanceSelected');
+    instancesPage.navigate();
+    instancesPage.clickButton('@selectInstance', client);
+    instancesPage.waitForElementVisible('@instanceSelected');
+    instancesPage.clickButton('@selectInstance', client);
+    instancesPage.waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage
-      .navigate()
-      .clickDropdown('@instanceDropdown');
-    client.pause(1000);
-    instancesPage.clickButton('@deleteDropdownItem');
-    client.pause(1000);
-    instancesPage
-      .clickButton('@confirmDeleteButton')
-      .waitForElementNotVisible('@deleteInstanceModalTitle');
-
+    instancesPage.navigate();
+    instancesPage.clickDropdown('@instanceDropdown', client);
+    instancesPage.clickButton('@deleteDropdownItem', client);
+    instancesPage.clickButton('@confirmDeleteButton', client);
+    instancesPage.waitForElementNotPresent('@deleteInstanceModalTitle');
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
   // This test should be reanabled once we merge with the devel branch

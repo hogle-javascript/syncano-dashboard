@@ -16,30 +16,25 @@ export default {
     const email = utils.addSuffix('admin') + '@syncano.com';
     const adminsPage = client.page.adminsPage();
 
-    adminsPage.navigate()
-      .waitForElementVisible('@adminsListItem')
-      .clickButton('@addAdminButton')
-      .waitForElementVisible('@addAdminModalTitle')
-      .fillInputField('@addAdminModalEmailInput', email)
-      .selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead');
-    client.pause(1000);
-    adminsPage.clickButton('@confirmButton');
-    client.pause(1000);
+    adminsPage.navigate();
+    adminsPage.waitForElementVisible('@adminsListItem');
+    adminsPage.clickButton('@addAdminButton', client);
+    adminsPage.waitForElementVisible('@addAdminModalTitle');
+    adminsPage.fillInputField('@addAdminModalEmailInput', email, client);
+    adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead', client);
+    adminsPage.clickButton('@confirmButton', client);
     adminsPage.waitForElementVisible('@adminEmailTableRow');
   },
   'User deletes an Administrator': (client) => {
     const adminsPage = client.page.adminsPage();
 
-    adminsPage.navigate()
-      .clickButton('@selectAdminTableRow')
-      .clickButton('@adminsListMenu')
-      .clickButton('@deleteButton')
-      .waitForElementVisible('@deleteAdminModalTitle');
-    client.pause(1000);
-    adminsPage.clickButton('@confirmButton');
-    client.pause(1000);
+    adminsPage.navigate();
+    adminsPage.clickButton('@selectAdminTableRow', client);
+    adminsPage.clickButton('@adminsListMenu', client);
+    adminsPage.clickButton('@deleteButton', client);
+    adminsPage.waitForElementVisible('@deleteAdminModalTitle');
+    adminsPage.clickButton('@confirmButton', client);
     adminsPage.waitForElementVisible('@adminTableRow');
-    client.pause(1000);
     adminsPage.waitForElementNotPresent('@adminEmailTableRow');
   }
 };

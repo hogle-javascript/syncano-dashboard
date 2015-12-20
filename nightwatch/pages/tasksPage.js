@@ -1,32 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const tasksCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-      .click(field)
-      .waitForElementVisible(value)
-      .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/tasks',
-  commands: [tasksCommands],
+  url: 'https://localhost:8080/#/instances/${globals.instanceName}/tasks',
+  commands: [commonCommands],
   elements: {
     scheduleDropdown: {
       selector: '//span[@class="synicon-dots-vertical"]',
@@ -89,17 +67,15 @@ export default {
       locateStrategy: 'xpath'
     },
     scheduleTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]',
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]`,
       locateStrategy: 'xpath'
     },
     selectScheduleTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('schedule') + '"]/preceding-sibling::div',
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     cronTabScheduleTableRow: {
-      // lolpath!
-      selector: '//div[text()="' + utils.addSuffix('schedule') +
-      '"]/parent::div/following-sibling::div[text()="*/5 * * * *"]',
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/parent::div/following-sibling::div[text()="*/5 * * * *"]`,
       locateStrategy: 'xpath'
     },
     deleteScheduleModalTitle: {
@@ -147,11 +123,11 @@ export default {
       locateStrategy: 'xpath'
     },
     triggerTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('trigger') + '"]',
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]`,
       locateStrategy: 'xpath'
     },
     selectTriggerTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('trigger') + '"]/preceding-sibling::div',
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
@@ -159,13 +135,7 @@ export default {
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
-      // moar lolpath!!!
-      selector: '//div[text()="' + utils.addSuffix('trigger') +
-      '"]/parent::div/following-sibling::div[text()="post_update"]',
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/parent::div/following-sibling::div[text()="post_update"]`,
       locateStrategy: 'xpath'
     }
   }

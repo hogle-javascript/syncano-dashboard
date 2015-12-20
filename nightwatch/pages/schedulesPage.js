@@ -1,32 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const schedulesCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-               .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-               .click(field)
-               .waitForElementVisible(value)
-               .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-               .clearValue(field)
-               .setValue(field, value);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
-  commands: [schedulesCommands],
+  commands: [commonCommands],
   elements: {
     schedulesListMenu: {
       selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]//button',
@@ -106,10 +84,6 @@ export default {
     },
     runEvery5minutes: {
       selector: '//div[text()="Run every 5 minutes"]',
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

@@ -1,12 +1,7 @@
-const leftMenuCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [leftMenuCommands],
+  commands: [commonCommands],
   elements: {
     leftMenu: {
       selector: '.left-nav'
