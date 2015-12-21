@@ -1,12 +1,7 @@
-const solutionDetailsCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [solutionDetailsCommands],
+  commands: [commonCommands],
   elements: {
     installSolutionButton: {
       selector: '//span[text()="Install solution"]',

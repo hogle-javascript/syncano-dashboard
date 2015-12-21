@@ -2,6 +2,12 @@ import _ from 'lodash';
 
 export default {
 
+  getInitialState() {
+    return {
+      open: false
+    };
+  },
+
   componentWillUpdate(nextProps, nextState) {
     console.debug('DialogMixin::componentWillUpdate');
 
@@ -18,7 +24,7 @@ export default {
         this.handleDialogShow();
       }
 
-      return this.refs.dialog.show();
+      this.show();
     }
   },
 
@@ -33,7 +39,7 @@ export default {
 
     let ref = _.isString(dialogRef) ? this.refs[dialogRef] : this.refs.dialog;
 
-    ref.dismiss();
+    this.dismiss();
 
     if (!ref.props.avoidResetState) {
       this.resetDialogState();
@@ -58,5 +64,13 @@ export default {
 
   hasAddMode() {
     return this.state._dialogMode === 'add';
+  },
+
+  show() {
+    this.setState({open: true});
+  },
+
+  dismiss() {
+    this.setState({open: false});
   }
 };

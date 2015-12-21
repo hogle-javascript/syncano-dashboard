@@ -3,7 +3,6 @@ import Radium from 'radium';
 import ColumnListConstans from '../ColumnListConstans';
 
 import MUI from 'syncano-material-ui';
-import MenuDialog from './MenuDialog';
 
 export default Radium(React.createClass({
 
@@ -65,11 +64,6 @@ export default Radium(React.createClass({
       <div
         className={this.props.className}
         style={styles}>
-        <MenuDialog
-          ref="menuDialog"
-          dialogTitle={this.state.dialogTitle}>
-          {this.state.dialogMessage}
-        </MenuDialog>
         <MUI.IconMenu
           onTouchTap={this.handleTouchTap}
           iconButtonElement={this.renderItemIconMenuButton()}

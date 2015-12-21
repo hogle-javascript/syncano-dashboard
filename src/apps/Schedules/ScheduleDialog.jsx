@@ -81,6 +81,7 @@ export default React.createClass({
         title={`${title} a Schedule Socket`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         actions={dialogStandardActions}>
         <div>
           {this.renderFormNotifications()}

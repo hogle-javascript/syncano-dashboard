@@ -75,6 +75,7 @@ export default React.createClass({
         title={`${title} a Snippet`}
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         contentStyle={{padding: '8px 0 0 0'}}>
         <div>
           {this.renderFormNotifications()}

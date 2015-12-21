@@ -102,8 +102,8 @@ export default React.createClass({
         key={`profileinvitationslist-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
-        showAcceptDialog={this.showMenuDialog.bind(null, item.inviter, Actions.acceptInvitations.bind(null, [item]))}
-        showDeclineDialog={this.showMenuDialog.bind(null, item.inviter, Actions.declineInvitations.bind(null, [item]))}
+        showAcceptDialog={this.showDialog.bind(null, 'acceptInvitationsDialog', item)}
+        showDeclineDialog={this.showDialog.bind(null, 'declineInvitationsDialog', item)}
         />
     );
   },
@@ -114,7 +114,6 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

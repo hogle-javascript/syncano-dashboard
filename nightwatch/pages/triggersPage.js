@@ -1,32 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const triggersCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-                .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-               .click(field)
-               .waitForElementVisible(value)
-               .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-                .clearValue(field)
-                .setValue(field, value);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/triggers`,
-  commands: [triggersCommands],
+  commands: [commonCommands],
   elements: {
     triggersListMenu: {
       selector: '//div[@class="triggers-list"]/div[1]/div[@class="col-menu"]//button',
@@ -57,7 +35,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalSnippetName: {
-      selector: '//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {
@@ -81,7 +59,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalCreate: {
-      selector: '//span[text()="create"]',
+      selector: '//div[text()="create"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalClass: {
@@ -89,7 +67,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalClassName: {
-      selector: '//span[text()="user_profile"]',
+      selector: '//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalSnippet: {
@@ -105,15 +83,11 @@ export default {
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
-      selector: '//span[text()="update"]',
+      selector: '//div[text()="update"]',
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
       selector: `//div[text()="${utils.addSuffix('trigger')}"]/parent::div/following-sibling::div[text()="post_update"]`,
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

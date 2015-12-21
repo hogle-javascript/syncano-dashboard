@@ -40,11 +40,6 @@ export default Radium(React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveGroups() {
-    console.info('Users::handleDeleteGroups');
-    Actions.removeGroups(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -52,7 +47,7 @@ export default Radium(React.createClass({
         key: 'removeGroupDialog',
         ref: 'removeGroupDialog',
         title: 'Delete a Group',
-        handleConfirm: this.handleRemoveGroups,
+        handleConfirm: Actions.removeGroups,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
@@ -66,7 +61,7 @@ export default Radium(React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeGroups.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeGroupDialog', item)}/>
     );
   },
 
@@ -76,7 +71,6 @@ export default Radium(React.createClass({
     return (
       <Lists.Container className="groups-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

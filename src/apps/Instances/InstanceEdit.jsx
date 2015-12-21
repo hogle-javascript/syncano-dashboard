@@ -156,7 +156,7 @@ export default React.createClass({
         }
       },
       {
-        dialog: Dialog.Delete,
+        dialog: Common.Dialog.Delete,
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',

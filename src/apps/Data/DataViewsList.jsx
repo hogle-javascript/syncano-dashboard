@@ -40,11 +40,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveDataViews() {
-    console.info('Data::handleRemoveDataViews');
-    Actions.removeDataViews(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -52,7 +47,7 @@ export default React.createClass({
         key: 'removeDataViewDialog',
         ref: 'removeDataViewDialog',
         title: 'Delete a DataView',
-        handleConfirm: this.handleRemoveDataViews,
+        handleConfirm: Actions.removeDataViews,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         groupName: 'Data Socket'
@@ -65,7 +60,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeDataViewDialog', item)}/>
     );
   },
 
@@ -75,7 +70,6 @@ export default React.createClass({
     return (
       <Lists.Container>
         {this.getDialogs()}
-        <ColumnList.Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"

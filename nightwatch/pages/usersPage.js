@@ -1,26 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const usersCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/users',
-  commands: [usersCommands],
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/users`,
+  commands: [commonCommands],
   elements: {
     usersListMenu: {
       selector: '//div[@class="users-list"]/div[1]/div[@class="col-menu"]//button',
@@ -51,11 +35,11 @@ export default {
       locateStrategy: 'xpath'
     },
     userTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('user') + '"]',
+      selector: `//div[text()="${utils.addSuffix('user')}"]`,
       locateStrategy: 'xpath'
     },
     selectUserTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('user') + '"]/preceding-sibling::div',
+      selector: `//div[text()="${utils.addSuffix('user')}"]/preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     deleteButton: {
@@ -79,11 +63,11 @@ export default {
       locateStrategy: 'xpath'
     },
     groupTableRow: {
-      selector: '//div[text()="' + utils.addSuffix('group') + '"]',
+      selector: `//div[text()="${utils.addSuffix('group')}"]`,
       locateStrategy: 'xpath'
     },
     groupTableRowDropdown: {
-      selector: '//div[text()="' + utils.addSuffix('group') + '"]/../following-sibling::div[2]//button',
+      selector: `//div[text()="${utils.addSuffix('group')}"]/../following-sibling::div[2]//button`,
       locateStrategy: 'xpath'
     },
     deleteButtonDropdown: {
@@ -104,10 +88,6 @@ export default {
     },
     groupList: {
       selector: '//div[@class="col-lg-8"]/div/div[2]',
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

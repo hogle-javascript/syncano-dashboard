@@ -22,8 +22,7 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
     const docsPage = client.page.docsPage();
 
-    topNavigationPage.click('@docs');
-    client.pause(1000);
+    topNavigationPage.clickButton('@docs', client);
     client.windowHandles(function(result) {
       const handle = result.value[1];
 
@@ -36,7 +35,7 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
 
     topNavigationPage.navigate();
-    topNavigationPage.click('@menuNotifications');
+    topNavigationPage.clickButton('@menuNotifications', client);
     topNavigationPage.waitForElementVisible('@notificationsDropdown');
   }
 };

@@ -36,6 +36,13 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
+      root: {
+        height: 56,
+        paddingTop: 2,
+        paddingBottom: 2,
+        paddingLeft: 16,
+        backgroundColor: '#F2F2F2'
+      },
       dropdownInstanceIcon: {
         left: 20,
         minWidth: 32,
@@ -206,17 +213,19 @@ export default Radium(React.createClass({
     }
 
     return (
-      <MUI.IconMenu
-        ref="instancesDropdown"
-        onItemTouchTap={this.closeDropdown}
-        iconButtonElement={this.renderDropdownIcon()}
-        openDirection="bottom-right"
-        style={styles.iconMenu}
-        menuStyle={styles.dropdownMenu}>
-        {this.renderAddInstanceItem()}
-        {this.renderList(InstancesStore.getMyInstances(true))}
-        {this.renderList(InstancesStore.getOtherInstances(true))}
-      </MUI.IconMenu>
+      <div style={styles.root}>
+        <MUI.IconMenu
+          ref="instancesDropdown"
+          onItemTouchTap={this.closeDropdown}
+          iconButtonElement={this.renderDropdownIcon()}
+          openDirection="bottom-right"
+          style={styles.iconMenu}
+          menuStyle={styles.dropdownMenu}>
+          {this.renderAddInstanceItem()}
+          {this.renderList(InstancesStore.getMyInstances(true))}
+          {this.renderList(InstancesStore.getOtherInstances(true))}
+        </MUI.IconMenu>
+      </div>
     );
   }
 }));

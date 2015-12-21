@@ -12,7 +12,7 @@ export default {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickButton('@loginButtonFacebook');
+    loginPage.clickButton('@loginButtonFacebook', client);
     client
       .pause(1000)
       .windowHandles((result) => {
@@ -20,10 +20,9 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage
-      .fillInputField('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL)
-      .fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD)
-      .clickButton('@signInButtonFacebook');
+    loginPage.fillInputField('@emailInputFacebook', process.env.NIGHTWATCH_EMAIL, client);
+    loginPage.fillInputField('@passInputFacebook', process.env.NIGHTWATCH_PASSWORD, client);
+    loginPage.clickButton('@signInButtonFacebook', client);
 
     client.windowHandles((result) => {
       const handle = result.value[0];
@@ -64,7 +63,7 @@ export default {
     const loginPage = client.page.loginPage();
     const instancesPage = client.page.instancesPage();
 
-    loginPage.clickButton('@loginButtonGithub');
+    loginPage.clickButton('@loginButtonGithub', client);
     client
       .pause(1000)
       .windowHandles((result) => {
@@ -72,10 +71,9 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage
-      .fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
-      .fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
-      .clickButton('@signInButtonGithub');
+    loginPage.fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL, client);
+    loginPage.fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD, client);
+    loginPage.clickButton('@signInButtonGithub', client);
 
     client.windowHandles((result) => {
       const handle = result.value[0];

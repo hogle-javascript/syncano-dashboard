@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 export default {
   getDialogs() {
@@ -7,8 +8,14 @@ export default {
     return dialogs.map((dialog) => React.createElement(dialog.dialog, dialog.params));
   },
 
-  showDialog(ref) {
-    this.refs[ref].show();
+  removeEventFromArray() {
+    let newArray = _.dropRight(arguments);
+
+    return !_.isEmpty(newArray) ? newArray : null;
+  },
+
+  showDialog(ref, ...args) {
+    this.refs[ref].show(this.removeEventFromArray(...args));
   },
 
   getDialogListLength(items) {
@@ -44,13 +51,6 @@ export default {
         }
       });
     }
-  },
-
-  showMenuDialog(itemName, handleConfirm, event) {
-    if (!this.refs.menuDialog) {
-      throw new Error("'menuDialog' ref not found. Please define dialog with 'menuDialog' ref.");
-    }
-    this.refs.menuDialog.show(itemName, handleConfirm, event.target.innerHTML);
   }
 };
 

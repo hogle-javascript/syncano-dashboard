@@ -39,11 +39,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveSchedules() {
-    console.info('Schedules::handleRemoveSchedules');
-    Actions.removeSchedules(Store.getCheckedItems());
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -51,7 +46,7 @@ export default React.createClass({
         key: 'removeScheduleDialog',
         ref: 'removeScheduleDialog',
         title: 'Delete a Schedule Socket',
-        handleConfirm: this.handleRemoveSchedules,
+        handleConfirm: Actions.removeSchedules,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
         itemLabelName: 'label',
@@ -65,7 +60,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeSchedules.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeScheduleDialog', item)}/>
     );
   },
 
@@ -75,7 +70,6 @@ export default React.createClass({
     return (
       <Lists.Container className="schedules-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

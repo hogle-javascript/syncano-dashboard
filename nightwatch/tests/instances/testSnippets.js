@@ -36,18 +36,16 @@ export default {
 
     client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/codeboxes`);
 
-    socketsPage
-      .waitForElementVisible('@codeBoxToSelect')
-      .clickButton('@codeBoxToSelect')
-      .clickButton('@selectMultipleButton');
+    socketsPage.waitForElementVisible('@codeBoxToSelect');
+    socketsPage.clickButton('@codeBoxToSelect', client);
+    socketsPage.clickButton('@selectMultipleButton', client);
 
     client.elements('css selector', socketsPage.elements.checkboxSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
-    socketsPage
-      .clickButton('@deselectMultipleButton')
-      .waitForElementVisible('@codeBoxToSelect');
+    socketsPage.clickButton('@deselectMultipleButton');
+    socketsPage.waitForElementVisible('@codeBoxToSelect');
 
     client.elements('css selector', socketsPage.elements.codeBoxToSelect.selector, (result) => {
       client.assert.equal(result.value.length, 3);
@@ -58,17 +56,12 @@ export default {
 
     client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/codeboxes`);
 
-    socketsPage
-      .waitForElementVisible('@codeBoxToSelect')
-      .clickButton('@codeBoxToSelect')
-      .clickButton('@selectMultipleButton')
-      .clickButton('@deleteButton')
-      .waitForElementVisible('@deleteCodeBoxModalTitle');
-
-    client.pause(1000);
-
-    socketsPage
-      .clickButton('@confirmButton')
-      .waitForElementVisible('@emptyListItem');
+    socketsPage.waitForElementVisible('@codeBoxToSelect');
+    socketsPage.clickButton('@codeBoxToSelect', client);
+    socketsPage.clickButton('@selectMultipleButton', client);
+    socketsPage.clickButton('@deleteButton', client);
+    socketsPage.waitForElementVisible('@deleteCodeBoxModalTitle');
+    socketsPage.clickButton('@confirmButton', client);
+    socketsPage.waitForElementVisible('@emptyListItem');
   }
 };
