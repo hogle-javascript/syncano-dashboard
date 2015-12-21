@@ -34,16 +34,16 @@ module.exports = {
   'User goes to Sockets View': (client) => {
     const instancesPage = client.page.instancesPage();
     const channelsPage = client.page.channelsPage();
-    const tasksPage = client.page.tasksPage();
-    const socketsPage = client.page.socketsPage();
+    const schedulesPage = client.page.schedulesPage();
+    const triggersPage = client.page.triggersPage();
 
     instancesPage.navigate();
     instancesPage.clickButton('@instancesTableName', client);
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
     socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
-    tasksPage.waitForElementPresent('@scheduleListItem');
-    tasksPage.waitForElementPresent('@triggerListItem');
+    schedulesPage.waitForElementPresent('@scheduleListItem');
+    triggersPage.waitForElementPresent('@triggerListItem');
   },
   'User goes to Classes View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();

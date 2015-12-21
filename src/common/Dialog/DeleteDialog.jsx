@@ -59,19 +59,15 @@ export default React.createClass({
     this.setState({open: true, items});
   },
 
-  renderContent(childrenProps) {
-    if (childrenProps) {
-      return childrenProps;
-    }
-
+  renderContent() {
     let {actionName, groupName, itemLabelName} = this.props;
     let listItems = _.filter(this.getConfirmArguments(), (item) => _.isObject(item));
     let itemsCount = listItems.length;
 
-    return (
-      `Do you really want to ${actionName} ${itemsCount} ${pluralize(groupName, itemsCount)}?
-      ${this.getDialogList(listItems, itemLabelName)}`
-    );
+    return [
+      `Do you really want to ${actionName} ${itemsCount} ${pluralize(groupName, itemsCount)}?`,
+      this.getDialogList(listItems, itemLabelName)
+    ];
   },
 
   render() {
@@ -94,7 +90,7 @@ export default React.createClass({
         modal={true}
         avoidResetState={true}
         {...other}>
-        {this.renderContent(children)}
+        {children ? children : this.renderContent()}
         <Loading
           type="linear"
           position="bottom"
