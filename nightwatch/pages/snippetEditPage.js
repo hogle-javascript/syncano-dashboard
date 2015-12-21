@@ -1,12 +1,7 @@
-const snippetEditPage = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [snippetEditPage],
+  commands: [commonCommands],
   elements: {
     snippetEditView: {
       selector: '#brace-editor'

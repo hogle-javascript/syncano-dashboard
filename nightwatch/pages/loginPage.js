@@ -1,13 +1,5 @@
+import commonCommands from '../commands/commonCommands';
 const loginCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
-  },
   login(email, pass) {
     return this
       .waitForElementVisible('@emailInput')
@@ -21,7 +13,7 @@ const loginCommands = {
 
 export default {
   url: 'https://localhost:8080/#/login',
-  commands: [loginCommands],
+  commands: [commonCommands, loginCommands],
   elements: {
     emailInput: {
       selector: 'input[type=text]'

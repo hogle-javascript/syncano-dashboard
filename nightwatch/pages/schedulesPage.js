@@ -1,32 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const schedulesCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-               .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-               .click(field)
-               .waitForElementVisible(value)
-               .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-               .clearValue(field)
-               .setValue(field, value);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/schedules`,
-  commands: [schedulesCommands],
+  commands: [commonCommands],
   elements: {
     schedulesListMenu: {
       selector: '//div[@class="schedules-list"]/div[1]/div[@class="col-menu"]//button',
@@ -73,7 +51,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalSnippetName: {
-      selector: '//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTab: {
@@ -81,7 +59,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addScheduleModalCronTabName: {
-      selector: '//span[text()="Run once a year at midnight"]',
+      selector: '//div[text()="Run once a year at midnight"]',
       locateStrategy: 'xpath'
     },
     scheduleTableRow: {
@@ -105,11 +83,7 @@ export default {
       locateStrategy: 'xpath'
     },
     runEvery5minutes: {
-      selector: '//span[text()="Run every 5 minutes"]',
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
+      selector: '//div[text()="Run every 5 minutes"]',
       locateStrategy: 'xpath'
     }
   }

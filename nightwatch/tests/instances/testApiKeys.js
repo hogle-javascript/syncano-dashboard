@@ -18,13 +18,12 @@ export default {
     const apiKeysPage = client.page.apiKeysPage();
     const description = utils.addSuffix('api_key_description');
 
-    apiKeysPage.navigate()
-      .clickButton('@addApiKeyButton')
-      .fillApiKeyDescription(description)
-      .clickButton('@confirmButton')
-
-      .waitForModalToClose()
-      .waitForElementVisible('@apiKeysTableRow');
+    apiKeysPage.navigate();
+    apiKeysPage.clickButton('@addApiKeyButton', client);
+    apiKeysPage.fillInputField('@createModalDescriptionInput', description, client);
+    apiKeysPage.clickButton('@confirmButton', client);
+    apiKeysPage.waitForModalToClose();
+    apiKeysPage.waitForElementVisible('@apiKeysTableRow');
   },
   'Test Reset Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
@@ -39,14 +38,11 @@ export default {
     client.element('xpath', apiKeyValueElement, (result) => {
       client.elementIdText(result.value.ELEMENT, (text) => apiKeyValue = text.value);
     });
-    apiKeysPage
-      .clickButton('@selectApiKey')
-      .clickButton('@apiKeysListMenu')
-      .clickButton('@resetButton');
-    client.pause(1000);
-    apiKeysPage
-      .clickButton('@confirmButton')
-      .waitForElementPresent('@selectApiKey');
+    apiKeysPage.clickButton('@selectApiKey', client);
+    apiKeysPage.clickButton('@apiKeysListMenu', client);
+    apiKeysPage.clickButton('@resetButton', client);
+    apiKeysPage.clickButton('@confirmButton', client);
+    apiKeysPage.waitForElementPresent('@selectApiKey');
     client.pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
         client.elementIdText(result.value.ELEMENT, (text) => {
@@ -57,14 +53,11 @@ export default {
   'Test Delete Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
 
-    apiKeysPage.navigate()
-      .clickButton('@selectApiKey')
-      .clickButton('@apiKeysListMenu');
-    client.pause(1000);
-    apiKeysPage.clickButton('@deleteButton');
-    client.pause(1000);
-    apiKeysPage.clickButton('@confirmButton');
-    client.pause(1000);
+    apiKeysPage.navigate();
+    apiKeysPage.clickButton('@selectApiKey', client);
+    apiKeysPage.clickButton('@apiKeysListMenu', client);
+    apiKeysPage.clickButton('@deleteButton', client);
+    apiKeysPage.clickButton('@confirmButton', client);
     apiKeysPage.waitForElementNotPresent('@selectApiKey');
   }
 };

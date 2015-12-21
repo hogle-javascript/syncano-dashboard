@@ -1,11 +1,7 @@
-const snippetsPage = {
-  clickButton(button) {
-    return this.waitForElementVisible(button).click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [snippetsPage],
+  commands: [commonCommands],
   elements: {
     snippetListItem: {
       selector: '//div[text()="snippet"]',

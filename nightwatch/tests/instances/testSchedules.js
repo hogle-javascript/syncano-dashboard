@@ -16,46 +16,37 @@ export default {
     const schedulesPage = client.page.schedulesPage();
     const suffix = utils.addSuffix('schedule');
 
-    schedulesPage
-      .navigate()
-      .clickButton('@addScheduleButton')
-      .waitForElementPresent('@addScheduleModalTitle')
-      .fillInputField('@addScheduleModalLabel', suffix)
-      .selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName')
-      .selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName')
-      .waitForElementNotVisible('@runEvery5minutes')
-      .clickButton('@confirm')
-      .waitForElementPresent('@scheduleTableRow');
+    schedulesPage.navigate();
+    schedulesPage.clickButton('@addScheduleButton', client);
+    schedulesPage.waitForElementPresent('@addScheduleModalTitle');
+    schedulesPage.fillInputField('@addScheduleModalLabel', suffix, client);
+    schedulesPage.selectFromDropdown('@addScheduleModalSnippet', '@addScheduleModalSnippetName', client);
+    schedulesPage.selectFromDropdown('@addScheduleModalCronTab', '@addScheduleModalCronTabName', client);
+    schedulesPage.waitForElementNotPresent('@runEvery5minutes');
+    schedulesPage.clickButton('@confirm', client);
+    schedulesPage.waitForElementPresent('@scheduleTableRow');
   },
   'Administrator edits a Schedule Socket Crontab': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
-    schedulesPage
-      .navigate()
-      .clickDropdown('@scheduleDropdown');
-    client.pause(1000);
-    schedulesPage
-      .clickButton('@editDropdownItem')
-      .waitForElementVisible('@editScheduleModalTitle')
-      .selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes')
-      .waitForElementNotVisible('@addScheduleModalCronTabName')
-      .clickButton('@confirm')
-      .waitForElementVisible('@cronTabScheduleTableRow');
+    schedulesPage.navigate();
+    schedulesPage.clickDropdown('@scheduleDropdown', client);
+    schedulesPage.clickButton('@editDropdownItem', client);
+    schedulesPage.waitForElementVisible('@editScheduleModalTitle');
+    schedulesPage.selectFromDropdown('@addScheduleModalCronTab', '@runEvery5minutes', client);
+    schedulesPage.waitForElementNotPresent('@addScheduleModalCronTabName');
+    schedulesPage.clickButton('@confirm', client);
+    schedulesPage.waitForElementVisible('@cronTabScheduleTableRow');
   },
   'Administrator deletes a Schedule Socket': (client) => {
     const schedulesPage = client.page.schedulesPage();
 
-    schedulesPage
-      .navigate()
-      .clickButton('@selectScheduleTableRow')
-      .clickButton('@schedulesListMenu');
-    client.pause(1000);
-    schedulesPage
-      .clickButton('@schedulesDeleteButton')
-      .waitForElementPresent('@deleteScheduleModalTitle');
-    client.pause(1000);
-    schedulesPage.clickButton('@confirm');
-    client.pause(1000);
+    schedulesPage.navigate();
+    schedulesPage.clickButton('@selectScheduleTableRow', client);
+    schedulesPage.clickButton('@schedulesListMenu', client);
+    schedulesPage.clickButton('@schedulesDeleteButton', client);
+    schedulesPage.waitForElementPresent('@deleteScheduleModalTitle');
+    schedulesPage.clickButton('@confirm', client);
     schedulesPage.waitForElementNotPresent('@selectScheduleTableRow');
   }
 };

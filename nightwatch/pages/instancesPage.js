@@ -1,3 +1,4 @@
+import commonCommands from '../commands/commonCommands';
 const instancesCommands = {
   clickFAB() {
     return this.waitForElementVisible('@fab')
@@ -11,14 +12,6 @@ const instancesCommands = {
       .clearValue(field)
       .setValue(field, description);
   },
-  clickButton(button) {
-    return this.waitForElementVisible(button).click(button);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-      .waitForElementNotPresent('@dropdownClickAnimation')
-      .click(element);
-  },
   isModalClosed(element) {
     return this.waitForElementNotVisible(element, 25000);
   }
@@ -26,7 +19,7 @@ const instancesCommands = {
 
 export default {
   url: 'https://localhost:8080/#/instances',
-  commands: [instancesCommands],
+  commands: [commonCommands, instancesCommands],
   elements: {
     instanceDropdown: {
       selector: '(//span[@class="synicon-dots-vertical"])[2]',
@@ -116,10 +109,6 @@ export default {
     },
     socketsHeaderTitle: {
       selector: '//span[text()="Sockets"]',
-      locateStrategy: 'xpath'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
       locateStrategy: 'xpath'
     }
   }

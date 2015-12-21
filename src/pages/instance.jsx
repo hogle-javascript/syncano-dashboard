@@ -1,12 +1,13 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation, RouteHandler} from 'react-router';
 
 import {LeftNavMixin} from '../mixins';
 
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import {LeftNav, List, ListItem, Divider} from 'syncano-material-ui';
+import {LeftNav, List, Divider} from 'syncano-material-ui';
+import {LinkListItem} from '../common/Lists';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
 
@@ -20,8 +21,8 @@ export default React.createClass({
 
   mixins: [
     LeftNavMixin,
-    Router.State,
-    Router.Navigation
+    State,
+    Navigation
   ],
 
   componentWillMount() {
@@ -39,14 +40,15 @@ export default React.createClass({
         paddingTop: 50,
         zIndex: 7,
         overflow: 'visible',
-        boxShadow: ''
+        boxShadow: '',
+        backgroundColor: 'rgba(245,245,245,0.30)'
       },
-      menuItemStyleSubheader: {
+      listSubheader: {
         color: 'rgba(0, 0, 0, 0.54)',
         fontSize: 12,
         paddingTop: 4,
         fontWeight: 800,
-        paddingLeft: 24
+        paddingLeft: 16
       },
       menuStyle: {
         backgroundColor: 'rgba(245,245,245,0.30)'
@@ -62,13 +64,6 @@ export default React.createClass({
       plusIcon: {
         marginTop: '4px',
         color: 'rgba(0, 0, 0, 0.54)'
-      },
-      instanceDropdown: {
-        height: 56,
-        paddingTop: 2,
-        paddingBottom: 2,
-        paddingLeft: 24,
-        backgroundColor: '#F2F2F2'
       }
     };
   },
@@ -78,14 +73,6 @@ export default React.createClass({
 
     SessionActions.fetchInstance(instanceName);
     this.transitionTo('instance', {instanceName});
-  },
-
-  renderInstanceDropdown() {
-    return (
-      <div style={this.getStyles().instanceDropdown}>
-        <HeaderInstancesDropdown />
-      </div>
-    );
   },
 
   render() {
@@ -101,30 +88,33 @@ export default React.createClass({
           className="left-nav"
           ref="leftNav"
           style={styles.leftNav}>
-          <List>
-            <ListItem desktop={true} route="sockets" payload={this.getMenuItemHref('sockets')} primaryText="Sockets"/>
+          <HeaderInstancesDropdown />
+          <List
+            style={styles.menuStyle}
+            subheaderStyle={styles.listSubheader}>
+            <LinkListItem routeName="sockets" primaryText="Sockets"/>
           </List>
           <Divider/>
-          <List subheader="Modules">
-            <ListItem
-              desktop={true} route="users" payload={this.getMenuItemHref('users')} primaryText="Users & Groups"/>
-            <ListItem desktop={true} route="classes" payload={this.getMenuItemHref('classes')} primaryText="Classes"/>
-            <ListItem
-              desktop={true} route="snippets" payload={this.getMenuItemHref('snippets')} primaryText="Snippets"/>
+          <List
+            style={styles.menuStyle}
+            subheader="Modules"
+            subheaderStyle={styles.listSubheader}>
+            <LinkListItem routeName="users" primaryText="Users & Groups"/>
+            <LinkListItem routeName="classes" primaryText="Classes"/>
+            <LinkListItem routeName="snippets" primaryText="Snippets"/>
           </List>
           <Divider/>
-          <List subheader="Settings">
-            <ListItem
-              desktop={true}
-              route="instance-edit" payload={this.getMenuItemHref('instance-edit')} primaryText="General"/>
-            <ListItem
-              desktop={true} route="admins" payload={this.getMenuItemHref('admins')} primaryText="Administrators"/>
-            <ListItem
-              desktop={true} route="api-keys" payload={this.getMenuItemHref('api-keys')} primaryText="API keys"/>
+          <List
+            style={styles.menuStyle}
+            subheader="Settings"
+            subheaderStyle={styles.listSubheader}>
+            <LinkListItem routeName="instance-edit" primaryText="General"/>
+            <LinkListItem routeName="admins" primaryText="Administrators"/>
+            <LinkListItem routeName="api-keys" primaryText="API keys"/>
           </List>
         </LeftNav>
         <div style={styles.content}>
-          <Router.RouteHandler />
+          <RouteHandler />
         </div>
       </div>
     );

@@ -1,4 +1,3 @@
-
 export default {
   tags: ['solutions'],
   before(client) {
@@ -15,14 +14,14 @@ export default {
     const solutionsPage = client.page.solutionsPage();
 
     solutionsPage.navigate();
-    solutionsPage.clickButton('@favorite');
+    solutionsPage.clickButton('@favorite', client);
     solutionsPage.waitForElementVisible('@favoriteSolutionTitle');
   },
   'Administrator can view his Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
     solutionsPage.navigate();
-    solutionsPage.clickButton('@mySolutions');
+    solutionsPage.clickButton('@mySolutions', client);
     solutionsPage.waitForElementVisible('@mySolutionTitle');
   },
   'Administrator can filter solutions by tags': (client) => {
@@ -32,7 +31,7 @@ export default {
 
     solutionsPage.navigate();
     solutionsPage.waitForElementVisible('@tagsList');
-    solutionsPage.clickButton('@tagsListJs');
+    solutionsPage.clickButton('@tagsListJs', client);
     solutionsPage.waitForElementVisible('@tagsJs');
 
     solutionsPage.getText('@tagListItemCount', function(result) {

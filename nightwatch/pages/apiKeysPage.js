@@ -1,24 +1,17 @@
 import utils from '../utils';
 import globals from '../globals';
+import commonCommands from '../commands/commonCommands';
 
 const apiKeysCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button).click(button);
-  },
-  fillApiKeyDescription(description) {
-    return this.waitForElementVisible('@createModalDescriptionInput')
-      .clearValue('@createModalDescriptionInput')
-      .setValue('@createModalDescriptionInput', description);
-  },
   waitForModalToClose() {
-    return this.waitForElementNotVisible('@createModalDescriptionInput')
-      .waitForElementVisible('@apiKeysTableRow');
+    return this.waitForElementNotPresent('@createModalDescriptionInput')
+               .waitForElementVisible('@apiKeysTableRow');
   }
 };
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/api_keys`,
-  commands: [apiKeysCommands],
+  commands: [commonCommands, apiKeysCommands],
   elements: {
     addApiKeyButton: {
       selector: '//span[@class="synicon-plus-circle-outline"]',

@@ -1,27 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const dataObjectsCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  },
-  clickCheckbox(button) {
-    return this.waitForElementPresent(button)
-      .click(button);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, '')
-      .clearValue(field)
-      .setValue(field, value);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/classes/class/objects',
-  commands: [dataObjectsCommands],
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/classes/class/objects`,
+  commands: [commonCommands],
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'
@@ -49,7 +32,7 @@ export default {
       locateStrategy: 'xpath'
     },
     stringFieldTableRow: {
-      selector: '//td[text()="' + utils.addSuffix('string') + '"]',
+      selector: `//td[text()="${utils.addSuffix('string')}"]`,
       locateStrategy: 'xpath'
     },
     stringField: {
@@ -57,11 +40,11 @@ export default {
       locateStrategy: 'xpath'
     },
     stringFieldEditedTableRow: {
-      selector: '//td[text()="' + utils.addSuffix('edited') + '"]',
+      selector: `//td[text()="${utils.addSuffix('edited')}"]`,
       locateStrategy: 'xpath'
     },
     selectDataObjectTableRow: {
-      selector: '//td[text()="' + utils.addSuffix('edited') + '"]/preceding-sibling::td//input[@type="checkbox"]',
+      selector: `//td[text()="${utils.addSuffix('edited')}"]/preceding-sibling::td//input[@type="checkbox"]`,
       locateStrategy: 'xpath'
     }
   }

@@ -16,34 +16,27 @@ export default {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
 
-    usersPage.navigate()
-      .waitForElementVisible('@groupEditButton')
-      .waitForElementVisible('@userList')
-      .clickButton('@addGroupButton')
-      .waitForElementPresent('@addGroupModalTitle')
-      .fillInputField('@groupName', suffix)
-      .clickButton('@confirm')
-      .waitForElementPresent('@groupTableRow');
+    usersPage.navigate();
+    usersPage.waitForElementVisible('@groupEditButton');
+    usersPage.waitForElementVisible('@userList');
+    usersPage.clickButton('@addGroupButton', client);
+    usersPage.waitForElementPresent('@addGroupModalTitle');
+    usersPage.fillInputField('@groupName', suffix, client);
+    usersPage.clickButton('@confirm', client);
+    usersPage.waitForElementPresent('@groupTableRow');
   },
   'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
 
-    usersPage
-      .navigate()
-      .waitForElementVisible('@groupEditButton')
-      .waitForElementVisible('@userList')
-      .clickDropdown('@groupTableRowDropdown');
-    client.pause(1000);
-    usersPage
-      .clickButton('@deleteButtonDropdown')
-      .waitForElementPresent('@deleteGroupModalTitle');
-    client.pause(1000);
-    usersPage
-      .clickButton('@confirm');
-    client.pause(1000);
-    usersPage
-      .waitForElementVisible('@groupList')
-      .waitForElementNotPresent('@groupTableRowDropdown');
+    usersPage.navigate();
+    usersPage.waitForElementVisible('@groupEditButton');
+    usersPage.waitForElementVisible('@userList');
+    usersPage.clickDropdown('@groupTableRowDropdown', client);
+    usersPage.clickButton('@deleteButtonDropdown', client);
+    usersPage.waitForElementPresent('@deleteGroupModalTitle');
+    usersPage.clickButton('@confirm', client);
+    usersPage.waitForElementVisible('@groupList');
+    usersPage.waitForElementNotPresent('@groupTableRowDropdown');
   },
   // 'Administrator adds a User': (client) => {
   //   const usersPage = client.page.usersPage();

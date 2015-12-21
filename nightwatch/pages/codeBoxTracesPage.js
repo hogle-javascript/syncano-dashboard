@@ -1,12 +1,7 @@
-const codeBoxTracesCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [codeBoxTracesCommands],
+  commands: [commonCommands],
   elements: {
     instancesDropdown: {
       selector: '.instances-dropdown'

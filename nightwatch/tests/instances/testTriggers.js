@@ -16,47 +16,35 @@ export default {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
 
-    triggersPage
-      .navigate()
-      .clickButton('@addTriggerButton')
-      .waitForElementPresent('@addTriggerModalTitle')
-      .fillInputField('@addTriggerModalLabel', suffix)
-      .selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName')
-      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate')
-      .selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName')
-      .waitForElementNotVisible('@addTriggerModalClassName')
-      .clickButton('@confirm')
-      .waitForElementPresent('@triggerTableRow');
+    triggersPage.navigate();
+    triggersPage.clickButton('@addTriggerButton', client);
+    triggersPage.waitForElementPresent('@addTriggerModalTitle');
+    triggersPage.fillInputField('@addTriggerModalLabel', suffix, client);
+    triggersPage.selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName', client);
+    triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate', client);
+    triggersPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName', client);
+    triggersPage.clickButton('@confirm', client);
+    triggersPage.waitForElementPresent('@triggerTableRow');
   },
   'Administrator edits a Trigger Signal': (client) => {
     const triggersPage = client.page.triggersPage();
 
-    triggersPage
-      .navigate()
-      .clickDropdown('@triggerDropdown');
-    client.pause(1000);
-    triggersPage.clickButton('@editDropdownItem');
-    client.pause(1000);
-    triggersPage.waitForElementVisible('@confirm')
-      .selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate')
-      .waitForElementNotVisible('@addTriggerModalSignalUpdate')
-      .clickButton('@confirm')
-      .waitForElementPresent('@signalTriggerTableRow');
+    triggersPage.navigate();
+    triggersPage.clickDropdown('@triggerDropdown', client);
+    triggersPage.clickButton('@editDropdownItem', client);
+    triggersPage.waitForElementVisible('@confirm', client);
+    triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate', client);
+    triggersPage.clickButton('@confirm', client);
+    triggersPage.waitForElementPresent('@signalTriggerTableRow');
   },
   'Administrator deletes a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
 
-    triggersPage
-      .navigate()
-      .clickButton('@selectTriggerTableRow')
-      .clickButton('@triggersListMenu');
-    client.pause(1000);
-    triggersPage
-      .clickButton('@triggersDeleteButton')
-      .waitForElementVisible('@confirm');
-    client.pause(1000);
-    triggersPage.clickButton('@confirm');
-    client.pause(1000);
+    triggersPage.clickButton('@selectTriggerTableRow', client);
+    triggersPage.clickButton('@triggersListMenu', client);
+    triggersPage.clickButton('@triggersDeleteButton', client);
+    triggersPage.waitForElementVisible('@confirm');
+    triggersPage.clickButton('@confirm', client);
     triggersPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

@@ -120,7 +120,6 @@ export default React.createClass({
         title: 'Delete a Solution',
         handleConfirm: this.handleDelete,
         isLoading: this.props.isLoading,
-        items: Store.getCheckedItems(),
         groupName: 'Channel',
         children: 'Do you really want to delete this Solution?'
       }

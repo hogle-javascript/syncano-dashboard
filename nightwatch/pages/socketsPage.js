@@ -1,27 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const dataCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-      .click(field)
-      .waitForElementVisible(value)
-      .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-      .clearValue(field)
-      .setValue(field, value);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  url: 'https://localhost:8080/#/instances/' + globals.instanceName + '/sockets',
-  commands: [dataCommands],
+  url: `https://localhost:8080/#/instances/${globals.instanceName}/sockets`,
+  commands: [commonCommands],
   elements: {
     codeBoxSocketDropDown: {
       selector: `//div[text()="${utils.addSuffix('codebox')}"]/../../../../..//button`,
@@ -82,7 +65,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addCodeBoxModalSnippetDropdownChoice: {
-      selector: '//div[@class="snippet-dropdown"]//span[text()="snippet"]',
+      selector: '//div[text()="snippet"]',
       locateStrategy: 'xpath'
     },
     codeBoxTableRow: {
@@ -174,6 +157,6 @@ export default {
     channelSocketDropDown: {
       selector: `//div[text()="${utils.addSuffix('channel')}"]/../../../../..//button`,
       locateStrategy: 'xpath'
-    },
+    }
   }
 };

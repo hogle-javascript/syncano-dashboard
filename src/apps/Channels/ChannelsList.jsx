@@ -47,7 +47,7 @@ export default React.createClass({
       params: {
         key: 'deleteChannelDialog',
         ref: 'deleteChannelDialog',
-        title: 'Delete a Channel',
+        title: 'Delete a Channel Socket',
         handleConfirm: Actions.removeChannels,
         isLoading: this.props.isLoading,
         items: Store.getCheckedItems(),
