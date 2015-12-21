@@ -47,7 +47,7 @@ export default Reflux.createStore({
   setInvitations(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
 
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -66,8 +66,7 @@ export default Reflux.createStore({
 
   onFetchInvitationsCompleted(items) {
     console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
-    this.data.items = Object.keys(items).map((item) => items[item]);
-    Actions.setInvitations(items);
+    Actions.setInvitations(items._items);
   },
 
   onRemoveInvitationCompleted() {

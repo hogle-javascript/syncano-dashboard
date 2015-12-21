@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   create(payload) {
     this.Connection
@@ -7,10 +9,11 @@ export default {
       .catch(this.failure);
   },
 
-  list() {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .DataViews
-      .list()
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },

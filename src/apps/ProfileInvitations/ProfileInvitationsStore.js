@@ -42,7 +42,7 @@ export default Reflux.createStore({
   },
 
   setInvitations(items) {
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -61,7 +61,7 @@ export default Reflux.createStore({
     }
 
     console.debug('ProfileInvitationsStore::onFetchInvitationsCompleted');
-    Actions.setInvitations(items);
+    Actions.setInvitations(items._items);
   },
 
   onFetchInvitationsFailure() {

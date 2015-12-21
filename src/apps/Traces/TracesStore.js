@@ -1,5 +1,4 @@
 import Reflux from 'reflux';
-import _ from 'lodash';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
@@ -68,9 +67,9 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  saveTraces(tracesObj) {
+  saveTraces(traces) {
     console.debug('TracesStore::saveTraces');
-    this.data.items = _.chain(Object.keys(tracesObj)).map((item) => tracesObj[item]).sortByOrder('id', 'desc').value();
+    this.data.items = traces;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -83,22 +82,22 @@ export default Reflux.createStore({
 
   onFetchSnippetTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchSnippetTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj);
+    this.saveTraces(tracesObj._items);
   },
 
   onFetchCodeBoxTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchCodeBoxTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj);
+    this.saveTraces(tracesObj._items);
   },
 
   onFetchTriggerTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchTriggerTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj);
+    this.saveTraces(tracesObj._items);
   },
 
   onFetchScheduleTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj);
+    this.saveTraces(tracesObj._items);
   },
 
   onFetchCurrentSnippetCompleted(currentObj) {

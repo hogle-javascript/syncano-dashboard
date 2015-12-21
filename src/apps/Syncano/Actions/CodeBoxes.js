@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default {
   get(codeboxName) {
     this.Connection
@@ -15,10 +17,11 @@ export default {
       .catch(this.failure);
   },
 
-  list() {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .WebHooks
-      .list()
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -42,7 +45,7 @@ export default {
   listTraces(codeboxId) {
     this.Connection
       .WebHooks
-      .traces(codeboxId)
+      .traces(codeboxId, {ordering: 'desc'})
       .then(this.completed)
       .catch(this.failure);
   }

@@ -1,10 +1,12 @@
 import D from 'd.js';
+import _ from 'lodash';
 
 export default {
-  list() {
+  list(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
     this.Connection
       .ApiKeys
-      .list()
+      .list(params)
       .then(this.completed)
       .catch(this.failure);
   },

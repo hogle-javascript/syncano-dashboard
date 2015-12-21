@@ -140,7 +140,7 @@ export default Reflux.createStore({
   },
 
   setSnippets(items) {
-    this.data.items = Object.keys(items).map((key) => items[key]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -163,7 +163,7 @@ export default Reflux.createStore({
 
   onFetchSnippetsCompleted(snippets) {
     console.debug('SnippetsStore::onFetchSnippetsCompleted');
-    Actions.setSnippets(snippets, 'items');
+    Actions.setSnippets(snippets._items);
   },
 
   onFetchTriggersCompleted(triggers) {
