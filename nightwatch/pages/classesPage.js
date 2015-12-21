@@ -1,32 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const classesCommands = {
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-               .clearValue(field)
-               .setValue(field, value);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-               .click(field)
-               .waitForElementVisible(value)
-               .click(value);
-  },
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-               .click(button);
-  },
-  clickDropdown(element) {
-    return this.waitForElementVisible(element)
-               .waitForElementNotPresent('@dropdownClickAnimation')
-               .click(element);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/classes`,
-  commands: [classesCommands],
+  commands: [commonCommands],
   elements: {
     classesListMenu: {
       selector: '//div[@class="classes-list"]/div[1]/div[@class="col-menu"]//button',
@@ -63,7 +41,7 @@ export default {
       locateStrategy: 'xpath'
     },
     createModalSchemaString: {
-      selector: '//span[text()="string"]',
+      selector: '//div[text()="string"]',
       locateStrategy: 'xpath'
     },
     createModalDescriptionInput: {
@@ -146,10 +124,6 @@ export default {
     },
     checkboxSelected: {
       selector: '.synicon-checkbox-marked-outline'
-    },
-    dropdownClickAnimation: {
-      selector: '//span[@class="synicon-dots-vertical"]/preceding-sibling::span/div',
-      locateStrategy: 'xpath'
     }
   }
 };

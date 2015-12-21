@@ -17,7 +17,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     socketsPage.waitForElementPresent('@dataSocketTableTitle');
   },
   afterEach(client, done) {
@@ -35,89 +35,75 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
     const profilePage = client.page.profilePage();
 
-    topNavigationPage.clickButton('@account');
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    client.pause(1000);
-    topNavigationPage.clickButton('@accountDropdown');
+    topNavigationPage.clickButton('@accountDropdown', client);
     profilePage.waitForElementPresent('@updateButton');
-    client.pause(1000);
   },
   'User goes to Account Authentication View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const authenticationPage = client.page.authenticationPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@authentication');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@authentication', client);
     authenticationPage.waitForElementPresent('@accountKey');
-    client.pause(1000);
   },
   'User goes to Account Invitations View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const invitationsPage = client.page.invitationsPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@invitations');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@invitations', client);
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
-    client.pause(1000);
   },
   'User goes to Billing Plan View': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const billingPlanPage = client.page.billingPlanPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@billingPlan');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@billingPlan', client);
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
-    client.pause(1000);
   },
   'User goes to Payment methods view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const paymentMethodsPage = client.page.paymentMethodsPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@paymentMethods');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@paymentMethods', client);
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
-    client.pause(1000);
   },
   'User goes to Invoices view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const invoicesPage = client.page.invoicesPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@invoices');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@invoices', client);
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
-    client.pause(1000);
   },
   'User goes to Billing Address view': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
     const leftMenuPage = client.page.leftMenuPage();
     const billingAddressPage = client.page.billingAddressPage();
 
-    topNavigationPage.clickButton('@account');
-    client.pause(1000);
+    topNavigationPage.clickButton('@account', client);
     topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickButton('@accountDropdown');
-    leftMenuPage.clickButton('@billingAddress');
+    topNavigationPage.clickButton('@accountDropdown', client);
+    leftMenuPage.clickButton('@billingAddress', client);
     billingAddressPage.waitForElementPresent('@billingAddressTitle');
-    client.pause(1000);
   }
 };

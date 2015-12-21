@@ -1,27 +1,10 @@
 import utils from '../utils';
 import globals from '../globals';
-
-const adminsCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-               .click(button);
-  },
-  selectFromDropdown(field, value) {
-    return this.waitForElementVisible(field)
-               .click(field)
-               .waitForElementVisible(value)
-               .click(value);
-  },
-  fillInputField(field, value) {
-    return this.waitForElementVisible(field)
-               .clearValue(field)
-               .setValue(field, value);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: `https://localhost:8080/#/instances/${globals.instanceName}/admins`,
-  commands: [adminsCommands],
+  commands: [commonCommands],
   elements: {
     confirmButton: {
       selector: '//span[text()="Confirm"]',
@@ -56,7 +39,7 @@ export default {
       locateStrategy: 'xpath'
     },
     addAdminModalRoleDropdownRead: {
-      selector: '//div[@tabindex="0"]//span[text()="read"]',
+      selector: '//a[@tabindex="0"]//div[text()="read"]',
       locateStrategy: 'xpath'
     },
     adminEmailTableRow: {

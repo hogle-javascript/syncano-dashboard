@@ -1,13 +1,8 @@
-const solutionsCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
   url: 'https://localhost:8080/#/solutions/list',
-  commands: [solutionsCommands],
+  commands: [commonCommands],
   elements: {
     solutionsView: {
       selector: 'div#solutions'

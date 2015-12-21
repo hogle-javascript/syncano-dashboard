@@ -18,10 +18,10 @@ module.exports = {
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets');
+    leftMenuPage.clickButton('@snippets', client);
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem');
+    snippetsPage.clickButton('@snippetListItem', client);
 
     var snippetEditPage = client.page.snippetEditPage();
     snippetEditPage.waitForElementPresent('@snippetEditView');
@@ -29,19 +29,19 @@ module.exports = {
   'User goes to Snippet config view': (client) => {
     var instancesPage = client.page.instancesPage();
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
 
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets');
+    leftMenuPage.clickButton('@snippets', client);
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem');
+    snippetsPage.clickButton('@snippetListItem', client);
 
     var snippetEditPage = client.page.snippetEditPage();
-    snippetEditPage.clickButton('@config');
+    snippetEditPage.clickButton('@config', client);
 
     snippetEditPage.waitForElementPresent('@configKeyField');
     snippetEditPage.waitForElementPresent('@configValueField');
@@ -53,19 +53,19 @@ module.exports = {
   'User goes to Snippet traces view': (client) => {
     var instancesPage = client.page.instancesPage();
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     
     var socketsPage = client.page.socketsPage();
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
     
     var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets');
+    leftMenuPage.clickButton('@snippets', client);
 
     var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem');
+    snippetsPage.clickButton('@snippetListItem', client);
 
     var snippetEditPage = client.page.snippetEditPage();
-    snippetEditPage.clickButton('@traces');
+    snippetEditPage.clickButton('@traces', client);
 
     snippetEditPage.waitForElementPresent('@tracesEmpty');
   }

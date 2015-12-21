@@ -1,12 +1,7 @@
-const channelsCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button)
-      .click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [channelsCommands],
+  commands: [commonCommands],
   elements: {
     channelListItem: {
       selector: '//div[text()="channel_123"]',
