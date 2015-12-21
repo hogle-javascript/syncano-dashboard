@@ -28,7 +28,9 @@ export default React.createClass({
       presence: true
     },
     codebox: {
-      presence: true
+      presence: {
+        message: `^Snippet can't be blank`
+      }
     }
   },
 
