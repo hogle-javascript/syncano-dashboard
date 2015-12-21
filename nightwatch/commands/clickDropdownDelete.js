@@ -8,7 +8,8 @@ exports.command = function(element) {
     .pause(1000)
     .waitForElementVisible('//span[text()="Confirm"]')
     .click('//span[text()="Confirm"]')
-    .waitForElementNotPresent('//iframe/following-sibling::div/div');
+    .waitForElementNotPresent('//iframe/following-sibling::div/div')
+    .pause(1000);
 
   return this;
 };
