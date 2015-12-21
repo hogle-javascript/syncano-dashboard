@@ -1,16 +1,11 @@
 import React from 'react';
 import Gravatar from 'gravatar';
 
-import MUI from 'syncano-material-ui';
+import {Divider, FontIcon, List, ListItem, Avatar} from 'syncano-material-ui';
 
 export default React.createClass({
 
   displayName: 'MaterialDropdwonItem',
-
-  /* eslint-disable react/sort-comp */
-  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
-
-  /* eslint-enable react/sort-comp */
 
   propTypes: {
     items: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -70,6 +65,8 @@ export default React.createClass({
     return headerContentProps && headerContentProps.userFullName || headerContentProps.userEmail;
   },
 
+  fallBackAvatar: `${location.protocol}//${location.hostname}:${location.port}/img/fox.png`,
+
   renderHeaderContent() {
     let styles = this.getStyles();
     let headerContentProps = this.props.headerContent;
@@ -81,9 +78,9 @@ export default React.createClass({
       let secondaryText = headerContentProps.userFullName ? headerContentProps.userEmail : null;
 
       headerContentElement = (
-        <MUI.ListItem
+        <ListItem
           leftAvatar={
-            <MUI.Avatar
+            <Avatar
               style={styles.avatar}
               src={gravatarUrl}
               onError={this.onAvatarError} />
@@ -99,23 +96,23 @@ export default React.createClass({
   },
 
   renderHeaderContentDivider() {
-    return this.isHeaderNecessary() ? <MUI.ListDivider /> : null;
+    return this.isHeaderNecessary() ? <Divider /> : null;
   },
 
   renderItems() {
     let items = this.props.items.map((item, index) => {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className={item.leftIcon.name || null}
           style={item.leftIcon.style}/>
       );
 
       return (
-        <MUI.List
+        <List
           key={item.name + index}
           subheader={item.subheader || null}
           subheaderStyle={item.subheaderStyle}>
-          <MUI.ListItem
+          <ListItem
             onClick={item.handleItemClick}
             leftIcon={icon}
             secondaryText={item.secondaryText}
@@ -123,8 +120,8 @@ export default React.createClass({
             <span style={item.content.style}>
               {item.content.text}
             </span>
-          </MUI.ListItem>
-        </MUI.List>
+          </ListItem>
+        </List>
       );
     });
 
@@ -133,11 +130,11 @@ export default React.createClass({
 
   render() {
     return (
-      <MUI.List>
+      <List>
         {this.renderHeaderContent()}
         {this.renderHeaderContentDivider()}
         {this.renderItems()}
-      </MUI.List>
+      </List>
     );
   }
 });

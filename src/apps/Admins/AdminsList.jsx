@@ -10,9 +10,9 @@ import Mixins from '../../mixins';
 
 // Components
 import ListItem from './AdminsListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -35,42 +35,24 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleDeleteAdmin() {
-    console.info('Admins::handleDelete');
-    Actions.removeAdmins(Store.getCheckedItems());
-  },
-
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
 
   initDialogs() {
-    let checkedAdmins = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'deleteAdminDialog',
-          ref: 'deleteAdminDialog',
-          title: 'Remove an Administrator',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteAdminDialog')},
-            {text: 'Confirm', onClick: this.handleDeleteAdmin}
-          ],
-          modal: true,
-          avoidResetState: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Administrator')}?`,
-            this.getDialogList(checkedAdmins, 'email'),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'deleteAdminDialog',
+        ref: 'deleteAdminDialog',
+        title: 'Remove an Administrator',
+        handleConfirm: Actions.removeAdmins,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'email',
+        groupName: 'Channel'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -78,7 +60,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.email, Actions.removeAdmins.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteAdminDialog', item)}/>
     );
   },
 
@@ -86,10 +68,9 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="admins-list">
+      <Lists.Container className="admins-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
@@ -99,20 +80,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete an Admin"
                 multipleItemsText="Delete Admins"
                 onTouchTap={this.showDialog.bind(null, 'deleteAdminDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

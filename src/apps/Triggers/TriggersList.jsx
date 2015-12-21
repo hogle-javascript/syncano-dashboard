@@ -10,9 +10,9 @@ import Mixins from '../../mixins';
 
 // Components
 import ListItem from './TriggersListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -46,44 +46,20 @@ export default React.createClass({
     });
   },
 
-  handleRemoveTriggers() {
-    console.info('Triggers::handleDelete');
-    Actions.removeTriggers(Store.getCheckedItems());
-  },
-
-  // Dialogs config
   initDialogs() {
-    let checkedTriggers = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeTriggerDialog',
-          ref: 'removeTriggerDialog',
-          title: 'Delete a Trigger',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeTriggerDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveTriggers
-            }
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Trigger')}?`,
-            this.getDialogList(checkedTriggers, 'label'),
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeTriggerDialog',
+        ref: 'removeTriggerDialog',
+        title: 'Delete a Trigger',
+        handleConfirm: Actions.removeTriggers,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'label',
+        groupName: 'Trigger'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -91,7 +67,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeTriggers.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeTriggerDialog', item)}/>
     );
   },
 
@@ -99,10 +75,9 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="triggers-list">
+      <Lists.Container className="triggers-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
@@ -122,20 +97,20 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader className="col-sm-7" columnName="DESC">Signal</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Trigger Socket"
                 multipleItemsText="Delete Trigger Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeTriggerDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

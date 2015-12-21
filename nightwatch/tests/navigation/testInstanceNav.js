@@ -17,7 +17,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
@@ -33,23 +33,24 @@ module.exports = {
   },
   'User goes to Sockets View': (client) => {
     const instancesPage = client.page.instancesPage();
-    const channelsPage = client.page.channelsPage();
-    const tasksPage = client.page.tasksPage();
     const socketsPage = client.page.socketsPage();
+    const channelsPage = client.page.channelsPage();
+    const schedulesPage = client.page.schedulesPage();
+    const triggersPage = client.page.triggersPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
     socketsPage.waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
-    tasksPage.waitForElementPresent('@scheduleListItem');
-    tasksPage.waitForElementPresent('@triggerListItem');
+    schedulesPage.waitForElementPresent('@scheduleListItem');
+    triggersPage.waitForElementPresent('@triggerListItem');
   },
   'User goes to Classes View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const classesPage = client.page.classesPage();
 
-    leftMenuPage.clickButton('@classes');
+    leftMenuPage.clickButton('@classes', client);
     classesPage.waitForElementPresent('@userProfileClassName');
   },
   'User goes to Snippets edit view': (client) => {
@@ -57,8 +58,8 @@ module.exports = {
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@snippets');
-    snippetsPage.clickButton('@snippetListItem');
+    leftMenuPage.clickButton('@snippets', client);
+    snippetsPage.clickButton('@snippetListItem', client);
     snippetEditPage.waitForElementPresent('@snippetEditView');
   },
   'User goes to Snippet config view': (client) => {
@@ -66,9 +67,9 @@ module.exports = {
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@snippets');
-    snippetsPage.clickButton('@snippetListItem');
-    snippetEditPage.clickButton('@config');
+    leftMenuPage.clickButton('@snippets', client);
+    snippetsPage.clickButton('@snippetListItem', client);
+    snippetEditPage.clickButton('@config', client);
     snippetEditPage.waitForElementPresent('@configKeyField');
     snippetEditPage.waitForElementPresent('@configValueField');
     snippetEditPage.waitForElementPresent('@configAddFieldButton');
@@ -80,9 +81,9 @@ module.exports = {
     const snippetsPage = client.page.snippetsPage();
     const snippetEditPage = client.page.snippetEditPage();
 
-    leftMenuPage.clickButton('@snippets');
-    snippetsPage.clickButton('@snippetListItem');
-    snippetEditPage.clickButton('@traces');
+    leftMenuPage.clickButton('@snippets', client);
+    snippetsPage.clickButton('@snippetListItem', client);
+    snippetEditPage.clickButton('@traces', client);
     snippetEditPage.waitForElementPresent('@tracesEmpty');
   },
   'User goes to Data Objects View': (client) => {
@@ -90,22 +91,22 @@ module.exports = {
     const classesPage = client.page.classesPage();
     const dataObjectsPage = client.page.dataObjectsPage();
 
-    leftMenuPage.clickButton('@classes');
-    classesPage.clickButton('@userClassListItem');
+    leftMenuPage.clickButton('@classes', client);
+    classesPage.clickButton('@userClassListItem', client);
     dataObjectsPage.waitForElementPresent('@dataObjectsTableBody');
   },
   'User goes to Users & Groups View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const usersPage = client.page.usersPage();
 
-    leftMenuPage.clickButton('@users');
+    leftMenuPage.clickButton('@users', client);
     usersPage.waitForElementPresent('@user');
   },
   'User goes to CodeBox Socket Traces View': (client) => {
     const socketsPage = client.page.socketsPage();
     const codeBoxTracesPage = client.page.codeBoxTracesPage();
 
-    socketsPage.clickButton('@codeBoxSocketItemTraces');
+    socketsPage.clickButton('@codeBoxSocketItemTraces', client);
     codeBoxTracesPage.waitForElementPresent('@codeBoxTracesEmptyView');
   }
 };

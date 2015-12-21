@@ -11,9 +11,9 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 import ListItem from './ClassesListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists, ColorIconPicker, Loading} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -100,47 +100,21 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('Classes::handleDelete');
-    Actions.removeClasses(Store.getCheckedItems());
-  },
-
-  handleReset() {
-    console.info('Classes::handleReset');
-    Actions.resetClass(Store.getCheckedItem().id);
-  },
-
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
     let classesAssociatedWithTriggers = this.getAssociatedClasses();
     let classesNotAssociated = _.difference(checkedClasses, classesAssociatedWithTriggers);
     let deleteDialog = {
-      dialog: Common.Dialog,
+      dialog: Dialog.Delete,
       params: {
         key: 'deleteClassDialog',
         ref: 'deleteClassDialog',
         title: 'Delete a Class',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteClassDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
-        ],
-        modal: true,
-        children: [
-          `Do you really want to delete ${Store.getDeleteItemsPhrase('Class')}?`,
-          this.getDialogList(checkedClasses),
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.props.isLoading}
-          />
-        ]
+        handleConfirm: Actions.removeClasses,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'Class'
       }
     };
 
@@ -153,7 +127,7 @@ export default React.createClass({
         ${Store.getDeleteItemsPhrase('Class')}?`,
         notAssociatedList,
         associatedWithTriggersList,
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.props.isLoading}/>
@@ -163,7 +137,7 @@ export default React.createClass({
     return [
       deleteDialog,
       {
-        dialog: Common.ColorIconPicker.Dialog,
+        dialog: ColorIconPicker.Dialog,
         params: {
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
@@ -182,7 +156,7 @@ export default React.createClass({
         onIconClick={this.handleItemIconClick}
         item={item}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeClasses.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteClassDialog', item)}/>
     );
   },
 
@@ -192,10 +166,9 @@ export default React.createClass({
     let someClassIsProtectedFromDelete = checkedItems.some(this.isProtectedFromDelete);
 
     return (
-      <Common.Lists.Container className="classes-list">
-        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
+      <Lists.Container className="classes-list">
         {this.getDialogs()}
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -219,21 +192,21 @@ export default React.createClass({
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItemsCount}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Class"
                 multipleItemsText="Delete Classes"
                 disabled={someClassIsProtectedFromDelete}
                 onTouchTap={this.showDialog.bind(null, 'deleteClassDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

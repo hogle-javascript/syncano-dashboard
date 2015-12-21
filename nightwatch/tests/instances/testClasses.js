@@ -27,11 +27,10 @@ export default {
 
     client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`);
     client.refresh();
-    classesPage
-      .clickDropdownSelect('@classesListMenu', 'select')
-      .clickButton('@selectUserClass')
-      .clickDropdownDelete('@classesListMenu')
-      .waitForElementVisible('@classTableRows');
+    classesPage.clickDropdownSelect('@classesListMenu', 'select');
+    classesPage.clickButton('@selectUserClass', client);
+    classesPage.clickDropdownDelete('@classesListMenu');
+    classesPage.waitForElementVisible('@classTableRows');
     const classTableRows = classesPage.elements.classTableRows.selector;
     const userProfileClassName = classesPage.elements.userProfileClassName.selector;
 

@@ -11,7 +11,7 @@ import Actions from './ProfileBillingPlanActions.js';
 import PlanDialogStore from './ProfileBillingPlanDialogStore';
 import PlanDialogActions from './ProfileBillingPlanDialogActions';
 
-import MUI from 'syncano-material-ui';
+import {FlatButton, IconButton, RaisedButton, TextField, Styles} from 'syncano-material-ui';
 import Common from '../../common';
 import PlanDialog from './ProfileBillingPlanDialog';
 import Limits from './Limits';
@@ -155,14 +155,15 @@ export default Radium(React.createClass({
         ref: 'cancelProductionPlan',
         title: 'Cancel Production Plan',
         actions: [
-          {
-            text: 'No, I want to keep my plan.',
-            onClick: this.handleCancelCancelProductionPlan
-          },
-          {
-            text: 'Yes, I want to cancel.',
-            onClick: this.handleCancelProductionPlan
-          }
+          <FlatButton
+            label="No, I want to keep my plan."
+            secondary={true}
+            onTouchTap={this.handleCancelCancelProductionPlan}/>,
+          <FlatButton
+            label="Yes, I want to cancel."
+            primary={true}
+            keyboardFocused={true}
+            onTouchTap={this.handleCancelProductionPlan}/>
         ],
         modal: true,
         children: ['Are you sure you want to cancel your Production plan?']
@@ -241,23 +242,17 @@ export default Radium(React.createClass({
 
         return (
           <div>
-
             <div style={styles.mainDesc}>
               <div style={{lineHeight: '48px'}}>New plan <strong>${total}</strong>:</div>
-
-              <MUI.IconButton
+              <IconButton
                 iconClassName="synicon-information-outline"
                 iconStyle={{color: Common.Color.getColorByName('blue', 'light')}}
                 tooltip={toolTip}/>
-
             </div>
-
             <div>
               <Limits data={limitsData}/>
             </div>
-
           </div>
-
         );
       }
       return (
@@ -294,7 +289,7 @@ export default Radium(React.createClass({
           <div style={styles.heading}>Limits</div>
           <div className="row align-middle">
             <div className="col-md-8 col-lg-5">
-              <MUI.TextField
+              <TextField
                 ref="soft_limit"
                 valueLink={this.linkState('soft_limit')}
                 errorText={this.getValidationMessages('soft_limit').join(' ')}
@@ -304,7 +299,7 @@ export default Radium(React.createClass({
                 fullWidth={true}/>
             </div>
             <div className="col-md-8 col-lg-5">
-              <MUI.TextField
+              <TextField
                 ref="hard_limit"
                 valueLink={this.linkState('hard_limit')}
                 errorText={this.getValidationMessages('hard_limit').join(' ')}
@@ -314,14 +309,14 @@ export default Radium(React.createClass({
                 fullWidth={true}/>
             </div>
             <div className="col-flex-1" style={{display: 'flex', alignItems: 'center'}}>
-              <MUI.FlatButton
+              <FlatButton
                 type="submit"
                 primary={true}
                 label='Set Limits'
                 disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
-              <MUI.IconButton
+              <IconButton
                 iconClassName="synicon-information-outline"
-                iconStyle={{color: MUI.Styles.Colors.blue500}}
+                iconStyle={{color: Styles.Colors.blue500}}
                 tooltip={toolTip}/>
             </div>
           </div>
@@ -408,7 +403,7 @@ export default Radium(React.createClass({
             text="You don't have any active subscription."/>
 
           <div style={{margin: '64px auto', textAlign: 'center'}}>
-            <MUI.RaisedButton
+            <RaisedButton
               label="Subscribe"
               labelStyle={styles.updateButtonLabel}
               className="raised-button"

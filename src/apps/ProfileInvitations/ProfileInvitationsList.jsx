@@ -8,6 +8,7 @@ import Actions from './ProfileInvitationsActions';
 import Store from './ProfileInvitationsStore';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import MenuItem from '../../../node_modules/syncano-material-ui/lib/menus/menu-item';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
@@ -57,8 +58,15 @@ export default React.createClass({
           ref: 'acceptInvitationsDialog',
           title: 'Accept an Invitation',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'acceptInvitationsDialog')},
-            {text: 'Confirm', onClick: this.handleAccept}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'acceptInvitationsDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleAccept}/>
           ],
           modal: true,
           children: `Do you really want to accept ${Store.getDeleteItemsPhrase('Invitation')}?`
@@ -71,8 +79,15 @@ export default React.createClass({
           ref: 'declineInvitationsDialog',
           title: 'Decline an Invitation',
           actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'declineInvitationsDialog')},
-            {text: 'Confirm', onClick: this.handleDecline}
+            <FlatButton
+              label="Cancel"
+              secondary={true}
+              onTouchTap={this.handleCancel.bind(null, 'declineInvitationsDialog')}/>,
+            <FlatButton
+              label="Confirm"
+              primary={true}
+              keyboardFocused={true}
+              onTouchTap={this.handleDecline}/>
           ],
           modal: true,
           children: `Do you really want to decline ${Store.getDeleteItemsPhrase('Invitation')}?`
@@ -87,8 +102,8 @@ export default React.createClass({
         key={`profileinvitationslist-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
-        showAcceptDialog={this.showMenuDialog.bind(null, item.inviter, Actions.acceptInvitations.bind(null, [item]))}
-        showDeclineDialog={this.showMenuDialog.bind(null, item.inviter, Actions.declineInvitations.bind(null, [item]))}
+        showAcceptDialog={this.showDialog.bind(null, 'acceptInvitationsDialog', item)}
+        showDeclineDialog={this.showDialog.bind(null, 'declineInvitationsDialog', item)}
         />
     );
   },
@@ -99,7 +114,6 @@ export default React.createClass({
     return (
       <Common.Lists.Container>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
         <Common.ColumnList.Header>
           <Column.ColumnHeader
             primary={true}

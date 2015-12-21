@@ -10,7 +10,6 @@ import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
-
   displayName: 'InstanceDialog',
 
   mixins: [
@@ -86,6 +85,7 @@ export default React.createClass({
         title={`${title} an Instance`}
         defaultOpen={this.props.defaultOpen}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         actions={dialogCustomActions}>
         {this.renderFormNotifications()}
         <MUI.TextField

@@ -17,7 +17,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableName');
+    instancesPage.clickButton('@instancesTableName', client);
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
@@ -35,7 +35,7 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
     const solutionsPage = client.page.solutionsPage();
 
-    topNavigationPage.clickButton('@solutions');
+    topNavigationPage.clickButton('@solutions', client);
     solutionsPage.waitForElementPresent('@solutionDetails');
     solutionsPage.waitForElementVisible('@solutionAvatars');
   },
@@ -44,9 +44,9 @@ module.exports = {
     const solutionsPage = client.page.solutionsPage();
     const solutionDetailsPage = client.page.solutionDetailsPage();
 
-    topNavigationPage.clickButton('@solutions');
+    topNavigationPage.clickButton('@solutions', client);
     solutionsPage.waitForElementPresent('@solutionsView');
-    solutionsPage.clickButton('@solutionDetails');
+    solutionsPage.clickButton('@solutionDetails', client);
     solutionDetailsPage.waitForElementPresent('@installSolutionButton');
   }
 };

@@ -202,6 +202,7 @@ export default React.createClass({
         title={`${title} a Data Socket`}
         defaultOpen={this.props.defaultOpen}
         actions={dialogStandardActions}
+        open={this.state.open}
         modal={true}>
         {this.renderFormNotifications()}
         <div>Main settings</div>

@@ -12,6 +12,7 @@ import SessionActions from '../Session/SessionActions';
 import {Dialog, Dialogs} from '../../mixins';
 
 // Components
+import {FlatButton} from 'syncano-material-ui';
 import MUI from 'syncano-material-ui';
 import Common from '../../common';
 import Container from '../../common/Container/Container';
@@ -155,16 +156,15 @@ export default React.createClass({
         }
       },
       {
-        dialog: Common.Dialog,
+        dialog: Common.Dialog.Delete,
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
           title: `${deleteText[0]} an Instance`,
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDelete}
-          ],
-          modal: true,
+          handleConfirm: this.handleDelete,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          groupName: 'Channel',
           children: [
             `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
             `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),

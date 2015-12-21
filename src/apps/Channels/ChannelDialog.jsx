@@ -82,6 +82,7 @@ export default React.createClass({
         title={`${title} a Channel Socket`}
         actions={dialogStandardActions}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         contentStyle={{padding: '8px 0 0 0'}}>
         {this.renderFormNotifications()}
         <div className="row">

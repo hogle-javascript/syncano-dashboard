@@ -16,8 +16,8 @@ import Store from './EditViewStore';
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
+import {Dialog, Show, Fab, Solutions, SolutionStar} from '../../common';
 import Container from '../../common/Container';
 
 import InstallDialog from './InstallDialog';
@@ -113,22 +113,14 @@ export default React.createClass({
 
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
+      dialog: Dialog.Delete,
       params: {
         key: 'deleteCreateDialog',
         ref: 'deleteCreateDialog',
         title: 'Delete a Solution',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteCreateDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
-        ],
-        modal: true,
+        handleConfirm: this.handleDelete,
+        isLoading: this.props.isLoading,
+        groupName: 'Channel',
         children: 'Do you really want to delete this Solution?'
       }
     }];
@@ -161,37 +153,36 @@ export default React.createClass({
 
         <InstallDialog />
 
-        <Common.Show if={this.isMySolution()}>
-          <Common.Fab>
-            <Common.Fab.TooltipItem
+        <Show if={this.isMySolution()}>
+          <Fab>
+            <Fab.TooltipItem
               tooltip="Click here to create Solution"
               onClick={this.handleAddVersion}
               iconClassName="synicon-plus"/>
-          </Common.Fab>
-        </Common.Show>
+          </Fab>
+        </Show>
 
-        <MUI.Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
-          <MUI.ToolbarGroup float="left" style={{padding: '0px'}}>
-            <MUI.FontIcon
+        <Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
+          <ToolbarGroup float="left" style={{padding: '0px'}}>
+            <FontIcon
               style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
               className="synicon-arrow-left"
-              onClick={this.handleBackClick}
-              />
-            <MUI.ToolbarTitle text={'Solutions'}/>
-          </MUI.ToolbarGroup>
+              onClick={this.handleBackClick}/>
+            <ToolbarTitle text={'Solutions'}/>
+          </ToolbarGroup>
 
-          <MUI.ToolbarGroup float="right">
-            <Common.Show if={this.isMySolution()}>
-              <MUI.IconButton
+          <ToolbarGroup float="right">
+            <Show if={this.isMySolution()}>
+              <IconButton
                 style={{fontSize: 25, marginTop: 5}}
                 iconClassName="synicon-delete"
                 tooltip="Delete Solution"
                 tooltipPosition="bottom-left"
                 // onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
                 />
-            </Common.Show>
-          </MUI.ToolbarGroup>
-        </MUI.Toolbar>
+            </Show>
+          </ToolbarGroup>
+        </Toolbar>
 
         <Container id='solutions' style={styles.main}>
 
@@ -209,18 +200,17 @@ export default React.createClass({
                   {this.state.item.description}
                 </div>
 
-                <Common.Show if={!this.isMySolution()}>
+                <Show if={!this.isMySolution()}>
                   <div className="row">
-                    <MUI.FontIcon
+                    <FontIcon
                       style={styles.cardTextListIcon}
                       className="synicon-tag"
-                      color="rgba(222, 222, 222, 0.54)"
-                      />
+                      color="rgba(222, 222, 222, 0.54)"/>
                     {this.renderItemTags()}
                   </div>
-                </Common.Show>
+                </Show>
 
-                <Common.Show if={this.isMySolution()}>
+                <Show if={this.isMySolution()}>
                   <div className="row vp-1-b">
                     <div className="col-flex-1">
                       <div className="vp-1-b">Tags</div>
@@ -234,10 +224,10 @@ export default React.createClass({
                         onChange={this.handleTagsListChange}/>
                     </div>
                   </div>
-                </Common.Show>
+                </Show>
 
                 <div className="row" style={{marginLeft: '-18px'}}>
-                  <Common.SolutionStar
+                  <SolutionStar
                     solution={this.state.item}
                     onStar={Actions.starSolution}
                     onUnstar={Actions.unstarSolution}
@@ -246,7 +236,7 @@ export default React.createClass({
 
                 <div className="row vp-5-t align-left">
 
-                  <MUI.RaisedButton
+                  <RaisedButton
                     primary={true}
                     disabled={this.state.versions && this.state.versions.length < 1}
                     label='Install solution'
@@ -266,7 +256,7 @@ export default React.createClass({
                   </div>
                   <div className="col-md-8">
                     <div className="row align-right">
-                      <MUI.Avatar
+                      <Avatar
                         size={70}
                         src={item.author ? item.author.avatar_url : null}/>
                     </div>
@@ -276,19 +266,19 @@ export default React.createClass({
             </div>
 
             <div style={styles.main}>
-              <Common.Show if={!this.isMySolution() && this.isNoVersions()}>
+              <Show if={!this.isMySolution() && this.isNoVersions()}>
                 <div style={styles.main}>No versions.</div>
-              </Common.Show>
+              </Show>
 
-              <Common.Show if={!this.isNoVersions() || this.isMySolution()}>
-                <Common.Solutions.VersionsList
+              <Show if={!this.isNoVersions() || this.isMySolution()}>
+                <Solutions.VersionsList
                   name="Versions"
                   items={this.state.versions}
                   isLoading={this.state.isLoading}
                   onInstall={this.handleInstallSolution}
                   emptyItemHandleClick={this.handleAddVersion}
                   emptyItemContent="Add new Version"/>
-              </Common.Show>
+              </Show>
             </div>
           </div>
         </Container>

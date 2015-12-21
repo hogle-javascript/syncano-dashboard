@@ -13,9 +13,9 @@ import Store from './SnippetsStore';
 
 // Components
 import ListItem from './SnippetsListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists, Loading} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -80,11 +80,6 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleDelete() {
-    console.info('Snippets::handleDelete');
-    Actions.removeSnippets(Store.getCheckedItems());
-  },
-
   initDialogs() {
     let checkedSnippets = Store.getCheckedItems();
     let snippetsAssociatedWithTriggers = this.getAssociatedSnippets('triggers');
@@ -93,31 +88,16 @@ export default React.createClass({
       snippetsAssociatedWithTriggers);
 
     let deleteDialog = {
-      dialog: Common.Dialog,
+      dialog: Dialog.Delete,
       params: {
         key: 'deleteSnippetDialog',
         ref: 'deleteSnippetDialog',
         title: 'Delete a Snippet',
-        actions: [
-          {
-            text: 'Cancel',
-            onClick: this.handleCancel.bind(null, 'deleteSnippetDialog')
-          },
-          {
-            text: 'Confirm',
-            onClick: this.handleDelete
-          }
-        ],
-        modal: true,
-        avoidResetState: true,
-        children: [
-          `Do you really want to delete ${Store.getDeleteItemsPhrase('Snippet')}?`,
-          this.getDialogList(checkedSnippets, 'label'),
-          <Common.Loading
-            type="linear"
-            position="bottom"
-            show={this.state.isLoading}/>
-        ]
+        handleConfirm: Actions.removeSnippets,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'label',
+        groupName: 'Snippet'
       }
     };
 
@@ -132,7 +112,7 @@ export default React.createClass({
         notAssociatedList,
         associatedWithSchedulesList,
         associatedWithTriggersList,
-        <Common.Loading
+        <Loading
           type="linear"
           position="bottom"
           show={this.state.isLoading}/>
@@ -147,18 +127,17 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeSnippets.bind(null, [item]))}
-      />);
+        showDeleteDialog={this.showDialog.bind(null, 'deleteSnippetDialog', item)}/>
+    );
   },
 
   render() {
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container>
+      <Lists.Container>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -168,20 +147,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Snippet"
                 multipleItemsText="Delete Snippets"
                 onTouchTap={this.showDialog.bind(null, 'deleteSnippetDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

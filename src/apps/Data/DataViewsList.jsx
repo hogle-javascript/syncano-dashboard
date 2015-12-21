@@ -11,9 +11,9 @@ import Store from './DataViewsStore';
 
 // Components
 import ListItem from './DataViewsListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -40,43 +40,19 @@ export default React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveDataViews() {
-    console.info('Data::handleRemoveDataViews');
-    Actions.removeDataViews(Store.getCheckedItems());
-  },
-
   initDialogs() {
-    let checkedItems = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeDataViewDialog',
-          ref: 'removeDataViewDialog',
-          title: 'Delete a DataView',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeDataViewDialog')
-            },
-            {
-              text: 'Confrim',
-              onClick: this.handleRemoveDataViews
-            }
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Data Socket')}?`,
-            this.getDialogList(checkedItems),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeDataViewDialog',
+        ref: 'removeDataViewDialog',
+        title: 'Delete a DataView',
+        handleConfirm: Actions.removeDataViews,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'Data Socket'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -84,7 +60,7 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, Actions.removeDataViews.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeDataViewDialog', item)}/>
     );
   },
 
@@ -92,10 +68,9 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container>
+      <Lists.Container>
         {this.getDialogs()}
-        <Common.ColumnList.Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             className="col-xs-12"
             primary={true}
@@ -114,20 +89,20 @@ export default React.createClass({
             Class
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Data Socket"
                 multipleItemsText="Delete Data Sockets"
                 onTouchTap={this.showDialog.bind(null, 'removeDataViewDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

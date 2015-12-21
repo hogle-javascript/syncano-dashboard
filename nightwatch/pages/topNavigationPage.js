@@ -1,11 +1,7 @@
-const topNavigationCommands = {
-  clickButton(button) {
-    return this.waitForElementVisible(button).click(button);
-  }
-};
+import commonCommands from '../commands/commonCommands';
 
 export default {
-  commands: [topNavigationCommands],
+  commands: [commonCommands],
   url: 'https://localhost:8080/#/instances',
   elements: {
     syncanoLogo: {

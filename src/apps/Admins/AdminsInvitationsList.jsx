@@ -10,9 +10,9 @@ import Mixins from '../../mixins';
 
 // Components
 import ListItem from './AdminsInvitationsListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -35,66 +35,36 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleResendInvitation() {
-    console.info('Admins::handleResendInvitation');
-    Actions.resendInvitation(Store.getCheckedItems());
-  },
-
-  handleRemoveInvitation() {
-    console.info('Admins::handleRemoveInvitation');
-    Actions.removeInvitation(Store.getCheckedItems());
-  },
-
   handleItemIconClick(id, state) {
     Actions.checkItem(id, state);
   },
 
   initDialogs() {
-    let checkedAdminsInvitations = Store.getCheckedItems();
-
     return [
       {
-        dialog: Common.Dialog,
+        dialog: Dialog.Delete,
         params: {
-          title: 'Resend an Invitation',
           key: 'resendInvitationDialog',
           ref: 'resendInvitationDialog',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'resendInvitationDialog')},
-            {text: 'Confirm', onClick: this.handleResendInvitation}
-          ],
-          modal: true,
-          avoidResetState: true,
-          children: [
-            `Do you really want to resend ${Store.getDeleteItemsPhrase('Invitation')}?`,
-            this.getDialogList(checkedAdminsInvitations, 'email'),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading}/>
-          ]
+          title: 'Resend an Invitation',
+          handleConfirm: Actions.resendInvitation,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          actionName: 'resend',
+          groupName: 'Channel'
         }
       },
       {
-        dialog: Common.Dialog,
+        dialog: Dialog.Delete,
         params: {
-          title: 'Delete an Invitation',
           key: 'removeInvitationDialog',
           ref: 'removeInvitationDialog',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'removeInvitationDialog')},
-            {text: 'Confirm', onClick: this.handleRemoveInvitation}
-          ],
-          modal: true,
-          avoidResetState: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Invitation')}?`,
-            this.getDialogList(checkedAdminsInvitations, 'email'),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading}/>
-          ]
+          title: 'Delete an Invitation',
+          handleConfirm: Actions.removeInvitation,
+          isLoading: this.props.isLoading,
+          items: Store.getCheckedItems(),
+          itemLabelName: 'email',
+          groupName: 'Channel'
         }
       }
     ];
@@ -105,8 +75,8 @@ export default React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.email, Actions.removeInvitation.bind(null, [item]))}
-        showResendDialog={this.showMenuDialog.bind(null, item.email, Actions.resendInvitation.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeInvitationDialog', item)}
+        showResendDialog={this.showDialog.bind(null, 'resendInvitationDialog', item)}/>
     );
   },
 
@@ -114,10 +84,9 @@ export default React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="admins-invitations-list">
+      <Lists.Container className="admins-invitations-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
@@ -127,20 +96,20 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Role</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete an Invitation"
                 multipleItemsText="Delete Invitations"
                 onTouchTap={this.showDialog.bind(null, 'removeInvitationDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

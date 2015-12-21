@@ -8,11 +8,8 @@ import HeaderStore from './HeaderStore';
 import ProfileInvitationsStore from '../ProfileInvitations/ProfileInvitationsStore';
 import ProfileInvitationsActions from '../ProfileInvitations/ProfileInvitationsActions';
 
-import MUI from 'syncano-material-ui';
+import {Utils, Styles, FontIcon, FlatButton, MenuItem, Divider, Badge, IconButton, IconMenu} from 'syncano-material-ui';
 import SnackbarNotificationMixin from '../../common/SnackbarNotification/SnackbarNotificationMixin';
-
-import MenuItem from 'syncano-material-ui/lib/menus/menu-item';
-import MenuDivider from 'syncano-material-ui/lib/menus/menu-divider';
 import Loading from '../../common/Loading';
 
 export default Radium(React.createClass({
@@ -30,7 +27,7 @@ export default Radium(React.createClass({
     Router.Navigation,
     Router.State,
     SnackbarNotificationMixin,
-    MUI.Utils.Styles
+    Utils.Styles
   ],
 
   componentDidMount() {
@@ -40,7 +37,7 @@ export default Radium(React.createClass({
   getStyles() {
     return {
       icon: {
-        color: MUI.Styles.Colors.white,
+        color: Styles.Colors.white,
         fontSize: 21
       },
       badgeContainer: {
@@ -57,7 +54,7 @@ export default Radium(React.createClass({
       },
       resendEmailText: {
         cursor: 'pointer',
-        color: MUI.Styles.Colors.lightBlueA700
+        color: Styles.Colors.lightBlueA700
       },
       menuItem: {
         whiteSpace: 'normal',
@@ -118,9 +115,9 @@ export default Radium(React.createClass({
 
     if (this.state.user.is_active && this.state.accountInvitations.items.length === 0) {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className="synicon-information"
-          color={MUI.Styles.Colors.lightBlueA700}/>
+          color={Styles.Colors.lightBlueA700}/>
       );
 
       return (
@@ -135,10 +132,10 @@ export default Radium(React.createClass({
 
     let notifications = this.state.accountInvitations.items.map((item) => {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           key={`${item.id}Icon`}
           className="synicon-share-variant"
-          color={MUI.Styles.Colors.lightGreen500}/>
+          color={Styles.Colors.lightGreen500}/>
       );
       let content = (
         <div>
@@ -148,12 +145,12 @@ export default Radium(React.createClass({
         </div>
       );
       let buttons = [
-        <MUI.FlatButton
+        <FlatButton
           key={`${item.id}ButtonAccept`}
           onTouchTap={this.handleAcceptInvitations.bind(this, [item])}
           label="Accept"
           primary={true}/>,
-        <MUI.FlatButton
+        <FlatButton
           key={`${item.id}ButtonDecline`}
           onTouchTap={this.handleDeclineInvitations.bind(this, [item])}
           label="Decline"/>
@@ -174,9 +171,9 @@ export default Radium(React.createClass({
 
     if (!this.state.user.is_active) {
       let icon = (
-        <MUI.FontIcon
+        <FontIcon
           className="synicon-alert"
-          color={MUI.Styles.Colors.orange500}/>
+          color={Styles.Colors.orange500}/>
       );
 
       let resendLink = (
@@ -210,15 +207,15 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <MUI.Badge
+        <Badge
           badgeContent={notificationCountIcon}
           style={badgeContainerStyle}
           badgeStyle={badgeStyle}>
-          <MUI.IconButton
+          <IconButton
             iconStyle={styles.icon}
             iconClassName={iconClassName}
             onTouchTap={this.handleNotificationsIconClick}/>
-        </MUI.Badge>
+        </Badge>
       </div>
     );
   },
@@ -227,7 +224,7 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <MUI.IconMenu
+      <IconMenu
         id={this.props.id}
         ref="headerNotificationDropdown"
         iconButtonElement={this.renderIcon()}
@@ -246,11 +243,11 @@ export default Radium(React.createClass({
           key="notificationDropdownHeader"
           primaryText="Notifications"
           disabled={true}/>
-        <MenuDivider />
+        <Divider/>
         <Loading show={this.state.accountInvitations.isLoading}>
           {this.renderItems()}
         </Loading>
-      </MUI.IconMenu>
+      </IconMenu>
   );
   }
 }));

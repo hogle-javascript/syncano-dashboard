@@ -11,9 +11,9 @@ import HeaderMixin from'../Header/HeaderMixin';
 
 // Components
 import ListItem from './GroupsListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default Radium(React.createClass({
 
@@ -40,43 +40,20 @@ export default Radium(React.createClass({
     Actions.checkItem(id, state);
   },
 
-  handleRemoveGroups() {
-    console.info('Users::handleDeleteGroups');
-    Actions.removeGroups(Store.getCheckedItems());
-  },
-
   initDialogs() {
-    let checkedItems = Store.getCheckedItems();
-
-    return [
-      {
-        dialog: Common.Dialog,
-        params: {
-          key: 'removeGroupDialog',
-          ref: 'removeGroupDialog',
-          title: 'Delete a Group',
-          actions: [
-            {
-              text: 'Cancel',
-              onClick: this.handleCancel.bind(null, 'removeGroupDialog')
-            },
-            {
-              text: 'Confirm',
-              onClick: this.handleRemoveGroups
-            }
-          ],
-          modal: true,
-          children: [
-            `Do you really want to delete ${Store.getDeleteItemsPhrase('Group')}?`,
-            this.getDialogList(checkedItems, 'label'),
-            <Common.Loading
-              type='linear'
-              position='bottom'
-              show={this.props.isLoading}/>
-          ]
-        }
+    return [{
+      dialog: Dialog.Delete,
+      params: {
+        key: 'removeGroupDialog',
+        ref: 'removeGroupDialog',
+        title: 'Delete a Group',
+        handleConfirm: Actions.removeGroups,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        itemLabelName: 'label',
+        groupName: 'Group'
       }
-    ];
+    }];
   },
 
   renderItem(item) {
@@ -84,7 +61,7 @@ export default Radium(React.createClass({
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.label, Actions.removeGroups.bind(null, [item]))}/>
+        showDeleteDialog={this.showDialog.bind(null, 'removeGroupDialog', item)}/>
     );
   },
 
@@ -92,10 +69,9 @@ export default Radium(React.createClass({
     let checkedItems = Store.getNumberOfChecked();
 
     return (
-      <Common.Lists.Container className="groups-list">
+      <Lists.Container className="groups-list">
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON"
@@ -108,20 +84,20 @@ export default Radium(React.createClass({
             ID
           </Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Delete a Group"
                 multipleItemsText="Delete Groups"
                 onTouchTap={this.showDialog.bind(null, 'removeGroupDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 }));

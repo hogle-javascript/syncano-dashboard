@@ -31,14 +31,6 @@ export default React.createClass({
     };
   },
 
-  show() {
-    this.refs.dialog.setState({open: true});
-  },
-
-  dismiss() {
-    this.refs.dialog.setState({open: false});
-  },
-
   render() {
     let styles = this.getStyles();
     let {children, style, bodyStyle, ...other} = this.props; // eslint-disable-line no-redeclare
@@ -49,8 +41,7 @@ export default React.createClass({
       <MUI.Dialog
         {...other}
         style={dialogStyle}
-        bodyStyle={dialogBodyStyle}
-        ref='dialog'>
+        bodyStyle={dialogBodyStyle}>
         {children}
       </MUI.Dialog>
     );

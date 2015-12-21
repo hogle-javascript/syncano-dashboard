@@ -11,9 +11,9 @@ import Store from './InstancesStore';
 import SessionStore from '../Session/SessionStore';
 
 import ListItem from './InstancesListItem';
-import Common from '../../common';
+import {Dialog, ColumnList, Lists, ColorIconPicker} from '../../common';
 
-let Column = Common.ColumnList.Column;
+let Column = ColumnList.Column;
 
 export default React.createClass({
 
@@ -54,40 +54,25 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleDeleteShared() {
-    console.info('Instances::handleDeleteShared');
-    Actions.removeSharedInstance(Store.getCheckedItems(), SessionStore.getUser().id);
-  },
-
-  // Dialogs config
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
-    let checkedItems = Store.getCheckedItems();
 
     return [
       {
-        dialog: Common.Dialog,
+        dialog: Dialog.Delete,
         params: {
           key: 'deleteSharedInstanceDialog',
           ref: 'deleteSharedInstanceDialog',
           title: 'Leave shared Instance',
-          actions: [
-            {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteSharedInstanceDialog')},
-            {text: 'Confirm', onClick: this.handleDeleteShared}
-          ],
-          modal: true,
-          children: [
-            `Do you really want to leave ${Store.getDeleteItemsPhrase('Instance')}?`,
-            this.getDialogList(checkedItems),
-            <Common.Loading
-              type="linear"
-              position="bottom"
-              show={this.props.isLoading} />
-          ]
+          handleConfirm: Actions.removeSharedInstance,
+          isLoading: this.props.isLoading,
+          actionName: 'leave',
+          items: Store.getCheckedItems(),
+          groupName: 'Instance'
         }
       },
       {
-        dialog: Common.ColorIconPicker.Dialog,
+        dialog: ColorIconPicker.Dialog,
         params: {
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
@@ -101,14 +86,12 @@ export default React.createClass({
   },
 
   renderItem(item) {
-    let removeSharedInstance = Actions.removeSharedInstance.bind(null, [item], SessionStore.getUser().id);
-
     return (
       <ListItem
         onIconClick={this.handleItemIconClick}
         item={item}
-        showDeleteDialog={this.showMenuDialog.bind(null, item.name, removeSharedInstance)}
-        showCustomizeDialog=""/>
+        showDeleteDialog={this.showDialog.bind(null, 'deleteSharedInstanceDialog', item, SessionStore.getUser().id)}
+        showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
     );
   },
 
@@ -117,10 +100,9 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <Common.Lists.Container className='instances-list'>
+      <Lists.Container className='instances-list'>
         {this.getDialogs()}
-        <Column.MenuDialog ref="menuDialog"/>
-        <Common.ColumnList.Header>
+        <ColumnList.Header>
           <Column.ColumnHeader
             primary={true}
             columnName="CHECK_ICON">
@@ -129,21 +111,21 @@ export default React.createClass({
           <Column.ColumnHeader columnName="DESC">Description</Column.ColumnHeader>
           <Column.ColumnHeader columnName="DATE">Created</Column.ColumnHeader>
           <Column.ColumnHeader columnName="MENU">
-            <Common.Lists.Menu
+            <Lists.Menu
               checkedItemsCount={checkedItems}
               actions={Actions}>
-              <Common.Lists.MenuItem
+              <Lists.MenuItem
                 singleItemText="Leave an Instance"
                 multipleItemsText="Leave Instances"
                 onTouchTap={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}/>
-            </Common.Lists.Menu>
+            </Lists.Menu>
           </Column.ColumnHeader>
-        </Common.ColumnList.Header>
-        <Common.Lists.List
+        </ColumnList.Header>
+        <Lists.List
           {...this.props}
           style={styles.list}
           renderItem={this.renderItem}/>
-      </Common.Lists.Container>
+      </Lists.Container>
     );
   }
 });

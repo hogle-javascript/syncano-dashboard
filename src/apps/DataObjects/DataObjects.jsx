@@ -12,8 +12,8 @@ import Actions from './DataObjectsActions';
 import Store from './DataObjectsStore';
 
 // Components
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
+import {Dialog, Show, InnerToolbar, Loading} from '../../common';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -99,20 +99,17 @@ export default React.createClass({
     );
   },
 
-  // Dialogs config
   initDialogs() {
     return [{
-      dialog: Common.Dialog,
+      dialog: Dialog.Delete,
       params: {
         key: 'deleteDataObjectDialog',
         ref: 'deleteDataObjectDialog',
         title: 'Delete a Data Object',
-        actions: [
-          {text: 'Cancel', onClick: this.handleCancel.bind(null, 'deleteDataObjectDialog')},
-          {text: 'Confirm', onClick: this.handleDelete}
-        ],
-        avoidResetState: true,
-        modal: true,
+        handleConfirm: this.handleDelete,
+        isLoading: this.props.isLoading,
+        items: Store.getCheckedItems(),
+        groupName: 'Channel',
         children: 'Do you really want to delete ' + Store.getSelectedRowsLength() + ' Data Object(s)?'
       }
     }];
@@ -148,7 +145,7 @@ export default React.createClass({
 
     return (
     <div>
-      <MUI.Table
+      <Table
         ref="table"
         multiSelectable={true}
         showRowHover={true}
@@ -157,34 +154,34 @@ export default React.createClass({
         wrapperStyle={{minHeight: '120px'}}
         bodyStyle={{overflowX: 'visible', overflowY: 'initial'}}>
         {tableHeader}
-        <MUI.TableBody
+        <TableBody
           deselectOnClickaway={false}
           showRowHover={true}
           stripedRows={false}>
           {tableData}
-        </MUI.TableBody>
-      </MUI.Table>
+        </TableBody>
+      </Table>
 
       <div
         className="row align-center"
         style={{margin: 50}}>
         <div>Loaded {tableData.length} Data Objects</div>
       </div>
-      <Common.Show if={this.state.hasNextPage}>
+      <Show if={this.state.hasNextPage}>
         <div
           className="row align-center"
           style={{margin: 50}}>
-          <MUI.RaisedButton
+          <RaisedButton
             label="Load more"
             onClick={this.handleMoreRows}/>
         </div>
-      </Common.Show>
+      </Show>
     </div>
     );
   },
 
   render() {
-    let table = this.state.items ? this.renderTable() : <Common.Loading visible={true}/>;
+    let table = this.state.items ? this.renderTable() : <Loading visible={true}/>;
     let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
 
     return (
@@ -193,17 +190,17 @@ export default React.createClass({
         <DataObjectDialog />
 
         <div className="col-flex-1">
-          <Common.InnerToolbar
+          <InnerToolbar
             title={`Class: ${this.getParams().className} ${selectedMessageText}`}
             backFallback={this.handleBackClick}>
 
-            <MUI.IconButton
+            <IconButton
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-plus"
               tooltip="Add Data Objects"
               onClick={this.showDataObjectDialog}/>
 
-            <MUI.IconButton
+            <IconButton
               style={{fontSize: 25, marginTop: 5}}
               iconClassName="synicon-delete"
               tooltip="Delete Data Objects"
@@ -214,12 +211,12 @@ export default React.createClass({
               columns={Store.getTableColumns()}
               checkToggleColumn={Actions.checkToggleColumn}/>
 
-          </Common.InnerToolbar>
+          </InnerToolbar>
 
           <div style={{clear: 'both', height: '100%'}}>
-            <Common.Show if={this.state.isLoading}>
-              <Common.Loading type='linear'/>
-            </Common.Show>
+            <Show if={this.state.isLoading}>
+              <Loading type='linear'/>
+            </Show>
             {table}
           </div>
         </div>

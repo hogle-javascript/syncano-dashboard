@@ -1,7 +1,9 @@
 import React from 'react';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
-import MUI from 'syncano-material-ui';
+import {Dialog} from '../../mixins';
+
+import {FlatButton, Tabs, Tab} from 'syncano-material-ui';
 import Common from '../../common';
 
 export default React.createClass({
@@ -21,6 +23,7 @@ export default React.createClass({
   },
 
   mixins: [
+    Dialog,
     LinkedStateMixin
   ],
 
@@ -60,14 +63,7 @@ export default React.createClass({
   handleSubmit() {
     console.info('InstancesAddDialog::handleSubmit');
     this.props.handleClick(this.state.color, this.state.icon);
-    this.dismiss();
-  },
-
-  handleCancel() {
-    this.setState({
-      errors: {}
-    });
-    this.dismiss();
+    this.handleCancel();
   },
 
   handleChange(ColorIcon) {
@@ -80,27 +76,18 @@ export default React.createClass({
     }
   },
 
-  show() {
-    this.refs.dialog.show();
-  },
-
-  dismiss() {
-    this.refs.dialog.dismiss();
-  },
-
   render() {
     let styles = this.getStyles();
     let dialogStandardActions = [
-      {
-        text: 'Cancel',
-        ref: 'cancel',
-        onTouchTap: this.handleCancel
-      },
-      {
-        text: 'Confirm',
-        ref: 'submit',
-        onTouchTap: this.handleSubmit
-      }
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.handleCancel}/>,
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleSubmit}/>
     ];
 
     return (
@@ -110,9 +97,10 @@ export default React.createClass({
         bodyStyle={styles.body}
         contentInnerStyle={styles.content}
         onRequestClose={this.handleCancel}
+        open={this.state.open}
         actions={dialogStandardActions}>
-        <MUI.Tabs inkBarStyle={styles.inkBar}>
-          <MUI.Tab label="Colors">
+        <Tabs inkBarStyle={styles.inkBar}>
+          <Tab label="Colors">
             <div style={styles.tabContent}>
               <Common.ColorIconPicker
                 ref="color"
@@ -121,8 +109,8 @@ export default React.createClass({
                 selectedColor={this.state.color}
                 handleChange={this.handleChange}/>
             </div>
-          </MUI.Tab>
-          <MUI.Tab label="Icons">
+          </Tab>
+          <Tab label="Icons">
             <div style={styles.tabContent}>
               <Common.ColorIconPicker
                 ref="icon"
@@ -131,8 +119,8 @@ export default React.createClass({
                 selectedIcon={this.state.icon}
                 handleChange={this.handleChange}/>
             </div>
-          </MUI.Tab>
-        </MUI.Tabs>
+          </Tab>
+        </Tabs>
       </Common.Dialog>
     );
   }
