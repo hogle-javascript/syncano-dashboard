@@ -1,49 +1,32 @@
 import React from 'react';
-import MUI from 'syncano-material-ui';
+import {Dialog, Utils} from 'syncano-material-ui';
 
 export default React.createClass({
-
   displayName: 'Dialog',
 
-  propTypes: {
-    handleClick: React.PropTypes.func
-  },
-
-  mixins: [MUI.Utils.Styles],
-
-  getDefaultProps() {
-    return {
-      style: {},
-      bodyStyle: {}
-    };
-  },
+  mixins: [Utils.Styles],
 
   getStyles() {
     return {
       style: {
         overflow: 'auto',
-        zIndex: 11
-      },
-      bodyStyle: {
-        overflowX: 'initial',
-        overflowY: 'initial'
+        paddingBottom: 64
       }
     };
   },
 
   render() {
     let styles = this.getStyles();
-    let {children, style, bodyStyle, ...other} = this.props; // eslint-disable-line no-redeclare
+    let {children, style, ...other} = this.props;
     let dialogStyle = this.mergeAndPrefix(style, styles.style);
-    let dialogBodyStyle = this.mergeAndPrefix(bodyStyle, styles.bodyStyle);
 
     return (
-      <MUI.Dialog
+      <Dialog
         {...other}
         style={dialogStyle}
-        bodyStyle={dialogBodyStyle}>
+        autoDetectWindowHeight={false}>
         {children}
-      </MUI.Dialog>
+      </Dialog>
     );
   }
 });
