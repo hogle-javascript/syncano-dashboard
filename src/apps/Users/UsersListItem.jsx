@@ -83,11 +83,10 @@ export default React.createClass({
             background={Common.Color.getColorByName('blue', 'xlight')}
             checked={item.checked}
             handleIconClick={this.props.onIconClick}>
-            <div
+            <Common.Truncate
               onClick={this.toggleUserInfo}
-              style={styles.showInfoItem}>
-              {item.username}
-            </div>
+              style={styles.showInfoItem}
+              text={item.username}/>
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>
