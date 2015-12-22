@@ -17,7 +17,7 @@ module.exports = {
     const socketsPage = client.page.socketsPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@instancesTableName', client);
+    instancesPage.clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {
@@ -37,7 +37,7 @@ module.exports = {
     const instanceName = client.globals.instanceName;
     const instanceNameField = generalPage.elements.instanceNameField.selector;
 
-    leftMenuPage.clickButton('@general', client);
+    leftMenuPage.clickElement('@general');
     generalPage.waitForElementPresent('@instanceNameField');
     client.getValue('xpath', instanceNameField, (result) => {
       client.assert.equal(result.value, instanceName);
@@ -47,14 +47,14 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const adminsPage = client.page.adminsPage();
 
-    leftMenuPage.clickButton('@administrators', client);
+    leftMenuPage.clickElement('@administrators');
     adminsPage.waitForElementPresent('@adminsListItem');
   },
   'User goes to API Keys settings View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
     const apiKeysPage = client.page.apiKeysPage();
 
-    leftMenuPage.clickButton('@apiKeys', client);
+    leftMenuPage.clickElement('@apiKeys');
     apiKeysPage.waitForElementPresent('@apiKeysListItem');
   }
 };

@@ -5,13 +5,13 @@ module.exports = {
 
     loginPage
       .navigate()
-      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD)
+      .login(process.env.NIGHTWATCH_EMAIL, process.env.NIGHTWATCH_PASSWORD);
   },
   after(client) {
     client.end();
   },
   afterEach(client, done) {
-    client.windowHandles(function(result) {
+    client.windowHandles((result) => {
       const handle = result.value[0];
 
       client.switchWindow(handle);
@@ -22,8 +22,8 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
     const docsPage = client.page.docsPage();
 
-    topNavigationPage.clickButton('@docs', client);
-    client.windowHandles(function(result) {
+    topNavigationPage.clickElement('@docs', client);
+    client.windowHandles((result) => {
       const handle = result.value[1];
 
       client.switchWindow(handle);
@@ -35,7 +35,7 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
 
     topNavigationPage.navigate();
-    topNavigationPage.clickButton('@menuNotifications', client);
+    topNavigationPage.clickElement('@menuNotifications');
     topNavigationPage.waitForElementVisible('@notificationsDropdown');
   }
 };

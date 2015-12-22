@@ -64,10 +64,6 @@ export default {
       selector: '//div[@class="snippet-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addCodeBoxModalSnippetDropdownChoice: {
-      selector: '//div[text()="snippet"]',
-      locateStrategy: 'xpath'
-    },
     codeBoxTableRow: {
       selector: `//div[text()="${utils.addSuffix('codebox')}"]`,
       locateStrategy: 'xpath'

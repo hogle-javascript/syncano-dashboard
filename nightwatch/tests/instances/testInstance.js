@@ -17,10 +17,10 @@ export default {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickDropdown('@instanceDropdown', client);
-    instancesPage.clickButton('@editDropdownItem', client);
+    instancesPage.clickDropdown('@instanceDropdown');
+    instancesPage.clickElement('@editDropdownItem');
     instancesPage.fillInstanceDescription('@createModalDescriptionInput', 'new_description', client);
-    instancesPage.clickButton('@confirmButton', client);
+    instancesPage.clickElement('@confirmButton');
     instancesPage.waitForElementNotPresent('@editInstanceModalTitle');
     instancesPage.waitForElementVisible('@instancesTableName');
     instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
@@ -29,9 +29,9 @@ export default {
     const instancesPage = client.page.instancesPage();
 
     instancesPage.navigate();
-    instancesPage.clickButton('@selectInstance', client);
+    instancesPage.clickElement('@selectInstance');
     instancesPage.waitForElementVisible('@instanceSelected');
-    instancesPage.clickButton('@selectInstance', client);
+    instancesPage.clickElement('@selectInstance');
     instancesPage.waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
@@ -39,8 +39,8 @@ export default {
 
     instancesPage.navigate();
     instancesPage.clickDropdown('@instanceDropdown', client);
-    instancesPage.clickButton('@deleteDropdownItem', client);
-    instancesPage.clickButton('@confirmDeleteButton', client);
+    instancesPage.clickElement('@deleteDropdownItem');
+    instancesPage.clickElement('@confirmDeleteButton');
     instancesPage.waitForElementNotPresent('@deleteInstanceModalTitle');
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }

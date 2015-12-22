@@ -17,13 +17,13 @@ export default {
     const suffix = utils.addSuffix('trigger');
 
     triggersPage.navigate();
-    triggersPage.clickButton('@addTriggerButton', client);
+    triggersPage.clickElement('@addTriggerButton');
     triggersPage.waitForElementPresent('@addTriggerModalTitle');
     triggersPage.fillInputField('@addTriggerModalLabel', suffix, client);
     triggersPage.selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName', client);
     triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate', client);
     triggersPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName', client);
-    triggersPage.clickButton('@confirm', client);
+    triggersPage.clickElement('@confirm');
     triggersPage.waitForElementPresent('@triggerTableRow');
   },
   'Administrator edits a Trigger Signal': (client) => {
@@ -31,20 +31,20 @@ export default {
 
     triggersPage.navigate();
     triggersPage.clickDropdown('@triggerDropdown', client);
-    triggersPage.clickButton('@editDropdownItem', client);
-    triggersPage.waitForElementVisible('@confirm', client);
+    triggersPage.clickElement('@editDropdownItem');
+    triggersPage.waitForElementVisible('@confirm');
     triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate', client);
-    triggersPage.clickButton('@confirm', client);
+    triggersPage.clickElement('@confirm');
     triggersPage.waitForElementPresent('@signalTriggerTableRow');
   },
   'Administrator deletes a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
 
-    triggersPage.clickButton('@selectTriggerTableRow', client);
-    triggersPage.clickButton('@triggersListMenu', client);
-    triggersPage.clickButton('@triggersDeleteButton', client);
+    triggersPage.clickElement('@selectTriggerTableRow');
+    triggersPage.clickElement('@triggersListMenu');
+    triggersPage.clickElement('@triggersDeleteButton');
     triggersPage.waitForElementVisible('@confirm');
-    triggersPage.clickButton('@confirm', client);
+    triggersPage.clickElement('@confirm');
     triggersPage.waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

@@ -19,10 +19,10 @@ export default {
     usersPage.navigate();
     usersPage.waitForElementVisible('@groupEditButton');
     usersPage.waitForElementVisible('@userList');
-    usersPage.clickButton('@addGroupButton', client);
+    usersPage.clickElement('@addGroupButton');
     usersPage.waitForElementPresent('@addGroupModalTitle');
-    usersPage.fillInputField('@groupName', suffix, client);
-    usersPage.clickButton('@confirm', client);
+    usersPage.fillInputField('@groupName', suffix);
+    usersPage.clickElement('@confirm');
     usersPage.waitForElementPresent('@groupTableRow');
   },
   'Administrator deletes a Group': (client) => {
@@ -31,13 +31,13 @@ export default {
     usersPage.navigate();
     usersPage.waitForElementVisible('@groupEditButton');
     usersPage.waitForElementVisible('@userList');
-    usersPage.clickDropdown('@groupTableRowDropdown', client);
-    usersPage.clickButton('@deleteButtonDropdown', client);
+    usersPage.clickDropdown('@groupTableRowDropdown');
+    usersPage.clickElement('@deleteButtonDropdown');
     usersPage.waitForElementPresent('@deleteGroupModalTitle');
-    usersPage.clickButton('@confirm', client);
+    usersPage.clickElement('@confirm');
     usersPage.waitForElementVisible('@groupList');
     usersPage.waitForElementNotPresent('@groupTableRowDropdown');
-  },
+  }
   // 'Administrator adds a User': (client) => {
   //   const usersPage = client.page.usersPage();
   //   const suffix = utils.addSuffix('user');
@@ -46,11 +46,11 @@ export default {
   //     .navigate()
   //     .waitForElementVisible('@groupEditButton')
   //     .waitForElementVisible('@userList')
-  //     .clickButton('@addUserButton')
+  //     .clickElement('@addUserButton')
   //     .waitForElementPresent('@addUserModalTitle')
   //     .fillInputField('@username', suffix)
   //     .fillInputField('@password', suffix)
-  //     .clickButton('@confirm')
+  //     .clickElement('@confirm')
   //     .waitForElementPresent('@userTableRow');
   // },
   // 'Administrator deletes a User': (client) => {
@@ -60,11 +60,11 @@ export default {
   //     .navigate()
   //     .waitForElementVisible('@groupEditButton')
   //     .waitForElementVisible('@userList')
-  //     .clickButton('@selectUserTableRow')
-  //     .clickButton('@usersListMenu')
-  //     .clickButton('@deleteButton')
+  //     .clickElement('@selectUserTableRow')
+  //     .clickElement('@usersListMenu')
+  //     .clickElement('@deleteButton')
   //     .waitForElementPresent('@deleteUserModalTitle')
-  //     .clickButton('@confirm')
+  //     .clickElement('@confirm')
   //     .waitForElementNotPresent('@userTableRow');
   // }
 };

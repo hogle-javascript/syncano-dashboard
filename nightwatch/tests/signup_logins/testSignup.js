@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   tags: ['signup'],
-  'User signs up': function(client) {
+  'User signs up': (client) => {
     const signupPage = client.page.signupPage();
     const instancesPage = client.page.instancesPage();
     const slug = Date.now();

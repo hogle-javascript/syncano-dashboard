@@ -4,7 +4,7 @@ import Syncano from 'syncano';
 export default {
   tags: ['snippets'],
   before(client) {
-    const syncano = new Syncano({accountKey: globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
+    const syncano = new Syncano({accountKey: Globals.tempAccountKey, baseUrl: 'https://api.syncano.rocks'});
     const loginPage = client.page.loginPage();
 
     const snippetOptions = {
@@ -17,11 +17,11 @@ export default {
       snippet: null
     };
 
-    syncano.instance(globals.tempInstanceName).codebox().add(snippetOptions).then((success) => {
+    syncano.instance(Globals.tempInstanceName).codebox().add(snippetOptions).then((success) => {
       codeBoxOptions.codebox = success.id;
       for (let i = 0; i < 3; i += 1) {
         codeBoxOptions.name = `codeBox_${i.toString()}`;
-        syncano.instance(globals.tempInstanceName).codeBox().add(codeBoxOptions);
+        syncano.instance(Globals.tempInstanceName).codeBox().add(codeBoxOptions);
       }
     });
     loginPage
@@ -34,17 +34,17 @@ export default {
   'Test Select/Deselect multiple CodeBoxes': (client) => {
     const socketsPage = client.page.socketsPage();
 
-    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/codeboxes`);
+    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
 
     socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickButton('@codeBoxToSelect', client);
-    socketsPage.clickButton('@selectMultipleButton', client);
+    socketsPage.clickElement('@codeBoxToSelect');
+    socketsPage.clickElement('@selectMultipleButton');
 
     client.elements('css selector', socketsPage.elements.checkboxSelected.selector, (result) => {
       client.assert.equal(result.value.length, 3);
     });
 
-    socketsPage.clickButton('@deselectMultipleButton');
+    socketsPage.clickElement('@deselectMultipleButton');
     socketsPage.waitForElementVisible('@codeBoxToSelect');
 
     client.elements('css selector', socketsPage.elements.codeBoxToSelect.selector, (result) => {
@@ -54,14 +54,14 @@ export default {
   'Test Delete multiple CodeBoxes': (client) => {
     const socketsPage = client.page.socketsPage();
 
-    client.url(`https://localhost:8080/#/instances/${globals.tempInstanceName}/codeboxes`);
+    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/codeboxes`);
 
     socketsPage.waitForElementVisible('@codeBoxToSelect');
-    socketsPage.clickButton('@codeBoxToSelect', client);
-    socketsPage.clickButton('@selectMultipleButton', client);
-    socketsPage.clickButton('@deleteButton', client);
+    socketsPage.clickElement('@codeBoxToSelect');
+    socketsPage.clickElement('@selectMultipleButton');
+    socketsPage.clickElement('@deleteButton');
     socketsPage.waitForElementVisible('@deleteCodeBoxModalTitle');
-    socketsPage.clickButton('@confirmButton', client);
+    socketsPage.clickElement('@confirmButton');
     socketsPage.waitForElementVisible('@emptyListItem');
   }
 };

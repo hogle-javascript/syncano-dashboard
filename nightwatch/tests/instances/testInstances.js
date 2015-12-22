@@ -39,9 +39,9 @@ export default {
       });
     });
     instancesPage.waitForElementPresent('@instancesTableName');
-    instancesPage.clickButton('@instancesTableName', client);
-    leftMenuPage.clickButton('@instancesDropdown', client);
-    leftMenuPage.clickButton('@instancesListSecondItem', client);
+    instancesPage.clickElement('@instancesTableName');
+    leftMenuPage.clickElement('@instancesDropdown');
+    leftMenuPage.clickElement('@instancesListSecondItem');
     socketsPage.waitForElementPresent('@emptySocketsHeading');
     const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 
@@ -57,12 +57,12 @@ export default {
   //    .navigate()
   //    .waitForElementPresent('@selectInstance')
   //    .moveToElement('@selectInstance', 0, 0)
-  //    .clickButton('@instanceToSelect')
-  //    .clickButton('@selectButton')
-  //    .clickButton('@deleteButton');
+  //    .clickElement('@instanceToSelect')
+  //    .clickElement('@selectButton')
+  //    .clickElement('@deleteButton');
   //  client.pause(1000);
   //  instancesPage
-  //    .clickButton('@confirmDeleteButton')
+  //    .clickElement('@confirmDeleteButton')
   //    .waitForElementNotVisible('@deleteInstanceModalTitle');
   //
   //  instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
