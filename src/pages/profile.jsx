@@ -3,9 +3,9 @@ import {State, Navigation, RouteHandler} from 'react-router';
 
 import {LeftNavMixin} from '../mixins';
 
-import {LeftNav, List} from 'syncano-material-ui';
+import {Divider, LeftNav, List} from 'syncano-material-ui';
 import Container from '../common/Container';
-import {InnerToolbar, Lists} from '../common';
+import {Lists} from '../common';
 
 export default React.createClass({
 
@@ -51,6 +51,7 @@ export default React.createClass({
             <Lists.LinkListItem routeName="profile-authentication" primaryText="Authentication"/>
             <Lists.LinkListItem routeName="profile-invitations" primaryText="Invitations"/>
           </List>
+          <Divider/>
           <List subheader="Billing">
             <Lists.LinkListItem routeName="profile-billing-plan" primaryText="Billing plan"/>
             <Lists.LinkListItem routeName="profile-billing-payment" primaryText="Payment methods"/>
@@ -59,7 +60,6 @@ export default React.createClass({
           </List>
         </LeftNav>
         <Container style={styles.content}>
-          <InnerToolbar/>
           <RouteHandler />
         </Container>
       </div>

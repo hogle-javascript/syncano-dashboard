@@ -31,7 +31,7 @@ export default React.createClass({
         zIndex: 6
       },
       toolbarRight: {
-        paddingTop: 4
+        height: '100%'
       },
       title: {
         paddingLeft: 36

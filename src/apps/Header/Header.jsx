@@ -64,7 +64,7 @@ export default Radium(React.createClass({
         width: 120
       },
       toolbarList: {
-        padding: '0 24px',
+        padding: '0 28px',
         display: 'flex'
       },
       toolbarListItem: {
@@ -213,6 +213,11 @@ export default Radium(React.createClass({
             <ul
               className="toolbar-list"
               style={styles.toolbarList}>
+              <li
+                id="menu-notifications"
+                style={styles.toolbarListItem}>
+                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
+              </li>
               <li id="menu-account">
                 <IconMenu
                   id="menu-account--dropdown"
@@ -227,11 +232,6 @@ export default Radium(React.createClass({
                   }}>
                   {this.getDropdownItems()}
                 </IconMenu>
-              </li>
-              <li
-                id="menu-notifications"
-                style={styles.toolbarListItem}>
-                <HeaderNotificationsDropdown id="menu-notifications--dropdown"/>
               </li>
             </ul>
           </ToolbarGroup>

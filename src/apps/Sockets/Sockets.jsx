@@ -105,13 +105,15 @@ export default React.createClass({
 
     return (
       <Common.InnerToolbar title="Sockets">
-        <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
-        <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
-        <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
-        <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
-        <Common.Socket.Schedule
-          onTouchTap={this.showScheduleAddDialog}
-          tooltipPosition="bottom-left"/>
+        <div style={{paddingTop: 4}}>
+          <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
+          <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
+          <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
+          <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
+          <Common.Socket.Schedule
+            onTouchTap={this.showScheduleAddDialog}
+            tooltipPosition="bottom-left"/>
+        </div>
       </Common.InnerToolbar>
     );
   },

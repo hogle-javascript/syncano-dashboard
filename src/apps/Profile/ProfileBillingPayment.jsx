@@ -5,7 +5,7 @@ import _ from 'lodash';
 import MUI from 'syncano-material-ui';
 
 import Mixins from '../../mixins';
-import Common from '../../common';
+import {Loading, Show, InnerToolbar, CreditCard} from '../../common';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
@@ -73,8 +73,9 @@ export default Radium(React.createClass({
     let labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
-        <Common.Loading show={this.state.isLoading}>
-          <Common.Show if={showForm}>
+        <Loading show={this.state.isLoading}>
+          <InnerToolbar title="Payment methods"/>
+          <Show if={showForm}>
             <form
               onSubmit={this.handleFormValidation}
               acceptCharset="UTF-8"
@@ -139,12 +140,12 @@ export default Radium(React.createClass({
               </div>
               <div className="row">
                 <div className="col-lg-20" style={{display: '-webkit-flex; display: flex'}}>
-                  <Common.Show if={hasCard}>
+                  <Show if={hasCard}>
                     <MUI.RaisedButton
                       onClick={this.toggleForm.bind(this, false)}
                       label="Cancel"
                       className="raised-button"/>
-                  </Common.Show>
+                  </Show>
                   <MUI.RaisedButton
                     type="submit"
                     label={labelPrefix + ' payment'}
@@ -154,11 +155,11 @@ export default Radium(React.createClass({
                 </div>
               </div>
             </form>
-          </Common.Show>
+          </Show>
 
-          <Common.Show if={!showForm}>
+          <Show if={!showForm}>
             <div>
-              <Common.CreditCard card={this.state.card}/>
+              <CreditCard card={this.state.card}/>
               <MUI.RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"
@@ -166,8 +167,8 @@ export default Radium(React.createClass({
                 className="raised-button"
                 secondary={true}/>
             </div>
-          </Common.Show>
-        </Common.Loading>
+          </Show>
+        </Loading>
     );
   }
 }));
