@@ -1,7 +1,7 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
-import Router from 'react-router';
+import {Navigation, State, Link} from 'react-router';
 import Gravatar from 'gravatar';
 
 // Stores & Actions
@@ -11,10 +11,9 @@ import SessionStore from '../Session/SessionStore';
 import InstancesStore from '../Instances/InstancesStore';
 
 // Components
+import Sticky from 'react-stickydiv';
 import {Utils, FontIcon, Divider, List, ListItem, Avatar, Toolbar, ToolbarGroup, IconMenu} from 'syncano-material-ui';
-import Common from '../../common';
-import Logo from '../../common/Logo/Logo';
-
+import {Logo} from '../../common';
 import HeaderNotificationsDropdown from './HeaderNotificationsDropdown';
 
 import './Header.sass';
@@ -31,10 +30,16 @@ export default Radium(React.createClass({
   mixins: [
     Reflux.connect(HeaderStore),
     Reflux.connect(InstancesStore),
-    Router.Navigation,
-    Router.State,
+    Navigation,
+    State,
     Utils.Styles
   ],
+
+  getDefaultProps() {
+    return {
+      logo: false
+    };
+  },
 
   componentDidMount() {
     SessionStore.getInstance();
@@ -42,19 +47,13 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
-      main: {
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 8
-      },
       topToolbar: {
         background: this.context.muiTheme.rawTheme.palette.primary1Color,
         height: 50,
         padding: 0
       },
       logotypeContainer: {
-        paddingLeft: 64,
+        paddingLeft: 24,
         height: '100%',
         width: 256,
         display: 'flex',
@@ -154,10 +153,6 @@ export default Radium(React.createClass({
     this.transitionTo('profile-billing-plan');
   },
 
-  handleSolutionsClick() {
-    this.transitionTo('solutions');
-  },
-
   renderIconButton() {
     return (
       <Avatar
@@ -166,47 +161,27 @@ export default Radium(React.createClass({
     );
   },
 
+  renderLogo() {
+    let styles = this.getStyles();
+
+    return (
+      <ToolbarGroup style={styles.logotypeContainer}>
+        <Link to="app">
+          <Logo
+            style={styles.logo}
+            className="logo-white"/>
+        </Link>
+      </ToolbarGroup>
+    );
+  },
+
   render() {
     let styles = this.getStyles();
 
     return (
-      <div style={styles.main}>
+      <Sticky zIndex={12}>
         <Toolbar style={styles.topToolbar}>
-          <ToolbarGroup style={styles.logotypeContainer}>
-            <Router.Link to="app">
-              <Common.Logo
-                style={styles.logo}
-                className="logo-white"/>
-            </Router.Link>
-          </ToolbarGroup>
-          <ToolbarGroup
-            float="left"
-            style={{marginLeft: '-5', height: '100%'}}>
-            <ul
-              className="toolbar-list"
-              style={styles.toolbarList}>
-              <li
-                id="menu-solutions"
-                style={styles.toolbarListItem}>
-                <a onClick={this.handleSolutionsClick}>Solutions Market</a>
-              </li>
-
-              <li style={styles.toolbarListItem}>
-                <a
-                  href="http://docs.syncano.com/"
-                  target="_blank">
-                  Docs
-                </a>
-              </li>
-              <li style={styles.toolbarListItem}>
-                <a
-                  href="http://ideas.syncano.io"
-                  target="_blank">
-                  Ideas
-                </a>
-              </li>
-            </ul>
-          </ToolbarGroup>
+          {this.props.logo ? this.renderLogo() : null}
           <ToolbarGroup
             float="right"
             style={{marginLeft: 100, height: '100%'}}>
@@ -235,8 +210,36 @@ export default Radium(React.createClass({
               </li>
             </ul>
           </ToolbarGroup>
+          <ToolbarGroup
+            float="left"
+            style={{marginLeft: '-5', height: '100%'}}>
+            <ul
+              className="toolbar-list"
+              style={styles.toolbarList}>
+              <li
+                id="menu-solutions"
+                style={styles.toolbarListItem}>
+                <Link to="solutions">Solutions Market</Link>
+              </li>
+
+              <li style={styles.toolbarListItem}>
+                <a
+                  href="http://docs.syncano.com/"
+                  target="_blank">
+                  Docs
+                </a>
+              </li>
+              <li style={styles.toolbarListItem}>
+                <a
+                  href="http://ideas.syncano.io"
+                  target="_blank">
+                  Ideas
+                </a>
+              </li>
+            </ul>
+          </ToolbarGroup>
         </Toolbar>
-      </div>
+      </Sticky>
     );
   }
 }));

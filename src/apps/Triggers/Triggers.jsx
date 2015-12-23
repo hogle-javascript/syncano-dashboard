@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
 import Mixins from '../../mixins';
@@ -9,18 +9,17 @@ import Actions from './TriggersActions';
 import Store from './TriggersStore';
 import SnippetsActions from '../Snippets/SnippetsActions';
 
+import {Container, InnerToolbar, Socket} from '../../common';
 import TriggersList from './TriggersList';
 import TriggerDialog from './TriggerDialog';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
 
 export default React.createClass({
 
   displayName: 'TriggerSockets',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.InstanceTabs,
@@ -38,23 +37,25 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <TriggerDialog />
 
-        <Common.InnerToolbar title="Trigger Sockets">
-          <Common.Socket.Trigger
+        <InnerToolbar title="Trigger Sockets">
+          <Socket.Trigger
             tooltipPosition="bottom-left"
             onTouchTap={this.showTriggerDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <TriggersList
-          name="Triggers"
-          isLoading={this.state.isLoading}
-          items={this.state.items}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showTriggerDialog}
-          emptyItemContent="Create a Trigger Socket"/>
-      </Container>
+        <Container>
+          <TriggersList
+            name="Triggers"
+            isLoading={this.state.isLoading}
+            items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.showTriggerDialog}
+            emptyItemContent="Create a Trigger Socket"/>
+        </Container>
+      </div>
     );
   }
 });

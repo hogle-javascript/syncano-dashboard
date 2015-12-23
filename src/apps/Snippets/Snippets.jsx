@@ -11,8 +11,7 @@ import Actions from './SnippetsActions';
 import Store from './SnippetsStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Container, InnerToolbar, Socket} from '../../common';
 
 // Local components
 import SnippetsList from './SnippetsList';
@@ -48,22 +47,24 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <SnippetDialog />
 
-        <Common.InnerToolbar title="Snippets">
-          <Common.Socket
+        <InnerToolbar title="Snippets">
+          <Socket
             tooltip="Create a Snippet"
             tooltipPosition="bottom-left"
             onTouchTap={this.showSnippetDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <SnippetsList
-          name="Snippets"
-          items={this.state.items}
-          emptyItemHandleClick={this.showSnippetDialog}
-          emptyItemContent="Create a Snippet"/>
-      </Container>
+        <Container>
+          <SnippetsList
+            name="Snippets"
+            items={this.state.items}
+            emptyItemHandleClick={this.showSnippetDialog}
+            emptyItemContent="Create a Snippet"/>
+        </Container>
+      </div>
     );
   }
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Actions & Stores
 import Actions from './InstancesActions';
@@ -9,13 +9,11 @@ import SessionStore from '../Session/SessionStore';
 import SessionActions from '../Session/SessionActions';
 
 // Utils
-import {Dialog, Dialogs} from '../../mixins';
+import Mixins from '../../mixins';
 
 // Components
-import {FlatButton} from 'syncano-material-ui';
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Utils, FlatButton, IconButton, RaisedButton, TextField} from 'syncano-material-ui';
+import {Container, InnerToolbar, ColorIconPicker, Dialog, Loading, ColumnList, Color} from '../../common';
 
 export default React.createClass({
 
@@ -26,13 +24,13 @@ export default React.createClass({
   },
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
     Reflux.connect(SessionStore),
     Reflux.connect(Store),
-    Dialog,
-    Dialogs,
-    MUI.Utils.Styles
+    Mixins.Dialog,
+    Mixins.Dialogs,
+    Utils.Styles
   ],
 
   validatorConstraints: {
@@ -96,10 +94,6 @@ export default React.createClass({
         ':hover': {
           opacity: 0.4
         }
-      },
-      content: {
-        marginTop: 30,
-        width: '100%'
       }
     };
   },
@@ -145,7 +139,7 @@ export default React.createClass({
 
     return [
       {
-        dialog: Common.ColorIconPicker.Dialog,
+        dialog: ColorIconPicker.Dialog,
         params: {
           key: 'pickColorIconDialog',
           ref: 'pickColorIconDialog',
@@ -156,7 +150,7 @@ export default React.createClass({
         }
       },
       {
-        dialog: Common.Dialog.Delete,
+        dialog: Dialog.Delete,
         params: {
           key: 'deleteInstanceDialog',
           ref: 'deleteInstanceDialog',
@@ -168,7 +162,7 @@ export default React.createClass({
           children: [
             `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
             `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),
-            <Common.Loading
+            <Loading
               type="linear"
               position="bottom"
               show={this.state.isLoading}/>
@@ -182,12 +176,12 @@ export default React.createClass({
     const styles = this.getStyles();
     const instance = this.state.instance;
     const deleteButtonText = Store.amIOwner(instance) ? 'Delete' : 'Leave';
-    const defaultIcon = Common.ColumnList.ColumnListConstans.DEFAULT_ICON;
-    const defaultIconColor = Common.ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
+    const defaultIcon = ColumnList.ColumnListConstans.DEFAULT_ICON;
+    const defaultIconColor = ColumnList.ColumnListConstans.DEFAULT_BACKGROUND;
     let icon = instance ? instance.metadata.icon : defaultIcon;
     let color = instance ? instance.metadata.color : defaultIconColor;
     let iconBackgroundColor = {
-      backgroundColor: Common.Color.getColorByName(color, 'dark') || defaultIconColor
+      backgroundColor: Color.getColorByName(color, 'dark') || defaultIconColor
     };
 
     if (!instance) {
@@ -195,53 +189,55 @@ export default React.createClass({
     }
 
     return (
-      <Container>
+      <div>
         {this.getDialogs()}
 
-        <Common.InnerToolbar title="General"/>
+        <InnerToolbar title="General"/>
 
-        <div style={{width: '50%'}}>
-          <div className="col-flex-1">
-            <div style={styles.content}>
-              <div style={styles.customizeSection}>
-                <MUI.IconButton
-                  tooltip="Click to customize Instance"
-                  tooltipStyles={styles.tooltip}
-                  iconStyle={styles.instanceIcon}
-                  style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
-                  iconClassName={'synicon-' + icon}
-                  onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
-                <MUI.TextField
-                  className="instance-name-field"
-                  ref="name"
-                  floatingLabelText="Instance name"
-                  disabled={true}
-                  fullWidth={true}
-                  defaultValue={instance.name}
-                  style={styles.textField}/>
-                <MUI.TextField
-                  ref="description"
-                  floatingLabelText="Instance description"
-                  defaultValue={instance.description}
-                  multiLine={true}
-                  fullWidth={true}
-                  style={styles.textField}/>
-              </div>
-              <div style={styles.buttonsSection}>
-                <MUI.RaisedButton
-                  onTouchTap={this.handleUpdate}
-                  type="submit"
-                  label="Update"
-                  secondary={true}/>
-                <MUI.FlatButton
-                  label={`${deleteButtonText} an Instance`}
-                  style={styles.deleteButton}
-                  onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+        <Container>
+          <div style={{width: '50%'}}>
+            <div className="col-flex-1">
+              <div>
+                <div style={styles.customizeSection}>
+                  <IconButton
+                    tooltip="Click to customize Instance"
+                    tooltipStyles={styles.tooltip}
+                    iconStyle={styles.instanceIcon}
+                    style={this.mergeAndPrefix(styles.instanceIconButton, iconBackgroundColor)}
+                    iconClassName={'synicon-' + icon}
+                    onClick={this.showDialog.bind(this, 'pickColorIconDialog')}/>
+                  <TextField
+                    className="instance-name-field"
+                    ref="name"
+                    floatingLabelText="Instance name"
+                    disabled={true}
+                    fullWidth={true}
+                    defaultValue={instance.name}
+                    style={styles.textField}/>
+                  <TextField
+                    ref="description"
+                    floatingLabelText="Instance description"
+                    defaultValue={instance.description}
+                    multiLine={true}
+                    fullWidth={true}
+                    style={styles.textField}/>
+                </div>
+                <div style={styles.buttonsSection}>
+                  <RaisedButton
+                    onTouchTap={this.handleUpdate}
+                    type="submit"
+                    label="Update"
+                    secondary={true}/>
+                  <FlatButton
+                    label={`${deleteButtonText} an Instance`}
+                    style={styles.deleteButton}
+                    onTouchTap={this.showDialog.bind(null, 'deleteInstanceDialog')}/>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
     );
   }
 });
