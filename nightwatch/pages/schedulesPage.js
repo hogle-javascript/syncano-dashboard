@@ -11,7 +11,7 @@ export default {
       locateStrategy: 'xpath'
     },
     scheduleDropdown: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -67,11 +67,11 @@ export default {
       locateStrategy: 'xpath'
     },
     selectScheduleTableRow: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     cronTabScheduleTableRow: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/parent::div/following-sibling::div[text()="*/5 * * * *"]`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../parent::div/following-sibling::div[text()="*/5 * * * *"]`,
       locateStrategy: 'xpath'
     },
     deleteScheduleModalTitle: {
