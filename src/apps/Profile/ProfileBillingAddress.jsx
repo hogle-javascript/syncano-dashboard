@@ -7,7 +7,8 @@ import FormMixin from '../../mixins/FormMixin';
 import Actions from './ProfileActions';
 import Store from './ProfileBillingAddressStore';
 
-import MUI from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
 
@@ -114,6 +115,7 @@ export default React.createClass({
   render() {
     return (
       <div>
+        <InnerToolbar title="Billing address"/>
         {this.renderFormNotifications()}
 
         <form
@@ -122,7 +124,7 @@ export default React.createClass({
           method="post">
           <div className="row vm-6-b">
             <div className="col-flex-1">
-              <MUI.TextField
+              <TextField
                 name="company_name"
                 fullWidth={true}
                 valueLink={this.linkState('company_name')}
@@ -130,7 +132,7 @@ export default React.createClass({
                 errorText={this.getValidationMessages('company_name').join(' ')}
                 hintText="Company name"
                 floatingLabelText="Company name"/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('first_name')}
                 defaultValue={this.state.first_name}
                 errorText={this.getValidationMessages('first_name').join(' ')}
@@ -138,7 +140,7 @@ export default React.createClass({
                 floatingLabelText="First name"
                 hintText="First name"
                 fullWidth={true}/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('last_name')}
                 defaultValue={this.state.last_name}
                 errorText={this.getValidationMessages('last_name').join(' ')}
@@ -146,7 +148,7 @@ export default React.createClass({
                 floatingLabelText="Last name"
                 hintText="Last name"
                 fullWidth={true}/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('tax_number')}
                 defaultValue={this.state.tax_number}
                 errorText={this.getValidationMessages('tax_number').join(' ')}
@@ -156,7 +158,7 @@ export default React.createClass({
                 fullWidth={true}/>
             </div>
             <div className="col-flex-1">
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('address_line1')}
                 defaultValue={this.state.address_line1}
                 errorText={this.getValidationMessages('address_line1').join(' ')}
@@ -164,7 +166,7 @@ export default React.createClass({
                 floatingLabelText="Address"
                 hintText="Address"
                 fullWidth={true}/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('address_line2')}
                 defaultValue={this.state.address_line2}
                 errorText={this.getValidationMessages('address_line2').join(' ')}
@@ -172,7 +174,7 @@ export default React.createClass({
                 floatingLabelText="Address"
                 hintText="Address"
                 fullWidth={true}/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('address_country')}
                 defaultValue={this.state.address_country}
                 errorText={this.getValidationMessages('address_country').join(' ')}
@@ -180,7 +182,7 @@ export default React.createClass({
                 floatingLabelText="Country"
                 hintText="Country"
                 fullWidth={true}/>
-              <MUI.TextField
+              <TextField
                 valueLink={this.linkState('address_state')}
                 defaultValue={this.state.address_state}
                 errorText={this.getValidationMessages('address_state').join(' ')}
@@ -192,7 +194,7 @@ export default React.createClass({
 
               <div className="row">
                 <div className="col-md-15">
-                  <MUI.TextField
+                  <TextField
                     valueLink={this.linkState('address_zip')}
                     defaultValue={this.state.address_zip}
                     errorText={this.getValidationMessages('address_zip').join(' ')}
@@ -202,7 +204,7 @@ export default React.createClass({
                     fullWidth={true}/>
                 </div>
                 <div className="col-flex-1">
-                  <MUI.TextField
+                  <TextField
                     valueLink={this.linkState('address_city')}
                     defaultValue={this.state.address_city}
                     errorText={this.getValidationMessages('address_city').join(' ')}
@@ -214,7 +216,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Update"
             className="raised-button"

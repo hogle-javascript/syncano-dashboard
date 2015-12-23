@@ -7,8 +7,8 @@ import FormMixin from '../../mixins/FormMixin';
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
-import MUI from 'syncano-material-ui';
-import {Clipboard} from '../../common';
+import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {Clipboard, InnerToolbar} from '../../common';
 
 export default Radium(React.createClass({
 
@@ -75,6 +75,7 @@ export default Radium(React.createClass({
 
     return (
       <div>
+        <InnerToolbar title="Authentication"/>
         <div style={styles.content}>
           <div>Account key</div>
           <div className="row" style={styles.contentRow}>
@@ -85,7 +86,7 @@ export default Radium(React.createClass({
                 snackbarText="API key copied to the clipboard"
                 snackbarAutoHideDuration={3000}
                 text="COPY"/>
-              <MUI.FlatButton
+              <FlatButton
                 label="RESET"
                 primary={true}
                 onClick={this.handleResetClick}/>
@@ -101,7 +102,7 @@ export default Radium(React.createClass({
                 acceptCharset="UTF-8"
                 method="post">
                 {this.renderFormNotifications()}
-                <MUI.TextField
+                <TextField
                   ref="currentPassword"
                   type="password"
                   valueLink={this.linkState('current_password')}
@@ -112,7 +113,7 @@ export default Radium(React.createClass({
                   autoComplete="currentPassword"
                   hintText="Current password"
                   fullWidth={true} />
-                <MUI.TextField
+                <TextField
                   ref="newPassword"
                   type="password"
                   valueLink={this.linkState('newPassword')}
@@ -123,7 +124,7 @@ export default Radium(React.createClass({
                   autoComplete="newPassword"
                   hintText="New password"
                   fullWidth={true} />
-                <MUI.TextField
+                <TextField
                   ref="confirmNewPassword"
                   type="password"
                   valueLink={this.linkState('confirmNewPassword')}
@@ -134,7 +135,7 @@ export default Radium(React.createClass({
                   autoComplete="confirmNewPassword"
                   hintText="Confirm new password"
                   fullWidth={true} />
-                <MUI.RaisedButton
+                <RaisedButton
                   type="submit"
                   label="Update"
                   style={styles.updateButton}

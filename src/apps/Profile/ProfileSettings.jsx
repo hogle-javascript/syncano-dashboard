@@ -6,7 +6,8 @@ import FormMixin from '../../mixins/FormMixin';
 import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
-import MUI from 'syncano-material-ui';
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import {InnerToolbar} from '../../common';
 
 export default React.createClass({
 
@@ -57,14 +58,14 @@ export default React.createClass({
 
     return (
       <div style={styles.content}>
+        <InnerToolbar title="Profile"/>
         {this.renderFormNotifications()}
         <form
           style={styles.form}
           onSubmit={this.handleFormValidation}
           acceptCharset="UTF-8"
           method="post">
-
-          <MUI.TextField
+          <TextField
             ref="firstName"
             valueLink={this.linkState('firstName')}
             defaultValue={this.state.firstName}
@@ -75,8 +76,7 @@ export default React.createClass({
             autoComplete="firstName"
             hintText="First name"
             fullWidth={true}/>
-
-          <MUI.TextField
+          <TextField
             ref="lastName"
             valueLink={this.linkState('lastName')}
             defaultValue={this.state.lastName}
@@ -87,8 +87,7 @@ export default React.createClass({
             autoComplete="lastName"
             hintText="Last name"
             fullWidth={true}/>
-
-          <MUI.TextField
+          <TextField
             ref="email"
             name="email"
             value={this.state.email}
@@ -98,8 +97,7 @@ export default React.createClass({
             hintText="Your email"
             disabled={true}
             fullWidth={true}/>
-
-          <MUI.RaisedButton
+          <RaisedButton
             type="submit"
             label="Update"
             style={styles.updateButton}
