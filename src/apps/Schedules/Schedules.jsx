@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import Reflux from 'reflux';
 
 import Mixins from '../../mixins';
@@ -11,16 +11,15 @@ import SnippetsActions from '../Snippets/SnippetsActions';
 
 import SchedulesList from './SchedulesList';
 import ScheduleDialog from './ScheduleDialog';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Container, InnerToolbar, Socket} from '../../common';
 
 export default React.createClass({
 
   displayName: 'ScheduleSockets',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.Dialogs,
@@ -39,23 +38,25 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <ScheduleDialog />
 
-        <Common.InnerToolbar title="Schedule Sockets">
-          <Common.Socket.Schedule
+        <InnerToolbar title="Schedule Sockets">
+          <Socket.Schedule
             tooltipPosition="bottom-left"
             onTouchTap={this.showScheduleDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <SchedulesList
-          name="Schedules"
-          isLoading={this.state.isLoading}
-          items={this.state.items}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showScheduleDialog}
-          emptyItemContent="Create a Schedule Socket"/>
-      </Container>
+        <Container>
+          <SchedulesList
+            name="Schedules"
+            isLoading={this.state.isLoading}
+            items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.showScheduleDialog}
+            emptyItemContent="Create a Schedule Socket"/>
+        </Container>
+      </div>
     );
   }
 });

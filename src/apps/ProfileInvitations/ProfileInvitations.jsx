@@ -10,9 +10,7 @@ import Store from './ProfileInvitationsStore';
 
 // Components
 import ProfileInvitationsList from './ProfileInvitationsList';
-import Common from '../../common';
-import Container from '../../common/Container/Container';
-import EmptyContainer from '../../common/Container/EmptyContainer';
+import {Container, Loading, Show, InnerToolbar} from '../../common';
 
 export default React.createClass({
 
@@ -31,23 +29,26 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
-        <Common.Loading show={this.state.isLoading}>
-          <Common.Show if={this.state.items.length < 1}>
-            <EmptyContainer
-              icon='synicon-email-outline'
-              text='You have no invitations'/>
-          </Common.Show>
+      <div>
+        <InnerToolbar title="Invitations"/>
+        <Container>
+          <Loading show={this.state.isLoading}>
+            <Show if={this.state.items.length < 1}>
+              <Container.Empty
+                icon='synicon-email-outline'
+                text='You have no invitations'/>
+            </Show>
 
-          <Common.Show if={this.state.items.length > 0}>
-            <ProfileInvitationsList
-              name="Profile Invitations"
-              isLoading={this.state.isLoading}
-              items={this.state.items}
-              hideDialogs={this.state.hideDialogs}/>
-          </Common.Show>
-        </Common.Loading>
-      </Container>
+            <Show if={this.state.items.length > 0}>
+              <ProfileInvitationsList
+                name="Profile Invitations"
+                isLoading={this.state.isLoading}
+                items={this.state.items}
+                hideDialogs={this.state.hideDialogs}/>
+            </Show>
+          </Loading>
+        </Container>
+      </div>
     );
   }
 });

@@ -8,8 +8,8 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import Store from './SnippetStore';
 
-import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {Tabs, Tab} from 'syncano-material-ui';
+import {InnerToolbar} from '../../common';
 
 let RouteHandler = Router.RouteHandler;
 
@@ -117,26 +117,26 @@ export default React.createClass({
 
     if (snippet !== null) {
       return (
-        <MUI.Tabs
+        <Tabs
           initialSelectedIndex={this.getActiveSubTabIndex()}
           tabItemContainerStyle={styles.subTabsHeader}
           style={styles.tabs}>
-          <MUI.Tab
+          <Tab
             style={styles.tab}
             label="Edit"
             route="snippet-edit"
             onActive={this.handleTabActive}/>
-          <MUI.Tab
+          <Tab
             style={styles.tab}
             label="Config"
             route="snippet-config"
             onActive={this.handleTabActive}/>
-          <MUI.Tab
+          <Tab
             style={styles.tab}
             label="Traces"
             route="snippet-traces"
             onActive={this.handleTabActive}/>
-        </MUI.Tabs>
+        </Tabs>
       );
     }
   },
@@ -144,7 +144,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Common.InnerToolbar
+        <InnerToolbar
           title={this.getToolbarTitle()}
           backFallback={this.handleBackClick}
           forceBackFallback={true}

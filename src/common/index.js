@@ -24,15 +24,16 @@ import Slider from './Slider';
 import SolutionStar from './SolutionStar';
 import Solutions from './Solutions';
 import SocialAuthButtonsList from './SocialAuthButtonsList';
-import Tags from './Tags';
-import Tour from './Tour';
-import Trace from './Trace';
-import Truncate from './Truncate';
 import SelectField from './SelectField';
+import Sidebar from './Sidebar';
 import Socket from './Socket';
 import Spacing from './Spacing';
 import SyncanoTheme from './SyncanoTheme';
 import SnackbarNotification from './SnackbarNotification';
+import Tags from './Tags';
+import Tour from './Tour';
+import Trace from './Trace';
+import Truncate from './Truncate';
 
 export default {
   Billing,
@@ -57,17 +58,18 @@ export default {
   Notification,
   Request,
   Show,
+  Sidebar,
   Slider,
   SolutionStar,
   Solutions,
   SocialAuthButtonsList,
-  Tags,
-  Tour,
-  Trace,
-  Truncate,
   SelectField,
   Socket,
   Spacing,
   SyncanoTheme,
-  SnackbarNotification
+  SnackbarNotification,
+  Tags,
+  Tour,
+  Trace,
+  Truncate
 };

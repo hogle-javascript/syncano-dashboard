@@ -11,8 +11,7 @@ import Actions from './ApiKeysActions';
 import Store from './ApiKeysStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Container, InnerToolbar, Socket} from '../../common';
 
 // Local components
 import ApiKeysList from './ApiKeysList';
@@ -43,23 +42,25 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <ApiKeyDialog />
 
-        <Common.InnerToolbar title="API Keys">
-          <Common.Socket
+        <InnerToolbar title="API Keys">
+          <Socket
             tooltip="Click here to add an API Key"
             onTouchTap={this.showApiKeyDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <ApiKeysList
-          name="API Keys"
-          items={this.state.items}
-          isLoading={this.state.isLoading}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showApiKeyDialog}
-          emptyItemContent="Generate an API Key"/>
-      </Container>
+        <Container>
+          <ApiKeysList
+            name="API Keys"
+            items={this.state.items}
+            isLoading={this.state.isLoading}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.showApiKeyDialog}
+            emptyItemContent="Generate an API Key"/>
+        </Container>
+      </div>
     );
   }
 });

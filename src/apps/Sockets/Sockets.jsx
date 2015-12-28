@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -8,8 +8,7 @@ import Mixins from '../../mixins';
 import HeaderMixin from '../Header/HeaderMixin';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Loading, InnerToolbar, Socket, Container} from '../../common';
 
 // Apps
 import Data from '../Data';
@@ -26,8 +25,8 @@ export default React.createClass({
   displayName: 'Data',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Channels.Store, 'channels'),
     Reflux.connect(Data.Store, 'dataviews'),
@@ -68,26 +67,6 @@ export default React.createClass({
     this.transitionTo(routeName, {instanceName});
   },
 
-  showTriggerAddDialog() {
-    Triggers.Actions.showDialog();
-  },
-
-  showScheduleAddDialog() {
-    Schedules.Actions.showDialog();
-  },
-
-  showChannelAddDialog() {
-    Channels.Actions.showDialog();
-  },
-
-  showDataViewAddDialog() {
-    Data.Actions.showDialog();
-  },
-
-  showCodeBoxAddDialog() {
-    CodeBoxes.Actions.showDialog();
-  },
-
   fetch() {
     Data.Actions.fetch();
     Snippets.Actions.fetch();
@@ -100,34 +79,36 @@ export default React.createClass({
 
   renderToolbar() {
     if (!this.hasAnyItem() || this.isViewLoading()) {
-      return <Common.InnerToolbar title="Sockets"/>;
+      return <InnerToolbar title="Sockets"/>;
     }
 
     return (
-      <Common.InnerToolbar title="Sockets">
-        <Common.Socket.Data onTouchTap={this.showDataViewAddDialog}/>
-        <Common.Socket.CodeBox onTouchTap={this.showCodeBoxAddDialog}/>
-        <Common.Socket.Channel onTouchTap={this.showChannelAddDialog}/>
-        <Common.Socket.Trigger onTouchTap={this.showTriggerAddDialog}/>
-        <Common.Socket.Schedule
-          onTouchTap={this.showScheduleAddDialog}
-          tooltipPosition="bottom-left"/>
-      </Common.InnerToolbar>
+      <InnerToolbar title="Sockets">
+        <div style={{paddingTop: 4}}>
+          <Socket.Data onTouchTap={Data.Actions.showDialog}/>
+          <Socket.CodeBox onTouchTap={CodeBoxes.Actions.showDialog}/>
+          <Socket.Channel onTouchTap={Channels.Actions.showDialog}/>
+          <Socket.Trigger onTouchTap={Triggers.Actions.showDialog}/>
+          <Socket.Schedule
+            onTouchTap={Schedules.Actions.showDialog}
+            tooltipPosition="bottom-left"/>
+        </div>
+      </InnerToolbar>
     );
   },
 
   renderLists() {
     if (!this.hasAnyItem()) {
       return (
-        <Common.Loading show={this.isViewLoading()}>
+        <Loading show={this.isViewLoading()}>
           <EmptyView />;
-        </Common.Loading>
+        </Loading>
       );
     }
 
     return (
       <div style={{clear: 'both', height: '100%'}}>
-        <Common.Loading show={this.isViewLoading()}>
+        <Loading show={this.isViewLoading()}>
           <Data.List
             name="Data Sockets"
             isLoading={this.state.dataviews.isLoading}
@@ -167,14 +148,14 @@ export default React.createClass({
             handleTitleClick={this.handleListTitleClick.bind(null, 'schedules')}
             emptyItemHandleClick={this.showScheduleAddDialog}
             emptyItemContent="Create a Schedule Socket"/>
-        </Common.Loading>
+        </Loading>
       </div>
     );
   },
 
   render() {
     return (
-      <Container>
+      <div>
         <CodeBoxes.Dialog />
         <Data.Dialog />
         <Schedules.Dialog />
@@ -182,8 +163,10 @@ export default React.createClass({
         <Channels.Dialog />
 
         {this.renderToolbar()}
-        {this.renderLists()}
-      </Container>
+        <Container>
+          {this.renderLists()}
+        </Container>
+      </div>
     );
   }
 });

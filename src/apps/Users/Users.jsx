@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -11,8 +11,7 @@ import Store from './UsersStore';
 import {GroupsActions, GroupsStore, GroupsList, GroupDialog} from './../Groups';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Container, InnerToolbar, Socket, Lists} from '../../common';
 
 // Local components
 import UsersList from './UsersList';
@@ -23,8 +22,8 @@ export default React.createClass({
   displayName: 'Users',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store, 'users'),
     Reflux.connect(GroupsStore, 'groups'),
@@ -51,40 +50,42 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <UserDialog />
         <GroupDialog />
 
-        <Common.InnerToolbar title="Users & Groups">
-          <Common.Socket.Users
+        <InnerToolbar title="Users & Groups">
+          <Socket.Users
             iconClassName="synicon-socket-user"
             onTouchTap={this.showGroupDialog}/>
-          <Common.Socket.User
+          <Socket.User
             tooltipPosition="bottom-left"
             onTouchTap={this.showUserDialog.bind(null, null)}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <Common.Lists.Container className="row">
-          <div className="col-lg-8">
-            <GroupsList
-              name="Groups"
-              isLoading={this.state.groups.isLoading}
-              items={this.state.groups.items}
-              hideDialogs={this.state.groups.hideDialogs}
-              emptyItemHandleClick={this.showGroupDialog}
-              emptyItemContent="Create a Group"/>
-          </div>
-          <div className="col-lg-27">
-            <UsersList
-              name="Users"
-              isLoading={this.state.users.isLoading}
-              items={this.state.users.items}
-              hideDialogs={this.state.users.hideDialogs}
-              emptyItemHandleClick={this.showUserDialog}
-              emptyItemContent="Create a User"/>
-          </div>
-        </Common.Lists.Container>
-      </Container>
+        <Container>
+          <Lists.Container className="row">
+            <div className="col-lg-8">
+              <GroupsList
+                name="Groups"
+                isLoading={this.state.groups.isLoading}
+                items={this.state.groups.items}
+                hideDialogs={this.state.groups.hideDialogs}
+                emptyItemHandleClick={this.showGroupDialog}
+                emptyItemContent="Create a Group"/>
+            </div>
+            <div className="col-lg-27">
+              <UsersList
+                name="Users"
+                isLoading={this.state.users.isLoading}
+                items={this.state.users.items}
+                hideDialogs={this.state.users.hideDialogs}
+                emptyItemHandleClick={this.showUserDialog}
+                emptyItemContent="Create a User"/>
+            </div>
+          </Lists.Container>
+        </Container>
+      </div>
     );
   }
 });

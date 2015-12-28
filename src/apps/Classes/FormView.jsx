@@ -151,7 +151,7 @@ export default React.createClass({
   },
 
   hasEditMode() {
-    return this.getParams().className;
+    return !_.isUndefined(this.getParams().className);
   },
 
   handleSuccessfullValidation() {

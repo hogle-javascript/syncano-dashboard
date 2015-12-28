@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -24,8 +24,8 @@ export default React.createClass({
   displayName: 'DataObjects',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.Header,
