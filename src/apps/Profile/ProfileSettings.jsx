@@ -7,7 +7,7 @@ import Actions from './ProfileActions';
 import Store from './ProfileSettingsStore';
 
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {InnerToolbar} from '../../common';
+import {Container, InnerToolbar} from '../../common';
 
 export default React.createClass({
 
@@ -29,9 +29,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      content: {
-        padding: '0 0 48px'
-      },
       form: {
         maxWidth: 416
       },
@@ -57,54 +54,56 @@ export default React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div style={styles.content}>
+      <div>
         <InnerToolbar title="Profile"/>
-        {this.renderFormNotifications()}
-        <form
-          style={styles.form}
-          onSubmit={this.handleFormValidation}
-          acceptCharset="UTF-8"
-          method="post">
-          <TextField
-            ref="firstName"
-            valueLink={this.linkState('firstName')}
-            defaultValue={this.state.firstName}
-            errorText={this.getValidationMessages('firstName').join(' ')}
-            name="firstName"
-            floatingLabelText="First name"
-            className="text-field"
-            autoComplete="firstName"
-            hintText="First name"
-            fullWidth={true}/>
-          <TextField
-            ref="lastName"
-            valueLink={this.linkState('lastName')}
-            defaultValue={this.state.lastName}
-            errorText={this.getValidationMessages('lastName').join(' ')}
-            name="lastName"
-            floatingLabelText="Last name"
-            className="text-field"
-            autoComplete="lastName"
-            hintText="Last name"
-            fullWidth={true}/>
-          <TextField
-            ref="email"
-            name="email"
-            value={this.state.email}
-            floatingLabelText="Email"
-            className="text-field vm-6-b"
-            autoComplete="email"
-            hintText="Your email"
-            disabled={true}
-            fullWidth={true}/>
-          <RaisedButton
-            type="submit"
-            label="Update"
-            style={styles.updateButton}
-            labelStyle={styles.updateButtonLabel}
-            className="raised-button"
-            secondary={true}/>
-        </form>
+        <Container>
+          {this.renderFormNotifications()}
+          <form
+            style={styles.form}
+            onSubmit={this.handleFormValidation}
+            acceptCharset="UTF-8"
+            method="post">
+            <TextField
+              ref="firstName"
+              valueLink={this.linkState('firstName')}
+              defaultValue={this.state.firstName}
+              errorText={this.getValidationMessages('firstName').join(' ')}
+              name="firstName"
+              floatingLabelText="First name"
+              className="text-field"
+              autoComplete="firstName"
+              hintText="First name"
+              fullWidth={true}/>
+            <TextField
+              ref="lastName"
+              valueLink={this.linkState('lastName')}
+              defaultValue={this.state.lastName}
+              errorText={this.getValidationMessages('lastName').join(' ')}
+              name="lastName"
+              floatingLabelText="Last name"
+              className="text-field"
+              autoComplete="lastName"
+              hintText="Last name"
+              fullWidth={true}/>
+            <TextField
+              ref="email"
+              name="email"
+              value={this.state.email}
+              floatingLabelText="Email"
+              className="text-field vm-6-b"
+              autoComplete="email"
+              hintText="Your email"
+              disabled={true}
+              fullWidth={true}/>
+            <RaisedButton
+              type="submit"
+              label="Update"
+              style={styles.updateButton}
+              labelStyle={styles.updateButtonLabel}
+              className="raised-button"
+              secondary={true}/>
+          </form>
+        </Container>
       </div>
     );
   }

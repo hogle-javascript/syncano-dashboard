@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -11,8 +11,7 @@ import Actions from './ClassesActions';
 import Store from './ClassesStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {InnerToolbar, Socket, Container} from '../../common';
 
 // Local components
 import ClassesList from './ClassesList';
@@ -22,8 +21,8 @@ export default React.createClass({
   displayName: 'Classes',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.Dialog,
@@ -43,21 +42,23 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
-        <Common.InnerToolbar title="Classes">
-          <Common.Socket
+      <div>
+        <InnerToolbar title="Classes">
+          <Socket
             tooltip="Create a Class"
             onTouchTap={this.redirectToAddClassView}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <ClassesList
-          name="Classes"
-          items={this.state.items}
-          triggers={this.state.triggers}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.redirectToAddClassView}
-          emptyItemContent="Create a Class"/>
-      </Container>
+        <Container>
+          <ClassesList
+            name="Classes"
+            items={this.state.items}
+            triggers={this.state.triggers}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.redirectToAddClassView}
+            emptyItemContent="Create a Class"/>
+        </Container>
+      </div>
     );
   }
 });

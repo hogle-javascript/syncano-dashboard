@@ -1,5 +1,6 @@
 import React from 'react';
 import {History} from 'react-router';
+import Sticky from 'react-stickydiv';
 
 import {Store as SessionStore} from '../../apps/Session';
 import {Toolbar, ToolbarGroup, ToolbarTitle, IconButton} from 'syncano-material-ui';
@@ -22,19 +23,12 @@ export default React.createClass({
   getStyles() {
     return {
       toolbar: {
-        position: 'fixed',
-        top: 50,
-        right: 0,
-        paddingLeft: 256,
         background: 'rgba(243,243,243,0.90)',
         padding: '0px 24px 0 24px',
         zIndex: 6
       },
       toolbarRight: {
         height: '100%'
-      },
-      title: {
-        paddingLeft: 36
       }
     };
   },
@@ -52,61 +46,50 @@ export default React.createClass({
   },
 
   renderBackButton() {
-    if (this.isHistory() || this.props.backFallback) {
-      return (
-        <ToolbarGroup>
-          <IconButton
-            iconClassName="synicon-arrow-left"
-            tooltip={this.props.backButtonTooltip}
-            tooltipPosition={this.props.backButtonTooltipPosition}
-            onClick={this.handleBackButtonTouchTap}
-            touch={true}
-            style={{marginTop: 4}}
-            iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
-        </ToolbarGroup>
-      );
-    }
-
-    return null;
+    return (
+      <ToolbarGroup style={{paddingRight: 24}}>
+        <IconButton
+          iconClassName="synicon-arrow-left"
+          tooltip={this.props.backButtonTooltip}
+          tooltipPosition={this.props.backButtonTooltipPosition}
+          onClick={this.handleBackButtonTouchTap}
+          touch={true}
+          style={{marginTop: 4}}
+          iconStyle={{color: 'rgba(0,0,0,.4)'}}/>
+      </ToolbarGroup>
+    );
   },
 
-  renderTitle() {
-    const styles = this.getStyles();
-
-    if (this.props.title) {
-      return (
-        <ToolbarGroup style={styles.title}>
-          <ToolbarTitle text={this.props.title}/>
-        </ToolbarGroup>
-      );
-    }
-
-    return null;
+  renderTitle(title) {
+    return (
+      <ToolbarGroup>
+        <ToolbarTitle text={title}/>
+      </ToolbarGroup>
+    );
   },
 
-  renderChildren() {
+  renderChildren(children) {
     const styles = this.getStyles();
 
-    if (this.props.children) {
-      return (
-        <ToolbarGroup float="right" style={styles.toolbarRight}>
-          {this.props.children}
-        </ToolbarGroup>
-      );
-    }
-
-    return null;
+    return (
+      <ToolbarGroup float="right" style={styles.toolbarRight}>
+        {children}
+      </ToolbarGroup>
+    );
   },
 
   render() {
     const styles = this.getStyles();
+    let {children, title, ...other} = this.props;
 
     return (
-      <Toolbar style={styles.toolbar}>
-        {this.renderBackButton()}
-        {this.renderTitle()}
-        {this.renderChildren()}
-      </Toolbar>
+      <Sticky offsetTop={50} zIndex={12}>
+        <Toolbar style={styles.toolbar}>
+          {this.isHistory() || this.props.backFallback ? this.renderBackButton() : null}
+          {title ? this.renderTitle(title) : null}
+          {children ? this.renderChildren(children) : null}
+        </Toolbar>
+      </Sticky>
     );
   }
 });

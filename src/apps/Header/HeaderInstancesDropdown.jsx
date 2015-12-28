@@ -40,7 +40,7 @@ export default Radium(React.createClass({
         height: 56,
         paddingTop: 2,
         paddingBottom: 2,
-        paddingLeft: 16,
+        paddingLeft: 24,
         backgroundColor: '#F2F2F2'
       },
       dropdownInstanceIcon: {

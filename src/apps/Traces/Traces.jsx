@@ -13,7 +13,7 @@ import Store from './TracesStore';
 import Actions from './TracesActions';
 
 // Components
-import Common from '../../common';
+import {InnerToolbar} from '../../common';
 
 // Local components
 import TracesList from './TracesList';
@@ -112,7 +112,7 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <Common.InnerToolbar
+        <InnerToolbar
           title={toolbarTitleText}
           backFallback={this.handleBackClick}
           backButtonTooltip={config.backLabel}/>
