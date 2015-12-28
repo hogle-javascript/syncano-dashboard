@@ -67,7 +67,7 @@ export default {
       locateStrategy: 'xpath'
     },
     groupTableRowDropdown: {
-      selector: `//div[text()="${utils.addSuffix('group')}"]/../following-sibling::div[2]//button`,
+      selector: `//div[text()="${utils.addSuffix('group')}"]/../../following-sibling::div[2]//button`,
       locateStrategy: 'xpath'
     },
     deleteButtonDropdown: {
