@@ -67,7 +67,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectScheduleTableRow: {
-      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../../preceding-sibling::div`,
+      selector: `//div[text()="${utils.addSuffix('schedule')}"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     cronTabScheduleTableRow: {

@@ -79,7 +79,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectTriggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../../preceding-sibling::div`,
+      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
