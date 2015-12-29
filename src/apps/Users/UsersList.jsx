@@ -35,15 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
-  uncheckAllUsers() {
-    console.info('Users::uncheckAllUsers');
-    Actions.uncheckAll();
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -63,7 +54,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`users-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeUserDialog', item)}/>
     );
@@ -98,6 +90,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="users-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

@@ -61,7 +61,7 @@ export default React.createClass({
       return 'No group';
     }
 
-    let itemGroups = groups.map((group) => <li style={styles.groupsListItem}>{group.label}</li>);
+    let itemGroups = groups.map((group) => <li key={group.label} style={styles.groupsListItem}>{group.label}</li>);
 
     return (
       <ul style={styles.groupsList}>{itemGroups}</ul>
