@@ -1,11 +1,19 @@
 import _ from 'lodash';
 
 export default {
-  listDevices(deviceType, params = {}) {
+  listGCMDevices(params = {}) {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
       .PushNotifications
-      .listDevices(deviceType, params)
+      .listDevices('gcm', params)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  listAPNsDevices(params = {}) {
+    _.defaults(params, {ordering: 'desc'});
+    this.Connection
+      .PushNotifications
+      .listDevices('apns', params)
       .then(this.completed)
       .catch(this.failure);
   }

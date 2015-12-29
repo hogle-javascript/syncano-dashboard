@@ -3,11 +3,17 @@ import CreateActions from '../../utils/ActionsConstructor';
 export default CreateActions(
   {
     fetch: {},
-    setDevices: {},
-    fetchDevices: {
+    setGCMDevices: {},
+    setAPNsDevices: {},
+    fetchGCMDevices: {
       asyncResult: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushNotifications.listDevices'
+      method: 'Syncano.Actions.PushNotifications.listGCMDevices'
+    },
+    fetchAPNsDevices: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.listAPNsDevices'
     }
   },
   {

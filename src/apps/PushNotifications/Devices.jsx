@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 
 import Actions from './PushNotificationsActions';
@@ -15,12 +16,13 @@ export default Radium(React.createClass({
   displayName: 'Devices',
 
   mixins: [
+    Reflux.connect(Store),
     State,
     Navigation
   ],
 
-  componentDidMount() {
-    Actions.fetchDevices('gcm');
+  componentWillMount() {
+    Actions.fetch();
   },
 
   getStyles() {
@@ -91,7 +93,7 @@ export default Radium(React.createClass({
   },
 
   render() {
-    console.error(Store.getDevices());
+    console.error(this.state.gcmDevices);
     let checkedItems = 5;
 
     return (
