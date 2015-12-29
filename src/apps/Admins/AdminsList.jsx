@@ -55,9 +55,10 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`admins-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteAdminDialog', item)}/>
@@ -92,6 +93,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="admins-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

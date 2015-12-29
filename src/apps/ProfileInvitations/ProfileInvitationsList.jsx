@@ -99,7 +99,7 @@ export default React.createClass({
   renderItem(item, index) {
     return (
       <ListItem
-        key={`profileinvitationslist-${index}`}
+        key={`profile-invitations-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showAcceptDialog={this.showDialog.bind(null, 'acceptInvitationsDialog', item)}
@@ -140,6 +140,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List
           {...this.props}
+          key="profile-invitations-list"
           renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );

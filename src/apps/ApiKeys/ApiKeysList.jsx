@@ -70,9 +70,10 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`apikeys-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteApiKeyDialog', item)}
@@ -113,6 +114,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="apikeys-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

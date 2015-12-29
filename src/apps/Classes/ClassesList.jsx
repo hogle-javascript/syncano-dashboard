@@ -122,16 +122,18 @@ export default React.createClass({
       let associatedWithTriggersList = this.getAssociationsList('triggers', classesAssociatedWithTriggers);
       let notAssociatedList = this.getAssociationsList('notAssociated', classesNotAssociated);
 
-      deleteDialog.params.children = [
-        `Some of checked Classes are associated with Triggers. Do you really want to delete
-        ${Store.getDeleteItemsPhrase('Class')}?`,
-        notAssociatedList,
-        associatedWithTriggersList,
-        <Loading
-          type="linear"
-          position="bottom"
-          show={this.props.isLoading}/>
-      ];
+      deleteDialog.params.children = (
+        <div>
+          {`Some of checked Classes are associated with Triggers. Do you really want to delete
+          ${Store.getDeleteItemsPhrase('Class')}?`}
+          {notAssociatedList}
+          {associatedWithTriggersList}
+          <Loading
+            type="linear"
+            position="bottom"
+            show={this.props.isLoading}/>
+        </div>
+      );
     }
 
     return [
@@ -150,9 +152,10 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`classes-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
@@ -205,6 +208,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="classes-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

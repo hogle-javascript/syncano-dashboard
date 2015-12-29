@@ -56,9 +56,10 @@ export default Radium(React.createClass({
     }];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`groups-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeGroupDialog', item)}/>
@@ -96,6 +97,7 @@ export default Radium(React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="groups-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

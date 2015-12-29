@@ -55,6 +55,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="versions-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

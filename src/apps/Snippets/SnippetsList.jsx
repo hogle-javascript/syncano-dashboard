@@ -122,9 +122,10 @@ export default React.createClass({
     return [deleteDialog];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`snippets-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteSnippetDialog', item)}/>
@@ -159,6 +160,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="snippets-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

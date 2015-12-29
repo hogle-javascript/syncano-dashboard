@@ -57,7 +57,7 @@ export default React.createClass({
   renderItem(item, index) {
     return (
       <ListItem
-        key={`codeBoxeslist-${index}`}
+        key={`codeboxes-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
@@ -111,6 +111,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="codeboxes-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

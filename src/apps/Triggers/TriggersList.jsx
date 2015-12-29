@@ -62,9 +62,10 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`triggers-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeTriggerDialog', item)}/>
@@ -109,6 +110,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

@@ -184,7 +184,7 @@ export default Radium(React.createClass({
       <Common.Lists.Container>
         <Common.Loading show={this.state.isLoading}>
           {this.renderHeader()}
-          <Common.Lists.List>
+          <Common.Lists.List key="traces-list">
             {this.renderList()}
           </Common.Lists.List>
         </Common.Loading>

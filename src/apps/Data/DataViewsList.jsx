@@ -55,9 +55,10 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`data-views-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeDataViewDialog', item)}/>
@@ -101,6 +102,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="dataviews-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

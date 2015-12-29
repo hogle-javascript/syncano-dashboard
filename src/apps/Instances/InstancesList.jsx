@@ -36,15 +36,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  getStyles() {
-    return {
-      list: {
-        padding: 0,
-        background: 'none'
-      }
-    };
-  },
-
   handleItemIconClick(id, state) {
     console.info('InstancesList::handleItemIconClick', id, state);
     Actions.checkItem(id, state);
@@ -88,9 +79,10 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`instances-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteInstanceDialog', item)}
@@ -100,7 +92,6 @@ export default React.createClass({
 
   renderLoaded() {
     let checkedItems = Store.getNumberOfChecked();
-    let styles = this.getStyles();
 
     return (
       <Lists.Container className='instances-list'>
@@ -126,7 +117,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          style={styles.list}
+          key="instances-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

@@ -60,9 +60,10 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
       <ListItem
+        key={`users-list-item-${index}`}
         onIconClick={this.handleItemIconClick}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeUserDialog', item)}/>
@@ -98,6 +99,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="users-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );
