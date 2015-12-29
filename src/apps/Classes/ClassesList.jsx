@@ -151,7 +151,7 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`classes-list-item-${item.id}`}
+        key={`classes-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}

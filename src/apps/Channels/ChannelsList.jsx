@@ -55,7 +55,7 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`channels-list-item-${item.id}`}
+        key={`channels-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteChannelDialog', item)}/>

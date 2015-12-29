@@ -53,7 +53,7 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`codeboxes-list-item-${item.id}`}
+        key={`codeboxes-list-item-${item.name}`}
         onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
