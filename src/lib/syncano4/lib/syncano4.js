@@ -95,6 +95,9 @@ var Syncano = (function() {
     if (typeof linksObject.instance_channels === 'undefined') {
       linksObject.instance_channels = linksObject.instance_self + 'channels/';
     }
+    if (typeof linksObject.instance_push_notifications === 'undefined') {
+      linksObject.instance_push_notifications = linksObject.instance_self + 'push_notifications/';
+    }
     delete obj.links;
     return linksObject;
   }
@@ -742,6 +745,17 @@ var Syncano = (function() {
       remove: this.removeSchedule.bind(this),
       traces: this.listScheduleTraces.bind(this),
       trace: this.getScheduleTrace.bind(this)
+    };
+
+    /**
+     * Object with methods to handle Push Notifications
+     *
+     * @alias Syncano#PushNotifications
+     * @type {object}
+     * @property {function} listDevices - shorcut to {@link Syncano#listDevices} method
+     */
+    this.PushNotifications = {
+      listDevices: this.listDevices.bind(this)
     };
   }
 
@@ -3269,6 +3283,30 @@ var Syncano = (function() {
       }
       var url = linksObject.instance_channels + name + '/history/';
       return this.request('GET', url, params, callbackOK, callbackError);
+    },
+
+    /********************
+     PUSH NOIFICATIONS METHODS
+     *********************/
+    /**
+     * Returns all defined Android / iOS devices as a list
+     *
+     * @method Syncano#listDevices
+     * @alias Syncano.PushNotifications.listDevices
+     * @param {object} [params]
+     * @param {string|Object} deviceType - device type (gcm / apns)
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    listDevices: function(deviceType, params, callbackOK, callbackError) {
+      if (typeof deviceType === 'object') {
+        deviceType = deviceType.name;
+      }
+      if (typeof linksObject.instance_push_notifications === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('GET', linksObject.instance_push_notifications + deviceType + '/devices/', params, callbackOK, callbackError);
     },
 
     /********************
