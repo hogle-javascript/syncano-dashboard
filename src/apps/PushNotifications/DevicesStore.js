@@ -4,7 +4,7 @@ import Reflux from 'reflux';
 import Mixins from '../../mixins';
 
 // Stores & Actions
-import Actions from './PushNotificationsActions';
+import Actions from './DevicesActions';
 import SessionActions from '../Session/SessionActions';
 
 export default Reflux.createStore({
@@ -55,7 +55,7 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('PushNotificationsStore::refreshData');
     Actions.fetchGCMDevices();
-    Actions.fetchAPnsDevices();
+    Actions.fetchAPNsDevices();
   },
 
   onFetchGCMDevices() {
