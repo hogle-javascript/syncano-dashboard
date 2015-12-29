@@ -35,10 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [
       {
@@ -70,11 +66,11 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`admins-invitations-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`admins-invitations-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeInvitationDialog', item)}
         showResendDialog={this.showDialog.bind(null, 'resendInvitationDialog', item)}/>

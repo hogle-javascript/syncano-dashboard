@@ -32,11 +32,6 @@ export default React.createClass({
     return {};
   },
 
-  handleItemIconClick(id, state) {
-    console.info('InstancesList::handleItemIconClick', id, state);
-    Actions.checkItem(id, state);
-  },
-
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
     let metadata = JSON.stringify({color, icon});
@@ -76,11 +71,11 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`shared-instances-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`shared-instances-list-item-${item.name}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteSharedInstanceDialog', item, SessionStore.getUser().id)}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>

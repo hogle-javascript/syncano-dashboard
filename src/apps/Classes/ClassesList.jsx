@@ -96,10 +96,6 @@ export default React.createClass({
     Actions.uncheckAll();
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     let clickedItem = Store.getClickedItemIconColor();
     let checkedClasses = Store.getCheckedItems();
@@ -152,11 +148,11 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`classes-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`classes-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}
         showDeleteDialog={this.showDialog.bind(null, 'deleteClassDialog', item)}/>

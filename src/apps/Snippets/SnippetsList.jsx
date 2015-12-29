@@ -76,10 +76,6 @@ export default React.createClass({
     return list[associationsFor];
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     let checkedSnippets = Store.getCheckedItems();
     let snippetsAssociatedWithTriggers = this.getAssociatedSnippets('triggers');
@@ -122,11 +118,11 @@ export default React.createClass({
     return [deleteDialog];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`snippets-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`snippets-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteSnippetDialog', item)}/>
     );

@@ -36,11 +36,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    console.info('InstancesList::handleItemIconClick', id, state);
-    Actions.checkItem(id, state);
-  },
-
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
     let metadata = JSON.stringify({color, icon});
@@ -79,11 +74,11 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`instances-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`instances-list-item-${item.name}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteInstanceDialog', item)}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>

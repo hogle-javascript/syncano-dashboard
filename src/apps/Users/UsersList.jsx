@@ -35,15 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
-  uncheckAllUsers() {
-    console.info('Users::uncheckAllUsers');
-    Actions.uncheckAll();
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -60,11 +51,11 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`users-list-item-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`users-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeUserDialog', item)}/>
     );
