@@ -140,6 +140,7 @@ export default Reflux.createStore({
   onRemoveSolutionCompleted() {
     console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = false;
+    SessionStore.getRouter().transitionTo('solutions');
   },
 
   onRemoveSolutionFailure() {

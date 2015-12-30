@@ -88,9 +88,7 @@ export default React.createClass({
 
   handleDelete() {
     console.info('SolutionEdit::handleDelete');
-    Actions.removeSolution(this.state.item.id).then(
-      SessionStore.getRouter().transitionTo('solutions')
-    );
+    Actions.removeSolution(this.state.item.id);
   },
 
   handleInstallSolution() {
@@ -178,7 +176,7 @@ export default React.createClass({
                 iconClassName="synicon-delete"
                 tooltip="Delete Solution"
                 tooltipPosition="bottom-left"
-                // onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
+                onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
                 />
             </Show>
           </ToolbarGroup>
