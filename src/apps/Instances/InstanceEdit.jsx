@@ -159,14 +159,17 @@ export default React.createClass({
           isLoading: this.props.isLoading,
           items: Store.getCheckedItems(),
           groupName: 'Channel',
-          children: [
-            `${deleteText[1]} this Instance can cause problems with your applications that are connected to it. ` +
-            `Do you really want to ${deleteText[0].toLowerCase()} this Instance?`, this.getDialogList([instance]),
-            <Loading
-              type="linear"
-              position="bottom"
-              show={this.state.isLoading}/>
-          ]
+          children: (
+            <div>
+              {`${deleteText[1]} this Instance can cause problems with your applications that are connected to it.
+              Do you really want to ${deleteText[0].toLowerCase()} this Instance?`}
+              {this.getDialogList([instance])}
+              <Loading
+                type="linear"
+                position="bottom"
+                show={this.state.isLoading}/>
+            </div>
+          )
         }
       }
     ];

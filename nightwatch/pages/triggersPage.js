@@ -11,7 +11,7 @@ export default {
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
-      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -79,7 +79,7 @@ export default {
       locateStrategy: 'xpath'
     },
     selectTriggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/preceding-sibling::div`,
+      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     addTriggerModalSignalUpdate: {
@@ -87,7 +87,7 @@ export default {
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
-      selector: `//div[text()="${utils.addSuffix('trigger')}"]/parent::div/following-sibling::div[text()="post_update"]`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../parent::div/following-sibling::div[text()="post_update"]`,
       locateStrategy: 'xpath'
     }
   }

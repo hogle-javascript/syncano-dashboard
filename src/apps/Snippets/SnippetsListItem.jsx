@@ -42,9 +42,10 @@ export default React.createClass({
           background={runtime.color}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <div style={{cursor: 'pointer'}} onClick={this.handleItemClick.bind(null, item.id)}>
-            {item.label}
-          </div>
+          <Common.Truncate
+            onClick={this.handleItemClick.bind(null, item.id)}
+            text={item.label}
+            style={{cursor: 'pointer'}}/>
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc>{item.description}</Column.Desc>

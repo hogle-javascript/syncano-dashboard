@@ -35,10 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -54,11 +50,11 @@ export default React.createClass({
     }];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`codeBoxeslist-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`codeboxes-list-item-${item.name}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeCodeBoxDialog', item)}/>
     );
@@ -111,6 +107,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="codeboxes-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

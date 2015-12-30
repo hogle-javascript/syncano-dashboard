@@ -52,20 +52,19 @@ export default React.createClass({
         fontSize: 15,
         verticalAlign: 'middle',
         color: '#9B9B9B'
+      },
+      tooltip: {
+        pointerEvents: 'none'
       }
     };
   },
 
   showTooltip() {
     this.setState({tooltipShown: true});
-    this._timeout = setTimeout(() => {
-      this.hideTooltip();
-    }, 1000);
   },
 
   hideTooltip() {
     this.setState({tooltipShown: false});
-    clearTimeout(this._timeout);
   },
 
 
@@ -77,8 +76,6 @@ export default React.createClass({
       <div
         onMouseLeave={this.hideTooltip}
         onMouseEnter={this.showTooltip}
-        onBlur={this.hideTooltip}
-        onFocus={this.showTooltip}
         style={styles.root}>
         <Clipboard
           copyText={link}
@@ -94,6 +91,7 @@ export default React.createClass({
           </div>
         </Clipboard>
         <Tooltip
+          style={styles.tooltip}
           label={this.props.tooltip}
           show={this.state.tooltipShown}
           verticalPosition="bottom"

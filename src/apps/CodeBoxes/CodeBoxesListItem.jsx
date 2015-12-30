@@ -51,7 +51,7 @@ export default React.createClass({
               instanceName: this.getParams().instanceName,
               codeBoxName: item.name
             }}>
-            traces
+            Traces
           </Link>
         </Column.Desc>
         <Column.Desc className="col-xs-4">

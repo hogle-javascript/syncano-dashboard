@@ -33,6 +33,7 @@ import SnackbarNotification from './SnackbarNotification';
 import Tags from './Tags';
 import Tour from './Tour';
 import Trace from './Trace';
+import Truncate from './Truncate';
 
 export default {
   Billing,
@@ -69,5 +70,6 @@ export default {
   SnackbarNotification,
   Tags,
   Tour,
-  Trace
+  Trace,
+  Truncate
 };

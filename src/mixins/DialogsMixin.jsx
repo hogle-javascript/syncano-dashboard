@@ -37,7 +37,7 @@ export default {
         association = schedulesAssociation;
       }
 
-      return <li>{item[paramName || 'name'] + association}</li>;
+      return <li key={item[paramName || 'name']}>{item[paramName || 'name'] + association}</li>;
     });
 
     return <ul>{listItems}</ul>;
