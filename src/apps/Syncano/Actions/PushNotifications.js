@@ -35,6 +35,18 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
+  removeAPNsDevices(devices) {
+    let promises = devices.map((device) => {
+      return this.Connection
+        .PushNotifications
+        .Devices
+        .remove('apns', device.registration_id);
+    });
+
+    this.D.all(promises)
+      .success(this.completed)
+      .error(this.failure);
+  },
   createGCMDevice(payload) {
     this.Connection
       .PushNotifications
@@ -50,5 +62,17 @@ export default {
       .update('gcm', payload)
       .then(this.completed)
       .catch(this.failure);
+  },
+  removeGCMDevices(devices) {
+    let promises = devices.map((device) => {
+      return this.Connection
+        .PushNotifications
+        .Devices
+        .remove('gcm', device.registration_id);
+    });
+
+    this.D.all(promises)
+      .success(this.completed)
+      .error(this.failure);
   }
 };

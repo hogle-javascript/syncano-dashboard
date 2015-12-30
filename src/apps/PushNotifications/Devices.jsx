@@ -10,7 +10,7 @@ import GCMDevicesStore from './GCMDevicesStore';
 import APNsDevicesStore from './APNsDevicesStore';
 
 import {Styles} from 'syncano-material-ui';
-import {InnerToolbar, Socket, Container, Loading} from '../../common';
+import {InnerToolbar, Socket, Container} from '../../common';
 import DevicesList from './DevicesList';
 import DeviceDialog from './DeviceDialog';
 
@@ -117,14 +117,13 @@ export default Radium(React.createClass({
             onTouchTap={this.showDeviceDialog}/>
         </InnerToolbar>
         <Container>
-          <Loading show={this.isLoaded()}>
-            <DevicesList
-              hideDialogs={this.state.hideDialogs}
-              emptyItemContent="Add a Device"
-              emptyItemHandleClick={this.showDeviceDialog}
-              itemIcon={this.isIOSTabActive() ? 'apple' : 'android'}
-              items={items}/>
-          </Loading>
+          <DevicesList
+            isLoading={this.isLoaded()}
+            hideDialogs={this.state.gcmDevices.hideDialogs || this.state.apnsDevices.hideDialogs}
+            emptyItemContent="Add a Device"
+            emptyItemHandleClick={this.showDeviceDialog}
+            isIOSDevice={this.isIOSTabActive()}
+            items={items}/>
         </Container>
       </div>
     );

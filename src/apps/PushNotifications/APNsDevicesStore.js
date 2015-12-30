@@ -57,5 +57,18 @@ export default Reflux.createStore({
   onFetchAPNsDevicesCompleted(devices) {
     console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
     this.setDevices(devices._items);
+  },
+
+  onRemoveAPNsDevices() {
+    console.debug('APNsDevicesStore::onRemoveAPNsDevices');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onRemoveAPNsDevicesCompleted() {
+    console.debug('APNsDevicesStore::onRemoveAPNsDevicesCompleted');
+    this.data.hideDialogs = true;
+    this.data.isLoading = false;
+    this.refreshData();
   }
 });

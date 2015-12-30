@@ -27,6 +27,11 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.updateAPNsDevice'
     },
+    removeAPNsDevices: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.removeAPNsDevices'
+    },
     createGCMDevice: {
       asyncForm: true,
       asyncResult: true,
@@ -38,6 +43,11 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.updateGCMDevice'
+    },
+    removeGCMDevices: {
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.removeGCMDevices'
     }
   },
   {

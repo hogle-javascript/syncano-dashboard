@@ -33,10 +33,8 @@ export default Reflux.createStore({
     return this.data.items || empty || null;
   },
 
-  getNumberOfChecked
-
   setDevices(devices) {
-    console.debug('PushNotificationsStore::setGCMDevices');
+    console.debug('GCMDevicesStore::setGCMDevices');
     this.data.items = devices.map((device) => {
       device.id = device.registration_id;
       return device;
@@ -46,18 +44,31 @@ export default Reflux.createStore({
   },
 
   refreshData() {
-    console.debug('PushNotificationsStore::refreshData');
+    console.debug('GCMDevicesStore::refreshData');
     Actions.fetchGCMDevices();
   },
 
   onFetchGCMDevices() {
-    console.debug('PushNotificationsStore::onFetchGCMDevices');
+    console.debug('GCMDevicesStore::onFetchGCMDevices');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
   onFetchGCMDevicesCompleted(devices) {
-    console.debug('PushNotificationsStore::onFetchGCMDevicesCompleted');
+    console.debug('GCMDevicesStore::onFetchGCMDevicesCompleted');
     this.setDevices(devices._items);
+  },
+
+  onRemoveGCMDevices() {
+    console.debug('APNsDevicesStore::onRemoveAPNsDevices');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onRemoveGCMDevicesCompleted() {
+    console.debug('GCMDevicesStore::onRemoveGCMDevicesCompleted');
+    this.data.isLoading = false;
+    this.data.hideDialogs = true;
+    this.refreshData();
   }
 });

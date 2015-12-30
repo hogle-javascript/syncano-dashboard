@@ -756,9 +756,10 @@ var Syncano = (function() {
      */
     this.PushNotifications = {
       Devices: {
-        list: this.listDevices.bind(this),
         create: this.createDevice.bind(this),
-        update: this.updateDevice.bind(this)
+        update: this.updateDevice.bind(this),
+        remove: this.removeDevice.bind(this),
+        list: this.listDevices.bind(this)
       }
     };
   }
@@ -3334,6 +3335,21 @@ var Syncano = (function() {
         throw new Error('Not connected to any instance');
       }
       return this.request('PATCH', linksObject.instance_push_notifications + deviceType + '/devices/' + params.registration_id + '/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Removes device identified by specified registration ID
+     *
+     * @method Syncano#removeDevice
+     * @alias Syncano.PushNotifications.Device.remove
+     * @param {string} deviceType - device type (gcm / apns)
+     * @param {string} registration_id
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    removeDevice: function(deviceType, registration_id, callbackOK, callbackError) {
+      return this.request('DELETE', linksObject.instance_push_notifications + deviceType + '/devices/' + registration_id + '/', {}, callbackOK, callbackError);
     },
 
     /**
