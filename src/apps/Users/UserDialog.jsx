@@ -15,7 +15,7 @@ import {GroupsStore} from './../Groups';
 import MUI from 'syncano-material-ui';
 import Common from '../../common';
 
-import 'react-select/dist/default.css';
+import 'react-select/dist/react-select.min.css';
 
 export default React.createClass({
 
@@ -36,13 +36,13 @@ export default React.createClass({
         presence: true
       }
     };
-    let editFormmConstraints = {
+    let editFormConstraints = {
       username: {
         presence: true
       }
     };
 
-    return this.hasEditMode() ? editFormmConstraints : addFormConstraints;
+    return this.hasEditMode() ? editFormConstraints : addFormConstraints;
   },
 
   componentWillUnmount() {
@@ -99,9 +99,9 @@ export default React.createClass({
     );
   },
 
-  handleSelectFieldChange(newValue, selectedGroups) {
+  handleSelectFieldChange(value) {
     this.setState({
-      newUserGroups: selectedGroups
+      newUserGroups: value
     });
   },
 

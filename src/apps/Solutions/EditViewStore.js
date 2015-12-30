@@ -64,7 +64,7 @@ export default Reflux.createStore({
   },
 
   setTags(tags) {
-    this.data.tags = this.saveListFromSyncano(tags);
+    this.data.tags = tags.objects;
     this.trigger(this.data);
   },
 
