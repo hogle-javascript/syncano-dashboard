@@ -14,6 +14,30 @@ export default CreateActions(
       asyncResult: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushNotifications.listAPNsDevices'
+    },
+    createAPNsDevice: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.createAPNsDevice'
+    },
+    updateAPNsDevice: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.updateAPNsDevice'
+    },
+    createGCMDevice: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.createGCMDevice'
+    },
+    updateGCMDevice: {
+      asyncForm: true,
+      asyncResult: true,
+      children: ['completed', 'failure'],
+      method: 'Syncano.Actions.PushNotifications.updateGCMDevice'
     }
   },
   {

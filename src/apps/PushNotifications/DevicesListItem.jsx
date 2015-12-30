@@ -13,7 +13,7 @@ let Column = Common.ColumnList.Column;
 
 export default React.createClass({
 
-  displayName: 'SchedulesListItem',
+  displayName: 'DeviceListItem',
 
   mixins: [
     State
@@ -22,13 +22,15 @@ export default React.createClass({
   render() {
     let item = this.props.item;
     let user = item.user_id ? item.user_id : 'no user';
-    let registrationDate = item.created_at;
 
     return (
-      <Common.ColumnList.Item key={item.device_id}>
+      <Common.ColumnList.Item
+        key={item.device_id}
+        checked={item.checked}>
         <Column.CheckIcon
-          id={item.device_id.toString()}
+          id={item.registration_id}
           icon={this.props.icon}
+          checked={item.checked}
           background={Common.Color.getColorByName('blue')}
           handleIconClick={this.props.onIconClick}
           className="col-xs-14">
@@ -46,7 +48,7 @@ export default React.createClass({
           {item.is_active.toString()}
         </Column.Desc>
         <Column.Date
-          date={registrationDate}/>
+          date={item.created_at}/>
         <Column.Menu>
           <MenuItem
             className="dropdown-item-edit"

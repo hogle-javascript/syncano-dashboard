@@ -3,21 +3,25 @@ import Radium from 'radium';
 import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 
+import {Dialogs} from '../../mixins';
+
 import Actions from './DevicesActions';
-import Store from './DevicesStore';
+import GCMDevicesStore from './GCMDevicesStore';
+import APNsDevicesStore from './APNsDevicesStore';
 
 import {Styles} from 'syncano-material-ui';
-import {InnerToolbar, Socket, Lists, ColumnList, Container} from '../../common';
-import ListItem from './DevicesListItem';
-
-let Column = ColumnList.Column;
+import {InnerToolbar, Socket, Container, Loading} from '../../common';
+import DevicesList from './DevicesList';
+import DeviceDialog from './DeviceDialog';
 
 export default Radium(React.createClass({
 
   displayName: 'Devices',
 
   mixins: [
-    Reflux.connect(Store),
+    Reflux.connect(GCMDevicesStore, 'gcmDevices'),
+    Reflux.connect(APNsDevicesStore, 'apnsDevices'),
+    Dialogs,
     State,
     Navigation
   ],
@@ -58,6 +62,10 @@ export default Radium(React.createClass({
     return this.isActive('apns-devices');
   },
 
+  isLoaded() {
+    return this.state.gcmDevices.isLoading && this.state.apnsDevices.isLoading;
+  },
+
   handleChangePlatform(routeName) {
     let instanceName = this.getParams().instanceName;
 
@@ -66,6 +74,10 @@ export default Radium(React.createClass({
 
   test() {
     console.error('test');
+  },
+
+  showDeviceDialog() {
+    Actions.showDialog();
   },
 
   renderTitle() {
@@ -93,60 +105,26 @@ export default Radium(React.createClass({
     );
   },
 
-  renderItem(item) {
-    return (
-      <ListItem
-        onIconClick={this.test}
-        icon={this.isIOSTabActive() ? 'apple' : 'android'}
-        item={item}/>
-    );
-  },
-
   render() {
-    console.error(this.state.gcmDevices);
-    let checkedItems = 5;
+    let items = this.isIOSTabActive() ? this.state.apnsDevices.items : this.state.gcmDevices.items;
 
     return (
       <div>
+        <DeviceDialog isAPNs={this.isIOSTabActive()}/>
         <InnerToolbar title={this.renderTitle()}>
           <Socket
             tooltip="Add Device"
-            onTouchTap={this.test}/>
+            onTouchTap={this.showDeviceDialog}/>
         </InnerToolbar>
         <Container>
-          <Lists.Container>
-            <ColumnList.Header>
-              <Column.ColumnHeader
-                primary={true}
-                columnName="CHECK_ICON"
-                className="col-xs-14">
-                Device
-              </Column.ColumnHeader>
-              <Column.ColumnHeader
-                className="col-xs-13"
-                columnName="DESC">
-                User
-              </Column.ColumnHeader>
-              <Column.ColumnHeader columnName="DESC">
-                Active
-              </Column.ColumnHeader>
-              <Column.ColumnHeader columnName="DATE">
-                Registered
-              </Column.ColumnHeader>
-              <Lists.Menu
-                checkedItemsCount={checkedItems}
-                actions={Actions}>
-                <Lists.MenuItem
-                  singleItemText="Delete a Device"
-                  multipleItemsText="Delete Devices"
-                  onTouchTap={this.test}/>
-              </Lists.Menu>
-            </ColumnList.Header>
-            <Lists.List
+          <Loading show={this.isLoaded()}>
+            <DevicesList
+              hideDialogs={this.state.hideDialogs}
               emptyItemContent="Add a Device"
-              items={this.isIOSTabActive() ? this.state.apnsDevices : this.state.gcmDevices}
-              renderItem={this.renderItem}/>
-          </Lists.Container>
+              emptyItemHandleClick={this.showDeviceDialog}
+              itemIcon={this.isIOSTabActive() ? 'apple' : 'android'}
+              items={items}/>
+          </Loading>
         </Container>
       </div>
     );

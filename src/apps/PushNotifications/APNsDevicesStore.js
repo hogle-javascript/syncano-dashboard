@@ -1,0 +1,61 @@
+import Reflux from 'reflux';
+
+// Utils & Mixins
+import Mixins from '../../mixins';
+
+// Stores & Actions
+import Actions from './DevicesActions';
+import SessionActions from '../Session/SessionActions';
+
+export default Reflux.createStore({
+  listenables: Actions,
+  mixins: [
+    Mixins.CheckListStore,
+    Mixins.WaitForStore
+  ],
+
+  getInitialState() {
+    return {
+      items: [],
+      isLoading: true
+    };
+  },
+
+  init() {
+    this.data = this.getInitialState();
+    this.waitFor(
+      SessionActions.setInstance,
+      this.refreshData
+    );
+  },
+
+  getDevices(empty) {
+    return this.data.items || empty || null;
+  },
+
+  setDevices(devices) {
+    console.debug('PushNotificationsStore::setAPNsDevices');
+    this.data.items = devices.map((device) => {
+      device.id = device.registration_id;
+      return device;
+    });
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  },
+
+  refreshData() {
+    console.debug('PushNotificationsStore::refreshData');
+    Actions.fetchAPNsDevices();
+  },
+
+  onFetchAPNsDevices() {
+    console.debug('PushNotificationsStore::onFetchAPNsDevices');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchAPNsDevicesCompleted(devices) {
+    console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
+    this.setDevices(devices._items);
+  }
+});

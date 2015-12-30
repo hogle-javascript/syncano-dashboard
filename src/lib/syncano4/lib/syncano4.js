@@ -95,8 +95,8 @@ var Syncano = (function() {
     if (typeof linksObject.instance_channels === 'undefined') {
       linksObject.instance_channels = linksObject.instance_self + 'channels/';
     }
-    if (typeof linksObject.instance_push_notifications === 'undefined') {
-      linksObject.instance_push_notifications = linksObject.instance_self + 'push_notifications/';
+    if (typeof obj.links.push_notifications === 'undefined') {
+      linksObject.instance_push_notifications = obj.links.self + 'push_notifications/';
     }
     delete obj.links;
     return linksObject;
@@ -755,7 +755,11 @@ var Syncano = (function() {
      * @property {function} listDevices - shorcut to {@link Syncano#listDevices} method
      */
     this.PushNotifications = {
-      listDevices: this.listDevices.bind(this)
+      Devices: {
+        list: this.listDevices.bind(this),
+        create: this.createDevice.bind(this),
+        update: this.updateDevice.bind(this)
+      }
     };
   }
 
@@ -3289,12 +3293,56 @@ var Syncano = (function() {
      PUSH NOIFICATIONS METHODS
      *********************/
     /**
+     * Creates new Device based on passed parameters
+     *
+     * @method Syncano#createDevice
+     * @alias Syncano.PushNotifications.Device.create
+     * @param {Object} params
+     * @param {string} params.label - name of the device
+     * @param {string} params.registration_id - device's registration id
+     * @param {string} params.user_id - user's id
+     * @param {string} params.device_id - device's id
+     * @param {boolean} params.is_active - specifies if device is active
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    createDevice: function(deviceType, params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('POST', linksObject.instance_push_notifications + deviceType + '/devices/', params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates Device based on passed parameters
+     *
+     * @method Syncano#updateDevice
+     * @alias Syncano.PushNotifications.Device.update
+     * @param {Object} params
+     * @param {string} params.label - name of the device
+     * @param {string} params.registration_id - device's registration id to update
+     * @param {string} params.user_id - user's id
+     * @param {string} params.device_id - device's id
+     * @param {boolean} params.is_active - specifies if device is active
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateDevice: function(deviceType, params, callbackOK, callbackError) {
+      if (typeof linksObject.instance_self === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_push_notifications + deviceType + '/devices/' + params.registration_id + '/', params, callbackOK, callbackError);
+    },
+
+    /**
      * Returns all defined Android / iOS devices as a list
      *
      * @method Syncano#listDevices
-     * @alias Syncano.PushNotifications.listDevices
-     * @param {object} [params]
+     * @alias Syncano.PushNotifications.Devices.list
      * @param {string|Object} deviceType - device type (gcm / apns)
+     * @param {object} [params]
      * @param {function} [callbackOK] - optional method to call on success
      * @param {function} [callbackError] - optional method to call when request fails
      * @returns {object} promise

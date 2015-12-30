@@ -16,8 +16,7 @@ export default Reflux.createStore({
 
   getInitialState() {
     return {
-      gcmDevices: [],
-      apnsDevices: [],
+      items: [],
       isLoading: true
     };
   },
@@ -30,24 +29,18 @@ export default Reflux.createStore({
     );
   },
 
-  getGCMDevices(empty) {
-    return this.data.gcmDevices || empty || null;
+  getDevices(empty) {
+    return this.data.items || empty || null;
   },
 
-  getAPNsDevices(empty) {
-    return this.data.apnsDevices || empty || null;
-  },
+  getNumberOfChecked
 
-  setGCMDevices(devices) {
+  setDevices(devices) {
     console.debug('PushNotificationsStore::setGCMDevices');
-    this.data.gcmDevices = devices;
-    this.data.isLoading = false;
-    this.trigger(this.data);
-  },
-
-  setAPNsDevices(devices) {
-    console.debug('PushNotificationsStore::setAPNsDevices');
-    this.data.apnsDevices = devices;
+    this.data.items = devices.map((device) => {
+      device.id = device.registration_id;
+      return device;
+    });
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -55,7 +48,6 @@ export default Reflux.createStore({
   refreshData() {
     console.debug('PushNotificationsStore::refreshData');
     Actions.fetchGCMDevices();
-    Actions.fetchAPNsDevices();
   },
 
   onFetchGCMDevices() {
@@ -66,18 +58,6 @@ export default Reflux.createStore({
 
   onFetchGCMDevicesCompleted(devices) {
     console.debug('PushNotificationsStore::onFetchGCMDevicesCompleted');
-    console.error(devices);
-    Actions.setGCMDevices(devices._items);
-  },
-
-  onFetchAPNsDevices() {
-    console.debug('PushNotificationsStore::onFetchAPNsDevices');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
-  onFetchAPNsDevicesCompleted(devices) {
-    console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
-    Actions.setAPNsDevices(devices._items);
+    this.setDevices(devices._items);
   }
 });

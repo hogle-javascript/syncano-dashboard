@@ -5,7 +5,8 @@ export default {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
       .PushNotifications
-      .listDevices('gcm', params)
+      .Devices
+      .list('gcm', params)
       .then(this.completed)
       .catch(this.failure);
   },
@@ -13,7 +14,40 @@ export default {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
       .PushNotifications
-      .listDevices('apns', params)
+      .Devices
+      .list('apns', params)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  createAPNsDevice(payload) {
+    this.Connection
+      .PushNotifications
+      .Devices
+      .create('apns', payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  updateAPNsDevice(payload) {
+    this.Connection
+      .PushNotifications
+      .Devices
+      .update('apns', payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  createGCMDevice(payload) {
+    this.Connection
+      .PushNotifications
+      .Devices
+      .create('gcm', payload)
+      .then(this.completed)
+      .catch(this.failure);
+  },
+  updateGCMDevice(payload) {
+    this.Connection
+      .PushNotifications
+      .Devices
+      .update('gcm', payload)
       .then(this.completed)
       .catch(this.failure);
   }
