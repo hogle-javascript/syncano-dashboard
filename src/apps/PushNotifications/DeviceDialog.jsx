@@ -2,7 +2,7 @@ import React from 'react';
 import Reflux from 'reflux';
 
 // Utils
-import Mixins from '../../mixins';
+import {Dialog, Form} from '../../mixins';
 
 // Stores and Actions
 import Actions from './DevicesActions';
@@ -18,8 +18,8 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(DeviceDialogStore),
-    Mixins.Dialog,
-    Mixins.Form
+    Dialog,
+    Form
   ],
 
   validatorConstraints: {
@@ -58,15 +58,17 @@ export default React.createClass({
   handleAddSubmit() {
     if (this.props.isAPNs) {
       Actions.createAPNsDevice(this.getParams());
+    } else {
+      Actions.createGCMDevice(this.getParams());
     }
-    Actions.createGCMDevice(this.getParams());
   },
 
   handleEditSubmit() {
     if (this.props.isAPNs) {
       Actions.updateAPNsDevice(this.getParams());
+    } else {
+      Actions.updateGCMDevice(this.getParams());
     }
-    Actions.updateGCMDevice(this.getParams());
   },
 
   render() {
@@ -135,6 +137,10 @@ export default React.createClass({
               label="Active"/>
           </div>
         </div>
+        <Common.Loading
+          type='linear'
+          position='bottom'
+          show={this.state.isLoading} />
       </Common.Dialog>
     );
   }

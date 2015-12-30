@@ -72,10 +72,6 @@ export default Radium(React.createClass({
     this.transitionTo(routeName, {instanceName});
   },
 
-  test() {
-    console.error('test');
-  },
-
   showDeviceDialog() {
     Actions.showDialog();
   },
@@ -122,7 +118,7 @@ export default Radium(React.createClass({
             hideDialogs={this.state.gcmDevices.hideDialogs || this.state.apnsDevices.hideDialogs}
             emptyItemContent="Add a Device"
             emptyItemHandleClick={this.showDeviceDialog}
-            isIOSDevice={this.isIOSTabActive()}
+            isAPNs={this.isIOSTabActive()}
             items={items}/>
         </Container>
       </div>

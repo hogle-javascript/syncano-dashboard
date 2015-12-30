@@ -39,9 +39,9 @@ export default React.createClass({
         key: 'deleteDeviceDialog',
         ref: 'deleteDeviceDialog',
         title: 'Delete a Device',
-        handleConfirm: this.props.isIOSDevice ? Actions.removeAPNsDevices : Actions.removeGCMDevices,
+        handleConfirm: this.props.isAPNs ? Actions.removeAPNsDevices : Actions.removeGCMDevices,
         isLoading: this.props.isLoading,
-        items: this.props.isIOSDevice ? APNsDevicesStore.getCheckedItems() : GCMDevicesStore.getCheckedItems(),
+        items: this.props.isAPNs ? APNsDevicesStore.getCheckedItems() : GCMDevicesStore.getCheckedItems(),
         groupName: 'Device',
         itemLabelName: 'label'
       }
@@ -51,18 +51,18 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
+        key={`devices-list-item-${item.id}`}
         onIconClick={this.handleItemIconClick}
-        icon={this.props.isIOSDevice ? 'apple' : 'android'}
+        icon={this.props.isAPNs ? 'apple' : 'android'}
         showDeleteDialog={this.showDialog.bind(null, 'deleteDeviceDialog', item)}
         item={item}/>
     );
   },
 
   render() {
-    console.error(APNsDevicesStore.getCheckedItems());
     let checkedGCMCount = GCMDevicesStore.getNumberOfChecked();
     let checkedAPNsCount = APNsDevicesStore.getNumberOfChecked();
-    let checkedItems = this.props.isIOSDevice ? checkedAPNsCount : checkedGCMCount;
+    let checkedItems = this.props.isAPNs ? checkedAPNsCount : checkedGCMCount;
 
     return (
       <div>

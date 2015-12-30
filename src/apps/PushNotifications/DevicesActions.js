@@ -3,8 +3,6 @@ import CreateActions from '../../utils/ActionsConstructor';
 export default CreateActions(
   {
     fetch: {},
-    setGCMDevices: {},
-    setAPNsDevices: {},
     fetchGCMDevices: {
       asyncResult: true,
       children: ['completed', 'failure'],

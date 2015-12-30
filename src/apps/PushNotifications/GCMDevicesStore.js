@@ -60,7 +60,7 @@ export default Reflux.createStore({
   },
 
   onRemoveGCMDevices() {
-    console.debug('APNsDevicesStore::onRemoveAPNsDevices');
+    console.debug('GCMDevicesStore::onRemoveGCMDevices');
     this.data.isLoading = true;
     this.trigger(this.data);
   },

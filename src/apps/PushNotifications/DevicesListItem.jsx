@@ -3,7 +3,6 @@ import {State} from 'react-router';
 
 // Stores and Actions
 import Actions from './DevicesActions';
-// import Store from './DevicesStore';
 
 // Components
 import Common from '../../common';
