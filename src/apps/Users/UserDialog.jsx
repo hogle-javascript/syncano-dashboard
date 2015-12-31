@@ -99,9 +99,9 @@ export default React.createClass({
     );
   },
 
-  handleSelectFieldChange(value) {
+  handleSelectFieldChange(newValue, selectedGroups) {
     this.setState({
-      newUserGroups: value
+      newUserGroups: selectedGroups
     });
   },
 

@@ -1125,6 +1125,7 @@ var Syncano = (function() {
      * @returns {object} promise
      */
     updateSolution: function(id, params, callbackOK, callbackError) {
+      params.dontSerialize = true;
       return this.request('PATCH', 'v1/marketplace/solutions/' + id, params, callbackOK, callbackError);
     },
 
@@ -3341,12 +3342,14 @@ var Syncano = (function() {
         callbackError('Missing request method');
       } else {
         params = params || {};
-        Object.keys(params).forEach(function(key) {
-          if (Array.isArray(params[key])) {
-            var arr = params[key];
-            params[key] = arr.join('&' + key + '=')
-          }
-        });
+        if (!params.dontSerialize) {
+          Object.keys(params).forEach(function(key) {
+            if (Array.isArray(params[key])) {
+              var arr = params[key];
+              params[key] = arr.join('&' + key + '=')
+            }
+          });
+        }
         var url = normalizeUrl(baseURL + method);
         var ajaxParams = {
           type: requestType,
