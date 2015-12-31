@@ -261,7 +261,7 @@ export default Radium(React.createClass({
         <div>
           {this.renderFormNotifications()}
           <div style={styles.heading}>Limits</div>
-          <div className="row align-middle">
+          <div className="row">
             <div className="col-md-8 col-lg-5">
               <TextField
                 ref="soft_limit"
@@ -282,16 +282,18 @@ export default Radium(React.createClass({
                 floatingLabelText="Hard Limit"
                 fullWidth={true}/>
             </div>
-            <div className="col-flex-1" style={{display: 'flex', alignItems: 'center'}}>
-              <FlatButton
-                type="submit"
-                primary={true}
-                label='Set Limits'
-                disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
-              <IconButton
-                iconClassName="synicon-information-outline"
-                iconStyle={{color: Styles.Colors.blue500}}
-                tooltip={toolTip}/>
+            <div className="col-flex-1">
+              <div className="vp-3-t" style={{display: 'flex', alignItems: 'center'}}>
+                <FlatButton
+                  type="submit"
+                  primary={true}
+                  label='Set Limits'
+                  disabled={(!this.state.hard_limit && !this.state.soft_limit)}/>
+                <IconButton
+                  iconClassName="synicon-information-outline"
+                  iconStyle={{color: Styles.Colors.blue500}}
+                  tooltip={toolTip}/>
+              </div>
             </div>
           </div>
         </div>
@@ -317,11 +319,9 @@ export default Radium(React.createClass({
 
       return (
         <div>
-
           <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
             {coveredText}
           </div>
-
           <div
             className="row align-middle"
             style={{marginTop: 25}}>
@@ -332,7 +332,6 @@ export default Radium(React.createClass({
               <div style={{marginTop: 15, fontSize: '1rem'}}>Your Cost: $0</div>
             </div>
           </div>
-
         </div>
       );
     }
@@ -343,11 +342,9 @@ export default Radium(React.createClass({
 
     return (
       <div>
-
         <div style={{textAlign: 'center', fontSize: '1.2rem'}}>
           {coveredText}
         </div>
-
         <div
           className="row align-middle"
           style={{marginTop: 20}}>
@@ -360,7 +357,6 @@ export default Radium(React.createClass({
             </div>
           </div>
         </div>
-
       </div>
     );
   },
@@ -394,7 +390,7 @@ export default Radium(React.createClass({
         <PlanDialog onDismiss={this.handlePlanDialogDismiss}/>
 
         <Common.InnerToolbar title={<div>Your plan:
-          <span style={styles.planTitleText}><strong>{Store.getPlanName()}</strong></span></div>}>
+          <span style={styles.planTitleText}><strong> {Store.getPlanName()}</strong></span></div>}>
           <Common.Billing.SwitchSection
             ref="toggle"
             plan={this.state.profile.subscription.plan}
@@ -403,19 +399,15 @@ export default Radium(React.createClass({
             onCancelPlanDialog={this.handleShowCancelPlanDialog}/>
         </Common.InnerToolbar>
 
-        <div style={{marginTop: 20}}>
-
+        <div className="vm-2-t">
           <div className="row vp-6-b">
-
             <div className="col-flex-1">
-              <div style={{marginBottom: 24}}>
+              <div className="vm-3-t">
                 {this.renderMainDesc()}
               </div>
-
-              <div style={{marginBottom: 24}}>
+              <div className="vm-3-t">
                 {this.renderCommment()}
               </div>
-
               <div>
                 <Common.Billing.PlanExplorerButton
                   plan={this.state.profile.subscription.plan}
@@ -423,9 +415,7 @@ export default Radium(React.createClass({
                   onPlanDialog={this.handleShowPlanDialog}
                   onDeleteSubscription={this.handleDeleteSubscription}/>
               </div>
-
             </div>
-
             <div
               className="col-md-14"
               style={styles.summary}>
@@ -449,9 +439,7 @@ export default Radium(React.createClass({
             <div className="col-flex-1">
               <Common.Billing.ChartLegend {...this.state.chartLegend} />
             </div>
-            <div className="col-flex-1">
-
-            </div>
+            <div className="col-flex-1"></div>
           </div>
 
           <div className="row vp-5-b">
@@ -461,7 +449,6 @@ export default Radium(React.createClass({
           </div>
 
           {this.renderLimitsForm()}
-
         </div>
       </div>
     );
