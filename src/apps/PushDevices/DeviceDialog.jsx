@@ -1,11 +1,11 @@
 import React from 'react';
 import Reflux from 'reflux';
+import _ from 'lodash';
 
 // Utils
 import {Dialog, Form} from '../../mixins';
 
 // Stores and Actions
-import Actions from './DevicesActions';
 import DeviceDialogStore from './DeviceDialogStore';
 
 // Components
@@ -56,18 +56,14 @@ export default React.createClass({
   },
 
   handleAddSubmit() {
-    if (this.props.isAPNs) {
-      Actions.createAPNsDevice(this.getParams());
-    } else {
-      Actions.createGCMDevice(this.getParams());
+    if (_.isFunction(this.props.handleAddSubmit)) {
+      this.props.handleAddSubmit(this.getParams());
     }
   },
 
   handleEditSubmit() {
-    if (this.props.isAPNs) {
-      Actions.updateAPNsDevice(this.getParams());
-    } else {
-      Actions.updateGCMDevice(this.getParams());
+    if (_.isFunction(this.props.handleEditSubmit)) {
+      this.props.handleEditSubmit(this.getParams());
     }
   },
 

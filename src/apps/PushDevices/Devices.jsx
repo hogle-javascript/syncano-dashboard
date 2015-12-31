@@ -106,7 +106,9 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <DeviceDialog isAPNs={this.isIOSTabActive()}/>
+        <DeviceDialog
+          handleAddSubmit={this.isIOSTabActive() ? Actions.createAPNsDevice : Actions.createGCMDevice}
+          handleEditSubmit={this.isIOSTabActive() ? Actions.updateAPNsDevice : Actions.updateGCMDevice}/>
         <InnerToolbar title={this.renderTitle()}>
           <Socket
             tooltip="Add Device"
