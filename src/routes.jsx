@@ -35,6 +35,7 @@ import Sockets from './apps/Sockets';
 import Triggers from './apps/Triggers';
 import Schedules from './apps/Schedules';
 import PushNotifications from './apps/PushNotifications';
+import PushDevices from './apps/PushDevices';
 
 const Route = Router.Route;
 const Redirect = Router.Redirect;
@@ -171,17 +172,17 @@ export default (
             <Route
               name="apns-devices"
               path="apns"
-              handler={PushNotifications.Devices}/>
+              handler={PushDevices}/>
             <Route
               name="gcm-devices"
               path="gcm"
-              handler={PushNotifications.Devices}/>
+              handler={PushDevices}/>
 
             <Redirect
               from="/instances/:instanceName/push-notifications/devices"
               to="apns-devices"
               />
-            <DefaultRoute handler={PushNotifications.Devices} />
+            <DefaultRoute handler={PushDevices} />
             </Route>
           <DefaultRoute handler={PushNotifications}/>
         </Route>

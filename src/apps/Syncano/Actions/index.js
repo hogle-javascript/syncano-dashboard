@@ -12,7 +12,7 @@ import CodeBoxes from './CodeBoxes';
 import DataObjects from './DataObjects';
 import Instances from './Instances';
 import Profile from './Profile';
-import PushNotifications from './PushNotifications';
+import PushDevices from './PushDevices';
 import Solutions from './Solutions';
 import Schedules from './Schedules';
 import Triggers from './Triggers';
@@ -35,7 +35,7 @@ export default {
   DataObjects,
   Instances,
   Profile,
-  PushNotifications,
+  PushDevices,
   Solutions,
   Schedules,
   Triggers,
