@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import Mixins from '../../mixins';
+import {CheckListStore, WaitForStore, StoreHelpers} from '../../mixins';
 
 // Stores & Actions
 import Actions from './DevicesActions';
@@ -10,8 +10,9 @@ import SessionActions from '../Session/SessionActions';
 export default Reflux.createStore({
   listenables: Actions,
   mixins: [
-    Mixins.CheckListStore,
-    Mixins.WaitForStore
+    CheckListStore,
+    WaitForStore,
+    StoreHelpers
   ],
 
   getInitialState() {
@@ -35,10 +36,7 @@ export default Reflux.createStore({
 
   setDevices(devices) {
     console.debug('PushNotificationsStore::setAPNsDevices');
-    this.data.items = devices.map((device) => {
-      device.id = device.registration_id;
-      return device;
-    });
+    this.data.items = devices;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
@@ -56,7 +54,9 @@ export default Reflux.createStore({
 
   onFetchAPNsDevicesCompleted(devices) {
     console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
-    this.setDevices(devices._items);
+    let items = this.saveListFromSyncano(devices);
+
+    this.setDevices(items);
   },
 
   onRemoveAPNsDevices() {

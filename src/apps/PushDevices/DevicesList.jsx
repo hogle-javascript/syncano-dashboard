@@ -28,10 +28,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -51,8 +47,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        key={`devices-list-item-${item.id}`}
-        onIconClick={this.handleItemIconClick}
+        key={`devices-list-item-${item.registration_id}`}
+        onIconClick={Actions.checkItem}
         icon={this.props.isAPNs ? 'apple' : 'android'}
         showDeleteDialog={this.showDialog.bind(null, 'deleteDeviceDialog', item)}
         item={item}/>

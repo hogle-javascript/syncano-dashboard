@@ -30,6 +30,7 @@ export default React.createClass({
           id={item.registration_id}
           icon={this.props.icon}
           checked={item.checked}
+          keyName="registration_id"
           background={Common.Color.getColorByName('blue')}
           handleIconClick={this.props.onIconClick}
           className="col-xs-14">

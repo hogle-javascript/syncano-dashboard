@@ -22,6 +22,7 @@ export default React.createClass({
           className="col-xs-12"
           id={item.name}
           icon={'bullhorn'}
+          keyName="name"
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
