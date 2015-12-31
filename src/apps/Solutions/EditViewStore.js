@@ -64,7 +64,7 @@ export default Reflux.createStore({
   },
 
   setTags(tags) {
-    this.data.tags = tags.objects;
+    this.data.tags = tags;
     this.trigger(this.data);
   },
 
@@ -156,7 +156,7 @@ export default Reflux.createStore({
   onFetchTagsCompleted(tags) {
     console.debug('SolutionsStore::onFetchTagsCompleted');
     this.data.isLoading = false;
-    Actions.setTags(tags);
+    Actions.setTags(tags.objects);
   },
 
   onFetchTagsFailure() {
