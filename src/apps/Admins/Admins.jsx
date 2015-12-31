@@ -13,8 +13,7 @@ import AdminsInvitationsActions from './AdminsInvitationsActions';
 import AdminsInvitationsStore from './AdminsInvitationsStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container';
+import {InnerToolbar, Socket, Container} from '../../common';
 
 // Local components
 import AdminsList from './AdminsList';
@@ -57,31 +56,33 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <AdminDialog />
 
-        <Common.InnerToolbar title="Administrators">
-          <Common.Socket
+        <InnerToolbar title="Administrators">
+          <Socket
             tooltip="Click here to invite Admin"
             onTouchTap={this.showAdminDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <AdminsList
-          name="Administrators"
-          checkItem={this.checkAdminItem}
-          isLoading={this.state.admins.isLoading}
-          hideDialogs={this.state.admins.hideDialogs}
-          items={this.state.admins.items}/>
+        <Container>
+          <AdminsList
+            name="Administrators"
+            checkItem={this.checkAdminItem}
+            isLoading={this.state.admins.isLoading}
+            hideDialogs={this.state.admins.hideDialogs}
+            items={this.state.admins.items}/>
 
-        <AdminsInvitationsList
-          name="Invitations"
-          emptyItemHandleClick={this.showAdminDialog}
-          emptyItemContent="Invite administrator"
-          checkItem={this.checkInvitationItem}
-          isLoading={this.state.invitations.isLoading}
-          hideDialogs={this.state.invitations.hideDialogs}
-          items={AdminsInvitationsStore.getPendingInvitations()}/>
-      </Container>
+          <AdminsInvitationsList
+            name="Invitations"
+            emptyItemHandleClick={this.showAdminDialog}
+            emptyItemContent="Invite administrator"
+            checkItem={this.checkInvitationItem}
+            isLoading={this.state.invitations.isLoading}
+            hideDialogs={this.state.invitations.hideDialogs}
+            items={AdminsInvitationsStore.getPendingInvitations()}/>
+        </Container>
+      </div>
     );
   }
 });

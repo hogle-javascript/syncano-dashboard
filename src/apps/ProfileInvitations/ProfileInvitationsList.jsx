@@ -44,11 +44,6 @@ export default React.createClass({
     Actions.declineInvitations(Store.getCheckedItems());
   },
 
-  handleItemIconClick(id, state) {
-    console.info('ProfileInvitations::checkItem');
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [
       {
@@ -96,11 +91,11 @@ export default React.createClass({
     ];
   },
 
-  renderItem(item, index) {
+  renderItem(item) {
     return (
       <ListItem
-        key={`profileinvitationslist-${index}`}
-        onIconClick={this.handleItemIconClick}
+        key={`profile-invitations-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showAcceptDialog={this.showDialog.bind(null, 'acceptInvitationsDialog', item)}
         showDeclineDialog={this.showDialog.bind(null, 'declineInvitationsDialog', item)}
@@ -140,6 +135,7 @@ export default React.createClass({
         </Common.ColumnList.Header>
         <Common.Lists.List
           {...this.props}
+          key="profile-invitations-list"
           renderItem={this.renderItem}/>
       </Common.Lists.Container>
     );

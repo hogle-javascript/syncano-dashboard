@@ -38,6 +38,7 @@
     "react-dropzone": "2.2.3",
     "react-onclickoutside": "4.1.0",
     "react-select": "github:syncano/react-select#build",
+    "react-stickydiv": "^3.4.17",
     "react-tap-event-plugin": "0.2.1",
     "reflux": "0.3.0",
     "syncano-c3": "0.4.11-rc4",

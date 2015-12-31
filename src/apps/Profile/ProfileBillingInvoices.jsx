@@ -69,7 +69,7 @@ export default React.createClass({
               <Column.ColumnHeader columnName="DESC">Status</Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">Action</Column.ColumnHeader>
             </ColumnList.Header>
-            <Lists.List>
+            <Lists.List key="invoices-list">
               {this.state.invoices.map(this.renderListItem)}
             </Lists.List>
           </Lists.Container>

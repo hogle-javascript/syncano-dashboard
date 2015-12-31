@@ -111,7 +111,7 @@ export default Radium(React.createClass({
             icon={status.icon}
             background={status.background}
             checkable={false}>
-            {item.status}
+            <Common.Truncate text={item.status}/>
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{duration}</Column.Desc>
@@ -184,7 +184,7 @@ export default Radium(React.createClass({
       <Common.Lists.Container>
         <Common.Loading show={this.state.isLoading}>
           {this.renderHeader()}
-          <Common.Lists.List>
+          <Common.Lists.List key="traces-list">
             {this.renderList()}
           </Common.Lists.List>
         </Common.Loading>

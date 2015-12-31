@@ -14,7 +14,9 @@ export default React.createClass({
   getStyles() {
     let styles = {
       paddingTop: 32,
-      paddingBottom: 64
+      paddingRight: 24,
+      paddingBottom: 64,
+      paddingLeft: 24
     };
 
     return this.mergeAndPrefix(styles, this.props.style);

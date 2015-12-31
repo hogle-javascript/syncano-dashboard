@@ -61,7 +61,7 @@ export default React.createClass({
       return 'No group';
     }
 
-    let itemGroups = groups.map((group) => <li style={styles.groupsListItem}>{group.label}</li>);
+    let itemGroups = groups.map((group) => <li key={group.label} style={styles.groupsListItem}>{group.label}</li>);
 
     return (
       <ul style={styles.groupsList}>{itemGroups}</ul>
@@ -83,11 +83,10 @@ export default React.createClass({
             background={Common.Color.getColorByName('blue', 'xlight')}
             checked={item.checked}
             handleIconClick={this.props.onIconClick}>
-            <div
+            <Common.Truncate
               onClick={this.toggleUserInfo}
-              style={styles.showInfoItem}>
-              {item.username}
-            </div>
+              style={styles.showInfoItem}
+              text={item.username}/>
           </Column.CheckIcon>
           <Column.ID>{item.id}</Column.ID>
           <Column.Desc>{this.renderItemGroups(item.groups)}</Column.Desc>

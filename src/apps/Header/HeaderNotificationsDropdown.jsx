@@ -47,6 +47,7 @@ export default Radium(React.createClass({
         padding: '0 6px 0 0'
       },
       badge: {
+        backgroundColor: 'transparent',
         color: '#fff'
       },
       badgeFilled: {

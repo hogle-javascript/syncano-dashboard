@@ -8,7 +8,7 @@ import Actions from './ProfileActions';
 import Store from './ProfileBillingAddressStore';
 
 import {TextField, RaisedButton} from 'syncano-material-ui';
-import {InnerToolbar} from '../../common';
+import {Container, InnerToolbar} from '../../common';
 
 export default React.createClass({
 
@@ -116,112 +116,114 @@ export default React.createClass({
     return (
       <div>
         <InnerToolbar title="Billing address"/>
-        {this.renderFormNotifications()}
 
-        <form
-          onSubmit={this.handleFormValidation}
-          acceptCharset="UTF-8"
-          method="post">
-          <div className="row vm-6-b">
-            <div className="col-flex-1">
-              <TextField
-                name="company_name"
-                fullWidth={true}
-                valueLink={this.linkState('company_name')}
-                defaultValue={this.state.company_name}
-                errorText={this.getValidationMessages('company_name').join(' ')}
-                hintText="Company name"
-                floatingLabelText="Company name"/>
-              <TextField
-                valueLink={this.linkState('first_name')}
-                defaultValue={this.state.first_name}
-                errorText={this.getValidationMessages('first_name').join(' ')}
-                name="first_name"
-                floatingLabelText="First name"
-                hintText="First name"
-                fullWidth={true}/>
-              <TextField
-                valueLink={this.linkState('last_name')}
-                defaultValue={this.state.last_name}
-                errorText={this.getValidationMessages('last_name').join(' ')}
-                name="last_name"
-                floatingLabelText="Last name"
-                hintText="Last name"
-                fullWidth={true}/>
-              <TextField
-                valueLink={this.linkState('tax_number')}
-                defaultValue={this.state.tax_number}
-                errorText={this.getValidationMessages('tax_number').join(' ')}
-                name="tax_number"
-                floatingLabelText="Tax number"
-                hintText="Tax number"
-                fullWidth={true}/>
-            </div>
-            <div className="col-flex-1">
-              <TextField
-                valueLink={this.linkState('address_line1')}
-                defaultValue={this.state.address_line1}
-                errorText={this.getValidationMessages('address_line1').join(' ')}
-                name="address_line1"
-                floatingLabelText="Address"
-                hintText="Address"
-                fullWidth={true}/>
-              <TextField
-                valueLink={this.linkState('address_line2')}
-                defaultValue={this.state.address_line2}
-                errorText={this.getValidationMessages('address_line2').join(' ')}
-                name="address_line2"
-                floatingLabelText="Address"
-                hintText="Address"
-                fullWidth={true}/>
-              <TextField
-                valueLink={this.linkState('address_country')}
-                defaultValue={this.state.address_country}
-                errorText={this.getValidationMessages('address_country').join(' ')}
-                name="address_country"
-                floatingLabelText="Country"
-                hintText="Country"
-                fullWidth={true}/>
-              <TextField
-                valueLink={this.linkState('address_state')}
-                defaultValue={this.state.address_state}
-                errorText={this.getValidationMessages('address_state').join(' ')}
-                name="address_state"
-                floatingLabelText="State"
-                autoComplete="State"
-                hintText="State"
-                fullWidth={true}/>
+        <Container>
+          {this.renderFormNotifications()}
+          <form
+            onSubmit={this.handleFormValidation}
+            acceptCharset="UTF-8"
+            method="post">
+            <div className="row vm-6-b">
+              <div className="col-flex-1">
+                <TextField
+                  name="company_name"
+                  fullWidth={true}
+                  valueLink={this.linkState('company_name')}
+                  defaultValue={this.state.company_name}
+                  errorText={this.getValidationMessages('company_name').join(' ')}
+                  hintText="Company name"
+                  floatingLabelText="Company name"/>
+                <TextField
+                  valueLink={this.linkState('first_name')}
+                  defaultValue={this.state.first_name}
+                  errorText={this.getValidationMessages('first_name').join(' ')}
+                  name="first_name"
+                  floatingLabelText="First name"
+                  hintText="First name"
+                  fullWidth={true}/>
+                <TextField
+                  valueLink={this.linkState('last_name')}
+                  defaultValue={this.state.last_name}
+                  errorText={this.getValidationMessages('last_name').join(' ')}
+                  name="last_name"
+                  floatingLabelText="Last name"
+                  hintText="Last name"
+                  fullWidth={true}/>
+                <TextField
+                  valueLink={this.linkState('tax_number')}
+                  defaultValue={this.state.tax_number}
+                  errorText={this.getValidationMessages('tax_number').join(' ')}
+                  name="tax_number"
+                  floatingLabelText="Tax number"
+                  hintText="Tax number"
+                  fullWidth={true}/>
+              </div>
+              <div className="col-flex-1">
+                <TextField
+                  valueLink={this.linkState('address_line1')}
+                  defaultValue={this.state.address_line1}
+                  errorText={this.getValidationMessages('address_line1').join(' ')}
+                  name="address_line1"
+                  floatingLabelText="Address"
+                  hintText="Address"
+                  fullWidth={true}/>
+                <TextField
+                  valueLink={this.linkState('address_line2')}
+                  defaultValue={this.state.address_line2}
+                  errorText={this.getValidationMessages('address_line2').join(' ')}
+                  name="address_line2"
+                  floatingLabelText="Address"
+                  hintText="Address"
+                  fullWidth={true}/>
+                <TextField
+                  valueLink={this.linkState('address_country')}
+                  defaultValue={this.state.address_country}
+                  errorText={this.getValidationMessages('address_country').join(' ')}
+                  name="address_country"
+                  floatingLabelText="Country"
+                  hintText="Country"
+                  fullWidth={true}/>
+                <TextField
+                  valueLink={this.linkState('address_state')}
+                  defaultValue={this.state.address_state}
+                  errorText={this.getValidationMessages('address_state').join(' ')}
+                  name="address_state"
+                  floatingLabelText="State"
+                  autoComplete="State"
+                  hintText="State"
+                  fullWidth={true}/>
 
-              <div className="row">
-                <div className="col-md-15">
-                  <TextField
-                    valueLink={this.linkState('address_zip')}
-                    defaultValue={this.state.address_zip}
-                    errorText={this.getValidationMessages('address_zip').join(' ')}
-                    name="address_zip"
-                    floatingLabelText="Zip code"
-                    hintText="Zip code"
-                    fullWidth={true}/>
-                </div>
-                <div className="col-flex-1">
-                  <TextField
-                    valueLink={this.linkState('address_city')}
-                    defaultValue={this.state.address_city}
-                    errorText={this.getValidationMessages('address_city').join(' ')}
-                    name="address_city"
-                    floatingLabelText="City"
-                    hintText="City"
-                    fullWidth={true}/>
+                <div className="row">
+                  <div className="col-md-15">
+                    <TextField
+                      valueLink={this.linkState('address_zip')}
+                      defaultValue={this.state.address_zip}
+                      errorText={this.getValidationMessages('address_zip').join(' ')}
+                      name="address_zip"
+                      floatingLabelText="Zip code"
+                      hintText="Zip code"
+                      fullWidth={true}/>
+                  </div>
+                  <div className="col-flex-1">
+                    <TextField
+                      valueLink={this.linkState('address_city')}
+                      defaultValue={this.state.address_city}
+                      errorText={this.getValidationMessages('address_city').join(' ')}
+                      name="address_city"
+                      floatingLabelText="City"
+                      hintText="City"
+                      fullWidth={true}/>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <RaisedButton
-            type="submit"
-            label="Update"
-            className="raised-button"
-            secondary={true}/>
-        </form>
+            <RaisedButton
+              type="submit"
+              label="Update"
+              className="raised-button"
+              secondary={true}/>
+          </form>
+        </Container>
       </div>
     );
   }

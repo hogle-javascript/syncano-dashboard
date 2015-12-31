@@ -11,9 +11,8 @@ import Store from './InstancesStore';
 import InstanceDialogActions from './InstanceDialogActions';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
-import EmptyContainer from '../../common/Container/EmptyContainer';
+import Header from '../Header';
+import {Container, Show, InnerToolbar, Socket} from '../../common';
 
 import InstancesList from './InstancesList';
 import SharedInstancesList from './SharedInstancesList';
@@ -50,31 +49,11 @@ export default React.createClass({
     localStorage.setItem(`welcomeShowed${userEmail}`, true);
   },
 
-  renderDeleteFabButton() {
-    if (Store.isSharedInstanceChecked()) {
-      return (
-        <Common.Fab.TooltipItem
-          tooltip="Click here to leave Instance"
-          mini={true}
-          onClick={this.showDialog.bind(null, 'deleteSharedInstanceDialog')}
-          iconClassName="synicon-delete"/>
-      );
-    }
-
-    return (
-      <Common.Fab.TooltipItem
-        tooltip="Click here to delete Instances"
-        mini={true}
-        onClick={this.showDialog.bind(null, 'deleteInstanceDialog')}
-        iconClassName="synicon-delete"/>
-    );
-  },
-
   render() {
     if (this.state.blocked) {
       return (
         <div className="row vp-5-t">
-          <EmptyContainer
+          <Container.Empty
             icon='synicon-block-helper'
             text={this.state.blocked}/>
         </div>
@@ -87,39 +66,41 @@ export default React.createClass({
       !localStorage.getItem(`welcomeShowed${userEmail}`);
 
     return (
-      <Container id="instances" style={{marginTop: 96, marginLeft: 'auto', marginRight: 'auto', width: '80%'}}>
-
+      <div>
         <WelcomeDialog
           getStarted={this.showInstanceDialog}
           visible={shouldShowWelcomeDialog}/>
+        <InstanceDialog />
 
-        <Common.InnerToolbar title="Instances">
-          <Common.Socket
+        <Header logo={true}/>
+
+        <InnerToolbar title="Instances">
+          <Socket
             tooltip="Create an Instance"
             tooltipPosition="bottom-left"
             onTouchTap={this.showInstanceDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <InstanceDialog />
-
-        <InstancesList
-          ref="myInstancesList"
-          name="My instances"
-          items={Store.getMyInstances()}
-          isLoading={this.state.isLoading}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showInstanceDialog}
-          emptyItemContent="Create an instance" />
-
-        <Common.Show if={this.state.items !== [] && Store.getOtherInstances().length && !this.state.isLoading}>
-          <SharedInstancesList
-            ref="otherInstancesList"
-            name="Shared with me"
-            items={Store.getOtherInstances()}
+        <Container id="instances">
+          <InstancesList
+            ref="myInstancesList"
+            name="My instances"
+            items={Store.getMyInstances()}
+            isLoading={this.state.isLoading}
             hideDialogs={this.state.hideDialogs}
-            isLoading={this.state.isLoading}/>
-        </Common.Show>
-      </Container>
+            emptyItemHandleClick={this.showInstanceDialog}
+            emptyItemContent="Create an instance" />
+
+          <Show if={this.state.items !== [] && Store.getOtherInstances().length && !this.state.isLoading}>
+            <SharedInstancesList
+              ref="otherInstancesList"
+              name="Shared with me"
+              items={Store.getOtherInstances()}
+              hideDialogs={this.state.hideDialogs}
+              isLoading={this.state.isLoading}/>
+          </Show>
+        </Container>
+      </div>
     );
   }
 });

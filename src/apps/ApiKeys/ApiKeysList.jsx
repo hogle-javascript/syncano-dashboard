@@ -34,10 +34,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [
       {
@@ -73,7 +69,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`apikeys-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteApiKeyDialog', item)}
         showResetDialog={this.showDialog.bind(null, 'resetApiKeyDialog', item)}/>
@@ -113,6 +110,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="apikeys-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

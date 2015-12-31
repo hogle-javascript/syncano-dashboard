@@ -11,8 +11,7 @@ import Actions from './CodeBoxesActions';
 import Store from './CodeBoxesStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {InnerToolbar, Socket, Container} from '../../common';
 
 // Local components
 import CodeBoxesList from './CodeBoxesList';
@@ -46,23 +45,25 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <CodeBoxDialog />
 
-        <Common.InnerToolbar title="CodeBox Sockets">
-          <Common.Socket.CodeBox
+        <InnerToolbar title="CodeBox Sockets">
+          <Socket.CodeBox
             tooltipPosition="bottom-left"
             onTouchTap={this.showCodeBoxDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <CodeBoxesList
-          name="CodeBox Sockets"
-          isLoading={this.state.isLoading}
-          items={this.state.items}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showCodeBoxDialog}
-          emptyItemContent="Create a CodeBox Socket"/>
-      </Container>
+        <Container>
+          <CodeBoxesList
+            name="CodeBox Sockets"
+            isLoading={this.state.isLoading}
+            items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.showCodeBoxDialog}
+            emptyItemContent="Create a CodeBox Socket"/>
+        </Container>
+      </div>
     );
   }
 });

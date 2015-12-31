@@ -86,9 +86,7 @@ export default Radium(React.createClass({
           checked={this.props.checked}
           handleClick={this.handleIconClick}
           checkable={this.props.checkable}/>
-
-        <div
-          style={styles.name}>
+        <div style={styles.name}>
           {this.props.children}
         </div>
       </div>

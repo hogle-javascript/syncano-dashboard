@@ -6,8 +6,7 @@ import SessionStore from '../apps/Session/SessionStore';
 import AuthConstants from '../apps/Account/AuthConstants';
 
 // Components
-import Header from '../apps/Header/Header';
-import ConversionPixel from '../common/ConversionPixel';
+import {ConversionPixel} from '../common';
 
 
 export default React.createClass({
@@ -47,11 +46,9 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Header />
         <Router.RouteHandler />
         {this.renderConversionPixels()}
       </div>
     );
   }
-
 });

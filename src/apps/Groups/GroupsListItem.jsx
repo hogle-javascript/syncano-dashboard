@@ -38,7 +38,7 @@ export default React.createClass({
           checked={item.checked}
           handleIconClick={this.props.onIconClick}
           className="col-flex-1">
-          {item.label}
+          <Common.Truncate text={item.label}/>
         </Column.CheckIcon>
         <Column.ID className="col-sm-4">{item.id}</Column.ID>
         <Column.Menu>

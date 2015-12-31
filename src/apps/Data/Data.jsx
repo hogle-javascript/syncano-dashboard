@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
-import Radium from 'radium';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -12,20 +11,19 @@ import Actions from './DataViewsActions';
 import Store from './DataViewsStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {Container, InnerToolbar, Socket} from '../../common';
 
 // Local components
 import DataList from './DataViewsList';
 import DataDialog from './DataViewDialog';
 
-export default Radium(React.createClass({
+export default React.createClass({
 
   displayName: 'Data',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
 
@@ -51,23 +49,25 @@ export default Radium(React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <DataDialog/>
 
-        <Common.InnerToolbar title="Data Sockets">
-          <Common.Socket.Data
+        <InnerToolbar title="Data Sockets">
+          <Socket.Data
             tooltipPosition="bottom-left"
-            onClick={Actions.showDialog}/>
-        </Common.InnerToolbar>
+            onClick={this.showDataViewDialog}/>
+        </InnerToolbar>
 
-        <DataList
-          name="Data Sockets"
-          isLoading={this.state.isLoading}
-          items={this.state.items}
-          hideDialogs={this.state.hideDialogs}
-          emptyItemHandleClick={this.showDataViewDialog}
-          emptyItemContent="Create a Data Socket"/>
-      </Container>
+        <Container>
+          <DataList
+            name="Data Sockets"
+            isLoading={this.state.isLoading}
+            items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
+            emptyItemHandleClick={this.showDataViewDialog}
+            emptyItemContent="Create a Data Socket"/>
+        </Container>
+      </div>
     );
   }
-}));
+});
