@@ -1,18 +1,19 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import StoreFormMixin from '../../mixins/StoreFormMixin';
-import DialogStoreMixin from '../../mixins/DialogStoreMixin';
+import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionStore from '../Session/SessionStore';
-import SolutionsActions from './CreateDialogActions';
+import Actions from './CreateDialogActions';
 
 export default Reflux.createStore({
-  listenables: SolutionsActions,
+  listenables: Actions,
+
   mixins: [
-    StoreFormMixin,
-    DialogStoreMixin
+    Mixins.StoreForm,
+    Mixins.DialogStore,
+    Mixins.StoreHelpers
   ],
 
   getInitialState() {
@@ -23,7 +24,17 @@ export default Reflux.createStore({
   },
 
   init() {
+    this.data = this.getInitialState();
+    Actions.fetchTags();
     this.listenToForms();
+  },
+
+  getTagsOptions() {
+    return this.getSelectOptions(this.data.allTags, 'name', 'name');
+  },
+
+  getItemTags() {
+    return this.getSelectValuesFromList(this.data.tags);
   },
 
   onCreateSolutionCompleted(solution) {
@@ -39,7 +50,25 @@ export default Reflux.createStore({
   onUpdateSolutionCompleted() {
     console.debug('SolutionDialogStore::onUpdateSolutionCompleted');
     this.dismissDialog();
-    SolutionsActions.fetchSolutions();
-  }
+    Actions.fetchSolutions();
+  },
 
+  onFetchTags() {
+    console.debug('SolutionsStore::onFetchTags');
+    this.data.isLoading = true;
+    this.trigger(this.data);
+  },
+
+  onFetchTagsCompleted(tags) {
+    console.debug('SolutionsStore::onFetchTagsCompleted');
+    this.data.isLoading = false;
+    this.data.allTags = tags.objects;
+    this.trigger(this.data);
+  },
+
+  onFetchTagsFailure() {
+    console.debug('SolutionsStore::onFetchTagsFailure');
+    this.data.isLoading = false;
+    this.trigger(this.data);
+  }
 });

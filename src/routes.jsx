@@ -303,8 +303,7 @@ export default (
       {/* Solutions */}
       <Route
         name="solutions"
-        path="/solutions"
-        >
+        path="/solutions">
         <Route
           name="solutions-list"
           handler={Solutions.ListView}

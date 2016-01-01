@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import Router from 'react-router';
-import Select from 'react-select';
 
 // Utils
 import Mixins from '../../mixins';
@@ -12,14 +11,17 @@ import SessionStore from '../Session/SessionStore';
 
 import Actions from './EditViewActions';
 import Store from './EditViewStore';
+import CreateDialogActions from './CreateDialogActions';
 
 import InstallDialogActions from './InstallDialogActions';
 
 // Components
-import {Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
-import {Dialog, Show, Fab, Solutions, SolutionStar} from '../../common';
+import {Header} from '../../apps';
+import {FontIcon, IconButton, RaisedButton, Avatar} from 'syncano-material-ui';
+import {Dialog, Show, Solutions, SolutionStar, InnerToolbar} from '../../common';
 import Container from '../../common/Container';
 
+import CreateDialog from './CreateDialog';
 import InstallDialog from './InstallDialog';
 
 export default React.createClass({
@@ -95,18 +97,8 @@ export default React.createClass({
     InstallDialogActions.showDialogWithPreFetch(this.getParams().solutionId);
   },
 
-  handleBackClick() {
-    SessionStore.getRouter().transitionTo('solutions');
-  },
-
   handleAddVersion() {
     SessionStore.getRouter().transitionTo('solutions-add-version', this.getParams());
-  },
-
-  handleTagsListChange(tagsString, tagsArray) {
-    Actions.updateSolution(this.state.item.id, {
-      tags: tagsArray.map((item) => item.value)
-    });
   },
 
   initDialogs() {
@@ -149,38 +141,28 @@ export default React.createClass({
       <div>
         {this.getDialogs()}
 
-        <InstallDialog />
+        <Header logo={true}/>
 
-        <Show if={this.isMySolution()}>
-          <Fab>
-            <Fab.TooltipItem
-              tooltip="Click here to create Solution"
-              onClick={this.handleAddVersion}
-              iconClassName="synicon-plus"/>
-          </Fab>
-        </Show>
+        <CreateDialog/>
+        <InstallDialog/>
 
-        <Toolbar style={{background: 'transparent', position: 'fixed', top: 64, padding: '0px'}}>
-          <ToolbarGroup float="left" style={{padding: '0px'}}>
-            <FontIcon
-              style={{paddingLeft: 10, paddingTop: 4, paddingRight: 10}}
-              className="synicon-arrow-left"
-              onClick={this.handleBackClick}/>
-            <ToolbarTitle text={'Solutions'}/>
-          </ToolbarGroup>
-
-          <ToolbarGroup float="right">
-            <Show if={this.isMySolution()}>
-              <IconButton
-                style={{fontSize: 25, marginTop: 5}}
-                iconClassName="synicon-delete"
-                tooltip="Delete Solution"
-                tooltipPosition="bottom-left"
-                onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}
-                />
-            </Show>
-          </ToolbarGroup>
-        </Toolbar>
+        <InnerToolbar
+          title={`Solution: ${this.state.item.label} (ID: ${this.state.item.id})`}
+          backFallback={this.transitionTo.bind(null, 'solutions')}>
+          <Show if={this.isMySolution()}>
+            <IconButton
+              style={{fontSize: 25, marginTop: 5}}
+              iconClassName="synicon-pencil"
+              tooltip="Edit Solution"
+              onTouchTap={CreateDialogActions.showDialog.bind(null, this.state.item)}/>
+            <IconButton
+              style={{fontSize: 25, marginTop: 5}}
+              iconClassName="synicon-delete"
+              tooltip="Delete Solution"
+              tooltipPosition="bottom-left"
+              onTouchTap={this.showDialog.bind(null, 'deleteCreateDialog')}/>
+          </Show>
+        </InnerToolbar>
 
         <Container id='solutions' style={styles.main}>
 
@@ -198,31 +180,13 @@ export default React.createClass({
                   {this.state.item.description}
                 </div>
 
-                <Show if={!this.isMySolution()}>
-                  <div className="row">
-                    <FontIcon
-                      style={styles.cardTextListIcon}
-                      className="synicon-tag"
-                      color="rgba(222, 222, 222, 0.54)"/>
-                    {this.renderItemTags()}
-                  </div>
-                </Show>
-
-                <Show if={this.isMySolution()}>
-                  <div className="row vp-1-b">
-                    <div className="col-flex-1">
-                      <div className="vp-1-b">Tags</div>
-                      <Select
-                        value={Store.getItemTags()}
-                        delimiter=","
-                        multi={true}
-                        allowCreate={true}
-                        placeholder="Select tags"
-                        options={Store.getTagsOptions()}
-                        onChange={this.handleTagsListChange}/>
-                    </div>
-                  </div>
-                </Show>
+                <div className="row">
+                  <FontIcon
+                    style={styles.cardTextListIcon}
+                    className="synicon-tag"
+                    color="rgba(222, 222, 222, 0.54)"/>
+                  {this.renderItemTags()}
+                </div>
 
                 <div className="row" style={{marginLeft: '-18px'}}>
                   <SolutionStar
@@ -233,7 +197,6 @@ export default React.createClass({
                 </div>
 
                 <div className="row vp-5-t align-left">
-
                   <RaisedButton
                     primary={true}
                     disabled={this.state.versions && this.state.versions.length < 1}
