@@ -42,12 +42,14 @@ export default React.createClass({
   componentDidMount() {
     console.info('SolutionEdit::componentDidMount');
 
+    InstancesActions.fetch();
+    Actions.fetch();
+  },
+
+  componentDidUpdate() {
     if (this.getParams().action === 'install') {
       this.handleInstallSolution();
     }
-
-    InstancesActions.fetch();
-    Actions.fetch();
   },
 
   getStyles() {
