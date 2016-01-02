@@ -148,6 +148,7 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.trigger(this.data);
   },
+
   onFetchTags() {
     console.debug('SolutionsStore::onFetchTags');
     this.data.isLoading = true;
@@ -165,5 +166,4 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.trigger(this.data);
   }
-
 });

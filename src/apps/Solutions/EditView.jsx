@@ -103,9 +103,9 @@ export default React.createClass({
     SessionStore.getRouter().transitionTo('solutions-add-version', this.getParams());
   },
 
-  handleTagsListChange(value) {
+  handleTagsListChange(tagsString, tagsArray) {
     Actions.updateSolution(this.state.item.id, {
-      tags: value
+      tags: tagsArray.map((item) => item.value)
     });
   },
 
