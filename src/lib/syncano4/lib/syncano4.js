@@ -518,6 +518,7 @@ var Syncano = (function() {
      */
     this.ApiKeys = {
       create: this.createApiKey.bind(this),
+      update: this.updateApiKey.bind(this),
       list: this.listApiKeys.bind(this),
       get: this.getApiKey.bind(this),
       remove: this.removeApiKey.bind(this),
@@ -1801,6 +1802,24 @@ var Syncano = (function() {
         throw new Error('Not connected to any instance');
       }
       return this.request('POST', linksObject.instance_api_keys, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Updates api key
+     *
+     * @method  Syncano#updateApiKey
+     * @alias Syncano.ApiKeys.update
+     * @param  {object} params
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {object} promise
+     */
+    updateApiKey: function(id, params, callbackOK, callbackError) {
+      params = params || {};
+      if (typeof linksObject.instance_api_keys === 'undefined') {
+        throw new Error('Not connected to any instance');
+      }
+      return this.request('PATCH', linksObject.instance_api_keys + '/' + id, params, callbackOK, callbackError);
     },
 
     /**
