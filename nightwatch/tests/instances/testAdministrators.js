@@ -20,10 +20,10 @@ export default {
       .navigate()
       .waitForElementVisible('@adminsListItem')
       .clickElement('@addAdminButton')
-      .waitForElementVisible('@addAdminModalTitle');
-    adminsPage.fillInputField('@addAdminModalEmailInput', email, client);
-    adminsPage.selectFromDropdown('@addAdminModalRoleDropdown', '@addAdminModalRoleDropdownRead', client);
-    adminsPage.clickElement('@confirmButton')
+      .waitForElementVisible('@addAdminModalTitle')
+      .fillInput('@addAdminModalEmailInput', email)
+      .selectDropdownValue('@addAdminModalRoleDropdown', 'read')
+      .clickElement('@confirmButton')
       .waitForElementVisible('@adminEmailTableRow');
   },
   'User deletes an Administrator': (client) => {

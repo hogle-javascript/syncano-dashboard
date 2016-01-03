@@ -14,6 +14,7 @@ export default {
   },
   'User adds a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
+    const snippet = Utils.addSuffix('snippet');
 
     socketsPage
       .navigate()
@@ -21,7 +22,7 @@ export default {
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
       .fillInput('@modalNameInput', 'codeBox')
-      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', 'snippet')
+      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', snippet)
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
