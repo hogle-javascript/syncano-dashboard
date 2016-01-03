@@ -12,14 +12,14 @@ import Actions from './ListViewActions';
 import SessionStore from '../Session/SessionStore';
 
 // Components
+import {Header} from '../../apps';
 import {Styles, List, ListItem, Divider} from 'syncano-material-ui';
-import Common from '../../common';
+import {Loading, Solutions, Tags, Socket, Show, InnerToolbar, Sidebar, Container} from '../../common';
 
-import CreateDialogActions from './CreateDialogActions';
 import CreateDialog from './CreateDialog';
-
-import InstallDialogActions from './InstallDialogActions';
+import CreateDialogActions from './CreateDialogActions';
 import InstallDialog from './InstallDialog';
+import InstallDialogActions from './InstallDialogActions';
 
 export default React.createClass({
 
@@ -40,13 +40,6 @@ export default React.createClass({
 
   getStyles() {
     return {
-      container: {
-        width: '90%',
-        margin: '96px auto'
-      },
-      sidebar: {
-        minWidth: 230
-      },
       listItemChecked: {
         background: Styles.Colors.lightBlue50
       }
@@ -94,56 +87,53 @@ export default React.createClass({
 
     return (
       <div id='solutions'>
-        <CreateDialog />
-        <InstallDialog />
-
-        <Common.Show if={SessionStore.hasFriendlyUser()}>
-          <Common.Fab>
-            <Common.Fab.TooltipItem
-              tooltip="Click here to create a Solution"
-              onClick={this.showSolutionDialog}
-              iconClassName="synicon-plus"
-              />
-          </Common.Fab>
-        </Common.Show>
-
-        <div style={styles.container}>
-          <div className="row">
-            <div style={styles.sidebar}>
-              <List zDepth={1} className="vm-6-b">
-                <ListItem
-                  innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
-                  primaryText="All solutions"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'public')}/>
-                <Divider />
-                <ListItem
-                  innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
-                  primaryText="Favorite"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}/>
-                <ListItem
-                  innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
-                  primaryText="My solutions"
-                  onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}/>
-              </List>
-              <Common.Tags.List
-                items={this.state.tags}
-                selectedItems={this.state.selectedTags}
-                toggleTagSelection={this.handleToggleTagSelection}
-                resetTagsSelection={this.handleResetTagsSelection}/>
-            </div>
-            <div className="col-flex-1">
-              <Common.Loading show={!this.state.items}>
-                <Common.Solutions.List
+        <div className="row">
+          <Sidebar>
+            <List className="vm-3-b">
+              <ListItem
+                innerDivStyle={this.state.filter === 'public' ? styles.listItemChecked : {}}
+                primaryText="All solutions"
+                onTouchTap={this.handleChangeFilter.bind(this, 'public')}/>
+              <Divider />
+              <ListItem
+                innerDivStyle={this.state.filter === 'starred_by_me' ? styles.listItemChecked : {}}
+                primaryText="Favorite"
+                onTouchTap={this.handleChangeFilter.bind(this, 'starred_by_me')}/>
+              <ListItem
+                innerDivStyle={this.state.filter === 'created_by_me' ? styles.listItemChecked : {}}
+                primaryText="My solutions"
+                onTouchTap={this.handleChangeFilter.bind(this, 'created_by_me')}/>
+            </List>
+            <Tags.List
+              items={this.state.tags}
+              selectedItems={this.state.selectedTags}
+              toggleTagSelection={this.handleToggleTagSelection}
+              resetTagsSelection={Actions.resetTagsSelection}/>
+          </Sidebar>
+          <div className="col-flex-1">
+            <Header/>
+            <InnerToolbar>
+              <Show if={SessionStore.hasFriendlyUser()}>
+                <Socket
+                  tooltip="Click here to create a Solution"
+                  onTouchTap={this.showSolutionDialog}/>
+              </Show>
+            </InnerToolbar>
+            <Container>
+              <Loading show={!this.state.items}>
+                <Solutions.List
                   items={this.state.items}
                   onInstall={this.handleInstallClick}
                   onSeeMore={this.handleSeeMoreClick}
                   onTagClick={this.handleTagClick}
                   onUnstar={this.handleUnstarClick}
                   onStar={this.handleStarClick}/>
-              </Common.Loading>
-            </div>
+              </Loading>
+            </Container>
           </div>
         </div>
+        <CreateDialog/>
+        <InstallDialog/>
       </div>
     );
   }
