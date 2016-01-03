@@ -1,3 +1,5 @@
+import Utils from '../../utils';
+
 export default {
   tags: ['api_keys'],
   before(client) {
@@ -14,11 +16,12 @@ export default {
 
   'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
+    const description = Utils.addSuffix();
 
     apiKeysPage
       .navigate()
       .clickElement('@addApiKeyButton')
-      .fillInput('@createModalDescriptionInput')
+      .fillInput('@createModalDescriptionInput', description)
       .clickElement('@confirmButton')
       .waitForModalToClose()
       .waitForElementVisible('@apiKeysTableRow');

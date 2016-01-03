@@ -16,27 +16,28 @@ export default {
     const usersPage = client.page.usersPage();
     const suffix = utils.addSuffix('group');
 
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList');
-    usersPage.clickElement('@addGroupButton');
-    usersPage.waitForElementPresent('@addGroupModalTitle');
-    usersPage.fillInputField('@groupName', suffix);
-    usersPage.clickElement('@confirm');
-    usersPage.waitForElementPresent('@groupTableRow');
+    usersPage
+      .navigate()
+      .waitForElementVisible('@groupEditButton')
+      .waitForElementVisible('@userList')
+      .clickElement('@addGroupButton')
+      .waitForElementPresent('@addGroupModalTitle')
+      .fillInput('@groupName', suffix)
+      .clickElement('@confirm')
+      .waitForElementPresent('@groupTableRow');
   },
   'Administrator deletes a Group': (client) => {
     const usersPage = client.page.usersPage();
 
-    usersPage.navigate();
-    usersPage.waitForElementVisible('@groupEditButton');
-    usersPage.waitForElementVisible('@userList');
-    usersPage.clickDropdown('@groupTableRowDropdown');
-    usersPage.clickElement('@deleteButtonDropdown');
-    usersPage.waitForElementPresent('@deleteGroupModalTitle');
-    usersPage.clickElement('@confirm');
-    usersPage.waitForElementVisible('@groupList');
-    usersPage.waitForElementNotPresent('@groupTableRowDropdown');
+    usersPage
+      .navigate()
+      .waitForElementVisible('@groupEditButton')
+      .waitForElementVisible('@userList')
+      .clickListItemDropdown('@groupTableRowDropdown', 'Delete')
+      .waitForElementPresent('@deleteGroupModalTitle')
+      .clickElement('@confirm')
+      .waitForElementVisible('@groupList')
+      .waitForElementNotPresent('@groupTableRowDropdown');
   }
   // 'Administrator adds a User': (client) => {
   //   const usersPage = client.page.usersPage();

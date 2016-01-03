@@ -50,16 +50,8 @@ export default {
       selector: '//div[@class="snippet-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalSnippetName: {
-      selector: '//div[text()="snippet"]',
-      locateStrategy: 'xpath'
-    },
     addScheduleModalCronTab: {
       selector: '//div[@class="crontab-dropdown"]',
-      locateStrategy: 'xpath'
-    },
-    addScheduleModalCronTabName: {
-      selector: '//div[text()="Run once a year at midnight"]',
       locateStrategy: 'xpath'
     },
     scheduleTableRow: {

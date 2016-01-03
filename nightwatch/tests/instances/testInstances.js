@@ -27,8 +27,9 @@ export default {
 
     const instanceNames = [];
 
-    instancesPage.navigate();
-    instancesPage.waitForElementPresent('@instancesTableName');
+    instancesPage
+      .navigate()
+      .waitForElementPresent('@instancesTableName');
     const instanceName = instancesPage.elements.instancesTableName;
 
     client.elements(instanceName.locateStrategy, instanceName.selector, (result) => {
@@ -38,33 +39,30 @@ export default {
         });
       });
     });
-    instancesPage.waitForElementPresent('@instancesTableName');
-    instancesPage.clickElement('@instancesTableName');
-    leftMenuPage.clickElement('@instancesDropdown');
-    leftMenuPage.clickElement('@instancesListSecondItem');
+    instancesPage
+      .waitForElementPresent('@instancesTableName')
+      .clickElement('@instancesTableName');
+    leftMenuPage
+      .clickElement('@instancesDropdown')
+      .clickElement('@instancesListSecondItem');
+
     socketsPage.waitForElementPresent('@emptySocketsHeading');
     const dropdown = leftMenuPage.elements.instancesDropdownName.selector;
 
     client.getText('xpath', dropdown, (text) => {
       client.assert.equal(text.value, instanceNames[0]);
     });
+  },
+  'Test Select and Delete multiple Instances': (client) => {
+    const instancesPage = client.page.instancesPage();
+
+    instancesPage
+      .navigate()
+      .clickListItemDropdown('@instancesDropdown', 'Select')
+      .clickListItemDropdown('@instancesDropdown', 'Delete')
+      .clickElement('@confirmDeleteButton')
+      .waitForElementNotPresent('@deleteInstanceModalTitle');
+
+    instancesPage.expect.element('@welcomeDialogCreateInstance').to.be.present.after(10000);
   }
-  // Deleted Fabs cousing this test fails so it will be enabled when delete button on toolbar will be added
-  //'Test Select and Delete multiple Instances': (client) => {
-  //  const instancesPage = client.page.instancesPage();
-  //
-  //  instancesPage
-  //    .navigate()
-  //    .waitForElementPresent('@selectInstance')
-  //    .moveToElement('@selectInstance', 0, 0)
-  //    .clickElement('@instanceToSelect')
-  //    .clickElement('@selectButton')
-  //    .clickElement('@deleteButton');
-  //  client.pause(1000);
-  //  instancesPage
-  //    .clickElement('@confirmDeleteButton')
-  //    .waitForElementNotVisible('@deleteInstanceModalTitle');
-  //
-  //  instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
-  //}
 };

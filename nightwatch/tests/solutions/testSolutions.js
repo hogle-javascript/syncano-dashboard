@@ -13,26 +13,29 @@ export default {
   'Administrator can view Favorite Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage.navigate();
-    solutionsPage.clickElement('@favorite');
-    solutionsPage.waitForElementVisible('@favoriteSolutionTitle');
+    solutionsPage
+      .navigate()
+      .clickElement('@favorite')
+      .waitForElementVisible('@favoriteSolutionTitle');
   },
   'Administrator can view his Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage.navigate();
-    solutionsPage.clickElement('@mySolutions');
-    solutionsPage.waitForElementVisible('@mySolutionTitle');
+    solutionsPage
+      .navigate()
+      .clickElement('@mySolutions')
+      .waitForElementVisible('@mySolutionTitle');
   },
   'Administrator can filter solutions by tags': (client) => {
     let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();
     const elementsWithTag = solutionsPage.elements.tagsJs;
 
-    solutionsPage.navigate();
-    solutionsPage.waitForElementVisible('@tagsList');
-    solutionsPage.clickElement('@tagsListJs');
-    solutionsPage.waitForElementVisible('@tagsJs');
+    solutionsPage
+      .navigate()
+      .waitForElementVisible('@tagsList')
+      .clickElement('@tagsListJs')
+      .waitForElementVisible('@tagsJs');
 
     solutionsPage.getText('@tagListItemCount', (result) => {
       tagsCount = parseInt(result.value, 10);

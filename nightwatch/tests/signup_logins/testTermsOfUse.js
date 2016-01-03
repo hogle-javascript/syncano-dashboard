@@ -3,8 +3,9 @@ module.exports = {
   'User Goes to terms of use page': (client) => {
     const signupPage = client.page.signupPage();
 
-    signupPage.navigate();
-    signupPage.clickTermsOfUseLink();
+    signupPage
+      .navigate()
+      .clickTermsOfUseLink();
     client.pause(1000);
 
     client.windowHandles((result) => {

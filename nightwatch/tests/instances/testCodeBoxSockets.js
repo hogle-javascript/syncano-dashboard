@@ -14,20 +14,21 @@ export default {
   },
   'User adds a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
-    const snippet = Utils.addSuffix('snippet');
+    const codeBox = Utils.addSuffix('codeBox');
 
     socketsPage
       .navigate()
       .waitForElementVisible('@codeBoxSocketItem')
       .clickElement('@addCodeBoxButton')
       .waitForElementVisible('@addCodeBoxModalTitle')
-      .fillInput('@modalNameInput', 'codeBox')
-      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', snippet)
+      .fillInput('@modalNameInput', codeBox)
+      .selectDropdownValue('@addCodeBoxModalSnippetDropdown', 'snippet')
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow');
   },
   'User edits a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();
+    const edited = Utils.addSuffix('edited');
 
     socketsPage
       .navigate()
@@ -35,12 +36,12 @@ export default {
       .clickElement('@codeBoxSocketDropDown')
       .clickElement('@editDropdownItem')
       .waitForElementVisible('@editCodeBoxModalTitle')
-      .fillInput('@modalDescriptionInput', 'edit')
+      .fillInput('@modalDescriptionInput', edited)
       .clickElement('@confirmButton')
       .waitForElementVisible('@codeBoxTableRow')
       .waitForElementVisible('@codeBoxTableRowDescription');
 
-    socketsPage.verify.containsText('@codeBoxTableRowDescription', Utils.addSuffix('edit'));
+    socketsPage.verify.containsText('@codeBoxTableRowDescription', edited);
   },
   'User deletes a CodeBox Socket': (client) => {
     const socketsPage = client.page.socketsPage();

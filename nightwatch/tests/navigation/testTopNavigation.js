@@ -34,8 +34,9 @@ module.exports = {
   'Admin can view notification dropdown': (client) => {
     const topNavigationPage = client.page.topNavigationPage();
 
-    topNavigationPage.navigate();
-    topNavigationPage.clickElement('@menuNotifications');
-    topNavigationPage.waitForElementVisible('@notificationsDropdown');
+    topNavigationPage
+      .navigate()
+      .clickElement('@menuNotifications')
+      .waitForElementVisible('@notificationsDropdown');
   }
 };

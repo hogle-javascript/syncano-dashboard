@@ -38,10 +38,12 @@ module.exports = {
     const schedulesPage = client.page.schedulesPage();
     const triggersPage = client.page.triggersPage();
 
-    instancesPage.navigate();
-    instancesPage.clickElement('@instancesTableName');
-    socketsPage.waitForElementPresent('@codeBoxSocketItem');
-    socketsPage.waitForElementPresent('@dataListItem');
+    instancesPage
+      .navigate()
+      .clickElement('@instancesTableName');
+    socketsPage
+      .waitForElementPresent('@codeBoxSocketItem')
+      .waitForElementPresent('@dataListItem');
     channelsPage.waitForElementPresent('@channelListItem');
     schedulesPage.waitForElementPresent('@scheduleListItem');
     triggersPage.waitForElementPresent('@triggerListItem');
@@ -69,12 +71,13 @@ module.exports = {
 
     leftMenuPage.clickElement('@snippets');
     snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage.clickElement('@config');
-    snippetEditPage.waitForElementPresent('@configKeyField');
-    snippetEditPage.waitForElementPresent('@configValueField');
-    snippetEditPage.waitForElementPresent('@configAddFieldButton');
-    snippetEditPage.verify.containsText('@configKeyField', '');
-    snippetEditPage.verify.containsText('@configValueField', '');
+    snippetEditPage
+      .clickElement('@config')
+      .waitForElementPresent('@configKeyField')
+      .waitForElementPresent('@configValueField')
+      .waitForElementPresent('@configAddFieldButton')
+      .verify.containsText('@configKeyField', '')
+      .verify.containsText('@configValueField', '');
   },
   'User goes to Snippet traces view': (client) => {
     const leftMenuPage = client.page.leftMenuPage();
@@ -83,8 +86,9 @@ module.exports = {
 
     leftMenuPage.clickElement('@snippets');
     snippetsPage.clickElement('@snippetListItem');
-    snippetEditPage.clickElement('@traces');
-    snippetEditPage.waitForElementPresent('@tracesEmpty');
+    snippetEditPage
+      .clickElement('@traces')
+      .waitForElementPresent('@tracesEmpty');
   },
   'User goes to Data Objects View': (client) => {
     const leftMenuPage = client.page.leftMenuPage();

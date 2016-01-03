@@ -29,9 +29,10 @@ export default {
       .url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`)
       .refresh();
     classesPage
-      .clickDropdownSelect('@classesListMenu', 'select')
+      .clickListItemDropdown('@classesListMenu', 'Select')
       .clickElement('@selectUserClass')
-      .clickDropdownDelete('@classesListMenu')
+      .clickListItemDropdown('@classesListMenu', 'Delete')
+      .clickElement('@confirmDeleteButton')
       .waitForElementVisible('@classTableRows');
     const classTableRows = classesPage.elements.classTableRows.selector;
     const userProfileClassName = classesPage.elements.userProfileClassName.selector;
