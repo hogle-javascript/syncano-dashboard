@@ -417,6 +417,7 @@ var Syncano = (function() {
      * @property {function} get - shortcut to {@link Syncano#getInstance} method
      * @property {function} remove - shortcut to {@link Syncano#removeInstance} method
      * @property {function} update - shortcut to {@link Syncano#updateInstance} method
+     * @property {function} rename - shortcut to {@link Syncano#renameInstance} method
      * @property {function} listAdmins - shortcut to {@link Syncano#listInstanceAdmins} method
      */
     this.Instances = {
@@ -426,6 +427,7 @@ var Syncano = (function() {
       remove: this.removeInstance.bind(this),
       removeShared: this.removeSharedInstance.bind(this),
       update: this.updateInstance.bind(this),
+      rename: this.renameInstance.bind(this),
       listAdmins: this.listInstanceAdmins.bind(this)
     };
 
@@ -1010,6 +1012,26 @@ var Syncano = (function() {
         throw new Error('Missing instance name');
       }
       return this.request('PATCH', 'v1/instances/' + name, params, callbackOK, callbackError);
+    },
+
+    /**
+     * Renames instance identified by specified name
+     *
+     * @method Syncano#renameInstance
+     * @alias Syncano.Instances.rename
+     * @param {string} name - name of the instance to change
+     * @param {Object} params - new values of the instance parameters
+     * @param {string} params.new_name - new name of the instance
+     * @param {string} params.description - new description of the instance
+     * @param {function} [callbackOK] - optional method to call on success
+     * @param {function} [callbackError] - optional method to call when request fails
+     * @returns {Object} promise
+     */
+    renameInstance: function(name, params, callbackOK, callbackError) {
+      if (typeof name === 'undefined' || name.length === 0) {
+        throw new Error('Missing instance name');
+      }
+      return this.request('POST', 'v1/instances/' + name + '/rename/', params, callbackOK, callbackError);
     },
 
     /**
