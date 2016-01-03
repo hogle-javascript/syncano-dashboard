@@ -12,11 +12,11 @@ export default {
       locateStrategy: 'xpath'
     },
     favorite: {
-      selector: '//div[@class="vm-6-b"]//div[text()="Favorite"]',
+      selector: '//div[text()="Favorite"]',
       locateStrategy: 'xpath'
     },
     mySolutions: {
-      selector: '//div[@class="vm-6-b"]//div[text()="My solutions"]',
+      selector: '//div[text()="My solutions"]',
       locateStrategy: 'xpath'
     },
     favoriteSolutionTitle: {
