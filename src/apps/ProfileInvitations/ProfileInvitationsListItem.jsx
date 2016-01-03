@@ -24,7 +24,7 @@ export default React.createClass({
           background={MUI.Styles.Colors.blue500}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          {item.instance}
+          <Common.Truncate text={item.instance}/>
         </Column.CheckIcon>
         <Column.Desc>{item.inviter}</Column.Desc>
         <Column.Desc>{item.role}</Column.Desc>

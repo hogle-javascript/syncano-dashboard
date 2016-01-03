@@ -22,6 +22,10 @@ export default Radium(React.createClass({
 
   getStyles() {
     return {
+      root: {
+        height: '100%',
+        margin: 0
+      },
       leftSide: {
         marginRight: 8,
         display: 'flex',
@@ -148,7 +152,9 @@ export default Radium(React.createClass({
     let styles = this.getStyles();
 
     return (
-      <div className="row align-center vp-3-t vp-3-b">
+      <div
+        className="row align-center"
+        style={styles.root}>
         <div style={styles.leftSide}>
           <div>
             {this.renderLeftSide()}

@@ -27,7 +27,7 @@ export default React.createClass({
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <div>{item.email}</div>
+          <Common.Truncate text={item.email}/>
         </Common.ColumnList.Column.CheckIcon>
         <Common.ColumnList.Column.Desc>{item.role}</Common.ColumnList.Column.Desc>
         <Common.ColumnList.Column.Date date={item.created_at}/>

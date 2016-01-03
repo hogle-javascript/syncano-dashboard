@@ -1,12 +1,13 @@
 import React from 'react';
 import {State, Navigation, RouteHandler} from 'react-router';
 
-import {LeftNavMixin} from '../mixins';
-
 // Stores and Action
 import SessionActions from '../apps/Session/SessionActions';
 
-import {LeftNav, List, Divider} from 'syncano-material-ui';
+import Sticky from 'react-stickydiv';
+import Header from '../apps/Header';
+import {List, Divider} from 'syncano-material-ui';
+import {Sidebar} from '../common/';
 import {LinkListItem} from '../common/Lists';
 import HeaderInstancesDropdown from '../apps/Header/HeaderInstancesDropdown';
 import InstanceDialog from '../apps/Instances/InstanceDialog';
@@ -20,7 +21,6 @@ export default React.createClass({
   },
 
   mixins: [
-    LeftNavMixin,
     State,
     Navigation
   ],
@@ -36,25 +36,15 @@ export default React.createClass({
 
   getStyles() {
     return {
-      leftNav: {
-        paddingTop: 50,
-        zIndex: 7,
-        overflow: 'visible',
-        boxShadow: '',
-        backgroundColor: 'rgba(245,245,245,0.30)'
-      },
       listSubheader: {
         color: 'rgba(0, 0, 0, 0.54)',
         fontSize: 12,
         paddingTop: 4,
         fontWeight: 800,
-        paddingLeft: 16
+        paddingLeft: 24
       },
       menuStyle: {
         backgroundColor: 'rgba(245,245,245,0.30)'
-      },
-      content: {
-        margin: '96px 24px 48px 284px'
       },
       addInstanceItem: {
         fontSize: 14,
@@ -80,42 +70,43 @@ export default React.createClass({
 
     return (
       <div>
+        <div className="row">
+          <Sidebar>
+            <Sticky offsetTop={50}>
+              <HeaderInstancesDropdown />
+            </Sticky>
+            <List
+              style={styles.menuStyle}
+              subheaderStyle={styles.listSubheader}>
+              <LinkListItem routeName="sockets" primaryText="Sockets"/>
+            </List>
+            <Divider/>
+            <List
+              style={styles.menuStyle}
+              subheader="Modules"
+              subheaderStyle={styles.listSubheader}>
+              <LinkListItem routeName="users" primaryText="Users & Groups"/>
+              <LinkListItem routeName="classes" primaryText="Classes"/>
+              <LinkListItem routeName="snippets" primaryText="Snippets"/>
+            </List>
+            <Divider/>
+            <List
+              style={styles.menuStyle}
+              subheader="Settings"
+              subheaderStyle={styles.listSubheader}>
+              <LinkListItem routeName="instance-edit" primaryText="General"/>
+              <LinkListItem routeName="admins" primaryText="Administrators"/>
+              <LinkListItem routeName="api-keys" primaryText="API keys"/>
+            </List>
+          </Sidebar>
+          <div className="col-flex-1">
+            <Header />
+            <RouteHandler />
+          </div>
+        </div>
         <InstanceDialog
           ref="addInstanceDialog"
           handleSubmit={this.redirectToNewInstance}/>
-        <LeftNav
-          open={true}
-          className="left-nav"
-          ref="leftNav"
-          style={styles.leftNav}>
-          <HeaderInstancesDropdown />
-          <List
-            style={styles.menuStyle}
-            subheaderStyle={styles.listSubheader}>
-            <LinkListItem routeName="sockets" primaryText="Sockets"/>
-          </List>
-          <Divider/>
-          <List
-            style={styles.menuStyle}
-            subheader="Modules"
-            subheaderStyle={styles.listSubheader}>
-            <LinkListItem routeName="users" primaryText="Users & Groups"/>
-            <LinkListItem routeName="classes" primaryText="Classes"/>
-            <LinkListItem routeName="snippets" primaryText="Snippets"/>
-          </List>
-          <Divider/>
-          <List
-            style={styles.menuStyle}
-            subheader="Settings"
-            subheaderStyle={styles.listSubheader}>
-            <LinkListItem routeName="instance-edit" primaryText="General"/>
-            <LinkListItem routeName="admins" primaryText="Administrators"/>
-            <LinkListItem routeName="api-keys" primaryText="API keys"/>
-          </List>
-        </LeftNav>
-        <div style={styles.content}>
-          <RouteHandler />
-        </div>
       </div>
     );
   }

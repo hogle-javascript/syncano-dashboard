@@ -32,20 +32,6 @@ export default React.createClass({
     return {};
   },
 
-  getStyles() {
-    return {
-      list: {
-        padding: 0,
-        background: 'none'
-      }
-    };
-  },
-
-  handleItemIconClick(id, state) {
-    console.info('InstancesList::handleItemIconClick', id, state);
-    Actions.checkItem(id, state);
-  },
-
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);
     let metadata = JSON.stringify({color, icon});
@@ -88,7 +74,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`shared-instances-list-item-${item.name}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteSharedInstanceDialog', item, SessionStore.getUser().id)}
         showCustomizeDialog={this.showDialog.bind(null, 'pickColorIconDialog')}/>
@@ -97,7 +84,6 @@ export default React.createClass({
 
   renderLoaded() {
     let checkedItems = Store.getNumberOfChecked();
-    let styles = this.getStyles();
 
     return (
       <Lists.Container className='instances-list'>
@@ -123,7 +109,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
-          style={styles.list}
+          key="shared-instances-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

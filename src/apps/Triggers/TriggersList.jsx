@@ -35,10 +35,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   handleItemClick(itemId) {
     this.transitionTo('trigger-traces', {
       instanceName: this.getParams().instanceName,
@@ -65,7 +61,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`triggers-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeTriggerDialog', item)}/>
     );
@@ -109,6 +106,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="triggers-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

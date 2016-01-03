@@ -18,7 +18,8 @@ export default React.createClass({
   getStyles() {
     return {
       base: {
-        fontSize: 14
+        fontSize: 14,
+        paddingLeft: 8
       },
       active: {
         color: Styles.Colors.blue400
@@ -37,12 +38,12 @@ export default React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let {routeName, ...other} = this.props;
+    let {routeName, style, ...other} = this.props;
     let isActive = this.isActive(routeName, this.getParams());
 
     return (
       <ListItem
-        style={this.Styles.mergeAndPrefix(styles.base, isActive && styles.active)}
+        style={this.Styles.mergeAndPrefix(styles.base, style, isActive && styles.active)}
         onTouchTap={this.handleTouchTap.bind(null, routeName)}
         desktop={true}
         href={this.getMenuItemHref(routeName)}

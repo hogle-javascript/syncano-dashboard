@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 
 // Utils
 import Mixins from '../../mixins';
@@ -11,8 +11,7 @@ import Actions from './ChannelsActions';
 import Store from './ChannelsStore';
 
 // Components
-import Common from '../../common';
-import Container from '../../common/Container/Container';
+import {InnerToolbar, Socket, Container} from '../../common';
 
 // Local components
 import ChannelsList from './ChannelsList';
@@ -23,8 +22,8 @@ export default React.createClass({
   displayName: 'Channels',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.Dialog,
@@ -49,22 +48,24 @@ export default React.createClass({
 
   render() {
     return (
-      <Container>
+      <div>
         <ChannelDialog />
 
-        <Common.InnerToolbar title="Channel Sockets">
-          <Common.Socket.Channel
+        <InnerToolbar title="Channel Sockets">
+          <Socket.Channel
             tooltipPosition="bottom-left"
             onTouchTap={this.showChannelDialog}/>
-        </Common.InnerToolbar>
+        </InnerToolbar>
 
-        <ChannelsList
-          name="Channels"
-          isLoading={this.state.isLoading}
-          items={this.state.items}
-          emptyItemHandleClick={this.showChannelDialog}
-          emptyItemContent="Create a Channel Socket"/>
-      </Container>
+        <Container>
+          <ChannelsList
+            name="Channels"
+            isLoading={this.state.isLoading}
+            items={this.state.items}
+            emptyItemHandleClick={this.showChannelDialog}
+            emptyItemContent="Create a Channel Socket"/>
+        </Container>
+      </div>
     );
   }
 });

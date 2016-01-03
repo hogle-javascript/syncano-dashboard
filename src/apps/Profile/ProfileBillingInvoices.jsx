@@ -6,10 +6,9 @@ import Actions from './ProfileActions';
 import Store from './ProfileBillingInvoicesStore';
 
 import MUI from 'syncano-material-ui';
-import Common from '../../common';
+import {Loading, Show, InnerToolbar, ColumnList, Lists} from '../../common';
 import EmptyContainer from '../../common/Container/EmptyContainer';
 
-let ColumnList = Common.ColumnList;
 let Column = ColumnList.Column;
 
 export default React.createClass({
@@ -50,30 +49,32 @@ export default React.createClass({
 
   render() {
     return (
-      <Common.Loading show={this.state.isLoading}>
-        <Common.Show if={this.state.invoices.length < 1}>
+      <Loading show={this.state.isLoading}>
+        <InnerToolbar title="Invoices"/>
+
+        <Show if={this.state.invoices.length < 1}>
           <EmptyContainer
             icon='synicon-file-outline'
             text='You have no invoices'/>
-        </Common.Show>
+        </Show>
 
-        <Common.Show if={this.state.invoices.length > 0}>
-          <Common.Lists.Container
+        <Show if={this.state.invoices.length > 0}>
+          <Lists.Container
             style={{width: '100%', margin: '65px 0px 0px 0px'}}
             className='invoices-list'>
-            <Common.ColumnList.Header>
+            <ColumnList.Header>
               <Column.ColumnHeader columnName="DESC">Period</Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">Invoice ID</Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">Amount</Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">Status</Column.ColumnHeader>
               <Column.ColumnHeader columnName="DESC">Action</Column.ColumnHeader>
-            </Common.ColumnList.Header>
-            <Common.Lists.List>
+            </ColumnList.Header>
+            <Lists.List key="invoices-list">
               {this.state.invoices.map(this.renderListItem)}
-            </Common.Lists.List>
-          </Common.Lists.Container>
-        </Common.Show>
-      </Common.Loading>
+            </Lists.List>
+          </Lists.Container>
+        </Show>
+      </Loading>
     );
   }
 });

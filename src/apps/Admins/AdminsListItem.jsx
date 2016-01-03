@@ -58,7 +58,7 @@ export default React.createClass({
           handleIconClick={this.props.onIconClick}
           checkable={!isOwner}>
           <div>
-            <div>{item.email}</div>
+            <Common.Truncate text={item.email}/>
             <div style={styles.ownerLabel}>
               {isOwner ? 'Owner (cannot be edited)' : null}
             </div>

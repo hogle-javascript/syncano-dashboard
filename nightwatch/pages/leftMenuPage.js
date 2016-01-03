@@ -7,7 +7,7 @@ export default {
       selector: '.left-nav'
     },
     instancesDropdown: {
-      selector: '//div[@class="left-nav"]/div/div[1]/div',
+      selector: '//div[@class="col-flex-0 left-nav"]/div/div[2]/div',
       locateStrategy: 'xpath'
     },
     instancesDropdownName: {
@@ -23,59 +23,59 @@ export default {
       locateStrategy: 'xpath'
     },
     classes: {
-      selector: '//div[@class="left-nav"]//div[text()="Classes"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Classes"]',
       locateStrategy: 'xpath'
     },
     snippets: {
-      selector: '//div[@class="left-nav"]//div[text()="Snippets"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Snippets"]',
       locateStrategy: 'xpath'
     },
     users: {
-      selector: '//div[@class="left-nav"]//div[text()="Users & Groups"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Users & Groups"]',
       locateStrategy: 'xpath'
     },
     schedules: {
-      selector: '//div[@class="left-nav"]//div[text()="Schedules"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Schedules"]',
       locateStrategy: 'xpath'
     },
     triggers: {
-      selector: '//div[@class="left-nav"]//div[text()="Triggers"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Triggers"]',
       locateStrategy: 'xpath'
     },
     general: {
-      selector: '//div[@class="left-nav"]//div[text()="General"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="General"]',
       locateStrategy: 'xpath'
     },
     administrators: {
-      selector: '//div[@class="left-nav"]//div[text()="Administrators"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Administrators"]',
       locateStrategy: 'xpath'
     },
     apiKeys: {
-      selector: '//div[@class="left-nav"]//div[text()="API keys"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="API keys"]',
       locateStrategy: 'xpath'
     },
     authentication: {
-      selector: '//div[@class="left-nav"]//div[text()="Authentication"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Authentication"]',
       locateStrategy: 'xpath'
     },
     invitations: {
-      selector: '//div[@class="left-nav"]//div[text()="Invitations"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Invitations"]',
       locateStrategy: 'xpath'
     },
     billingPlan: {
-      selector: '//div[@class="left-nav"]//div[text()="Billing plan"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing plan"]',
       locateStrategy: 'xpath'
     },
     paymentMethods: {
-      selector: '//div[@class="left-nav"]//div[text()="Payment methods"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Payment methods"]',
       locateStrategy: 'xpath'
     },
     invoices: {
-      selector: '//div[@class="left-nav"]//div[text()="Invoices"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Invoices"]',
       locateStrategy: 'xpath'
     },
     billingAddress: {
-      selector: '//div[@class="left-nav"]//div[text()="Billing address"]',
+      selector: '//div[@class="col-flex-0 left-nav"]//div[text()="Billing address"]',
       locateStrategy: 'xpath'
     }
   }

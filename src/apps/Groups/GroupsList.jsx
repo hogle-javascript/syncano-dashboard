@@ -36,10 +36,6 @@ export default Radium(React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -59,7 +55,8 @@ export default Radium(React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`groups-list-item-${item.id}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'removeGroupDialog', item)}/>
     );
@@ -96,6 +93,7 @@ export default Radium(React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="groups-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

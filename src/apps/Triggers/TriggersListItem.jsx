@@ -35,7 +35,7 @@ export default React.createClass({
           background={Common.Color.getColorByName('blue', 'xlight')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          {item.label}
+          <Common.Truncate text={item.label}/>
         </Column.CheckIcon>
         <Column.ID>{item.id}</Column.ID>
         <Column.Desc className="col-flex-1">

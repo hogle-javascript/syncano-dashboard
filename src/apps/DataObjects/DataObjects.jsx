@@ -1,6 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
-import Router from 'react-router';
+import {State, Navigation} from 'react-router';
 import _ from 'lodash';
 
 // Utils
@@ -13,7 +13,7 @@ import Store from './DataObjectsStore';
 
 // Components
 import {IconButton, RaisedButton, Table, TableBody} from 'syncano-material-ui';
-import {Dialog, Show, InnerToolbar, Loading} from '../../common';
+import {Dialog, Show, InnerToolbar, Loading, Container} from '../../common';
 
 // Local components
 import ColumnsFilterMenu from './ColumnsFilterMenu';
@@ -24,8 +24,8 @@ export default React.createClass({
   displayName: 'DataObjects',
 
   mixins: [
-    Router.State,
-    Router.Navigation,
+    State,
+    Navigation,
 
     Reflux.connect(Store),
     Mixins.Header,
@@ -185,41 +185,38 @@ export default React.createClass({
     let selectedMessageText = !_.isEmpty(this.state.selectedRows) ? 'selected: ' + this.state.selectedRows.length : '';
 
     return (
-      <div className="row" style={{paddingTop: 48, height: '100%'}}>
+      <div>
         {this.getDialogs()}
         <DataObjectDialog />
 
-        <div className="col-flex-1">
-          <InnerToolbar
-            title={`Class: ${this.getParams().className} ${selectedMessageText}`}
-            backFallback={this.handleBackClick}>
+        <InnerToolbar
+          title={`Class: ${this.getParams().className} ${selectedMessageText}`}
+          backFallback={this.handleBackClick}>
 
-            <IconButton
-              style={{fontSize: 25, marginTop: 5}}
-              iconClassName="synicon-plus"
-              tooltip="Add Data Objects"
-              onClick={this.showDataObjectDialog}/>
+          <IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-plus"
+            tooltip="Add Data Objects"
+            onClick={this.showDataObjectDialog}/>
 
-            <IconButton
-              style={{fontSize: 25, marginTop: 5}}
-              iconClassName="synicon-delete"
-              tooltip="Delete Data Objects"
-              disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
-              onTouchTap={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
+          <IconButton
+            style={{fontSize: 25, marginTop: 5}}
+            iconClassName="synicon-delete"
+            tooltip="Delete Data Objects"
+            disabled={this.state.selectedRows && this.state.selectedRows.length < 1}
+            onTouchTap={this.showDialog.bind(null, 'deleteDataObjectDialog')}/>
 
-            <ColumnsFilterMenu
-              columns={Store.getTableColumns()}
-              checkToggleColumn={Actions.checkToggleColumn}/>
+          <ColumnsFilterMenu
+            columns={Store.getTableColumns()}
+            checkToggleColumn={Actions.checkToggleColumn}/>
 
-          </InnerToolbar>
-
-          <div style={{clear: 'both', height: '100%'}}>
-            <Show if={this.state.isLoading}>
-              <Loading type='linear'/>
-            </Show>
-            {table}
-          </div>
-        </div>
+        </InnerToolbar>
+        <Container>
+          <Show if={this.state.isLoading}>
+            <Loading type='linear'/>
+          </Show>
+          {table}
+        </Container>
       </div>
     );
   }

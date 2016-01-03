@@ -45,7 +45,7 @@ export default React.createClass({
         return null;
       }
 
-      return <li>{item[paramName || 'name'] + association}</li>;
+      return <li key={item[paramName || 'name']}>{item[paramName || 'name'] + association}</li>;
     });
 
     return <ul>{listItems}</ul>;
@@ -64,10 +64,12 @@ export default React.createClass({
     let listItems = _.filter(this.getConfirmArguments(), (item) => _.isObject(item));
     let itemsCount = listItems.length;
 
-    return [
-      `Do you really want to ${actionName} ${itemsCount} ${pluralize(groupName, itemsCount)}?`,
-      this.getDialogList(listItems, itemLabelName)
-    ];
+    return (
+      <div>
+        {`Do you really want to ${actionName} ${itemsCount} ${pluralize(groupName, itemsCount)}?`}
+        {this.getDialogList(listItems, itemLabelName)}
+      </div>
+    );
   },
 
   render() {
