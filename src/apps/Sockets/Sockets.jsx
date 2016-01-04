@@ -101,7 +101,7 @@ export default React.createClass({
     if (!this.hasAnyItem()) {
       return (
         <Loading show={this.isViewLoading()}>
-          <EmptyView />;
+          <EmptyView />
         </Loading>
       );
     }

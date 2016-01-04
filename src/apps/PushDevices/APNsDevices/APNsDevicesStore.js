@@ -1,11 +1,11 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {CheckListStore, WaitForStore, StoreHelpers} from '../../mixins';
+import {CheckListStore, WaitForStore, StoreHelpers} from '../../../mixins';
 
 // Stores & Actions
-import Actions from './DevicesActions';
-import SessionActions from '../Session/SessionActions';
+import Actions from '../DevicesActions';
+import SessionActions from '../../Session/SessionActions';
 
 export default Reflux.createStore({
   listenables: Actions,
@@ -35,40 +35,40 @@ export default Reflux.createStore({
   },
 
   setDevices(devices) {
-    console.debug('GCMDevicesStore::setGCMDevices');
+    console.debug('PushNotificationsStore::setAPNsDevices');
     this.data.items = devices;
     this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   refreshData() {
-    console.debug('GCMDevicesStore::refreshData');
-    Actions.fetchGCMDevices();
+    console.debug('PushNotificationsStore::refreshData');
+    Actions.fetchAPNsDevices();
   },
 
-  onFetchGCMDevices() {
-    console.debug('GCMDevicesStore::onFetchGCMDevices');
+  onFetchAPNsDevices() {
+    console.debug('PushNotificationsStore::onFetchAPNsDevices');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onFetchGCMDevicesCompleted(devices) {
-    console.debug('GCMDevicesStore::onFetchGCMDevicesCompleted');
+  onFetchAPNsDevicesCompleted(devices) {
+    console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
     let items = this.saveListFromSyncano(devices);
 
     this.setDevices(items);
   },
 
-  onRemoveGCMDevices() {
-    console.debug('GCMDevicesStore::onRemoveGCMDevices');
+  onRemoveAPNsDevices() {
+    console.debug('APNsDevicesStore::onRemoveAPNsDevices');
     this.data.isLoading = true;
     this.trigger(this.data);
   },
 
-  onRemoveGCMDevicesCompleted() {
-    console.debug('GCMDevicesStore::onRemoveGCMDevicesCompleted');
-    this.data.isLoading = false;
+  onRemoveAPNsDevicesCompleted() {
+    console.debug('APNsDevicesStore::onRemoveAPNsDevicesCompleted');
     this.data.hideDialogs = true;
+    this.data.isLoading = false;
     this.refreshData();
   }
 });

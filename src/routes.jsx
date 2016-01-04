@@ -172,17 +172,17 @@ export default (
             <Route
               name="apns-devices"
               path="apns"
-              handler={PushDevices}/>
+              handler={PushDevices.APNs}/>
             <Route
               name="gcm-devices"
               path="gcm"
-              handler={PushDevices}/>
+              handler={PushDevices.GCM}/>
 
             <Redirect
               from="/instances/:instanceName/push-notifications/devices"
               to="apns-devices"
               />
-            <DefaultRoute handler={PushDevices} />
+            <DefaultRoute handler={PushDevices.APNs} />
             </Route>
           <DefaultRoute handler={PushNotifications}/>
         </Route>

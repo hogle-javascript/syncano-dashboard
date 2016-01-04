@@ -1,27 +1,21 @@
 import React from 'react';
 import Radium from 'radium';
-import Reflux from 'reflux';
 import {State, Navigation} from 'react-router';
 
-import {Dialogs} from '../../mixins';
+import {Dialogs as DialogsMixin} from '../../mixins';
 
 import Actions from './DevicesActions';
-import GCMDevicesStore from './GCMDevicesStore';
-import APNsDevicesStore from './APNsDevicesStore';
 
 import {Styles} from 'syncano-material-ui';
 import {InnerToolbar, Socket, Container} from '../../common';
 import DevicesList from './DevicesList';
-import DeviceDialog from './DeviceDialog';
 
 export default Radium(React.createClass({
 
   displayName: 'Devices',
 
   mixins: [
-    Reflux.connect(GCMDevicesStore, 'gcmDevices'),
-    Reflux.connect(APNsDevicesStore, 'apnsDevices'),
-    Dialogs,
+    DialogsMixin,
     State,
     Navigation
   ],
@@ -62,10 +56,6 @@ export default Radium(React.createClass({
     return this.isActive('apns-devices');
   },
 
-  isLoaded() {
-    return this.state.gcmDevices.isLoading && this.state.apnsDevices.isLoading;
-  },
-
   handleChangePlatform(routeName) {
     let instanceName = this.getParams().instanceName;
 
@@ -102,26 +92,17 @@ export default Radium(React.createClass({
   },
 
   render() {
-    let items = this.isIOSTabActive() ? this.state.apnsDevices.items : this.state.gcmDevices.items;
-
     return (
       <div>
-        <DeviceDialog
-          handleAddSubmit={this.isIOSTabActive() ? Actions.createAPNsDevice : Actions.createGCMDevice}
-          handleEditSubmit={this.isIOSTabActive() ? Actions.updateAPNsDevice : Actions.updateGCMDevice}/>
         <InnerToolbar title={this.renderTitle()}>
           <Socket
             tooltip="Add Device"
-            onTouchTap={this.showDeviceDialog}/>
+            onTouchTap={this.props.emptyItemHandleClick}/>
         </InnerToolbar>
         <Container>
           <DevicesList
-            isLoading={this.isLoaded()}
-            hideDialogs={this.state.gcmDevices.hideDialogs || this.state.apnsDevices.hideDialogs}
-            emptyItemContent="Add a Device"
-            emptyItemHandleClick={this.showDeviceDialog}
-            isAPNs={this.isIOSTabActive()}
-            items={items}/>
+            {...this.props}
+            isAPNs={this.isIOSTabActive()} />
         </Container>
       </div>
     );

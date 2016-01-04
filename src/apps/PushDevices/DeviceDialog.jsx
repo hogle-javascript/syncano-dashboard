@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 import _ from 'lodash';
 
 // Utils
-import {Dialog, Form} from '../../mixins';
+import {Dialog as DialogMixin, Form} from '../../mixins';
 
 // Stores and Actions
 import DeviceDialogStore from './DeviceDialogStore';
@@ -18,7 +18,7 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(DeviceDialogStore),
-    Dialog,
+    DialogMixin,
     Form
   ],
 
@@ -86,8 +86,8 @@ export default React.createClass({
 
     return (
       <Common.Dialog
-        key='dialog'
-        ref='dialog'
+        key="dialog"
+        ref="dialog"
         title={`${title} a Device`}
         onRequestClose={this.handleCancel}
         open={this.state.open}
@@ -95,34 +95,34 @@ export default React.createClass({
         <div>
           {this.renderFormNotifications()}
           <MUI.TextField
-            ref='label'
-            name='label'
+            ref="label"
+            name="label"
             valueLink={this.linkState('label')}
             fullWidth={true}
             errorText={this.getValidationMessages('label').join(' ')}
-            floatingLabelText='Label of the Device'/>
+            floatingLabelText="Label of the Device"/>
           <MUI.TextField
-            ref='registration_id'
-            name='registration_id'
+            ref="registration_id"
+            name="registration_id"
             disabled={this.hasEditMode()}
             valueLink={this.linkState('registration_id')}
             fullWidth={true}
             errorText={this.getValidationMessages('registration_id').join(' ')}
             floatingLabelText="Device's registration ID"/>
           <MUI.TextField
-            ref='user_id'
-            name='user_id'
+            ref="user_id"
+            name="user_id"
             valueLink={this.linkState('user_id')}
             fullWidth={true}
             errorText={this.getValidationMessages('user_id').join(' ')}
-            floatingLabelText='User ID'/>
+            floatingLabelText="User ID"/>
           <MUI.TextField
-            ref='device_id'
-            name='device_id'
+            ref="device_id"
+            name="device_id"
             valueLink={this.linkState('device_id')}
             fullWidth={true}
             errorText={this.getValidationMessages('device_id').join(' ')}
-            floatingLabelText='Device ID'/>
+            floatingLabelText="Device ID"/>
 
           <div style={styles.toggle}>
             <MUI.Toggle
@@ -134,8 +134,8 @@ export default React.createClass({
           </div>
         </div>
         <Common.Loading
-          type='linear'
-          position='bottom'
+          type="linear"
+          position="bottom"
           show={this.state.isLoading} />
       </Common.Dialog>
     );

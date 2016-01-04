@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Mixins from '../../mixins';
+import {Dialog as DialogMixin, Dialogs as DialogsMixin} from '../../mixins';
 import Actions from './DevicesActions';
-import GCMDevicesStore from './GCMDevicesStore';
-import APNsDevicesStore from './APNsDevicesStore';
+import GCMDevicesStore from './GCMDevices/GCMDevicesStore';
+import APNsDevicesStore from './APNsDevices/APNsDevicesStore';
 
 import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
@@ -15,8 +15,8 @@ export default React.createClass({
   displayName: 'DevicesList',
 
   mixins: [
-    Mixins.Dialog,
-    Mixins.Dialogs
+    DialogMixin,
+    DialogsMixin
   ],
 
   getInitialState() {
