@@ -3,7 +3,7 @@ import React from 'react';
 import {Dialog as DialogMixin, Dialogs as DialogsMixin} from '../../mixins';
 import Actions from './DevicesActions';
 import GCMDevicesStore from './GCMDevices/GCMDevicesStore';
-import APNsDevicesStore from './APNsDevices/APNsDevicesStore';
+import APNSDevicesStore from './APNSDevices/APNSDevicesStore';
 
 import {ColumnList, Container, Lists, Loading, Dialog} from '../../common';
 import ListItem from './DevicesListItem';
@@ -35,9 +35,9 @@ export default React.createClass({
         key: 'deleteDeviceDialog',
         ref: 'deleteDeviceDialog',
         title: 'Delete a Device',
-        handleConfirm: this.props.isAPNs ? Actions.removeAPNsDevices : Actions.removeGCMDevices,
+        handleConfirm: this.props.isAPNS ? Actions.removeAPNSDevices : Actions.removeGCMDevices,
         isLoading: this.props.isLoading,
-        items: this.props.isAPNs ? APNsDevicesStore.getCheckedItems() : GCMDevicesStore.getCheckedItems(),
+        items: this.props.isAPNS ? APNSDevicesStore.getCheckedItems() : GCMDevicesStore.getCheckedItems(),
         groupName: 'Device',
         itemLabelName: 'label'
       }
@@ -49,7 +49,7 @@ export default React.createClass({
       <ListItem
         key={`devices-list-item-${item.registration_id}`}
         onIconClick={Actions.checkItem}
-        icon={this.props.isAPNs ? 'apple' : 'android'}
+        icon={this.props.isAPNS ? 'apple' : 'android'}
         showDeleteDialog={this.showDialog.bind(null, 'deleteDeviceDialog', item)}
         item={item}/>
     );
@@ -57,8 +57,8 @@ export default React.createClass({
 
   render() {
     let checkedGCMCount = GCMDevicesStore.getNumberOfChecked();
-    let checkedAPNsCount = APNsDevicesStore.getNumberOfChecked();
-    let checkedItems = this.props.isAPNs ? checkedAPNsCount : checkedGCMCount;
+    let checkedAPNSCount = APNSDevicesStore.getNumberOfChecked();
+    let checkedItems = this.props.isAPNS ? checkedAPNSCount : checkedGCMCount;
 
     return (
       <div>

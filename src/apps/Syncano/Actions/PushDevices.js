@@ -10,7 +10,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  listAPNsDevices(params = {}) {
+  listAPNSDevices(params = {}) {
     _.defaults(params, {ordering: 'desc'});
     this.Connection
       .PushNotifications
@@ -19,7 +19,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  createAPNsDevice(payload) {
+  createAPNSDevice(payload) {
     this.Connection
       .PushNotifications
       .Devices
@@ -27,7 +27,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  updateAPNsDevice(payload) {
+  updateAPNSDevice(payload) {
     this.Connection
       .PushNotifications
       .Devices
@@ -35,7 +35,7 @@ export default {
       .then(this.completed)
       .catch(this.failure);
   },
-  removeAPNsDevices(devices) {
+  removeAPNSDevices(devices) {
     let promises = devices.map((device) => {
       return this.Connection
         .PushNotifications

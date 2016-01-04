@@ -30,16 +30,16 @@ export default Reflux.createStore({
     this.setLoadingStates();
   },
 
-  onCreateAPNsDeviceCompleted() {
+  onCreateAPNSDeviceCompleted() {
     console.debug('DeviceDialogStore::onCreateDeviceCompleted');
     this.dismissDialog();
-    Actions.fetchAPNsDevices();
+    Actions.fetchAPNSDevices();
   },
 
-  onUpdateAPNsDeviceCompleted() {
+  onUpdateAPNSDeviceCompleted() {
     console.debug('DeviceDialogStore::onUpdateDeviceCompleted');
     this.dismissDialog();
-    Actions.fetchAPNsDevices();
+    Actions.fetchAPNSDevices();
   },
 
   onCreateGCMDeviceCompleted() {

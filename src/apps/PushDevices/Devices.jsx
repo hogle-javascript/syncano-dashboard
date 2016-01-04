@@ -102,7 +102,7 @@ export default Radium(React.createClass({
         <Container>
           <DevicesList
             {...this.props}
-            isAPNs={this.isIOSTabActive()} />
+            isAPNS={this.isIOSTabActive()} />
         </Container>
       </div>
     );

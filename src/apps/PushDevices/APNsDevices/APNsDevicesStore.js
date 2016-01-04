@@ -37,25 +37,25 @@ export default Reflux.createStore({
   },
 
   setDevices(devices) {
-    console.debug('PushNotificationsStore::setAPNsDevices');
+    console.debug('PushNotificationsStore::setAPNSDevices');
     this.data.items = devices;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('PushNotificationsStore::refreshData');
-    Actions.fetchAPNsDevices();
+    Actions.fetchAPNSDevices();
   },
 
-  onFetchAPNsDevicesCompleted(devices) {
-    console.debug('PushNotificationsStore::onFetchAPNsDevicesCompleted');
+  onFetchAPNSDevicesCompleted(devices) {
+    console.debug('PushNotificationsStore::onFetchAPNSDevicesCompleted');
     let items = this.saveListFromSyncano(devices);
 
     this.setDevices(items);
   },
 
-  onRemoveAPNsDevicesCompleted() {
-    console.debug('APNsDevicesStore::onRemoveAPNsDevicesCompleted');
+  onRemoveAPNSDevicesCompleted() {
+    console.debug('APNSDevicesStore::onRemoveAPNSDevicesCompleted');
     this.data.hideDialogs = true;
     this.refreshData();
   }

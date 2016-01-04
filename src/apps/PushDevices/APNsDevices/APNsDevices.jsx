@@ -1,15 +1,15 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import APNsDevicesStore from './APNsDevicesStore';
+import APNsDevicesStore from './APNSDevicesStore';
 import Actions from '../DevicesActions';
 
 import Devices from '../Devices';
-import APNsDeviceDialog from './APNsDeviceDialog';
+import APNsDeviceDialog from './APNSDeviceDialog';
 
 export default React.createClass({
 
-  displayName: 'APNDevices',
+  displayName: 'APNSDapnsevices',
 
   mixins: [
     Reflux.connect(APNsDevicesStore)

@@ -9,31 +9,31 @@ export default CreateActions(
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.PushDevices.listGCMDevices'
     },
-    fetchAPNsDevices: {
+    fetchAPNSDevices: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.listAPNsDevices'
+      method: 'Syncano.Actions.PushDevices.listAPNSDevices'
     },
-    createAPNsDevice: {
+    createAPNSDevice: {
       asyncForm: true,
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.createAPNsDevice'
+      method: 'Syncano.Actions.PushDevices.createAPNSDevice'
     },
-    updateAPNsDevice: {
+    updateAPNSDevice: {
       asyncForm: true,
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.updateAPNsDevice'
+      method: 'Syncano.Actions.PushDevices.updateAPNSDevice'
     },
-    removeAPNsDevices: {
+    removeAPNSDevices: {
       asyncResult: true,
       loading: true,
       children: ['completed', 'failure'],
-      method: 'Syncano.Actions.PushDevices.removeAPNsDevices'
+      method: 'Syncano.Actions.PushDevices.removeAPNSDevices'
     },
     createGCMDevice: {
       asyncForm: true,

@@ -6,14 +6,14 @@ import DeviceDialog from '../DeviceDialog';
 
 export default React.createClass({
 
-  displayName: 'APNDeviceDialog',
+  displayName: 'APNSDeviceDialog',
 
   render() {
     return (
       <div>
         <DeviceDialog
-          handleAddSubmit={Actions.createAPNsDevice}
-          handleEditSubmit={Actions.updateAPNsDevice}/>
+          handleAddSubmit={Actions.createAPNSDevice}
+          handleEditSubmit={Actions.updateAPNSDevice}/>
       </div>
     );
   }
