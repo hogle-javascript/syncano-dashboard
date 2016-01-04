@@ -1,18 +1,18 @@
 import React from 'react';
 import Reflux from 'reflux';
 
-import APNsDevicesStore from './APNSDevicesStore';
+import APNSDevicesStore from './APNSDevicesStore';
 import Actions from '../DevicesActions';
 
 import Devices from '../Devices';
-import APNsDeviceDialog from './APNSDeviceDialog';
+import APNSDeviceDialog from './APNSDeviceDialog';
 
 export default React.createClass({
 
-  displayName: 'APNSDapnsevices',
+  displayName: 'APNSDevices',
 
   mixins: [
-    Reflux.connect(APNsDevicesStore)
+    Reflux.connect(APNSDevicesStore)
   ],
 
   showDeviceDialog() {
@@ -22,10 +22,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <APNsDeviceDialog />
+        <APNSDeviceDialog />
         <Devices
           emptyItemHandleClick={this.showDeviceDialog}
-          emptyItemContent="Add APNs Device"
+          emptyItemContent="Add APNS Device"
           hideDialogs={this.state.hideDialogs}
           isLoading={this.state.isLoading}
           items={this.state.items}/>

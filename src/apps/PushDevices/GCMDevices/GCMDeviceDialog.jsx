@@ -6,7 +6,7 @@ import DeviceDialog from '../DeviceDialog';
 
 export default React.createClass({
 
-  displayName: 'APNDeviceDialog',
+  displayName: 'GCMDeviceDialog',
 
   render() {
     return (
