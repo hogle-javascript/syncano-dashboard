@@ -36,7 +36,6 @@ export default Reflux.createStore({
 
   setGroups(groups) {
     console.debug('GroupsStore::setGroups');
-
     this.data.items = groups;
     this.trigger(this.data);
   },
@@ -45,31 +44,8 @@ export default Reflux.createStore({
     return this.data.items || empty || null;
   },
 
-  getActiveGroup(empty) {
-    return this.data.activeGroup || empty || null;
-  },
-
-  resetActiveGroup() {
-    this.data.activeGroup = null;
-    this.trigger(this.data);
-  },
-
   refreshData() {
     Actions.fetchGroups();
-  },
-
-  onSetActiveGroup(group) {
-    console.debug('GroupsStore::onSetActiveGroup');
-
-    let isCurrentActiveGroup = this.data.activeGroup && this.data.activeGroup.id === group.id;
-
-    this.data.activeGroup = isCurrentActiveGroup ? null : group;
-    this.trigger(this.data);
-  },
-
-  onFetchGroups() {
-    console.debug('GroupsStore::onFetchGroups');
-    this.trigger(this.data);
   },
 
   onFetchGroupsCompleted(items) {
@@ -78,13 +54,6 @@ export default Reflux.createStore({
   },
 
   onRemoveGroupsCompleted() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
-  },
-
-  onFetchGroupUsers() {
-    this.data.isLoading = false;
-    this.trigger(this.data);
   }
 });

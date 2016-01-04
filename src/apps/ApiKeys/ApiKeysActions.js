@@ -13,26 +13,22 @@ export default CreateActions(
     createApiKey: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.create'
     },
     updateApiKey: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.update'
     },
     removeApiKeys: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.remove'
     },
     resetApiKey: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.ApiKeys.reset'
     }

@@ -4,7 +4,6 @@ export default CreateActions(
   {
     fetch: {},
     setGroups: {},
-    setActiveGroup: {},
     fetchGroups: {
       asyncResult: true,
       loading: true,
@@ -14,27 +13,22 @@ export default CreateActions(
     createGroup: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Groups.create'
     },
     updateGroup: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Groups.update'
     },
     removeGroups: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Groups.remove'
-
     },
     fetchGroupUsers: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Groups.listUsers'
     }

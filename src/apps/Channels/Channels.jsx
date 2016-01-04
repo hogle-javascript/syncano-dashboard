@@ -26,7 +26,6 @@ export default React.createClass({
     Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -62,6 +61,7 @@ export default React.createClass({
             name="Channels"
             isLoading={this.state.isLoading}
             items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
             emptyItemHandleClick={this.showChannelDialog}
             emptyItemContent="Create a Channel Socket"/>
         </Container>

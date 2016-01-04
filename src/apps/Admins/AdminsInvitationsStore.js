@@ -46,7 +46,6 @@ export default Reflux.createStore({
 
   setInvitations(items) {
     console.debug('AdminsInvitationsStore::setInvitations');
-
     this.data.items = items;
     this.trigger(this.data);
   },
@@ -60,12 +59,8 @@ export default Reflux.createStore({
     return pendingInvitations;
   },
 
-  onFetchInvitations() {
-    this.trigger(this.data);
-  },
-
   onFetchInvitationsCompleted(items) {
-    console.debug('AdminsInvitationsStore::onGetInstanesCompleted');
+    console.debug('AdminsInvitationsStore::onFetchInvitationsCompleted');
     Actions.setInvitations(items._items);
   },
 

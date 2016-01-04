@@ -24,9 +24,7 @@ export default React.createClass({
   mixins: [
     Router.State,
     Router.Navigation,
-
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin
@@ -61,6 +59,7 @@ export default React.createClass({
           <SnippetsList
             name="Snippets"
             items={this.state.items}
+            hideDialogs={this.state.hideDialogs}
             emptyItemHandleClick={this.showSnippetDialog}
             emptyItemContent="Create a Snippet"/>
         </Container>

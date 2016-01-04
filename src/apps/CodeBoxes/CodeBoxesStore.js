@@ -9,9 +9,11 @@ import Actions from './CodeBoxesActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -27,10 +29,11 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   setCodeBoxes(items) {
-    this.data.items = Object.keys(items).map((item) => items[item]);
+    this.data.items = items;
     this.trigger(this.data);
   },
 
@@ -42,20 +45,12 @@ export default Reflux.createStore({
     Actions.fetchCodeBoxes();
   },
 
-  onFetchCodeBoxes() {
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
   onFetchCodeBoxesCompleted(items) {
     console.debug('CodeBoxesStore::onFetchCodeBoxesCompleted');
-    this.data.isLoading = false;
-    Actions.setCodeBoxes(items);
+    Actions.setCodeBoxes(items._items);
   },
 
   onRemoveCodeBoxesCompleted() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

@@ -5,11 +5,10 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import UsersActions from './UsersActions';
-import {GroupsActions} from './../Groups';
+import Actions from './UsersActions';
 
 export default Reflux.createStore({
-  listenables: [UsersActions],
+  listenables: [Actions],
 
   mixins: [
     Mixins.CheckListStore,
@@ -29,20 +28,13 @@ export default Reflux.createStore({
     this.waitFor(
       SessionActions.setUser,
       SessionActions.setInstance,
-      GroupsActions.setGroups,
       this.refreshData
     );
     this.setLoadingStates();
   },
 
   refreshData() {
-    // let activeGroup = GroupsStore.getActiveGroup();
-
-    // if (activeGroup) {
-    //   GroupsActions.fetchGroupUsers(activeGroup.id);
-    // } else {
-    UsersActions.fetchUsers();
-    // }
+    Actions.fetchUsers();
   },
 
   setUsers(users) {
@@ -56,12 +48,12 @@ export default Reflux.createStore({
 
   onFetchUsersCompleted(payload) {
     console.debug('UsersStore::onFetchUsersCompleted');
-    this.setUsers(payload);
+    Actions.setUsers(payload);
   },
 
   onFetchGroupUsersCompleted(payload) {
     console.debug('UsersStore::onFetchGroupUsersCompleted');
-    this.setUsers(payload);
+    Actions.setUsers(payload);
   },
 
   onRemoveUsersCompleted() {

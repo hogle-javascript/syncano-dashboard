@@ -5,13 +5,15 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import TriggersActions from './TriggersActions';
+import Actions from './TriggersActions';
 
 export default Reflux.createStore({
-  listenables: TriggersActions,
+  listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -27,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   setTriggers(items) {
@@ -41,22 +44,15 @@ export default Reflux.createStore({
 
   refreshData() {
     console.debug('TriggersStore::refreshData');
-    TriggersActions.fetchTriggers();
-  },
-
-  onFetchTriggers() {
-    console.debug('TriggersStore::onFetchTriggers');
-    this.data.isLoading = true;
-    this.trigger(this.data);
+    Actions.fetchTriggers();
   },
 
   onFetchTriggersCompleted(items) {
     console.debug('TriggersStore::onFetchTriggersCompleted');
-    TriggersActions.setTriggers(items._items);
+    Actions.setTriggers(items._items);
   },
 
   onRemoveTriggersCompleted() {
-    this.data.hideDialogs = true;
     this.refreshData();
   }
 });

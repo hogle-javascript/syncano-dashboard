@@ -23,13 +23,8 @@ export default React.createClass({
     Router.Navigation,
     HeaderMixin,
     Mixins.IsLoading({attr: 'state.items'}),
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   componentWillUpdate(nextProps) {
     console.info('Channels::componentWillUpdate');

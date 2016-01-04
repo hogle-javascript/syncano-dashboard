@@ -13,13 +13,11 @@ export default CreateActions(
     updateAdmin: {
       asyncResult: true,
       asyncForm: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Admins.update'
     },
     removeAdmins: {
       asyncResult: true,
-      loading: true,
       children: ['completed', 'failure'],
       method: 'Syncano.Actions.Admins.remove'
     }

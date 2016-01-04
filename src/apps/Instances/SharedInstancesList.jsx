@@ -24,13 +24,8 @@ export default React.createClass({
     Router.Navigation,
     HeaderMixin,
     Mixins.IsLoading({attr: 'state.items'}),
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
-
-  getInitialState() {
-    return {};
-  },
 
   handleChangePalette(color, icon) {
     console.info('Instances::handleChangePalette', color, icon);

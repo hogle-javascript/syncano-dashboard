@@ -67,8 +67,8 @@ export default Reflux.createStore({
     this.refreshData();
   },
 
-  saveTraces(traces) {
-    console.debug('TracesStore::saveTraces');
+  setTraces(traces) {
+    console.debug('TracesStore::setTraces');
     this.data.items = traces;
     this.data.isLoading = false;
     this.trigger(this.data);
@@ -82,22 +82,22 @@ export default Reflux.createStore({
 
   onFetchSnippetTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchSnippetTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj._items);
+    this.setTraces(tracesObj._items);
   },
 
   onFetchCodeBoxTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchCodeBoxTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj._items);
+    this.setTraces(tracesObj._items);
   },
 
   onFetchTriggerTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchTriggerTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj._items);
+    this.setTraces(tracesObj._items);
   },
 
   onFetchScheduleTracesCompleted(tracesObj) {
     console.debug('TracesStore::onFetchScheduleTracesCompleted', tracesObj);
-    this.saveTraces(tracesObj._items);
+    this.setTraces(tracesObj._items);
   },
 
   onFetchCurrentSnippetCompleted(currentObj) {

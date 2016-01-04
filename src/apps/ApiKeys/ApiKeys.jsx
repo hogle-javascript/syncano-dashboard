@@ -26,7 +26,6 @@ export default React.createClass({
     Router.Navigation,
 
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.InstanceTabs,
     HeaderMixin
   ],

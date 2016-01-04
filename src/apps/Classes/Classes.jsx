@@ -23,9 +23,7 @@ export default React.createClass({
   mixins: [
     State,
     Navigation,
-
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.Dialogs,
     Mixins.InstanceTabs,
     HeaderMixin

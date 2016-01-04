@@ -9,6 +9,7 @@ import Actions from './ApiKeysActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
     Mixins.WaitForStore,
@@ -39,13 +40,7 @@ export default Reflux.createStore({
 
   setApiKeys(items) {
     console.debug('AdminsStore::setApiKeys');
-
     this.data.items = items;
-    this.trigger(this.data);
-  },
-
-  onFetchApiKeys() {
-    this.data.isLoading = true;
     this.trigger(this.data);
   },
 
@@ -55,14 +50,10 @@ export default Reflux.createStore({
   },
 
   onRemoveApiKeysCompleted() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onResetApiKeyCompleted() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

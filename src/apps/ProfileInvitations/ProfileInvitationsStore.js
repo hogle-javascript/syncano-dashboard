@@ -10,6 +10,7 @@ import Actions from './ProfileInvitationsActions';
 
 export default Reflux.createStore({
   listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
     Mixins.StoreLoading,
@@ -46,11 +47,6 @@ export default Reflux.createStore({
     this.trigger(this.data);
   },
 
-  onFetchInvitations() {
-    console.debug('ProfileInvitationsStore::onFetchInvitations');
-    this.trigger(this.data);
-  },
-
   onFetchInvitationsCompleted(items) {
     let invKey = SessionStore.getRouter().getCurrentQuery().invitation_key || null;
     let isInvitedByEmail = _.some(items._items, 'key', invKey);
@@ -83,20 +79,14 @@ export default Reflux.createStore({
   },
 
   onAcceptInvitationsFailure() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onDeclineInvitationsCompleted() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   },
 
   onDeclineInvitationsFailure() {
-    this.data.hideDialogs = true;
-    this.trigger(this.data);
     this.refreshData();
   }
 });

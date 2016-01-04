@@ -21,7 +21,6 @@ import AdminsInvitationsList from './AdminsInvitationsList';
 import AdminDialog from './AdminDialog';
 
 export default React.createClass({
-
   displayName: 'Admins',
 
   mixins: [

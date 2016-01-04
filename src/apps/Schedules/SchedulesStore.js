@@ -5,13 +5,15 @@ import Mixins from '../../mixins';
 
 // Stores & Actions
 import SessionActions from '../Session/SessionActions';
-import SchedulesActions from './SchedulesActions';
+import Actions from './SchedulesActions';
 
 export default Reflux.createStore({
-  listenables: SchedulesActions,
+  listenables: Actions,
+
   mixins: [
     Mixins.CheckListStore,
-    Mixins.WaitForStore
+    Mixins.WaitForStore,
+    Mixins.StoreLoading
   ],
 
   getInitialState() {
@@ -27,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   getSchedules(empty) {
@@ -36,29 +39,21 @@ export default Reflux.createStore({
   setSchedules(items) {
     console.debug('SchedulesStore::setSchedules');
     this.data.items = items;
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('SchedulesStore::refreshData');
-    SchedulesActions.fetchSchedules();
-  },
-
-  onFetchSchedules() {
-    console.debug('SchedulesStore::onFetchSchedules');
-    this.data.isLoading = true;
-    this.trigger(this.data);
+    Actions.fetchSchedules();
   },
 
   onFetchSchedulesCompleted(items) {
     console.debug('SchedulesStore::onFetchSchedulesCompleted');
-    SchedulesActions.setSchedules(items._items);
+    Actions.setSchedules(items._items);
   },
 
   onRemoveSchedulesCompleted() {
     console.debug('SchedulesStore::onRemoveSchedulesCompleted');
-    this.data.hideDialogs = true;
     this.refreshData();
   }
 });

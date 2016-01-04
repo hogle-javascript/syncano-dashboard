@@ -18,7 +18,6 @@ export default React.createClass({
 
   mixins: [
     Reflux.connect(Store),
-    Mixins.Dialog,
     Mixins.Dialogs
   ],
 
