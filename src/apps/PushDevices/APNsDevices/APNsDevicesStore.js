@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {CheckListStore, WaitForStore, StoreHelpers} from '../../../mixins';
+import {CheckListStore, WaitForStore, StoreHelpers, StoreLoading} from '../../../mixins';
 
 // Stores & Actions
 import Actions from '../DevicesActions';
@@ -12,7 +12,8 @@ export default Reflux.createStore({
   mixins: [
     CheckListStore,
     WaitForStore,
-    StoreHelpers
+    StoreHelpers,
+    StoreLoading
   ],
 
   getInitialState() {
@@ -28,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   getDevices(empty) {
@@ -37,19 +39,12 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('PushNotificationsStore::setAPNsDevices');
     this.data.items = devices;
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('PushNotificationsStore::refreshData');
     Actions.fetchAPNsDevices();
-  },
-
-  onFetchAPNsDevices() {
-    console.debug('PushNotificationsStore::onFetchAPNsDevices');
-    this.data.isLoading = true;
-    this.trigger(this.data);
   },
 
   onFetchAPNsDevicesCompleted(devices) {
@@ -59,16 +54,9 @@ export default Reflux.createStore({
     this.setDevices(items);
   },
 
-  onRemoveAPNsDevices() {
-    console.debug('APNsDevicesStore::onRemoveAPNsDevices');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
   onRemoveAPNsDevicesCompleted() {
     console.debug('APNsDevicesStore::onRemoveAPNsDevicesCompleted');
     this.data.hideDialogs = true;
-    this.data.isLoading = false;
     this.refreshData();
   }
 });

@@ -1,7 +1,7 @@
 import Reflux from 'reflux';
 
 // Utils & Mixins
-import {CheckListStore, WaitForStore, StoreHelpers} from '../../../mixins';
+import {CheckListStore, WaitForStore, StoreHelpers, StoreLoading} from '../../../mixins';
 
 // Stores & Actions
 import Actions from '../DevicesActions';
@@ -12,7 +12,8 @@ export default Reflux.createStore({
   mixins: [
     CheckListStore,
     WaitForStore,
-    StoreHelpers
+    StoreHelpers,
+    StoreLoading
   ],
 
   getInitialState() {
@@ -28,6 +29,7 @@ export default Reflux.createStore({
       SessionActions.setInstance,
       this.refreshData
     );
+    this.setLoadingStates();
   },
 
   getDevices(empty) {
@@ -37,19 +39,12 @@ export default Reflux.createStore({
   setDevices(devices) {
     console.debug('GCMDevicesStore::setGCMDevices');
     this.data.items = devices;
-    this.data.isLoading = false;
     this.trigger(this.data);
   },
 
   refreshData() {
     console.debug('GCMDevicesStore::refreshData');
     Actions.fetchGCMDevices();
-  },
-
-  onFetchGCMDevices() {
-    console.debug('GCMDevicesStore::onFetchGCMDevices');
-    this.data.isLoading = true;
-    this.trigger(this.data);
   },
 
   onFetchGCMDevicesCompleted(devices) {
@@ -59,15 +54,8 @@ export default Reflux.createStore({
     this.setDevices(items);
   },
 
-  onRemoveGCMDevices() {
-    console.debug('GCMDevicesStore::onRemoveGCMDevices');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
-
   onRemoveGCMDevicesCompleted() {
     console.debug('GCMDevicesStore::onRemoveGCMDevicesCompleted');
-    this.data.isLoading = false;
     this.data.hideDialogs = true;
     this.refreshData();
   }
