@@ -13,7 +13,7 @@ export default React.createClass({
       <div>
         <DeviceDialog
           handleAddSubmit={Actions.createGCMDevice}
-          handleEditSubmit={Actions.updateGCMDevice}/>
+          handleEditSubmit={Actions.updateGCMDevice} />
       </div>
     );
   }

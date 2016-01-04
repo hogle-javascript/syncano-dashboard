@@ -13,7 +13,7 @@ export default React.createClass({
       <div>
         <DeviceDialog
           handleAddSubmit={Actions.createAPNSDevice}
-          handleEditSubmit={Actions.updateAPNSDevice}/>
+          handleEditSubmit={Actions.updateAPNSDevice} />
       </div>
     );
   }
