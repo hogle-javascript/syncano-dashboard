@@ -7,8 +7,8 @@ import FormMixin from '../../mixins/FormMixin';
 import Store from './ProfileAuthenticationStore';
 import Actions from './ProfileActions';
 
-import MUI from 'syncano-material-ui';
-import {Clipboard} from '../../common';
+import {TextField, FlatButton, RaisedButton} from 'syncano-material-ui';
+import {Container, Clipboard, InnerToolbar} from '../../common';
 
 export default Radium(React.createClass({
 
@@ -75,76 +75,79 @@ export default Radium(React.createClass({
 
     return (
       <div>
-        <div style={styles.content}>
-          <div>Account key</div>
-          <div className="row" style={styles.contentRow}>
-            <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
-            <div className="col-xs-10">
-              <Clipboard
-                copyText={this.state.account_key}
-                snackbarText="API key copied to the clipboard"
-                snackbarAutoHideDuration={3000}
-                text="COPY"/>
-              <MUI.FlatButton
-                label="RESET"
-                primary={true}
-                onClick={this.handleResetClick}/>
+        <InnerToolbar title="Authentication"/>
+        <Container>
+          <div style={styles.content}>
+            <div>Account key</div>
+            <div className="row" style={styles.contentRow}>
+              <div className="col-xs-15" style={styles.accountKey}>{this.state.account_key}</div>
+              <div className="col-xs-10">
+                <Clipboard
+                  copyText={this.state.account_key}
+                  snackbarText="API key copied to the clipboard"
+                  snackbarAutoHideDuration={3000}
+                  text="COPY"/>
+                <FlatButton
+                  label="RESET"
+                  primary={true}
+                  onClick={this.handleResetClick}/>
+              </div>
             </div>
           </div>
-        </div>
-        <div style={styles.content}>
-          <div style={styles.settingsTitle}>Password settings</div>
-          <div className="row" style={styles.contentRow}>
-            <div className="col-md-15">
-              <form
-                onSubmit={this.handleFormValidation}
-                acceptCharset="UTF-8"
-                method="post">
-                {this.renderFormNotifications()}
-                <MUI.TextField
-                  ref="currentPassword"
-                  type="password"
-                  valueLink={this.linkState('current_password')}
-                  errorText={this.getValidationMessages('current_password').join(' ')}
-                  name="currentPassword"
-                  floatingLabelText="Current password"
-                  className="text-field"
-                  autoComplete="currentPassword"
-                  hintText="Current password"
-                  fullWidth={true} />
-                <MUI.TextField
-                  ref="newPassword"
-                  type="password"
-                  valueLink={this.linkState('newPassword')}
-                  errorText={this.getValidationMessages('newPassword').join(' ')}
-                  name="newPassword"
-                  floatingLabelText="New password"
-                  className="text-field"
-                  autoComplete="newPassword"
-                  hintText="New password"
-                  fullWidth={true} />
-                <MUI.TextField
-                  ref="confirmNewPassword"
-                  type="password"
-                  valueLink={this.linkState('confirmNewPassword')}
-                  errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
-                  name="confirmNewPassword"
-                  floatingLabelText="Confirm new password"
-                  className="text-field vm-6-b"
-                  autoComplete="confirmNewPassword"
-                  hintText="Confirm new password"
-                  fullWidth={true} />
-                <MUI.RaisedButton
-                  type="submit"
-                  label="Update"
-                  style={styles.updateButton}
-                  labelStyle={styles.updateButtonLabel}
-                  className="raised-button"
-                  secondary={true} />
-              </form>
+          <div style={styles.content}>
+            <div style={styles.settingsTitle}>Password settings</div>
+            <div className="row" style={styles.contentRow}>
+              <div className="col-md-15">
+                <form
+                  onSubmit={this.handleFormValidation}
+                  acceptCharset="UTF-8"
+                  method="post">
+                  {this.renderFormNotifications()}
+                  <TextField
+                    ref="currentPassword"
+                    type="password"
+                    valueLink={this.linkState('current_password')}
+                    errorText={this.getValidationMessages('current_password').join(' ')}
+                    name="currentPassword"
+                    floatingLabelText="Current password"
+                    className="text-field"
+                    autoComplete="currentPassword"
+                    hintText="Current password"
+                    fullWidth={true} />
+                  <TextField
+                    ref="newPassword"
+                    type="password"
+                    valueLink={this.linkState('newPassword')}
+                    errorText={this.getValidationMessages('newPassword').join(' ')}
+                    name="newPassword"
+                    floatingLabelText="New password"
+                    className="text-field"
+                    autoComplete="newPassword"
+                    hintText="New password"
+                    fullWidth={true} />
+                  <TextField
+                    ref="confirmNewPassword"
+                    type="password"
+                    valueLink={this.linkState('confirmNewPassword')}
+                    errorText={this.getValidationMessages('confirmNewPassword').join(' ')}
+                    name="confirmNewPassword"
+                    floatingLabelText="Confirm new password"
+                    className="text-field vm-6-b"
+                    autoComplete="confirmNewPassword"
+                    hintText="Confirm new password"
+                    fullWidth={true} />
+                  <RaisedButton
+                    type="submit"
+                    label="Update"
+                    style={styles.updateButton}
+                    labelStyle={styles.updateButtonLabel}
+                    className="raised-button"
+                    secondary={true} />
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }

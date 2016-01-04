@@ -8,14 +8,17 @@ import Mixins from '../../mixins';
 import SessionActions from '../Session/SessionActions';
 import SessionStore from '../Session/SessionStore';
 import Actions from './EditViewActions';
+import CreateDialogActions from './CreateDialogActions';
 
 export default Reflux.createStore({
-  listenables: Actions,
+  listenables: [
+    Actions,
+    CreateDialogActions
+  ],
 
   mixins: [
     Mixins.StoreForm,
-    Mixins.WaitForStore,
-    Mixins.StoreHelpers
+    Mixins.WaitForStore
   ],
 
   getInitialState() {
@@ -43,7 +46,6 @@ export default Reflux.createStore({
     let solutionId = SessionStore.router.getCurrentParams().solutionId;
 
     D.all([
-      Actions.fetchTags(),
       Actions.fetchSolution(solutionId),
       Actions.fetchSolutionVersions(solutionId)
     ]).then(() => {
@@ -61,19 +63,6 @@ export default Reflux.createStore({
     console.debug('SolutionsEditStore::setSolutions');
     this.data.item = solution;
     this.trigger(this.data);
-  },
-
-  setTags(tags) {
-    this.data.tags = this.saveListFromSyncano(tags);
-    this.trigger(this.data);
-  },
-
-  getTagsOptions() {
-    return this.getSelectOptions(this.data.tags, 'name', 'name');
-  },
-
-  getItemTags() {
-    return this.getSelectValuesFromList(this.data.item.tags);
   },
 
   setSolutionVersions(versions) {
@@ -140,6 +129,7 @@ export default Reflux.createStore({
   onRemoveSolutionCompleted() {
     console.debug('SolutionsEditStore::onRemoveSolution');
     this.data.isLoading = false;
+    SessionStore.getRouter().transitionTo('solutions');
   },
 
   onRemoveSolutionFailure() {
@@ -147,22 +137,8 @@ export default Reflux.createStore({
     this.data.isLoading = false;
     this.trigger(this.data);
   },
-  onFetchTags() {
-    console.debug('SolutionsStore::onFetchTags');
-    this.data.isLoading = true;
-    this.trigger(this.data);
-  },
 
-  onFetchTagsCompleted(tags) {
-    console.debug('SolutionsStore::onFetchTagsCompleted');
-    this.data.isLoading = false;
-    Actions.setTags(tags);
-  },
-
-  onFetchTagsFailure() {
-    console.debug('SolutionsStore::onFetchTagsFailure');
-    this.data.isLoading = false;
-    this.trigger(this.data);
+  onUpdateSolutionCompleted() {
+    this.refreshData();
   }
-
 });

@@ -2,13 +2,15 @@ import React from 'react';
 import Reflux from 'reflux';
 import Radium from 'radium';
 import _ from 'lodash';
-import MUI from 'syncano-material-ui';
 
 import Mixins from '../../mixins';
-import Common from '../../common';
 
 import Actions from './ProfileActions';
 import Store from './ProfileBillingPaymentStore';
+
+import {TextField, RaisedButton} from 'syncano-material-ui';
+import {Container, Loading, Show, InnerToolbar, CreditCard} from '../../common';
+
 
 export default Radium(React.createClass({
 
@@ -73,8 +75,10 @@ export default Radium(React.createClass({
     let labelPrefix = hasCard ? 'Update' : 'Add';
 
     return (
-        <Common.Loading show={this.state.isLoading}>
-          <Common.Show if={showForm}>
+      <Loading show={this.state.isLoading}>
+        <InnerToolbar title="Payment methods"/>
+        <Container>
+          <Show if={showForm}>
             <form
               onSubmit={this.handleFormValidation}
               acceptCharset="UTF-8"
@@ -83,7 +87,7 @@ export default Radium(React.createClass({
 
               <div className="row">
                 <div className="col-lg-20">
-                  <MUI.TextField
+                  <TextField
                     name="number"
                     ref="number"
                     fullWidth={true}
@@ -96,7 +100,7 @@ export default Radium(React.createClass({
               </div>
               <div className="row">
                 <div className="col-lg-20">
-                  <MUI.TextField
+                  <TextField
                     name="cvc"
                     ref="cvc"
                     fullWidth={true}
@@ -111,7 +115,7 @@ export default Radium(React.createClass({
                 <div className="col-lg-20">
                   <div className="row">
                     <div className="col-flex-1">
-                      <MUI.TextField
+                      <TextField
                         name="exp_month"
                         ref="exp_month"
                         size={2}
@@ -123,7 +127,7 @@ export default Radium(React.createClass({
                         dataStripe="exp-month"/>
                     </div>
                     <div className="col-flex-1">
-                      <MUI.TextField
+                      <TextField
                         name="exp_year"
                         ref="exp_year"
                         size={4}
@@ -139,13 +143,13 @@ export default Radium(React.createClass({
               </div>
               <div className="row">
                 <div className="col-lg-20" style={{display: '-webkit-flex; display: flex'}}>
-                  <Common.Show if={hasCard}>
-                    <MUI.RaisedButton
+                  <Show if={hasCard}>
+                    <RaisedButton
                       onClick={this.toggleForm.bind(this, false)}
                       label="Cancel"
                       className="raised-button"/>
-                  </Common.Show>
-                  <MUI.RaisedButton
+                  </Show>
+                  <RaisedButton
                     type="submit"
                     label={labelPrefix + ' payment'}
                     className="raised-button"
@@ -154,20 +158,21 @@ export default Radium(React.createClass({
                 </div>
               </div>
             </form>
-          </Common.Show>
+          </Show>
 
-          <Common.Show if={!showForm}>
+          <Show if={!showForm}>
             <div>
-              <Common.CreditCard card={this.state.card}/>
-              <MUI.RaisedButton
+              <CreditCard card={this.state.card}/>
+              <RaisedButton
                 onClick={this.toggleForm.bind(null, true)}
                 type="submit"
                 label={labelPrefix + ' payment'}
                 className="raised-button"
                 secondary={true}/>
             </div>
-          </Common.Show>
-        </Common.Loading>
+          </Show>
+        </Container>
+      </Loading>
     );
   }
 }));

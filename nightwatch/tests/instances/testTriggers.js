@@ -16,35 +16,37 @@ export default {
     const triggersPage = client.page.triggersPage();
     const suffix = utils.addSuffix('trigger');
 
-    triggersPage.navigate();
-    triggersPage.clickElement('@addTriggerButton');
-    triggersPage.waitForElementPresent('@addTriggerModalTitle');
-    triggersPage.fillInputField('@addTriggerModalLabel', suffix, client);
-    triggersPage.selectFromDropdown('@addTriggerModalSnippet', '@addScheduleModalSnippetName', client);
-    triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalCreate', client);
-    triggersPage.selectFromDropdown('@addTriggerModalClass', '@addTriggerModalClassName', client);
-    triggersPage.clickElement('@confirm');
-    triggersPage.waitForElementPresent('@triggerTableRow');
+    triggersPage
+      .navigate()
+      .clickElement('@addTriggerButton')
+      .waitForElementPresent('@addTriggerModalTitle')
+      .fillInput('@addTriggerModalLabel', suffix)
+      .selectDropdownValue('@addTriggerModalSnippet', 'snippet')
+      .selectDropdownValue('@addTriggerModalSignal', 'create')
+      .selectDropdownValue('@addTriggerModalClass', 'user_profile')
+      .clickElement('@confirm')
+      .waitForElementPresent('@triggerTableRow');
   },
   'Administrator edits a Trigger Signal': (client) => {
     const triggersPage = client.page.triggersPage();
 
-    triggersPage.navigate();
-    triggersPage.clickDropdown('@triggerDropdown', client);
-    triggersPage.clickElement('@editDropdownItem');
-    triggersPage.waitForElementVisible('@confirm');
-    triggersPage.selectFromDropdown('@addTriggerModalSignal', '@addTriggerModalSignalUpdate', client);
-    triggersPage.clickElement('@confirm');
-    triggersPage.waitForElementPresent('@signalTriggerTableRow');
+    triggersPage
+      .navigate()
+      .clickListItemDropdown('@triggerDropdown', 'Edit')
+      .waitForElementVisible('@confirm')
+      .selectDropdownValue('@addTriggerModalSignal', 'update')
+      .clickElement('@confirm')
+      .waitForElementPresent('@signalTriggerTableRow');
   },
   'Administrator deletes a Trigger': (client) => {
     const triggersPage = client.page.triggersPage();
 
-    triggersPage.clickElement('@selectTriggerTableRow');
-    triggersPage.clickElement('@triggersListMenu');
-    triggersPage.clickElement('@triggersDeleteButton');
-    triggersPage.waitForElementVisible('@confirm');
-    triggersPage.clickElement('@confirm');
-    triggersPage.waitForElementNotPresent('@selectTriggerTableRow');
+    triggersPage
+      .clickElement('@selectTriggerTableRow')
+      .clickElement('@triggersListMenu')
+      .clickElement('@triggersDeleteButton')
+      .waitForElementVisible('@confirm')
+      .clickElement('@confirm')
+      .waitForElementNotPresent('@selectTriggerTableRow');
   }
 };

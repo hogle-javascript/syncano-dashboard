@@ -37,10 +37,6 @@ export default React.createClass({
     this.hideDialogs(nextProps.hideDialogs);
   },
 
-  handleItemIconClick(id, state) {
-    Actions.checkItem(id, state);
-  },
-
   initDialogs() {
     return [{
       dialog: Dialog.Delete,
@@ -59,7 +55,8 @@ export default React.createClass({
   renderItem(item) {
     return (
       <ListItem
-        onIconClick={this.handleItemIconClick}
+        key={`channels-list-item-${item.name}`}
+        onIconClick={Actions.checkItem}
         item={item}
         showDeleteDialog={this.showDialog.bind(null, 'deleteChannelDialog', item)}/>
     );
@@ -108,6 +105,7 @@ export default React.createClass({
         </ColumnList.Header>
         <Lists.List
           {...this.props}
+          key="channels-list"
           renderItem={this.renderItem}/>
       </Lists.Container>
     );

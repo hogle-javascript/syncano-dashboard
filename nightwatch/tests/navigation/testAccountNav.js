@@ -16,8 +16,9 @@ module.exports = {
     const instancesPage = client.page.instancesPage();
     const socketsPage = client.page.socketsPage();
 
-    instancesPage.navigate();
-    instancesPage.clickElement('@instancesTableName');
+    instancesPage
+      .navigate()
+      .clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@dataSocketTableTitle');
   },
   afterEach(client, done) {
@@ -35,9 +36,10 @@ module.exports = {
     const topNavigationPage = client.page.topNavigationPage();
     const profilePage = client.page.profilePage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     profilePage.waitForElementPresent('@updateButton');
   },
   'User goes to Account Authentication View': (client) => {
@@ -45,9 +47,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const authenticationPage = client.page.authenticationPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@authentication');
     authenticationPage.waitForElementPresent('@accountKey');
   },
@@ -56,9 +59,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const invitationsPage = client.page.invitationsPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@invitations');
     invitationsPage.waitForElementPresent('@emptyInvitationsView');
   },
@@ -67,9 +71,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const billingPlanPage = client.page.billingPlanPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@billingPlan');
     billingPlanPage.waitForElementPresent('@openPlansExplorerButton');
   },
@@ -78,9 +83,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const paymentMethodsPage = client.page.paymentMethodsPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@paymentMethods');
     paymentMethodsPage.waitForElementPresent('@addPaymentButton');
   },
@@ -89,9 +95,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const invoicesPage = client.page.invoicesPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@invoices');
     invoicesPage.waitForElementPresent('@emptyInvoicesView');
   },
@@ -100,9 +107,10 @@ module.exports = {
     const leftMenuPage = client.page.leftMenuPage();
     const billingAddressPage = client.page.billingAddressPage();
 
-    topNavigationPage.clickElement('@account');
-    topNavigationPage.waitForElementVisible('@fox');
-    topNavigationPage.clickElement('@accountDropdown');
+    topNavigationPage
+      .clickElement('@account')
+      .waitForElementVisible('@fox')
+      .clickElement('@accountDropdown');
     leftMenuPage.clickElement('@billingAddress');
     billingAddressPage.waitForElementPresent('@billingAddressTitle');
   }

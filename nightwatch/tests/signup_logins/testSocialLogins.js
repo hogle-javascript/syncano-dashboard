@@ -71,9 +71,10 @@ export default {
 
         client.switchWindow(handle);
       });
-    loginPage.fillInputField('@emailInputGithub', process.env.NIGHTWATCH_EMAIL, client);
-    loginPage.fillInputField('@passInputGithub', process.env.NIGHTWATCH_PASSWORD, client);
-    loginPage.clickElement('@signInButtonGithub');
+    loginPage
+      .fillInput('@emailInputGithub', process.env.NIGHTWATCH_EMAIL)
+      .fillInput('@passInputGithub', process.env.NIGHTWATCH_PASSWORD)
+      .clickElement('@signInButtonGithub');
 
     client.windowHandles((result) => {
       const handle = result.value[0];

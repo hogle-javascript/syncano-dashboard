@@ -20,7 +20,7 @@ export default {
       .waitForElementVisible('@channelSocketsListTitle')
       .clickElement('@addChannelButton')
       .waitForElementVisible('@addChannelModalTitle')
-      .fillInput('@modalNameInput', 'channel')
+      .fillInput('@modalNameInput', Utils.addSuffix('channel'))
       .clickElement('@confirmButton')
       .waitForElementVisible('@channelTableRow');
   },
@@ -33,7 +33,7 @@ export default {
       .clickElement('@channelSocketDropDown')
       .clickElement('@editDropdownItem')
       .waitForElementVisible('@editChannelModalTitle')
-      .fillInput('@modalDescriptionInput', 'edit')
+      .fillInput('@modalDescriptionInput', Utils.addSuffix('edit'))
       .clickElement('@confirmButton')
       .waitForElementVisible('@channelTableRow')
       .waitForElementVisible('@channelTableRowDescription');

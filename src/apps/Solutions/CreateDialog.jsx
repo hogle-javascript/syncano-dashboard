@@ -1,5 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
+import Select from 'react-select';
 
 // Utils
 import Mixins from '../../mixins';
@@ -32,17 +33,27 @@ export default React.createClass({
     }
   },
 
-  handleEditSubmit() {
-    Actions.updateSolution({
-      description: this.state.description
-    });
-  },
-
   handleAddSubmit() {
     Actions.createSolution({
       label: this.state.label,
       description: this.state.description,
-      public: this.state.public
+      public: this.state.public,
+      tags: this.state.tags
+    });
+  },
+
+  handleEditSubmit() {
+    Actions.updateSolution(this.state.id, {
+      label: this.state.label,
+      description: this.state.description,
+      public: this.state.public,
+      tags: this.state.tags
+    });
+  },
+
+  handleTagsListChange(tagsString, tagsArray) {
+    this.setState({
+      tags: tagsArray.map((item) => item.value)
     });
   },
 
@@ -84,7 +95,6 @@ export default React.createClass({
             ref='label'
             name='label'
             fullWidth={true}
-            disabled={this.hasEditMode()}
             valueLink={this.linkState('label')}
             errorText={this.getValidationMessages('label').join(' ')}
             hintText='Short name for your Solution'
@@ -96,13 +106,22 @@ export default React.createClass({
             valueLink={this.linkState('description')}
             errorText={this.getValidationMessages('description').join(' ')}
             hintText='Description of a Solution (optional)'
-            floatingLabelText='Description'/>
+            floatingLabelText='Description'
+            className='vm-4-b'/>
+          <Select
+            value={this.state.tags}
+            delimiter=","
+            multi={true}
+            allowCreate={true}
+            placeholder="Select tags"
+            options={Store.getTagsOptions()}
+            onChange={this.handleTagsListChange}
+            className='vm-3-b'/>
           <MUI.Toggle
             ref='public'
             name='public'
             defaultToggled={this.state.public}
             onToggle={this.handleToogle}
-            style={{marginTop: 20}}
             label='Make this solution public?'/>
         </div>
       </Common.Dialog>

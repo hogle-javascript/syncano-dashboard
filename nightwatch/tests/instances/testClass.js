@@ -14,15 +14,16 @@ export default {
   },
   'Test Add Class': (client) => {
     const classesPage = client.page.classesPage();
+    const className = Utils.addSuffix('class');
 
     classesPage
       .navigate()
       .clickElement('@addClassButton')
-      .fillInput('@createModalNameInput', 'class')
-      .fillInput('@createModalDescriptionInput')
-      .fillInput('@createModalFieldNameInput', 'string');
-    classesPage.selectFromDropdown('@createModalDropdownType', '@createModalSchemaString', client);
-    classesPage.clickElement('@addButton')
+      .fillInput('@createModalNameInput', className)
+      .fillInput('@createModalDescriptionInput', Utils.addSuffix())
+      .fillInput('@createModalFieldNameInput', 'string')
+      .selectDropdownValue('@createModalDropdownType', 'string')
+      .clickElement('@addButton')
       .waitForElementVisible('@addClassTitle')
       .clickElement('@confirmButton')
       .waitForElementNotPresent('@addClassTitle')
@@ -34,10 +35,9 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown('@classItemDropdown', client);
-    classesPage.clickElement('@editDropdownItem')
+      .clickListItemDropdown('@classItemDropdown', 'Edit')
       .waitForElementVisible('@createModalDescriptionInput')
-      .fillInput('@createModalDescriptionInput', 'edit')
+      .fillInput('@createModalDescriptionInput', Utils.addSuffix('edit'))
       .clickElement('@confirmButton')
       .waitForElementVisible('@classTableRowDescription');
 
@@ -47,8 +47,7 @@ export default {
     const classesPage = client.page.classesPage();
 
     classesPage
-      .clickDropdown('@classItemDropdown', client);
-    classesPage.clickElement('@deleteDropdownItem')
+      .clickListItemDropdown('@classItemDropdown', 'Delete')
       .waitForElementVisible('@deleteClassModalTitle')
       .clickElement('@confirmDeleteButton')
       .waitForElementNotPresent('@deleteClassModalTitle')

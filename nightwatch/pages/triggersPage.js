@@ -11,7 +11,7 @@ export default {
       locateStrategy: 'xpath'
     },
     triggerDropdown: {
-      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../following-sibling::div[@class="col-menu"]//button`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../../following-sibling::div[@class="col-menu"]//button`,
       locateStrategy: 'xpath'
     },
     editDropdownItem: {
@@ -34,10 +34,6 @@ export default {
       selector: '//div[text()="trigger_123"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalSnippetName: {
-      selector: '//div[text()="snippet"]',
-      locateStrategy: 'xpath'
-    },
     runEvery5minutes: {
       selector: '//span[text()="Run every 5 minutes"]',
       locateStrategy: 'xpath'
@@ -58,16 +54,8 @@ export default {
       selector: '//div[@class="signal-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addTriggerModalSignalCreate: {
-      selector: '//div[text()="create"]',
-      locateStrategy: 'xpath'
-    },
     addTriggerModalClass: {
       selector: '//div[@class="class-dropdown"]',
-      locateStrategy: 'xpath'
-    },
-    addTriggerModalClassName: {
-      selector: '//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalSnippet: {
@@ -79,15 +67,11 @@ export default {
       locateStrategy: 'xpath'
     },
     selectTriggerTableRow: {
-      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/preceding-sibling::div`,
-      locateStrategy: 'xpath'
-    },
-    addTriggerModalSignalUpdate: {
-      selector: '//div[text()="update"]',
+      selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../preceding-sibling::div`,
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
-      selector: `//div[text()="${utils.addSuffix('trigger')}"]/parent::div/following-sibling::div[text()="post_update"]`,
+      selector: `//div[text()="${utils.addSuffix('trigger')}"]/../parent::div/following-sibling::div[text()="post_update"]`,
       locateStrategy: 'xpath'
     }
   }

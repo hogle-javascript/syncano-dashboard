@@ -43,11 +43,11 @@ export default {
       locateStrategy: 'xpath'
     },
     selectApiKey: {
-      selector: `//div[text()="${utils.addSuffix('')}"]/preceding-sibling::div//span`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../preceding-sibling::div//span`,
       locateStrategy: 'xpath'
     },
     apiKeyValue: {
-      selector: `//div[text()="${utils.addSuffix('')}"]/../following-sibling::div[2]/div[1]`,
+      selector: `//div[text()="${utils.addSuffix('')}"]/../../following-sibling::div[2]/div[1]`,
       locateStrategy: 'xpath'
     },
     deleteButton: {

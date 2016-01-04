@@ -57,9 +57,10 @@ export default React.createClass({
           background={Common.Color.getColorByName(metadata && metadata.color ? metadata.color : 'blue')}
           checked={item.checked}
           handleIconClick={this.props.onIconClick}>
-          <div onClick={this.handleItemNameClick.bind(null, item.name)} style={{cursor: 'pointer'}}>
-            {item.name}
-          </div>
+          <Common.Truncate
+            onClick={this.handleItemNameClick.bind(null, item.name)}
+            style={{cursor: 'pointer'}}
+            text={item.name}/>
         </Column.CheckIcon>
         <Column.Desc>{item.description}</Column.Desc>
         <Column.ID className="col-xs-3 col-md-3">

@@ -16,8 +16,9 @@ module.exports = {
     const instancesPage = client.page.instancesPage();
     const socketsPage = client.page.socketsPage();
 
-    instancesPage.navigate();
-    instancesPage.clickElement('@instancesTableName');
+    instancesPage
+      .navigate()
+      .clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
   },
   afterEach(client, done) {

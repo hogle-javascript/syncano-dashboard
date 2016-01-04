@@ -1,4 +1,4 @@
-import utils from '../../utils';
+import Utils from '../../utils';
 
 export default {
   tags: ['api_keys'],
@@ -16,12 +16,12 @@ export default {
 
   'Test Add Api Key': (client) => {
     const apiKeysPage = client.page.apiKeysPage();
-    // const description = utils.addSuffix('api_key_description');
+    const description = Utils.addSuffix();
 
     apiKeysPage
       .navigate()
       .clickElement('@addApiKeyButton')
-      .fillInput('@createModalDescriptionInput')
+      .fillInput('@createModalDescriptionInput', description)
       .clickElement('@confirmButton')
       .waitForModalToClose()
       .waitForElementVisible('@apiKeysTableRow');
@@ -45,7 +45,8 @@ export default {
       .clickElement('@resetButton')
       .clickElement('@confirmButton')
       .waitForElementPresent('@selectApiKey');
-    client.pause(1000)
+    client
+      .pause(1000)
       .element('xpath', apiKeyValueElement, (result) => {
         client.elementIdText(result.value.ELEMENT, (text) => {
           client.assert.notEqual(text.value, apiKeyValue);

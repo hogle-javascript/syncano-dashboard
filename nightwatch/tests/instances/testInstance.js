@@ -5,10 +5,11 @@ export default {
     const slug = Date.now();
     const email = 'syncano.bot+' + slug + '@syncano.com';
 
-    signupPage.navigate();
-    signupPage.setValue('@emailInput', email);
-    signupPage.setValue('@passInput', slug);
-    signupPage.clickSubmitButton();
+    signupPage
+      .navigate()
+      .setValue('@emailInput', email)
+      .setValue('@passInput', slug)
+      .clickSubmitButton();
   },
   after(client) {
     client.end();
@@ -16,32 +17,35 @@ export default {
   'Test Edit Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickDropdown('@instanceDropdown');
-    instancesPage.clickElement('@editDropdownItem');
-    instancesPage.fillInstanceDescription('@createModalDescriptionInput', 'new_description', client);
-    instancesPage.clickElement('@confirmButton');
-    instancesPage.waitForElementNotPresent('@editInstanceModalTitle');
-    instancesPage.waitForElementVisible('@instancesTableName');
+    instancesPage
+      .navigate()
+      .clickListItemDropdown('@instanceDropdown', 'Edit')
+      .fillInput('@createModalDescriptionInput', 'new_description')
+      .clickElement('@confirmButton')
+      .waitForElementNotPresent('@editInstanceModalTitle')
+      .waitForElementVisible('@instancesTableName');
+
     instancesPage.expect.element('@instancesTableRow').to.contain.text('new_description');
   },
   'Test Select/Deselect Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickElement('@selectInstance');
-    instancesPage.waitForElementVisible('@instanceSelected');
-    instancesPage.clickElement('@selectInstance');
-    instancesPage.waitForElementNotPresent('@instanceSelected');
+    instancesPage
+      .navigate()
+      .clickElement('@selectInstance')
+      .waitForElementVisible('@instanceSelected')
+      .clickElement('@selectInstance')
+      .waitForElementNotPresent('@instanceSelected');
   },
   'Test Delete Instance': (client) => {
     const instancesPage = client.page.instancesPage();
 
-    instancesPage.navigate();
-    instancesPage.clickDropdown('@instanceDropdown', client);
-    instancesPage.clickElement('@deleteDropdownItem');
-    instancesPage.clickElement('@confirmDeleteButton');
-    instancesPage.waitForElementNotPresent('@deleteInstanceModalTitle');
+    instancesPage
+      .navigate()
+      .clickListItemDropdown('@instanceDropdown', 'Delete')
+      .clickElement('@confirmDeleteButton')
+      .waitForElementNotPresent('@deleteInstanceModalTitle');
+
     instancesPage.expect.element('@emptyListItem').to.be.present.after(10000);
   }
   // This test should be reanabled once we merge with the devel branch
