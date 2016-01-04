@@ -48,10 +48,6 @@ export default {
       selector: '//div[@class="type-dropdown"]',
       locateStrategy: 'xpath'
     },
-    createModalSchemaString: {
-      selector: '//div[text()="string"]',
-      locateStrategy: 'xpath'
-    },
     createModalDescriptionInput: {
       selector: 'input[name="description"]'
     },

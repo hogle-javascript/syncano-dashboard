@@ -1,8 +1,11 @@
-var _ = require('lodash');
+const _ = require('lodash');
 
-module.exports = {
-    suffix: '_' + new Date().getTime() + _.random(0, 99999),
-    addSuffix: function (text) {
-        return text.toString() + this.suffix;
+export default {
+  suffix: '_' + new Date().getTime() + _.random(0, 99999),
+  addSuffix(text) {
+    if (typeof text === 'undefined') {
+      return this.suffix;
     }
+    return text.toString() + this.suffix;
+  }
 };

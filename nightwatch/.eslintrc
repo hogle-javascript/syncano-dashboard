@@ -12,6 +12,8 @@
     "no-path-concat": 2,
     "no-process-exit": 2,
     "no-restricted-modules": 2,
-    "no-sync": 2
+    "no-sync": 2,
+    "no-process-env": 0,
+    "max-statements": 0
   }
 }

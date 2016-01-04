@@ -11,62 +11,48 @@ module.exports = {
     client.end();
   },
   'User goes to Snippet edit view': (client) => {
-    //var instancesPage = client.page.instancesPage();
-    //instancesPage.clickButton('@instancesTableName');
-    
-    var socketsPage = client.page.socketsPage();
+    const socketsPage = client.page.socketsPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
+
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
-
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets', client);
-
-    var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem', client);
-
-    var snippetEditPage = client.page.snippetEditPage();
+    leftMenuPage.clickElement('@snippets');
+    snippetsPage.clickElement('@snippetListItem');
     snippetEditPage.waitForElementPresent('@snippetEditView');
   },
   'User goes to Snippet config view': (client) => {
-    var instancesPage = client.page.instancesPage();
+    const instancesPage = client.page.instancesPage();
+    const socketsPage = client.page.socketsPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
+
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableName', client);
-    
-    var socketsPage = client.page.socketsPage();
+    instancesPage.clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
-
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets', client);
-
-    var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem', client);
-
-    var snippetEditPage = client.page.snippetEditPage();
-    snippetEditPage.clickButton('@config', client);
-
+    leftMenuPage.clickElement('@snippets');
+    snippetsPage.clickElement('@snippetListItem');
+    snippetEditPage.clickElement('@config');
     snippetEditPage.waitForElementPresent('@configKeyField');
     snippetEditPage.waitForElementPresent('@configValueField');
     snippetEditPage.waitForElementPresent('@configAddFieldButton');
     snippetEditPage.verify.containsText('@configKeyField', '');
     snippetEditPage.verify.containsText('@configValueField', '');
-
   },
   'User goes to Snippet traces view': (client) => {
-    var instancesPage = client.page.instancesPage();
+    const instancesPage = client.page.instancesPage();
+    const socketsPage = client.page.socketsPage();
+    const leftMenuPage = client.page.leftMenuPage();
+    const snippetsPage = client.page.snippetsPage();
+    const snippetEditPage = client.page.snippetEditPage();
+
     client.url(instancesPage.url);
-    instancesPage.clickButton('@instancesTableName', client);
-    
-    var socketsPage = client.page.socketsPage();
+    instancesPage.clickElement('@instancesTableName');
     socketsPage.waitForElementPresent('@codeBoxSocketItem');
-    
-    var leftMenuPage = client.page.leftMenuPage();
-    leftMenuPage.clickButton('@snippets', client);
-
-    var snippetsPage = client.page.snippetsPage();
-    snippetsPage.clickButton('@snippetListItem', client);
-
-    var snippetEditPage = client.page.snippetEditPage();
-    snippetEditPage.clickButton('@traces', client);
-
+    leftMenuPage.clickElement('@snippets');
+    snippetsPage.clickElement('@snippetListItem');
+    snippetEditPage.clickElement('@traces');
     snippetEditPage.waitForElementPresent('@tracesEmpty');
   }
 };

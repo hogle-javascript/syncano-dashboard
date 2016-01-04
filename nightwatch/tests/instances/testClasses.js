@@ -1,5 +1,5 @@
 import Globals from '../../globals';
-import async from 'async';
+import Async from 'async';
 
 export default {
   tags: ['classes'],
@@ -7,7 +7,7 @@ export default {
     client.end();
   },
   'Test create classes': (client) => {
-    async.waterfall([
+    Async.waterfall([
       client.createTempAccount,
       client.createTempClass,
       client.createTempClass,
@@ -25,12 +25,15 @@ export default {
   'Test Select/Delete multiple Classes': (client) => {
     const classesPage = client.page.classesPage();
 
-    client.url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`);
-    client.refresh();
-    classesPage.clickDropdownSelect('@classesListMenu', 'select');
-    classesPage.clickButton('@selectUserClass', client);
-    classesPage.clickDropdownDelete('@classesListMenu');
-    classesPage.waitForElementVisible('@classTableRows');
+    client
+      .url(`https://localhost:8080/#/instances/${Globals.tempInstanceName}/classes`)
+      .refresh();
+    classesPage
+      .clickListItemDropdown('@classesListMenu', 'Select')
+      .clickElement('@selectUserClass')
+      .clickListItemDropdown('@classesListMenu', 'Delete')
+      .clickElement('@confirmDeleteButton')
+      .waitForElementVisible('@classTableRows');
     const classTableRows = classesPage.elements.classTableRows.selector;
     const userProfileClassName = classesPage.elements.userProfileClassName.selector;
 

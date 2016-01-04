@@ -1,5 +1,4 @@
-exports.command = function(element) {
-
+exports.command = function clickDropdownDelete(element) {
   this
     .waitForElementVisible(element)
     .click(element)

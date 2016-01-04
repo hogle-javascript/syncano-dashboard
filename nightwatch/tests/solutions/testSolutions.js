@@ -13,32 +13,35 @@ export default {
   'Administrator can view Favorite Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage.navigate();
-    solutionsPage.clickButton('@favorite', client);
-    solutionsPage.waitForElementVisible('@favoriteSolutionTitle');
+    solutionsPage
+      .navigate()
+      .clickElement('@favorite')
+      .waitForElementVisible('@favoriteSolutionTitle');
   },
   'Administrator can view his Solutions': (client) => {
     const solutionsPage = client.page.solutionsPage();
 
-    solutionsPage.navigate();
-    solutionsPage.clickButton('@mySolutions', client);
-    solutionsPage.waitForElementVisible('@mySolutionTitle');
+    solutionsPage
+      .navigate()
+      .clickElement('@mySolutions')
+      .waitForElementVisible('@mySolutionTitle');
   },
   'Administrator can filter solutions by tags': (client) => {
     let tagsCount = null;
     const solutionsPage = client.page.solutionsPage();
     const elementsWithTag = solutionsPage.elements.tagsJs;
 
-    solutionsPage.navigate();
-    solutionsPage.waitForElementVisible('@tagsList');
-    solutionsPage.clickButton('@tagsListJs', client);
-    solutionsPage.waitForElementVisible('@tagsJs');
+    solutionsPage
+      .navigate()
+      .waitForElementVisible('@tagsList')
+      .clickElement('@tagsListJs')
+      .waitForElementVisible('@tagsJs');
 
-    solutionsPage.getText('@tagListItemCount', function(result) {
+    solutionsPage.getText('@tagListItemCount', (result) => {
       tagsCount = parseInt(result.value, 10);
     });
 
-    client.elements(elementsWithTag.locateStrategy, elementsWithTag.selector, function(result) {
+    client.elements(elementsWithTag.locateStrategy, elementsWithTag.selector, (result) => {
       if (tagsCount >= result.value.length) {
         client.assert.ok(true, 'Tags count is equal or greater than number of solutions on the list');
       }

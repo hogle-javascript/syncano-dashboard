@@ -34,10 +34,6 @@ export default {
       selector: '//div[text()="trigger_123"]',
       locateStrategy: 'xpath'
     },
-    addScheduleModalSnippetName: {
-      selector: '//div[text()="snippet"]',
-      locateStrategy: 'xpath'
-    },
     runEvery5minutes: {
       selector: '//span[text()="Run every 5 minutes"]',
       locateStrategy: 'xpath'
@@ -58,16 +54,8 @@ export default {
       selector: '//div[@class="signal-dropdown"]',
       locateStrategy: 'xpath'
     },
-    addTriggerModalSignalCreate: {
-      selector: '//div[text()="create"]',
-      locateStrategy: 'xpath'
-    },
     addTriggerModalClass: {
       selector: '//div[@class="class-dropdown"]',
-      locateStrategy: 'xpath'
-    },
-    addTriggerModalClassName: {
-      selector: '//div[text()="user_profile"]',
       locateStrategy: 'xpath'
     },
     addTriggerModalSnippet: {
@@ -80,10 +68,6 @@ export default {
     },
     selectTriggerTableRow: {
       selector: `//div[text()="${ utils.addSuffix('trigger')}"]/../preceding-sibling::div`,
-      locateStrategy: 'xpath'
-    },
-    addTriggerModalSignalUpdate: {
-      selector: '//div[text()="update"]',
       locateStrategy: 'xpath'
     },
     signalTriggerTableRow: {
